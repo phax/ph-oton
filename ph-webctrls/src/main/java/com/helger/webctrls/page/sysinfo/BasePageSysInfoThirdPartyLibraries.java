@@ -1,0 +1,149 @@
+/**
+ * Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.helger.webctrls.page.sysinfo;
+
+import java.util.Locale;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotations.Translatable;
+import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.name.ComparatorHasDisplayName;
+import com.helger.commons.name.IHasDisplayName;
+import com.helger.commons.name.IHasDisplayText;
+import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.thirdparty.IThirdPartyModule;
+import com.helger.commons.thirdparty.ThirdPartyModuleRegistry;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.HCA;
+import com.helger.html.hc.html.HCH4;
+import com.helger.html.hc.html.HCUL;
+import com.helger.html.hc.html.HC_Target;
+import com.helger.html.hc.impl.HCNodeList;
+import com.helger.webbasics.app.page.IWebPageExecutionContext;
+import com.helger.webctrls.page.AbstractWebPageExt;
+import com.helger.webctrls.page.EWebPageText;
+
+/**
+ * Page with all linked third party libraries
+ *
+ * @author Philip Helger
+ * @param <WPECTYPE>
+ *        Web Page Execution Context type
+ */
+public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+{
+  @Translatable
+  protected static enum EText implements IHasDisplayText
+  {
+    MSG_TPM_HEADER ("Folgende externen Module werden verwendet", "The following external libraries are used"),
+    MSG_LICENSED_UNDER (" lizensiert unter ", " licensed under ");
+
+    private final TextProvider m_aTP;
+
+    private EText (final String sDE, final String sEN)
+    {
+      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+    }
+
+    @Nullable
+    public String getDisplayText (@Nonnull final Locale aContentLocale)
+    {
+      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    }
+  }
+
+  public BasePageSysInfoThirdPartyLibraries (@Nonnull @Nonempty final String sID)
+  {
+    super (sID, EWebPageText.PAGE_NAME_SYSINFO_THIRDPARTYLIBS.getAsMLT ());
+  }
+
+  public BasePageSysInfoThirdPartyLibraries (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
+  {
+    super (sID, sName);
+  }
+
+  public BasePageSysInfoThirdPartyLibraries (@Nonnull @Nonempty final String sID,
+                                             @Nonnull final String sName,
+                                             @Nullable final String sDescription)
+  {
+    super (sID, sName, sDescription);
+  }
+
+  public BasePageSysInfoThirdPartyLibraries (@Nonnull @Nonempty final String sID,
+                                             @Nonnull final IReadonlyMultiLingualText aName,
+                                             @Nullable final IReadonlyMultiLingualText aDescription)
+  {
+    super (sID, aName, aDescription);
+  }
+
+  @Nonnull
+  private static IHCNode _getModuleHCNode (@Nonnull final IThirdPartyModule aModule,
+                                           @Nonnull final Locale aDisplayLocale)
+  {
+    final HCNodeList aNL = new HCNodeList ();
+
+    // Module name
+    String sModuleText = aModule.getDisplayName ();
+    if (aModule.getVersion () != null)
+      sModuleText += ' ' + aModule.getVersion ().getAsString ();
+
+    // Link (if available)
+    if (aModule.getWebSiteURL () == null)
+      aNL.addChild (sModuleText);
+    else
+      aNL.addChild (new HCA (aModule.getWebSiteURL ()).setTarget (HC_Target.BLANK).addChild (sModuleText));
+    aNL.addChild (EText.MSG_LICENSED_UNDER.getDisplayText (aDisplayLocale));
+
+    // License text
+    String sLicenseText = aModule.getLicense ().getDisplayName ();
+    if (aModule.getLicense ().getVersion () != null)
+      sLicenseText += ' ' + aModule.getLicense ().getVersion ().getAsString ();
+
+    // Link (if available)
+    if (aModule.getLicense ().getURL () == null)
+      aNL.addChild (sLicenseText);
+    else
+      aNL.addChild (new HCA (aModule.getLicense ().getURL ()).setTarget (HC_Target.BLANK).addChild (sLicenseText));
+    return aNL;
+  }
+
+  @Override
+  protected void fillContent (@Nonnull final WPECTYPE aWPEC)
+  {
+    final HCNodeList aNodeList = aWPEC.getNodeList ();
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+
+    aNodeList.addChild (HCH4.create (EText.MSG_TPM_HEADER.getDisplayText (aDisplayLocale)));
+
+    // Third party modules
+    final Set <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
+                                                                     .getAllRegisteredThirdPartyModules ();
+    final HCUL aUL = aNodeList.addAndReturnChild (new HCUL ());
+
+    // Show all required modules, sorted by name
+    for (final IThirdPartyModule aModule : CollectionHelper.getSorted (aModules,
+                                                                      new ComparatorHasDisplayName <IHasDisplayName> (aDisplayLocale)))
+      if (!aModule.isOptional ())
+        aUL.addItem (_getModuleHCNode (aModule, aDisplayLocale));
+  }
+}

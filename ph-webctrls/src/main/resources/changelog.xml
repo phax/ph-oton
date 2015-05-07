@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="ph-webctrls">
+  <entry date="2015-05-06" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to Datatables 1.10.7</text>
+    </change>
+  </entry>
+  <entry date="2015-05-06" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to jQuery 1.11.3 and 2.1.4</text>
+    </change>
+  </entry>
+  <entry date="2015-05-06" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to select2 4.0.0</text>
+    </change>
+  </entry>
+  <entry date="2015-04-20" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to Datatables 1.10.6 and ColVis plugin 1.1.2</text>
+    </change>
+  </entry>
+  <entry date="2015-04-16" category="tech" action="add">
+    <change>
+      <text locale="en">Added support for select2</text>
+    </change>
+  </entry>
+  <release date="2015-04-01" version="4.0.1" />
+  <release date="2015-03-27" version="4.0.0" />
+  <entry date="2015-03-09" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to Twitter typeahead 0.10.5</text>
+    </change>
+  </entry>
+  <entry date="2015-03-09" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to latest animate.css</text>
+    </change>
+  </entry>
+  <entry date="2015-03-09" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to Colorbox 1.6.0</text>
+    </change>
+  </entry>
+  <entry date="2015-03-09" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to jQuery 1.11.2 and 2.1.3</text>
+    </change>
+  </entry>
+  <entry date="2015-02-23" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to Font Awesome 4.3.0</text>
+    </change>
+  </entry>
+  <entry date="2015-02-23" category="tech" action="add">
+    <change>
+      <text locale="en">Added support for jscolor.com ColorPicker</text>
+    </change>
+  </entry>
+  <release date="2015-02-20" version="2.7.1" />
+  <entry date="2015-02-20" category="tech" action="update" incomaptible="true">
+    <change>
+      <text locale="en">Updated to ph-web 6.3.0 and ph-smtp 1.0.1</text>
+    </change>
+  </entry>
+  <release date="2015-02-18" version="2.7.0" />
+  <entry date="2015-02-18" category="tech" action="update" incomaptible="true">
+    <change>
+      <text locale="en">Updated to ph-commons 5.5.0 and ph-web 6.2.0 and ph-smtp 1.0.0</text>
+    </change>
+  </entry>
+  <release date="2015-02-11" version="2.6.1" />
+  <entry date="2015-02-10" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to DataTables 1.10.5</text>
+    </change>
+  </entry>
+  <release date="2015-02-05" version="2.6.0" />
+  <entry date="2015-01-12" category="tech" action="update">
+    <change>
+      <text locale="en">Switched back to Autonumeric 1.9.26 because of initialization bug in 1.9.27 and 1.9.28</text>
+    </change>
+  </entry>
+  <entry date="2015-01-08" category="tech" action="update">
+    <change>
+      <text locale="en">Updated Autonumeric to 1.9.27</text>
+    </change>
+  </entry>
+  <release date="2014-11-14" version="2.5.1" />
+  <entry date="2014-11-14" category="tech" action="add">
+    <change>
+      <text locale="en">Added DataTables search highlight support.</text>
+    </change>
+  </entry>
+  <entry date="2014-11-14" category="tech" action="update">
+    <change>
+      <text locale="en">Updated DataTables to 1.10.4</text>
+    </change>
+  </entry>
+  <entry date="2014-11-03" category="tech" action="add">
+    <change>
+      <text locale="en">Added Font Awesome icons</text>
+    </change>
+  </entry>
+  <release date="2014-10-30" version="2.5.0" />
+  <entry date="2014-10-30" category="tech" action="update">
+    <change>
+      <text locale="en">Updated Autonumeric to 1.9.26</text>
+    </change>
+  </entry>
+  <entry date="2014-10-30" category="tech" action="update">
+    <change>
+      <text locale="en">Updated DataTables to 1.10.3</text>
+    </change>
+  </entry>
+  <entry date="2014-10-23" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Changed package name com.helger.webpages to com.helegr.webctrls.page</text>
+    </change>
+  </entry>
+  <release date="2014-10-10" version="2.4.1" />
+  <entry date="2014-10-10" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to ph-scopes 6.6.0</text>
+    </change>
+  </entry>
+  <entry date="2014-10-10" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to ph-commons 5.1.0</text>
+    </change>
+  </entry>
+  <release date="2014-10-03" version="2.4.0" />
+  <entry date="2014-09-19" category="api" action="add">
+    <change>
+      <text locale="en">Started new system page to manage the system message - not yet enabled</text>
+    </change>
+  </entry>
+  <entry date="2014-09-16" category="api" action="add">
+    <change>
+      <text locale="en">Added new system page that shows all locked objects</text>
+    </change>
+  </entry>
+  <entry date="2014-09-10" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Changed a parameter in AbstractWebPageExt from HCForm to AbstractHCForm&lt;?&gt;</text>
+    </change>
+  </entry>
+  <entry date="2014-09-10" category="tech" action="remove">
+    <change>
+      <text locale="en">Removed old tiptip control</text>
+    </change>
+  </entry>
+  <entry date="2014-09-10" category="tech" action="remove">
+    <change>
+      <text locale="en">Removed old date time control</text>
+    </change>
+  </entry>
+  <release date="2014-09-03" version="2.3.0" />
+  <entry date="2014-09-03" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to ph-webbasics 3.3.0</text>
+    </change>
+  </entry>
+  <entry date="2014-09-03" category="tech" action="update">
+    <change>
+      <text locale="en">Updated DataTables to 1.10.2</text>
+    </change>
+  </entry>
+  <release date="2014-08-26" version="2.2.0" />
+</changelog>

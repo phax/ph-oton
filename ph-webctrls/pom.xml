@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.helger</groupId>
+    <artifactId>ph-oton</artifactId>
+    <version>5.0.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>ph-webctrls</artifactId>
+  <packaging>bundle</packaging>
+  <name>ph-webctrls</name>
+  <description>Library with common JavaScript and Java UI components for web applications</description>
+  <url>https://github.com/phax/ph-oton/ph-webctrls</url>
+  <inceptionYear>2014</inceptionYear>
+ 
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>Philip Helger</name>
+    <url>http://www.helger.com</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <id>philip</id>
+      <name>Philip Helger</name>
+      <email>ph(at)helger.com</email>
+      <url>http://www.helger.com</url>
+    </developer>
+  </developers>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-commons</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-datetime</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-smtp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-masterdata</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-json</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-css</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-schedule</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-html</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-webbasics</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Export-Package>
+              com.helger.webctrls.*
+            </Export-Package>
+            <Import-Package>
+              !javax.annotation.*,*
+            </Import-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/*.min.js</exclude>
+            <exclude>**/*.min.css</exclude>
+            <exclude>src/main/resources/autonumeric/**</exclude>
+            <exclude>src/main/resources/autosize/**</exclude>
+            <exclude>src/main/resources/chart/**</exclude>
+            <exclude>src/main/resources/colorbox/**</exclude>
+            <exclude>src/main/resources/css/animate.*</exclude>
+            <exclude>src/main/resources/datatables/**</exclude>
+            <exclude>src/main/resources/famfam/**</exclude>
+            <exclude>src/main/resources/fineupload/**</exclude>
+            <exclude>src/test/resources/fineupload/**</exclude>
+            <exclude>src/main/resources/fontawesome/**</exclude>
+            <exclude>src/main/resources/handlebars/**</exclude>
+            <exclude>src/main/resources/html5shiv/**</exclude>
+            <exclude>src/main/resources/jquery/**</exclude>
+            <exclude>src/main/resources/js/big.*</exclude>
+            <exclude>src/main/resources/js/respond.*</exclude>
+            <exclude>src/main/resources/js/stacktrace.*</exclude>
+            <exclude>src/main/resources/js/wow.*</exclude>
+            <exclude>src/main/resources/pdfobject/**</exclude>
+            <exclude>src/main/resources/jscolor/**</exclude>
+            <exclude>src/main/resources/placeholder/**</exclude>
+            <exclude>src/main/resources/select2/**</exclude>
+            <exclude>src/main/resources/swf/**</exclude>
+            <exclude>src/main/resources/typeahead/**</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.helger.maven</groupId>
+        <artifactId>ph-jscompress-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jscompress</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <forceCreation>false</forceCreation>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.helger.maven</groupId>
+        <artifactId>ph-csscompress-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>csscompress</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <forceCompress>false</forceCompress>
+          <removeUnnecessaryCode>true</removeUnnecessaryCode>
+          <quoteURLs>true</quoteURLs>
+          <verbose>true</verbose>
+          <sourceDirectory>${basedir}/src/main/resources</sourceDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,36 @@
+/* Internet Explorer 10 doesn't differentiate device width 
+   from viewport width, and thus doesn't properly apply the 
+   media queries in Bootstrap's CSS. To address this, you can
+   optionally include the following CSS and JavaScript to work
+   around this problem until Microsoft issues a fix. */
+@-webkit-viewport   { width: device-width; }
+@-moz-viewport      { width: device-width; }
+@-ms-viewport       { width: device-width; }
+@-o-viewport        { width: device-width; }
+@viewport           { width: device-width; }
+
+form > label.form-label{
+  text-align: right;
+  display:inline-block;
+}
+
+table > label.form-label{
+  text-align: right;
+  display:inline-block;
+  width:100%;
+}
+
+/* No selection outline around tabs */
+.nav-tabs > li.active > a, 
+.nav-tabs > li > a:focus, 
+.nav-tabs > li > a:link, 
+.nav-tabs > li > a:visited, 
+.nav-tabs > li > a:hover, 
+.nav-tabs > li > a:active {
+  outline-style:none;
+}
+
+/* No margin for alerts in navbar! */ 
+.nav .alert {
+  margin-bottom: 0;
+}

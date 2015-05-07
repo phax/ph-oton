@@ -1,0 +1,207 @@
+/**
+ * Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.helger.webbasics.ajax.servlet;
+
+import java.io.IOException;
+
+import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+import javax.annotation.concurrent.ThreadSafe;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.helger.commons.GlobalDebug;
+import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotations.ReturnsMutableObject;
+import com.helger.commons.callback.CallbackList;
+import com.helger.commons.mime.CMimeType;
+import com.helger.commons.mutable.Wrapper;
+import com.helger.commons.state.EContinue;
+import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
+import com.helger.commons.stats.IStatisticsHandlerKeyedTimer;
+import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.string.StringHelper;
+import com.helger.commons.timing.StopWatch;
+import com.helger.web.CWebCharset;
+import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.webbasics.ajax.IAjaxExceptionCallback;
+import com.helger.webbasics.ajax.IAjaxExecutor;
+import com.helger.webbasics.ajax.IAjaxInvoker;
+import com.helger.webbasics.ajax.response.IAjaxResponse;
+import com.helger.webbasics.servlet.AbstractUnifiedResponseServlet;
+
+/**
+ * Abstract implementation of a servlet that invokes AJAX functions.
+ *
+ * @author Philip Helger
+ */
+@ThreadSafe
+public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
+{
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAjaxServlet.class);
+  private static final IStatisticsHandlerKeyedTimer s_aStatsTimer = StatisticsManager.getKeyedTimerHandler (AbstractAjaxServlet.class);
+  private static final IStatisticsHandlerKeyedCounter s_aStatsCounterSuccess = StatisticsManager.getKeyedCounterHandler (AbstractAjaxServlet.class +
+                                                                                                                         "$success");
+  private static final IStatisticsHandlerKeyedCounter s_aStatsCounterError = StatisticsManager.getKeyedCounterHandler (AbstractAjaxServlet.class +
+                                                                                                                       "$error");
+
+  private static final String SCOPE_ATTR_NAME = "$ph-ajaxservlet.name";
+  private static final String SCOPE_ATTR_INVOKER = "$ph-ajaxservlet.invoker";
+  private static final String SCOPE_ATTR_EXECUTOR = "$ph-ajaxservlet.executor";
+
+  private static final CallbackList <IAjaxExceptionCallback> s_aExceptionCallbacks = new CallbackList <IAjaxExceptionCallback> ();
+
+  /**
+   * @return The callback list with the exception handlers
+   */
+  @Nonnull
+  @ReturnsMutableObject (reason = "design")
+  public static CallbackList <IAjaxExceptionCallback> getExceptionCallbacks ()
+  {
+    return s_aExceptionCallbacks;
+  }
+
+  /**
+   * Check if it is valid in the current scope to invoke the passed AJAX
+   * function.
+   *
+   * @param sAjaxFunctionName
+   *        The AJAX function that was desired to be invoked.
+   * @param aRequestScope
+   *        The current request scope. Never <code>null</code>.
+   * @return <code>true</code> if the AJAX function may be invoked.
+   */
+  @OverrideOnDemand
+  protected boolean isValidToInvokeActionFunction (@Nonnull final String sAjaxFunctionName,
+                                                   @Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    return true;
+  }
+
+  /**
+   * Get the AJAX invoker matching the passed request
+   *
+   * @param aRequestScope
+   *        The request scope to use. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  protected abstract IAjaxInvoker getAjaxInvoker (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope);
+
+  @Override
+  @OverrideOnDemand
+  @OverridingMethodsMustInvokeSuper
+  protected EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                        @Nonnull final UnifiedResponse aUnifiedResponse)
+  {
+    // cut the leading "/"
+    String sFunctionName = aRequestScope.getPathWithinServlet ();
+    if (StringHelper.startsWith (sFunctionName, '/'))
+      sFunctionName = sFunctionName.substring (1);
+
+    final IAjaxInvoker aAjaxInvoker = getAjaxInvoker (aRequestScope);
+    final IAjaxExecutor aAjaxExecutor = aAjaxInvoker.createExecutor (sFunctionName);
+    if (aAjaxExecutor == null)
+    {
+      s_aLogger.warn ("Unknown Ajax function '" + sFunctionName + "' provided!");
+
+      // No such action
+      aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
+      return EContinue.BREAK;
+    }
+
+    // Call the initialization of the action executor
+    aAjaxExecutor.initExecution (aRequestScope);
+
+    // Remember in scope
+    // Important: use a wrapper to avoid scope destruction
+    aRequestScope.setAttribute (SCOPE_ATTR_NAME, sFunctionName);
+    aRequestScope.setAttribute (SCOPE_ATTR_INVOKER, Wrapper.create (aAjaxInvoker));
+    aRequestScope.setAttribute (SCOPE_ATTR_EXECUTOR, aAjaxExecutor);
+    return EContinue.CONTINUE;
+  }
+
+  @Override
+  protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
+  {
+    // Action is present
+    final String sAjaxFunctionName = aRequestScope.getAttributeAsString (SCOPE_ATTR_NAME);
+    final IAjaxInvoker aAjaxInvoker = (IAjaxInvoker) aRequestScope.getTypedAttribute (SCOPE_ATTR_INVOKER, Wrapper.class)
+                                                                  .get ();
+    final IAjaxExecutor aAjaxExecutor = aRequestScope.getTypedAttribute (SCOPE_ATTR_EXECUTOR, IAjaxExecutor.class);
+
+    if (!isValidToInvokeActionFunction (sAjaxFunctionName, aRequestScope))
+    {
+      s_aLogger.warn ("Invoking the AJAX function '" + sAjaxFunctionName + "' is not valid in this context!");
+      aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_ACCEPTABLE);
+    }
+    else
+      try
+      {
+        // Start the timing
+        final StopWatch aSW = new StopWatch (true);
+
+        // Invoke function
+        final IAjaxResponse aResult = aAjaxInvoker.invokeFunction (sAjaxFunctionName, aAjaxExecutor, aRequestScope);
+        if (s_aLogger.isTraceEnabled ())
+          s_aLogger.trace ("  AJAX Result: " + aResult);
+
+        // Convert to JSON String
+        final String sResultJSON = aResult.getSerializedAsJSON (GlobalDebug.isDebugMode ());
+
+        // Do not cache the result!
+        aUnifiedResponse.disableCaching ()
+                        .setContentAndCharset (sResultJSON, CWebCharset.CHARSET_XML_OBJ)
+                        .setMimeType (CMimeType.APPLICATION_JSON);
+
+        // Remember the time
+        s_aStatsTimer.addTime (sAjaxFunctionName, aSW.stopAndGetMillis ());
+        s_aStatsCounterSuccess.increment (sAjaxFunctionName);
+      }
+      catch (final Throwable t)
+      {
+        s_aStatsCounterError.increment (sAjaxFunctionName);
+
+        // Notify custom exception handler
+        for (final IAjaxExceptionCallback aExceptionCallback : getExceptionCallbacks ().getAllCallbacks ())
+          try
+          {
+            aExceptionCallback.onAjaxExecutionException (aAjaxInvoker,
+                                                         sAjaxFunctionName,
+                                                         aAjaxExecutor,
+                                                         aRequestScope,
+                                                         t);
+          }
+          catch (final Throwable t2)
+          {
+            s_aLogger.error ("Exception in custom AJAX exception handler of function '" + sAjaxFunctionName + "'", t2);
+          }
+
+        // Re-throw
+        if (t instanceof IOException)
+          throw (IOException) t;
+        if (t instanceof ServletException)
+          throw (ServletException) t;
+        throw new ServletException ("Error invoking AJAX function '" + sAjaxFunctionName + "'", t);
+      }
+  }
+}

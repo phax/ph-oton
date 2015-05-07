@@ -1,0 +1,6 @@
+/* Fixes problem with edits in input groups. See 
+http://stackoverflow.com/questions/18757211/input-group-controls-resize-within-nested-rows-in-ie9-and-twitter-bootstrap-3
+*/
+.input-group .form-control {
+  display: block !important;
+}

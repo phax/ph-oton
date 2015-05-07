@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<entry name="callbacks.disable" type="method" return="Callbacks">
+  <title>callbacks.disable()</title>
+  <signature>
+    <added>1.7</added>
+  </signature>
+  <desc>Disable a callback list from doing anything more.</desc>
+  <longdesc>
+    <p>This method returns the Callbacks object onto which it is attached (<code>this</code>).</p>
+  </longdesc>
+  <example>
+    <desc>Use <code>callbacks.disable()</code> to disable further calls to a callback list:</desc>
+    <code><![CDATA[
+// A sample logging function to be added to a callbacks list
+var foo = function( value ) {
+  console.log( value );
+};
+
+var callbacks = $.Callbacks();
+
+// Add the above function to the list
+callbacks.add( foo );
+
+// Fire the items on the list
+callbacks.fire( "foo" );
+// Outputs: foo
+
+// Disable further calls being possible
+callbacks.disable();
+
+// Attempt to fire with "foobar" as an argument
+callbacks.fire( "foobar" );
+// foobar isn't output
+]]></code>
+  </example>
+  <category slug="callbacks-object"/>
+  <category slug="version/1.7"/>
+</entry>

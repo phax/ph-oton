@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="ph-webbasics">
+  <release date="2015-04-01" version="4.0.1" />
+  <entry date="2015-03-27" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to JSch 0.1.52</text>
+    </change>
+  </entry>
+  <release date="2015-03-27" version="4.0.0" />
+  <release date="2015-02-20" version="3.8.1" />
+  <entry date="2015-02-19" category="tech" action="update" incomaptible="true">
+    <change>
+      <text locale="en">Updated to ph-web 6.3.0</text>
+    </change>
+  </entry>
+  <release date="2015-02-18" version="3.8.0" />
+  <entry date="2015-02-18" category="tech" action="update" incomaptible="true">
+    <change>
+      <text locale="en">Updated to ph-commons 5.5.0 and ph-web 6.2.0 and ph-smtp 1.0.0</text>
+    </change>
+  </entry>
+  <release date="2015-02-11" version="3.7.0" />
+  <entry date="2015-02-10" category="tech" action="add">
+    <change>
+      <text locale="en">Using PBKDF2 as the default password hash algorithm</text>
+    </change>
+  </entry>
+  <entry date="2015-02-10" category="api" action="add" incompatible="true">
+    <change>
+      <text locale="en">Added password salt support</text>
+    </change>
+  </entry>
+  <entry date="2015-02-10" category="api" action="add">
+    <change>
+      <text locale="en">Moved all special servlets from ph-webscopes into this project</text>
+    </change>
+  </entry>
+  <release date="2015-02-05" version="3.6.0" />
+  <entry date="2014-12-04" category="api" action="change">
+    <change>
+      <text locale="en">Moved HTMLConfigManager into MetaSystemManager</text>
+    </change>
+  </entry>
+  <entry date="2014-12-04" category="api" action="add">
+    <change>
+      <text locale="en">Added WebSiteResourceBundleManager and servlet</text>
+    </change>
+  </entry>
+  <entry date="2014-11-28" category="api" action="add">
+    <change>
+      <text locale="en">Added go-mapping manager and servlet</text>
+    </change>
+  </entry>
+  <entry date="2014-11-28" category="api" action="add">
+    <change>
+      <text locale="en">Added CSRF nonce manager</text>
+    </change>
+  </entry>
+  <entry date="2014-11-28" category="api" action="add">
+    <change>
+      <text locale="en">Added IWebPage.getHeaderNode() method</text>
+    </change>
+  </entry>
+  <entry date="2014-11-28" category="api" action="add">
+    <change>
+      <text locale="en">Extracted IMenuItemDeterminatorCallback interface</text>
+    </change>
+  </entry>
+  <entry date="2014-11-19" category="api" action="add">
+    <change>
+      <text locale="en">Extended LoggedInUserManager API</text>
+    </change>
+  </entry>
+  <release date="2014-10-30" version="3.5.0" />
+  <entry date="2014-10-30" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to ph-commons 5.2.0 and ph-scopes 6.6.1</text>
+    </change>
+  </entry>
+  <release date="2014-10-10" version="3.4.1" />
+  <entry date="2014-10-10" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to ph-scopes 6.6.0</text>
+    </change>
+  </entry>
+  <entry date="2014-10-10" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to ph-commons 5.1.0</text>
+    </change>
+  </entry>
+  <release date="2014-10-03" version="3.4.0" />
+  <entry date="2014-10-02" category="tech" action="change" incompatible="true">
+    <change>
+      <text locale="en">IPage now extends IReadonlyAttributeContainer for further attributes</text>
+    </change>
+  </entry>
+  <entry date="2014-10-02" category="tech" action="change" incompatible="true">
+    <change>
+      <text locale="en">HTMLConfigManager now reads from classpath and not from data path</text>
+    </change>
+  </entry>
+  <entry date="2014-10-01" category="api" action="add">
+    <change>
+      <text locale="en">Made LoginManager more flexible by providing more overridable methods</text>
+    </change>
+  </entry>
+  <entry date="2014-09-19" category="api" action="add">
+    <change>
+      <text locale="en">Added new class SystemMessageManager to manage application wide system messages</text>
+    </change>
+  </entry>
+  <entry date="2014-09-17" category="tech" action="add">
+    <change>
+      <text locale="en">Upon logout, all objects of that user are unlocked</text>
+    </change>
+  </entry>
+  <entry date="2014-09-16" category="api" action="add">
+    <change>
+      <text locale="en">Extended ILockManager API</text>
+    </change>
+  </entry>
+  <entry date="2014-09-16" category="api" action="add">
+    <change>
+      <text locale="en">Added modification callbacks for users, user groups and roles</text>
+    </change>
+  </entry>
+  <entry date="2014-09-15" category="api" action="change">
+    <change>
+      <text locale="en">Made internal error handling more flexible</text>
+    </change>
+  </entry>
+  <entry date="2014-09-15" category="api" action="add">
+    <change>
+      <text locale="en">Extended AccountingArea class by three fields</text>
+    </change>
+  </entry>
+  <release date="2014-09-03" version="3.3.0" />
+  <entry date="2014-09-03" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Unified Ajax and Action components so that they can be used similarily</text>
+    </change>
+  </entry>
+  <release date="2014-08-26" version="3.2.0" />
+</changelog>

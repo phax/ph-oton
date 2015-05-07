@@ -1,0 +1,113 @@
+/**
+ * Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.helger.appbasics.object.accarea;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.helger.appbasics.misc.IHasUIText;
+import com.helger.appbasics.object.client.IClientObject;
+import com.helger.commons.name.IHasDisplayName;
+import com.helger.masterdata.address.IReadonlyAddress;
+import com.helger.masterdata.currency.ECurrency;
+
+/**
+ * This interface represents a single accounting area.
+ *
+ * @author Philip Helger
+ */
+public interface IAccountingArea extends IClientObject, IHasDisplayName, IHasUIText
+{
+  /**
+   * @return The company type. E.g. "KEG"
+   */
+  @Nullable
+  String getCompanyType ();
+
+  /**
+   * @return The company UID.
+   */
+  @Nullable
+  String getCompanyVATIN ();
+
+  /**
+   * @return The company number (Interne Betriebsnummer). May not be
+   *         <code>null</code>.
+   */
+  @Nullable
+  String getCompanyNumber ();
+
+  /**
+   * @return The address of the owner.
+   */
+  @Nonnull
+  IReadonlyAddress getAddress ();
+
+  /**
+   * @return The telephone number. May be <code>null</code>.
+   */
+  @Nullable
+  String getTelephone ();
+
+  /**
+   * @return The telefax number. May be <code>null</code>.
+   */
+  @Nullable
+  String getFax ();
+
+  /**
+   * @return The email address. May be <code>null</code>.
+   */
+  @Nullable
+  String getEmailAddress ();
+
+  /**
+   * @return The web site. May be <code>null</code>.
+   */
+  @Nullable
+  String getWebSite ();
+
+  /**
+   * @return The default currency in this client. May be <code>null</code>.
+   */
+  @Nullable
+  ECurrency getDefaultCurrency ();
+
+  /**
+   * @return The default currency ID in this client. May be <code>null</code>.
+   */
+  @Nullable
+  String getDefaultCurrencyID ();
+
+  /**
+   * @return Office location (Firmensitz)
+   */
+  @Nullable
+  String getOfficeLocation ();
+
+  /**
+   * @return Commercial registration number (e.g. Firmenbuchnummer)
+   */
+  @Nullable
+  String getCommercialRegistrationNumber ();
+
+  /**
+   * @return Commercial court(e.g. Firmenbuchgericht)
+   */
+  @Nullable
+  String getCommercialCourt ();
+}

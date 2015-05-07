@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<translationitems count="14">
+  <item id="com.helger.webctrls.datatables.EDataTablesText.FIRST">
+    <ro>Prima</ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.INFO">
+    <ro>Arată din _START_ la _END_ din _TOTAL_ intrări</ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.INFO_EMPTY">
+    <ro>Arată de la 0 la 0 din 0 intrări</ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.INFO_FILTERED">
+    <ro>(filtrate de la _MAX_din total intrări)</ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.INFO_POSTFIX">
+    <ro></ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.LAST">
+    <ro>Ultima</ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.LENGTH_MENU">
+    <ro>Arată intrările _MENU_</ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.NEXT">
+    <ro>Următorul</ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.PREVIOUS">
+    <ro>Precedent</ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.PROCESSING">
+    <ro>În prelucrare</ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.SEARCH">
+    <ro>Căutare:</ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.URL">
+    <ro></ro>
+  </item>
+  <item id="com.helger.webctrls.datatables.EDataTablesText.ZERO_RECORDS">
+    <ro>Nu se găsesc înregistrări potrivite.</ro>
+  </item>
+  <item id="com.helger.webctrls.facebook.EFacebookText.SHARE">
+    <ro>Partaj</ro>
+  </item>
+</translationitems>
