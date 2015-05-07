@@ -105,7 +105,7 @@
         <configuration>
           <instructions>
             <Export-Package>
-              com.helger.tinymce4.*
+              com.helger.photon.tinymce4.*
             </Export-Package>
             <Import-Package>
               !javax.annotation.*,*

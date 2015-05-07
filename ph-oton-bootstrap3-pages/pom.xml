@@ -133,77 +133,12 @@
         <configuration>
           <instructions>
             <Export-Package>
-              com.helger.webctrls.*
+              com.helger.photon.page.*
             </Export-Package>
             <Import-Package>
               !javax.annotation.*,*
             </Import-Package>
           </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>**/*.min.js</exclude>
-            <exclude>**/*.min.css</exclude>
-            <exclude>src/main/resources/autonumeric/**</exclude>
-            <exclude>src/main/resources/autosize/**</exclude>
-            <exclude>src/main/resources/chart/**</exclude>
-            <exclude>src/main/resources/colorbox/**</exclude>
-            <exclude>src/main/resources/css/animate.*</exclude>
-            <exclude>src/main/resources/datatables/**</exclude>
-            <exclude>src/main/resources/famfam/**</exclude>
-            <exclude>src/main/resources/fineupload/**</exclude>
-            <exclude>src/test/resources/fineupload/**</exclude>
-            <exclude>src/main/resources/fontawesome/**</exclude>
-            <exclude>src/main/resources/handlebars/**</exclude>
-            <exclude>src/main/resources/html5shiv/**</exclude>
-            <exclude>src/main/resources/jquery/**</exclude>
-            <exclude>src/main/resources/js/big.*</exclude>
-            <exclude>src/main/resources/js/respond.*</exclude>
-            <exclude>src/main/resources/js/stacktrace.*</exclude>
-            <exclude>src/main/resources/js/wow.*</exclude>
-            <exclude>src/main/resources/pdfobject/**</exclude>
-            <exclude>src/main/resources/jscolor/**</exclude>
-            <exclude>src/main/resources/placeholder/**</exclude>
-            <exclude>src/main/resources/select2/**</exclude>
-            <exclude>src/main/resources/swf/**</exclude>
-            <exclude>src/main/resources/typeahead/**</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.helger.maven</groupId>
-        <artifactId>ph-jscompress-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>jscompress</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <forceCreation>false</forceCreation>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.helger.maven</groupId>
-        <artifactId>ph-csscompress-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>csscompress</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <forceCompress>false</forceCompress>
-          <removeUnnecessaryCode>true</removeUnnecessaryCode>
-          <quoteURLs>true</quoteURLs>
-          <verbose>true</verbose>
-          <sourceDirectory>${basedir}/src/main/resources</sourceDirectory>
         </configuration>
       </plugin>
     </plugins>

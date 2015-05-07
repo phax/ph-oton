@@ -1,0 +1,174 @@
+/**
+ * Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.helger.photon.page.settings;
+
+import java.util.Locale;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.helger.bootstrap3.alert.BootstrapSuccessBox;
+import com.helger.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.bootstrap3.table.BootstrapTableForm;
+import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotations.Translatable;
+import com.helger.commons.name.IHasDisplayText;
+import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.html.hc.CHCParam;
+import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.conversion.IHCConversionSettings;
+import com.helger.html.hc.html.AbstractHCForm;
+import com.helger.html.hc.html.HCCheckBox;
+import com.helger.html.hc.html.HCCol;
+import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.uicore.html.table.IHCTableForm;
+import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
+import com.helger.photon.uicore.page.AbstractWebPageExt;
+import com.helger.photon.uicore.page.EWebPageText;
+import com.helger.photon.uicore.page.IWebPageExecutionContext;
+
+/**
+ * Page with global HTML output settings
+ *
+ * @author Philip Helger
+ * @param <WPECTYPE>
+ *        Web Page Execution Context type
+ */
+public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+{
+  @Translatable
+  protected static enum EText implements IHasDisplayText
+  {
+    MSG_FORMAT_HTML ("HTML formatieren?", "Format HTML?"),
+    MSG_FORMAT_CSS ("CSS formatieren?", "Format CSS?"),
+    MSG_FORMAT_JS ("JS formatieren?", "Format JS?"),
+    MSG_CONSISTENCY_CHECKS_ENABLED ("Konsistenzprüfungen aktiv?", "Consistency checks enabled?"),
+    MSG_EXTRACT_OUT_OF_BAND_NODES ("Out-of-band Knoten extrahieren?", "Extract out-of-band nodes?"),
+    MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
+
+    private final TextProvider m_aTP;
+
+    private EText (final String sDE, final String sEN)
+    {
+      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+    }
+
+    @Nullable
+    public String getDisplayText (@Nonnull final Locale aContentLocale)
+    {
+      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    }
+  }
+
+  private static final String FIELD_FORMAT_HTML = "formathtml";
+  private static final String FIELD_FORMAT_CSS = "formatcss";
+  private static final String FIELD_FORMAT_JS = "formatjs";
+  private static final String FIELD_CONSISTENCY_CHECKS_ENABLED = "consistencychecks";
+  private static final String FIELD_EXTRACT_OUT_OF_BAND_NODES = "extractoobnodes";
+
+  public BasePageSettingsHTML (@Nonnull @Nonempty final String sID)
+  {
+    super (sID, EWebPageText.PAGE_NAME_SETTINGS_HTML.getAsMLT ());
+  }
+
+  public BasePageSettingsHTML (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
+  {
+    super (sID, sName);
+  }
+
+  public BasePageSettingsHTML (@Nonnull @Nonempty final String sID,
+                               @Nonnull final String sName,
+                               @Nullable final String sDescription)
+  {
+    super (sID, sName, sDescription);
+  }
+
+  public BasePageSettingsHTML (@Nonnull @Nonempty final String sID,
+                               @Nonnull final IReadonlyMultiLingualText aName,
+                               @Nullable final IReadonlyMultiLingualText aDescription)
+  {
+    super (sID, aName, aDescription);
+  }
+
+  @Override
+  protected void fillContent (@Nonnull final WPECTYPE aWPEC)
+  {
+    final HCNodeList aNodeList = aWPEC.getNodeList ();
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+    final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettings ();
+
+    if (aWPEC.hasAction (CHCParam.ACTION_SAVE))
+    {
+      // Save changes
+      final boolean bFormatHTML = aWPEC.getCheckBoxAttr (FIELD_FORMAT_HTML, aConversionSettings.getXMLWriterSettings ()
+                                                                                               .getIndent ()
+                                                                                               .isIndent ());
+      final boolean bFormatCSS = aWPEC.getCheckBoxAttr (FIELD_FORMAT_CSS, !aConversionSettings.getCSSWriterSettings ()
+                                                                                              .isOptimizedOutput ());
+      final boolean bFormatJS = aWPEC.getCheckBoxAttr (FIELD_FORMAT_JS, aConversionSettings.getJSWriterSettings ()
+                                                                                           .isIndentAndAlign ());
+      final boolean bConsistencyChecksEnabled = aWPEC.getCheckBoxAttr (FIELD_CONSISTENCY_CHECKS_ENABLED,
+                                                                       aConversionSettings.areConsistencyChecksEnabled ());
+      final boolean bExtractOutOfBandNodes = aWPEC.getCheckBoxAttr (FIELD_EXTRACT_OUT_OF_BAND_NODES,
+                                                                    aConversionSettings.isExtractOutOfBandNodes ());
+
+      // Apply the settings
+      HCSettings.getConversionSettingsProvider ()
+                .setXMLWriterSettingsOptimized (!bFormatHTML)
+                .setCSSWriterSettingsOptimized (!bFormatCSS)
+                .setJSWriterSettingsOptimized (!bFormatJS)
+                .setConsistencyChecksEnabled (bConsistencyChecksEnabled)
+                .setExtractOutOfBandNodes (bExtractOutOfBandNodes);
+
+      aNodeList.addChild (new BootstrapSuccessBox ().addChild (
+                                                         EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
+    }
+
+    final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+
+    // HCSettings
+    {
+      final IHCTableForm <?> aTable = new BootstrapTableForm (new HCCol (170), HCCol.star ());
+      aTable.createItemRow ()
+            .setLabel (EText.MSG_FORMAT_HTML.getDisplayText (aDisplayLocale))
+            .setCtrl (new HCCheckBox (FIELD_FORMAT_HTML, aConversionSettings.getXMLWriterSettings ()
+                                                                            .getIndent ()
+                                                                            .isIndent ()));
+      aTable.createItemRow ()
+            .setLabel (EText.MSG_FORMAT_CSS.getDisplayText (aDisplayLocale))
+            .setCtrl (new HCCheckBox (FIELD_FORMAT_CSS, !aConversionSettings.getCSSWriterSettings ()
+                                                                            .isOptimizedOutput ()));
+      aTable.createItemRow ()
+            .setLabel (EText.MSG_FORMAT_JS.getDisplayText (aDisplayLocale))
+            .setCtrl (new HCCheckBox (FIELD_FORMAT_JS, aConversionSettings.getJSWriterSettings ().isIndentAndAlign ()));
+      aTable.createItemRow ()
+            .setLabel (EText.MSG_CONSISTENCY_CHECKS_ENABLED.getDisplayText (aDisplayLocale))
+            .setCtrl (new HCCheckBox (FIELD_CONSISTENCY_CHECKS_ENABLED,
+                                      aConversionSettings.areConsistencyChecksEnabled ()));
+      aTable.createItemRow ()
+            .setLabel (EText.MSG_EXTRACT_OUT_OF_BAND_NODES.getDisplayText (aDisplayLocale))
+            .setCtrl (new HCCheckBox (FIELD_EXTRACT_OUT_OF_BAND_NODES, aConversionSettings.isExtractOutOfBandNodes ()));
+      aForm.addChild (aTable);
+    }
+
+    final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+    aToolbar.addHiddenField (CHCParam.PARAM_ACTION, CHCParam.ACTION_SAVE);
+    aToolbar.addSubmitButtonSave (aDisplayLocale);
+  }
+}
