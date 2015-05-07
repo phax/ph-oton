@@ -22,8 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bootstrap3.datatables.BootstrapDataTables;
-import com.helger.bootstrap3.datatables.IBootstrapDataTablesConfigurator;
 import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.idfactory.GlobalIDFactory;
 import com.helger.css.property.CCSSProperties;
@@ -38,6 +36,8 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.EBootstrapFormType;
+import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.bootstrap3.uictrls.datatables.IBootstrapDataTablesConfigurator;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.action.pub.CActionPublic;

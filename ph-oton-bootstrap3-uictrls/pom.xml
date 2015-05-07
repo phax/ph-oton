@@ -121,7 +121,7 @@
         <configuration>
           <instructions>
             <Export-Package>
-              com.helger.bootstrap3.*
+              com.helger.photon.bootstrap3.uictrls.*
             </Export-Package>
             <Import-Package>
               !javax.annotation.*,*

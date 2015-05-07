@@ -133,7 +133,7 @@
         <configuration>
           <instructions>
             <Export-Package>
-              com.helger.photon.page.*
+              com.helger.photon.bootstrap3.page.*
             </Export-Package>
             <Import-Package>
               !javax.annotation.*,*
