@@ -33,7 +33,7 @@ import com.helger.html.resource.css.ICSSPathProvider;
 public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
 {
   /** https://github.com/daneden/animate.css */
-  ANIMATE ("css/animate.css"),
+  ANIMATE ("animate/animate.css"),
   AUTONUMERIC ("autonumeric/autonumeric.css"),
   CHART ("chart/Chart.css"),
   COLORBOX ("colorbox/1.6.0/colorbox.css"),
