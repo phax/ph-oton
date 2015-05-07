@@ -25,7 +25,7 @@
     <version>1.3.3</version>
   </parent>
   <artifactId>ph-oton</artifactId>
-  <version>5.0.0-SNAPSHOT</version>
+  <version>5.0.0</version>
   <packaging>pom</packaging>
   <name>ph-oton</name>
   <description>Base POM to build the ph web stack</description>
@@ -44,7 +44,7 @@
     <connection>scm:git:git@github.com:phax/ph-oton.git</connection>
     <developerConnection>scm:git:git@github.com:phax/ph-oton.git</developerConnection>
     <url>http://github.com/phax/ph-oton</url>
-    <tag>HEAD</tag>
+    <tag>ph-oton-5.0.0</tag>
   </scm>
 
   <organization>
