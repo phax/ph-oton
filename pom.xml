@@ -209,10 +209,10 @@
     <module>ph-oton-core</module>
     <module>ph-oton-connect</module>
     <module>ph-oton-uicore</module>
-    <module>ph-tinymce4</module>
-    <module>ph-webctrls</module>
-    <module>ph-bootstrap3</module>
+    <module>ph-oton-tinymce4</module>
+    <module>ph-oton-uictrls</module>
+    <module>ph-oton-bootstrap3</module>
     <module>ph-oton-bootstrap3-uictrls</module>
-    <module>ph-oton-pages</module>
+    <module>ph-oton-bootstrap3-pages</module>
   </modules>
 </project>
