@@ -43,7 +43,7 @@ import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.uicore.custom.toolbar.IButtonToolbar;
+import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.js.JSFormHelper;
 import com.helger.validation.error.FormErrors;
 import com.helger.webbasics.form.FormState;
