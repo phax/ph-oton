@@ -24,11 +24,11 @@
     <artifactId>ph-oton</artifactId>
     <version>5.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-webapp-demo</artifactId>
+  <artifactId>ph-oton-demo</artifactId>
   <packaging>war</packaging>
-  <name>ph-webdemoapp</name>
-  <description>Demo web application facilitating the ph web stack</description>
-  <url>https://github.com/phax/ph-oton/ph-webapp-demo</url>
+  <name>ph-oton-demo</name>
+  <description>Demo web application facilitating the ph-oton web stack</description>
+  <url>https://github.com/phax/ph-oton/ph-oton-demo</url>
   <inceptionYear>2014</inceptionYear>
   
   <licenses>
