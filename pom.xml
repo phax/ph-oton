@@ -60,17 +60,6 @@
       <url>http://www.helger.com</url>
     </developer>
   </developers>
-
-  <distributionManagement>
-    <repository>
-      <id>repo.ph.deploy</id>
-      <url>http://phax.mooo.com:81/nexus/content/repositories/releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>repo.ph.deploy</id>
-      <url>http://phax.mooo.com:81/nexus/content/repositories/snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
   
   <dependencyManagement>
     <dependencies>
