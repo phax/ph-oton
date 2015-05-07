@@ -56,53 +56,7 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-commons</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-datetime</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-smtp</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-masterdata</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-json</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-css</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-schedule</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-html</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
       <artifactId>ph-oton-uicore</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -148,8 +102,6 @@
             <exclude>src/main/resources/fontawesome/**</exclude>
             <exclude>src/main/resources/handlebars/**</exclude>
             <exclude>src/main/resources/js/big.*</exclude>
-            <exclude>src/main/resources/js/respond.*</exclude>
-            <exclude>src/main/resources/js/stacktrace.*</exclude>
             <exclude>src/main/resources/js/wow.*</exclude>
             <exclude>src/main/resources/pdfobject/**</exclude>
             <exclude>src/main/resources/jscolor/**</exclude>

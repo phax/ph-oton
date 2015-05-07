@@ -86,12 +86,6 @@
       <groupId>com.helger</groupId>
       <artifactId>ph-masterdata</artifactId>
     </dependency>
-    
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
 
     <dependency>
       <groupId>com.helger</groupId>

@@ -61,6 +61,13 @@
     </developer>
   </developers>
   
+  <properties>
+    <m2e.jaxrs.activation>false</m2e.jaxrs.activation>
+    <m2e.jpa.activation>false</m2e.jpa.activation>
+    <m2e.jsf.activation>false</m2e.jsf.activation>
+    <log4j.version>2.2</log4j.version>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -190,8 +197,26 @@
         <artifactId>commons-net</artifactId>
         <version>3.3</version>
       </dependency>       
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-slf4j-impl</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
+  
+  <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
   
   <build>
     <pluginManagement>
