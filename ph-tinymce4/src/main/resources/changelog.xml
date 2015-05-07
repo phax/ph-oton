@@ -18,7 +18,7 @@
 
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="ph-tinymce4">
+  xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="ph-oton-tinymce4">
   <release date="2015-03-27" version="0.3.5" />
   <entry date="2015-03-27" category="tech" action="update">
     <change>
