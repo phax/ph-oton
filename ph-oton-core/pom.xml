@@ -27,7 +27,7 @@
   <artifactId>ph-oton-core</artifactId>
   <packaging>bundle</packaging>
   <name>ph-oton-core</name>
-  <description>Library with basic business objects required by Java web application</description>
+  <description>ph-oton core</description>
   <url>https://github.com/phax/ph-oton/ph-oton-core</url>
   <inceptionYear>2014</inceptionYear>
  
