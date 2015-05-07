@@ -52,11 +52,11 @@ import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
 import com.helger.web.networkinterface.ComparatorNetworkInterfaceName;
 import com.helger.web.networkinterface.NetworkInterfaceUtils;
 import com.helger.webbasics.EWebBasicsText;
-import com.helger.webctrls.datatables.DataTables;
-import com.helger.webctrls.datatables.DataTablesLengthMenuList;
 
 /**
  * Page with information on the current network settings

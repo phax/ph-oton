@@ -68,6 +68,10 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.autonumeric.HCAutoNumericInt;
+import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
+import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.famfam.EFamFamIcon;
 import com.helger.smtp.CSMTP;
 import com.helger.smtp.EEmailType;
 import com.helger.smtp.EmailGlobalSettings;
@@ -83,10 +87,6 @@ import com.helger.webbasics.form.RequestFieldBoolean;
 import com.helger.webbasics.smtp.CNamedSMTPSettings;
 import com.helger.webbasics.smtp.NamedSMTPSettings;
 import com.helger.webbasics.smtp.NamedSMTPSettingsManager;
-import com.helger.webctrls.autonumeric.HCAutoNumericInt;
-import com.helger.webctrls.autosize.HCTextAreaAutosize;
-import com.helger.webctrls.datatables.DataTables;
-import com.helger.webctrls.famfam.EFamFamIcon;
 
 public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <NamedSMTPSettings, WPECTYPE>
 {

@@ -43,11 +43,11 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.webbasics.EWebBasicsText;
 import com.helger.webbasics.go.GoMappingItem;
 import com.helger.webbasics.go.GoMappingManager;
 import com.helger.webbasics.go.GoServlet;
-import com.helger.webctrls.datatables.DataTables;
 
 /**
  * Show web site resource bundles.

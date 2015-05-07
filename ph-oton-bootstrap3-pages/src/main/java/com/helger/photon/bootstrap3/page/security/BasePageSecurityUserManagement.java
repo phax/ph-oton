@@ -83,12 +83,12 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
+import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.validation.error.FormErrors;
 import com.helger.webbasics.EWebBasicsText;
 import com.helger.webbasics.form.RequestField;
 import com.helger.webbasics.form.RequestFieldBoolean;
-import com.helger.webctrls.autosize.HCTextAreaAutosize;
-import com.helger.webctrls.datatables.DataTables;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 

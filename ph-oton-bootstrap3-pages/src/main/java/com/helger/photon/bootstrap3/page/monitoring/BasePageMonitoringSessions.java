@@ -62,12 +62,12 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
 import com.helger.validation.error.FormErrors;
 import com.helger.web.scopes.domain.ISessionWebScope;
 import com.helger.webbasics.EWebBasicsText;
-import com.helger.webctrls.datatables.DataTables;
-import com.helger.webctrls.datatables.comparator.ComparatorDTDateTime;
-import com.helger.webctrls.datatables.comparator.ComparatorDTInteger;
 
 /**
  * Show information on all active sessions

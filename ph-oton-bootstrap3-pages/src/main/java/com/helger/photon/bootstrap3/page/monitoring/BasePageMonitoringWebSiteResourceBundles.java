@@ -44,13 +44,13 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 import com.helger.webbasics.EWebBasicsText;
 import com.helger.webbasics.resource.ResourceBundleServlet;
 import com.helger.webbasics.resource.WebSiteResourceBundleManager;
 import com.helger.webbasics.resource.WebSiteResourceBundleSerialized;
 import com.helger.webbasics.resource.WebSiteResourceCache;
-import com.helger.webctrls.datatables.DataTables;
-import com.helger.webctrls.datatables.comparator.ComparatorDTDateTime;
 
 /**
  * Show web site resource bundles.

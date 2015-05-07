@@ -121,7 +121,7 @@
         <configuration>
           <instructions>
             <Export-Package>
-              com.helger.webctrls.*
+              com.helger.photon.uictrls.*
             </Export-Package>
             <Import-Package>
               !javax.annotation.*,*
@@ -147,17 +147,13 @@
             <exclude>src/test/resources/fineupload/**</exclude>
             <exclude>src/main/resources/fontawesome/**</exclude>
             <exclude>src/main/resources/handlebars/**</exclude>
-            <exclude>src/main/resources/html5shiv/**</exclude>
-            <exclude>src/main/resources/jquery/**</exclude>
             <exclude>src/main/resources/js/big.*</exclude>
             <exclude>src/main/resources/js/respond.*</exclude>
             <exclude>src/main/resources/js/stacktrace.*</exclude>
             <exclude>src/main/resources/js/wow.*</exclude>
             <exclude>src/main/resources/pdfobject/**</exclude>
             <exclude>src/main/resources/jscolor/**</exclude>
-            <exclude>src/main/resources/placeholder/**</exclude>
             <exclude>src/main/resources/select2/**</exclude>
-            <exclude>src/main/resources/swf/**</exclude>
             <exclude>src/main/resources/typeahead/**</exclude>
           </excludes>
         </configuration>

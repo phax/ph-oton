@@ -18,9 +18,9 @@ package com.helger.webappdemo.app.ajax.pub;
 
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
 import com.helger.webbasics.ajax.IAjaxFunctionDeclaration;
 import com.helger.webbasics.ajax.decl.PublicApplicationAjaxFunctionDeclaration;
-import com.helger.webctrls.datatables.ajax.AjaxExecutorDataTables;
 
 /**
  * This class defines the available ajax functions for the view application.

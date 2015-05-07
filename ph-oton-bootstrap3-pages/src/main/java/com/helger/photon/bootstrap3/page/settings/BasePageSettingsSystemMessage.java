@@ -51,10 +51,10 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 import com.helger.webbasics.EWebBasicsText;
 import com.helger.webbasics.form.RequestField;
 import com.helger.webbasics.mgr.MetaSystemManager;
-import com.helger.webctrls.autosize.HCTextAreaAutosize;
 
 public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
 {

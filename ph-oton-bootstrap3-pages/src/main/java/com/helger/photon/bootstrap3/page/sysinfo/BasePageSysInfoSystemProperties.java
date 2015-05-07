@@ -58,7 +58,7 @@ import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
-import com.helger.webctrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.DataTables;
 
 /**
  * Page with all system properties

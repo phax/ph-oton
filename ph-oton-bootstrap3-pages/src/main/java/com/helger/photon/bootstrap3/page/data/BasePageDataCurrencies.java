@@ -46,11 +46,11 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
+import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
+import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
 import com.helger.webbasics.app.html.PerRequestCSSIncludes;
-import com.helger.webctrls.EUICtrlsCSSPathProvider;
-import com.helger.webctrls.datatables.DataTables;
-import com.helger.webctrls.datatables.comparator.ComparatorDTInteger;
-import com.helger.webctrls.famfam.EFamFamFlagIcon;
 
 /**
  * Page with all currencies

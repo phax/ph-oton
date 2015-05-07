@@ -56,8 +56,8 @@ import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
-import com.helger.webctrls.datatables.DataTables;
-import com.helger.webctrls.datatables.DataTablesLengthMenuList;
+import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
 
 /**
  * Page with information on the current security settings

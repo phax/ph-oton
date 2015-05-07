@@ -49,9 +49,9 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.web.scopes.mgr.WebScopeManager;
 import com.helger.webbasics.EWebBasicsText;
-import com.helger.webctrls.datatables.DataTables;
 
 /**
  * Show servlet context information.

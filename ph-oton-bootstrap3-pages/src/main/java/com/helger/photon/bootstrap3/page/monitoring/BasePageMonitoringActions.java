@@ -44,6 +44,7 @@ import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
 import com.helger.webbasics.action.ApplicationActionManager;
@@ -52,7 +53,6 @@ import com.helger.webbasics.action.IActionBeforeExecutionCallback;
 import com.helger.webbasics.action.IActionDeclaration;
 import com.helger.webbasics.action.IActionExceptionCallback;
 import com.helger.webbasics.action.IActionLongRunningExecutionCallback;
-import com.helger.webctrls.datatables.DataTables;
 
 /**
  * Show all registered actions.

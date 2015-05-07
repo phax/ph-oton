@@ -39,6 +39,11 @@ import com.helger.photon.bootstrap3.form.EBootstrapFormType;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.bootstrap3.uictrls.datatables.IBootstrapDataTablesConfigurator;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
+import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
+import com.helger.photon.uictrls.datatables.ajax.ActionExecutorDataTablesI18N;
+import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
+import com.helger.photon.uictrls.famfam.EFamFamIcon;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.action.pub.CActionPublic;
 import com.helger.webappdemo.app.ajax.pub.CAjaxPublic;
@@ -46,11 +51,6 @@ import com.helger.webbasics.EWebBasicsText;
 import com.helger.webbasics.app.layout.LayoutExecutionContext;
 import com.helger.webbasics.form.RequestField;
 import com.helger.webbasics.login.CLogin;
-import com.helger.webctrls.datatables.DataTablesLengthMenuList;
-import com.helger.webctrls.datatables.EDataTablesFilterType;
-import com.helger.webctrls.datatables.ajax.ActionExecutorDataTablesI18N;
-import com.helger.webctrls.datatables.ajax.AjaxExecutorDataTables;
-import com.helger.webctrls.famfam.EFamFamIcon;
 
 @Immutable
 public final class AppCommonUI

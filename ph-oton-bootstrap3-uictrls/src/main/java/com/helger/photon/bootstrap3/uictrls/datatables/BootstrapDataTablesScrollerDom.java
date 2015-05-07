@@ -17,7 +17,7 @@
 package com.helger.photon.bootstrap3.uictrls.datatables;
 
 import com.helger.photon.bootstrap3.CBootstrapCSS;
-import com.helger.webctrls.datatables.DataTablesDom;
+import com.helger.photon.uictrls.datatables.DataTablesDom;
 
 /**
  * The data tables "dom" to be used for Bootstrap. This DOM is only to be used,
