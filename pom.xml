@@ -108,6 +108,11 @@
         <artifactId>ph-poi</artifactId>
         <version>2.9.4</version>
       </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-settings</artifactId>
+        <version>1.1.2</version>
+      </dependency>
 
       <dependency>
         <groupId>com.helger</groupId>
