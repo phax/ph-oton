@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.helger.webbasics.favorites;
+package com.helger.appbasics.favorites;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.appbasics.app.dao.impl.DAOException;
 import com.helger.appbasics.app.systemmsg.SystemMessageManager;
+import com.helger.appbasics.favorites.FavoriteManager;
 import com.helger.appbasics.longrun.LongRunningJobManager;
 import com.helger.appbasics.longrun.LongRunningJobResultManager;
 import com.helger.appbasics.migration.SystemMigrationManager;
@@ -36,7 +37,6 @@ import com.helger.commons.scopes.IScope;
 import com.helger.commons.scopes.singleton.GlobalSingleton;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.webbasics.app.html.HTMLConfigManager;
-import com.helger.webbasics.favorites.FavoriteManager;
 import com.helger.webbasics.go.GoMappingManager;
 import com.helger.webbasics.resource.WebSiteResourceBundleManager;
 import com.helger.webbasics.smtp.FailedMailQueueWithDAO;
