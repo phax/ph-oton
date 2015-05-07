@@ -35,6 +35,7 @@ import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.utils.DirtyFlagMap;
 
 import com.helger.bootstrap3.alert.BootstrapErrorBox;
+import com.helger.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.bootstrap3.nav.BootstrapTabBox;
 import com.helger.bootstrap3.table.BootstrapTableFormView;
 import com.helger.commons.annotations.Nonempty;
@@ -81,7 +82,8 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
     MSG_PREVIOUS_FIRE_TIME ("Letzter Aufruf: ", "Previous fire time: "),
     MSG_NEXT_FIRE_TIME ("Nächster Aufruf: ", "Next fire time: "),
     MSG_JOB_DATA ("JobData: ", "JobData: "),
-    MSG_NONE ("keine", "none");
+    MSG_NONE ("keine", "none"),
+    MSG_NOTHING_SCHEDULED ("Es sind keine Tasks geplant", "No actions are scheduled");
 
     @Nonnull
     private final TextProvider m_aTP;
@@ -130,7 +132,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
 
     try
     {
-      final ITabBox <?> aTabBox = new BootstrapTabBox();
+      final ITabBox <?> aTabBox = new BootstrapTabBox ();
       for (final Scheduler aScheduler : QuartzSchedulerHelper.getSchedulerFactory ().getAllSchedulers ())
       {
         final HCNodeList aTab = new HCNodeList ();
@@ -196,7 +198,11 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
 
         aTabBox.addTab (aScheduler.getSchedulerName (), aTab);
       }
-      aNodeList.addChild (aTabBox);
+
+      if (aTabBox.hasNoTabs ())
+        aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NOTHING_SCHEDULED.getDisplayText (aDisplayLocale)));
+      else
+        aNodeList.addChild (aTabBox);
     }
     catch (final SchedulerException ex)
     {
