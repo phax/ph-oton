@@ -1,0 +1,54 @@
+/**
+ * Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.helger.photon.connect.connection;
+
+import javax.annotation.Nonnull;
+
+import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotations.ReturnsMutableCopy;
+
+/**
+ * Interface having all required fields required for connecting to a server via
+ * private and public key.
+ *
+ * @author philip
+ */
+public interface IServerConnectionSettingsKeyPair extends IBaseServerConnectionSettings
+{
+  /**
+   * @return Private key bytes. Neither <code>null</code> nor empty.
+   */
+  @Nonnull
+  @Nonempty
+  @ReturnsMutableCopy
+  byte [] getPrivateKey ();
+
+  /**
+   * @return Public key bytes. Neither <code>null</code> nor empty.
+   */
+  @Nonnull
+  @Nonempty
+  @ReturnsMutableCopy
+  byte [] getPublicKey ();
+
+  /**
+   * @return The pass phrase to be used to access the key pair.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  byte [] getKeyPairPassphrase ();
+}

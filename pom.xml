@@ -187,6 +187,7 @@
   
   <modules>
     <module>ph-oton-core</module>
+    <module>ph-oton-connect</module>
     <module>ph-webctrls</module>
     <module>ph-bootstrap3</module>
     <module>ph-tinymce4</module>

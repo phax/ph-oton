@@ -1,5 +1,7 @@
 # ph-oton
-The complete ph websuite
+This set of Java libraries forms a generic package to build Java web applications.
 
-# Content
-This websuite consists of the following libraries which form the core 
+---
+
+On Twitter: <a href="https://twitter.com/philiphelger">Follow @philiphelger</a>
+ 

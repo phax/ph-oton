@@ -24,11 +24,11 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>5.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-oton-core</artifactId>
+  <artifactId>ph-oton-connect</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-oton-core</name>
-  <description>Library with basic business objects required by Java web application</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-core</url>
+  <name>ph-oton-connect</name>
+  <description>Connectivity part of the ph-oton stack</description>
+  <url>https://github.com/phax/ph-oton/ph-oton-connect</url>
   <inceptionYear>2014</inceptionYear>
  
   <licenses>
@@ -68,50 +68,17 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-json</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-css</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-smtp</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-schedule</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-masterdata</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-html</artifactId>
-    </dependency>
-    
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <scope>provided</scope>
+      <artifactId>ph-oton-core</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-poi</artifactId>
-      <optional>true</optional>
+      <groupId>com.jcraft</groupId>
+      <artifactId>jsch</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.persistence</groupId>
-      <artifactId>javax.persistence</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <optional>true</optional>
-    </dependency>
+      <groupId>commons-net</groupId>
+      <artifactId>commons-net</artifactId>
+    </dependency>       
 
     <dependency>
       <groupId>org.slf4j</groupId>
