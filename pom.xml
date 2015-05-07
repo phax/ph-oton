@@ -117,7 +117,7 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-html</artifactId>
-        <version>${project.version}</version>
+        <version>4.7.2</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
@@ -186,7 +186,6 @@
   </build>
   
   <modules>
-    <module>ph-html</module>
     <module>ph-oton-core</module>
     <module>ph-webctrls</module>
     <module>ph-bootstrap3</module>
