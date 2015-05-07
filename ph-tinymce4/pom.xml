@@ -24,11 +24,11 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>5.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-tinymce4</artifactId>
+  <artifactId>ph-oton-tinymce4</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-tinymce4</name>
+  <name>ph-oton-tinymce4</name>
   <description>Library for providing TinyMCE as a UI control in web applications</description>
-  <url>https://github.com/phax/ph-oton/ph-tinymce4</url>
+  <url>https://github.com/phax/ph-oton/ph-oton-tinymce4</url>
   <inceptionYear>2014</inceptionYear>
  
   <licenses>

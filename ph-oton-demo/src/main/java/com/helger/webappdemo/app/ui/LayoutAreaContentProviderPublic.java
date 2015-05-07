@@ -63,6 +63,8 @@ import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.html.HCStrong;
 import com.helger.html.hc.html.HCUL;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.uicore.page.IWebPage;
+import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.CApp;
 import com.helger.webappdemo.app.menu.pub.CMenuPublic;
@@ -71,8 +73,6 @@ import com.helger.webbasics.app.LinkUtils;
 import com.helger.webbasics.app.layout.CLayout;
 import com.helger.webbasics.app.layout.ILayoutAreaContentProvider;
 import com.helger.webbasics.app.layout.LayoutExecutionContext;
-import com.helger.webbasics.app.page.IWebPage;
-import com.helger.webbasics.app.page.WebPageExecutionContext;
 import com.helger.webbasics.servlet.LogoutServlet;
 
 /**

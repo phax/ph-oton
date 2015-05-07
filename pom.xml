@@ -126,17 +126,37 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
-        <artifactId>ph-webctrls</artifactId>
+        <artifactId>ph-oton-connect</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
-        <artifactId>ph-bootstrap3</artifactId>
+        <artifactId>ph-oton-uicore</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
-        <artifactId>ph-tinymce4</artifactId>
+        <artifactId>ph-oton-uictrls</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-tinymce4</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-bootstrap3</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-bootstrap3-uictrls</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-bootstrap3-pages</artifactId>
         <version>${project.version}</version>
       </dependency>
 
@@ -188,8 +208,11 @@
   <modules>
     <module>ph-oton-core</module>
     <module>ph-oton-connect</module>
+    <module>ph-oton-uicore</module>
+    <module>ph-tinymce4</module>
     <module>ph-webctrls</module>
     <module>ph-bootstrap3</module>
-    <module>ph-tinymce4</module>
+    <module>ph-oton-bootstrap3-uictrls</module>
+    <module>ph-oton-pages</module>
   </modules>
 </project>

@@ -26,7 +26,7 @@ import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.html.HCSpan;
-import com.helger.webctrls.custom.IIcon;
+import com.helger.photon.uicore.icon.IIcon;
 
 /**
  * Contains all free FamFam 0.13 icons

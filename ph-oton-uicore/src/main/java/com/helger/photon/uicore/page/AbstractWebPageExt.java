@@ -28,13 +28,16 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.email.IEmailAddress;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.state.EContinue;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
+import com.helger.commons.url.URLValidator;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.css.ICSSClassProvider;
@@ -44,6 +47,9 @@ import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCSpan;
+import com.helger.html.hc.html.HC_Target;
+import com.helger.html.hc.htmlext.HCA_MailTo;
+import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.uicore.css.WebCtrlsCSS;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.webbasics.app.layout.ILayoutExecutionContext;
@@ -450,5 +456,37 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   {
     final ISimpleURL aURL = createCreateURL (aLEC).add (CHCParam.PARAM_OBJECT, aCurObject.getID ());
     return new HCA (aURL).setTitle (sTitle).addChild (getCreateImg ());
+  }
+
+  @Nullable
+  public IHCNode createEmailLink (@Nullable final String sEmailAddress)
+  {
+    if (StringHelper.hasNoText (sEmailAddress))
+      return null;
+    return HCA_MailTo.createLinkedEmail (sEmailAddress);
+  }
+
+  @Nullable
+  public IHCNode createEmailLink (@Nullable final IEmailAddress aEmail)
+  {
+    if (aEmail == null)
+      return null;
+    return HCA_MailTo.createLinkedEmail (aEmail.getAddress (), aEmail.getPersonal ());
+  }
+
+  @Nullable
+  public IHCNode createWebLink (@Nullable final String sWebSite)
+  {
+    return createWebLink (sWebSite, HC_Target.BLANK);
+  }
+
+  @Nullable
+  public IHCNode createWebLink (@Nullable final String sWebSite, @Nullable final HC_Target aTarget)
+  {
+    if (StringHelper.hasNoText (sWebSite))
+      return null;
+    if (!URLValidator.isValid (sWebSite))
+      return new HCTextNode (sWebSite);
+    return new HCA (sWebSite).setTarget (aTarget).addChild (sWebSite);
   }
 }

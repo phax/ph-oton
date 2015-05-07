@@ -47,8 +47,8 @@ import com.helger.html.js.builder.jquery.JQuery;
 import com.helger.webbasics.app.html.PerRequestCSSIncludes;
 import com.helger.webbasics.app.html.PerRequestJSIncludes;
 import com.helger.webbasics.form.RequestField;
-import com.helger.webctrls.EWebCtrlsCSSPathProvider;
-import com.helger.webctrls.EWebCtrlsJSPathProvider;
+import com.helger.webctrls.EUICtrlsCSSPathProvider;
+import com.helger.webctrls.EUICtrlsJSPathProvider;
 
 /**
  * jQuery autoNumeric plugin from
@@ -419,8 +419,8 @@ public class HCAutoNumeric extends AbstractHCInput <HCAutoNumeric> implements IH
   public void onAdded (@Nonnegative final int nIndex, @Nonnull final IHCHasChildrenMutable <?, ?> aParent)
   {
     // Register resources
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EWebCtrlsCSSPathProvider.AUTONUMERIC);
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.AUTONUMERIC);
+    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.AUTONUMERIC);
+    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTONUMERIC);
 
     // Add special JS code
     ((IHCNodeWithChildren <?>) aParent).addChild (new HCAutoNumericJS (this));

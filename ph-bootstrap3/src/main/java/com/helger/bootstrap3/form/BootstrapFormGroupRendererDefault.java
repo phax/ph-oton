@@ -40,10 +40,10 @@ import com.helger.html.hc.html.HCLabel;
 import com.helger.html.hc.html.HCRadioButton;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.AbstractHCInput;
+import com.helger.photon.uicore.html.formlabel.HCFormLabel;
+import com.helger.photon.uicore.html.formlabel.HCFormLabelUtils;
 import com.helger.validation.error.IError;
 import com.helger.validation.error.IErrorList;
-import com.helger.webctrls.custom.formlabel.HCFormLabel;
-import com.helger.webctrls.custom.formlabel.HCFormLabelUtils;
 
 /**
  * This is the default implementation of {@link IBootstrapFormGroupRenderer}

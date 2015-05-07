@@ -24,8 +24,8 @@ import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.builder.jquery.IJQuerySelector;
 import com.helger.webbasics.app.html.PerRequestCSSIncludes;
 import com.helger.webbasics.app.html.PerRequestJSIncludes;
-import com.helger.webctrls.EWebCtrlsCSSPathProvider;
-import com.helger.webctrls.EWebCtrlsJSPathProvider;
+import com.helger.webctrls.EUICtrlsCSSPathProvider;
+import com.helger.webctrls.EUICtrlsJSPathProvider;
 
 /**
  * jQuery colorbox plugin from
@@ -61,7 +61,7 @@ public final class ColorBoxJS
 
   public static void registerExternalResources ()
   {
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EWebCtrlsCSSPathProvider.COLORBOX);
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.COLORBOX);
+    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.COLORBOX);
+    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.COLORBOX);
   }
 }

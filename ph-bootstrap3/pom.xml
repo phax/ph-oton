@@ -24,11 +24,11 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>5.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-bootstrap3</artifactId>
+  <artifactId>ph-oton-bootstrap3</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-bootstrap3</name>
+  <name>ph-oton-bootstrap3</name>
   <description>Library wrapping Bootstrap 3 controls as Java web application components</description>
-  <url>https://github.com/phax/ph-bootstrap3</url>
+  <url>https://github.com/phax/ph-oton-bootstrap3</url>
   <inceptionYear>2014</inceptionYear>
  
   <licenses>
@@ -88,7 +88,7 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-webctrls</artifactId>
+      <artifactId>ph-oton-uicore</artifactId>
     </dependency>
 
     <dependency>

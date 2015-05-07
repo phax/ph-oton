@@ -26,8 +26,8 @@ import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.webctrls.custom.tabbox.AbstractTabBox;
-import com.helger.webctrls.custom.tabbox.Tab;
+import com.helger.photon.uicore.html.tabbox.AbstractTabBox;
+import com.helger.photon.uicore.html.tabbox.Tab;
 
 /**
  * Represent a single tab box

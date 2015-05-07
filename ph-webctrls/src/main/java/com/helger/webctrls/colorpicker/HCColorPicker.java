@@ -30,7 +30,7 @@ import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.impl.AbstractHCInput;
 import com.helger.html.js.builder.JSAssocArray;
 import com.helger.webbasics.app.html.PerRequestJSIncludes;
-import com.helger.webctrls.EWebCtrlsJSPathProvider;
+import com.helger.webctrls.EUICtrlsJSPathProvider;
 
 /**
  * A wrapper around the JSColor color picker control. http://jscolor.com/
@@ -87,6 +87,6 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
 
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.JSCOLOR);
+    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.JSCOLOR);
   }
 }

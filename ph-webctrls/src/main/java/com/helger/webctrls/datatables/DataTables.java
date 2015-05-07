@@ -70,14 +70,15 @@ import com.helger.html.js.builder.jquery.JQuerySelector;
 import com.helger.html.js.builder.jquery.JQuerySelectorList;
 import com.helger.json.IJsonObject;
 import com.helger.json.impl.JsonObject;
+import com.helger.photon.uicore.EUICoreJSPathProvider;
+import com.helger.photon.uicore.js.JSJQueryUtils;
 import com.helger.web.http.EHTTPMethod;
 import com.helger.webbasics.app.html.PerRequestCSSIncludes;
 import com.helger.webbasics.app.html.PerRequestJSIncludes;
 import com.helger.webbasics.state.UIStateRegistry;
-import com.helger.webctrls.EWebCtrlsCSSPathProvider;
-import com.helger.webctrls.EWebCtrlsJSPathProvider;
+import com.helger.webctrls.EUICtrlsCSSPathProvider;
+import com.helger.webctrls.EUICtrlsJSPathProvider;
 import com.helger.webctrls.datatables.ajax.DataTablesServerData;
-import com.helger.webctrls.js.JSJQueryUtils;
 
 public class DataTables implements IHCNodeBuilder
 {
@@ -820,24 +821,24 @@ public class DataTables implements IHCNodeBuilder
     registerExternalResources ();
     if (m_bUseColVis)
     {
-      PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.DATATABLES_EXTRAS_COL_VIS);
-      PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EWebCtrlsCSSPathProvider.DATATABLES_EXTRAS_COL_VIS);
+      PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_COL_VIS);
+      PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_COL_VIS);
     }
     if (m_bUseFixedHeader)
     {
-      PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.DATATABLES_EXTRAS_FIXED_HEADER);
-      PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EWebCtrlsCSSPathProvider.DATATABLES_EXTRAS_FIXED_HEADER);
+      PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_FIXED_HEADER);
+      PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_FIXED_HEADER);
     }
     if (m_bUseSearchHighlight)
     {
-      PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.JQUERY_HIGHLIGHT);
-      PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
-      PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EWebCtrlsCSSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
+      PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_HIGHLIGHT);
+      PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
+      PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
     }
     if (m_bUseScroller)
     {
-      PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EWebCtrlsCSSPathProvider.DATATABLES_EXTRAS_SCROLLER);
-      PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.DATATABLES_EXTRAS_SCROLLER);
+      PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_SCROLLER);
+      PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_SCROLLER);
     }
     onRegisterExternalResources ();
 
@@ -1219,7 +1220,7 @@ public class DataTables implements IHCNodeBuilder
    */
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.DATATABLES_1_10);
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EWebCtrlsCSSPathProvider.DATATABLES_1_10);
+    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_1_10);
+    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_1_10);
   }
 }

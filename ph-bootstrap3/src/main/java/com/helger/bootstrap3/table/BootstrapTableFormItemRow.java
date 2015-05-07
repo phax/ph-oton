@@ -24,9 +24,9 @@ import com.helger.bootstrap3.CBootstrapCSS;
 import com.helger.bootstrap3.form.BootstrapHelpBlock;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.photon.uicore.html.formlabel.HCFormLabel;
+import com.helger.photon.uicore.html.table.HCTableFormItemRow;
 import com.helger.validation.error.IError;
-import com.helger.webctrls.custom.formlabel.HCFormLabel;
-import com.helger.webctrls.custom.table.HCTableFormItemRow;
 
 public class BootstrapTableFormItemRow extends HCTableFormItemRow
 {

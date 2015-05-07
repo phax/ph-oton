@@ -34,11 +34,8 @@ public enum EBootstrapCSSPathProvider implements ICSSPathProvider
 {
   BOOTSTRAP_334 ("bootstrap/3.3.4/css/bootstrap.css"),
   BOOTSTRAP_THEME_334 ("bootstrap/3.3.4/css/bootstrap-theme.css"),
-  BOOTSTRAP_DATATABLES ("bootstrap/datatables/bootstrap3-datatables.css"),
   BOOTSTRAP_IE9 ("bootstrap/bootstrap3-ie9.css", "if lt IE 10"),
-  BOOTSTRAP_PH ("bootstrap/bootstrap3-ph.css"),
-  DATETIMEPICKER ("bootstrap/datetimepicker/bootstrap-datetimepicker.css"),
-  TREE_VIEW ("bootstrap/treeview/bootstrap-treeview.css");
+  BOOTSTRAP_PH ("bootstrap/bootstrap3-ph.css");
 
   private final ConstantCSSPathProvider m_aPP;
 

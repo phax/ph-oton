@@ -30,9 +30,9 @@ import com.helger.html.hc.impl.HCHasCSSClasses;
 import com.helger.html.hc.impl.HCHasCSSStyles;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.photon.uicore.html.formlabel.ELabelType;
+import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.validation.error.IErrorList;
-import com.helger.webctrls.custom.formlabel.ELabelType;
-import com.helger.webctrls.custom.formlabel.HCFormLabel;
 
 /**
  * Represents a single form group.

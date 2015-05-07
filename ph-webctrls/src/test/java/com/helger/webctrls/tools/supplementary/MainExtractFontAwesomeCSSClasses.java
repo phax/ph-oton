@@ -33,13 +33,13 @@ import com.helger.css.decl.ICSSSelectorMember;
 import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.decl.visit.DefaultCSSVisitor;
 import com.helger.css.reader.CSSReader;
-import com.helger.webctrls.EWebCtrlsCSSPathProvider;
+import com.helger.webctrls.EUICtrlsCSSPathProvider;
 
 public class MainExtractFontAwesomeCSSClasses
 {
   public static void main (final String [] args)
   {
-    final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EWebCtrlsCSSPathProvider.FONT_AWESOME4.getCSSItemPath (true)),
+    final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EUICtrlsCSSPathProvider.FONT_AWESOME4.getCSSItemPath (true)),
                                                                CCharset.CHARSET_UTF_8_OBJ,
                                                                ECSSVersion.CSS30);
     final Set <String> aClasses = new TreeSet <String> ();

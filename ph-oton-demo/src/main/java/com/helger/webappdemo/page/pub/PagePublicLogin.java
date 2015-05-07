@@ -24,10 +24,10 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.html.HCCode;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.uicore.page.AbstractWebPageExt;
+import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.webappdemo.app.CApp;
 import com.helger.webappdemo.app.ui.AppCommonUI;
-import com.helger.webbasics.app.page.WebPageExecutionContext;
-import com.helger.webctrls.page.AbstractWebPageExt;
 
 public final class PagePublicLogin extends AbstractWebPageExt <WebPageExecutionContext>
 {

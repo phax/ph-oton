@@ -24,11 +24,11 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>5.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-oton-demo</artifactId>
+  <artifactId>ph-oton-bootstrap3-demo</artifactId>
   <packaging>war</packaging>
-  <name>ph-oton-demo</name>
+  <name>ph-oton-bootstrap3-demo</name>
   <description>Demo web application facilitating the ph-oton web stack</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-demo</url>
+  <url>https://github.com/phax/ph-oton/ph-oton-bootstrap3-demo</url>
   <inceptionYear>2014</inceptionYear>
   
   <licenses>
@@ -95,11 +95,23 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-webctrls</artifactId>
+      <artifactId>ph-oton-uicore</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-bootstrap3</artifactId>
+      <artifactId>ph-oton-uictrls</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-oton-bootstrap3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-oton-bootstrap3-uictrls</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-oton-bootstrap3-pages</artifactId>
     </dependency>
     
     <dependency>

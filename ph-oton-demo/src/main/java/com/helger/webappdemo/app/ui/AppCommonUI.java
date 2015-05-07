@@ -23,11 +23,11 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bootstrap3.button.BootstrapButtonToolbar;
-import com.helger.bootstrap3.ext.BootstrapDataTables;
+import com.helger.bootstrap3.datatables.BootstrapDataTables;
+import com.helger.bootstrap3.datatables.IBootstrapDataTablesConfigurator;
 import com.helger.bootstrap3.form.BootstrapForm;
 import com.helger.bootstrap3.form.BootstrapFormGroup;
 import com.helger.bootstrap3.form.EBootstrapFormType;
-import com.helger.bootstrap3.styler.BootstrapWebPageStyler;
 import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.idfactory.GlobalIDFactory;
 import com.helger.css.property.CCSSProperties;
@@ -38,19 +38,19 @@ import com.helger.html.hc.html.HCEditPassword;
 import com.helger.html.js.builder.JSAssocArray;
 import com.helger.html.js.builder.JSPackage;
 import com.helger.html.js.builder.jquery.JQuery;
+import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.action.pub.CActionPublic;
 import com.helger.webappdemo.app.ajax.pub.CAjaxPublic;
 import com.helger.webbasics.EWebBasicsText;
 import com.helger.webbasics.app.layout.LayoutExecutionContext;
-import com.helger.webbasics.app.page.IWebPageExecutionContext;
 import com.helger.webbasics.form.RequestField;
 import com.helger.webbasics.login.CLogin;
 import com.helger.webctrls.datatables.DataTablesLengthMenuList;
 import com.helger.webctrls.datatables.EDataTablesFilterType;
 import com.helger.webctrls.datatables.ajax.ActionExecutorDataTablesI18N;
 import com.helger.webctrls.datatables.ajax.AjaxExecutorDataTables;
-import com.helger.webctrls.styler.WebPageStylerManager;
+import com.helger.webctrls.famfam.EFamFamIcon;
 
 @Immutable
 public final class AppCommonUI
@@ -65,25 +65,23 @@ public final class AppCommonUI
 
   public static void init ()
   {
-    WebPageStylerManager.getInstance ().setStyler (new BootstrapWebPageStyler ()
+    EFamFamIcon.setAsDefault ();
+    BootstrapDataTables.setConfigurator (new IBootstrapDataTablesConfigurator ()
     {
-      @Override
-      @Nonnull
-      public BootstrapDataTables createDefaultDataTables (@Nonnull final IWebPageExecutionContext aWPEC,
-                                                          @Nonnull final IHCTable <?> aTable)
+      public void configure (@Nonnull final IWebPageExecutionContext aWPEC,
+                             @Nonnull final IHCTable <?> aTable,
+                             @Nonnull final BootstrapDataTables aDataTables)
       {
         final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
-        final BootstrapDataTables ret = super.createDefaultDataTables (aWPEC, aTable);
-        ret.setAutoWidth (false)
-           .setLengthMenu (LENGTH_MENU)
-           .setUseJQueryAjax (true)
-           .setAjaxSource (CAjaxPublic.DATATABLES.getInvocationURL (aRequestScope))
-           .setServerParams (CollectionHelper.newMap (AjaxExecutorDataTables.OBJECT_ID, aTable.getID ()))
-           .setServerFilterType (EDataTablesFilterType.ALL_TERMS_PER_ROW)
-           .setTextLoadingURL (CActionPublic.DATATABLES_I18N.getInvocationURL (aRequestScope),
-                               ActionExecutorDataTablesI18N.LANGUAGE_ID)
-           .setUseSearchHighlight (true);
-        return ret;
+        aDataTables.setAutoWidth (false)
+                   .setLengthMenu (LENGTH_MENU)
+                   .setUseJQueryAjax (true)
+                   .setAjaxSource (CAjaxPublic.DATATABLES.getInvocationURL (aRequestScope))
+                   .setServerParams (CollectionHelper.newMap (AjaxExecutorDataTables.OBJECT_ID, aTable.getID ()))
+                   .setServerFilterType (EDataTablesFilterType.ALL_TERMS_PER_ROW)
+                   .setTextLoadingURL (CActionPublic.DATATABLES_I18N.getInvocationURL (aRequestScope),
+                                       ActionExecutorDataTablesI18N.LANGUAGE_ID)
+                   .setUseSearchHighlight (true);
       }
     });
   }

@@ -26,11 +26,7 @@ import com.helger.html.resource.js.IJSPathProvider;
 public enum EBootstrapJSPathProvider implements IJSPathProvider
 {
   BOOTSTRAP_334 ("bootstrap/3.3.4/js/bootstrap.js"),
-  BOOTSTRAP_DATATABLES ("bootstrap/datatables/bootstrap3-datatables.js"),
-  BOOTSTRAP_PH ("bootstrap/bootstrap3-ph.js"),
-  DATETIMEPICKER ("bootstrap/datetimepicker/bootstrap-datetimepicker.js"),
-  DATETIMEPICKER_LOCALE ("bootstrap/datetimepicker/locales/bootstrap-datetimepicker.{0}.js", null, false),
-  TREE_VIEW ("bootstrap/treeview/bootstrap-treeview.js");
+  BOOTSTRAP_PH ("bootstrap/bootstrap3-ph.js");
 
   private final ConstantJSPathProvider m_aPP;
 

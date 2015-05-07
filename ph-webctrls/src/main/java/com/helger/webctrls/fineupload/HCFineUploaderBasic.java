@@ -38,8 +38,8 @@ import com.helger.html.js.builder.jquery.JQuerySelector;
 import com.helger.web.scopes.mgr.WebScopeManager;
 import com.helger.webbasics.app.html.PerRequestCSSIncludes;
 import com.helger.webbasics.app.html.PerRequestJSIncludes;
-import com.helger.webctrls.EWebCtrlsCSSPathProvider;
-import com.helger.webctrls.EWebCtrlsJSPathProvider;
+import com.helger.webctrls.EUICtrlsCSSPathProvider;
+import com.helger.webctrls.EUICtrlsJSPathProvider;
 
 public class HCFineUploaderBasic implements IHCNodeBuilder
 {
@@ -143,7 +143,7 @@ public class HCFineUploaderBasic implements IHCNodeBuilder
 
   public static final void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.FINEUPLOADER_320);
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EWebCtrlsCSSPathProvider.FINEUPLOADER_320);
+    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.FINEUPLOADER_320);
+    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.FINEUPLOADER_320);
   }
 }

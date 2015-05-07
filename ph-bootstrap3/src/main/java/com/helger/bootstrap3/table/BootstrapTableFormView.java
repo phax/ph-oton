@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.hc.html.HCCol;
-import com.helger.webctrls.custom.table.HCTableFormViewItemRow;
-import com.helger.webctrls.custom.table.IHCTableFormView;
+import com.helger.photon.uicore.html.table.HCTableFormViewItemRow;
+import com.helger.photon.uicore.html.table.IHCTableFormView;
 
 public class BootstrapTableFormView extends AbstractBootstrapTable <BootstrapTableFormView> implements IHCTableFormView <BootstrapTableFormView>
 {

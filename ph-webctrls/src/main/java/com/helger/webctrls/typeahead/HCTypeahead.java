@@ -39,8 +39,8 @@ import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.builder.jquery.IJQuerySelector;
 import com.helger.webbasics.app.html.PerRequestCSSIncludes;
 import com.helger.webbasics.app.html.PerRequestJSIncludes;
-import com.helger.webctrls.EWebCtrlsCSSPathProvider;
-import com.helger.webctrls.EWebCtrlsJSPathProvider;
+import com.helger.webctrls.EUICtrlsCSSPathProvider;
+import com.helger.webctrls.EUICtrlsJSPathProvider;
 
 public class HCTypeahead implements IHCNodeBuilder
 {
@@ -308,8 +308,8 @@ public class HCTypeahead implements IHCNodeBuilder
 
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.TYPEAHEAD_0_9);
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.TYPEAHEAD_PH);
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EWebCtrlsCSSPathProvider.TYPEAHEAD_BOOTSTRAP);
+    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_0_9);
+    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_PH);
+    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.TYPEAHEAD_BOOTSTRAP);
   }
 }

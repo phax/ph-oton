@@ -24,7 +24,7 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.html.HCTextArea;
 import com.helger.html.request.IHCRequestField;
 import com.helger.webbasics.app.html.PerRequestJSIncludes;
-import com.helger.webctrls.EWebCtrlsJSPathProvider;
+import com.helger.webctrls.EUICtrlsJSPathProvider;
 
 /**
  * jQuery autosize plugin from
@@ -61,7 +61,7 @@ public class HCTextAreaAutosize extends HCTextArea
 
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.AUTOSIZE);
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EWebCtrlsJSPathProvider.AUTOSIZE_ALL);
+    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE);
+    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE_ALL);
   }
 }

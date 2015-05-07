@@ -24,11 +24,11 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>5.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-webctrls</artifactId>
+  <artifactId>ph-oton-uictrls</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-webctrls</name>
+  <name>ph-oton-uictrls</name>
   <description>Library with common JavaScript and Java UI components for web applications</description>
-  <url>https://github.com/phax/ph-oton/ph-webctrls</url>
+  <url>https://github.com/phax/ph-oton/ph-oton-uictrls</url>
   <inceptionYear>2014</inceptionYear>
  
   <licenses>
@@ -93,6 +93,10 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-oton-uicore</artifactId>
     </dependency>
 
     <dependency>

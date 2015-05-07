@@ -22,9 +22,9 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.appbasics.app.menu.IMenuTree;
 import com.helger.appbasics.app.menu.filter.MenuItemFilterNotLoggedIn;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.photon.uicore.page.WebPageExecutionContext;
+import com.helger.photon.uicore.page.external.PageViewExternal;
 import com.helger.webappdemo.page.pub.PagePublicLogin;
-import com.helger.webbasics.app.page.WebPageExecutionContext;
-import com.helger.webctrls.page.PageViewExternal;
 
 @Immutable
 public final class MenuPublic

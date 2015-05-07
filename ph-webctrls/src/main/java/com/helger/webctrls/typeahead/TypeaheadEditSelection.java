@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.webbasics.app.page.IWebPageExecutionContext;
+import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**
  * Domain object to easily handle the selected elements of a

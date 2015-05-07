@@ -26,8 +26,8 @@ import com.helger.html.hc.IHCHasFocus;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCCol;
+import com.helger.photon.uicore.html.table.IHCTableForm;
 import com.helger.web.scopes.mgr.WebScopeManager;
-import com.helger.webctrls.custom.table.IHCTableForm;
 
 public class BootstrapTableForm extends AbstractBootstrapTable <BootstrapTableForm> implements IHCTableForm <BootstrapTableForm>
 {

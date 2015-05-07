@@ -27,8 +27,8 @@ import com.helger.html.EHTMLRole;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCA;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.webctrls.custom.EDefaultIcon;
-import com.helger.webctrls.custom.IIcon;
+import com.helger.photon.uicore.icon.EDefaultIcon;
+import com.helger.photon.uicore.icon.IIcon;
 
 /**
  * Bootstrap button based on an &lt;a&gt;

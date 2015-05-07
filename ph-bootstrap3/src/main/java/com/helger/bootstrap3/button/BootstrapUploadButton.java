@@ -90,6 +90,6 @@ public class BootstrapUploadButton extends AbstractHCDiv <BootstrapUploadButton>
                                                  .on ("change",
                                                       new JSAnonymousFunction (JQuery.idRef (aEdit)
                                                                                      .val (JSExpr.THIS.ref ("value")))));
-    return HCNodeList.create (aEdit, aScript);
+    return new HCNodeList ().addChildren (aEdit, aScript);
   }
 }

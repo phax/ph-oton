@@ -31,7 +31,7 @@ import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HCUL;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.webctrls.custom.IIcon;
+import com.helger.photon.uicore.icon.IIcon;
 
 /**
  * Navigation items

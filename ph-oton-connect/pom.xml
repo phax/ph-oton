@@ -96,23 +96,12 @@
         <configuration>
           <instructions>
             <Export-Package>
-              com.helger.appbasics.*,
-              com.helger.webbasics.*
+              com.helger.photon.connect.*
             </Export-Package>
             <Import-Package>
               !javax.annotation.*,*
             </Import-Package>
           </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/main/resources/schemas/servlet/**</exclude>
-            <exclude>src/test/resources/res/**</exclude>
-          </excludes>
         </configuration>
       </plugin>
     </plugins>

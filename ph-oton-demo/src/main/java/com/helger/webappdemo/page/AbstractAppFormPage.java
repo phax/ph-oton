@@ -26,15 +26,15 @@ import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.js.builder.JSArray;
+import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
+import com.helger.photon.uicore.icon.EDefaultIcon;
+import com.helger.photon.uicore.js.JSFormHelper;
+import com.helger.photon.uicore.page.AbstractWebPageForm;
+import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.ajax.secure.CAjaxSecure;
 import com.helger.webbasics.app.layout.CLayout;
-import com.helger.webbasics.app.page.WebPageExecutionContext;
 import com.helger.webbasics.form.ajax.AjaxExecutorSaveFormState;
-import com.helger.webctrls.custom.EDefaultIcon;
-import com.helger.webctrls.custom.toolbar.IButtonToolbar;
-import com.helger.webctrls.js.JSFormHelper;
-import com.helger.webctrls.page.AbstractWebPageForm;
 
 public abstract class AbstractAppFormPage <DATATYPE extends IHasID <String>> extends
                                                                              AbstractWebPageForm <DATATYPE, WebPageExecutionContext>

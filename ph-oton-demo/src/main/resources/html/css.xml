@@ -23,7 +23,7 @@
   <css path="bootstrap/bootstrap3-ph.css"/>
   <css path="famfam/flags/flags.css"/>
   <css path="famfam/013/famfam.css"/>
-  <css path="css/webctrls.css"/>
+  <css path="uicore/uicore.css"/>
   <css path="/css/default.css"/>
-  <css path="placeholder/placeholder-fix.css" condcomment="if lt IE 10"/>
+  <css path="uicore/placeholder/placeholder-fix.css" condcomment="if lt IE 10"/>
 </items>
