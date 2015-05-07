@@ -18,12 +18,12 @@ package com.helger.bootstrap3.datatables;
 
 import javax.annotation.Nonnull;
 
-import com.helger.bootstrap3.CBootstrapCSS;
 import com.helger.bootstrap3.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.bootstrap3.EBootstrapUICtrlsJSPathProvider;
-import com.helger.bootstrap3.table.AbstractBootstrapTable;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.html.hc.IHCTable;
+import com.helger.photon.bootstrap3.CBootstrapCSS;
+import com.helger.photon.bootstrap3.table.AbstractBootstrapTable;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.webbasics.app.html.PerRequestCSSIncludes;
 import com.helger.webbasics.app.html.PerRequestJSIncludes;

@@ -16,7 +16,7 @@
  */
 package com.helger.bootstrap3.datatables;
 
-import com.helger.bootstrap3.CBootstrapCSS;
+import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.webctrls.datatables.DataTablesDom;
 
 /**

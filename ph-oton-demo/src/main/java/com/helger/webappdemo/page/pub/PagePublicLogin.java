@@ -19,11 +19,11 @@ package com.helger.webappdemo.page.pub;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.html.HCCode;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.webappdemo.app.CApp;

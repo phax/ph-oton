@@ -32,9 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.bootstrap3.EBootstrapUICtrlsCSSPathProvider;
-import com.helger.bootstrap3.EBootstrapIcon;
 import com.helger.bootstrap3.EBootstrapUICtrlsJSPathProvider;
-import com.helger.bootstrap3.inputgroup.BootstrapInputGroup;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
@@ -58,6 +56,8 @@ import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.builder.jquery.JQuery;
 import com.helger.html.js.builder.jquery.JQueryInvocation;
 import com.helger.html.request.IHCRequestField;
+import com.helger.photon.bootstrap3.EBootstrapIcon;
+import com.helger.photon.bootstrap3.inputgroup.BootstrapInputGroup;
 import com.helger.webbasics.app.html.PerRequestCSSIncludes;
 import com.helger.webbasics.app.html.PerRequestJSIncludes;
 import com.helger.webbasics.form.RequestField;

@@ -24,8 +24,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.bootstrap3.datatables.BootstrapDataTables;
-import com.helger.bootstrap3.nav.BootstrapTabBox;
-import com.helger.bootstrap3.table.BootstrapTableFormView;
 import com.helger.commons.GlobalDebug;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.Translatable;
@@ -47,6 +45,8 @@ import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCEM;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.AbstractWebPageExt;

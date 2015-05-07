@@ -6,12 +6,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.bootstrap3.alert.BootstrapErrorBox;
-import com.helger.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.html.hc.IHCNode;
+import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
+import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.uicore.page.AbstractWebPageForm;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.webbasics.EWebBasicsText;

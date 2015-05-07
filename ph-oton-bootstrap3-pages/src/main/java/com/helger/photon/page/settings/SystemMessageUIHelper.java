@@ -23,10 +23,6 @@ import javax.annotation.Nullable;
 
 import com.helger.appbasics.app.systemmsg.ESystemMessageType;
 import com.helger.appbasics.app.systemmsg.SystemMessageManager;
-import com.helger.bootstrap3.alert.BootstrapErrorBox;
-import com.helger.bootstrap3.alert.BootstrapInfoBox;
-import com.helger.bootstrap3.alert.BootstrapSuccessBox;
-import com.helger.bootstrap3.alert.BootstrapWarnBox;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.PresentForCodeCoverage;
 import com.helger.commons.collections.ArrayHelper;
@@ -35,6 +31,10 @@ import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
+import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
+import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
+import com.helger.photon.bootstrap3.alert.BootstrapWarnBox;
 import com.helger.webbasics.mgr.MetaSystemManager;
 
 public final class SystemMessageUIHelper

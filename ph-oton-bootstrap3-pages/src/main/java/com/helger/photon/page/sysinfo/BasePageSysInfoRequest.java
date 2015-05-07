@@ -25,8 +25,6 @@ import javax.annotation.Nullable;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import com.helger.bootstrap3.nav.BootstrapTabBox;
-import com.helger.bootstrap3.table.BootstrapTableFormView;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.Translatable;
 import com.helger.commons.collections.CollectionHelper;
@@ -40,6 +38,8 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.AbstractWebPageExt;

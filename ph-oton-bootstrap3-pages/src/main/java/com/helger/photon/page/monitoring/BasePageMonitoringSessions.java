@@ -24,11 +24,7 @@ import javax.annotation.Nullable;
 
 import org.joda.time.LocalDateTime;
 
-import com.helger.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.bootstrap3.datatables.BootstrapDataTables;
-import com.helger.bootstrap3.nav.BootstrapTabBox;
-import com.helger.bootstrap3.table.BootstrapTable;
-import com.helger.bootstrap3.table.BootstrapTableFormView;
 import com.helger.commons.CGlobal;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.Translatable;
@@ -53,6 +49,10 @@ import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.table.BootstrapTable;
+import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.page.AbstractBootstrapWebPageForm;
 import com.helger.photon.uicore.UITextFormatter;
 import com.helger.photon.uicore.html.tabbox.ITabBox;

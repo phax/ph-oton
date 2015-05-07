@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.bootstrap3.datatables.BootstrapDataTables;
-import com.helger.bootstrap3.table.BootstrapTable;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.Translatable;
 import com.helger.commons.changelog.ChangeLog;
@@ -44,6 +43,7 @@ import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;

@@ -19,13 +19,13 @@ package com.helger.webappdemo.page;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.bootstrap3.alert.BootstrapErrorBox;
-import com.helger.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.js.builder.JSArray;
+import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
+import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.js.JSFormHelper;
