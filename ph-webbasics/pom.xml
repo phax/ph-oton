@@ -24,11 +24,11 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>5.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-webbasics</artifactId>
+  <artifactId>ph-oton-core</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-webbasics</name>
+  <name>ph-oton-core</name>
   <description>Library with basic business objects required by Java web application</description>
-  <url>https://github.com/phax/ph-webbasics</url>
+  <url>https://github.com/phax/ph-oton/ph-oton-core</url>
   <inceptionYear>2014</inceptionYear>
  
   <licenses>

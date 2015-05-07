@@ -80,7 +80,7 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-webbasics</artifactId>
+      <artifactId>ph-oton-core</artifactId>
     </dependency>
 
     <dependency>
