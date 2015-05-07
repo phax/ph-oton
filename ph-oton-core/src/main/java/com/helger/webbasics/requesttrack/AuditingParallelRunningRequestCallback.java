@@ -22,9 +22,9 @@ import java.util.List;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.security.audit.AuditUtils;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.photon.basic.security.audit.AuditUtils;
 
 /**
  * A simple implementation of {@link IParallelRunningRequestCallback} simply

@@ -27,9 +27,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.helger.appbasics.app.dao.impl.AbstractSimpleDAO;
-import com.helger.appbasics.app.dao.impl.DAOException;
-import com.helger.appbasics.security.audit.AuditUtils;
 import com.helger.commons.IHasSize;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
@@ -42,6 +39,9 @@ import com.helger.commons.microdom.impl.MicroDocument;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
+import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.photon.basic.security.audit.AuditUtils;
 import com.helger.smtp.ISMTPSettings;
 import com.helger.smtp.impl.SMTPSettings;
 

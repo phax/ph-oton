@@ -23,10 +23,10 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.appbasics.app.menu.IMenuItem;
-import com.helger.appbasics.app.menu.IMenuObject;
-import com.helger.appbasics.app.menu.IMenuTree;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
+import com.helger.photon.basic.app.menu.IMenuItem;
+import com.helger.photon.basic.app.menu.IMenuObject;
+import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.webbasics.app.layout.ILayoutExecutionContext;
 
 @Immutable

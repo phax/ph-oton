@@ -19,11 +19,11 @@ package com.helger.webbasics.config;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.appbasics.favorites.Favorite;
-import com.helger.appbasics.favorites.FavoriteMicroTypeConverter;
 import com.helger.commons.annotations.IsSPIImplementation;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistry;
+import com.helger.photon.basic.favorites.Favorite;
+import com.helger.photon.basic.favorites.FavoriteMicroTypeConverter;
 import com.helger.webbasics.smtp.NamedSMTPSettings;
 import com.helger.webbasics.smtp.NamedSMTPSettingsMicroTypeConverter;
 import com.helger.webbasics.userdata.UserDataObject;

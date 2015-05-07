@@ -22,11 +22,11 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.security.AccessManager;
-import com.helger.appbasics.security.role.IRole;
 import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.name.ComparatorHasName;
 import com.helger.html.hc.html.HCOption;
+import com.helger.photon.basic.security.AccessManager;
+import com.helger.photon.basic.security.role.IRole;
 import com.helger.webbasics.form.RequestField;
 
 /**

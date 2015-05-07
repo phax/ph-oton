@@ -22,13 +22,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.app.io.IPathRelativeIO;
-import com.helger.appbasics.app.io.WebFileIO;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
+import com.helger.photon.basic.app.io.IPathRelativeIO;
+import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webbasics.app.LinkUtils;
 

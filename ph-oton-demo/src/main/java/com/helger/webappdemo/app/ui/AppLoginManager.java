@@ -20,8 +20,8 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.security.login.ELoginResult;
 import com.helger.commons.annotations.ReturnsImmutableObject;
+import com.helger.photon.basic.security.login.ELoginResult;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapLoginHTMLProvider;
 import com.helger.webappdemo.app.CApp;
 import com.helger.webbasics.app.html.IHTMLProvider;

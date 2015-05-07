@@ -20,8 +20,8 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.app.systemmsg.ESystemMessageType;
 import com.helger.html.hc.html.HCSelect;
+import com.helger.photon.basic.app.systemmsg.ESystemMessageType;
 import com.helger.webbasics.form.RequestField;
 
 public final class HCSystemMessageTypeSelect extends HCSelect

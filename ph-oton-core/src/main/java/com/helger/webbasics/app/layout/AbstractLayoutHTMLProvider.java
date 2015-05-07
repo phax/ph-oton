@@ -21,8 +21,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.app.request.ApplicationRequestManager;
-import com.helger.appbasics.app.request.IRequestManager;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
@@ -36,6 +34,8 @@ import com.helger.html.hc.html.HCBody;
 import com.helger.html.hc.html.HCHead;
 import com.helger.html.hc.html.HCHtml;
 import com.helger.html.hc.html.HCSpan;
+import com.helger.photon.basic.app.request.ApplicationRequestManager;
+import com.helger.photon.basic.app.request.IRequestManager;
 import com.helger.webbasics.app.ISimpleWebExecutionContext;
 import com.helger.webbasics.app.error.InternalErrorBuilder;
 import com.helger.webbasics.app.html.AbstractHTMLProvider;

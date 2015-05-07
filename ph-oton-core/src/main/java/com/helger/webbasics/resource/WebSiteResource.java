@@ -23,7 +23,6 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.appbasics.app.io.WebFileIO;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.charset.CCharset;
@@ -47,6 +46,7 @@ import com.helger.css.decl.visit.AbstractModifyingCSSUrlVisitor;
 import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriter;
+import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webbasics.app.LinkUtils;
 import com.helger.webbasics.app.html.WebHTMLCreator;

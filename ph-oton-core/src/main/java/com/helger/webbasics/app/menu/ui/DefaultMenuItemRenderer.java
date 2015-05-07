@@ -20,9 +20,6 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.app.menu.IMenuItemExternal;
-import com.helger.appbasics.app.menu.IMenuItemPage;
-import com.helger.appbasics.app.menu.IMenuSeparator;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
@@ -31,6 +28,9 @@ import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.impl.HCEntityNode;
+import com.helger.photon.basic.app.menu.IMenuItemExternal;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
+import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.webbasics.app.ISimpleWebExecutionContext;
 
 /**

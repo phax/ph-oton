@@ -23,11 +23,11 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.app.menu.IMenuTree;
 import com.helger.commons.collections.attrs.IAttributeContainer;
 import com.helger.commons.collections.attrs.IReadonlyAttributeContainer;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.CHCParam;
+import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.web.fileupload.IFileItem;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.request.IRequestParamMap;

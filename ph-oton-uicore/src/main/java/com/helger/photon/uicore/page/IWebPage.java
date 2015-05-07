@@ -19,10 +19,10 @@ package com.helger.photon.uicore.page;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.app.page.IPage;
 import com.helger.commons.annotations.ReturnsMutableObject;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.meta.MetaElementList;
+import com.helger.photon.basic.app.page.IPage;
 
 /**
  * The base interface for a single web page of content.

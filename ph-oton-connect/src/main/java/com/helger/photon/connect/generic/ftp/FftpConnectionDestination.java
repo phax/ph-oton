@@ -28,10 +28,10 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.appbasics.auth.credentials.IAuthCredentials;
-import com.helger.appbasics.auth.credentials.userpw.IUserNamePasswordCredentials;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
+import com.helger.photon.basic.auth.credentials.IAuthCredentials;
+import com.helger.photon.basic.auth.credentials.userpw.IUserNamePasswordCredentials;
 
 public final class FftpConnectionDestination implements IFtpConnectionDestination
 {

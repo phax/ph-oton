@@ -21,12 +21,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.app.menu.IMenuItemDeterminatorCallback;
-import com.helger.appbasics.app.menu.IMenuItemExternal;
-import com.helger.appbasics.app.menu.IMenuItemPage;
-import com.helger.appbasics.app.menu.IMenuSeparator;
-import com.helger.appbasics.app.menu.IMenuTree;
-import com.helger.appbasics.app.menu.MenuItemDeterminatorCallback;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.factory.FactoryNewInstance;
 import com.helger.html.hc.IHCElement;
@@ -35,6 +29,12 @@ import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HCUL;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.photon.basic.app.menu.IMenuItemDeterminatorCallback;
+import com.helger.photon.basic.app.menu.IMenuItemExternal;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
+import com.helger.photon.basic.app.menu.IMenuSeparator;
+import com.helger.photon.basic.app.menu.IMenuTree;
+import com.helger.photon.basic.app.menu.MenuItemDeterminatorCallback;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.bootstrap3.well.BootstrapWell;

@@ -29,8 +29,6 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.appbasics.app.dao.impl.AbstractSimpleDAO;
-import com.helger.appbasics.app.dao.impl.DAOException;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
@@ -43,6 +41,8 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ECSSMedium;
+import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
+import com.helger.photon.basic.app.dao.impl.DAOException;
 
 public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
 {

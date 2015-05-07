@@ -14,33 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.appbasics.object.client;
+package com.helger.photon.tinymce4;
 
-import javax.annotation.Nonnull;
+import static org.junit.Assert.assertTrue;
 
-import com.helger.appbasics.object.IObject;
-import com.helger.commons.annotations.Nonempty;
+import org.junit.Test;
+
+import com.helger.commons.io.IReadableResource;
+import com.helger.commons.io.resource.ClassPathResource;
 
 /**
- * Base interface for an object that is uniquely assigned to a client.
+ * Test class for class {@link ETinyMCE4JSPathProvider}.
  *
  * @author Philip Helger
  */
-public interface IClientObject extends IObject, IHasClient
+public final class ETinyMCE4JSPathProviderTest
 {
-  /**
-   * @return The client ID to which the object is assigned to. May neither be
-   *         <code>null</code> nor empty.
-   * @see #getClient()
-   */
-  @Nonnull
-  @Nonempty
-  String getClientID ();
-
-  /**
-   * @return The client to which the object is assigned to. May not be
-   *         <code>null</code>.
-   */
-  @Nonnull
-  IClient getClient ();
+  @Test
+  public void testBasic ()
+  {
+    for (final ETinyMCE4JSPathProvider e : ETinyMCE4JSPathProvider.values ())
+    {
+      IReadableResource aRes = new ClassPathResource (e.getJSItemPath (true));
+      assertTrue (aRes.getPath (), aRes.exists ());
+      aRes = new ClassPathResource (e.getJSItemPath (false));
+      assertTrue (aRes.getPath (), aRes.exists ());
+    }
+  }
 }

@@ -19,9 +19,9 @@ package com.helger.webappdemo.app.menu.pub;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.appbasics.app.menu.IMenuTree;
-import com.helger.appbasics.app.menu.filter.MenuItemFilterNotLoggedIn;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.photon.basic.app.menu.IMenuTree;
+import com.helger.photon.basic.app.menu.filter.MenuItemFilterNotLoggedIn;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uicore.page.external.PageViewExternal;
 import com.helger.webappdemo.page.pub.PagePublicLogin;

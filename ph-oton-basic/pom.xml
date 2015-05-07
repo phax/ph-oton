@@ -76,19 +76,15 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-smtp</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
       <artifactId>ph-schedule</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-masterdata</artifactId>
+      <artifactId>ph-html</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-html</artifactId>
+      <artifactId>ph-masterdata</artifactId>
     </dependency>
     
     <dependency>
@@ -129,23 +125,12 @@
         <configuration>
           <instructions>
             <Export-Package>
-              com.helger.appbasics.*,
-              com.helger.webbasics.*
+              com.helger.photon.basic.*
             </Export-Package>
             <Import-Package>
               !javax.annotation.*,*
             </Import-Package>
           </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/main/resources/schemas/servlet/**</exclude>
-            <exclude>src/test/resources/res/**</exclude>
-          </excludes>
         </configuration>
       </plugin>
     </plugins>

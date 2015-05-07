@@ -25,10 +25,10 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.appbasics.auth.credentials.IAuthCredentials;
-import com.helger.appbasics.auth.credentials.userpw.IUserNamePasswordCredentials;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
+import com.helger.photon.basic.auth.credentials.IAuthCredentials;
+import com.helger.photon.basic.auth.credentials.userpw.IUserNamePasswordCredentials;
 import com.helger.web.port.CNetworkPort;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;

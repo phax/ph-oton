@@ -19,8 +19,6 @@ package com.helger.photon.uicore.facebook.xfbml;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.helger.photon.uicore.facebook.xfbml.FBLike;
-
 public class FBLikeTest
 {
   private static final String VALID = "abcdefghijabcdefghijabcdefghijabcdefghij123456789";

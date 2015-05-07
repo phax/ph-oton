@@ -39,8 +39,6 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.appbasics.app.io.WebFileIO;
-import com.helger.appbasics.app.io.WebIOIntIDFactory;
 import com.helger.commons.CGlobal;
 import com.helger.commons.GlobalDebug;
 import com.helger.commons.SystemProperties;
@@ -68,6 +66,8 @@ import com.helger.commons.vminit.VirtualMachineInitializer;
 import com.helger.commons.xml.serialize.XMLWriterSettings;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.io.PDTIOHelper;
+import com.helger.photon.basic.app.io.WebFileIO;
+import com.helger.photon.basic.app.io.WebIOIntIDFactory;
 import com.helger.web.datetime.PDTWebDateUtils;
 import com.helger.web.scopes.mgr.WebScopeManager;
 import com.helger.web.servlet.server.StaticServerInfo;

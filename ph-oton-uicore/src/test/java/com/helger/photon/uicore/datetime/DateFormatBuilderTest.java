@@ -30,9 +30,6 @@ import org.junit.Test;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.mock.AbstractPHTestCase;
 import com.helger.datetime.format.PDTFormatPatterns;
-import com.helger.photon.uicore.datetime.DateFormatBuilder;
-import com.helger.photon.uicore.datetime.EDateTimeFormatToken;
-import com.helger.photon.uicore.datetime.IDateFormatBuilder;
 
 /**
  * Test class for class {@link DateFormatBuilder}.

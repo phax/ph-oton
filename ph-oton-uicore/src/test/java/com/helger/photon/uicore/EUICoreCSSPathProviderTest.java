@@ -22,7 +22,6 @@ import org.junit.Test;
 
 import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.photon.uicore.EUICoreCSSPathProvider;
 
 /**
  * Test class for class {@link EUICoreCSSPathProvider}.

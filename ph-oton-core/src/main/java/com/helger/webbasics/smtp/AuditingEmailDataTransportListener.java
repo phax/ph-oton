@@ -19,8 +19,8 @@ package com.helger.webbasics.smtp;
 import javax.annotation.Nonnull;
 import javax.mail.event.TransportEvent;
 
-import com.helger.appbasics.security.audit.AuditUtils;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.photon.basic.security.audit.AuditUtils;
 import com.helger.smtp.IEmailData;
 import com.helger.smtp.IEmailDataTransportListener;
 import com.helger.smtp.ISMTPSettings;

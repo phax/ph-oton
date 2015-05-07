@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import com.helger.appbasics.security.login.ELoginResult;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.html.HCBody;
@@ -33,6 +32,7 @@ import com.helger.html.hc.html.HCH2;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCHtml;
 import com.helger.html.hc.html.HCSpan;
+import com.helger.photon.basic.security.login.ELoginResult;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.base.BootstrapContainer;
 import com.helger.photon.bootstrap3.button.BootstrapSubmitButton;

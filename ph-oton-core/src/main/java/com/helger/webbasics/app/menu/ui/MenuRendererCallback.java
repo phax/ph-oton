@@ -21,12 +21,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.app.menu.IMenuItemExternal;
-import com.helger.appbasics.app.menu.IMenuItemPage;
-import com.helger.appbasics.app.menu.IMenuObject;
-import com.helger.appbasics.app.menu.IMenuSeparator;
-import com.helger.appbasics.app.menu.IMenuTree;
-import com.helger.appbasics.app.menu.MenuItemDeterminatorCallback;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collections.NonBlockingStack;
 import com.helger.commons.factory.IFactory;
@@ -37,6 +31,12 @@ import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCList;
 import com.helger.html.hc.html.HCLI;
+import com.helger.photon.basic.app.menu.IMenuItemExternal;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
+import com.helger.photon.basic.app.menu.IMenuObject;
+import com.helger.photon.basic.app.menu.IMenuSeparator;
+import com.helger.photon.basic.app.menu.IMenuTree;
+import com.helger.photon.basic.app.menu.MenuItemDeterminatorCallback;
 import com.helger.webbasics.app.ISimpleWebExecutionContext;
 import com.helger.webbasics.app.layout.ILayoutExecutionContext;
 

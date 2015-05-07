@@ -23,12 +23,12 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.appbasics.security.login.ELoginResult;
-import com.helger.appbasics.security.login.LoggedInUserManager;
 import com.helger.commons.GlobalDebug;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.json.impl.JsonObject;
+import com.helger.photon.basic.security.login.ELoginResult;
+import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.CApp;

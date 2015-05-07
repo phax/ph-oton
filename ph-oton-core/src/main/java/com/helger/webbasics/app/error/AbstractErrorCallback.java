@@ -19,11 +19,11 @@ package com.helger.webbasics.app.error;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.app.dao.IDAOReadExceptionCallback;
-import com.helger.appbasics.app.dao.IDAOWriteExceptionCallback;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.io.IReadableResource;
 import com.helger.commons.string.StringHelper;
+import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
+import com.helger.photon.basic.app.dao.IDAOWriteExceptionCallback;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webbasics.action.IActionExceptionCallback;
 import com.helger.webbasics.action.IActionExecutor;

@@ -21,11 +21,6 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.app.menu.EMenuObjectType;
-import com.helger.appbasics.app.menu.IMenuItemExternal;
-import com.helger.appbasics.app.menu.IMenuItemPage;
-import com.helger.appbasics.app.menu.IMenuObject;
-import com.helger.appbasics.app.menu.IMenuSeparator;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.string.StringHelper;
 import com.helger.css.property.CCSSProperties;
@@ -33,6 +28,11 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HC_Target;
+import com.helger.photon.basic.app.menu.EMenuObjectType;
+import com.helger.photon.basic.app.menu.IMenuItemExternal;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
+import com.helger.photon.basic.app.menu.IMenuObject;
+import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**

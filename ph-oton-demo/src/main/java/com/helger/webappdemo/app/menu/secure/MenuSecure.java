@@ -19,11 +19,11 @@ package com.helger.webappdemo.app.menu.secure;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.appbasics.app.menu.IMenuItemPage;
-import com.helger.appbasics.app.menu.IMenuObject;
-import com.helger.appbasics.app.menu.IMenuTree;
-import com.helger.appbasics.app.menu.filter.AbstractMenuObjectFilter;
-import com.helger.appbasics.app.menu.filter.MenuItemFilterUserAssignedToUserGroup;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
+import com.helger.photon.basic.app.menu.IMenuObject;
+import com.helger.photon.basic.app.menu.IMenuTree;
+import com.helger.photon.basic.app.menu.filter.AbstractMenuObjectFilter;
+import com.helger.photon.basic.app.menu.filter.MenuItemFilterUserAssignedToUserGroup;
 import com.helger.photon.bootstrap3.page.DefaultMenuConfigurator;
 import com.helger.photon.bootstrap3.page.form.BasePageFormSavedStates;
 import com.helger.photon.uicore.page.WebPageExecutionContext;

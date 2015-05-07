@@ -21,8 +21,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.migration.SystemMigrationManager;
-import com.helger.appbasics.migration.SystemMigrationResult;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.Translatable;
@@ -36,6 +34,8 @@ import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.basic.migration.SystemMigrationManager;
+import com.helger.photon.basic.migration.SystemMigrationResult;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;

@@ -25,7 +25,6 @@ import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.html.HCScript;
 import com.helger.html.hc.html.HCScript.EMode;
 import com.helger.html.mock.HCTestRuleOptimized;
-import com.helger.photon.uicore.html.google.HCGoogleAnalytics;
 
 /**
  * Test class for class {@link HCGoogleAnalytics}

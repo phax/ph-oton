@@ -33,7 +33,6 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.appbasics.app.io.WebFileIO;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
@@ -43,6 +42,7 @@ import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.scopes.IScope;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.web.scopes.singleton.SessionWebSingleton;
 
 /**

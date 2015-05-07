@@ -24,7 +24,6 @@ import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.conversion.HCSettings;
-import com.helger.photon.uicore.html.swf.HCSWFObject;
 
 /**
  * Test class for class {@link HCSWFObject}.

@@ -23,8 +23,6 @@ import javax.annotation.Nullable;
 
 import org.joda.time.LocalDateTime;
 
-import com.helger.appbasics.app.systemmsg.ESystemMessageType;
-import com.helger.appbasics.app.systemmsg.SystemMessageManager;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.annotations.Translatable;
@@ -42,6 +40,9 @@ import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCH2;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.basic.app.systemmsg.ESystemMessageType;
+import com.helger.photon.basic.app.systemmsg.SystemMessageManager;
+import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
@@ -54,7 +55,6 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 import com.helger.webbasics.EWebBasicsText;
 import com.helger.webbasics.form.RequestField;
-import com.helger.webbasics.mgr.MetaSystemManager;
 
 public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
 {
@@ -130,7 +130,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();
-    final SystemMessageManager aSystemMsgMgr = MetaSystemManager.getSystemMessageMgr ();
+    final SystemMessageManager aSystemMsgMgr = PhotonBasicManager.getSystemMessageMgr ();
 
     boolean bShowList = true;
     if (aWPEC.hasAction (CHCParam.ACTION_EDIT))

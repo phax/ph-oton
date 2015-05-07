@@ -22,7 +22,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.app.menu.IMenuItem;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.Translatable;
 import com.helger.commons.name.IHasDisplayText;
@@ -38,6 +37,7 @@ import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.basic.app.menu.IMenuItem;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;

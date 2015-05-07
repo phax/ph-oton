@@ -20,9 +20,6 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.security.login.LoggedInUserManager;
-import com.helger.appbasics.security.user.IUser;
-import com.helger.appbasics.security.util.SecurityUtils;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCNode;
@@ -32,6 +29,9 @@ import com.helger.html.hc.html.HCHead;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.html.HCStrong;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.basic.security.login.LoggedInUserManager;
+import com.helger.photon.basic.security.user.IUser;
+import com.helger.photon.basic.security.util.SecurityUtils;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.base.BootstrapContainer;
 import com.helger.photon.bootstrap3.breadcrumbs.BootstrapBreadcrumbs;

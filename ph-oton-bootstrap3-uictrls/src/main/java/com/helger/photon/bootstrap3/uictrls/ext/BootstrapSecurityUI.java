@@ -23,9 +23,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.appbasics.security.password.GlobalPasswordSettings;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 import com.helger.photon.bootstrap3.tooltip.BootstrapTooltip;
 
 /**

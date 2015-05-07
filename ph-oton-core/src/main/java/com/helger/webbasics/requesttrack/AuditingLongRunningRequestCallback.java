@@ -19,9 +19,9 @@ package com.helger.webbasics.requesttrack;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.security.audit.AuditUtils;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.photon.basic.security.audit.AuditUtils;
 import com.helger.web.scopes.domain.IRequestWebScope;
 import com.helger.web.servlet.request.RequestHelper;
 

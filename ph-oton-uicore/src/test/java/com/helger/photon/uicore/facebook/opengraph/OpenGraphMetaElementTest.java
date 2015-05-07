@@ -21,8 +21,6 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import com.helger.html.hc.conversion.HCSettings;
-import com.helger.photon.uicore.facebook.opengraph.EOpenGraphObjectProperty;
-import com.helger.photon.uicore.facebook.opengraph.OpenGraphMetaElement;
 
 /**
  * Test class for class {@link OpenGraphMetaElement}.

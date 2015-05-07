@@ -22,14 +22,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.appbasics.app.menu.IMenuItem;
-import com.helger.appbasics.app.menu.IMenuItemPage;
-import com.helger.appbasics.app.menu.IMenuObject;
-import com.helger.appbasics.app.menu.IMenuTree;
-import com.helger.appbasics.migration.SystemMigrationManager;
-import com.helger.appbasics.security.audit.IAuditManager;
-import com.helger.appbasics.security.lock.ILockManager;
 import com.helger.commons.filter.IFilter;
+import com.helger.photon.basic.app.menu.IMenuItem;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
+import com.helger.photon.basic.app.menu.IMenuObject;
+import com.helger.photon.basic.app.menu.IMenuTree;
+import com.helger.photon.basic.mgr.PhotonBasicManager;
+import com.helger.photon.basic.migration.SystemMigrationManager;
+import com.helger.photon.basic.security.audit.IAuditManager;
+import com.helger.photon.basic.security.lock.ILockManager;
 import com.helger.photon.bootstrap3.page.data.BasePageDataCountries;
 import com.helger.photon.bootstrap3.page.data.BasePageDataCurrencies;
 import com.helger.photon.bootstrap3.page.data.BasePageDataLanguages;
@@ -127,11 +128,11 @@ public final class DefaultMenuConfigurator
     return DefaultMenuConfigurator.<WPECTYPE> addMonitoringItems (aMenuTree,
                                                                   aParent,
                                                                   aDisplayFilter,
-                                                                  MetaSystemManager.getAuditMgr (),
+                                                                  PhotonBasicManager.getAuditMgr (),
                                                                   MetaSystemManager.getFailedMailQueue (),
                                                                   MetaSystemManager.getLockMgr (),
                                                                   MetaSystemManager.getGoMappingMgr (),
-                                                                  MetaSystemManager.getSystemMigrationMgr (),
+                                                                  PhotonBasicManager.getSystemMigrationMgr (),
                                                                   MetaSystemManager.getWebSiteResourceBundleMgr ());
   }
 

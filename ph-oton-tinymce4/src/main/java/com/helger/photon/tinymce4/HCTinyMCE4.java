@@ -52,6 +52,7 @@ import com.helger.photon.tinymce4.type.ETinyMCE4Theme;
 import com.helger.photon.tinymce4.type.TinyMCE4ExternalPlugin;
 import com.helger.photon.tinymce4.type.TinyMCE4MenubarItemList;
 import com.helger.photon.tinymce4.type.TinyMCE4ToolbarControlList;
+import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 /**
@@ -1285,6 +1286,7 @@ public class HCTinyMCE4 implements IHCNodeBuilder
 
   public static void registerExternalResources ()
   {
+    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_1);
     PerRequestJSIncludes.registerJSIncludeForThisRequest (ETinyMCE4JSPathProvider.TINYMCE_4);
   }
 }

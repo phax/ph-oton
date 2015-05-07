@@ -22,9 +22,6 @@ import org.junit.Test;
 
 import com.helger.html.js.builder.jquery.JQuerySelector;
 import com.helger.html.js.writer.JSWriterSettings;
-import com.helger.photon.bootstrap3.tooltip.BootstrapTooltip;
-import com.helger.photon.bootstrap3.tooltip.EBootstrapTooltipPosition;
-import com.helger.photon.bootstrap3.tooltip.EBootstrapTooltipTrigger;
 
 /**
  * Test class for class {@link BootstrapTooltip}.

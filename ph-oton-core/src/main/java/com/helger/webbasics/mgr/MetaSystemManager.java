@@ -21,20 +21,12 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.appbasics.app.dao.impl.DAOException;
-import com.helger.appbasics.app.systemmsg.SystemMessageManager;
-import com.helger.appbasics.favorites.FavoriteManager;
-import com.helger.appbasics.longrun.LongRunningJobManager;
-import com.helger.appbasics.longrun.LongRunningJobResultManager;
-import com.helger.appbasics.migration.SystemMigrationManager;
-import com.helger.appbasics.security.audit.AuditManager;
-import com.helger.appbasics.security.audit.AuditUtils;
-import com.helger.appbasics.security.lock.ObjectLockManager;
-import com.helger.appbasics.security.login.LoggedInUserManager;
 import com.helger.commons.annotations.UsedViaReflection;
 import com.helger.commons.exceptions.InitializationException;
 import com.helger.commons.scopes.IScope;
 import com.helger.commons.scopes.singleton.GlobalSingleton;
+import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.photon.basic.security.lock.ObjectLockManager;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.webbasics.app.html.HTMLConfigManager;
 import com.helger.webbasics.go.GoMappingManager;
@@ -46,16 +38,10 @@ import com.helger.webbasics.smtp.NamedSMTPSettingsManager;
  * The meta system manager encapsulates all managers that are located in this
  * project. Currently the contained managers are:
  * <ul>
- * <li>{@link AuditManager}</li>
  * <li>{@link FailedMailQueueWithDAO}</li>
- * <li>{@link FavoriteManager}</li>
  * <li>{@link GoMappingManager}</li>
  * <li>{@link HTMLConfigManager}</li>
- * <li>{@link LongRunningJobManager}</li>
- * <li>{@link LongRunningJobResultManager}</li>
  * <li>{@link NamedSMTPSettingsManager}</li>
- * <li>{@link SystemMessageManager}</li>
- * <li>{@link SystemMigrationManager}</li>
  * <li>{@link WebSiteResourceBundleManager}</li>
  * </ul>
  *
@@ -76,16 +62,10 @@ public final class MetaSystemManager extends GlobalSingleton
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (MetaSystemManager.class);
 
-  private AuditManager m_aAuditMgr;
   private FailedMailQueueWithDAO m_aFailedMailQueue;
-  private FavoriteManager m_aFavoriteManager;
   private GoMappingManager m_aGoMappingMgr;
   private HTMLConfigManager m_aHTMLConfigMgr;
-  private LongRunningJobManager m_aLongRunningJobMgr;
-  private LongRunningJobResultManager m_aLongRunningJobResultMgr;
   private NamedSMTPSettingsManager m_aSMTPSettingsMgr;
-  private SystemMessageManager m_aSystemMessageMgr;
-  private SystemMigrationManager m_aSystemMigrationMgr;
   private WebSiteResourceBundleManager m_aWebSiteResourceBundleMgr;
 
   @Deprecated
@@ -98,10 +78,6 @@ public final class MetaSystemManager extends GlobalSingleton
   {
     try
     {
-      m_aAuditMgr = new AuditManager (DIRECTORY_AUDITS, LoggedInUserManager.getInstance ());
-      AuditUtils.setAuditor (m_aAuditMgr.getAuditor ());
-      AuditUtils.onAuditExecuteSuccess ("audit-initialized");
-
       m_aHTMLConfigMgr = new HTMLConfigManager (DIRECTORY_HTML);
 
       m_aSMTPSettingsMgr = new NamedSMTPSettingsManager (SMTP_SETTINGS_XML);
@@ -109,18 +85,9 @@ public final class MetaSystemManager extends GlobalSingleton
       m_aFailedMailQueue = new FailedMailQueueWithDAO (FAILED_MAILS_XML);
       ScopedMailAPI.getInstance ().setFailedMailQueue (m_aFailedMailQueue);
 
-      m_aFavoriteManager = new FavoriteManager (FAVORITES_XML);
-
-      m_aSystemMigrationMgr = new SystemMigrationManager (SYSTEM_MIGRATIONS_XML);
-
-      m_aSystemMessageMgr = new SystemMessageManager (SYSTEM_MESSAGE_XML);
-
       m_aGoMappingMgr = new GoMappingManager (GO_XML);
 
       m_aWebSiteResourceBundleMgr = new WebSiteResourceBundleManager (RESOURCE_BUNDLES_XML);
-
-      m_aLongRunningJobResultMgr = new LongRunningJobResultManager (LONG_RUNNING_JOB_RESULTS_XML);
-      m_aLongRunningJobMgr = new LongRunningJobManager (m_aLongRunningJobResultMgr);
 
       s_aLogger.info ("MetaSystemManager was initialized");
     }
@@ -130,29 +97,10 @@ public final class MetaSystemManager extends GlobalSingleton
     }
   }
 
-  @Override
-  protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
-  {
-    // Don't reset the FailedMailQueue, as no global scope is available anymore!
-
-    if (m_aAuditMgr != null)
-    {
-      AuditUtils.onAuditExecuteSuccess ("audit-shutdown");
-      AuditUtils.setDefaultAuditor ();
-      m_aAuditMgr.stop ();
-    }
-  }
-
   @Nonnull
   public static MetaSystemManager getInstance ()
   {
     return getGlobalSingleton (MetaSystemManager.class);
-  }
-
-  @Nonnull
-  public static AuditManager getAuditMgr ()
-  {
-    return getInstance ().m_aAuditMgr;
   }
 
   @Nonnull
@@ -174,27 +122,9 @@ public final class MetaSystemManager extends GlobalSingleton
   }
 
   @Nonnull
-  public static FavoriteManager getFavoriteManager ()
-  {
-    return getInstance ().m_aFavoriteManager;
-  }
-
-  @Nonnull
   public static ObjectLockManager getLockMgr ()
   {
     return ObjectLockManager.getInstance ();
-  }
-
-  @Nonnull
-  public static SystemMigrationManager getSystemMigrationMgr ()
-  {
-    return getInstance ().m_aSystemMigrationMgr;
-  }
-
-  @Nonnull
-  public static SystemMessageManager getSystemMessageMgr ()
-  {
-    return getInstance ().m_aSystemMessageMgr;
   }
 
   @Nonnull
@@ -207,17 +137,5 @@ public final class MetaSystemManager extends GlobalSingleton
   public static WebSiteResourceBundleManager getWebSiteResourceBundleMgr ()
   {
     return getInstance ().m_aWebSiteResourceBundleMgr;
-  }
-
-  @Nonnull
-  public static LongRunningJobResultManager getLongRunningJobResultMgr ()
-  {
-    return getInstance ().m_aLongRunningJobResultMgr;
-  }
-
-  @Nonnull
-  public static LongRunningJobManager getLongRunningJobMgr ()
-  {
-    return getInstance ().m_aLongRunningJobMgr;
   }
 }

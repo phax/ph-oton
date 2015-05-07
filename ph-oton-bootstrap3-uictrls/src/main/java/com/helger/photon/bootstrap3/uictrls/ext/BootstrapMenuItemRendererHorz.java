@@ -20,9 +20,9 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.app.menu.IMenuSeparator;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCLI;
+import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.webbasics.app.ISimpleWebExecutionContext;
 
 /**

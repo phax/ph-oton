@@ -24,7 +24,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.auth.credentials.IAuthCredentials;
 import com.helger.commons.filter.IFilter;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FileUtils;
@@ -32,6 +31,7 @@ import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.io.streams.StreamUtils;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
+import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 import com.helger.photon.connect.generic.IConnectorFileBased;
 
 public class FileConnector implements IConnectorFileBased <File, File>

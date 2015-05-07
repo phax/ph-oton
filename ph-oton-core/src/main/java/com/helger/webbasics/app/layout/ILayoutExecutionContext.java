@@ -21,10 +21,10 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.app.menu.IMenuItemPage;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.webbasics.app.ISimpleWebExecutionContext;
 import com.helger.webbasics.app.redirect.ForcedRedirectException;
 

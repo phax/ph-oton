@@ -26,7 +26,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.appbasics.app.dao.impl.DAOException;
+import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.webbasics.mock.WebBasicTestRule;
 
 /**

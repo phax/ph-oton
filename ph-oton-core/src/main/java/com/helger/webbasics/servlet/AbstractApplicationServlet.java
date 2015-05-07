@@ -25,11 +25,11 @@ import javax.servlet.ServletException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.appbasics.app.request.ApplicationRequestManager;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.io.streams.StreamUtils;
 import com.helger.commons.lang.ServiceLoaderUtils;
 import com.helger.commons.state.EContinue;
+import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.ERedirectMode;
 import com.helger.web.servlet.response.UnifiedResponse;

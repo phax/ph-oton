@@ -18,12 +18,12 @@ package com.helger.webbasics.app.menu.ui;
 
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.app.menu.IMenuItemExternal;
-import com.helger.appbasics.app.menu.IMenuItemPage;
-import com.helger.appbasics.app.menu.IMenuSeparator;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCList;
 import com.helger.html.hc.html.HCLI;
+import com.helger.photon.basic.app.menu.IMenuItemExternal;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
+import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.webbasics.app.ISimpleWebExecutionContext;
 
 /**

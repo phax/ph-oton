@@ -21,10 +21,10 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
-import com.helger.appbasics.security.AccessManager;
-import com.helger.appbasics.security.login.LoggedInUserManager;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.state.EContinue;
+import com.helger.photon.basic.security.AccessManager;
+import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 import com.helger.webappdemo.app.CApp;

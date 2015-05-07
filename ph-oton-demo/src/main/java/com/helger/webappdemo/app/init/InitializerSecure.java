@@ -18,8 +18,8 @@ package com.helger.webappdemo.app.init;
 
 import javax.annotation.Nonnull;
 
-import com.helger.appbasics.app.locale.ILocaleManager;
-import com.helger.appbasics.app.menu.IMenuTree;
+import com.helger.photon.basic.app.locale.ILocaleManager;
+import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.webappdemo.app.CApp;
 import com.helger.webappdemo.app.action.secure.CActionSecure;
 import com.helger.webappdemo.app.ajax.secure.CAjaxSecure;

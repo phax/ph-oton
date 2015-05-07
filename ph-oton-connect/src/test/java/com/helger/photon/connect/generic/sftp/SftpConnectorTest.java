@@ -22,8 +22,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.helger.appbasics.auth.credentials.userpw.UserNamePasswordCredentials;
-import com.helger.photon.connect.generic.sftp.SftpConnector;
+import com.helger.photon.basic.auth.credentials.userpw.UserNamePasswordCredentials;
 
 /**
  * Unit test for class {@link SftpConnector}.

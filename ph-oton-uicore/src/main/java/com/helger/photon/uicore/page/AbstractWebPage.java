@@ -21,7 +21,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.app.page.AbstractPage;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.annotations.ReturnsMutableObject;
@@ -41,6 +40,7 @@ import com.helger.html.hc.html.HCH1;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.meta.MetaElementList;
+import com.helger.photon.basic.app.page.AbstractPage;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
 import com.helger.webbasics.EWebBasicsText;

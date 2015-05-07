@@ -19,12 +19,6 @@ package com.helger.photon.uicore.page.system;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.appbasics.app.menu.IMenuItem;
-import com.helger.appbasics.app.menu.IMenuItemExternal;
-import com.helger.appbasics.app.menu.IMenuItemPage;
-import com.helger.appbasics.app.menu.IMenuObject;
-import com.helger.appbasics.app.menu.IMenuSeparator;
-import com.helger.appbasics.app.menu.IMenuTree;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
@@ -37,6 +31,12 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HCUL;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.basic.app.menu.IMenuItem;
+import com.helger.photon.basic.app.menu.IMenuItemExternal;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
+import com.helger.photon.basic.app.menu.IMenuObject;
+import com.helger.photon.basic.app.menu.IMenuSeparator;
+import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
