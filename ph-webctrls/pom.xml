@@ -21,8 +21,8 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.helger</groupId>
-    <artifactId>ph-oton</artifactId>
-    <version>5.0.1-SNAPSHOT</version>
+    <artifactId>ph-oton-parent-pom</artifactId>
+    <version>5.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>ph-webctrls</artifactId>
   <packaging>bundle</packaging>
