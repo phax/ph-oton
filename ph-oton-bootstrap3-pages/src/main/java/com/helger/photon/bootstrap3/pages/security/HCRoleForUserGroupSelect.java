@@ -27,8 +27,8 @@ import com.helger.commons.name.ComparatorHasName;
 import com.helger.html.hc.html.HCOption;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.role.IRole;
+import com.helger.photon.core.form.RequestField;
 import com.helger.photon.uicore.html.select.HCExtSelect;
-import com.helger.webbasics.form.RequestField;
 
 /**
  * Select roles a user group should be assigned to

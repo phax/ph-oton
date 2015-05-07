@@ -40,11 +40,11 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.grid.BootstrapRow;
 import com.helger.photon.bootstrap3.pageheader.BootstrapPageHeader;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.app.ISimpleWebExecutionContext;
+import com.helger.photon.core.login.CLogin;
+import com.helger.photon.core.login.LoginHTMLProvider;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.app.ISimpleWebExecutionContext;
-import com.helger.webbasics.login.CLogin;
-import com.helger.webbasics.login.LoginHTMLProvider;
 
 /**
  * A special {@link LoginHTMLProvider} with Bootstrap UI.

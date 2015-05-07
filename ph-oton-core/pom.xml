@@ -85,7 +85,7 @@
         <configuration>
           <instructions>
             <Export-Package>
-              com.helger.webbasics.*
+              com.helger.photon.core.*
             </Export-Package>
             <Import-Package>
               !javax.annotation.*,*

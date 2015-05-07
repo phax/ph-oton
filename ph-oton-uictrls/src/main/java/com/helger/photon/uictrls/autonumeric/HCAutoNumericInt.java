@@ -20,7 +20,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.webbasics.form.RequestField;
+import com.helger.photon.core.form.RequestField;
 
 /**
  * Special auto numeric that only takes integers (and not decimal places)

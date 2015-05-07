@@ -20,17 +20,17 @@ import javax.annotation.Nonnull;
 
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
+import com.helger.photon.core.action.IActionInvoker;
+import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.app.init.DefaultApplicationInitializer;
+import com.helger.photon.core.app.layout.CLayout;
+import com.helger.photon.core.app.layout.ILayoutManager;
+import com.helger.photon.core.app.layout.LayoutExecutionContext;
 import com.helger.webappdemo.app.CApp;
 import com.helger.webappdemo.app.action.secure.CActionSecure;
 import com.helger.webappdemo.app.ajax.secure.CAjaxSecure;
 import com.helger.webappdemo.app.menu.secure.MenuSecure;
 import com.helger.webappdemo.app.ui.LayoutAreaContentProviderSecure;
-import com.helger.webbasics.action.IActionInvoker;
-import com.helger.webbasics.ajax.IAjaxInvoker;
-import com.helger.webbasics.app.init.DefaultApplicationInitializer;
-import com.helger.webbasics.app.layout.CLayout;
-import com.helger.webbasics.app.layout.ILayoutManager;
-import com.helger.webbasics.app.layout.LayoutExecutionContext;
 
 /**
  * Initialize the config application stuff

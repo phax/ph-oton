@@ -25,12 +25,12 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.state.EContinue;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
+import com.helger.photon.core.app.CApplication;
+import com.helger.photon.core.servlet.AbstractUnifiedResponseFilter;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 import com.helger.webappdemo.app.CApp;
 import com.helger.webappdemo.app.ui.AppLoginManager;
-import com.helger.webbasics.app.CApplication;
-import com.helger.webbasics.servlet.AbstractUnifiedResponseFilter;
 
 /**
  * A special servlet filter that checks that a user can only access the config

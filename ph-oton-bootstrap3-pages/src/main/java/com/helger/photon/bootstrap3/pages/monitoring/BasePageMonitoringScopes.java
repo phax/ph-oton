@@ -40,6 +40,7 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.EWebBasicsText;
 import com.helger.photon.uicore.UITextFormatter;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
@@ -51,7 +52,6 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.web.scopes.domain.IGlobalWebScope;
 import com.helger.web.scopes.mgr.WebScopeManager;
-import com.helger.webbasics.EWebBasicsText;
 
 /**
  * Show information on global and application scopes

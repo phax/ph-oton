@@ -32,13 +32,13 @@ import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.utils.HCSpecialNodes;
+import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
+import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
+import com.helger.photon.core.ajax.response.IAjaxResponse;
+import com.helger.photon.core.state.UIStateRegistry;
 import com.helger.photon.uictrls.datatables.CDataTables;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
-import com.helger.webbasics.ajax.executor.AbstractAjaxExecutor;
-import com.helger.webbasics.ajax.response.AjaxDefaultResponse;
-import com.helger.webbasics.ajax.response.IAjaxResponse;
-import com.helger.webbasics.state.UIStateRegistry;
 
 /**
  * AJAX handler for filling DataTables

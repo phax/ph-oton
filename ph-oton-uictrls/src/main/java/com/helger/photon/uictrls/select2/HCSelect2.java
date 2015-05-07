@@ -8,12 +8,12 @@ import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.js.builder.jquery.JQuery;
 import com.helger.html.request.IHCRequestField;
+import com.helger.photon.core.app.html.PerRequestCSSIncludes;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.photon.uicore.html.select.HCExtSelect;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
-import com.helger.webbasics.app.html.PerRequestCSSIncludes;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 public class HCSelect2 extends HCExtSelect
 {

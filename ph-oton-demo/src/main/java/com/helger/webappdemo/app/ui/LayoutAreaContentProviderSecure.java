@@ -42,14 +42,14 @@ import com.helger.photon.bootstrap3.navbar.BootstrapNavbar;
 import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarPosition;
 import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarType;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRenderer;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.app.LinkUtils;
+import com.helger.photon.core.app.layout.CLayout;
+import com.helger.photon.core.app.layout.ILayoutAreaContentProvider;
+import com.helger.photon.core.app.layout.LayoutExecutionContext;
+import com.helger.photon.core.servlet.LogoutServlet;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.CApp;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.app.LinkUtils;
-import com.helger.webbasics.app.layout.CLayout;
-import com.helger.webbasics.app.layout.ILayoutAreaContentProvider;
-import com.helger.webbasics.app.layout.LayoutExecutionContext;
-import com.helger.webbasics.servlet.LogoutServlet;
 
 /**
  * The viewport renderer (menu + content area)

@@ -70,15 +70,15 @@ import com.helger.html.js.builder.jquery.JQuerySelector;
 import com.helger.html.js.builder.jquery.JQuerySelectorList;
 import com.helger.json.IJsonObject;
 import com.helger.json.impl.JsonObject;
+import com.helger.photon.core.app.html.PerRequestCSSIncludes;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.state.UIStateRegistry;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.photon.uicore.js.JSJQueryUtils;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.ajax.DataTablesServerData;
 import com.helger.web.http.EHTTPMethod;
-import com.helger.webbasics.app.html.PerRequestCSSIncludes;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
-import com.helger.webbasics.state.UIStateRegistry;
 
 public class DataTables implements IHCNodeBuilder
 {

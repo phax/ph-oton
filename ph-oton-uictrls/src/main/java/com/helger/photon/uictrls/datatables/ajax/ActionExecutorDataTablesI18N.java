@@ -29,11 +29,11 @@ import com.helger.commons.mime.MimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLCharset;
 import com.helger.json.IJsonObject;
+import com.helger.photon.core.action.executor.AbstractActionExecutor;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.ResponseHelperSettings;
 import com.helger.web.servlet.response.UnifiedResponse;
-import com.helger.webbasics.action.executor.AbstractActionExecutor;
 
 /**
  * Action executor for providing the DataTables translated texts

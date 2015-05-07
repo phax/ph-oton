@@ -65,14 +65,14 @@ import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoSecurity;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoSystemProperties;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoThirdPartyLibraries;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoThreads;
+import com.helger.photon.core.go.GoMappingManager;
+import com.helger.photon.core.mgr.MetaSystemManager;
+import com.helger.photon.core.resource.WebSiteResourceBundleManager;
+import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.system.PageShowChildren;
 import com.helger.smtp.failed.FailedMailQueue;
-import com.helger.webbasics.go.GoMappingManager;
-import com.helger.webbasics.mgr.MetaSystemManager;
-import com.helger.webbasics.resource.WebSiteResourceBundleManager;
-import com.helger.webbasics.smtp.NamedSMTPSettingsManager;
 
 @Immutable
 public final class DefaultMenuConfigurator

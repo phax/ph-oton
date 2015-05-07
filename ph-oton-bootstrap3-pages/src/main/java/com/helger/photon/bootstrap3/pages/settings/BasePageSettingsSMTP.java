@@ -60,6 +60,12 @@ import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableForm;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.form.RequestField;
+import com.helger.photon.core.form.RequestFieldBoolean;
+import com.helger.photon.core.smtp.CNamedSMTPSettings;
+import com.helger.photon.core.smtp.NamedSMTPSettings;
+import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 import com.helger.photon.uicore.html.select.HCCharsetSelect;
 import com.helger.photon.uicore.html.table.IHCTableForm;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
@@ -81,12 +87,6 @@ import com.helger.smtp.impl.ReadonlySMTPSettings;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.validation.error.FormErrors;
 import com.helger.web.port.CNetworkPort;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.form.RequestField;
-import com.helger.webbasics.form.RequestFieldBoolean;
-import com.helger.webbasics.smtp.CNamedSMTPSettings;
-import com.helger.webbasics.smtp.NamedSMTPSettings;
-import com.helger.webbasics.smtp.NamedSMTPSettingsManager;
 
 public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <NamedSMTPSettings, WPECTYPE>
 {

@@ -35,7 +35,7 @@ import com.helger.html.js.builder.JSAnonymousFunction;
 import com.helger.html.js.builder.JSVar;
 import com.helger.html.js.builder.jquery.JQuery;
 import com.helger.html.js.builder.jquery.JQuerySelector;
-import com.helger.webbasics.form.RequestField;
+import com.helger.photon.core.form.RequestField;
 
 /**
  * This class encapsulates a HTML input field, a hidden field for the ID and the

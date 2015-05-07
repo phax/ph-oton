@@ -45,13 +45,13 @@ import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
+import com.helger.photon.core.form.FormState;
+import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.validation.error.FormErrors;
-import com.helger.webbasics.form.FormState;
-import com.helger.webbasics.form.FormStateManager;
 
 /**
  * Saved states base page

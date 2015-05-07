@@ -19,12 +19,12 @@ package com.helger.webappdemo.app.ajax.secure;
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.IHCNode;
+import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
+import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
+import com.helger.photon.core.ajax.response.IAjaxResponse;
+import com.helger.photon.core.app.layout.LayoutExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.ui.LayoutAreaContentProviderSecure;
-import com.helger.webbasics.ajax.executor.AbstractAjaxExecutor;
-import com.helger.webbasics.ajax.response.AjaxDefaultResponse;
-import com.helger.webbasics.ajax.response.IAjaxResponse;
-import com.helger.webbasics.app.layout.LayoutExecutionContext;
 
 /**
  * Ajax executor to get the update content the config application's menu.

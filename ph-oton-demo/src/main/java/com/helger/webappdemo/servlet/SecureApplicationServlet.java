@@ -18,10 +18,10 @@ package com.helger.webappdemo.servlet;
 
 import javax.annotation.Nonnull;
 
+import com.helger.photon.core.app.html.IHTMLProvider;
+import com.helger.photon.core.servlet.AbstractSecureApplicationServlet;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.ui.AppLayoutHTMLProvider;
-import com.helger.webbasics.app.html.IHTMLProvider;
-import com.helger.webbasics.servlet.AbstractSecureApplicationServlet;
 
 /**
  * The servlet to show the secure application

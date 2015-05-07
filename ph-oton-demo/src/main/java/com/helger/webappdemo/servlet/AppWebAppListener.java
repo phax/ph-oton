@@ -26,14 +26,14 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.helger.commons.annotations.Nonempty;
 import com.helger.photon.bootstrap3.servlet.AbstractWebAppListenerMultiAppBootstrap;
+import com.helger.photon.core.app.CApplication;
+import com.helger.photon.core.app.init.IApplicationInitializer;
+import com.helger.photon.core.app.layout.LayoutExecutionContext;
 import com.helger.webappdemo.app.AppSettings;
 import com.helger.webappdemo.app.init.AppSecurity;
 import com.helger.webappdemo.app.init.InitializerPublic;
 import com.helger.webappdemo.app.init.InitializerSecure;
 import com.helger.webappdemo.app.ui.AppCommonUI;
-import com.helger.webbasics.app.CApplication;
-import com.helger.webbasics.app.init.IApplicationInitializer;
-import com.helger.webbasics.app.layout.LayoutExecutionContext;
 
 /**
  * This listener is invoked during the servlet initiailization. This is

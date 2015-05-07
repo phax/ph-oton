@@ -27,8 +27,8 @@ import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSInvocation;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 public class HCFacebookSDK extends HCNodeList
 {

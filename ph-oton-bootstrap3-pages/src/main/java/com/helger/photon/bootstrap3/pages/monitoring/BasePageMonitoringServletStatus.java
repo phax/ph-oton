@@ -37,6 +37,10 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.servletstatus.EServletStatus;
+import com.helger.photon.core.servletstatus.ServletStatus;
+import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
@@ -45,10 +49,6 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.servletstatus.EServletStatus;
-import com.helger.webbasics.servletstatus.ServletStatus;
-import com.helger.webbasics.servletstatus.ServletStatusManager;
 
 /**
  * Show servlet status.

@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.masterdata.vat.IVATItem;
 import com.helger.masterdata.vat.VATManager;
-import com.helger.webbasics.form.RequestField;
+import com.helger.photon.core.form.RequestField;
 
 /**
  * Special {@link RequestField} child class, that handles {@link IVATItem}

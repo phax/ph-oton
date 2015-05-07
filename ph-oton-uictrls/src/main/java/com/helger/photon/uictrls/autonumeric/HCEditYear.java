@@ -20,7 +20,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.webbasics.form.RequestField;
+import com.helger.photon.core.form.RequestField;
 
 /**
  * Special numeric edit for years from {@value #DEFAULT_MIN} to

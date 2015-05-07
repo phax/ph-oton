@@ -27,9 +27,9 @@ import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.customize.HCMultiCustomizer;
 import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
-import com.helger.webbasics.app.html.WebHTMLCreator;
-import com.helger.webbasics.app.layout.ILayoutExecutionContext;
-import com.helger.webbasics.servlet.AbstractWebAppListenerMultiApp;
+import com.helger.photon.core.app.html.WebHTMLCreator;
+import com.helger.photon.core.app.layout.ILayoutExecutionContext;
+import com.helger.photon.core.servlet.AbstractWebAppListenerMultiApp;
 
 /**
  * Bootstrap specific initialization listener

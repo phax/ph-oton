@@ -47,6 +47,7 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.EWebBasicsText;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
@@ -56,7 +57,6 @@ import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
 import com.helger.web.networkinterface.ComparatorNetworkInterfaceName;
 import com.helger.web.networkinterface.NetworkInterfaceUtils;
-import com.helger.webbasics.EWebBasicsText;
 
 /**
  * Page with information on the current network settings

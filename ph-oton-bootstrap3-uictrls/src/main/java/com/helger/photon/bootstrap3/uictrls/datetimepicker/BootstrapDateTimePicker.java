@@ -58,10 +58,10 @@ import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.bootstrap3.inputgroup.BootstrapInputGroup;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsJSPathProvider;
-import com.helger.webbasics.app.html.PerRequestCSSIncludes;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
-import com.helger.webbasics.form.RequestField;
-import com.helger.webbasics.form.RequestFieldDate;
+import com.helger.photon.core.app.html.PerRequestCSSIncludes;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.form.RequestField;
+import com.helger.photon.core.form.RequestFieldDate;
 
 /**
  * This class represents a wrapper around the DateTime Picker for Bootstrap from

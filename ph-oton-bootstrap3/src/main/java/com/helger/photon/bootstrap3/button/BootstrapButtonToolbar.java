@@ -23,9 +23,9 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.html.EHTMLRole;
 import com.helger.html.js.IJSCodeProvider;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
+import com.helger.photon.core.app.layout.ILayoutExecutionContext;
 import com.helger.photon.uicore.html.toolbar.AbstractButtonToolbar;
 import com.helger.photon.uicore.icon.IIcon;
-import com.helger.webbasics.app.layout.ILayoutExecutionContext;
 
 /**
  * Bootstrap3 button toolbar. Should only be used to group button groups and not

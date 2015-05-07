@@ -62,6 +62,8 @@ import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableForm;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.form.RequestField;
 import com.helger.photon.uicore.html.table.IHCTableForm;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -71,8 +73,6 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.validation.error.FormErrors;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.form.RequestField;
 
 public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageSecurityObjectWithAttributes <IUserGroup, WPECTYPE>
 {

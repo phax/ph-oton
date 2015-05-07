@@ -41,11 +41,11 @@ import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.meta.MetaElementList;
 import com.helger.photon.basic.app.page.AbstractPage;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.app.LinkUtils;
+import com.helger.photon.core.app.layout.ILayoutExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.app.LinkUtils;
-import com.helger.webbasics.app.layout.ILayoutExecutionContext;
 
 /**
  * Abstract base implementation for {@link IWebPage}.

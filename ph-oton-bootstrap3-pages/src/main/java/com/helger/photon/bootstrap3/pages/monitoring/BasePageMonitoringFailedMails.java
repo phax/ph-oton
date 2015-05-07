@@ -58,6 +58,8 @@ import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.mgr.MetaSystemManager;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
@@ -74,8 +76,6 @@ import com.helger.smtp.failed.FailedMailData;
 import com.helger.smtp.failed.FailedMailQueue;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.validation.error.FormErrors;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.mgr.MetaSystemManager;
 
 /**
  * Show all failed mails.

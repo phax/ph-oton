@@ -23,8 +23,8 @@ import com.helger.html.js.builder.IJSExpression;
 import com.helger.html.js.builder.JSAnonymousFunction;
 import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSVar;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 /**
  * Java JavaScript wrapper for uicore-jquery.js

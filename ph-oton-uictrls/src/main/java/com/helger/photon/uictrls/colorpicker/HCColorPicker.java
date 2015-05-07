@@ -29,8 +29,8 @@ import com.helger.html.css.UncheckedCSSClassProvider;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.impl.AbstractHCInput;
 import com.helger.html.js.builder.JSAssocArray;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 /**
  * A wrapper around the JSColor color picker control. http://jscolor.com/

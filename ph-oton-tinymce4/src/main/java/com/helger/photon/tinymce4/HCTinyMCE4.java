@@ -44,6 +44,7 @@ import com.helger.html.js.builder.JSAssocArray;
 import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSInvocation;
 import com.helger.json.impl.JsonObject;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
 import com.helger.photon.tinymce4.type.ETinyMCE4Language;
 import com.helger.photon.tinymce4.type.ETinyMCE4Plugin;
 import com.helger.photon.tinymce4.type.ETinyMCE4Resize;
@@ -53,7 +54,6 @@ import com.helger.photon.tinymce4.type.TinyMCE4ExternalPlugin;
 import com.helger.photon.tinymce4.type.TinyMCE4MenubarItemList;
 import com.helger.photon.tinymce4.type.TinyMCE4ToolbarControlList;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 /**
  * Wraps TinyMCE4 into an HC node. The only required settings is

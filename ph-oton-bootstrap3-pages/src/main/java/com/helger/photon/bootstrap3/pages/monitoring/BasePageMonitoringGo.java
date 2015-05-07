@@ -38,16 +38,16 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.go.GoMappingItem;
+import com.helger.photon.core.go.GoMappingManager;
+import com.helger.photon.core.go.GoServlet;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.go.GoMappingItem;
-import com.helger.webbasics.go.GoMappingManager;
-import com.helger.webbasics.go.GoServlet;
 
 /**
  * Show web site resource bundles.

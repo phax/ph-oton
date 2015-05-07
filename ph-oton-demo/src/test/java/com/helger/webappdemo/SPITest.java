@@ -19,7 +19,7 @@ package com.helger.webappdemo;
 import org.junit.Test;
 
 import com.helger.commons.mock.PHTestUtils;
-import com.helger.webbasics.mock.WebBasicValidator;
+import com.helger.photon.core.mock.WebBasicValidator;
 
 public final class SPITest
 {

@@ -27,7 +27,7 @@ import com.helger.html.hc.html.HCOption;
 import com.helger.html.hc.html.HCSelect;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.request.IHCRequestField;
-import com.helger.webbasics.EWebBasicsText;
+import com.helger.photon.core.EWebBasicsText;
 
 public class HCExtSelect extends HCSelect
 {

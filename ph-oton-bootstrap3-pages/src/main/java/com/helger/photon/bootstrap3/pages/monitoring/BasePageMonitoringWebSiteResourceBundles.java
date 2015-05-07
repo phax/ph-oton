@@ -39,6 +39,11 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.resource.ResourceBundleServlet;
+import com.helger.photon.core.resource.WebSiteResourceBundleManager;
+import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
+import com.helger.photon.core.resource.WebSiteResourceCache;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
@@ -46,11 +51,6 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.resource.ResourceBundleServlet;
-import com.helger.webbasics.resource.WebSiteResourceBundleManager;
-import com.helger.webbasics.resource.WebSiteResourceBundleSerialized;
-import com.helger.webbasics.resource.WebSiteResourceCache;
 
 /**
  * Show web site resource bundles.

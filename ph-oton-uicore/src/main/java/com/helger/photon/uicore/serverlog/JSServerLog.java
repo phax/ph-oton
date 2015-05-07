@@ -22,8 +22,8 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.js.builder.IJSExpression;
 import com.helger.html.js.builder.JSInvocation;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 @Immutable
 public final class JSServerLog

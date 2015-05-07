@@ -39,11 +39,11 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.bootstrap3.well.BootstrapWell;
 import com.helger.photon.bootstrap3.well.EBootstrapWellType;
-import com.helger.webbasics.app.ISimpleWebExecutionContext;
-import com.helger.webbasics.app.layout.ILayoutExecutionContext;
-import com.helger.webbasics.app.menu.ui.AbstractMenuItemRenderer;
-import com.helger.webbasics.app.menu.ui.IMenuItemRenderer;
-import com.helger.webbasics.app.menu.ui.MenuRendererCallback;
+import com.helger.photon.core.app.ISimpleWebExecutionContext;
+import com.helger.photon.core.app.layout.ILayoutExecutionContext;
+import com.helger.photon.core.app.menu.ui.AbstractMenuItemRenderer;
+import com.helger.photon.core.app.menu.ui.IMenuItemRenderer;
+import com.helger.photon.core.app.menu.ui.MenuRendererCallback;
 
 /**
  * Default implementation of {@link IMenuItemRenderer}

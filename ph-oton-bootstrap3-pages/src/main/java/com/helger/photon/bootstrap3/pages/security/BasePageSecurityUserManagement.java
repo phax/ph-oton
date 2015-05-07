@@ -74,6 +74,9 @@ import com.helger.photon.bootstrap3.table.BootstrapTableForm;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapSecurityUI;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.form.RequestField;
+import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableForm;
@@ -86,9 +89,6 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.validation.error.FormErrors;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.form.RequestField;
-import com.helger.webbasics.form.RequestFieldBoolean;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 

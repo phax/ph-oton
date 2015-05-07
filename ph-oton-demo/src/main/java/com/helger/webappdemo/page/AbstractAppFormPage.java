@@ -26,6 +26,8 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.js.builder.JSArray;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
+import com.helger.photon.core.app.layout.CLayout;
+import com.helger.photon.core.form.ajax.AjaxExecutorSaveFormState;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.js.JSFormHelper;
@@ -33,8 +35,6 @@ import com.helger.photon.uicore.page.AbstractWebPageForm;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.ajax.secure.CAjaxSecure;
-import com.helger.webbasics.app.layout.CLayout;
-import com.helger.webbasics.form.ajax.AjaxExecutorSaveFormState;
 
 public abstract class AbstractAppFormPage <DATATYPE extends IHasID <String>> extends
                                                                              AbstractWebPageForm <DATATYPE, WebPageExecutionContext>

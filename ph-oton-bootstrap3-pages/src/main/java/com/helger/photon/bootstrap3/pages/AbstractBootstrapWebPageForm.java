@@ -12,9 +12,9 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.photon.core.EWebBasicsText;
 import com.helger.photon.uicore.page.AbstractWebPageForm;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
-import com.helger.webbasics.EWebBasicsText;
 
 @NotThreadSafe
 public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageForm <DATATYPE, WPECTYPE>

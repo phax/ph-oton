@@ -29,9 +29,9 @@ import com.helger.html.hc.html.AbstractHCDiv;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.js.IJSCodeProvider;
 import com.helger.html.js.builder.html.JSHtml;
+import com.helger.photon.core.EWebBasicsText;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
-import com.helger.webbasics.EWebBasicsText;
 
 /**
  * Abstract button toolbar implementation

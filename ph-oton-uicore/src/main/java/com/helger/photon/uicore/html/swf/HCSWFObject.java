@@ -33,8 +33,8 @@ import com.helger.html.js.builder.JSAssocArray;
 import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.marshal.JSMarshaller;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 /**
  * Create the necessary tags for embedding a flash files using SWFObject.<br>

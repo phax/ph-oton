@@ -30,14 +30,14 @@ import com.helger.json.impl.JsonObject;
 import com.helger.photon.basic.security.login.ELoginResult;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
+import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
+import com.helger.photon.core.ajax.response.IAjaxResponse;
+import com.helger.photon.core.app.layout.LayoutExecutionContext;
+import com.helger.photon.core.login.CLogin;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.CApp;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.ajax.executor.AbstractAjaxExecutor;
-import com.helger.webbasics.ajax.response.AjaxDefaultResponse;
-import com.helger.webbasics.ajax.response.IAjaxResponse;
-import com.helger.webbasics.app.layout.LayoutExecutionContext;
-import com.helger.webbasics.login.CLogin;
 
 /**
  * Ajax executor to login a user from view application.

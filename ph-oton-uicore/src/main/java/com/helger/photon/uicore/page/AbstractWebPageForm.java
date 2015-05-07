@@ -43,14 +43,14 @@ import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.lock.LockResult;
 import com.helger.photon.basic.security.lock.ObjectLockManager;
 import com.helger.photon.basic.security.user.IUser;
+import com.helger.photon.core.form.FormState;
+import com.helger.photon.core.form.FormStateManager;
+import com.helger.photon.core.form.RequestField;
+import com.helger.photon.core.form.ajax.AjaxExecutorSaveFormState;
+import com.helger.photon.core.mgr.MetaSystemManager;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.js.JSFormHelper;
 import com.helger.validation.error.FormErrors;
-import com.helger.webbasics.form.FormState;
-import com.helger.webbasics.form.FormStateManager;
-import com.helger.webbasics.form.RequestField;
-import com.helger.webbasics.form.ajax.AjaxExecutorSaveFormState;
-import com.helger.webbasics.mgr.MetaSystemManager;
 
 /**
  * Abstract base class for a web page that has the common form handling, with a

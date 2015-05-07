@@ -26,10 +26,10 @@ import com.helger.photon.basic.app.menu.filter.AbstractMenuObjectFilter;
 import com.helger.photon.basic.app.menu.filter.MenuItemFilterUserAssignedToUserGroup;
 import com.helger.photon.bootstrap3.pages.DefaultMenuConfigurator;
 import com.helger.photon.bootstrap3.pages.form.BasePageFormSavedStates;
+import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uicore.page.system.PageShowChildren;
 import com.helger.webappdemo.app.CApp;
-import com.helger.webbasics.form.FormStateManager;
 
 @Immutable
 public final class MenuSecure

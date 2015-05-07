@@ -23,8 +23,8 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.HCButton;
 import com.helger.html.hc.html.HCButton_Submit;
 import com.helger.html.js.IJSCodeProvider;
+import com.helger.photon.core.app.layout.ILayoutExecutionContext;
 import com.helger.photon.uicore.icon.IIcon;
-import com.helger.webbasics.app.layout.ILayoutExecutionContext;
 
 /**
  * Simple button toolbar

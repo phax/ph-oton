@@ -40,6 +40,12 @@ import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.action.ApplicationActionManager;
+import com.helger.photon.core.action.IActionAfterExecutionCallback;
+import com.helger.photon.core.action.IActionBeforeExecutionCallback;
+import com.helger.photon.core.action.IActionDeclaration;
+import com.helger.photon.core.action.IActionExceptionCallback;
+import com.helger.photon.core.action.IActionLongRunningExecutionCallback;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -47,12 +53,6 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
-import com.helger.webbasics.action.ApplicationActionManager;
-import com.helger.webbasics.action.IActionAfterExecutionCallback;
-import com.helger.webbasics.action.IActionBeforeExecutionCallback;
-import com.helger.webbasics.action.IActionDeclaration;
-import com.helger.webbasics.action.IActionExceptionCallback;
-import com.helger.webbasics.action.IActionLongRunningExecutionCallback;
 
 /**
  * Show all registered actions.

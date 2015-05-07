@@ -19,7 +19,7 @@ package com.helger.photon.uicore.page;
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.webbasics.app.layout.ILayoutExecutionContext;
+import com.helger.photon.core.app.layout.ILayoutExecutionContext;
 
 public interface IWebPageExecutionContext extends ILayoutExecutionContext
 {

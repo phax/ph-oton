@@ -23,8 +23,8 @@ import javax.annotation.Nullable;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.html.HCTextArea;
 import com.helger.html.request.IHCRequestField;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 /**
  * jQuery autosize plugin from

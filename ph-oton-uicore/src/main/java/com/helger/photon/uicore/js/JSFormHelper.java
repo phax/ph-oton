@@ -29,10 +29,10 @@ import com.helger.html.js.builder.JSAssocArray;
 import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.builder.JSRef;
+import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
-import com.helger.webbasics.ajax.IAjaxFunctionDeclaration;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 /**
  * Java JavaScript wrapper for form.js

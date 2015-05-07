@@ -54,6 +54,7 @@ import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.EWebBasicsText;
 import com.helger.photon.uicore.UITextFormatter;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
@@ -67,7 +68,6 @@ import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
 import com.helger.validation.error.FormErrors;
 import com.helger.web.scopes.domain.ISessionWebScope;
-import com.helger.webbasics.EWebBasicsText;
 
 /**
  * Show information on all active sessions

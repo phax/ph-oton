@@ -22,10 +22,10 @@ import javax.annotation.Nullable;
 import com.helger.commons.error.EErrorLevel;
 import com.helger.commons.log.LogUtils;
 import com.helger.commons.string.StringHelper;
+import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
+import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
+import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
-import com.helger.webbasics.ajax.executor.AbstractAjaxExecutor;
-import com.helger.webbasics.ajax.response.AjaxDefaultResponse;
-import com.helger.webbasics.ajax.response.IAjaxResponse;
 
 public class AjaxExecutorServerLog extends AbstractAjaxExecutor
 {

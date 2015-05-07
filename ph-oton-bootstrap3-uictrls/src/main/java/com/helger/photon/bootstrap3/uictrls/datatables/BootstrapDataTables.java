@@ -24,11 +24,11 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.table.AbstractBootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsJSPathProvider;
+import com.helger.photon.core.app.html.PerRequestCSSIncludes;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.DataTablesDom;
-import com.helger.webbasics.app.html.PerRequestCSSIncludes;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 public class BootstrapDataTables extends DataTables
 {

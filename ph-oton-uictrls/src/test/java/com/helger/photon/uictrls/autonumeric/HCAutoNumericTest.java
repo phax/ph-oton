@@ -27,9 +27,9 @@ import com.helger.commons.system.ENewLineMode;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.conversion.HCConversionSettings;
 import com.helger.html.hc.html.HCDiv;
+import com.helger.photon.core.form.RequestField;
+import com.helger.photon.core.mock.WebBasicTestRule;
 import com.helger.photon.uictrls.autonumeric.HCAutoNumeric;
-import com.helger.webbasics.form.RequestField;
-import com.helger.webbasics.mock.WebBasicTestRule;
 
 public final class HCAutoNumericTest
 {

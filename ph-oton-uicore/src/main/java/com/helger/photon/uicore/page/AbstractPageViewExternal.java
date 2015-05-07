@@ -37,8 +37,8 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.xml.serialize.SAXReaderSettings;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.parser.XHTMLParser;
+import com.helger.photon.core.app.html.WebHTMLCreator;
 import com.helger.photon.uicore.page.external.PageViewExternalHTMLCleanser;
-import com.helger.webbasics.app.html.WebHTMLCreator;
 
 /**
  * Base class for pages consisting of external HTML code that is provided from

@@ -33,11 +33,11 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.json.impl.JsonArray;
 import com.helger.json.impl.JsonObject;
-import com.helger.webbasics.ajax.executor.AbstractAjaxExecutorWithContext;
-import com.helger.webbasics.ajax.response.AjaxDefaultResponse;
-import com.helger.webbasics.ajax.response.AjaxSimpleResponse;
-import com.helger.webbasics.ajax.response.IAjaxResponse;
-import com.helger.webbasics.app.layout.ILayoutExecutionContext;
+import com.helger.photon.core.ajax.executor.AbstractAjaxExecutorWithContext;
+import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
+import com.helger.photon.core.ajax.response.AjaxSimpleResponse;
+import com.helger.photon.core.ajax.response.IAjaxResponse;
+import com.helger.photon.core.app.layout.ILayoutExecutionContext;
 
 /**
  * Abstract AJAX handler that can be used as the source for a Bootstrap

@@ -21,11 +21,11 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.html.hc.html.HCHtml;
 import com.helger.photon.basic.app.request.IRequestManager;
+import com.helger.photon.core.app.ISimpleWebExecutionContext;
+import com.helger.photon.core.app.layout.AbstractLayoutManagerBasedLayoutHTMLProvider;
+import com.helger.photon.core.app.layout.ApplicationLayoutManager;
+import com.helger.photon.core.app.layout.LayoutExecutionContext;
 import com.helger.webappdemo.app.CApp;
-import com.helger.webbasics.app.ISimpleWebExecutionContext;
-import com.helger.webbasics.app.layout.AbstractLayoutManagerBasedLayoutHTMLProvider;
-import com.helger.webbasics.app.layout.ApplicationLayoutManager;
-import com.helger.webbasics.app.layout.LayoutExecutionContext;
 
 /**
  * Main class for creating HTML output

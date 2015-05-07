@@ -39,6 +39,7 @@ import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.table.BootstrapTableForm;
+import com.helger.photon.core.EWebBasicsText;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableForm;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -46,7 +47,6 @@ import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.smtp.EmailGlobalSettings;
-import com.helger.webbasics.EWebBasicsText;
 
 /**
  * Page with global basic settings

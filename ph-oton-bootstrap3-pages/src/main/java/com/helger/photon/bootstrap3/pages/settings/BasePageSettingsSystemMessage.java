@@ -46,6 +46,8 @@ import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.form.RequestField;
 import com.helger.photon.uicore.html.select.HCSystemMessageTypeSelect;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
@@ -53,8 +55,6 @@ import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
-import com.helger.webbasics.EWebBasicsText;
-import com.helger.webbasics.form.RequestField;
 
 public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
 {

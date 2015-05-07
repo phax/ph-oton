@@ -37,10 +37,10 @@ import com.helger.html.js.builder.JSAnonymousFunction;
 import com.helger.html.js.builder.JSArray;
 import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.builder.jquery.IJQuerySelector;
+import com.helger.photon.core.app.html.PerRequestCSSIncludes;
+import com.helger.photon.core.app.html.PerRequestJSIncludes;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
-import com.helger.webbasics.app.html.PerRequestCSSIncludes;
-import com.helger.webbasics.app.html.PerRequestJSIncludes;
 
 public class HCTypeahead implements IHCNodeBuilder
 {

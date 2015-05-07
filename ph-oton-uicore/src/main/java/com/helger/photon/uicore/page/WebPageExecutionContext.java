@@ -22,8 +22,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.webbasics.app.layout.ILayoutExecutionContext;
-import com.helger.webbasics.app.layout.LayoutExecutionContext;
+import com.helger.photon.core.app.layout.ILayoutExecutionContext;
+import com.helger.photon.core.app.layout.LayoutExecutionContext;
 
 /**
  * This page is instantiated per page view, so that the thread safety of the

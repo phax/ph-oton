@@ -22,10 +22,10 @@ import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.stats.utils.StatisticsExporter;
+import com.helger.photon.core.action.executor.AbstractActionExecutor;
 import com.helger.web.CWebCharset;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
-import com.helger.webbasics.action.executor.AbstractActionExecutor;
 
 /**
  * A simple actions that exports the current statistics as XML
