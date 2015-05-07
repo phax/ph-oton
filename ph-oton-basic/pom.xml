@@ -28,7 +28,7 @@
   <packaging>bundle</packaging>
   <name>ph-oton-basic</name>
   <description>ph-oton basic components</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-basics</url>
+  <url>https://github.com/phax/ph-oton/ph-oton-basic</url>
   <inceptionYear>2014</inceptionYear>
  
   <licenses>

@@ -28,7 +28,7 @@
   <packaging>bundle</packaging>
   <name>ph-oton-bootstrap3-uictrls</name>
   <description>Library wrapping Bootstrap 3 controls as Java web application components</description>
-  <url>https://github.com/phax/ph-oton-bootstrap3-uictrls</url>
+  <url>https://github.com/phax/ph-oton/ph-oton-bootstrap3-uictrls</url>
   <inceptionYear>2014</inceptionYear>
  
   <licenses>
