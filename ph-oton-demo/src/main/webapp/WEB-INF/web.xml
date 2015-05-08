@@ -42,7 +42,7 @@
   
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
-    <filter-class>com.helger.webbasics.servlet.CharacterEncodingFilter</filter-class>
+    <filter-class>com.helger.photon.core.servlet.CharacterEncodingFilter</filter-class>
     <init-param>
       <param-name>encoding</param-name>
       <param-value>UTF-8</param-value>
@@ -59,7 +59,7 @@
   
   <servlet>
     <servlet-name>SecureApplicationActionServlet</servlet-name>
-    <servlet-class>com.helger.webbasics.action.servlet.SecureApplicationActionServlet</servlet-class>
+    <servlet-class>com.helger.photon.core.action.servlet.SecureApplicationActionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SecureApplicationActionServlet</servlet-name>
@@ -68,7 +68,7 @@
   
   <servlet>
     <servlet-name>PublicApplicationActionServlet</servlet-name>
-    <servlet-class>com.helger.webbasics.action.servlet.PublicApplicationActionServlet</servlet-class>
+    <servlet-class>com.helger.photon.core.action.servlet.PublicApplicationActionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>PublicApplicationActionServlet</servlet-name>
@@ -77,7 +77,7 @@
   
   <servlet>
     <servlet-name>SecureApplicationAjaxServlet</servlet-name>
-    <servlet-class>com.helger.webbasics.ajax.servlet.SecureApplicationAjaxServlet</servlet-class>
+    <servlet-class>com.helger.photon.core.ajax.servlet.SecureApplicationAjaxServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SecureApplicationAjaxServlet</servlet-name>
@@ -86,7 +86,7 @@
   
   <servlet>
     <servlet-name>PublicApplicationAjaxServlet</servlet-name>
-    <servlet-class>com.helger.webbasics.ajax.servlet.PublicApplicationAjaxServlet</servlet-class>
+    <servlet-class>com.helger.photon.core.ajax.servlet.PublicApplicationAjaxServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>PublicApplicationAjaxServlet</servlet-name>
@@ -95,7 +95,7 @@
   
   <servlet>
     <servlet-name>StreamServlet</servlet-name>
-    <servlet-class>com.helger.webbasics.servlet.StreamServlet</servlet-class>
+    <servlet-class>com.helger.photon.core.servlet.StreamServlet</servlet-class>
     <init-param>
       <param-name>allowedExtensions</param-name>
       <param-value>$web-default$</param-value>
@@ -108,7 +108,7 @@
   
   <servlet>
     <servlet-name>UserStreamServlet</servlet-name>
-    <servlet-class>com.helger.webbasics.userdata.UserStreamServlet</servlet-class>
+    <servlet-class>com.helger.photon.core.userdata.UserStreamServlet</servlet-class>
     <init-param>
       <param-name>allowedExtensions</param-name>
       <param-value>$web-default$</param-value>
@@ -121,7 +121,7 @@
   
   <servlet>
     <servlet-name>UserUploadServlet</servlet-name>
-    <servlet-class>com.helger.webbasics.userdata.UserUploadServlet</servlet-class>
+    <servlet-class>com.helger.photon.core.userdata.UserUploadServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UserUploadServlet</servlet-name>
@@ -130,7 +130,7 @@
 
   <servlet>
     <servlet-name>LogoutServlet</servlet-name>
-    <servlet-class>com.helger.webbasics.servlet.LogoutServlet</servlet-class>
+    <servlet-class>com.helger.photon.core.servlet.LogoutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
@@ -140,12 +140,12 @@
   <!-- Application specific stuff -->  
 
   <listener>
-    <listener-class>com.helger.webappdemo.servlet.AppWebAppListener</listener-class>
+    <listener-class>com.helger.photon.bootstrap.demo.servlet.AppWebAppListener</listener-class>
   </listener>
   
   <filter>
     <filter-name>SecureLoginFilter</filter-name>
-    <filter-class>com.helger.webappdemo.servlet.SecureLoginFilter</filter-class>
+    <filter-class>com.helger.photon.bootstrap.demo.servlet.SecureLoginFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>SecureLoginFilter</filter-name>
@@ -162,7 +162,7 @@
   
   <servlet>
     <servlet-name>SecureApplicationServlet</servlet-name>
-    <servlet-class>com.helger.webappdemo.servlet.SecureApplicationServlet</servlet-class>
+    <servlet-class>com.helger.photon.bootstrap.demo.servlet.SecureApplicationServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SecureApplicationServlet</servlet-name>
@@ -171,7 +171,7 @@
   
   <servlet>
     <servlet-name>PublicApplicationServlet</servlet-name>
-    <servlet-class>com.helger.webappdemo.servlet.PublicApplicationServlet</servlet-class>
+    <servlet-class>com.helger.photon.bootstrap.demo.servlet.PublicApplicationServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>PublicApplicationServlet</servlet-name>
