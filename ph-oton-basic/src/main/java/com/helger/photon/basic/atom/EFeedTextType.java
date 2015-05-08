@@ -14,23 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.atom;
+package com.helger.photon.basic.atom;
 
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.Nonnull;
+
+import com.helger.commons.annotations.Nonempty;
 
 /**
- * Constants for ATOM feeds
+ * Text identification type
  * 
  * @author Philip Helger
  */
-@Immutable
-public final class CFeed
+public enum EFeedTextType
 {
-  /**
-   * The XML namespace for ATOM feeds.
-   */
-  public static final String XMLNS_ATOM = "http://www.w3.org/2005/Atom";
+  TEXT ("text"),
+  HTML ("html"),
+  XHTML ("xhtml");
 
-  private CFeed ()
-  {}
+  private final String m_sType;
+
+  private EFeedTextType (@Nonnull @Nonempty final String sType)
+  {
+    m_sType = sType;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getType ()
+  {
+    return m_sType;
+  }
 }

@@ -14,20 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.atom;
+package com.helger.photon.basic.atom;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.html.hc.html.HCDiv;
 
 /**
- * Base interface for the content element.
- * 
+ * Feed entry XHTML content.
+ *
  * @author Philip Helger
  */
-public interface IFeedContent extends IFeedElement
+public class FeedXHTMLContent extends AbstractFeedXHTML implements IFeedContent
 {
-  @Nonnull
-  @Nonempty
-  String getType ();
+  public FeedXHTMLContent (@Nonnull final HCDiv aDiv)
+  {
+    super (aDiv);
+  }
 }

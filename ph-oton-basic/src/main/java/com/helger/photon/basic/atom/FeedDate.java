@@ -14,49 +14,56 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.atom;
+package com.helger.photon.basic.atom;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
+
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.impl.MicroElement;
 import com.helger.commons.string.StringHelper;
+import com.helger.datetime.PDTFactory;
+import com.helger.web.datetime.PDTWebDateUtils;
 
-public class FeedOutOfLineContent extends AbstractFeedElement implements IFeedContent
+/**
+ * ATOM date construct.
+ *
+ * @author Philip Helger
+ */
+public class FeedDate extends AbstractFeedElement
 {
-  private final String m_sType;
-  private final String m_sSrc;
+  private LocalDateTime m_aDT;
 
-  public FeedOutOfLineContent (@Nonnull @Nonempty final String sType, @Nonnull @Nonempty final String sSrc)
+  public FeedDate (@Nonnull final DateTime aDT)
   {
-    ValueEnforcer.notEmpty (sType, "Type");
-    ValueEnforcer.notEmpty (sSrc, "Src");
-    m_sType = sType;
-    m_sSrc = sSrc;
+    this (aDT.toLocalDateTime ());
+  }
+
+  public FeedDate (@Nullable final LocalDateTime aDT)
+  {
+    setDateTime (aDT);
+  }
+
+  public void setDateTime (@Nullable final LocalDateTime aDT)
+  {
+    m_aDT = aDT;
+  }
+
+  @Nullable
+  public LocalDateTime getDateTime ()
+  {
+    return m_aDT;
   }
 
   @Nonnull
-  @Nonempty
-  public String getType ()
-  {
-    return m_sType;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getSrc ()
-  {
-    return m_sSrc;
-  }
-
   public IMicroElement getAsElement (final String sElementName)
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
-    aElement.setAttribute ("type", m_sType);
-    aElement.setAttribute ("src", m_sSrc);
+    aElement.appendText (PDTWebDateUtils.getAsStringW3C (m_aDT));
     if (StringHelper.hasText (getLanguage ()))
       aElement.setAttribute (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
@@ -64,6 +71,12 @@ public class FeedOutOfLineContent extends AbstractFeedElement implements IFeedCo
 
   public boolean isValid ()
   {
-    return true;
+    return m_aDT != null;
+  }
+
+  @Nonnull
+  public static FeedDate createNow ()
+  {
+    return new FeedDate (PDTFactory.getCurrentLocalDateTime ());
   }
 }

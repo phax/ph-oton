@@ -14,34 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.atom;
-
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotations.Nonempty;
+package com.helger.photon.basic.atom;
 
 /**
- * Text identification type
+ * Base interface for the text construct.
  * 
  * @author Philip Helger
  */
-public enum EFeedTextType
+public interface IFeedTextConstruct extends IFeedElement
 {
-  TEXT ("text"),
-  HTML ("html"),
-  XHTML ("xhtml");
-
-  private final String m_sType;
-
-  private EFeedTextType (@Nonnull @Nonempty final String sType)
-  {
-    m_sType = sType;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getType ()
-  {
-    return m_sType;
-  }
+  /* empty */
 }

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.atom;
+package com.helger.photon.core.atom.action;
 
 import java.util.Locale;
 
@@ -36,6 +36,9 @@ import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
 import com.helger.commons.stats.StatisticsManager;
 import com.helger.commons.timing.StopWatch;
 import com.helger.commons.xml.serialize.XMLWriterSettings;
+import com.helger.photon.basic.atom.Feed;
+import com.helger.photon.basic.atom.FeedGenerator;
+import com.helger.photon.basic.atom.FeedLink;
 import com.helger.photon.core.action.executor.AbstractActionExecutor;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;

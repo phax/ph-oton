@@ -14,21 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.atom;
+package com.helger.photon.basic.atom;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.helger.html.hc.html.HCDiv;
-
-/**
- * XHTML text construct.
- *
- * @author Philip Helger
- */
-public class FeedXHTMLTextConstruct extends AbstractFeedXHTML implements IFeedTextConstruct
+public class FeedPlainTextConstruct extends AbstractFeedText implements IFeedTextConstruct
 {
-  public FeedXHTMLTextConstruct (@Nonnull final HCDiv aDiv)
+  public FeedPlainTextConstruct (@Nullable final String sText)
   {
-    super (aDiv);
+    super (DEFAULT_TYPE, sText);
+  }
+
+  public FeedPlainTextConstruct (@Nullable final EFeedTextType eType, @Nullable final String sText)
+  {
+    super (eType, sText);
   }
 }

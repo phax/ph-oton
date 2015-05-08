@@ -14,14 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.atom;
+package com.helger.photon.basic.atom;
+
+import javax.annotation.concurrent.Immutable;
 
 /**
- * Base interface for the text construct.
+ * Constants for ATOM feeds
  * 
  * @author Philip Helger
  */
-public interface IFeedTextConstruct extends IFeedElement
+@Immutable
+public final class CFeed
 {
-  /* empty */
+  /**
+   * The XML namespace for ATOM feeds.
+   */
+  public static final String XMLNS_ATOM = "http://www.w3.org/2005/Atom";
+
+  private CFeed ()
+  {}
 }
