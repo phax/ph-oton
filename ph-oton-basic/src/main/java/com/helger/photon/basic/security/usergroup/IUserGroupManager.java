@@ -27,6 +27,7 @@ import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.annotations.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.state.EChange;
+import com.helger.photon.basic.security.usergroup.callback.IUserGroupModificationCallback;
 
 /**
  * Interface for a user group manager

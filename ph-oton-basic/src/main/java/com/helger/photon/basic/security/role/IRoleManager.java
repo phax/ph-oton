@@ -27,6 +27,7 @@ import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.annotations.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.state.EChange;
+import com.helger.photon.basic.security.role.callback.IRoleModificationCallback;
 
 /**
  * Interface for a role manager.

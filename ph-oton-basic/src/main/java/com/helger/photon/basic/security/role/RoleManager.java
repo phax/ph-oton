@@ -47,6 +47,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.security.CSecurity;
 import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.role.callback.IRoleModificationCallback;
 
 /**
  * This class manages the available roles.

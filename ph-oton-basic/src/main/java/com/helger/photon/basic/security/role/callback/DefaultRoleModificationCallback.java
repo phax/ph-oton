@@ -14,17 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.security.login;
+package com.helger.photon.basic.security.role.callback;
 
-import javax.annotation.Nonnull;
+import com.helger.photon.basic.security.role.IRole;
 
 /**
- * Default empty implementation of {@link IUserLogoutCallback}.
+ * Default empty implementation of {@link IRoleModificationCallback}. Use this
+ * class as the base class of custom implementations so that no change is
+ * necessary when the interface gets extended.
  * 
  * @author Philip Helger
  */
-public class DefaultUserLogoutCallback implements IUserLogoutCallback
+public class DefaultRoleModificationCallback implements IRoleModificationCallback
 {
-  public void onUserLogout (@Nonnull final LoginInfo aInfo)
+  public void onRoleCreated (final IRole aRole, final boolean bPredefinedRole)
+  {}
+
+  public void onRoleUpdated (final IRole aRole)
+  {}
+
+  public void onRoleRenamed (final IRole aRole)
+  {}
+
+  public void onRoleDeleted (final IRole aRole)
   {}
 }

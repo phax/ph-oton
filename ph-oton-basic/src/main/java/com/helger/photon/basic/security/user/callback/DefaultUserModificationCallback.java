@@ -14,9 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.security.user;
+package com.helger.photon.basic.security.user.callback;
 
 import javax.annotation.Nonnull;
+
+import com.helger.photon.basic.security.user.IUser;
 
 /**
  * Default empty implementation of {@link IUserModificationCallback}. Use this

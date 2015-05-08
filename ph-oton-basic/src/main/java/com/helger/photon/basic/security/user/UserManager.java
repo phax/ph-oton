@@ -53,6 +53,7 @@ import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 import com.helger.photon.basic.security.password.hash.PasswordHash;
 import com.helger.photon.basic.security.password.salt.IPasswordSalt;
 import com.helger.photon.basic.security.password.salt.PasswordSalt;
+import com.helger.photon.basic.security.user.callback.IUserModificationCallback;
 
 /**
  * This class manages the available users.

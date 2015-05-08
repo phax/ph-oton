@@ -14,22 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.security.login;
+package com.helger.photon.basic.security.login.callback;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.photon.basic.security.login.LoginInfo;
 
 /**
- * Default empty implementation of {@link IUserLoginCallback}.
+ * Default empty implementation of {@link IUserLogoutCallback}.
  * 
  * @author Philip Helger
  */
-public class DefaultUserLoginCallback implements IUserLoginCallback
+public class DefaultUserLogoutCallback implements IUserLogoutCallback
 {
-  public void onUserLogin (@Nonnull final LoginInfo aInfo)
-  {}
-
-  public void onUserLoginError (@Nonnull @Nonempty final String sUserID, @Nonnull final ELoginResult eLoginResult)
+  public void onUserLogout (@Nonnull final LoginInfo aInfo)
   {}
 }

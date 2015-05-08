@@ -14,12 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.security.login;
+package com.helger.photon.basic.security.login.callback;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.callback.ICallback;
+import com.helger.photon.basic.security.login.ELoginResult;
+import com.helger.photon.basic.security.login.LoginInfo;
 
 /**
  * Callback interface when a user logs in.

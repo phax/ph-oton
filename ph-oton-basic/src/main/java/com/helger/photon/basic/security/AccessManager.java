@@ -38,19 +38,19 @@ import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.scopes.singleton.GlobalSingleton;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.security.login.DefaultUserLoginCallback;
 import com.helger.photon.basic.security.login.ELoginResult;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.photon.basic.security.login.LoginInfo;
+import com.helger.photon.basic.security.login.callback.DefaultUserLoginCallback;
 import com.helger.photon.basic.security.role.IRole;
-import com.helger.photon.basic.security.role.IRoleModificationCallback;
 import com.helger.photon.basic.security.role.RoleManager;
+import com.helger.photon.basic.security.role.callback.IRoleModificationCallback;
 import com.helger.photon.basic.security.user.IUser;
-import com.helger.photon.basic.security.user.IUserModificationCallback;
 import com.helger.photon.basic.security.user.UserManager;
+import com.helger.photon.basic.security.user.callback.IUserModificationCallback;
 import com.helger.photon.basic.security.usergroup.IUserGroup;
-import com.helger.photon.basic.security.usergroup.IUserGroupModificationCallback;
 import com.helger.photon.basic.security.usergroup.UserGroupManager;
+import com.helger.photon.basic.security.usergroup.callback.IUserGroupModificationCallback;
 
 /**
  * This is the central manager that encapsulates all security manages. This

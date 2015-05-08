@@ -51,6 +51,7 @@ import com.helger.photon.basic.security.CSecurity;
 import com.helger.photon.basic.security.audit.AuditUtils;
 import com.helger.photon.basic.security.role.IRoleManager;
 import com.helger.photon.basic.security.user.IUserManager;
+import com.helger.photon.basic.security.usergroup.callback.IUserGroupModificationCallback;
 
 /**
  * This class manages the available user groups.

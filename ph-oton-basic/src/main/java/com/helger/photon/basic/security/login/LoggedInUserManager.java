@@ -51,6 +51,10 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.lock.ObjectLockManager;
+import com.helger.photon.basic.security.login.callback.DefaultUserLogoutCallback;
+import com.helger.photon.basic.security.login.callback.IUserLoginCallback;
+import com.helger.photon.basic.security.login.callback.IUserLogoutCallback;
 import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 import com.helger.photon.basic.security.user.IUser;
 import com.helger.web.scopes.domain.ISessionWebScope;
@@ -184,6 +188,23 @@ public final class LoggedInUserManager extends GlobalSingleton implements ICurre
     public String toString ()
     {
       return ToStringGenerator.getDerived (super.toString ()).append ("userID", m_sUserID).toString ();
+    }
+  }
+
+  /**
+   * Special logout callback that is executed every time a user logs out. It
+   * removes all objects from the {@link ObjectLockManager}.
+   * 
+   * @author Philip Helger
+   */
+  final class UserLogoutCallbackUnlockAllObjects extends DefaultUserLogoutCallback
+  {
+    @Override
+    public void onUserLogout (@Nonnull final LoginInfo aInfo)
+    {
+      final ObjectLockManager aOLMgr = ObjectLockManager.getInstanceIfInstantiated ();
+      if (aOLMgr != null)
+        aOLMgr.unlockAllObjectsOfUser (aInfo.getUserID ());
     }
   }
 
