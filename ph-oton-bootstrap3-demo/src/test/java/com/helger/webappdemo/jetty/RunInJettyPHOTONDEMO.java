@@ -20,11 +20,18 @@ import java.io.File;
 
 import javax.annotation.concurrent.Immutable;
 
+import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.webapp.Configuration;
+import org.eclipse.jetty.webapp.FragmentConfiguration;
+import org.eclipse.jetty.webapp.JettyWebXmlConfiguration;
+import org.eclipse.jetty.webapp.MetaInfConfiguration;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.webapp.WebInfConfiguration;
+import org.eclipse.jetty.webapp.WebXmlConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +44,9 @@ import com.helger.commons.SystemProperties;
  * @author Philip Helger
  */
 @Immutable
-public final class RunInJettyDEMO
+public final class RunInJettyPHOTONDEMO
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (RunInJettyDEMO.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (RunInJettyPHOTONDEMO.class);
   private static final String RESOURCE_PREFIX = "target/webapp-classes";
 
   public static void main (final String [] args) throws Exception
@@ -65,7 +72,7 @@ public final class RunInJettyDEMO
     aWebAppCtx.setDescriptor (RESOURCE_PREFIX + "/WEB-INF/web.xml");
     aWebAppCtx.setResourceBase (RESOURCE_PREFIX);
     aWebAppCtx.setContextPath ("/");
-    aWebAppCtx.setTempDirectory (new File (SystemProperties.getTmpDir () + '/' + RunInJettyDEMO.class.getName ()));
+    aWebAppCtx.setTempDirectory (new File (SystemProperties.getTmpDir () + '/' + RunInJettyPHOTONDEMO.class.getName ()));
     aWebAppCtx.setParentLoaderPriority (true);
     aWebAppCtx.setThrowUnavailableOnStartupException (true);
     if (false)
@@ -73,6 +80,13 @@ public final class RunInJettyDEMO
       // Don't do this!
       aWebAppCtx.setCopyWebInf (true);
     }
+    if (false)
+      aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
+                                                          new WebXmlConfiguration (),
+                                                          new MetaInfConfiguration (),
+                                                          new FragmentConfiguration (),
+                                                          new AnnotationConfiguration (),
+                                                          new JettyWebXmlConfiguration () });
     aServer.setHandler (aWebAppCtx);
     final ServletContextHandler aCtx = aWebAppCtx;
 
