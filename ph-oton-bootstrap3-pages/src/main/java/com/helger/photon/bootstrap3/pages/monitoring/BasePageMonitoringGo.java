@@ -38,7 +38,7 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.go.GoMappingItem;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.go.GoServlet;
@@ -130,13 +130,13 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     aNodeList.addChild (new HCDiv ().addChild (EText.MSG_GO_SERVLET.getDisplayText (aDisplayLocale) +
-                                               EWebBasicsText.getYesOrNo (GoServlet.isServletRegisteredInServletContext (),
+                                               EPhotonCoreText.getYesOrNo (GoServlet.isServletRegisteredInServletContext (),
                                                                           aDisplayLocale)));
 
     final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ())
@@ -150,9 +150,9 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
     {
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (aItem.getKey ());
-      aRow.addCell (EWebBasicsText.getYesOrNo (aItem.isInternal (), aDisplayLocale));
+      aRow.addCell (EPhotonCoreText.getYesOrNo (aItem.isInternal (), aDisplayLocale));
       aRow.addCell (HCA.createLinkedWebsite (aItem.getTargetURLAsString ()));
-      aRow.addCell (EWebBasicsText.getYesOrNo (aItem.isEditable (), aDisplayLocale));
+      aRow.addCell (EPhotonCoreText.getYesOrNo (aItem.isEditable (), aDisplayLocale));
     }
     aNodeList.addChild (aTable);
 

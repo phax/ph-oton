@@ -37,8 +37,8 @@ import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.menu.MenuItemDeterminatorCallback;
-import com.helger.photon.core.app.ISimpleWebExecutionContext;
-import com.helger.photon.core.app.layout.ILayoutExecutionContext;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 
 /**
  * Renders menu item nodes.

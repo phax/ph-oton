@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCHead;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 /**
  * Interface for an object that provides content to an application layout area.

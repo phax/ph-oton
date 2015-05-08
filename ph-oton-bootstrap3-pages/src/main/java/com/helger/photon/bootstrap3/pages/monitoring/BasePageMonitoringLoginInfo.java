@@ -54,7 +54,7 @@ import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
@@ -313,7 +313,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
     final IButtonToolbar <?> aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
 
@@ -324,7 +324,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     aTable.addHeaderRow ().addCells (EText.MSG_USERNAME.getDisplayText (aDisplayLocale),
                                      EText.MSG_LOGINDT.getDisplayText (aDisplayLocale),
                                      EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale),
-                                     EWebBasicsText.MSG_ACTIONS.getDisplayText (aDisplayLocale));
+                                     EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));
     final Collection <LoginInfo> aLoginInfos = LoggedInUserManager.getInstance ().getAllLoginInfos ();
     for (final LoginInfo aLoginInfo : aLoginInfos)
     {

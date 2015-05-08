@@ -18,7 +18,7 @@ package com.helger.photon.core.app;
 
 /**
  * This class contains application IDs for the most common use cases
- * 
+ *
  * @author Philip Helger
  */
 public final class CApplication

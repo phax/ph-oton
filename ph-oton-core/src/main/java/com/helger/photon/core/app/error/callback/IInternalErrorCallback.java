@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.app.error;
+package com.helger.photon.core.app.error.callback;
 
 import java.util.Locale;
 
@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.callback.ICallback;
+import com.helger.photon.core.app.error.InternalErrorHandler;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**

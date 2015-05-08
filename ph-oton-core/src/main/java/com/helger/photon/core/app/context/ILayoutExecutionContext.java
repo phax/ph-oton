@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.app.layout;
+package com.helger.photon.core.app.context;
 
 import java.util.Map;
 
@@ -25,7 +25,6 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
-import com.helger.photon.core.app.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
 
 public interface ILayoutExecutionContext extends ISimpleWebExecutionContext

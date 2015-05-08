@@ -27,7 +27,7 @@ import com.helger.html.hc.html.HCOption;
 import com.helger.html.hc.html.HCSelect;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.request.IHCRequestField;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 
 public class HCExtSelect extends HCSelect
 {
@@ -54,7 +54,7 @@ public class HCExtSelect extends HCSelect
   @Nonnull
   public static HCOption createOptionPleaseSelect (@Nonnull final Locale aDisplayLocale)
   {
-    return createSpecialOption (EWebBasicsText.PLEASE_SELECT.getDisplayText (aDisplayLocale));
+    return createSpecialOption (EPhotonCoreText.PLEASE_SELECT.getDisplayText (aDisplayLocale));
   }
 
   @Nonnull
@@ -66,7 +66,7 @@ public class HCExtSelect extends HCSelect
   @Nonnull
   public static HCOption createOptionNone (@Nonnull final Locale aDisplayLocale)
   {
-    return createSpecialOption (EWebBasicsText.SELECT_NONE.getDisplayText (aDisplayLocale));
+    return createSpecialOption (EPhotonCoreText.SELECT_NONE.getDisplayText (aDisplayLocale));
   }
 
   @Nonnull

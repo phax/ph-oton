@@ -49,8 +49,8 @@ import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestManager;
-import com.helger.photon.core.app.LinkUtils;
 import com.helger.photon.core.mgr.MetaSystemManager;
+import com.helger.photon.core.url.LinkUtils;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
 

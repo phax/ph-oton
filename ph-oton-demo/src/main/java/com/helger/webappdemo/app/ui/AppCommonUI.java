@@ -38,8 +38,8 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.EBootstrapFormType;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.bootstrap3.uictrls.datatables.IBootstrapDataTablesConfigurator;
-import com.helger.photon.core.EWebBasicsText;
-import com.helger.photon.core.app.layout.LayoutExecutionContext;
+import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.login.CLogin;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -105,12 +105,12 @@ public final class AppCommonUI
     aForm.setLeft (3);
 
     // User name field
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EWebBasicsText.EMAIL_ADDRESS.getDisplayText (aDisplayLocale))
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EPhotonCoreText.EMAIL_ADDRESS.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (CLogin.REQUEST_ATTR_USERID,
                                                                                          sPreselectedUserName)).setID (sIDUserName)));
 
     // Password field
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EWebBasicsText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale))
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EPhotonCoreText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEditPassword (CLogin.REQUEST_ATTR_PASSWORD).setID (sIDPassword)));
 
     // Placeholder for error message
@@ -125,7 +125,7 @@ public final class AppCommonUI
                                                  .add (CLogin.REQUEST_ATTR_PASSWORD, JQuery.idRef (sIDPassword).val ()))
                         .arg (sIDErrorField));
     aOnClick._return (false);
-    aToolbar.addSubmitButton (EWebBasicsText.LOGIN_BUTTON_SUBMIT.getDisplayText (aDisplayLocale), aOnClick);
+    aToolbar.addSubmitButton (EPhotonCoreText.LOGIN_BUTTON_SUBMIT.getDisplayText (aDisplayLocale), aOnClick);
     return aForm;
   }
 }

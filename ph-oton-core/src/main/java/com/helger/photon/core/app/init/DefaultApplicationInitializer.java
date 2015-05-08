@@ -22,7 +22,7 @@ import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.core.action.IActionInvoker;
 import com.helger.photon.core.ajax.IAjaxInvoker;
-import com.helger.photon.core.app.layout.ILayoutExecutionContext;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.layout.ILayoutManager;
 
 /**

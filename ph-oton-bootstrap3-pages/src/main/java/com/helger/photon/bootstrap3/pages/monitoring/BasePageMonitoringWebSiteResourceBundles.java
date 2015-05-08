@@ -39,7 +39,7 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
@@ -137,19 +137,19 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     aNodeList.addChild (new HCDiv ().addChild (EText.MSG_CACHE_ACTIVE.getDisplayText (aDisplayLocale) +
-                                               EWebBasicsText.getYesOrNo (WebSiteResourceCache.isCacheEnabled (),
+                                               EPhotonCoreText.getYesOrNo (WebSiteResourceCache.isCacheEnabled (),
                                                                           aDisplayLocale)));
     aNodeList.addChild (new HCDiv ().addChild (EText.MSG_RESBUNDLE_SERVLET.getDisplayText (aDisplayLocale) +
-                                               EWebBasicsText.getYesOrNo (ResourceBundleServlet.isServletRegisteredInServletContext (),
+                                               EPhotonCoreText.getYesOrNo (ResourceBundleServlet.isServletRegisteredInServletContext (),
                                                                           aDisplayLocale)));
     aNodeList.addChild (new HCDiv ().addChild (EText.MSG_RESBUNDLE_ACTIVE.getDisplayText (aDisplayLocale) +
-                                               EWebBasicsText.getYesOrNo (ResourceBundleServlet.isActive (),
+                                               EPhotonCoreText.getYesOrNo (ResourceBundleServlet.isActive (),
                                                                           aDisplayLocale)));
 
     final IHCTable <?> aTable = new BootstrapTable (HCCol.star (),

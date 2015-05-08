@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.app.html;
+package com.helger.photon.core.url;
 
 import javax.annotation.Nonnull;
 
@@ -30,8 +30,6 @@ import com.helger.commons.url.ReadonlySimpleURL;
 import com.helger.commons.url.URLProtocolRegistry;
 import com.helger.commons.url.URLUtils;
 import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.photon.core.IWebURIToURLConverter;
-import com.helger.photon.core.app.LinkUtils;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**
@@ -59,18 +57,28 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
     return s_aInstance;
   }
 
+  private static boolean _isProjectRelativeURI (@Nonnull @Nonempty final String sURI)
+  {
+    // Absolute paths are project relative files and therefore are relative to
+    // the servlet context directory
+    return sURI.startsWith ("/");
+  }
+
   @Nonnull
   public IReadableResource getAsResource (@Nonnull @Nonempty final String sURI)
   {
+    ValueEnforcer.notEmpty (sURI, "URI");
+
     // If the URL is absolute, use it
     if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI))
       return new URLResource (URLUtils.getAsURL (sURI));
 
     // Absolute paths are project relative files and therefore are relative to
     // the servlet context directory
-    if (sURI.startsWith ("/"))
+    if (_isProjectRelativeURI (sURI))
       return WebFileIO.getServletContextIO ().getResource (sURI);
 
+    // Defaults to class path
     return new ClassPathResource (sURI);
   }
 
@@ -83,10 +91,14 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
     if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI))
       return new ReadonlySimpleURL (sURI);
 
-    // Absolute paths stay
-    if (sURI.startsWith ("/"))
+    // Absolute paths stays
+    if (_isProjectRelativeURI (sURI))
+    {
+      // Just add the context
       return LinkUtils.getURLWithContext (sURI);
+    }
 
+    // It's relative and therefore streamed
     final StringBuilder aPrefix = new StringBuilder (LinkUtils.getStreamServletPath ());
     if (!StringHelper.startsWith (sURI, '/'))
       aPrefix.append ('/');
@@ -97,6 +109,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   public ISimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                               @Nonnull @Nonempty final String sURI)
   {
+    ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notEmpty (sURI, "URI");
 
     // If the URL is absolute, use it
@@ -104,7 +117,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
       return new ReadonlySimpleURL (sURI);
 
     // Absolute paths stay
-    if (sURI.startsWith ("/"))
+    if (_isProjectRelativeURI (sURI))
       return LinkUtils.getURLWithContext (aRequestScope, sURI);
 
     // Relative paths will get streamed

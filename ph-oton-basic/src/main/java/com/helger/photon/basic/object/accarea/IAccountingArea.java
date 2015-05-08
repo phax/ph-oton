@@ -22,8 +22,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.masterdata.address.IReadonlyAddress;
 import com.helger.masterdata.currency.ECurrency;
-import com.helger.photon.basic.misc.IHasUIText;
 import com.helger.photon.basic.object.client.IClientObject;
+import com.helger.photon.basic.uitext.IHasUIText;
 
 /**
  * This interface represents a single accounting area.

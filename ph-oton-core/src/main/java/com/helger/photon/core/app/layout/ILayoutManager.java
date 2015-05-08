@@ -25,6 +25,7 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCHead;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 public interface ILayoutManager <LECTYPE extends ILayoutExecutionContext>
 {

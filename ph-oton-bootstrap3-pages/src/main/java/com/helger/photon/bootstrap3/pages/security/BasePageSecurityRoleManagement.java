@@ -56,7 +56,7 @@ import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -296,7 +296,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                             .setID (getID ());
     aTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
                                      EText.HEADER_IN_USE.getDisplayText (aDisplayLocale),
-                                     EWebBasicsText.MSG_ACTIONS.getDisplayText (aDisplayLocale));
+                                     EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));
     final Collection <? extends IRole> aRoles = aAccessMgr.getAllRoles ();
     for (final IRole aRole : aRoles)
     {
@@ -306,7 +306,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (new HCA (aViewLink).addChild (aRole.getName ()));
-      aRow.addCell (EWebBasicsText.getYesOrNo (!aAssignedUserGroups.isEmpty (), aDisplayLocale));
+      aRow.addCell (EPhotonCoreText.getYesOrNo (!aAssignedUserGroups.isEmpty (), aDisplayLocale));
 
       final IHCCell <?> aActionCell = aRow.addCell ();
       if (canDeleteRole (aRole))

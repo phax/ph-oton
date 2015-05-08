@@ -39,7 +39,7 @@ import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.table.BootstrapTableForm;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableForm;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -162,10 +162,10 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
             .setCtrl (Long.toString (EmailGlobalSettings.getMaxMailSendCount ()));
       aTable.createItemRow ()
             .setLabel (EText.MSG_EMAIL_USE_SSL.getDisplayText (aDisplayLocale))
-            .setCtrl (EWebBasicsText.getYesOrNo (EmailGlobalSettings.isUseSSL (), aDisplayLocale));
+            .setCtrl (EPhotonCoreText.getYesOrNo (EmailGlobalSettings.isUseSSL (), aDisplayLocale));
       aTable.createItemRow ()
             .setLabel (EText.MSG_EMAIL_USE_STARTTLS.getDisplayText (aDisplayLocale))
-            .setCtrl (EWebBasicsText.getYesOrNo (EmailGlobalSettings.isUseSTARTTLS (), aDisplayLocale));
+            .setCtrl (EPhotonCoreText.getYesOrNo (EmailGlobalSettings.isUseSTARTTLS (), aDisplayLocale));
       aTable.createItemRow ()
             .setLabel (EText.MSG_EMAIL_CONNECTION_TIMEOUT.getDisplayText (aDisplayLocale))
             .setCtrl (Long.toString (EmailGlobalSettings.getConnectionTimeoutMilliSecs ()) + "ms");

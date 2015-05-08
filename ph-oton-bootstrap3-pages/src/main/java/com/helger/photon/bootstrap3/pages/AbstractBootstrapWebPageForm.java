@@ -12,7 +12,7 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.page.AbstractWebPageForm;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
@@ -61,6 +61,6 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
   protected final IHCNode createIncorrectInputBox (@Nonnull final WPECTYPE aWPEC)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    return new BootstrapErrorBox ().addChild (EWebBasicsText.MSG_ERR_INCORRECT_INPUT.getDisplayText (aDisplayLocale));
+    return new BootstrapErrorBox ().addChild (EPhotonCoreText.ERR_INCORRECT_INPUT.getDisplayText (aDisplayLocale));
   }
 }

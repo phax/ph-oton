@@ -41,7 +41,7 @@ import com.helger.photon.basic.security.util.SecurityUtils;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
@@ -138,7 +138,7 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
@@ -160,7 +160,7 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
       aRow.addCell (PDTToString.getAsString (aItem.getDateTime (), aDisplayLocale));
       aRow.addCell (SecurityUtils.getUserDisplayName (aItem.getUserID (), aDisplayLocale));
       aRow.addCell (aItem.getType ().getID ());
-      aRow.addCell (EWebBasicsText.getYesOrNo (aItem.getSuccess ().isSuccess (), aDisplayLocale));
+      aRow.addCell (EPhotonCoreText.getYesOrNo (aItem.getSuccess ().isSuccess (), aDisplayLocale));
       aRow.addCell (getActionString (aItem));
     }
     aNodeList.addChild (aTable);

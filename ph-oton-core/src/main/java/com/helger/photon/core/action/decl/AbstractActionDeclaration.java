@@ -33,7 +33,7 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.photon.core.action.ActionInvoker;
 import com.helger.photon.core.action.IActionDeclaration;
 import com.helger.photon.core.action.IActionExecutor;
-import com.helger.photon.core.app.LinkUtils;
+import com.helger.photon.core.url.LinkUtils;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**

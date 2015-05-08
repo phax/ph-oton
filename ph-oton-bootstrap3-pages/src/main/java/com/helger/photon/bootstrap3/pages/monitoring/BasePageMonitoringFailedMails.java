@@ -58,7 +58,7 @@ import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.mgr.MetaSystemManager;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -205,7 +205,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_RESEND.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_RESEND.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref ()
                              .add (CHCParam.PARAM_ACTION, ACTION_RESEND)
                              .add (CHCParam.PARAM_OBJECT, aSelectedObject.getID ()),
@@ -215,7 +215,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                              .add (CHCParam.PARAM_ACTION, ACTION_RESEND_DEFAULT_SETTINGS)
                              .add (CHCParam.PARAM_OBJECT, aSelectedObject.getID ()),
                         EDefaultIcon.YES);
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_DELETE.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_DELETE.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref ()
                              .add (CHCParam.PARAM_ACTION, ACTION_DELETE)
                              .add (CHCParam.PARAM_OBJECT, aSelectedObject.getID ()),
@@ -454,10 +454,10 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     // Refresh button
     final boolean bDisabled = m_aFailedMailQueue.getAllFailedMails ().isEmpty ();
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_RESEND_ALL.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_RESEND_ALL.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION, ACTION_RESEND_ALL),
                         EDefaultIcon.YES);
     ((AbstractHCButton <?>) aToolbar.getLastChild ()).setDisabled (bDisabled);
@@ -465,7 +465,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                         aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION, ACTION_RESEND_ALL_DEFAULT_SETTINGS),
                         EDefaultIcon.YES);
     ((AbstractHCButton <?>) aToolbar.getLastChild ()).setDisabled (bDisabled);
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_DELETE_ALL.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_DELETE_ALL.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION, ACTION_DELETE_ALL),
                         EDefaultIcon.DELETE);
     ((AbstractHCButton <?>) aToolbar.getLastChild ()).setDisabled (bDisabled);

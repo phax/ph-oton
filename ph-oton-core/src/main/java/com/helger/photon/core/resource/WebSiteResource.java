@@ -47,8 +47,8 @@ import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriter;
 import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.photon.core.app.LinkUtils;
 import com.helger.photon.core.app.html.WebHTMLCreator;
+import com.helger.photon.core.url.LinkUtils;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**

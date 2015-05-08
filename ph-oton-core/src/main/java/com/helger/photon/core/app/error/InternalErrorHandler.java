@@ -61,6 +61,10 @@ import com.helger.datetime.PDTFactory;
 import com.helger.datetime.io.PDTIOHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
+import com.helger.photon.basic.thread.ThreadDescriptor;
+import com.helger.photon.basic.thread.ThreadDescriptorList;
+import com.helger.photon.core.app.error.callback.IInternalErrorCallback;
+import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
 import com.helger.smtp.EEmailType;
 import com.helger.smtp.IEmailAttachmentDataSource;
 import com.helger.smtp.IEmailAttachmentList;
@@ -601,7 +605,7 @@ public final class InternalErrorHandler
 
       // Add all request attributes
       for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aRequestScope.getAllAttributes ())
-                                                                    .entrySet ())
+                                                                     .entrySet ())
         aMetadata.addField ("[Request] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
     }
     else
@@ -639,7 +643,7 @@ public final class InternalErrorHandler
 
         // Add all session attributes
         for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aSessionScope.getAllAttributes ())
-                                                                      .entrySet ())
+                                                                       .entrySet ())
           aMetadata.addField ("[Session] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
       }
     }

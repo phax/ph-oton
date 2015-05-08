@@ -39,7 +39,7 @@ import com.helger.photon.basic.migration.SystemMigrationResult;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
@@ -129,7 +129,7 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
@@ -148,7 +148,7 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (aItem.getID ());
       aRow.addCell (PDTToString.getAsString (aItem.getExecutionDateTime (), aDisplayLocale));
-      aRow.addCell (EWebBasicsText.getYesOrNo (aItem.isSuccess (), aDisplayLocale));
+      aRow.addCell (EPhotonCoreText.getYesOrNo (aItem.isSuccess (), aDisplayLocale));
       aRow.addCell (aItem.getErrorMessage ());
     }
     aNodeList.addChild (aTable);

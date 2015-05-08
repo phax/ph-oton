@@ -37,7 +37,7 @@ public final class CApp
 {
   public static final Locale DEFAULT_LOCALE = LocaleCache.getLocale ("en", "US");
 
-  private static final String APPLICATION_TITLE = "ph-webapp-demo";
+  private static final String APPLICATION_TITLE = "ph-oton-bootstrap3-demo";
 
   // Security roles
   public static final String ROLE_CONFIG_ID = "config";

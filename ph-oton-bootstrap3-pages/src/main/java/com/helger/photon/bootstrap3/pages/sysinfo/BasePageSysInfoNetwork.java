@@ -47,7 +47,7 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
@@ -185,7 +185,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
                                  // network interface is up and running.
                                  try
                                  {
-                                   aRow.addCell (EWebBasicsText.getYesOrNo (aNI.isUp (), aDisplayLocale));
+                                   aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isUp (), aDisplayLocale));
                                  }
                                  catch (final SocketException ex)
                                  {
@@ -195,7 +195,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
                                  // network interface is a loopback interface.
                                  try
                                  {
-                                   aRow.addCell (EWebBasicsText.getYesOrNo (aNI.isLoopback (), aDisplayLocale));
+                                   aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isLoopback (), aDisplayLocale));
                                  }
                                  catch (final SocketException ex)
                                  {
@@ -208,7 +208,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
                                  // a modem.
                                  try
                                  {
-                                   aRow.addCell (EWebBasicsText.getYesOrNo (aNI.isPointToPoint (), aDisplayLocale));
+                                   aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isPointToPoint (), aDisplayLocale));
                                  }
                                  catch (final SocketException ex)
                                  {
@@ -219,7 +219,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
                                  // not.
                                  try
                                  {
-                                   aRow.addCell (EWebBasicsText.getYesOrNo (aNI.supportsMulticast (), aDisplayLocale));
+                                   aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.supportsMulticast (), aDisplayLocale));
                                  }
                                  catch (final SocketException ex)
                                  {
@@ -250,7 +250,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
                                  // and a number identifying the child since
                                  // there can be several virtual interfaces
                                  // attached to a single physical interface
-                                 aRow.addCell (EWebBasicsText.getYesOrNo (aNI.isVirtual (), aDisplayLocale));
+                                 aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isVirtual (), aDisplayLocale));
                                }
                              });
       }

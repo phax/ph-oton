@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.app.error;
+package com.helger.photon.core.app.error.uihandler;
 
 import java.util.Locale;
 
@@ -32,7 +32,7 @@ import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCH1;
 import com.helger.html.hc.html.HCTextArea;
 import com.helger.html.hc.htmlext.HCUtils;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 
 /**
  * The default implementation of {@link IUIInternalErrorHandler}
@@ -58,8 +58,8 @@ public class UIInternalErrorHandler implements IUIInternalErrorHandler
                                @Nonnull final String sErrorID,
                                @Nonnull final Locale aDisplayLocale)
   {
-    m_aParentNode.addChild (new HCH1 ().addChild (EWebBasicsText.INTERNAL_ERROR_TITLE.getDisplayText (aDisplayLocale)));
-    m_aParentNode.addChild (new HCDiv ().addChildren (HCUtils.nl2brList (EWebBasicsText.INTERNAL_ERROR_DESCRIPTION.getDisplayTextWithArgs (aDisplayLocale,
+    m_aParentNode.addChild (new HCH1 ().addChild (EPhotonCoreText.INTERNAL_ERROR_TITLE.getDisplayText (aDisplayLocale)));
+    m_aParentNode.addChild (new HCDiv ().addChildren (HCUtils.nl2brList (EPhotonCoreText.INTERNAL_ERROR_DESCRIPTION.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                            sErrorID))));
 
     // Show stack trace details

@@ -40,7 +40,7 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.UITextFormatter;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
@@ -133,13 +133,13 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
                .setCtrl (aScope.getID ());
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isValid (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_IN_DESTRUCTION.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isInDestruction (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isDestroyed (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_APPLICATION_SCOPES.getDisplayText (aDisplayLocale))
                .setCtrl (Integer.toString (aScope.getApplicationScopeCount ()));
@@ -181,13 +181,13 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
                .setCtrl (aScope.getID ());
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isValid (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_IN_DESTRUCTION.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isInDestruction (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isDestroyed (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
                .setCtrl (Integer.toString (aScope.getAttributeCount ()));
@@ -224,7 +224,7 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);

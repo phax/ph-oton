@@ -25,8 +25,8 @@ import javax.servlet.http.HttpSession;
 
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.photon.core.app.LinkUtils;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
+import com.helger.photon.core.url.LinkUtils;
 import com.helger.web.http.EHTTPMethod;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;

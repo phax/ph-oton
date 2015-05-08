@@ -36,7 +36,8 @@ import com.helger.html.hc.html.HCScriptFile;
 import com.helger.html.hc.impl.HCConditionalCommentNode;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
-import com.helger.photon.core.IWebURIToURLConverter;
+import com.helger.photon.core.url.IWebURIToURLConverter;
+import com.helger.photon.core.url.StreamOrLocalURIToURLConverter;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 

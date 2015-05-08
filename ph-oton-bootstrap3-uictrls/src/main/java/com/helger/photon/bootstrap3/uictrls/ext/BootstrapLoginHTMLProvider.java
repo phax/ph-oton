@@ -40,8 +40,8 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.grid.BootstrapRow;
 import com.helger.photon.bootstrap3.pageheader.BootstrapPageHeader;
-import com.helger.photon.core.EWebBasicsText;
-import com.helger.photon.core.app.ISimpleWebExecutionContext;
+import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.login.CLogin;
 import com.helger.photon.core.login.LoginHTMLProvider;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -130,16 +130,16 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
       aForm.addChild (BootstrapErrorBox.create (getTextErrorMessage (aDisplayLocale, getLoginResult ())));
 
     // User name and password table
-    final String sUserName = EWebBasicsText.EMAIL_ADDRESS.getDisplayText (aDisplayLocale);
+    final String sUserName = EPhotonCoreText.EMAIL_ADDRESS.getDisplayText (aDisplayLocale);
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sUserName)
                                                  .setCtrl (new HCEdit (CLogin.REQUEST_ATTR_USERID).setPlaceholder (sUserName)));
 
-    final String sPassword = EWebBasicsText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale);
+    final String sPassword = EPhotonCoreText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale);
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPassword)
                                                  .setCtrl (new HCEditPassword (CLogin.REQUEST_ATTR_PASSWORD).setPlaceholder (sPassword)));
 
     // Submit button
-    aForm.addChild (new BootstrapSubmitButton ().addChild (EWebBasicsText.LOGIN_BUTTON_SUBMIT.getDisplayText (aDisplayLocale)));
+    aForm.addChild (new BootstrapSubmitButton ().addChild (EPhotonCoreText.LOGIN_BUTTON_SUBMIT.getDisplayText (aDisplayLocale)));
 
     // Customize
     onAfterForm (aSWEC, aForm);

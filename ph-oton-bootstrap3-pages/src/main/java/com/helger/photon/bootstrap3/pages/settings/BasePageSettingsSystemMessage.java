@@ -46,7 +46,7 @@ import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.uicore.html.select.HCSystemMessageTypeSelect;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -200,7 +200,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
       aForm.addChild (new HCHiddenField (CHCParam.PARAM_ACTION, CHCParam.ACTION_EDIT));
 
       final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-      aToolbar.addSubmitButton (EWebBasicsText.MSG_BUTTON_EDIT.getDisplayText (aDisplayLocale), EDefaultIcon.EDIT);
+      aToolbar.addSubmitButton (EPhotonCoreText.BUTTON_EDIT.getDisplayText (aDisplayLocale), EDefaultIcon.EDIT);
     }
   }
 }

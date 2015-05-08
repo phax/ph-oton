@@ -27,7 +27,7 @@ import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.photon.basic.app.menu.IMenuItem;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.core.app.layout.ILayoutExecutionContext;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 @Immutable
 public final class BootstrapBreadcrumbsProvider

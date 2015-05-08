@@ -62,7 +62,7 @@ import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableForm;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.uicore.html.table.IHCTableForm;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
@@ -448,7 +448,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                             .setID (getID ());
     aTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
                                      EText.HEADER_IN_USE.getDisplayText (aDisplayLocale),
-                                     EWebBasicsText.MSG_ACTIONS.getDisplayText (aDisplayLocale));
+                                     EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));
     final Collection <? extends IUserGroup> aUserGroups = AccessManager.getInstance ().getAllUserGroups ();
     for (final IUserGroup aUserGroup : aUserGroups)
     {
@@ -456,7 +456,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (new HCA (aViewLink).addChild (aUserGroup.getName ()));
-      aRow.addCell (EWebBasicsText.getYesOrNo (aUserGroup.hasContainedUsers (), aDisplayLocale));
+      aRow.addCell (EPhotonCoreText.getYesOrNo (aUserGroup.hasContainedUsers (), aDisplayLocale));
 
       final IHCCell <?> aActionCell = aRow.addCell ();
       aActionCell.addChild (createEditLink (aWPEC,

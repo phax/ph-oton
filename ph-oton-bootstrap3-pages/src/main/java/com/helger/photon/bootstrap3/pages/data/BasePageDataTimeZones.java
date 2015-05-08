@@ -40,7 +40,7 @@ import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -140,8 +140,8 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> e
       aRow.addCell (aDTZ.getName (nNow, aDisplayLocale));
       aRow.addCell (aDTZ.getShortName (nNow, aDisplayLocale));
       aRow.addCell (new Duration (aDTZ.getOffset (nNow)).toString ());
-      aRow.addCell (EWebBasicsText.getYesOrNo (aDTZ.isStandardOffset (nNow), aDisplayLocale));
-      aRow.addCell (EWebBasicsText.getYesOrNo (aDTZ.isFixed (), aDisplayLocale));
+      aRow.addCell (EPhotonCoreText.getYesOrNo (aDTZ.isStandardOffset (nNow), aDisplayLocale));
+      aRow.addCell (EPhotonCoreText.getYesOrNo (aDTZ.isFixed (), aDisplayLocale));
     }
     aNodeList.addChild (aTable);
 

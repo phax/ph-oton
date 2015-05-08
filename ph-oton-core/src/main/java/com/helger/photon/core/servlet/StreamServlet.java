@@ -23,8 +23,8 @@ import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.url.URLUtils;
 import com.helger.photon.core.app.CApplication;
-import com.helger.photon.core.app.LinkUtils;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
+import com.helger.photon.core.url.LinkUtils;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**

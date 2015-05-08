@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.app.error;
+package com.helger.photon.core.app.error.callback;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,6 +30,7 @@ import com.helger.photon.core.action.IActionInvoker;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.app.error.InternalErrorHandler;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**

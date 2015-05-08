@@ -31,7 +31,7 @@ import com.helger.html.hc.impl.HCEntityNode;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuSeparator;
-import com.helger.photon.core.app.ISimpleWebExecutionContext;
+import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 
 /**
  * Default implementation of {@link IMenuItemRenderer}

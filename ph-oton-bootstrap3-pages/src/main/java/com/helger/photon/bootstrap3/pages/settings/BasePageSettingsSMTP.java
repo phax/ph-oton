@@ -60,7 +60,7 @@ import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableForm;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.photon.core.smtp.CNamedSMTPSettings;
@@ -290,11 +290,11 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
     aTable.createItemRow ()
           .setLabel (EText.LABEL_SSL.getDisplayText (aDisplayLocale))
-          .setCtrl (EWebBasicsText.getYesOrNo (aSettings.isSSLEnabled (), aDisplayLocale));
+          .setCtrl (EPhotonCoreText.getYesOrNo (aSettings.isSSLEnabled (), aDisplayLocale));
 
     aTable.createItemRow ()
           .setLabel (EText.LABEL_STARTTLS.getDisplayText (aDisplayLocale))
-          .setCtrl (EWebBasicsText.getYesOrNo (aSettings.isSTARTTLSEnabled (), aDisplayLocale));
+          .setCtrl (EPhotonCoreText.getYesOrNo (aSettings.isSTARTTLSEnabled (), aDisplayLocale));
 
     aTable.createItemRow ()
           .setLabel (EText.LABEL_CONNECTION_TIMEOUT.getDisplayText (aDisplayLocale))
@@ -648,7 +648,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     aTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
                                      EText.HEADER_HOST.getDisplayText (aDisplayLocale),
                                      EText.HEADER_USERNAME.getDisplayText (aDisplayLocale),
-                                     EWebBasicsText.MSG_ACTIONS.getDisplayText (aDisplayLocale));
+                                     EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));
     for (final NamedSMTPSettings aCurObject : m_aMgr.getAllSettings ().values ())
     {
       final ISMTPSettings aSettings = aCurObject.getSMTPSettings ();

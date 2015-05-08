@@ -29,7 +29,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.io.IPathRelativeIO;
 import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.photon.core.app.LinkUtils;
+import com.helger.photon.core.url.LinkUtils;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**

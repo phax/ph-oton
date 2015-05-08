@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.app;
+package com.helger.photon.core.url;
 
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -84,6 +84,10 @@ public final class LinkUtils
     }
   }
 
+  /**
+   * @return The name of the stream servlet path. Default is <code>stream</code>
+   * @see #getStreamServletPath()
+   */
   @Nonnull
   @Nonempty
   public static String getStreamServletName ()
@@ -99,6 +103,11 @@ public final class LinkUtils
     }
   }
 
+  /**
+   * @return The relative path of the stream servlet. Default is
+   *         <code>/stream</code>
+   * @see #getStreamServletName()
+   */
   @Nonnull
   @Nonempty
   public static String getStreamServletPath ()

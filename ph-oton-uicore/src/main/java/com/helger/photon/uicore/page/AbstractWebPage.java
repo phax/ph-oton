@@ -41,9 +41,9 @@ import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.meta.MetaElementList;
 import com.helger.photon.basic.app.page.AbstractPage;
-import com.helger.photon.core.EWebBasicsText;
-import com.helger.photon.core.app.LinkUtils;
-import com.helger.photon.core.app.layout.ILayoutExecutionContext;
+import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.core.url.LinkUtils;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
 
@@ -284,7 +284,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
 
     final HCA aHelpNode = new HCA (getHelpURL (aRequestScope, aDisplayLocale));
     final String sPageName = getDisplayText (aDisplayLocale);
-    aHelpNode.setTitle (EWebBasicsText.PAGE_HELP_TITLE.getDisplayTextWithArgs (aDisplayLocale, sPageName));
+    aHelpNode.setTitle (EPhotonCoreText.PAGE_HELP_TITLE.getDisplayTextWithArgs (aDisplayLocale, sPageName));
     aHelpNode.addChild (new HCSpan ().addClass (CSS_PAGE_HELP_ICON));
     aHelpNode.setTarget (HELP_WINDOW_TARGET);
     return aHelpNode;

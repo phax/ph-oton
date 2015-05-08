@@ -40,8 +40,8 @@ import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.basic.security.login.ELoginResult;
-import com.helger.photon.core.EWebBasicsText;
-import com.helger.photon.core.app.ISimpleWebExecutionContext;
+import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.html.AbstractHTMLProvider;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
@@ -104,14 +104,14 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
   @OverrideOnDemand
   protected String getTextHeader (@Nonnull final Locale aDisplayLocale)
   {
-    return EWebBasicsText.LOGIN_HEADER.getDisplayText (aDisplayLocale);
+    return EPhotonCoreText.LOGIN_HEADER.getDisplayText (aDisplayLocale);
   }
 
   @Nullable
   @OverrideOnDemand
   protected String getTextErrorMessage (@Nonnull final Locale aDisplayLocale, @Nonnull final ELoginResult eLoginResult)
   {
-    return EWebBasicsText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) +
+    return EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) +
            " " +
            eLoginResult.getDisplayText (aDisplayLocale);
   }
@@ -120,14 +120,14 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
   @OverrideOnDemand
   protected String getTextFieldUserName (@Nonnull final Locale aDisplayLocale)
   {
-    return EWebBasicsText.LOGIN_FIELD_USERNAME.getDisplayText (aDisplayLocale);
+    return EPhotonCoreText.LOGIN_FIELD_USERNAME.getDisplayText (aDisplayLocale);
   }
 
   @Nullable
   @OverrideOnDemand
   protected String getTextFieldPassword (@Nonnull final Locale aDisplayLocale)
   {
-    return EWebBasicsText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale);
+    return EPhotonCoreText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale);
   }
 
   /**
@@ -180,6 +180,6 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
 
     // Submit button
     final IHCCell <?> aCell = aTable.addBodyRow ().addCell ().setColspan (aTable.getColumnCount ());
-    aCell.addChild (new HCButton_Submit (EWebBasicsText.LOGIN_BUTTON_SUBMIT.getDisplayText (aDisplayLocale)));
+    aCell.addChild (new HCButton_Submit (EPhotonCoreText.LOGIN_BUTTON_SUBMIT.getDisplayText (aDisplayLocale)));
   }
 }

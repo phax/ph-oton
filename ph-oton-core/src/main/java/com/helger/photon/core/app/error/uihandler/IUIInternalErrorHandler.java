@@ -14,27 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.misc;
+package com.helger.photon.core.app.error.uihandler;
 
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
-
-import com.helger.commons.annotations.Nonempty;
+import javax.annotation.Nullable;
 
 /**
- * Interface for objects that have a UI display text
- * 
+ * Callback interface to show internal errors on the UI in a generic way.
+ *
  * @author Philip Helger
  */
-public interface IHasUIText
+public interface IUIInternalErrorHandler
 {
   /**
+   * @param t
+   *        Exception thrown. May be <code>null</code>.
+   * @param sErrorID
+   *        The created unique error ID. Never <code>null</code>.
    * @param aDisplayLocale
-   *        Display locale. May not be <code>null</code>.
-   * @return The UI text
+   *        The display locale to be used. Never <code>null</code>.
    */
-  @Nonnull
-  @Nonempty
-  String getAsUIText (@Nonnull Locale aDisplayLocale);
+  void onInternalError (@Nullable Throwable t, @Nonnull String sErrorID, @Nonnull Locale aDisplayLocale);
 }

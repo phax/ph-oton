@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.html.hc.html.AbstractHCList;
 import com.helger.html.hc.html.HCLI;
-import com.helger.photon.core.app.ISimpleWebExecutionContext;
+import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 
 /**
  * Abstract base implementation of {@link IMenuItemRenderer}

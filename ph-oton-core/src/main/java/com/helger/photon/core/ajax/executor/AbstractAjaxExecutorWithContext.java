@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
-import com.helger.photon.core.app.layout.ILayoutExecutionContext;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutExecutionContext> extends AbstractAjaxExecutor

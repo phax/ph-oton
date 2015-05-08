@@ -63,12 +63,12 @@ import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarType;
 import com.helger.photon.bootstrap3.pageheader.BootstrapPageHeader;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRenderer;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRendererHorz;
-import com.helger.photon.core.EWebBasicsText;
-import com.helger.photon.core.app.LinkUtils;
+import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.app.layout.ILayoutAreaContentProvider;
-import com.helger.photon.core.app.layout.LayoutExecutionContext;
 import com.helger.photon.core.servlet.LogoutServlet;
+import com.helger.photon.core.url.LinkUtils;
 import com.helger.photon.uicore.page.IWebPage;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -113,7 +113,7 @@ public final class LayoutAreaContentProviderPublic implements ILayoutAreaContent
                                  .addChild (new HCStrong ().addChild (SecurityUtils.getUserDisplayName (aUser,
                                                                                                         aDisplayLocale))));
 
-      aNav.addItem (new HCA (LinkUtils.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EWebBasicsText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
+      aNav.addItem (new HCA (LinkUtils.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
       aNavbar.addNav (EBootstrapNavbarPosition.COLLAPSIBLE_RIGHT, aNav);
     }
     else
@@ -260,7 +260,9 @@ public final class LayoutAreaContentProviderPublic implements ILayoutAreaContent
     {
       final BootstrapContainer aDiv = new BootstrapContainer ().setID (CLayout.LAYOUT_AREAID_FOOTER);
 
-      aDiv.addChild (new HCP ().addChild ("Demo web application for the ph OSS-stack"));
+      aDiv.addChild (new HCP ().addChild ("Demo web application for the ")
+                               .addChild (new HCA ("https://github.com/phax/ph-oton").addChild ("ph-oton"))
+                               .addChild (" stack"));
       aDiv.addChild (new HCP ().addChild ("Created by Philip Helger - Twitter: @philiphelger"));
 
       final BootstrapMenuItemRendererHorz aRenderer = new BootstrapMenuItemRendererHorz (aDisplayLocale);

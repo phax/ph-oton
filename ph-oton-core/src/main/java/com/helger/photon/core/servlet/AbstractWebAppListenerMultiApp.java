@@ -37,9 +37,9 @@ import com.helger.photon.basic.security.password.constraint.PasswordConstraintLi
 import com.helger.photon.basic.security.password.constraint.PasswordConstraintMinLength;
 import com.helger.photon.core.action.ApplicationActionManager;
 import com.helger.photon.core.ajax.ApplicationAjaxManager;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
 import com.helger.photon.core.app.layout.ApplicationLayoutManager;
-import com.helger.photon.core.app.layout.ILayoutExecutionContext;
 import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
 import com.helger.photon.core.userdata.UserDataManager;
 import com.helger.smtp.EmailGlobalSettings;

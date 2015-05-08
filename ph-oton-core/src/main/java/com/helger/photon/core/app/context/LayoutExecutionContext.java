@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.app.layout;
+package com.helger.photon.core.app.context;
 
 import java.util.Locale;
 import java.util.Map;
@@ -33,8 +33,6 @@ import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestManager;
-import com.helger.photon.core.app.ISimpleWebExecutionContext;
-import com.helger.photon.core.app.SimpleWebExecutionContext;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
 import com.helger.photon.core.app.redirect.ForcedRedirectManager;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;

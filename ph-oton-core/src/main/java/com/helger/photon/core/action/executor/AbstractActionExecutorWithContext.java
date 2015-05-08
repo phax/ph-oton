@@ -18,7 +18,7 @@ package com.helger.photon.core.action.executor;
 
 import javax.annotation.Nonnull;
 
-import com.helger.photon.core.app.layout.ILayoutExecutionContext;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 

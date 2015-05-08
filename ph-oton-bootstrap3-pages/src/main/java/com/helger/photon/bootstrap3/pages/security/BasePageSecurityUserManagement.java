@@ -74,7 +74,7 @@ import com.helger.photon.bootstrap3.table.BootstrapTableForm;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapSecurityUI;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
@@ -333,14 +333,14 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
           .setCtrl (createEmailLink (aSelectedObject.getEmailAddress ()));
     aTable.createItemRow ()
           .setLabel (EText.LABEL_ENABLED.getDisplayText (aDisplayLocale))
-          .setCtrl (EWebBasicsText.getYesOrNo (aSelectedObject.isEnabled (), aDisplayLocale));
+          .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isEnabled (), aDisplayLocale));
     if (StringHelper.hasText (aSelectedObject.getDescription ()))
       aTable.createItemRow ()
             .setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
             .setCtrl (HCUtils.nl2divList (aSelectedObject.getDescription ()));
     aTable.createItemRow ()
           .setLabel (EText.LABEL_DELETED.getDisplayText (aDisplayLocale))
-          .setCtrl (EWebBasicsText.getYesOrNo (aSelectedObject.isDeleted (), aDisplayLocale));
+          .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isDeleted (), aDisplayLocale));
     aTable.createItemRow ()
           .setLabel (EText.LABEL_LAST_LOGIN.getDisplayText (aDisplayLocale))
           .setCtrl (aSelectedObject.getLastLoginDateTime () != null ? new HCTextNode (PDTToString.getAsString (aSelectedObject.getLastLoginDateTime (),
@@ -658,7 +658,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       // Cannot edit enabled state of administrator
       aTable.createItemRow ()
             .setLabel (EText.LABEL_ENABLED.getDisplayText (aDisplayLocale))
-            .setCtrl (EWebBasicsText.getYesOrNo (aSelectedObject.isEnabled (), aDisplayLocale));
+            .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isEnabled (), aDisplayLocale));
     }
     else
     {
@@ -814,7 +814,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       aHeaderRow.addCell (EText.HEADER_LOGINNAME.getDisplayText (aDisplayLocale));
     aHeaderRow.addCells (EText.HEADER_EMAIL.getDisplayText (aDisplayLocale),
                          EText.HEADER_USERGROUPS.getDisplayText (aDisplayLocale),
-                         EWebBasicsText.MSG_ACTIONS.getDisplayText (aDisplayLocale));
+                         EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));
 
     for (final IUser aCurUser : aUsers)
     {

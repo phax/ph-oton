@@ -29,7 +29,7 @@ import com.helger.html.hc.html.AbstractHCDiv;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.js.IJSCodeProvider;
 import com.helger.html.js.builder.html.JSHtml;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
 
@@ -104,13 +104,13 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   @Nonnull
   public IMPLTYPE addButtonBack (@Nonnull final Locale aDisplayLocale, @Nonnull final ISimpleURL aURL)
   {
-    return addButton (EWebBasicsText.MSG_BUTTON_BACK.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.BACK);
+    return addButton (EPhotonCoreText.BUTTON_BACK.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.BACK);
   }
 
   @Nonnull
   public IMPLTYPE addButtonBack (@Nonnull final Locale aDisplayLocale, @Nonnull final IJSCodeProvider aOnBack)
   {
-    return addButton (EWebBasicsText.MSG_BUTTON_BACK.getDisplayText (aDisplayLocale), aOnBack, EDefaultIcon.BACK);
+    return addButton (EPhotonCoreText.BUTTON_BACK.getDisplayText (aDisplayLocale), aOnBack, EDefaultIcon.BACK);
   }
 
   @Nonnull
@@ -122,13 +122,13 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   @Nonnull
   public IMPLTYPE addButtonCancel (@Nonnull final Locale aDisplayLocale, @Nonnull final ISimpleURL aURL)
   {
-    return addButton (EWebBasicsText.MSG_BUTTON_CANCEL.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.CANCEL);
+    return addButton (EPhotonCoreText.BUTTON_CANCEL.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.CANCEL);
   }
 
   @Nonnull
   public IMPLTYPE addButtonCancel (@Nonnull final Locale aDisplayLocale, @Nonnull final IJSCodeProvider aOnCancel)
   {
-    return addButton (EWebBasicsText.MSG_BUTTON_CANCEL.getDisplayText (aDisplayLocale), aOnCancel, EDefaultIcon.CANCEL);
+    return addButton (EPhotonCoreText.BUTTON_CANCEL.getDisplayText (aDisplayLocale), aOnCancel, EDefaultIcon.CANCEL);
   }
 
   @Nonnull
@@ -140,13 +140,13 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   @Nonnull
   public IMPLTYPE addButtonNo (@Nonnull final Locale aDisplayLocale, @Nonnull final ISimpleURL aURL)
   {
-    return addButton (EWebBasicsText.MSG_BUTTON_NO.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.NO);
+    return addButton (EPhotonCoreText.BUTTON_NO.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.NO);
   }
 
   @Nonnull
   public IMPLTYPE addButtonNo (@Nonnull final Locale aDisplayLocale, @Nonnull final IJSCodeProvider aOnNo)
   {
-    return addButton (EWebBasicsText.MSG_BUTTON_NO.getDisplayText (aDisplayLocale), aOnNo, EDefaultIcon.NO);
+    return addButton (EPhotonCoreText.BUTTON_NO.getDisplayText (aDisplayLocale), aOnNo, EDefaultIcon.NO);
   }
 
   @Nonnull
@@ -158,25 +158,25 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   @Nonnull
   public IMPLTYPE addButtonEdit (@Nonnull final Locale aDisplayLocale, @Nonnull final ISimpleURL aURL)
   {
-    return addButton (EWebBasicsText.MSG_BUTTON_EDIT.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.EDIT);
+    return addButton (EPhotonCoreText.BUTTON_EDIT.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.EDIT);
   }
 
   @Nonnull
   public IMPLTYPE addButtonEdit (@Nonnull final Locale aDisplayLocale, @Nonnull final IJSCodeProvider aOnEdit)
   {
-    return addButton (EWebBasicsText.MSG_BUTTON_EDIT.getDisplayText (aDisplayLocale), aOnEdit, EDefaultIcon.EDIT);
+    return addButton (EPhotonCoreText.BUTTON_EDIT.getDisplayText (aDisplayLocale), aOnEdit, EDefaultIcon.EDIT);
   }
 
   @Nonnull
   public IMPLTYPE addButtonSave (@Nonnull final Locale aDisplayLocale, @Nonnull final ISimpleURL aURL)
   {
-    return addButton (EWebBasicsText.MSG_BUTTON_SAVE.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.SAVE);
+    return addButton (EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.SAVE);
   }
 
   @Nonnull
   public IMPLTYPE addButtonSave (@Nonnull final Locale aDisplayLocale, @Nonnull final IJSCodeProvider aOnSave)
   {
-    return addButton (EWebBasicsText.MSG_BUTTON_SAVE.getDisplayText (aDisplayLocale), aOnSave, EDefaultIcon.SAVE);
+    return addButton (EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale), aOnSave, EDefaultIcon.SAVE);
   }
 
   @Nonnull
@@ -215,12 +215,12 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   @Nonnull
   public final IMPLTYPE addSubmitButtonSave (@Nonnull final Locale aDisplayLocale)
   {
-    return addSubmitButton (EWebBasicsText.MSG_BUTTON_SAVE.getDisplayText (aDisplayLocale), EDefaultIcon.SAVE);
+    return addSubmitButton (EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale), EDefaultIcon.SAVE);
   }
 
   @Nonnull
   public final IMPLTYPE addSubmitButtonYes (@Nonnull final Locale aDisplayLocale)
   {
-    return addSubmitButton (EWebBasicsText.MSG_BUTTON_YES.getDisplayText (aDisplayLocale), EDefaultIcon.YES);
+    return addSubmitButton (EPhotonCoreText.BUTTON_YES.getDisplayText (aDisplayLocale), EDefaultIcon.YES);
   }
 }

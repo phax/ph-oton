@@ -34,6 +34,7 @@ import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCHead;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 /**
  * This class handles the mapping of the area ID to a content provider.

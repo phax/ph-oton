@@ -42,12 +42,12 @@ import com.helger.photon.bootstrap3.navbar.BootstrapNavbar;
 import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarPosition;
 import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarType;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRenderer;
-import com.helger.photon.core.EWebBasicsText;
-import com.helger.photon.core.app.LinkUtils;
+import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.app.layout.ILayoutAreaContentProvider;
-import com.helger.photon.core.app.layout.LayoutExecutionContext;
 import com.helger.photon.core.servlet.LogoutServlet;
+import com.helger.photon.core.url.LinkUtils;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.webappdemo.app.CApp;
 
@@ -80,7 +80,7 @@ public final class LayoutAreaContentProviderSecure implements ILayoutAreaContent
                                .addChild (new HCStrong ().addChild (SecurityUtils.getUserDisplayName (aUser,
                                                                                                       aDisplayLocale))));
 
-    aNav.addItem (new HCA (LinkUtils.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EWebBasicsText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
+    aNav.addItem (new HCA (LinkUtils.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
     aNavbar.addNav (EBootstrapNavbarPosition.COLLAPSIBLE_RIGHT, aNav);
 
     return aNavbar;

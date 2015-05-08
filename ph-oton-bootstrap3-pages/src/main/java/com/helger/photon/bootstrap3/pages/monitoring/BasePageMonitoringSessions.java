@@ -54,7 +54,7 @@ import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.EWebBasicsText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.UITextFormatter;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
@@ -176,13 +176,13 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                .setCtrl (aScope.getID ());
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isValid (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_IN_DESTRUCTION.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isInDestruction (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isDestroyed (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SESSION_APPLICATION_SCOPES.getDisplayText (aDisplayLocale))
                .setCtrl (Integer.toString (aScope.getSessionApplicationScopeCount ()));
@@ -214,7 +214,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                                     aDisplayLocale));
       aTableScope.createItemRow ()
                  .setLabel (EText.MSG_SCOPE_IS_NEW.getDisplayText (aDisplayLocale))
-                 .setCtrl (EWebBasicsText.getYesOrNo (aWebScope.isNew (), aDisplayLocale));
+                 .setCtrl (EPhotonCoreText.getYesOrNo (aWebScope.isNew (), aDisplayLocale));
     }
 
     // All scope attributes
@@ -250,13 +250,13 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                .setCtrl (aScope.getID ());
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isValid (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_IN_DESTRUCTION.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isInDestruction (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
-               .setCtrl (EWebBasicsText.getYesOrNo (aScope.isDestroyed (), aDisplayLocale));
+               .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (), aDisplayLocale));
     aTableScope.createItemRow ()
                .setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
                .setCtrl (Integer.toString (aScope.getAttributeCount ()));
@@ -290,10 +290,10 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EWebBasicsText.MSG_BACK_TO_OVERVIEW.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BACK_TO_OVERVIEW.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.BACK_TO_LIST);
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
                         createViewURL (aWPEC, aScope),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
@@ -335,7 +335,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EWebBasicsText.MSG_BUTTON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
@@ -347,7 +347,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
                                      EText.MSG_ATTRCOUNT.getDisplayText (aDisplayLocale),
                                      EText.MSG_LAST_ACCESS.getDisplayText (aDisplayLocale),
-                                     EWebBasicsText.MSG_ACTIONS.getDisplayText (aDisplayLocale));
+                                     EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));
     for (final ISessionScope aSessionScope : ScopeSessionManager.getInstance ().getAllSessionScopes ())
     {
       final ISessionWebScope aWebScope = aSessionScope instanceof ISessionWebScope ? (ISessionWebScope) aSessionScope
