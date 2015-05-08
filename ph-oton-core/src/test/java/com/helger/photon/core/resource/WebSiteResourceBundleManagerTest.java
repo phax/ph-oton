@@ -29,7 +29,7 @@ import org.junit.rules.TestRule;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.photon.core.mgr.PhotonCoreManager;
-import com.helger.photon.core.mock.WebBasicTestRule;
+import com.helger.photon.core.mock.PhotonCoreTestRule;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.core.resource.WebSiteResourceWithCondition;
@@ -42,7 +42,7 @@ import com.helger.photon.core.resource.WebSiteResourceWithCondition;
 public final class WebSiteResourceBundleManagerTest
 {
   @Rule
-  public final TestRule m_aRule = new WebBasicTestRule ();
+  public final TestRule m_aRule = new PhotonCoreTestRule ();
 
   @Test
   public void testBasicJS ()

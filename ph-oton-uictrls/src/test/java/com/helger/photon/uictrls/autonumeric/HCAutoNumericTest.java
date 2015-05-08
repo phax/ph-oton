@@ -28,7 +28,7 @@ import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.conversion.HCConversionSettings;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.photon.core.form.RequestField;
-import com.helger.photon.core.mock.WebBasicTestRule;
+import com.helger.photon.core.mock.PhotonCoreTestRule;
 import com.helger.photon.uictrls.autonumeric.HCAutoNumeric;
 
 public final class HCAutoNumericTest
@@ -36,7 +36,7 @@ public final class HCAutoNumericTest
   private static final String CRLF = ENewLineMode.DEFAULT.getText ();
 
   @Rule
-  public final WebBasicTestRule m_aRule = new WebBasicTestRule ();
+  public final PhotonCoreTestRule m_aRule = new PhotonCoreTestRule ();
 
   @Test
   public void testGetJS ()

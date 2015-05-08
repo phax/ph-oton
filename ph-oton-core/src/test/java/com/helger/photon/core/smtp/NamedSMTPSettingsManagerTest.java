@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.core.mock.WebBasicTestRule;
+import com.helger.photon.core.mock.PhotonCoreTestRule;
 import com.helger.photon.core.smtp.CNamedSMTPSettings;
 import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 
@@ -35,7 +35,7 @@ import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 public final class NamedSMTPSettingsManagerTest
 {
   @Rule
-  public final TestRule m_aRule = new WebBasicTestRule ();
+  public final TestRule m_aRule = new PhotonCoreTestRule ();
 
   @Test
   public void testBasic () throws DAOException

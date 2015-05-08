@@ -31,12 +31,12 @@ import com.helger.web.scopes.mock.WebScopeTestRule;
 /**
  * A JUnit test rule that is suitable for all webbasics projects. It is
  * optimized for the use within Java libraries. For the use within Java web
- * applications using {@link WebBasicWebAppTestRule} is preferred, since the
+ * applications using {@link PhotonCoreWebAppTestRule} is preferred, since the
  * correct resource base path is used.
  *
  * @author Philip Helger
  */
-public class WebBasicTestRule extends WebScopeTestRule
+public class PhotonCoreTestRule extends WebScopeTestRule
 {
   @Nonnull
   @ReturnsMutableCopy
@@ -46,12 +46,12 @@ public class WebBasicTestRule extends WebScopeTestRule
                       .add (WebAppListener.INIT_PARAMETER_NO_CHECK_FILE_ACCESS, "true");
   }
 
-  public WebBasicTestRule ()
+  public PhotonCoreTestRule ()
   {
     this (createDefaultServletContextInitParameters ());
   }
 
-  public WebBasicTestRule (@Nullable final Map <String, String> aServletContextInitParameters)
+  public PhotonCoreTestRule (@Nullable final Map <String, String> aServletContextInitParameters)
   {
     super (aServletContextInitParameters);
   }

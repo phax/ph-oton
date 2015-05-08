@@ -28,12 +28,12 @@ import com.helger.web.mock.MockServletContext;
 /**
  * A JUnit test rule that is suitable for all webbasics projects. It is
  * optimized for the use within Java web application. For the use within Java
- * libraries using {@link WebBasicTestRule} is preferred, since the correct
+ * libraries using {@link PhotonCoreTestRule} is preferred, since the correct
  * resource base path is used.
  *
  * @author Philip Helger
  */
-public class WebBasicWebAppTestRule extends WebBasicTestRule
+public class PhotonCoreWebAppTestRule extends PhotonCoreTestRule
 {
   public static final File RESOURCE_BASE_FILE = new File ("target/webapp-classes").getAbsoluteFile ();
 

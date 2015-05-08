@@ -32,11 +32,11 @@ import com.helger.photon.core.app.html.HTMLConfigManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 
 @Immutable
-public final class WebBasicValidator
+public final class PhotonCoreValidator
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (WebBasicValidator.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonCoreValidator.class);
 
-  private WebBasicValidator ()
+  private PhotonCoreValidator ()
   {}
 
   static void validateWebXML () throws Exception
@@ -72,7 +72,7 @@ public final class WebBasicValidator
 
   public static void validateExternalResources () throws Exception
   {
-    final WebBasicWebAppTestRule aRule = new WebBasicWebAppTestRule ();
+    final PhotonCoreWebAppTestRule aRule = new PhotonCoreWebAppTestRule ();
 
     aRule.before ();
     try

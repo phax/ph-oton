@@ -28,7 +28,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.core.go.GoMappingManager;
-import com.helger.photon.core.mock.WebBasicTestRule;
+import com.helger.photon.core.mock.PhotonCoreTestRule;
 
 /**
  * Test class for class {@link GoMappingManager}.
@@ -38,7 +38,7 @@ import com.helger.photon.core.mock.WebBasicTestRule;
 public final class GoMappingManagerTest
 {
   @Rule
-  public final TestRule m_aRule = new WebBasicTestRule ();
+  public final TestRule m_aRule = new PhotonCoreTestRule ();
 
   @Test
   public void testBasic () throws DAOException
