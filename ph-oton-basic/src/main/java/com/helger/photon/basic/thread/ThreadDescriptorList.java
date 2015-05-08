@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.IHasStringRepresentation;
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.ArrayHelper;
@@ -60,11 +61,12 @@ public class ThreadDescriptorList implements IHasStringRepresentation, IHasMicro
   public ThreadDescriptorList ()
   {}
 
-  public void addDescriptor (@Nonnull final ThreadDescriptor aDescriptor)
+  @Nonnull
+  public ThreadDescriptorList addDescriptor (@Nonnull final ThreadDescriptor aDescriptor)
   {
-    if (aDescriptor == null)
-      throw new NullPointerException ("descriptor");
+    ValueEnforcer.notNull (aDescriptor, "Descriptor");
     m_aList.add (aDescriptor);
+    return this;
   }
 
   @Nonnull
@@ -74,9 +76,11 @@ public class ThreadDescriptorList implements IHasStringRepresentation, IHasMicro
     return CollectionHelper.newList (m_aList);
   }
 
-  public void setError (@Nullable final String sError)
+  @Nonnull
+  public ThreadDescriptorList setError (@Nullable final String sError)
   {
     m_sError = sError;
+    return this;
   }
 
   @Nullable
@@ -183,8 +187,8 @@ public class ThreadDescriptorList implements IHasStringRepresentation, IHasMicro
     {
       // Get all stack traces, sorted by thread ID
       for (final Map.Entry <Thread, StackTraceElement []> aEntry : CollectionHelper.getSortedByKey (Thread.getAllStackTraces (),
-                                                                                                   new ComparatorThreadID ())
-                                                                                  .entrySet ())
+                                                                                                    new ComparatorThreadID ())
+                                                                                   .entrySet ())
       {
         final StackTraceElement [] aStackTrace = aEntry.getValue ();
         final String sStackTrace = ArrayHelper.isEmpty (aStackTrace) ? "No stack trace available!\n"

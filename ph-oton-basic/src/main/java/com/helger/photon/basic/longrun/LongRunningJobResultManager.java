@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.CollectionHelper;
@@ -72,16 +73,14 @@ public class LongRunningJobResultManager extends AbstractSimpleDAO
 
   private void _internalAdd (@Nonnull final LongRunningJobData aJobData)
   {
-    if (aJobData == null)
-      throw new NullPointerException ("JobData");
+    ValueEnforcer.notNull (aJobData, "JobData");
 
     m_aMap.put (aJobData.getID (), aJobData);
   }
 
   public void addResult (@Nonnull final LongRunningJobData aJobData)
   {
-    if (aJobData == null)
-      throw new NullPointerException ("jobData");
+    ValueEnforcer.notNull (aJobData, "JobData");
     if (!aJobData.isEnded ())
       throw new IllegalArgumentException ("Passed jobData is not yet finished");
 
