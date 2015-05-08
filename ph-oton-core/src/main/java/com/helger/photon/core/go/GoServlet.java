@@ -38,7 +38,7 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestManager;
 import com.helger.photon.core.app.CApplication;
-import com.helger.photon.core.mgr.MetaSystemManager;
+import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.web.http.EHTTPMethod;
@@ -97,7 +97,7 @@ public class GoServlet extends AbstractUnifiedResponseServlet
   @OverrideOnDemand
   protected GoMappingItem getResolvedGoMappingItem (@Nonnull final String sKey)
   {
-    return MetaSystemManager.getGoMappingMgr ().getItemOfKey (sKey);
+    return PhotonCoreManager.getGoMappingMgr ().getItemOfKey (sKey);
   }
 
   /**

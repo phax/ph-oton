@@ -28,7 +28,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
-import com.helger.photon.core.mgr.MetaSystemManager;
+import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.mock.WebBasicTestRule;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
@@ -50,7 +50,7 @@ public final class WebSiteResourceBundleManagerTest
     final List <WebSiteResourceWithCondition> aList = new ArrayList <WebSiteResourceWithCondition> ();
     aList.add (new WebSiteResourceWithCondition (new ConstantJSPathProvider ("/res/serverlog.js"), true));
     aList.add (new WebSiteResourceWithCondition (new ConstantJSPathProvider ("/res/stacktrace.js"), true));
-    final List <WebSiteResourceBundleSerialized> aBundles = MetaSystemManager.getWebSiteResourceBundleMgr ()
+    final List <WebSiteResourceBundleSerialized> aBundles = PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                              .getResourceBundles (aList, true);
     assertNotNull (aBundles);
     assertEquals (1, aBundles.size ());
@@ -62,7 +62,7 @@ public final class WebSiteResourceBundleManagerTest
     final List <WebSiteResourceWithCondition> aList = new ArrayList <WebSiteResourceWithCondition> ();
     aList.add (new WebSiteResourceWithCondition (new ConstantCSSPathProvider ("/res/animate.css"), true));
     aList.add (new WebSiteResourceWithCondition (new ConstantCSSPathProvider ("/res/famfam.css"), true));
-    final List <WebSiteResourceBundleSerialized> aBundles = MetaSystemManager.getWebSiteResourceBundleMgr ()
+    final List <WebSiteResourceBundleSerialized> aBundles = PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                              .getResourceBundles (aList, true);
     assertNotNull (aBundles);
     assertEquals (1, aBundles.size ());

@@ -40,7 +40,7 @@ import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.context.SimpleWebExecutionContext;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
-import com.helger.photon.core.mgr.MetaSystemManager;
+import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.core.resource.WebSiteResourceWithCondition;
@@ -78,7 +78,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   @OverrideOnDemand
   protected HTMLConfigManager getHTMLConfigMgr ()
   {
-    return MetaSystemManager.getHTMLConfigMgr ();
+    return PhotonCoreManager.getHTMLConfigMgr ();
   }
 
   @Nonnull
@@ -142,7 +142,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
         final List <WebSiteResourceWithCondition> aCSSRes = new ArrayList <WebSiteResourceWithCondition> ();
         for (final ICSSPathProvider aCSS : aCSSs)
           aCSSRes.add (new WebSiteResourceWithCondition (aCSS, bRegular));
-        for (final WebSiteResourceBundleSerialized aBundle : MetaSystemManager.getWebSiteResourceBundleMgr ()
+        for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                               .getResourceBundles (aCSSRes, bRegular))
           aHead.addCSS (aBundle.createNode (aRequestScope));
       }
@@ -163,7 +163,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
         final List <WebSiteResourceWithCondition> aJSRes = new ArrayList <WebSiteResourceWithCondition> ();
         for (final IJSPathProvider aJS : aJSs)
           aJSRes.add (new WebSiteResourceWithCondition (aJS, bRegular));
-        for (final WebSiteResourceBundleSerialized aBundle : MetaSystemManager.getWebSiteResourceBundleMgr ()
+        for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                               .getResourceBundles (aJSRes, bRegular))
           aHead.addJS (aBundle.createNode (aRequestScope));
       }

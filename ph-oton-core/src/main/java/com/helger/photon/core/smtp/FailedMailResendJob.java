@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
-import com.helger.photon.core.mgr.MetaSystemManager;
+import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.schedule.job.AbstractScopeAwareJob;
 import com.helger.schedule.quartz.GlobalQuartzScheduler;
 import com.helger.smtp.failed.FailedMailData;
@@ -69,7 +69,7 @@ public class FailedMailResendJob extends AbstractScopeAwareJob
   @Override
   protected void onExecute (final JobExecutionContext aContext) throws JobExecutionException
   {
-    final List <FailedMailData> aFailedMails = MetaSystemManager.getFailedMailQueue ().removeAll ();
+    final List <FailedMailData> aFailedMails = PhotonCoreManager.getFailedMailQueue ().removeAll ();
     if (!aFailedMails.isEmpty ())
     {
       s_aLogger.info ("Trying to resend " + aFailedMails.size () + " failed mails!");

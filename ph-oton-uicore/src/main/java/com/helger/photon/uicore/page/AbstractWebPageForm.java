@@ -47,7 +47,7 @@ import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.ajax.AjaxExecutorSaveFormState;
-import com.helger.photon.core.mgr.MetaSystemManager;
+import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.js.JSFormHelper;
 import com.helger.validation.error.FormErrors;
@@ -454,7 +454,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   {
     if (isObjectLockingEnabled ())
     {
-      final ObjectLockManager aOLM = MetaSystemManager.getLockMgr ();
+      final ObjectLockManager aOLM = PhotonCoreManager.getLockMgr ();
       // Lock EDIT and DELETE if an object is present
       if (eFormAction != null && eFormAction.isModifying () && aSelectedObject != null)
       {

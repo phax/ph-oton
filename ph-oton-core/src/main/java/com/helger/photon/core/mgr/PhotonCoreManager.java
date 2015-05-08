@@ -47,7 +47,7 @@ import com.helger.smtp.scope.ScopedMailAPI;
  *
  * @author Philip Helger
  */
-public final class MetaSystemManager extends GlobalSingleton
+public final class PhotonCoreManager extends GlobalSingleton
 {
   public static final String DIRECTORY_AUDITS = "audits/";
   public static final String DIRECTORY_HTML = "html/";
@@ -60,7 +60,7 @@ public final class MetaSystemManager extends GlobalSingleton
   public static final String RESOURCE_BUNDLES_XML = "resource-bundles.xml";
   public static final String LONG_RUNNING_JOB_RESULTS_XML = "long-running-job-results.xml";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MetaSystemManager.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonCoreManager.class);
 
   private FailedMailQueueWithDAO m_aFailedMailQueue;
   private GoMappingManager m_aGoMappingMgr;
@@ -70,7 +70,7 @@ public final class MetaSystemManager extends GlobalSingleton
 
   @Deprecated
   @UsedViaReflection
-  public MetaSystemManager ()
+  public PhotonCoreManager ()
   {}
 
   @Override
@@ -98,9 +98,9 @@ public final class MetaSystemManager extends GlobalSingleton
   }
 
   @Nonnull
-  public static MetaSystemManager getInstance ()
+  public static PhotonCoreManager getInstance ()
   {
-    return getGlobalSingleton (MetaSystemManager.class);
+    return getGlobalSingleton (PhotonCoreManager.class);
   }
 
   @Nonnull

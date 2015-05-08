@@ -59,7 +59,7 @@ import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.core.mgr.MetaSystemManager;
+import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
@@ -393,7 +393,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final FailedMailData aFailedMailData = m_aFailedMailQueue.remove (aSelectedObject.getID ());
           if (aFailedMailData != null)
           {
-            final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_DEFAULT_SETTINGS) ? MetaSystemManager.getSMTPSettingsMgr ()
+            final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_DEFAULT_SETTINGS) ? PhotonCoreManager.getSMTPSettingsMgr ()
                                                                                                                            .getDefaultSMTPSettings ()
                                                                                                        : null;
             s_aLogger.info ("Trying to resend single failed mail with ID " +
@@ -418,7 +418,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final List <FailedMailData> aFailedMails = m_aFailedMailQueue.removeAll ();
           if (!aFailedMails.isEmpty ())
           {
-            final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_ALL_DEFAULT_SETTINGS) ? MetaSystemManager.getSMTPSettingsMgr ()
+            final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_ALL_DEFAULT_SETTINGS) ? PhotonCoreManager.getSMTPSettingsMgr ()
                                                                                                                                .getDefaultSMTPSettings ()
                                                                                                            : null;
             s_aLogger.info ("Trying to resend " +

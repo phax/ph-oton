@@ -63,7 +63,6 @@ import com.helger.html.resource.js.IJSPathProvider;
 @Immutable
 public class HTMLConfigManager
 {
-  public static final String DEFAULT_BASE_PATH = "html/";
   /** Filename containing the meta elements */
   public static final String FILENAME_METATAGS_XML = "metatags.xml";
   /** Filename containing the CSS includes */

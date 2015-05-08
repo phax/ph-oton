@@ -29,7 +29,7 @@ import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.serialize.MicroReader;
 import com.helger.commons.microdom.utils.MicroRecursiveIterator;
 import com.helger.photon.core.app.html.HTMLConfigManager;
-import com.helger.photon.core.mgr.MetaSystemManager;
+import com.helger.photon.core.mgr.PhotonCoreManager;
 
 @Immutable
 public final class WebBasicValidator
@@ -67,7 +67,7 @@ public final class WebBasicValidator
   {
     // This will throw an IllegalStateException for wrong files in html/js.xml
     // and html/css.xml
-    new HTMLConfigManager (MetaSystemManager.DIRECTORY_HTML);
+    new HTMLConfigManager (PhotonCoreManager.DIRECTORY_HTML);
   }
 
   public static void validateExternalResources () throws Exception

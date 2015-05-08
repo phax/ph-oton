@@ -66,7 +66,7 @@ import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoSystemPropertie
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoThirdPartyLibraries;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoThreads;
 import com.helger.photon.core.go.GoMappingManager;
-import com.helger.photon.core.mgr.MetaSystemManager;
+import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -129,11 +129,11 @@ public final class DefaultMenuConfigurator
                                                                   aParent,
                                                                   aDisplayFilter,
                                                                   PhotonBasicManager.getAuditMgr (),
-                                                                  MetaSystemManager.getFailedMailQueue (),
-                                                                  MetaSystemManager.getLockMgr (),
-                                                                  MetaSystemManager.getGoMappingMgr (),
+                                                                  PhotonCoreManager.getFailedMailQueue (),
+                                                                  PhotonCoreManager.getLockMgr (),
+                                                                  PhotonCoreManager.getGoMappingMgr (),
                                                                   PhotonBasicManager.getSystemMigrationMgr (),
-                                                                  MetaSystemManager.getWebSiteResourceBundleMgr ());
+                                                                  PhotonCoreManager.getWebSiteResourceBundleMgr ());
   }
 
   @Nonnull
@@ -249,7 +249,7 @@ public final class DefaultMenuConfigurator
     return DefaultMenuConfigurator.<WPECTYPE> addSettingsItems (aMenuTree,
                                                                 aParent,
                                                                 aDisplayFilter,
-                                                                MetaSystemManager.getSMTPSettingsMgr ());
+                                                                PhotonCoreManager.getSMTPSettingsMgr ());
   }
 
   @Nonnull
