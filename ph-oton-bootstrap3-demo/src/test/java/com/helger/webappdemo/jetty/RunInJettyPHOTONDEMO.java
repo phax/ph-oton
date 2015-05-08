@@ -17,6 +17,8 @@
 package com.helger.webappdemo.jetty;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -24,6 +26,7 @@ import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.FragmentConfiguration;
 import org.eclipse.jetty.webapp.JettyWebXmlConfiguration;
@@ -78,6 +81,30 @@ public final class RunInJettyPHOTONDEMO
     {
       // Don't do this!
       aWebAppCtx.setCopyWebInf (true);
+    }
+    {
+      final List <Resource> aFragments = new ArrayList <Resource> ();
+      for (final String sCP : System.getProperty ("java.class.path").split (System.getProperty ("path.separator")))
+      {
+        final Resource aResCP = Resource.newResource (sCP);
+
+        Resource aResFragment;
+        if (aResCP.isDirectory ())
+        {
+          // tolerate the case where the library is a directory, not a jar.
+          // useful for OSGi for example
+          aResFragment = Resource.newResource (aResCP.getURL () + "/META-INF/web-fragment.xml");
+        }
+        else
+        {
+          // the standard case: a jar most likely inside WEB-INF/lib
+          aResFragment = Resource.newResource ("jar:" + aResCP.getURL () + "!/META-INF/web-fragment.xml");
+        }
+        if (aResFragment.exists ())
+          aFragments.add (aResCP);
+      }
+
+      aWebAppCtx.setAttribute (FragmentConfiguration.FRAGMENT_RESOURCES, aFragments);
     }
     if (false)
       aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
