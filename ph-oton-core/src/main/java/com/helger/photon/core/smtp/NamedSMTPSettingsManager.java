@@ -326,7 +326,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
       m_aRWLock.writeLock ().unlock ();
     }
 
-    AuditUtils.onAuditCreateSuccess (CNamedSMTPSettings.OT_NAMED_SMTP_SETTINGS,
+    AuditUtils.onAuditCreateSuccess (NamedSMTPSettings.OT,
                                      aNamedSettings.getID (),
                                      aNamedSettings.getName (),
                                      aSettings.getHostName (),
@@ -360,7 +360,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
     final NamedSMTPSettings aNamedSettings = getSettings (sID);
     if (aNamedSettings == null)
     {
-      AuditUtils.onAuditModifyFailure (CNamedSMTPSettings.OT_NAMED_SMTP_SETTINGS, sID, "no-such-id");
+      AuditUtils.onAuditModifyFailure (NamedSMTPSettings.OT, sID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -378,7 +378,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditModifySuccess (CNamedSMTPSettings.OT_NAMED_SMTP_SETTINGS,
+    AuditUtils.onAuditModifySuccess (NamedSMTPSettings.OT,
                                      aNamedSettings.getID (),
                                      aNamedSettings.getName (),
                                      aSettings.getHostName (),
@@ -414,9 +414,9 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
       m_aRWLock.writeLock ().unlock ();
     }
     if (eChange.isChanged ())
-      AuditUtils.onAuditDeleteSuccess (CNamedSMTPSettings.OT_NAMED_SMTP_SETTINGS, sID);
+      AuditUtils.onAuditDeleteSuccess (NamedSMTPSettings.OT, sID);
     else
-      AuditUtils.onAuditDeleteFailure (CNamedSMTPSettings.OT_NAMED_SMTP_SETTINGS, sID, "no-such-id");
+      AuditUtils.onAuditDeleteFailure (NamedSMTPSettings.OT, sID, "no-such-id");
     return eChange;
   }
 

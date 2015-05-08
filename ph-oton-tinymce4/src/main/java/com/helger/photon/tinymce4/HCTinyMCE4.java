@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.CGlobal;
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.annotations.ReturnsMutableObject;
@@ -395,8 +396,7 @@ public class HCTinyMCE4 implements IHCNodeBuilder
   @Nonnull
   public HCTinyMCE4 addPlugin (@Nonnull final ETinyMCE4Plugin ePlugin)
   {
-    if (ePlugin == null)
-      throw new NullPointerException ("plugin");
+    ValueEnforcer.notNull (ePlugin, "Plugin");
     m_aPlugins.add (ePlugin);
     return this;
   }
@@ -518,8 +518,7 @@ public class HCTinyMCE4 implements IHCNodeBuilder
   @Nonnull
   public HCTinyMCE4 addExternalPlugin (@Nonnull final TinyMCE4ExternalPlugin aExternalPlugin)
   {
-    if (aExternalPlugin == null)
-      throw new NullPointerException ("plugin");
+    ValueEnforcer.notNull (aExternalPlugin, "ExternalPlugin");
     m_aExternalPlugins.add (aExternalPlugin);
     return this;
   }
@@ -638,8 +637,7 @@ public class HCTinyMCE4 implements IHCNodeBuilder
   @Nonnull
   public HCTinyMCE4 setSelector (@Nonnull @Nonempty final String sSelector)
   {
-    if (StringHelper.hasNoText (sSelector))
-      throw new IllegalArgumentException ("selector");
+    ValueEnforcer.notEmpty (sSelector, "Selector");
     m_sSelector = sSelector;
     return this;
   }
@@ -1131,10 +1129,8 @@ public class HCTinyMCE4 implements IHCNodeBuilder
   @Nonnull
   public HCTinyMCE4 addCustomOption (@Nonnull @Nonempty final String sName, @Nonnull final IJSExpression aValue)
   {
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("name");
-    if (aValue == null)
-      throw new NullPointerException ("value");
+    ValueEnforcer.notEmpty (sName, "Name");
+    ValueEnforcer.notNull (aValue, "Value");
     m_aCustom.put (sName, aValue);
     return this;
   }

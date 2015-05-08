@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.microdom.IMicroDocument;
@@ -48,8 +49,7 @@ public final class Feed extends FeedSource
   @Nonnull
   public Feed addEntry (@Nonnull final FeedEntry aEntry)
   {
-    if (aEntry == null)
-      throw new NullPointerException ("entry");
+    ValueEnforcer.notNull (aEntry, "Entry");
     m_aEntries.add (aEntry);
     return this;
   }
@@ -106,7 +106,7 @@ public final class Feed extends FeedSource
     // one atom:author element.
     if (getAuthors ().isEmpty ())
       for (final FeedEntry aEntry : m_aEntries)
-        if (aEntry.getAuthors ().isEmpty ())
+        if (aEntry.getAllAuthors ().isEmpty ())
         {
           s_aLogger.warn ("Both the feed author field and at least one entry author field is empty");
           return false;

@@ -20,11 +20,11 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.hash.HashCodeGenerator;
 import com.helger.commons.idfactory.GlobalIDFactory;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ITypedObject;
 import com.helger.commons.type.ObjectType;
@@ -33,6 +33,8 @@ import com.helger.smtp.impl.ReadonlySMTPSettings;
 
 public class NamedSMTPSettings implements ITypedObject <String>, Serializable
 {
+  public static final ObjectType OT = new ObjectType ("named-smtp-settings");
+
   private final String m_sID;
   private String m_sName;
   private ReadonlySMTPSettings m_aSMTPSettings;
@@ -46,8 +48,7 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
                      @Nonnull @Nonempty final String sName,
                      @Nonnull final ISMTPSettings aSMTPSettings)
   {
-    if (StringHelper.hasNoText (sID))
-      throw new IllegalArgumentException ("ID");
+    ValueEnforcer.notEmpty (sID, "ID");
     m_sID = sID;
     setName (sName);
     setSMTPSettings (aSMTPSettings);
@@ -56,7 +57,7 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
   @Nonnull
   public ObjectType getTypeID ()
   {
-    return CNamedSMTPSettings.OT_NAMED_SMTP_SETTINGS;
+    return OT;
   }
 
   @Nonnull
@@ -76,8 +77,7 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
   @Nonnull
   public EChange setName (@Nonnull @Nonempty final String sName)
   {
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("name");
+    ValueEnforcer.notEmpty (sName, "Name");
 
     if (sName.equals (m_sName))
       return EChange.UNCHANGED;
@@ -94,8 +94,7 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
   @Nonnull
   public EChange setSMTPSettings (@Nonnull final ISMTPSettings aSMTPSettings)
   {
-    if (aSMTPSettings == null)
-      throw new NullPointerException ("SMTPSettings");
+    ValueEnforcer.notNull (aSMTPSettings, "SMTPSettings");
 
     // Ensure that the implementation type is the same!
     final ReadonlySMTPSettings aRealSMTPSettings = new ReadonlySMTPSettings (aSMTPSettings);

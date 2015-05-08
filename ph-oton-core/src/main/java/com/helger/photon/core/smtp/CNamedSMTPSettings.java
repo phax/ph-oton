@@ -18,8 +18,6 @@ package com.helger.photon.core.smtp;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.type.ObjectType;
-
 /**
  * Constants for named SMTP settings handling
  *
@@ -28,9 +26,6 @@ import com.helger.commons.type.ObjectType;
 @Immutable
 public final class CNamedSMTPSettings
 {
-  // Object types
-  public static final ObjectType OT_NAMED_SMTP_SETTINGS = new ObjectType ("named-smtp-settings");
-
   // Default named SMTP settings data
   public static final String NAMED_SMTP_SETTINGS_DEFAULT_ID = "default";
   public static final String NAMED_SMTP_SETTINGS_DEFAULT_NAME = "default";

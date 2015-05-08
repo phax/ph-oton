@@ -19,6 +19,7 @@ package com.helger.photon.core.atom;
 import javax.annotation.Nonnull;
 import javax.xml.XMLConstants;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.IMicroNode;
@@ -40,8 +41,7 @@ public abstract class AbstractFeedXHTML extends AbstractFeedElement
 
   public AbstractFeedXHTML (@Nonnull final HCDiv aDiv)
   {
-    if (aDiv == null)
-      throw new NullPointerException ("div");
+    ValueEnforcer.notNull (aDiv, "Div");
     m_aDiv = aDiv;
   }
 

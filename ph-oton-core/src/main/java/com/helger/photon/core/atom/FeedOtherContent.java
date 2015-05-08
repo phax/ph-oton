@@ -22,6 +22,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.xml.XMLConstants;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.IMicroNode;
@@ -35,8 +36,7 @@ public final class FeedOtherContent extends AbstractFeedElement implements IFeed
 
   public FeedOtherContent (@Nonnull @Nonempty final String sType)
   {
-    if (StringHelper.hasNoText (sType))
-      throw new IllegalArgumentException ("type is empty");
+    ValueEnforcer.notEmpty (sType, "Type");
     m_sType = sType;
   }
 
@@ -50,8 +50,7 @@ public final class FeedOtherContent extends AbstractFeedElement implements IFeed
   @Nonnull
   public FeedOtherContent addChild (@Nonnull final String sText)
   {
-    if (sText == null)
-      throw new NullPointerException ("text");
+    ValueEnforcer.notNull (sText, "Text");
     m_aChildren.add (sText);
     return this;
   }
@@ -59,8 +58,7 @@ public final class FeedOtherContent extends AbstractFeedElement implements IFeed
   @Nonnull
   public FeedOtherContent addChild (@Nonnull final IMicroNode aNode)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
+    ValueEnforcer.notNull (aNode, "Node");
     m_aChildren.add (aNode);
     return this;
   }

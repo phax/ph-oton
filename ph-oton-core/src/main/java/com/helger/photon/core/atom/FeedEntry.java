@@ -28,7 +28,8 @@ import javax.xml.XMLConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.ReturnsImmutableObject;
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.impl.MicroElement;
@@ -64,30 +65,28 @@ public final class FeedEntry extends AbstractFeedElement
 
   public void addAuthor (@Nonnull final FeedPerson aAuthor)
   {
-    if (aAuthor == null)
-      throw new NullPointerException ("author");
+    ValueEnforcer.notNull (aAuthor, "Author");
     m_aAuthors.add (aAuthor);
   }
 
   @Nonnull
-  @ReturnsImmutableObject
-  public List <FeedPerson> getAuthors ()
+  @ReturnsMutableCopy
+  public List <FeedPerson> getAllAuthors ()
   {
-    return CollectionHelper.makeUnmodifiable (m_aAuthors);
+    return CollectionHelper.newList (m_aAuthors);
   }
 
   public void addCategory (@Nonnull final FeedCategory aCategory)
   {
-    if (aCategory == null)
-      throw new NullPointerException ("category");
+    ValueEnforcer.notNull (aCategory, "Category");
     m_aCategories.add (aCategory);
   }
 
   @Nonnull
-  @ReturnsImmutableObject
-  public List <FeedCategory> getCategories ()
+  @ReturnsMutableCopy
+  public List <FeedCategory> getAllCategories ()
   {
-    return CollectionHelper.makeUnmodifiable (m_aCategories);
+    return CollectionHelper.newList (m_aCategories);
   }
 
   public void setContent (@Nullable final IFeedContent aContent)
@@ -103,16 +102,15 @@ public final class FeedEntry extends AbstractFeedElement
 
   public void addContributor (@Nonnull final FeedPerson aContributor)
   {
-    if (aContributor == null)
-      throw new NullPointerException ("contributor");
+    ValueEnforcer.notNull (aContributor, "Contributor");
     m_aContributors.add (aContributor);
   }
 
   @Nonnull
-  @ReturnsImmutableObject
-  public List <FeedPerson> getContributors ()
+  @ReturnsMutableCopy
+  public List <FeedPerson> getAllContributors ()
   {
-    return CollectionHelper.makeUnmodifiable (m_aContributors);
+    return CollectionHelper.newList (m_aContributors);
   }
 
   public void setID (@Nullable final ISimpleURL aID)
@@ -128,16 +126,15 @@ public final class FeedEntry extends AbstractFeedElement
 
   public void addLink (@Nonnull final FeedLink aLink)
   {
-    if (aLink == null)
-      throw new NullPointerException ("link");
+    ValueEnforcer.notNull (aLink, "Link");
     m_aLinks.add (aLink);
   }
 
   @Nonnull
-  @ReturnsImmutableObject
-  public List <FeedLink> getLinks ()
+  @ReturnsMutableCopy
+  public List <FeedLink> getAllLinks ()
   {
-    return CollectionHelper.makeUnmodifiable (m_aLinks);
+    return CollectionHelper.newList (m_aLinks);
   }
 
   public void setPublished (@Nullable final FeedDate aPublished)

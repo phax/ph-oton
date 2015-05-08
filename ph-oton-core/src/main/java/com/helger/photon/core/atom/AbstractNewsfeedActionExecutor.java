@@ -25,6 +25,7 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
@@ -33,7 +34,6 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
 import com.helger.commons.stats.StatisticsManager;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
 import com.helger.commons.xml.serialize.XMLWriterSettings;
 import com.helger.photon.core.action.executor.AbstractActionExecutor;
@@ -59,10 +59,8 @@ public abstract class AbstractNewsfeedActionExecutor extends AbstractActionExecu
   public AbstractNewsfeedActionExecutor (@Nonnull final IHasDisplayText aDisplayText,
                                          @Nonnull @Nonempty final String sFeedID)
   {
-    if (aDisplayText == null)
-      throw new NullPointerException ("displayText");
-    if (StringHelper.hasNoText (sFeedID))
-      throw new IllegalArgumentException ("No feed ID passed!");
+    ValueEnforcer.notNull (aDisplayText, "DisplayText");
+    ValueEnforcer.notNull (sFeedID, "FeedID");
     m_aDisplayText = aDisplayText;
     m_sFeedID = sFeedID;
   }
@@ -83,7 +81,7 @@ public abstract class AbstractNewsfeedActionExecutor extends AbstractActionExecu
   @OverrideOnDemand
   protected String getFeedDescription ()
   {
-    return "ph-webbasics";
+    return "ph-oton-core";
   }
 
   protected abstract void fillNewsfeed (@Nonnull Feed aFeed);
