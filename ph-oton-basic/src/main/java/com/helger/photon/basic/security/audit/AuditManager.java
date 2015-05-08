@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,7 +110,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
 
   public static final String ELEMENT_ITEMS = "items";
   public static final String ELEMENT_ITEM = "item";
-  public static final String ATTR_DT = "dt";
+  public static final String ATTR_DT_STRING = "dts";
   public static final String ATTR_USER = "user";
   public static final String ATTR_TYPE = "type";
   /* initially was called "succes" by accident */
@@ -221,8 +222,8 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
 
     for (final IMicroElement eItem : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
     {
-      final String sDT = eItem.getAttributeValue (ATTR_DT);
-      final Long aDT = StringParser.parseLongObj (sDT);
+      final String sDT = eItem.getAttributeValue (ATTR_DT_STRING);
+      final LocalDateTime aDT = PDTFactory.createLocalDateTime (sDT);
       if (aDT == null)
       {
         s_aLogger.warn ("Failed to parse date time '" + sDT + "'");
@@ -248,11 +249,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
       final ESuccess eSuccess = ESuccess.valueOf (StringParser.parseBool (sSuccess));
 
       final String sAction = eItem.getTextContent ();
-      aHandler.onReadAuditItem (new AuditItem (PDTFactory.createDateTimeFromMillis (aDT.longValue ()),
-                                               sUserID,
-                                               eType,
-                                               eSuccess,
-                                               sAction));
+      aHandler.onReadAuditItem (new AuditItem (aDT, sUserID, eType, eSuccess, sAction));
     }
   }
 
@@ -280,7 +277,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
     for (final IAuditItem aAuditItem : m_aItems.getAllItems ())
     {
       final IMicroElement eItem = eCIL.appendElement (ELEMENT_ITEM);
-      eItem.setAttribute (ATTR_DT, Long.toString (aAuditItem.getDateTime ().getMillis ()));
+      eItem.setAttribute (ATTR_DT_STRING, aAuditItem.getDateTime ().toString ());
       eItem.setAttribute (ATTR_USER, aAuditItem.getUserID ());
       eItem.setAttribute (ATTR_TYPE, aAuditItem.getType ().getID ());
       eItem.setAttribute (ATTR_SUCCESS, Boolean.toString (aAuditItem.getSuccess ().isSuccess ()));

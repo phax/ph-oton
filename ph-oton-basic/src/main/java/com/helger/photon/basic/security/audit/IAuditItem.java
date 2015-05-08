@@ -18,7 +18,7 @@ package com.helger.photon.basic.security.audit;
 
 import javax.annotation.Nonnull;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
 import com.helger.commons.state.ESuccess;
@@ -26,7 +26,7 @@ import com.helger.commons.state.ISuccessIndicator;
 
 /**
  * Base interface for a single audit item
- * 
+ *
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
@@ -36,7 +36,7 @@ public interface IAuditItem extends ISuccessIndicator
    * @return The date and time when the audit item was created
    */
   @Nonnull
-  DateTime getDateTime ();
+  LocalDateTime getDateTime ();
 
   /**
    * @return The user who triggered the audit item.

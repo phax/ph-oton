@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hash.HashCodeGenerator;
@@ -36,7 +36,7 @@ import com.helger.datetime.PDTFactory;
 @Immutable
 final class AuditItem implements IAuditItem
 {
-  private final DateTime m_aDateTime;
+  private final LocalDateTime m_aDateTime;
   private final String m_sUserID;
   private final EAuditActionType m_eType;
   private final ESuccess m_eSuccess;
@@ -47,10 +47,14 @@ final class AuditItem implements IAuditItem
                     @Nonnull final ESuccess eSuccess,
                     @Nonnull final String sAction)
   {
-    this (PDTFactory.getCurrentDateTime (), sUserID != null ? sUserID : CAudit.GUEST_USERID, eType, eSuccess, sAction);
+    this (PDTFactory.getCurrentLocalDateTime (),
+          sUserID != null ? sUserID : CAudit.GUEST_USERID,
+          eType,
+          eSuccess,
+          sAction);
   }
 
-  AuditItem (@Nonnull final DateTime aDateTime,
+  AuditItem (@Nonnull final LocalDateTime aDateTime,
              @Nonnull final String sUserID,
              @Nonnull final EAuditActionType eType,
              @Nonnull final ESuccess eSuccess,
@@ -64,7 +68,7 @@ final class AuditItem implements IAuditItem
   }
 
   @Nonnull
-  public DateTime getDateTime ()
+  public LocalDateTime getDateTime ()
   {
     return m_aDateTime;
   }
