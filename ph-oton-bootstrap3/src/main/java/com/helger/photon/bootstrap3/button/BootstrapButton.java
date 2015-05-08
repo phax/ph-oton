@@ -26,12 +26,11 @@ import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCButton;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
-import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
 
 /**
  * Bootstrap button based on an &lt;button&gt;
- * 
+ *
  * @author Philip Helger
  */
 public class BootstrapButton extends AbstractHCButton <BootstrapButton>
@@ -93,12 +92,6 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
   public IIcon getIcon ()
   {
     return m_aIcon;
-  }
-
-  @Nonnull
-  public BootstrapButton setIcon (@Nullable final EDefaultIcon eIcon)
-  {
-    return setIcon (eIcon == null ? null : eIcon.getIcon ());
   }
 
   @Nonnull

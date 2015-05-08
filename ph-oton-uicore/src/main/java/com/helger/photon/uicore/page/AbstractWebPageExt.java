@@ -312,7 +312,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   @Nonnull
   public static IHCNode getEditImg ()
   {
-    return EDefaultIcon.EDIT.getIcon ().getAsNode ();
+    return EDefaultIcon.EDIT.getAsNode ();
   }
 
   @Nonnull
@@ -367,7 +367,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   @Nonnull
   public static IHCNode getCopyImg ()
   {
-    return EDefaultIcon.COPY.getIcon ().getAsNode ();
+    return EDefaultIcon.COPY.getAsNode ();
   }
 
   @Nonnull
@@ -413,7 +413,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   @Nonnull
   public static IHCNode getDeleteImg ()
   {
-    return EDefaultIcon.DELETE.getIcon ().getAsNode ();
+    return EDefaultIcon.DELETE.getAsNode ();
   }
 
   @Nonnull
@@ -446,7 +446,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   @Nonnull
   public static IHCNode getCreateImg ()
   {
-    return EDefaultIcon.NEW.getIcon ().getAsNode ();
+    return EDefaultIcon.NEW.getAsNode ();
   }
 
   @Nonnull

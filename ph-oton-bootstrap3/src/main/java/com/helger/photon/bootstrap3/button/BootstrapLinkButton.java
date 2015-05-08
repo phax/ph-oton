@@ -27,7 +27,6 @@ import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCA;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
-import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
 
 /**
@@ -95,12 +94,6 @@ public class BootstrapLinkButton extends AbstractHCA <BootstrapLinkButton>
   public IIcon getIcon ()
   {
     return m_aIcon;
-  }
-
-  @Nonnull
-  public BootstrapLinkButton setIcon (@Nullable final EDefaultIcon eIcon)
-  {
-    return setIcon (eIcon == null ? null : eIcon.getIcon ());
   }
 
   @Nonnull
