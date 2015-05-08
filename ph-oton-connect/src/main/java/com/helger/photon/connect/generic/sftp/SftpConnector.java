@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.filter.IFilter;
 import com.helger.commons.io.streams.StreamUtils;
 import com.helger.commons.state.EChange;
@@ -54,8 +55,7 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
 
   public SftpConnector (@Nonnull final ISftpConnectionDestination aDestination)
   {
-    if (aDestination == null)
-      throw new NullPointerException ("destination");
+    ValueEnforcer.notNull (aDestination, "Destination");
     m_aDestination = aDestination;
   }
 
@@ -192,8 +192,7 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
   public ESuccess listFiles (@Nullable final IFilter <ChannelSftp.LsEntry> aFilter,
                              @Nonnull final List <ChannelSftp.LsEntry> aTargetList)
   {
-    if (aTargetList == null)
-      throw new NullPointerException ("targetList");
+    ValueEnforcer.notNull (aTargetList, "TargetList");
 
     if (m_aChannel != null)
     {

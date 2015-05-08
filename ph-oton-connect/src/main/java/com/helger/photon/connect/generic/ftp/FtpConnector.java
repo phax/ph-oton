@@ -30,6 +30,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collections.ArrayHelper;
 import com.helger.commons.filter.IFilter;
 import com.helger.commons.io.streams.StreamUtils;
@@ -66,8 +67,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
 
   public FtpConnector (@Nonnull final IFtpConnectionDestination aDestination)
   {
-    if (aDestination == null)
-      throw new NullPointerException ("destination");
+    ValueEnforcer.notNull (aDestination, "Destination");
     m_aDestination = aDestination;
   }
 
@@ -239,8 +239,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
   @Nonnull
   public ESuccess listFiles (@Nullable final IFilter <FTPFile> aFilter, @Nonnull final List <FTPFile> aTargetList)
   {
-    if (aTargetList == null)
-      throw new NullPointerException ("targetList");
+    ValueEnforcer.notNull (aTargetList, "TargetList");
 
     if (m_aChannel != null)
     {

@@ -18,8 +18,8 @@ package com.helger.photon.connect.sftp;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.string.StringHelper;
 
 /**
  * Abstract implementation of the {@link IChannelSftpRunnable} interface
@@ -33,8 +33,7 @@ public abstract class AbstractChannelSftpRunnable implements IChannelSftpRunnabl
 
   public AbstractChannelSftpRunnable (@Nonnull @Nonempty final String sDisplayName)
   {
-    if (StringHelper.hasNoText (sDisplayName))
-      throw new IllegalArgumentException ("name may not be empty!");
+    ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     m_sDisplayName = sDisplayName;
   }
 

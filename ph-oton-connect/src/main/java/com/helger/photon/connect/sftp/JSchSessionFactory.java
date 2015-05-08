@@ -35,6 +35,11 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
+/**
+ * Utility class to create JSch sessions.
+ * 
+ * @author Philip Helger
+ */
 @Immutable
 public final class JSchSessionFactory
 {

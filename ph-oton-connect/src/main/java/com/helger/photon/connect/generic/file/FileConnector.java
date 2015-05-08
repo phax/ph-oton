@@ -24,6 +24,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.filter.IFilter;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FileUtils;
@@ -41,8 +42,7 @@ public class FileConnector implements IConnectorFileBased <File, File>
 
   public FileConnector (@Nonnull final IFileConnectionDestination aDestination)
   {
-    if (aDestination == null)
-      throw new NullPointerException ("destination");
+    ValueEnforcer.notNull (aDestination, "Destination");
     m_aDestination = aDestination;
   }
 
@@ -93,8 +93,10 @@ public class FileConnector implements IConnectorFileBased <File, File>
     try
     {
       if (m_aChannel != null)
-        return StreamUtils.copyInputStreamToOutputStream (FileUtils.getInputStream (new File (m_aChannel, sFilename)),
-                                                          aOS);
+      {
+        final File aFile = new File (m_aChannel, sFilename);
+        return StreamUtils.copyInputStreamToOutputStream (FileUtils.getInputStream (aFile), aOS);
+      }
       return ESuccess.FAILURE;
     }
     finally
@@ -109,8 +111,10 @@ public class FileConnector implements IConnectorFileBased <File, File>
     try
     {
       if (m_aChannel != null)
-        return StreamUtils.copyInputStreamToOutputStream (aIS,
-                                                          FileUtils.getOutputStream (new File (m_aChannel, sFilename)));
+      {
+        final File aFile = new File (m_aChannel, sFilename);
+        return StreamUtils.copyInputStreamToOutputStream (aIS, FileUtils.getOutputStream (aFile));
+      }
       return ESuccess.FAILURE;
     }
     finally
@@ -140,7 +144,10 @@ public class FileConnector implements IConnectorFileBased <File, File>
   public ESuccess deleteFile (@Nonnull final String sFilename)
   {
     if (m_aChannel != null)
-      return ESuccess.valueOf (FileOperations.deleteFile (new File (m_aChannel, sFilename)).isSuccess ());
+    {
+      final File aFile = new File (m_aChannel, sFilename);
+      return ESuccess.valueOf (FileOperations.deleteFile (aFile).isSuccess ());
+    }
     return ESuccess.FAILURE;
   }
 

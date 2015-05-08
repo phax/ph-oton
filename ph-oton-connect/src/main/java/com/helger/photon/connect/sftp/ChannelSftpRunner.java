@@ -22,6 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.state.ESuccess;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -57,8 +58,8 @@ public final class ChannelSftpRunner
                                   final int nChannelConnectTimeoutMillis,
                                   @Nonnull final IChannelSftpRunnable aRunnable) throws JSchException
   {
-    if (aRunnable == null)
-      throw new NullPointerException ("runnable");
+    ValueEnforcer.notNull (aSessionProvider, "SessionProvider");
+    ValueEnforcer.notNull (aRunnable, "Runnable");
 
     Session aSession = null;
     Channel aChannel = null;
@@ -68,7 +69,7 @@ public final class ChannelSftpRunner
       // get session from pool
       aSession = aSessionProvider.createSession ();
       if (aSession == null)
-        throw new IllegalStateException ("Failed to create JSch session");
+        throw new IllegalStateException ("Failed to create JSch session from provider");
 
       // Open the SFTP channel
       aChannel = aSession.openChannel ("sftp");

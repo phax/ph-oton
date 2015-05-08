@@ -23,6 +23,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileFilter;
 import org.apache.commons.net.ftp.FTPFileFilters;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.filter.IFilter;
 
 public final class FTPFileFilterFromIFilter implements FTPFileFilter
@@ -31,9 +32,14 @@ public final class FTPFileFilterFromIFilter implements FTPFileFilter
 
   public FTPFileFilterFromIFilter (@Nonnull final IFilter <FTPFile> aFilter)
   {
-    if (aFilter == null)
-      throw new NullPointerException ("filter");
+    ValueEnforcer.notNull (aFilter, "Filter");
     m_aFilter = aFilter;
+  }
+
+  @Nonnull
+  public IFilter <FTPFile> getFilter ()
+  {
+    return m_aFilter;
   }
 
   public boolean accept (final FTPFile aFile)
