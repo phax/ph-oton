@@ -33,7 +33,7 @@ import com.helger.commons.url.ISimpleURL;
  *
  * @author Philip Helger
  */
-public final class FeedLink extends AbstractFeedElement
+public class FeedLink extends AbstractFeedElement
 {
   public static final String REL_SELF = "self";
   public static final String REL_ALTERNATE = "alternate";

@@ -25,7 +25,7 @@ import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.impl.MicroElement;
 import com.helger.commons.string.StringHelper;
 
-public final class FeedOutOfLineContent extends AbstractFeedElement implements IFeedContent
+public class FeedOutOfLineContent extends AbstractFeedElement implements IFeedContent
 {
   private final String m_sType;
   private final String m_sSrc;

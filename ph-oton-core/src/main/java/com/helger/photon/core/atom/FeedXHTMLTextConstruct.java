@@ -22,10 +22,10 @@ import com.helger.html.hc.html.HCDiv;
 
 /**
  * XHTML text construct.
- * 
+ *
  * @author Philip Helger
  */
-public final class FeedXHTMLTextConstruct extends AbstractFeedXHTML implements IFeedTextConstruct
+public class FeedXHTMLTextConstruct extends AbstractFeedXHTML implements IFeedTextConstruct
 {
   public FeedXHTMLTextConstruct (@Nonnull final HCDiv aDiv)
   {

@@ -29,7 +29,7 @@ import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.impl.MicroElement;
 import com.helger.commons.string.StringHelper;
 
-public final class FeedOtherContent extends AbstractFeedElement implements IFeedContent
+public class FeedOtherContent extends AbstractFeedElement implements IFeedContent
 {
   private final List <Object> m_aChildren = new ArrayList <Object> ();
   private final String m_sType;

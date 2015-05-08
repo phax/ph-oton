@@ -18,7 +18,7 @@ package com.helger.photon.core.atom;
 
 import javax.annotation.Nullable;
 
-public final class FeedTextContent extends AbstractFeedText implements IFeedContent
+public class FeedTextContent extends AbstractFeedText implements IFeedContent
 {
   public FeedTextContent (@Nullable final String sText)
   {

@@ -22,10 +22,10 @@ import com.helger.html.hc.html.HCDiv;
 
 /**
  * Feed entry XHTML content.
- * 
+ *
  * @author Philip Helger
  */
-public final class FeedXHTMLContent extends AbstractFeedXHTML implements IFeedContent
+public class FeedXHTMLContent extends AbstractFeedXHTML implements IFeedContent
 {
   public FeedXHTMLContent (@Nonnull final HCDiv aDiv)
   {

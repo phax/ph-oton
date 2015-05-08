@@ -37,7 +37,7 @@ import com.helger.commons.microdom.impl.MicroDocument;
  *
  * @author Philip Helger
  */
-public final class Feed extends FeedSource
+public class Feed extends FeedSource
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (Feed.class);
 

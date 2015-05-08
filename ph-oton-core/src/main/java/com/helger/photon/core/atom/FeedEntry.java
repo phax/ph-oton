@@ -43,7 +43,7 @@ import com.helger.commons.url.ISimpleURL;
  *
  * @author Philip Helger
  */
-public final class FeedEntry extends AbstractFeedElement
+public class FeedEntry extends AbstractFeedElement
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FeedEntry.class);
 

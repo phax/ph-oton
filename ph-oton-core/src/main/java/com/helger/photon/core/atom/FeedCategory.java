@@ -23,7 +23,7 @@ import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.impl.MicroElement;
 import com.helger.commons.string.StringHelper;
 
-public final class FeedCategory extends AbstractFeedElement
+public class FeedCategory extends AbstractFeedElement
 {
   private String m_sTerm;
   private String m_sScheme;

@@ -34,7 +34,7 @@ import com.helger.web.datetime.PDTWebDateUtils;
  *
  * @author Philip Helger
  */
-public final class FeedDate extends AbstractFeedElement
+public class FeedDate extends AbstractFeedElement
 {
   private LocalDateTime m_aDT;
 

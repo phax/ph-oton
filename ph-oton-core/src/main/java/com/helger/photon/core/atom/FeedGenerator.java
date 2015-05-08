@@ -30,7 +30,7 @@ import com.helger.commons.string.StringHelper;
  *
  * @author Philip Helger
  */
-public final class FeedGenerator extends AbstractFeedElement implements IHasDescription
+public class FeedGenerator extends AbstractFeedElement implements IHasDescription
 {
   private String m_sURI;
   private String m_sVersion;

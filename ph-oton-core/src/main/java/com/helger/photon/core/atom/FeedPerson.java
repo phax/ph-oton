@@ -32,7 +32,7 @@ import com.helger.commons.string.StringHelper;
  *
  * @author Philip Helger
  */
-public final class FeedPerson extends AbstractFeedElement
+public class FeedPerson extends AbstractFeedElement
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FeedPerson.class);
 
