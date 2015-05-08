@@ -27,12 +27,12 @@ import com.helger.commons.hash.HashCodeGenerator;
 /**
  * Abstract base implementation of {@link IObject} that handles everything
  * except {@link #getTypeID()}.
- * 
+ *
  * @author Philip Helger
  */
 public abstract class AbstractObject extends AbstractBaseObject
 {
-  // Status vars
+  // Status member
   private Integer m_aHashCode;
 
   public AbstractObject (@Nonnull final IObject aObject)

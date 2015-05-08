@@ -114,7 +114,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditCreateSuccess (CObject.OT_CLIENT, aClient.getID (), sDisplayName);
+    AuditUtils.onAuditCreateSuccess (Client.OT, aClient.getID (), sDisplayName);
     return aClient;
   }
 
@@ -127,7 +127,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
       final Client aClient = m_aMap.get (sClientID);
       if (aClient == null)
       {
-        AuditUtils.onAuditModifyFailure (CObject.OT_CLIENT, sClientID, "no-such-id");
+        AuditUtils.onAuditModifyFailure (Client.OT, sClientID, "no-such-id");
         return EChange.UNCHANGED;
       }
 
@@ -143,7 +143,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditModifySuccess (CObject.OT_CLIENT, "all", sClientID, sDisplayName);
+    AuditUtils.onAuditModifySuccess (Client.OT, "all", sClientID, sDisplayName);
     return EChange.CHANGED;
   }
 

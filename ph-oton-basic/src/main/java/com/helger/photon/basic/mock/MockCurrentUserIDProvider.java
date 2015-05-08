@@ -23,7 +23,7 @@ import com.helger.photon.basic.security.login.ICurrentUserIDProvider;
 
 /**
  * Mock implementation of {@link ICurrentUserIDProvider}.
- * 
+ *
  * @author Philip Helger
  */
 public class MockCurrentUserIDProvider implements ICurrentUserIDProvider
@@ -32,7 +32,7 @@ public class MockCurrentUserIDProvider implements ICurrentUserIDProvider
 
   private final String m_sUserID;
 
-  protected MockCurrentUserIDProvider ()
+  public MockCurrentUserIDProvider ()
   {
     this ("unittest");
   }

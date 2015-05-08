@@ -28,7 +28,7 @@ import com.helger.commons.scopes.mock.ScopeTestRule;
  *
  * @author Philip Helger
  */
-public class AppBasicTestRule extends ScopeTestRule
+public class PhotonBasicTestRule extends ScopeTestRule
 {
   private final File m_aDataPath;
   private final File m_aServletContextPath;
@@ -36,7 +36,7 @@ public class AppBasicTestRule extends ScopeTestRule
   /**
    * Ctor using the default storage path from {@link ScopeTestRule}
    */
-  public AppBasicTestRule ()
+  public PhotonBasicTestRule ()
   {
     this (ScopeTestRule.STORAGE_PATH, ScopeTestRule.STORAGE_PATH);
   }
@@ -49,7 +49,7 @@ public class AppBasicTestRule extends ScopeTestRule
    * @param aServletContextPath
    *        The servlet context path to be used. May not be <code>null</code>.
    */
-  public AppBasicTestRule (@Nonnull final File aDataPath, @Nonnull final File aServletContextPath)
+  public PhotonBasicTestRule (@Nonnull final File aDataPath, @Nonnull final File aServletContextPath)
   {
     ValueEnforcer.notNull (aDataPath, "DataPath");
     ValueEnforcer.notNull (aServletContextPath, "ServletContextPath");
@@ -79,13 +79,13 @@ public class AppBasicTestRule extends ScopeTestRule
   public void before ()
   {
     super.before ();
-    AppBasicTestInit.initAppBasics (m_aDataPath, m_aServletContextPath);
+    PhotonBasicTestInit.init (m_aDataPath, m_aServletContextPath);
   }
 
   @Override
   public void after ()
   {
-    AppBasicTestInit.shutdownAppBasics ();
+    PhotonBasicTestInit.shutdown ();
     super.after ();
   }
 }

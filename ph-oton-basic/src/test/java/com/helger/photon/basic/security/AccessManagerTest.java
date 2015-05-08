@@ -22,7 +22,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.photon.basic.mock.AppBasicTestRule;
+import com.helger.photon.basic.mock.PhotonBasicTestRule;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.CSecurity;
 import com.helger.photon.basic.security.role.Role;
@@ -35,7 +35,7 @@ import com.helger.photon.basic.security.role.Role;
 public final class AccessManagerTest
 {
   @Rule
-  public final TestRule m_aRule = new AppBasicTestRule ();
+  public final TestRule m_aRule = new PhotonBasicTestRule ();
 
   @Test
   public void testStartup ()

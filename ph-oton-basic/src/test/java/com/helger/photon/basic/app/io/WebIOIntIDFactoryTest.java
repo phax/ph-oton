@@ -27,7 +27,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.idfactory.IIntIDFactory;
 import com.helger.photon.basic.app.io.WebIOIntIDFactory;
-import com.helger.photon.basic.mock.AppBasicTestRule;
+import com.helger.photon.basic.mock.PhotonBasicTestRule;
 
 /**
  * Test class for class {@link WebIOIntIDFactory}.
@@ -37,7 +37,7 @@ import com.helger.photon.basic.mock.AppBasicTestRule;
 public final class WebIOIntIDFactoryTest
 {
   @Rule
-  public final TestRule m_aRule = new AppBasicTestRule ();
+  public final TestRule m_aRule = new PhotonBasicTestRule ();
 
   @Test
   public void testFileBasedIDProvider ()

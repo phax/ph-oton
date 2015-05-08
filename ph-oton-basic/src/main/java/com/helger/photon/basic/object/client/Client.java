@@ -32,17 +32,19 @@ import com.helger.photon.basic.object.StubObject;
 
 /**
  * Default implementation of {@link IClient}
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
 public final class Client extends AbstractObject implements IClient
 {
+  public static final ObjectType OT = new ObjectType ("client");
+
   private String m_sDisplayName;
 
   /**
    * Constructor for new client
-   * 
+   *
    * @param sID
    *        ID
    * @param sDisplayName
@@ -62,7 +64,7 @@ public final class Client extends AbstractObject implements IClient
   @Nonnull
   public ObjectType getTypeID ()
   {
-    return CObject.OT_CLIENT;
+    return OT;
   }
 
   public boolean isGlobalClient ()
@@ -90,7 +92,7 @@ public final class Client extends AbstractObject implements IClient
 
   @Nonnull
   @Nonempty
-  public String getAsUIText (Locale aDisplayLocale)
+  public String getAsUIText (final Locale aDisplayLocale)
   {
     return getID () + " - " + m_sDisplayName;
   }

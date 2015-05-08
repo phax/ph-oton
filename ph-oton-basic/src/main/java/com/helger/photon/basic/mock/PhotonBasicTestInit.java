@@ -19,6 +19,7 @@ package com.helger.photon.basic.mock;
 import java.io.File;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.cleanup.CommonsCleanup;
 import com.helger.commons.idfactory.GlobalIDFactory;
@@ -26,19 +27,20 @@ import com.helger.commons.idfactory.MemoryIntIDFactory;
 import com.helger.photon.basic.app.io.WebFileIO;
 
 /**
- * Static appbasics test init and shutdown code
+ * Static test init and shutdown code for this project
  *
  * @author Philip Helger
  */
-public final class AppBasicTestInit
+@Immutable
+public final class PhotonBasicTestInit
 {
-  private AppBasicTestInit ()
+  private PhotonBasicTestInit ()
   {}
 
-  public static void initAppBasics (@Nonnull final File aDataPath, @Nonnull final File aServletContextPath)
+  public static void init (@Nonnull final File aDataPath, @Nonnull final File aServletContextPath)
   {
-    // Init the base path once - don't check access rights in test, for
-    // performance reasons
+    // Init the base path once
+    // don't check access rights in test, for performance reasons
     WebFileIO.initPaths (aDataPath, aServletContextPath, false);
 
     // Init the IDs
@@ -46,7 +48,7 @@ public final class AppBasicTestInit
       GlobalIDFactory.setPersistentIntIDFactory (new MemoryIntIDFactory ());
   }
 
-  public static void shutdownAppBasics ()
+  public static void shutdown ()
   {
     // Init the base path once
     WebFileIO.resetPaths ();

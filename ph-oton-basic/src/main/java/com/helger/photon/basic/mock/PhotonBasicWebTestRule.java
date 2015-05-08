@@ -29,7 +29,7 @@ import com.helger.web.scopes.mock.WebScopeTestRule;
  *
  * @author Philip Helger
  */
-public class AppBasicWebTestRule extends WebScopeTestRule
+public class PhotonBasicWebTestRule extends WebScopeTestRule
 {
   private final File m_aDataPath;
   private final File m_aServletContextPath;
@@ -37,7 +37,7 @@ public class AppBasicWebTestRule extends WebScopeTestRule
   /**
    * Ctor using the default storage path from {@link ScopeTestRule}
    */
-  public AppBasicWebTestRule ()
+  public PhotonBasicWebTestRule ()
   {
     this (ScopeTestRule.STORAGE_PATH, ScopeTestRule.STORAGE_PATH);
   }
@@ -50,7 +50,7 @@ public class AppBasicWebTestRule extends WebScopeTestRule
    * @param aServletContextPath
    *        The servlet context path to be used. May not be <code>null</code>.
    */
-  public AppBasicWebTestRule (@Nonnull final File aDataPath, @Nonnull final File aServletContextPath)
+  public PhotonBasicWebTestRule (@Nonnull final File aDataPath, @Nonnull final File aServletContextPath)
   {
     ValueEnforcer.notNull (aDataPath, "DataPath");
     ValueEnforcer.notNull (aServletContextPath, "ServletContextPath");
@@ -80,13 +80,13 @@ public class AppBasicWebTestRule extends WebScopeTestRule
   public void before ()
   {
     super.before ();
-    AppBasicTestInit.initAppBasics (m_aDataPath, m_aServletContextPath);
+    PhotonBasicTestInit.init (m_aDataPath, m_aServletContextPath);
   }
 
   @Override
   public void after ()
   {
-    AppBasicTestInit.shutdownAppBasics ();
+    PhotonBasicTestInit.shutdown ();
     super.after ();
   }
 }

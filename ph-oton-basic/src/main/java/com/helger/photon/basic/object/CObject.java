@@ -19,7 +19,6 @@ package com.helger.photon.basic.object;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotations.PresentForCodeCoverage;
-import com.helger.commons.type.ObjectType;
 
 /**
  * Constants for {@link IObject} etc.
@@ -31,9 +30,6 @@ public final class CObject
 {
   public static final String GLOBAL_CLIENT = "$";
   public static final String GLOBAL_CLIENT_NAME = "$system client$";
-
-  public static final ObjectType OT_ACCOUNTINGAREA = new ObjectType ("accountingarea");
-  public static final ObjectType OT_CLIENT = new ObjectType ("client");
 
   @PresentForCodeCoverage
   private static final CObject s_aInstance = new CObject ();

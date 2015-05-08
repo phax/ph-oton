@@ -31,7 +31,6 @@ import com.helger.commons.type.ObjectType;
 import com.helger.masterdata.address.Address;
 import com.helger.masterdata.address.IReadonlyAddress;
 import com.helger.masterdata.currency.ECurrency;
-import com.helger.photon.basic.object.CObject;
 import com.helger.photon.basic.object.StubObject;
 import com.helger.photon.basic.object.client.AbstractClientObject;
 import com.helger.photon.basic.object.client.IClient;
@@ -44,6 +43,8 @@ import com.helger.photon.basic.object.client.IClient;
 @NotThreadSafe
 public final class AccountingArea extends AbstractClientObject implements IAccountingArea
 {
+  public static final ObjectType OT = new ObjectType ("accountingarea");
+
   private String m_sDisplayName;
   private String m_sCompanyType;
   private String m_sCompanyVATIN;
@@ -162,7 +163,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public ObjectType getTypeID ()
   {
-    return CObject.OT_ACCOUNTINGAREA;
+    return OT;
   }
 
   @Nonnull

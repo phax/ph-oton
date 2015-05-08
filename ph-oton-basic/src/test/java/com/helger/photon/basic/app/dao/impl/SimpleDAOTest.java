@@ -31,7 +31,7 @@ import com.helger.commons.microdom.impl.MicroDocument;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.mock.AppBasicTestRule;
+import com.helger.photon.basic.mock.PhotonBasicTestRule;
 
 /**
  * Test class for class {@link AbstractSimpleDAO}.
@@ -65,7 +65,7 @@ public class SimpleDAOTest
   }
 
   @Rule
-  public final TestRule m_aRule = new AppBasicTestRule ();
+  public final TestRule m_aRule = new PhotonBasicTestRule ();
 
   @Test
   public void testBasic () throws DAOException
