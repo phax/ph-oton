@@ -35,6 +35,7 @@ import com.helger.commons.string.StringHelper;
 public final class FeedPerson extends AbstractFeedElement
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FeedPerson.class);
+
   private String m_sName;
   private String m_sURI;
   private String m_sEmail;

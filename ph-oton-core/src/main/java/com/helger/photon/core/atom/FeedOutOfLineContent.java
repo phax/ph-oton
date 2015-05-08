@@ -19,6 +19,7 @@ package com.helger.photon.core.atom;
 import javax.annotation.Nonnull;
 import javax.xml.XMLConstants;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.impl.MicroElement;
@@ -31,10 +32,8 @@ public final class FeedOutOfLineContent extends AbstractFeedElement implements I
 
   public FeedOutOfLineContent (@Nonnull @Nonempty final String sType, @Nonnull @Nonempty final String sSrc)
   {
-    if (StringHelper.hasNoText (sType))
-      throw new IllegalArgumentException ("type is empty");
-    if (StringHelper.hasNoText (sSrc))
-      throw new IllegalArgumentException ("src is empty");
+    ValueEnforcer.notEmpty (sType, "Type");
+    ValueEnforcer.notEmpty (sSrc, "Src");
     m_sType = sType;
     m_sSrc = sSrc;
   }

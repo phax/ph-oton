@@ -94,9 +94,9 @@ public abstract class AbstractNewsfeedActionExecutor extends AbstractActionExecu
     s_aStatsHdlExecute.increment (m_sFeedID);
 
     final Feed aFeed = new Feed ();
-    aFeed.setID ("urn:ph-webbasics:newsfeed:" + m_sFeedID);
+    aFeed.setID ("urn:ph-oton-core:newsfeed:" + m_sFeedID);
 
-    final FeedGenerator aGenerator = new FeedGenerator ("urn:ph-webbasics");
+    final FeedGenerator aGenerator = new FeedGenerator ("urn:ph-oton-core");
     aGenerator.setDescription (getFeedDescription ());
     aFeed.setGenerator (aGenerator);
     aFeed.addLink (new FeedLink (aRequestScope.getFullContextAndServletPath () + m_sFeedID, FeedLink.REL_SELF));
