@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls.typeaheadten;
+package com.helger.photon.uictrls.typeahead2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -400,7 +400,7 @@ public class HCTypeahead010 implements IHCNodeBuilder
 
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_0_10);
+    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_0_11);
     PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_PH);
     PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.TYPEAHEAD_BOOTSTRAP);
   }
