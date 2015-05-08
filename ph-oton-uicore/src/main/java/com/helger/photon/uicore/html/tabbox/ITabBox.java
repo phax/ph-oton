@@ -26,6 +26,13 @@ import com.helger.commons.state.EChange;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
 
+/**
+ * Base interface for a tab box
+ * 
+ * @author Philip Helger
+ * @param <IMPLTYPE>
+ *        Implementation type
+ */
 public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeBuilder
 {
   /** By default a tab is not active */

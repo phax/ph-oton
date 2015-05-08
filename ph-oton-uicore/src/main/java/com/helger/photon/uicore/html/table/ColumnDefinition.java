@@ -111,6 +111,7 @@ public class ColumnDefinition implements Serializable
                                        .append ("column", m_aCol)
                                        .append ("fieldID", m_sFieldID)
                                        .append ("comparator", m_aComparator)
+                                       .append ("tooltip", m_sToolTip)
                                        .toString ();
   }
 }

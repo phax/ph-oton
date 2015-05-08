@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.html.css.DefaultCSSClassProvider;
+import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.html.AbstractHCLabel;
@@ -27,23 +29,28 @@ import com.helger.html.hc.impl.HCTextNode;
 
 public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormLabel
 {
+  public static final ICSSClassProvider CSS_CLASS_FORM_LABEL = DefaultCSSClassProvider.create ("form-label");
+  public static final ICSSClassProvider CSS_CLASS_FORM_LABEL_OPTIONAL = DefaultCSSClassProvider.create ("form-label-optional");
+  public static final ICSSClassProvider CSS_CLASS_FORM_LABEL_MANDATORY = DefaultCSSClassProvider.create ("form-label-mandatory");
+  public static final ICSSClassProvider CSS_CLASS_FORM_LABEL_ALTERNATIVE = DefaultCSSClassProvider.create ("form-label-alternative");
+
   private final ELabelType m_eType;
   private final boolean m_bTextLabel;
   private final String m_sLabelText;
 
   private void _assignClasses (@Nonnull final ELabelType eType)
   {
-    addClass (HCFormLabelUtils.CSS_CLASS_FORM_LABEL);
+    addClass (CSS_CLASS_FORM_LABEL);
     switch (eType)
     {
       case OPTIONAL:
-        addClass (HCFormLabelUtils.CSS_CLASS_FORM_LABEL_OPTIONAL);
+        addClass (CSS_CLASS_FORM_LABEL_OPTIONAL);
         break;
       case MANDATORY:
-        addClass (HCFormLabelUtils.CSS_CLASS_FORM_LABEL_MANDATORY);
+        addClass (CSS_CLASS_FORM_LABEL_MANDATORY);
         break;
       case ALTERNATIVE:
-        addClass (HCFormLabelUtils.CSS_CLASS_FORM_LABEL_ALTERNATIVE);
+        addClass (CSS_CLASS_FORM_LABEL_ALTERNATIVE);
         break;
       default:
         break;

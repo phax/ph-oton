@@ -21,19 +21,12 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.css.DefaultCSSClassProvider;
-import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.htmlext.HCUtils;
 
 @Immutable
 public final class HCFormLabelUtils
 {
-  public static final ICSSClassProvider CSS_CLASS_FORM_LABEL = DefaultCSSClassProvider.create ("form-label");
-  public static final ICSSClassProvider CSS_CLASS_FORM_LABEL_OPTIONAL = DefaultCSSClassProvider.create ("form-label-optional");
-  public static final ICSSClassProvider CSS_CLASS_FORM_LABEL_MANDATORY = DefaultCSSClassProvider.create ("form-label-mandatory");
-  public static final ICSSClassProvider CSS_CLASS_FORM_LABEL_ALTERNATIVE = DefaultCSSClassProvider.create ("form-label-alternative");
-
   public static final String SIGN_MANDATORY = "*";
   public static final String SIGN_ALTERNATIVE = "°";
   public static final String LABEL_END = ":";

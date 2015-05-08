@@ -50,6 +50,12 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   }
 
   @Nonnull
+  public ISimpleURL getSelfHref ()
+  {
+    return m_aSelfHref;
+  }
+
+  @Nonnull
   public final IMPLTYPE addHiddenField (@Nullable final String sName, final int nValue)
   {
     addChild (new HCHiddenField (sName, nValue));

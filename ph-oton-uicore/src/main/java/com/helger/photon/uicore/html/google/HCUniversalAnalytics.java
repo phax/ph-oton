@@ -145,15 +145,6 @@ public class HCUniversalAnalytics extends HCScript
     return aPkg;
   }
 
-  @Deprecated
-  public HCUniversalAnalytics (@Nonnull @Nonempty final String sAccount,
-                               final boolean bForceSSL,
-                               final boolean bEnhancedLinkAttribution,
-                               final boolean bUseIPAnonymization)
-  {
-    this (sAccount, bForceSSL, bEnhancedLinkAttribution, bUseIPAnonymization, false);
-  }
-
   public HCUniversalAnalytics (@Nonnull @Nonempty final String sAccount,
                                final boolean bForceSSL,
                                final boolean bEnhancedLinkAttribution,

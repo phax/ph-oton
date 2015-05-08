@@ -216,6 +216,8 @@ public abstract class AbstractTabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> imple
   {
     if (m_aTabs.remove (sTabID) == null)
       return EChange.UNCHANGED;
+
+    // Was it the active tab?
     if (m_sActiveTabID != null && m_sActiveTabID.equals (sTabID))
       m_sActiveTabID = null;
     return EChange.CHANGED;
