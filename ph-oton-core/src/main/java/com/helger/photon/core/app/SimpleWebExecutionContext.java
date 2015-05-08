@@ -273,30 +273,10 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
     return m_aRequestScope.getAllAttributeValues ();
   }
 
-  /**
-   * @deprecated Use {@link #getAttributeAsList(String)} instead
-   */
-  @Deprecated
-  @Nullable
-  public List <String> getAttributeValues (@Nullable final String sName)
-  {
-    return getAttributeAsList (sName);
-  }
-
   @Nullable
   public List <String> getAttributeAsList (@Nullable final String sName)
   {
     return m_aRequestScope.getAttributeAsList (sName);
-  }
-
-  /**
-   * @deprecated Use {@link #getAttributeAsList(String,List)} instead
-   */
-  @Deprecated
-  @Nullable
-  public List <String> getAttributeValues (@Nullable final String sName, @Nullable final List <String> aDefault)
-  {
-    return getAttributeAsList (sName, aDefault);
   }
 
   @Nullable

@@ -40,21 +40,6 @@ public final class ForcedRedirectException extends RuntimeException
   /**
    * Constructor
    *
-   * @param aRedirectTargetURL
-   *        The redirect target URL. May not be <code>null</code>.
-   * @param aContent
-   *        The additional content to be displayed upon the next get. May be
-   *        <code>null</code>.
-   */
-  @Deprecated
-  public ForcedRedirectException (@Nonnull final ISimpleURL aRedirectTargetURL, @Nullable final IHCNode aContent)
-  {
-    this (DEFAULT_MENU_ITEM_ID, aRedirectTargetURL, aContent);
-  }
-
-  /**
-   * Constructor
-   *
    * @param sSourceMenuItemID
    *        The source menu item ID that triggered the PRG.
    * @param aRedirectTargetURL

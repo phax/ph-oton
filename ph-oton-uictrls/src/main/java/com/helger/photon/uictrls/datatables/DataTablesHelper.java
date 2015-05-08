@@ -42,13 +42,6 @@ public final class DataTablesHelper
   private DataTablesHelper ()
   {}
 
-  @Deprecated
-  public static void makeDataTablesScrollable (@Nonnull final DataTables aDataTables,
-                                               @Nonnull final String sScrollHeight)
-  {
-    aDataTables.setUseScroller (true, sScrollHeight);
-  }
-
   /**
    * Create the JS conversion routine from object to number.
    *

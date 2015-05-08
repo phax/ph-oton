@@ -167,13 +167,6 @@ public final class ForcedRedirectManager extends SessionWebSingleton
   }
 
   @Nullable
-  @Deprecated
-  public static IHCNode getLastForcedRedirectContentAndClear ()
-  {
-    return getAndRemoveLastForcedRedirectContent (ForcedRedirectException.DEFAULT_MENU_ITEM_ID);
-  }
-
-  @Nullable
   public static IHCNode getAndRemoveLastForcedRedirectContent (@Nullable final String sMenuItemID)
   {
     if (StringHelper.hasNoText (sMenuItemID))
