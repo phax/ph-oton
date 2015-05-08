@@ -83,6 +83,8 @@ public final class RunInJettyPHOTONDEMO
       aWebAppCtx.setCopyWebInf (true);
     }
     {
+      // If working, post on
+      // https://stackoverflow.com/questions/18666720/configure-jetty-to-scan-web-inf-classes-for-web-fragment-xml
       final List <Resource> aFragments = new ArrayList <Resource> ();
       for (final String sCP : System.getProperty ("java.class.path").split (System.getProperty ("path.separator")))
       {
