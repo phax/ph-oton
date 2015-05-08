@@ -133,7 +133,7 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
-        <artifactId>ph-oton-core</artifactId>
+        <artifactId>ph-oton-exchange</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -143,17 +143,22 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
+        <artifactId>ph-oton-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
         <artifactId>ph-oton-uicore</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
-        <artifactId>ph-oton-uictrls</artifactId>
+        <artifactId>ph-oton-tinymce4</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
-        <artifactId>ph-oton-tinymce4</artifactId>
+        <artifactId>ph-oton-uictrls</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -169,6 +174,11 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-bootstrap3-pages</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-stub</artifactId>
         <version>${project.version}</version>
       </dependency>
 
@@ -246,5 +256,6 @@
     <module>ph-oton-bootstrap3</module>
     <module>ph-oton-bootstrap3-uictrls</module>
     <module>ph-oton-bootstrap3-pages</module>
+    <module>ph-oton-stub</module>
   </modules>
 </project>

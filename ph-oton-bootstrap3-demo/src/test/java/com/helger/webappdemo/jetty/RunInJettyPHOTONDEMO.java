@@ -20,7 +20,6 @@ import java.io.File;
 
 import javax.annotation.concurrent.Immutable;
 
-import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
@@ -85,7 +84,9 @@ public final class RunInJettyPHOTONDEMO
                                                           new WebXmlConfiguration (),
                                                           new MetaInfConfiguration (),
                                                           new FragmentConfiguration (),
-                                                          new AnnotationConfiguration (),
+                                                          // new
+                                                          // AnnotationConfiguration
+                                                          // (),
                                                           new JettyWebXmlConfiguration () });
     aServer.setHandler (aWebAppCtx);
     final ServletContextHandler aCtx = aWebAppCtx;

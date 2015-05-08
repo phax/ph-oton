@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotations.UsedViaReflection;
 import com.helger.commons.exceptions.InitializationException;
+import com.helger.commons.lang.CGStringHelper;
 import com.helger.commons.scopes.IScope;
 import com.helger.commons.scopes.singleton.GlobalSingleton;
 import com.helger.photon.basic.app.dao.impl.DAOException;
@@ -89,7 +90,7 @@ public final class PhotonCoreManager extends GlobalSingleton
 
       m_aWebSiteResourceBundleMgr = new WebSiteResourceBundleManager (RESOURCE_BUNDLES_XML);
 
-      s_aLogger.info ("MetaSystemManager was initialized");
+      s_aLogger.info (CGStringHelper.getClassLocalName (this) + " was initialized");
     }
     catch (final DAOException ex)
     {
