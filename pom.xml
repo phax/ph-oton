@@ -237,8 +237,9 @@
   
   <modules>
     <module>ph-oton-basic</module>
-    <module>ph-oton-core</module>
+    <module>ph-oton-exchange</module>
     <module>ph-oton-connect</module>
+    <module>ph-oton-core</module>
     <module>ph-oton-uicore</module>
     <module>ph-oton-tinymce4</module>
     <module>ph-oton-uictrls</module>

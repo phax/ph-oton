@@ -56,7 +56,7 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-oton-core</artifactId>
+      <artifactId>ph-oton-basic</artifactId>
     </dependency>
 
     <dependency>

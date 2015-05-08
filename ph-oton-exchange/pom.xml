@@ -24,11 +24,11 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>5.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-oton-basic</artifactId>
+  <artifactId>ph-oton-exchange</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-oton-basic</name>
-  <description>ph-oton basic components</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-basic</url>
+  <name>ph-oton-exchange</name>
+  <description>ph-oton exchange components</description>
+  <url>https://github.com/phax/ph-oton/ph-oton-exchange</url>
   <inceptionYear>2014</inceptionYear>
  
   <licenses>
@@ -64,38 +64,12 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
       <artifactId>ph-json</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-css</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-schedule</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-html</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-masterdata</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.persistence</groupId>
-      <artifactId>javax.persistence</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <optional>true</optional>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-poi</artifactId>
     </dependency>
 
     <dependency>
