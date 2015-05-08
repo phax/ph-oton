@@ -111,6 +111,7 @@ public enum ETinyMCE4Language
   TA_IN ("ta_IN"),
   TG ("tg"),
   TH_TH ("th_TH"),
+  TR ("tr"),
   TR_TR ("tr_TR"),
   TT ("tt"),
   UG ("ug"),
