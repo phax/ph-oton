@@ -49,7 +49,7 @@ import com.helger.web.servlet.response.UnifiedResponse;
  * <pre>
  *  &lt;servlet&gt;
  *     &lt;servlet-name&gt;ResourceBundleServlet&lt;/servlet-name&gt;
- *     &lt;servlet-class&gt;com.helger.webbasics.resource.ResourceBundleServlet&lt;/servlet-class&gt;
+ *     &lt;servlet-class&gt;com.helger.photon.core.resource.ResourceBundleServlet&lt;/servlet-class&gt;
  *     &lt;init-param&gt;
  *       &lt;param-name&gt;allowedExtensions&lt;/param-name&gt;
  *       &lt;param-value&gt;js,css&lt;/param-value&gt;

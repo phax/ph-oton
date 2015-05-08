@@ -26,10 +26,10 @@ import com.helger.commons.io.IReadableResourceProvider;
 import com.helger.web.mock.MockServletContext;
 
 /**
- * A JUnit test rule that is suitable for all webbasics projects. It is
- * optimized for the use within Java web application. For the use within Java
- * libraries using {@link PhotonCoreTestRule} is preferred, since the correct
- * resource base path is used.
+ * A JUnit test rule that is suitable for all ph-oton projects. It is optimized
+ * for the use within Java web application. For the use within Java libraries
+ * using {@link PhotonCoreTestRule} is preferred, since the correct resource
+ * base path is used.
  *
  * @author Philip Helger
  */
