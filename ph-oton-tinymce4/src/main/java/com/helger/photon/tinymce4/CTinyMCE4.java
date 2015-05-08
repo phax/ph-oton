@@ -29,7 +29,7 @@ import com.helger.commons.version.Version;
 public final class CTinyMCE4
 {
   /** Edit version */
-  public static final Version TINYMCE_VERSION = new Version (4, 1, 7);
+  public static final Version TINYMCE_VERSION = new Version (4, 1, 10);
 
   private CTinyMCE4 ()
   {}
