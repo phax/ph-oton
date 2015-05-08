@@ -21,6 +21,8 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotations.IsSPIImplementation;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistry;
+import com.helger.photon.basic.favorites.Favorite;
+import com.helger.photon.basic.favorites.FavoriteMicroTypeConverter;
 import com.helger.photon.basic.longrun.LongRunningJobData;
 import com.helger.photon.basic.longrun.LongRunningJobDataMicroTypeConverter;
 import com.helger.photon.basic.migration.SystemMigrationResult;
@@ -42,6 +44,7 @@ public final class MicroTypeConverterRegistrar_ph_oton_basic implements IMicroTy
 {
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
+    aRegistry.registerMicroElementTypeConverter (Favorite.class, new FavoriteMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (LongRunningJobData.class, new LongRunningJobDataMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (Role.class, new RoleMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (SystemMigrationResult.class,

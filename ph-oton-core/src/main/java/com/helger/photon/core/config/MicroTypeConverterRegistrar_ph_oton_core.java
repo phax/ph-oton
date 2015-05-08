@@ -22,8 +22,6 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.annotations.IsSPIImplementation;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistry;
-import com.helger.photon.basic.favorites.Favorite;
-import com.helger.photon.basic.favorites.FavoriteMicroTypeConverter;
 import com.helger.photon.core.smtp.NamedSMTPSettings;
 import com.helger.photon.core.smtp.NamedSMTPSettingsMicroTypeConverter;
 import com.helger.photon.core.userdata.UserDataObject;
@@ -40,7 +38,6 @@ public final class MicroTypeConverterRegistrar_ph_oton_core implements IMicroTyp
 {
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
-    aRegistry.registerMicroElementTypeConverter (Favorite.class, new FavoriteMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (NamedSMTPSettings.class, new NamedSMTPSettingsMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (UserDataObject.class, new UserDataObjectMicroTypeConverter ());
   }
