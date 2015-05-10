@@ -1,5 +1,5 @@
 # ph-oton
-This set of Java libraries forms a generic package to build Java web applications.
+This set of Java libraries forms a package to build Java web applications.
 
 ---
 
