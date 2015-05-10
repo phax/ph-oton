@@ -28,7 +28,10 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.form.EBootstrapFormType;
 import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.page.AbstractWebPageForm;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
@@ -58,6 +61,13 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
                                        @Nullable final IReadonlyMultiLingualText aDescription)
   {
     super (sID, aName, aDescription);
+  }
+
+  @Override
+  @Nonnull
+  public final BootstrapForm createFormSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  {
+    return new BootstrapForm (EBootstrapFormType.HORIZONTAL).setAction (aLEC.getSelfHref ());
   }
 
   @Override
