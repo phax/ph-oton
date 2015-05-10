@@ -131,7 +131,7 @@ public final class PhotonStubInitializer
       }
 
       {
-        aSC.addListener (PhotonStubServletContextListener.class);
+        aSC.addListener (PhotonStubConfigurationListener.class);
       }
 
       s_aLogger.info ("Finished registering default ph-oton listeners and servlets");
