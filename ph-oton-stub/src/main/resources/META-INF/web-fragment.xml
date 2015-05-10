@@ -21,7 +21,7 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd"
               version="3.0">
-  <name>ph-oton-stub</name>
+  <name>ph-oton-bootstrap3-stub</name>
   <distributable />
   <ordering>
     <before>
@@ -30,7 +30,7 @@
   </ordering>
   
   <listener>
-    <listener-class>com.helger.photon.stub.PhotonStubServletContextListener</listener-class>
+    <listener-class>com.helger.photon.bootstrap3.stub.PhotonStubServletContextListener</listener-class>
   </listener>
   
   <!--  

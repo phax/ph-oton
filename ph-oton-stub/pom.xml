@@ -24,11 +24,11 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>5.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-oton-stub</artifactId>
+  <artifactId>ph-oton-bootstrap3-stub</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-oton-stub</name>
-  <description>Web application stub for the ph-oton stack</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-stub</url>
+  <name>ph-oton-bootstrap3-stub</name>
+  <description>Web application stub with Bootstrap for the ph-oton stack</description>
+  <url>https://github.com/phax/ph-oton/ph-oton-bootstrap3-stub</url>
   <inceptionYear>2014</inceptionYear>
  
   <licenses>
@@ -73,12 +73,6 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <scope>test</scope>
     </dependency>
   </dependencies>
   

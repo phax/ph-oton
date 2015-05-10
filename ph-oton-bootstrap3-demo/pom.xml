@@ -56,7 +56,7 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-oton-stub</artifactId>
+      <artifactId>ph-oton-bootstrap3-stub</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>

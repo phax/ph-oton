@@ -179,7 +179,7 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
-        <artifactId>ph-oton-stub</artifactId>
+        <artifactId>ph-oton-bootstrap3-stub</artifactId>
         <version>${project.version}</version>
       </dependency>
 
