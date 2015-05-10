@@ -20,8 +20,6 @@ import javax.annotation.Nonnull;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.slf4j.bridge.SLF4JBridgeHandler;
-
 import com.helger.html.meta.MetaElement;
 import com.helger.photon.bootstrap3.EBootstrapCSSPathProvider;
 import com.helger.photon.bootstrap3.EBootstrapJSPathProvider;
@@ -39,13 +37,6 @@ import com.helger.photon.uictrls.famfam.EFamFamIcon;
  */
 public final class PhotonStubConfigurationListener implements ServletContextListener
 {
-  private static void _initLogging ()
-  {
-    // JUL to SLF4J
-    SLF4JBridgeHandler.removeHandlersForRootLogger ();
-    SLF4JBridgeHandler.install ();
-  }
-
   private static void _registerDefaultResources ()
   {
     final HTMLConfigManager aConfigMgr = PhotonCoreManager.getHTMLConfigMgr ();
@@ -82,8 +73,6 @@ public final class PhotonStubConfigurationListener implements ServletContextList
 
   public void contextInitialized (@Nonnull final ServletContextEvent aSCE)
   {
-    _initLogging ();
-
     _registerDefaultResources ();
 
     // Set default icon set
