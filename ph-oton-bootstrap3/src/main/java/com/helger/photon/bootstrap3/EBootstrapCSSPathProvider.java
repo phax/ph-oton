@@ -32,9 +32,13 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EBootstrapCSSPathProvider implements ICSSPathProvider
 {
+  /** Main Bootstrap CSS */
   BOOTSTRAP_334 ("bootstrap/3.3.4/css/bootstrap.css"),
+  /** Bootstrap theme CSS */
   BOOTSTRAP_THEME_334 ("bootstrap/3.3.4/css/bootstrap-theme.css"),
+  /** Special Bootstrap CSS for IE < 10 */
   BOOTSTRAP_IE9 ("bootstrap/bootstrap3-ie9.css", "if lt IE 10"),
+  /** A some of default Bootstrap CSS adoptions etc. */
   BOOTSTRAP_PH ("bootstrap/bootstrap3-ph.css");
 
   private final ConstantCSSPathProvider m_aPP;

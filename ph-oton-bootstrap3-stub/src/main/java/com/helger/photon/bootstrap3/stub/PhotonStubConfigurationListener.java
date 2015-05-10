@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.MetaElement;
 import com.helger.photon.bootstrap3.EBootstrapCSSPathProvider;
 import com.helger.photon.bootstrap3.EBootstrapJSPathProvider;
@@ -31,7 +32,8 @@ import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
 
 /**
- * This class
+ * This class triggers some default configuration to run ph-oton applications
+ * more easy.
  *
  * @author Philip Helger
  */
@@ -67,8 +69,8 @@ public final class PhotonStubConfigurationListener implements ServletContextList
 
     // Meta elements
     aConfigMgr.addMetaElement (new MetaElement ("generator", "ph-oton stack - https://github.com/phax/ph-oton"));
-    aConfigMgr.addMetaElement (new MetaElement ("X-UA-Compatible", true, "IE=Edge,chrome=1"));
-    aConfigMgr.addMetaElement (new MetaElement ("viewport", "width=device-width, initial-scale=1.0"));
+    aConfigMgr.addMetaElement (EStandardMetaElement.X_UA_COMPATIBLE.getAsMetaElement ("IE=Edge,chrome=1"));
+    aConfigMgr.addMetaElement (EStandardMetaElement.VIEWPORT.getAsMetaElement ("width=device-width, initial-scale=1.0"));
   }
 
   public void contextInitialized (@Nonnull final ServletContextEvent aSCE)
