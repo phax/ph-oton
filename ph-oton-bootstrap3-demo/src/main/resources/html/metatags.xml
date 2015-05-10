@@ -18,8 +18,6 @@
 
 -->
 <mapping>
-  <map key="generator" value="ph web stack"/>
-  <map key="description" value="Demo Web Application" />
-  <map key="X-UA-Compatible" value="IE=edge" />
+  <map key="description" value="ph-oton Bootstrap Demo Web Application" />
   <map key="viewport" value="width=device-width, initial-scale=1.0" />
 </mapping>

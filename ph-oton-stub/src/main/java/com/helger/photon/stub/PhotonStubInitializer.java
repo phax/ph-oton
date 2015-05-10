@@ -122,6 +122,10 @@ public final class PhotonStubInitializer
         aServlet.addMapping ("/logout/*");
       }
 
+      {
+        aSC.addListener (PhotonStubServletContextListener.class);
+      }
+
       s_aLogger.info ("Finished registering default ph-oton listeners and servlets");
     }
   }

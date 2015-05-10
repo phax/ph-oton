@@ -17,16 +17,20 @@
 package com.helger.photon.stub;
 
 import javax.annotation.Nonnull;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+
+import com.helger.html.meta.MetaElement;
+import com.helger.photon.core.app.html.HTMLConfigManager;
+import com.helger.photon.core.mgr.PhotonCoreManager;
 
 public final class PhotonStubServletContextListener implements ServletContextListener
 {
   public void contextInitialized (@Nonnull final ServletContextEvent aSCE)
   {
-    final ServletContext aSC = aSCE.getServletContext ();
-    PhotonStubInitializer.init (aSC);
+    final HTMLConfigManager aConfigMgr = PhotonCoreManager.getHTMLConfigMgr ();
+    aConfigMgr.addMetaElement (new MetaElement ("generator", "ph-oton stack - https://github.com/phax/ph-oton"));
+    aConfigMgr.addMetaElement (new MetaElement ("X-UA-Compatible", true, "IE=Edge,chrome=1"));
   }
 
   public void contextDestroyed (final ServletContextEvent sce)
