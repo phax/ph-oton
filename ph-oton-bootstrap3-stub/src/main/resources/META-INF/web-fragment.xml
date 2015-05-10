@@ -130,5 +130,18 @@
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/logout/*</url-pattern>
   </servlet-mapping>
-  -->
+  
+  <servlet>
+    <servlet-name>ResourceBundleServlet</servlet-name>
+    <servlet-class>com.helger.photon.core.resource.ResourceBundleServlet</servlet-class>
+    <init-param>
+      <param-name>allowedExtensions</param-name>
+      <param-value>js,css</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResourceBundleServlet</servlet-name>
+    <url-pattern>/resbundle/*</url-pattern>
+  </servlet-mapping>
+-->
 </web-fragment>

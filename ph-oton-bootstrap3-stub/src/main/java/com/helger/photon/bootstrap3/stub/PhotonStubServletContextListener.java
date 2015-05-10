@@ -21,16 +21,48 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import com.helger.html.meta.MetaElement;
+import com.helger.photon.bootstrap3.EBootstrapCSSPathProvider;
+import com.helger.photon.bootstrap3.EBootstrapJSPathProvider;
 import com.helger.photon.core.app.html.HTMLConfigManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
+import com.helger.photon.uicore.EUICoreCSSPathProvider;
+import com.helger.photon.uicore.EUICoreJSPathProvider;
+import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 
 public final class PhotonStubServletContextListener implements ServletContextListener
 {
   public void contextInitialized (@Nonnull final ServletContextEvent aSCE)
   {
     final HTMLConfigManager aConfigMgr = PhotonCoreManager.getHTMLConfigMgr ();
+
+    // CSS
+    aConfigMgr.addCSSItem (EBootstrapCSSPathProvider.BOOTSTRAP_334);
+    aConfigMgr.addCSSItem (EBootstrapCSSPathProvider.BOOTSTRAP_THEME_334);
+    aConfigMgr.addCSSItem (EBootstrapCSSPathProvider.BOOTSTRAP_PH);
+    aConfigMgr.addCSSItem (EUICtrlsCSSPathProvider.FAMFAM_ICONS);
+    aConfigMgr.addCSSItem (EUICtrlsCSSPathProvider.FAMFAM_FLAGS);
+    aConfigMgr.addCSSItem (EUICoreCSSPathProvider.UICORE);
+
+    // With conditional comments
+    aConfigMgr.addCSSItem (EBootstrapCSSPathProvider.BOOTSTRAP_IE9);
+    aConfigMgr.addCSSItem (EUICoreCSSPathProvider.PLACEHOLDER_FIX);
+
+    // JS
+    aConfigMgr.addJSItem (EUICoreJSPathProvider.JQUERY_1);
+    aConfigMgr.addJSItem (EUICoreJSPathProvider.UICORE_JQUERY);
+    aConfigMgr.addJSItem (EUICoreJSPathProvider.UICORE_FORM);
+    aConfigMgr.addJSItem (EBootstrapJSPathProvider.BOOTSTRAP_334);
+    aConfigMgr.addJSItem (EBootstrapJSPathProvider.BOOTSTRAP_PH);
+
+    // With conditional comments
+    aConfigMgr.addJSItem (EUICoreJSPathProvider.HTML5SHIV_3_7_2);
+    aConfigMgr.addJSItem (EUICoreJSPathProvider.RESPOND);
+    aConfigMgr.addJSItem (EUICoreJSPathProvider.PLACEHOLDER_FIX);
+
+    // Meta elements
     aConfigMgr.addMetaElement (new MetaElement ("generator", "ph-oton stack - https://github.com/phax/ph-oton"));
     aConfigMgr.addMetaElement (new MetaElement ("X-UA-Compatible", true, "IE=Edge,chrome=1"));
+    aConfigMgr.addMetaElement (new MetaElement ("viewport", "width=device-width, initial-scale=1.0"));
   }
 
   public void contextDestroyed (final ServletContextEvent sce)

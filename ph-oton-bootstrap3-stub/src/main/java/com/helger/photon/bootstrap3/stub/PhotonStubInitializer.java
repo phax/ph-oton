@@ -33,6 +33,7 @@ import com.helger.photon.core.action.servlet.PublicApplicationActionServlet;
 import com.helger.photon.core.action.servlet.SecureApplicationActionServlet;
 import com.helger.photon.core.ajax.servlet.PublicApplicationAjaxServlet;
 import com.helger.photon.core.ajax.servlet.SecureApplicationAjaxServlet;
+import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryServlet;
 import com.helger.photon.core.servlet.CharacterEncodingFilter;
 import com.helger.photon.core.servlet.LogoutServlet;
@@ -120,6 +121,13 @@ public final class PhotonStubInitializer
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("LogoutServlet", LogoutServlet.class);
         aServlet.addMapping ("/logout/*");
+      }
+
+      {
+        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("ResourceBundleServlet",
+                                                                     ResourceBundleServlet.class);
+        aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS, "js,css");
+        aServlet.addMapping ("/resbundle/*");
       }
 
       {
