@@ -35,7 +35,7 @@ public enum EUICoreCSSPathProvider implements ICSSPathProvider
   /** Edit placeholder fix for IE &lt; 10 */
   PLACEHOLDER_FIX ("uicore/placeholder/placeholder-fix.css", "if lt IE 10"),
   /** Custom development */
-  WEBCTRLS ("uicore/uicore.css");
+  UICORE ("uicore/uicore.css");
 
   private final ConstantCSSPathProvider m_aPP;
 
