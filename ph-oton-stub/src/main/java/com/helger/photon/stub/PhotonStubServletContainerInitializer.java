@@ -16,27 +16,17 @@
  */
 package com.helger.photon.stub;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
+import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import javax.servlet.ServletException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public final class PhotonStubWebListener implements ServletContextListener
+public final class PhotonStubServletContainerInitializer implements ServletContainerInitializer
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonStubWebListener.class);
-
-  public void contextInitialized (@Nonnull final ServletContextEvent aSCE)
+  public void onStartup (@Nonnull final Set <Class <?>> aClasses, @Nonnull final ServletContext aSC) throws ServletException
   {
-    final ServletContext aSC = aSCE.getServletContext ();
-    if (aSC.getMajorVersion () < 3)
-      throw new IllegalStateException ("At least servlet version 3 is required!");
-
-    s_aLogger.info ("Registering default ph-oton listeners and servlets");
+    PhotonStubInitializer.init (aSC);
   }
-
-  public void contextDestroyed (@Nonnull final ServletContextEvent aSCE)
-  {}
 }

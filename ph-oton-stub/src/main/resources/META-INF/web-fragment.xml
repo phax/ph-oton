@@ -17,15 +17,23 @@
     limitations under the License.
 
 -->
-<web-fragment version="3.0">
+<web-fragment xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd"
+              version="3.0">
   <name>ph-oton-stub</name>
-  
+  <distributable />
   <ordering>
     <before>
       <others />
     </before>
   </ordering>
-
+  
+  <listener>
+    <listener-class>com.helger.photon.stub.PhotonStubServletContextListener</listener-class>
+  </listener>
+  
+  <!--  
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
     <filter-class>com.helger.photon.core.servlet.CharacterEncodingFilter</filter-class>
@@ -42,10 +50,6 @@
     <filter-name>CharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-  <listener>
-    <listener-class>com.helger.photon.stub.PhotonStubWebListener</listener-class>
-  </listener>
   
   <servlet>
     <servlet-name>SecureApplicationActionServlet</servlet-name>
@@ -126,4 +130,5 @@
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/logout/*</url-pattern>
   </servlet-mapping>
+  -->
 </web-fragment>

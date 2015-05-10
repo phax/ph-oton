@@ -51,6 +51,15 @@ import com.helger.web.servlet.response.UnifiedResponse;
  */
 public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedResponseServlet
 {
+  public static final String INITPARAM_DENIED_FILENAMES = "deniedFilenames";
+  public static final String INITPARAM_DENIED_EXTENSIONS = "deniedExtensions";
+  public static final String INITPARAM_DENIED_REG_EXS = "deniedRegExs";
+  public static final String INITPARAM_ALLOWED_FILENAMES = "allowedFilenames";
+  public static final String INITPARAM_ALLOWED_EXTENSIONS = "allowedExtensions";
+  public static final String INITPARAM_ALLOWED_REG_EXS = "allowedRegExs";
+  public static final String INITPARAM_VALUE_WILDCARD = "*";
+  public static final String EXTENSION_MACRO_WEB_DEFAULT = "$web-default$";
+
   protected static final String REQUEST_ATTR_OBJECT_DELIVERY_FILENAME = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                                         "object-delivery.filename";
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractObjectDeliveryServlet.class);
@@ -117,7 +126,7 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
     {
       // Perform some default replacements to avoid updating all references at
       // once before splitting
-      final String sRealItemList = sItemList.replace ("$web-default$",
+      final String sRealItemList = sItemList.replace (EXTENSION_MACRO_WEB_DEFAULT,
                                                       "js,css,png,jpg,jpeg,gif,eot,svg,ttf,woff,woff2,map");
 
       for (final String sItem : StringHelper.getExploded (',', sRealItemList))
@@ -139,31 +148,43 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
   {
     super.onInit ();
 
-    _initialFillSet (m_aDeniedFilenames, getInitParameter ("deniedFilenames"), false);
-    _initialFillSet (m_aDeniedExtensions, getInitParameter ("deniedExtensions"), true);
-    _initialFillSet (m_aDeniedRegExs, getInitParameter ("deniedRegExs"), false);
-    m_bDeniedAllExtensions = m_aDeniedExtensions.contains ("*");
+    _initialFillSet (m_aDeniedFilenames, getInitParameter (INITPARAM_DENIED_FILENAMES), false);
+    _initialFillSet (m_aDeniedExtensions, getInitParameter (INITPARAM_DENIED_EXTENSIONS), true);
+    _initialFillSet (m_aDeniedRegExs, getInitParameter (INITPARAM_DENIED_REG_EXS), false);
+    m_bDeniedAllExtensions = m_aDeniedExtensions.contains (INITPARAM_VALUE_WILDCARD);
 
-    _initialFillSet (m_aAllowedFilenames, getInitParameter ("allowedFilenames"), false);
-    _initialFillSet (m_aAllowedExtensions, getInitParameter ("allowedExtensions"), true);
-    _initialFillSet (m_aAllowedRegExs, getInitParameter ("allowedRegExs"), false);
-    m_bAllowedAllExtensions = m_aAllowedExtensions.contains ("*");
+    _initialFillSet (m_aAllowedFilenames, getInitParameter (INITPARAM_ALLOWED_FILENAMES), false);
+    _initialFillSet (m_aAllowedExtensions, getInitParameter (INITPARAM_ALLOWED_EXTENSIONS), true);
+    _initialFillSet (m_aAllowedRegExs, getInitParameter (INITPARAM_ALLOWED_REG_EXS), false);
+    m_bAllowedAllExtensions = m_aAllowedExtensions.contains (INITPARAM_VALUE_WILDCARD);
 
     if (s_aLogger.isDebugEnabled ())
     {
       s_aLogger.debug ("Settings for " +
                        getClass ().getName () +
-                       ": deniedFilenames=" +
+                       ": " +
+                       INITPARAM_DENIED_FILENAMES +
+                       "=" +
                        m_aDeniedFilenames +
-                       "; deniedExtensions=" +
+                       "; " +
+                       INITPARAM_DENIED_EXTENSIONS +
+                       "=" +
                        m_aDeniedExtensions +
-                       "; deniedRegExs=" +
+                       "; " +
+                       INITPARAM_DENIED_REG_EXS +
+                       "=" +
                        m_aDeniedRegExs +
-                       "; allowedFilenames=" +
+                       "; " +
+                       INITPARAM_ALLOWED_FILENAMES +
+                       "=" +
                        m_aAllowedFilenames +
-                       "; allowedExtension=" +
+                       "; " +
+                       INITPARAM_ALLOWED_EXTENSIONS +
+                       "=" +
                        m_aAllowedExtensions +
-                       "; allowedRegExs=" +
+                       "; " +
+                       INITPARAM_ALLOWED_REG_EXS +
+                       "=" +
                        m_aAllowedRegExs);
     }
 

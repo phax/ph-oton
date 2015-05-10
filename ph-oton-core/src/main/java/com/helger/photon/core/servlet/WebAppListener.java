@@ -173,8 +173,6 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   protected final void logInitParameters (@Nonnull final ServletContext aSC)
   {
-    s_aLogger.info ("Servlet context init-parameters:");
-
     // Put them in a sorted map
     final Map <String, String> aParams = new TreeMap <String, String> ();
     final Enumeration <?> aEnum = aSC.getInitParameterNames ();
@@ -185,9 +183,15 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       aParams.put (sName, sValue);
     }
 
-    // Emit them
-    for (final Map.Entry <String, String> aEntry : aParams.entrySet ())
-      s_aLogger.info ("  " + aEntry.getKey () + "=" + aEntry.getValue ());
+    if (aParams.isEmpty ())
+      s_aLogger.info ("No servlet context init-parameters present");
+    else
+    {
+      // Emit them
+      s_aLogger.info ("Servlet context init-parameters:");
+      for (final Map.Entry <String, String> aEntry : aParams.entrySet ())
+        s_aLogger.info ("  " + aEntry.getKey () + "=" + aEntry.getValue ());
+    }
   }
 
   protected final void logThirdpartyModules ()

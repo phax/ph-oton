@@ -17,16 +17,14 @@
 package com.helger.webappdemo.jetty;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.concurrent.Immutable;
 
+import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.FragmentConfiguration;
 import org.eclipse.jetty.webapp.JettyWebXmlConfiguration;
@@ -41,7 +39,7 @@ import com.helger.commons.SystemProperties;
 
 /**
  * Run ebiz4all as a standalone web application in Jetty on port 8080.<br>
- * http://localhost:8080/kb
+ * http://localhost:8080/
  *
  * @author Philip Helger
  */
@@ -64,10 +62,9 @@ public final class RunInJettyPHOTONDEMO
     // Create main server
     final Server aServer = new Server ();
     // Create connector on Port
-    final Connector aConnector = new SelectChannelConnector ();
+    final ServerConnector aConnector = new ServerConnector (aServer);
     aConnector.setPort (nPort);
-    aConnector.setMaxIdleTime (30000);
-    aConnector.setStatsOn (true);
+    aConnector.setIdleTimeout (30000);
     aServer.setConnectors (new Connector [] { aConnector });
 
     final WebAppContext aWebAppCtx = new WebAppContext ();
@@ -82,41 +79,13 @@ public final class RunInJettyPHOTONDEMO
       // Don't do this!
       aWebAppCtx.setCopyWebInf (true);
     }
-    {
-      // If working, post on
-      // https://stackoverflow.com/questions/18666720/configure-jetty-to-scan-web-inf-classes-for-web-fragment-xml
-      final List <Resource> aFragments = new ArrayList <Resource> ();
-      for (final String sCP : System.getProperty ("java.class.path").split (System.getProperty ("path.separator")))
-      {
-        final Resource aResCP = Resource.newResource (sCP);
-
-        Resource aResFragment;
-        if (aResCP.isDirectory ())
-        {
-          // tolerate the case where the library is a directory, not a jar.
-          // useful for OSGi for example
-          aResFragment = Resource.newResource (aResCP.getURL () + "/META-INF/web-fragment.xml");
-        }
-        else
-        {
-          // the standard case: a jar most likely inside WEB-INF/lib
-          aResFragment = Resource.newResource ("jar:" + aResCP.getURL () + "!/META-INF/web-fragment.xml");
-        }
-        if (aResFragment.exists ())
-          aFragments.add (aResCP);
-      }
-
-      aWebAppCtx.setAttribute (FragmentConfiguration.FRAGMENT_RESOURCES, aFragments);
-    }
-    if (false)
-      aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
-                                                          new WebXmlConfiguration (),
-                                                          new MetaInfConfiguration (),
-                                                          new FragmentConfiguration (),
-                                                          // new
-                                                          // AnnotationConfiguration
-                                                          // (),
-                                                          new JettyWebXmlConfiguration () });
+    // Important to add the AnnotationConfiguration!
+    aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
+                                                        new WebXmlConfiguration (),
+                                                        new MetaInfConfiguration (),
+                                                        new FragmentConfiguration (),
+                                                        new JettyWebXmlConfiguration (),
+                                                        new AnnotationConfiguration () });
     aServer.setHandler (aWebAppCtx);
     final ServletContextHandler aCtx = aWebAppCtx;
 
@@ -124,12 +93,6 @@ public final class RunInJettyPHOTONDEMO
     // Stops the server when ctrl+c is pressed (registers to
     // Runtime.addShutdownHook)
     aServer.setStopAtShutdown (true);
-    // Send the server version in the response header?
-    aServer.setSendServerVersion (true);
-    // Send the date header in the response header?
-    aServer.setSendDateHeader (true);
-    // Allows requests (prior to shutdown) to finish gracefully
-    aServer.setGracefulShutdown (1000);
     // Starting shutdown listener thread
     if (nPort == 8080)
       new JettyMonitor ().start ();

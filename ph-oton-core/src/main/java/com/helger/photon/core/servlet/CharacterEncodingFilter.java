@@ -38,15 +38,15 @@ import com.helger.commons.string.StringParser;
 /**
  * Special servlet filter that applies a certain encoding to a request and a
  * response.
- * 
+ *
  * @author Philip Helger
  */
 public class CharacterEncodingFilter implements Filter
 {
   /** Name of the init parameter for the encoding */
-  public static final String FILTER_INITPARAM_ENCODING = "encoding";
+  public static final String INITPARAM_ENCODING = "encoding";
   /** Name of the init parameter to force setting the encoding */
-  public static final String FILTER_INITPARAM_FORCE_ENCODING = "forceEncoding";
+  public static final String INITPARAM_FORCE_ENCODING = "forceEncoding";
   /** The default encoding is UTF-8 */
   public static final String DEFAULT_ENCODING = CCharset.CHARSET_UTF_8;
   /** By default the encoding is not enforced. */
@@ -78,7 +78,7 @@ public class CharacterEncodingFilter implements Filter
   public void init (@Nonnull final FilterConfig aFilterConfig) throws ServletException
   {
     // encoding
-    final String sEncoding = aFilterConfig.getInitParameter (FILTER_INITPARAM_ENCODING);
+    final String sEncoding = aFilterConfig.getInitParameter (INITPARAM_ENCODING);
     if (sEncoding != null)
     {
       // Throws IllegalArgumentException in case it is unknown
@@ -87,7 +87,7 @@ public class CharacterEncodingFilter implements Filter
     }
 
     // force encoding?
-    final String sForceEncoding = aFilterConfig.getInitParameter (FILTER_INITPARAM_FORCE_ENCODING);
+    final String sForceEncoding = aFilterConfig.getInitParameter (INITPARAM_FORCE_ENCODING);
     if (sForceEncoding != null)
       m_bForceEncoding = StringParser.parseBool (sForceEncoding);
   }
