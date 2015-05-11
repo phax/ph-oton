@@ -130,7 +130,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
@@ -275,7 +275,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     });
 
     // Build the final UI as a tabbox
-    final ITabBox <?> aTabBox = new BootstrapTabBox();
+    final ITabBox <?> aTabBox = new BootstrapTabBox ();
     {
       final HCNodeList aNL = new HCNodeList ();
       aNL.addChild (aTableTimer);

@@ -114,13 +114,12 @@ public class BasePageMonitoringServletStatus <WPECTYPE extends IWebPageExecution
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ())
-                                            .setID (getID ());
+    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ()).setID (getID ());
     aTable.addHeaderRow ().addCells (EText.MSG_SERVLET.getDisplayText (aDisplayLocale),
                                      EText.MSG_STATUS.getDisplayText (aDisplayLocale),
                                      EText.MSG_INVOCATION_COUNT.getDisplayText (aDisplayLocale),

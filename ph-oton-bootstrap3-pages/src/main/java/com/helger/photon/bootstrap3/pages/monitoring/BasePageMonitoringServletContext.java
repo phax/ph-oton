@@ -101,15 +101,15 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
   }
 
   public BasePageMonitoringServletContext (@Nonnull @Nonempty final String sID,
-                                        @Nonnull final String sName,
-                                        @Nullable final String sDescription)
+                                           @Nonnull final String sName,
+                                           @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
   public BasePageMonitoringServletContext (@Nonnull @Nonempty final String sID,
-                                        @Nonnull final IReadonlyMultiLingualText aName,
-                                        @Nullable final IReadonlyMultiLingualText aDescription)
+                                           @Nonnull final IReadonlyMultiLingualText aName,
+                                           @Nullable final IReadonlyMultiLingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -122,19 +122,19 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     final ServletContext aSC = WebScopeManager.getGlobalScope ().getServletContext ();
 
-    final ITabBox <?> aTabBox = new BootstrapTabBox();
+    final ITabBox <?> aTabBox = new BootstrapTabBox ();
 
     {
       // Add servlets
-      final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ())
-                                              .setID (getID () + "servlets");
+      final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ()).setID (getID () +
+                                                                                                                         "servlets");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_CLASS_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_INIT_PARAMS.getDisplayText (aDisplayLocale),
@@ -164,10 +164,10 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
     {
       // Add filters
       final IHCTable <?> aTable = new BootstrapTable (HCCol.star (),
-                                                            HCCol.star (),
-                                                            HCCol.star (),
-                                                            HCCol.star (),
-                                                            HCCol.star ()).setID (getID () + "filters");
+                                                      HCCol.star (),
+                                                      HCCol.star (),
+                                                      HCCol.star (),
+                                                      HCCol.star ()).setID (getID () + "filters");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_CLASS_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_INIT_PARAMS.getDisplayText (aDisplayLocale),

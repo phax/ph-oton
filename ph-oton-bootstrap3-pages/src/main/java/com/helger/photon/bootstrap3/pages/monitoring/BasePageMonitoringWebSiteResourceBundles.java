@@ -91,33 +91,33 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
   private final WebSiteResourceBundleManager m_aResBundleMgr;
 
   public BasePageMonitoringWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
-                                                @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
+                                                   @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
   {
     super (sID, EWebPageText.PAGE_NAME_MONITORING_WEBRESBUNDLE.getAsMLT ());
     m_aResBundleMgr = ValueEnforcer.notNull (aResBundleMgr, "ResBundleMgr");
   }
 
   public BasePageMonitoringWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
-                                                @Nonnull final String sName,
-                                                @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
+                                                   @Nonnull final String sName,
+                                                   @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
   {
     super (sID, sName);
     m_aResBundleMgr = ValueEnforcer.notNull (aResBundleMgr, "ResBundleMgr");
   }
 
   public BasePageMonitoringWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
-                                                @Nonnull final String sName,
-                                                @Nullable final String sDescription,
-                                                @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
+                                                   @Nonnull final String sName,
+                                                   @Nullable final String sDescription,
+                                                   @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
   {
     super (sID, sName, sDescription);
     m_aResBundleMgr = ValueEnforcer.notNull (aResBundleMgr, "ResBundleMgr");
   }
 
   public BasePageMonitoringWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
-                                                @Nonnull final IReadonlyMultiLingualText aName,
-                                                @Nullable final IReadonlyMultiLingualText aDescription,
-                                                @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
+                                                   @Nonnull final IReadonlyMultiLingualText aName,
+                                                   @Nullable final IReadonlyMultiLingualText aDescription,
+                                                   @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
   {
     super (sID, aName, aDescription);
     m_aResBundleMgr = ValueEnforcer.notNull (aResBundleMgr, "ResBundleMgr");
@@ -137,26 +137,26 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     aNodeList.addChild (new HCDiv ().addChild (EText.MSG_CACHE_ACTIVE.getDisplayText (aDisplayLocale) +
                                                EPhotonCoreText.getYesOrNo (WebSiteResourceCache.isCacheEnabled (),
-                                                                          aDisplayLocale)));
+                                                                           aDisplayLocale)));
     aNodeList.addChild (new HCDiv ().addChild (EText.MSG_RESBUNDLE_SERVLET.getDisplayText (aDisplayLocale) +
                                                EPhotonCoreText.getYesOrNo (ResourceBundleServlet.isServletRegisteredInServletContext (),
-                                                                          aDisplayLocale)));
+                                                                           aDisplayLocale)));
     aNodeList.addChild (new HCDiv ().addChild (EText.MSG_RESBUNDLE_ACTIVE.getDisplayText (aDisplayLocale) +
                                                EPhotonCoreText.getYesOrNo (ResourceBundleServlet.isActive (),
-                                                                          aDisplayLocale)));
+                                                                           aDisplayLocale)));
 
     final IHCTable <?> aTable = new BootstrapTable (HCCol.star (),
-                                                          HCCol.star (),
-                                                          HCCol.star (),
-                                                          HCCol.star (),
-                                                          HCCol.star ()).setID (getID ());
+                                                    HCCol.star (),
+                                                    HCCol.star (),
+                                                    HCCol.star (),
+                                                    HCCol.star ()).setID (getID ());
     aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
                                      EText.MSG_DATE.getDisplayText (aDisplayLocale),
                                      EText.MSG_RESOURCES.getDisplayText (aDisplayLocale),

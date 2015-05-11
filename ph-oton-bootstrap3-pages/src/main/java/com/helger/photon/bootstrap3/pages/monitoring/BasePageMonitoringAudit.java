@@ -138,16 +138,16 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     final IHCTable <?> aTable = new BootstrapTable (new HCCol (COLUMN_WIDTH_DATETIME),
-                                                          new HCCol (120),
-                                                          new HCCol (60),
-                                                          new HCCol (60),
-                                                          HCCol.star ()).setID (getID ());
+                                                    new HCCol (120),
+                                                    new HCCol (60),
+                                                    new HCCol (60),
+                                                    HCCol.star ()).setID (getID ());
     aTable.addHeaderRow ().addCells (EText.MSG_DATE.getDisplayText (aDisplayLocale),
                                      EText.MSG_USER.getDisplayText (aDisplayLocale),
                                      EText.MSG_TYPE.getDisplayText (aDisplayLocale),

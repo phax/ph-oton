@@ -149,9 +149,7 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     aNodeList.addChild (aTableScope);
 
     // All scope attributes
-    final IHCTableFormView <?> aTableAttrs = new BootstrapTableFormView (HCCol.star (),
-                                                                               HCCol.star (),
-                                                                               HCCol.star ()).setID ("globalscope");
+    final IHCTableFormView <?> aTableAttrs = new BootstrapTableFormView (HCCol.star (), HCCol.star (), HCCol.star ()).setID ("globalscope");
     aTableAttrs.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                           EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                                           EText.MSG_VALUE.getDisplayText (aDisplayLocale));
@@ -194,10 +192,8 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     aNodeList.addChild (aTableScope);
 
     // All scope attributes
-    final IHCTableFormView <?> aTableAttrs = new BootstrapTableFormView (HCCol.star (),
-                                                                               HCCol.star (),
-                                                                               HCCol.star ()).setID ("appscope" +
-                                                                                                     aScope.getID ());
+    final IHCTableFormView <?> aTableAttrs = new BootstrapTableFormView (HCCol.star (), HCCol.star (), HCCol.star ()).setID ("appscope" +
+                                                                                                                             aScope.getID ());
     aTableAttrs.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                           EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                                           EText.MSG_VALUE.getDisplayText (aDisplayLocale));
@@ -224,19 +220,19 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final ITabBox <?> aTabBox = new BootstrapTabBox();
+    final ITabBox <?> aTabBox = new BootstrapTabBox ();
     // Global scope
     aTabBox.addTab (EText.MSG_GLOBAL_SCOPE.getDisplayTextWithArgs (aDisplayLocale, aGlobalScope.getID ()),
                     _getGlobalScopeInfo (aWPEC, aGlobalScope));
 
     // Application scopes
     for (final IApplicationScope aAppScope : CollectionHelper.getSortedByKey (aGlobalScope.getAllApplicationScopes ())
-                                                            .values ())
+                                                             .values ())
       aTabBox.addTab (EText.MSG_APPLICATION_SCOPE.getDisplayTextWithArgs (aDisplayLocale, aAppScope.getID ()),
                       _getApplicationScopeInfo (aWPEC, aAppScope));
 

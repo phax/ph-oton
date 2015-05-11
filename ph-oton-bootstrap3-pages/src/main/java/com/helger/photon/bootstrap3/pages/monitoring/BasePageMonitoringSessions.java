@@ -293,7 +293,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aToolbar.addButton (EPhotonCoreText.BACK_TO_OVERVIEW.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.BACK_TO_LIST);
-    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         createViewURL (aWPEC, aScope),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
@@ -335,7 +335,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);

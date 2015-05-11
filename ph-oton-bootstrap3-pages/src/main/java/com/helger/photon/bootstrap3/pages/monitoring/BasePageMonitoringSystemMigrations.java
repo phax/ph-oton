@@ -83,33 +83,33 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
   private final SystemMigrationManager m_aSystemMigrationMgr;
 
   public BasePageMonitoringSystemMigrations (@Nonnull @Nonempty final String sID,
-                                          @Nonnull final SystemMigrationManager aSystemMigrationMgr)
+                                             @Nonnull final SystemMigrationManager aSystemMigrationMgr)
   {
     super (sID, EWebPageText.PAGE_NAME_MONITORING_SYSTEMMIGRATIONS.getAsMLT ());
     m_aSystemMigrationMgr = ValueEnforcer.notNull (aSystemMigrationMgr, "SystemMigrationMgr");
   }
 
   public BasePageMonitoringSystemMigrations (@Nonnull @Nonempty final String sID,
-                                          @Nonnull final String sName,
-                                          @Nonnull final SystemMigrationManager aSystemMigrationMgr)
+                                             @Nonnull final String sName,
+                                             @Nonnull final SystemMigrationManager aSystemMigrationMgr)
   {
     super (sID, sName);
     m_aSystemMigrationMgr = ValueEnforcer.notNull (aSystemMigrationMgr, "SystemMigrationMgr");
   }
 
   public BasePageMonitoringSystemMigrations (@Nonnull @Nonempty final String sID,
-                                          @Nonnull final String sName,
-                                          @Nullable final String sDescription,
-                                          @Nonnull final SystemMigrationManager aSystemMigrationMgr)
+                                             @Nonnull final String sName,
+                                             @Nullable final String sDescription,
+                                             @Nonnull final SystemMigrationManager aSystemMigrationMgr)
   {
     super (sID, sName, sDescription);
     m_aSystemMigrationMgr = ValueEnforcer.notNull (aSystemMigrationMgr, "SystemMigrationMgr");
   }
 
   public BasePageMonitoringSystemMigrations (@Nonnull @Nonempty final String sID,
-                                          @Nonnull final IReadonlyMultiLingualText aName,
-                                          @Nullable final IReadonlyMultiLingualText aDescription,
-                                          @Nonnull final SystemMigrationManager aSystemMigrationMgr)
+                                             @Nonnull final IReadonlyMultiLingualText aName,
+                                             @Nullable final IReadonlyMultiLingualText aDescription,
+                                             @Nonnull final SystemMigrationManager aSystemMigrationMgr)
   {
     super (sID, aName, aDescription);
     m_aSystemMigrationMgr = ValueEnforcer.notNull (aSystemMigrationMgr, "SystemMigrationMgr");
@@ -129,15 +129,12 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (new HCCol (200),
-                                                          new HCCol (140),
-                                                          new HCCol (60),
-                                                          HCCol.star ()).setID (getID ());
+    final IHCTable <?> aTable = new BootstrapTable (new HCCol (200), new HCCol (140), new HCCol (60), HCCol.star ()).setID (getID ());
     aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
                                      EText.MSG_DATE.getDisplayText (aDisplayLocale),
                                      EText.MSG_SUCCESS.getDisplayText (aDisplayLocale),

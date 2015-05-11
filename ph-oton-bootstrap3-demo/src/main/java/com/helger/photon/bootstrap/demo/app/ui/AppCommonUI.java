@@ -49,7 +49,6 @@ import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.ajax.ActionExecutorDataTablesI18N;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
-import com.helger.photon.uictrls.famfam.EFamFamIcon;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 @Immutable
@@ -65,7 +64,6 @@ public final class AppCommonUI
 
   public static void init ()
   {
-    EFamFamIcon.setAsDefault ();
     BootstrapDataTables.setConfigurator (new IBootstrapDataTablesConfigurator ()
     {
       public void configure (@Nonnull final IWebPageExecutionContext aWPEC,

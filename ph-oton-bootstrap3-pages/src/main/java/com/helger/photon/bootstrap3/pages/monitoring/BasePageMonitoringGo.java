@@ -91,26 +91,26 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
   }
 
   public BasePageMonitoringGo (@Nonnull @Nonempty final String sID,
-                            @Nonnull final String sName,
-                            @Nonnull final GoMappingManager aGoMappingMgr)
+                               @Nonnull final String sName,
+                               @Nonnull final GoMappingManager aGoMappingMgr)
   {
     super (sID, sName);
     m_aGoMappingMgr = ValueEnforcer.notNull (aGoMappingMgr, "GoMappingMgr");
   }
 
   public BasePageMonitoringGo (@Nonnull @Nonempty final String sID,
-                            @Nonnull final String sName,
-                            @Nullable final String sDescription,
-                            @Nonnull final GoMappingManager aGoMappingMgr)
+                               @Nonnull final String sName,
+                               @Nullable final String sDescription,
+                               @Nonnull final GoMappingManager aGoMappingMgr)
   {
     super (sID, sName, sDescription);
     m_aGoMappingMgr = ValueEnforcer.notNull (aGoMappingMgr, "GoMappingMgr");
   }
 
   public BasePageMonitoringGo (@Nonnull @Nonempty final String sID,
-                            @Nonnull final IReadonlyMultiLingualText aName,
-                            @Nullable final IReadonlyMultiLingualText aDescription,
-                            @Nonnull final GoMappingManager aGoMappingMgr)
+                               @Nonnull final IReadonlyMultiLingualText aName,
+                               @Nullable final IReadonlyMultiLingualText aDescription,
+                               @Nonnull final GoMappingManager aGoMappingMgr)
   {
     super (sID, aName, aDescription);
     m_aGoMappingMgr = ValueEnforcer.notNull (aGoMappingMgr, "GoMappingMgr");
@@ -130,17 +130,16 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
 
     // Refresh button
     final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.ON_REFRESH.getDisplayText (aDisplayLocale),
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     aNodeList.addChild (new HCDiv ().addChild (EText.MSG_GO_SERVLET.getDisplayText (aDisplayLocale) +
                                                EPhotonCoreText.getYesOrNo (GoServlet.isServletRegisteredInServletContext (),
-                                                                          aDisplayLocale)));
+                                                                           aDisplayLocale)));
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ())
-                                            .setID (getID ());
+    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ()).setID (getID ());
     aTable.addHeaderRow ().addCells (EText.MSG_KEY.getDisplayText (aDisplayLocale),
                                      EText.MSG_INTERNAL.getDisplayText (aDisplayLocale),
                                      EText.MSG_URL.getDisplayText (aDisplayLocale),
