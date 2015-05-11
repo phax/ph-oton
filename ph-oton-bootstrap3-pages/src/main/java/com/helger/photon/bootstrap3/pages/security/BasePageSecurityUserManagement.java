@@ -78,6 +78,7 @@ import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
+import com.helger.photon.uicore.html.select.HCUserGroupForUserSelect;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableForm;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
