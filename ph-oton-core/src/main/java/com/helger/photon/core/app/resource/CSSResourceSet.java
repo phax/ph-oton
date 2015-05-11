@@ -17,6 +17,7 @@
 package com.helger.photon.core.app.resource;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -30,52 +31,62 @@ import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.hash.HashCodeGenerator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.html.resource.css.ICSSPathProvider;
 
 /**
- * This class keeps track of all the JS files that must be included for a single
- * request, so that the controls are working properly.
+ * This class keeps track of all the CSS files that must be included for a
+ * single request, so that the controls are working properly.
  *
  * @author Philip Helger
  */
-public final class JSResourceList implements IWebResourceList <IJSPathProvider>, ICloneable <JSResourceList>
+public final class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>, ICloneable <CSSResourceSet>
 {
-  private final Set <IJSPathProvider> m_aItems = new LinkedHashSet <IJSPathProvider> ();
+  private final Set <ICSSPathProvider> m_aItems = new LinkedHashSet <ICSSPathProvider> ();
 
-  public JSResourceList ()
+  public CSSResourceSet ()
   {}
 
-  public JSResourceList (@Nonnull final JSResourceList aOther)
+  public CSSResourceSet (@Nonnull final CSSResourceSet aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aItems.addAll (aOther.m_aItems);
   }
 
-  public JSResourceList (@Nonnull final Collection <? extends IJSPathProvider> aOther)
+  public CSSResourceSet (@Nonnull final Collection <? extends ICSSPathProvider> aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
     m_aItems.addAll (aOther);
   }
 
-  public JSResourceList (@Nonnull final IJSPathProvider... aOther)
+  public CSSResourceSet (@Nonnull final ICSSPathProvider... aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
-    for (final IJSPathProvider aItem : aOther)
+    for (final ICSSPathProvider aItem : aOther)
       m_aItems.add (aItem);
   }
 
   @Nonnull
-  public EChange addItem (@Nonnull final IJSPathProvider aJSPathProvider)
+  public EChange addItem (@Nonnull final ICSSPathProvider aCSSPathProvider)
   {
-    ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
-    return EChange.valueOf (m_aItems.add (aJSPathProvider));
+    ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
+    return EChange.valueOf (m_aItems.add (aCSSPathProvider));
   }
 
   @Nonnull
-  public EChange removeItem (@Nonnull final IJSPathProvider aJSPathProvider)
+  public EChange addItems (@Nonnull final IWebResourceSet <? extends ICSSPathProvider> aItems)
   {
-    ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
-    return EChange.valueOf (m_aItems.remove (aJSPathProvider));
+    ValueEnforcer.notNull (aItems, "Items");
+    EChange ret = EChange.UNCHANGED;
+    for (final ICSSPathProvider aItem : aItems)
+      ret = ret.or (addItem (aItem));
+    return ret;
+  }
+
+  @Nonnull
+  public EChange removeItem (@Nonnull final ICSSPathProvider aCSSPathProvider)
+  {
+    ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
+    return EChange.valueOf (m_aItems.remove (aCSSPathProvider));
   }
 
   @Nonnull
@@ -89,12 +100,12 @@ public final class JSResourceList implements IWebResourceList <IJSPathProvider>,
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <IJSPathProvider> getAllItems ()
+  public Set <ICSSPathProvider> getAllItems ()
   {
     return CollectionHelper.newOrderedSet (m_aItems);
   }
 
-  public void getAllItems (@Nonnull final Collection <? super IJSPathProvider> aTarget)
+  public void getAllItems (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
     aTarget.addAll (m_aItems);
@@ -117,10 +128,16 @@ public final class JSResourceList implements IWebResourceList <IJSPathProvider>,
   }
 
   @Nonnull
-  @ReturnsMutableCopy
-  public JSResourceList getClone ()
+  public Iterator <ICSSPathProvider> iterator ()
   {
-    return new JSResourceList (this);
+    return m_aItems.iterator ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public CSSResourceSet getClone ()
+  {
+    return new CSSResourceSet (this);
   }
 
   @Override
@@ -130,7 +147,7 @@ public final class JSResourceList implements IWebResourceList <IJSPathProvider>,
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final JSResourceList rhs = (JSResourceList) o;
+    final CSSResourceSet rhs = (CSSResourceSet) o;
     return m_aItems.equals (rhs.m_aItems);
   }
 

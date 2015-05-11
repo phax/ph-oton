@@ -42,9 +42,9 @@ import com.helger.web.servlet.response.UnifiedResponse;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class WebHTMLCreator
+public final class PhotonHTMLHelper
 {
-  private WebHTMLCreator ()
+  private PhotonHTMLHelper ()
   {}
 
   /**

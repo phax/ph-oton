@@ -19,6 +19,7 @@ package com.helger.photon.core.app.html;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -76,13 +77,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
   @Nonnull
   @OverrideOnDemand
-  protected HTMLConfigManager getHTMLConfigMgr ()
-  {
-    return PhotonCoreManager.getHTMLConfigMgr ();
-  }
-
-  @Nonnull
-  @OverrideOnDemand
   protected Locale getDisplayLocale ()
   {
     return ApplicationRequestManager.getRequestMgr ().getRequestDisplayLocale ();
@@ -106,23 +100,23 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   @OverrideOnDemand
   protected MetaElementList getAllMetaElements ()
   {
-    return getHTMLConfigMgr ().getAllMetaElements ();
+    return PhotonCoreManager.getHTMLConfigMgr ().getAllMetaElements ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
   @OverrideOnDemand
-  protected List <ICSSPathProvider> getAllGlobalCSSItems ()
+  protected Set <ICSSPathProvider> getAllGlobalCSSItems ()
   {
-    return getHTMLConfigMgr ().getAllCSSItems ();
+    return PhotonCoreManager.getHTMLConfigMgr ().getAllCSSItems ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
   @OverrideOnDemand
-  protected List <IJSPathProvider> getAllGlobalJSItems ()
+  protected Set <IJSPathProvider> getAllGlobalJSItems ()
   {
-    return getHTMLConfigMgr ().getAllJSItems ();
+    return PhotonCoreManager.getHTMLConfigMgr ().getAllJSItems ();
   }
 
   @OverrideOnDemand
@@ -135,8 +129,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
     // Add configured and per-request CSS
     {
-      final List <ICSSPathProvider> aCSSs = getAllGlobalCSSItems ();
-      PerRequestCSSIncludes.getAllRegisteredCSSIncludesForThisRequest (aCSSs);
+      final Set <ICSSPathProvider> aCSSs = getAllGlobalCSSItems ();
+      PhotonCSS.getAllRegisteredCSSIncludesForThisRequest (aCSSs);
       if (bAggregateCSS)
       {
         final List <WebSiteResourceWithCondition> aCSSRes = new ArrayList <WebSiteResourceWithCondition> ();
@@ -149,14 +143,14 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
       else
       {
         for (final ICSSPathProvider aCSS : aCSSs)
-          aHead.addCSS (WebHTMLCreator.getCSSNode (aRequestScope, aCSS, bRegular));
+          aHead.addCSS (PhotonHTMLHelper.getCSSNode (aRequestScope, aCSS, bRegular));
       }
     }
 
     // Add all configured and per-request JS
     {
-      final List <IJSPathProvider> aJSs = getAllGlobalJSItems ();
-      PerRequestJSIncludes.getAllRegisteredJSIncludesForThisRequest (aJSs);
+      final Set <IJSPathProvider> aJSs = getAllGlobalJSItems ();
+      PhotonJS.getAllRegisteredJSIncludesForThisRequest (aJSs);
 
       if (bAggregateJS)
       {
@@ -170,7 +164,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
       else
       {
         for (final IJSPathProvider aJS : aJSs)
-          aHead.addJS (WebHTMLCreator.getJSNode (aRequestScope, aJS, bRegular));
+          aHead.addJS (PhotonHTMLHelper.getJSNode (aRequestScope, aJS, bRegular));
       }
     }
   }
@@ -191,7 +185,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     final HCHead aHead = aHtml.getHead ();
 
     // Special meta tag
-    final IMimeType aMimeType = WebHTMLCreator.getMimeType (aRequestScope);
+    final IMimeType aMimeType = PhotonHTMLHelper.getMimeType (aRequestScope);
     aHead.getMetaElementList ()
          .addMetaElement (EStandardMetaElement.CONTENT_TYPE.getAsMetaElement (aMimeType.getAsString ()));
 

@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.html.HCTextArea;
 import com.helger.html.request.IHCRequestField;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
 /**
@@ -61,7 +61,7 @@ public class HCTextAreaAutosize extends HCTextArea
 
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE);
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE_ALL);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE_ALL);
   }
 }

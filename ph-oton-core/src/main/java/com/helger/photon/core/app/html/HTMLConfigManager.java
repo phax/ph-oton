@@ -16,10 +16,7 @@
  */
 package com.helger.photon.core.app.html;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -34,7 +31,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.microdom.IMicroDocument;
@@ -57,6 +53,8 @@ import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.photon.core.app.resource.CSSResourceSet;
+import com.helger.photon.core.app.resource.JSResourceSet;
 import com.helger.photon.core.url.IWebURIToURLConverter;
 import com.helger.photon.core.url.StreamOrLocalURIToURLConverter;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -88,9 +86,9 @@ public class HTMLConfigManager
   @GuardedBy ("m_aRWLock")
   private final MetaElementList m_aMetaElements = new MetaElementList ();
   @GuardedBy ("m_aRWLock")
-  private final Set <ICSSPathProvider> m_aCSSItems = new LinkedHashSet <ICSSPathProvider> ();
+  private final CSSResourceSet m_aCSSItems = new CSSResourceSet ();
   @GuardedBy ("m_aRWLock")
-  private final Set <IJSPathProvider> m_aJSItems = new LinkedHashSet <IJSPathProvider> ();
+  private final JSResourceSet m_aJSItems = new JSResourceSet ();
   @GuardedBy ("s_aRWLock")
   private static EHTMLVersion m_eHTMLVersion = EHTMLVersion.DEFAULT;
   @GuardedBy ("s_aRWLock")
@@ -122,13 +120,13 @@ public class HTMLConfigManager
 
   @Nonnull
   @ReturnsMutableCopy
-  public static List <ICSSPathProvider> getAllCSSItemsOfResource (@Nonnull final IReadableResource aRes,
-                                                                  @Nonnull final IWebURIToURLConverter aURIToURLConverter)
+  public static CSSResourceSet getAllCSSItemsOfResource (@Nonnull final IReadableResource aRes,
+                                                          @Nonnull final IWebURIToURLConverter aURIToURLConverter)
   {
     ValueEnforcer.notNull (aRes, "Res");
     ValueEnforcer.notNull (aURIToURLConverter, "URIToURLConverter");
 
-    final List <ICSSPathProvider> ret = new ArrayList <ICSSPathProvider> ();
+    final CSSResourceSet ret = new CSSResourceSet ();
     final IMicroDocument aDoc = aRes.exists () ? MicroReader.readMicroXML (aRes) : null;
     if (aDoc != null)
       for (final IMicroElement eChild : aDoc.getDocumentElement ().getAllChildElements ("css"))
@@ -169,20 +167,20 @@ public class HTMLConfigManager
             }
             aMediaList.addMedium (eMedium);
           }
-        ret.add (new ConstantCSSPathProvider (sPath, sConditionalComment, aMediaList));
+        ret.addItem (new ConstantCSSPathProvider (sPath, sConditionalComment, aMediaList));
       }
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static List <IJSPathProvider> getAllJSItemsOfResource (@Nonnull final IReadableResource aRes,
-                                                                @Nonnull final IWebURIToURLConverter aURIToURLConverter)
+  public static JSResourceSet getAllJSItemsOfResource (@Nonnull final IReadableResource aRes,
+                                                        @Nonnull final IWebURIToURLConverter aURIToURLConverter)
   {
     ValueEnforcer.notNull (aRes, "Res");
     ValueEnforcer.notNull (aURIToURLConverter, "URIToURLConverter");
 
-    final List <IJSPathProvider> ret = new ArrayList <IJSPathProvider> ();
+    final JSResourceSet ret = new JSResourceSet ();
     final IMicroDocument aDoc = aRes.exists () ? MicroReader.readMicroXML (aRes) : null;
     if (aDoc != null)
       for (final IMicroElement eChild : aDoc.getDocumentElement ().getAllChildElements ("js"))
@@ -204,7 +202,7 @@ public class HTMLConfigManager
 
         final String sConditionalComment = eChild.getAttributeValue ("condcomment");
 
-        ret.add (new ConstantJSPathProvider (sPath, sConditionalComment, true));
+        ret.addItem (new ConstantJSPathProvider (sPath, sConditionalComment, true));
       }
     return ret;
   }
@@ -224,12 +222,12 @@ public class HTMLConfigManager
                                                                                             FILENAME_METATAGS_XML)));
 
       // read all CSS files
-      m_aCSSItems.addAll (getAllCSSItemsOfResource (new ClassPathResource (sBasePath + FILENAME_CSS_XML),
-                                                    m_aURIToURLConverter));
+      m_aCSSItems.addItems (getAllCSSItemsOfResource (new ClassPathResource (sBasePath + FILENAME_CSS_XML),
+                                                      m_aURIToURLConverter));
 
       // read all JS files
-      m_aJSItems.addAll (getAllJSItemsOfResource (new ClassPathResource (sBasePath + FILENAME_JS_XML),
-                                                  m_aURIToURLConverter));
+      m_aJSItems.addItems (getAllJSItemsOfResource (new ClassPathResource (sBasePath + FILENAME_JS_XML),
+                                                    m_aURIToURLConverter));
     }
     finally
     {
@@ -292,12 +290,12 @@ public class HTMLConfigManager
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <ICSSPathProvider> getAllCSSItems ()
+  public Set <ICSSPathProvider> getAllCSSItems ()
   {
     m_aRWLock.readLock ().lock ();
     try
     {
-      return CollectionHelper.newList (m_aCSSItems);
+      return m_aCSSItems.getAllItems ();
     }
     finally
     {
@@ -308,11 +306,10 @@ public class HTMLConfigManager
   @Nonnull
   public HTMLConfigManager addCSSItem (@Nonnull final ICSSPathProvider aCSSItem)
   {
-    ValueEnforcer.notNull (aCSSItem, "CSSItem");
     m_aRWLock.writeLock ().lock ();
     try
     {
-      m_aCSSItems.add (aCSSItem);
+      m_aCSSItems.addItem (aCSSItem);
     }
     finally
     {
@@ -327,7 +324,7 @@ public class HTMLConfigManager
     m_aRWLock.writeLock ().lock ();
     try
     {
-      m_aCSSItems.clear ();
+      m_aCSSItems.removeAll ();
     }
     finally
     {
@@ -341,12 +338,12 @@ public class HTMLConfigManager
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <IJSPathProvider> getAllJSItems ()
+  public Set <IJSPathProvider> getAllJSItems ()
   {
     m_aRWLock.readLock ().lock ();
     try
     {
-      return CollectionHelper.newList (m_aJSItems);
+      return m_aJSItems.getAllItems ();
     }
     finally
     {
@@ -357,11 +354,10 @@ public class HTMLConfigManager
   @Nonnull
   public HTMLConfigManager addJSItem (@Nonnull final IJSPathProvider aJSItem)
   {
-    ValueEnforcer.notNull (aJSItem, "JSItem");
     m_aRWLock.writeLock ().lock ();
     try
     {
-      m_aJSItems.add (aJSItem);
+      m_aJSItems.addItem (aJSItem);
     }
     finally
     {
@@ -376,7 +372,7 @@ public class HTMLConfigManager
     m_aRWLock.writeLock ().lock ();
     try
     {
-      m_aJSItems.clear ();
+      m_aJSItems.removeAll ();
     }
     finally
     {

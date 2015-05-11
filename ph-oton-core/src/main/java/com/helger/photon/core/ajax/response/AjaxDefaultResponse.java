@@ -39,8 +39,8 @@ import com.helger.json.IJson;
 import com.helger.json.impl.JsonObject;
 import com.helger.json.serialize.JsonWriter;
 import com.helger.photon.core.app.html.HTMLConfigManager;
-import com.helger.photon.core.app.html.PerRequestCSSIncludes;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 @Immutable
@@ -80,10 +80,10 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
     // Grab all CSS/JS independent of conditional comment :(
     final boolean bRegular = GlobalDebug.isDebugMode ();
 
-    for (final ICSSPathProvider aCSS : PerRequestCSSIncludes.getAllRegisteredCSSIncludesForThisRequest ())
+    for (final ICSSPathProvider aCSS : PhotonCSS.getAllRegisteredCSSIncludesForThisRequest ())
       addExternalCSS (HTMLConfigManager.getCSSPath (aRequestScope, aCSS, bRegular).getAsString ());
 
-    for (final IJSPathProvider aJS : PerRequestJSIncludes.getAllRegisteredJSIncludesForThisRequest ())
+    for (final IJSPathProvider aJS : PhotonJS.getAllRegisteredJSIncludesForThisRequest ())
       addExternalJS (HTMLConfigManager.getJSPath (aRequestScope, aJS, bRegular).getAsString ());
   }
 

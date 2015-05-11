@@ -33,7 +33,7 @@ import com.helger.html.js.builder.JSAssocArray;
 import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.marshal.JSMarshaller;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 
 /**
@@ -267,7 +267,7 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
   public void onAdded (@Nonnegative final int nIndex, @Nonnull final IHCHasChildrenMutable <?, ?> aParent)
   {
     // Register resources
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICoreJSPathProvider.SWFOBJECT);
+    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.SWFOBJECT);
 
     // Add special JS code
     {

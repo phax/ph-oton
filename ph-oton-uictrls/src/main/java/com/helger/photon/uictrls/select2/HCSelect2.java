@@ -24,8 +24,8 @@ import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.js.builder.jquery.JQuery;
 import com.helger.html.request.IHCRequestField;
-import com.helger.photon.core.app.html.PerRequestCSSIncludes;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.photon.uicore.html.select.HCExtSelect;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
@@ -57,8 +57,8 @@ public class HCSelect2 extends HCExtSelect
 
   public static void registerExternalResources ()
   {
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.SELECT2);
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_MOUSEWHEEL);
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.SELECT2);
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.SELECT2);
+    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_MOUSEWHEEL);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.SELECT2);
   }
 }

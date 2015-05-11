@@ -30,7 +30,7 @@ import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.builder.JSRef;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
@@ -47,7 +47,7 @@ public final class JSFormHelper
 
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICoreJSPathProvider.UICORE_FORM);
+    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.UICORE_FORM);
   }
 
   @Nonnull

@@ -58,8 +58,8 @@ import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.bootstrap3.inputgroup.BootstrapInputGroup;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsJSPathProvider;
-import com.helger.photon.core.app.html.PerRequestCSSIncludes;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldDate;
 
@@ -628,12 +628,12 @@ public class BootstrapDateTimePicker implements IHCNodeBuilder, Serializable
 
   public static void registerExternalResources (@Nullable final EDateTimePickerLanguage eLanguage)
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER);
+    PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER);
     if (eLanguage != null)
     {
       // Locales must be after the main datetime picker
-      PerRequestJSIncludes.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER_LOCALE.getInstance (eLanguage.getLanguageID ()));
+      PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER_LOCALE.getInstance (eLanguage.getLanguageID ()));
     }
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.DATETIMEPICKER);
+    PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.DATETIMEPICKER);
   }
 }

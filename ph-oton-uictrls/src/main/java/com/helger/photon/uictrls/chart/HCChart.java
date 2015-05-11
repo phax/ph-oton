@@ -38,8 +38,8 @@ import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSPackage;
 import com.helger.html.js.builder.JSVar;
 import com.helger.html.js.builder.html.JSHtml;
-import com.helger.photon.core.app.html.PerRequestCSSIncludes;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
@@ -201,9 +201,9 @@ public class HCChart implements IHCNodeBuilder
 
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.CHART);
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.EXCANVAS);
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.CHART);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.CHART);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.EXCANVAS);
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.CHART);
   }
 
   @Nonnull

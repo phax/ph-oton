@@ -35,8 +35,8 @@ import com.helger.html.js.builder.JSPackage;
 import com.helger.html.js.builder.JSVar;
 import com.helger.html.js.builder.jquery.JQuery;
 import com.helger.html.js.builder.jquery.JQuerySelector;
-import com.helger.photon.core.app.html.PerRequestCSSIncludes;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.web.scopes.mgr.WebScopeManager;
@@ -143,7 +143,7 @@ public class HCFineUploaderBasic implements IHCNodeBuilder
 
   public static final void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.FINEUPLOADER_320);
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.FINEUPLOADER_320);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.FINEUPLOADER_320);
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.FINEUPLOADER_320);
   }
 }

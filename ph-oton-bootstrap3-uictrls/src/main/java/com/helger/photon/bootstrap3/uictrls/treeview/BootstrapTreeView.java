@@ -46,8 +46,8 @@ import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.builder.jquery.JQuery;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsJSPathProvider;
-import com.helger.photon.core.app.html.PerRequestCSSIncludes;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 
 /**
  * Bootstrap Tree View from https://github.com/jonmiles/bootstrap-treeview
@@ -235,8 +235,8 @@ public class BootstrapTreeView implements IHCNodeBuilder
 
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.TREE_VIEW);
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.TREE_VIEW);
+    PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.TREE_VIEW);
+    PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.TREE_VIEW);
   }
 
   @Nonnull

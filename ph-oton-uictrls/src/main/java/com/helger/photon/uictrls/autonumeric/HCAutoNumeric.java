@@ -44,8 +44,8 @@ import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSGlobal;
 import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.builder.jquery.JQuery;
-import com.helger.photon.core.app.html.PerRequestCSSIncludes;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
@@ -419,8 +419,8 @@ public class HCAutoNumeric extends AbstractHCInput <HCAutoNumeric> implements IH
   public void onAdded (@Nonnegative final int nIndex, @Nonnull final IHCHasChildrenMutable <?, ?> aParent)
   {
     // Register resources
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.AUTONUMERIC);
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTONUMERIC);
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.AUTONUMERIC);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTONUMERIC);
 
     // Add special JS code
     ((IHCNodeWithChildren <?>) aParent).addChild (new HCAutoNumericJS (this));

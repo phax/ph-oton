@@ -27,7 +27,7 @@ import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSInvocation;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 
 public class HCFacebookSDK extends HCNodeList
@@ -72,6 +72,6 @@ public class HCFacebookSDK extends HCNodeList
    */
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICoreJSPathProvider.FACEBOOK);
+    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.FACEBOOK);
   }
 }

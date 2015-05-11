@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.state.EChange;
 
-public interface IWebResourceList <T> extends Serializable
+public interface IWebResourceSet <T> extends Serializable, Iterable <T>
 {
   /**
    * Add an item
@@ -20,6 +20,16 @@ public interface IWebResourceList <T> extends Serializable
    */
   @Nonnull
   EChange addItem (@Nonnull T aItem);
+
+  /**
+   * Add all items from another list.
+   *
+   * @param aItems
+   *        The items to be added. May not be <code>null</code>.
+   * @return {@link EChange}
+   */
+  @Nonnull
+  EChange addItems (@Nonnull IWebResourceSet <? extends T> aItems);
 
   /**
    * Unregister an existing item

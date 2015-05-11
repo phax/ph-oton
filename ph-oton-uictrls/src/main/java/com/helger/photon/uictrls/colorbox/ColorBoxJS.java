@@ -22,8 +22,8 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.builder.jquery.IJQuerySelector;
-import com.helger.photon.core.app.html.PerRequestCSSIncludes;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
@@ -61,7 +61,7 @@ public final class ColorBoxJS
 
   public static void registerExternalResources ()
   {
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.COLORBOX);
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.COLORBOX);
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.COLORBOX);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.COLORBOX);
   }
 }

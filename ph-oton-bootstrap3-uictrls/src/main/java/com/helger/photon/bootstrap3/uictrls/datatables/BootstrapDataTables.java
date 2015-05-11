@@ -24,8 +24,8 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.table.AbstractBootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsJSPathProvider;
-import com.helger.photon.core.app.html.PerRequestCSSIncludes;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.DataTablesDom;
@@ -70,8 +70,8 @@ public class BootstrapDataTables extends DataTables
 
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.BOOTSTRAP_DATATABLES);
-    PerRequestCSSIncludes.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.BOOTSTRAP_DATATABLES);
+    PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.BOOTSTRAP_DATATABLES);
+    PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.BOOTSTRAP_DATATABLES);
   }
 
   public static void setConfigurator (@Nonnull final IBootstrapDataTablesConfigurator aConfigurator)

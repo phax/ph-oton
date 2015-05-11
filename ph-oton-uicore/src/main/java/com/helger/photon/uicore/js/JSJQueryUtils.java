@@ -23,7 +23,7 @@ import com.helger.html.js.builder.IJSExpression;
 import com.helger.html.js.builder.JSAnonymousFunction;
 import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSVar;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 
 /**
@@ -39,7 +39,7 @@ public final class JSJQueryUtils
 
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICoreJSPathProvider.UICORE_JQUERY);
+    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.UICORE_JQUERY);
   }
 
   /**

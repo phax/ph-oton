@@ -31,7 +31,7 @@ import com.helger.commons.lang.ServiceLoaderUtils;
 import com.helger.commons.state.EContinue;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.core.app.html.IHTMLProvider;
-import com.helger.photon.core.app.html.WebHTMLCreator;
+import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
 import com.helger.photon.core.app.redirect.ForcedRedirectManager;
 import com.helger.photon.core.spi.IApplicationRequestListenerSPI;
@@ -140,7 +140,7 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
       final IHTMLProvider aHTMLProvider = createHTMLProvider (aRequestScope);
 
       // Create the HTML and put it into the response
-      WebHTMLCreator.createHTMLResponse (aRequestScope, aUnifiedResponse, aHTMLProvider);
+      PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aHTMLProvider);
     }
     catch (final Throwable t)
     {

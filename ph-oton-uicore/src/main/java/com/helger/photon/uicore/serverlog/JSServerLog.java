@@ -22,7 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.js.builder.IJSExpression;
 import com.helger.html.js.builder.JSInvocation;
-import com.helger.photon.core.app.html.PerRequestJSIncludes;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 
 @Immutable
@@ -33,7 +33,7 @@ public final class JSServerLog
 
   public static void registerExternalResources ()
   {
-    PerRequestJSIncludes.registerJSIncludeForThisRequest (EUICoreJSPathProvider.SERVERLOG);
+    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.SERVERLOG);
   }
 
   @Nonnull

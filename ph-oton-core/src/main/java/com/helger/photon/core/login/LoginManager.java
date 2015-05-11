@@ -34,7 +34,7 @@ import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.photon.basic.security.login.LoginInfo;
 import com.helger.photon.basic.security.user.IUser;
 import com.helger.photon.core.app.html.IHTMLProvider;
-import com.helger.photon.core.app.html.WebHTMLCreator;
+import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 import com.helger.web.useragent.UserAgentDatabase;
@@ -273,7 +273,7 @@ public class LoginManager
       {
         // Show login screen as no user is in the session
         final IHTMLProvider aLoginScreenProvider = createLoginScreen (bLoginError, eLoginResult);
-        WebHTMLCreator.createHTMLResponse (aRequestScope, aUnifiedResponse, aLoginScreenProvider);
+        PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aLoginScreenProvider);
       }
     }
 
