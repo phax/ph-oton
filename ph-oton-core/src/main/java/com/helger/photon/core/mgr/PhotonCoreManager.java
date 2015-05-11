@@ -29,9 +29,9 @@ import com.helger.commons.scopes.IScope;
 import com.helger.commons.scopes.singleton.GlobalSingleton;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.security.lock.ObjectLockManager;
-import com.helger.photon.core.app.html.HTMLConfigManager;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.core.app.html.PhotonMetaElements;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.smtp.FailedMailQueueWithDAO;
@@ -44,7 +44,6 @@ import com.helger.smtp.scope.ScopedMailAPI;
  * <ul>
  * <li>{@link FailedMailQueueWithDAO}</li>
  * <li>{@link GoMappingManager}</li>
- * <li>{@link HTMLConfigManager}</li>
  * <li>{@link NamedSMTPSettingsManager}</li>
  * <li>{@link WebSiteResourceBundleManager}</li>
  * </ul>
@@ -54,7 +53,6 @@ import com.helger.smtp.scope.ScopedMailAPI;
 public final class PhotonCoreManager extends GlobalSingleton
 {
   public static final String DIRECTORY_AUDITS = "audits/";
-  public static final String DIRECTORY_HTML = "html/";
   public static final String SMTP_SETTINGS_XML = "smtpsettings.xml";
   public static final String FAILED_MAILS_XML = "failedmails.xml";
   public static final String FAVORITES_XML = "favorites.xml";
@@ -68,7 +66,6 @@ public final class PhotonCoreManager extends GlobalSingleton
 
   private FailedMailQueueWithDAO m_aFailedMailQueue;
   private GoMappingManager m_aGoMappingMgr;
-  private HTMLConfigManager m_aHTMLConfigMgr;
   private NamedSMTPSettingsManager m_aSMTPSettingsMgr;
   private WebSiteResourceBundleManager m_aWebSiteResourceBundleMgr;
 
@@ -82,10 +79,9 @@ public final class PhotonCoreManager extends GlobalSingleton
   {
     try
     {
-      m_aHTMLConfigMgr = new HTMLConfigManager ();
       PhotonCSS.readCSSIncludesForGlobal (new ClassPathResource (PhotonCSS.DEFAULT_FILENAME));
       PhotonJS.readJSIncludesForGlobal (new ClassPathResource (PhotonJS.DEFAULT_FILENAME));
-      m_aHTMLConfigMgr.readAllFiles (DIRECTORY_HTML);
+      PhotonMetaElements.readMetaElementsForGlobal (new ClassPathResource (PhotonMetaElements.DEFAULT_FILENAME));
 
       m_aSMTPSettingsMgr = new NamedSMTPSettingsManager (SMTP_SETTINGS_XML);
 
@@ -108,12 +104,6 @@ public final class PhotonCoreManager extends GlobalSingleton
   public static PhotonCoreManager getInstance ()
   {
     return getGlobalSingleton (PhotonCoreManager.class);
-  }
-
-  @Nonnull
-  public static HTMLConfigManager getHTMLConfigMgr ()
-  {
-    return getInstance ().m_aHTMLConfigMgr;
   }
 
   @Nonnull

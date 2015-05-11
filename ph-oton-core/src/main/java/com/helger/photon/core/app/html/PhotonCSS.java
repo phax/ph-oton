@@ -46,8 +46,8 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
 
 /**
- * This class keeps track of all the CSS files that must be included for a
- * single request, so that the controls are working properly.
+ * This class keeps track of all the CSS files that must be included globally or
+ * for a single request.
  *
  * @author Philip Helger
  */
@@ -56,7 +56,7 @@ public final class PhotonCSS
 {
   public static final String DEFAULT_FILENAME = "html/css.xml";
 
-  private static final String REQUEST_ATTR_CSSINCLUDE = PhotonCSS.class.getName ();
+  private static final String REQUEST_ATTR_CSSRESOURCES = PhotonCSS.class.getName ();
   private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonCSS.class);
   private static final CSSResourceSet s_aGlobal = new CSSResourceSet ();
   private static final Lock s_aLock = new ReentrantLock ();
@@ -169,7 +169,7 @@ public final class PhotonCSS
 
   /**
    * @return <code>true</code> if at least a single CSS path has been registered
-   *         for this request only
+   *         globally.
    */
   public static boolean hasRegisteredCSSIncludesForGlobal ()
   {
@@ -184,11 +184,11 @@ public final class PhotonCSS
     s_aLock.lock ();
     try
     {
-      CSSResourceSet ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_CSSINCLUDE);
+      CSSResourceSet ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_CSSRESOURCES);
       if (ret == null && bCreateIfNotExisting)
       {
         ret = new CSSResourceSet ();
-        aRequestScope.setAttribute (REQUEST_ATTR_CSSINCLUDE, ret);
+        aRequestScope.setAttribute (REQUEST_ATTR_CSSRESOURCES, ret);
       }
       return ret;
     }
@@ -240,15 +240,15 @@ public final class PhotonCSS
   @ReturnsMutableCopy
   public static Set <ICSSPathProvider> getAllRegisteredCSSIncludesForThisRequest ()
   {
-    final CSSResourceSet ret = _getPerRequestSet (false);
-    return ret == null ? new LinkedHashSet <ICSSPathProvider> () : ret.getAllItems ();
+    final CSSResourceSet aSet = _getPerRequestSet (false);
+    return aSet == null ? new LinkedHashSet <ICSSPathProvider> () : aSet.getAllItems ();
   }
 
   public static void getAllRegisteredCSSIncludesForThisRequest (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
   {
-    final CSSResourceSet aCSSs = _getPerRequestSet (false);
-    if (aCSSs != null)
-      aCSSs.getAllItems (aTarget);
+    final CSSResourceSet aSet = _getPerRequestSet (false);
+    if (aSet != null)
+      aSet.getAllItems (aTarget);
   }
 
   /**
@@ -257,7 +257,7 @@ public final class PhotonCSS
    */
   public static boolean hasRegisteredCSSIncludesForThisRequest ()
   {
-    final CSSResourceSet aCSSs = _getPerRequestSet (false);
-    return aCSSs != null && aCSSs.isNotEmpty ();
+    final CSSResourceSet aSet = _getPerRequestSet (false);
+    return aSet != null && aSet.isNotEmpty ();
   }
 }

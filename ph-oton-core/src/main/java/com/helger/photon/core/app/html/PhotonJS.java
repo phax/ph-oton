@@ -43,8 +43,8 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
 
 /**
- * This class keeps track of all the JS files that must be included for a single
- * request, so that the controls are working properly.
+ * This class keeps track of all the JS files that must be included globally for
+ * a single request.
  *
  * @author Philip Helger
  */
@@ -53,7 +53,7 @@ public final class PhotonJS
 {
   public static final String DEFAULT_FILENAME = "html/js.xml";
 
-  private static final String REQUEST_ATTR_JSINCLUDE = PhotonJS.class.getName ();
+  private static final String REQUEST_ATTR_JSRESOURCES = PhotonJS.class.getName ();
   private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonJS.class);
   private static final JSResourceSet s_aGlobal = new JSResourceSet ();
   private static final Lock s_aLock = new ReentrantLock ();
@@ -146,7 +146,7 @@ public final class PhotonJS
 
   /**
    * @return <code>true</code> if at least a single JS path has been registered
-   *         for this request only
+   *         globally.
    */
   public static boolean hasRegisteredJSIncludesForGlobal ()
   {
@@ -161,11 +161,11 @@ public final class PhotonJS
     s_aLock.lock ();
     try
     {
-      JSResourceSet ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_JSINCLUDE);
+      JSResourceSet ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_JSRESOURCES);
       if (ret == null && bCreateIfNotExisting)
       {
         ret = new JSResourceSet ();
-        aRequestScope.setAttribute (REQUEST_ATTR_JSINCLUDE, ret);
+        aRequestScope.setAttribute (REQUEST_ATTR_JSRESOURCES, ret);
       }
       return ret;
     }
@@ -217,15 +217,15 @@ public final class PhotonJS
   @ReturnsMutableCopy
   public static Set <IJSPathProvider> getAllRegisteredJSIncludesForThisRequest ()
   {
-    final JSResourceSet ret = _getPerRequestSet (false);
-    return ret == null ? new LinkedHashSet <IJSPathProvider> () : ret.getAllItems ();
+    final JSResourceSet aSet = _getPerRequestSet (false);
+    return aSet == null ? new LinkedHashSet <IJSPathProvider> () : aSet.getAllItems ();
   }
 
   public static void getAllRegisteredJSIncludesForThisRequest (@Nonnull final Collection <? super IJSPathProvider> aTarget)
   {
-    final JSResourceSet aJSs = _getPerRequestSet (false);
-    if (aJSs != null)
-      aJSs.getAllItems (aTarget);
+    final JSResourceSet aSet = _getPerRequestSet (false);
+    if (aSet != null)
+      aSet.getAllItems (aTarget);
   }
 
   /**
@@ -234,7 +234,7 @@ public final class PhotonJS
    */
   public static boolean hasRegisteredJSIncludesForThisRequest ()
   {
-    final JSResourceSet aJSs = _getPerRequestSet (false);
-    return aJSs != null && aJSs.isNotEmpty ();
+    final JSResourceSet aSet = _getPerRequestSet (false);
+    return aSet != null && aSet.isNotEmpty ();
   }
 }

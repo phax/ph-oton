@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.app.html;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -25,22 +23,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.io.IReadableResource;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.microdom.reader.XMLMapHandler;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.conversion.HCConversionSettingsProvider;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.html.HCScript;
-import com.helger.html.meta.IMetaElement;
-import com.helger.html.meta.MetaElement;
-import com.helger.html.meta.MetaElementList;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.core.url.IWebURIToURLConverter;
@@ -50,9 +38,8 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 /**
  * This class holds the central configuration settings.
  * <ul>
- * <li>All global meta elements</li>
- * <li>All global page CSS files</li>
- * <li>All global page JavaScript files</li>
+ * <li>HTML Version</li>
+ * <li>The converter from URI to URL</li>
  * </ul>
  *
  * @author Philip Helger
@@ -60,114 +47,14 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 @ThreadSafe
 public class HTMLConfigManager
 {
-  /** Filename containing the meta elements */
-  public static final String FILENAME_METATAGS_XML = "metatags.xml";
-
-  private static final Logger s_aLogger = LoggerFactory.getLogger (HTMLConfigManager.class);
-
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
-  @GuardedBy ("m_aRWLock")
-  private final MetaElementList m_aMetaElements = new MetaElementList ();
   @GuardedBy ("s_aRWLock")
   private static EHTMLVersion m_eHTMLVersion = EHTMLVersion.DEFAULT;
   @GuardedBy ("s_aRWLock")
   private static IWebURIToURLConverter m_aURIToURLConverter = StreamOrLocalURIToURLConverter.getInstance ();
 
-  public HTMLConfigManager ()
+  private HTMLConfigManager ()
   {}
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public static MetaElementList getAllMetaElementsOfResource (@Nonnull final IReadableResource aRes)
-  {
-    ValueEnforcer.notNull (aRes, "Res");
-
-    final MetaElementList ret = new MetaElementList ();
-
-    if (aRes.exists ())
-    {
-      final Map <String, String> aMetaElements = new LinkedHashMap <String, String> ();
-      if (XMLMapHandler.readMap (aRes, aMetaElements).isFailure ())
-        s_aLogger.error ("Failed to read meta element file " + aRes.getPath ());
-
-      for (final Map.Entry <String, String> aEntry : aMetaElements.entrySet ())
-        ret.addMetaElement (new MetaElement (aEntry.getKey (), aEntry.getValue ()));
-    }
-
-    return ret;
-  }
-
-  @Nonnull
-  @Deprecated
-  public HTMLConfigManager readAllFiles (@Nonnull final String sBasePath)
-  {
-    ValueEnforcer.notNull (sBasePath, "BasePath");
-    if (sBasePath.length () > 0 && !sBasePath.endsWith ("/"))
-      throw new IllegalArgumentException ("BasePath must end with a '/'!");
-
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      // read all static MetaTags
-      m_aMetaElements.addMetaElements (getAllMetaElementsOfResource (new ClassPathResource (sBasePath +
-                                                                                            FILENAME_METATAGS_XML)));
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return this;
-  }
-
-  /**
-   * @return A list of all global meta elements. Never <code>null</code>.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public MetaElementList getAllMetaElements ()
-  {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMetaElements.getClone ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  @Nonnull
-  public HTMLConfigManager addMetaElement (@Nonnull final IMetaElement aMetaElement)
-  {
-    ValueEnforcer.notNull (aMetaElement, "MetaElement");
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      m_aMetaElements.addMetaElement (aMetaElement);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return this;
-  }
-
-  @Nonnull
-  public HTMLConfigManager removeAllMetaElements ()
-  {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      m_aMetaElements.removeAllMetaElements ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return this;
-  }
 
   /**
    * @return The HTML version to use. Never <code>null</code>.

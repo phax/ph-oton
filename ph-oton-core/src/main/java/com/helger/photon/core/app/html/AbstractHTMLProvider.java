@@ -26,13 +26,12 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.GlobalDebug;
 import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.html.HCHead;
 import com.helger.html.hc.html.HCHtml;
 import com.helger.html.meta.EStandardMetaElement;
-import com.helger.html.meta.MetaElementList;
+import com.helger.html.meta.IMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
@@ -95,61 +94,94 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     return new HCHtml ().setLanguage (aDisplayLocale.getLanguage ());
   }
 
-  @Nonnull
-  @ReturnsMutableCopy
+  /**
+   * Add all meta elements to the HTML head element.
+   *
+   * @param aRequestScope
+   *        Current request scope. Never <code>null</code>.
+   * @param aHead
+   *        The HTML head object. Never <code>null</code>.
+   */
   @OverrideOnDemand
-  protected MetaElementList getAllMetaElements ()
+  protected void addMetaElementsToHead (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                        @Nonnull final HCHead aHead)
   {
-    return PhotonCoreManager.getHTMLConfigMgr ().getAllMetaElements ();
+    final List <IMetaElement> aMetaElements = PhotonMetaElements.getAllRegisteredMetaElementsForGlobal ();
+    PhotonMetaElements.getAllRegisteredMetaElementsForThisRequest (aMetaElements);
+
+    // add Special meta tag
+    final IMimeType aMimeType = PhotonHTMLHelper.getMimeType (aRequestScope);
+    aMetaElements.add (0, EStandardMetaElement.CONTENT_TYPE.getAsMetaElement (aMimeType.getAsString ()));
+
+    for (final IMetaElement aMetaElement : aMetaElements)
+      aHead.getMetaElementList ().addMetaElement (aMetaElement);
   }
 
+  /**
+   * Add all CSS include to the HTML head element.
+   *
+   * @param aRequestScope
+   *        Current request scope. Never <code>null</code>.
+   * @param aHead
+   *        The HTML head object. Never <code>null</code>.
+   */
   @OverrideOnDemand
-  protected void addCSSAndJSToHead (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                    @Nonnull final HCHead aHead)
+  protected void addCSSToHead (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHead aHead)
   {
     final boolean bRegular = useRegularResources ();
     final boolean bAggregateCSS = useWebSiteResourceBundlesForCSS ();
-    final boolean bAggregateJS = useWebSiteResourceBundlesForJS ();
 
     // Add configured and per-request CSS
+    final Set <ICSSPathProvider> aCSSs = PhotonCSS.getAllRegisteredCSSIncludesForGlobal ();
+    PhotonCSS.getAllRegisteredCSSIncludesForThisRequest (aCSSs);
+
+    if (bAggregateCSS)
     {
-      final Set <ICSSPathProvider> aCSSs = PhotonCSS.getAllRegisteredCSSIncludesForGlobal ();
-      PhotonCSS.getAllRegisteredCSSIncludesForThisRequest (aCSSs);
-      if (bAggregateCSS)
-      {
-        final List <WebSiteResourceWithCondition> aCSSRes = new ArrayList <WebSiteResourceWithCondition> ();
-        for (final ICSSPathProvider aCSS : aCSSs)
-          aCSSRes.add (new WebSiteResourceWithCondition (aCSS, bRegular));
-        for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
-                                                                              .getResourceBundles (aCSSRes, bRegular))
-          aHead.addCSS (aBundle.createNode (aRequestScope));
-      }
-      else
-      {
-        for (final ICSSPathProvider aCSS : aCSSs)
-          aHead.addCSS (PhotonHTMLHelper.getCSSNode (aRequestScope, aCSS, bRegular));
-      }
+      final List <WebSiteResourceWithCondition> aCSSRes = new ArrayList <WebSiteResourceWithCondition> ();
+      for (final ICSSPathProvider aCSS : aCSSs)
+        aCSSRes.add (new WebSiteResourceWithCondition (aCSS, bRegular));
+      for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
+                                                                            .getResourceBundles (aCSSRes, bRegular))
+        aHead.addCSS (aBundle.createNode (aRequestScope));
     }
+    else
+    {
+      for (final ICSSPathProvider aCSS : aCSSs)
+        aHead.addCSS (PhotonHTMLHelper.getCSSNode (aRequestScope, aCSS, bRegular));
+    }
+  }
+
+  /**
+   * Add all JS includes to the HTML head element.
+   *
+   * @param aRequestScope
+   *        Current request scope. Never <code>null</code>.
+   * @param aHead
+   *        The HTML head object. Never <code>null</code>.
+   */
+  @OverrideOnDemand
+  protected void addJSToHead (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHead aHead)
+  {
+    final boolean bRegular = useRegularResources ();
+    final boolean bAggregateJS = useWebSiteResourceBundlesForJS ();
 
     // Add all configured and per-request JS
-    {
-      final Set <IJSPathProvider> aJSs = PhotonJS.getAllRegisteredJSIncludesForGlobal ();
-      PhotonJS.getAllRegisteredJSIncludesForThisRequest (aJSs);
+    final Set <IJSPathProvider> aJSs = PhotonJS.getAllRegisteredJSIncludesForGlobal ();
+    PhotonJS.getAllRegisteredJSIncludesForThisRequest (aJSs);
 
-      if (bAggregateJS)
-      {
-        final List <WebSiteResourceWithCondition> aJSRes = new ArrayList <WebSiteResourceWithCondition> ();
-        for (final IJSPathProvider aJS : aJSs)
-          aJSRes.add (new WebSiteResourceWithCondition (aJS, bRegular));
-        for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
-                                                                              .getResourceBundles (aJSRes, bRegular))
-          aHead.addJS (aBundle.createNode (aRequestScope));
-      }
-      else
-      {
-        for (final IJSPathProvider aJS : aJSs)
-          aHead.addJS (PhotonHTMLHelper.getJSNode (aRequestScope, aJS, bRegular));
-      }
+    if (bAggregateJS)
+    {
+      final List <WebSiteResourceWithCondition> aJSRes = new ArrayList <WebSiteResourceWithCondition> ();
+      for (final IJSPathProvider aJS : aJSs)
+        aJSRes.add (new WebSiteResourceWithCondition (aJS, bRegular));
+      for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
+                                                                            .getResourceBundles (aJSRes, bRegular))
+        aHead.addJS (aBundle.createNode (aRequestScope));
+    }
+    else
+    {
+      for (final IJSPathProvider aJS : aJSs)
+        aHead.addJS (PhotonHTMLHelper.getJSNode (aRequestScope, aJS, bRegular));
     }
   }
 
@@ -168,16 +200,12 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
     final HCHead aHead = aHtml.getHead ();
 
-    // Special meta tag
-    final IMimeType aMimeType = PhotonHTMLHelper.getMimeType (aRequestScope);
-    aHead.getMetaElementList ()
-         .addMetaElement (EStandardMetaElement.CONTENT_TYPE.getAsMetaElement (aMimeType.getAsString ()));
-
     // Add all configured meta elements
-    aHead.getMetaElementList ().addMetaElements (getAllMetaElements ());
+    addMetaElementsToHead (aRequestScope, aHead);
 
     // Add CSS and JS
-    addCSSAndJSToHead (aRequestScope, aHead);
+    addCSSToHead (aRequestScope, aHead);
+    addJSToHead (aRequestScope, aHead);
   }
 
   /**

@@ -24,10 +24,9 @@ import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.MetaElement;
 import com.helger.photon.bootstrap3.EBootstrapCSSPathProvider;
 import com.helger.photon.bootstrap3.EBootstrapJSPathProvider;
-import com.helger.photon.core.app.html.HTMLConfigManager;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.core.mgr.PhotonCoreManager;
+import com.helger.photon.core.app.html.PhotonMetaElements;
 import com.helger.photon.uicore.EUICoreCSSPathProvider;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
@@ -43,8 +42,6 @@ public final class PhotonStubConfigurationListener implements ServletContextList
 {
   private static void _registerDefaultResources ()
   {
-    final HTMLConfigManager aConfigMgr = PhotonCoreManager.getHTMLConfigMgr ();
-
     // CSS
     PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_334);
     PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_THEME_334);
@@ -70,9 +67,10 @@ public final class PhotonStubConfigurationListener implements ServletContextList
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.PLACEHOLDER_FIX);
 
     // Meta elements
-    aConfigMgr.addMetaElement (new MetaElement ("generator", "ph-oton stack - https://github.com/phax/ph-oton"));
-    aConfigMgr.addMetaElement (EStandardMetaElement.X_UA_COMPATIBLE.getAsMetaElement ("IE=Edge,chrome=1"));
-    aConfigMgr.addMetaElement (EStandardMetaElement.VIEWPORT.getAsMetaElement ("width=device-width, initial-scale=1.0"));
+    PhotonMetaElements.registerMetaElementForGlobal (new MetaElement ("generator",
+                                                                      "ph-oton stack - https://github.com/phax/ph-oton"));
+    PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.X_UA_COMPATIBLE.getAsMetaElement ("IE=Edge,chrome=1"));
+    PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.VIEWPORT.getAsMetaElement ("width=device-width, initial-scale=1.0"));
   }
 
   public void contextInitialized (@Nonnull final ServletContextEvent aSCE)
