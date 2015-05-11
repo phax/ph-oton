@@ -23,15 +23,11 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotations.UsedViaReflection;
 import com.helger.commons.exceptions.InitializationException;
-import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.lang.CGStringHelper;
 import com.helger.commons.scopes.IScope;
 import com.helger.commons.scopes.singleton.GlobalSingleton;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.security.lock.ObjectLockManager;
-import com.helger.photon.core.app.html.PhotonCSS;
-import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.core.app.html.PhotonMetaElements;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.smtp.FailedMailQueueWithDAO;
@@ -79,10 +75,6 @@ public final class PhotonCoreManager extends GlobalSingleton
   {
     try
     {
-      PhotonCSS.readCSSIncludesForGlobal (new ClassPathResource (PhotonCSS.DEFAULT_FILENAME));
-      PhotonJS.readJSIncludesForGlobal (new ClassPathResource (PhotonJS.DEFAULT_FILENAME));
-      PhotonMetaElements.readMetaElementsForGlobal (new ClassPathResource (PhotonMetaElements.DEFAULT_FILENAME));
-
       m_aSMTPSettingsMgr = new NamedSMTPSettingsManager (SMTP_SETTINGS_XML);
 
       m_aFailedMailQueue = new FailedMailQueueWithDAO (FAILED_MAILS_XML);

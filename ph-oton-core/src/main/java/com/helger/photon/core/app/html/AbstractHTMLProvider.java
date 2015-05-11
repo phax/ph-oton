@@ -56,6 +56,10 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   public AbstractHTMLProvider ()
   {}
 
+  /**
+   * @return <code>true</code> to use non-minified resources, <code>false</code>
+   *         to use minified resources.
+   */
   @OverrideOnDemand
   protected boolean useRegularResources ()
   {
@@ -106,12 +110,14 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   protected void addMetaElementsToHead (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                         @Nonnull final HCHead aHead)
   {
-    final List <IMetaElement> aMetaElements = PhotonMetaElements.getAllRegisteredMetaElementsForGlobal ();
+    final List <IMetaElement> aMetaElements = new ArrayList <IMetaElement> ();
+    {
+      // add special meta element at the beginning
+      final IMimeType aMimeType = PhotonHTMLHelper.getMimeType (aRequestScope);
+      aMetaElements.add (EStandardMetaElement.CONTENT_TYPE.getAsMetaElement (aMimeType.getAsString ()));
+    }
+    PhotonMetaElements.getAllRegisteredMetaElementsForGlobal (aMetaElements);
     PhotonMetaElements.getAllRegisteredMetaElementsForThisRequest (aMetaElements);
-
-    // add Special meta tag
-    final IMimeType aMimeType = PhotonHTMLHelper.getMimeType (aRequestScope);
-    aMetaElements.add (0, EStandardMetaElement.CONTENT_TYPE.getAsMetaElement (aMimeType.getAsString ()));
 
     for (final IMetaElement aMetaElement : aMetaElements)
       aHead.getMetaElementList ().addMetaElement (aMetaElement);
@@ -140,12 +146,14 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
       final List <WebSiteResourceWithCondition> aCSSRes = new ArrayList <WebSiteResourceWithCondition> ();
       for (final ICSSPathProvider aCSS : aCSSs)
         aCSSRes.add (new WebSiteResourceWithCondition (aCSS, bRegular));
+
       for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                             .getResourceBundles (aCSSRes, bRegular))
         aHead.addCSS (aBundle.createNode (aRequestScope));
     }
     else
     {
+      // Add each CSS separately
       for (final ICSSPathProvider aCSS : aCSSs)
         aHead.addCSS (PhotonHTMLHelper.getCSSNode (aRequestScope, aCSS, bRegular));
     }
@@ -174,12 +182,14 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
       final List <WebSiteResourceWithCondition> aJSRes = new ArrayList <WebSiteResourceWithCondition> ();
       for (final IJSPathProvider aJS : aJSs)
         aJSRes.add (new WebSiteResourceWithCondition (aJS, bRegular));
+
       for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                             .getResourceBundles (aJSRes, bRegular))
         aHead.addJS (aBundle.createNode (aRequestScope));
     }
     else
     {
+      // Add each JS separately
       for (final IJSPathProvider aJS : aJSs)
         aHead.addJS (PhotonHTMLHelper.getJSNode (aRequestScope, aJS, bRegular));
     }
@@ -200,7 +210,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
     final HCHead aHead = aHtml.getHead ();
 
-    // Add all configured meta elements
+    // Add all meta elements
     addMetaElementsToHead (aRequestScope, aHead);
 
     // Add CSS and JS

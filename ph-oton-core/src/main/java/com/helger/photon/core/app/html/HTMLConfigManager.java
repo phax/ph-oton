@@ -26,7 +26,6 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.EHTMLVersion;
-import com.helger.html.hc.conversion.HCConversionSettingsProvider;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.html.HCScript;
 import com.helger.html.resource.css.ICSSPathProvider;
@@ -38,7 +37,6 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 /**
  * This class holds the central configuration settings.
  * <ul>
- * <li>HTML Version</li>
  * <li>The converter from URI to URL</li>
  * </ul>
  *
@@ -49,68 +47,34 @@ public class HTMLConfigManager
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("s_aRWLock")
-  private static EHTMLVersion m_eHTMLVersion = EHTMLVersion.DEFAULT;
-  @GuardedBy ("s_aRWLock")
   private static IWebURIToURLConverter m_aURIToURLConverter = StreamOrLocalURIToURLConverter.getInstance ();
 
   private HTMLConfigManager ()
   {}
 
   /**
-   * @return The HTML version to use. Never <code>null</code>.
-   */
-  @Nonnull
-  public static EHTMLVersion getHTMLVersion ()
-  {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_eHTMLVersion;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  /**
-   * Set the default HTML version to use. This implicitly creates a new
-   * {@link HCConversionSettingsProvider} that will be used in
-   * {@link HCSettings}. So if you are customizing the settings ensure that this
-   * is done after setting the HTML version!
+   * Set the default HTML version to use. This sets the HTML version in the
+   * {@link HCSettings} class and performs some additional modifications
+   * depending on the chosen version.
    *
    * @param eHTMLVersion
-   *        The HTML version. May not be <code>null</code>.
+   *        The HTML version to use. May not be <code>null</code>.
    */
-  public static void setHTMLVersion (@Nonnull final EHTMLVersion eHTMLVersion)
+  public static void setDefaultHTMLVersion (@Nonnull final EHTMLVersion eHTMLVersion)
   {
     ValueEnforcer.notNull (eHTMLVersion, "HTMLVersion");
 
-    s_aRWLock.writeLock ().lock ();
-    try
+    // Update the HCSettings
+    HCSettings.getConversionSettingsProvider ().setHTMLVersion (eHTMLVersion);
+    if (eHTMLVersion.isAtLeastHTML5 ())
     {
-      if (eHTMLVersion != m_eHTMLVersion)
-      {
-        // Store the changed HTML version
-        m_eHTMLVersion = eHTMLVersion;
-
-        // Update the HCSettings
-        HCSettings.getConversionSettingsProvider ().setHTMLVersion (eHTMLVersion);
-        if (eHTMLVersion.isAtLeastHTML5 ())
-        {
-          // No need to put anything in a comment
-          HCScript.setDefaultMode (HCScript.EMode.PLAIN_TEXT_NO_ESCAPE);
-        }
-        else
-        {
-          // Use default mode
-          HCScript.setDefaultMode (HCScript.DEFAULT_MODE);
-        }
-      }
+      // No need to put anything in a comment
+      HCScript.setDefaultMode (HCScript.EMode.PLAIN_TEXT_NO_ESCAPE);
     }
-    finally
+    else
     {
-      s_aRWLock.writeLock ().unlock ();
+      // Use default mode
+      HCScript.setDefaultMode (HCScript.DEFAULT_MODE);
     }
   }
 

@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.html.meta.EStandardMetaElement;
-import com.helger.html.meta.MetaElement;
 import com.helger.photon.bootstrap3.EBootstrapCSSPathProvider;
 import com.helger.photon.bootstrap3.EBootstrapJSPathProvider;
 import com.helger.photon.core.app.html.PhotonCSS;
@@ -67,10 +67,14 @@ public final class PhotonStubConfigurationListener implements ServletContextList
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.PLACEHOLDER_FIX);
 
     // Meta elements
-    PhotonMetaElements.registerMetaElementForGlobal (new MetaElement ("generator",
-                                                                      "ph-oton stack - https://github.com/phax/ph-oton"));
+    PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.GENERATOR.getAsMetaElement ("ph-oton stack - https://github.com/phax/ph-oton"));
     PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.X_UA_COMPATIBLE.getAsMetaElement ("IE=Edge,chrome=1"));
     PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.VIEWPORT.getAsMetaElement ("width=device-width, initial-scale=1.0"));
+
+    // Finally read everything that may be defined within the application
+    PhotonCSS.readCSSIncludesForGlobal (new ClassPathResource (PhotonCSS.DEFAULT_FILENAME));
+    PhotonJS.readJSIncludesForGlobal (new ClassPathResource (PhotonJS.DEFAULT_FILENAME));
+    PhotonMetaElements.readMetaElementsForGlobal (new ClassPathResource (PhotonMetaElements.DEFAULT_FILENAME));
   }
 
   public void contextInitialized (@Nonnull final ServletContextEvent aSCE)

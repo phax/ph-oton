@@ -36,8 +36,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.xml.serialize.SAXReaderSettings;
 import com.helger.html.EHTMLVersion;
+import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.parser.XHTMLParser;
-import com.helger.photon.core.app.html.HTMLConfigManager;
 import com.helger.photon.uicore.page.external.PageViewExternalHTMLCleanser;
 
 /**
@@ -64,7 +64,7 @@ public abstract class AbstractPageViewExternal <WPECTYPE extends IWebPageExecuti
     // XXX hack - explicitly use XHTML 1.1 for reading, to avoid problems with
     // entity resolving, because HTML5 has no public ID and therefore the entity
     // resolver is not called!
-    EHTMLVersion eHTMLVersion = HTMLConfigManager.getHTMLVersion ();
+    EHTMLVersion eHTMLVersion = HCSettings.getConversionSettings ().getHTMLVersion ();
     if (eHTMLVersion.isAtLeastHTML5 ())
       eHTMLVersion = EHTMLVersion.XHTML11;
 

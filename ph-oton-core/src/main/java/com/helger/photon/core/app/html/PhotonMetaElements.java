@@ -124,8 +124,7 @@ public final class PhotonMetaElements
 
   public static void getAllRegisteredMetaElementsForGlobal (@Nonnull final Collection <? super IMetaElement> aTarget)
   {
-    ValueEnforcer.notNull (aTarget, "Target");
-    aTarget.addAll (s_aGlobal.getAllMetaElements ());
+    s_aGlobal.getAllMetaElements (aTarget);
   }
 
   /**
@@ -208,10 +207,9 @@ public final class PhotonMetaElements
 
   public static void getAllRegisteredMetaElementsForThisRequest (@Nonnull final Collection <? super IMetaElement> aTarget)
   {
-    ValueEnforcer.notNull (aTarget, "Target");
     final MetaElementList aSet = _getPerRequestSet (false);
     if (aSet != null)
-      aTarget.addAll (aSet.getAllMetaElements ());
+      aSet.getAllMetaElements (aTarget);
   }
 
   /**

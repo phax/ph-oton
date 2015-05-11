@@ -9,6 +9,13 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.state.EChange;
 
+/**
+ * Base interface for CSS and JS resource sets.
+ * 
+ * @author Philip Helger
+ * @param <T>
+ *        The contained data type.
+ */
 public interface IWebResourceSet <T> extends Serializable, Iterable <T>
 {
   /**

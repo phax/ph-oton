@@ -56,7 +56,7 @@ public abstract class AbstractWebAppListenerMultiAppBootstrap <LECTYPE extends I
     // UI stuff:
 
     // Always use HTML5 for Bootstrap3
-    HTMLConfigManager.setHTMLVersion (EHTMLVersion.HTML5);
+    HTMLConfigManager.setDefaultHTMLVersion (EHTMLVersion.HTML5);
 
     // Add special Bootstrap customizer
     HCSettings.getConversionSettingsProvider ()
