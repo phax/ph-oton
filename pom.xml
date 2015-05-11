@@ -88,6 +88,11 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
+        <artifactId>ph-validation</artifactId>
+        <version>3.3.5</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
         <artifactId>ph-masterdata</artifactId>
         <version>3.7.2</version>
       </dependency>
