@@ -40,7 +40,7 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
-public class PageShowChildren <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
+public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
 {
   private static final class ShowChildrenCallback <WPECTYPE extends IWebPageExecutionContext> extends DefaultHierarchyWalkerCallback <DefaultTreeItemWithID <String, IMenuObject>>
   {
@@ -128,14 +128,14 @@ public class PageShowChildren <WPECTYPE extends IWebPageExecutionContext> extend
   private final IMenuTree m_aMenuTree;
   private final PageShowChildrenRenderer m_aRenderer;
 
-  public PageShowChildren (@Nonnull @Nonempty final String sID,
+  public BasePageShowChildren (@Nonnull @Nonempty final String sID,
                            @Nonnull final IReadonlyMultiLingualText aName,
                            @Nonnull final IMenuTree aMenuTree)
   {
     this (sID, aName, aMenuTree, new PageShowChildrenRenderer ());
   }
 
-  public PageShowChildren (@Nonnull @Nonempty final String sID,
+  public BasePageShowChildren (@Nonnull @Nonempty final String sID,
                            @Nonnull final IReadonlyMultiLingualText aName,
                            @Nonnull final IMenuTree aMenuTree,
                            @Nonnull final PageShowChildrenRenderer aRenderer)
@@ -145,14 +145,14 @@ public class PageShowChildren <WPECTYPE extends IWebPageExecutionContext> extend
     m_aRenderer = ValueEnforcer.notNull (aRenderer, "Renderer");
   }
 
-  public PageShowChildren (@Nonnull @Nonempty final String sID,
+  public BasePageShowChildren (@Nonnull @Nonempty final String sID,
                            @Nonnull final String sName,
                            @Nonnull final IMenuTree aMenuTree)
   {
     this (sID, sName, aMenuTree, new PageShowChildrenRenderer ());
   }
 
-  public PageShowChildren (@Nonnull @Nonempty final String sID,
+  public BasePageShowChildren (@Nonnull @Nonempty final String sID,
                            @Nonnull final String sName,
                            @Nonnull final IMenuTree aMenuTree,
                            @Nonnull final PageShowChildrenRenderer aRenderer)

@@ -24,7 +24,7 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.menu.filter.MenuItemFilterNotLoggedIn;
 import com.helger.photon.bootstrap.demo.page.pub.PagePublicLogin;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
-import com.helger.photon.uicore.page.external.PageViewExternal;
+import com.helger.photon.uicore.page.external.BasePageViewExternal;
 
 @Immutable
 public final class MenuPublic
@@ -40,11 +40,11 @@ public final class MenuPublic
     aMenuTree.createRootSeparator ().setDisplayFilter (MenuItemFilterNotLoggedIn.getInstance ());
 
     // Common stuff
-    aMenuTree.createRootItem (new PageViewExternal <WebPageExecutionContext> (CMenuPublic.MENU_SITENOTICE,
+    aMenuTree.createRootItem (new BasePageViewExternal <WebPageExecutionContext> (CMenuPublic.MENU_SITENOTICE,
                                                                               "Site notice",
                                                                               new ClassPathResource ("viewpages/en/site-notice.xml")));
 
-    aMenuTree.createRootItem (new PageViewExternal <WebPageExecutionContext> (CMenuPublic.MENU_GTC,
+    aMenuTree.createRootItem (new BasePageViewExternal <WebPageExecutionContext> (CMenuPublic.MENU_GTC,
                                                                               "GTC",
                                                                               new ClassPathResource ("viewpages/en/gtc.xml")))
              .setAttribute (CMenuPublic.FLAG_FOOTER, Boolean.TRUE);

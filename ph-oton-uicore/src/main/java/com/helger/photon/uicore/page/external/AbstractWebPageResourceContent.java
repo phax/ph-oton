@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uicore.page;
+package com.helger.photon.uicore.page.external;
 
 import java.nio.charset.Charset;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -24,6 +24,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.helger.commons.GlobalDebug;
 import com.helger.commons.annotations.Nonempty;
@@ -38,7 +41,8 @@ import com.helger.commons.xml.serialize.SAXReaderSettings;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.parser.XHTMLParser;
-import com.helger.photon.uicore.page.external.PageViewExternalHTMLCleanser;
+import com.helger.photon.uicore.page.AbstractWebPageExt;
+import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**
  * Base class for pages consisting of external HTML code that is provided from
@@ -49,9 +53,11 @@ import com.helger.photon.uicore.page.external.PageViewExternalHTMLCleanser;
  *        Web page execution context type
  */
 @ThreadSafe
-public abstract class AbstractPageViewExternal <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
 {
   public static final Charset DEFAULT_CHARSET = CCharset.CHARSET_UTF_8_OBJ;
+
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageResourceContent.class);
 
   protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
 
@@ -77,6 +83,9 @@ public abstract class AbstractPageViewExternal <WPECTYPE extends IWebPageExecuti
                                                       @Nonnull final EHTMLVersion eHTMLVersion,
                                                       @Nullable final SAXReaderSettings aAdditionalSaxReaderSettings)
   {
+    if (eHTMLVersion.isAtLeastHTML5 ())
+      s_aLogger.warn ("Reading an HTML page fragment with HTML5 may fail because of missing HTML entities!");
+
     // Read content once
     final String sContent = StreamUtils.getAllBytesAsString (aResource, aCharset);
     if (sContent == null)
@@ -95,12 +104,13 @@ public abstract class AbstractPageViewExternal <WPECTYPE extends IWebPageExecuti
     return ret;
   }
 
-  public AbstractPageViewExternal (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
+  public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
     super (sID, sName);
   }
 
-  public AbstractPageViewExternal (@Nonnull @Nonempty final String sID, @Nonnull final IReadonlyMultiLingualText aName)
+  public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID,
+                                         @Nonnull final IReadonlyMultiLingualText aName)
   {
     super (sID, aName);
   }
@@ -135,7 +145,7 @@ public abstract class AbstractPageViewExternal <WPECTYPE extends IWebPageExecuti
    */
   @SuppressWarnings ("javadoc")
   @Nonnull
-  public final AbstractPageViewExternal <WPECTYPE> setReadEveryTime (final boolean bReadEveryTime)
+  public final AbstractWebPageResourceContent <WPECTYPE> setReadEveryTime (final boolean bReadEveryTime)
   {
     m_aRWLock.writeLock ().lock ();
     try

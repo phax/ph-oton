@@ -42,14 +42,10 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  */
 public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
 {
-  public static final String PAGEID_SYSTEM_NOTFOUND = "system.notfound";
-  private static final Logger s_aLogger = LoggerFactory.getLogger (SystemPageNotFound.class);
-
   @Translatable
   protected static enum ETextBase implements IHasDisplayText
   {
     PAGENAME ("Seite nicht gefunden", "Page not found"),
-    TITLE ("Seite nicht gefunden", "Page not found"),
     MESSAGE ("Die von Ihnen gesuchte Seite existiert leider nicht!", "The page you are looking for does not exist!");
 
     private final TextProvider m_aTP;
@@ -66,6 +62,9 @@ public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> exte
     }
   }
 
+  public static final String PAGEID_SYSTEM_NOTFOUND = "system.notfound";
+  private static final Logger s_aLogger = LoggerFactory.getLogger (SystemPageNotFound.class);
+
   public SystemPageNotFound ()
   {
     super (PAGEID_SYSTEM_NOTFOUND, ETextBase.PAGENAME.m_aTP);
@@ -78,6 +77,6 @@ public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> exte
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
     s_aLogger.info ("PAGE NOT FOUND " + aWPEC.getRequestScope ().getURL ());
-    aNodeList.addChild (HCH1.create (ETextBase.MESSAGE.getDisplayText (aDisplayLocale)));
+    aNodeList.addChild (new HCH1 ().addChild (ETextBase.MESSAGE.getDisplayText (aDisplayLocale)));
   }
 }

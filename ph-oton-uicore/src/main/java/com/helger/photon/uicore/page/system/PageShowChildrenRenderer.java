@@ -36,7 +36,7 @@ import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**
- * The default renderer used for {@link PageShowChildren}.
+ * The default renderer used for {@link BasePageShowChildren}.
  *
  * @author Philip Helger
  */

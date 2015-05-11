@@ -71,16 +71,17 @@ import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
-import com.helger.photon.uicore.page.system.PageShowChildren;
+import com.helger.photon.uicore.page.system.BasePageShowChildren;
 import com.helger.smtp.failed.FailedMailQueue;
 
 @Immutable
-public final class DefaultMenuConfigurator
+public final class BootstrapPagesMenuConfigurator
 {
   public static final String MENU_ADMIN_SECURITY = "admin_security";
   public static final String MENU_ADMIN_SECURITY_USER = "admin_security_user";
   public static final String MENU_ADMIN_SECURITY_USER_GROUP = "admin_security_usergroup";
   public static final String MENU_ADMIN_SECURITY_ROLE = "admin_security_role";
+
   public static final String MENU_ADMIN_MONITORING = "admin_monitoring";
   public static final String MENU_ADMIN_MONITORING_ACTIONS = "admin_monitoring_actions";
   public static final String MENU_ADMIN_MONITORING_AJAX_FUNCTIONS = "admin_monitoring_ajax_functions";
@@ -97,11 +98,13 @@ public final class DefaultMenuConfigurator
   public static final String MENU_ADMIN_MONITORING_STATISTICS = "admin_monitoring_statistics";
   public static final String MENU_ADMIN_MONITORING_SYSTEMMIGRATIONS = "admin_monitoring_systemmigrations";
   public static final String MENU_ADMIN_MONITORING_WEBRESBUNDLE = "admin_monitoring_webresbundle";
+
   public static final String MENU_ADMIN_SETTINGS = "admin_settings";
   public static final String MENU_ADMIN_SETTINGS_GLOBAL = "admin_settings_global";
   public static final String MENU_ADMIN_SETTINGS_HTML = "admin_settings_html";
   public static final String MENU_ADMIN_SETTINGS_SMTP = "admin_settings_smtp";
   public static final String MENU_ADMIN_SETTINGS_SYSTEMMESSAGE = "admin_settings_systemmessage";
+
   public static final String MENU_ADMIN_SYSINFO = "admin_sysinfo";
   public static final String MENU_ADMIN_SYSINFO_CHANGELOGS = "admin_sysinfo_changelog";
   public static final String MENU_ADMIN_SYSINFO_ENVVARS = "admin_sysinfo_envvars";
@@ -111,13 +114,14 @@ public final class DefaultMenuConfigurator
   public static final String MENU_ADMIN_SYSINFO_SYSPROPS = "admin_sysinfo_sysprops";
   public static final String MENU_ADMIN_SYSINFO_THIRDPARTYLIBS = "admin_sysinfo_thirdpartylibs";
   public static final String MENU_ADMIN_SYSINFO_THREADS = "admin_sysinfo_threads";
+
   public static final String MENU_ADMIN_DATA = "admin_data";
   public static final String MENU_ADMIN_DATA_COUNTRIES = "admin_data_countries";
   public static final String MENU_ADMIN_DATA_CURRENCIES = "admin_data_currencies";
   public static final String MENU_ADMIN_DATA_LANGUAGES = "admin_data_languages";
   public static final String MENU_ADMIN_DATA_TIMEZONES = "admin_data_timezones";
 
-  private DefaultMenuConfigurator ()
+  private BootstrapPagesMenuConfigurator ()
   {}
 
   @Nonnull
@@ -125,7 +129,7 @@ public final class DefaultMenuConfigurator
                                                                                               @Nonnull final IMenuItem aParent,
                                                                                               @Nullable final IFilter <IMenuObject> aDisplayFilter)
   {
-    return DefaultMenuConfigurator.<WPECTYPE> addMonitoringItems (aMenuTree,
+    return BootstrapPagesMenuConfigurator.<WPECTYPE> addMonitoringItems (aMenuTree,
                                                                   aParent,
                                                                   aDisplayFilter,
                                                                   PhotonBasicManager.getAuditMgr (),
@@ -148,7 +152,7 @@ public final class DefaultMenuConfigurator
                                                                                               @Nullable final WebSiteResourceBundleManager aResBundleMgr)
   {
     final IMenuItemPage aAdminMonitoring = aMenuTree.createItem (aParent,
-                                                                 new PageShowChildren <WPECTYPE> (MENU_ADMIN_MONITORING,
+                                                                 new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_MONITORING,
                                                                                                   EWebPageText.PAGE_NAME_MONITORING.getAsMLT (),
                                                                                                   aMenuTree))
                                                     .setDisplayFilter (aDisplayFilter);
@@ -226,7 +230,7 @@ public final class DefaultMenuConfigurator
                                                                                             @Nonnull final Locale aDefaultLocale)
   {
     final IMenuItemPage aAdminSecurity = aMenuTree.createItem (aParent,
-                                                               new PageShowChildren <WPECTYPE> (MENU_ADMIN_SECURITY,
+                                                               new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_SECURITY,
                                                                                                 EWebPageText.PAGE_NAME_SECURITY.getAsMLT (),
                                                                                                 aMenuTree))
                                                   .setDisplayFilter (aDisplayFilter);
@@ -246,7 +250,7 @@ public final class DefaultMenuConfigurator
                                                                                             @Nonnull final IMenuItem aParent,
                                                                                             @Nullable final IFilter <IMenuObject> aDisplayFilter)
   {
-    return DefaultMenuConfigurator.<WPECTYPE> addSettingsItems (aMenuTree,
+    return BootstrapPagesMenuConfigurator.<WPECTYPE> addSettingsItems (aMenuTree,
                                                                 aParent,
                                                                 aDisplayFilter,
                                                                 PhotonCoreManager.getSMTPSettingsMgr ());
@@ -259,7 +263,7 @@ public final class DefaultMenuConfigurator
                                                                                             @Nullable final NamedSMTPSettingsManager aNamedSMTPSettingsMgr)
   {
     final IMenuItemPage aAdminSettings = aMenuTree.createItem (aParent,
-                                                               new PageShowChildren <WPECTYPE> (MENU_ADMIN_SETTINGS,
+                                                               new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_SETTINGS,
                                                                                                 EWebPageText.PAGE_NAME_SETTINGS.getAsMLT (),
                                                                                                 aMenuTree))
                                                   .setDisplayFilter (aDisplayFilter);
@@ -288,7 +292,7 @@ public final class DefaultMenuConfigurator
                                                                                            @Nullable final IFilter <IMenuObject> aDisplayFilter)
   {
     final IMenuItemPage aAdminSysInfo = aMenuTree.createItem (aParent,
-                                                              new PageShowChildren <WPECTYPE> (MENU_ADMIN_SYSINFO,
+                                                              new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_SYSINFO,
                                                                                                EWebPageText.PAGE_NAME_SYSINFO.getAsMLT (),
                                                                                                aMenuTree))
                                                  .setDisplayFilter (aDisplayFilter);
@@ -319,7 +323,7 @@ public final class DefaultMenuConfigurator
                                                                                         @Nullable final IFilter <IMenuObject> aDisplayFilter)
   {
     final IMenuItemPage aAdminData = aMenuTree.createItem (aParent,
-                                                           new PageShowChildren <WPECTYPE> (MENU_ADMIN_DATA,
+                                                           new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_DATA,
                                                                                             EWebPageText.PAGE_NAME_DATA.getAsMLT (),
                                                                                             aMenuTree))
                                               .setDisplayFilter (aDisplayFilter);

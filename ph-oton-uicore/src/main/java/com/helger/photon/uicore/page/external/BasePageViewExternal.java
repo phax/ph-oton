@@ -32,7 +32,6 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.html.hc.impl.HCDOMWrapper;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.uicore.page.AbstractPageViewExternal;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**
@@ -44,7 +43,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web page execution context type
  */
 @ThreadSafe
-public class PageViewExternal <WPECTYPE extends IWebPageExecutionContext> extends AbstractPageViewExternal <WPECTYPE>
+public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageResourceContent <WPECTYPE>
 {
   protected final IReadableResource m_aResource;
   @GuardedBy ("m_aRWLock")
@@ -72,9 +71,9 @@ public class PageViewExternal <WPECTYPE extends IWebPageExecutionContext> extend
     return ret;
   }
 
-  public PageViewExternal (@Nonnull @Nonempty final String sID,
-                           @Nonnull final String sName,
-                           @Nonnull final IReadableResource aResource)
+  public BasePageViewExternal (@Nonnull @Nonempty final String sID,
+                               @Nonnull final String sName,
+                               @Nonnull final IReadableResource aResource)
   {
     super (sID, sName);
 
@@ -83,9 +82,9 @@ public class PageViewExternal <WPECTYPE extends IWebPageExecutionContext> extend
     m_aParsedContent = _readFromResource (aResource);
   }
 
-  public PageViewExternal (@Nonnull @Nonempty final String sID,
-                           @Nonnull final IReadonlyMultiLingualText aName,
-                           @Nonnull final IReadableResource aResource)
+  public BasePageViewExternal (@Nonnull @Nonempty final String sID,
+                               @Nonnull final IReadonlyMultiLingualText aName,
+                               @Nonnull final IReadableResource aResource)
   {
     super (sID, aName);
 

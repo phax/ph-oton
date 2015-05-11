@@ -25,11 +25,11 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.menu.filter.AbstractMenuObjectFilter;
 import com.helger.photon.basic.app.menu.filter.MenuItemFilterUserAssignedToUserGroup;
 import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap3.pages.DefaultMenuConfigurator;
+import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.pages.form.BasePageFormSavedStates;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
-import com.helger.photon.uicore.page.system.PageShowChildren;
+import com.helger.photon.uicore.page.system.BasePageShowChildren;
 
 @Immutable
 public final class MenuSecure
@@ -45,16 +45,16 @@ public final class MenuSecure
 
     // Administrator
     {
-      final IMenuItemPage aAdmin = aMenuTree.createRootItem (new PageShowChildren <WebPageExecutionContext> (CMenuSecure.MENU_ADMIN,
+      final IMenuItemPage aAdmin = aMenuTree.createRootItem (new BasePageShowChildren <WebPageExecutionContext> (CMenuSecure.MENU_ADMIN,
                                                                                                              "Administration",
                                                                                                              aMenuTree))
                                             .setDisplayFilter (aFilterAdministrators);
 
-      DefaultMenuConfigurator.addSecurityItems (aMenuTree, aAdmin, aFilterAdministrators, CApp.DEFAULT_LOCALE);
-      DefaultMenuConfigurator.addMonitoringItems (aMenuTree, aAdmin, aFilterAdministrators);
-      DefaultMenuConfigurator.addSysInfoItems (aMenuTree, aAdmin, aFilterAdministrators);
-      DefaultMenuConfigurator.addDataItems (aMenuTree, aAdmin, aFilterAdministrators);
-      DefaultMenuConfigurator.addSettingsItems (aMenuTree, aAdmin, aFilterAdministrators);
+      BootstrapPagesMenuConfigurator.addSecurityItems (aMenuTree, aAdmin, aFilterAdministrators, CApp.DEFAULT_LOCALE);
+      BootstrapPagesMenuConfigurator.addMonitoringItems (aMenuTree, aAdmin, aFilterAdministrators);
+      BootstrapPagesMenuConfigurator.addSysInfoItems (aMenuTree, aAdmin, aFilterAdministrators);
+      BootstrapPagesMenuConfigurator.addDataItems (aMenuTree, aAdmin, aFilterAdministrators);
+      BootstrapPagesMenuConfigurator.addSettingsItems (aMenuTree, aAdmin, aFilterAdministrators);
     }
 
     // Saved states

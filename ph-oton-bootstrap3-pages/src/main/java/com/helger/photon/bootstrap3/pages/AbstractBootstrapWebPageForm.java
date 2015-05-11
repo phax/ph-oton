@@ -35,6 +35,16 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.page.AbstractWebPageForm;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
+/**
+ * Abstract base class for a Bootstrap based web page that has the common form
+ * handling, with a list view, details view, create and edit + binding.
+ *
+ * @author Philip Helger
+ * @param <DATATYPE>
+ *        The data type of the object to be handled.
+ * @param <WPECTYPE>
+ *        Web page execution context type
+ */
 @NotThreadSafe
 public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageForm <DATATYPE, WPECTYPE>
 {
