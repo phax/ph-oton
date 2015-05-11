@@ -19,9 +19,7 @@ package com.helger.photon.uicore.page;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.ReturnsMutableObject;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.meta.MetaElementList;
 import com.helger.photon.basic.app.page.IPage;
 
 /**
@@ -33,19 +31,6 @@ import com.helger.photon.basic.app.page.IPage;
  */
 public interface IWebPage <WPECTYPE extends IWebPageExecutionContext> extends IPage
 {
-  /**
-   * @return The meta elements of this page as a modifiable object.
-   */
-  @Nonnull
-  @ReturnsMutableObject (reason = "design")
-  MetaElementList getMetaElements ();
-
-  /**
-   * @return The icon for the web page. May be <code>null</code>.
-   */
-  @Nullable
-  IWebPageIcon getIcon ();
-
   /**
    * Get the headline of the page. By default it is equal to the page name.
    *

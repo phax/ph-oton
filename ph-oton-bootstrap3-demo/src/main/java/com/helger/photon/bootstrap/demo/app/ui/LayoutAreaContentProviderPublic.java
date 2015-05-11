@@ -170,7 +170,7 @@ public final class LayoutAreaContentProviderPublic implements ILayoutAreaContent
 
   @SuppressWarnings ("unchecked")
   @Nonnull
-  static IHCNode _getMainContent (@Nonnull final LayoutExecutionContext aLEC, @Nonnull final HCHead aHead)
+  static IHCNode _getMainContent (@Nonnull final LayoutExecutionContext aLEC)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
 
@@ -218,8 +218,6 @@ public final class LayoutAreaContentProviderPublic implements ILayoutAreaContent
     aDisplayPage.getContent (aWPEC);
     // Add result
     aPageContainer.addChild (aWPEC.getNodeList ());
-    // Add all meta elements
-    aHead.getMetaElementList ().addMetaElements (aDisplayPage.getMetaElements ());
     return aPageContainer;
   }
 
@@ -253,7 +251,7 @@ public final class LayoutAreaContentProviderPublic implements ILayoutAreaContent
       aCol1.addChild (new HCDiv ().setID (CLayout.LAYOUT_AREAID_SPECIAL));
 
       // content
-      aCol2.addChild (_getMainContent (aLEC, aHead));
+      aCol2.addChild (_getMainContent (aLEC));
     }
 
     // Footer

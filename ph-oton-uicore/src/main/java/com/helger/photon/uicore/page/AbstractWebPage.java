@@ -23,10 +23,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableObject;
 import com.helger.commons.state.EValidity;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SMap;
@@ -39,7 +37,6 @@ import com.helger.html.hc.html.HCForm;
 import com.helger.html.hc.html.HCH1;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.html.HC_Target;
-import com.helger.html.meta.MetaElementList;
 import com.helger.photon.basic.app.page.AbstractPage;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
@@ -60,9 +57,6 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   public static final ICSSClassProvider CSS_PAGE_HELP_ICON = DefaultCSSClassProvider.create ("page_help_icon");
 
   public static final HC_Target HELP_WINDOW_TARGET = new HC_Target (HELP_WINDOW_NAME);
-
-  private final MetaElementList m_aMetaElements = new MetaElementList ();
-  private IWebPageIcon m_aIcon;
 
   /**
    * Constructor
@@ -136,26 +130,6 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
                           @Nullable final IReadonlyMultiLingualText aDescription)
   {
     super (sID, aName, aDescription);
-  }
-
-  @Nonnull
-  @ReturnsMutableObject (reason = "design")
-  public MetaElementList getMetaElements ()
-  {
-    return m_aMetaElements;
-  }
-
-  @Nullable
-  public IWebPageIcon getIcon ()
-  {
-    return m_aIcon;
-  }
-
-  @Nonnull
-  public AbstractWebPage <WPECTYPE> setIcon (@Nullable final IWebPageIcon aIcon)
-  {
-    m_aIcon = aIcon;
-    return this;
   }
 
   @Nullable
@@ -344,14 +318,5 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
       if (aHelpNode != null)
         insertHelpNode (aWPEC, aHelpNode);
     }
-  }
-
-  @Override
-  public String toString ()
-  {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("metaElements", m_aMetaElements)
-                            .appendIfNotNull ("icon", m_aIcon)
-                            .toString ();
   }
 }
