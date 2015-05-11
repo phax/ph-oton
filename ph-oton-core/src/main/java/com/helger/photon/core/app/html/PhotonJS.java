@@ -19,9 +19,12 @@ package com.helger.photon.core.app.html;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,11 +48,15 @@ import com.helger.web.scopes.mgr.WebScopeManager;
  *
  * @author Philip Helger
  */
+@ThreadSafe
 public final class PhotonJS
 {
+  public static final String DEFAULT_FILENAME = "html/js.xml";
+
   private static final String REQUEST_ATTR_JSINCLUDE = PhotonJS.class.getName ();
   private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonJS.class);
   private static final JSResourceSet s_aGlobal = new JSResourceSet ();
+  private static final Lock s_aLock = new ReentrantLock ();
 
   private PhotonJS ()
   {}
@@ -70,6 +77,7 @@ public final class PhotonJS
           continue;
         }
 
+        // Just a consistency check to see if the resource is valid
         final IReadableResource aChildRes = HTMLConfigManager.getURIToURLConverter ().getAsResource (sPath);
         if (!aChildRes.exists ())
           throw new IllegalStateException ("The provided global JS resource '" +
@@ -149,13 +157,22 @@ public final class PhotonJS
   private static JSResourceSet _getPerRequestSet (final boolean bCreateIfNotExisting)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
-    JSResourceSet ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_JSINCLUDE);
-    if (ret == null && bCreateIfNotExisting)
+
+    s_aLock.lock ();
+    try
     {
-      ret = new JSResourceSet ();
-      aRequestScope.setAttribute (REQUEST_ATTR_JSINCLUDE, ret);
+      JSResourceSet ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_JSINCLUDE);
+      if (ret == null && bCreateIfNotExisting)
+      {
+        ret = new JSResourceSet ();
+        aRequestScope.setAttribute (REQUEST_ATTR_JSINCLUDE, ret);
+      }
+      return ret;
     }
-    return ret;
+    finally
+    {
+      s_aLock.unlock ();
+    }
   }
 
   /**

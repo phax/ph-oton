@@ -23,13 +23,14 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.serialize.MicroReader;
 import com.helger.commons.microdom.utils.MicroRecursiveIterator;
-import com.helger.photon.core.app.html.HTMLConfigManager;
-import com.helger.photon.core.mgr.PhotonCoreManager;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 
 @Immutable
 public final class PhotonCoreValidator
@@ -67,7 +68,8 @@ public final class PhotonCoreValidator
   {
     // This will throw an IllegalStateException for wrong files in html/js.xml
     // and html/css.xml
-    new HTMLConfigManager ().readAllFiles (PhotonCoreManager.DIRECTORY_HTML);
+    PhotonCSS.readCSSIncludesForGlobal (new ClassPathResource (PhotonCSS.DEFAULT_FILENAME));
+    PhotonJS.readJSIncludesForGlobal (new ClassPathResource (PhotonJS.DEFAULT_FILENAME));
   }
 
   public static void validateExternalResources () throws Exception

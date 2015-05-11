@@ -99,6 +99,7 @@ public class HTMLConfigManager
   }
 
   @Nonnull
+  @Deprecated
   public HTMLConfigManager readAllFiles (@Nonnull final String sBasePath)
   {
     ValueEnforcer.notNull (sBasePath, "BasePath");

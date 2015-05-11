@@ -20,9 +20,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ICloneable;
 import com.helger.commons.ValueEnforcer;
@@ -39,8 +43,11 @@ import com.helger.html.resource.css.ICSSPathProvider;
  *
  * @author Philip Helger
  */
-public final class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>, ICloneable <CSSResourceSet>
+@ThreadSafe
+public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>, ICloneable <CSSResourceSet>
 {
+  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  @GuardedBy ("m_aRWLock")
   private final Set <ICSSPathProvider> m_aItems = new LinkedHashSet <ICSSPathProvider> ();
 
   public CSSResourceSet ()
@@ -69,13 +76,23 @@ public final class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>,
   public EChange addItem (@Nonnull final ICSSPathProvider aCSSPathProvider)
   {
     ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
-    return EChange.valueOf (m_aItems.add (aCSSPathProvider));
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      return EChange.valueOf (m_aItems.add (aCSSPathProvider));
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
   }
 
   @Nonnull
   public EChange addItems (@Nonnull final IWebResourceSet <? extends ICSSPathProvider> aItems)
   {
     ValueEnforcer.notNull (aItems, "Items");
+
     EChange ret = EChange.UNCHANGED;
     for (final ICSSPathProvider aItem : aItems)
       ret = ret.or (addItem (aItem));
@@ -86,58 +103,124 @@ public final class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>,
   public EChange removeItem (@Nonnull final ICSSPathProvider aCSSPathProvider)
   {
     ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
-    return EChange.valueOf (m_aItems.remove (aCSSPathProvider));
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      return EChange.valueOf (m_aItems.remove (aCSSPathProvider));
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
   }
 
   @Nonnull
   public EChange removeAll ()
   {
-    if (m_aItems.isEmpty ())
-      return EChange.UNCHANGED;
-    m_aItems.clear ();
-    return EChange.CHANGED;
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (m_aItems.isEmpty ())
+        return EChange.UNCHANGED;
+      m_aItems.clear ();
+      return EChange.CHANGED;
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Set <ICSSPathProvider> getAllItems ()
   {
-    return CollectionHelper.newOrderedSet (m_aItems);
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return CollectionHelper.newOrderedSet (m_aItems);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   public void getAllItems (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
-    aTarget.addAll (m_aItems);
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      aTarget.addAll (m_aItems);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   public boolean isEmpty ()
   {
-    return m_aItems.isEmpty ();
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aItems.isEmpty ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   public boolean isNotEmpty ()
   {
-    return !m_aItems.isEmpty ();
+    return !isEmpty ();
   }
 
   @Nonnegative
   public int getCount ()
   {
-    return m_aItems.size ();
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aItems.size ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   @Nonnull
   public Iterator <ICSSPathProvider> iterator ()
   {
-    return m_aItems.iterator ();
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aItems.iterator ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public CSSResourceSet getClone ()
   {
-    return new CSSResourceSet (this);
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return new CSSResourceSet (this);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   @Override

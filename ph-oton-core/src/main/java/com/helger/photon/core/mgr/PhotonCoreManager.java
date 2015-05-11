@@ -83,8 +83,8 @@ public final class PhotonCoreManager extends GlobalSingleton
     try
     {
       m_aHTMLConfigMgr = new HTMLConfigManager ();
-      PhotonCSS.readCSSIncludesForGlobal (new ClassPathResource (DIRECTORY_HTML + "css.xml"));
-      PhotonJS.readJSIncludesForGlobal (new ClassPathResource (DIRECTORY_HTML + "js.xml"));
+      PhotonCSS.readCSSIncludesForGlobal (new ClassPathResource (PhotonCSS.DEFAULT_FILENAME));
+      PhotonJS.readJSIncludesForGlobal (new ClassPathResource (PhotonJS.DEFAULT_FILENAME));
       m_aHTMLConfigMgr.readAllFiles (DIRECTORY_HTML);
 
       m_aSMTPSettingsMgr = new NamedSMTPSettingsManager (SMTP_SETTINGS_XML);

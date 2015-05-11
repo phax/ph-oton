@@ -20,9 +20,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ICloneable;
 import com.helger.commons.ValueEnforcer;
@@ -39,8 +43,11 @@ import com.helger.html.resource.js.IJSPathProvider;
  *
  * @author Philip Helger
  */
-public final class JSResourceSet implements IWebResourceSet <IJSPathProvider>, ICloneable <JSResourceSet>
+@ThreadSafe
+public class JSResourceSet implements IWebResourceSet <IJSPathProvider>, ICloneable <JSResourceSet>
 {
+  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  @GuardedBy ("m_aRWLock")
   private final Set <IJSPathProvider> m_aItems = new LinkedHashSet <IJSPathProvider> ();
 
   public JSResourceSet ()
@@ -69,13 +76,23 @@ public final class JSResourceSet implements IWebResourceSet <IJSPathProvider>, I
   public EChange addItem (@Nonnull final IJSPathProvider aJSPathProvider)
   {
     ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
-    return EChange.valueOf (m_aItems.add (aJSPathProvider));
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      return EChange.valueOf (m_aItems.add (aJSPathProvider));
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
   }
 
   @Nonnull
   public EChange addItems (@Nonnull final IWebResourceSet <? extends IJSPathProvider> aItems)
   {
     ValueEnforcer.notNull (aItems, "Items");
+
     EChange ret = EChange.UNCHANGED;
     for (final IJSPathProvider aItem : aItems)
       ret = ret.or (addItem (aItem));
@@ -86,58 +103,124 @@ public final class JSResourceSet implements IWebResourceSet <IJSPathProvider>, I
   public EChange removeItem (@Nonnull final IJSPathProvider aJSPathProvider)
   {
     ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
-    return EChange.valueOf (m_aItems.remove (aJSPathProvider));
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      return EChange.valueOf (m_aItems.remove (aJSPathProvider));
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
   }
 
   @Nonnull
   public EChange removeAll ()
   {
-    if (m_aItems.isEmpty ())
-      return EChange.UNCHANGED;
-    m_aItems.clear ();
-    return EChange.CHANGED;
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (m_aItems.isEmpty ())
+        return EChange.UNCHANGED;
+      m_aItems.clear ();
+      return EChange.CHANGED;
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Set <IJSPathProvider> getAllItems ()
   {
-    return CollectionHelper.newOrderedSet (m_aItems);
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return CollectionHelper.newOrderedSet (m_aItems);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   public void getAllItems (@Nonnull final Collection <? super IJSPathProvider> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
-    aTarget.addAll (m_aItems);
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      aTarget.addAll (m_aItems);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   public boolean isEmpty ()
   {
-    return m_aItems.isEmpty ();
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aItems.isEmpty ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   public boolean isNotEmpty ()
   {
-    return !m_aItems.isEmpty ();
+    return !isEmpty ();
   }
 
   @Nonnegative
   public int getCount ()
   {
-    return m_aItems.size ();
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aItems.size ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   @Nonnull
   public Iterator <IJSPathProvider> iterator ()
   {
-    return m_aItems.iterator ();
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aItems.iterator ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public JSResourceSet getClone ()
   {
-    return new JSResourceSet (this);
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return new JSResourceSet (this);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   @Override

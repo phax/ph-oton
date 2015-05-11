@@ -19,9 +19,12 @@ package com.helger.photon.core.app.html;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,11 +51,15 @@ import com.helger.web.scopes.mgr.WebScopeManager;
  *
  * @author Philip Helger
  */
+@ThreadSafe
 public final class PhotonCSS
 {
+  public static final String DEFAULT_FILENAME = "html/css.xml";
+
   private static final String REQUEST_ATTR_CSSINCLUDE = PhotonCSS.class.getName ();
   private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonCSS.class);
   private static final CSSResourceSet s_aGlobal = new CSSResourceSet ();
+  private static final Lock s_aLock = new ReentrantLock ();
 
   private PhotonCSS ()
   {}
@@ -73,6 +80,7 @@ public final class PhotonCSS
           continue;
         }
 
+        // Just a consistency check to see if the resource is valid
         final IReadableResource aChildRes = HTMLConfigManager.getURIToURLConverter ().getAsResource (sPath);
         if (!aChildRes.exists ())
           throw new IllegalStateException ("The provided global CSS resource '" +
@@ -172,13 +180,22 @@ public final class PhotonCSS
   private static CSSResourceSet _getPerRequestSet (final boolean bCreateIfNotExisting)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
-    CSSResourceSet ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_CSSINCLUDE);
-    if (ret == null && bCreateIfNotExisting)
+
+    s_aLock.lock ();
+    try
     {
-      ret = new CSSResourceSet ();
-      aRequestScope.setAttribute (REQUEST_ATTR_CSSINCLUDE, ret);
+      CSSResourceSet ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_CSSINCLUDE);
+      if (ret == null && bCreateIfNotExisting)
+      {
+        ret = new CSSResourceSet ();
+        aRequestScope.setAttribute (REQUEST_ATTR_CSSINCLUDE, ret);
+      }
+      return ret;
     }
-    return ret;
+    finally
+    {
+      s_aLock.unlock ();
+    }
   }
 
   /**
