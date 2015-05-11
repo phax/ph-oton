@@ -28,7 +28,7 @@ import com.helger.html.hc.customize.HCMultiCustomizer;
 import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.photon.core.app.html.WebHTMLCreator;
+import com.helger.photon.core.app.html.HTMLConfigManager;
 import com.helger.photon.core.servlet.AbstractWebAppListenerMultiApp;
 
 /**
@@ -56,9 +56,9 @@ public abstract class AbstractWebAppListenerMultiAppBootstrap <LECTYPE extends I
     // UI stuff:
 
     // Always use HTML5 for Bootstrap3
-    WebHTMLCreator.setHTMLVersion (EHTMLVersion.HTML5);
+    HTMLConfigManager.setHTMLVersion (EHTMLVersion.HTML5);
 
-    // Special Bootstrap customizer
+    // Add special Bootstrap customizer
     HCSettings.getConversionSettingsProvider ()
               .setCustomizer (new HCMultiCustomizer (HCConversionSettings.createDefaultCustomizer (),
                                                      new BootstrapCustomizer (getBoostrapVersion ())));

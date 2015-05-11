@@ -67,7 +67,7 @@ public final class PhotonCoreValidator
   {
     // This will throw an IllegalStateException for wrong files in html/js.xml
     // and html/css.xml
-    new HTMLConfigManager (PhotonCoreManager.DIRECTORY_HTML);
+    new HTMLConfigManager ().readAllFiles (PhotonCoreManager.DIRECTORY_HTML);
   }
 
   public static void validateExternalResources () throws Exception

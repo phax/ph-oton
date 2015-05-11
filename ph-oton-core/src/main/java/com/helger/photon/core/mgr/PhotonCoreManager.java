@@ -79,7 +79,8 @@ public final class PhotonCoreManager extends GlobalSingleton
   {
     try
     {
-      m_aHTMLConfigMgr = new HTMLConfigManager (DIRECTORY_HTML);
+      m_aHTMLConfigMgr = new HTMLConfigManager ();
+      m_aHTMLConfigMgr.readAllFiles (DIRECTORY_HTML);
 
       m_aSMTPSettingsMgr = new NamedSMTPSettingsManager (SMTP_SETTINGS_XML);
 

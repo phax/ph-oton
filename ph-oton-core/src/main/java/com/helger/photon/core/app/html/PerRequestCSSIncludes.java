@@ -23,10 +23,9 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
 import com.helger.html.resource.css.ICSSPathProvider;
+import com.helger.photon.core.app.resource.CSSResourceList;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
 
@@ -44,13 +43,13 @@ public final class PerRequestCSSIncludes
   {}
 
   @Nullable
-  private static Set <ICSSPathProvider> _getPerRequestSet (final boolean bCreateIfNotExisting)
+  private static CSSResourceList _getPerRequestSet (final boolean bCreateIfNotExisting)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
-    Set <ICSSPathProvider> ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_CSSINCLUDE);
+    CSSResourceList ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_CSSINCLUDE);
     if (ret == null && bCreateIfNotExisting)
     {
-      ret = new LinkedHashSet <ICSSPathProvider> ();
+      ret = new CSSResourceList ();
       aRequestScope.setAttribute (REQUEST_ATTR_CSSINCLUDE, ret);
     }
     return ret;
@@ -64,8 +63,7 @@ public final class PerRequestCSSIncludes
    */
   public static void registerCSSIncludeForThisRequest (@Nonnull final ICSSPathProvider aCSSPathProvider)
   {
-    ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
-    _getPerRequestSet (true).add (aCSSPathProvider);
+    _getPerRequestSet (true).addItem (aCSSPathProvider);
   }
 
   /**
@@ -76,8 +74,7 @@ public final class PerRequestCSSIncludes
    */
   public static void unregisterCSSIncludeFromThisRequest (@Nonnull final ICSSPathProvider aCSSPathProvider)
   {
-    ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
-    _getPerRequestSet (true).remove (aCSSPathProvider);
+    _getPerRequestSet (true).removeItem (aCSSPathProvider);
   }
 
   /**
@@ -85,9 +82,9 @@ public final class PerRequestCSSIncludes
    */
   public static void unregisterAllCSSIncludesFromThisRequest ()
   {
-    final Set <ICSSPathProvider> aSet = _getPerRequestSet (false);
+    final CSSResourceList aSet = _getPerRequestSet (false);
     if (aSet != null)
-      aSet.clear ();
+      aSet.removeAll ();
   }
 
   /**
@@ -98,15 +95,15 @@ public final class PerRequestCSSIncludes
   @ReturnsMutableCopy
   public static Set <ICSSPathProvider> getAllRegisteredCSSIncludesForThisRequest ()
   {
-    final Set <ICSSPathProvider> ret = _getPerRequestSet (false);
-    return CollectionHelper.newOrderedSet (ret);
+    final CSSResourceList ret = _getPerRequestSet (false);
+    return ret == null ? new LinkedHashSet <ICSSPathProvider> () : ret.getAllItems ();
   }
 
   public static void getAllRegisteredCSSIncludesForThisRequest (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
   {
-    final Set <ICSSPathProvider> aCSSs = _getPerRequestSet (false);
+    final CSSResourceList aCSSs = _getPerRequestSet (false);
     if (aCSSs != null)
-      aTarget.addAll (aCSSs);
+      aCSSs.getAllItems (aTarget);
   }
 
   /**
@@ -115,6 +112,7 @@ public final class PerRequestCSSIncludes
    */
   public static boolean hasRegisteredCSSIncludesForThisRequest ()
   {
-    return CollectionHelper.isNotEmpty (_getPerRequestSet (false));
+    final CSSResourceList aCSSs = _getPerRequestSet (false);
+    return aCSSs != null && aCSSs.isNotEmpty ();
   }
 }

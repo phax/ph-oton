@@ -21,24 +21,23 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.helger.html.EHTMLVersion;
-import com.helger.photon.core.app.html.WebHTMLCreator;
 
 /**
- * Test class for class {@link WebHTMLCreator}.
- * 
+ * Test class for class {@link HTMLConfigManager}.
+ *
  * @author Philip Helger
  */
-public final class WebHTMLCreatorTest
+public final class HTMLConfigManagerTest
 {
   @Test
   public void testBasic ()
   {
-    assertEquals (EHTMLVersion.DEFAULT, WebHTMLCreator.getHTMLVersion ());
-    WebHTMLCreator.setHTMLVersion (EHTMLVersion.HTML5);
-    assertEquals (EHTMLVersion.HTML5, WebHTMLCreator.getHTMLVersion ());
-    WebHTMLCreator.setHTMLVersion (EHTMLVersion.HTML5);
-    assertEquals (EHTMLVersion.HTML5, WebHTMLCreator.getHTMLVersion ());
-    WebHTMLCreator.setHTMLVersion (EHTMLVersion.DEFAULT);
-    assertEquals (EHTMLVersion.DEFAULT, WebHTMLCreator.getHTMLVersion ());
+    assertEquals (EHTMLVersion.DEFAULT, HTMLConfigManager.getHTMLVersion ());
+    HTMLConfigManager.setHTMLVersion (EHTMLVersion.HTML5);
+    assertEquals (EHTMLVersion.HTML5, HTMLConfigManager.getHTMLVersion ());
+    HTMLConfigManager.setHTMLVersion (EHTMLVersion.HTML5);
+    assertEquals (EHTMLVersion.HTML5, HTMLConfigManager.getHTMLVersion ());
+    HTMLConfigManager.setHTMLVersion (EHTMLVersion.DEFAULT);
+    assertEquals (EHTMLVersion.DEFAULT, HTMLConfigManager.getHTMLVersion ());
   }
 }

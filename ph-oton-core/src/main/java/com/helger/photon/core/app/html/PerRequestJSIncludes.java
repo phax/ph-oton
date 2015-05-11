@@ -23,10 +23,9 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
 import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.photon.core.app.resource.JSResourceList;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
 
@@ -44,13 +43,13 @@ public final class PerRequestJSIncludes
   {}
 
   @Nullable
-  private static Set <IJSPathProvider> _getPerRequestSet (final boolean bCreateIfNotExisting)
+  private static JSResourceList _getPerRequestSet (final boolean bCreateIfNotExisting)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
-    Set <IJSPathProvider> ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_JSINCLUDE);
+    JSResourceList ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_JSINCLUDE);
     if (ret == null && bCreateIfNotExisting)
     {
-      ret = new LinkedHashSet <IJSPathProvider> ();
+      ret = new JSResourceList ();
       aRequestScope.setAttribute (REQUEST_ATTR_JSINCLUDE, ret);
     }
     return ret;
@@ -64,9 +63,7 @@ public final class PerRequestJSIncludes
    */
   public static void registerJSIncludeForThisRequest (@Nonnull final IJSPathProvider aJSPathProvider)
   {
-    ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
-
-    _getPerRequestSet (true).add (aJSPathProvider);
+    _getPerRequestSet (true).addItem (aJSPathProvider);
   }
 
   /**
@@ -77,9 +74,7 @@ public final class PerRequestJSIncludes
    */
   public static void unregisterJSIncludeFromThisRequest (@Nonnull final IJSPathProvider aJSPathProvider)
   {
-    ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
-
-    _getPerRequestSet (true).remove (aJSPathProvider);
+    _getPerRequestSet (true).removeItem (aJSPathProvider);
   }
 
   /**
@@ -87,9 +82,9 @@ public final class PerRequestJSIncludes
    */
   public static void unregisterAllJSIncludesFromThisRequest ()
   {
-    final Set <IJSPathProvider> aSet = _getPerRequestSet (false);
+    final JSResourceList aSet = _getPerRequestSet (false);
     if (aSet != null)
-      aSet.clear ();
+      aSet.removeAll ();
   }
 
   /**
@@ -100,15 +95,15 @@ public final class PerRequestJSIncludes
   @ReturnsMutableCopy
   public static Set <IJSPathProvider> getAllRegisteredJSIncludesForThisRequest ()
   {
-    final Set <IJSPathProvider> ret = _getPerRequestSet (false);
-    return CollectionHelper.newOrderedSet (ret);
+    final JSResourceList ret = _getPerRequestSet (false);
+    return ret == null ? new LinkedHashSet <IJSPathProvider> () : ret.getAllItems ();
   }
 
   public static void getAllRegisteredJSIncludesForThisRequest (@Nonnull final Collection <? super IJSPathProvider> aTarget)
   {
-    final Set <IJSPathProvider> aJSs = _getPerRequestSet (false);
+    final JSResourceList aJSs = _getPerRequestSet (false);
     if (aJSs != null)
-      aTarget.addAll (aJSs);
+      aJSs.getAllItems (aTarget);
   }
 
   /**
@@ -117,6 +112,7 @@ public final class PerRequestJSIncludes
    */
   public static boolean hasRegisteredJSIncludesForThisRequest ()
   {
-    return CollectionHelper.isNotEmpty (_getPerRequestSet (false));
+    final JSResourceList aJSs = _getPerRequestSet (false);
+    return aJSs != null && aJSs.isNotEmpty ();
   }
 }
