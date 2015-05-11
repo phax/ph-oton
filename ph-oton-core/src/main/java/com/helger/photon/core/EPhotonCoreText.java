@@ -107,7 +107,9 @@ public enum EPhotonCoreText implements IHasDisplayText, IHasDisplayTextWithArgs
   BUTTON_DELETE ("Löschen", "Delete"),
   BUTTON_DELETE_ALL ("Alle löschen", "Delete all"),
   BUTTON_UPLOAD ("Hochladen", "Upload"),
+  @Deprecated
   ON_REFRESH ("Aktualisieren", "Refresh"),
+  BUTTON_REFRESH ("Aktualisieren", "Refresh"),
   BUTTON_REGISTER ("Registrieren", "Register"),
   BUTTON_SIGN_UP ("Registrieren", "Sign up"),
   BUTTON_EDIT ("Bearbeiten", "Edit"),
