@@ -78,6 +78,13 @@
       <artifactId>jetty-annotations</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- Must be 3.1.0 for Jetty! -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version><!--$NO-MVN-MAN-VER$-->
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
