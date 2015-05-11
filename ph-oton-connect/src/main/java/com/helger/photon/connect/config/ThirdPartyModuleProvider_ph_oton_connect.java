@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.config;
+package com.helger.photon.connect.config;
 
 import javax.annotation.Nullable;
 
@@ -33,27 +33,19 @@ import com.helger.web.config.ThirdPartyModuleProvider_ph_web;
  * @author Philip Helger
  */
 @IsSPIImplementation
-public final class ThirdPartyModuleProvider_ph_oton_core implements IThirdPartyModuleProviderSPI
+public final class ThirdPartyModuleProvider_ph_oton_connect implements IThirdPartyModuleProviderSPI
 {
-  public static final IThirdPartyModule JSCH = ThirdPartyModuleProvider_ph_web.JSCH.getAsOptionalCopy ();
+  public static final IThirdPartyModule JSCH = ThirdPartyModuleProvider_ph_web.JSCH.getAsNonOptionalCopy ();
 
   public static final IThirdPartyModule COMMONS_NET = new ThirdPartyModule ("Apache Commons Net",
                                                                             "Apache",
                                                                             ELicense.APACHE2,
                                                                             new Version (3, 3, 0),
-                                                                            "http://commons.apache.org/net/",
-                                                                            true);
-
-  public static final IThirdPartyModule OPEN_CSV = new ThirdPartyModule ("OpenCSV",
-                                                                         "Glen Smith",
-                                                                         ELicense.APACHE2,
-                                                                         new Version (2, 3),
-                                                                         "http://opencsv.sourceforge.net/",
-                                                                         true);
+                                                                            "http://commons.apache.org/net/");
 
   @Nullable
   public IThirdPartyModule [] getAllThirdPartyModules ()
   {
-    return new IThirdPartyModule [] { JSCH, COMMONS_NET, OPEN_CSV };
+    return new IThirdPartyModule [] { JSCH, COMMONS_NET };
   }
 }
