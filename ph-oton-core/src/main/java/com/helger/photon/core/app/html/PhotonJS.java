@@ -78,7 +78,7 @@ public final class PhotonJS
         }
 
         // Just a consistency check to see if the resource is valid
-        final IReadableResource aChildRes = HTMLConfigManager.getURIToURLConverter ().getAsResource (sPath);
+        final IReadableResource aChildRes = PhotonHTMLSettings.getURIToURLConverter ().getAsResource (sPath);
         if (!aChildRes.exists ())
           throw new IllegalStateException ("The provided global JS resource '" +
                                            sPath +

@@ -43,13 +43,13 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
  * @author Philip Helger
  */
 @ThreadSafe
-public class HTMLConfigManager
+public class PhotonHTMLSettings
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("s_aRWLock")
   private static IWebURIToURLConverter m_aURIToURLConverter = StreamOrLocalURIToURLConverter.getInstance ();
 
-  private HTMLConfigManager ()
+  private PhotonHTMLSettings ()
   {}
 
   /**
@@ -66,6 +66,7 @@ public class HTMLConfigManager
 
     // Update the HCSettings
     HCSettings.getConversionSettingsProvider ().setHTMLVersion (eHTMLVersion);
+
     if (eHTMLVersion.isAtLeastHTML5 ())
     {
       // No need to put anything in a comment
@@ -112,7 +113,7 @@ public class HTMLConfigManager
                                        @Nonnull final ICSSPathProvider aCSS,
                                        final boolean bRegular)
   {
-    return m_aURIToURLConverter.getAsURL (aRequestScope, aCSS.getCSSItemPath (bRegular));
+    return getURIToURLConverter ().getAsURL (aRequestScope, aCSS.getCSSItemPath (bRegular));
   }
 
   @Nonnull
@@ -120,6 +121,6 @@ public class HTMLConfigManager
                                       @Nonnull final IJSPathProvider aJS,
                                       final boolean bRegular)
   {
-    return m_aURIToURLConverter.getAsURL (aRequestScope, aJS.getJSItemPath (bRegular));
+    return getURIToURLConverter ().getAsURL (aRequestScope, aJS.getJSItemPath (bRegular));
   }
 }

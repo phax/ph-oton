@@ -81,7 +81,7 @@ public final class PhotonCSS
         }
 
         // Just a consistency check to see if the resource is valid
-        final IReadableResource aChildRes = HTMLConfigManager.getURIToURLConverter ().getAsResource (sPath);
+        final IReadableResource aChildRes = PhotonHTMLSettings.getURIToURLConverter ().getAsResource (sPath);
         if (!aChildRes.exists ())
           throw new IllegalStateException ("The provided global CSS resource '" +
                                            sPath +

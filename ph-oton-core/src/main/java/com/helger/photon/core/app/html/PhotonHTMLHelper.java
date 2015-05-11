@@ -35,9 +35,7 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
- * A utility class that handles a request, based on a
- * {@link IRequestWebScopeWithoutResponse}, a {@link UnifiedResponse} and an
- * {@link IHTMLProvider}.
+ * A utility class for consistent HTML creation.
  *
  * @author Philip Helger
  */
@@ -67,7 +65,7 @@ public final class PhotonHTMLHelper
                                     @Nonnull final ICSSPathProvider aCSS,
                                     final boolean bRegular)
   {
-    final HCLink aLink = HCLink.createCSSLink (HTMLConfigManager.getCSSPath (aRequestScope, aCSS, bRegular));
+    final HCLink aLink = HCLink.createCSSLink (PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular));
     aLink.setMedia (aCSS.getMediaList ());
 
     final String sConditionalComment = aCSS.getConditionalComment ();
@@ -82,7 +80,7 @@ public final class PhotonHTMLHelper
                                    @Nonnull final IJSPathProvider aJS,
                                    final boolean bRegular)
   {
-    final HCScriptFile aScript = HCScriptFile.create (HTMLConfigManager.getJSPath (aRequestScope, aJS, bRegular));
+    final HCScriptFile aScript = HCScriptFile.create (PhotonHTMLSettings.getJSPath (aRequestScope, aJS, bRegular));
 
     final String sConditionalComment = aJS.getConditionalComment ();
     if (StringHelper.hasText (sConditionalComment))

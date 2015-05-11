@@ -47,7 +47,7 @@ import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriter;
 import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.photon.core.app.html.HTMLConfigManager;
+import com.helger.photon.core.app.html.PhotonHTMLSettings;
 import com.helger.photon.core.url.LinkUtils;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
@@ -174,7 +174,7 @@ public class WebSiteResource
         // Remove the filename from the path
         // Not using a requestScope is okay here, because we don't want to link
         // anything right now
-        final String sBasePath = FilenameHelper.getPath (HTMLConfigManager.getURIToURLConverter ()
+        final String sBasePath = FilenameHelper.getPath (PhotonHTMLSettings.getURIToURLConverter ()
                                                                           .getAsURL (m_sPath)
                                                                           .getAsString ());
         return _readAndParseCSS (m_aResource, sBasePath, bRegular);
