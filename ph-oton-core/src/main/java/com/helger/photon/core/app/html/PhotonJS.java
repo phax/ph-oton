@@ -23,7 +23,17 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.io.IReadableResource;
+import com.helger.commons.microdom.IMicroDocument;
+import com.helger.commons.microdom.IMicroElement;
+import com.helger.commons.microdom.serialize.MicroReader;
+import com.helger.commons.string.StringHelper;
+import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.core.app.resource.JSResourceSet;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -38,9 +48,102 @@ import com.helger.web.scopes.mgr.WebScopeManager;
 public final class PhotonJS
 {
   private static final String REQUEST_ATTR_JSINCLUDE = PhotonJS.class.getName ();
+  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonJS.class);
+  private static final JSResourceSet s_aGlobal = new JSResourceSet ();
 
   private PhotonJS ()
   {}
+
+  public static void _readJSIncludes (@Nonnull final IReadableResource aRes, @Nonnull final JSResourceSet aTarget)
+  {
+    ValueEnforcer.notNull (aRes, "Res");
+    ValueEnforcer.notNull (aTarget, "Target");
+
+    final IMicroDocument aDoc = aRes.exists () ? MicroReader.readMicroXML (aRes) : null;
+    if (aDoc != null)
+      for (final IMicroElement eChild : aDoc.getDocumentElement ().getAllChildElements ("js"))
+      {
+        final String sPath = eChild.getAttributeValue ("path");
+        if (StringHelper.hasNoText (sPath))
+        {
+          s_aLogger.error ("Found JS item without a path in " + aRes.getPath ());
+          continue;
+        }
+
+        final IReadableResource aChildRes = HTMLConfigManager.getURIToURLConverter ().getAsResource (sPath);
+        if (!aChildRes.exists ())
+          throw new IllegalStateException ("The provided global JS resource '" +
+                                           sPath +
+                                           "' resolved to '" +
+                                           aChildRes.getAsURL () +
+                                           "' does NOT exist!");
+
+        final String sConditionalComment = eChild.getAttributeValue ("condcomment");
+
+        // Add to target
+        aTarget.addItem (new ConstantJSPathProvider (sPath, sConditionalComment, true));
+      }
+  }
+
+  public static void readJSIncludesForGlobal (@Nonnull final IReadableResource aRes)
+  {
+    _readJSIncludes (aRes, s_aGlobal);
+  }
+
+  /**
+   * Register a new JS item for global scope.
+   *
+   * @param aJSPathProvider
+   *        The JS path provider to use. May not be <code>null</code>.
+   */
+  public static void registerJSIncludeForGlobal (@Nonnull final IJSPathProvider aJSPathProvider)
+  {
+    s_aGlobal.addItem (aJSPathProvider);
+  }
+
+  /**
+   * Unregister an existing JS item for global scope.
+   *
+   * @param aJSPathProvider
+   *        The JS path provider to use. May not be <code>null</code>.
+   */
+  public static void unregisterJSIncludeForGlobal (@Nonnull final IJSPathProvider aJSPathProvider)
+  {
+    s_aGlobal.removeItem (aJSPathProvider);
+  }
+
+  /**
+   * Unregister all existing JS items from global scope.
+   */
+  public static void unregisterAllJSIncludesFromGlobal ()
+  {
+    s_aGlobal.removeAll ();
+  }
+
+  /**
+   * @return A non-<code>null</code> set with all JS paths to be included
+   *         globally. Order is ensured using LinkedHashSet.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <IJSPathProvider> getAllRegisteredJSIncludesForGlobal ()
+  {
+    return s_aGlobal.getAllItems ();
+  }
+
+  public static void getAllRegisteredJSIncludesForGlobal (@Nonnull final Collection <? super IJSPathProvider> aTarget)
+  {
+    s_aGlobal.getAllItems (aTarget);
+  }
+
+  /**
+   * @return <code>true</code> if at least a single JS path has been registered
+   *         for this request only
+   */
+  public static boolean hasRegisteredJSIncludesForGlobal ()
+  {
+    return s_aGlobal.isNotEmpty ();
+  }
 
   @Nullable
   private static JSResourceSet _getPerRequestSet (final boolean bCreateIfNotExisting)

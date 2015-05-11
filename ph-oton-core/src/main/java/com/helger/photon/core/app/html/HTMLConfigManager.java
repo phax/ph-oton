@@ -18,7 +18,6 @@ package com.helger.photon.core.app.html;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -33,15 +32,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.reader.XMLMapHandler;
-import com.helger.commons.microdom.serialize.MicroReader;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.css.media.CSSMediaList;
-import com.helger.css.media.ECSSMedium;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.conversion.HCConversionSettingsProvider;
 import com.helger.html.hc.conversion.HCSettings;
@@ -49,12 +41,8 @@ import com.helger.html.hc.html.HCScript;
 import com.helger.html.meta.IMetaElement;
 import com.helger.html.meta.MetaElement;
 import com.helger.html.meta.MetaElementList;
-import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
-import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
-import com.helger.photon.core.app.resource.CSSResourceSet;
-import com.helger.photon.core.app.resource.JSResourceSet;
 import com.helger.photon.core.url.IWebURIToURLConverter;
 import com.helger.photon.core.url.StreamOrLocalURIToURLConverter;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -74,10 +62,6 @@ public class HTMLConfigManager
 {
   /** Filename containing the meta elements */
   public static final String FILENAME_METATAGS_XML = "metatags.xml";
-  /** Filename containing the CSS includes */
-  public static final String FILENAME_CSS_XML = "css.xml";
-  /** Filename containing the JS includes */
-  public static final String FILENAME_JS_XML = "js.xml";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (HTMLConfigManager.class);
 
@@ -85,10 +69,6 @@ public class HTMLConfigManager
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private final MetaElementList m_aMetaElements = new MetaElementList ();
-  @GuardedBy ("m_aRWLock")
-  private final CSSResourceSet m_aCSSItems = new CSSResourceSet ();
-  @GuardedBy ("m_aRWLock")
-  private final JSResourceSet m_aJSItems = new JSResourceSet ();
   @GuardedBy ("s_aRWLock")
   private static EHTMLVersion m_eHTMLVersion = EHTMLVersion.DEFAULT;
   @GuardedBy ("s_aRWLock")
@@ -119,95 +99,6 @@ public class HTMLConfigManager
   }
 
   @Nonnull
-  @ReturnsMutableCopy
-  public static CSSResourceSet getAllCSSItemsOfResource (@Nonnull final IReadableResource aRes,
-                                                          @Nonnull final IWebURIToURLConverter aURIToURLConverter)
-  {
-    ValueEnforcer.notNull (aRes, "Res");
-    ValueEnforcer.notNull (aURIToURLConverter, "URIToURLConverter");
-
-    final CSSResourceSet ret = new CSSResourceSet ();
-    final IMicroDocument aDoc = aRes.exists () ? MicroReader.readMicroXML (aRes) : null;
-    if (aDoc != null)
-      for (final IMicroElement eChild : aDoc.getDocumentElement ().getAllChildElements ("css"))
-      {
-        final String sPath = eChild.getAttributeValue ("path");
-        if (StringHelper.hasNoText (sPath))
-        {
-          s_aLogger.error ("Found CSS item without a path in " + aRes.getPath ());
-          continue;
-        }
-
-        final IReadableResource aChildRes = aURIToURLConverter.getAsResource (sPath);
-        if (!aChildRes.exists ())
-          throw new IllegalStateException ("The provided global CSS resource '" +
-                                           sPath +
-                                           "' resolved to '" +
-                                           aChildRes.getAsURL () +
-                                           "' does NOT exist!");
-
-        final String sConditionalComment = eChild.getAttributeValue ("condcomment");
-
-        final String sMedia = eChild.getAttributeValue ("media");
-        final CSSMediaList aMediaList = new CSSMediaList ();
-        if (sMedia != null)
-          for (final String sMedium : RegExHelper.getSplitToArray (sMedia, ",\\s*"))
-          {
-            final ECSSMedium eMedium = ECSSMedium.getFromNameOrNull (sMedium);
-            if (eMedium == null)
-            {
-              s_aLogger.warn ("CSS item '" +
-                              sPath +
-                              "' in " +
-                              aRes.getPath () +
-                              " has an invalid medium '" +
-                              sMedium +
-                              "' - ignoring");
-              continue;
-            }
-            aMediaList.addMedium (eMedium);
-          }
-        ret.addItem (new ConstantCSSPathProvider (sPath, sConditionalComment, aMediaList));
-      }
-    return ret;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public static JSResourceSet getAllJSItemsOfResource (@Nonnull final IReadableResource aRes,
-                                                        @Nonnull final IWebURIToURLConverter aURIToURLConverter)
-  {
-    ValueEnforcer.notNull (aRes, "Res");
-    ValueEnforcer.notNull (aURIToURLConverter, "URIToURLConverter");
-
-    final JSResourceSet ret = new JSResourceSet ();
-    final IMicroDocument aDoc = aRes.exists () ? MicroReader.readMicroXML (aRes) : null;
-    if (aDoc != null)
-      for (final IMicroElement eChild : aDoc.getDocumentElement ().getAllChildElements ("js"))
-      {
-        final String sPath = eChild.getAttributeValue ("path");
-        if (StringHelper.hasNoText (sPath))
-        {
-          s_aLogger.error ("Found JS item without a path in " + aRes.getPath ());
-          continue;
-        }
-
-        final IReadableResource aChildRes = aURIToURLConverter.getAsResource (sPath);
-        if (!aChildRes.exists ())
-          throw new IllegalStateException ("The provided global JS resource '" +
-                                           sPath +
-                                           "' resolved to '" +
-                                           aChildRes.getAsURL () +
-                                           "' does NOT exist!");
-
-        final String sConditionalComment = eChild.getAttributeValue ("condcomment");
-
-        ret.addItem (new ConstantJSPathProvider (sPath, sConditionalComment, true));
-      }
-    return ret;
-  }
-
-  @Nonnull
   public HTMLConfigManager readAllFiles (@Nonnull final String sBasePath)
   {
     ValueEnforcer.notNull (sBasePath, "BasePath");
@@ -220,14 +111,6 @@ public class HTMLConfigManager
       // read all static MetaTags
       m_aMetaElements.addMetaElements (getAllMetaElementsOfResource (new ClassPathResource (sBasePath +
                                                                                             FILENAME_METATAGS_XML)));
-
-      // read all CSS files
-      m_aCSSItems.addItems (getAllCSSItemsOfResource (new ClassPathResource (sBasePath + FILENAME_CSS_XML),
-                                                      m_aURIToURLConverter));
-
-      // read all JS files
-      m_aJSItems.addItems (getAllJSItemsOfResource (new ClassPathResource (sBasePath + FILENAME_JS_XML),
-                                                    m_aURIToURLConverter));
     }
     finally
     {
@@ -277,102 +160,6 @@ public class HTMLConfigManager
     try
     {
       m_aMetaElements.removeAllMetaElements ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return this;
-  }
-
-  /**
-   * @return A list of all global CSS items. Never <code>null</code>.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public Set <ICSSPathProvider> getAllCSSItems ()
-  {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aCSSItems.getAllItems ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  @Nonnull
-  public HTMLConfigManager addCSSItem (@Nonnull final ICSSPathProvider aCSSItem)
-  {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      m_aCSSItems.addItem (aCSSItem);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return this;
-  }
-
-  @Nonnull
-  public HTMLConfigManager removeAllCSSItems ()
-  {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      m_aCSSItems.removeAll ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return this;
-  }
-
-  /**
-   * @return A list of all global JS items. Never <code>null</code>.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public Set <IJSPathProvider> getAllJSItems ()
-  {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aJSItems.getAllItems ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  @Nonnull
-  public HTMLConfigManager addJSItem (@Nonnull final IJSPathProvider aJSItem)
-  {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      m_aJSItems.addItem (aJSItem);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return this;
-  }
-
-  @Nonnull
-  public HTMLConfigManager removeAllJSItems ()
-  {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      m_aJSItems.removeAll ();
     }
     finally
     {

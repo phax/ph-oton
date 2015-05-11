@@ -25,6 +25,8 @@ import com.helger.html.meta.MetaElement;
 import com.helger.photon.bootstrap3.EBootstrapCSSPathProvider;
 import com.helger.photon.bootstrap3.EBootstrapJSPathProvider;
 import com.helger.photon.core.app.html.HTMLConfigManager;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.uicore.EUICoreCSSPathProvider;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
@@ -44,28 +46,28 @@ public final class PhotonStubConfigurationListener implements ServletContextList
     final HTMLConfigManager aConfigMgr = PhotonCoreManager.getHTMLConfigMgr ();
 
     // CSS
-    aConfigMgr.addCSSItem (EBootstrapCSSPathProvider.BOOTSTRAP_334);
-    aConfigMgr.addCSSItem (EBootstrapCSSPathProvider.BOOTSTRAP_THEME_334);
-    aConfigMgr.addCSSItem (EBootstrapCSSPathProvider.BOOTSTRAP_PH);
-    aConfigMgr.addCSSItem (EUICtrlsCSSPathProvider.FAMFAM_ICONS);
-    aConfigMgr.addCSSItem (EUICtrlsCSSPathProvider.FAMFAM_FLAGS);
-    aConfigMgr.addCSSItem (EUICoreCSSPathProvider.UICORE);
+    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_334);
+    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_THEME_334);
+    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_PH);
+    PhotonCSS.registerCSSIncludeForGlobal (EUICtrlsCSSPathProvider.FAMFAM_ICONS);
+    PhotonCSS.registerCSSIncludeForGlobal (EUICtrlsCSSPathProvider.FAMFAM_FLAGS);
+    PhotonCSS.registerCSSIncludeForGlobal (EUICoreCSSPathProvider.UICORE);
 
     // With conditional comments
-    aConfigMgr.addCSSItem (EBootstrapCSSPathProvider.BOOTSTRAP_IE9);
-    aConfigMgr.addCSSItem (EUICoreCSSPathProvider.PLACEHOLDER_FIX);
+    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_IE9);
+    PhotonCSS.registerCSSIncludeForGlobal (EUICoreCSSPathProvider.PLACEHOLDER_FIX);
 
     // JS
-    aConfigMgr.addJSItem (EUICoreJSPathProvider.JQUERY_1);
-    aConfigMgr.addJSItem (EUICoreJSPathProvider.UICORE_JQUERY);
-    aConfigMgr.addJSItem (EUICoreJSPathProvider.UICORE_FORM);
-    aConfigMgr.addJSItem (EBootstrapJSPathProvider.BOOTSTRAP_334);
-    aConfigMgr.addJSItem (EBootstrapJSPathProvider.BOOTSTRAP_PH);
+    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_1);
+    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.UICORE_JQUERY);
+    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.UICORE_FORM);
+    PhotonJS.registerJSIncludeForGlobal (EBootstrapJSPathProvider.BOOTSTRAP_334);
+    PhotonJS.registerJSIncludeForGlobal (EBootstrapJSPathProvider.BOOTSTRAP_PH);
 
     // With conditional comments
-    aConfigMgr.addJSItem (EUICoreJSPathProvider.HTML5SHIV_3_7_2);
-    aConfigMgr.addJSItem (EUICoreJSPathProvider.RESPOND);
-    aConfigMgr.addJSItem (EUICoreJSPathProvider.PLACEHOLDER_FIX);
+    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.HTML5SHIV_3_7_2);
+    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.RESPOND);
+    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.PLACEHOLDER_FIX);
 
     // Meta elements
     aConfigMgr.addMetaElement (new MetaElement ("generator", "ph-oton stack - https://github.com/phax/ph-oton"));

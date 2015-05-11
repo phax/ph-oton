@@ -103,22 +103,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     return PhotonCoreManager.getHTMLConfigMgr ().getAllMetaElements ();
   }
 
-  @Nonnull
-  @ReturnsMutableCopy
-  @OverrideOnDemand
-  protected Set <ICSSPathProvider> getAllGlobalCSSItems ()
-  {
-    return PhotonCoreManager.getHTMLConfigMgr ().getAllCSSItems ();
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  @OverrideOnDemand
-  protected Set <IJSPathProvider> getAllGlobalJSItems ()
-  {
-    return PhotonCoreManager.getHTMLConfigMgr ().getAllJSItems ();
-  }
-
   @OverrideOnDemand
   protected void addCSSAndJSToHead (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                     @Nonnull final HCHead aHead)
@@ -129,7 +113,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
     // Add configured and per-request CSS
     {
-      final Set <ICSSPathProvider> aCSSs = getAllGlobalCSSItems ();
+      final Set <ICSSPathProvider> aCSSs = PhotonCSS.getAllRegisteredCSSIncludesForGlobal ();
       PhotonCSS.getAllRegisteredCSSIncludesForThisRequest (aCSSs);
       if (bAggregateCSS)
       {
@@ -149,7 +133,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
     // Add all configured and per-request JS
     {
-      final Set <IJSPathProvider> aJSs = getAllGlobalJSItems ();
+      final Set <IJSPathProvider> aJSs = PhotonJS.getAllRegisteredJSIncludesForGlobal ();
       PhotonJS.getAllRegisteredJSIncludesForThisRequest (aJSs);
 
       if (bAggregateJS)

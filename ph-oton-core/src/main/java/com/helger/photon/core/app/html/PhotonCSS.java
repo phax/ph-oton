@@ -23,7 +23,20 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.io.IReadableResource;
+import com.helger.commons.microdom.IMicroDocument;
+import com.helger.commons.microdom.IMicroElement;
+import com.helger.commons.microdom.serialize.MicroReader;
+import com.helger.commons.regex.RegExHelper;
+import com.helger.commons.string.StringHelper;
+import com.helger.css.media.CSSMediaList;
+import com.helger.css.media.ECSSMedium;
+import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.photon.core.app.resource.CSSResourceSet;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -38,9 +51,122 @@ import com.helger.web.scopes.mgr.WebScopeManager;
 public final class PhotonCSS
 {
   private static final String REQUEST_ATTR_CSSINCLUDE = PhotonCSS.class.getName ();
+  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonCSS.class);
+  private static final CSSResourceSet s_aGlobal = new CSSResourceSet ();
 
   private PhotonCSS ()
   {}
+
+  public static void _readCSSIncludes (@Nonnull final IReadableResource aRes, @Nonnull final CSSResourceSet aTarget)
+  {
+    ValueEnforcer.notNull (aRes, "Res");
+    ValueEnforcer.notNull (aTarget, "Target");
+
+    final IMicroDocument aDoc = aRes.exists () ? MicroReader.readMicroXML (aRes) : null;
+    if (aDoc != null)
+      for (final IMicroElement eChild : aDoc.getDocumentElement ().getAllChildElements ("css"))
+      {
+        final String sPath = eChild.getAttributeValue ("path");
+        if (StringHelper.hasNoText (sPath))
+        {
+          s_aLogger.error ("Found CSS item without a path in " + aRes.getPath ());
+          continue;
+        }
+
+        final IReadableResource aChildRes = HTMLConfigManager.getURIToURLConverter ().getAsResource (sPath);
+        if (!aChildRes.exists ())
+          throw new IllegalStateException ("The provided global CSS resource '" +
+                                           sPath +
+                                           "' resolved to '" +
+                                           aChildRes.getAsURL () +
+                                           "' does NOT exist!");
+
+        final String sConditionalComment = eChild.getAttributeValue ("condcomment");
+
+        final String sMedia = eChild.getAttributeValue ("media");
+        final CSSMediaList aMediaList = new CSSMediaList ();
+        if (sMedia != null)
+          for (final String sMedium : RegExHelper.getSplitToArray (sMedia, ",\\s*"))
+          {
+            final ECSSMedium eMedium = ECSSMedium.getFromNameOrNull (sMedium);
+            if (eMedium == null)
+            {
+              s_aLogger.warn ("CSS item '" +
+                              sPath +
+                              "' in " +
+                              aRes.getPath () +
+                              " has an invalid medium '" +
+                              sMedium +
+                              "' - ignoring");
+              continue;
+            }
+            aMediaList.addMedium (eMedium);
+          }
+
+        // Add to target
+        aTarget.addItem (new ConstantCSSPathProvider (sPath, sConditionalComment, aMediaList));
+      }
+  }
+
+  public static void readCSSIncludesForGlobal (@Nonnull final IReadableResource aRes)
+  {
+    _readCSSIncludes (aRes, s_aGlobal);
+  }
+
+  /**
+   * Register a new CSS item for global scope.
+   *
+   * @param aCSSPathProvider
+   *        The CSS path provider to use. May not be <code>null</code>.
+   */
+  public static void registerCSSIncludeForGlobal (@Nonnull final ICSSPathProvider aCSSPathProvider)
+  {
+    s_aGlobal.addItem (aCSSPathProvider);
+  }
+
+  /**
+   * Unregister an existing CSS item for global scope.
+   *
+   * @param aCSSPathProvider
+   *        The CSS path provider to use. May not be <code>null</code>.
+   */
+  public static void unregisterCSSIncludeForGlobal (@Nonnull final ICSSPathProvider aCSSPathProvider)
+  {
+    s_aGlobal.removeItem (aCSSPathProvider);
+  }
+
+  /**
+   * Unregister all existing CSS items from global scope.
+   */
+  public static void unregisterAllCSSIncludesFromGlobal ()
+  {
+    s_aGlobal.removeAll ();
+  }
+
+  /**
+   * @return A non-<code>null</code> set with all CSS paths to be included
+   *         globally. Order is ensured using LinkedHashSet.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <ICSSPathProvider> getAllRegisteredCSSIncludesForGlobal ()
+  {
+    return s_aGlobal.getAllItems ();
+  }
+
+  public static void getAllRegisteredCSSIncludesForGlobal (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
+  {
+    s_aGlobal.getAllItems (aTarget);
+  }
+
+  /**
+   * @return <code>true</code> if at least a single CSS path has been registered
+   *         for this request only
+   */
+  public static boolean hasRegisteredCSSIncludesForGlobal ()
+  {
+    return s_aGlobal.isNotEmpty ();
+  }
 
   @Nullable
   private static CSSResourceSet _getPerRequestSet (final boolean bCreateIfNotExisting)
