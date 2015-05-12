@@ -45,6 +45,7 @@ import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCol;
+import com.helger.html.hc.html.HCH4;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.html.HC_Target;
@@ -488,5 +489,13 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
     if (!URLValidator.isValid (sWebSite))
       return new HCTextNode (sWebSite);
     return new HCA (sWebSite).setTarget (aTarget).addChild (sWebSite);
+  }
+
+  @Nullable
+  public IHCNode createInPageHeader (@Nullable final String sText)
+  {
+    if (StringHelper.hasNoText (sText))
+      return null;
+    return new HCH4 ().addChild (sText);
   }
 }
