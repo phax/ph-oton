@@ -26,10 +26,10 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
-import com.helger.photon.uicore.page.AbstractWebPageExt;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 
-public final class PagePublicLogin extends AbstractWebPageExt <WebPageExecutionContext>
+public final class PagePublicLogin extends AbstractBootstrapWebPageExt <WebPageExecutionContext>
 {
   public PagePublicLogin (@Nonnull @Nonempty final String sID)
   {

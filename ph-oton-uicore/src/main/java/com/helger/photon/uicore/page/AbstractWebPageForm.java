@@ -811,7 +811,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
         // Default back to custom
         s_aLogger.info ("Action " +
                         eFormAction +
-                        " is not allowed on " +
+                        " is not allowed on object " +
                         (aSelectedObject == null ? "null" : aSelectedObject.getID ()));
         eFormAction = EWebPageFormAction.CUSTOM;
       }
