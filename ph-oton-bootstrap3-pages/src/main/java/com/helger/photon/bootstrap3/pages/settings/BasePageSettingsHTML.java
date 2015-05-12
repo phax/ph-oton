@@ -36,10 +36,10 @@ import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.bootstrap3.table.BootstrapTableForm;
 import com.helger.photon.uicore.html.table.IHCTableForm;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
-import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
@@ -50,7 +50,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageExt <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -136,8 +136,7 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
                 .setConsistencyChecksEnabled (bConsistencyChecksEnabled)
                 .setExtractOutOfBandNodes (bExtractOutOfBandNodes);
 
-      aNodeList.addChild (new BootstrapSuccessBox ().addChild (
-                                                         EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
+      aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
     }
 
     final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));

@@ -50,10 +50,10 @@ import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
-import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -66,7 +66,7 @@ import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageExt <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -129,23 +129,23 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final ITabBox <?> aTabBox = new BootstrapTabBox();
+    final ITabBox <?> aTabBox = new BootstrapTabBox ();
 
     final List <Provider> aSortedProviders = CollectionHelper.getSorted (Security.getProviders (),
-                                                                        new AbstractComparator <Provider> ()
-                                                                        {
-                                                                          @Override
-                                                                          protected int mainCompare (@Nonnull final Provider aElement1,
-                                                                                                     @Nonnull final Provider aElement2)
-                                                                          {
-                                                                            int ret = aElement1.getName ()
-                                                                                               .compareTo (aElement2.getName ());
-                                                                            if (ret == 0)
-                                                                              ret = CompareUtils.compare (aElement1.getVersion (),
-                                                                                                          aElement2.getVersion ());
-                                                                            return ret;
-                                                                          }
-                                                                        });
+                                                                         new AbstractComparator <Provider> ()
+                                                                         {
+                                                                           @Override
+                                                                           protected int mainCompare (@Nonnull final Provider aElement1,
+                                                                                                      @Nonnull final Provider aElement2)
+                                                                           {
+                                                                             int ret = aElement1.getName ()
+                                                                                                .compareTo (aElement2.getName ());
+                                                                             if (ret == 0)
+                                                                               ret = CompareUtils.compare (aElement1.getVersion (),
+                                                                                                           aElement2.getVersion ());
+                                                                             return ret;
+                                                                           }
+                                                                         });
 
     // show all providers
     {

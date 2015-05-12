@@ -39,10 +39,10 @@ import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
-import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -57,7 +57,7 @@ import com.helger.web.servlet.request.RequestLogger;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageExt <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -120,7 +120,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
     final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
     final int nFirstColWidth = 250;
 
-    final ITabBox <?> aTabBox = new BootstrapTabBox();
+    final ITabBox <?> aTabBox = new BootstrapTabBox ();
 
     // HTTP headers
     {
@@ -129,9 +129,9 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, List <String>> aEntry : CollectionHelper.getSortedByKey (RequestHelper.getRequestHeaderMap (aHttpRequest)
-                                                                                                         .getAllHeaders (),
-                                                                                            new ComparatorString (aDisplayLocale))
-                                                                           .entrySet ())
+                                                                                                          .getAllHeaders (),
+                                                                                             new ComparatorString (aDisplayLocale))
+                                                                            .entrySet ())
       {
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (HCUtils.list2divList (aEntry.getValue ()));
       }
@@ -146,8 +146,8 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale),
                                        EText.MSG_DETAILS.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, Cookie> aEntry : CollectionHelper.getSortedByKey (CookieHelper.getAllCookies (aHttpRequest),
-                                                                                     new ComparatorString (aDisplayLocale))
-                                                                    .entrySet ())
+                                                                                      new ComparatorString (aDisplayLocale))
+                                                                     .entrySet ())
       {
         final Cookie aCookie = aEntry.getValue ();
         String sOther = "";
@@ -193,15 +193,15 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
     // Request attributes
     {
       final IHCTableFormView <?> aTable = new BootstrapTableFormView (new HCCol (nFirstColWidth),
-                                                                            HCCol.star (),
-                                                                            HCCol.star ());
+                                                                      HCCol.star (),
+                                                                      HCCol.star ());
       aTable.setID (getID () + "$attrs");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aRequestScope.getAllAttributes (),
-                                                                                     new ComparatorString (aDisplayLocale))
-                                                                    .entrySet ())
+                                                                                      new ComparatorString (aDisplayLocale))
+                                                                     .entrySet ())
       {
         aTable.addBodyRow ()
               .addCell (aEntry.getKey ())

@@ -38,6 +38,7 @@ import com.helger.html.hc.html.HCH3;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.ajax.ApplicationAjaxManager;
@@ -47,7 +48,6 @@ import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxLongRunningExecutionCallback;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
-import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -61,7 +61,7 @@ import com.helger.web.scopes.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageMonitoringAjaxFunctions <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+public class BasePageMonitoringAjaxFunctions <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageExt <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -133,8 +133,9 @@ public class BasePageMonitoringAjaxFunctions <WPECTYPE extends IWebPageExecution
 
         // Show all registered AJAX functions
         {
-          final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star ())
-                                                  .setID (getID () + sAppScopeID + "-func");
+          final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star ()).setID (getID () +
+                                                                                                              sAppScopeID +
+                                                                                                              "-func");
           aTable.addHeaderRow ().addCells (EText.MSG_KEY.getDisplayText (aDisplayLocale),
                                            EText.MSG_FACTORY.getDisplayText (aDisplayLocale),
                                            EText.MSG_URL.getDisplayText (aDisplayLocale));
@@ -158,8 +159,8 @@ public class BasePageMonitoringAjaxFunctions <WPECTYPE extends IWebPageExecution
           aTab.addChild (new HCH3 ().addChild (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
 
           final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star ()).setID (getID () +
-                                                                                                     sAppScopeID +
-                                                                                                     "-cb");
+                                                                                               sAppScopeID +
+                                                                                               "-cb");
           aTable.addHeaderRow ().addCells (EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                                            EText.MSG_CALLBACK.getDisplayText (aDisplayLocale));
           for (final IAjaxExceptionCallback aCB : aMgr.getExceptionCallbacks ().getAllCallbacks ())

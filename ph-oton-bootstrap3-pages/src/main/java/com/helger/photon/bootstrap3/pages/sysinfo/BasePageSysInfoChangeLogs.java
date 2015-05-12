@@ -42,9 +42,9 @@ import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -57,7 +57,7 @@ import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDate;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageExt <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -132,15 +132,15 @@ public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
 
       // Show at last the 500 newest entries
       aChangeLogEntries = CollectionHelper.getSortedInline (aChangeLogEntries,
-                                                           new ComparatorChangeLogEntryDate (ESortOrder.DESCENDING));
+                                                            new ComparatorChangeLogEntryDate (ESortOrder.DESCENDING));
       s_aCache = aChangeLogEntries.subList (0, Math.min (500, aChangeLogEntries.size ()));
     }
 
     // Create table
     final IHCTable <?> aTable = new BootstrapTable (new HCCol (COLUMN_WIDTH_DATE),
-                                                          new HCCol (150),
-                                                          new HCCol (100),
-                                                          HCCol.star ()).setID (getID ());
+                                                    new HCCol (150),
+                                                    new HCCol (100),
+                                                    HCCol.star ()).setID (getID ());
     aTable.addHeaderRow ().addCells (EText.MSG_HEADER_DATE.getDisplayText (aDisplayLocale),
                                      EText.MSG_HEADER_COMPONENT.getDisplayText (aDisplayLocale),
                                      EText.MSG_HEADER_CATEGORY.getDisplayText (aDisplayLocale),

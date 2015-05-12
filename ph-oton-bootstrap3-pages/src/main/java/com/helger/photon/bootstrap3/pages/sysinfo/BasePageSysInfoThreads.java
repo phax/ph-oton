@@ -39,9 +39,9 @@ import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.uicore.page.AbstractWebPageExt;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -55,7 +55,7 @@ import com.helger.photon.uictrls.datatables.comparator.ComparatorDTLong;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageExt <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -129,15 +129,15 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final IHCTable <?> aTable = new BootstrapTable (new HCCol (50),
-                                                          new HCCol (100),
-                                                          new HCCol (150),
-                                                          new HCCol (55),
-                                                          new HCCol (100),
-                                                          HCCol.star ()).setID (getID ());
+                                                    new HCCol (100),
+                                                    new HCCol (150),
+                                                    new HCCol (55),
+                                                    new HCCol (100),
+                                                    HCCol.star ()).setID (getID ());
 
     // get all threads and sort them by thread ID
     final Map <Thread, StackTraceElement []> aThreads = CollectionHelper.getSortedByKey (Thread.getAllStackTraces (),
-                                                                                        new ComparatorThreadID ());
+                                                                                         new ComparatorThreadID ());
 
     aTable.setSpanningHeaderContent ("Total count=" +
                                      aThreads.size () +
