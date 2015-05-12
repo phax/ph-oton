@@ -40,6 +40,7 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLValidator;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
+import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCNode;
@@ -96,6 +97,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   protected static final ICSSClassProvider CSS_CLASS_NOWRAP = WebCtrlsCSS.CSS_CLASS_NOWRAP;
   protected static final ICSSClassProvider CSS_CLASS_ACTION_COL = WebCtrlsCSS.CSS_CLASS_ACTION_COL;
   protected static final ICSSClassProvider CSS_CLASS_EMPTY_ACTION = WebCtrlsCSS.CSS_CLASS_EMPTY_ACTION;
+  protected static final ICSSClassProvider CSS_CLASS_IN_PAGE_HEADER = DefaultCSSClassProvider.create ("in-page-header");
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageExt.class);
 
@@ -221,6 +223,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   @Nonnull
   public static HCSpan createEmptyAction ()
   {
+    // Assume each icon has a width of 16px
     return new HCSpan ().addClass (CSS_CLASS_EMPTY_ACTION)
                         .addStyle (CCSSProperties.DISPLAY_INLINE_BLOCK)
                         .addStyle (CCSSProperties.WIDTH.newValue (ECSSUnit.px (16)));
@@ -460,29 +463,25 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   }
 
   @Nullable
-  public IHCNode createEmailLink (@Nullable final String sEmailAddress)
+  public static IHCNode createEmailLink (@Nullable final String sEmailAddress)
   {
-    if (StringHelper.hasNoText (sEmailAddress))
-      return null;
     return HCA_MailTo.createLinkedEmail (sEmailAddress);
   }
 
   @Nullable
-  public IHCNode createEmailLink (@Nullable final IEmailAddress aEmail)
+  public static IHCNode createEmailLink (@Nullable final IEmailAddress aEmail)
   {
-    if (aEmail == null)
-      return null;
-    return HCA_MailTo.createLinkedEmail (aEmail.getAddress (), aEmail.getPersonal ());
+    return HCA_MailTo.createLinkedEmail (aEmail);
   }
 
   @Nullable
-  public IHCNode createWebLink (@Nullable final String sWebSite)
+  public static IHCNode createWebLink (@Nullable final String sWebSite)
   {
     return createWebLink (sWebSite, HC_Target.BLANK);
   }
 
   @Nullable
-  public IHCNode createWebLink (@Nullable final String sWebSite, @Nullable final HC_Target aTarget)
+  public static IHCNode createWebLink (@Nullable final String sWebSite, @Nullable final HC_Target aTarget)
   {
     if (StringHelper.hasNoText (sWebSite))
       return null;
@@ -492,10 +491,16 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   }
 
   @Nullable
-  public IHCNode createInPageHeader (@Nullable final String sText)
+  public static IHCNode createInPageHeaderDefault (@Nullable final String sText)
   {
     if (StringHelper.hasNoText (sText))
       return null;
-    return new HCH4 ().addChild (sText);
+    return new HCH4 ().addClass (CSS_CLASS_IN_PAGE_HEADER).addChild (sText);
+  }
+
+  @Nullable
+  protected IHCNode createInPageHeader (@Nullable final String sText)
+  {
+    return createInPageHeaderDefault (sText);
   }
 }
