@@ -34,6 +34,7 @@ import com.helger.photon.core.action.servlet.PublicApplicationActionServlet;
 import com.helger.photon.core.action.servlet.SecureApplicationActionServlet;
 import com.helger.photon.core.ajax.servlet.PublicApplicationAjaxServlet;
 import com.helger.photon.core.ajax.servlet.SecureApplicationAjaxServlet;
+import com.helger.photon.core.go.GoServlet;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryServlet;
 import com.helger.photon.core.servlet.CharacterEncodingFilter;
@@ -84,56 +85,61 @@ public final class PhotonStubInitializer
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationActionServlet",
                                                                      SecureApplicationActionServlet.class);
-        aServlet.addMapping ("/secureaction/*");
+        aServlet.addMapping (SecureApplicationActionServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PublicApplicationActionServlet",
                                                                      PublicApplicationActionServlet.class);
-        aServlet.addMapping ("/publicaction/*");
+        aServlet.addMapping (PublicApplicationActionServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationAjaxServlet",
                                                                      SecureApplicationAjaxServlet.class);
-        aServlet.addMapping ("/secureajax/*");
+        aServlet.addMapping (SecureApplicationAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PublicApplicationAjaxServlet",
                                                                      PublicApplicationAjaxServlet.class);
-        aServlet.addMapping ("/publicajax/*");
+        aServlet.addMapping (PublicApplicationAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("StreamServlet", StreamServlet.class);
         aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS,
                                    AbstractObjectDeliveryServlet.EXTENSION_MACRO_WEB_DEFAULT);
-        aServlet.addMapping ("/stream/*");
+        aServlet.addMapping (StreamServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("UserStreamServlet", UserStreamServlet.class);
         aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS,
                                    AbstractObjectDeliveryServlet.EXTENSION_MACRO_WEB_DEFAULT);
-        aServlet.addMapping ("/user/*");
+        aServlet.addMapping (UserStreamServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("UserUploadServlet", UserUploadServlet.class);
-        aServlet.addMapping ("/userUpload/*");
+        aServlet.addMapping (UserUploadServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("LogoutServlet", LogoutServlet.class);
-        aServlet.addMapping ("/logout/*");
+        aServlet.addMapping (LogoutServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("ResourceBundleServlet",
                                                                      ResourceBundleServlet.class);
         aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS, "js,css");
-        aServlet.addMapping ("/resbundle/*");
+        aServlet.addMapping (ResourceBundleServlet.SERVLET_DEFAULT_PATH + "/*");
+      }
+
+      {
+        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("GoServlet", GoServlet.class);
+        aServlet.addMapping (GoServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
