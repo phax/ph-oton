@@ -113,6 +113,7 @@ public enum EPhotonCoreText implements IHasDisplayText, IHasDisplayTextWithArgs
   BUTTON_REGISTER ("Registrieren", "Register"),
   BUTTON_SIGN_UP ("Registrieren", "Sign up"),
   BUTTON_EDIT ("Bearbeiten", "Edit"),
+  BUTTON_SEND ("Absenden", "Send"),
   BUTTON_RESEND ("Erneut versenden", "Resend"),
   BUTTON_RESEND_ALL ("Alle erneut versenden", "Resend all"),
   TRUE ("Wahr", "True"),
