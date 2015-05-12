@@ -86,9 +86,21 @@ public class BulkImportResult implements ISuccessIndicator
     }
   }
 
+  /**
+   * @return all added objects
+   * @deprecated Use {@link #getAllAdded()} instead
+   */
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public final List <ITypedObject <String>> getAdded ()
+  {
+    return getAllAdded ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public final List <ITypedObject <String>> getAllAdded ()
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -142,9 +154,21 @@ public class BulkImportResult implements ISuccessIndicator
     }
   }
 
+  /**
+   * @return all changed objects
+   * @deprecated Use {@link #getAllChanged()} instead
+   */
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public final List <ITypedObject <String>> getChanged ()
+  {
+    return getAllChanged ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public final List <ITypedObject <String>> getAllChanged ()
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -198,9 +222,12 @@ public class BulkImportResult implements ISuccessIndicator
     }
   }
 
+  /**
+   * @return All failed IDs.
+   */
   @Nonnull
   @ReturnsMutableCopy
-  public final List <String> getFailed ()
+  public final List <String> getAllFailed ()
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -261,9 +288,21 @@ public class BulkImportResult implements ISuccessIndicator
     }
   }
 
+  /**
+   * @return All warnings
+   * @deprecated Use {@link #getAllWarnings()} instead
+   */
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public final List <String> getWarnings ()
+  {
+    return getAllWarnings ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public final List <String> getAllWarnings ()
   {
     m_aRWLock.readLock ().lock ();
     try
