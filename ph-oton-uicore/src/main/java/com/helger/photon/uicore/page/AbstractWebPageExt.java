@@ -91,6 +91,8 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
 
   public static final String FIELD_NONCE = "$ph_nonce";
 
+  public static final String PARAM_SOURCE_MENU_ITEM = "srcmi";
+
   protected static final ICSSClassProvider CSS_CLASS_LEFT = WebCtrlsCSS.CSS_CLASS_LEFT;
   protected static final ICSSClassProvider CSS_CLASS_CENTER = WebCtrlsCSS.CSS_CLASS_CENTER;
   protected static final ICSSClassProvider CSS_CLASS_RIGHT = WebCtrlsCSS.CSS_CLASS_RIGHT;

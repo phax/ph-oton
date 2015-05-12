@@ -34,9 +34,9 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
 {
   /** Special field for the flow ID */
-  public static final String FIELD_FLOW_ID = "$flowid";
+  public static final String FIELD_FLOW_ID = "$ph_flowid";
   /** Special field to restore a flow ID */
-  public static final String FIELD_RESTORE_FLOW_ID = "$restoreflowid";
+  public static final String FIELD_RESTORE_FLOW_ID = "$ph_restoreflowid";
   /** Special prefix for field names */
   public static final String PREFIX_FIELD = "field-";
   // Same as in form.js!

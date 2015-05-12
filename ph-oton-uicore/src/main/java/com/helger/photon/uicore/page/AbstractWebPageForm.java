@@ -43,12 +43,14 @@ import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.lock.LockResult;
 import com.helger.photon.basic.security.lock.ObjectLockManager;
 import com.helger.photon.basic.security.user.IUser;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.ajax.AjaxExecutorSaveFormState;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
+import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.js.JSFormHelper;
 import com.helger.validation.error.FormErrors;
 
@@ -274,6 +276,13 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                     @Nonnull final IButtonToolbar <?> aToolbar)
   {}
 
+  @Nullable
+  @OverrideOnDemand
+  protected String getEditToolbarSubmitButtonText (@Nonnull final Locale aDisplayLocale)
+  {
+    return EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale);
+  }
+
   /**
    * Create toolbar for editing an existing object
    *
@@ -298,7 +307,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     aToolbar.addHiddenField (CHCParam.PARAM_OBJECT, aSelectedObject.getID ());
     aToolbar.addHiddenField (CHCParam.PARAM_SUBACTION, ACTION_SAVE);
     // Save button
-    aToolbar.addSubmitButtonSave (aDisplayLocale);
+    aToolbar.addSubmitButton (getEditToolbarSubmitButtonText (aDisplayLocale), EDefaultIcon.SAVE);
     // Cancel button
     aToolbar.addButtonCancel (aDisplayLocale);
 
@@ -346,6 +355,13 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   protected void modifyCreateToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final IButtonToolbar <?> aToolbar)
   {}
 
+  @Nullable
+  @OverrideOnDemand
+  protected String getCreateToolbarSubmitButtonText (@Nonnull final Locale aDisplayLocale)
+  {
+    return EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale);
+  }
+
   /**
    * Create toolbar for creating a new object
    *
@@ -371,7 +387,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
       aToolbar.addHiddenField (CHCParam.PARAM_OBJECT, aSelectedObject.getID ());
     aToolbar.addHiddenField (CHCParam.PARAM_SUBACTION, ACTION_SAVE);
     // Save button
-    aToolbar.addSubmitButtonSave (aDisplayLocale);
+    aToolbar.addSubmitButton (getCreateToolbarSubmitButtonText (aDisplayLocale), EDefaultIcon.SAVE);
     // Cancel button
     aToolbar.addButtonCancel (aDisplayLocale);
 
@@ -685,6 +701,13 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   protected void modifyDeleteToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final IButtonToolbar <?> aToolbar)
   {}
 
+  @Nullable
+  @OverrideOnDemand
+  protected String getDeleteToolbarSubmitButtonText (@Nonnull final Locale aDisplayLocale)
+  {
+    return EPhotonCoreText.BUTTON_YES.getDisplayText (aDisplayLocale);
+  }
+
   /**
    * Create toolbar for deleting an existing object
    *
@@ -709,7 +732,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     aToolbar.addHiddenField (CHCParam.PARAM_SUBACTION, ACTION_SAVE);
     aToolbar.addHiddenField (CHCParam.PARAM_OBJECT, aSelectedObject.getID ());
     // Yes button
-    aToolbar.addSubmitButtonYes (aDisplayLocale);
+    aToolbar.addSubmitButton (getDeleteToolbarSubmitButtonText (aDisplayLocale), EDefaultIcon.YES);
     // No button
     aToolbar.addButtonNo (aDisplayLocale);
 
