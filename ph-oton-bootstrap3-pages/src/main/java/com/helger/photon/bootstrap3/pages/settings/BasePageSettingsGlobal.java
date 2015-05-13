@@ -20,6 +20,8 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.mail.event.ConnectionListener;
+import javax.mail.event.TransportListener;
 
 import com.helger.commons.GlobalDebug;
 import com.helger.commons.annotations.Nonempty;
@@ -34,7 +36,6 @@ import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
@@ -47,6 +48,7 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.smtp.EmailGlobalSettings;
+import com.helger.smtp.IEmailDataTransportListener;
 
 /**
  * Page with global basic settings
@@ -171,18 +173,36 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
       aTable.createItemRow ()
             .setLabel (EText.MSG_EMAIL_SOCKET_TIMEOUT.getDisplayText (aDisplayLocale))
             .setCtrl (Long.toString (EmailGlobalSettings.getTimeoutMilliSecs ()) + "ms");
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_EMAIL_CONNECTION_LISTENER.getDisplayText (aDisplayLocale))
-            .setCtrl (EmailGlobalSettings.getConnectionListener () == null ? HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale))
-                                                                          : new HCTextNode (String.valueOf (EmailGlobalSettings.getConnectionListener ())));
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_EMAIL_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
-            .setCtrl (EmailGlobalSettings.getTransportListener () == null ? HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale))
-                                                                         : new HCTextNode (String.valueOf (EmailGlobalSettings.getTransportListener ())));
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
-            .setCtrl (EmailGlobalSettings.getEmailDataTransportListener () == null ? HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale))
-                                                                                  : new HCTextNode (String.valueOf (EmailGlobalSettings.getEmailDataTransportListener ())));
+      {
+        final HCNodeList aCtrl = new HCNodeList ();
+        for (final ConnectionListener aListener : EmailGlobalSettings.getAllConnectionListeners ())
+          aCtrl.addChild (String.valueOf (aListener));
+        if (!aCtrl.hasChildren ())
+          aCtrl.addChild (HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
+        aTable.createItemRow ()
+              .setLabel (EText.MSG_EMAIL_CONNECTION_LISTENER.getDisplayText (aDisplayLocale))
+              .setCtrl (aCtrl);
+      }
+      {
+        final HCNodeList aCtrl = new HCNodeList ();
+        for (final TransportListener aListener : EmailGlobalSettings.getAllTransportListeners ())
+          aCtrl.addChild (String.valueOf (aListener));
+        if (!aCtrl.hasChildren ())
+          aCtrl.addChild (HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
+        aTable.createItemRow ()
+              .setLabel (EText.MSG_EMAIL_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
+              .setCtrl (aCtrl);
+      }
+      {
+        final HCNodeList aCtrl = new HCNodeList ();
+        for (final IEmailDataTransportListener aListener : EmailGlobalSettings.getAllEmailDataTransportListeners ())
+          aCtrl.addChild (String.valueOf (aListener));
+        if (!aCtrl.hasChildren ())
+          aCtrl.addChild (HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
+        aTable.createItemRow ()
+              .setLabel (EText.MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
+              .setCtrl (aCtrl);
+      }
       aTabBox.addTab (EText.MSG_HEADER_EMAIL.getDisplayText (aDisplayLocale), aTable);
     }
 

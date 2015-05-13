@@ -82,7 +82,7 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
     GlobalPasswordSettings.setPasswordConstraintList (new PasswordConstraintList (new PasswordConstraintMinLength (DEFAULT_PASSWORD_MIN_LENGTH)));
 
     // Email global settings
-    EmailGlobalSettings.setEmailDataTransportListener (new AuditingEmailDataTransportListener ());
+    EmailGlobalSettings.addEmailDataTransportListener (new AuditingEmailDataTransportListener ());
 
     // HTML output settings
     if (!GlobalDebug.isDebugMode ())
