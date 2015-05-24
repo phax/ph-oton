@@ -53,6 +53,7 @@ import com.helger.photon.basic.security.usergroup.IUserGroup;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
+import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -160,7 +161,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final IHCTableFormView <?> aTable = aNodeList.addAndReturnChild (new BootstrapTableFormView (new HCCol (170),
-                                                                                                       HCCol.star ()));
+                                                                                                 HCCol.star ()));
     aTable.setSpanningHeaderContent (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                   aSelectedObject.getName ()));
 
@@ -188,7 +189,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
       for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aAssignedUserGroups,
-                                                                    new ComparatorHasName <IUserGroup> (aDisplayLocale)))
+                                                                     new ComparatorHasName <IUserGroup> (aDisplayLocale)))
         aUserGroupUI.addChild (HCDiv.create (aUserGroup.getName ()));
       aTable.createItemRow ()
             .setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
@@ -240,7 +241,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   @Override
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final IRole aSelectedObject,
-                                @Nonnull final AbstractHCForm <?> aForm,
+                                @Nonnull final BootstrapForm aForm,
                                 @Nonnull final EWebPageFormAction eFormAction,
                                 @Nonnull final FormErrors aFormErrors)
   {
@@ -260,9 +261,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                   @Nonnull final IRole aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (new BootstrapQuestionBox ().addChild (
-                                                    EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                               aSelectedObject.getName ())));
+    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                     aSelectedObject.getName ())));
   }
 
   @Override
@@ -273,15 +273,13 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
     if (AccessManager.getInstance ().deleteRole (aSelectedObject.getID ()).isChanged ())
     {
-      aNodeList.addChild (new BootstrapSuccessBox ().addChild (
-                                                         EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                      aSelectedObject.getName ())));
+      aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                            aSelectedObject.getName ())));
     }
     else
     {
-      aNodeList.addChild (new BootstrapErrorBox ().addChild (
-                                                       EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                  aSelectedObject.getName ())));
+      aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                        aSelectedObject.getName ())));
     }
   }
 
@@ -292,8 +290,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final AccessManager aAccessMgr = AccessManager.getInstance ();
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), new HCCol (110), createActionCol (1))
-                                            .setID (getID ());
+    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), new HCCol (110), createActionCol (1)).setID (getID ());
     aTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
                                      EText.HEADER_IN_USE.getDisplayText (aDisplayLocale),
                                      EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));

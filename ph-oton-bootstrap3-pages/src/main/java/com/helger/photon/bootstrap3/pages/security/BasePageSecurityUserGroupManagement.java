@@ -58,6 +58,7 @@ import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableForm;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
@@ -183,7 +184,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final IHCTableFormView <?> aTable = aNodeList.addAndReturnChild (new BootstrapTableFormView (new HCCol (170),
-                                                                                                       HCCol.star ()));
+                                                                                                 HCCol.star ()));
     aTable.setSpanningHeaderContent (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                   aSelectedObject.getName ()));
     onShowSelectedObjectTableStart (aWPEC, aTable, aSelectedObject);
@@ -322,7 +323,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
         // We're editing an existing object
         aAccessMgr.setUserGroupData (sUserGroupID, sName, sDescription, aAttrMap);
-        aNodeList.addChild (new BootstrapSuccessBox ().addChild ( EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
+        aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
 
         // assign to the matching roles
         final Collection <String> aPrevRoleIDs = aSelectedObject.getAllContainedRoleIDs ();
@@ -340,7 +341,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       {
         // We're creating a new object
         final IUserGroup aNewUserGroup = aAccessMgr.createNewUserGroup (sName, sDescription, aCustomAttrMap);
-        aNodeList.addChild (new BootstrapSuccessBox ().addChild ( EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
+        aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
 
         // assign to the matching internal user groups
         for (final String sRoleID : aRoleIDs)
@@ -352,13 +353,12 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   @Override
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final IUserGroup aSelectedObject,
-                                @Nonnull final AbstractHCForm <?> aForm,
+                                @Nonnull final BootstrapForm aForm,
                                 @Nonnull final EWebPageFormAction eFormAction,
                                 @Nonnull final FormErrors aFormErrors)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final IHCTableForm <?> aTable = aForm.addAndReturnChild (new BootstrapTableForm (new HCCol (170),
-                                                                                           HCCol.star ()));
+    final IHCTableForm <?> aTable = aForm.addAndReturnChild (new BootstrapTableForm (new HCCol (170), HCCol.star ()));
     aTable.setSpanningHeaderContent (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                       aSelectedObject.getName ())
                                                           : EText.TITLE_CREATE.getDisplayText (aDisplayLocale));
@@ -414,9 +414,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                   @Nonnull final IUserGroup aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (new BootstrapQuestionBox ().addChild (
-                                                    EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                               aSelectedObject.getName ())));
+    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                     aSelectedObject.getName ())));
   }
 
   @Override
@@ -426,13 +425,11 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     if (AccessManager.getInstance ().deleteUserGroup (aSelectedObject.getID ()).isChanged ())
-      aNodeList.addChild (new BootstrapSuccessBox ().addChild (
-                                                         EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                      aSelectedObject.getName ())));
+      aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                            aSelectedObject.getName ())));
     else
-      aNodeList.addChild (new BootstrapErrorBox ().addChild (
-                                                       EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                  aSelectedObject.getName ())));
+      aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                        aSelectedObject.getName ())));
   }
 
   @Override
@@ -445,8 +442,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final IButtonToolbar <?> aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addButtonNew (EText.BUTTON_CREATE_NEW_USERGROUP.getDisplayText (aDisplayLocale), createCreateURL (aWPEC));
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), new HCCol (110), createActionCol (2))
-                                            .setID (getID ());
+    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), new HCCol (110), createActionCol (2)).setID (getID ());
     aTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
                                      EText.HEADER_IN_USE.getDisplayText (aDisplayLocale),
                                      EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));

@@ -26,6 +26,7 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
@@ -33,7 +34,9 @@ import com.helger.photon.bootstrap3.form.EBootstrapFormType;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.page.AbstractWebPageForm;
+import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.validation.error.FormErrors;
 
 /**
  * Abstract base class for a Bootstrap based web page that has the common form
@@ -99,4 +102,22 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     return new BootstrapErrorBox ().addChild (EPhotonCoreText.ERR_INCORRECT_INPUT.getDisplayText (aDisplayLocale));
   }
+
+  @Override
+  protected final void showInputForm (@Nonnull final WPECTYPE aWPEC,
+                                      @Nullable final DATATYPE aSelectedObject,
+                                      @Nonnull final AbstractHCForm <?> aForm,
+                                      @Nonnull final EWebPageFormAction eFormAction,
+                                      @Nonnull final FormErrors aFormErrors)
+  {
+    // Change type from AbstractHCForm <?> to BootstrapForm
+    final BootstrapForm aBootstrapForm = (BootstrapForm) aForm;
+    showInputForm (aWPEC, aSelectedObject, aBootstrapForm, eFormAction, aFormErrors);
+  }
+
+  protected abstract void showInputForm (@Nonnull final WPECTYPE aWPEC,
+                                         @Nullable final DATATYPE aSelectedObject,
+                                         @Nonnull final BootstrapForm aForm,
+                                         @Nonnull final EWebPageFormAction eFormAction,
+                                         @Nonnull final FormErrors aFormErrors);
 }
