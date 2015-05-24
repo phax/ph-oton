@@ -371,8 +371,7 @@ public class FineUploaderBasic
   @Nonnull
   public FineUploaderBasic setMaxConnections (@Nonnegative final int nMaxConnections)
   {
-    if (nMaxConnections <= 0)
-      throw new IllegalArgumentException ("maxConnections may not be negative!");
+    ValueEnforcer.isGT0 (nMaxConnections, "MaxConnections");
     m_nMaxConnections = nMaxConnections;
     return this;
   }
