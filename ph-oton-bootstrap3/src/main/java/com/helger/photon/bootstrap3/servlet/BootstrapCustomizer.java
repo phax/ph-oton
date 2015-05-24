@@ -57,12 +57,14 @@ public class BootstrapCustomizer extends HCEmptyCustomizer
                              @Nonnull final IHCNode aNode,
                              @Nonnull final EHTMLVersion eHTMLVersion)
   {
-    if (aNode instanceof HCImg)
+    if (false && aNode instanceof HCImg)
     {
       final HCImg aImg = (HCImg) aNode;
       final ScalableSize aExtent = aImg.getExtent ();
       // Workaround for IE if a CSS contains "width:auto" and/or "height:auto"
-      // See e.g. https://github.com/twitter/bootstrap/issues/1899
+      // See https://github.com/twitter/bootstrap/issues/1899
+      // Or https://github.com/twbs/bootstrap/issues/4471
+      // Or https://github.com/twbs/bootstrap/issues/4935
       if (aExtent != null)
       {
         aImg.addStyles (CCSSProperties.WIDTH.newValue (ECSSUnit.px (aExtent.getWidth ())),
