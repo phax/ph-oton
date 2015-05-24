@@ -90,4 +90,18 @@ public interface IUserDataObject extends Serializable
    *         <code>false</code> if it is used in production.
    */
   boolean isTemporary ();
+
+  /**
+   * Create a clone of this object but for a different path. This is a utility
+   * method to easily "change" the path of a UDO independent of the
+   * implementation.
+   * 
+   * @param sPath
+   *        The new path to use. May neither be <code>null</code> nor empty.
+   * @return A new user data object which has the same temporary state as the
+   *         original. An implementation may chose to return <code>this</code>
+   *         if the path is identical to the path of this UDO.
+   */
+  @Nonnull
+  IUserDataObject getCloneWithDifferentPath (@Nonnull @Nonempty String sPath);
 }

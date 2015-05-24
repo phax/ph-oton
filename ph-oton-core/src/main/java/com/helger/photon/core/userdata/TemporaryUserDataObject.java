@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.string.StringHelper;
 
 /**
@@ -36,6 +37,13 @@ public class TemporaryUserDataObject extends AbstractUserDataObject
   public TemporaryUserDataObject (@Nonnull @Nonempty final String sPath)
   {
     super (sPath, true);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public TemporaryUserDataObject getCloneWithDifferentPath (@Nonnull @Nonempty final String sPath)
+  {
+    return new TemporaryUserDataObject (sPath);
   }
 
   @Nullable
