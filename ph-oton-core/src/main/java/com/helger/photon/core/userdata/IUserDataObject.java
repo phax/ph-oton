@@ -21,6 +21,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.url.SimpleURL;
@@ -33,6 +34,7 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
+@MustImplementEqualsAndHashcode
 public interface IUserDataObject extends Serializable
 {
   /**
@@ -95,7 +97,7 @@ public interface IUserDataObject extends Serializable
    * Create a clone of this object but for a different path. This is a utility
    * method to easily "change" the path of a UDO independent of the
    * implementation.
-   * 
+   *
    * @param sPath
    *        The new path to use. May neither be <code>null</code> nor empty.
    * @return A new user data object which has the same temporary state as the
