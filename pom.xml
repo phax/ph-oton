@@ -243,11 +243,6 @@
         <artifactId>jetty-jsp</artifactId>
         <version>${jetty.version}</version>
       </dependency>
-      <!-- Must be 3.1.0 for Jetty 9.x! -->
-      <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-      </dependency>
     </dependencies>
   </dependencyManagement>
   
