@@ -20,17 +20,28 @@ import javax.annotation.Nonnull;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.helger.commons.GlobalDebug;
+import com.helger.commons.SystemProperties;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.commons.scopes.ScopeUtils;
+import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.customize.HCDefaultCustomizer;
+import com.helger.html.hc.customize.HCMultiCustomizer;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.photon.bootstrap3.EBootstrapCSSPathProvider;
 import com.helger.photon.bootstrap3.EBootstrapJSPathProvider;
+import com.helger.photon.bootstrap3.servlet.BootstrapCustomizer;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.app.html.PhotonMetaElements;
+import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.uicore.EUICoreCSSPathProvider;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
+import com.helger.photon.uictrls.autonumeric.AbstractHCAutoNumeric;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
+import com.helger.web.scopes.factory.ThrowingScopeFactory;
+import com.helger.web.scopes.mgr.WebScopeManager;
 
 /**
  * This class triggers some default configuration to run ph-oton applications
@@ -81,8 +92,33 @@ public final class PhotonStubConfigurationListener implements ServletContextList
   {
     _registerDefaultResources ();
 
+    // Scope handling
+    ThrowingScopeFactory.installToMetaScopeFactory ();
+
+    if (GlobalDebug.isDebugMode ())
+    {
+      if (false)
+        ScopeUtils.setDebugSessionScopeEnabled (true);
+      SystemProperties.setPropertyValue ("sun.io.serialization.extendedDebugInfo", "true");
+      // Not production ready yet
+      WebScopeManager.setSessionPassivationAllowed (true);
+
+      // Disable in debug mode
+      RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);
+    }
+
     // Set default icon set
     EFamFamIcon.setAsDefault ();
+
+    // Never use a thousand separator in HCAutoNumeric fields because of parsing
+    // problems
+    AbstractHCAutoNumeric.setDefaultThousandSeparator ("");
+
+    // Special Bootstrap customizer
+    // Default customizer: disable CSS classes - should fix issue with checkbox
+    // in form in IE9
+    HCSettings.getConversionSettingsProvider ().setCustomizer (new HCMultiCustomizer (new HCDefaultCustomizer (false),
+                                                                                      new BootstrapCustomizer ()));
   }
 
   public void contextDestroyed (final ServletContextEvent sce)
