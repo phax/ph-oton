@@ -35,7 +35,7 @@ import com.helger.html.js.builder.jquery.JQueryInvocation;
  * so that potentially identical options can be merged to a single invocation.<br>
  * Must implement equals and hashcode to be able to get removed "stateless" from
  * a node
- * 
+ *
  * @author Philip Helger
  */
 @OutOfBandNode
@@ -43,11 +43,11 @@ import com.helger.html.js.builder.jquery.JQueryInvocation;
 @SpecialNodeListModifier (HCAutoNumericSpecialNodeListModifier.class)
 public class HCAutoNumericJS extends HCScriptOnDocumentReady
 {
-  private final HCAutoNumeric m_aAutoNumeric;
+  private final AbstractHCAutoNumeric <?> m_aAutoNumeric;
 
   @Nonnull
   public static IJSCodeProvider createInitCode (@Nullable final JQueryInvocation aExplicitAutoNumeric,
-                                                @Nonnull final HCAutoNumeric aAutoNumeric)
+                                                @Nonnull final AbstractHCAutoNumeric <?> aAutoNumeric)
   {
     final JQueryInvocation aInvocation = aExplicitAutoNumeric != null ? aExplicitAutoNumeric
                                                                      : JQuery.idRef (aAutoNumeric);
@@ -56,14 +56,14 @@ public class HCAutoNumericJS extends HCScriptOnDocumentReady
     return ret;
   }
 
-  public HCAutoNumericJS (@Nonnull final HCAutoNumeric aAutoNumeric)
+  public HCAutoNumericJS (@Nonnull final AbstractHCAutoNumeric <?> aAutoNumeric)
   {
     super (createInitCode (null, aAutoNumeric));
     m_aAutoNumeric = aAutoNumeric;
   }
 
   @Nonnull
-  public HCAutoNumeric getAutoNumeric ()
+  public AbstractHCAutoNumeric <?> getAutoNumeric ()
   {
     return m_aAutoNumeric;
   }

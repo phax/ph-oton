@@ -66,7 +66,7 @@ public final class HCAutoNumericSpecialNodeListModifier implements IHCSpecialNod
     while (!aRest.isEmpty ())
     {
       final HCAutoNumericJS aCurrent = aRest.remove (0);
-      final HCAutoNumeric aCurrentAutoNumeric = aCurrent.getAutoNumeric ();
+      final AbstractHCAutoNumeric <?> aCurrentAutoNumeric = aCurrent.getAutoNumeric ();
       final JSAssocArray aCurrentJSOptions = aCurrentAutoNumeric.getJSOptions ();
 
       // Find all other auto numerics with the same options
@@ -75,7 +75,7 @@ public final class HCAutoNumericSpecialNodeListModifier implements IHCSpecialNod
       while (itRest.hasNext ())
       {
         final HCAutoNumericJS aCurrentRest = itRest.next ();
-        final HCAutoNumeric aCurrentRestAutoNumeric = aCurrentRest.getAutoNumeric ();
+        final AbstractHCAutoNumeric <?> aCurrentRestAutoNumeric = aCurrentRest.getAutoNumeric ();
         if (aCurrentRestAutoNumeric.getJSOptions ().equals (aCurrentJSOptions))
         {
           aSameOptions.add (aCurrentRest);

@@ -24,10 +24,10 @@ import com.helger.photon.core.form.RequestField;
 
 /**
  * Special auto numeric that only takes integers (and not decimal places)
- * 
+ *
  * @author Philip Helger
  */
-public class HCAutoNumericInt extends HCAutoNumeric
+public class HCAutoNumericInt extends AbstractHCAutoNumeric <HCAutoNumericInt>
 {
   public HCAutoNumericInt (@Nonnull final RequestField aRF)
   {
