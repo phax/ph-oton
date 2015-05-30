@@ -47,7 +47,7 @@ public class PhotonHTMLSettings
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("s_aRWLock")
-  private static IWebURIToURLConverter m_aURIToURLConverter = StreamOrLocalURIToURLConverter.getInstance ();
+  private static IWebURIToURLConverter s_aURIToURLConverter = StreamOrLocalURIToURLConverter.getInstance ();
 
   private PhotonHTMLSettings ()
   {}
@@ -85,7 +85,7 @@ public class PhotonHTMLSettings
     s_aRWLock.readLock ().lock ();
     try
     {
-      return m_aURIToURLConverter;
+      return s_aURIToURLConverter;
     }
     finally
     {
@@ -100,7 +100,7 @@ public class PhotonHTMLSettings
     s_aRWLock.writeLock ().lock ();
     try
     {
-      m_aURIToURLConverter = aURIToURLConverter;
+      s_aURIToURLConverter = aURIToURLConverter;
     }
     finally
     {
