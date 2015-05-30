@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.exchange;
+package com.helger.photon.exchange.bulkexport;
 
 import static org.junit.Assert.assertEquals;
 
