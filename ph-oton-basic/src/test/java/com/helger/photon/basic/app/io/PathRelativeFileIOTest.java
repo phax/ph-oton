@@ -29,17 +29,14 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 
 import com.helger.commons.io.streams.StreamUtils;
-import com.helger.photon.basic.app.io.IPathRelativeIO;
-import com.helger.photon.basic.app.io.PathRelativeFileIO;
-import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.mock.PhotonBasicTestRule;
 
 /**
  * Test class for class {@link PathRelativeFileIO}
- * 
+ *
  * @author Philip Helger
  */
-public final class PathRelativeIOTest
+public final class PathRelativeFileIOTest
 {
   @Rule
   public final TestRule m_aRule = new PhotonBasicTestRule ();

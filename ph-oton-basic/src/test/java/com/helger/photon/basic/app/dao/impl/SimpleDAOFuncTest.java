@@ -38,7 +38,7 @@ import com.helger.photon.basic.mock.PhotonBasicTestRule;
  * 
  * @author Philip Helger
  */
-public class SimpleDAOTest
+public class SimpleDAOFuncTest
 {
   private static final class MyDAO extends AbstractSimpleDAO
   {
