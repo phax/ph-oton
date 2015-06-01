@@ -43,6 +43,7 @@ import com.helger.photon.core.app.layout.ApplicationLayoutManager;
 import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
 import com.helger.photon.core.userdata.UserDataManager;
 import com.helger.smtp.EmailGlobalSettings;
+import com.helger.smtp.transport.listener.LoggingConnectionListener;
 import com.helger.web.mock.MockHttpServletResponse;
 import com.helger.web.mock.OfflineHttpServletRequest;
 import com.helger.web.scopes.mgr.WebScopeManager;
@@ -83,10 +84,15 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
 
     // Email global settings
     EmailGlobalSettings.addEmailDataTransportListener (new AuditingEmailDataTransportListener ());
-
-    // HTML output settings
-    if (!GlobalDebug.isDebugMode ())
+    if (GlobalDebug.isDebugMode ())
+    {
+      EmailGlobalSettings.addConnectionListener (new LoggingConnectionListener ());
+    }
+    else
+    {
+      // HTML output settings
       HCSettings.getConversionSettingsProvider ().setToOptimized ();
+    }
   }
 
   @Override
