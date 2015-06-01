@@ -62,6 +62,7 @@ public enum ETinyMCE4Plugin
   PASTE ("paste"),
   PREVIEW ("preview"),
   PRINT ("print"),
+  TEXTMACRO ("textmacro"),
   SAVE ("save"),
   SEARCHREPLACE ("searchreplace"),
   SPELLCHECKER ("spellchecker"),
