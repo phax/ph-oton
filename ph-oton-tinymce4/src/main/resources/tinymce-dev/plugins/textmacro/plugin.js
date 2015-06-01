@@ -1,52 +1,26 @@
 tinymce.PluginManager.add('textmacro', function(editor) {
+	var settings = editor.settings;
+	var macro_title = settings.macro_title || 'Macro';
+	var macro_patterns = settings.macro_patterns || {};
+	
+	var entries = [];
+	for(var key in macro_patterns)
+	{
+		var createOnClick = function(txt){
+			return function(){
+			  tinymce.activeEditor.execCommand('mceInsertContent', false, txt);
+			};
+		};
+		entries.push({
+			text : key,
+			onclick : createOnClick(macro_patterns[key])
+		});
+	}
   
     editor.addButton('textmacro', {
-        text: 'Macro',
+        text: macro_title,
         type: 'menubutton',
         icon: false,
-        menu: [
-				{
-					text : 'Anrede',
-					onclick : function() {
-						tinymce.activeEditor.execCommand('mceInsertContent', false, "$greetingcomplete$ ");
-					}
-				},
-				{
-					text : 'Empfängername',
-					onclick : function() {
-						tinymce.activeEditor.execCommand('mceInsertContent', false, "$recipientname$ ");
-					}
-				},
-				{
-					text : 'Lieferdatum',
-					onclick : function() {
-						tinymce.activeEditor.execCommand('mceInsertContent', false, "$deliverydate$ ");
-					}
-				},
-				{
-					text : 'Rechnungsnummer',
-					onclick : function() {
-						tinymce.activeEditor.execCommand('mceInsertContent', false, "$invoicenumber$ ");
-					}
-				},
-				{
-					text : 'Senderadresse',
-					onclick : function() {
-						tinymce.activeEditor.execCommand('mceInsertContent', false, "$accountingareaaddress$ ");
-					}
-				},
-				{
-					text : 'Senderername',
-					onclick : function() {
-						tinymce.activeEditor.execCommand('mceInsertContent', false, "$sendername$ ");
-					}
-				},
-				{	
-					text : 'Typ',
-					onclick : function() {
-						tinymce.activeEditor.execCommand('mceInsertContent', false, "$objecttype$ ");
-					}
-				},
-			]
+        menu: entries,
     });
  });
