@@ -51,12 +51,15 @@ import com.helger.html.hc.html.HCEdit;
 import com.helger.html.hc.html.HCEditPassword;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
+import com.helger.photon.bootstrap3.button.BootstrapButton;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
+import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableForm;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
@@ -258,11 +261,11 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final ISMTPSettings aSettings = aSelectedObject.getSMTPSettings ();
 
+    aNodeList.addChild (createInPageHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                         aSelectedObject.getName ())));
+
     final IHCTableFormView <?> aTable = aNodeList.addAndReturnChild (new BootstrapTableFormView (new HCCol (170),
                                                                                                  HCCol.star ()));
-    aTable.setSpanningHeaderContent (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                  aSelectedObject.getName ()));
-
     aTable.createItemRow ()
           .setLabel (EText.LABEL_NAME.getDisplayText (aDisplayLocale))
           .setCtrl (aSelectedObject.getName ());
@@ -402,12 +405,13 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final ISMTPSettings aSettings = aSelectedObject == null ? null : aSelectedObject.getSMTPSettings ();
 
+    aForm.addChild (createInPageHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                         aSelectedObject.getName ())
+                                                             : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
+
     final IHCTableForm <?> aTable = aForm.addAndReturnChild (new BootstrapTableForm (new HCCol (170),
                                                                                      HCCol.star (),
                                                                                      new HCCol (20)));
-    aTable.setSpanningHeaderContent (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                      aSelectedObject.getName ())
-                                                          : EText.TITLE_CREATE.getDisplayText (aDisplayLocale));
 
     {
       final String sName = EText.LABEL_NAME.getDisplayText (aDisplayLocale);
@@ -641,6 +645,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     // Toolbar on top
     final IButtonToolbar <?> aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addButtonNew (EText.BUTTON_CREATE_NEW.getDisplayText (aDisplayLocale), createCreateURL (aWPEC));
+    aToolbar.addChild (new BootstrapButton ().addChild (EWebPageText.PAGE_NAME_MONITORING_FAILED_MAILS.getDisplayText (aDisplayLocale))
+                                             .setOnClick (aWPEC.getLinkToMenuItem (BootstrapPagesMenuConfigurator.MENU_ADMIN_MONITORING_FAILEDMAILS))
+                                             .setIcon (EBootstrapIcon.ARROW_RIGHT));
 
     final IHCTable <?> aTable = new BootstrapTable (HCCol.star (),
                                                     new HCCol (200),

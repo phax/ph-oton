@@ -42,7 +42,6 @@ import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.AbstractHCButton;
 import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCol;
@@ -51,11 +50,14 @@ import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
+import com.helger.photon.bootstrap3.button.BootstrapButton;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
+import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -458,18 +460,25 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_RESEND_ALL.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION, ACTION_RESEND_ALL),
-                        EDefaultIcon.YES);
-    ((AbstractHCButton <?>) aToolbar.getLastChild ()).setDisabled (bDisabled);
-    aToolbar.addButton (EText.MSG_BUTTON_RESEND_ALL_DEFAULT_SETTINGS.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION, ACTION_RESEND_ALL_DEFAULT_SETTINGS),
-                        EDefaultIcon.YES);
-    ((AbstractHCButton <?>) aToolbar.getLastChild ()).setDisabled (bDisabled);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_DELETE_ALL.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION, ACTION_DELETE_ALL),
-                        EDefaultIcon.DELETE);
-    ((AbstractHCButton <?>) aToolbar.getLastChild ()).setDisabled (bDisabled);
+    aToolbar.addChild (new BootstrapButton ().addChild (EPhotonCoreText.BUTTON_RESEND_ALL.getDisplayText (aDisplayLocale))
+                                             .setOnClick (aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION,
+                                                                                    ACTION_RESEND_ALL))
+                                             .setIcon (EDefaultIcon.YES)
+                                             .setDisabled (bDisabled));
+    aToolbar.addChild (new BootstrapButton ().addChild (EText.MSG_BUTTON_RESEND_ALL_DEFAULT_SETTINGS.getDisplayText (aDisplayLocale))
+                                             .setOnClick (aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION,
+                                                                                    ACTION_RESEND_ALL_DEFAULT_SETTINGS))
+                                             .setIcon (EDefaultIcon.YES)
+                                             .setDisabled (bDisabled));
+    aToolbar.addChild (new BootstrapButton ().addChild (EPhotonCoreText.BUTTON_DELETE_ALL.getDisplayText (aDisplayLocale))
+                                             .setOnClick (aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION,
+                                                                                    ACTION_DELETE_ALL))
+                                             .setIcon (EDefaultIcon.DELETE)
+                                             .setDisabled (bDisabled));
+    aToolbar.addChild (new BootstrapButton ().addChild (EWebPageText.PAGE_NAME_SETTINGS_SMTP.getDisplayText (aDisplayLocale))
+                                             .setOnClick (aWPEC.getLinkToMenuItem (BootstrapPagesMenuConfigurator.MENU_ADMIN_SETTINGS_SMTP))
+                                             .setIcon (EBootstrapIcon.ARROW_RIGHT));
+
     aNodeList.addChild (aToolbar);
 
     final IHCTable <?> aTable = new BootstrapTable (HCCol.star (),

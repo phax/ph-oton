@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotations.ReturnsMutableObject;
 import com.helger.commons.idfactory.GlobalIDFactory;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
@@ -54,6 +55,12 @@ public class BootstrapFormGroup
   public BootstrapFormGroup ()
   {}
 
+  /**
+   * Ensure that this form group has a unique ID. If an ID is already present,
+   * nothing happens.
+   *
+   * @return this
+   */
   @Nonnull
   public final BootstrapFormGroup ensureID ()
   {
@@ -62,6 +69,13 @@ public class BootstrapFormGroup
     return this;
   }
 
+  /**
+   * Set the ID of this form group.
+   *
+   * @param sFormGroupID
+   *        The from group ID to be set. May be <code>null</code>.
+   * @return this
+   */
   @Nonnull
   public final BootstrapFormGroup setID (@Nullable final String sFormGroupID)
   {
@@ -69,6 +83,10 @@ public class BootstrapFormGroup
     return this;
   }
 
+  /**
+   * @return <code>true</code> if an ID is present, <code>false</code>
+   *         otherwise.
+   */
   public boolean hasID ()
   {
     return StringHelper.hasText (m_sID);
@@ -86,6 +104,7 @@ public class BootstrapFormGroup
   }
 
   @Nonnull
+  @ReturnsMutableObject (reason = "design")
   public HCHasCSSClasses getCSSClasses ()
   {
     if (m_aCSSClasses == null)
@@ -99,6 +118,7 @@ public class BootstrapFormGroup
   }
 
   @Nonnull
+  @ReturnsMutableObject (reason = "design")
   public HCHasCSSStyles getCSSStyles ()
   {
     if (m_aCSSStyles == null)
