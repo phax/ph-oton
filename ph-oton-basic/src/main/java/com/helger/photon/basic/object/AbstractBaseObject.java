@@ -26,9 +26,11 @@ import org.joda.time.LocalDateTime;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.state.EChange;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.PDTUtils;
+import com.helger.photon.basic.security.audit.CAudit;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 
 /**
@@ -109,7 +111,13 @@ public abstract class AbstractBaseObject implements IObject
 
   public final void setLastModificationNow ()
   {
-    setLastModification (PDTFactory.getCurrentDateTime (), LoggedInUserManager.getInstance ().getCurrentUserID ());
+    String sCurrentUserID = LoggedInUserManager.getInstance ().getCurrentUserID ();
+    if (StringHelper.hasNoText (sCurrentUserID))
+    {
+      // No user is logged in- use the internal guest user ID
+      sCurrentUserID = CAudit.GUEST_USERID;
+    }
+    setLastModification (PDTFactory.getCurrentDateTime (), sCurrentUserID);
   }
 
   public final void setLastModification (@Nonnull final DateTime aLastModificationDT,
