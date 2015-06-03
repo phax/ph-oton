@@ -26,7 +26,6 @@ import com.helger.commons.exceptions.InitializationException;
 import com.helger.commons.lang.CGStringHelper;
 import com.helger.commons.scopes.IScope;
 import com.helger.commons.scopes.singleton.GlobalSingleton;
-import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.security.lock.ObjectLockManager;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
@@ -86,9 +85,9 @@ public final class PhotonCoreManager extends GlobalSingleton
 
       s_aLogger.info (CGStringHelper.getClassLocalName (this) + " was initialized");
     }
-    catch (final DAOException ex)
+    catch (final Throwable t)
     {
-      throw new InitializationException ("Failed to init managers", ex);
+      throw new InitializationException ("Failed to init " + CGStringHelper.getClassLocalName (this), t);
     }
   }
 
