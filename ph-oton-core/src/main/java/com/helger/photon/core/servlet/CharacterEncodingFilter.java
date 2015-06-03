@@ -105,7 +105,7 @@ public class CharacterEncodingFilter implements Filter
       if (sOldRequestEncoding == null || isForceEncoding ())
       {
         aRequest.setCharacterEncoding (sEncoding);
-        if (sOldRequestEncoding != null && !sEncoding.equals (sOldRequestEncoding))
+        if (sOldRequestEncoding != null && !sEncoding.equalsIgnoreCase (sOldRequestEncoding))
           s_aLogger.info ("Changed request encoding from '" + sOldRequestEncoding + "' to '" + sEncoding + "'");
       }
       aResponse.setCharacterEncoding (sEncoding);
