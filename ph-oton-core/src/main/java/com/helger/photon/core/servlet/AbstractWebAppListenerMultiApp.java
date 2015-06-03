@@ -141,7 +141,7 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
       catch (final RuntimeException ex)
       {
         // Log so that the failed application can easily be determined.
-        s_aLogger.error ("Failed to init application '" + sAppID + "'");
+        s_aLogger.error ("Failed to init application '" + sAppID + "'", ex);
 
         // re-throw
         throw ex;
