@@ -96,6 +96,9 @@ public final class CSecurity
   public static final String USER_GUEST_NAME = "Guest";
   public static final String USER_GUEST_PASSWORD = "guest";
 
+  /** The user ID to be used, if no user is logged in */
+  public static final String USER_ID_NONE_LOGGED_IN = "$GUEST$";
+
   // Default roles
   public static final String ROLE_ADMINISTRATOR_ID = "radmin";
   public static final String ROLE_ADMINISTRATOR_NAME = "Administrator";

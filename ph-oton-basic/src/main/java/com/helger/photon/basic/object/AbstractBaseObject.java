@@ -30,7 +30,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.PDTUtils;
-import com.helger.photon.basic.security.audit.CAudit;
+import com.helger.photon.basic.security.CSecurity;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 
 /**
@@ -115,7 +115,7 @@ public abstract class AbstractBaseObject implements IObject
     if (StringHelper.hasNoText (sCurrentUserID))
     {
       // No user is logged in- use the internal guest user ID
-      sCurrentUserID = CAudit.GUEST_USERID;
+      sCurrentUserID = CSecurity.USER_ID_NONE_LOGGED_IN;
     }
     setLastModification (PDTFactory.getCurrentDateTime (), sCurrentUserID);
   }

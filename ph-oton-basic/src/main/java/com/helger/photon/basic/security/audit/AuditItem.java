@@ -25,8 +25,10 @@ import org.joda.time.LocalDateTime;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hash.HashCodeGenerator;
 import com.helger.commons.state.ESuccess;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
+import com.helger.photon.basic.security.CSecurity;
 
 /**
  * Represents a single change item
@@ -48,7 +50,7 @@ final class AuditItem implements IAuditItem
                     @Nonnull final String sAction)
   {
     this (PDTFactory.getCurrentLocalDateTime (),
-          sUserID != null ? sUserID : CAudit.GUEST_USERID,
+          StringHelper.hasText (sUserID) ? sUserID : CSecurity.USER_ID_NONE_LOGGED_IN,
           eType,
           eSuccess,
           sAction);
@@ -81,7 +83,7 @@ final class AuditItem implements IAuditItem
 
   public boolean isAnonymousUser ()
   {
-    return CAudit.GUEST_USERID.equals (m_sUserID);
+    return CSecurity.USER_ID_NONE_LOGGED_IN.equals (m_sUserID);
   }
 
   @Nonnull
