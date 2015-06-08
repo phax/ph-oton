@@ -519,12 +519,24 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
     return createActionHeaderDefault (sText);
   }
 
+  @Nonnull
+  public static IHCElementWithChildren <?> createDataGroupHeaderDefault ()
+  {
+    return new HCDiv ().addClass (CSS_CLASS_DATAGROUP_HEADER);
+  }
+
   @Nullable
   public static IHCElementWithChildren <?> createDataGroupHeaderDefault (@Nullable final String sText)
   {
     if (StringHelper.hasNoText (sText))
       return null;
-    return new HCDiv ().addClass (CSS_CLASS_DATAGROUP_HEADER).addChild (sText);
+    return createDataGroupHeaderDefault ().addChild (sText);
+  }
+
+  @Nonnull
+  protected IHCElementWithChildren <?> createDataGroupHeader ()
+  {
+    return createDataGroupHeaderDefault ();
   }
 
   @Nullable
