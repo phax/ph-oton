@@ -17,7 +17,6 @@
 package com.helger.photon.bootstrap3.dropdown;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
@@ -39,7 +38,7 @@ public enum EBootstrapDropdownType implements ICSSClassProvider
     m_aCSSClass = aCSSClass;
   }
 
-  @Nullable
+  @Nonnull
   public String getCSSClass ()
   {
     return m_aCSSClass.getCSSClass ();
