@@ -43,6 +43,7 @@ import com.helger.css.property.CCSSProperties;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.CHCParam;
+import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCol;
@@ -495,7 +496,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   }
 
   @Nullable
-  public static IHCNode createActionHeaderDefault (@Nullable final String sText)
+  public static IHCElementWithChildren <?> createActionHeaderDefault (@Nullable final String sText)
   {
     if (StringHelper.hasNoText (sText))
       return null;
@@ -513,13 +514,13 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   }
 
   @Nullable
-  protected IHCNode createActionHeader (@Nullable final String sText)
+  protected IHCElementWithChildren <?> createActionHeader (@Nullable final String sText)
   {
     return createActionHeaderDefault (sText);
   }
 
   @Nullable
-  public static IHCNode createDataGroupHeaderDefault (@Nullable final String sText)
+  public static IHCElementWithChildren <?> createDataGroupHeaderDefault (@Nullable final String sText)
   {
     if (StringHelper.hasNoText (sText))
       return null;
@@ -527,7 +528,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   }
 
   @Nullable
-  protected IHCNode createDataGroupHeader (@Nullable final String sText)
+  protected IHCElementWithChildren <?> createDataGroupHeader (@Nullable final String sText)
   {
     return createDataGroupHeaderDefault (sText);
   }
