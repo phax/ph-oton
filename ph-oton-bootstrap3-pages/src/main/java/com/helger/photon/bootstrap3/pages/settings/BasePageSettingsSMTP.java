@@ -58,11 +58,11 @@ import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButton;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
+import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
-import com.helger.photon.bootstrap3.table.BootstrapTableForm;
-import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
@@ -71,8 +71,6 @@ import com.helger.photon.core.smtp.CNamedSMTPSettings;
 import com.helger.photon.core.smtp.NamedSMTPSettings;
 import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 import com.helger.photon.uicore.html.select.HCCharsetSelect;
-import com.helger.photon.uicore.html.table.IHCTableForm;
-import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
@@ -264,49 +262,40 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                          aSelectedObject.getName ())));
 
-    final IHCTableFormView <?> aTable = aNodeList.addAndReturnChild (new BootstrapTableFormView (new HCCol (170),
-                                                                                                 HCCol.star ()));
-    aTable.createItemRow ()
-          .setLabel (EText.LABEL_NAME.getDisplayText (aDisplayLocale))
-          .setCtrl (aSelectedObject.getName ());
+    final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_NAME.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (aSelectedObject.getName ()));
 
-    aTable.createItemRow ()
-          .setLabel (EText.LABEL_HOSTNAME.getDisplayText (aDisplayLocale))
-          .setCtrl (aSettings.getHostName ());
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_HOSTNAME.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (aSettings.getHostName ()));
 
-    aTable.createItemRow ()
-          .setLabel (EText.LABEL_PORT.getDisplayText (aDisplayLocale))
-          .setCtrl (aSettings.getPort () > 0 ? Integer.toString (aSettings.getPort ())
-                                            : EText.PORT_DEFAULT.getDisplayText (aDisplayLocale));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_PORT.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (aSettings.getPort () > 0 ? Integer.toString (aSettings.getPort ())
+                                                                                   : EText.PORT_DEFAULT.getDisplayText (aDisplayLocale)));
 
-    aTable.createItemRow ()
-          .setLabel (EText.LABEL_USERNAME.getDisplayText (aDisplayLocale))
-          .setCtrl (aSettings.getUserName ());
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERNAME.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (aSettings.getUserName ()));
 
-    aTable.createItemRow ()
-          .setLabel (EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale))
-          .setCtrl (StringHelper.hasText (aSettings.getPassword ()) ? "***"
-                                                                   : EText.MSG_NO_PASSWORD_SET.getDisplayText (aDisplayLocale));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (StringHelper.hasText (aSettings.getPassword ()) ? "***"
+                                                                                                          : EText.MSG_NO_PASSWORD_SET.getDisplayText (aDisplayLocale)));
 
-    aTable.createItemRow ()
-          .setLabel (EText.LABEL_CHARSET.getDisplayText (aDisplayLocale))
-          .setCtrl (aSettings.getCharset ());
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_CHARSET.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (aSettings.getCharset ()));
 
-    aTable.createItemRow ()
-          .setLabel (EText.LABEL_SSL.getDisplayText (aDisplayLocale))
-          .setCtrl (EPhotonCoreText.getYesOrNo (aSettings.isSSLEnabled (), aDisplayLocale));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_SSL.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (EPhotonCoreText.getYesOrNo (aSettings.isSSLEnabled (),
+                                                                                       aDisplayLocale)));
 
-    aTable.createItemRow ()
-          .setLabel (EText.LABEL_STARTTLS.getDisplayText (aDisplayLocale))
-          .setCtrl (EPhotonCoreText.getYesOrNo (aSettings.isSTARTTLSEnabled (), aDisplayLocale));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_STARTTLS.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (EPhotonCoreText.getYesOrNo (aSettings.isSTARTTLSEnabled (),
+                                                                                       aDisplayLocale)));
 
-    aTable.createItemRow ()
-          .setLabel (EText.LABEL_CONNECTION_TIMEOUT.getDisplayText (aDisplayLocale))
-          .setCtrl (Long.toString (aSettings.getConnectionTimeoutMilliSecs ()));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_CONNECTION_TIMEOUT.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (Long.toString (aSettings.getConnectionTimeoutMilliSecs ())));
 
-    aTable.createItemRow ()
-          .setLabel (EText.LABEL_SOCKET_TIMEOUT.getDisplayText (aDisplayLocale))
-          .setCtrl (Long.toString (aSettings.getTimeoutMilliSecs ()));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_SOCKET_TIMEOUT.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (Long.toString (aSettings.getTimeoutMilliSecs ())));
   }
 
   @Override
@@ -409,118 +398,112 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
                                                                                                          aSelectedObject.getName ())
                                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
 
-    final IHCTableForm <?> aTable = aForm.addAndReturnChild (new BootstrapTableForm (new HCCol (170),
-                                                                                     HCCol.star (),
-                                                                                     new HCCol (20)));
-
     {
       final String sName = EText.LABEL_NAME.getDisplayText (aDisplayLocale);
-      aTable.createItemRow ()
-            .setLabelMandatory (sName)
-            .setCtrl (new HCEdit (new RequestField (FIELD_NAME, aSelectedObject == null ? null
-                                                                                       : aSelectedObject.getName ())).setPlaceholder (sName))
-            .setErrorList (aFormErrors.getListOfField (FIELD_NAME));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sName)
+                                                   .setCtrl (new HCEdit (new RequestField (FIELD_NAME,
+                                                                                           aSelectedObject == null ? null
+                                                                                                                  : aSelectedObject.getName ())).setPlaceholder (sName))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_NAME)));
     }
 
     {
       final String sHostName = EText.LABEL_HOSTNAME.getDisplayText (aDisplayLocale);
-      aTable.createItemRow ()
-            .setLabelMandatory (sHostName)
-            .setCtrl (new HCEdit (new RequestField (FIELD_HOSTNAME, aSettings == null ? null : aSettings.getHostName ())).setPlaceholder (sHostName))
-            .setErrorList (aFormErrors.getListOfField (FIELD_HOSTNAME));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sHostName)
+                                                   .setCtrl (new HCEdit (new RequestField (FIELD_HOSTNAME,
+                                                                                           aSettings == null ? null
+                                                                                                            : aSettings.getHostName ())).setPlaceholder (sHostName))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_HOSTNAME)));
     }
 
     {
       // Default port: empty string
       final String sPort = EText.LABEL_PORT.getDisplayText (aDisplayLocale);
-      aTable.createItemRow ()
-            .setLabelMandatory (sPort)
-            .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_PORT,
-                                                              aSettings == null || aSettings.getPort () < 0 ? ""
-                                                                                                           : Integer.toString (aSettings.getPort ())),
-                                            aDisplayLocale).setMin (CNetworkPort.MINIMUM_PORT_NUMBER)
-                                                           .setMax (CNetworkPort.MAXIMUM_PORT_NUMBER)
-                                                           .setThousandSeparator (""))
-            .setErrorList (aFormErrors.getListOfField (FIELD_PORT));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sPort)
+                                                   .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_PORT,
+                                                                                                     aSettings == null ||
+                                                                                                         aSettings.getPort () < 0 ? ""
+                                                                                                                                 : Integer.toString (aSettings.getPort ())),
+                                                                                   aDisplayLocale).setMin (CNetworkPort.MINIMUM_PORT_NUMBER)
+                                                                                                  .setMax (CNetworkPort.MAXIMUM_PORT_NUMBER)
+                                                                                                  .setThousandSeparator (""))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_PORT)));
     }
 
     {
       final String sUserName = EText.LABEL_USERNAME.getDisplayText (aDisplayLocale);
-      aTable.createItemRow ()
-            .setLabel (sUserName)
-            .setCtrl (new HCEdit (new RequestField (FIELD_USERNAME, aSettings == null ? null : aSettings.getUserName ())).setPlaceholder (sUserName))
-            .setErrorList (aFormErrors.getListOfField (FIELD_USERNAME));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sUserName)
+                                                   .setCtrl (new HCEdit (new RequestField (FIELD_USERNAME,
+                                                                                           aSettings == null ? null
+                                                                                                            : aSettings.getUserName ())).setPlaceholder (sUserName))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_USERNAME)));
     }
 
     {
       final String sPassword = EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale);
-      aTable.createItemRow ()
-            .setLabel (sPassword)
-            .setCtrl (new HCEditPassword (FIELD_PASSWORD).setPlaceholder (sPassword))
-            .setErrorList (aFormErrors.getListOfField (FIELD_PASSWORD));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPassword)
+                                                   .setCtrl (new HCEditPassword (FIELD_PASSWORD).setPlaceholder (sPassword))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_PASSWORD)));
     }
 
     {
       final String sCharset = EText.LABEL_CHARSET.getDisplayText (aDisplayLocale);
-      aTable.createItemRow ()
-            .setLabelMandatory (sCharset)
-            .setCtrl (new HCCharsetSelect (new RequestField (FIELD_CHARSET, aSettings == null ? DEFAULT_CHARSET
-                                                                                             : aSettings.getCharset ()),
-                                           true,
-                                           aDisplayLocale))
-            .setErrorList (aFormErrors.getListOfField (FIELD_CHARSET));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sCharset)
+                                                   .setCtrl (new HCCharsetSelect (new RequestField (FIELD_CHARSET,
+                                                                                                    aSettings == null ? DEFAULT_CHARSET
+                                                                                                                     : aSettings.getCharset ()),
+                                                                                  true,
+                                                                                  aDisplayLocale))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_CHARSET)));
     }
 
     {
       final String sSSL = EText.LABEL_SSL.getDisplayText (aDisplayLocale);
-      aTable.createItemRow ()
-            .setLabel (sSSL)
-            .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_SSL,
-                                                               aSettings == null ? EmailGlobalSettings.isUseSSL ()
-                                                                                : aSettings.isSSLEnabled ())))
-            .setErrorList (aFormErrors.getListOfField (FIELD_SSL));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sSSL)
+                                                   .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_SSL,
+                                                                                                      aSettings == null ? EmailGlobalSettings.isUseSSL ()
+                                                                                                                       : aSettings.isSSLEnabled ())))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_SSL)));
     }
 
     {
       final String sSTARTTLS = EText.LABEL_STARTTLS.getDisplayText (aDisplayLocale);
-      aTable.createItemRow ()
-            .setLabel (sSTARTTLS)
-            .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_STARTTLS,
-                                                               aSettings == null ? EmailGlobalSettings.isUseSTARTTLS ()
-                                                                                : aSettings.isSTARTTLSEnabled ())))
-            .setErrorList (aFormErrors.getListOfField (FIELD_STARTTLS));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sSTARTTLS)
+                                                   .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_STARTTLS,
+                                                                                                      aSettings == null ? EmailGlobalSettings.isUseSTARTTLS ()
+                                                                                                                       : aSettings.isSTARTTLSEnabled ())))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_STARTTLS)));
     }
 
     {
       final String sConnectionTimeout = EText.LABEL_CONNECTION_TIMEOUT.getDisplayText (aDisplayLocale);
-      aTable.createItemRow ()
-            .setLabelMandatory (sConnectionTimeout)
-            .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_CONNECTION_TIMEOUT,
-                                                              aSettings == null ? EmailGlobalSettings.getConnectionTimeoutMilliSecs ()
-                                                                               : aSettings.getConnectionTimeoutMilliSecs ()),
-                                            aDisplayLocale).setMin (0).setThousandSeparator (""))
-            .setErrorList (aFormErrors.getListOfField (FIELD_CONNECTION_TIMEOUT));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sConnectionTimeout)
+                                                   .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_CONNECTION_TIMEOUT,
+                                                                                                     aSettings == null ? EmailGlobalSettings.getConnectionTimeoutMilliSecs ()
+                                                                                                                      : aSettings.getConnectionTimeoutMilliSecs ()),
+                                                                                   aDisplayLocale).setMin (0)
+                                                                                                  .setThousandSeparator (""))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_CONNECTION_TIMEOUT)));
     }
 
     {
       final String sSocketTimeout = EText.LABEL_SOCKET_TIMEOUT.getDisplayText (aDisplayLocale);
-      aTable.createItemRow ()
-            .setLabelMandatory (sSocketTimeout)
-            .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_SOCKET_TIMEOUT,
-                                                              aSettings == null ? EmailGlobalSettings.getTimeoutMilliSecs ()
-                                                                               : aSettings.getTimeoutMilliSecs ()),
-                                            aDisplayLocale).setMin (0).setThousandSeparator (""))
-            .setErrorList (aFormErrors.getListOfField (FIELD_SOCKET_TIMEOUT));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sSocketTimeout)
+                                                   .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_SOCKET_TIMEOUT,
+                                                                                                     aSettings == null ? EmailGlobalSettings.getTimeoutMilliSecs ()
+                                                                                                                      : aSettings.getTimeoutMilliSecs ()),
+                                                                                   aDisplayLocale).setMin (0)
+                                                                                                  .setThousandSeparator (""))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_SOCKET_TIMEOUT)));
     }
 
     {
       final String sDebugSMTP = EText.LABEL_DEBUG_SMTP.getDisplayText (aDisplayLocale);
-      aTable.createItemRow ()
-            .setLabel (sDebugSMTP)
-            .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_DEBUG_SMTP,
-                                                               aSettings == null ? EmailGlobalSettings.isDebugSMTP ()
-                                                                                : aSettings.isDebugSMTP ())))
-            .setErrorList (aFormErrors.getListOfField (FIELD_DEBUG_SMTP));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sDebugSMTP)
+                                                   .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_DEBUG_SMTP,
+                                                                                                      aSettings == null ? EmailGlobalSettings.isDebugSMTP ()
+                                                                                                                       : aSettings.isDebugSMTP ())))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_DEBUG_SMTP)));
     }
   }
 
@@ -597,33 +580,30 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       }
 
       // Show question
-      final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+      final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
 
       aForm.addChild (createActionHeader (EText.TITLE_TEST_MAIL.getDisplayTextWithArgs (aDisplayLocale,
                                                                                         aSelectedObject.getName ())));
-      final IHCTableForm <?> aTable = aForm.addAndReturnChild (new BootstrapTableForm (new HCCol (170), HCCol.star ()));
 
-      aTable.createItemRow ()
-            .setLabelMandatory (EText.MSG_SENDER.getDisplayText (aDisplayLocale))
-            .setCtrl (new HCEdit (new RequestField (FIELD_TEST_SENDER, VendorInfo.getVendorEmail ())))
-            .setErrorList (aFormErrors.getListOfField (FIELD_TEST_SENDER));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_SENDER.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCEdit (new RequestField (FIELD_TEST_SENDER,
+                                                                                           VendorInfo.getVendorEmail ())))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_TEST_SENDER)));
 
-      aTable.createItemRow ()
-            .setLabelMandatory (EText.MSG_RECEIVER.getDisplayText (aDisplayLocale))
-            .setCtrl (new HCEdit (new RequestField (FIELD_TEST_RECEIVER, VendorInfo.getVendorEmail ())))
-            .setErrorList (aFormErrors.getListOfField (FIELD_TEST_RECEIVER));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_RECEIVER.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCEdit (new RequestField (FIELD_TEST_RECEIVER,
+                                                                                           VendorInfo.getVendorEmail ())))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_TEST_RECEIVER)));
 
-      aTable.createItemRow ()
-            .setLabelMandatory (EText.MSG_SUBJECT.getDisplayText (aDisplayLocale))
-            .setCtrl (new HCEdit (new RequestField (FIELD_TEST_SUBJECT,
-                                                    EText.TEST_SUBJECT.getDisplayText (aDisplayLocale))))
-            .setErrorList (aFormErrors.getListOfField (FIELD_TEST_SUBJECT));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_SUBJECT.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCEdit (new RequestField (FIELD_TEST_SUBJECT,
+                                                                                           EText.TEST_SUBJECT.getDisplayText (aDisplayLocale))))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_TEST_SUBJECT)));
 
-      aTable.createItemRow ()
-            .setLabelMandatory (EText.MSG_BODY.getDisplayText (aDisplayLocale))
-            .setCtrl (new HCTextAreaAutosize (new RequestField (FIELD_TEST_BODY,
-                                                                EText.TEST_BODY.getDisplayText (aDisplayLocale))).setRows (5))
-            .setErrorList (aFormErrors.getListOfField (FIELD_TEST_BODY));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_BODY.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCTextAreaAutosize (new RequestField (FIELD_TEST_BODY,
+                                                                                                       EText.TEST_BODY.getDisplayText (aDisplayLocale))).setRows (5))
+                                                   .setErrorList (aFormErrors.getListOfField (FIELD_TEST_BODY)));
 
       final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
       aToolbar.addHiddenField (CHCParam.PARAM_ACTION, ACTION_TEST_MAIL);

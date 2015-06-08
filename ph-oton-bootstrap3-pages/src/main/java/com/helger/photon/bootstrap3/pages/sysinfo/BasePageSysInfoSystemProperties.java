@@ -53,9 +53,7 @@ import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
-import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -143,7 +141,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     super (sID, aName, aDescription);
   }
 
-  private static void _addDirectoryContent (@Nonnull final IHCTableFormView <?> aTable,
+  private static void _addDirectoryContent (@Nonnull final BootstrapTable aTable,
                                             @Nonnull final String sSysPropName,
                                             @Nonnull final IHCNode aLabel,
                                             @Nonnull final SizeHelper aSH,
@@ -197,7 +195,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
 
     {
       aNodeList.addChild (createActionHeader (EText.MSG_HEADER_SPECIAL_SYSPROPS.getDisplayText (aDisplayLocale)));
-      final IHCTableFormView <?> aTable = new BootstrapTableFormView (new HCCol (250), HCCol.star ());
+      final BootstrapTable aTable = new BootstrapTable (new HCCol (250), HCCol.star ());
       aTable.setID (getID () + "$special");
       aTable.addHeaderRow ().addCells (EText.MSG_HEADER_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_HEADER_VALUE.getDisplayText (aDisplayLocale));

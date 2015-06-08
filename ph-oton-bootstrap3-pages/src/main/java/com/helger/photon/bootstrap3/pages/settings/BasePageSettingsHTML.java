@@ -30,16 +30,13 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.conversion.IHCConversionSettings;
-import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCCheckBox;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTableForm;
-import com.helger.photon.uicore.html.table.IHCTableForm;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
@@ -139,34 +136,32 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
       aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
     }
 
-    final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+    final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
 
     // HCSettings
     {
-      final IHCTableForm <?> aTable = new BootstrapTableForm (new HCCol (170), HCCol.star ());
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_FORMAT_HTML.getDisplayText (aDisplayLocale))
-            .setCtrl (new HCCheckBox (FIELD_FORMAT_HTML, aConversionSettings.getXMLWriterSettings ()
-                                                                            .getIndent ()
-                                                                            .isIndent ()));
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_FORMAT_CSS.getDisplayText (aDisplayLocale))
-            .setCtrl (new HCCheckBox (FIELD_FORMAT_CSS, !aConversionSettings.getCSSWriterSettings ()
-                                                                            .isOptimizedOutput ()));
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_FORMAT_JS.getDisplayText (aDisplayLocale))
-            .setCtrl (new HCCheckBox (FIELD_FORMAT_JS, aConversionSettings.getJSWriterSettings ().isIndentAndAlign ()));
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_CONSISTENCY_CHECKS_ENABLED.getDisplayText (aDisplayLocale))
-            .setCtrl (new HCCheckBox (FIELD_CONSISTENCY_CHECKS_ENABLED,
-                                      aConversionSettings.areConsistencyChecksEnabled ()));
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_EXTRACT_OUT_OF_BAND_NODES.getDisplayText (aDisplayLocale))
-            .setCtrl (new HCCheckBox (FIELD_EXTRACT_OUT_OF_BAND_NODES, aConversionSettings.isExtractOutOfBandNodes ()));
-      aForm.addChild (aTable);
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_HTML.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCCheckBox (FIELD_FORMAT_HTML,
+                                                                             aConversionSettings.getXMLWriterSettings ()
+                                                                                                .getIndent ()
+                                                                                                .isIndent ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_CSS.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCCheckBox (FIELD_FORMAT_CSS,
+                                                                             !aConversionSettings.getCSSWriterSettings ()
+                                                                                                 .isOptimizedOutput ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_JS.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCCheckBox (FIELD_FORMAT_JS,
+                                                                             aConversionSettings.getJSWriterSettings ()
+                                                                                                .isIndentAndAlign ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_CONSISTENCY_CHECKS_ENABLED.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCCheckBox (FIELD_CONSISTENCY_CHECKS_ENABLED,
+                                                                             aConversionSettings.areConsistencyChecksEnabled ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXTRACT_OUT_OF_BAND_NODES.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCCheckBox (FIELD_EXTRACT_OUT_OF_BAND_NODES,
+                                                                             aConversionSettings.isExtractOutOfBandNodes ())));
     }
 
-    final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+    final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addHiddenField (CHCParam.PARAM_ACTION, CHCParam.ACTION_SAVE);
     aToolbar.addSubmitButtonSave (aDisplayLocale);
   }

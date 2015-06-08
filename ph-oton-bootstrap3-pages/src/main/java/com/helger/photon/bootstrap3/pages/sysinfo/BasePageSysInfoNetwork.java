@@ -46,11 +46,10 @@ import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
+import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
-import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -131,15 +130,15 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
 
     // ntwork interfaces
     {
-      final IHCTableFormView <?> aTable = new BootstrapTableFormView (new HCCol (80),
-                                                                      HCCol.star (),
-                                                                      HCCol.star (),
-                                                                      new HCCol (40),
-                                                                      new HCCol (40),
-                                                                      new HCCol (40),
-                                                                      new HCCol (40),
-                                                                      new HCCol (40),
-                                                                      new HCCol (40));
+      final BootstrapTable aTable = new BootstrapTable (HCCol.star (),
+                                                        HCCol.star (),
+                                                        HCCol.star (),
+                                                        HCCol.star (),
+                                                        HCCol.star (),
+                                                        HCCol.star (),
+                                                        HCCol.star (),
+                                                        HCCol.star (),
+                                                        HCCol.star ());
       aTable.setID (getID () + "-ni");
       aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
                                        EText.MSG_NAME.getDisplayText (aDisplayLocale),

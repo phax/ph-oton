@@ -40,9 +40,8 @@ import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
+import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
-import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -124,7 +123,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
 
     // HTTP headers
     {
-      final IHCTableFormView <?> aTable = new BootstrapTableFormView (new HCCol (nFirstColWidth), HCCol.star ());
+      final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star ());
       aTable.setID (getID () + "$http");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
@@ -140,7 +139,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
 
     // Cookies
     {
-      final IHCTableFormView <?> aTable = new BootstrapTableFormView (new HCCol (), new HCCol (), new HCCol ());
+      final BootstrapTable aTable = new BootstrapTable (new HCCol (), new HCCol (), new HCCol ());
       aTable.setID (getID () + "$cookies");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale),
@@ -166,7 +165,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
 
     // Request parameters
     {
-      final IHCTableFormView <?> aTable = new BootstrapTableFormView (new HCCol (nFirstColWidth), HCCol.star ());
+      final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star ());
       aTable.setID (getID () + "$params");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
@@ -179,7 +178,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
 
     // Request properties
     {
-      final IHCTableFormView <?> aTable = new BootstrapTableFormView (new HCCol (nFirstColWidth), HCCol.star ());
+      final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star ());
       aTable.setID (getID () + "$props");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
@@ -192,9 +191,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
 
     // Request attributes
     {
-      final IHCTableFormView <?> aTable = new BootstrapTableFormView (new HCCol (nFirstColWidth),
-                                                                      HCCol.star (),
-                                                                      HCCol.star ());
+      final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star (), HCCol.star ());
       aTable.setID (getID () + "$attrs");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_TYPE.getDisplayText (aDisplayLocale),

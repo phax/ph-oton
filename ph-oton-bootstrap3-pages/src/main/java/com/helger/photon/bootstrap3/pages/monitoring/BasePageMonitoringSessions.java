@@ -54,12 +54,10 @@ import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
-import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.UITextFormatter;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
-import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
@@ -213,8 +211,8 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     }
 
     // All scope attributes
-    final IHCTableFormView <?> aTableAttrs = new BootstrapTableFormView (HCCol.star (), HCCol.star (), HCCol.star ()).setID ("sessionscope-" +
-                                                                                                                             aScope.getID ());
+    final BootstrapTable aTableAttrs = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star ()).setID ("sessionscope-" +
+                                                                                                               aScope.getID ());
     aTableAttrs.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                           EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                                           EText.MSG_VALUE.getDisplayText (aDisplayLocale));
@@ -256,8 +254,8 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aNodeList.addChild (aTableScope);
 
     // All scope attributes
-    final IHCTableFormView <?> aTableAttrs = new BootstrapTableFormView (HCCol.star (), HCCol.star (), HCCol.star ()).setID ("sessionappscope" +
-                                                                                                                             aScope.getID ());
+    final BootstrapTable aTableAttrs = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star ()).setID ("sessionappscope" +
+                                                                                                               aScope.getID ());
     aTableAttrs.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                           EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                                           EText.MSG_VALUE.getDisplayText (aDisplayLocale));
