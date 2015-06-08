@@ -29,9 +29,10 @@ import com.helger.html.hc.html.HCCol;
 import com.helger.photon.uicore.html.table.IHCTableForm;
 import com.helger.web.scopes.mgr.WebScopeManager;
 
+@Deprecated
 public class BootstrapTableForm extends AbstractBootstrapTable <BootstrapTableForm> implements IHCTableForm <BootstrapTableForm>
 {
-  private static final String REQUEST_ATTR_FIRST_FOCUSABLE = "Bootstrap3TableForm$FirstFocusable";
+  private static final String REQUEST_ATTR_FIRST_FOCUSABLE = "ph$Bootstrap3TableForm$FirstFocusable";
 
   private boolean m_bFocusHandlingEnabled = true;
   private boolean m_bSetAutoFocus = false;
