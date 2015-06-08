@@ -31,7 +31,7 @@ import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
 
 @NotThreadSafe
-public class BootstrapForm extends AbstractHCForm <BootstrapForm>
+public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IBootstrapFormGroupContainer
 {
   public static final int DEFAULT_LEFT_PART = 3;
   public static final int DEFAULT_RIGHT_PART = CBootstrap.GRID_SYSTEM_MAX - DEFAULT_LEFT_PART;
@@ -39,7 +39,7 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm>
   private EBootstrapFormType m_eFormType;
   private BootstrapGridSpec m_aLeftGrid = BootstrapGridSpec.create (DEFAULT_LEFT_PART);
   private BootstrapGridSpec m_aRightGrid = BootstrapGridSpec.create (DEFAULT_RIGHT_PART);
-  private IBootstrapFormGroupRenderer m_aFormGroupRenderer = new BootstrapFormGroupRendererDefault ();
+  private IBootstrapFormGroupRenderer m_aFormGroupRenderer = new DefaultBootstrapFormGroupRenderer ();
 
   public BootstrapForm ()
   {
@@ -75,10 +75,6 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm>
     setFormType (eFormType);
   }
 
-  /**
-   * @return The form type as specified in the constructor. Never
-   *         <code>null</code>.
-   */
   @Nonnull
   public final EBootstrapFormType getFormType ()
   {
@@ -104,21 +100,12 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm>
     return this;
   }
 
-  /**
-   * @return The left parts. Always &ge; 1 and &lt; CBootstrap.GRID_SYSTEM_MAX.
-   *         Never <code>null</code>.
-   */
   @Nonnull
   public final BootstrapGridSpec getLeft ()
   {
     return m_aLeftGrid;
   }
 
-  /**
-   * @return The right parts. Always
-   *         <code>CBootstrap.GRID_SYSTEM_MAX - getLeft ()</code>. Never
-   *         <code>null</code>.
-   */
   @Nonnull
   public final BootstrapGridSpec getRight ()
   {

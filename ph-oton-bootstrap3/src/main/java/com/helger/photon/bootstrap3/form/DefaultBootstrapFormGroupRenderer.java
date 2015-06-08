@@ -53,14 +53,14 @@ import com.helger.validation.error.IErrorList;
  * @author Philip Helger
  */
 @Immutable
-public class BootstrapFormGroupRendererDefault implements IBootstrapFormGroupRenderer
+public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRenderer
 {
   public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_HELP_TEXT = DefaultCSSClassProvider.create ("form-group-help-text");
   public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_ERROR_TEXT = DefaultCSSClassProvider.create ("form-group-error-text");
 
   private boolean m_bUseIcons = false;
 
-  public BootstrapFormGroupRendererDefault ()
+  public DefaultBootstrapFormGroupRenderer ()
   {}
 
   public boolean isUseIcons ()
@@ -181,13 +181,13 @@ public class BootstrapFormGroupRendererDefault implements IBootstrapFormGroupRen
    *        The created node so far. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void modifyFinalNode (@Nonnull final BootstrapForm aForm,
+  protected void modifyFinalNode (@Nonnull final IBootstrapFormGroupContainer aForm,
                                   @Nonnull final BootstrapFormGroup aFormGroup,
                                   @Nonnull final HCDiv aFinalNode)
   {}
 
   @Nonnull
-  public IHCElement <?> renderFormGroup (@Nonnull final BootstrapForm aForm,
+  public IHCElement <?> renderFormGroup (@Nonnull final IBootstrapFormGroupContainer aForm,
                                          @Nonnull final BootstrapFormGroup aFormGroup)
   {
     final EBootstrapFormType eFormType = aForm.getFormType ();

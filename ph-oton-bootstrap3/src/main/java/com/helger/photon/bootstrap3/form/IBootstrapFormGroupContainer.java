@@ -18,26 +18,35 @@ package com.helger.photon.bootstrap3.form;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hc.IHCElement;
+import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
 
 /**
- * Interface for rendering a form group based on the form style.
+ * Base interface for a form group container.
  *
  * @author Philip Helger
  */
-public interface IBootstrapFormGroupRenderer
+public interface IBootstrapFormGroupContainer
 {
-  boolean isUseIcons ();
-
-  void setUseIcons (boolean bUseIcons);
-
   /**
-   * @param aForm
-   *        Form the form group belongs to. May not be <code>null</code>.
-   * @param aFormGroup
-   *        The form group to be rendered. May not be <code>null</code>.
-   * @return Never <code>null</code>.
+   * @return The form type for aligning the form groups. Never <code>null</code>
+   *         .
    */
   @Nonnull
-  IHCElement <?> renderFormGroup (@Nonnull IBootstrapFormGroupContainer aForm, @Nonnull BootstrapFormGroup aFormGroup);
+  EBootstrapFormType getFormType ();
+
+  /**
+   * @return The left parts. Always &ge; 1 and &lt; CBootstrap.GRID_SYSTEM_MAX.
+   *         Never <code>null</code>.
+   */
+  @Nonnull
+  BootstrapGridSpec getLeft ();
+
+  /**
+   * @return The right parts. Always
+   *         <code>CBootstrap.GRID_SYSTEM_MAX - getLeft ()</code>. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  BootstrapGridSpec getRight ();
+
 }
