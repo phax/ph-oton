@@ -46,6 +46,7 @@ import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSInvocation;
 import com.helger.json.impl.JsonObject;
 import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.tinymce4.type.ETinyMCE4ExternalPlugin;
 import com.helger.photon.tinymce4.type.ETinyMCE4Language;
 import com.helger.photon.tinymce4.type.ETinyMCE4Plugin;
 import com.helger.photon.tinymce4.type.ETinyMCE4Resize;
@@ -55,6 +56,7 @@ import com.helger.photon.tinymce4.type.TinyMCE4ExternalPlugin;
 import com.helger.photon.tinymce4.type.TinyMCE4MenubarItemList;
 import com.helger.photon.tinymce4.type.TinyMCE4ToolbarControlList;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
+import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**
  * Wraps TinyMCE4 into an HC node. The only required settings is
@@ -506,6 +508,22 @@ public class HCTinyMCE4 implements IHCNodeBuilder
   public int getExternalPluginCount ()
   {
     return m_aExternalPlugins.size ();
+  }
+
+  /**
+   * Add an external plugin to the editor.
+   *
+   * @param eExternalPlugin
+   *        The external plugin to be added. May not be <code>null</code>.
+   * @param aRequestScope
+   *        The request to be used. Required if cookies are disabled.
+   * @return this
+   */
+  @Nonnull
+  public HCTinyMCE4 addExternalPlugin (@Nonnull final ETinyMCE4ExternalPlugin eExternalPlugin,
+                                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    return addExternalPlugin (eExternalPlugin.getAsExternalPlugin (aRequestScope));
   }
 
   /**

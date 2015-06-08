@@ -93,6 +93,21 @@
           </excludes>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.helger.maven</groupId>
+        <artifactId>ph-jscompress-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jscompress</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <forceCreation>false</forceCreation>
+          <sourceDirectory>${basedir}/src/main/resources/tinymce-plugins</sourceDirectory>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
