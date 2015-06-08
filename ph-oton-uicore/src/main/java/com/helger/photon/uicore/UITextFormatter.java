@@ -26,15 +26,22 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.microdom.IMicroContainer;
+import com.helger.commons.microdom.utils.MicroWalker;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCP;
+import com.helger.html.hc.impl.HCDOMWrapper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.markdown.MarkdownConfiguration;
 import com.helger.html.markdown.MarkdownProcessor;
+import com.helger.html.parser.XHTMLParser;
+import com.helger.photon.uicore.page.external.PageViewExternalHTMLCleanser;
 
 @Immutable
 public final class UITextFormatter
@@ -105,5 +112,21 @@ public final class UITextFormatter
   public static IHCNode markdownOnDemand (@Nullable final String s)
   {
     return StringHelper.hasText (s) ? markdown (s) : null;
+  }
+
+  @Nonnull
+  public static IHCNode unescapeHTML (@Nonnull final String s)
+  {
+    // Parse content with a non-HTML5 parser because entity resolving would fail
+    final XHTMLParser aXHTMLParser = new XHTMLParser (EHTMLVersion.XHTML11);
+    final IMicroContainer ret = aXHTMLParser.unescapeXHTMLFragment (s);
+    if (ret == null)
+      throw new IllegalStateException ("Failed to parse HTML code: " + s);
+
+    // Do standard cleansing also setting the correct namespace URI
+    MicroWalker.walkNode (ret, new PageViewExternalHTMLCleanser (HCSettings.getConversionSettings ().getHTMLVersion ()));
+
+    // Convert micro container to IHCNode
+    return new HCDOMWrapper (ret);
   }
 }
