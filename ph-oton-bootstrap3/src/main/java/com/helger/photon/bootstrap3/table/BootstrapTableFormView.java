@@ -23,6 +23,7 @@ import com.helger.html.hc.html.HCCol;
 import com.helger.photon.uicore.html.table.HCTableFormViewItemRow;
 import com.helger.photon.uicore.html.table.IHCTableFormView;
 
+@Deprecated
 public class BootstrapTableFormView extends AbstractBootstrapTable <BootstrapTableFormView> implements IHCTableFormView <BootstrapTableFormView>
 {
   private void _init ()

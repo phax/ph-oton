@@ -18,20 +18,17 @@ package com.helger.photon.bootstrap3.form;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCElement;
-import com.helger.html.hc.html.AbstractHCForm;
+import com.helger.html.hc.html.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
 
 @NotThreadSafe
-public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMutableBootstrapFormGroupContainer
+public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> implements IMutableBootstrapFormGroupContainer
 {
   public static final int DEFAULT_LEFT_PART = 3;
   public static final int DEFAULT_RIGHT_PART = CBootstrap.GRID_SYSTEM_MAX - DEFAULT_LEFT_PART;
@@ -41,37 +38,13 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
   private BootstrapGridSpec m_aRightGrid = BootstrapGridSpec.create (DEFAULT_RIGHT_PART);
   private IBootstrapFormGroupRenderer m_aFormGroupRenderer = new DefaultBootstrapFormGroupRenderer ();
 
-  public BootstrapForm ()
+  public BootstrapViewForm ()
   {
-    this ((ISimpleURL) null);
+    this (EBootstrapFormType.HORIZONTAL);
   }
 
-  public BootstrapForm (@Nullable final ISimpleURL aAction)
+  public BootstrapViewForm (@Nonnull final EBootstrapFormType eFormType)
   {
-    this (aAction, EBootstrapFormType.DEFAULT);
-  }
-
-  public BootstrapForm (@Nonnull final EBootstrapFormType eFormType)
-  {
-    this ((ISimpleURL) null, eFormType);
-  }
-
-  public BootstrapForm (@Nullable final String sAction)
-  {
-    this (sAction, EBootstrapFormType.DEFAULT);
-  }
-
-  public BootstrapForm (@Nullable final ISimpleURL aAction, @Nonnull final EBootstrapFormType eFormType)
-  {
-    this (aAction == null ? null : aAction.getAsString (), eFormType);
-  }
-
-  public BootstrapForm (@Nullable final String sAction, @Nonnull final EBootstrapFormType eFormType)
-  {
-    super ();
-    setRole (EHTMLRole.FORM);
-    if (sAction != null)
-      setAction (sAction);
     setFormType (eFormType);
   }
 
@@ -87,7 +60,7 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
    * @return this
    */
   @Nonnull
-  public final BootstrapForm setFormType (@Nonnull final EBootstrapFormType eFormType)
+  public final BootstrapViewForm setFormType (@Nonnull final EBootstrapFormType eFormType)
   {
     ValueEnforcer.notNull (eFormType, "FormType");
 
@@ -122,7 +95,7 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
    */
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public BootstrapForm setLeft (@Nonnegative final int nLeftParts)
+  public BootstrapViewForm setLeft (@Nonnegative final int nLeftParts)
   {
     return setLeft (nLeftParts, nLeftParts, nLeftParts, nLeftParts);
   }
@@ -143,10 +116,10 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
    */
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public BootstrapForm setLeft (@Nonnegative final int nLeftPartsXS,
-                                @Nonnegative final int nLeftPartsSM,
-                                @Nonnegative final int nLeftPartsMD,
-                                @Nonnegative final int nLeftPartsLG)
+  public BootstrapViewForm setLeft (@Nonnegative final int nLeftPartsXS,
+                                    @Nonnegative final int nLeftPartsSM,
+                                    @Nonnegative final int nLeftPartsMD,
+                                    @Nonnegative final int nLeftPartsLG)
   {
     ValueEnforcer.isBetweenInclusive (nLeftPartsXS, "LeftPartsXS", 1, CBootstrap.GRID_SYSTEM_MAX - 1);
     ValueEnforcer.isBetweenInclusive (nLeftPartsSM, "LeftPartsSM", 1, CBootstrap.GRID_SYSTEM_MAX - 1);
@@ -172,7 +145,7 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
    */
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public BootstrapForm setSplitting (@Nonnull final BootstrapGridSpec aLeft, @Nonnull final BootstrapGridSpec aRight)
+  public BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft, @Nonnull final BootstrapGridSpec aRight)
   {
     ValueEnforcer.notNull (aLeft, "Left");
     ValueEnforcer.notNull (aRight, "Right");
@@ -188,14 +161,14 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
   }
 
   @Nonnull
-  public BootstrapForm setFormGroupRenderer (@Nonnull final IBootstrapFormGroupRenderer aFormGroupRenderer)
+  public BootstrapViewForm setFormGroupRenderer (@Nonnull final IBootstrapFormGroupRenderer aFormGroupRenderer)
   {
     m_aFormGroupRenderer = ValueEnforcer.notNull (aFormGroupRenderer, "FormGroupRenderer");
     return this;
   }
 
   @Nonnull
-  public BootstrapForm addFormGroup (@Nonnull final BootstrapFormGroup aFormGroup)
+  public BootstrapViewForm addFormGroup (@Nonnull final BootstrapFormGroup aFormGroup)
   {
     // Must be added directly and cannot be added via a proxy, because
     // otherwise, the adding may happen after the out of band nodes were

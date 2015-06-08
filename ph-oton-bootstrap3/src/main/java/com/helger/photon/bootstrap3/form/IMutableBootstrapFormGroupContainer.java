@@ -18,34 +18,20 @@ package com.helger.photon.bootstrap3.form;
 
 import javax.annotation.Nonnull;
 
-import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
-
 /**
- * Base interface for a form group container.
+ * Mutable interface for a form group container.
  *
  * @author Philip Helger
  */
-public interface IBootstrapFormGroupContainer
+public interface IMutableBootstrapFormGroupContainer extends IBootstrapFormGroupContainer
 {
   /**
-   * @return The form type for aligning the form groups. Never <code>null</code>
-   *         .
+   * Add a new form group at the end.
+   *
+   * @param aFormGroup
+   *        The form group to be added. May not be <code>null</code>.
+   * @return this
    */
   @Nonnull
-  EBootstrapFormType getFormType ();
-
-  /**
-   * @return The left parts. Always &ge; 1 and &lt; CBootstrap.GRID_SYSTEM_MAX.
-   *         Never <code>null</code>.
-   */
-  @Nonnull
-  BootstrapGridSpec getLeft ();
-
-  /**
-   * @return The right parts. Always
-   *         <code>CBootstrap.GRID_SYSTEM_MAX - getLeft ()</code>. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  BootstrapGridSpec getRight ();
+  IMutableBootstrapFormGroupContainer addFormGroup (@Nonnull BootstrapFormGroup aFormGroup);
 }
