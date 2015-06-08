@@ -332,8 +332,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       }
     }
 
-    // Help text
-    if (aHelpText != null)
+    // Help text (only if a control is present)
+    if (aHelpText != null && aCtrls != null)
     {
       final IHCElement <?> aHelpTextNode = createHelpTextNode (aHelpText);
 
