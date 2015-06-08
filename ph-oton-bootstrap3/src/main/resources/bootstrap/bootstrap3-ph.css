@@ -34,3 +34,9 @@ table > label.form-label{
 .nav .alert {
   margin-bottom: 0;
 }
+
+/* Display all dropdown elements as inline-block by default */
+.dropdown,
+.dropup {
+  display:inline-block;
+}

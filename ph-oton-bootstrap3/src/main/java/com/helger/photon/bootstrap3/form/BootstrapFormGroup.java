@@ -21,18 +21,12 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.idfactory.GlobalIDFactory;
-import com.helger.commons.string.StringHelper;
-import com.helger.css.property.CCSSProperties;
-import com.helger.css.property.ECSSProperty;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.html.HCDiv;
-import com.helger.html.hc.impl.HCHasCSSClasses;
-import com.helger.html.hc.impl.HCHasCSSStyles;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.photon.bootstrap3.AbstractBootstrapObject;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.validation.error.IErrorList;
@@ -43,11 +37,8 @@ import com.helger.validation.error.IErrorList;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class BootstrapFormGroup
+public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGroup>
 {
-  private String m_sID;
-  private HCHasCSSClasses m_aCSSClasses;
-  private HCHasCSSStyles m_aCSSStyles;
   private HCFormLabel m_aLabel;
   private IHCNode m_aCtrl;
   private IHCNode m_aHelpText;
@@ -56,77 +47,6 @@ public class BootstrapFormGroup
 
   public BootstrapFormGroup ()
   {}
-
-  /**
-   * Ensure that this form group has a unique ID. If an ID is already present,
-   * nothing happens.
-   *
-   * @return this
-   */
-  @Nonnull
-  public final BootstrapFormGroup ensureID ()
-  {
-    if (StringHelper.hasNoText (m_sID))
-      m_sID = GlobalIDFactory.getNewStringID ();
-    return this;
-  }
-
-  /**
-   * Set the ID of this form group.
-   *
-   * @param sFormGroupID
-   *        The from group ID to be set. May be <code>null</code>.
-   * @return this
-   */
-  @Nonnull
-  public final BootstrapFormGroup setID (@Nullable final String sFormGroupID)
-  {
-    m_sID = sFormGroupID;
-    return this;
-  }
-
-  /**
-   * @return <code>true</code> if an ID is present, <code>false</code>
-   *         otherwise.
-   */
-  public boolean hasID ()
-  {
-    return StringHelper.hasText (m_sID);
-  }
-
-  @Nullable
-  public String getID ()
-  {
-    return m_sID;
-  }
-
-  public boolean hasCSSClasses ()
-  {
-    return m_aCSSClasses != null;
-  }
-
-  @Nonnull
-  @ReturnsMutableObject (reason = "design")
-  public HCHasCSSClasses getCSSClasses ()
-  {
-    if (m_aCSSClasses == null)
-      m_aCSSClasses = new HCHasCSSClasses ();
-    return m_aCSSClasses;
-  }
-
-  public boolean hasCSSStyles ()
-  {
-    return m_aCSSStyles != null;
-  }
-
-  @Nonnull
-  @ReturnsMutableObject (reason = "design")
-  public HCHasCSSStyles getCSSStyles ()
-  {
-    if (m_aCSSStyles == null)
-      m_aCSSStyles = new HCHasCSSStyles ();
-    return m_aCSSStyles;
-  }
 
   @Nonnull
   public final BootstrapFormGroup setLabel (@Nullable final String sLabel)
@@ -310,16 +230,5 @@ public class BootstrapFormGroup
   public EBootstrapFormGroupState getState ()
   {
     return m_eState;
-  }
-
-  @Nonnull
-  public BootstrapFormGroup setHidden (final boolean bHidden)
-  {
-    if (bHidden)
-      getCSSStyles ().addStyle (CCSSProperties.DISPLAY_NONE);
-    else
-      if (m_aCSSStyles != null)
-        m_aCSSStyles.removeStyle (ECSSProperty.DISPLAY);
-    return this;
   }
 }

@@ -29,21 +29,24 @@ import com.helger.html.hc.htmlext.HCA_JS;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.js.provider.IJSCodeProviderWithSettings;
+import com.helger.photon.bootstrap3.AbstractBootstrapObject;
 
 /**
  * This class represents a single dropdown menu item.
  *
  * @author Philip Helger
  */
-public class BootstrapDropdownMenuItem
+public class BootstrapDropdownMenuItem extends AbstractBootstrapObject <BootstrapDropdownMenuItem>
 {
   public static final boolean DEFAULT_ACTIVE = false;
+  public static final boolean DEFAULT_DISABLED = false;
 
   private ISimpleURL m_aURL;
   private IJSCodeProviderWithSettings m_aJSCode;
   private IHCNode m_aLabel;
   private HC_Target m_aTarget;
   private boolean m_bActive = DEFAULT_ACTIVE;
+  private boolean m_bDisabled = DEFAULT_DISABLED;
 
   public BootstrapDropdownMenuItem ()
   {}
@@ -123,6 +126,18 @@ public class BootstrapDropdownMenuItem
   }
 
   @Nonnull
+  public BootstrapDropdownMenuItem setDisabled (final boolean bDisabled)
+  {
+    m_bDisabled = bDisabled;
+    return this;
+  }
+
+  public boolean isDisabled ()
+  {
+    return m_bDisabled;
+  }
+
+  @Nonnull
   public AbstractHCA <?> createLink ()
   {
     if (m_aURL == null && m_aJSCode == null)
@@ -134,6 +149,11 @@ public class BootstrapDropdownMenuItem
     else
       ret = new HCA_JS (m_aJSCode);
     ret.setTarget (m_aTarget);
-    return ret.addChild (m_aLabel);
+    ret.addChild (m_aLabel);
+
+    // Set ID, class and style
+    applyBasicHTMLTo (ret);
+
+    return ret;
   }
 }
