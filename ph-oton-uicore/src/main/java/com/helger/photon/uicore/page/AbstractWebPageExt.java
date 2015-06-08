@@ -46,6 +46,7 @@ import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCol;
+import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCH4;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCSpan;
@@ -99,7 +100,8 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   protected static final ICSSClassProvider CSS_CLASS_NOWRAP = WebCtrlsCSS.CSS_CLASS_NOWRAP;
   protected static final ICSSClassProvider CSS_CLASS_ACTION_COL = WebCtrlsCSS.CSS_CLASS_ACTION_COL;
   protected static final ICSSClassProvider CSS_CLASS_EMPTY_ACTION = WebCtrlsCSS.CSS_CLASS_EMPTY_ACTION;
-  protected static final ICSSClassProvider CSS_CLASS_IN_PAGE_HEADER = DefaultCSSClassProvider.create ("in-page-header");
+  protected static final ICSSClassProvider CSS_CLASS_ACTION_HEADER = DefaultCSSClassProvider.create ("action-header");
+  protected static final ICSSClassProvider CSS_CLASS_DATAGROUP_HEADER = DefaultCSSClassProvider.create ("datagroup-header");
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageExt.class);
 
@@ -493,16 +495,40 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   }
 
   @Nullable
-  public static IHCNode createInPageHeaderDefault (@Nullable final String sText)
+  public static IHCNode createActionHeaderDefault (@Nullable final String sText)
   {
     if (StringHelper.hasNoText (sText))
       return null;
-    return new HCH4 ().addClass (CSS_CLASS_IN_PAGE_HEADER).addChild (sText);
+    return new HCH4 ().addClass (CSS_CLASS_ACTION_HEADER).addChild (sText);
   }
 
+  /**
+   * @deprecated Use {@link #createActionHeader(String)} instead
+   */
+  @Deprecated
   @Nullable
   protected IHCNode createInPageHeader (@Nullable final String sText)
   {
-    return createInPageHeaderDefault (sText);
+    return createActionHeader (sText);
+  }
+
+  @Nullable
+  protected IHCNode createActionHeader (@Nullable final String sText)
+  {
+    return createActionHeaderDefault (sText);
+  }
+
+  @Nullable
+  public static IHCNode createDataGroupHeaderDefault (@Nullable final String sText)
+  {
+    if (StringHelper.hasNoText (sText))
+      return null;
+    return new HCDiv ().addClass (CSS_CLASS_DATAGROUP_HEADER).addChild (sText);
+  }
+
+  @Nullable
+  protected IHCNode createDataGroupHeader (@Nullable final String sText)
+  {
+    return createDataGroupHeaderDefault (sText);
   }
 }

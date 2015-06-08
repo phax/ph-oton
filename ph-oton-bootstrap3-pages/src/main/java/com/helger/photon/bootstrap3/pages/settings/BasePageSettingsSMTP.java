@@ -261,7 +261,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final ISMTPSettings aSettings = aSelectedObject.getSMTPSettings ();
 
-    aNodeList.addChild (createInPageHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
+    aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                          aSelectedObject.getName ())));
 
     final IHCTableFormView <?> aTable = aNodeList.addAndReturnChild (new BootstrapTableFormView (new HCCol (170),
@@ -405,7 +405,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final ISMTPSettings aSettings = aSelectedObject == null ? null : aSelectedObject.getSMTPSettings ();
 
-    aForm.addChild (createInPageHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+    aForm.addChild (createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          aSelectedObject.getName ())
                                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
 
@@ -599,7 +599,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       // Show question
       final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
 
-      aForm.addChild (createInPageHeader (EText.TITLE_TEST_MAIL.getDisplayTextWithArgs (aDisplayLocale,
+      aForm.addChild (createActionHeader (EText.TITLE_TEST_MAIL.getDisplayTextWithArgs (aDisplayLocale,
                                                                                         aSelectedObject.getName ())));
       final IHCTableForm <?> aTable = aForm.addAndReturnChild (new BootstrapTableForm (new HCCol (170), HCCol.star ()));
 

@@ -140,7 +140,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
         final DirtyFlagMap <String, Object> aContext = aScheduler.getContext ();
         if (!aContext.isEmpty ())
         {
-          aNodeList.addChild (createInPageHeader (EText.MSG_CONTEXT.getDisplayText (aDisplayLocale)));
+          aNodeList.addChild (createActionHeader (EText.MSG_CONTEXT.getDisplayText (aDisplayLocale)));
           final HCTable aContextTable = new HCTable (HCCol.star (), HCCol.star ());
           for (final Map.Entry <String, Object> aEntry : aContext.entrySet ())
             aContextTable.addBodyRow ().addCells (aEntry.getKey (), aEntry.getValue ().toString ());

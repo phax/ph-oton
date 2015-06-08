@@ -312,7 +312,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final AccessManager aMgr = AccessManager.getInstance ();
 
-    aNodeList.addChild (createInPageHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
+    aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                          SecurityUtils.getUserDisplayName (aSelectedObject,
                                                                                                                            aDisplayLocale))));
     final IHCTableFormView <?> aTable = aNodeList.addAndReturnChild (new BootstrapTableFormView (new HCCol (170),
@@ -591,7 +591,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final AccessManager aMgr = AccessManager.getInstance ();
 
-    aForm.addChild (createInPageHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+    aForm.addChild (createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          SecurityUtils.getUserDisplayName (aSelectedObject,
                                                                                                                                            aDisplayLocale))
                                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
@@ -750,7 +750,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         // Show input form
         final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
         final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
-        aForm.addChild (createInPageHeader (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
+        aForm.addChild (createActionHeader (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                SecurityUtils.getUserDisplayName (aSelectedObject,
                                                                                                                                  aDisplayLocale))));
         final IHCTableForm <?> aTable = aForm.addAndReturnChild (new BootstrapTableForm (new HCCol (200),

@@ -132,7 +132,7 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
     final Map <Thread, StackTraceElement []> aThreads = CollectionHelper.getSortedByKey (Thread.getAllStackTraces (),
                                                                                          new ComparatorThreadID ());
 
-    aNodeList.addChild (createInPageHeader ("Total count=" +
+    aNodeList.addChild (createActionHeader ("Total count=" +
                                             aThreads.size () +
                                             "; Prios (min/norm/max): " +
                                             Thread.MIN_PRIORITY +

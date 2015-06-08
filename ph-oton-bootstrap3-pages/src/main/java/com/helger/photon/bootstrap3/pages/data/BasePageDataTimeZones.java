@@ -116,7 +116,7 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> e
     // Get default time zone
     final DateTimeZone aCurrentDTZ = PDTConfig.getDefaultDateTimeZone ();
 
-    aNodeList.addChild (createInPageHeader (EText.MSG_CURRENT_TIMEZONE.getDisplayText (aDisplayLocale) +
+    aNodeList.addChild (createActionHeader (EText.MSG_CURRENT_TIMEZONE.getDisplayText (aDisplayLocale) +
                                             aCurrentDTZ.getID () +
                                             " - " +
                                             aCurrentDTZ.getName (nNow)));
