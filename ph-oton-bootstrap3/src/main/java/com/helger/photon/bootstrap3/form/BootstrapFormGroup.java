@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.html.HCDiv;
@@ -109,8 +110,10 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
   @Nonnull
   public final BootstrapFormGroup setCtrl (@Nullable final String sValue)
   {
-    final HCDiv aP = new HCDiv ();
-    return setCtrl (aP.addChild (sValue));
+    if (StringHelper.hasNoText (sValue))
+      return this;
+
+    return setCtrl (new HCDiv ().addChild (sValue));
   }
 
   @Nonnull
@@ -119,10 +122,7 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
     final HCNodeList aNodeList = new HCNodeList ();
     if (aValues != null)
       for (final String sValue : aValues)
-      {
-        final HCDiv aP = new HCDiv ();
-        aNodeList.addChild (aP.addChild (sValue));
-      }
+        aNodeList.addChild (new HCDiv ().addChild (sValue));
     return setCtrl (aNodeList);
   }
 
