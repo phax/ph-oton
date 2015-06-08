@@ -31,19 +31,18 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.html.hc.CHCParam;
-import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCCheckBox;
-import com.helger.html.hc.html.HCCol;
+import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
+import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTableForm;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.uicore.html.tabbox.ITabBox;
-import com.helger.photon.uicore.html.table.IHCTableForm;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -137,78 +136,73 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
       aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
     }
 
-    final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
-    final ITabBox <?> aTabBox = new BootstrapTabBox ();
+    final BootstrapForm aForm0 = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
     // GlobalDebug
     {
-      final IHCTableForm <?> aTable = new BootstrapTableForm (new HCCol (170), HCCol.star ());
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_GLOBAL_DEBUG.getDisplayText (aDisplayLocale))
-            .setCtrl (new HCCheckBox (FIELD_GLOBAL_DEBUG, GlobalDebug.isDebugMode ()));
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_GLOBAL_PRODUCTION.getDisplayText (aDisplayLocale))
-            .setCtrl (new HCCheckBox (FIELD_GLOBAL_PRODUCTION, GlobalDebug.isProductionMode ()));
-      aTabBox.addTab (EText.MSG_HEADER_GLOBAL.getDisplayText (aDisplayLocale), aTable);
+      final BootstrapViewForm aForm = new BootstrapViewForm ();
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_GLOBAL_DEBUG.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCCheckBox (FIELD_GLOBAL_DEBUG,
+                                                                             GlobalDebug.isDebugMode ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_GLOBAL_PRODUCTION.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCCheckBox (FIELD_GLOBAL_PRODUCTION,
+                                                                             GlobalDebug.isProductionMode ())));
+      aTabBox.addTab (EText.MSG_HEADER_GLOBAL.getDisplayText (aDisplayLocale), aForm);
     }
 
     // Email global settings
     {
-      final IHCTableForm <?> aTable = new BootstrapTableForm (new HCCol (200), HCCol.star ());
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_EMAIL_MAILQUEUE_LENGTH.getDisplayText (aDisplayLocale))
-            .setCtrl (Long.toString (EmailGlobalSettings.getMaxMailQueueLength ()));
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_EMAIL_MAX_SEND_COUNT.getDisplayText (aDisplayLocale))
-            .setCtrl (Long.toString (EmailGlobalSettings.getMaxMailSendCount ()));
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_EMAIL_USE_SSL.getDisplayText (aDisplayLocale))
-            .setCtrl (EPhotonCoreText.getYesOrNo (EmailGlobalSettings.isUseSSL (), aDisplayLocale));
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_EMAIL_USE_STARTTLS.getDisplayText (aDisplayLocale))
-            .setCtrl (EPhotonCoreText.getYesOrNo (EmailGlobalSettings.isUseSTARTTLS (), aDisplayLocale));
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_EMAIL_CONNECTION_TIMEOUT.getDisplayText (aDisplayLocale))
-            .setCtrl (Long.toString (EmailGlobalSettings.getConnectionTimeoutMilliSecs ()) + "ms");
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_EMAIL_SOCKET_TIMEOUT.getDisplayText (aDisplayLocale))
-            .setCtrl (Long.toString (EmailGlobalSettings.getTimeoutMilliSecs ()) + "ms");
+      final BootstrapViewForm aForm = new BootstrapViewForm ();
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_MAILQUEUE_LENGTH.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (Long.toString (EmailGlobalSettings.getMaxMailQueueLength ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_MAX_SEND_COUNT.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (Long.toString (EmailGlobalSettings.getMaxMailSendCount ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_USE_SSL.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (EPhotonCoreText.getYesOrNo (EmailGlobalSettings.isUseSSL (),
+                                                                                         aDisplayLocale)));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_USE_STARTTLS.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (EPhotonCoreText.getYesOrNo (EmailGlobalSettings.isUseSTARTTLS (),
+                                                                                         aDisplayLocale)));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_CONNECTION_TIMEOUT.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (Long.toString (EmailGlobalSettings.getConnectionTimeoutMilliSecs ()) +
+                                                             "ms"));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_SOCKET_TIMEOUT.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (Long.toString (EmailGlobalSettings.getTimeoutMilliSecs ()) +
+                                                             "ms"));
       {
         final HCNodeList aCtrl = new HCNodeList ();
         for (final ConnectionListener aListener : EmailGlobalSettings.getAllConnectionListeners ())
-          aCtrl.addChild (String.valueOf (aListener));
+          aCtrl.addChild (new HCDiv ().addChild (String.valueOf (aListener)));
         if (!aCtrl.hasChildren ())
           aCtrl.addChild (HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
-        aTable.createItemRow ()
-              .setLabel (EText.MSG_EMAIL_CONNECTION_LISTENER.getDisplayText (aDisplayLocale))
-              .setCtrl (aCtrl);
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_CONNECTION_LISTENER.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aCtrl));
       }
       {
         final HCNodeList aCtrl = new HCNodeList ();
         for (final TransportListener aListener : EmailGlobalSettings.getAllTransportListeners ())
-          aCtrl.addChild (String.valueOf (aListener));
+          aCtrl.addChild (new HCDiv ().addChild (String.valueOf (aListener)));
         if (!aCtrl.hasChildren ())
           aCtrl.addChild (HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
-        aTable.createItemRow ()
-              .setLabel (EText.MSG_EMAIL_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
-              .setCtrl (aCtrl);
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aCtrl));
       }
       {
         final HCNodeList aCtrl = new HCNodeList ();
         for (final IEmailDataTransportListener aListener : EmailGlobalSettings.getAllEmailDataTransportListeners ())
-          aCtrl.addChild (String.valueOf (aListener));
+          aCtrl.addChild (new HCDiv ().addChild (String.valueOf (aListener)));
         if (!aCtrl.hasChildren ())
           aCtrl.addChild (HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
-        aTable.createItemRow ()
-              .setLabel (EText.MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
-              .setCtrl (aCtrl);
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aCtrl));
       }
-      aTabBox.addTab (EText.MSG_HEADER_EMAIL.getDisplayText (aDisplayLocale), aTable);
+      aTabBox.addTab (EText.MSG_HEADER_EMAIL.getDisplayText (aDisplayLocale), aForm);
     }
 
-    aForm.addChild (aTabBox);
+    aForm0.addChild (aTabBox);
 
-    final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+    final IButtonToolbar <?> aToolbar = aForm0.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addHiddenField (CHCParam.PARAM_ACTION, CHCParam.ACTION_SAVE);
     aToolbar.addSubmitButtonSave (aDisplayLocale);
   }
