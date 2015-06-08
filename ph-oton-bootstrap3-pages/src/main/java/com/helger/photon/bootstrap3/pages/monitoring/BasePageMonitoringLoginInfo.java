@@ -51,12 +51,12 @@ import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
+import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
-import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
@@ -177,29 +177,26 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayText (aDisplayLocale)));
-    final IHCTableFormView <?> aTable = aNodeList.addAndReturnChild (new BootstrapTableFormView (new HCCol (170),
-                                                                                                 HCCol.star ()));
-    aTable.createItemRow ()
-          .setLabel (EText.MSG_USERID.getDisplayText (aDisplayLocale))
-          .setCtrl (aSelectedObject.getUserID ());
-    aTable.createItemRow ()
-          .setLabel (EText.MSG_USERNAME.getDisplayText (aDisplayLocale))
-          .setCtrl (SecurityUtils.getUserDisplayName (aSelectedObject.getUser (), aDisplayLocale));
-    aTable.createItemRow ()
-          .setLabel (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale))
-          .setCtrl (PDTToString.getAsString (aSelectedObject.getLoginDT (), aDisplayLocale));
-    aTable.createItemRow ()
-          .setLabel (EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale))
-          .setCtrl (PDTToString.getAsString (aSelectedObject.getLastAccessDT (), aDisplayLocale));
+    final BootstrapViewForm aTable = aNodeList.addAndReturnChild (new BootstrapViewForm ());
+    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USERID.getDisplayText (aDisplayLocale))
+                                                  .setCtrl (aSelectedObject.getUserID ()));
+    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USERNAME.getDisplayText (aDisplayLocale))
+                                                  .setCtrl (SecurityUtils.getUserDisplayName (aSelectedObject.getUser (),
+                                                                                              aDisplayLocale)));
+    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale))
+                                                  .setCtrl (PDTToString.getAsString (aSelectedObject.getLoginDT (),
+                                                                                     aDisplayLocale)));
+    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale))
+                                                  .setCtrl (PDTToString.getAsString (aSelectedObject.getLastAccessDT (),
+                                                                                     aDisplayLocale)));
     if (aSelectedObject.getLogoutDT () != null)
     {
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_LOGOUTDT.getDisplayText (aDisplayLocale))
-            .setCtrl (PDTToString.getAsString (aSelectedObject.getLogoutDT (), aDisplayLocale));
+      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LOGOUTDT.getDisplayText (aDisplayLocale))
+                                                    .setCtrl (PDTToString.getAsString (aSelectedObject.getLogoutDT (),
+                                                                                       aDisplayLocale)));
     }
-    aTable.createItemRow ()
-          .setLabel (EText.MSG_SESSION_ID.getDisplayText (aDisplayLocale))
-          .setCtrl (aSelectedObject.getSessionScope ().getID ());
+    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SESSION_ID.getDisplayText (aDisplayLocale))
+                                                  .setCtrl (aSelectedObject.getSessionScope ().getID ()));
 
     // Add custom attributes
     final Map <String, Object> aAttrs = aSelectedObject.getAllAttributes ();
@@ -214,9 +211,8 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aCustomAttrTable);
       aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
 
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_ATTRS.getDisplayText (aDisplayLocale))
-            .setCtrl (aCustomAttrTable, aDataTables.build ());
+      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ATTRS.getDisplayText (aDisplayLocale))
+                                                    .setCtrl (aCustomAttrTable, aDataTables.build ()));
     }
   }
 

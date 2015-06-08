@@ -54,11 +54,11 @@ import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
+import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
-import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -162,27 +162,23 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
     aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                          aSelectedObject.getName ())));
-    final IHCTableFormView <?> aTable = aNodeList.addAndReturnChild (new BootstrapTableFormView (new HCCol (170),
-                                                                                                 HCCol.star ()));
-    onShowSelectedObjectTableStart (aWPEC, aTable, aSelectedObject);
+    final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
+    onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
 
-    aTable.createItemRow ()
-          .setLabel (EText.LABEL_NAME.getDisplayText (aDisplayLocale))
-          .setCtrl (aSelectedObject.getName ());
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_NAME.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (aSelectedObject.getName ()));
 
     if (StringHelper.hasText (aSelectedObject.getDescription ()))
-      aTable.createItemRow ()
-            .setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
-            .setCtrl (HCUtils.nl2divList (aSelectedObject.getDescription ()));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (HCUtils.nl2divList (aSelectedObject.getDescription ())));
 
     // All user groups to which the role is assigned
     final Collection <IUserGroup> aAssignedUserGroups = AccessManager.getInstance ()
                                                                      .getAllUserGroupsWithAssignedRole (aSelectedObject.getID ());
     if (aAssignedUserGroups.isEmpty ())
     {
-      aTable.createItemRow ()
-            .setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
-            .setCtrl (HCEM.create (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale)));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (HCEM.create (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
     }
     else
     {
@@ -190,17 +186,16 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
       for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aAssignedUserGroups,
                                                                      new ComparatorHasName <IUserGroup> (aDisplayLocale)))
         aUserGroupUI.addChild (HCDiv.create (aUserGroup.getName ()));
-      aTable.createItemRow ()
-            .setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
-                                                                        Integer.toString (aAssignedUserGroups.size ())))
-            .setCtrl (aUserGroupUI);
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                               Integer.toString (aAssignedUserGroups.size ())))
+                                                   .setCtrl (aUserGroupUI));
     }
 
     // custom attributes
     final Map <String, Object> aCustomAttrs = aSelectedObject.getAllAttributes ();
 
     // Callback for custom attributes
-    final Set <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aTable);
+    final Set <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aForm);
 
     if (!aCustomAttrs.isEmpty ())
     {
@@ -221,11 +216,12 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
       // Maybe all custom attributes where handled in
       // showCustomAttrsOfSelectedObject
       if (aAttrTable.hasBodyRows ())
-        aTable.createItemRow ().setLabel (EText.LABEL_ATTRIBUTES.getDisplayText (aDisplayLocale)).setCtrl (aAttrTable);
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ATTRIBUTES.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aAttrTable));
     }
 
     // Callback
-    onShowSelectedObjectTableEnd (aWPEC, aTable, aSelectedObject);
+    onShowSelectedObjectTableEnd (aWPEC, aForm, aSelectedObject);
   }
 
   @Override

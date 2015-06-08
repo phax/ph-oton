@@ -56,14 +56,14 @@ import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButton;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
+import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
-import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.mgr.PhotonCoreManager;
-import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
@@ -246,47 +246,44 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     final IEmailData aEmailData = aSelectedObject.getEmailData ();
     final Throwable aError = aSelectedObject.getError ();
 
-    final IHCTableFormView <?> aTable = aNodeList.addAndReturnChild (new BootstrapTableFormView (new HCCol (170),
-                                                                                                 HCCol.star ()));
-    aTable.createItemRow ().setLabel (EText.MSG_ID.getDisplayText (aDisplayLocale)).setCtrl (aSelectedObject.getID ());
-    aTable.createItemRow ()
-          .setLabel (EText.MSG_ERROR_DT.getDisplayText (aDisplayLocale))
-          .setCtrl (aSelectedObject.getErrorTimeDisplayText (aDisplayLocale));
-    aTable.createItemRow ()
-          .setLabel (EText.MSG_SMTP_SETTINGS.getDisplayText (aDisplayLocale))
-          .setCtrl (aSelectedObject.getSMTPServerDisplayText ());
-    aTable.createItemRow ()
-          .setLabel (EText.MSG_SENDING_DT.getDisplayText (aDisplayLocale))
-          .setCtrl (PDTToString.getAsString (aSelectedObject.getOriginalSentDateTime (), aDisplayLocale));
+    final BootstrapViewForm aTable = aNodeList.addAndReturnChild (new BootstrapViewForm ());
+    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ID.getDisplayText (aDisplayLocale))
+                                                  .setCtrl (aSelectedObject.getID ()));
+    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ERROR_DT.getDisplayText (aDisplayLocale))
+                                                  .setCtrl (aSelectedObject.getErrorTimeDisplayText (aDisplayLocale)));
+    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SMTP_SETTINGS.getDisplayText (aDisplayLocale))
+                                                  .setCtrl (aSelectedObject.getSMTPServerDisplayText ()));
+    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SENDING_DT.getDisplayText (aDisplayLocale))
+                                                  .setCtrl (PDTToString.getAsString (aSelectedObject.getOriginalSentDateTime (),
+                                                                                     aDisplayLocale)));
     if (aEmailData != null)
     {
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_EMAIL_TYPE.getDisplayText (aDisplayLocale))
-            .setCtrl (aEmailData.getEmailType ().getID ());
+      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_TYPE.getDisplayText (aDisplayLocale))
+                                                    .setCtrl (aEmailData.getEmailType ().getID ()));
 
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_FROM.getDisplayText (aDisplayLocale))
-            .setCtrl (aEmailData.getFrom ().getDisplayName ());
+      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FROM.getDisplayText (aDisplayLocale))
+                                                    .setCtrl (aEmailData.getFrom ().getDisplayName ()));
 
       final IHCNode aReplyTo = _getAsString (aEmailData.getReplyTo ());
       if (aReplyTo != null)
-        aTable.createItemRow ().setLabel (EText.MSG_REPLY_TO.getDisplayText (aDisplayLocale)).setCtrl (aReplyTo);
+        aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_REPLY_TO.getDisplayText (aDisplayLocale))
+                                                      .setCtrl (aReplyTo));
 
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_TO.getDisplayText (aDisplayLocale))
-            .setCtrl (_getAsString (aEmailData.getTo ()));
+      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_TO.getDisplayText (aDisplayLocale))
+                                                    .setCtrl (_getAsString (aEmailData.getTo ())));
 
       final IHCNode aCc = _getAsString (aEmailData.getCc ());
       if (aCc != null)
-        aTable.createItemRow ().setLabel (EText.MSG_CC.getDisplayText (aDisplayLocale)).setCtrl (aCc);
+        aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_CC.getDisplayText (aDisplayLocale))
+                                                      .setCtrl (aCc));
 
       final IHCNode aBcc = _getAsString (aEmailData.getBcc ());
       if (aBcc != null)
-        aTable.createItemRow ().setLabel (EText.MSG_BCC.getDisplayText (aDisplayLocale)).setCtrl (aBcc);
+        aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_BCC.getDisplayText (aDisplayLocale))
+                                                      .setCtrl (aBcc));
 
-      aTable.createItemRow ()
-            .setLabel (EText.MSG_SUBJECT.getDisplayText (aDisplayLocale))
-            .setCtrl (aEmailData.getSubject ());
+      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SUBJECT.getDisplayText (aDisplayLocale))
+                                                    .setCtrl (aEmailData.getSubject ()));
 
       List <? extends IHCNode> aBody = null;
       switch (aEmailData.getEmailType ())
@@ -298,7 +295,8 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           aBody = CollectionHelper.newList (new HCTextNode (aEmailData.getBody ()));
           break;
       }
-      aTable.createItemRow ().setLabel (EText.MSG_BODY.getDisplayText (aDisplayLocale)).setCtrl (aBody);
+      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_BODY.getDisplayText (aDisplayLocale))
+                                                    .setCtrl (aBody));
 
       // Show attachment details
       final IReadonlyEmailAttachmentList aAttachments = aEmailData.getAttachments ();
@@ -315,14 +313,14 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           sText += "; disposition=" + aAttachment.getDisposition ().getID ();
           aAttachmentNodeList.addChild (new HCDiv ().addChild (sText));
         }
-        aTable.createItemRow ()
-              .setLabel (EText.MSG_ATTACHMENTS.getDisplayText (aDisplayLocale))
-              .setCtrl (aAttachmentNodeList);
+        aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ATTACHMENTS.getDisplayText (aDisplayLocale))
+                                                      .setCtrl (aAttachmentNodeList));
       }
     }
     if (aError != null)
     {
-      aTable.createItemRow ().setLabel (EText.MSG_ERROR.getDisplayText (aDisplayLocale)).setCtrl (aError.getMessage ());
+      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ERROR.getDisplayText (aDisplayLocale))
+                                                    .setCtrl (aError.getMessage ()));
     }
   }
 

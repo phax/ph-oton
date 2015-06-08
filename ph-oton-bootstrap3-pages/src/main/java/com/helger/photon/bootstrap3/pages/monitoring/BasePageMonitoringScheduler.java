@@ -51,11 +51,11 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
+import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
+import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTableFormView;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
-import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.schedule.quartz.QuartzSchedulerHelper;
@@ -147,20 +147,19 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
           aTab.addChild (aContextTable);
         }
 
-        final IHCTableFormView <?> aDetailsTable = new BootstrapTableFormView (HCCol.star (), HCCol.star ());
-        aDetailsTable.createItemRow ()
-                     .setLabel (EText.MSG_SUMMARY.getDisplayText (aDisplayLocale))
-                     .setCtrl (HCUtils.nl2divList (aScheduler.getMetaData ().getSummary ()));
-        aDetailsTable.createItemRow ()
-                     .setLabel (EText.MSG_EXECUTING_JOBS.getDisplayText (aDisplayLocale))
-                     .setCtrl (Integer.toString (aScheduler.getCurrentlyExecutingJobs ().size ()));
+        final BootstrapViewForm aDetailsTable = new BootstrapViewForm ();
+        aDetailsTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SUMMARY.getDisplayText (aDisplayLocale))
+                                                             .setCtrl (HCUtils.nl2divList (aScheduler.getMetaData ()
+                                                                                                     .getSummary ())));
+        aDetailsTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXECUTING_JOBS.getDisplayText (aDisplayLocale))
+                                                             .setCtrl (Integer.toString (aScheduler.getCurrentlyExecutingJobs ()
+                                                                                                   .size ())));
 
         final List <String> aListeners = new ArrayList <String> ();
         for (final JobListener aJobListener : aScheduler.getListenerManager ().getJobListeners ())
           aListeners.add (aJobListener.getName () + " - " + aJobListener.getClass ().getName ());
-        aDetailsTable.createItemRow ()
-                     .setLabel (EText.MSG_LISTENERS.getDisplayText (aDisplayLocale))
-                     .setCtrl (HCUtils.list2divList (aListeners));
+        aDetailsTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LISTENERS.getDisplayText (aDisplayLocale))
+                                                             .setCtrl (HCUtils.list2divList (aListeners)));
         aTab.addChild (aDetailsTable);
 
         final HCUL aDetailUL = new HCUL ();

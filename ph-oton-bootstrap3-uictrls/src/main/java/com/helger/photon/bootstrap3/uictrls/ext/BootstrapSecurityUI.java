@@ -26,7 +26,6 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.photon.basic.security.password.GlobalPasswordSettings;
-import com.helger.photon.bootstrap3.tooltip.BootstrapTooltip;
 
 /**
  * Common methods to render security UI with Bootstrap
@@ -47,13 +46,13 @@ public final class BootstrapSecurityUI
    * @return <code>null</code> if not special constraints are defined.
    */
   @Nullable
-  public static IHCNode createPasswordConstraintTip (@Nonnull final Locale aDisplayLocale)
+  public static List <IHCNode> createPasswordConstraintTip (@Nonnull final Locale aDisplayLocale)
   {
     final List <String> aTexts = GlobalPasswordSettings.getPasswordConstraintList ()
                                                        .getAllPasswordConstraintDescriptions (aDisplayLocale);
     if (aTexts.isEmpty ())
       return null;
 
-    return BootstrapTooltip.createSimpleTooltip (HCUtils.list2divList (aTexts));
+    return HCUtils.list2divList (aTexts);
   }
 }

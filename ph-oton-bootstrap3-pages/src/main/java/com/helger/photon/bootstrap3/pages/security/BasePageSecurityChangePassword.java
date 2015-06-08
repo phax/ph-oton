@@ -31,8 +31,6 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.html.hc.CHCParam;
-import com.helger.html.hc.html.AbstractHCForm;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCEditPassword;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.AccessManager;
@@ -43,11 +41,11 @@ import com.helger.photon.basic.security.util.SecurityUtils;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTableForm;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapSecurityUI;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
-import com.helger.photon.uicore.html.table.IHCTableForm;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -173,34 +171,31 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
       {
         // Show input form
         final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
-        final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+        final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
         aForm.addChild (createActionHeader (EText.TITLE.getDisplayTextWithArgs (aDisplayLocale,
                                                                                 SecurityUtils.getUserDisplayName (aCurrentUser,
                                                                                                                   aDisplayLocale))));
-        final IHCTableForm <?> aTable = aForm.addAndReturnChild (new BootstrapTableForm (new HCCol (200),
-                                                                                         HCCol.star (),
-                                                                                         new HCCol (20)));
 
         final String sLabelOldPassword = EText.LABEL_OLD_PASSWORD.getDisplayText (aDisplayLocale);
-        aTable.createItemRow ()
-              .setLabel (sLabelOldPassword, ELabelType.MANDATORY)
-              .setCtrl (new HCEditPassword (FIELD_OLD_PASSWORD).setPlaceholder (sLabelOldPassword))
-              .setErrorList (aFormErrors.getListOfField (FIELD_OLD_PASSWORD));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sLabelOldPassword, ELabelType.MANDATORY)
+                                                     .setCtrl (new HCEditPassword (FIELD_OLD_PASSWORD).setPlaceholder (sLabelOldPassword))
+                                                     .setErrorList (aFormErrors.getListOfField (FIELD_OLD_PASSWORD)));
 
         final String sLabelNewPassword = EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale);
-        aTable.createItemRow ()
-              .setLabel (sLabelNewPassword, bHasAnyPasswordConstraint ? ELabelType.MANDATORY : ELabelType.OPTIONAL)
-              .setCtrl (new HCEditPassword (FIELD_NEW_PASSWORD).setPlaceholder (sLabelNewPassword))
-              .setNote (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
-              .setErrorList (aFormErrors.getListOfField (FIELD_NEW_PASSWORD));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sLabelNewPassword,
+                                                                bHasAnyPasswordConstraint ? ELabelType.MANDATORY
+                                                                                         : ELabelType.OPTIONAL)
+                                                     .setCtrl (new HCEditPassword (FIELD_NEW_PASSWORD).setPlaceholder (sLabelNewPassword))
+                                                     .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
+                                                     .setErrorList (aFormErrors.getListOfField (FIELD_NEW_PASSWORD)));
 
         final String sLabelNewPasswordConfirm = EText.LABEL_PASSWORD_CONFIRM.getDisplayText (aDisplayLocale);
-        aTable.createItemRow ()
-              .setLabel (sLabelNewPasswordConfirm,
-                         bHasAnyPasswordConstraint ? ELabelType.MANDATORY : ELabelType.OPTIONAL)
-              .setCtrl (new HCEditPassword (FIELD_NEW_PASSWORD_CONFIRM).setPlaceholder (sLabelNewPasswordConfirm))
-              .setNote (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
-              .setErrorList (aFormErrors.getListOfField (FIELD_NEW_PASSWORD_CONFIRM));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sLabelNewPasswordConfirm,
+                                                                bHasAnyPasswordConstraint ? ELabelType.MANDATORY
+                                                                                         : ELabelType.OPTIONAL)
+                                                     .setCtrl (new HCEditPassword (FIELD_NEW_PASSWORD_CONFIRM).setPlaceholder (sLabelNewPasswordConfirm))
+                                                     .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
+                                                     .setErrorList (aFormErrors.getListOfField (FIELD_NEW_PASSWORD_CONFIRM)));
 
         final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         aToolbar.addHiddenField (CHCParam.PARAM_ACTION, CHCParam.ACTION_PERFORM);

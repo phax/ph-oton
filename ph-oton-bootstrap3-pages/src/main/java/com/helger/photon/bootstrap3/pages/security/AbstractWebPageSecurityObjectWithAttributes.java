@@ -26,10 +26,9 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.html.hc.html.AbstractHCForm;
+import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
-import com.helger.photon.uicore.html.table.IHCTableForm;
-import com.helger.photon.uicore.html.table.IHCTableFormView;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.validation.error.FormErrors;
@@ -78,7 +77,7 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
    */
   @OverrideOnDemand
   protected void onShowSelectedObjectTableStart (@Nonnull final WPECTYPE aWPEC,
-                                                 @Nonnull final IHCTableFormView <?> aTable,
+                                                 @Nonnull final BootstrapViewForm aTable,
                                                  @Nonnull final DATATYPE aSelectedObject)
   {}
 
@@ -104,7 +103,7 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
   protected Set <String> onShowSelectedObjectCustomAttrs (@Nonnull final WPECTYPE aWPEC,
                                                           @Nonnull final DATATYPE aSelectedObject,
                                                           @Nonnull final Map <String, ?> aCustomAttrs,
-                                                          @Nonnull final IHCTableFormView <?> aTable)
+                                                          @Nonnull final BootstrapViewForm aTable)
   {
     return null;
   }
@@ -119,7 +118,7 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
    */
   @OverrideOnDemand
   protected void onShowSelectedObjectTableEnd (@Nonnull final WPECTYPE aWPEC,
-                                               @Nonnull final IHCTableFormView <?> aTable,
+                                               @Nonnull final BootstrapViewForm aTable,
                                                @Nonnull final DATATYPE aSelectedObject)
   {}
 
@@ -163,15 +162,12 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
    * @param aFormErrors
    *        Previous errors from validation. Never <code>null</code> but maybe
    *        empty.
-   * @param aTable
-   *        The table where new fields should be added. Never <code>null</code>.
    */
   @OverrideOnDemand
   protected void onShowInputFormEnd (@Nonnull final WPECTYPE aWPEC,
                                      @Nullable final DATATYPE aSelectedObject,
-                                     @Nonnull final AbstractHCForm <?> aForm,
+                                     @Nonnull final BootstrapForm aForm,
                                      @Nonnull final EWebPageFormAction eFormAction,
-                                     @Nonnull final FormErrors aFormErrors,
-                                     @Nonnull final IHCTableForm <?> aTable)
+                                     @Nonnull final FormErrors aFormErrors)
   {}
 }
