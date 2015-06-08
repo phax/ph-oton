@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
@@ -29,13 +30,17 @@ import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCDiv;
+import com.helger.html.hc.html.HCP;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.markdown.MarkdownConfiguration;
+import com.helger.html.markdown.MarkdownProcessor;
 
 @Immutable
 public final class UITextFormatter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (UITextFormatter.class);
+  private static final MarkdownProcessor MARKDOWN = new MarkdownProcessor (MarkdownConfiguration.DEFAULT_EXTENSIONS);
 
   private UITextFormatter ()
   {}
@@ -75,5 +80,30 @@ public final class UITextFormatter
       }
     }
     return new HCTextNode (sOrigValue);
+  }
+
+  @Nullable
+  public static IHCNode markdown (@Nullable final String s)
+  {
+    try
+    {
+      final HCNodeList aNL = MARKDOWN.process (s).getNodeList ();
+
+      // Replace a single <p> element with its contents
+      if (aNL.getChildCount () == 1 && aNL.getChildAtIndex (0) instanceof HCP)
+        return ((HCP) aNL.getChildAtIndex (0)).getAllChildrenAsNodeList ();
+
+      return aNL;
+    }
+    catch (final Exception ex)
+    {
+      return new HCTextNode (s);
+    }
+  }
+
+  @Nullable
+  public static IHCNode markdownOnDemand (@Nullable final String s)
+  {
+    return StringHelper.hasText (s) ? markdown (s) : null;
   }
 }
