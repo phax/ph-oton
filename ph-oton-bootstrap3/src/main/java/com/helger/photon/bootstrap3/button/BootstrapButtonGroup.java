@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.html.hc.html.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
+import com.helger.photon.bootstrap3.dropdown.BootstrapDropdown;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdownMenu;
 
 public class BootstrapButtonGroup extends AbstractHCDiv <BootstrapButtonGroup>
@@ -80,10 +81,11 @@ public class BootstrapButtonGroup extends AbstractHCDiv <BootstrapButtonGroup>
    * @return The created drop down button
    */
   @Nonnull
+  @Deprecated
   public BootstrapDropdownMenu addButtonAsDropDownMenu (@Nonnull final BootstrapButton aButton)
   {
     // Add caret to button
-    BootstrapDropdownMenu.makeDropdownToggle (aButton);
+    BootstrapDropdown.makeDropdownToggle (aButton);
 
     addClass (CBootstrapCSS.DROPDOWN);
     addChild (aButton);
@@ -98,12 +100,13 @@ public class BootstrapButtonGroup extends AbstractHCDiv <BootstrapButtonGroup>
    * @return The created drop down button
    */
   @Nonnull
+  @Deprecated
   public BootstrapDropdownMenu addButtonAsDropDownMenuWithSeparateCaret (@Nonnull final BootstrapButton aButton)
   {
     addChild (aButton);
 
     final BootstrapButton aCaret = new BootstrapButton (aButton.getButtonType (), aButton.getButtonSize ());
-    BootstrapDropdownMenu.makeDropdownToggle (aCaret);
+    BootstrapDropdown.makeDropdownToggle (aCaret);
     addChild (aCaret);
 
     return addDropDownMenu ();

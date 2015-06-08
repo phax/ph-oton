@@ -368,14 +368,8 @@ public class BootstrapFormGroupRendererDefault implements IBootstrapFormGroupRen
     if (bUseIcons)
       aFinalNode.addClass (CBootstrapCSS.HAS_FEEDBACK);
 
-    if (aFormGroup.hasID ())
-      aFinalNode.setID (aFormGroup.getID ());
-
-    if (aFormGroup.hasCSSClasses ())
-      aFinalNode.addClasses (aFormGroup.getCSSClasses ().getAllClasses ());
-
-    if (aFormGroup.hasCSSStyles ())
-      aFinalNode.addStyles (aFormGroup.getCSSStyles ().getAllStyleValues ());
+    // Set ID, class and style
+    aFormGroup.applyBasicHTMLTo (aFinalNode);
 
     modifyFinalNode (aForm, aFormGroup, aFinalNode);
 

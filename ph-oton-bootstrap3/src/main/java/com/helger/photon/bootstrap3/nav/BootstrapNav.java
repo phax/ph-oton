@@ -30,6 +30,7 @@ import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HCUL;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
+import com.helger.photon.bootstrap3.dropdown.BootstrapDropdown;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdownMenu;
 import com.helger.photon.uicore.icon.IIcon;
 
@@ -148,7 +149,7 @@ public class BootstrapNav extends HCUL
   public BootstrapDropdownMenu addDropdownMenu (@Nullable final IHCNode aText)
   {
     final HCLI aLI = addItem ().addClass (CBootstrapCSS.DROPDOWN);
-    aLI.addChild (BootstrapDropdownMenu.makeDropdownToggle (new HCA (new SimpleURL ()).addChild (aText)));
+    aLI.addChild (BootstrapDropdown.makeDropdownToggle (new HCA (new SimpleURL ()).addChild (aText)));
     final BootstrapDropdownMenu aMenu = aLI.addAndReturnChild (new BootstrapDropdownMenu ());
     return aMenu;
   }

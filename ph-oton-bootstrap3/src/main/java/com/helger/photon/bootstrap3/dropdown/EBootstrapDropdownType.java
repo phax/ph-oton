@@ -14,42 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.button;
-
-import java.util.List;
+package com.helger.photon.bootstrap3.dropdown;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsImmutableObject;
-import com.helger.commons.collections.CollectionHelper;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
- * Button group types
+ * Bootstrap dropdown type
  *
  * @author Philip Helger
  */
-public enum EBootstrapButtonGroupType
+public enum EBootstrapDropdownType implements ICSSClassProvider
 {
-  DEFAULT (CBootstrapCSS.BTN_GROUP),
-  VERTICAL (CBootstrapCSS.BTN_GROUP_VERTICAL),
-  JUSTIFIED (CBootstrapCSS.BTN_GROUP, CBootstrapCSS.BTN_GROUP_JUSTIFIED);
+  DROPDOWN (CBootstrapCSS.DROPDOWN),
+  DROPUP (CBootstrapCSS.DROPUP);
 
-  private final List <ICSSClassProvider> m_aCSSClasses;
+  private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapButtonGroupType (@Nullable final ICSSClassProvider... aCSSClasses)
+  private EBootstrapDropdownType (@Nonnull final ICSSClassProvider aCSSClass)
   {
-    m_aCSSClasses = CollectionHelper.newUnmodifiableList (aCSSClasses);
+    m_aCSSClass = aCSSClass;
   }
 
   @Nonnull
-  @Nonempty
-  @ReturnsImmutableObject
-  public List <ICSSClassProvider> getAllCSSClasses ()
+  public String getCSSClass ()
   {
-    return m_aCSSClasses;
+    return m_aCSSClass.getCSSClass ();
   }
 }

@@ -22,17 +22,21 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLRole;
-import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HCUL;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
-import com.helger.photon.bootstrap3.base.BootstrapCaret;
 
 public class BootstrapDropdownMenu extends HCUL
 {
   public BootstrapDropdownMenu ()
   {
+    this (EBootstrapDropdownMenuAlignment.DEFAULT);
+  }
+
+  public BootstrapDropdownMenu (@Nullable final EBootstrapDropdownMenuAlignment eAlignment)
+  {
     addClass (CBootstrapCSS.DROPDOWN_MENU);
+    addClass (eAlignment);
     setRole (EHTMLRole.MENU);
   }
 
@@ -44,20 +48,22 @@ public class BootstrapDropdownMenu extends HCUL
   }
 
   @Nonnull
-  public BootstrapDropdownMenu addMenuItem (@Nonnull final BootstrapDropdownMenuItem aItem)
+  public HCLI addMenuItem (@Nonnull final BootstrapDropdownMenuItem aItem)
   {
     ValueEnforcer.notNull (aItem, "DropdownMenuItem");
+
     final HCLI aLI = addAndReturnItem (aItem.createLink ());
     if (aItem.isActive ())
       aLI.addClass (CBootstrapCSS.ACTIVE);
-    return this;
+    if (aItem.isDisabled ())
+      aLI.addClass (CBootstrapCSS.DISABLED);
+    return aLI;
   }
 
   @Nonnull
-  public BootstrapDropdownMenu addDivider ()
+  public HCLI addDivider ()
   {
-    addItem ().addClass (CBootstrapCSS.DIVIDER);
-    return this;
+    return addItem ().addClass (CBootstrapCSS.DIVIDER);
   }
 
   @Nonnull
@@ -66,30 +72,5 @@ public class BootstrapDropdownMenu extends HCUL
     if (StringHelper.hasText (sHeaderText))
       addItem (sHeaderText).addClass (CBootstrapCSS.DROPDOWN_HEADER);
     return this;
-  }
-
-  public static void disableItem (@Nonnull final HCLI aItem)
-  {
-    aItem.addClass (CBootstrapCSS.DISABLED);
-  }
-
-  /**
-   * Call this method to convert an element to a dropdown toggle. Important:
-   * call this after all children are added, because a caret is added at the
-   * end!
-   *
-   * @param aElement
-   *        The element to use. May not be <code>null</code>.
-   * @param <IMPLTYPE>
-   *        Implementation type
-   * @return The passed element. Never <code>null</code>.
-   */
-  @Nonnull
-  public static <IMPLTYPE extends IHCElementWithChildren <?>> IMPLTYPE makeDropdownToggle (@Nonnull final IMPLTYPE aElement)
-  {
-    aElement.addClass (CBootstrapCSS.DROPDOWN_TOGGLE)
-            .setDataAttr ("toggle", "dropdown")
-            .addChild (new BootstrapCaret ());
-    return aElement;
   }
 }
