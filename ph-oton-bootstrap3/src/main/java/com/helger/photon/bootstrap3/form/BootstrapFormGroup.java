@@ -24,6 +24,8 @@ import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.annotations.ReturnsMutableObject;
 import com.helger.commons.idfactory.GlobalIDFactory;
 import com.helger.commons.string.StringHelper;
+import com.helger.css.property.CCSSProperties;
+import com.helger.css.property.ECSSProperty;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.html.HCDiv;
@@ -308,5 +310,16 @@ public class BootstrapFormGroup
   public EBootstrapFormGroupState getState ()
   {
     return m_eState;
+  }
+
+  @Nonnull
+  public BootstrapFormGroup setHidden (final boolean bHidden)
+  {
+    if (bHidden)
+      getCSSStyles ().addStyle (CCSSProperties.DISPLAY_NONE);
+    else
+      if (m_aCSSStyles != null)
+        m_aCSSStyles.removeStyle (ECSSProperty.DISPLAY);
+    return this;
   }
 }
