@@ -196,9 +196,9 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     {
+      aNodeList.addChild (createInPageHeader (EText.MSG_HEADER_SPECIAL_SYSPROPS.getDisplayText (aDisplayLocale)));
       final IHCTableFormView <?> aTable = new BootstrapTableFormView (new HCCol (250), HCCol.star ());
       aTable.setID (getID () + "$special");
-      aTable.setSpanningHeaderContent (EText.MSG_HEADER_SPECIAL_SYSPROPS.getDisplayText (aDisplayLocale));
       aTable.addHeaderRow ().addCells (EText.MSG_HEADER_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_HEADER_VALUE.getDisplayText (aDisplayLocale));
 
@@ -266,9 +266,9 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     }
 
     {
+      aNodeList.addChild (createInPageHeader (EText.MSG_HEADER_SYSPROPS.getDisplayText (aDisplayLocale)));
       final IHCTable <?> aTable = new BootstrapTable (new HCCol (250), HCCol.star ());
       aTable.setID (getID ());
-      aTable.setSpanningHeaderContent (EText.MSG_HEADER_SYSPROPS.getDisplayText (aDisplayLocale));
       aTable.addHeaderRow ().addCells (EText.MSG_HEADER_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_HEADER_VALUE.getDisplayText (aDisplayLocale));
 

@@ -116,16 +116,16 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> e
     // Get default time zone
     final DateTimeZone aCurrentDTZ = PDTConfig.getDefaultDateTimeZone ();
 
+    aNodeList.addChild (createInPageHeader (EText.MSG_CURRENT_TIMEZONE.getDisplayText (aDisplayLocale) +
+                                            aCurrentDTZ.getID () +
+                                            " - " +
+                                            aCurrentDTZ.getName (nNow)));
     final IHCTable <?> aTable = new BootstrapTable (new HCCol (100),
                                                     HCCol.star (),
                                                     new HCCol (100),
                                                     new HCCol (70),
                                                     new HCCol (70),
                                                     new HCCol (70)).setID (getID ());
-    aTable.setSpanningHeaderContent (EText.MSG_CURRENT_TIMEZONE.getDisplayText (aDisplayLocale) +
-                                     aCurrentDTZ.getID () +
-                                     " - " +
-                                     aCurrentDTZ.getName (nNow));
     aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
                                      EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                      EText.MSG_SHORTNAME.getDisplayText (aDisplayLocale),

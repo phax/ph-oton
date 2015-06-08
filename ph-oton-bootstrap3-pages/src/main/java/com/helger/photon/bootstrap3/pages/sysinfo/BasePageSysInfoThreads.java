@@ -128,6 +128,20 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
+    // get all threads and sort them by thread ID
+    final Map <Thread, StackTraceElement []> aThreads = CollectionHelper.getSortedByKey (Thread.getAllStackTraces (),
+                                                                                         new ComparatorThreadID ());
+
+    aNodeList.addChild (createInPageHeader ("Total count=" +
+                                            aThreads.size () +
+                                            "; Prios (min/norm/max): " +
+                                            Thread.MIN_PRIORITY +
+                                            "/" +
+                                            Thread.NORM_PRIORITY +
+                                            "/" +
+                                            Thread.MAX_PRIORITY +
+                                            "; Zeitpunkt: " +
+                                            PDTToString.getAsString (PDTFactory.getCurrentDateTime (), aDisplayLocale)));
     final IHCTable <?> aTable = new BootstrapTable (new HCCol (50),
                                                     new HCCol (100),
                                                     new HCCol (150),
@@ -135,20 +149,6 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
                                                     new HCCol (100),
                                                     HCCol.star ()).setID (getID ());
 
-    // get all threads and sort them by thread ID
-    final Map <Thread, StackTraceElement []> aThreads = CollectionHelper.getSortedByKey (Thread.getAllStackTraces (),
-                                                                                         new ComparatorThreadID ());
-
-    aTable.setSpanningHeaderContent ("Total count=" +
-                                     aThreads.size () +
-                                     "; Prios (min/norm/max): " +
-                                     Thread.MIN_PRIORITY +
-                                     "/" +
-                                     Thread.NORM_PRIORITY +
-                                     "/" +
-                                     Thread.MAX_PRIORITY +
-                                     "; Zeitpunkt: " +
-                                     PDTToString.getAsString (PDTFactory.getCurrentDateTime (), aDisplayLocale));
     aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
                                      EText.MSG_GROUP.getDisplayText (aDisplayLocale),
                                      EText.MSG_NAME.getDisplayText (aDisplayLocale),

@@ -599,9 +599,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       // Show question
       final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
 
+      aForm.addChild (createInPageHeader (EText.TITLE_TEST_MAIL.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                        aSelectedObject.getName ())));
       final IHCTableForm <?> aTable = aForm.addAndReturnChild (new BootstrapTableForm (new HCCol (170), HCCol.star ()));
-      aTable.setSpanningHeaderContent (EText.TITLE_TEST_MAIL.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                     aSelectedObject.getName ()));
 
       aTable.createItemRow ()
             .setLabelMandatory (EText.MSG_SENDER.getDisplayText (aDisplayLocale))

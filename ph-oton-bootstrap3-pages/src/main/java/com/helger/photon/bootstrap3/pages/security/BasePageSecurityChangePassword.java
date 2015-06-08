@@ -174,13 +174,12 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
         // Show input form
         final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
         final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+        aForm.addChild (createInPageHeader (EText.TITLE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                SecurityUtils.getUserDisplayName (aCurrentUser,
+                                                                                                                  aDisplayLocale))));
         final IHCTableForm <?> aTable = aForm.addAndReturnChild (new BootstrapTableForm (new HCCol (200),
                                                                                          HCCol.star (),
                                                                                          new HCCol (20)));
-
-        aTable.setSpanningHeaderContent (EText.TITLE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                             SecurityUtils.getUserDisplayName (aCurrentUser,
-                                                                                                               aDisplayLocale)));
 
         final String sLabelOldPassword = EText.LABEL_OLD_PASSWORD.getDisplayText (aDisplayLocale);
         aTable.createItemRow ()

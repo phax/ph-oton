@@ -160,11 +160,10 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
+    aNodeList.addChild (createInPageHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                         aSelectedObject.getName ())));
     final IHCTableFormView <?> aTable = aNodeList.addAndReturnChild (new BootstrapTableFormView (new HCCol (170),
                                                                                                  HCCol.star ()));
-    aTable.setSpanningHeaderContent (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                  aSelectedObject.getName ()));
-
     onShowSelectedObjectTableStart (aWPEC, aTable, aSelectedObject);
 
     aTable.createItemRow ()
