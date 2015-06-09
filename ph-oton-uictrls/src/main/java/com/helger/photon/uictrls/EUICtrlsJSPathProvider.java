@@ -30,7 +30,7 @@ import com.helger.html.resource.js.IJSPathProvider;
  */
 public enum EUICtrlsJSPathProvider implements IJSPathProvider
 {
-  AUTONUMERIC ("autonumeric/1.9.30/autoNumeric.js"),
+  AUTONUMERIC ("autonumeric/1.9.37/autoNumeric.js"),
   AUTOSIZE ("autosize/1.18.18/jquery.autosize.js"),
   AUTOSIZE_ALL ("autosize/autosize-all.js"),
   /** BigDecimal support for JS */
@@ -48,6 +48,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   HANDLEBARS_1 ("handlebars/1.3.0/handlebars-v1.3.0.js"),
   HANDLEBARS_3 ("handlebars/3.0.0/handlebars-v3.0.0.js"),
   JSCOLOR ("jscolor/1.4.4/jscolor.js"),
+  PRISMJS ("prismjs/prism.js"),
   SELECT2 ("select2/4.0.0/js/select2.js"),
   SELECT2_LOCALE ("select2/4.0.0/js/i18n/{0}.js", null, false),
   /** https://github.com/twitter/typeahead.js/ */
