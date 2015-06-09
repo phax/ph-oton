@@ -47,7 +47,6 @@ import com.helger.photon.core.action.IActionBeforeExecutionCallback;
 import com.helger.photon.core.action.IActionDeclaration;
 import com.helger.photon.core.action.IActionExceptionCallback;
 import com.helger.photon.core.action.IActionLongRunningExecutionCallback;
-import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -120,7 +119,7 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
 
-    final ITabBox <?> aTabBox = new BootstrapTabBox ();
+    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
     for (final IApplicationScope aAppScope : WebScopeManager.getGlobalScope ().getAllApplicationScopes ().values ())
     {

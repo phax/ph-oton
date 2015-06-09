@@ -58,6 +58,7 @@ import com.helger.photon.bootstrap3.pages.settings.BasePageSettingsHTML;
 import com.helger.photon.bootstrap3.pages.settings.BasePageSettingsSMTP;
 import com.helger.photon.bootstrap3.pages.settings.BasePageSettingsSystemMessage;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoChangeLogs;
+import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoConfigurationFiles;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoEnvironmentVariables;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoNetwork;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoRequest;
@@ -107,6 +108,7 @@ public final class BootstrapPagesMenuConfigurator
 
   public static final String MENU_ADMIN_SYSINFO = "admin_sysinfo";
   public static final String MENU_ADMIN_SYSINFO_CHANGELOGS = "admin_sysinfo_changelog";
+  public static final String MENU_ADMIN_SYSINFO_CONFIGFILES = "admin_sysinfo_configfiles";
   public static final String MENU_ADMIN_SYSINFO_ENVVARS = "admin_sysinfo_envvars";
   public static final String MENU_ADMIN_SYSINFO_NETWORK = "admin_sysinfo_network";
   public static final String MENU_ADMIN_SYSINFO_REQUEST = "admin_sysinfo_request";
@@ -130,14 +132,14 @@ public final class BootstrapPagesMenuConfigurator
                                                                                               @Nullable final IFilter <IMenuObject> aDisplayFilter)
   {
     return BootstrapPagesMenuConfigurator.<WPECTYPE> addMonitoringItems (aMenuTree,
-                                                                  aParent,
-                                                                  aDisplayFilter,
-                                                                  PhotonBasicManager.getAuditMgr (),
-                                                                  PhotonCoreManager.getFailedMailQueue (),
-                                                                  PhotonCoreManager.getLockMgr (),
-                                                                  PhotonCoreManager.getGoMappingMgr (),
-                                                                  PhotonBasicManager.getSystemMigrationMgr (),
-                                                                  PhotonCoreManager.getWebSiteResourceBundleMgr ());
+                                                                         aParent,
+                                                                         aDisplayFilter,
+                                                                         PhotonBasicManager.getAuditMgr (),
+                                                                         PhotonCoreManager.getFailedMailQueue (),
+                                                                         PhotonCoreManager.getLockMgr (),
+                                                                         PhotonCoreManager.getGoMappingMgr (),
+                                                                         PhotonBasicManager.getSystemMigrationMgr (),
+                                                                         PhotonCoreManager.getWebSiteResourceBundleMgr ());
   }
 
   @Nonnull
@@ -153,8 +155,8 @@ public final class BootstrapPagesMenuConfigurator
   {
     final IMenuItemPage aAdminMonitoring = aMenuTree.createItem (aParent,
                                                                  new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_MONITORING,
-                                                                                                  EWebPageText.PAGE_NAME_MONITORING.getAsMLT (),
-                                                                                                  aMenuTree))
+                                                                                                      EWebPageText.PAGE_NAME_MONITORING.getAsMLT (),
+                                                                                                      aMenuTree))
                                                     .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminMonitoring, new BasePageMonitoringActions <WPECTYPE> (MENU_ADMIN_MONITORING_ACTIONS))
              .setDisplayFilter (aDisplayFilter);
@@ -231,8 +233,8 @@ public final class BootstrapPagesMenuConfigurator
   {
     final IMenuItemPage aAdminSecurity = aMenuTree.createItem (aParent,
                                                                new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_SECURITY,
-                                                                                                EWebPageText.PAGE_NAME_SECURITY.getAsMLT (),
-                                                                                                aMenuTree))
+                                                                                                    EWebPageText.PAGE_NAME_SECURITY.getAsMLT (),
+                                                                                                    aMenuTree))
                                                   .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSecurity,
                           new BasePageSecurityUserManagement <WPECTYPE> (MENU_ADMIN_SECURITY_USER).setDefaultUserLocale (aDefaultLocale))
@@ -251,9 +253,9 @@ public final class BootstrapPagesMenuConfigurator
                                                                                             @Nullable final IFilter <IMenuObject> aDisplayFilter)
   {
     return BootstrapPagesMenuConfigurator.<WPECTYPE> addSettingsItems (aMenuTree,
-                                                                aParent,
-                                                                aDisplayFilter,
-                                                                PhotonCoreManager.getSMTPSettingsMgr ());
+                                                                       aParent,
+                                                                       aDisplayFilter,
+                                                                       PhotonCoreManager.getSMTPSettingsMgr ());
   }
 
   @Nonnull
@@ -264,8 +266,8 @@ public final class BootstrapPagesMenuConfigurator
   {
     final IMenuItemPage aAdminSettings = aMenuTree.createItem (aParent,
                                                                new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_SETTINGS,
-                                                                                                EWebPageText.PAGE_NAME_SETTINGS.getAsMLT (),
-                                                                                                aMenuTree))
+                                                                                                    EWebPageText.PAGE_NAME_SETTINGS.getAsMLT (),
+                                                                                                    aMenuTree))
                                                   .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSettings, new BasePageSettingsGlobal <WPECTYPE> (MENU_ADMIN_SETTINGS_GLOBAL))
              .setDisplayFilter (aDisplayFilter);
@@ -293,10 +295,13 @@ public final class BootstrapPagesMenuConfigurator
   {
     final IMenuItemPage aAdminSysInfo = aMenuTree.createItem (aParent,
                                                               new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_SYSINFO,
-                                                                                               EWebPageText.PAGE_NAME_SYSINFO.getAsMLT (),
-                                                                                               aMenuTree))
+                                                                                                   EWebPageText.PAGE_NAME_SYSINFO.getAsMLT (),
+                                                                                                   aMenuTree))
                                                  .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoChangeLogs <WPECTYPE> (MENU_ADMIN_SYSINFO_CHANGELOGS))
+             .setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminSysInfo,
+                          new BasePageSysInfoConfigurationFiles <WPECTYPE> (MENU_ADMIN_SYSINFO_CONFIGFILES))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo,
                           new BasePageSysInfoEnvironmentVariables <WPECTYPE> (MENU_ADMIN_SYSINFO_ENVVARS))
@@ -324,8 +329,8 @@ public final class BootstrapPagesMenuConfigurator
   {
     final IMenuItemPage aAdminData = aMenuTree.createItem (aParent,
                                                            new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_DATA,
-                                                                                            EWebPageText.PAGE_NAME_DATA.getAsMLT (),
-                                                                                            aMenuTree))
+                                                                                                EWebPageText.PAGE_NAME_DATA.getAsMLT (),
+                                                                                                aMenuTree))
                                               .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminData, new BasePageDataCountries <WPECTYPE> (MENU_ADMIN_DATA_COUNTRIES))
              .setDisplayFilter (aDisplayFilter);

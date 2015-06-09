@@ -69,6 +69,7 @@ public enum EWebPageText implements IHasDisplayText, IHasDisplayTextWithArgs
   PAGE_NAME_SETTINGS_SYSTEMMESSAGE ("Systemnachricht", "System message"),
   PAGE_NAME_SYSINFO ("System Informationen", "System information"),
   PAGE_NAME_SYSINFO_CHANGELOGS ("Änderungshistorie", "Change logs"),
+  PAGE_NAME_SYSINFO_CONFIG_FILES ("Konfigurationsdateien", "Configuration files"),
   PAGE_NAME_SYSINFO_ENV_VARS ("Umgebungsvariablen", "Environment variables"),
   PAGE_NAME_SYSINFO_NETWORK ("Netzwerk", "Network"),
   PAGE_NAME_SYSINFO_REQUEST ("Request", "Request"),

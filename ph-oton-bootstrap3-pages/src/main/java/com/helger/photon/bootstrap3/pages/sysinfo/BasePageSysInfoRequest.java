@@ -41,7 +41,6 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
-import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -119,7 +118,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
     final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
     final int nFirstColWidth = 250;
 
-    final ITabBox <?> aTabBox = new BootstrapTabBox ();
+    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
     // HTTP headers
     {
