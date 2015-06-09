@@ -67,4 +67,6 @@ td {
 .datagroup-header {
   font-weight: bold;
   font-size: large;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }

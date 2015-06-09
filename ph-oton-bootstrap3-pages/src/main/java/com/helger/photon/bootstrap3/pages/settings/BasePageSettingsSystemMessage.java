@@ -35,9 +35,7 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCElementWithChildren;
-import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCDiv;
-import com.helger.html.hc.html.HCH2;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.app.systemmsg.ESystemMessageType;
@@ -46,11 +44,11 @@ import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.uicore.html.select.HCSystemMessageTypeSelect;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -152,7 +150,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
       else
       {
         // Show input form
-        final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+        final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
 
         final String sSystemMessage = aSystemMsgMgr.getSystemMessage ();
         aForm.addChild (new HCSystemMessageTypeSelect (new RequestField (FIELD_MESSAGE_TYPE,
@@ -163,7 +161,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         aForm.addChild (new HCHiddenField (CHCParam.PARAM_SUBACTION, CHCParam.ACTION_SAVE));
         aForm.addChild (createCSRFNonceField ());
 
-        final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+        final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         aToolbar.addButtonCancel (aDisplayLocale);
         aToolbar.addSubmitButtonSave (aDisplayLocale);
         bShowList = false;
@@ -176,17 +174,17 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
       final LocalDateTime aLastUpdateDT = aSystemMsgMgr.getLastUpdateDT ();
       if (aLastUpdateDT != null)
       {
-        aNodeList.addChild (new HCH2 ().addChild (EText.LAST_UPDATE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                            PDTToString.getAsString (aLastUpdateDT,
-                                                                                                                     aDisplayLocale))));
+        aNodeList.addChild (createActionHeader (EText.LAST_UPDATE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                          PDTToString.getAsString (aLastUpdateDT,
+                                                                                                                   aDisplayLocale))));
       }
 
-      final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+      final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
 
       if (aSystemMsgMgr.hasSystemMessage ())
       {
         // Show current message
-        aForm.addChild (new HCDiv ().addChild (EText.CURRENT_MESSAGE_TYPE.getDisplayTextWithArgs (aDisplayLocale,
+        aForm.addChild (createDataGroupHeader (EText.CURRENT_MESSAGE_TYPE.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                   aSystemMsgMgr.getMessageType ()
                                                                                                                .getDisplayText (aDisplayLocale))));
         aForm.addChild (new HCDiv ().addChild (renderCurrentSystemMessage (aWPEC)));
@@ -199,7 +197,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
 
       aForm.addChild (new HCHiddenField (CHCParam.PARAM_ACTION, CHCParam.ACTION_EDIT));
 
-      final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+      final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
       aToolbar.addSubmitButton (EPhotonCoreText.BUTTON_EDIT.getDisplayText (aDisplayLocale), EDefaultIcon.EDIT);
     }
   }
