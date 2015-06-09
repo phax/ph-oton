@@ -45,6 +45,8 @@ import com.helger.photon.uictrls.prism.HCPrismJS;
  * Server configuration file.
  *
  * @author Philip Helger
+ * @param <WPECTYPE>
+ *        Web Page Execution Context type
  */
 public class BasePageSysInfoConfigurationFiles <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageExt <WPECTYPE>
 {
