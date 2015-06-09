@@ -62,3 +62,9 @@ option.select-option-special {
 td {
   vertical-align: top;
 }
+
+/** AbstractWebPageEx */
+.datagroup-header {
+  font-weight: bold;
+  font-size: large;
+}

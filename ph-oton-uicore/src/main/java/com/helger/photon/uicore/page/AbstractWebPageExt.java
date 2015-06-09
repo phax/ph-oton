@@ -56,7 +56,7 @@ import com.helger.html.hc.htmlext.HCA_MailTo;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.form.csrf.CSRFSessionManager;
-import com.helger.photon.uicore.css.WebCtrlsCSS;
+import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 
 /**
@@ -95,12 +95,12 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
 
   public static final String PARAM_SOURCE_MENU_ITEM = "srcmi";
 
-  protected static final ICSSClassProvider CSS_CLASS_LEFT = WebCtrlsCSS.CSS_CLASS_LEFT;
-  protected static final ICSSClassProvider CSS_CLASS_CENTER = WebCtrlsCSS.CSS_CLASS_CENTER;
-  protected static final ICSSClassProvider CSS_CLASS_RIGHT = WebCtrlsCSS.CSS_CLASS_RIGHT;
-  protected static final ICSSClassProvider CSS_CLASS_NOWRAP = WebCtrlsCSS.CSS_CLASS_NOWRAP;
-  protected static final ICSSClassProvider CSS_CLASS_ACTION_COL = WebCtrlsCSS.CSS_CLASS_ACTION_COL;
-  protected static final ICSSClassProvider CSS_CLASS_EMPTY_ACTION = WebCtrlsCSS.CSS_CLASS_EMPTY_ACTION;
+  protected static final ICSSClassProvider CSS_CLASS_LEFT = CUICoreCSS.CSS_CLASS_LEFT;
+  protected static final ICSSClassProvider CSS_CLASS_CENTER = CUICoreCSS.CSS_CLASS_CENTER;
+  protected static final ICSSClassProvider CSS_CLASS_RIGHT = CUICoreCSS.CSS_CLASS_RIGHT;
+  protected static final ICSSClassProvider CSS_CLASS_NOWRAP = CUICoreCSS.CSS_CLASS_NOWRAP;
+  protected static final ICSSClassProvider CSS_CLASS_ACTION_COL = CUICoreCSS.CSS_CLASS_ACTION_COL;
+  protected static final ICSSClassProvider CSS_CLASS_EMPTY_ACTION = CUICoreCSS.CSS_CLASS_EMPTY_ACTION;
   protected static final ICSSClassProvider CSS_CLASS_ACTION_HEADER = DefaultCSSClassProvider.create ("action-header");
   protected static final ICSSClassProvider CSS_CLASS_DATAGROUP_HEADER = DefaultCSSClassProvider.create ("datagroup-header");
 

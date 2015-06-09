@@ -27,7 +27,7 @@ import com.helger.html.css.ICSSClassProvider;
  * @author Philip Helger
  */
 @Immutable
-public final class WebCtrlsCSS
+public final class CUICoreCSS
 {
   /** Align text center */
   public static final ICSSClassProvider CSS_CLASS_LEFT = DefaultCSSClassProvider.create ("left");
@@ -47,6 +47,6 @@ public final class WebCtrlsCSS
   /** Empty action */
   public static final ICSSClassProvider CSS_CLASS_EMPTY_ACTION = DefaultCSSClassProvider.create ("empty-action");
 
-  private WebCtrlsCSS ()
+  private CUICoreCSS ()
   {}
 }
