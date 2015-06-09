@@ -41,11 +41,17 @@ public final class CUICoreCSS
   /** white-space:nowrap */
   public static final ICSSClassProvider CSS_CLASS_NOWRAP = DefaultCSSClassProvider.create ("nowrap");
 
-  /** Action column */
+  /** Action column in a table */
   public static final ICSSClassProvider CSS_CLASS_ACTION_COL = DefaultCSSClassProvider.create ("actioncol");
 
-  /** Empty action */
+  /** Empty action in the action column of a table */
   public static final ICSSClassProvider CSS_CLASS_EMPTY_ACTION = DefaultCSSClassProvider.create ("empty-action");
+
+  /** Action header in a web page */
+  public static final ICSSClassProvider CSS_CLASS_ACTION_HEADER = DefaultCSSClassProvider.create ("action-header");
+
+  /** Data group header in a web page */
+  public static final ICSSClassProvider CSS_CLASS_DATAGROUP_HEADER = DefaultCSSClassProvider.create ("datagroup-header");
 
   private CUICoreCSS ()
   {}

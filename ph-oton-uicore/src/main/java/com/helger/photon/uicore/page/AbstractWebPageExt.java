@@ -40,7 +40,6 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLValidator;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
-import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCElementWithChildren;
@@ -100,9 +99,6 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   protected static final ICSSClassProvider CSS_CLASS_RIGHT = CUICoreCSS.CSS_CLASS_RIGHT;
   protected static final ICSSClassProvider CSS_CLASS_NOWRAP = CUICoreCSS.CSS_CLASS_NOWRAP;
   protected static final ICSSClassProvider CSS_CLASS_ACTION_COL = CUICoreCSS.CSS_CLASS_ACTION_COL;
-  protected static final ICSSClassProvider CSS_CLASS_EMPTY_ACTION = CUICoreCSS.CSS_CLASS_EMPTY_ACTION;
-  protected static final ICSSClassProvider CSS_CLASS_ACTION_HEADER = DefaultCSSClassProvider.create ("action-header");
-  protected static final ICSSClassProvider CSS_CLASS_DATAGROUP_HEADER = DefaultCSSClassProvider.create ("datagroup-header");
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageExt.class);
 
@@ -229,7 +225,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   public static HCSpan createEmptyAction ()
   {
     // Assume each icon has a width of 16px
-    return new HCSpan ().addClass (CSS_CLASS_EMPTY_ACTION)
+    return new HCSpan ().addClass (CUICoreCSS.CSS_CLASS_EMPTY_ACTION)
                         .addStyle (CCSSProperties.DISPLAY_INLINE_BLOCK)
                         .addStyle (CCSSProperties.WIDTH.newValue (ECSSUnit.px (16)));
   }
@@ -500,7 +496,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   {
     if (StringHelper.hasNoText (sText))
       return null;
-    return new HCH4 ().addClass (CSS_CLASS_ACTION_HEADER).addChild (sText);
+    return new HCH4 ().addClass (CUICoreCSS.CSS_CLASS_ACTION_HEADER).addChild (sText);
   }
 
   /**
@@ -522,7 +518,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   @Nonnull
   public static IHCElementWithChildren <?> createDataGroupHeaderDefault ()
   {
-    return new HCDiv ().addClass (CSS_CLASS_DATAGROUP_HEADER);
+    return new HCDiv ().addClass (CUICoreCSS.CSS_CLASS_DATAGROUP_HEADER);
   }
 
   @Nullable
