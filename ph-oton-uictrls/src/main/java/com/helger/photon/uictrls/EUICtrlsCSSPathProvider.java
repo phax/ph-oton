@@ -50,6 +50,7 @@ public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
   /** http://fontawesome.io */
   FONT_AWESOME4 ("fontawesome/4.3.0/css/font-awesome.css"),
   PRISMJS ("prismjs/prism.css"),
+  PRISMJS_BOOTSTRAP ("prismjs/prism-bootstrap.css"),
   SELECT2 ("select2/4.0.0/css/select2.css"),
   TYPEAHEAD_BOOTSTRAP ("typeahead/typeahead.js-bootstrap.css");
 
