@@ -90,7 +90,15 @@ public class WebSiteResourceWithCondition
                                         final boolean bCanBeBundled,
                                         @Nullable final ICSSMediaList aMediaList)
   {
-    m_aResource = WebSiteResourceCache.getOrCreateResource (eType, sPath);
+    this (WebSiteResourceCache.getOrCreateResource (eType, sPath), sConditionalComment, bCanBeBundled, aMediaList);
+  }
+
+  protected WebSiteResourceWithCondition (@Nonnull final WebSiteResource aResource,
+                                          @Nullable final String sConditionalComment,
+                                          final boolean bCanBeBundled,
+                                          @Nullable final ICSSMediaList aMediaList)
+  {
+    m_aResource = aResource;
     m_sConditionalComment = sConditionalComment;
     m_bCanBeBundled = bCanBeBundled;
     m_aMediaList = aMediaList == null || aMediaList.isEmpty () ? null : new CSSMediaList (aMediaList);

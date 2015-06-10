@@ -49,23 +49,29 @@ public class WebSiteResourceBundle
 {
   private final List <WebSiteResource> m_aResources;
   private final String m_sConditionalComment;
+  private final boolean m_bCanBeBundled;
   private final CSSMediaList m_aMediaList;
   // Status vars
   private final EWebSiteResourceType m_eResourceType;
   private Integer m_aHashCode;
 
-  public WebSiteResourceBundle (@Nonnull @Nonempty final List <WebSiteResource> aResources,
+  public WebSiteResourceBundle (@Nonnull @Nonempty final List <WebSiteResourceWithCondition> aResources,
                                 @Nullable final String sConditionalComment,
+                                final boolean bCanBeBundled,
                                 @Nullable final ICSSMediaList aMediaList)
   {
-    m_aResources = CollectionHelper.newList (ValueEnforcer.notEmptyNoNullValue (aResources, "Resources"));
+    ValueEnforcer.notEmptyNoNullValue (aResources, "Resources");
+    m_aResources = new ArrayList <> ();
+    for (final WebSiteResourceWithCondition aResourceWithCond : aResources)
+      m_aResources.add (aResourceWithCond.getResource ());
     m_sConditionalComment = sConditionalComment;
+    m_bCanBeBundled = bCanBeBundled;
     m_aMediaList = aMediaList == null || aMediaList.isEmpty () ? null : new CSSMediaList (aMediaList);
-    m_eResourceType = aResources.get (0).getResourceType ();
+    m_eResourceType = aResources.get (0).getResource ().getResourceType ();
 
     // Consistency check
-    for (final WebSiteResource aResource : aResources)
-      if (!aResource.getResourceType ().equals (m_eResourceType))
+    for (final WebSiteResourceWithCondition aResource : aResources)
+      if (!aResource.getResource ().getResourceType ().equals (m_eResourceType))
         throw new IllegalArgumentException ("The passed resources are mixed of different resource types: " + aResources);
   }
 
@@ -123,6 +129,11 @@ public class WebSiteResourceBundle
     return m_sConditionalComment;
   }
 
+  public boolean canBeBundled ()
+  {
+    return m_bCanBeBundled;
+  }
+
   @Nullable
   public ICSSMediaList getMediaList ()
   {
@@ -166,6 +177,7 @@ public class WebSiteResourceBundle
     final WebSiteResourceBundle rhs = (WebSiteResourceBundle) o;
     return m_aResources.equals (rhs.m_aResources) &&
            EqualsUtils.equals (m_sConditionalComment, rhs.m_sConditionalComment) &&
+           m_bCanBeBundled == rhs.m_bCanBeBundled &&
            EqualsUtils.equals (m_aMediaList, rhs.m_aMediaList);
   }
 
@@ -175,6 +187,7 @@ public class WebSiteResourceBundle
     if (m_aHashCode == null)
       m_aHashCode = new HashCodeGenerator (this).append (m_aResources)
                                                 .append (m_sConditionalComment)
+                                                .append (m_bCanBeBundled)
                                                 .append (m_aMediaList)
                                                 .getHashCodeObj ();
     return m_aHashCode.intValue ();
@@ -184,7 +197,9 @@ public class WebSiteResourceBundle
   public String toString ()
   {
     return new ToStringGenerator (this).append ("resources", m_aResources)
-                                       .appendIfNotNull ("conditionalComment", m_sConditionalComment)
+                                       .appendIfNotNull ("ConditionalComment", m_sConditionalComment)
+                                       .append ("CanBeBundled", m_bCanBeBundled)
+                                       .appendIfNotNull ("MediaList", m_aMediaList)
                                        .toString ();
   }
 }

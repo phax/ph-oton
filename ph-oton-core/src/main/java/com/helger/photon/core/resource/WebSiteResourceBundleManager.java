@@ -39,6 +39,7 @@ import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.impl.MicroDocument;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.string.StringParser;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ECSSMedium;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
@@ -53,6 +54,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
   private static final String ATTR_ID = "id";
   private static final String ATTR_CREATIONDT = "creationdt";
   private static final String ATTR_CONDITIONAL_COMMENT = "conditionalcomment";
+  private static final String ATTR_CAN_BE_BUNDLED = "canbebundled";
   private static final String ELEMENT_MEDIUM = "medium";
   private static final String ELEMENT_RESOURCE = "resource";
   private static final String ATTR_RESOURCE_TYPE = "resourcetype";
@@ -85,6 +87,10 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
                                                                                          LocalDateTime.class);
       final String sConditionalComment = eResourceBundle.getAttributeValue (ATTR_CONDITIONAL_COMMENT);
 
+      // This attribute was added - default to true
+      final String sCanBeBundled = eResourceBundle.getAttributeValue (ATTR_CAN_BE_BUNDLED);
+      final boolean bCanBeBundled = StringParser.parseBool (sCanBeBundled, true);
+
       final CSSMediaList aMediaList = new CSSMediaList ();
       for (final IMicroElement eMedium : eResourceBundle.getAllChildElements (ELEMENT_MEDIUM))
       {
@@ -95,7 +101,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
         aMediaList.addMedium (eCSSMedium);
       }
 
-      final List <WebSiteResource> aResources = new ArrayList <WebSiteResource> ();
+      final List <WebSiteResourceWithCondition> aResources = new ArrayList <WebSiteResourceWithCondition> ();
       for (final IMicroElement eResource : eResourceBundle.getAllChildElements (ELEMENT_RESOURCE))
       {
         final String sResourceType = eResource.getAttributeValue (ATTR_RESOURCE_TYPE);
@@ -150,7 +156,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
           bResourcesAreOutOfSync = true;
           continue;
         }
-        aResources.add (aNewResource);
+        aResources.add (new WebSiteResourceWithCondition (aNewResource, sConditionalComment, bCanBeBundled, aMediaList));
       }
 
       if (bResourcesAreOutOfSync)
@@ -161,7 +167,10 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
       else
       {
         // Restore bundle
-        final WebSiteResourceBundle aBundle = new WebSiteResourceBundle (aResources, sConditionalComment, aMediaList);
+        final WebSiteResourceBundle aBundle = new WebSiteResourceBundle (aResources,
+                                                                         sConditionalComment,
+                                                                         bCanBeBundled,
+                                                                         aMediaList);
         final WebSiteResourceBundleSerialized aBundleSerialized = new WebSiteResourceBundleSerialized (sBundleID,
                                                                                                        aBundle,
                                                                                                        aCreationDT);
@@ -189,6 +198,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
 
       final WebSiteResourceBundle aBundle = aResourceBundle.getBundle ();
       eBundle.setAttributeWithConversion (ATTR_CONDITIONAL_COMMENT, aBundle.getConditionalComment ());
+      eBundle.setAttribute (ATTR_CAN_BE_BUNDLED, Boolean.toString (aBundle.canBeBundled ()));
       if (aBundle.hasMediaList ())
         for (final ECSSMedium eMedium : aBundle.getMediaList ().getAllMedia ())
           eBundle.appendElement (ELEMENT_MEDIUM).appendText (eMedium.getName ());
@@ -284,14 +294,14 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
       final WebSiteResourceWithCondition aFirst = aCopy.remove (0);
 
       // Find all resources that can be bundled with aFirst
-      final List <WebSiteResource> aBundleResources = CollectionHelper.newList (aFirst.getResource ());
+      final List <WebSiteResourceWithCondition> aBundleResources = CollectionHelper.newList (aFirst);
       while (!aCopy.isEmpty ())
       {
         final WebSiteResourceWithCondition aBundleCandidate = aCopy.get (0);
         if (aFirst.canBeBundledWith (aBundleCandidate))
         {
           // Can be bundled
-          aBundleResources.add (aBundleCandidate.getResource ());
+          aBundleResources.add (aBundleCandidate);
           aCopy.remove (0);
         }
         else
@@ -304,6 +314,8 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
       // Create the bundle
       final WebSiteResourceBundle aBundle = new WebSiteResourceBundle (aBundleResources,
                                                                        aFirst.getConditionalComment (),
+                                                                       aBundleResources.size () != 1 ||
+                                                                           aFirst.canBeBundled (),
                                                                        aFirst.getMediaList ());
 
       // Try to find existing bundle (ID and serialized one)

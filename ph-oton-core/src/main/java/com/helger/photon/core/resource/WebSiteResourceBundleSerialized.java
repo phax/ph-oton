@@ -174,17 +174,18 @@ public class WebSiteResourceBundleSerialized implements IInputStreamProvider
   @Nonnull
   public IHCNode createNode (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    ISimpleURL aURL;
-    if (m_aBundle.getResourceCount () == 1)
+    ISimpleURL aURL = null;
+    if (m_aBundle.getResourceCount () == 1 && !m_aBundle.canBeBundled ())
     {
       // Special handling for resource bundles with a single item - use the
       // original path (e.g. for TinyMCE because it cannot be bundled)
       final WebSiteResource aResource = m_aBundle.getResourceAtIndex (0);
       aURL = aResource.getAsURL (aRequestScope);
     }
-    else
+
+    if (aURL == null)
     {
-      // Use the ResourceBundleServlet path
+      // Use the ResourceBundleServlet path by default
       aURL = LinkUtils.getURLWithContext (aRequestScope, ResourceBundleServlet.SERVLET_DEFAULT_PATH +
                                                          "/" +
                                                          m_sBundleID +
