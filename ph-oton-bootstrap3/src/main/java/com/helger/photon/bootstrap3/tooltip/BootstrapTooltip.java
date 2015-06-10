@@ -50,7 +50,7 @@ public class BootstrapTooltip implements IHCNodeBuilder
   public static final EBootstrapTooltipPosition DEFAULT_PLACEMENT = EBootstrapTooltipPosition.TOP;
   public static final boolean DEFAULT_PLACEMENT_AUTO = false;
   public static final Set <EBootstrapTooltipTrigger> DEFAULT_TRIGGER = CollectionHelper.newUnmodifiableSortedSet (EBootstrapTooltipTrigger.HOVER,
-                                                                                                                 EBootstrapTooltipTrigger.FOCUS);
+                                                                                                                  EBootstrapTooltipTrigger.FOCUS);
 
   private final IJQuerySelector m_aSelector;
   private boolean m_bAnimation = DEFAULT_ANIMATION;
@@ -243,10 +243,9 @@ public class BootstrapTooltip implements IHCNodeBuilder
   @Nonnull
   public BootstrapTooltip setDelay (@Nonnegative final int nShowDelay, @Nonnegative final int nHideDelay)
   {
-    if (nShowDelay < 0)
-      throw new IllegalArgumentException ("showDelay: " + nShowDelay);
-    if (nHideDelay < 0)
-      throw new IllegalArgumentException ("hideDelay: " + nHideDelay);
+    ValueEnforcer.isGE0 (nShowDelay, "ShowDelay");
+    ValueEnforcer.isGE0 (nHideDelay, "HideDelay");
+
     m_nShowDelay = nShowDelay;
     m_nHideDelay = nHideDelay;
     return this;

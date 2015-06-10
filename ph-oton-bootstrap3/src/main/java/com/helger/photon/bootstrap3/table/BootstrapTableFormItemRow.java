@@ -28,6 +28,7 @@ import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.photon.uicore.html.table.HCTableFormItemRow;
 import com.helger.validation.error.IError;
 
+@Deprecated
 public class BootstrapTableFormItemRow extends HCTableFormItemRow
 {
   public BootstrapTableFormItemRow (final boolean bHeader, final boolean bHasNoteColumn)
