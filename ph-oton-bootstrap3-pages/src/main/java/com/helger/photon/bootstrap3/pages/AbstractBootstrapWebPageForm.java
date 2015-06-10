@@ -85,6 +85,13 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
 
   @Override
   @Nonnull
+  public final BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  {
+    return createFormSelf (aLEC).setEncTypeFileUpload ();
+  }
+
+  @Override
+  @Nonnull
   protected final BootstrapButtonToolbar createNewToolbar (@Nonnull final WPECTYPE aWPEC)
   {
     return new BootstrapButtonToolbar (aWPEC);

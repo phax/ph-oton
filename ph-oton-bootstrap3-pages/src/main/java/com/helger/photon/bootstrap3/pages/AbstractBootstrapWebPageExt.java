@@ -67,9 +67,16 @@ public abstract class AbstractBootstrapWebPageExt <WPECTYPE extends IWebPageExec
     return new BootstrapForm (EBootstrapFormType.HORIZONTAL).setAction (aLEC.getSelfHref ());
   }
 
+  @Override
+  @Nonnull
+  public final BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  {
+    return createFormSelf (aLEC).setEncTypeFileUpload ();
+  }
+
   /**
    * Create a new toolbar.
-   * 
+   *
    * @param aWPEC
    *        Current web page execution context. Never <code>null</code>.
    * @return Never <code>null</code>.
@@ -82,7 +89,7 @@ public abstract class AbstractBootstrapWebPageExt <WPECTYPE extends IWebPageExec
 
   /**
    * Create a new error box
-   * 
+   *
    * @param aWPEC
    *        Current web page execution context. Never <code>null</code>.
    * @param sErrorMsg
