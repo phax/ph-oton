@@ -19,6 +19,7 @@ package com.helger.photon.core.resource;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -68,6 +69,12 @@ public class WebSiteResourceBundle
         throw new IllegalArgumentException ("The passed resources are mixed of different resource types: " + aResources);
   }
 
+  @Nonnegative
+  public int getResourceCount ()
+  {
+    return m_aResources.size ();
+  }
+
   /**
    * @return A list of all bundled resources. Neither <code>null</code> nor
    *         empty.
@@ -78,6 +85,12 @@ public class WebSiteResourceBundle
   public List <WebSiteResource> getAllResources ()
   {
     return CollectionHelper.newList (m_aResources);
+  }
+
+  @Nullable
+  public WebSiteResource getResourceAtIndex (@Nonnegative final int nIndex)
+  {
+    return CollectionHelper.getSafe (m_aResources, nIndex);
   }
 
   @Nonnull

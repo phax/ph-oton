@@ -306,7 +306,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
                                                                        aFirst.getConditionalComment (),
                                                                        aFirst.getMediaList ());
 
-      // Try to find existing bundle
+      // Try to find existing bundle (ID and serialized one)
       String sBundleID;
       WebSiteResourceBundleSerialized aBundleSerialized;
       m_aRWLock.readLock ().lock ();

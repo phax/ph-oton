@@ -24,9 +24,8 @@ import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.URLResource;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.IURIToURLConverter;
-import com.helger.commons.url.ReadonlySimpleURL;
+import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLProtocolRegistry;
 import com.helger.commons.url.URLUtils;
 import com.helger.photon.basic.app.io.WebFileIO;
@@ -83,13 +82,13 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   }
 
   @Nonnull
-  public ISimpleURL getAsURL (@Nonnull @Nonempty final String sURI)
+  public SimpleURL getAsURL (@Nonnull @Nonempty final String sURI)
   {
     ValueEnforcer.notEmpty (sURI, "URI");
 
     // If the URL is absolute, use it
     if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI))
-      return new ReadonlySimpleURL (sURI);
+      return new SimpleURL (sURI);
 
     // Absolute paths stays
     if (_isProjectRelativeURI (sURI))
@@ -106,15 +105,15 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   }
 
   @Nonnull
-  public ISimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                              @Nonnull @Nonempty final String sURI)
+  public SimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull @Nonempty final String sURI)
   {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notEmpty (sURI, "URI");
 
     // If the URL is absolute, use it
     if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI))
-      return new ReadonlySimpleURL (sURI);
+      return new SimpleURL (sURI);
 
     // Absolute paths stay
     if (_isProjectRelativeURI (sURI))

@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.collections.ArrayHelper;
 import com.helger.commons.equals.EqualsUtils;
@@ -39,7 +40,6 @@ import com.helger.commons.messagedigest.MessageDigestGeneratorHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SMap;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.visit.AbstractModifyingCSSUrlVisitor;
@@ -48,7 +48,7 @@ import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriter;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
-import com.helger.photon.core.url.LinkUtils;
+import com.helger.photon.core.url.StreamOrLocalURIToURLConverter;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**
@@ -175,8 +175,8 @@ public class WebSiteResource
         // Not using a requestScope is okay here, because we don't want to link
         // anything right now
         final String sBasePath = FilenameHelper.getPath (PhotonHTMLSettings.getURIToURLConverter ()
-                                                                          .getAsURL (m_sPath)
-                                                                          .getAsString ());
+                                                                           .getAsURL (m_sPath)
+                                                                           .getAsString ());
         return _readAndParseCSS (m_aResource, sBasePath, bRegular);
       default:
         throw new IllegalStateException ("Unsupported resource type!");
@@ -196,6 +196,7 @@ public class WebSiteResource
   }
 
   @Nonnull
+  @ReturnsMutableCopy
   public byte [] getContentHashBytes ()
   {
     return ArrayHelper.getCopy (m_aContentHash);
@@ -211,14 +212,10 @@ public class WebSiteResource
   public ISimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Append the version number to work around caching issues
-    if (m_sPath.startsWith ("/"))
-    {
-      // Project resource
-      return LinkUtils.getURLWithContext (aRequestScope, m_sPath, new SMap ().add ("version", m_sContentHash));
-    }
-
-    // Classpath resource - won't change
-    return LinkUtils.getStreamURL (aRequestScope, m_sPath);
+    // Cut it down to the first 16 bytes, because the SHA512 hash is 128 bytes
+    // long
+    final String sVersion = m_sContentHash.substring (0, 16);
+    return StreamOrLocalURIToURLConverter.getInstance ().getAsURL (aRequestScope, m_sPath).add ("version", sVersion);
   }
 
   @Override

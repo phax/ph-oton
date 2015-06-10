@@ -32,8 +32,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.ReadonlySimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLProtocolRegistry;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -438,15 +436,15 @@ public final class LinkUtils
    *         <code>/<i>webapp-context</i>/stream/<i>URL</i></code>.
    */
   @Nonnull
-  public static ISimpleURL getStreamURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                         @Nonnull @Nonempty final String sURL)
+  public static SimpleURL getStreamURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                        @Nonnull @Nonempty final String sURL)
   {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notEmpty (sURL, "URL");
 
     // If the URL is absolute, use it
     if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sURL))
-      return new ReadonlySimpleURL (sURL);
+      return new SimpleURL (sURL);
 
     final StringBuilder aPrefix = new StringBuilder (getStreamServletPath ());
     if (!StringHelper.startsWith (sURL, '/'))

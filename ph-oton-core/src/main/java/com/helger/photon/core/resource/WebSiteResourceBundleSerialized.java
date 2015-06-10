@@ -174,11 +174,22 @@ public class WebSiteResourceBundleSerialized implements IInputStreamProvider
   @Nonnull
   public IHCNode createNode (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final ISimpleURL aURL = LinkUtils.getURLWithContext (aRequestScope, ResourceBundleServlet.SERVLET_DEFAULT_PATH +
-                                                                        "/" +
-                                                                        m_sBundleID +
-                                                                        m_aBundle.getResourceType ()
-                                                                                 .getFileExtension ());
+    ISimpleURL aURL;
+    if (m_aBundle.getResourceCount () == 1)
+    {
+      // Special handling for resource bundles with a single item - use the
+      // original path (e.g. for TinyMCE because it cannot be bundled)
+      final WebSiteResource aResource = m_aBundle.getResourceAtIndex (0);
+      aURL = aResource.getAsURL (aRequestScope);
+    }
+    else
+    {
+      // Use the ResourceBundleServlet path
+      aURL = LinkUtils.getURLWithContext (aRequestScope, ResourceBundleServlet.SERVLET_DEFAULT_PATH +
+                                                         "/" +
+                                                         m_sBundleID +
+                                                         m_aBundle.getResourceType ().getFileExtension ());
+    }
 
     // Create the main node
     final IHCNode aNode = m_aBundle.getResourceType ().createNode (aURL, m_aBundle.getMediaList ());
