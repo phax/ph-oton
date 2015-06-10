@@ -115,7 +115,7 @@ public class WebSiteResourceWithCondition
     ValueEnforcer.notNull (aOther, "Other");
 
     // Resource cannot be bundled at all
-    if (!m_bCanBeBundled)
+    if (!m_bCanBeBundled || !aOther.canBeBundled ())
       return false;
 
     // Can only bundle resources of the same type
@@ -130,6 +130,7 @@ public class WebSiteResourceWithCondition
     if (!EqualsUtils.equals (m_aMediaList, aOther.m_aMediaList))
       return false;
 
+    // Can be bundled!
     return true;
   }
 
