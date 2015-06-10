@@ -25,14 +25,15 @@ import com.helger.html.resource.js.IJSPathProvider;
 
 public enum ETinyMCE4JSPathProvider implements IJSPathProvider
 {
-  TINYMCE_4 ("tinymce-dev/tinymce.jquery.js", "tinymce-min/tinymce.min.js");
+  TINYMCE_4 ("tinymce-dev/tinymce.jquery.js", "tinymce-min/tinymce.min.js", false);
 
   private final ConstantJSPathProvider m_aPP;
 
   private ETinyMCE4JSPathProvider (@Nonnull @Nonempty final String sRegularPath,
-                                   @Nonnull @Nonempty final String sMinPath)
+                                   @Nonnull @Nonempty final String sMinPath,
+                                   final boolean bCanBeBundled)
   {
-    m_aPP = new ConstantJSPathProvider (sRegularPath, sMinPath);
+    m_aPP = new ConstantJSPathProvider (sRegularPath, sMinPath, (String) null, bCanBeBundled);
   }
 
   @Nonnull
