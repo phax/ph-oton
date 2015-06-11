@@ -42,7 +42,11 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   JQUERY_HOTKEYS ("uicore/jqueryplugins/jquery.hotkeys.js"),
   JQUERY_MIGRATE ("uicore/jqueryplugins/jquery-migrate-1.2.1.js"),
   JQUERY_MOUSEWHEEL ("uicore/jqueryplugins/jquery.mousewheel.js"),
+  JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/2.1.2/jquery.placeholder.js", "if lt IE 10"),
+  JQUERY_PLACEHOLDER_ALL ("uicore/jqueryplaceholder/jquery.placeholder-all.js", "if lt IE 10"),
+
   /** Edit placeholder fix for IE &lt; 10 */
+  @Deprecated
   PLACEHOLDER_FIX ("uicore/placeholder/placeholder-fix.js", "if lt IE 10"),
   /**
    * Source: https://github.com/scottjehl/Respond - only for IE6-8 so use it

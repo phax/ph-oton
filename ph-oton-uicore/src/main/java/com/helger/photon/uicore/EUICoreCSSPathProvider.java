@@ -32,7 +32,9 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EUICoreCSSPathProvider implements ICSSPathProvider
 {
+  JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/jquery.placeholder.css", "if lt IE 10"),
   /** Edit placeholder fix for IE &lt; 10 */
+  @Deprecated
   PLACEHOLDER_FIX ("uicore/placeholder/placeholder-fix.css", "if lt IE 10"),
   /** Custom development */
   UICORE ("uicore/uicore.css");

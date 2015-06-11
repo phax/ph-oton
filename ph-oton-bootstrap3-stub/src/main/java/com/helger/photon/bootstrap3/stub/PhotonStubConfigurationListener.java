@@ -63,7 +63,7 @@ public final class PhotonStubConfigurationListener implements ServletContextList
 
     // With conditional comments
     PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_IE9);
-    PhotonCSS.registerCSSIncludeForGlobal (EUICoreCSSPathProvider.PLACEHOLDER_FIX);
+    PhotonCSS.registerCSSIncludeForGlobal (EUICoreCSSPathProvider.JQUERY_PLACEHOLDER);
 
     // JS
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_1);
@@ -75,7 +75,8 @@ public final class PhotonStubConfigurationListener implements ServletContextList
     // With conditional comments
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.HTML5SHIV_3_7_2);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.RESPOND);
-    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.PLACEHOLDER_FIX);
+    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_PLACEHOLDER);
+    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_PLACEHOLDER_ALL);
 
     // Meta elements
     PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.GENERATOR.getAsMetaElement ("ph-oton stack - https://github.com/phax/ph-oton"));
