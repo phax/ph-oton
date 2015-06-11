@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.html.hc.html.AbstractHCTable;
 import com.helger.html.hc.html.HCCol;
 
+@Deprecated
 public abstract class AbstractHCTableFormView <IMPLTYPE extends AbstractHCTableFormView <IMPLTYPE>> extends AbstractHCTable <IMPLTYPE> implements IHCTableFormView <IMPLTYPE>
 {
   public AbstractHCTableFormView ()
