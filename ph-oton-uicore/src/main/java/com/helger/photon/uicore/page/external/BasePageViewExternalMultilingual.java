@@ -50,7 +50,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web page execution context type
  */
 @ThreadSafe
-public class BasePageViewExternalMultiLingual <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageResourceContent <WPECTYPE>
+public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageResourceContent <WPECTYPE>
 {
   @NotThreadSafe
   private static final class ContentPerLocale implements Serializable
@@ -133,7 +133,7 @@ public class BasePageViewExternalMultiLingual <WPECTYPE extends IWebPageExecutio
     }
   }
 
-  public BasePageViewExternalMultiLingual (@Nonnull @Nonempty final String sID,
+  public BasePageViewExternalMultilingual (@Nonnull @Nonempty final String sID,
                                            @Nonnull final String sName,
                                            @Nonnull final Map <Locale, IReadableResource> aResources,
                                            @Nonnull final Locale aDefaultLocale)
@@ -149,7 +149,7 @@ public class BasePageViewExternalMultiLingual <WPECTYPE extends IWebPageExecutio
     _init (aResources);
   }
 
-  public BasePageViewExternalMultiLingual (@Nonnull @Nonempty final String sID,
+  public BasePageViewExternalMultilingual (@Nonnull @Nonempty final String sID,
                                            @Nonnull final IReadonlyMultiLingualText aName,
                                            @Nonnull final Map <Locale, IReadableResource> aResources,
                                            @Nonnull final Locale aDefaultLocale)
