@@ -167,19 +167,32 @@ public class DataTables implements IHCNodeBuilder
     ValueEnforcer.notNull (aTable, "Table");
     ValueEnforcer.notEmpty (aTable.getID (), "Table must have an ID to work with DataTables!");
 
-    int nColIndex = 0;
-    for (final HCCol aCol : aTable.getColGroup ().getAllColumns ())
+    final HCColGroup aColGroup = aTable.getColGroup ();
+    boolean bHasDTColumn = false;
+    final String [] aHeaderTexts = new String [aTable.getColumnCount ()];
+    if (aColGroup != null)
     {
-      if (aCol instanceof DTColumn)
+      int nColIndex = 0;
+      for (final HCCol aCol : aColGroup.getAllColumns ())
       {
-        final DTColumn aDTColumn = (DTColumn) aCol;
-        getOrCreateColumnOfTarget (nColIndex).setFromColumn (aDTColumn);
+        if (aCol instanceof DTColumn)
+        {
+          bHasDTColumn = true;
+          aHeaderTexts[nColIndex] = ((DTColumn) aCol).getHeaderText ();
+        }
+        else
+          aHeaderTexts[nColIndex] = "";
+        nColIndex++;
       }
-      nColIndex++;
     }
 
     if (!aTable.hasHeaderRows ())
-      s_aLogger.warn ("Table does not have a header row so DataTables may not be displayed correctly!");
+    {
+      if (bHasDTColumn)
+        aTable.addHeaderRow ().addCells (aHeaderTexts);
+      else
+        s_aLogger.warn ("Table does not have a header row so DataTables may not be displayed correctly!");
+    }
 
     m_aTable = aTable;
   }
@@ -334,9 +347,19 @@ public class DataTables implements IHCNodeBuilder
       int nColIndex = 0;
       for (final HCCol aCol : aColGroup.getAllColumns ())
       {
-        final DataTablesColumn aColumn = new DataTablesColumn (nColIndex);
-        if (!aCol.isStar ())
-          aColumn.setWidth (aCol.getWidth ());
+        DataTablesColumn aColumn;
+        if (aCol instanceof DTColumn)
+        {
+          // Copy data from DTColumn
+          aColumn = new DataTablesColumn (nColIndex, (DTColumn) aCol);
+        }
+        else
+        {
+          // Raw column
+          aColumn = new DataTablesColumn (nColIndex);
+          if (!aCol.isStar ())
+            aColumn.setWidth (aCol.getWidth ());
+        }
         addColumn (aColumn);
         ++nColIndex;
       }

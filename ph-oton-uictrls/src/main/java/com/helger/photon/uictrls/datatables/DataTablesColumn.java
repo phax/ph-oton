@@ -47,7 +47,7 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
 
   private final int [] m_aTargets;
   private boolean m_bSearchable = DEFAULT_SEARCHABLE;
-  private boolean m_bOrderable = DEFAULT_SORTABLE;
+  private boolean m_bSortable = DEFAULT_SORTABLE;
   private boolean m_bVisible = DEFAULT_VISIBLE;
   private final HCHasCSSClasses m_aCSSClasses = new HCHasCSSClasses ();
   private String m_sName;
@@ -64,9 +64,22 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
   {
     ValueEnforcer.notEmpty (aTargets, "Targets");
     for (final int nTarget : aTargets)
-      if (nTarget < 0)
-        throw new IllegalArgumentException ("Target must be >= 0: " + nTarget);
+      ValueEnforcer.isGE0 (nTarget, "Target");
     m_aTargets = ArrayHelper.getCopy (aTargets);
+  }
+
+  public DataTablesColumn (@Nonnegative final int nTarget, @Nonnull final DTColumn aDTColumn)
+  {
+    this (nTarget);
+    setSearchable (aDTColumn.isSearchable ());
+    setSortable (aDTColumn.isSortable ());
+    setVisible (aDTColumn.isVisible ());
+    addClasses (aDTColumn.getAllClasses ());
+    setName (aDTColumn.getName ());
+    if (!aDTColumn.isStar ())
+      setWidth (aDTColumn.getWidth ());
+    setDataSort (aDTColumn.getDataSort ());
+    setComparator (aDTColumn.getComparator ());
   }
 
   @Nonnull
@@ -96,13 +109,13 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
 
   public boolean isSortable ()
   {
-    return m_bOrderable;
+    return m_bSortable;
   }
 
   @Nonnull
   public DataTablesColumn setSortable (final boolean bSortable)
   {
-    m_bOrderable = bSortable;
+    m_bSortable = bSortable;
     return this;
   }
 
@@ -258,8 +271,8 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
     ret.add ("targets", new JSArray ().addAll (m_aTargets));
     if (m_bSearchable != DEFAULT_SEARCHABLE)
       ret.add ("searchable", m_bSearchable);
-    if (m_bOrderable != DEFAULT_SORTABLE)
-      ret.add ("orderable", m_bOrderable);
+    if (m_bSortable != DEFAULT_SORTABLE)
+      ret.add ("orderable", m_bSortable);
     if (m_bVisible != DEFAULT_VISIBLE)
       ret.add ("visible", m_bVisible);
     final String sClasses = getAllClassesAsString ();
@@ -272,11 +285,5 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
     if (ArrayHelper.isNotEmpty (m_aDataSort))
       ret.add ("aDataSort", new JSArray ().addAll (m_aDataSort));
     return ret;
-  }
-
-  public void setFromColumn (final DTColumn aDTColumn)
-  {
-    // TODO
-
   }
 }

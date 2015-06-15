@@ -25,8 +25,6 @@ import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.html.HCCol;
-import com.helger.html.js.builder.JSArray;
-import com.helger.html.js.builder.JSAssocArray;
 import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
 
 /**
@@ -44,10 +42,9 @@ public class DTColumn extends HCCol
   private final String m_sHeaderText;
   private ESortOrder m_eInitialSorting = null;
   private boolean m_bSearchable = DEFAULT_SEARCHABLE;
-  private boolean m_bOrderable = DEFAULT_SORTABLE;
+  private boolean m_bSortable = DEFAULT_SORTABLE;
   private boolean m_bVisible = DEFAULT_VISIBLE;
   private String m_sName;
-  private String m_sWidth;
   private int [] m_aDataSort;
   private AbstractComparatorDT m_aComparator;
 
@@ -90,13 +87,13 @@ public class DTColumn extends HCCol
 
   public boolean isSortable ()
   {
-    return m_bOrderable;
+    return m_bSortable;
   }
 
   @Nonnull
   public DTColumn setSortable (final boolean bSortable)
   {
-    m_bOrderable = bSortable;
+    m_bSortable = bSortable;
     return this;
   }
 
@@ -122,21 +119,6 @@ public class DTColumn extends HCCol
   public DTColumn setName (@Nullable final String sName)
   {
     m_sName = sName;
-    return this;
-  }
-
-  @Override
-  @Nullable
-  public String getWidth ()
-  {
-    return m_sWidth;
-  }
-
-  @Override
-  @Nonnull
-  public DTColumn setWidth (@Nullable final String sWidth)
-  {
-    m_sWidth = sWidth;
     return this;
   }
 
@@ -172,28 +154,5 @@ public class DTColumn extends HCCol
   {
     m_aComparator = aComparator;
     return this;
-  }
-
-  @Nonnull
-  public JSAssocArray getAsJS (final int nColumnIndex)
-  {
-    final JSAssocArray ret = new JSAssocArray ();
-    ret.add ("targets", new JSArray ().add (nColumnIndex));
-    if (m_bSearchable != DEFAULT_SEARCHABLE)
-      ret.add ("searchable", m_bSearchable);
-    if (m_bOrderable != DEFAULT_SORTABLE)
-      ret.add ("orderable", m_bOrderable);
-    if (m_bVisible != DEFAULT_VISIBLE)
-      ret.add ("visible", m_bVisible);
-    final String sClasses = getAllClassesAsString ();
-    if (StringHelper.hasText (sClasses))
-      ret.add ("sClass", sClasses);
-    if (StringHelper.hasText (m_sName))
-      ret.add ("sName", m_sName);
-    if (StringHelper.hasText (m_sWidth))
-      ret.add ("sWidth", m_sWidth);
-    if (ArrayHelper.isNotEmpty (m_aDataSort))
-      ret.add ("aDataSort", new JSArray ().addAll (m_aDataSort));
-    return ret;
   }
 }
