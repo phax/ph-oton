@@ -170,7 +170,7 @@ public class DataTables implements IHCNodeBuilder
 
     final HCColGroup aColGroup = aTable.getColGroup ();
     boolean bHasDTColumn = false;
-    final String [] aHeaderTexts = new String [aTable.getColumnCount ()];
+    final IHCNode [] aHeaderNodes = new IHCNode [aTable.getColumnCount ()];
     if (aColGroup != null)
     {
       int nColIndex = 0;
@@ -179,10 +179,8 @@ public class DataTables implements IHCNodeBuilder
         if (aCol instanceof DTColumn)
         {
           bHasDTColumn = true;
-          aHeaderTexts[nColIndex] = ((DTColumn) aCol).getHeaderText ();
+          aHeaderNodes[nColIndex] = ((DTColumn) aCol).getHeaderNode ();
         }
-        else
-          aHeaderTexts[nColIndex] = "";
         nColIndex++;
       }
     }
@@ -190,7 +188,7 @@ public class DataTables implements IHCNodeBuilder
     if (!aTable.hasHeaderRows ())
     {
       if (bHasDTColumn)
-        aTable.addHeaderRow ().addCells (aHeaderTexts);
+        aTable.addHeaderRow ().addCells (aHeaderNodes);
       else
         s_aLogger.warn ("Table does not have a header row so DataTables may not be displayed correctly!");
     }
@@ -308,6 +306,7 @@ public class DataTables implements IHCNodeBuilder
   }
 
   @Nonnull
+  @Deprecated
   public DataTablesColumn getOrCreateColumnOfTarget (@Nonnegative final int nTarget)
   {
     for (final DataTablesColumn aCurColumn : m_aColumns)

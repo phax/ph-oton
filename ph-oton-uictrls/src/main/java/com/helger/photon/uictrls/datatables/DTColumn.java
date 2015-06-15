@@ -22,9 +22,10 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.ArrayHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLAttributeValues;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCCol;
+import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
 
 /**
@@ -39,7 +40,7 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   public static final boolean DEFAULT_SORTABLE = true;
   public static final boolean DEFAULT_VISIBLE = true;
 
-  private final String m_sHeaderText;
+  private final IHCNode m_aHeaderNode;
   private ESortOrder m_eInitialSorting = null;
   private boolean m_bSearchable = DEFAULT_SEARCHABLE;
   private boolean m_bSortable = DEFAULT_SORTABLE;
@@ -50,14 +51,19 @@ public class DTColumn extends AbstractHCCol <DTColumn>
 
   public DTColumn (@Nullable final String sHeaderText)
   {
+    this (HCTextNode.createOnDemand (sHeaderText));
+  }
+
+  public DTColumn (@Nullable final IHCNode aHeaderNode)
+  {
     setWidth (CHTMLAttributeValues.STAR);
-    m_sHeaderText = StringHelper.getNotNull (sHeaderText);
+    m_aHeaderNode = aHeaderNode;
   }
 
   @Nonnull
-  public String getHeaderText ()
+  public IHCNode getHeaderNode ()
   {
-    return m_sHeaderText;
+    return m_aHeaderNode;
   }
 
   @Nonnull
