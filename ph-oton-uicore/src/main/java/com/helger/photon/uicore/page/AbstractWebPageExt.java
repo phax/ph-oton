@@ -193,11 +193,13 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   }
 
   @Nonnegative
+  @Deprecated
   public static int getActionColWidth ()
   {
     return s_nActionColWidth;
   }
 
+  @Deprecated
   public static void setActionColWidth (@Nonnegative final int nActionColWidth)
   {
     s_nActionColWidth = nActionColWidth;
@@ -213,6 +215,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
    * @return The column with the according column width.
    */
   @Nonnull
+  @Deprecated
   public static HCCol createActionCol (@Nonnegative final int nActions)
   {
     // Assume each action icon is 20 pixels (incl. margin) - at least 3 column

@@ -33,7 +33,6 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
@@ -48,6 +47,7 @@ import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
+import com.helger.photon.uictrls.datatables.DTColumn;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
 import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
@@ -116,20 +116,17 @@ public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext> 
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (),
-                                                    HCCol.star (),
-                                                    HCCol.star (),
-                                                    HCCol.star (),
-                                                    HCCol.star (),
-                                                    HCCol.star (),
-                                                    HCCol.star ()).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_CODE.getDisplayText (aDisplayLocale),
-                                     EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                     EText.MSG_SYMBOL.getDisplayText (aDisplayLocale),
-                                     EText.MSG_DEFAULT_FRACTION_DIGITS.getDisplayText (aDisplayLocale),
-                                     EText.MSG_EXAMPLE.getDisplayText (aDisplayLocale),
-                                     EText.MSG_CONTINENTS.getDisplayText (aDisplayLocale),
-                                     EText.MSG_LOCALE.getDisplayText (aDisplayLocale));
+    final IHCTable <?> aTable = new BootstrapTable (new DTColumn (EText.MSG_CODE.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                               6)
+                                                                                                                 .setInitialSorting (ESortOrder.ASCENDING),
+                                                    new DTColumn (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (1,
+                                                                                                                               6),
+                                                    new DTColumn (EText.MSG_SYMBOL.getDisplayText (aDisplayLocale)),
+                                                    new DTColumn (EText.MSG_DEFAULT_FRACTION_DIGITS.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                                                    .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                                    new DTColumn (EText.MSG_EXAMPLE.getDisplayText (aDisplayLocale)),
+                                                    new DTColumn (EText.MSG_CONTINENTS.getDisplayText (aDisplayLocale)),
+                                                    new DTColumn (EText.MSG_LOCALE.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final Map.Entry <Locale, Currency> aEntry : CurrencyUtils.getLocaleToCurrencyMap ().entrySet ())
     {
       final Locale aLocale = aEntry.getKey ();
@@ -171,12 +168,6 @@ public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext> 
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (0).setDataSort (0, 6);
-    aDataTables.getOrCreateColumnOfTarget (1).setDataSort (1, 6);
-    aDataTables.getOrCreateColumnOfTarget (3)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTInteger (aDisplayLocale));
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
 
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.FAMFAM_FLAGS);

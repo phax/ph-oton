@@ -40,7 +40,7 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   public static final boolean DEFAULT_SORTABLE = true;
   public static final boolean DEFAULT_VISIBLE = true;
 
-  private final IHCNode m_aHeaderNode;
+  private IHCNode m_aHeaderNode;
   private ESortOrder m_eInitialSorting = null;
   private boolean m_bSearchable = DEFAULT_SEARCHABLE;
   private boolean m_bSortable = DEFAULT_SORTABLE;
@@ -48,6 +48,11 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   private String m_sName;
   private int [] m_aDataSort;
   private AbstractComparatorDT m_aComparator;
+
+  public DTColumn ()
+  {
+    this ((IHCNode) null);
+  }
 
   public DTColumn (@Nullable final String sHeaderText)
   {
@@ -57,7 +62,7 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   public DTColumn (@Nullable final IHCNode aHeaderNode)
   {
     setWidth (CHTMLAttributeValues.STAR);
-    m_aHeaderNode = aHeaderNode;
+    setHeaderNode (aHeaderNode);
   }
 
   @Nonnull
@@ -67,9 +72,21 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   }
 
   @Nonnull
+  public DTColumn setHeaderNode (@Nullable final IHCNode aHeaderNode)
+  {
+    m_aHeaderNode = aHeaderNode;
+    return this;
+  }
+
+  @Nonnull
   public ESortOrder getInitialSorting ()
   {
     return m_eInitialSorting;
+  }
+
+  public boolean hasInitialSorting ()
+  {
+    return m_eInitialSorting != null;
   }
 
   @Nonnull
