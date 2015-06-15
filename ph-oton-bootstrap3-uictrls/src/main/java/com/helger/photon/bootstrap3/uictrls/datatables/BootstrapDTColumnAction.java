@@ -8,7 +8,7 @@ import com.helger.photon.uictrls.datatables.DTColumn;
 
 /**
  * Special action column. Has a special CSS class and is never sortable.
- * 
+ *
  * @author Philip Helger
  */
 public class BootstrapDTColumnAction extends DTColumn
@@ -17,6 +17,12 @@ public class BootstrapDTColumnAction extends DTColumn
   {
     addClass (CUICoreCSS.CSS_CLASS_ACTION_COL);
     setSortable (false);
+  }
+
+  public BootstrapDTColumnAction ()
+  {
+    super ();
+    _init ();
   }
 
   public BootstrapDTColumnAction (@Nullable final String sHeaderText)
