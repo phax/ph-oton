@@ -86,18 +86,6 @@ public class BulkImportResult implements ISuccessIndicator
     }
   }
 
-  /**
-   * @return all added objects
-   * @deprecated Use {@link #getAllAdded()} instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public final List <ITypedObject <String>> getAdded ()
-  {
-    return getAllAdded ();
-  }
-
   @Nonnull
   @ReturnsMutableCopy
   public final List <ITypedObject <String>> getAllAdded ()
@@ -152,18 +140,6 @@ public class BulkImportResult implements ISuccessIndicator
     {
       m_aRWLock.writeLock ().unlock ();
     }
-  }
-
-  /**
-   * @return all changed objects
-   * @deprecated Use {@link #getAllChanged()} instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public final List <ITypedObject <String>> getChanged ()
-  {
-    return getAllChanged ();
   }
 
   @Nonnull
@@ -286,18 +262,6 @@ public class BulkImportResult implements ISuccessIndicator
     {
       m_aRWLock.writeLock ().unlock ();
     }
-  }
-
-  /**
-   * @return All warnings
-   * @deprecated Use {@link #getAllWarnings()} instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public final List <String> getWarnings ()
-  {
-    return getAllWarnings ();
   }
 
   @Nonnull

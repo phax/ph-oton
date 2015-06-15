@@ -24,7 +24,7 @@ import com.helger.commons.collections.ArrayHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLAttributeValues;
-import com.helger.html.hc.html.HCCol;
+import com.helger.html.hc.html.AbstractHCCol;
 import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
 
 /**
@@ -33,7 +33,7 @@ import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
  *
  * @author Philip Helger
  */
-public class DTColumn extends HCCol
+public class DTColumn extends AbstractHCCol <DTColumn>
 {
   public static final boolean DEFAULT_SEARCHABLE = true;
   public static final boolean DEFAULT_SORTABLE = true;

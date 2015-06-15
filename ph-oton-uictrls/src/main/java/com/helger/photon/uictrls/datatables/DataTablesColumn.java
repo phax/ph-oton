@@ -277,13 +277,13 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
       ret.add ("visible", m_bVisible);
     final String sClasses = getAllClassesAsString ();
     if (StringHelper.hasText (sClasses))
-      ret.add ("sClass", sClasses);
+      ret.add ("className", sClasses);
     if (StringHelper.hasText (m_sName))
-      ret.add ("sName", m_sName);
+      ret.add ("name", m_sName);
     if (StringHelper.hasText (m_sWidth))
-      ret.add ("sWidth", m_sWidth);
+      ret.add ("width", m_sWidth);
     if (ArrayHelper.isNotEmpty (m_aDataSort))
-      ret.add ("aDataSort", new JSArray ().addAll (m_aDataSort));
+      ret.add ("orderData", new JSArray ().addAll (m_aDataSort));
     return ret;
   }
 }

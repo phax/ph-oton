@@ -18,24 +18,24 @@ package com.helger.photon.bootstrap3.table;
 
 import javax.annotation.Nullable;
 
-import com.helger.html.hc.html.HCCol;
+import com.helger.html.hc.IHCCol;
 
 public class BootstrapTable extends AbstractBootstrapTable <BootstrapTable>
 {
   public BootstrapTable ()
   {}
 
-  public BootstrapTable (@Nullable final HCCol aCol)
+  public BootstrapTable (@Nullable final IHCCol <?> aCol)
   {
     super (aCol);
   }
 
-  public BootstrapTable (@Nullable final HCCol... aCols)
+  public BootstrapTable (@Nullable final IHCCol <?>... aCols)
   {
     super (aCols);
   }
 
-  public BootstrapTable (@Nullable final Iterable <? extends HCCol> aCols)
+  public BootstrapTable (@Nullable final Iterable <? extends IHCCol <?>> aCols)
   {
     super (aCols);
   }

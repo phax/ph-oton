@@ -45,6 +45,7 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.html.hc.IHCCol;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.IHCTable;
@@ -173,7 +174,7 @@ public class DataTables implements IHCNodeBuilder
     if (aColGroup != null)
     {
       int nColIndex = 0;
-      for (final HCCol aCol : aColGroup.getAllColumns ())
+      for (final IHCCol <?> aCol : aColGroup.getAllColumns ())
       {
         if (aCol instanceof DTColumn)
         {
@@ -345,7 +346,7 @@ public class DataTables implements IHCNodeBuilder
     if (aColGroup != null)
     {
       int nColIndex = 0;
-      for (final HCCol aCol : aColGroup.getAllColumns ())
+      for (final IHCCol <?> aCol : aColGroup.getAllColumns ())
       {
         DataTablesColumn aColumn;
         if (aCol instanceof DTColumn)

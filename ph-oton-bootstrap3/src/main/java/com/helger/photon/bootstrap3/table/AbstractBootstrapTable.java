@@ -19,8 +19,8 @@ package com.helger.photon.bootstrap3.table;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.html.hc.IHCCol;
 import com.helger.html.hc.html.AbstractHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
@@ -38,19 +38,19 @@ public abstract class AbstractBootstrapTable <THISTYPE extends AbstractHCTable <
     _init ();
   }
 
-  public AbstractBootstrapTable (@Nullable final HCCol aCol)
+  public AbstractBootstrapTable (@Nullable final IHCCol <?> aCol)
   {
     super (aCol);
     _init ();
   }
 
-  public AbstractBootstrapTable (@Nullable final HCCol... aCols)
+  public AbstractBootstrapTable (@Nullable final IHCCol <?>... aCols)
   {
     super (aCols);
     _init ();
   }
 
-  public AbstractBootstrapTable (@Nullable final Iterable <? extends HCCol> aCols)
+  public AbstractBootstrapTable (@Nullable final Iterable <? extends IHCCol <?>> aCols)
   {
     super (aCols);
     _init ();
