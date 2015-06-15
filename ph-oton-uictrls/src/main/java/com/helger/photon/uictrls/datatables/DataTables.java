@@ -351,7 +351,10 @@ public class DataTables implements IHCNodeBuilder
         if (aCol instanceof DTColumn)
         {
           // Copy data from DTColumn
-          aColumn = new DataTablesColumn (nColIndex, (DTColumn) aCol);
+          final DTColumn aDTCol = (DTColumn) aCol;
+          aColumn = new DataTablesColumn (nColIndex, aDTCol);
+          if (aDTCol.hasInitialSorting ())
+            setInitialSorting (nColIndex, aDTCol.getInitialSorting ());
         }
         else
         {
