@@ -165,9 +165,21 @@ public class DataTables implements IHCNodeBuilder
   public DataTables (@Nonnull final IHCTable <?> aTable)
   {
     ValueEnforcer.notNull (aTable, "Table");
+    ValueEnforcer.notEmpty (aTable.getID (), "Table must have an ID to work with DataTables!");
+
+    int nColIndex = 0;
+    for (final HCCol aCol : aTable.getColGroup ().getAllColumns ())
+    {
+      if (aCol instanceof DTColumn)
+      {
+        final DTColumn aDTColumn = (DTColumn) aCol;
+        getOrCreateColumnOfTarget (nColIndex).setFromColumn (aDTColumn);
+      }
+      nColIndex++;
+    }
+
     if (!aTable.hasHeaderRows ())
       s_aLogger.warn ("Table does not have a header row so DataTables may not be displayed correctly!");
-    ValueEnforcer.notEmpty (aTable.getID (), "Table must have an ID to work with DataTables!");
 
     m_aTable = aTable;
   }

@@ -16,70 +16,64 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import java.util.Set;
-
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.ArrayHelper;
+import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.IHCHasCSSClasses;
-import com.helger.html.hc.impl.HCHasCSSClasses;
+import com.helger.html.CHTMLAttributeValues;
+import com.helger.html.hc.html.HCCol;
 import com.helger.html.js.builder.JSArray;
 import com.helger.html.js.builder.JSAssocArray;
 import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
 
 /**
- * Contains all data for a single DataTables column
+ * Specialized column for DataTables to be used in IHCTable implementation
+ * constructors.
  *
  * @author Philip Helger
  */
-public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
+public class DTColumn extends HCCol
 {
   public static final boolean DEFAULT_SEARCHABLE = true;
   public static final boolean DEFAULT_SORTABLE = true;
   public static final boolean DEFAULT_VISIBLE = true;
 
-  private final int [] m_aTargets;
+  private final String m_sHeaderText;
+  private ESortOrder m_eInitialSorting = null;
   private boolean m_bSearchable = DEFAULT_SEARCHABLE;
   private boolean m_bOrderable = DEFAULT_SORTABLE;
   private boolean m_bVisible = DEFAULT_VISIBLE;
-  private final HCHasCSSClasses m_aCSSClasses = new HCHasCSSClasses ();
   private String m_sName;
   private String m_sWidth;
   private int [] m_aDataSort;
   private AbstractComparatorDT m_aComparator;
 
-  public DataTablesColumn (@Nonnegative final int nTarget)
+  public DTColumn (@Nullable final String sHeaderText)
   {
-    this (new int [] { nTarget });
-  }
-
-  public DataTablesColumn (@Nonnull @Nonempty final int... aTargets)
-  {
-    ValueEnforcer.notEmpty (aTargets, "Targets");
-    for (final int nTarget : aTargets)
-      if (nTarget < 0)
-        throw new IllegalArgumentException ("Target must be >= 0: " + nTarget);
-    m_aTargets = ArrayHelper.getCopy (aTargets);
+    setWidth (CHTMLAttributeValues.STAR);
+    m_sHeaderText = StringHelper.getNotNull (sHeaderText);
   }
 
   @Nonnull
-  @Nonempty
-  @ReturnsMutableCopy
-  public int [] getAllTargets ()
+  public String getHeaderText ()
   {
-    return ArrayHelper.getCopy (m_aTargets);
+    return m_sHeaderText;
   }
 
-  public boolean hasTarget (final int nTarget)
+  @Nonnull
+  public ESortOrder getInitialSorting ()
   {
-    return ArrayHelper.contains (m_aTargets, nTarget);
+    return m_eInitialSorting;
+  }
+
+  @Nonnull
+  public DTColumn setInitialSorting (@Nullable final ESortOrder eInitialSorting)
+  {
+    m_eInitialSorting = eInitialSorting;
+    return this;
   }
 
   public boolean isSearchable ()
@@ -88,7 +82,7 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
   }
 
   @Nonnull
-  public DataTablesColumn setSearchable (final boolean bSearchable)
+  public DTColumn setSearchable (final boolean bSearchable)
   {
     m_bSearchable = bSearchable;
     return this;
@@ -100,7 +94,7 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
   }
 
   @Nonnull
-  public DataTablesColumn setSortable (final boolean bSortable)
+  public DTColumn setSortable (final boolean bSortable)
   {
     m_bOrderable = bSortable;
     return this;
@@ -112,83 +106,10 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
   }
 
   @Nonnull
-  public DataTablesColumn setVisible (final boolean bVisible)
+  public DTColumn setVisible (final boolean bVisible)
   {
     m_bVisible = bVisible;
     return this;
-  }
-
-  public boolean containsClass (@Nullable final ICSSClassProvider aCSSClassProvider)
-  {
-    return m_aCSSClasses.containsClass (aCSSClassProvider);
-  }
-
-  @Nonnull
-  public DataTablesColumn addClass (@Nullable final ICSSClassProvider aCSSClassProvider)
-  {
-    m_aCSSClasses.addClass (aCSSClassProvider);
-    return this;
-  }
-
-  @Deprecated
-  @Nonnull
-  public DataTablesColumn addClasses (@Nullable final ICSSClassProvider aCSSClassProvider)
-  {
-    m_aCSSClasses.addClasses (aCSSClassProvider);
-    return this;
-  }
-
-  @Nonnull
-  public DataTablesColumn addClasses (@Nullable final ICSSClassProvider... aCSSClassProviders)
-  {
-    m_aCSSClasses.addClasses (aCSSClassProviders);
-    return this;
-  }
-
-  @Nonnull
-  public DataTablesColumn addClasses (@Nullable final Iterable <? extends ICSSClassProvider> aCSSClassProviders)
-  {
-    m_aCSSClasses.addClasses (aCSSClassProviders);
-    return this;
-  }
-
-  @Nonnull
-  public DataTablesColumn removeClass (@Nullable final ICSSClassProvider aCSSClassProvider)
-  {
-    m_aCSSClasses.removeClass (aCSSClassProvider);
-    return this;
-  }
-
-  @Nonnull
-  public DataTablesColumn removeAllClasses ()
-  {
-    m_aCSSClasses.removeAllClasses ();
-    return this;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public Set <ICSSClassProvider> getAllClasses ()
-  {
-    return m_aCSSClasses.getAllClasses ();
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public Set <String> getAllClassNames ()
-  {
-    return m_aCSSClasses.getAllClassNames ();
-  }
-
-  @Nullable
-  public String getAllClassesAsString ()
-  {
-    return m_aCSSClasses.getAllClassesAsString ();
-  }
-
-  public boolean hasAnyClass ()
-  {
-    return m_aCSSClasses.hasAnyClass ();
   }
 
   @Nullable
@@ -198,20 +119,22 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
   }
 
   @Nonnull
-  public DataTablesColumn setName (@Nullable final String sName)
+  public DTColumn setName (@Nullable final String sName)
   {
     m_sName = sName;
     return this;
   }
 
+  @Override
   @Nullable
   public String getWidth ()
   {
     return m_sWidth;
   }
 
+  @Override
   @Nonnull
-  public DataTablesColumn setWidth (@Nullable final String sWidth)
+  public DTColumn setWidth (@Nullable final String sWidth)
   {
     m_sWidth = sWidth;
     return this;
@@ -232,7 +155,7 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
    * @return this
    */
   @Nonnull
-  public DataTablesColumn setDataSort (@Nullable final int... aDataSort)
+  public DTColumn setDataSort (@Nullable final int... aDataSort)
   {
     m_aDataSort = ArrayHelper.getCopy (aDataSort);
     return this;
@@ -245,17 +168,17 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
   }
 
   @Nonnull
-  public DataTablesColumn setComparator (@Nullable final AbstractComparatorDT aComparator)
+  public DTColumn setComparator (@Nullable final AbstractComparatorDT aComparator)
   {
     m_aComparator = aComparator;
     return this;
   }
 
   @Nonnull
-  public JSAssocArray getAsJS ()
+  public JSAssocArray getAsJS (final int nColumnIndex)
   {
     final JSAssocArray ret = new JSAssocArray ();
-    ret.add ("targets", new JSArray ().addAll (m_aTargets));
+    ret.add ("targets", new JSArray ().add (nColumnIndex));
     if (m_bSearchable != DEFAULT_SEARCHABLE)
       ret.add ("searchable", m_bSearchable);
     if (m_bOrderable != DEFAULT_SORTABLE)
@@ -272,11 +195,5 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
     if (ArrayHelper.isNotEmpty (m_aDataSort))
       ret.add ("aDataSort", new JSArray ().addAll (m_aDataSort));
     return ret;
-  }
-
-  public void setFromColumn (final DTColumn aDTColumn)
-  {
-    // TODO
-
   }
 }
