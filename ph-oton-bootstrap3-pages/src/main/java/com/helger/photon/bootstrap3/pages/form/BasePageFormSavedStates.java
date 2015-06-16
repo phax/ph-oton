@@ -31,7 +31,6 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCCell;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCol;
@@ -211,9 +210,9 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
       aNodeList.addChild (aToolbar);
 
       // Start emitting saved states
-      final IHCTable <?> aPerPage = aNodeList.addAndReturnChild (new BootstrapTable (HCCol.star (),
-                                                                                     new HCCol (170),
-                                                                                     createActionCol (2)));
+      final BootstrapTable aPerPage = aNodeList.addAndReturnChild (new BootstrapTable (HCCol.star (),
+                                                                                       new HCCol (170),
+                                                                                       createActionCol (2)));
       aPerPage.addHeaderRow ().addCells (EText.HEADER_PAGE.getDisplayText (aDisplayLocale),
                                          EText.HEADER_REMEMBERED_AT.getDisplayText (aDisplayLocale),
                                          EText.HEADER_ACTIONS.getDisplayText (aDisplayLocale));

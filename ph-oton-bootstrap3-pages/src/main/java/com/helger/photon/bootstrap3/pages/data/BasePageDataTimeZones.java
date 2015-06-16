@@ -35,7 +35,6 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.config.PDTConfig;
 import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
@@ -44,6 +43,7 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
 
@@ -120,18 +120,14 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> e
                                             aCurrentDTZ.getID () +
                                             " - " +
                                             aCurrentDTZ.getName (nNow)));
-    final IHCTable <?> aTable = new BootstrapTable (new HCCol (100),
-                                                    HCCol.star (),
-                                                    new HCCol (100),
-                                                    new HCCol (70),
-                                                    new HCCol (70),
-                                                    new HCCol (70)).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
-                                     EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                     EText.MSG_SHORTNAME.getDisplayText (aDisplayLocale),
-                                     EText.MSG_OFFSET.getDisplayText (aDisplayLocale),
-                                     EText.MSG_STANDARD_OFFSET.getDisplayText (aDisplayLocale),
-                                     EText.MSG_FIXED.getDisplayText (aDisplayLocale));
+    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                                    new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_SHORTNAME.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_OFFSET.getDisplayText (aDisplayLocale)).setComparator (new ComparatorDTInteger (new StringSkipPrefixAndSuffixFormatter ("PT",
+                                                                                                                                                                                                 "S"),
+                                                                                                                                                         aDisplayLocale)),
+                                                    new DTCol (EText.MSG_STANDARD_OFFSET.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_FIXED.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final String sID : DateTimeZone.getAvailableIDs ())
     {
       final DateTimeZone aDTZ = DateTimeZone.forID (sID);
@@ -146,10 +142,6 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> e
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (3)
-               .setComparator (new ComparatorDTInteger (new StringSkipPrefixAndSuffixFormatter ("PT", "S"),
-                                                        aDisplayLocale));
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
   }
 }

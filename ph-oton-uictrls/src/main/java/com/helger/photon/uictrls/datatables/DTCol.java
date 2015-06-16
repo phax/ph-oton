@@ -30,21 +30,18 @@ import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
 
 /**
  * Specialized column for DataTables to be used in IHCTable implementation
- * constructors.
+ * constructors. Only when used with {@link DataTables} it will customize the
+ * column design.
  *
  * @author Philip Helger
  */
 public class DTCol extends AbstractHCCol <DTCol>
 {
-  public static final boolean DEFAULT_SEARCHABLE = true;
-  public static final boolean DEFAULT_SORTABLE = true;
-  public static final boolean DEFAULT_VISIBLE = true;
-
   private IHCNode m_aHeaderNode;
   private ESortOrder m_eInitialSorting = null;
-  private boolean m_bSearchable = DEFAULT_SEARCHABLE;
-  private boolean m_bSortable = DEFAULT_SORTABLE;
-  private boolean m_bVisible = DEFAULT_VISIBLE;
+  private boolean m_bSearchable = DataTablesColumn.DEFAULT_SEARCHABLE;
+  private boolean m_bSortable = DataTablesColumn.DEFAULT_SORTABLE;
+  private boolean m_bVisible = DataTablesColumn.DEFAULT_VISIBLE;
   private String m_sName;
   private int [] m_aDataSort;
   private AbstractComparatorDT m_aComparator;
