@@ -103,8 +103,9 @@
             <exclude>src/main/resources/handlebars/**</exclude>
             <exclude>src/main/resources/js/big.*</exclude>
             <exclude>src/main/resources/js/wow.*</exclude>
-            <exclude>src/main/resources/pdfobject/**</exclude>
             <exclude>src/main/resources/jscolor/**</exclude>
+            <exclude>src/main/resources/pdfobject/**</exclude>
+            <exclude>src/main/resources/prismjs/**</exclude>
             <exclude>src/main/resources/select2/**</exclude>
             <exclude>src/main/resources/typeahead/**</exclude>
           </excludes>

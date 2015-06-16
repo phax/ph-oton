@@ -92,6 +92,7 @@
             <exclude>**/*.min.css</exclude>
             <exclude>src/main/resources/uicore/html5shiv/**</exclude>
             <exclude>src/main/resources/uicore/jquery/**</exclude>
+            <exclude>src/main/resources/uicore/jqueryplaceholder/**</exclude>
             <exclude>src/main/resources/uicore/jqueryplugins/**</exclude>
             <exclude>src/main/resources/uicore/placeholder/**</exclude>
             <exclude>src/main/resources/uicore/respond/**</exclude>

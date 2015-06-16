@@ -90,6 +90,8 @@
           <excludes>
             <exclude>src/main/resources/tinymce-dev/**</exclude>
             <exclude>src/main/resources/tinymce-min/**</exclude>
+            <exclude>**/*.min.js</exclude>
+            <exclude>**/*.min.css</exclude>
           </excludes>
         </configuration>
       </plugin>
