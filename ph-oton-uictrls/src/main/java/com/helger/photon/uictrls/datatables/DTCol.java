@@ -34,7 +34,7 @@ import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
  *
  * @author Philip Helger
  */
-public class DTColumn extends AbstractHCCol <DTColumn>
+public class DTCol extends AbstractHCCol <DTCol>
 {
   public static final boolean DEFAULT_SEARCHABLE = true;
   public static final boolean DEFAULT_SORTABLE = true;
@@ -49,17 +49,17 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   private int [] m_aDataSort;
   private AbstractComparatorDT m_aComparator;
 
-  public DTColumn ()
+  public DTCol ()
   {
     this ((IHCNode) null);
   }
 
-  public DTColumn (@Nullable final String sHeaderText)
+  public DTCol (@Nullable final String sHeaderText)
   {
     this (HCTextNode.createOnDemand (sHeaderText));
   }
 
-  public DTColumn (@Nullable final IHCNode aHeaderNode)
+  public DTCol (@Nullable final IHCNode aHeaderNode)
   {
     setWidth (CHTMLAttributeValues.STAR);
     setHeaderNode (aHeaderNode);
@@ -72,7 +72,7 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   }
 
   @Nonnull
-  public DTColumn setHeaderNode (@Nullable final IHCNode aHeaderNode)
+  public DTCol setHeaderNode (@Nullable final IHCNode aHeaderNode)
   {
     m_aHeaderNode = aHeaderNode;
     return this;
@@ -90,7 +90,7 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   }
 
   @Nonnull
-  public DTColumn setInitialSorting (@Nullable final ESortOrder eInitialSorting)
+  public DTCol setInitialSorting (@Nullable final ESortOrder eInitialSorting)
   {
     m_eInitialSorting = eInitialSorting;
     return this;
@@ -102,7 +102,7 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   }
 
   @Nonnull
-  public DTColumn setSearchable (final boolean bSearchable)
+  public DTCol setSearchable (final boolean bSearchable)
   {
     m_bSearchable = bSearchable;
     return this;
@@ -114,7 +114,7 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   }
 
   @Nonnull
-  public DTColumn setSortable (final boolean bSortable)
+  public DTCol setSortable (final boolean bSortable)
   {
     m_bSortable = bSortable;
     return this;
@@ -126,7 +126,7 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   }
 
   @Nonnull
-  public DTColumn setVisible (final boolean bVisible)
+  public DTCol setVisible (final boolean bVisible)
   {
     m_bVisible = bVisible;
     return this;
@@ -139,7 +139,7 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   }
 
   @Nonnull
-  public DTColumn setName (@Nullable final String sName)
+  public DTCol setName (@Nullable final String sName)
   {
     m_sName = sName;
     return this;
@@ -160,7 +160,7 @@ public class DTColumn extends AbstractHCCol <DTColumn>
    * @return this
    */
   @Nonnull
-  public DTColumn setDataSort (@Nullable final int... aDataSort)
+  public DTCol setDataSort (@Nullable final int... aDataSort)
   {
     m_aDataSort = ArrayHelper.getCopy (aDataSort);
     return this;
@@ -173,7 +173,7 @@ public class DTColumn extends AbstractHCCol <DTColumn>
   }
 
   @Nonnull
-  public DTColumn setComparator (@Nullable final AbstractComparatorDT aComparator)
+  public DTCol setComparator (@Nullable final AbstractComparatorDT aComparator)
   {
     m_aComparator = aComparator;
     return this;

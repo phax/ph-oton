@@ -68,7 +68,7 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
     m_aTargets = ArrayHelper.getCopy (aTargets);
   }
 
-  public DataTablesColumn (@Nonnegative final int nTarget, @Nonnull final DTColumn aDTColumn)
+  public DataTablesColumn (@Nonnegative final int nTarget, @Nonnull final DTCol aDTColumn)
   {
     this (nTarget);
     setSearchable (aDTColumn.isSearchable ());

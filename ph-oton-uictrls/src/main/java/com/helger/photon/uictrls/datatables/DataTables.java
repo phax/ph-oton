@@ -176,10 +176,10 @@ public class DataTables implements IHCNodeBuilder
       int nColIndex = 0;
       for (final IHCCol <?> aCol : aColGroup.getAllColumns ())
       {
-        if (aCol instanceof DTColumn)
+        if (aCol instanceof DTCol)
         {
           bHasDTColumn = true;
-          aHeaderNodes[nColIndex] = ((DTColumn) aCol).getHeaderNode ();
+          aHeaderNodes[nColIndex] = ((DTCol) aCol).getHeaderNode ();
         }
         nColIndex++;
       }
@@ -348,10 +348,10 @@ public class DataTables implements IHCNodeBuilder
       for (final IHCCol <?> aCol : aColGroup.getAllColumns ())
       {
         DataTablesColumn aColumn;
-        if (aCol instanceof DTColumn)
+        if (aCol instanceof DTCol)
         {
           // Copy data from DTColumn
-          final DTColumn aDTCol = (DTColumn) aCol;
+          final DTCol aDTCol = (DTCol) aCol;
           aColumn = new DataTablesColumn (nColIndex, aDTCol);
           if (aDTCol.hasInitialSorting ())
             setInitialSorting (nColIndex, aDTCol.getInitialSorting ());

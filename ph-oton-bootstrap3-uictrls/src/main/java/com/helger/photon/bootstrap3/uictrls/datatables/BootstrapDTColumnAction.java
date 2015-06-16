@@ -4,14 +4,14 @@ import javax.annotation.Nullable;
 
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.uicore.css.CUICoreCSS;
-import com.helger.photon.uictrls.datatables.DTColumn;
+import com.helger.photon.uictrls.datatables.DTCol;
 
 /**
  * Special action column. Has a special CSS class and is never sortable.
  *
  * @author Philip Helger
  */
-public class BootstrapDTColumnAction extends DTColumn
+public class BootstrapDTColumnAction extends DTCol
 {
   private void _init ()
   {

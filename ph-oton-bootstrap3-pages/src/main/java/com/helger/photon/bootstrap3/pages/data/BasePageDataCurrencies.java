@@ -47,7 +47,7 @@ import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
-import com.helger.photon.uictrls.datatables.DTColumn;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
 import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
@@ -116,17 +116,17 @@ public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext> 
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IHCTable <?> aTable = new BootstrapTable (new DTColumn (EText.MSG_CODE.getDisplayText (aDisplayLocale)).setDataSort (0,
+    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_CODE.getDisplayText (aDisplayLocale)).setDataSort (0,
                                                                                                                                6)
                                                                                                                  .setInitialSorting (ESortOrder.ASCENDING),
-                                                    new DTColumn (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (1,
+                                                    new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (1,
                                                                                                                                6),
-                                                    new DTColumn (EText.MSG_SYMBOL.getDisplayText (aDisplayLocale)),
-                                                    new DTColumn (EText.MSG_DEFAULT_FRACTION_DIGITS.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                    new DTCol (EText.MSG_SYMBOL.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_DEFAULT_FRACTION_DIGITS.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
                                                                                                                                     .setComparator (new ComparatorDTInteger (aDisplayLocale)),
-                                                    new DTColumn (EText.MSG_EXAMPLE.getDisplayText (aDisplayLocale)),
-                                                    new DTColumn (EText.MSG_CONTINENTS.getDisplayText (aDisplayLocale)),
-                                                    new DTColumn (EText.MSG_LOCALE.getDisplayText (aDisplayLocale))).setID (getID ());
+                                                    new DTCol (EText.MSG_EXAMPLE.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_CONTINENTS.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_LOCALE.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final Map.Entry <Locale, Currency> aEntry : CurrencyUtils.getLocaleToCurrencyMap ().entrySet ())
     {
       final Locale aLocale = aEntry.getKey ();
