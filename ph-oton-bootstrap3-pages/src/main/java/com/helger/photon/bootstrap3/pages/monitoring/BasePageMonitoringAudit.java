@@ -32,7 +32,6 @@ import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.audit.IAuditItem;
@@ -41,11 +40,13 @@ import com.helger.photon.basic.security.util.SecurityUtils;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
+import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 
@@ -142,17 +143,13 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (new HCCol (COLUMN_WIDTH_DATETIME),
-                                                    new HCCol (120),
-                                                    new HCCol (60),
-                                                    new HCCol (60),
-                                                    HCCol.star ()).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_DATE.getDisplayText (aDisplayLocale),
-                                     EText.MSG_USER.getDisplayText (aDisplayLocale),
-                                     EText.MSG_TYPE.getDisplayText (aDisplayLocale),
-                                     EText.MSG_SUCCESS.getDisplayText (aDisplayLocale),
-                                     EText.MSG_ACTION.getDisplayText (aDisplayLocale));
-
+    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                              .setComparator (new ComparatorDTDateTime (aDisplayLocale))
+                                                                                                              .setInitialSorting (ESortOrder.DESCENDING),
+                                                    new DTCol (EText.MSG_USER.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)),
+                                                    new BootstrapDTColAction (EText.MSG_ACTION.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final IAuditItem aItem : m_aAuditMgr.getLastAuditItems (250))
     {
       final HCRow aRow = aTable.addBodyRow ();
@@ -165,11 +162,6 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (0)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTDateTime (aDisplayLocale));
-    aDataTables.getOrCreateColumnOfTarget (4).addClass (CSS_CLASS_ACTION_COL).setSortable (false);
-    aDataTables.setInitialSorting (0, ESortOrder.DESCENDING);
     aNodeList.addChild (aDataTables);
   }
 }

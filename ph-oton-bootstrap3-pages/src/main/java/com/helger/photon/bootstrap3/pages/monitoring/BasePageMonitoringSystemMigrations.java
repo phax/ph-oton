@@ -30,8 +30,6 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.migration.SystemMigrationManager;
@@ -45,6 +43,7 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 
@@ -134,11 +133,15 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (new HCCol (200), new HCCol (140), new HCCol (60), HCCol.star ()).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
-                                     EText.MSG_DATE.getDisplayText (aDisplayLocale),
-                                     EText.MSG_SUCCESS.getDisplayText (aDisplayLocale),
-                                     EText.MSG_ERRORMESSAGE.getDisplayText (aDisplayLocale));
+    final BootstrapTable aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)),
+                                                      new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                                .setComparator (new ComparatorDTDateTime (aDisplayLocale))
+                                                                                                                .setInitialSorting (ESortOrder.DESCENDING),
+                                                      new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)).setDataSort (2,
+                                                                                                                                 1),
+                                                      new DTCol (EText.MSG_ERRORMESSAGE.getDisplayText (aDisplayLocale)).setDataSort (3,
+                                                                                                                                      2,
+                                                                                                                                      1)).setID (getID ());
 
     for (final SystemMigrationResult aItem : m_aSystemMigrationMgr.getAllMigrationResultsFlattened ())
     {
@@ -151,12 +154,6 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (1)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTDateTime (aDisplayLocale));
-    aDataTables.getOrCreateColumnOfTarget (2).setDataSort (2, 1);
-    aDataTables.getOrCreateColumnOfTarget (3).setDataSort (3, 2, 1);
-    aDataTables.setInitialSorting (1, ESortOrder.DESCENDING);
     aNodeList.addChild (aDataTables);
   }
 }

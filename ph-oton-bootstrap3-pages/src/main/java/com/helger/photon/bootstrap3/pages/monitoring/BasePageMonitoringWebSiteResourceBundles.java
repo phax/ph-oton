@@ -30,8 +30,6 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.htmlext.HCUtils;
@@ -49,6 +47,7 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 
@@ -152,16 +151,14 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
                                                EPhotonCoreText.getYesOrNo (ResourceBundleServlet.isActive (),
                                                                            aDisplayLocale)));
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (),
-                                                    HCCol.star (),
-                                                    HCCol.star (),
-                                                    HCCol.star (),
-                                                    HCCol.star ()).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
-                                     EText.MSG_DATE.getDisplayText (aDisplayLocale),
-                                     EText.MSG_RESOURCES.getDisplayText (aDisplayLocale),
-                                     EText.MSG_COND_COMMENT.getDisplayText (aDisplayLocale),
-                                     EText.MSG_CSS_MEDIA.getDisplayText (aDisplayLocale));
+    final BootstrapTable aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                                      new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                                .setComparator (new ComparatorDTDateTime (aDisplayLocale)),
+                                                      new DTCol (EText.MSG_RESOURCES.getDisplayText (aDisplayLocale)),
+                                                      new DTCol (EText.MSG_COND_COMMENT.getDisplayText (aDisplayLocale)).setDataSort (3,
+                                                                                                                                      1),
+                                                      new DTCol (EText.MSG_CSS_MEDIA.getDisplayText (aDisplayLocale)).setDataSort (4,
+                                                                                                                                   1)).setID (getID ());
 
     for (final WebSiteResourceBundleSerialized aBundle : m_aResBundleMgr.getAllResourceBundles ().values ())
     {
@@ -176,12 +173,6 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (1)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTDateTime (aDisplayLocale));
-    aDataTables.getOrCreateColumnOfTarget (3).setDataSort (3, 1);
-    aDataTables.getOrCreateColumnOfTarget (4).setDataSort (4, 1);
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
   }
 }
