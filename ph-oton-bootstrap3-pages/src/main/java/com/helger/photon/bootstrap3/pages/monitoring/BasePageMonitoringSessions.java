@@ -44,7 +44,6 @@ import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCA;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
@@ -54,6 +53,7 @@ import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
+import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.UITextFormatter;
@@ -63,6 +63,7 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
@@ -211,11 +212,10 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     }
 
     // All scope attributes
-    final BootstrapTable aTableAttrs = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star ()).setID ("sessionscope-" +
-                                                                                                               aScope.getID ());
-    aTableAttrs.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                          EText.MSG_TYPE.getDisplayText (aDisplayLocale),
-                                          EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+    final BootstrapTable aTableAttrs = new BootstrapTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                                           new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
+                                                           new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionscope-" +
+                                                                                                                               aScope.getID ());
     for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
@@ -224,7 +224,6 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     ret.addChild (aTableAttrs);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     ret.addChild (aDataTables);
 
     return ret;
@@ -254,11 +253,10 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aNodeList.addChild (aTableScope);
 
     // All scope attributes
-    final BootstrapTable aTableAttrs = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star ()).setID ("sessionappscope" +
-                                                                                                               aScope.getID ());
-    aTableAttrs.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                          EText.MSG_TYPE.getDisplayText (aDisplayLocale),
-                                          EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+    final BootstrapTable aTableAttrs = new BootstrapTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                                           new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
+                                                           new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionappscope" +
+                                                                                                                               aScope.getID ());
     for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
@@ -267,7 +265,6 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aNodeList.addChild (aTableAttrs);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
 
     return aNodeList;
@@ -331,14 +328,13 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (),
-                                                    new HCCol (60),
-                                                    new HCCol (COLUMN_WIDTH_DATETIME),
-                                                    createActionCol (1)).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
-                                     EText.MSG_ATTRCOUNT.getDisplayText (aDisplayLocale),
-                                     EText.MSG_LAST_ACCESS.getDisplayText (aDisplayLocale),
-                                     EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));
+    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_ATTRCOUNT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                                   .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_LAST_ACCESS.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                                     .setComparator (new ComparatorDTDateTime (aDisplayLocale))
+                                                                                                                     .setInitialSorting (ESortOrder.DESCENDING),
+                                                    new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final ISessionScope aSessionScope : ScopeSessionManager.getInstance ().getAllSessionScopes ())
     {
       final ISessionWebScope aWebScope = aSessionScope instanceof ISessionWebScope ? (ISessionWebScope) aSessionScope
@@ -361,14 +357,6 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (1)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTInteger (aDisplayLocale));
-    aDataTables.getOrCreateColumnOfTarget (2)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTDateTime (aDisplayLocale));
-    aDataTables.getOrCreateColumnOfTarget (3).addClass (CSS_CLASS_ACTION_COL).setSortable (false);
-    aDataTables.setInitialSorting (2, ESortOrder.DESCENDING);
     aNodeList.addChild (aDataTables);
   }
 }

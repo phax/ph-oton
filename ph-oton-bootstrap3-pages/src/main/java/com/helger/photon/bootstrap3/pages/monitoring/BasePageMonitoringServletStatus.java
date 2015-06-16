@@ -31,7 +31,6 @@ import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
@@ -46,6 +45,7 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
@@ -119,11 +119,12 @@ public class BasePageMonitoringServletStatus <WPECTYPE extends IWebPageExecution
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ()).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_SERVLET.getDisplayText (aDisplayLocale),
-                                     EText.MSG_STATUS.getDisplayText (aDisplayLocale),
-                                     EText.MSG_INVOCATION_COUNT.getDisplayText (aDisplayLocale),
-                                     EText.MSG_INIT_DT.getDisplayText (aDisplayLocale));
+    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_SERVLET.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                                    new DTCol (EText.MSG_STATUS.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_INVOCATION_COUNT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                                          .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_INIT_DT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                                 .setComparator (new ComparatorDTDateTime (aDisplayLocale))).setID (getID ());
 
     for (final Map.Entry <String, ServletStatus> aItem : ServletStatusManager.getAllStatus ().entrySet ())
     {
@@ -138,13 +139,6 @@ public class BasePageMonitoringServletStatus <WPECTYPE extends IWebPageExecution
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (2)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTInteger (aDisplayLocale));
-    aDataTables.getOrCreateColumnOfTarget (3)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTDateTime (aDisplayLocale));
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
   }
 }

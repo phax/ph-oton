@@ -29,9 +29,7 @@ import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCA;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
@@ -47,6 +45,7 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 
 /**
@@ -139,11 +138,12 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
                                                EPhotonCoreText.getYesOrNo (GoServlet.isServletRegisteredInServletContext (),
                                                                            aDisplayLocale)));
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ()).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_KEY.getDisplayText (aDisplayLocale),
-                                     EText.MSG_INTERNAL.getDisplayText (aDisplayLocale),
-                                     EText.MSG_URL.getDisplayText (aDisplayLocale),
-                                     EText.MSG_EDITABLE.getDisplayText (aDisplayLocale));
+    final BootstrapTable aTable = new BootstrapTable (new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                                      new DTCol (EText.MSG_INTERNAL.getDisplayText (aDisplayLocale)).setDataSort (1,
+                                                                                                                                  0),
+                                                      new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale)),
+                                                      new DTCol (EText.MSG_EDITABLE.getDisplayText (aDisplayLocale)).setDataSort (3,
+                                                                                                                                  0)).setID (getID ());
 
     for (final GoMappingItem aItem : m_aGoMappingMgr.getAllItems ().values ())
     {
@@ -156,9 +156,6 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (1).setDataSort (1, 0);
-    aDataTables.getOrCreateColumnOfTarget (3).setDataSort (3, 0);
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
   }
 }

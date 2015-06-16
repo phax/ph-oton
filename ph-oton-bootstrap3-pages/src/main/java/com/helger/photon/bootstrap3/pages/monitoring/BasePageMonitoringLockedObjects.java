@@ -32,7 +32,6 @@ import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.lock.ILockInfo;
@@ -47,6 +46,7 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 
@@ -135,10 +135,11 @@ public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecution
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (new HCCol (COLUMN_WIDTH_DATETIME), new HCCol (120), HCCol.star ()).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_DATE.getDisplayText (aDisplayLocale),
-                                     EText.MSG_USER.getDisplayText (aDisplayLocale),
-                                     EText.MSG_OBJECTID.getDisplayText (aDisplayLocale));
+    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                              .setComparator (new ComparatorDTDateTime (aDisplayLocale))
+                                                                                                              .setInitialSorting (ESortOrder.DESCENDING),
+                                                    new DTCol (EText.MSG_USER.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_OBJECTID.getDisplayText (aDisplayLocale))).setID (getID ());
 
     for (final Map.Entry <String, ILockInfo> aEntry : m_aLockMgr.getAllLockInfos ().entrySet ())
     {
@@ -153,10 +154,6 @@ public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecution
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (0)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTDateTime (aDisplayLocale));
-    aDataTables.setInitialSorting (0, ESortOrder.DESCENDING);
     aNodeList.addChild (aDataTables);
   }
 }

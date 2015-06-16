@@ -101,6 +101,7 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   protected static final ICSSClassProvider CSS_CLASS_CENTER = CUICoreCSS.CSS_CLASS_CENTER;
   protected static final ICSSClassProvider CSS_CLASS_RIGHT = CUICoreCSS.CSS_CLASS_RIGHT;
   protected static final ICSSClassProvider CSS_CLASS_NOWRAP = CUICoreCSS.CSS_CLASS_NOWRAP;
+  @Deprecated
   protected static final ICSSClassProvider CSS_CLASS_ACTION_COL = CUICoreCSS.CSS_CLASS_ACTION_COL;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageExt.class);

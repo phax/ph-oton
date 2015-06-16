@@ -55,6 +55,7 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
+import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -62,6 +63,7 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 import com.helger.validation.error.FormErrors;
@@ -314,14 +316,13 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (),
-                                                    new HCCol (COLUMN_WIDTH_DATETIME),
-                                                    new HCCol (COLUMN_WIDTH_DATETIME),
-                                                    createActionCol (2)).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_USERNAME.getDisplayText (aDisplayLocale),
-                                     EText.MSG_LOGINDT.getDisplayText (aDisplayLocale),
-                                     EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale),
-                                     EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));
+    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_USERNAME.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                                 .setComparator (new ComparatorDTDateTime (aDisplayLocale))
+                                                                                                                 .setInitialSorting (ESortOrder.ASCENDING),
+                                                    new DTCol (EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                                      .setComparator (new ComparatorDTDateTime (aDisplayLocale)),
+                                                    new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
     final Collection <LoginInfo> aLoginInfos = LoggedInUserManager.getInstance ().getAllLoginInfos ();
     for (final LoginInfo aLoginInfo : aLoginInfos)
     {
@@ -352,14 +353,6 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (1)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTDateTime (aDisplayLocale));
-    aDataTables.getOrCreateColumnOfTarget (2)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTDateTime (aDisplayLocale));
-    aDataTables.getOrCreateColumnOfTarget (3).addClass (CSS_CLASS_ACTION_COL).setSortable (false);
-    aDataTables.setInitialSorting (1, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
   }
 }

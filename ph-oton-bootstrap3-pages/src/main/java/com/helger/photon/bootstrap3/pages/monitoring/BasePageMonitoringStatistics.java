@@ -37,7 +37,6 @@ import com.helger.commons.stats.visit.StatisticsWalker;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
@@ -45,11 +44,11 @@ import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
 
@@ -136,52 +135,60 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     aNodeList.addChild (aToolbar);
 
     // Table for timer
-    final HCTable aTableTimer = new HCTable (HCCol.star (),
-                                             HCCol.star (),
-                                             HCCol.star (),
-                                             HCCol.star (),
-                                             HCCol.star (),
-                                             HCCol.star (),
-                                             HCCol.star ()).setID (getID () + "timer");
-    aTableTimer.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                          EText.MSG_KEY.getDisplayText (aDisplayLocale),
-                                          EText.MSG_INVOCATION.getDisplayText (aDisplayLocale),
-                                          EText.MSG_TIMER_MIN.getDisplayText (aDisplayLocale),
-                                          EText.MSG_TIMER_MAX.getDisplayText (aDisplayLocale),
-                                          EText.MSG_TIMER_AVG.getDisplayText (aDisplayLocale),
-                                          EText.MSG_TIMER_SUM.getDisplayText (aDisplayLocale));
+    final HCTable aTableTimer = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                     1),
+                                             new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
+                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                             .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                             new DTCol (EText.MSG_TIMER_MIN.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                             new DTCol (EText.MSG_TIMER_MAX.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                             new DTCol (EText.MSG_TIMER_AVG.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                             new DTCol (EText.MSG_TIMER_SUM.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale))
+                                                                                                            .setInitialSorting (ESortOrder.DESCENDING)).setID (getID () +
+                                                                                                                                                               "timer");
 
     // Table for size
-    final HCTable aTableSize = new HCTable (HCCol.star (),
-                                            HCCol.star (),
-                                            HCCol.star (),
-                                            HCCol.star (),
-                                            HCCol.star (),
-                                            HCCol.star (),
-                                            HCCol.star ()).setID (getID () + "size");
-    aTableSize.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                         EText.MSG_KEY.getDisplayText (aDisplayLocale),
-                                         EText.MSG_INVOCATION.getDisplayText (aDisplayLocale),
-                                         EText.MSG_MIN.getDisplayText (aDisplayLocale),
-                                         EText.MSG_MAX.getDisplayText (aDisplayLocale),
-                                         EText.MSG_AVG.getDisplayText (aDisplayLocale),
-                                         EText.MSG_SUM.getDisplayText (aDisplayLocale));
+    final HCTable aTableSize = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                    1),
+                                            new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
+                                            new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale))
+                                                                                                            .setInitialSorting (ESortOrder.ASCENDING),
+                                            new DTCol (EText.MSG_MIN.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                     .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                            new DTCol (EText.MSG_MAX.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                     .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                            new DTCol (EText.MSG_AVG.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                     .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                            new DTCol (EText.MSG_SUM.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                     .setComparator (new ComparatorDTInteger (aDisplayLocale))).setID (getID () +
+                                                                                                                                                                       "size");
 
     // Table for counter
-    final HCTable aTableCounter = new HCTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ()).setID (getID () +
-                                                                                                                  "counter");
-    aTableCounter.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                            EText.MSG_KEY.getDisplayText (aDisplayLocale),
-                                            EText.MSG_INVOCATION.getDisplayText (aDisplayLocale),
-                                            EText.MSG_COUNT.getDisplayText (aDisplayLocale));
+    final HCTable aTableCounter = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                       1),
+                                               new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
+                                               new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                               .setComparator (new ComparatorDTInteger (aDisplayLocale))
+                                                                                                               .setInitialSorting (ESortOrder.ASCENDING),
+                                               new DTCol (EText.MSG_COUNT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                          .setComparator (new ComparatorDTInteger (aDisplayLocale))).setID (getID () +
+                                                                                                                                                                            "counter");
 
     // Table for cache
-    final HCTable aTableCache = new HCTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ()).setID (getID () +
-                                                                                                                "cache");
-    aTableCache.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                          EText.MSG_INVOCATION.getDisplayText (aDisplayLocale),
-                                          EText.MSG_CACHE_HIT.getDisplayText (aDisplayLocale),
-                                          EText.MSG_CACHE_MISS.getDisplayText (aDisplayLocale));
+    final HCTable aTableCache = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
+                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                             .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                             new DTCol (EText.MSG_CACHE_HIT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                             new DTCol (EText.MSG_CACHE_MISS.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                             .setComparator (new ComparatorDTInteger (aDisplayLocale))
+                                                                                                             .setInitialSorting (ESortOrder.DESCENDING)).setID (getID () +
+                                                                                                                                                                "cache");
 
     // Third party modules
     StatisticsWalker.walkStatistics (new IStatisticsVisitor ()
@@ -275,29 +282,12 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     });
 
     // Build the final UI as a tabbox
-    final ITabBox <?> aTabBox = new BootstrapTabBox ();
+    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
     {
       final HCNodeList aNL = new HCNodeList ();
       aNL.addChild (aTableTimer);
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableTimer);
-      aDataTables.getOrCreateColumnOfTarget (0).setDataSort (0, 1);
-      aDataTables.getOrCreateColumnOfTarget (2)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.getOrCreateColumnOfTarget (3)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.getOrCreateColumnOfTarget (4)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.getOrCreateColumnOfTarget (5)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.getOrCreateColumnOfTarget (6)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.setInitialSorting (6, ESortOrder.DESCENDING);
       aNL.addChild (aDataTables);
 
       aTabBox.addTab (EText.MSG_TAB_TIMER.getDisplayText (aDisplayLocale), aNL);
@@ -307,23 +297,6 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       aNL.addChild (aTableSize);
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableSize);
-      aDataTables.getOrCreateColumnOfTarget (0).setDataSort (0, 1);
-      aDataTables.getOrCreateColumnOfTarget (2)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.getOrCreateColumnOfTarget (3)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.getOrCreateColumnOfTarget (4)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.getOrCreateColumnOfTarget (5)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.getOrCreateColumnOfTarget (6)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.setInitialSorting (2, ESortOrder.ASCENDING);
       aNL.addChild (aDataTables);
 
       aTabBox.addTab (EText.MSG_TAB_SIZE.getDisplayText (aDisplayLocale), aNL);
@@ -333,14 +306,6 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       aNL.addChild (aTableCounter);
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableCounter);
-      aDataTables.getOrCreateColumnOfTarget (0).setDataSort (0, 1);
-      aDataTables.getOrCreateColumnOfTarget (2)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.getOrCreateColumnOfTarget (3)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.setInitialSorting (2, ESortOrder.ASCENDING);
       aNL.addChild (aDataTables);
 
       aTabBox.addTab (EText.MSG_TAB_COUNTER.getDisplayText (aDisplayLocale), aNL);
@@ -350,16 +315,6 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       aNL.addChild (aTableCache);
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableCache);
-      aDataTables.getOrCreateColumnOfTarget (1)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.getOrCreateColumnOfTarget (2)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.getOrCreateColumnOfTarget (3)
-                 .addClass (CSS_CLASS_RIGHT)
-                 .setComparator (new ComparatorDTInteger (aDisplayLocale));
-      aDataTables.setInitialSorting (3, ESortOrder.DESCENDING);
       aNL.addChild (aDataTables);
 
       aTabBox.addTab (EText.MSG_TAB_CACHE.getDisplayText (aDisplayLocale), aNL);
