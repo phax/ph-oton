@@ -70,10 +70,13 @@ public abstract class AbstractWebPageExt <WPECTYPE extends IWebPageExecutionCont
   public static final boolean DEFAULT_CSRF_PREVENTION_ENABLED = true;
 
   /** The width of a single action inside the action column in pixels */
+  @Deprecated
   public static final int DEFAULT_ACTION_COL_WIDTH = 20;
 
   /** Column width for date time values, so that it matches multiple languages */
+  @Deprecated
   public static final int COLUMN_WIDTH_DATE = 100;
+  @Deprecated
   public static final int COLUMN_WIDTH_DATETIME = 170;
 
   public static final String ACTION_CANCEL = CHCParam.ACTION_CANCEL;
