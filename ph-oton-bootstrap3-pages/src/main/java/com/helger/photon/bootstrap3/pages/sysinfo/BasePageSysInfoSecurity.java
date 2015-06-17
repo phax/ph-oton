@@ -41,9 +41,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCCol;
-import com.helger.html.hc.html.HCH3;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.html.HCTable;
@@ -56,6 +54,7 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
 
@@ -83,7 +82,11 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
     MSG_PROVIDER ("Provider", "Provider"),
     MSG_TYPE ("Typ", "Type"),
     MSG_ALGORITHM ("Algorithmus", "Algorithm"),
-    MSG_CLASSNAME ("Klassenname", "Class name");
+    MSG_CLASSNAME ("Klassenname", "Class name"),
+    MSG_DEFAULT_PROTOCOLS ("Standard Protokolle", "Default protocols"),
+    MSG_DEFAULT_CIPHER_SUITES ("Standard Cipher Suites", "Default cipher suites"),
+    MSG_SUPPORTED_PROTOCOLS ("Unterstützte Protokolle", "Supported protocols"),
+    MSG_SUPPORTED_CIPHER_SUITES ("Unterstützte Cipher Suites", "Supported cipher suites");
 
     private final TextProvider m_aTP;
 
@@ -149,7 +152,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
     // show all providers
     {
-      final HCTable aTable = new HCTable (HCCol.star (), HCCol.star (), HCCol.star ());
+      final HCTable aTable = new HCTable (new DTCol (), new DTCol (), new DTCol ());
       aTable.setID (getID () + "-providers");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VERSION.getDisplayText (aDisplayLocale),
@@ -173,12 +176,14 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
     // Show all algorithms of all providers
     {
-      final HCTable aTable = new HCTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ());
-      aTable.setID (getID () + "-algorithm");
-      aTable.addHeaderRow ().addCells (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale),
-                                       EText.MSG_TYPE.getDisplayText (aDisplayLocale),
-                                       EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale),
-                                       EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale));
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                      1,
+                                                                                                                      2),
+                                          new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (1, 2)
+                                                                                                    .setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                                  "-algorithm");
       for (final Provider aSecurityProvider : aSortedProviders)
       {
         final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersion ();
@@ -195,10 +200,6 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
-      aDataTables.getOrCreateColumnOfTarget (0).setDataSort (0, 1, 2);
-      aDataTables.getOrCreateColumnOfTarget (1).setDataSort (1, 2);
-      aDataTables.setInitialSorting (1, ESortOrder.ASCENDING);
-
       aTabBox.addTab (EText.TAB_ALGORITHMS.getDisplayText (aDisplayLocale), new HCNodeList ().addChild (aTable)
                                                                                              .addChild (aDataTables));
     }
@@ -208,11 +209,12 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       for (final Provider aSecurityProvider : aSortedProviders)
       {
         final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersion ();
-        final HCTable aTable = new HCTable (HCCol.star (), HCCol.star (), HCCol.star ());
-        aTable.setID (getID () + "-" + RegExHelper.getAsIdentifier (sProviderName));
-        aTable.addHeaderRow ().addCells (EText.MSG_TYPE.getDisplayText (aDisplayLocale),
-                                         EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale),
-                                         EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale));
+        final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                    1),
+                                            new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                            new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                                    "-" +
+                                                                                                                    RegExHelper.getAsIdentifier (sProviderName));
 
         // Services of this providers
         for (final Service aService : aSecurityProvider.getServices ())
@@ -225,11 +227,9 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
         final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
         aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
-        aDataTables.getOrCreateColumnOfTarget (0).setDataSort (0, 1);
-        aDataTables.setInitialSorting (1, ESortOrder.ASCENDING);
 
         // Add properties of this provider
-        final IHCTable <?> aPropsTable = new BootstrapTable (HCCol.star (), HCCol.star ());
+        final BootstrapTable aPropsTable = new BootstrapTable (HCCol.star (), HCCol.star ());
         aPropsTable.addHeaderRow ().addCells (EText.MSG_KEY.getDisplayText (aDisplayLocale),
                                               EText.MSG_VALUE.getDisplayText (aDisplayLocale));
         final Set <String> aKeys = new HashSet <String> ();
@@ -245,28 +245,23 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
         aTabBox.addTab (sProviderName,
                         new HCNodeList ().addChild (aTable)
                                          .addChild (aDataTables)
-                                         .addChild (new HCH3 ().addChild (EText.MSG_PROPS.getDisplayText (aDisplayLocale)))
+                                         .addChild (createDataGroupHeader (EText.MSG_PROPS.getDisplayText (aDisplayLocale)))
                                          .addChild (aPropsTable));
       }
     }
 
     // List details of all SSLContexts
     {
-      final HCTable aTable = new HCTable (HCCol.star (),
-                                          HCCol.star (),
-                                          HCCol.star (),
-                                          HCCol.star (),
-                                          HCCol.star (),
-                                          HCCol.star (),
-                                          HCCol.star ());
-      aTable.setID (getID () + "-sslcontexts");
-      aTable.addHeaderRow ().addCells (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale),
-                                       EText.MSG_TYPE.getDisplayText (aDisplayLocale),
-                                       EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale),
-                                       "Default protocols",
-                                       "Default cipher suites",
-                                       "Supported protocols",
-                                       "Supported cipher suites");
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                      1,
+                                                                                                                      2),
+                                          new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (1, 2),
+                                          new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_DEFAULT_PROTOCOLS.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_DEFAULT_CIPHER_SUITES.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_SUPPORTED_PROTOCOLS.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_SUPPORTED_CIPHER_SUITES.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                                                "-sslcontexts");
       for (final Provider aSecurityProvider : aSortedProviders)
       {
         final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersion ();
@@ -305,10 +300,6 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
-      aDataTables.getOrCreateColumnOfTarget (0).setDataSort (0, 1, 2);
-      aDataTables.getOrCreateColumnOfTarget (1).setDataSort (1, 2);
-      aDataTables.setInitialSorting (2, ESortOrder.ASCENDING);
-
       aTabBox.addTab (EText.TAB_SSLCONTEXT.getDisplayText (aDisplayLocale), new HCNodeList ().addChild (aTable)
                                                                                              .addChild (aDataTables));
     }

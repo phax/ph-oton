@@ -29,21 +29,21 @@ import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.concurrent.ComparatorThreadID;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.name.IHasDisplayText;
+import com.helger.commons.name.IHasDisplayTextWithArgs;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTLong;
@@ -58,8 +58,21 @@ import com.helger.photon.uictrls.datatables.comparator.ComparatorDTLong;
 public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageExt <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
+    MSG_HEADER ("Anzahl={0}; Prios (min/norm/max): " +
+                Thread.MIN_PRIORITY +
+                "/" +
+                Thread.NORM_PRIORITY +
+                "/" +
+                Thread.MAX_PRIORITY +
+                "; Zeitpunkt: {1}", "Total count={0}; Prios (min/norm/max): " +
+                                    Thread.MIN_PRIORITY +
+                                    "/" +
+                                    Thread.NORM_PRIORITY +
+                                    "/" +
+                                    Thread.MAX_PRIORITY +
+                                    "; Datetime: {1}"),
     MSG_ID ("ID", "ID"),
     MSG_GROUP ("Gruppe", "Group"),
     MSG_NAME ("Name", "Name"),
@@ -78,6 +91,12 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
       return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    }
+
+    @Nullable
+    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
+    {
+      return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
     }
   }
 
@@ -132,30 +151,19 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
     final Map <Thread, StackTraceElement []> aThreads = CollectionHelper.getSortedByKey (Thread.getAllStackTraces (),
                                                                                          new ComparatorThreadID ());
 
-    aNodeList.addChild (createActionHeader ("Total count=" +
-                                            aThreads.size () +
-                                            "; Prios (min/norm/max): " +
-                                            Thread.MIN_PRIORITY +
-                                            "/" +
-                                            Thread.NORM_PRIORITY +
-                                            "/" +
-                                            Thread.MAX_PRIORITY +
-                                            "; Zeitpunkt: " +
-                                            PDTToString.getAsString (PDTFactory.getCurrentDateTime (), aDisplayLocale)));
-    final IHCTable <?> aTable = new BootstrapTable (new HCCol (50),
-                                                    new HCCol (100),
-                                                    new HCCol (150),
-                                                    new HCCol (55),
-                                                    new HCCol (100),
-                                                    HCCol.star ()).setID (getID ());
-
-    aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
-                                     EText.MSG_GROUP.getDisplayText (aDisplayLocale),
-                                     EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                     EText.MSG_PRIORITY.getDisplayText (aDisplayLocale),
-                                     EText.MSG_STATE.getDisplayText (aDisplayLocale),
-                                     EText.MSG_STACKTRACE.getDisplayText (aDisplayLocale));
-
+    aNodeList.addChild (createActionHeader (EText.MSG_HEADER.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                     Integer.valueOf (aThreads.size ()),
+                                                                                     PDTToString.getAsString (PDTFactory.getCurrentLocalDateTime (),
+                                                                                                              aDisplayLocale))));
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                .setComparator (new ComparatorDTLong (aDisplayLocale))
+                                                                                                .setInitialSorting (ESortOrder.ASCENDING),
+                                        new DTCol (EText.MSG_GROUP.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_PRIORITY.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
+                                                                                                      .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                        new DTCol (EText.MSG_STATE.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_STACKTRACE.getDisplayText (aDisplayLocale)).setSortable (false)).setID (getID ());
     // For all system properties
     for (final Map.Entry <Thread, StackTraceElement []> aEntry : aThreads.entrySet ())
     {
@@ -184,14 +192,6 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (0)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTLong (aDisplayLocale));
-    aDataTables.getOrCreateColumnOfTarget (3)
-               .addClass (CSS_CLASS_RIGHT)
-               .setComparator (new ComparatorDTInteger (aDisplayLocale));
-    aDataTables.getOrCreateColumnOfTarget (5).setSortable (false);
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
   }
 }
