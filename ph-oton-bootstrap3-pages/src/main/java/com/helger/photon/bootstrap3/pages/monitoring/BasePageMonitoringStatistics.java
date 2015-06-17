@@ -37,6 +37,7 @@ import com.helger.commons.stats.visit.StatisticsWalker;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.type.EBaseType;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
@@ -50,7 +51,6 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
 
 /**
  * Page with all currently available in memory statistics.
@@ -138,16 +138,16 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     final HCTable aTableTimer = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
                                                                                                                      1),
                                              new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
-                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                             .setComparator (new ComparatorDTInteger (aDisplayLocale)),
-                                             new DTCol (EText.MSG_TIMER_MIN.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale)),
-                                             new DTCol (EText.MSG_TIMER_MAX.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale)),
-                                             new DTCol (EText.MSG_TIMER_AVG.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale)),
-                                             new DTCol (EText.MSG_TIMER_SUM.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale))
+                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                              aDisplayLocale),
+                                             new DTCol (EText.MSG_TIMER_MIN.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                             aDisplayLocale),
+                                             new DTCol (EText.MSG_TIMER_MAX.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                             aDisplayLocale),
+                                             new DTCol (EText.MSG_TIMER_AVG.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                             aDisplayLocale),
+                                             new DTCol (EText.MSG_TIMER_SUM.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                             aDisplayLocale)
                                                                                                             .setInitialSorting (ESortOrder.DESCENDING)).setID (getID () +
                                                                                                                                                                "timer");
 
@@ -155,38 +155,38 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     final HCTable aTableSize = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
                                                                                                                     1),
                                             new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
-                                            new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale))
+                                            new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                             aDisplayLocale)
                                                                                                             .setInitialSorting (ESortOrder.ASCENDING),
-                                            new DTCol (EText.MSG_MIN.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                     .setComparator (new ComparatorDTInteger (aDisplayLocale)),
-                                            new DTCol (EText.MSG_MAX.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                     .setComparator (new ComparatorDTInteger (aDisplayLocale)),
-                                            new DTCol (EText.MSG_AVG.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                     .setComparator (new ComparatorDTInteger (aDisplayLocale)),
-                                            new DTCol (EText.MSG_SUM.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                     .setComparator (new ComparatorDTInteger (aDisplayLocale))).setID (getID () +
-                                                                                                                                                                       "size");
+                                            new DTCol (EText.MSG_MIN.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                      aDisplayLocale),
+                                            new DTCol (EText.MSG_MAX.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                      aDisplayLocale),
+                                            new DTCol (EText.MSG_AVG.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                      aDisplayLocale),
+                                            new DTCol (EText.MSG_SUM.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                      aDisplayLocale)).setID (getID () +
+                                                                                                                                              "size");
 
     // Table for counter
     final HCTable aTableCounter = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
                                                                                                                        1),
                                                new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
-                                               new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                               .setComparator (new ComparatorDTInteger (aDisplayLocale))
+                                               new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                                aDisplayLocale)
                                                                                                                .setInitialSorting (ESortOrder.ASCENDING),
-                                               new DTCol (EText.MSG_COUNT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                          .setComparator (new ComparatorDTInteger (aDisplayLocale))).setID (getID () +
-                                                                                                                                                                            "counter");
+                                               new DTCol (EText.MSG_COUNT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                           aDisplayLocale)).setID (getID () +
+                                                                                                                                                   "counter");
 
     // Table for cache
     final HCTable aTableCache = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
-                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                             .setComparator (new ComparatorDTInteger (aDisplayLocale)),
-                                             new DTCol (EText.MSG_CACHE_HIT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                            .setComparator (new ComparatorDTInteger (aDisplayLocale)),
-                                             new DTCol (EText.MSG_CACHE_MISS.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                             .setComparator (new ComparatorDTInteger (aDisplayLocale))
+                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                              aDisplayLocale),
+                                             new DTCol (EText.MSG_CACHE_HIT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                             aDisplayLocale),
+                                             new DTCol (EText.MSG_CACHE_MISS.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                              aDisplayLocale)
                                                                                                              .setInitialSorting (ESortOrder.DESCENDING)).setID (getID () +
                                                                                                                                                                 "cache");
 

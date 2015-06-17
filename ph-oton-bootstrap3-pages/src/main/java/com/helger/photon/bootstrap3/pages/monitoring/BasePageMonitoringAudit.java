@@ -30,6 +30,7 @@ import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCRow;
@@ -48,7 +49,6 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 
 /**
  * Show audit items.
@@ -143,8 +143,8 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                              .setComparator (new ComparatorDTDateTime (aDisplayLocale))
+    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                               aDisplayLocale)
                                                                                                               .setInitialSorting (ESortOrder.DESCENDING),
                                                     new DTCol (EText.MSG_USER.getDisplayText (aDisplayLocale)),
                                                     new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),

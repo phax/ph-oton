@@ -36,6 +36,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.type.EBaseType;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCTable;
@@ -48,7 +49,6 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDate;
 
 /**
  * Page with all linked third party libraries
@@ -137,8 +137,8 @@ public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     }
 
     // Create table
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_HEADER_DATE.getDisplayText (aDisplayLocale)).setComparator (new ComparatorDTDate (aDisplayLocale))
-                                                                                                                     .addClass (CSS_CLASS_RIGHT)
+    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_HEADER_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATE,
+                                                                                                                                      aDisplayLocale)
                                                                                                                      .setInitialSorting (ESortOrder.DESCENDING),
                                                     new DTCol (EText.MSG_HEADER_COMPONENT.getDisplayText (aDisplayLocale)),
                                                     new DTCol (EText.MSG_HEADER_CATEGORY.getDisplayText (aDisplayLocale)),

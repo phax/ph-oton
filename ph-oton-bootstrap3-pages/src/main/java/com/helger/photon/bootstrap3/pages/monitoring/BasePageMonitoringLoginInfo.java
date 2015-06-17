@@ -32,6 +32,7 @@ import com.helger.commons.name.IHasDisplayTextWithArgs;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.CHCParam;
@@ -65,7 +66,6 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 import com.helger.validation.error.FormErrors;
 
 /**
@@ -317,11 +317,11 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                         EDefaultIcon.REFRESH);
 
     final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_USERNAME.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                                 .setComparator (new ComparatorDTDateTime (aDisplayLocale))
-                                                                                                                 .setInitialSorting (ESortOrder.ASCENDING),
-                                                    new DTCol (EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                                      .setComparator (new ComparatorDTDateTime (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                                  aDisplayLocale)
+                                                                                                                 .setInitialSorting (ESortOrder.DESCENDING),
+                                                    new DTCol (EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                                       aDisplayLocale),
                                                     new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
     final Collection <LoginInfo> aLoginInfos = LoggedInUserManager.getInstance ().getAllLoginInfos ();
     for (final LoginInfo aLoginInfo : aLoginInfos)

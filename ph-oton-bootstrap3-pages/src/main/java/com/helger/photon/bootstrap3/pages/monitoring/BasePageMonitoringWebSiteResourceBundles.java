@@ -29,6 +29,7 @@ import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
@@ -49,7 +50,6 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 
 /**
  * Show web site resource bundles.
@@ -152,8 +152,8 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
                                                                            aDisplayLocale)));
 
     final BootstrapTable aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                                      new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                                .setComparator (new ComparatorDTDateTime (aDisplayLocale)),
+                                                      new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                                 aDisplayLocale),
                                                       new DTCol (EText.MSG_RESOURCES.getDisplayText (aDisplayLocale)),
                                                       new DTCol (EText.MSG_COND_COMMENT.getDisplayText (aDisplayLocale)).setDataSort (3,
                                                                                                                                       1),

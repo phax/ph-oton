@@ -38,6 +38,7 @@ import com.helger.commons.scopes.mgr.ScopeSessionManager;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
@@ -65,8 +66,6 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
 import com.helger.validation.error.FormErrors;
 import com.helger.web.scopes.domain.ISessionWebScope;
 
@@ -329,10 +328,10 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aNodeList.addChild (aToolbar);
 
     final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_ATTRCOUNT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                                   .setComparator (new ComparatorDTInteger (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_LAST_ACCESS.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                                     .setComparator (new ComparatorDTDateTime (aDisplayLocale))
+                                                    new DTCol (EText.MSG_ATTRCOUNT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                                    aDisplayLocale),
+                                                    new DTCol (EText.MSG_LAST_ACCESS.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                                      aDisplayLocale)
                                                                                                                      .setInitialSorting (ESortOrder.DESCENDING),
                                                     new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final ISessionScope aSessionScope : ScopeSessionManager.getInstance ().getAllSessionScopes ())

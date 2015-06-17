@@ -32,6 +32,7 @@ import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.type.EBaseType;
 import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
@@ -49,7 +50,6 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
 import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
 
 /**
@@ -117,13 +117,13 @@ public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext> 
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_CODE.getDisplayText (aDisplayLocale)).setDataSort (0,
-                                                                                                                               6)
-                                                                                                                 .setInitialSorting (ESortOrder.ASCENDING),
+                                                                                                                            6)
+                                                                                                              .setInitialSorting (ESortOrder.ASCENDING),
                                                     new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (1,
-                                                                                                                               6),
+                                                                                                                            6),
                                                     new DTCol (EText.MSG_SYMBOL.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_DEFAULT_FRACTION_DIGITS.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                                                    .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_DEFAULT_FRACTION_DIGITS.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                                                  aDisplayLocale),
                                                     new DTCol (EText.MSG_EXAMPLE.getDisplayText (aDisplayLocale)),
                                                     new DTCol (EText.MSG_CONTINENTS.getDisplayText (aDisplayLocale)),
                                                     new DTCol (EText.MSG_LOCALE.getDisplayText (aDisplayLocale))).setID (getID ());

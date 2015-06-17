@@ -37,6 +37,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.CHCParam;
@@ -70,7 +71,6 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 import com.helger.smtp.IEmailAttachment;
 import com.helger.smtp.IEmailData;
 import com.helger.smtp.IReadonlyEmailAttachmentList;
@@ -250,7 +250,8 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ID.getDisplayText (aDisplayLocale))
                                                   .setCtrl (aSelectedObject.getID ()));
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ERROR_DT.getDisplayText (aDisplayLocale))
-                                                  .setCtrl (aSelectedObject.getErrorTimeDisplayText (aDisplayLocale)));
+                                                  .setCtrl (PDTToString.getAsString (aSelectedObject.getErrorDateTime (),
+                                                                                     aDisplayLocale)));
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SMTP_SETTINGS.getDisplayText (aDisplayLocale))
                                                   .setCtrl (aSelectedObject.getSMTPServerDisplayText ()));
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SENDING_DT.getDisplayText (aDisplayLocale))
@@ -480,8 +481,8 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     aNodeList.addChild (aToolbar);
 
     final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.DESCENDING),
-                                                    new DTCol (EText.MSG_ERROR_DT.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                                  .setComparator (new ComparatorDTDateTime (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_ERROR_DT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                                   aDisplayLocale),
                                                     new DTCol (EText.MSG_SMTP_SETTINGS.getDisplayText (aDisplayLocale)),
                                                     new DTCol (EText.MSG_SUBJECT.getDisplayText (aDisplayLocale)),
                                                     new DTCol (EText.MSG_ERROR.getDisplayText (aDisplayLocale))).setID (getID ());
@@ -493,7 +494,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
 
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (new HCA (aViewURL).addChild (aItem.getID ()));
-      aRow.addCell (aItem.getErrorTimeDisplayText (aDisplayLocale));
+      aRow.addCell (PDTToString.getAsString (aItem.getErrorDateTime (), aDisplayLocale));
       aRow.addCell (aItem.getSMTPServerDisplayText ());
       aRow.addCell (aEmailData == null ? null : aEmailData.getSubject ());
       aRow.addCell (aError == null ? null : aError.getMessage ());
