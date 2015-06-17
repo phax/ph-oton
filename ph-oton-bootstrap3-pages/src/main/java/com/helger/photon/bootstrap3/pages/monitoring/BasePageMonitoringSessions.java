@@ -332,7 +332,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                         new DTCol (EText.MSG_LAST_ACCESS.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
                                                                                                                           aDisplayLocale)
                                                                                                          .setInitialSorting (ESortOrder.DESCENDING),
-                                        new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
+                                        new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
     for (final ISessionScope aSessionScope : ScopeSessionManager.getInstance ().getAllSessionScopes ())
     {
       final ISessionWebScope aWebScope = aSessionScope instanceof ISessionWebScope ? (ISessionWebScope) aSessionScope

@@ -40,7 +40,6 @@ import com.helger.photon.basic.security.audit.IAuditManager;
 import com.helger.photon.basic.security.util.SecurityUtils;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.icon.EDefaultIcon;
@@ -142,14 +141,18 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
+    int nMaxItems = aWPEC.getAttributeAsInt ("maxitems");
+    if (nMaxItems <= 0)
+      nMaxItems = 250;
+
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
                                                                                                                    aDisplayLocale)
                                                                                                   .setInitialSorting (ESortOrder.DESCENDING),
                                         new DTCol (EText.MSG_USER.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)),
-                                        new BootstrapDTColAction (EText.MSG_ACTION.getDisplayText (aDisplayLocale))).setID (getID ());
-    for (final IAuditItem aItem : m_aAuditMgr.getLastAuditItems (250))
+                                        new DTCol (EText.MSG_ACTION.getDisplayText (aDisplayLocale)).setDataSort (4, 0)).setID (getID ());
+    for (final IAuditItem aItem : m_aAuditMgr.getLastAuditItems (nMaxItems))
     {
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (PDTToString.getAsString (aItem.getDateTime (), aDisplayLocale));

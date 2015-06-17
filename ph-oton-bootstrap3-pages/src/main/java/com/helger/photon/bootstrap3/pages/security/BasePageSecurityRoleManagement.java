@@ -290,7 +290,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
     final HCTable aTable = new HCTable (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_IN_USE.getDisplayText (aDisplayLocale)),
-                                        new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
+                                        new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
     final Collection <? extends IRole> aRoles = aAccessMgr.getAllRoles ();
     for (final IRole aRole : aRoles)
     {

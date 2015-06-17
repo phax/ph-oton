@@ -632,7 +632,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     final HCTable aTable = new HCTable (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_HOST.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.HEADER_USERNAME.getDisplayText (aDisplayLocale)),
-                                        new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
+                                        new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
     for (final NamedSMTPSettings aCurObject : m_aMgr.getAllSettings ().values ())
     {
       final ISMTPSettings aSettings = aCurObject.getSMTPSettings ();

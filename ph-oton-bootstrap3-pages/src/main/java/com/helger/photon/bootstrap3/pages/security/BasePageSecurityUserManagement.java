@@ -16,7 +16,6 @@
  */
 package com.helger.photon.bootstrap3.pages.security;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -786,14 +785,13 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final boolean bSeparateLoginName = !useEmailAddressAsLoginName ();
     final AccessManager aMgr = AccessManager.getInstance ();
     // List existing
-    final List <DTCol> aCols = new ArrayList <DTCol> ();
-    aCols.add (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)));
+    final HCTable aTable = new HCTable ().setID (sTableID);
+    aTable.addColumn (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)));
     if (bSeparateLoginName)
-      aCols.add (new DTCol (EText.HEADER_LOGINNAME.getDisplayText (aDisplayLocale)));
-    aCols.add (new DTCol (EText.HEADER_EMAIL.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING));
-    aCols.add (new DTCol (EText.HEADER_USERGROUPS.getDisplayText (aDisplayLocale)));
-    aCols.add (new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale)));
-    final HCTable aTable = new HCTable (aCols).setID (sTableID);
+      aTable.addColumn (new DTCol (EText.HEADER_LOGINNAME.getDisplayText (aDisplayLocale)));
+    aTable.addColumn (new DTCol (EText.HEADER_EMAIL.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING));
+    aTable.addColumn (new DTCol (EText.HEADER_USERGROUPS.getDisplayText (aDisplayLocale)));
+    aTable.addColumn (new BootstrapDTColAction (aDisplayLocale));
 
     for (final IUser aCurUser : aUsers)
     {

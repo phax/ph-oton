@@ -317,7 +317,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                                                                                      .setInitialSorting (ESortOrder.DESCENDING),
                                         new DTCol (EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
                                                                                                                            aDisplayLocale),
-                                        new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
+                                        new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
     final Collection <LoginInfo> aLoginInfos = LoggedInUserManager.getInstance ().getAllLoginInfos ();
     for (final LoginInfo aLoginInfo : aLoginInfos)
     {
