@@ -36,6 +36,7 @@ import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.validation.error.IError;
 import com.helger.validation.error.IErrorList;
 
+@Deprecated
 public class HCTableFormItemRow extends HCRow
 {
   private final IHCCell <?> m_aLabelCell;

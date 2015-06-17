@@ -28,6 +28,7 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 
+@Deprecated
 public class HCTableFormViewItemRow extends HCRow
 {
   private final IHCCell <?> m_aLabelCell;

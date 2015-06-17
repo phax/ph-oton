@@ -28,6 +28,7 @@ import com.helger.html.hc.IHCTable;
  * @param <THISTYPE>
  *        Implementation type
  */
+@Deprecated
 public interface IHCTableFormView <THISTYPE extends IHCTableFormView <THISTYPE>> extends IHCTable <THISTYPE>
 {
   @Nonnull
