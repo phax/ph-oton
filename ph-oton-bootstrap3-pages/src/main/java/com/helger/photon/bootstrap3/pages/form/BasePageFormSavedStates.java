@@ -45,6 +45,7 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -76,8 +77,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
     SAVED_STATE_EDIT ("Daten weiter bearbeiten", "Continue editing this data"),
     SAVED_STATE_DELETE ("Lösche diese gemerkten Daten", "Delete this saved state"),
     HEADER_PAGE ("Seite", "Page"),
-    HEADER_REMEMBERED_AT ("Gemerkt am", "Remebered at"),
-    HEADER_ACTIONS ("Aktionen", "Actions");
+    HEADER_REMEMBERED_AT ("Gemerkt am", "Remebered at");
 
     private final TextProvider m_aTP;
 
@@ -211,11 +211,11 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
 
       // Start emitting saved states
       final BootstrapTable aPerPage = aNodeList.addAndReturnChild (new BootstrapTable (HCCol.star (),
-                                                                                       new HCCol (170),
-                                                                                       createActionCol (2)));
+                                                                                       HCCol.star (),
+                                                                                       HCCol.star ()));
       aPerPage.addHeaderRow ().addCells (EText.HEADER_PAGE.getDisplayText (aDisplayLocale),
                                          EText.HEADER_REMEMBERED_AT.getDisplayText (aDisplayLocale),
-                                         EText.HEADER_ACTIONS.getDisplayText (aDisplayLocale));
+                                         EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));
       for (final FormState aFormState : aAllFormStates)
       {
         final HCRow aRow = aPerPage.addBodyRow ();

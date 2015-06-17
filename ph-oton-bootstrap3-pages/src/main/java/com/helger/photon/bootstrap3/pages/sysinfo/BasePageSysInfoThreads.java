@@ -33,6 +33,7 @@ import com.helger.commons.name.IHasDisplayTextWithArgs;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.type.EBaseType;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.HCRow;
@@ -45,8 +46,6 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTLong;
 
 /**
  * Page with all threads
@@ -155,13 +154,13 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
                                                                                      Integer.valueOf (aThreads.size ()),
                                                                                      PDTToString.getAsString (PDTFactory.getCurrentLocalDateTime (),
                                                                                                               aDisplayLocale))));
-    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                .setComparator (new ComparatorDTLong (aDisplayLocale))
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                 aDisplayLocale)
                                                                                                 .setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_GROUP.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_PRIORITY.getDisplayText (aDisplayLocale)).addClass (CSS_CLASS_RIGHT)
-                                                                                                      .setComparator (new ComparatorDTInteger (aDisplayLocale)),
+                                        new DTCol (EText.MSG_PRIORITY.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                       aDisplayLocale),
                                         new DTCol (EText.MSG_STATE.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_STACKTRACE.getDisplayText (aDisplayLocale)).setSortable (false)).setID (getID ());
     // For all system properties

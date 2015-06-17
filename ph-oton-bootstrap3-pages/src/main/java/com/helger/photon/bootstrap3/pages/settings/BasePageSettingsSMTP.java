@@ -42,14 +42,13 @@ import com.helger.commons.vendor.VendorInfo;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCheckBox;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCEdit;
 import com.helger.html.hc.html.HCEditPassword;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
@@ -62,7 +61,7 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
+import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
@@ -78,6 +77,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autonumeric.HCAutoNumericInt;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
 import com.helger.smtp.CSMTP;
@@ -629,14 +629,10 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
                                              .setOnClick (aWPEC.getLinkToMenuItem (BootstrapPagesMenuConfigurator.MENU_ADMIN_MONITORING_FAILEDMAILS))
                                              .setIcon (EBootstrapIcon.ARROW_RIGHT));
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (),
-                                                    new HCCol (200),
-                                                    new HCCol (150),
-                                                    createActionCol (1)).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
-                                     EText.HEADER_HOST.getDisplayText (aDisplayLocale),
-                                     EText.HEADER_USERNAME.getDisplayText (aDisplayLocale),
-                                     EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));
+    final HCTable aTable = new HCTable (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                        new DTCol (EText.HEADER_HOST.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.HEADER_USERNAME.getDisplayText (aDisplayLocale)),
+                                        new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final NamedSMTPSettings aCurObject : m_aMgr.getAllSettings ().values ())
     {
       final ISMTPSettings aSettings = aCurObject.getSMTPSettings ();
@@ -669,8 +665,6 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (3).setSortable (false).addClass (CSS_CLASS_ACTION_COL);
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
   }
 }

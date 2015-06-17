@@ -29,7 +29,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.annotations.Translatable;
-import com.helger.commons.collections.ArrayHelper;
 import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.email.EmailAddressUtils;
@@ -55,6 +54,7 @@ import com.helger.html.hc.html.HCEM;
 import com.helger.html.hc.html.HCEdit;
 import com.helger.html.hc.html.HCEditPassword;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
@@ -72,6 +72,7 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
+import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapSecurityUI;
 import com.helger.photon.core.EPhotonCoreText;
@@ -79,13 +80,13 @@ import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.select.HCUserGroupForUserSelect;
-import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.validation.error.FormErrors;
 
@@ -785,21 +786,14 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final boolean bSeparateLoginName = !useEmailAddressAsLoginName ();
     final AccessManager aMgr = AccessManager.getInstance ();
     // List existing
-    final List <HCCol> aCols = new ArrayList <HCCol> ();
-    aCols.add (new HCCol (200));
+    final List <DTCol> aCols = new ArrayList <DTCol> ();
+    aCols.add (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)));
     if (bSeparateLoginName)
-      aCols.add (new HCCol (200));
-    aCols.add (HCCol.star ());
-    aCols.add (new HCCol (150));
-    aCols.add (createActionCol (3));
-    final IHCTable <?> aTable = new BootstrapTable (ArrayHelper.newArray (aCols, HCCol.class)).setID (sTableID);
-    final HCRow aHeaderRow = aTable.addHeaderRow ();
-    aHeaderRow.addCell (EText.HEADER_NAME.getDisplayText (aDisplayLocale));
-    if (bSeparateLoginName)
-      aHeaderRow.addCell (EText.HEADER_LOGINNAME.getDisplayText (aDisplayLocale));
-    aHeaderRow.addCells (EText.HEADER_EMAIL.getDisplayText (aDisplayLocale),
-                         EText.HEADER_USERGROUPS.getDisplayText (aDisplayLocale),
-                         EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale));
+      aCols.add (new DTCol (EText.HEADER_LOGINNAME.getDisplayText (aDisplayLocale)));
+    aCols.add (new DTCol (EText.HEADER_EMAIL.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING));
+    aCols.add (new DTCol (EText.HEADER_USERGROUPS.getDisplayText (aDisplayLocale)));
+    aCols.add (new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale)));
+    final HCTable aTable = new HCTable (aCols).setID (sTableID);
 
     for (final IUser aCurUser : aUsers)
     {
@@ -854,8 +848,6 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (3).addClass (CSS_CLASS_ACTION_COL).setSortable (false);
-    aDataTables.setInitialSorting (1, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
 
     // Required for best layout inside a tab!
@@ -871,10 +863,10 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
     // Toolbar on top
-    final IButtonToolbar <?> aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+    final BootstrapButtonToolbar aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addButtonNew (EText.BUTTON_CREATE_NEW_USER.getDisplayText (aDisplayLocale), createCreateURL (aWPEC));
 
-    final ITabBox <?> aTabBox = new BootstrapTabBox ();
+    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
     final AccessManager aMgr = AccessManager.getInstance ();
 
