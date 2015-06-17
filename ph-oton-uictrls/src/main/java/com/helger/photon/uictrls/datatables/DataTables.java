@@ -169,7 +169,7 @@ public class DataTables implements IHCNodeBuilder
     ValueEnforcer.notEmpty (aTable.getID (), "Table must have an ID to work with DataTables!");
 
     final HCColGroup aColGroup = aTable.getColGroup ();
-    boolean bHasDTColumn = false;
+    boolean bHasDTCol = false;
     final IHCNode [] aHeaderNodes = new IHCNode [aTable.getColumnCount ()];
     if (aColGroup != null)
     {
@@ -178,7 +178,7 @@ public class DataTables implements IHCNodeBuilder
       {
         if (aCol instanceof DTCol)
         {
-          bHasDTColumn = true;
+          bHasDTCol = true;
           aHeaderNodes[nColIndex] = ((DTCol) aCol).getHeaderNode ();
         }
         nColIndex++;
@@ -187,7 +187,7 @@ public class DataTables implements IHCNodeBuilder
 
     if (!aTable.hasHeaderRows ())
     {
-      if (bHasDTColumn)
+      if (bHasDTCol)
         aTable.addHeaderRow ().addCells (aHeaderNodes);
       else
         s_aLogger.warn ("Table does not have a header row so DataTables may not be displayed correctly!");
