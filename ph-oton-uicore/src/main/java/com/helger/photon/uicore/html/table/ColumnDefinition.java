@@ -30,6 +30,7 @@ import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.html.HCCol;
 
 @Immutable
+@Deprecated
 public class ColumnDefinition implements Serializable
 {
   private final String m_sName;

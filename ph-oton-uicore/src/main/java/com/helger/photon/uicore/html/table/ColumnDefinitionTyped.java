@@ -24,6 +24,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.html.HCCol;
 
 @Immutable
+@Deprecated
 public final class ColumnDefinitionTyped extends ColumnDefinition
 {
   private final Class <?> m_aType;
