@@ -76,8 +76,14 @@ public class DataTablesColumn implements IHCHasCSSClasses <DataTablesColumn>
     setVisible (aDTColumn.isVisible ());
     addClasses (aDTColumn.getAllClasses ());
     setName (aDTColumn.getName ());
-    if (!aDTColumn.isStar ())
-      setWidth (aDTColumn.getWidth ());
+    if (!aDTColumn.isVisible ())
+    {
+      // Invisible columns always get width 0
+      setWidth ("0");
+    }
+    else
+      if (!aDTColumn.isStar ())
+        setWidth (aDTColumn.getWidth ());
     setDataSort (aDTColumn.getDataSort ());
     setComparator (aDTColumn.getComparator ());
   }

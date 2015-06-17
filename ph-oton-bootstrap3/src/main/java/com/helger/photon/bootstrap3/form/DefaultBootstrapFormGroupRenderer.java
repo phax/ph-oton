@@ -99,7 +99,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         {
           // Special handling for the form label, which has explicit support for
           // label texts
-          aEdit.setPlaceholder (((HCFormLabel) aLabel).getLabelText ());
+          aEdit.setPlaceholder (aLabel.getPlainText ());
         }
         else
         {
@@ -233,7 +233,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         if (aLabel.isTextLabel ())
         {
           // Use only the text
-          final String sLabelText = aLabel.getLabelText ();
+          final String sLabelText = aLabel.getPlainText ();
           aLabel.removeAllChildren ().addChild (sLabelText);
         }
 

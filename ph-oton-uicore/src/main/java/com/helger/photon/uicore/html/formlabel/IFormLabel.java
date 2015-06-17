@@ -40,8 +40,9 @@ public interface IFormLabel extends IHCNode
   boolean isTextLabel ();
 
   /**
-   * @return The pure label text without any type specific suffix.
+   * @return The pure label text without any type specific suffix. Never
+   *         <code>null</code>.
    */
   @Nonnull
-  String getLabelText ();
+  String getPlainText ();
 }

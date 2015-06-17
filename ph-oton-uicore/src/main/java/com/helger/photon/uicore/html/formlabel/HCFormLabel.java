@@ -22,6 +22,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.html.AbstractHCLabel;
@@ -36,21 +37,21 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
 
   private final ELabelType m_eType;
   private final boolean m_bTextLabel;
-  private final String m_sLabelText;
+  private final String m_sPlainText;
 
-  private void _assignClasses (@Nonnull final ELabelType eType)
+  public static void assignFormLabelClasses (@Nonnull final IHCElement <?> aElement, @Nonnull final ELabelType eType)
   {
-    addClass (CSS_CLASS_FORM_LABEL);
+    aElement.addClass (CSS_CLASS_FORM_LABEL);
     switch (eType)
     {
       case OPTIONAL:
-        addClass (CSS_CLASS_FORM_LABEL_OPTIONAL);
+        aElement.addClass (CSS_CLASS_FORM_LABEL_OPTIONAL);
         break;
       case MANDATORY:
-        addClass (CSS_CLASS_FORM_LABEL_MANDATORY);
+        aElement.addClass (CSS_CLASS_FORM_LABEL_MANDATORY);
         break;
       case ALTERNATIVE:
-        addClass (CSS_CLASS_FORM_LABEL_ALTERNATIVE);
+        aElement.addClass (CSS_CLASS_FORM_LABEL_ALTERNATIVE);
         break;
       default:
         break;
@@ -61,29 +62,30 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
   {
     ValueEnforcer.notNull (sText, "Text");
     ValueEnforcer.notNull (eType, "Type");
-    _assignClasses (eType);
+    assignFormLabelClasses (this, eType);
     addChild (new HCTextNode (HCFormLabelUtils.getTextWithState (sText, eType)));
     m_eType = eType;
     m_bTextLabel = true;
-    m_sLabelText = sText;
+    m_sPlainText = sText;
   }
 
   public HCFormLabel (@Nonnull final IHCNodeWithChildren <?> aNode, @Nonnull final ELabelType eType)
   {
     ValueEnforcer.notNull (aNode, "Node");
     ValueEnforcer.notNull (eType, "Type");
-    _assignClasses (eType);
+    assignFormLabelClasses (this, eType);
     // Set the label text, before the signs are appended!
-    m_sLabelText = aNode.getPlainText ();
+    m_sPlainText = aNode.getPlainText ();
     addChild (HCFormLabelUtils.getNodeWithState (aNode, eType));
     m_eType = eType;
     m_bTextLabel = false;
   }
 
+  @Override
   @Nonnull
-  public String getLabelText ()
+  public String getPlainText ()
   {
-    return m_sLabelText;
+    return m_sPlainText;
   }
 
   public boolean isTextLabel ()
@@ -101,7 +103,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("labelText", m_sLabelText)
+                            .append ("labelText", m_sPlainText)
                             .append ("isTextLabel", m_bTextLabel)
                             .append ("type", m_eType)
                             .toString ();
