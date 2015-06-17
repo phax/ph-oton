@@ -17,14 +17,18 @@
 package com.helger.photon.bootstrap3.dropdown;
 
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import com.helger.commons.GlobalDebug;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.microdom.IMicroElement;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.conversion.HCConsistencyChecker;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCDiv;
-import com.helger.html.hc.html.AbstractHCScript;
+import com.helger.html.hc.utils.HCSpecialNodeHandler;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.base.BootstrapCaret;
 
@@ -50,15 +54,24 @@ public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
   }
 
   @Override
-  protected void beforeAddChild (@Nonnull final IHCNode aChild)
+  @OverrideOnDemand
+  @OverridingMethodsMustInvokeSuper
+  protected void applyProperties (@Nonnull final IMicroElement aElement,
+                                  @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    if (GlobalDebug.isDebugMode ())
+    super.applyProperties (aElement, aConversionSettings);
+    if (aConversionSettings.areConsistencyChecksEnabled ())
     {
-      // Anything besides script may not be added
-      if (getChildCount () >= 2 && !(aChild instanceof AbstractHCScript <?>))
-        throw new IllegalStateException ("A BootstrapDropdown must have only 2 children!");
+      // Anything besides script may not be added besides the 2 default elements
+      // from the ctor
+      if (getChildCount () >= 2)
+        for (int i = 2; i < getChildCount (); ++i)
+        {
+          final IHCNode aChild = getChildAtIndex (i);
+          if (!HCSpecialNodeHandler.isOutOfBandNode (aChild))
+            HCConsistencyChecker.consistencyWarning ("A BootstrapDropdown must have only 2 children or scripts!");
+        }
     }
-    super.beforeAddChild (aChild);
   }
 
   /**
