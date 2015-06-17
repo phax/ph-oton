@@ -39,7 +39,6 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
@@ -47,6 +46,7 @@ import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDate;
 
@@ -137,14 +137,12 @@ public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     }
 
     // Create table
-    final IHCTable <?> aTable = new BootstrapTable (new HCCol (COLUMN_WIDTH_DATE),
-                                                    new HCCol (150),
-                                                    new HCCol (100),
-                                                    HCCol.star ()).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_HEADER_DATE.getDisplayText (aDisplayLocale),
-                                     EText.MSG_HEADER_COMPONENT.getDisplayText (aDisplayLocale),
-                                     EText.MSG_HEADER_CATEGORY.getDisplayText (aDisplayLocale),
-                                     EText.MSG_HEADER_CHANGE.getDisplayText (aDisplayLocale));
+    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_HEADER_DATE.getDisplayText (aDisplayLocale)).setComparator (new ComparatorDTDate (aDisplayLocale))
+                                                                                                                     .addClass (CSS_CLASS_RIGHT)
+                                                                                                                     .setInitialSorting (ESortOrder.DESCENDING),
+                                                    new DTCol (EText.MSG_HEADER_COMPONENT.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_HEADER_CATEGORY.getDisplayText (aDisplayLocale)),
+                                                    new DTCol (EText.MSG_HEADER_CHANGE.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final ChangeLogEntry aEntry : s_aCache)
     {
       final HCRow aRow = aTable.addBodyRow ();
@@ -156,8 +154,6 @@ public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.getOrCreateColumnOfTarget (0).setComparator (new ComparatorDTDate (aDisplayLocale));
-    aDataTables.setInitialSorting (0, ESortOrder.DESCENDING);
     aNodeList.addChild (aDataTables);
   }
 }

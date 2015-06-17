@@ -17,6 +17,7 @@
 package com.helger.photon.bootstrap3.uictrls.datatables;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.html.hc.IHCTable;
@@ -74,7 +75,13 @@ public class BootstrapDataTables extends DataTables
     PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.BOOTSTRAP_DATATABLES);
   }
 
-  public static void setConfigurator (@Nonnull final IBootstrapDataTablesConfigurator aConfigurator)
+  @Nullable
+  public static IBootstrapDataTablesConfigurator getConfigurator ()
+  {
+    return s_aConfigurator;
+  }
+
+  public static void setConfigurator (@Nullable final IBootstrapDataTablesConfigurator aConfigurator)
   {
     s_aConfigurator = aConfigurator;
   }
