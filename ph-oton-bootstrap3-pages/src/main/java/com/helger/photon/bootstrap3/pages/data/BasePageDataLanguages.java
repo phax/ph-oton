@@ -36,12 +36,11 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.html.hc.IHCCell;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -119,9 +118,9 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> e
         aMapLanguageToLocale.putSingle (sLanguage, aLocale);
     }
 
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                                    new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_LOCALES.getDisplayText (aDisplayLocale)).setSortable (false)).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                        new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_LOCALES.getDisplayText (aDisplayLocale)).setSortable (false)).setID (getID ());
 
     // For all languages
     for (final Map.Entry <String, List <Locale>> aEntry : aMapLanguageToLocale.entrySet ())

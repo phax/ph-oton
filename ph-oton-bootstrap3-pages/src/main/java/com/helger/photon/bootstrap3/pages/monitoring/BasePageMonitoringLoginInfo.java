@@ -38,11 +38,10 @@ import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.photon.basic.security.login.LoginInfo;
@@ -55,7 +54,6 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
@@ -204,15 +202,12 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     final Map <String, Object> aAttrs = aSelectedObject.getAllAttributes ();
     if (!aAttrs.isEmpty ())
     {
-      final IHCTable <?> aCustomAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ()).setID (aSelectedObject.getID ());
-      aCustomAttrTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                                 EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+      final HCTable aCustomAttrTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                                    new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID (aSelectedObject.getID ());
       for (final Map.Entry <String, Object> aEntry : aAttrs.entrySet ())
         aCustomAttrTable.addBodyRow ().addCells (aEntry.getKey (), String.valueOf (aEntry.getValue ()));
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aCustomAttrTable);
-      aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
-
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ATTRS.getDisplayText (aDisplayLocale))
                                                     .setCtrl (aCustomAttrTable, aDataTables.build ()));
     }
@@ -316,13 +311,13 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
 
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_USERNAME.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
-                                                                                                                                  aDisplayLocale)
-                                                                                                                 .setInitialSorting (ESortOrder.DESCENDING),
-                                                    new DTCol (EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
-                                                                                                                                       aDisplayLocale),
-                                                    new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_USERNAME.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                      aDisplayLocale)
+                                                                                                     .setInitialSorting (ESortOrder.DESCENDING),
+                                        new DTCol (EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                           aDisplayLocale),
+                                        new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
     final Collection <LoginInfo> aLoginInfos = LoggedInUserManager.getInstance ().getAllLoginInfos ();
     for (final LoginInfo aLoginInfo : aLoginInfos)
     {

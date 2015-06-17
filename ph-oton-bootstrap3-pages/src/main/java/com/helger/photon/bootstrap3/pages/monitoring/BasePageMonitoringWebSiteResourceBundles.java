@@ -33,11 +33,11 @@ import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.resource.ResourceBundleServlet;
@@ -151,14 +151,14 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
                                                EPhotonCoreText.getYesOrNo (ResourceBundleServlet.isActive (),
                                                                            aDisplayLocale)));
 
-    final BootstrapTable aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                                      new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
-                                                                                                                                 aDisplayLocale),
-                                                      new DTCol (EText.MSG_RESOURCES.getDisplayText (aDisplayLocale)),
-                                                      new DTCol (EText.MSG_COND_COMMENT.getDisplayText (aDisplayLocale)).setDataSort (3,
-                                                                                                                                      1),
-                                                      new DTCol (EText.MSG_CSS_MEDIA.getDisplayText (aDisplayLocale)).setDataSort (4,
-                                                                                                                                   1)).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                        new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                   aDisplayLocale),
+                                        new DTCol (EText.MSG_RESOURCES.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_COND_COMMENT.getDisplayText (aDisplayLocale)).setDataSort (3,
+                                                                                                                        1),
+                                        new DTCol (EText.MSG_CSS_MEDIA.getDisplayText (aDisplayLocale)).setDataSort (4,
+                                                                                                                     1)).setID (getID ());
 
     for (final WebSiteResourceBundleSerialized aBundle : m_aResBundleMgr.getAllResourceBundles ().values ())
     {

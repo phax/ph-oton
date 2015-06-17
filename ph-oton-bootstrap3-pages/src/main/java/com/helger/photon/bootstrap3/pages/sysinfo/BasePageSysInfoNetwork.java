@@ -37,21 +37,22 @@ import com.helger.commons.tree.utils.sort.TreeWithIDSorter;
 import com.helger.commons.tree.utils.walk.TreeWalker;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
+import com.helger.commons.type.EBaseType;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCCell;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCEM;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
 import com.helger.web.networkinterface.ComparatorNetworkInterfaceName;
@@ -130,25 +131,17 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
 
     // ntwork interfaces
     {
-      final BootstrapTable aTable = new BootstrapTable (HCCol.star (),
-                                                        HCCol.star (),
-                                                        HCCol.star (),
-                                                        HCCol.star (),
-                                                        HCCol.star (),
-                                                        HCCol.star (),
-                                                        HCCol.star (),
-                                                        HCCol.star (),
-                                                        HCCol.star ());
-      aTable.setID (getID () + "-ni");
-      aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
-                                       EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                       EText.MSG_MAC.getDisplayText (aDisplayLocale),
-                                       EText.MSG_IS_UP.getDisplayText (aDisplayLocale),
-                                       EText.MSG_IS_LOOPBACK.getDisplayText (aDisplayLocale),
-                                       EText.MSG_IS_POINT_TO_POINT.getDisplayText (aDisplayLocale),
-                                       EText.MSG_IS_MULTICAST.getDisplayText (aDisplayLocale),
-                                       EText.MSG_MTU.getDisplayText (aDisplayLocale),
-                                       EText.MSG_IS_VIRTUAL.getDisplayText (aDisplayLocale));
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_MAC.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_IS_UP.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_IS_LOOPBACK.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_IS_POINT_TO_POINT.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_IS_MULTICAST.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_MTU.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                    aDisplayLocale),
+                                          new DTCol (EText.MSG_IS_VIRTUAL.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                                   "-ni");
       try
       {
         final DefaultTreeWithGlobalUniqueID <String, NetworkInterface> aNITree = NetworkInterfaceUtils.createNetworkInterfaceTree ();
@@ -261,7 +254,6 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
-      aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
 
       aTabBox.addTab (EText.MSG_NETWORK_INTERFACES.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));

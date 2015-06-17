@@ -32,15 +32,14 @@ import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.audit.IAuditItem;
 import com.helger.photon.basic.security.audit.IAuditManager;
 import com.helger.photon.basic.security.util.SecurityUtils;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
@@ -143,13 +142,13 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
-                                                                                                                               aDisplayLocale)
-                                                                                                              .setInitialSorting (ESortOrder.DESCENDING),
-                                                    new DTCol (EText.MSG_USER.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)),
-                                                    new BootstrapDTColAction (EText.MSG_ACTION.getDisplayText (aDisplayLocale))).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                   aDisplayLocale)
+                                                                                                  .setInitialSorting (ESortOrder.DESCENDING),
+                                        new DTCol (EText.MSG_USER.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)),
+                                        new BootstrapDTColAction (EText.MSG_ACTION.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final IAuditItem aItem : m_aAuditMgr.getLastAuditItems (250))
     {
       final HCRow aRow = aTable.addBodyRow ();

@@ -34,11 +34,10 @@ import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.config.PDTConfig;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -120,14 +119,14 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> e
                                             aCurrentDTZ.getID () +
                                             " - " +
                                             aCurrentDTZ.getName (nNow)));
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                                    new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_SHORTNAME.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_OFFSET.getDisplayText (aDisplayLocale)).setComparator (new ComparatorDTInteger (new StringSkipPrefixAndSuffixFormatter ("PT",
-                                                                                                                                                                                                 "S"),
-                                                                                                                                                         aDisplayLocale)),
-                                                    new DTCol (EText.MSG_STANDARD_OFFSET.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_FIXED.getDisplayText (aDisplayLocale))).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                        new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_SHORTNAME.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_OFFSET.getDisplayText (aDisplayLocale)).setComparator (new ComparatorDTInteger (new StringSkipPrefixAndSuffixFormatter ("PT",
+                                                                                                                                                                                     "S"),
+                                                                                                                                             aDisplayLocale)),
+                                        new DTCol (EText.MSG_STANDARD_OFFSET.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_FIXED.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final String sID : DateTimeZone.getAvailableIDs ())
     {
       final DateTimeZone aDTZ = DateTimeZone.forID (sID);

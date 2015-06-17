@@ -31,12 +31,11 @@ import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.servletstatus.EServletStatus;
@@ -118,12 +117,12 @@ public class BasePageMonitoringServletStatus <WPECTYPE extends IWebPageExecution
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_SERVLET.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                                    new DTCol (EText.MSG_STATUS.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_INVOCATION_COUNT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
-                                                                                                                                           aDisplayLocale),
-                                                    new DTCol (EText.MSG_INIT_DT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
-                                                                                                                                  aDisplayLocale)).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_SERVLET.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                        new DTCol (EText.MSG_STATUS.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_INVOCATION_COUNT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                               aDisplayLocale),
+                                        new DTCol (EText.MSG_INIT_DT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                      aDisplayLocale)).setID (getID ());
 
     for (final Map.Entry <String, ServletStatus> aItem : ServletStatusManager.getAllStatus ().entrySet ())
     {

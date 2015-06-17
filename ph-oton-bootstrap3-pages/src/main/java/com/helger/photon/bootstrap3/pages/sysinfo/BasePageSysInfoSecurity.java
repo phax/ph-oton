@@ -41,6 +41,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.type.EBaseType;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCSpan;
@@ -152,11 +153,11 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
     // show all providers
     {
-      final HCTable aTable = new HCTable (new DTCol (), new DTCol (), new DTCol ());
-      aTable.setID (getID () + "-providers");
-      aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                       EText.MSG_VERSION.getDisplayText (aDisplayLocale),
-                                       EText.MSG_INFO.getDisplayText (aDisplayLocale));
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_VERSION.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DOUBLE,
+                                                                                                                        aDisplayLocale),
+                                          new DTCol (EText.MSG_INFO.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                             "-providers");
 
       for (final Provider aSecurityProvider : aSortedProviders)
       {
@@ -168,7 +169,6 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
-      aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
 
       aTabBox.addTab (EText.TAB_PROVIDERS.getDisplayText (aDisplayLocale), new HCNodeList ().addChild (aTable)
                                                                                             .addChild (aDataTables));

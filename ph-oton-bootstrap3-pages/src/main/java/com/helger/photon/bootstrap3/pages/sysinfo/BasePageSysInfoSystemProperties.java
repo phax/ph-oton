@@ -41,11 +41,11 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCEM;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.html.HCUL;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
@@ -56,6 +56,7 @@ import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 
 /**
@@ -265,10 +266,8 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
 
     {
       aNodeList.addChild (createActionHeader (EText.MSG_HEADER_SYSPROPS.getDisplayText (aDisplayLocale)));
-      final IHCTable <?> aTable = new BootstrapTable (new HCCol (250), HCCol.star ());
-      aTable.setID (getID ());
-      aTable.addHeaderRow ().addCells (EText.MSG_HEADER_NAME.getDisplayText (aDisplayLocale),
-                                       EText.MSG_HEADER_VALUE.getDisplayText (aDisplayLocale));
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_HEADER_VALUE.getDisplayText (aDisplayLocale))).setID (getID ());
 
       // For all system properties
       final String sPathSep = SystemProperties.getPathSeparator ();
@@ -291,7 +290,6 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
       aNodeList.addChild (aTable);
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
       aNodeList.addChild (aDataTables);
     }
   }

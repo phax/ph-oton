@@ -42,11 +42,11 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
@@ -60,7 +60,6 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.mgr.PhotonCoreManager;
@@ -480,12 +479,12 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
 
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.DESCENDING),
-                                                    new DTCol (EText.MSG_ERROR_DT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
-                                                                                                                                   aDisplayLocale),
-                                                    new DTCol (EText.MSG_SMTP_SETTINGS.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_SUBJECT.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_ERROR.getDisplayText (aDisplayLocale))).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.DESCENDING),
+                                        new DTCol (EText.MSG_ERROR_DT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                       aDisplayLocale),
+                                        new DTCol (EText.MSG_SMTP_SETTINGS.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_SUBJECT.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_ERROR.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final FailedMailData aItem : m_aFailedMailQueue.getAllFailedMails ())
     {
       final ISimpleURL aViewURL = createViewURL (aWPEC, aItem);

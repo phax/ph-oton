@@ -32,15 +32,14 @@ import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.lock.ILockInfo;
 import com.helger.photon.basic.security.lock.ILockManager;
 import com.helger.photon.basic.security.util.SecurityUtils;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -135,11 +134,11 @@ public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecution
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
-                                                                                                                               aDisplayLocale)
-                                                                                                              .setInitialSorting (ESortOrder.DESCENDING),
-                                                    new DTCol (EText.MSG_USER.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_OBJECTID.getDisplayText (aDisplayLocale))).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                   aDisplayLocale)
+                                                                                                  .setInitialSorting (ESortOrder.DESCENDING),
+                                        new DTCol (EText.MSG_USER.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_OBJECTID.getDisplayText (aDisplayLocale))).setID (getID ());
 
     for (final Map.Entry <String, ILockInfo> aEntry : m_aLockMgr.getAllLockInfos ().entrySet ())
     {

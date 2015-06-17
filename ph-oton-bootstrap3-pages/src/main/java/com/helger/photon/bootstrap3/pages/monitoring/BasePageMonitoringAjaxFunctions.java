@@ -24,7 +24,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.Translatable;
-import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.scopes.AbstractSingleton;
@@ -32,14 +31,11 @@ import com.helger.commons.scopes.domain.IApplicationScope;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
-import com.helger.html.hc.html.HCH3;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.ajax.ApplicationAjaxManager;
 import com.helger.photon.core.ajax.IAjaxAfterExecutionCallback;
@@ -50,6 +46,7 @@ import com.helger.photon.core.ajax.IAjaxLongRunningExecutionCallback;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
@@ -133,15 +130,13 @@ public class BasePageMonitoringAjaxFunctions <WPECTYPE extends IWebPageExecution
 
         // Show all registered AJAX functions
         {
-          final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star ()).setID (getID () +
-                                                                                                              sAppScopeID +
-                                                                                                              "-func");
-          aTable.addHeaderRow ().addCells (EText.MSG_KEY.getDisplayText (aDisplayLocale),
-                                           EText.MSG_FACTORY.getDisplayText (aDisplayLocale),
-                                           EText.MSG_URL.getDisplayText (aDisplayLocale));
-
-          for (final Map.Entry <String, IAjaxFunctionDeclaration> aEntry : CollectionHelper.getSortedByKey (aMgr.getAllRegisteredFunctions ())
-                                                                                           .entrySet ())
+          final HCTable aTable = new HCTable (new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                              new DTCol (EText.MSG_FACTORY.getDisplayText (aDisplayLocale)),
+                                              new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                                sAppScopeID +
+                                                                                                                "-func");
+          for (final Map.Entry <String, IAjaxFunctionDeclaration> aEntry : aMgr.getAllRegisteredFunctions ()
+                                                                               .entrySet ())
           {
             aTable.addBodyRow ().addCells (aEntry.getKey (),
                                            aEntry.getValue ().getExecutorFactory ().toString (),
@@ -150,19 +145,19 @@ public class BasePageMonitoringAjaxFunctions <WPECTYPE extends IWebPageExecution
           aTab.addChild (aTable);
 
           final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-          aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
           aTab.addChild (aDataTables);
         }
 
         // Show all callbacks
         {
-          aTab.addChild (new HCH3 ().addChild (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
+          aTab.addChild (createDataGroupHeader (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
 
-          final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star ()).setID (getID () +
-                                                                                               sAppScopeID +
-                                                                                               "-cb");
-          aTable.addHeaderRow ().addCells (EText.MSG_TYPE.getDisplayText (aDisplayLocale),
-                                           EText.MSG_CALLBACK.getDisplayText (aDisplayLocale));
+          final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                      1)
+                                                                                                        .setInitialSorting (ESortOrder.ASCENDING),
+                                              new DTCol (EText.MSG_CALLBACK.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                                     sAppScopeID +
+                                                                                                                     "-cb");
           for (final IAjaxExceptionCallback aCB : aMgr.getExceptionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("Exception", aCB.toString ());
           for (final IAjaxBeforeExecutionCallback aCB : aMgr.getBeforeExecutionCallbacks ().getAllCallbacks ())
@@ -175,7 +170,6 @@ public class BasePageMonitoringAjaxFunctions <WPECTYPE extends IWebPageExecution
           aTab.addChild (aTable);
 
           final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-          aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
           aTab.addChild (aDataTables);
         }
 

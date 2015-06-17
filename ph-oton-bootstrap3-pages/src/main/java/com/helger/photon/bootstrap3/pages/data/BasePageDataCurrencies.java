@@ -33,16 +33,15 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.type.EBaseType;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.masterdata.currency.CurrencyUtils;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.masterdata.locale.ContinentUtils;
 import com.helger.masterdata.locale.EContinent;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -116,17 +115,15 @@ public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext> 
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_CODE.getDisplayText (aDisplayLocale)).setDataSort (0,
-                                                                                                                            6)
-                                                                                                              .setInitialSorting (ESortOrder.ASCENDING),
-                                                    new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (1,
-                                                                                                                            6),
-                                                    new DTCol (EText.MSG_SYMBOL.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_DEFAULT_FRACTION_DIGITS.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
-                                                                                                                                                  aDisplayLocale),
-                                                    new DTCol (EText.MSG_EXAMPLE.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_CONTINENTS.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_LOCALE.getDisplayText (aDisplayLocale))).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_CODE.getDisplayText (aDisplayLocale)).setDataSort (0, 6)
+                                                                                                  .setInitialSorting (ESortOrder.ASCENDING),
+                                        new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (1, 6),
+                                        new DTCol (EText.MSG_SYMBOL.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_DEFAULT_FRACTION_DIGITS.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                                      aDisplayLocale),
+                                        new DTCol (EText.MSG_EXAMPLE.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_CONTINENTS.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_LOCALE.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final Map.Entry <Locale, Currency> aEntry : CurrencyUtils.getLocaleToCurrencyMap ().entrySet ())
     {
       final Locale aLocale = aEntry.getKey ();

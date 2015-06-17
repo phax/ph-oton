@@ -30,20 +30,19 @@ import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.masterdata.locale.ContinentUtils;
 import com.helger.masterdata.locale.EContinent;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
 
@@ -107,10 +106,9 @@ public class BasePageDataCountries <WPECTYPE extends IWebPageExecutionContext> e
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star ()).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_ID.getDisplayText (aDisplayLocale),
-                                     EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                     EText.MSG_CONTINENTS.getDisplayText (aDisplayLocale));
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                        new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_CONTINENTS.getDisplayText (aDisplayLocale))).setID (getID ());
 
     // For all countries
     for (final Locale aCountry : CountryCache.getInstance ().getAllCountryLocales ())
@@ -147,7 +145,6 @@ public class BasePageDataCountries <WPECTYPE extends IWebPageExecutionContext> e
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
 
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.FAMFAM_FLAGS);

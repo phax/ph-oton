@@ -34,14 +34,13 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.HCCol;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.UITextFormatter;
@@ -50,6 +49,7 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.web.scopes.domain.IGlobalWebScope;
 import com.helger.web.scopes.mgr.WebScopeManager;
@@ -147,10 +147,9 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     aNodeList.addChild (aTableScope);
 
     // All scope attributes
-    final BootstrapTable aTableAttrs = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star ()).setID ("globalscope");
-    aTableAttrs.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                          EText.MSG_TYPE.getDisplayText (aDisplayLocale),
-                                          EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+    final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                             new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
+                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("globalscope");
     for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
@@ -159,7 +158,6 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     aNodeList.addChild (aTableAttrs);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
 
     return aNodeList;
@@ -188,11 +186,10 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     aNodeList.addChild (aTableScope);
 
     // All scope attributes
-    final BootstrapTable aTableAttrs = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star ()).setID ("appscope" +
-                                                                                                               aScope.getID ());
-    aTableAttrs.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                          EText.MSG_TYPE.getDisplayText (aDisplayLocale),
-                                          EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+    final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                             new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
+                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("appscope" +
+                                                                                                                 aScope.getID ());
     for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
@@ -201,7 +198,6 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     aNodeList.addChild (aTableAttrs);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
 
     return aNodeList;

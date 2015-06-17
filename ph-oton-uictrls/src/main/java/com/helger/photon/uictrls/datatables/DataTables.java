@@ -411,6 +411,7 @@ public class DataTables implements IHCNodeBuilder
   }
 
   @Nonnull
+  @Deprecated
   public DataTables setInitialSorting (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
   {
     return setInitialSorting (new DataTablesSorting ().addColumn (nIndex, eSortOrder));

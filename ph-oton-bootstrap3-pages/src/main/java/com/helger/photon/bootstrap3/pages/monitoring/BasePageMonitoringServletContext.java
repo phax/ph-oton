@@ -34,15 +34,13 @@ import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.tabbox.ITabBox;
@@ -50,6 +48,7 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.web.scopes.mgr.WebScopeManager;
 
@@ -133,13 +132,11 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
 
     {
       // Add servlets
-      final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star (), HCCol.star (), HCCol.star ()).setID (getID () +
-                                                                                                                         "servlets");
-      aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                       EText.MSG_CLASS_NAME.getDisplayText (aDisplayLocale),
-                                       EText.MSG_INIT_PARAMS.getDisplayText (aDisplayLocale),
-                                       EText.MSG_MAPPINGS.getDisplayText (aDisplayLocale));
-
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_CLASS_NAME.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_INIT_PARAMS.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_MAPPINGS.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                                 "servlets");
       for (final ServletRegistration aRegistration : aSC.getServletRegistrations ().values ())
       {
         final HCRow aRow = aTable.addBodyRow ();
@@ -155,7 +152,6 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
 
       aTabBox.addTab (EText.MSG_SERVLETS.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
@@ -163,17 +159,12 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
 
     {
       // Add filters
-      final IHCTable <?> aTable = new BootstrapTable (HCCol.star (),
-                                                      HCCol.star (),
-                                                      HCCol.star (),
-                                                      HCCol.star (),
-                                                      HCCol.star ()).setID (getID () + "filters");
-      aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                       EText.MSG_CLASS_NAME.getDisplayText (aDisplayLocale),
-                                       EText.MSG_INIT_PARAMS.getDisplayText (aDisplayLocale),
-                                       EText.MSG_SERVLET_MAPPINGS.getDisplayText (aDisplayLocale),
-                                       EText.MSG_URL_MAPPINGS.getDisplayText (aDisplayLocale));
-
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_CLASS_NAME.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_INIT_PARAMS.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_SERVLET_MAPPINGS.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_URL_MAPPINGS.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                                     "filters");
       for (final FilterRegistration aRegistration : aSC.getFilterRegistrations ().values ())
       {
         final HCRow aRow = aTable.addBodyRow ();
@@ -190,7 +181,6 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
 
       aTabBox.addTab (EText.MSG_FILTERS.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));

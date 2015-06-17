@@ -43,9 +43,9 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
@@ -53,7 +53,6 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
@@ -211,10 +210,10 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     }
 
     // All scope attributes
-    final BootstrapTable aTableAttrs = new BootstrapTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                                           new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
-                                                           new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionscope-" +
-                                                                                                                               aScope.getID ());
+    final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                             new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
+                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionscope-" +
+                                                                                                                 aScope.getID ());
     for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
@@ -252,10 +251,10 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aNodeList.addChild (aTableScope);
 
     // All scope attributes
-    final BootstrapTable aTableAttrs = new BootstrapTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                                           new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
-                                                           new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionappscope" +
-                                                                                                                               aScope.getID ());
+    final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                             new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
+                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionappscope" +
+                                                                                                                 aScope.getID ());
     for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
@@ -327,13 +326,13 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_ATTRCOUNT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
-                                                                                                                                    aDisplayLocale),
-                                                    new DTCol (EText.MSG_LAST_ACCESS.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
-                                                                                                                                      aDisplayLocale)
-                                                                                                                     .setInitialSorting (ESortOrder.DESCENDING),
-                                                    new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_ATTRCOUNT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                                                                                                        aDisplayLocale),
+                                        new DTCol (EText.MSG_LAST_ACCESS.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                          aDisplayLocale)
+                                                                                                         .setInitialSorting (ESortOrder.DESCENDING),
+                                        new BootstrapDTColAction (EPhotonCoreText.ACTIONS.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final ISessionScope aSessionScope : ScopeSessionManager.getInstance ().getAllSessionScopes ())
     {
       final ISessionWebScope aWebScope = aSessionScope instanceof ISessionWebScope ? (ISessionWebScope) aSessionScope

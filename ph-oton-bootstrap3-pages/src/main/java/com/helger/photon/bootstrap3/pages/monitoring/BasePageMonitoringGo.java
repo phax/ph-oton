@@ -32,10 +32,10 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.go.GoMappingItem;
@@ -138,12 +138,12 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
                                                EPhotonCoreText.getYesOrNo (GoServlet.isServletRegisteredInServletContext (),
                                                                            aDisplayLocale)));
 
-    final BootstrapTable aTable = new BootstrapTable (new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                                      new DTCol (EText.MSG_INTERNAL.getDisplayText (aDisplayLocale)).setDataSort (1,
-                                                                                                                                  0),
-                                                      new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale)),
-                                                      new DTCol (EText.MSG_EDITABLE.getDisplayText (aDisplayLocale)).setDataSort (3,
-                                                                                                                                  0)).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                        new DTCol (EText.MSG_INTERNAL.getDisplayText (aDisplayLocale)).setDataSort (1,
+                                                                                                                    0),
+                                        new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_EDITABLE.getDisplayText (aDisplayLocale)).setDataSort (3,
+                                                                                                                    0)).setID (getID ());
 
     for (final GoMappingItem aItem : m_aGoMappingMgr.getAllItems ().values ())
     {

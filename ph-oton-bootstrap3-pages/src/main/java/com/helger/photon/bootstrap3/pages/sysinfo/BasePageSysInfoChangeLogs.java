@@ -39,11 +39,10 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.IHCTable;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -137,12 +136,12 @@ public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     }
 
     // Create table
-    final IHCTable <?> aTable = new BootstrapTable (new DTCol (EText.MSG_HEADER_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATE,
-                                                                                                                                      aDisplayLocale)
-                                                                                                                     .setInitialSorting (ESortOrder.DESCENDING),
-                                                    new DTCol (EText.MSG_HEADER_COMPONENT.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_HEADER_CATEGORY.getDisplayText (aDisplayLocale)),
-                                                    new DTCol (EText.MSG_HEADER_CHANGE.getDisplayText (aDisplayLocale))).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_HEADER_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATE,
+                                                                                                                          aDisplayLocale)
+                                                                                                         .setInitialSorting (ESortOrder.DESCENDING),
+                                        new DTCol (EText.MSG_HEADER_COMPONENT.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_HEADER_CATEGORY.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_HEADER_CHANGE.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final ChangeLogEntry aEntry : s_aCache)
     {
       final HCRow aRow = aTable.addBodyRow ();

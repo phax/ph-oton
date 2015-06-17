@@ -32,12 +32,12 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.migration.SystemMigrationManager;
 import com.helger.photon.basic.migration.SystemMigrationResult;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -133,15 +133,14 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final BootstrapTable aTable = new BootstrapTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)),
-                                                      new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
-                                                                                                                                 aDisplayLocale)
-                                                                                                                .setInitialSorting (ESortOrder.DESCENDING),
-                                                      new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)).setDataSort (2,
-                                                                                                                                 1),
-                                                      new DTCol (EText.MSG_ERRORMESSAGE.getDisplayText (aDisplayLocale)).setDataSort (3,
-                                                                                                                                      2,
-                                                                                                                                      1)).setID (getID ());
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                                   aDisplayLocale)
+                                                                                                  .setInitialSorting (ESortOrder.DESCENDING),
+                                        new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)).setDataSort (2, 1),
+                                        new DTCol (EText.MSG_ERRORMESSAGE.getDisplayText (aDisplayLocale)).setDataSort (3,
+                                                                                                                        2,
+                                                                                                                        1)).setID (getID ());
 
     for (final SystemMigrationResult aItem : m_aSystemMigrationMgr.getAllMigrationResultsFlattened ())
     {

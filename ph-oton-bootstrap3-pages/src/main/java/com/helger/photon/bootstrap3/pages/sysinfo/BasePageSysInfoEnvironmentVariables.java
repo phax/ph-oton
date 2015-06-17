@@ -29,15 +29,14 @@ import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
+import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
-import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 
 /**
@@ -99,9 +98,8 @@ public class BasePageSysInfoEnvironmentVariables <WPECTYPE extends IWebPageExecu
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IHCTable <?> aTable = new BootstrapTable (HCCol.star (), HCCol.star ()).setID (getID ());
-    aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                     EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                        new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID (getID ());
 
     // For all environment variables
     for (final Map.Entry <String, String> aEntry : System.getenv ().entrySet ())
@@ -113,7 +111,6 @@ public class BasePageSysInfoEnvironmentVariables <WPECTYPE extends IWebPageExecu
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDataTables.setInitialSorting (0, ESortOrder.ASCENDING);
     aNodeList.addChild (aDataTables);
   }
 }
