@@ -36,6 +36,7 @@ import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigDecimal;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigInteger;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDate;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTString;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTTime;
 
 /**
@@ -105,7 +106,7 @@ public class DTCol extends AbstractHCCol <DTCol>
         setSortable (false);
         break;
       case TEXT:
-        // Nothing special
+        setComparator (new ComparatorDTString (aDisplayLocale));
         break;
       case TIME:
         setComparator (new ComparatorDTTime (aDisplayLocale));
