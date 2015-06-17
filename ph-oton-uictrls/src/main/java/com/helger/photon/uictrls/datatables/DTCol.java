@@ -16,17 +16,27 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.ArrayHelper;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.type.EBaseType;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCCol;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigDecimal;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigInteger;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDate;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTTime;
 
 /**
  * Specialized column for DataTables to be used in IHCTable implementation
@@ -60,6 +70,54 @@ public class DTCol extends AbstractHCCol <DTCol>
   {
     setWidth (CHTMLAttributeValues.STAR);
     setHeaderNode (aHeaderNode);
+  }
+
+  @Nonnull
+  public DTCol setDisplayType (@Nonnull final EBaseType eBaseType, @Nonnull final Locale aDisplayLocale)
+  {
+    ValueEnforcer.notNull (eBaseType, "BaseType");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
+    switch (eBaseType)
+    {
+      case BOOLEAN:
+        // Nothing special
+        break;
+      case BYTE_ARRAY:
+        setSortable (false);
+        break;
+      case DATE:
+        setComparator (new ComparatorDTDate (aDisplayLocale));
+        addClass (CUICoreCSS.CSS_CLASS_RIGHT);
+        break;
+      case DATETIME:
+        setComparator (new ComparatorDTDateTime (aDisplayLocale));
+        addClass (CUICoreCSS.CSS_CLASS_RIGHT);
+        break;
+      case DOUBLE:
+        setComparator (new ComparatorDTBigDecimal (aDisplayLocale));
+        addClass (CUICoreCSS.CSS_CLASS_RIGHT);
+        break;
+      case INT:
+        setComparator (new ComparatorDTBigInteger (aDisplayLocale));
+        addClass (CUICoreCSS.CSS_CLASS_RIGHT);
+        break;
+      case MTEXT:
+        setSortable (false);
+        break;
+      case TEXT:
+        // Nothing special
+        break;
+      case TIME:
+        setComparator (new ComparatorDTTime (aDisplayLocale));
+        addClass (CUICoreCSS.CSS_CLASS_RIGHT);
+        break;
+      case XML:
+        setSortable (false);
+        break;
+      default:
+        throw new IllegalArgumentException ("Unsupported base type provided: " + eBaseType);
+    }
+    return this;
   }
 
   @Nonnull
