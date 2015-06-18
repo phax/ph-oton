@@ -62,14 +62,14 @@ public abstract class AbstractBootstrapWebPageExt <WPECTYPE extends IWebPageExec
 
   @Override
   @Nonnull
-  public final BootstrapForm createFormSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  public BootstrapForm createFormSelf (@Nonnull final ILayoutExecutionContext aLEC)
   {
     return new BootstrapForm (EBootstrapFormType.HORIZONTAL).setAction (aLEC.getSelfHref ());
   }
 
   @Override
   @Nonnull
-  public final BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  public BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC)
   {
     return createFormSelf (aLEC).setEncTypeFileUpload ();
   }

@@ -37,8 +37,14 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
   public static final int DEFAULT_RIGHT_PART = CBootstrap.GRID_SYSTEM_MAX - DEFAULT_LEFT_PART;
 
   private EBootstrapFormType m_eFormType;
-  private BootstrapGridSpec m_aLeftGrid = BootstrapGridSpec.create (DEFAULT_LEFT_PART);
-  private BootstrapGridSpec m_aRightGrid = BootstrapGridSpec.create (DEFAULT_RIGHT_PART);
+  private BootstrapGridSpec m_aLeftGrid = BootstrapGridSpec.create (CBootstrap.GRID_SYSTEM_MAX,
+                                                                    DEFAULT_LEFT_PART,
+                                                                    DEFAULT_LEFT_PART,
+                                                                    DEFAULT_LEFT_PART);
+  private BootstrapGridSpec m_aRightGrid = BootstrapGridSpec.create (CBootstrap.GRID_SYSTEM_MAX,
+                                                                     DEFAULT_RIGHT_PART,
+                                                                     DEFAULT_RIGHT_PART,
+                                                                     DEFAULT_RIGHT_PART);
   private IBootstrapFormGroupRenderer m_aFormGroupRenderer = new DefaultBootstrapFormGroupRenderer ();
 
   public BootstrapForm ()
