@@ -30,12 +30,14 @@ import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCCol;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigDecimal;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigInteger;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDate;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTFixedCurrencyFormat;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTString;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTTime;
 
@@ -118,6 +120,17 @@ public class DTCol extends AbstractHCCol <DTCol>
       default:
         throw new IllegalArgumentException ("Unsupported base type provided: " + eBaseType);
     }
+    return this;
+  }
+
+  @Nonnull
+  public DTCol setDisplayTypeCurrency (@Nonnull final Locale aDisplayLocale, @Nonnull final ECurrency eCurrency)
+  {
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
+    ValueEnforcer.notNull (eCurrency, "Currency");
+
+    setComparator (new ComparatorDTFixedCurrencyFormat (aDisplayLocale, eCurrency));
+    addClass (CUICoreCSS.CSS_CLASS_RIGHT);
     return this;
   }
 
