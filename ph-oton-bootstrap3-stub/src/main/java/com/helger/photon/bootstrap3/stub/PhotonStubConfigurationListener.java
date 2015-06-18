@@ -54,8 +54,8 @@ public final class PhotonStubConfigurationListener implements ServletContextList
   private static void _registerDefaultResources ()
   {
     // CSS
-    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_334);
-    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_THEME_334);
+    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_335);
+    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_THEME_335);
     PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_PH);
     PhotonCSS.registerCSSIncludeForGlobal (EUICtrlsCSSPathProvider.FAMFAM_ICONS);
     PhotonCSS.registerCSSIncludeForGlobal (EUICtrlsCSSPathProvider.FAMFAM_FLAGS);
@@ -69,7 +69,7 @@ public final class PhotonStubConfigurationListener implements ServletContextList
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_1);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.UICORE_JQUERY);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.UICORE_FORM);
-    PhotonJS.registerJSIncludeForGlobal (EBootstrapJSPathProvider.BOOTSTRAP_334);
+    PhotonJS.registerJSIncludeForGlobal (EBootstrapJSPathProvider.BOOTSTRAP_335);
     PhotonJS.registerJSIncludeForGlobal (EBootstrapJSPathProvider.BOOTSTRAP_PH);
 
     // With conditional comments

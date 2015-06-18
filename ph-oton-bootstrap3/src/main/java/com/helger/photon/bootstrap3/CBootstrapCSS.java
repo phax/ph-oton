@@ -30,7 +30,7 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CBootstrapCSS
 {
   // Note: all CSS classes were created via MainExtractBootstrap3CSSClasses for
-  // 3.3.4
+  // 3.3.5
   public static final ICSSClassProvider ACTIVE = DefaultCSSClassProvider.create ("active");
   public static final ICSSClassProvider AFFIX = DefaultCSSClassProvider.create ("affix");
   public static final ICSSClassProvider ALERT = DefaultCSSClassProvider.create ("alert");

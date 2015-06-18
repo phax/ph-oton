@@ -18,9 +18,7 @@ package com.helger.photon.bootstrap3.servlet;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.gfx.ScalableSize;
-import com.helger.commons.version.Version;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.EHTMLVersion;
@@ -30,27 +28,11 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.customize.HCEmptyCustomizer;
 import com.helger.html.hc.html.HCImg;
 import com.helger.photon.bootstrap3.BootstrapHelper;
-import com.helger.photon.bootstrap3.CBootstrap;
 
 public class BootstrapCustomizer extends HCEmptyCustomizer
 {
-  private final Version m_aBootstrapVersion;
-
   public BootstrapCustomizer ()
-  {
-    this (CBootstrap.BOOTSTRAP_VERSION_334);
-  }
-
-  public BootstrapCustomizer (@Nonnull final Version aBootstrapVersion)
-  {
-    m_aBootstrapVersion = ValueEnforcer.notNull (aBootstrapVersion, "BootstrapVersion");
-  }
-
-  @Nonnull
-  public final Version getBootstrapVersion ()
-  {
-    return m_aBootstrapVersion;
-  }
+  {}
 
   @Override
   public void customizeNode (@Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aParentElement,

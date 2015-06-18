@@ -16,16 +16,12 @@
  */
 package com.helger.photon.bootstrap3.servlet;
 
-import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.version.Version;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.conversion.HCConversionSettings;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.customize.HCMultiCustomizer;
-import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
@@ -40,13 +36,6 @@ import com.helger.photon.core.servlet.AbstractWebAppListenerMultiApp;
  */
 public abstract class AbstractWebAppListenerMultiAppBootstrap <LECTYPE extends ILayoutExecutionContext> extends AbstractWebAppListenerMultiApp <LECTYPE>
 {
-  @Nonnull
-  @OverrideOnDemand
-  protected Version getBoostrapVersion ()
-  {
-    return CBootstrap.BOOTSTRAP_VERSION_334;
-  }
-
   @Override
   @OverridingMethodsMustInvokeSuper
   protected void initGlobals ()
@@ -61,7 +50,7 @@ public abstract class AbstractWebAppListenerMultiAppBootstrap <LECTYPE extends I
     // Add special Bootstrap customizer
     HCSettings.getConversionSettingsProvider ()
               .setCustomizer (new HCMultiCustomizer (HCConversionSettings.createDefaultCustomizer (),
-                                                     new BootstrapCustomizer (getBoostrapVersion ())));
+                                                     new BootstrapCustomizer ()));
 
     // Using Bootstrap icon set by default
     EBootstrapIcon.setAsDefault ();

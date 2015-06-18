@@ -29,7 +29,7 @@ import com.helger.commons.version.Version;
 public final class CBootstrap
 {
   /** Bootstrap version */
-  public static final Version BOOTSTRAP_VERSION_334 = new Version (3, 3, 4);
+  public static final Version BOOTSTRAP_VERSION_335 = new Version (3, 3, 5);
 
   /** The maximum number of columns a grid system can be separated into */
   public static final int GRID_SYSTEM_MAX = 12;
