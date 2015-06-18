@@ -133,18 +133,25 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
     return setLeft (nLeftParts, nLeftParts, nLeftParts, nLeftParts);
   }
 
+  private static int _getRight (final int nLeft)
+  {
+    if (nLeft == CBootstrap.GRID_SYSTEM_MAX)
+      return CBootstrap.GRID_SYSTEM_MAX;
+    return CBootstrap.GRID_SYSTEM_MAX - nLeft;
+  }
+
   /**
    * Set the left part of a horizontal form. This implies setting the correct
    * right parts (= CBootstrap.GRID_SYSTEM_MAX - left).
    *
    * @param nLeftPartsXS
-   *        The left parts XS. Must be &ge; 1 and &lt; 12!
+   *        The left parts XS. Must be &ge; 1 and &le; 12!
    * @param nLeftPartsSM
-   *        The left parts SM. Must be &ge; 1 and &lt; 12!
+   *        The left parts SM. Must be &ge; 1 and &le; 12!
    * @param nLeftPartsMD
-   *        The left parts MD. Must be &ge; 1 and &lt; 12!
+   *        The left parts MD. Must be &ge; 1 and &le; 12!
    * @param nLeftPartsLG
-   *        The left parts LG. Must be &ge; 1 and &lt; 12!
+   *        The left parts LG. Must be &ge; 1 and &le; 12!
    * @return this
    */
   @Nonnull
@@ -154,16 +161,16 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
                                 @Nonnegative final int nLeftPartsMD,
                                 @Nonnegative final int nLeftPartsLG)
   {
-    ValueEnforcer.isBetweenInclusive (nLeftPartsXS, "LeftPartsXS", 1, CBootstrap.GRID_SYSTEM_MAX - 1);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsSM, "LeftPartsSM", 1, CBootstrap.GRID_SYSTEM_MAX - 1);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsMD, "LeftPartsMD", 1, CBootstrap.GRID_SYSTEM_MAX - 1);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 1, CBootstrap.GRID_SYSTEM_MAX - 1);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsXS, "LeftPartsXS", 1, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsSM, "LeftPartsSM", 1, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsMD, "LeftPartsMD", 1, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 1, CBootstrap.GRID_SYSTEM_MAX);
 
     final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS, nLeftPartsSM, nLeftPartsMD, nLeftPartsLG);
-    final BootstrapGridSpec aNewRight = BootstrapGridSpec.create (CBootstrap.GRID_SYSTEM_MAX - nLeftPartsXS,
-                                                                  CBootstrap.GRID_SYSTEM_MAX - nLeftPartsSM,
-                                                                  CBootstrap.GRID_SYSTEM_MAX - nLeftPartsMD,
-                                                                  CBootstrap.GRID_SYSTEM_MAX - nLeftPartsLG);
+    final BootstrapGridSpec aNewRight = BootstrapGridSpec.create (_getRight (nLeftPartsXS),
+                                                                  _getRight (nLeftPartsSM),
+                                                                  _getRight (nLeftPartsMD),
+                                                                  _getRight (nLeftPartsLG));
     return setSplitting (aNewLeft, aNewRight);
   }
 
