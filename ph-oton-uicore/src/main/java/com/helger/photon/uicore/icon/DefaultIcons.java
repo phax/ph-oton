@@ -24,6 +24,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.collections.CollectionHelper;
 
 /**
  * This class maintains the actual icon objects to the different default icons.
@@ -38,15 +40,61 @@ public final class DefaultIcons
   private DefaultIcons ()
   {}
 
-  @Nullable
-  public static IIcon get (@Nullable final EDefaultIcon eIcon)
+  /**
+   * @return <code>true</code> if at least a single default icon is defined,
+   *         <code>false</code> if no default icon is defined.
+   */
+  public static boolean areDefined ()
   {
-    return s_aMap.get (eIcon);
+    return !s_aMap.isEmpty ();
   }
 
-  public static void set (@Nonnull final EDefaultIcon eIcon, @Nullable final IIcon aIcon)
+  /**
+   * Get the icon assigned to the passed default icon.
+   *
+   * @param eDefaultIcon
+   *        The default icon to query. May be <code>null</code>.
+   * @return <code>null</code> if no icon was found.
+   */
+  @Nullable
+  public static IIcon get (@Nullable final EDefaultIcon eDefaultIcon)
   {
-    ValueEnforcer.notNull (eIcon, "DefaultIcon");
-    s_aMap.put (eIcon, aIcon);
+    if (eDefaultIcon == null)
+      return null;
+    return s_aMap.get (eDefaultIcon);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Map <EDefaultIcon, IIcon> getAll ()
+  {
+    return CollectionHelper.newMap (s_aMap);
+  }
+
+  /**
+   * Set the icon to be used for the specified default icon. Existing
+   * definitions are simply overwritten.
+   *
+   * @param eDefaultIcon
+   *        The default icon to use. May not be <code>null</code>.
+   * @param aIcon
+   *        The icon to set. May be <code>null</code> in which case the
+   *        assignment is removed.
+   */
+  public static void set (@Nonnull final EDefaultIcon eDefaultIcon, @Nullable final IIcon aIcon)
+  {
+    ValueEnforcer.notNull (eDefaultIcon, "DefaultIcon");
+    if (aIcon != null)
+      s_aMap.put (eDefaultIcon, aIcon);
+    else
+      s_aMap.remove (eDefaultIcon);
+  }
+
+  /**
+   * Remove all default icon assignments.
+   */
+  public static void removeAll ()
+  {
+    s_aMap.clear ();
   }
 }
