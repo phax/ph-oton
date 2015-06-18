@@ -37,6 +37,7 @@ import com.helger.photon.core.app.html.PhotonMetaElements;
 import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.uicore.EUICoreCSSPathProvider;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
+import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.autonumeric.AbstractHCAutoNumeric;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
@@ -51,7 +52,7 @@ import com.helger.web.scopes.mgr.WebScopeManager;
  */
 public final class PhotonStubConfigurationListener implements ServletContextListener
 {
-  private static void _registerDefaultResources ()
+  public static void registerDefaultResources ()
   {
     // CSS
     PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_335);
@@ -89,9 +90,9 @@ public final class PhotonStubConfigurationListener implements ServletContextList
     PhotonMetaElements.readMetaElementsForGlobal (new ClassPathResource (PhotonMetaElements.DEFAULT_FILENAME));
   }
 
-  public void contextInitialized (@Nonnull final ServletContextEvent aSCE)
+  public static void onContextInitialized ()
   {
-    _registerDefaultResources ();
+    registerDefaultResources ();
 
     // Scope handling
     ThrowingScopeFactory.installToMetaScopeFactory ();
@@ -108,8 +109,9 @@ public final class PhotonStubConfigurationListener implements ServletContextList
       RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);
     }
 
-    // Set default icon set
-    EFamFamIcon.setAsDefault ();
+    // Set default icon set if none is defined
+    if (!DefaultIcons.areDefined ())
+      EFamFamIcon.setAsDefault ();
 
     // Never use a thousand separator in HCAutoNumeric fields because of parsing
     // problems
@@ -120,6 +122,11 @@ public final class PhotonStubConfigurationListener implements ServletContextList
     // in form in IE9
     HCSettings.getConversionSettingsProvider ().setCustomizer (new HCMultiCustomizer (new HCDefaultCustomizer (false),
                                                                                       new BootstrapCustomizer ()));
+  }
+
+  public void contextInitialized (@Nonnull final ServletContextEvent aSCE)
+  {
+    onContextInitialized ();
   }
 
   public void contextDestroyed (final ServletContextEvent sce)
