@@ -187,8 +187,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   {}
 
   @Nonnull
-  public IHCElement <?> renderFormGroup (@Nonnull final IBootstrapFormGroupContainer aForm,
-                                         @Nonnull final BootstrapFormGroup aFormGroup)
+  public HCDiv renderFormGroup (@Nonnull final IBootstrapFormGroupContainer aForm,
+                                @Nonnull final BootstrapFormGroup aFormGroup)
   {
     final EBootstrapFormType eFormType = aForm.getFormType ();
     final BootstrapGridSpec aLeftGrid = aForm.getLeft ();

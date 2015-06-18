@@ -18,6 +18,7 @@ package com.helger.photon.bootstrap3.form;
 
 import javax.annotation.Nonnull;
 
+import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
 
 /**
@@ -35,7 +36,7 @@ public interface IBootstrapFormGroupContainer
   EBootstrapFormType getFormType ();
 
   /**
-   * @return The left parts. Always &ge; 1 and &lt; CBootstrap.GRID_SYSTEM_MAX.
+   * @return The left parts. Always &ge; 1 and &le; CBootstrap.GRID_SYSTEM_MAX.
    *         Never <code>null</code>.
    */
   @Nonnull
@@ -43,9 +44,28 @@ public interface IBootstrapFormGroupContainer
 
   /**
    * @return The right parts. Always
-   *         <code>CBootstrap.GRID_SYSTEM_MAX - getLeft ()</code>. Never
-   *         <code>null</code>.
+   *         <code>CBootstrap.GRID_SYSTEM_MAX - getLeft ()</code> except left is
+   *         <code>CBootstrap.GRID_SYSTEM_MAX</code> than right is also
+   *         <code>CBootstrap.GRID_SYSTEM_MAX</code>. Never <code>null</code>.
    */
   @Nonnull
   BootstrapGridSpec getRight ();
+
+  /**
+   * @return The renderer used to convert form groups into HC nodes. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  IBootstrapFormGroupRenderer getFormGroupRenderer ();
+
+  /**
+   * Get the rendered form group based on the contained form group renderer. The
+   * form group is NOT added to this container!
+   *
+   * @param aFormGroup
+   *        The form group to be rendered. May not be <code>null</code>.
+   * @return The rendered form group and never <code>null</code>.
+   */
+  @Nonnull
+  IHCElementWithChildren <?> getRenderedFormGroup (@Nonnull BootstrapFormGroup aFormGroup);
 }

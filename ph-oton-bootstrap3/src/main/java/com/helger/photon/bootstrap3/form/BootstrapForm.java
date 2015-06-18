@@ -25,7 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.EHTMLRole;
-import com.helger.html.hc.IHCElement;
+import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
@@ -118,14 +118,6 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
     return m_aRightGrid;
   }
 
-  /**
-   * Set the left part of a horizontal form. This implies setting the correct
-   * right parts (= CBootstrap.GRID_SYSTEM_MAX - left).
-   *
-   * @param nLeftParts
-   *        The left parts. Must be &ge; 1 and &lt; 12!
-   * @return this
-   */
   @Nonnull
   @OverridingMethodsMustInvokeSuper
   public BootstrapForm setLeft (@Nonnegative final int nLeftParts)
@@ -140,20 +132,6 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
     return CBootstrap.GRID_SYSTEM_MAX - nLeft;
   }
 
-  /**
-   * Set the left part of a horizontal form. This implies setting the correct
-   * right parts (= CBootstrap.GRID_SYSTEM_MAX - left).
-   *
-   * @param nLeftPartsXS
-   *        The left parts XS. Must be &ge; 1 and &le; 12!
-   * @param nLeftPartsSM
-   *        The left parts SM. Must be &ge; 1 and &le; 12!
-   * @param nLeftPartsMD
-   *        The left parts MD. Must be &ge; 1 and &le; 12!
-   * @param nLeftPartsLG
-   *        The left parts LG. Must be &ge; 1 and &le; 12!
-   * @return this
-   */
   @Nonnull
   @OverridingMethodsMustInvokeSuper
   public BootstrapForm setLeft (@Nonnegative final int nLeftPartsXS,
@@ -174,15 +152,6 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
     return setSplitting (aNewLeft, aNewRight);
   }
 
-  /**
-   * Set the left part of a horizontal form.
-   *
-   * @param aLeft
-   *        The left parts. Must not be <code>null</code>.
-   * @param aRight
-   *        The right parts. Must not be <code>null</code>.
-   * @return this
-   */
   @Nonnull
   @OverridingMethodsMustInvokeSuper
   public BootstrapForm setSplitting (@Nonnull final BootstrapGridSpec aLeft, @Nonnull final BootstrapGridSpec aRight)
@@ -208,12 +177,17 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
   }
 
   @Nonnull
+  public IHCElementWithChildren <?> getRenderedFormGroup (@Nonnull final BootstrapFormGroup aFormGroup)
+  {
+    return m_aFormGroupRenderer.renderFormGroup (this, aFormGroup);
+  }
+
+  @Nonnull
   public BootstrapForm addFormGroup (@Nonnull final BootstrapFormGroup aFormGroup)
   {
     // Must be added directly and cannot be added via a proxy, because
     // otherwise, the adding may happen after the out of band nodes were
     // extracted!
-    final IHCElement <?> aRendererNode = m_aFormGroupRenderer.renderFormGroup (this, aFormGroup);
-    return addChild (aRendererNode);
+    return addChild (getRenderedFormGroup (aFormGroup));
   }
 }
