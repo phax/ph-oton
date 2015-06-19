@@ -45,7 +45,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   EXCANVAS ("chart/excanvas.js", "if lt IE 9"),
   FINEUPLOADER_320 ("fineupload/320/fineuploader.js"),
   FINEUPLOADER_330 ("fineupload/330/fineuploader.js"),
-  HANDLEBARS_3 ("handlebars/3.0.3/handlebars-v3.0.0.js"),
+  HANDLEBARS_3 ("handlebars/3.0.3/handlebars-v3.0.3.js"),
   JSCOLOR ("jscolor/1.4.4/jscolor.js"),
   PRISMJS ("prismjs/prism.js"),
   SELECT2 ("select2/4.0.0/js/select2.js"),
