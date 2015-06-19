@@ -301,5 +301,6 @@
     <module>ph-oton-bootstrap3-uictrls</module>
     <module>ph-oton-bootstrap3-pages</module>
     <module>ph-oton-bootstrap3-stub</module>
+    <module>ph-oton-bootstrap3-demo</module>
   </modules>
 </project>
