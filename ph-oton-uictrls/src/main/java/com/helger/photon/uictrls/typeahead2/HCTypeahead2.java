@@ -46,7 +46,7 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.typeahead.TypeaheadDataset;
 
 @WorkInProgress
-public class HCTypeahead010 implements IHCNodeBuilder
+public class HCTypeahead2 implements IHCNodeBuilder
 {
   public static final boolean DEFAULT_AUTOSELECT = false;
   public static final boolean DEFAULT_HIGHLIGHT = false;
@@ -72,12 +72,12 @@ public class HCTypeahead010 implements IHCNodeBuilder
   private JSAnonymousFunction m_aOnSelected;
   private JSAnonymousFunction m_aOnAutoCompleted;
 
-  public HCTypeahead010 (@Nonnull final IJQuerySelector aSelector)
+  public HCTypeahead2 (@Nonnull final IJQuerySelector aSelector)
   {
     this (aSelector.invoke ());
   }
 
-  public HCTypeahead010 (@Nonnull final IJSExpression aSelector)
+  public HCTypeahead2 (@Nonnull final IJSExpression aSelector)
   {
     m_aSelector = ValueEnforcer.notNull (aSelector, "Selector");
   }
@@ -94,7 +94,7 @@ public class HCTypeahead010 implements IHCNodeBuilder
   }
 
   @Nonnull
-  public HCTypeahead010 setAutoselect (final boolean bAutoSelect)
+  public HCTypeahead2 setAutoselect (final boolean bAutoSelect)
   {
     m_bAutoSelect = bAutoSelect;
     return this;
@@ -106,7 +106,7 @@ public class HCTypeahead010 implements IHCNodeBuilder
   }
 
   @Nonnull
-  public HCTypeahead010 setHighlight (final boolean bHighlight)
+  public HCTypeahead2 setHighlight (final boolean bHighlight)
   {
     m_bHighlight = bHighlight;
     return this;
@@ -118,7 +118,7 @@ public class HCTypeahead010 implements IHCNodeBuilder
   }
 
   @Nonnull
-  public HCTypeahead010 setHint (final boolean bHint)
+  public HCTypeahead2 setHint (final boolean bHint)
   {
     m_bHint = bHint;
     return this;
@@ -130,14 +130,14 @@ public class HCTypeahead010 implements IHCNodeBuilder
   }
 
   @Nonnull
-  public HCTypeahead010 setMinLength (@Nonnegative final int nMinLength)
+  public HCTypeahead2 setMinLength (@Nonnegative final int nMinLength)
   {
     m_nMinLength = nMinLength;
     return this;
   }
 
   @Nonnull
-  public HCTypeahead010 addDataset (@Nonnull final TypeaheadDataset aDataset)
+  public HCTypeahead2 addDataset (@Nonnull final TypeaheadDataset aDataset)
   {
     ValueEnforcer.notNull (aDataset, "Dataset");
 
@@ -166,7 +166,7 @@ public class HCTypeahead010 implements IHCNodeBuilder
    * @return this
    */
   @Nonnull
-  public HCTypeahead010 setOnOpened (@Nullable final JSAnonymousFunction aOnOpened)
+  public HCTypeahead2 setOnOpened (@Nullable final JSAnonymousFunction aOnOpened)
   {
     m_aOnOpened = aOnOpened;
     return this;
@@ -189,7 +189,7 @@ public class HCTypeahead010 implements IHCNodeBuilder
    * @return this
    */
   @Nonnull
-  public HCTypeahead010 setOnClosed (@Nullable final JSAnonymousFunction aOnClosed)
+  public HCTypeahead2 setOnClosed (@Nullable final JSAnonymousFunction aOnClosed)
   {
     m_aOnClosed = aOnClosed;
     return this;
@@ -215,7 +215,7 @@ public class HCTypeahead010 implements IHCNodeBuilder
    * @return this
    */
   @Nonnull
-  public HCTypeahead010 setOnCursorChanged (@Nullable final JSAnonymousFunction aOnCursorChanged)
+  public HCTypeahead2 setOnCursorChanged (@Nullable final JSAnonymousFunction aOnCursorChanged)
   {
     m_aOnCursorChanged = aOnCursorChanged;
     return this;
@@ -243,7 +243,7 @@ public class HCTypeahead010 implements IHCNodeBuilder
    * @return this
    */
   @Nonnull
-  public HCTypeahead010 setOnSelected (@Nullable final JSAnonymousFunction aOnSelected)
+  public HCTypeahead2 setOnSelected (@Nullable final JSAnonymousFunction aOnSelected)
   {
     m_aOnSelected = aOnSelected;
     return this;
@@ -271,7 +271,7 @@ public class HCTypeahead010 implements IHCNodeBuilder
    * @return this
    */
   @Nonnull
-  public HCTypeahead010 setOnAutoCompleted (@Nullable final JSAnonymousFunction aOnAutoCompleted)
+  public HCTypeahead2 setOnAutoCompleted (@Nullable final JSAnonymousFunction aOnAutoCompleted)
   {
     m_aOnAutoCompleted = aOnAutoCompleted;
     return this;
