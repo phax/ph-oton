@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.html.hc.IHCNode;
@@ -33,6 +34,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.EBootstrapFormType;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.AbstractWebPageForm;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -91,13 +93,6 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
   }
 
   @Override
-  @Nonnull
-  protected final BootstrapButtonToolbar createNewToolbar (@Nonnull final WPECTYPE aWPEC)
-  {
-    return new BootstrapButtonToolbar (aWPEC);
-  }
-
-  @Override
   protected final IHCNode createErrorBox (@Nonnull final WPECTYPE aWPEC, @Nullable final String sErrorMsg)
   {
     return new BootstrapErrorBox ().addChild (sErrorMsg);
@@ -111,6 +106,54 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
   }
 
   @Override
+  @Nonnull
+  protected final BootstrapButtonToolbar createNewToolbar (@Nonnull final WPECTYPE aWPEC)
+  {
+    return new BootstrapButtonToolbar (aWPEC);
+  }
+
+  @Override
+  @Nonnull
+  @OverrideOnDemand
+  protected BootstrapButtonToolbar createNewViewToolbar (@Nonnull final WPECTYPE aWPEC)
+  {
+    return (BootstrapButtonToolbar) super.createNewViewToolbar (aWPEC);
+  }
+
+  @Override
+  @Nonnull
+  @OverrideOnDemand
+  protected BootstrapButtonToolbar createNewEditToolbar (@Nonnull final WPECTYPE aWPEC)
+  {
+    return (BootstrapButtonToolbar) super.createNewEditToolbar (aWPEC);
+  }
+
+  @Nonnull
+  @OverrideOnDemand
+  protected BootstrapButtonToolbar createEditToolbar (@Nonnull final WPECTYPE aWPEC,
+                                                      @Nonnull final BootstrapForm aForm,
+                                                      @Nonnull final DATATYPE aSelectedObject)
+  {
+    return (BootstrapButtonToolbar) super.createEditToolbar (aWPEC, aForm, aSelectedObject);
+  }
+
+  @Override
+  @Nonnull
+  @OverrideOnDemand
+  protected final IButtonToolbar <?> createEditToolbar (@Nonnull final WPECTYPE aWPEC,
+                                                        @Nonnull final AbstractHCForm <?> aForm,
+                                                        @Nonnull final DATATYPE aSelectedObject)
+  {
+    return createEditToolbar (aWPEC, (BootstrapForm) aForm, aSelectedObject);
+  }
+
+  protected abstract void showInputForm (@Nonnull final WPECTYPE aWPEC,
+                                         @Nullable final DATATYPE aSelectedObject,
+                                         @Nonnull final BootstrapForm aForm,
+                                         @Nonnull final EWebPageFormAction eFormAction,
+                                         @Nonnull final FormErrors aFormErrors);
+
+  @Override
   protected final void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                       @Nullable final DATATYPE aSelectedObject,
                                       @Nonnull final AbstractHCForm <?> aForm,
@@ -121,10 +164,4 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
     final BootstrapForm aBootstrapForm = (BootstrapForm) aForm;
     showInputForm (aWPEC, aSelectedObject, aBootstrapForm, eFormAction, aFormErrors);
   }
-
-  protected abstract void showInputForm (@Nonnull final WPECTYPE aWPEC,
-                                         @Nullable final DATATYPE aSelectedObject,
-                                         @Nonnull final BootstrapForm aForm,
-                                         @Nonnull final EWebPageFormAction eFormAction,
-                                         @Nonnull final FormErrors aFormErrors);
 }

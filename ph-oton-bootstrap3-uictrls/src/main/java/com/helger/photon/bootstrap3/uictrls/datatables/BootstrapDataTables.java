@@ -90,6 +90,9 @@ public class BootstrapDataTables extends DataTables
   public static BootstrapDataTables createDefaultDataTables (@Nonnull final IWebPageExecutionContext aWPEC,
                                                              @Nonnull final IHCTable <?> aTable)
   {
+    // Assign special table class for Bootstrap look and feel
+    aTable.addClass (CBootstrapCSS.TABLE).addClass (CBootstrapCSS.TABLE_STRIPED);
+
     final BootstrapDataTables ret = new BootstrapDataTables (aTable);
     ret.setDisplayLocale (aWPEC.getDisplayLocale ());
     ret.addAllColumns (aTable);
