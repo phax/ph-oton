@@ -39,7 +39,7 @@ import com.helger.html.hc.html.HCH4;
 import com.helger.html.hc.html.HCUL;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageExt;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
@@ -50,7 +50,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageExt <WPECTYPE>
+public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText

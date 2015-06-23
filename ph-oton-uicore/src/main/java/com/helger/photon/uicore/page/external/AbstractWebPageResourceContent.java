@@ -41,7 +41,7 @@ import com.helger.commons.xml.serialize.SAXReaderSettings;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.parser.XHTMLParser;
-import com.helger.photon.uicore.page.AbstractWebPageExt;
+import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**
@@ -53,7 +53,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web page execution context type
  */
 @ThreadSafe
-public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
 {
   public static final Charset DEFAULT_CHARSET = CCharset.CHARSET_UTF_8_OBJ;
 

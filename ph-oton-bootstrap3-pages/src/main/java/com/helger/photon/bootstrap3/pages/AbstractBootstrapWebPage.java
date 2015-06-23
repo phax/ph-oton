@@ -30,32 +30,31 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.EBootstrapFormType;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.photon.uicore.page.AbstractWebPageExt;
+import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
-public abstract class AbstractBootstrapWebPageExt <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
 {
-  public AbstractBootstrapWebPageExt (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
+  public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
     super (sID, sName);
   }
 
-  public AbstractBootstrapWebPageExt (@Nonnull @Nonempty final String sID,
-                                      @Nonnull final IReadonlyMultiLingualText aName)
+  public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID, @Nonnull final IReadonlyMultiLingualText aName)
   {
     super (sID, aName);
   }
 
-  public AbstractBootstrapWebPageExt (@Nonnull @Nonempty final String sID,
-                                      @Nonnull final String sName,
-                                      @Nullable final String sDescription)
+  public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID,
+                                   @Nonnull final String sName,
+                                   @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
-  public AbstractBootstrapWebPageExt (@Nonnull @Nonempty final String sID,
-                                      @Nonnull final IReadonlyMultiLingualText aName,
-                                      @Nullable final IReadonlyMultiLingualText aDescription)
+  public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID,
+                                   @Nonnull final IReadonlyMultiLingualText aName,
+                                   @Nullable final IReadonlyMultiLingualText aDescription)
   {
     super (sID, aName, aDescription);
   }

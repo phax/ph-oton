@@ -66,7 +66,7 @@ import com.helger.validation.error.FormErrors;
  *        Web page execution context type
  */
 @NotThreadSafe
-public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageExt <WPECTYPE>
+public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
 {
   // all internal IDs starting with "$" to prevent accidental overwrite with
   // actual field
