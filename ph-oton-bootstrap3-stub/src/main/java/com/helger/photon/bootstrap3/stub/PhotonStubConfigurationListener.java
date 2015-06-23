@@ -22,6 +22,8 @@ import javax.annotation.Nonnull;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.slf4j.bridge.SLF4JBridgeHandler;
+
 import com.helger.commons.GlobalDebug;
 import com.helger.commons.SystemProperties;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -103,6 +105,11 @@ public final class PhotonStubConfigurationListener implements ServletContextList
   {
     if (s_aInitialized.compareAndSet (false, true))
     {
+      // Logging: JUL to SLF4J
+      SLF4JBridgeHandler.removeHandlersForRootLogger ();
+      SLF4JBridgeHandler.install ();
+
+      // Default JS and CSS
       registerDefaultResources ();
 
       // Scope handling

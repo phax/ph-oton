@@ -26,7 +26,6 @@ import javax.servlet.ServletRegistration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.helger.commons.annotations.PresentForCodeCoverage;
 import com.helger.commons.charset.CCharset;
@@ -64,10 +63,6 @@ public final class PhotonStubInitializer
   {
     if (s_aInitialized.compareAndSet (false, true))
     {
-      // Logging: JUL to SLF4J
-      SLF4JBridgeHandler.removeHandlersForRootLogger ();
-      SLF4JBridgeHandler.install ();
-
       // Check SC version
       if (aSC.getMajorVersion () < 3)
         throw new IllegalStateException ("At least servlet version 3 is required!");
