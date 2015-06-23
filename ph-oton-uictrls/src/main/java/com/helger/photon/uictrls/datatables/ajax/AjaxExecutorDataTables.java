@@ -30,12 +30,12 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.utils.HCSpecialNodes;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.state.UIStateRegistry;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uictrls.datatables.CDataTables;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -49,7 +49,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
 {
   // This parameter must be passed to identify the table from the
   // UIStateRegistry!
-  public static final String OBJECT_ID = CHCParam.PARAM_OBJECT;
+  public static final String OBJECT_ID = CPageParam.PARAM_OBJECT;
   private static final String DISPLAY_START = "iDisplayStart";
   private static final String DISPLAY_LENGTH = "iDisplayLength";
   private static final String COLUMNS = "iColumns";
@@ -78,8 +78,8 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
       final Locale aDisplayLocale = aServerData.getDisplayLocale ();
 
       final DataTablesServerSortState aNewServerSortState = new DataTablesServerSortState (aServerData,
-                                                                       aRequestData.getSortColumnArray (),
-                                                                       aDisplayLocale);
+                                                                                           aRequestData.getSortColumnArray (),
+                                                                                           aDisplayLocale);
       // Must we change the sorting?
       if (!aServerData.areServerSortStateEqual (aNewServerSortState))
       {

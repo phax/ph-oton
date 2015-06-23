@@ -41,7 +41,6 @@ import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCTable;
@@ -77,6 +76,7 @@ import com.helger.photon.bootstrap3.uictrls.ext.BootstrapSecurityUI;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldBoolean;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.select.HCUserGroupForUserSelect;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -755,9 +755,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                      .setErrorList (aFormErrors.getListOfField (FIELD_PASSWORD_CONFIRM)));
 
         final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-        aToolbar.addHiddenField (CHCParam.PARAM_ACTION, ACTION_RESET_PASSWORD);
-        aToolbar.addHiddenField (CHCParam.PARAM_OBJECT, aSelectedObject.getID ());
-        aToolbar.addHiddenField (CHCParam.PARAM_SUBACTION, ACTION_PERFORM);
+        aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_RESET_PASSWORD);
+        aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
+        aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_PERFORM);
         // Add the nonce for CSRF check
         aToolbar.addChild (createCSRFNonceField ());
         aToolbar.addSubmitButtonSave (aDisplayLocale);
@@ -832,11 +832,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       if (canResetPassword (aCurUser))
       {
         aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
-                                            .add (CHCParam.PARAM_ACTION, ACTION_RESET_PASSWORD)
-                                            .add (CHCParam.PARAM_OBJECT, aCurUser.getID ())).setTitle (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                          SecurityUtils.getUserDisplayName (aCurUser,
-                                                                                                                                                                                            aDisplayLocale)))
-                                                                                            .addChild (getResetPasswordIcon ()));
+                                            .add (CPageParam.PARAM_ACTION, ACTION_RESET_PASSWORD)
+                                            .add (CPageParam.PARAM_OBJECT, aCurUser.getID ())).setTitle (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                            SecurityUtils.getUserDisplayName (aCurUser,
+                                                                                                                                                                                              aDisplayLocale)))
+                                                                                              .addChild (getResetPasswordIcon ()));
       }
       else
         aActionCell.addChild (createEmptyAction ());

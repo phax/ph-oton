@@ -43,13 +43,4 @@ public interface IPage extends IHasID <String>, IHasDisplayText, IReadonlyAttrib
    */
   @Nullable
   String getDescription (@Nonnull Locale aContentLocale);
-
-  /**
-   * Determine whether help is available for this page. The default
-   * implementation returns always <code>true</code>.
-   *
-   * @return <code>true</code> if help is available for this page,
-   *         <code>false</code> otherwise.
-   */
-  boolean isHelpAvailable ();
 }

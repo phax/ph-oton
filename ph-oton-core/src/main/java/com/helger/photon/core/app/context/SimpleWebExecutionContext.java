@@ -42,7 +42,6 @@ import com.helger.commons.equals.EqualsUtils;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hc.CHCParam;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestManager;
@@ -318,28 +317,6 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public IRequestParamMap getRequestParamMap ()
   {
     return m_aRequestScope.getRequestParamMap ();
-  }
-
-  @Nullable
-  public String getAction ()
-  {
-    return getAttributeAsString (CHCParam.PARAM_ACTION);
-  }
-
-  public boolean hasAction (@Nullable final String sAction)
-  {
-    return EqualsUtils.equals (getAction (), sAction);
-  }
-
-  @Nullable
-  public String getSubAction ()
-  {
-    return getAttributeAsString (CHCParam.PARAM_SUBACTION);
-  }
-
-  public boolean hasSubAction (@Nullable final String sSubAction)
-  {
-    return EqualsUtils.equals (getSubAction (), sSubAction);
   }
 
   @Nonnull

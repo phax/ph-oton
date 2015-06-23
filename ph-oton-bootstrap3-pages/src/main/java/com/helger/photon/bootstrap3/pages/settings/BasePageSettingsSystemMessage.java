@@ -33,7 +33,6 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCHiddenField;
@@ -48,6 +47,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.select.HCSystemMessageTypeSelect;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -131,9 +131,9 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
     final SystemMessageManager aSystemMsgMgr = PhotonBasicManager.getSystemMessageMgr ();
 
     boolean bShowList = true;
-    if (aWPEC.hasAction (CHCParam.ACTION_EDIT))
+    if (aWPEC.hasAction (CPageParam.ACTION_EDIT))
     {
-      if (aWPEC.hasSubAction (CHCParam.ACTION_SAVE))
+      if (aWPEC.hasSubAction (CPageParam.ACTION_SAVE))
       {
         if (checkCSRFNonce (aWPEC).isContinue ())
         {
@@ -157,8 +157,8 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
                                                                          aSystemMsgMgr.getMessageType ().getID ()),
                                                        aDisplayLocale));
         aForm.addChild (new HCTextAreaAutosize (new RequestField (FIELD_MESSAGE, sSystemMessage)));
-        aForm.addChild (new HCHiddenField (CHCParam.PARAM_ACTION, CHCParam.ACTION_EDIT));
-        aForm.addChild (new HCHiddenField (CHCParam.PARAM_SUBACTION, CHCParam.ACTION_SAVE));
+        aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT));
+        aForm.addChild (new HCHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE));
         aForm.addChild (createCSRFNonceField ());
 
         final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
@@ -195,7 +195,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         aForm.addChild (new BootstrapInfoBox ().addChild (EText.NO_SYSTEM_MESSAGE.getDisplayText (aDisplayLocale)));
       }
 
-      aForm.addChild (new HCHiddenField (CHCParam.PARAM_ACTION, CHCParam.ACTION_EDIT));
+      aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT));
 
       final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
       aToolbar.addSubmitButton (EPhotonCoreText.BUTTON_EDIT.getDisplayText (aDisplayLocale), EDefaultIcon.EDIT);

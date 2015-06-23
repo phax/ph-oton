@@ -33,17 +33,15 @@ import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.state.EValidity;
+import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SMap;
 import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLValidator;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
-import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCForm;
@@ -58,14 +56,11 @@ import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.htmlext.HCA_MailTo;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.basic.app.page.AbstractPage;
-import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.form.csrf.CSRFSessionManager;
-import com.helger.photon.core.url.LinkUtils;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uicore.icon.EDefaultIcon;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
-import com.helger.web.scopes.mgr.WebScopeManager;
 
 /**
  * Abstract base implementation for {@link IWebPage}.
@@ -78,32 +73,24 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
 {
   public static final boolean DEFAULT_CSRF_PREVENTION_ENABLED = true;
 
-  /** The CSS class to be applied to the help div */
-  public static final ICSSClassProvider CSS_PAGE_HELP_ICON = DefaultCSSClassProvider.create ("page_help_icon");
   protected static final ICSSClassProvider CSS_CLASS_LEFT = CUICoreCSS.CSS_CLASS_LEFT;
   protected static final ICSSClassProvider CSS_CLASS_CENTER = CUICoreCSS.CSS_CLASS_CENTER;
   protected static final ICSSClassProvider CSS_CLASS_RIGHT = CUICoreCSS.CSS_CLASS_RIGHT;
   protected static final ICSSClassProvider CSS_CLASS_NOWRAP = CUICoreCSS.CSS_CLASS_NOWRAP;
 
-  public static final HC_Target HELP_WINDOW_TARGET = new HC_Target (HELP_WINDOW_NAME);
-
-  public static final String ACTION_CANCEL = CHCParam.ACTION_CANCEL;
-  public static final String ACTION_COLLAPSE = CHCParam.ACTION_COLLAPSE;
-  public static final String ACTION_COPY = CHCParam.ACTION_COPY;
-  public static final String ACTION_CREATE = CHCParam.ACTION_CREATE;
-  public static final String ACTION_DELETE = CHCParam.ACTION_DELETE;
-  public static final String ACTION_DELETE_ALL = CHCParam.ACTION_DELETE_ALL;
-  public static final String ACTION_EDIT = CHCParam.ACTION_EDIT;
-  public static final String ACTION_EXPAND = CHCParam.ACTION_EXPAND;
-  public static final String ACTION_PERFORM = CHCParam.ACTION_PERFORM;
-  public static final String ACTION_SAVE = CHCParam.ACTION_SAVE;
-  public static final String ACTION_UNDELETE = CHCParam.ACTION_UNDELETE;
-  public static final String ACTION_UNDELETE_ALL = CHCParam.ACTION_UNDELETE_ALL;
-  public static final String ACTION_VIEW = CHCParam.ACTION_VIEW;
-
-  public static final String FIELD_NONCE = "$ph_nonce";
-
-  public static final String PARAM_SOURCE_MENU_ITEM = "srcmi";
+  protected static final String ACTION_CANCEL = CPageParam.ACTION_CANCEL;
+  protected static final String ACTION_COLLAPSE = CPageParam.ACTION_COLLAPSE;
+  protected static final String ACTION_COPY = CPageParam.ACTION_COPY;
+  protected static final String ACTION_CREATE = CPageParam.ACTION_CREATE;
+  protected static final String ACTION_DELETE = CPageParam.ACTION_DELETE;
+  protected static final String ACTION_DELETE_ALL = CPageParam.ACTION_DELETE_ALL;
+  protected static final String ACTION_EDIT = CPageParam.ACTION_EDIT;
+  protected static final String ACTION_EXPAND = CPageParam.ACTION_EXPAND;
+  protected static final String ACTION_PERFORM = CPageParam.ACTION_PERFORM;
+  protected static final String ACTION_SAVE = CPageParam.ACTION_SAVE;
+  protected static final String ACTION_UNDELETE = CPageParam.ACTION_UNDELETE;
+  protected static final String ACTION_UNDELETE_ALL = CPageParam.ACTION_UNDELETE_ALL;
+  protected static final String ACTION_VIEW = CPageParam.ACTION_VIEW;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPage.class);
 
@@ -219,7 +206,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
     if (m_bCSRFPreventionEnabled)
     {
       final CSRFSessionManager aCSRFSessionMgr = CSRFSessionManager.getInstance ();
-      final String sNonce = aWPEC.getAttributeAsString (FIELD_NONCE);
+      final String sNonce = aWPEC.getAttributeAsString (CPageParam.FIELD_NONCE);
       if (!aCSRFSessionMgr.isExpectedNonce (sNonce))
       {
         // CSRF failure!
@@ -238,7 +225,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
     if (m_bCSRFPreventionEnabled)
     {
       final CSRFSessionManager aCSRFSessionMgr = CSRFSessionManager.getInstance ();
-      return new HCHiddenField (FIELD_NONCE, aCSRFSessionMgr.getNonce ());
+      return new HCHiddenField (CPageParam.FIELD_NONCE, aCSRFSessionMgr.getNonce ());
     }
 
     // If disabled, don't emit a nonce
@@ -258,13 +245,13 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   public static SimpleURL createCreateURL (@Nonnull final ILayoutExecutionContext aLEC,
                                            @Nonnull final String sMenuItemID)
   {
-    return aLEC.getLinkToMenuItem (sMenuItemID).add (CHCParam.PARAM_ACTION, ACTION_CREATE);
+    return aLEC.getLinkToMenuItem (sMenuItemID).add (CPageParam.PARAM_ACTION, ACTION_CREATE);
   }
 
   @Nonnull
   public static SimpleURL createCreateURL (@Nonnull final ILayoutExecutionContext aLEC)
   {
-    return aLEC.getSelfHref ().add (CHCParam.PARAM_ACTION, ACTION_CREATE);
+    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, ACTION_CREATE);
   }
 
   @Nonnull
@@ -281,8 +268,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
                                          @Nonnull final String sObjectID)
   {
     return aLEC.getLinkToMenuItem (sMenuItemID)
-               .add (CHCParam.PARAM_ACTION, ACTION_VIEW)
-               .add (CHCParam.PARAM_OBJECT, sObjectID);
+               .add (CPageParam.PARAM_ACTION, ACTION_VIEW)
+               .add (CPageParam.PARAM_OBJECT, sObjectID);
   }
 
   @Nonnull
@@ -295,7 +282,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   @Nonnull
   public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final String sObjectID)
   {
-    return aLEC.getSelfHref ().add (CHCParam.PARAM_ACTION, ACTION_VIEW).add (CHCParam.PARAM_OBJECT, sObjectID);
+    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, ACTION_VIEW).add (CPageParam.PARAM_OBJECT, sObjectID);
   }
 
   @Nonnull
@@ -349,8 +336,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
                                          @Nonnull final IHasID <String> aCurObject)
   {
     return aLEC.getSelfHref ()
-               .add (CHCParam.PARAM_ACTION, ACTION_EDIT)
-               .add (CHCParam.PARAM_OBJECT, aCurObject.getID ());
+               .add (CPageParam.PARAM_ACTION, ACTION_EDIT)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
   }
 
   @Nonnull
@@ -404,8 +391,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
                                          @Nonnull final IHasID <String> aCurObject)
   {
     return aLEC.getSelfHref ()
-               .add (CHCParam.PARAM_ACTION, ACTION_COPY)
-               .add (CHCParam.PARAM_OBJECT, aCurObject.getID ());
+               .add (CPageParam.PARAM_ACTION, ACTION_COPY)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
   }
 
   @Nonnull
@@ -450,8 +437,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
                                            @Nonnull final IHasID <String> aCurObject)
   {
     return aLEC.getSelfHref ()
-               .add (CHCParam.PARAM_ACTION, ACTION_DELETE)
-               .add (CHCParam.PARAM_OBJECT, aCurObject.getID ());
+               .add (CPageParam.PARAM_ACTION, ACTION_DELETE)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
   }
 
   @Nonnull
@@ -468,8 +455,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
                                              @Nonnull final IHasID <String> aCurObject)
   {
     return aLEC.getSelfHref ()
-               .add (CHCParam.PARAM_ACTION, ACTION_UNDELETE)
-               .add (CHCParam.PARAM_OBJECT, aCurObject.getID ());
+               .add (CPageParam.PARAM_ACTION, ACTION_UNDELETE)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
   }
 
   @Nonnull
@@ -483,7 +470,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
                                             @Nonnull final IHasID <String> aCurObject,
                                             @Nullable final String sTitle)
   {
-    final ISimpleURL aURL = createCreateURL (aLEC).add (CHCParam.PARAM_OBJECT, aCurObject.getID ());
+    final ISimpleURL aURL = createCreateURL (aLEC).add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
     return new HCA (aURL).setTitle (sTitle).addChild (getCreateImg ());
   }
 
@@ -523,16 +510,6 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
     return new HCH4 ().addClass (CUICoreCSS.CSS_CLASS_ACTION_HEADER).addChild (sText);
   }
 
-  /**
-   * @deprecated Use {@link #createActionHeader(String)} instead
-   */
-  @Deprecated
-  @Nullable
-  protected IHCNode createInPageHeader (@Nullable final String sText)
-  {
-    return createActionHeader (sText);
-  }
-
   @Nullable
   protected IHCElementWithChildren <?> createActionHeader (@Nullable final String sText)
   {
@@ -569,7 +546,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   @OverrideOnDemand
   public String getHeaderText (@Nonnull final WPECTYPE aWPEC)
   {
-    return getDisplayText (aWPEC.getDisplayLocale ());
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+    return getDisplayText (aDisplayLocale);
   }
 
   @Nullable
@@ -580,13 +558,6 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
     if (StringHelper.hasNoText (sHeaderText))
       return null;
     return new HCH1 ().addChild (sHeaderText);
-  }
-
-  @Nonnull
-  @Deprecated
-  public static final IRequestWebScopeWithoutResponse getScope ()
-  {
-    return WebScopeManager.getRequestScope ();
   }
 
   /**
@@ -621,7 +592,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    */
   @OverrideOnDemand
   @Nonnull
-  protected EValidity isValidToDisplayPage (@Nonnull final WPECTYPE aWPEC)
+  protected IValidityIndicator isValidToDisplayPage (@Nonnull final WPECTYPE aWPEC)
   {
     return EValidity.VALID;
   }
@@ -636,7 +607,9 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
 
   /**
    * Abstract method to be implemented by subclasses, that creates the main page
-   * content, without the help icon.
+   * content. This method is only called, when
+   * {@link #isValidToDisplayPage(IWebPageExecutionContext)} returned
+   * <code>true</code>.
    *
    * @param aWPEC
    *        The web page execution context. Never <code>null</code>.
@@ -650,82 +623,6 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   @OverrideOnDemand
   protected void afterFillContent ()
   {}
-
-  /**
-   * Get the help URL of the current page
-   *
-   * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
-   * @param aDisplayLocale
-   *        The current display locale. Never <code>null</code>.
-   * @return The help URL for this page. May not be <code>null</code>.
-   */
-  @Nonnull
-  @OverrideOnDemand
-  protected ISimpleURL getHelpURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                   @Nonnull final Locale aDisplayLocale)
-  {
-    return LinkUtils.getURLWithContext (aRequestScope,
-                                        "help/" + getID (),
-                                        new SMap ().add ("locale", aDisplayLocale.toString ()));
-  }
-
-  /**
-   * Create the HC node to represent the help icon. This method is only called,
-   * if help is available for this page. The created code looks like this by
-   * default:<br>
-   * <code>&lt;a href="<i>helpURL</i>" title="Show help for page <i>pageName</i>" target="simplehelpwindow"&gt;<br>
-   * &lt;span class="page_help_icon"&gt;&lt;/span&gt;<br>
-   * &lt;/a&gt;</code>
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @return The created help icon node. May be <code>null</code>.
-   */
-  @Nullable
-  @OverrideOnDemand
-  protected IHCNode getHelpIconNode (@Nonnull final WPECTYPE aWPEC)
-  {
-    final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-
-    final HCA aHelpNode = new HCA (getHelpURL (aRequestScope, aDisplayLocale));
-    final String sPageName = getDisplayText (aDisplayLocale);
-    aHelpNode.setTitle (EPhotonCoreText.PAGE_HELP_TITLE.getDisplayTextWithArgs (aDisplayLocale, sPageName));
-    aHelpNode.addChild (new HCSpan ().addClass (CSS_PAGE_HELP_ICON));
-    aHelpNode.setTarget (HELP_WINDOW_TARGET);
-    return aHelpNode;
-  }
-
-  /**
-   * Check if is help is available for the current execution context
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @return <code>true</code> if help is available, <code>false</code> if not
-   */
-  @OverrideOnDemand
-  public boolean isHelpAvailable (@Nonnull final WPECTYPE aWPEC)
-  {
-    return false;
-  }
-
-  /**
-   * Overridable method to attach the help node to the page. This is called as
-   * the last action.
-   *
-   * @param aWPEC
-   *        The web page execution context. Never <code>null</code>.
-   * @param aHelpNode
-   *        The help node to be inserted. Never <code>null</code>.
-   */
-  @OverrideOnDemand
-  protected void insertHelpNode (@Nonnull final WPECTYPE aWPEC, @Nonnull final IHCNode aHelpNode)
-  {
-    // Add the help icon as the first child of the resulting node list
-    aWPEC.getNodeList ().addChild (0, aHelpNode);
-  }
 
   /**
    * Default implementation calling the abstract fillContent method and creating
@@ -743,14 +640,6 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
 
       // "after"-callback
       afterFillContent ();
-    }
-
-    // Is help available for this page?
-    if (isHelpAvailable (aWPEC))
-    {
-      final IHCNode aHelpNode = getHelpIconNode (aWPEC);
-      if (aHelpNode != null)
-        insertHelpNode (aWPEC, aHelpNode);
     }
   }
 }

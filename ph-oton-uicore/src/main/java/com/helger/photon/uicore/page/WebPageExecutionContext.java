@@ -17,18 +17,21 @@
 package com.helger.photon.uicore.page;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.equals.EqualsUtils;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
+import com.helger.photon.uicore.css.CPageParam;
 
 /**
  * This page is instantiated per page view, so that the thread safety of the
  * execution parameters is more clear.
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -65,6 +68,28 @@ public class WebPageExecutionContext extends LayoutExecutionContext implements I
   public HCNodeList getNodeList ()
   {
     return m_aNodeList;
+  }
+
+  @Nullable
+  public String getAction ()
+  {
+    return getAttributeAsString (CPageParam.PARAM_ACTION);
+  }
+
+  public boolean hasAction (@Nullable final String sAction)
+  {
+    return EqualsUtils.equals (getAction (), sAction);
+  }
+
+  @Nullable
+  public String getSubAction ()
+  {
+    return getAttributeAsString (CPageParam.PARAM_SUBACTION);
+  }
+
+  public boolean hasSubAction (@Nullable final String sSubAction)
+  {
+    return EqualsUtils.equals (getSubAction (), sSubAction);
   }
 
   @Override

@@ -25,13 +25,16 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCForm;
+import com.helger.html.hc.html.HCH1;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.EBootstrapFormType;
+import com.helger.photon.bootstrap3.pageheader.BootstrapPageHeader;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -76,6 +79,17 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
                                        @Nullable final IReadonlyMultiLingualText aDescription)
   {
     super (sID, aName, aDescription);
+  }
+
+  @Override
+  @Nullable
+  @OverrideOnDemand
+  public IHCNode getHeaderNode (@Nonnull final WPECTYPE aWPEC)
+  {
+    final String sHeaderText = getHeaderText (aWPEC);
+    if (StringHelper.hasNoText (sHeaderText))
+      return null;
+    return new BootstrapPageHeader ().addChild (new HCH1 ().addChild (sHeaderText));
   }
 
   @Override

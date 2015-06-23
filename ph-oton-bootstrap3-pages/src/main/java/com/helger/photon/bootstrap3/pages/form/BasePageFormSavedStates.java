@@ -29,7 +29,6 @@ import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
@@ -48,6 +47,7 @@ import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
@@ -167,7 +167,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
       final HCNodeList aNodeList = aWPEC.getNodeList ();
       final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-      if (aWPEC.hasSubAction (CHCParam.ACTION_SAVE))
+      if (aWPEC.hasSubAction (CPageParam.ACTION_SAVE))
       {
         if (FormStateManager.getInstance ().deleteAllFormStates ().isChanged ())
           aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.DELETE_ALL_SUCCESS.getDisplayText (aDisplayLocale)));
@@ -179,8 +179,8 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
       final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
       aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_ALL_QUERY.getDisplayText (aDisplayLocale)));
       final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-      aToolbar.addHiddenField (CHCParam.PARAM_ACTION, ACTION_DELETE_ALL);
-      aToolbar.addHiddenField (CHCParam.PARAM_SUBACTION, ACTION_SAVE);
+      aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_DELETE_ALL);
+      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_SAVE);
       aToolbar.addSubmitButtonYes (aDisplayLocale);
       aToolbar.addButtonNo (aDisplayLocale);
       return false;
@@ -205,7 +205,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
     {
       final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
       aToolbar.addButton (EText.BUTTON_DELETE.getDisplayText (aDisplayLocale),
-                          aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION, ACTION_DELETE_ALL),
+                          aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION, ACTION_DELETE_ALL),
                           EDefaultIcon.DELETE);
       aNodeList.addChild (aToolbar);
 
@@ -228,12 +228,13 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
 
         final IHCCell <?> aActionCell = aRow.addCell ();
         // Original action (currently always create even for copy)
-        final String sAction = aFormState.getAttributes ().getAttributeAsString (CHCParam.PARAM_ACTION, ACTION_CREATE);
+        final String sAction = aFormState.getAttributes ()
+                                         .getAttributeAsString (CPageParam.PARAM_ACTION, ACTION_CREATE);
         // Original object ID
-        final String sObjectID = aFormState.getAttributes ().getAttributeAsString (CHCParam.PARAM_OBJECT);
+        final String sObjectID = aFormState.getAttributes ().getAttributeAsString (CPageParam.PARAM_OBJECT);
         aActionCell.addChild (new HCA (aWPEC.getLinkToMenuItem (aFormState.getPageID ())
-                                            .add (CHCParam.PARAM_ACTION, sAction)
-                                            .addIfNonNull (CHCParam.PARAM_OBJECT, sObjectID)
+                                            .add (CPageParam.PARAM_ACTION, sAction)
+                                            .addIfNonNull (CPageParam.PARAM_OBJECT, sObjectID)
                                             .add (FIELD_FLOW_ID, aFormState.getFlowID ())
                                             .add (FIELD_RESTORE_FLOW_ID, aFormState.getFlowID ())).setTitle (EText.SAVED_STATE_EDIT.getDisplayText (aDisplayLocale))
                                                                                                   .addChild (getCreateImg ()));

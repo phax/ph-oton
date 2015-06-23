@@ -33,7 +33,6 @@ import com.helger.commons.idfactory.GlobalIDFactory;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCHiddenField;
@@ -49,6 +48,7 @@ import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.ajax.AjaxExecutorSaveFormState;
 import com.helger.photon.core.mgr.PhotonCoreManager;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
@@ -142,7 +142,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   @Nullable
   protected final String getSelectedObjectID (@Nonnull final WPECTYPE aWPEC)
   {
-    return aWPEC.getAttributeAsString (CHCParam.PARAM_OBJECT);
+    return aWPEC.getAttributeAsString (CPageParam.PARAM_OBJECT);
   }
 
   @Nonnull
@@ -311,9 +311,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final IButtonToolbar <?> aToolbar = createNewEditToolbar (aWPEC);
-    aToolbar.addHiddenField (CHCParam.PARAM_ACTION, ACTION_EDIT);
-    aToolbar.addHiddenField (CHCParam.PARAM_OBJECT, aSelectedObject.getID ());
-    aToolbar.addHiddenField (CHCParam.PARAM_SUBACTION, ACTION_SAVE);
+    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_EDIT);
+    aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
+    aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_SAVE);
     // Save button
     aToolbar.addSubmitButton (getEditToolbarSubmitButtonText (aDisplayLocale), getEditToolbarSubmitButtonIcon ());
     // Cancel button
@@ -397,10 +397,10 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final IButtonToolbar <?> aToolbar = createNewCreateToolbar (aWPEC);
-    aToolbar.addHiddenField (CHCParam.PARAM_ACTION, ACTION_CREATE);
+    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_CREATE);
     if (aSelectedObject != null)
-      aToolbar.addHiddenField (CHCParam.PARAM_OBJECT, aSelectedObject.getID ());
-    aToolbar.addHiddenField (CHCParam.PARAM_SUBACTION, ACTION_SAVE);
+      aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
+    aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_SAVE);
     // Save button
     aToolbar.addSubmitButton (getCreateToolbarSubmitButtonText (aDisplayLocale), getCreateToolbarSubmitButtonIcon ());
     // Cancel button
@@ -750,9 +750,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final IButtonToolbar <?> aToolbar = createNewDeleteToolbar (aWPEC);
-    aToolbar.addHiddenField (CHCParam.PARAM_ACTION, ACTION_DELETE);
-    aToolbar.addHiddenField (CHCParam.PARAM_SUBACTION, ACTION_SAVE);
-    aToolbar.addHiddenField (CHCParam.PARAM_OBJECT, aSelectedObject.getID ());
+    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_DELETE);
+    aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_SAVE);
+    aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
     // Yes button
     aToolbar.addSubmitButton (getDeleteToolbarSubmitButtonText (aDisplayLocale), getDeleteToolbarSubmitButtonIcon ());
     // No button
@@ -883,7 +883,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           // Create or edit a client
           final FormErrors aFormErrors = new FormErrors ();
           boolean bShowInputForm = true;
-          final boolean bIsFormSubmitted = aWPEC.hasSubAction (CHCParam.ACTION_SAVE);
+          final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
 
           if (bIsFormSubmitted)
           {
@@ -975,7 +975,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
         }
         case DELETE:
         {
-          final boolean bIsFormSubmitted = aWPEC.hasSubAction (CHCParam.ACTION_SAVE);
+          final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
 
           if (bIsFormSubmitted)
           {

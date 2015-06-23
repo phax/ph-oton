@@ -26,7 +26,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.collections.attrs.IAttributeContainer;
 import com.helger.commons.collections.attrs.IReadonlyAttributeContainer;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hc.CHCParam;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.web.fileupload.IFileItem;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -140,39 +139,6 @@ public interface ISimpleWebExecutionContext extends IReadonlyAttributeContainer
    */
   @Nonnull
   IRequestParamMap getRequestParamMap ();
-
-  /**
-   * @return The special request parameter value of
-   *         {@link CHCParam#PARAM_ACTION}. May be <code>null</code>.
-   */
-  @Nullable
-  String getAction ();
-
-  /**
-   * Check if the specified action is present in the request scope.
-   *
-   * @param sAction
-   *        Action to check.
-   * @return <code>true</code> if <code>getAction().equals (sAction)</code>
-   */
-  boolean hasAction (@Nullable String sAction);
-
-  /**
-   * @return The special request parameter value of
-   *         {@link CHCParam#PARAM_SUBACTION}. May be <code>null</code>.
-   */
-  @Nullable
-  String getSubAction ();
-
-  /**
-   * Check if the specified sub action is present in the request scope.
-   *
-   * @param sSubAction
-   *        Sub action to check.
-   * @return <code>true</code> if
-   *         <code>getSubAction().equals (sSubAction)</code>
-   */
-  boolean hasSubAction (@Nullable String sSubAction);
 
   /**
    * Get the user agent object of this HTTP request.

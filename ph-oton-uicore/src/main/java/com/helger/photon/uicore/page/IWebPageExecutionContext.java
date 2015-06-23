@@ -17,7 +17,9 @@
 package com.helger.photon.uicore.page;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
+import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
@@ -34,4 +36,37 @@ public interface IWebPageExecutionContext extends ILayoutExecutionContext
    */
   @Nonnull
   HCNodeList getNodeList ();
+
+  /**
+   * @return The special request parameter value of
+   *         {@link CHCParam#PARAM_ACTION}. May be <code>null</code>.
+   */
+  @Nullable
+  String getAction ();
+
+  /**
+   * Check if the specified action is present in the request scope.
+   *
+   * @param sAction
+   *        Action to check.
+   * @return <code>true</code> if <code>getAction().equals (sAction)</code>
+   */
+  boolean hasAction (@Nullable String sAction);
+
+  /**
+   * @return The special request parameter value of
+   *         {@link CHCParam#PARAM_SUBACTION}. May be <code>null</code>.
+   */
+  @Nullable
+  String getSubAction ();
+
+  /**
+   * Check if the specified sub action is present in the request scope.
+   *
+   * @param sSubAction
+   *        Sub action to check.
+   * @return <code>true</code> if
+   *         <code>getSubAction().equals (sSubAction)</code>
+   */
+  boolean hasSubAction (@Nullable String sSubAction);
 }

@@ -39,7 +39,6 @@ import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.vendor.VendorInfo;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCA;
@@ -68,6 +67,7 @@ import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.photon.core.smtp.CNamedSMTPSettings;
 import com.helger.photon.core.smtp.NamedSMTPSettings;
 import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.select.HCCharsetSelect;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
@@ -605,9 +605,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_TEST_BODY)));
 
       final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-      aToolbar.addHiddenField (CHCParam.PARAM_ACTION, ACTION_TEST_MAIL);
-      aToolbar.addHiddenField (CHCParam.PARAM_OBJECT, aSelectedObject.getID ());
-      aToolbar.addHiddenField (CHCParam.PARAM_SUBACTION, ACTION_PERFORM);
+      aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_TEST_MAIL);
+      aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
+      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_PERFORM);
       aToolbar.addSubmitButton (EText.BUTTON_SEND_TEST_MAIL.getDisplayText (aDisplayLocale), EDefaultIcon.YES);
       aToolbar.addButtonCancel (aDisplayLocale);
       return false;
@@ -656,9 +656,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
         aActionCell.addChild (createEmptyAction ());
 
       aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
-                                          .add (CHCParam.PARAM_ACTION, ACTION_TEST_MAIL)
-                                          .add (CHCParam.PARAM_OBJECT, aCurObject.getID ())).setTitle (EText.MSG_SEND_TEST_MAIL.getDisplayText (aDisplayLocale))
-                                                                                            .addChild (getTestMailIcon ()));
+                                          .add (CPageParam.PARAM_ACTION, ACTION_TEST_MAIL)
+                                          .add (CPageParam.PARAM_OBJECT, aCurObject.getID ())).setTitle (EText.MSG_SEND_TEST_MAIL.getDisplayText (aDisplayLocale))
+                                                                                              .addChild (getTestMailIcon ()));
     }
 
     aNodeList.addChild (aTable);

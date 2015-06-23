@@ -24,7 +24,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.collections.attrs.MapBasedAttributeContainer;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IReadonlyMultiLingualText;
@@ -37,9 +36,6 @@ import com.helger.commons.text.impl.ReadonlyMultiLingualText;
  */
 public abstract class AbstractPage extends MapBasedAttributeContainer implements IPage
 {
-  /** The name of the window where the help opens up */
-  public static final String HELP_WINDOW_NAME = "simplehelpwindow";
-
   private final String m_sID;
   private IReadonlyMultiLingualText m_aName;
   private IReadonlyMultiLingualText m_aDescription;
@@ -191,12 +187,6 @@ public abstract class AbstractPage extends MapBasedAttributeContainer implements
   public final String getDescription (@Nonnull final Locale aContentLocale)
   {
     return m_aDescription == null ? null : m_aDescription.getTextWithLocaleFallback (aContentLocale);
-  }
-
-  @OverrideOnDemand
-  public boolean isHelpAvailable ()
-  {
-    return false;
   }
 
   @Override

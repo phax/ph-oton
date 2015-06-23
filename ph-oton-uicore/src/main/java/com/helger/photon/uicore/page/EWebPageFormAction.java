@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
-import com.helger.html.hc.CHCParam;
+import com.helger.photon.uicore.css.CPageParam;
 
 /**
  * Determines the different form actions to be handled in
@@ -32,12 +32,12 @@ import com.helger.html.hc.CHCParam;
  */
 public enum EWebPageFormAction implements IHasID <String>
 {
-  VIEW (CHCParam.ACTION_VIEW),
-  CREATE (CHCParam.ACTION_CREATE),
-  EDIT (CHCParam.ACTION_EDIT),
-  COPY (CHCParam.ACTION_COPY),
-  DELETE (CHCParam.ACTION_DELETE),
-  UNDELETE (CHCParam.ACTION_UNDELETE),
+  VIEW (CPageParam.ACTION_VIEW),
+  CREATE (CPageParam.ACTION_CREATE),
+  EDIT (CPageParam.ACTION_EDIT),
+  COPY (CPageParam.ACTION_COPY),
+  DELETE (CPageParam.ACTION_DELETE),
+  UNDELETE (CPageParam.ACTION_UNDELETE),
   CUSTOM ("$custom$");
 
   private final String m_sID;

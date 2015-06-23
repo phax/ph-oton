@@ -30,7 +30,6 @@ import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCEM;
@@ -43,6 +42,7 @@ import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -124,7 +124,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    if (aWPEC.hasAction (CHCParam.ACTION_SAVE))
+    if (aWPEC.hasAction (CPageParam.ACTION_SAVE))
     {
       // Save changes
       final boolean bGlobalDebug = aWPEC.getCheckBoxAttr (FIELD_GLOBAL_DEBUG, GlobalDebug.isDebugMode ());
@@ -203,7 +203,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
     aForm0.addChild (aTabBox);
 
     final IButtonToolbar <?> aToolbar = aForm0.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-    aToolbar.addHiddenField (CHCParam.PARAM_ACTION, CHCParam.ACTION_SAVE);
+    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_SAVE);
     aToolbar.addSubmitButtonSave (aDisplayLocale);
   }
 }

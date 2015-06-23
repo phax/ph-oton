@@ -32,7 +32,6 @@ import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCDiv;
-import com.helger.html.hc.html.HCH1;
 import com.helger.html.hc.html.HCHead;
 import com.helger.html.hc.html.HCP;
 import com.helger.html.hc.html.HCSpan;
@@ -62,7 +61,6 @@ import com.helger.photon.bootstrap3.nav.BootstrapNav;
 import com.helger.photon.bootstrap3.navbar.BootstrapNavbar;
 import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarPosition;
 import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarType;
-import com.helger.photon.bootstrap3.pageheader.BootstrapPageHeader;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRenderer;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRendererHorz;
 import com.helger.photon.core.EPhotonCoreText;
@@ -211,11 +209,12 @@ public final class LayoutAreaContentProviderPublic implements ILayoutAreaContent
                                                                                                          : "")));
     }
 
-    final String sHeaderText = aDisplayPage.getHeaderText (aWPEC);
-    if (StringHelper.hasText (sHeaderText))
-      aPageContainer.addChild (new BootstrapPageHeader ().addChild (new HCH1 ().addChild (sHeaderText)));
+    // Add page header
+    aPageContainer.addChild (aDisplayPage.getHeaderNode (aWPEC));
+
     // Main fill content
     aDisplayPage.getContent (aWPEC);
+
     // Add result
     aPageContainer.addChild (aWPEC.getNodeList ());
     return aPageContainer;

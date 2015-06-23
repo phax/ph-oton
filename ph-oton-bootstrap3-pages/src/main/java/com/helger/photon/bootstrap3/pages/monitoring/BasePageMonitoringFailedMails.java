@@ -40,7 +40,6 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCDiv;
@@ -62,6 +61,7 @@ import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.mgr.PhotonCoreManager;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
@@ -208,18 +208,18 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
 
     aToolbar.addButton (EPhotonCoreText.BUTTON_RESEND.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref ()
-                             .add (CHCParam.PARAM_ACTION, ACTION_RESEND)
-                             .add (CHCParam.PARAM_OBJECT, aSelectedObject.getID ()),
+                             .add (CPageParam.PARAM_ACTION, ACTION_RESEND)
+                             .add (CPageParam.PARAM_OBJECT, aSelectedObject.getID ()),
                         EDefaultIcon.YES);
     aToolbar.addButton (EText.MSG_BUTTON_RESEND_DEFAULT_SETTINGS.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref ()
-                             .add (CHCParam.PARAM_ACTION, ACTION_RESEND_DEFAULT_SETTINGS)
-                             .add (CHCParam.PARAM_OBJECT, aSelectedObject.getID ()),
+                             .add (CPageParam.PARAM_ACTION, ACTION_RESEND_DEFAULT_SETTINGS)
+                             .add (CPageParam.PARAM_OBJECT, aSelectedObject.getID ()),
                         EDefaultIcon.YES);
     aToolbar.addButton (EPhotonCoreText.BUTTON_DELETE.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref ()
-                             .add (CHCParam.PARAM_ACTION, ACTION_DELETE)
-                             .add (CHCParam.PARAM_OBJECT, aSelectedObject.getID ()),
+                             .add (CPageParam.PARAM_ACTION, ACTION_DELETE)
+                             .add (CPageParam.PARAM_OBJECT, aSelectedObject.getID ()),
                         EDefaultIcon.DELETE);
   }
 
@@ -458,17 +458,17 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aToolbar.addChild (new BootstrapButton ().addChild (EPhotonCoreText.BUTTON_RESEND_ALL.getDisplayText (aDisplayLocale))
-                                             .setOnClick (aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION,
+                                             .setOnClick (aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION,
                                                                                     ACTION_RESEND_ALL))
                                              .setIcon (EDefaultIcon.YES)
                                              .setDisabled (bDisabled));
     aToolbar.addChild (new BootstrapButton ().addChild (EText.MSG_BUTTON_RESEND_ALL_DEFAULT_SETTINGS.getDisplayText (aDisplayLocale))
-                                             .setOnClick (aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION,
+                                             .setOnClick (aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION,
                                                                                     ACTION_RESEND_ALL_DEFAULT_SETTINGS))
                                              .setIcon (EDefaultIcon.YES)
                                              .setDisabled (bDisabled));
     aToolbar.addChild (new BootstrapButton ().addChild (EPhotonCoreText.BUTTON_DELETE_ALL.getDisplayText (aDisplayLocale))
-                                             .setOnClick (aWPEC.getSelfHref ().add (CHCParam.PARAM_ACTION,
+                                             .setOnClick (aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION,
                                                                                     ACTION_DELETE_ALL))
                                              .setIcon (EDefaultIcon.DELETE)
                                              .setDisabled (bDisabled));

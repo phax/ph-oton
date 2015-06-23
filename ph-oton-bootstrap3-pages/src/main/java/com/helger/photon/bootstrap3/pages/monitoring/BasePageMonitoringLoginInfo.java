@@ -35,7 +35,6 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCForm;
@@ -57,6 +56,7 @@ import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
@@ -290,9 +290,9 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                                                                                          sUserName)));
 
       final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-      aToolbar.addHiddenField (CHCParam.PARAM_ACTION, ACTION_LOGOUT_USER);
-      aToolbar.addHiddenField (CHCParam.PARAM_OBJECT, aSelectedObject.getID ());
-      aToolbar.addHiddenField (CHCParam.PARAM_SUBACTION, ACTION_PERFORM);
+      aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_LOGOUT_USER);
+      aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
+      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_PERFORM);
       aToolbar.addSubmitButtonYes (aDisplayLocale);
       aToolbar.addButtonNo (aDisplayLocale);
       return false;
@@ -334,10 +334,10 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       {
         final String sUserName = SecurityUtils.getUserDisplayName (aLoginInfo.getUser (), aDisplayLocale);
         aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
-                                            .add (CHCParam.PARAM_ACTION, ACTION_LOGOUT_USER)
-                                            .add (CHCParam.PARAM_OBJECT, aLoginInfo.getID ())).setTitle (EText.MSG_LOGOUT_USER.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                       sUserName))
-                                                                                              .addChild (getLogoutUserIcon ()));
+                                            .add (CPageParam.PARAM_ACTION, ACTION_LOGOUT_USER)
+                                            .add (CPageParam.PARAM_OBJECT, aLoginInfo.getID ())).setTitle (EText.MSG_LOGOUT_USER.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                         sUserName))
+                                                                                                .addChild (getLogoutUserIcon ()));
       }
       else
       {

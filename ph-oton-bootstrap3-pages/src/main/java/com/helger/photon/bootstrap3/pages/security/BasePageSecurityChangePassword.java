@@ -30,7 +30,6 @@ import com.helger.commons.name.IHasDisplayTextWithArgs;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.commons.text.impl.TextProvider;
 import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.html.HCEditPassword;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.AccessManager;
@@ -45,6 +44,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapSecurityUI;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -198,7 +198,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
                                                      .setErrorList (aFormErrors.getListOfField (FIELD_NEW_PASSWORD_CONFIRM)));
 
         final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-        aToolbar.addHiddenField (CHCParam.PARAM_ACTION, CHCParam.ACTION_PERFORM);
+        aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_PERFORM);
         // Add the nonce for CSRF check
         aToolbar.addChild (createCSRFNonceField ());
         aToolbar.addSubmitButtonSave (aDisplayLocale);
