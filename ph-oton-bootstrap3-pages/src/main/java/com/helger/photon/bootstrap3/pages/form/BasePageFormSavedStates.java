@@ -162,7 +162,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
   @Override
   protected boolean handleCustomActions (@Nonnull final WPECTYPE aWPEC, @Nullable final FormState aSelectedObject)
   {
-    if (aWPEC.hasAction (ACTION_DELETE_ALL))
+    if (aWPEC.hasAction (CPageParam.ACTION_DELETE_ALL))
     {
       final HCNodeList aNodeList = aWPEC.getNodeList ();
       final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
@@ -179,8 +179,8 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
       final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
       aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_ALL_QUERY.getDisplayText (aDisplayLocale)));
       final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-      aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_DELETE_ALL);
-      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_SAVE);
+      aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE_ALL);
+      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
       aToolbar.addSubmitButtonYes (aDisplayLocale);
       aToolbar.addButtonNo (aDisplayLocale);
       return false;
@@ -205,7 +205,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
     {
       final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
       aToolbar.addButton (EText.BUTTON_DELETE.getDisplayText (aDisplayLocale),
-                          aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION, ACTION_DELETE_ALL),
+                          aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE_ALL),
                           EDefaultIcon.DELETE);
       aNodeList.addChild (aToolbar);
 
@@ -229,7 +229,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
         final IHCCell <?> aActionCell = aRow.addCell ();
         // Original action (currently always create even for copy)
         final String sAction = aFormState.getAttributes ()
-                                         .getAttributeAsString (CPageParam.PARAM_ACTION, ACTION_CREATE);
+                                         .getAttributeAsString (CPageParam.PARAM_ACTION, CPageParam.ACTION_CREATE);
         // Original object ID
         final String sObjectID = aFormState.getAttributes ().getAttributeAsString (CPageParam.PARAM_OBJECT);
         aActionCell.addChild (new HCA (aWPEC.getLinkToMenuItem (aFormState.getPageID ())
@@ -237,7 +237,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
                                             .addIfNonNull (CPageParam.PARAM_OBJECT, sObjectID)
                                             .add (FIELD_FLOW_ID, aFormState.getFlowID ())
                                             .add (FIELD_RESTORE_FLOW_ID, aFormState.getFlowID ())).setTitle (EText.SAVED_STATE_EDIT.getDisplayText (aDisplayLocale))
-                                                                                                  .addChild (getCreateImg ()));
+                                                                                                  .addChild (EDefaultIcon.NEW.getAsNode ()));
         aActionCell.addChild (createDeleteLink (aWPEC,
                                                 aFormState,
                                                 EText.SAVED_STATE_DELETE.getDisplayText (aDisplayLocale)));

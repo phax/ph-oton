@@ -547,7 +547,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       final HCNodeList aNodeList = aWPEC.getNodeList ();
       final FormErrors aFormErrors = new FormErrors ();
 
-      if (aWPEC.hasSubAction (ACTION_PERFORM))
+      if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
       {
         final String sSender = aWPEC.getAttributeAsString (FIELD_TEST_SENDER);
         final String sReceiver = aWPEC.getAttributeAsString (FIELD_TEST_RECEIVER);
@@ -607,7 +607,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
       aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_TEST_MAIL);
       aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
-      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_PERFORM);
+      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
       aToolbar.addSubmitButton (EText.BUTTON_SEND_TEST_MAIL.getDisplayText (aDisplayLocale), EDefaultIcon.YES);
       aToolbar.addButtonCancel (aDisplayLocale);
       return false;

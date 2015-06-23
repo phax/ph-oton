@@ -17,6 +17,7 @@
 package com.helger.photon.uicore.page;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,25 +31,38 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.name.IHasDisplayName;
+import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.url.ISimpleURL;
+import com.helger.commons.url.SimpleURL;
+import com.helger.commons.url.URLValidator;
+import com.helger.css.ECSSUnit;
+import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCForm;
+import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
+import com.helger.html.hc.html.HCSpan;
+import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.lock.LockResult;
 import com.helger.photon.basic.security.lock.ObjectLockManager;
 import com.helger.photon.basic.security.user.IUser;
 import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.ajax.AjaxExecutorSaveFormState;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.uicore.css.CPageParam;
+import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
@@ -66,15 +80,14 @@ import com.helger.validation.error.FormErrors;
  *        Web page execution context type
  */
 @NotThreadSafe
-public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
+public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends AbstractHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>> extends AbstractWebPage <WPECTYPE>
 {
   // all internal IDs starting with "$" to prevent accidental overwrite with
   // actual field
   public static final String FIELD_FLOW_ID = AjaxExecutorSaveFormState.FIELD_FLOW_ID;
   public static final String FIELD_RESTORE_FLOW_ID = AjaxExecutorSaveFormState.FIELD_RESTORE_FLOW_ID;
-  public static final String INPUT_FORM_ID = "inputform";
-  public static final String DELETE_FORM_ID = "deleteform";
-  public static final String UNDELETE_FORM_ID = "undeleteform";
+  public static final String FORM_ID_INPUT = "inputform";
+  public static final String FORM_ID_DELETE = "deleteform";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageForm.class);
 
@@ -101,6 +114,31 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   {
     super (sID, aName, aDescription);
   }
+
+  /**
+   * @param aLEC
+   *        Layout execution context
+   * @return A form that links to the current page.
+   */
+  @Nonnull
+  protected abstract FORM_TYPE createFormSelf (@Nonnull final ILayoutExecutionContext aLEC);
+
+  /**
+   * @param aLEC
+   *        Layout execution context
+   * @return A file upload form that links to the current page.
+   */
+  @Nonnull
+  protected abstract FORM_TYPE createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC);
+
+  @Nonnull
+  protected abstract TOOLBAR_TYPE createToolbar (@Nonnull WPECTYPE aWPEC);
+
+  @Nullable
+  protected abstract IHCNode createErrorBox (@Nonnull WPECTYPE aWPEC, @Nullable String sErrorMsg);
+
+  @Nullable
+  protected abstract IHCNode createIncorrectInputBox (@Nonnull WPECTYPE aWPEC);
 
   /**
    * Get the display name of the passed object.
@@ -146,13 +184,242 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   @Nonnull
-  protected abstract IButtonToolbar <?> createNewToolbar (@Nonnull WPECTYPE aWPEC);
+  public static HCSpan createEmptyAction ()
+  {
+    // Assume each icon has a width of 16px
+    return new HCSpan ().addClass (CUICoreCSS.CSS_CLASS_EMPTY_ACTION)
+                        .addStyle (CCSSProperties.DISPLAY_INLINE_BLOCK)
+                        .addStyle (CCSSProperties.WIDTH.newValue (ECSSUnit.px (16)));
+  }
+
+  @Nonnull
+  public static SimpleURL createCreateURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                           @Nonnull final String sMenuItemID)
+  {
+    return aLEC.getLinkToMenuItem (sMenuItemID).add (CPageParam.PARAM_ACTION, CPageParam.ACTION_CREATE);
+  }
+
+  @Nonnull
+  public static SimpleURL createCreateURL (@Nonnull final ILayoutExecutionContext aLEC)
+  {
+    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_CREATE);
+  }
+
+  @Nonnull
+  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                         @Nonnull final String sMenuItemID,
+                                         @Nonnull final IHasID <String> aCurObject)
+  {
+    return createViewURL (aLEC, sMenuItemID, aCurObject.getID ());
+  }
+
+  @Nonnull
+  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                         @Nonnull final String sMenuItemID,
+                                         @Nonnull final String sObjectID)
+  {
+    return aLEC.getLinkToMenuItem (sMenuItemID)
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW)
+               .add (CPageParam.PARAM_OBJECT, sObjectID);
+  }
+
+  @Nonnull
+  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                         @Nonnull final IHasID <String> aCurObject)
+  {
+    return createViewURL (aLEC, aCurObject.getID ());
+  }
+
+  @Nonnull
+  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final String sObjectID)
+  {
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW)
+               .add (CPageParam.PARAM_OBJECT, sObjectID);
+  }
+
+  @Nonnull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                                                                  @Nonnull final T aCurObject)
+  {
+    return createEditLink (aLEC, aCurObject, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                                                                  @Nonnull final T aCurObject,
+                                                                                  @Nullable final Map <String, String> aParams)
+  {
+    final Locale aDisplayLocale = aLEC.getDisplayLocale ();
+    return createEditLink (aLEC,
+                           aCurObject,
+                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                            aCurObject.getDisplayName ()),
+                           aParams);
+  }
+
+  @Nonnull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                                                                  @Nonnull final T aCurObject)
+  {
+    return createEditLink (aLEC, aCurObject, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                                                                  @Nonnull final T aCurObject,
+                                                                                  @Nullable final Map <String, String> aParams)
+  {
+    final Locale aDisplayLocale = aLEC.getDisplayLocale ();
+    return createEditLink (aLEC,
+                           aCurObject,
+                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                            aCurObject.getDisplayText (aDisplayLocale)),
+                           aParams);
+  }
+
+  @Nonnull
+  public static SimpleURL createEditURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                         @Nonnull final IHasID <String> aCurObject)
+  {
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+  }
+
+  @Nonnull
+  public static HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                    @Nonnull final IHasID <String> aCurObject,
+                                    @Nullable final String sTitle)
+  {
+    return createEditLink (aLEC, aCurObject, sTitle, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                    @Nonnull final IHasID <String> aCurObject,
+                                    @Nullable final String sTitle,
+                                    @Nullable final Map <String, String> aParams)
+  {
+    final ISimpleURL aEditURL = createEditURL (aLEC, aCurObject).addAll (aParams);
+    return new HCA (aEditURL).setTitle (sTitle).addChild (EDefaultIcon.EDIT.getAsNode ());
+  }
+
+  @Nonnull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                                                                  @Nonnull final T aCurObject)
+  {
+    final Locale aDisplayLocale = aLEC.getDisplayLocale ();
+    return createCopyLink (aLEC,
+                           aCurObject,
+                           EWebPageText.OBJECT_COPY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                            aCurObject.getDisplayName ()));
+  }
+
+  @Nonnull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                                                                  @Nonnull final T aCurObject)
+  {
+    final Locale aDisplayLocale = aLEC.getDisplayLocale ();
+    return createCopyLink (aLEC,
+                           aCurObject,
+                           EWebPageText.OBJECT_COPY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                            aCurObject.getDisplayText (aDisplayLocale)));
+  }
+
+  @Nonnull
+  public static SimpleURL createCopyURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                         @Nonnull final IHasID <String> aCurObject)
+  {
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_COPY)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+  }
+
+  @Nonnull
+  public static HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                    @Nonnull final IHasID <String> aCurObject,
+                                    @Nullable final String sTitle)
+  {
+    final ISimpleURL aCopyURL = createCopyURL (aLEC, aCurObject);
+    return new HCA (aCopyURL).setTitle (sTitle).addChild (EDefaultIcon.COPY.getAsNode ());
+  }
+
+  @Nonnull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createDeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                                                                    @Nonnull final T aCurObject)
+  {
+    final Locale aDisplayLocale = aLEC.getDisplayLocale ();
+    return createDeleteLink (aLEC,
+                             aCurObject,
+                             EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                aCurObject.getDisplayName ()));
+  }
+
+  @Nonnull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createDeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                                                                    @Nonnull final T aCurObject)
+  {
+    final Locale aDisplayLocale = aLEC.getDisplayLocale ();
+    return createDeleteLink (aLEC,
+                             aCurObject,
+                             EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                aCurObject.getDisplayText (aDisplayLocale)));
+  }
+
+  @Nonnull
+  public static SimpleURL createDeleteURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                           @Nonnull final IHasID <String> aCurObject)
+  {
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+  }
+
+  @Nonnull
+  public static HCA createDeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                      @Nonnull final IHasID <String> aCurObject,
+                                      @Nullable final String sTitle)
+  {
+    final ISimpleURL aURL = createDeleteURL (aLEC, aCurObject);
+    return new HCA (aURL).setTitle (sTitle).addChild (EDefaultIcon.DELETE.getAsNode ());
+  }
+
+  @Nonnull
+  public static SimpleURL createUndeleteURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                             @Nonnull final IHasID <String> aCurObject)
+  {
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_UNDELETE)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+  }
+
+  @Nonnull
+  public static HCA createNestedCreateLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                            @Nonnull final IHasID <String> aCurObject,
+                                            @Nullable final String sTitle)
+  {
+    final ISimpleURL aURL = createCreateURL (aLEC).add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+    return new HCA (aURL).setTitle (sTitle).addChild (EDefaultIcon.NEW.getAsNode ());
+  }
 
   @Nullable
-  protected abstract IHCNode createErrorBox (@Nonnull WPECTYPE aWPEC, @Nullable String sErrorMsg);
+  public static IHCNode createWebLink (@Nullable final String sWebSite)
+  {
+    return createWebLink (sWebSite, HC_Target.BLANK);
+  }
 
   @Nullable
-  protected abstract IHCNode createIncorrectInputBox (@Nonnull WPECTYPE aWPEC);
+  public static IHCNode createWebLink (@Nullable final String sWebSite, @Nullable final HC_Target aTarget)
+  {
+    // TODO replace with HCA.createLinkedWebsite in ph-html &gt; 4.7.4
+
+    if (StringHelper.hasNoText (sWebSite))
+      return null;
+    if (!URLValidator.isValid (sWebSite))
+      return new HCTextNode (sWebSite);
+    return new HCA (sWebSite).setTarget (aTarget).addChild (sWebSite);
+  }
 
   /**
    * @param aWPEC
@@ -162,9 +429,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   @Nonnull
   @OverrideOnDemand
-  protected IButtonToolbar <?> createNewViewToolbar (@Nonnull final WPECTYPE aWPEC)
+  protected TOOLBAR_TYPE createNewViewToolbar (@Nonnull final WPECTYPE aWPEC)
   {
-    return createNewToolbar (aWPEC);
+    return createToolbar (aWPEC);
   }
 
   /**
@@ -194,7 +461,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   @OverrideOnDemand
   protected void modifyViewToolbar (@Nonnull final WPECTYPE aWPEC,
                                     @Nonnull final DATATYPE aSelectedObject,
-                                    @Nonnull final IButtonToolbar <?> aToolbar)
+                                    @Nonnull final TOOLBAR_TYPE aToolbar)
   {}
 
   /**
@@ -211,13 +478,13 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   @Nonnull
   @OverrideOnDemand
-  protected IButtonToolbar <?> createViewToolbar (@Nonnull final WPECTYPE aWPEC,
-                                                  final boolean bCanGoBack,
-                                                  @Nonnull final DATATYPE aSelectedObject)
+  protected TOOLBAR_TYPE createViewToolbar (@Nonnull final WPECTYPE aWPEC,
+                                            final boolean bCanGoBack,
+                                            @Nonnull final DATATYPE aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IButtonToolbar <?> aToolbar = createNewViewToolbar (aWPEC);
+    final TOOLBAR_TYPE aToolbar = createNewViewToolbar (aWPEC);
     if (bCanGoBack)
     {
       // Back to list
@@ -242,9 +509,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   @Nonnull
   @OverrideOnDemand
-  protected IButtonToolbar <?> createNewEditToolbar (@Nonnull final WPECTYPE aWPEC)
+  protected TOOLBAR_TYPE createNewEditToolbar (@Nonnull final WPECTYPE aWPEC)
   {
-    return createNewToolbar (aWPEC);
+    return createToolbar (aWPEC);
   }
 
   /**
@@ -274,7 +541,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   @OverrideOnDemand
   protected void modifyEditToolbar (@Nonnull final WPECTYPE aWPEC,
                                     @Nonnull final DATATYPE aSelectedObject,
-                                    @Nonnull final IButtonToolbar <?> aToolbar)
+                                    @Nonnull final TOOLBAR_TYPE aToolbar)
   {}
 
   @Nullable
@@ -304,16 +571,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   @Nonnull
   @OverrideOnDemand
-  protected IButtonToolbar <?> createEditToolbar (@Nonnull final WPECTYPE aWPEC,
-                                                  @Nonnull final AbstractHCForm <?> aForm,
-                                                  @Nonnull final DATATYPE aSelectedObject)
+  protected TOOLBAR_TYPE createEditToolbar (@Nonnull final WPECTYPE aWPEC,
+                                            @Nonnull final FORM_TYPE aForm,
+                                            @Nonnull final DATATYPE aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IButtonToolbar <?> aToolbar = createNewEditToolbar (aWPEC);
-    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_EDIT);
+    final TOOLBAR_TYPE aToolbar = createNewEditToolbar (aWPEC);
+    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT);
     aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
-    aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_SAVE);
+    aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
     // Save button
     aToolbar.addSubmitButton (getEditToolbarSubmitButtonText (aDisplayLocale), getEditToolbarSubmitButtonIcon ());
     // Cancel button
@@ -346,9 +613,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   @Nonnull
   @OverrideOnDemand
-  protected IButtonToolbar <?> createNewCreateToolbar (@Nonnull final WPECTYPE aWPEC)
+  protected TOOLBAR_TYPE createNewCreateToolbar (@Nonnull final WPECTYPE aWPEC)
   {
-    return createNewToolbar (aWPEC);
+    return createToolbar (aWPEC);
   }
 
   /**
@@ -360,7 +627,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The toolbar to be modified
    */
   @OverrideOnDemand
-  protected void modifyCreateToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final IButtonToolbar <?> aToolbar)
+  protected void modifyCreateToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final TOOLBAR_TYPE aToolbar)
   {}
 
   @Nullable
@@ -390,17 +657,17 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   @Nonnull
   @OverrideOnDemand
-  protected IButtonToolbar <?> createCreateToolbar (@Nonnull final WPECTYPE aWPEC,
-                                                    @Nonnull final AbstractHCForm <?> aForm,
-                                                    @Nullable final DATATYPE aSelectedObject)
+  protected TOOLBAR_TYPE createCreateToolbar (@Nonnull final WPECTYPE aWPEC,
+                                              @Nonnull final FORM_TYPE aForm,
+                                              @Nullable final DATATYPE aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IButtonToolbar <?> aToolbar = createNewCreateToolbar (aWPEC);
-    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_CREATE);
+    final TOOLBAR_TYPE aToolbar = createNewCreateToolbar (aWPEC);
+    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_CREATE);
     if (aSelectedObject != null)
       aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
-    aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_SAVE);
+    aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
     // Save button
     aToolbar.addSubmitButton (getCreateToolbarSubmitButtonText (aDisplayLocale), getCreateToolbarSubmitButtonIcon ());
     // Cancel button
@@ -608,7 +875,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        the form to add the elements to
    */
   @OverrideOnDemand
-  protected void modifyFormBeforeShowInputForm (@Nonnull final WPECTYPE aWPEC, @Nonnull final AbstractHCForm <?> aForm)
+  protected void modifyFormBeforeShowInputForm (@Nonnull final WPECTYPE aWPEC, @Nonnull final FORM_TYPE aForm)
   {}
 
   /**
@@ -630,7 +897,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   protected abstract void showInputForm (@Nonnull WPECTYPE aWPEC,
                                          @Nullable DATATYPE aSelectedObject,
-                                         @Nonnull AbstractHCForm <?> aForm,
+                                         @Nonnull FORM_TYPE aForm,
                                          @Nonnull EWebPageFormAction eFormAction,
                                          @Nonnull FormErrors aFormErrors);
 
@@ -646,7 +913,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        the form to add the elements to
    */
   @OverrideOnDemand
-  protected void modifyFormAfterShowInputForm (@Nonnull final WPECTYPE aWPEC, @Nonnull final AbstractHCForm <?> aForm)
+  protected void modifyFormAfterShowInputForm (@Nonnull final WPECTYPE aWPEC, @Nonnull final FORM_TYPE aForm)
   {}
 
   /**
@@ -661,7 +928,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   @OverrideOnDemand
   protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final AbstractHCForm <?> aForm,
+                                  @Nonnull final FORM_TYPE aForm,
                                   @Nonnull final DATATYPE aSelectedObject)
   {}
 
@@ -699,9 +966,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   @Nonnull
   @OverrideOnDemand
-  protected IButtonToolbar <?> createNewDeleteToolbar (@Nonnull final WPECTYPE aWPEC)
+  protected TOOLBAR_TYPE createNewDeleteToolbar (@Nonnull final WPECTYPE aWPEC)
   {
-    return createNewToolbar (aWPEC);
+    return createToolbar (aWPEC);
   }
 
   /**
@@ -713,7 +980,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The toolbar to be modified
    */
   @OverrideOnDemand
-  protected void modifyDeleteToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final IButtonToolbar <?> aToolbar)
+  protected void modifyDeleteToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final TOOLBAR_TYPE aToolbar)
   {}
 
   @Nullable
@@ -743,15 +1010,15 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   @Nonnull
   @OverrideOnDemand
-  protected IButtonToolbar <?> createDeleteToolbar (@Nonnull final WPECTYPE aWPEC,
-                                                    @Nonnull final AbstractHCForm <?> aForm,
-                                                    @Nonnull final DATATYPE aSelectedObject)
+  protected TOOLBAR_TYPE createDeleteToolbar (@Nonnull final WPECTYPE aWPEC,
+                                              @Nonnull final FORM_TYPE aForm,
+                                              @Nonnull final DATATYPE aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IButtonToolbar <?> aToolbar = createNewDeleteToolbar (aWPEC);
-    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_DELETE);
-    aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_SAVE);
+    final TOOLBAR_TYPE aToolbar = createNewDeleteToolbar (aWPEC);
+    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE);
+    aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
     aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
     // Yes button
     aToolbar.addSubmitButton (getDeleteToolbarSubmitButtonText (aDisplayLocale), getDeleteToolbarSubmitButtonIcon ());
@@ -815,34 +1082,34 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
 
     // Default value is custom action
     EWebPageFormAction eFormAction = EWebPageFormAction.CUSTOM;
-    if (ACTION_VIEW.equals (sAction))
+    if (CPageParam.ACTION_VIEW.equals (sAction))
     {
       if (aSelectedObject != null)
         eFormAction = EWebPageFormAction.VIEW;
     }
     else
-      if (ACTION_CREATE.equals (sAction))
+      if (CPageParam.ACTION_CREATE.equals (sAction))
         eFormAction = EWebPageFormAction.CREATE;
       else
-        if (ACTION_EDIT.equals (sAction))
+        if (CPageParam.ACTION_EDIT.equals (sAction))
         {
           if (aSelectedObject != null)
             eFormAction = EWebPageFormAction.EDIT;
         }
         else
-          if (ACTION_COPY.equals (sAction))
+          if (CPageParam.ACTION_COPY.equals (sAction))
           {
             if (aSelectedObject != null)
               eFormAction = EWebPageFormAction.COPY;
           }
           else
-            if (ACTION_DELETE.equals (sAction))
+            if (CPageParam.ACTION_DELETE.equals (sAction))
             {
               if (aSelectedObject != null)
                 eFormAction = EWebPageFormAction.DELETE;
             }
             else
-              if (ACTION_UNDELETE.equals (sAction))
+              if (CPageParam.ACTION_UNDELETE.equals (sAction))
               {
                 if (aSelectedObject != null)
                   eFormAction = EWebPageFormAction.UNDELETE;
@@ -920,12 +1187,12 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             // Show the input form. Either for the first time or because of form
             // errors a n-th time
             bShowList = false;
-            final AbstractHCForm <?> aForm = isFileUploadForm (aWPEC) ? createFormFileUploadSelf (aWPEC)
-                                                                     : createFormSelf (aWPEC);
+            final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? createFormFileUploadSelf (aWPEC)
+                                                            : createFormSelf (aWPEC);
             aNodeList.addChild (aForm);
 
             // Set unique ID
-            aForm.setID (INPUT_FORM_ID);
+            aForm.setID (FORM_ID_INPUT);
 
             // Add the nonce for CSRF check
             aForm.addChild (createCSRFNonceField ());
@@ -948,7 +1215,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
               if (aSavedState != null)
               {
                 // Restore all form values
-                aForm.addChild (new HCScriptOnDocumentReady (JSFormHelper.setAllFormValues (INPUT_FORM_ID,
+                aForm.addChild (new HCScriptOnDocumentReady (JSFormHelper.setAllFormValues (FORM_ID_INPUT,
                                                                                             aSavedState.getAsAssocArray ())));
               }
             }
@@ -989,11 +1256,11 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           }
           else
           {
-            final AbstractHCForm <?> aForm = createFormSelf (aWPEC);
+            final FORM_TYPE aForm = createFormSelf (aWPEC);
             aNodeList.addChild (aForm);
 
             // Set unique ID
-            aForm.setID (DELETE_FORM_ID);
+            aForm.setID (FORM_ID_DELETE);
 
             // Add the nonce for CSRF check
             aForm.addChild (createCSRFNonceField ());

@@ -16,23 +16,14 @@
  */
 package com.helger.photon.bootstrap3.pages;
 
-import java.util.Locale;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IReadonlyMultiLingualText;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.HCH1;
-import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
-import com.helger.photon.bootstrap3.form.EBootstrapFormType;
-import com.helger.photon.bootstrap3.pageheader.BootstrapPageHeader;
-import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -69,57 +60,30 @@ public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecuti
   public IHCNode getHeaderNode (@Nonnull final WPECTYPE aWPEC)
   {
     final String sHeaderText = getHeaderText (aWPEC);
-    if (StringHelper.hasNoText (sHeaderText))
-      return null;
-    return new BootstrapPageHeader ().addChild (new HCH1 ().addChild (sHeaderText));
+    return BootstrapUI.createPageHeader (sHeaderText);
   }
 
-  @Override
   @Nonnull
-  public BootstrapForm createFormSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  protected BootstrapForm createFormSelf (@Nonnull final ILayoutExecutionContext aLEC)
   {
-    return new BootstrapForm (EBootstrapFormType.HORIZONTAL).setAction (aLEC.getSelfHref ());
+    return BootstrapUI.createFormSelf (aLEC);
   }
 
-  @Override
   @Nonnull
-  public BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  protected BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC)
   {
-    return createFormSelf (aLEC).setEncTypeFileUpload ();
+    return BootstrapUI.createFormFileUploadSelf (aLEC);
   }
 
-  /**
-   * Create a new toolbar.
-   *
-   * @param aWPEC
-   *        Current web page execution context. Never <code>null</code>.
-   * @return Never <code>null</code>.
-   */
   @Nonnull
-  protected final BootstrapButtonToolbar createNewToolbar (@Nonnull final WPECTYPE aWPEC)
+  protected final IHCNode createErrorBox (@Nullable final String sErrorMsg)
   {
-    return new BootstrapButtonToolbar (aWPEC);
-  }
-
-  /**
-   * Create a new error box
-   *
-   * @param aWPEC
-   *        Current web page execution context. Never <code>null</code>.
-   * @param sErrorMsg
-   *        The error message to emit.
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  protected final IHCNode createErrorBox (@Nonnull final WPECTYPE aWPEC, @Nullable final String sErrorMsg)
-  {
-    return new BootstrapErrorBox ().addChild (sErrorMsg);
+    return BootstrapUI.createErrorBox (sErrorMsg);
   }
 
   @Nonnull
   protected final IHCNode createIncorrectInputBox (@Nonnull final WPECTYPE aWPEC)
   {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    return new BootstrapErrorBox ().addChild (EPhotonCoreText.ERR_INCORRECT_INPUT.getDisplayText (aDisplayLocale));
+    return BootstrapUI.createIncorrectInputBox (aWPEC);
   }
 }

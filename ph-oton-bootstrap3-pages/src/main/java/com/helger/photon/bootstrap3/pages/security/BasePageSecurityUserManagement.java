@@ -53,6 +53,7 @@ import com.helger.html.hc.html.HCEdit;
 import com.helger.html.hc.html.HCEditPassword;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;
+import com.helger.html.hc.htmlext.HCA_MailTo;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
@@ -324,7 +325,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LASTNAME.getDisplayText (aDisplayLocale))
                                                  .setCtrl (aSelectedObject.getLastName ()));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_EMAIL.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (createEmailLink (aSelectedObject.getEmailAddress ())));
+                                                 .setCtrl (HCA_MailTo.createLinkedEmail (aSelectedObject.getEmailAddress ())));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ENABLED.getDisplayText (aDisplayLocale))
                                                  .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isEnabled (),
                                                                                        aDisplayLocale)));
@@ -702,7 +703,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       final boolean bShowForm = true;
       final FormErrors aFormErrors = new FormErrors ();
 
-      if (aWPEC.hasSubAction (ACTION_PERFORM))
+      if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
       {
         // Check if the nonce matches
         if (checkCSRFNonce (aWPEC).isContinue ())
@@ -757,7 +758,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_RESET_PASSWORD);
         aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
-        aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_PERFORM);
+        aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
         // Add the nonce for CSRF check
         aToolbar.addChild (createCSRFNonceField ());
         aToolbar.addSubmitButtonSave (aDisplayLocale);

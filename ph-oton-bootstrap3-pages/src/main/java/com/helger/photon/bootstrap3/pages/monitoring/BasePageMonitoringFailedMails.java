@@ -218,7 +218,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                         EDefaultIcon.YES);
     aToolbar.addButton (EPhotonCoreText.BUTTON_DELETE.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref ()
-                             .add (CPageParam.PARAM_ACTION, ACTION_DELETE)
+                             .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE)
                              .add (CPageParam.PARAM_OBJECT, aSelectedObject.getID ()),
                         EDefaultIcon.DELETE);
   }
@@ -371,7 +371,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    if (aWPEC.hasAction (ACTION_DELETE_ALL))
+    if (aWPEC.hasAction (CPageParam.ACTION_DELETE_ALL))
     {
       // Delete all failed mails
       final List <FailedMailData> aFailedMails = m_aFailedMailQueue.removeAll ();
@@ -469,7 +469,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                              .setDisabled (bDisabled));
     aToolbar.addChild (new BootstrapButton ().addChild (EPhotonCoreText.BUTTON_DELETE_ALL.getDisplayText (aDisplayLocale))
                                              .setOnClick (aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION,
-                                                                                    ACTION_DELETE_ALL))
+                                                                                    CPageParam.ACTION_DELETE_ALL))
                                              .setIcon (EDefaultIcon.DELETE)
                                              .setDisabled (bDisabled));
     aToolbar.addChild (new BootstrapButton ().addChild (EWebPageText.PAGE_NAME_SETTINGS_SMTP.getDisplayText (aDisplayLocale))

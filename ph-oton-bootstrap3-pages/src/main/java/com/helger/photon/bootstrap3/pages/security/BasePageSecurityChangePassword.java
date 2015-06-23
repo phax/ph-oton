@@ -136,7 +136,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
       final boolean bShowForm = true;
       final FormErrors aFormErrors = new FormErrors ();
 
-      if (aWPEC.hasAction (ACTION_PERFORM))
+      if (aWPEC.hasAction (CPageParam.ACTION_PERFORM))
       {
         // Check if the CSRF nonce matches
         if (checkCSRFNonce (aWPEC).isContinue ())

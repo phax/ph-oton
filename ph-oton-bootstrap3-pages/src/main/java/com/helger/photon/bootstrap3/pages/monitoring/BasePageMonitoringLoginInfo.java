@@ -263,7 +263,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       final HCNodeList aNodeList = aWPEC.getNodeList ();
       final String sUserName = SecurityUtils.getUserDisplayName (aSelectedObject.getUser (), aDisplayLocale);
 
-      if (aWPEC.hasSubAction (ACTION_PERFORM))
+      if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
       {
         // Destroy the session of the user -> this triggers the logout
         aSelectedObject.getSessionScope ().selfDestruct ();
@@ -292,7 +292,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
       aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_LOGOUT_USER);
       aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
-      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, ACTION_PERFORM);
+      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
       aToolbar.addSubmitButtonYes (aDisplayLocale);
       aToolbar.addButtonNo (aDisplayLocale);
       return false;

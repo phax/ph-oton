@@ -72,7 +72,7 @@ public abstract class AbstractAppWebPageForm <DATATYPE extends IHasID <String>> 
     aSpecialNode = BootstrapErrorBox.create ("Error saving the data!");
     aFailureUpdates.add (JSFormHelper.createUpdateParam (CLayout.LAYOUT_AREAID_SPECIAL, aSpecialNode));
     aToolbar.addButton ("Remember", JSFormHelper.saveFormData (aRequestScope,
-                                                               INPUT_FORM_ID,
+                                                               FORM_ID_INPUT,
                                                                AjaxExecutorSaveFormState.PREFIX_FIELD,
                                                                getID (),
                                                                CAjaxSecure.SAVE_FORM_STATE,
