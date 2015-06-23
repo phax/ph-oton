@@ -650,7 +650,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   {}
 
   /**
-   * Perform object delete
+   * Show the delete query.
    *
    * @param aWPEC
    *        The web page execution context

@@ -42,7 +42,6 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
@@ -203,7 +202,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
   @Override
   protected void modifyViewToolbar (@Nonnull final WPECTYPE aWPEC,
                                     @Nonnull final FailedMailData aSelectedObject,
-                                    @Nonnull final IButtonToolbar <?> aToolbar)
+                                    @Nonnull final BootstrapButtonToolbar aToolbar)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
@@ -345,7 +344,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
 
   @Override
   protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final AbstractHCForm <?> aForm,
+                                  @Nonnull final BootstrapForm aForm,
                                   @Nonnull final FailedMailData aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();

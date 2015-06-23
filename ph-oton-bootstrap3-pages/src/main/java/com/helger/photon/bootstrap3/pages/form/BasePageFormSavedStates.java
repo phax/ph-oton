@@ -140,7 +140,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
 
   @Override
   protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final AbstractHCForm <?> aForm,
+                                  @Nonnull final BootstrapForm aForm,
                                   @Nonnull final FormState aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();

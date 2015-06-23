@@ -27,18 +27,18 @@ import com.helger.html.js.builder.JSArray;
 import com.helger.photon.bootstrap.demo.app.ajax.secure.CAjaxSecure;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
+import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.form.ajax.AjaxExecutorSaveFormState;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.js.JSFormHelper;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
-public abstract class AbstractAppFormPage <DATATYPE extends IHasID <String>> extends AbstractBootstrapWebPageForm <DATATYPE, WebPageExecutionContext>
+public abstract class AbstractAppWebPageForm <DATATYPE extends IHasID <String>> extends AbstractBootstrapWebPageForm <DATATYPE, WebPageExecutionContext>
 {
-  public AbstractAppFormPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
+  public AbstractAppWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
     super (sID, sName);
   }
@@ -55,7 +55,7 @@ public abstract class AbstractAppFormPage <DATATYPE extends IHasID <String>> ext
 
   @Override
   protected void modifyCreateToolbar (@Nonnull final WebPageExecutionContext aWPEC,
-                                      @Nonnull final IButtonToolbar <?> aToolbar)
+                                      @Nonnull final BootstrapButtonToolbar aToolbar)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
     final JSArray aSuccessUpdates = new JSArray ();

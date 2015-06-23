@@ -120,12 +120,69 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
     return (BootstrapButtonToolbar) super.createNewViewToolbar (aWPEC);
   }
 
+  /**
+   * Add additional elements to the view toolbar
+   *
+   * @param aWPEC
+   *        The web page execution context
+   * @param aSelectedObject
+   *        The selected object
+   * @param aToolbar
+   *        The toolbar to be modified
+   */
+  @OverrideOnDemand
+  protected void modifyViewToolbar (@Nonnull final WPECTYPE aWPEC,
+                                    @Nonnull final DATATYPE aSelectedObject,
+                                    @Nonnull final BootstrapButtonToolbar aToolbar)
+  {}
+
+  @Override
+  protected final void modifyViewToolbar (@Nonnull final WPECTYPE aWPEC,
+                                          @Nonnull final DATATYPE aSelectedObject,
+                                          @Nonnull final IButtonToolbar <?> aToolbar)
+  {
+    modifyViewToolbar (aWPEC, aSelectedObject, (BootstrapButtonToolbar) aToolbar);
+  }
+
+  @Override
+  @Nonnull
+  protected BootstrapButtonToolbar createViewToolbar (@Nonnull final WPECTYPE aWPEC,
+                                                      final boolean bCanGoBack,
+                                                      @Nonnull final DATATYPE aSelectedObject)
+  {
+    return (BootstrapButtonToolbar) super.createViewToolbar (aWPEC, bCanGoBack, aSelectedObject);
+  }
+
   @Override
   @Nonnull
   @OverrideOnDemand
   protected BootstrapButtonToolbar createNewEditToolbar (@Nonnull final WPECTYPE aWPEC)
   {
     return (BootstrapButtonToolbar) super.createNewEditToolbar (aWPEC);
+  }
+
+  /**
+   * Add additional elements to the edit toolbar
+   *
+   * @param aWPEC
+   *        The web page execution context
+   * @param aSelectedObject
+   *        The selected object. Never <code>null</code>.
+   * @param aToolbar
+   *        The toolbar to be modified
+   */
+  @OverrideOnDemand
+  protected void modifyEditToolbar (@Nonnull final WPECTYPE aWPEC,
+                                    @Nonnull final DATATYPE aSelectedObject,
+                                    @Nonnull final BootstrapButtonToolbar aToolbar)
+  {}
+
+  @Override
+  protected final void modifyEditToolbar (@Nonnull final WPECTYPE aWPEC,
+                                          @Nonnull final DATATYPE aSelectedObject,
+                                          @Nonnull final IButtonToolbar <?> aToolbar)
+  {
+    modifyEditToolbar (aWPEC, aSelectedObject, (BootstrapButtonToolbar) aToolbar);
   }
 
   @Nonnull
@@ -139,12 +196,55 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
 
   @Override
   @Nonnull
-  @OverrideOnDemand
   protected final IButtonToolbar <?> createEditToolbar (@Nonnull final WPECTYPE aWPEC,
                                                         @Nonnull final AbstractHCForm <?> aForm,
                                                         @Nonnull final DATATYPE aSelectedObject)
   {
     return createEditToolbar (aWPEC, (BootstrapForm) aForm, aSelectedObject);
+  }
+
+  @Override
+  @Nonnull
+  @OverrideOnDemand
+  protected BootstrapButtonToolbar createNewCreateToolbar (@Nonnull final WPECTYPE aWPEC)
+  {
+    return (BootstrapButtonToolbar) super.createNewCreateToolbar (aWPEC);
+  }
+
+  /**
+   * Add additional elements to the create toolbar
+   *
+   * @param aWPEC
+   *        The web page execution context
+   * @param aToolbar
+   *        The toolbar to be modified
+   */
+  @OverrideOnDemand
+  protected void modifyCreateToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final BootstrapButtonToolbar aToolbar)
+  {}
+
+  @Override
+  protected final void modifyCreateToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final IButtonToolbar <?> aToolbar)
+  {
+    modifyCreateToolbar (aWPEC, (BootstrapButtonToolbar) aToolbar);
+  }
+
+  @Nonnull
+  @OverrideOnDemand
+  protected BootstrapButtonToolbar createCreateToolbar (@Nonnull final WPECTYPE aWPEC,
+                                                        @Nonnull final BootstrapForm aForm,
+                                                        @Nullable final DATATYPE aSelectedObject)
+  {
+    return (BootstrapButtonToolbar) super.createCreateToolbar (aWPEC, aForm, aSelectedObject);
+  }
+
+  @Override
+  @Nonnull
+  protected final BootstrapButtonToolbar createCreateToolbar (@Nonnull final WPECTYPE aWPEC,
+                                                              @Nonnull final AbstractHCForm <?> aForm,
+                                                              @Nullable final DATATYPE aSelectedObject)
+  {
+    return createCreateToolbar (aWPEC, (BootstrapForm) aForm, aSelectedObject);
   }
 
   protected abstract void showInputForm (@Nonnull final WPECTYPE aWPEC,
@@ -161,7 +261,96 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
                                       @Nonnull final FormErrors aFormErrors)
   {
     // Change type from AbstractHCForm <?> to BootstrapForm
-    final BootstrapForm aBootstrapForm = (BootstrapForm) aForm;
-    showInputForm (aWPEC, aSelectedObject, aBootstrapForm, eFormAction, aFormErrors);
+    showInputForm (aWPEC, aSelectedObject, (BootstrapForm) aForm, eFormAction, aFormErrors);
+  }
+
+  /**
+   * Add additional form IDs (e.g. client and accounting area). This method is
+   * called after
+   * {@link #showInputForm(IWebPageExecutionContext, IHasID, AbstractHCForm, EWebPageFormAction, FormErrors)}
+   * was called but before the toolbars are added.
+   *
+   * @param aWPEC
+   *        Web page execution context
+   * @param aForm
+   *        the form to add the elements to
+   */
+  @OverrideOnDemand
+  protected void modifyFormAfterShowInputForm (@Nonnull final WPECTYPE aWPEC, @Nonnull final BootstrapForm aForm)
+  {}
+
+  @Override
+  protected final void modifyFormAfterShowInputForm (@Nonnull final WPECTYPE aWPEC,
+                                                     @Nonnull final AbstractHCForm <?> aForm)
+  {
+    modifyFormAfterShowInputForm (aWPEC, (BootstrapForm) aForm);
+  }
+
+  /**
+   * Show the delete query.
+   *
+   * @param aWPEC
+   *        The web page execution context
+   * @param aForm
+   *        The handled form. Never <code>null</code>.
+   * @param aSelectedObject
+   *        The object to be deleted. Never <code>null</code>.
+   */
+  @OverrideOnDemand
+  protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                  @Nonnull final BootstrapForm aForm,
+                                  @Nonnull final DATATYPE aSelectedObject)
+  {}
+
+  @Override
+  protected final void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                        @Nonnull final AbstractHCForm <?> aForm,
+                                        @Nonnull final DATATYPE aSelectedObject)
+  {
+    showDeleteQuery (aWPEC, (BootstrapForm) aForm, aSelectedObject);
+  }
+
+  @Override
+  @Nonnull
+  @OverrideOnDemand
+  protected BootstrapButtonToolbar createNewDeleteToolbar (@Nonnull final WPECTYPE aWPEC)
+  {
+    return (BootstrapButtonToolbar) super.createNewDeleteToolbar (aWPEC);
+  }
+
+  /**
+   * Add additional elements to the delete toolbar
+   *
+   * @param aWPEC
+   *        The web page execution context
+   * @param aToolbar
+   *        The toolbar to be modified
+   */
+  @OverrideOnDemand
+  protected void modifyDeleteToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final BootstrapButtonToolbar aToolbar)
+  {}
+
+  @Override
+  protected final void modifyDeleteToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final IButtonToolbar <?> aToolbar)
+  {
+    modifyDeleteToolbar (aWPEC, (BootstrapButtonToolbar) aToolbar);
+  }
+
+  @Nonnull
+  @OverrideOnDemand
+  protected BootstrapButtonToolbar createDeleteToolbar (@Nonnull final WPECTYPE aWPEC,
+                                                        @Nonnull final BootstrapForm aForm,
+                                                        @Nonnull final DATATYPE aSelectedObject)
+  {
+    return (BootstrapButtonToolbar) super.createDeleteToolbar (aWPEC, aForm, aSelectedObject);
+  }
+
+  @Override
+  @Nonnull
+  protected final BootstrapButtonToolbar createDeleteToolbar (@Nonnull final WPECTYPE aWPEC,
+                                                              @Nonnull final AbstractHCForm <?> aForm,
+                                                              @Nonnull final DATATYPE aSelectedObject)
+  {
+    return createDeleteToolbar (aWPEC, (BootstrapForm) aForm, aSelectedObject);
   }
 }

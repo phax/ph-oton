@@ -38,7 +38,6 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.IHCTable;
-import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCDiv;
@@ -255,7 +254,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
   @Override
   protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final AbstractHCForm <?> aForm,
+                                  @Nonnull final BootstrapForm aForm,
                                   @Nonnull final IRole aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();

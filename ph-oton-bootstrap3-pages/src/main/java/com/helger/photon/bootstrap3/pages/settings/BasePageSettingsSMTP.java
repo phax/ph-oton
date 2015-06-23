@@ -42,7 +42,6 @@ import com.helger.commons.vendor.VendorInfo;
 import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.hc.html.HCEdit;
@@ -516,7 +515,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
   @Override
   protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final AbstractHCForm <?> aForm,
+                                  @Nonnull final BootstrapForm aForm,
                                   @Nonnull final NamedSMTPSettings aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
