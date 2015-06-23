@@ -46,6 +46,7 @@ public abstract class AbstractHCTableFormView <IMPLTYPE extends AbstractHCTableF
   }
 
   @Nonnull
+  @Deprecated
   public HCTableFormViewItemRow createItemRow ()
   {
     final HCTableFormViewItemRow aRow = new HCTableFormViewItemRow (false);

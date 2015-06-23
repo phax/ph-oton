@@ -102,6 +102,7 @@ public abstract class AbstractHCTableForm <IMPLTYPE extends AbstractHCTableForm 
   }
 
   @Nonnull
+  @Deprecated
   public HCTableFormItemRow createItemRow ()
   {
     final HCTableFormItemRow ret = new HCTableFormItemRow (false, getColumnCount () > 2)
