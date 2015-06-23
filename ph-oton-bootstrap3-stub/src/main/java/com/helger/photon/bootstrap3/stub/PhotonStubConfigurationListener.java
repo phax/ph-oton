@@ -16,6 +16,8 @@
  */
 package com.helger.photon.bootstrap3.stub;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.annotation.Nonnull;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -52,6 +54,13 @@ import com.helger.web.scopes.mgr.WebScopeManager;
  */
 public final class PhotonStubConfigurationListener implements ServletContextListener
 {
+  private static final AtomicBoolean s_aInitialized = new AtomicBoolean (false);
+
+  public static boolean isInitialized ()
+  {
+    return s_aInitialized.get ();
+  }
+
   public static void registerDefaultResources ()
   {
     // CSS
@@ -92,36 +101,41 @@ public final class PhotonStubConfigurationListener implements ServletContextList
 
   public static void onContextInitialized ()
   {
-    registerDefaultResources ();
-
-    // Scope handling
-    ThrowingScopeFactory.installToMetaScopeFactory ();
-
-    if (GlobalDebug.isDebugMode ())
+    if (s_aInitialized.compareAndSet (false, true))
     {
-      if (false)
-        ScopeUtils.setDebugSessionScopeEnabled (true);
-      SystemProperties.setPropertyValue ("sun.io.serialization.extendedDebugInfo", "true");
-      // Not production ready yet
-      WebScopeManager.setSessionPassivationAllowed (true);
+      registerDefaultResources ();
 
-      // Disable in debug mode
-      RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);
+      // Scope handling
+      ThrowingScopeFactory.installToMetaScopeFactory ();
+
+      if (GlobalDebug.isDebugMode ())
+      {
+        if (false)
+          ScopeUtils.setDebugSessionScopeEnabled (true);
+        SystemProperties.setPropertyValue ("sun.io.serialization.extendedDebugInfo", "true");
+        // Not production ready yet
+        WebScopeManager.setSessionPassivationAllowed (true);
+
+        // Disable in debug mode
+        RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);
+      }
+
+      // Set default icon set if none is defined
+      if (!DefaultIcons.areDefined ())
+        EFamFamIcon.setAsDefault ();
+
+      // Never use a thousand separator in HCAutoNumeric fields because of
+      // parsing
+      // problems
+      AbstractHCAutoNumeric.setDefaultThousandSeparator ("");
+
+      // Special Bootstrap customizer
+      // Default customizer: disable CSS classes - should fix issue with
+      // checkbox
+      // in form in IE9
+      HCSettings.getConversionSettingsProvider ()
+                .setCustomizer (new HCMultiCustomizer (new HCDefaultCustomizer (false), new BootstrapCustomizer ()));
     }
-
-    // Set default icon set if none is defined
-    if (!DefaultIcons.areDefined ())
-      EFamFamIcon.setAsDefault ();
-
-    // Never use a thousand separator in HCAutoNumeric fields because of parsing
-    // problems
-    AbstractHCAutoNumeric.setDefaultThousandSeparator ("");
-
-    // Special Bootstrap customizer
-    // Default customizer: disable CSS classes - should fix issue with checkbox
-    // in form in IE9
-    HCSettings.getConversionSettingsProvider ().setCustomizer (new HCMultiCustomizer (new HCDefaultCustomizer (false),
-                                                                                      new BootstrapCustomizer ()));
   }
 
   public void contextInitialized (@Nonnull final ServletContextEvent aSCE)

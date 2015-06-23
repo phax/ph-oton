@@ -77,69 +77,89 @@ public final class PhotonStubInitializer
       {
         final FilterRegistration.Dynamic aFilter = aSC.addFilter ("CharacterEncodingFilter",
                                                                   CharacterEncodingFilter.class);
-        aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_ENCODING, CCharset.CHARSET_UTF_8);
-        aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_FORCE_ENCODING, Boolean.TRUE.toString ());
-        aFilter.addMappingForUrlPatterns (null, false, "/*");
+        if (aFilter != null)
+        {
+          // Filter is new
+          aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_ENCODING, CCharset.CHARSET_UTF_8);
+          aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_FORCE_ENCODING, Boolean.TRUE.toString ());
+          aFilter.addMappingForUrlPatterns (null, false, "/*");
+        }
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationActionServlet",
                                                                      SecureApplicationActionServlet.class);
-        aServlet.addMapping (SecureApplicationActionServlet.SERVLET_DEFAULT_PATH + "/*");
+        if (aServlet != null)
+          aServlet.addMapping (SecureApplicationActionServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PublicApplicationActionServlet",
                                                                      PublicApplicationActionServlet.class);
-        aServlet.addMapping (PublicApplicationActionServlet.SERVLET_DEFAULT_PATH + "/*");
+        if (aServlet != null)
+          aServlet.addMapping (PublicApplicationActionServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationAjaxServlet",
                                                                      SecureApplicationAjaxServlet.class);
-        aServlet.addMapping (SecureApplicationAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
+        if (aServlet != null)
+          aServlet.addMapping (SecureApplicationAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PublicApplicationAjaxServlet",
                                                                      PublicApplicationAjaxServlet.class);
-        aServlet.addMapping (PublicApplicationAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
+        if (aServlet != null)
+          aServlet.addMapping (PublicApplicationAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("StreamServlet", StreamServlet.class);
-        aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS,
-                                   AbstractObjectDeliveryServlet.EXTENSION_MACRO_WEB_DEFAULT);
-        aServlet.addMapping (StreamServlet.SERVLET_DEFAULT_PATH + "/*");
+        if (aServlet != null)
+        {
+          aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS,
+                                     AbstractObjectDeliveryServlet.EXTENSION_MACRO_WEB_DEFAULT);
+          aServlet.addMapping (StreamServlet.SERVLET_DEFAULT_PATH + "/*");
+        }
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("UserStreamServlet", UserStreamServlet.class);
-        aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS,
-                                   AbstractObjectDeliveryServlet.EXTENSION_MACRO_WEB_DEFAULT);
-        aServlet.addMapping (UserStreamServlet.SERVLET_DEFAULT_PATH + "/*");
+        if (aServlet != null)
+        {
+          aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS,
+                                     AbstractObjectDeliveryServlet.EXTENSION_MACRO_WEB_DEFAULT);
+          aServlet.addMapping (UserStreamServlet.SERVLET_DEFAULT_PATH + "/*");
+        }
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("UserUploadServlet", UserUploadServlet.class);
-        aServlet.addMapping (UserUploadServlet.SERVLET_DEFAULT_PATH + "/*");
+        if (aServlet != null)
+          aServlet.addMapping (UserUploadServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("LogoutServlet", LogoutServlet.class);
-        aServlet.addMapping (LogoutServlet.SERVLET_DEFAULT_PATH + "/*");
+        if (aServlet != null)
+          aServlet.addMapping (LogoutServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("ResourceBundleServlet",
                                                                      ResourceBundleServlet.class);
-        aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS, "js,css");
-        aServlet.addMapping (ResourceBundleServlet.SERVLET_DEFAULT_PATH + "/*");
+        if (aServlet != null)
+        {
+          aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS, "js,css");
+          aServlet.addMapping (ResourceBundleServlet.SERVLET_DEFAULT_PATH + "/*");
+        }
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("GoServlet", GoServlet.class);
-        aServlet.addMapping (GoServlet.SERVLET_DEFAULT_PATH + "/*");
+        if (aServlet != null)
+          aServlet.addMapping (GoServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {
