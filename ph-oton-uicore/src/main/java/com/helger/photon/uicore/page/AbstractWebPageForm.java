@@ -78,6 +78,10 @@ import com.helger.validation.error.FormErrors;
  *        The data type of the object to be handled.
  * @param <WPECTYPE>
  *        Web page execution context type
+ * @param <FORM_TYPE>
+ *        The form implementation type.
+ * @param <TOOLBAR_TYPE>
+ *        The form implementation type.
  */
 @NotThreadSafe
 public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends AbstractHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>> extends AbstractWebPage <WPECTYPE>

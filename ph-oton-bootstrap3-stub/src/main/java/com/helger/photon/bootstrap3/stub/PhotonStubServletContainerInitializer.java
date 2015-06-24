@@ -23,6 +23,11 @@ import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+/**
+ * ph-oton SCI
+ * 
+ * @author Philip Helger
+ */
 public final class PhotonStubServletContainerInitializer implements ServletContainerInitializer
 {
   public void onStartup (@Nonnull final Set <Class <?>> aClasses, @Nonnull final ServletContext aSC) throws ServletException
