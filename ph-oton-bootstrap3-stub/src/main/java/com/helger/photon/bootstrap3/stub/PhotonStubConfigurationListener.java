@@ -119,7 +119,10 @@ public final class PhotonStubConfigurationListener implements ServletContextList
       {
         if (false)
           ScopeUtils.setDebugSessionScopeEnabled (true);
+
+        // Enable Java Serialization debug
         SystemProperties.setPropertyValue ("sun.io.serialization.extendedDebugInfo", "true");
+
         // Not production ready yet
         WebScopeManager.setSessionPassivationAllowed (true);
 

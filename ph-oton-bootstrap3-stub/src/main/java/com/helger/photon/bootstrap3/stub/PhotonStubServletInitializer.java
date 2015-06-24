@@ -27,6 +27,7 @@ import javax.servlet.ServletRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.PresentForCodeCoverage;
 import com.helger.commons.charset.CCharset;
 import com.helger.photon.core.action.servlet.PublicApplicationActionServlet;
@@ -42,30 +43,51 @@ import com.helger.photon.core.servlet.StreamServlet;
 import com.helger.photon.core.userdata.UserStreamServlet;
 import com.helger.photon.core.userdata.UserUploadServlet;
 
+/**
+ * This class dynamically registers the ph-oton servlets into the
+ * {@link ServletContext} provided.
+ *
+ * @author Philip Helger
+ */
 @ThreadSafe
-public final class PhotonStubInitializer
+public final class PhotonStubServletInitializer
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonStubInitializer.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonStubServletInitializer.class);
   private static final AtomicBoolean s_aInitialized = new AtomicBoolean (false);
 
   @PresentForCodeCoverage
-  private static final PhotonStubInitializer s_aInstance = new PhotonStubInitializer ();
+  private static final PhotonStubServletInitializer s_aInstance = new PhotonStubServletInitializer ();
 
-  private PhotonStubInitializer ()
+  private PhotonStubServletInitializer ()
   {}
 
-  public static boolean isInitialized ()
+  /**
+   * @return <code>true</code> if the servlet registration already took place,
+   *         <code>false</code> otherwise.
+   */
+  public static boolean areServletsRegistered ()
   {
     return s_aInitialized.get ();
   }
 
-  public static void init (@Nonnull final ServletContext aSC)
+  /**
+   * Register all ph-oton servlets to the passed {@link ServletContext}.
+   * 
+   * @param aSC
+   *        The {@link ServletContext} to use. May not be <code>null</code>.
+   */
+  public static void registerServlets (@Nonnull final ServletContext aSC)
   {
+    ValueEnforcer.notNull (aSC, "ServletContext");
+
     if (s_aInitialized.compareAndSet (false, true))
     {
       // Check SC version
       if (aSC.getMajorVersion () < 3)
-        throw new IllegalStateException ("At least servlet version 3 is required!");
+        throw new IllegalStateException ("At least servlet version 3 is required! Currently running version " +
+                                         aSC.getMajorVersion () +
+                                         "." +
+                                         aSC.getMinorVersion ());
 
       s_aLogger.info ("Registering default ph-oton listeners and servlets");
 

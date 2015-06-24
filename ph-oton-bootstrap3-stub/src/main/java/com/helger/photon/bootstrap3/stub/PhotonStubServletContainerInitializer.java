@@ -27,6 +27,6 @@ public final class PhotonStubServletContainerInitializer implements ServletConta
 {
   public void onStartup (@Nonnull final Set <Class <?>> aClasses, @Nonnull final ServletContext aSC) throws ServletException
   {
-    PhotonStubInitializer.init (aSC);
+    PhotonStubServletInitializer.registerServlets (aSC);
   }
 }
