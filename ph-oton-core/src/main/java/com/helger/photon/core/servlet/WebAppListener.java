@@ -83,6 +83,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 {
   static
   {
+    // Do this exactly once here
     VirtualMachineInitializer.runInitialization ();
 
     // Ensure that any AWT code runs headless (fonts etc.)
@@ -157,6 +158,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
     if (SystemProperties.getJavaVersion ().startsWith ("1.6.0_14"))
       s_aLogger.warn ("This Java version is bad for development - breakpoints don't work in the debugger!");
+
+    if (getClass ().desiredAssertionStatus ())
+      s_aLogger.warn ("Java assertions are enabled - this should be disabled in production!");
   }
 
   protected final void logClassPath ()
