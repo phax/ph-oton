@@ -40,3 +40,15 @@ table > label.form-label{
 .dropup {
   display:inline-block;
 }
+
+/** Ripped from Bootstrap h4 styling */
+.action-header,
+.datagroup-header {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+  font-family: inherit;
+}
