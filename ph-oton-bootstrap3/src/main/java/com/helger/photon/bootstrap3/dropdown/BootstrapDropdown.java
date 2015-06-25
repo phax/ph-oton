@@ -38,6 +38,14 @@ public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
                             @Nonnull final IHCElementWithChildren <?> aSelector,
                             @Nonnull final BootstrapDropdownMenu aMenu)
   {
+    this (eDropdownType, aSelector, aMenu, true);
+  }
+
+  public BootstrapDropdown (@Nonnull final EBootstrapDropdownType eDropdownType,
+                            @Nonnull final IHCElementWithChildren <?> aSelector,
+                            @Nonnull final BootstrapDropdownMenu aMenu,
+                            final boolean bAddDropDownToggle)
+  {
     ValueEnforcer.notNull (aSelector, "Selector");
     ValueEnforcer.notNull (aMenu, "Menu");
     addClass (eDropdownType);
@@ -45,8 +53,11 @@ public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
     // Link selector and menu
     aMenu.setCustomAttr (CHTMLAttributes.ARIA_LABELLEDBY, aSelector.ensureID ().getID ());
 
-    // Add dropdown caret
-    makeDropdownToggle (aSelector);
+    if (bAddDropDownToggle)
+    {
+      // Add dropdown caret
+      makeDropdownToggle (aSelector);
+    }
 
     // Add children
     addChild (aSelector);
