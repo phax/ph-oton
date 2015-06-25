@@ -38,14 +38,21 @@ public final class MicroTypeConverterRegistrar_ph_oton_basic_Mock implements IMi
 {
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
-    aRegistry.registerMicroElementTypeConverter (AccountingArea.class,
-                                                 new AccountingAreaMicroTypeConverter (new IClientResolver ()
-                                                 {
-                                                   @Nullable
-                                                   public IClient getClientOfID (@Nullable final String sID)
+    try
+    {
+      aRegistry.registerMicroElementTypeConverter (AccountingArea.class,
+                                                   new AccountingAreaMicroTypeConverter (new IClientResolver ()
                                                    {
-                                                     return new Client (sID, "Dummy-" + sID);
-                                                   }
-                                                 }));
+                                                     @Nullable
+                                                     public IClient getClientOfID (@Nullable final String sID)
+                                                     {
+                                                       return new Client (sID, "Dummy-" + sID);
+                                                     }
+                                                   }));
+    }
+    catch (final IllegalArgumentException ex)
+    {
+      // Another micro element converter is already registered - ignore
+    }
   }
 }
