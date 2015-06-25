@@ -58,6 +58,11 @@ public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
       // Add dropdown caret
       makeDropdownToggle (aSelector);
     }
+    else
+    {
+      // Required for drop down to work :)
+      aSelector.setDataAttr ("toggle", "dropdown");
+    }
 
     // Add children
     addChild (aSelector);
