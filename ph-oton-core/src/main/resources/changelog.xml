@@ -17,8 +17,7 @@
     limitations under the License.
 
 -->
-<changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="ph-oton-core">
+<changelog xmlns="http://www.helger.com/xsd/changelog/1.0" version="1.0" component="ph-oton-core">
   <entry date="2015-03-27" category="tech" action="update">
     <change>
       <text locale="en">Renamed from ph-webbasics to ph-oton-core</text>
