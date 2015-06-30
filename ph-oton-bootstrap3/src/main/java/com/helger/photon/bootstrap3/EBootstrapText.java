@@ -19,11 +19,13 @@ package com.helger.photon.bootstrap3;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 
 /**
  * Contains multilingual texts for the Bootstrap3 and extensions.
@@ -33,18 +35,19 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 @Translatable
 public enum EBootstrapText implements IHasDisplayText
 {
-  TOOGLE_NAVIGATION ("Navigation ein/ausblenden", "Toggle navigation"),
-  ENTER_SEARCH_STRING ("Geben Sie einen Suchtext ein", "Enter a search phrase");
+ TOOGLE_NAVIGATION ("Navigation ein/ausblenden", "Toggle navigation"),
+ ENTER_SEARCH_STRING ("Geben Sie einen Suchtext ein", "Enter a search phrase");
 
-  private final TextProvider m_aTP;
+  private final IMultilingualText m_aTP;
 
   private EBootstrapText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
-    m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+    m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }
 
+  @Nullable
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }
 }

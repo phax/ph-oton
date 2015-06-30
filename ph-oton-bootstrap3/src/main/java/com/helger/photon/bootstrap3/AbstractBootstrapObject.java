@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.string.StringHelper;
 import com.helger.css.property.CCSSProperties;
@@ -103,7 +103,7 @@ public abstract class AbstractBootstrapObject <IMPLTYPE extends AbstractBootstra
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public final HCHasCSSClasses getCSSClasses ()
   {
     if (m_aCSSClasses == null)
@@ -117,7 +117,7 @@ public abstract class AbstractBootstrapObject <IMPLTYPE extends AbstractBootstra
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public final HCHasCSSStyles getCSSStyles ()
   {
     if (m_aCSSStyles == null)

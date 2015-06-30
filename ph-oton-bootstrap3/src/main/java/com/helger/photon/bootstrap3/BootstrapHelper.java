@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap3;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.annotations.PresentForCodeCoverage;
+import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.html.hc.IHCControl;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCHasChildren;

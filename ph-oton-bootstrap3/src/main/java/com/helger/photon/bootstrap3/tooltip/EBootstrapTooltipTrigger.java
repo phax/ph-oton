@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.tooltip;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 
 public enum EBootstrapTooltipTrigger
 {

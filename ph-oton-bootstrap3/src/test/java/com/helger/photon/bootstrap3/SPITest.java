@@ -16,30 +16,20 @@
  */
 package com.helger.photon.bootstrap3;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.mock.CommonsTestHelper;
 
 /**
- * Test class for class {@link EBootstrapJSPathProvider}.
+ * Test SPI configuration consistency.
  *
  * @author Philip Helger
  */
-public final class EBootstrapJSPathProviderTest
+public final class SPITest
 {
   @Test
-  public void testBasic ()
+  public void testBasic () throws Exception
   {
-    for (final EBootstrapJSPathProvider e : EBootstrapJSPathProvider.values ())
-      if (e.canBeBundled ())
-      {
-        IReadableResource aRes = new ClassPathResource (e.getJSItemPath (true));
-        assertTrue (aRes.getPath (), aRes.exists ());
-        aRes = new ClassPathResource (e.getJSItemPath (false));
-        assertTrue (aRes.getPath (), aRes.exists ());
-      }
+    CommonsTestHelper.testIfAllSPIImplementationsAreValid ();
   }
 }

@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.nav;
 
 import javax.annotation.Nullable;
 
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.html.HCA;
