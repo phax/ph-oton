@@ -22,9 +22,9 @@ import javax.xml.XMLConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.email.EmailAddressUtils;
+import com.helger.commons.email.EmailAddressHelper;
 import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.impl.MicroElement;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
 
 /**
@@ -120,7 +120,7 @@ public class FeedPerson extends AbstractFeedElement
     if (StringHelper.hasNoText (m_sName))
       return false;
 
-    if (StringHelper.hasText (m_sEmail) && !EmailAddressUtils.isValid (m_sEmail))
+    if (StringHelper.hasText (m_sEmail) && !EmailAddressHelper.isValid (m_sEmail))
     {
       s_aLogger.warn ("Email address is invalid!");
       return false;

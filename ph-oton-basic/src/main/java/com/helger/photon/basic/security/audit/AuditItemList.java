@@ -24,11 +24,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsImmutableObject;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.ReturnsImmutableObject;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -76,8 +76,9 @@ final class AuditItemList
   public List <IAuditItem> getLastItems (@Nonnegative final int nMaxItems)
   {
     final int nEndIndex = Math.min (nMaxItems, m_aItems.size ());
-    return CollectionHelper.getSorted (m_aItems, new ComparatorAuditItemDateTime (ESortOrder.DESCENDING))
-                          .subList (0, nEndIndex);
+    return CollectionHelper.getSorted (m_aItems,
+                                       new ComparatorAuditItemDateTime ().setSortOrder (ESortOrder.DESCENDING))
+                           .subList (0, nEndIndex);
   }
 
   @Override

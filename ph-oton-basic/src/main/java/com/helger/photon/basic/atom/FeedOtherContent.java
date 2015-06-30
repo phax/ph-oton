@@ -23,10 +23,10 @@ import javax.annotation.Nonnull;
 import javax.xml.XMLConstants;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.IMicroNode;
-import com.helger.commons.microdom.impl.MicroElement;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
 
 public class FeedOtherContent extends AbstractFeedElement implements IFeedContent

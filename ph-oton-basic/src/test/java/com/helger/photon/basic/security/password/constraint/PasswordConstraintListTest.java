@@ -22,14 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.commons.mock.PHTestUtils;
-import com.helger.photon.basic.security.password.constraint.PasswordConstraintList;
-import com.helger.photon.basic.security.password.constraint.PasswordConstraintMaxLength;
-import com.helger.photon.basic.security.password.constraint.PasswordConstraintMinLength;
-import com.helger.photon.basic.security.password.constraint.PasswordConstraintMustContainDigit;
-import com.helger.photon.basic.security.password.constraint.PasswordConstraintMustContainLetter;
-import com.helger.photon.basic.security.password.constraint.PasswordConstraintMustContainLetterLowerCase;
-import com.helger.photon.basic.security.password.constraint.PasswordConstraintMustContainLetterUpperCase;
+import com.helger.commons.mock.CommonsTestHelper;
 
 /**
  * Test class for class {@link PasswordConstraintList}.
@@ -80,7 +73,7 @@ public final class PasswordConstraintListTest
     aPCL = new PasswordConstraintList (new PasswordConstraintMinLength (3),
                                        new PasswordConstraintMustContainDigit (1),
                                        new PasswordConstraintMustContainLetter (1));
-    PHTestUtils.testGetClone (aPCL);
+    CommonsTestHelper.testGetClone (aPCL);
     assertTrue (aPCL.hasConstraints ());
     assertEquals (3, aPCL.getConstraintCount ());
     assertFalse (aPCL.isPasswordValid (""));
@@ -92,7 +85,7 @@ public final class PasswordConstraintListTest
     aPCL = new PasswordConstraintList (new PasswordConstraintMinLength (3),
                                        new PasswordConstraintMustContainDigit (1),
                                        new PasswordConstraintMustContainLetterLowerCase (1));
-    PHTestUtils.testGetClone (aPCL);
+    CommonsTestHelper.testGetClone (aPCL);
     assertTrue (aPCL.hasConstraints ());
     assertEquals (3, aPCL.getConstraintCount ());
     assertFalse (aPCL.isPasswordValid (""));
@@ -104,7 +97,7 @@ public final class PasswordConstraintListTest
     aPCL = new PasswordConstraintList (new PasswordConstraintMinLength (3),
                                        new PasswordConstraintMustContainDigit (1),
                                        new PasswordConstraintMustContainLetterUpperCase (1));
-    PHTestUtils.testGetClone (aPCL);
+    CommonsTestHelper.testGetClone (aPCL);
     assertTrue (aPCL.hasConstraints ());
     assertEquals (3, aPCL.getConstraintCount ());
     assertFalse (aPCL.isPasswordValid (""));

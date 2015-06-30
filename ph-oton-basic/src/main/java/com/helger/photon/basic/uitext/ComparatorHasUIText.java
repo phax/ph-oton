@@ -21,7 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.compare.AbstractCollationComparator;
+import com.helger.commons.compare.AbstractCollatingComparator;
 
 /**
  * Special comparator that compares based on a UI text
@@ -30,7 +30,7 @@ import com.helger.commons.compare.AbstractCollationComparator;
  * @param <DATATYPE>
  *        Data type to compare
  */
-public class ComparatorHasUIText <DATATYPE extends IHasUIText> extends AbstractCollationComparator <DATATYPE>
+public class ComparatorHasUIText <DATATYPE extends IHasUIText> extends AbstractCollatingComparator <DATATYPE>
 {
   private final Locale m_aDisplayLocale;
 
@@ -47,7 +47,7 @@ public class ComparatorHasUIText <DATATYPE extends IHasUIText> extends AbstractC
   }
 
   @Override
-  protected String asString (@Nonnull final DATATYPE aObject)
+  protected String getPart (@Nonnull final DATATYPE aObject)
   {
     return aObject.getAsUIText (m_aDisplayLocale);
   }

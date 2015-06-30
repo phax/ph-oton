@@ -20,8 +20,8 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.hierarchy.IHierarchyWalkerCallback;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.hierarchy.visit.IHierarchyVisitorCallback;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 
 /**
@@ -29,7 +29,7 @@ import com.helger.commons.tree.withid.DefaultTreeItemWithID;
  *
  * @author Philip Helger
  */
-public interface IMenuItemDeterminatorCallback extends IHierarchyWalkerCallback <DefaultTreeItemWithID <String, IMenuObject>>
+public interface IMenuItemDeterminatorCallback extends IHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
 {
   /**
    * @return The menu tree on which this item determinator works. Never

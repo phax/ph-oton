@@ -21,9 +21,9 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.callback.INonThrowingRunnableWithParameter;
-import com.helger.commons.name.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.photon.basic.app.page.IPage;
 

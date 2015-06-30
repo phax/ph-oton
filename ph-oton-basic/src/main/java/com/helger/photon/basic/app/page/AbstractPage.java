@@ -23,27 +23,27 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.collections.attrs.MapBasedAttributeContainer;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.ReadonlyMultiLingualText;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.ReadOnlyMultilingualText;
 
 /**
  * Abstract base implementation for {@link IPage}.
  *
  * @author Philip Helger
  */
-public abstract class AbstractPage extends MapBasedAttributeContainer implements IPage
+public abstract class AbstractPage extends MapBasedAttributeContainerAny <String>implements IPage
 {
   private final String m_sID;
-  private IReadonlyMultiLingualText m_aName;
-  private IReadonlyMultiLingualText m_aDescription;
+  private IMultilingualText m_aName;
+  private IMultilingualText m_aDescription;
 
   @Nonnull
-  private static ReadonlyMultiLingualText _getAsMLT (@Nonnull final String sText)
+  private static ReadOnlyMultilingualText _getAsMLT (@Nonnull final String sText)
   {
-    return new ReadonlyMultiLingualText (CGlobal.LOCALE_INDEPENDENT, sText);
+    return new ReadOnlyMultilingualText (CGlobal.LOCALE_INDEPENDENT, sText);
   }
 
   /**
@@ -98,7 +98,7 @@ public abstract class AbstractPage extends MapBasedAttributeContainer implements
    * @param aName
    *        The name of the page. May not be <code>null</code>.
    */
-  public AbstractPage (@Nonnull @Nonempty final String sID, @Nonnull final IReadonlyMultiLingualText aName)
+  public AbstractPage (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
     this (sID, aName, null);
   }
@@ -114,8 +114,8 @@ public abstract class AbstractPage extends MapBasedAttributeContainer implements
    *        Optional description of the page. May be <code>null</code>.
    */
   public AbstractPage (@Nonnull @Nonempty final String sID,
-                       @Nonnull final IReadonlyMultiLingualText aName,
-                       @Nullable final IReadonlyMultiLingualText aDescription)
+                       @Nonnull final IMultilingualText aName,
+                       @Nullable final IMultilingualText aDescription)
   {
     this (sID);
     setName (aName);
@@ -138,7 +138,7 @@ public abstract class AbstractPage extends MapBasedAttributeContainer implements
    * @param aName
    *        The multilingual name of the page. May not be <code>null</code>.
    */
-  public final void setName (@Nonnull final IReadonlyMultiLingualText aName)
+  public final void setName (@Nonnull final IMultilingualText aName)
   {
     m_aName = ValueEnforcer.notNull (aName, "Name");
   }
@@ -148,7 +148,7 @@ public abstract class AbstractPage extends MapBasedAttributeContainer implements
    *         <code>null</code>.
    */
   @Nonnull
-  public final IReadonlyMultiLingualText getName ()
+  public final IMultilingualText getName ()
   {
     return m_aName;
   }
@@ -159,7 +159,7 @@ public abstract class AbstractPage extends MapBasedAttributeContainer implements
   @Nullable
   public final String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return m_aName.getTextWithLocaleFallback (aContentLocale);
+    return m_aName.getText (aContentLocale);
   }
 
   /**
@@ -168,7 +168,7 @@ public abstract class AbstractPage extends MapBasedAttributeContainer implements
    * @param aDescription
    *        The multilingual description of the page. May be <code>null</code>.
    */
-  public final void setDescription (@Nullable final IReadonlyMultiLingualText aDescription)
+  public final void setDescription (@Nullable final IMultilingualText aDescription)
   {
     m_aDescription = aDescription;
   }
@@ -178,7 +178,7 @@ public abstract class AbstractPage extends MapBasedAttributeContainer implements
    *         be <code>null</code>.
    */
   @Nullable
-  public final IReadonlyMultiLingualText getDescription ()
+  public final IMultilingualText getDescription ()
   {
     return m_aDescription;
   }
@@ -186,7 +186,7 @@ public abstract class AbstractPage extends MapBasedAttributeContainer implements
   @Nullable
   public final String getDescription (@Nonnull final Locale aContentLocale)
   {
-    return m_aDescription == null ? null : m_aDescription.getTextWithLocaleFallback (aContentLocale);
+    return m_aDescription == null ? null : m_aDescription.getText (aContentLocale);
   }
 
   @Override

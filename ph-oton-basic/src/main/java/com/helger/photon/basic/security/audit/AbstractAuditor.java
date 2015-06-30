@@ -21,8 +21,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.collections.ArrayHelper;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.type.ObjectType;
 import com.helger.json.impl.JsonArray;
@@ -31,7 +31,7 @@ import com.helger.photon.basic.security.login.ICurrentUserIDProvider;
 
 /**
  * Abstract base class for interface {@link IAuditor}.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -61,7 +61,7 @@ public abstract class AbstractAuditor implements IAuditor
 
   /**
    * Implement this method to handle the created audit items.
-   * 
+   *
    * @param aAuditItem
    *        The audit item to handle. Never <code>null</code>.
    */
@@ -107,18 +107,14 @@ public abstract class AbstractAuditor implements IAuditor
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
 
-    _createAuditItem (EAuditActionType.CREATE,
-                      ESuccess.SUCCESS,
-                      createAuditString (aObjectType.getObjectTypeName (), aArgs));
+    _createAuditItem (EAuditActionType.CREATE, ESuccess.SUCCESS, createAuditString (aObjectType.getName (), aArgs));
   }
 
   public void onCreateFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
 
-    _createAuditItem (EAuditActionType.CREATE,
-                      ESuccess.FAILURE,
-                      createAuditString (aObjectType.getObjectTypeName (), aArgs));
+    _createAuditItem (EAuditActionType.CREATE, ESuccess.FAILURE, createAuditString (aObjectType.getName (), aArgs));
   }
 
   public void onModifySuccess (@Nonnull final ObjectType aObjectType,
@@ -129,7 +125,7 @@ public abstract class AbstractAuditor implements IAuditor
 
     _createAuditItem (EAuditActionType.MODIFY,
                       ESuccess.SUCCESS,
-                      createAuditString (aObjectType.getObjectTypeName (),
+                      createAuditString (aObjectType.getName (),
                                          ArrayHelper.getConcatenated (sWhat, aArgs, Object.class)));
   }
 
@@ -141,7 +137,7 @@ public abstract class AbstractAuditor implements IAuditor
 
     _createAuditItem (EAuditActionType.MODIFY,
                       ESuccess.FAILURE,
-                      createAuditString (aObjectType.getObjectTypeName (),
+                      createAuditString (aObjectType.getName (),
                                          ArrayHelper.getConcatenated (sWhat, aArgs, Object.class)));
   }
 
@@ -149,36 +145,28 @@ public abstract class AbstractAuditor implements IAuditor
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
 
-    _createAuditItem (EAuditActionType.DELETE,
-                      ESuccess.SUCCESS,
-                      createAuditString (aObjectType.getObjectTypeName (), aArgs));
+    _createAuditItem (EAuditActionType.DELETE, ESuccess.SUCCESS, createAuditString (aObjectType.getName (), aArgs));
   }
 
   public void onDeleteFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
 
-    _createAuditItem (EAuditActionType.DELETE,
-                      ESuccess.FAILURE,
-                      createAuditString (aObjectType.getObjectTypeName (), aArgs));
+    _createAuditItem (EAuditActionType.DELETE, ESuccess.FAILURE, createAuditString (aObjectType.getName (), aArgs));
   }
 
   public void onUndeleteSuccess (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
 
-    _createAuditItem (EAuditActionType.UNDELETE,
-                      ESuccess.SUCCESS,
-                      createAuditString (aObjectType.getObjectTypeName (), aArgs));
+    _createAuditItem (EAuditActionType.UNDELETE, ESuccess.SUCCESS, createAuditString (aObjectType.getName (), aArgs));
   }
 
   public void onUndeleteFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
 
-    _createAuditItem (EAuditActionType.UNDELETE,
-                      ESuccess.FAILURE,
-                      createAuditString (aObjectType.getObjectTypeName (), aArgs));
+    _createAuditItem (EAuditActionType.UNDELETE, ESuccess.FAILURE, createAuditString (aObjectType.getName (), aArgs));
   }
 
   public void onExecuteSuccess (@Nonnull final String sWhat, @Nullable final Object... aArgs)
@@ -199,7 +187,7 @@ public abstract class AbstractAuditor implements IAuditor
 
     _createAuditItem (EAuditActionType.EXECUTE,
                       ESuccess.SUCCESS,
-                      createAuditString (aObjectType.getObjectTypeName (),
+                      createAuditString (aObjectType.getName (),
                                          ArrayHelper.getConcatenated (sWhat, aArgs, Object.class)));
   }
 
@@ -211,7 +199,7 @@ public abstract class AbstractAuditor implements IAuditor
 
     _createAuditItem (EAuditActionType.EXECUTE,
                       ESuccess.FAILURE,
-                      createAuditString (aObjectType.getObjectTypeName (),
+                      createAuditString (aObjectType.getName (),
                                          ArrayHelper.getConcatenated (sWhat, aArgs, Object.class)));
   }
 }

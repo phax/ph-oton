@@ -29,30 +29,30 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.GlobalDebug;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ELockType;
-import com.helger.commons.annotations.MustBeLocked;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.io.IReadableResource;
+import com.helger.commons.annotation.ELockType;
+import com.helger.commons.annotation.MustBeLocked;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileIOError;
-import com.helger.commons.io.file.FileUtils;
 import com.helger.commons.io.resource.FileSystemResource;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.microdom.IMicroComment;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.impl.MicroComment;
+import com.helger.commons.microdom.MicroComment;
 import com.helger.commons.microdom.serialize.MicroReader;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
-import com.helger.commons.stats.IStatisticsHandlerCounter;
-import com.helger.commons.stats.IStatisticsHandlerTimer;
-import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
+import com.helger.commons.statistics.IMutableStatisticsHandlerTimer;
+import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
-import com.helger.commons.xml.serialize.IXMLWriterSettings;
-import com.helger.commons.xml.serialize.XMLWriterSettings;
+import com.helger.commons.xml.serialize.write.IXMLWriterSettings;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.photon.basic.app.dao.IDAOIO;
@@ -73,26 +73,26 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractSimpleDAO.class);
 
-  private final IStatisticsHandlerCounter m_aStatsCounterInitTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                          "$init-total");
-  private final IStatisticsHandlerCounter m_aStatsCounterInitSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                            "$init-success");
-  private final IStatisticsHandlerTimer m_aStatsCounterInitTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
-                                                                                                      "$init");
-  private final IStatisticsHandlerCounter m_aStatsCounterReadTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                          "$read-total");
-  private final IStatisticsHandlerCounter m_aStatsCounterReadSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                            "$read-success");
-  private final IStatisticsHandlerTimer m_aStatsCounterReadTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
-                                                                                                      "$read");
-  private final IStatisticsHandlerCounter m_aStatsCounterWriteTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                           "$write-total");
-  private final IStatisticsHandlerCounter m_aStatsCounterWriteSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                             "$write-success");
-  private final IStatisticsHandlerCounter m_aStatsCounterWriteExceptions = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                                "$write-exceptions");
-  private final IStatisticsHandlerTimer m_aStatsCounterWriteTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
-                                                                                                       "$write");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterInitTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                 "$init-total");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterInitSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                   "$init-success");
+  private final IMutableStatisticsHandlerTimer m_aStatsCounterInitTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
+                                                                                                             "$init");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterReadTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                 "$read-total");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterReadSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                   "$read-success");
+  private final IMutableStatisticsHandlerTimer m_aStatsCounterReadTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
+                                                                                                             "$read");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterWriteTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                  "$write-total");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterWriteSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                    "$write-success");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterWriteExceptions = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                       "$write-exceptions");
+  private final IMutableStatisticsHandlerTimer m_aStatsCounterWriteTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
+                                                                                                              "$write");
 
   private final IDAOIO m_aDAOIO;
   private final IHasFilename m_aFilenameProvider;
@@ -191,7 +191,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
       {
         case READ:
           // Check for read-rights
-          if (!FileUtils.canRead (aFile))
+          if (!FileHelper.canRead (aFile))
             throw new DAOException ("The DAO of class " +
                                     getClass ().getName () +
                                     " has no access rights to read from '" +
@@ -200,7 +200,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
           break;
         case WRITE:
           // Check for write-rights
-          if (!FileUtils.canWrite (aFile))
+          if (!FileHelper.canWrite (aFile))
             throw new DAOException ("The DAO of class " +
                                     getClass ().getName () +
                                     " has no access rights to write to '" +
@@ -257,7 +257,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
         catch (final Throwable t2)
         {
           s_aLogger.error ("Error in custom exception handler for reading " +
-                               (aRes == null ? "memory-only" : aRes.toString ()),
+                           (aRes == null ? "memory-only" : aRes.toString ()),
                            t2);
         }
       }
@@ -306,7 +306,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
         try
         {
           m_aStatsCounterInitTotal.increment ();
-          final StopWatch aSW = new StopWatch (true);
+          final StopWatch aSW = StopWatch.createdStarted ();
 
           if (onInit ().isChanged ())
             if (aFile != null)
@@ -342,7 +342,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
           beginWithoutAutoSave ();
           try
           {
-            final StopWatch aSW = new StopWatch (true);
+            final StopWatch aSW = StopWatch.createdStarted ();
 
             if (onRead (aDoc).isChanged ())
               eWriteSuccess = _writeToFile ();
@@ -372,7 +372,11 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
     catch (final Throwable t)
     {
       triggerExceptionHandlersRead (t, bIsInitialization, aFile);
-      throw new DAOException ("Error " + (bIsInitialization ? "initializing" : "reading") + " the file '" + aFile + "'",
+      throw new DAOException ("Error " +
+                              (bIsInitialization ? "initializing" : "reading") +
+                              " the file '" +
+                              aFile +
+                              "'",
                               t);
     }
     finally
@@ -544,7 +548,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
       aFile = getSafeFile (sFilename, EMode.WRITE);
 
       m_aStatsCounterWriteTotal.increment ();
-      final StopWatch aSW = new StopWatch (true);
+      final StopWatch aSW = StopWatch.createdStarted ();
 
       // Create XML document to write
       aDoc = createWriteData ();
@@ -559,7 +563,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
       beforeWriteToFile (sFilename, aFile);
 
       // Get the output stream
-      final OutputStream aOS = FileUtils.getOutputStream (aFile);
+      final OutputStream aOS = FileHelper.getOutputStream (aFile);
       if (aOS == null)
       {
         // Happens, when another application has the file open!
@@ -586,7 +590,8 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
                        getClass ().getName () +
                        " failed to write the DAO data to '" +
                        sErrorFilename +
-                       "'", t);
+                       "'",
+                       t);
 
       triggerExceptionHandlersWrite (t, sErrorFilename, aDoc);
       m_aStatsCounterWriteExceptions.increment ();

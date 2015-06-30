@@ -21,11 +21,12 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 
 /**
  * This enumeration defines the texts for the different system message types.
@@ -35,21 +36,21 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 @Translatable
 public enum ESystemMessageTypeText implements IHasDisplayText
 {
-  INFO ("Information", "Information"),
-  WARNING ("Warnung", "Warning"),
-  ERROR ("Fehler", "Error"),
-  SUCCESS ("Erfolg", "Success");
+ INFO ("Information", "Information"),
+ WARNING ("Warnung", "Warning"),
+ ERROR ("Fehler", "Error"),
+ SUCCESS ("Erfolg", "Success");
 
-  private final TextProvider m_aTP;
+  private final IMultilingualText m_aTP;
 
   private ESystemMessageTypeText (@Nonnull @Nonempty final String sDE, @Nonnull @Nonempty final String sEN)
   {
-    m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+    m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }
 
   @Nullable
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }
 }

@@ -24,11 +24,11 @@ import javax.annotation.Nullable;
 
 import org.joda.time.DateTime;
 
-import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.collections.attrs.IReadonlyAttributeContainer;
-import com.helger.commons.name.IHasDescription;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.name.IHasDisplayName;
+import com.helger.commons.text.IHasDescription;
 import com.helger.commons.type.ITypedObject;
 import com.helger.datetime.IHasCreationDateTime;
 import com.helger.datetime.IHasDeletionDateTime;
@@ -43,7 +43,7 @@ import com.helger.photon.basic.security.password.hash.PasswordHash;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IUser extends ITypedObject <String>, IHasDisplayName, IHasDescription, IHasCreationDateTime, IHasLastModificationDateTime, IHasDeletionDateTime, IAuthSubject, IReadonlyAttributeContainer
+public interface IUser extends ITypedObject <String>, IHasDisplayName, IHasDescription, IHasCreationDateTime, IHasLastModificationDateTime, IHasDeletionDateTime, IAuthSubject, IAttributeContainer <String, Object>
 {
   /**
    * @return <code>true</code> if the user has the ID

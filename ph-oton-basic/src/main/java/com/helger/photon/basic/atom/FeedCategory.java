@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 
 import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.impl.MicroElement;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
 
 public class FeedCategory extends AbstractFeedElement

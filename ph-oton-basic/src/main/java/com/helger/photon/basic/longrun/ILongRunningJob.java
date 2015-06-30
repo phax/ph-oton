@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import org.quartz.Job;
 
-import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.text.IMultilingualText;
 
 /**
  * This is a marker interface that identifies long running background jobs.
@@ -34,7 +34,7 @@ public interface ILongRunningJob extends Job
    *         <code>null</code>.
    */
   @Nonnull
-  IReadonlyMultiLingualText getJobDescription ();
+  IMultilingualText getJobDescription ();
 
   /**
    * @return The results of this job for asynchronous retrieval by the user.

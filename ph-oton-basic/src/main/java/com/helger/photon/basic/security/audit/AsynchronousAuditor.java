@@ -40,7 +40,7 @@ import com.helger.photon.basic.security.login.ICurrentUserIDProvider;
 
 /**
  * The class handles all audit items
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
@@ -54,13 +54,21 @@ public class AsynchronousAuditor extends AbstractAuditor
   private static final ThreadFactory s_aThreadFactory = new ExtendedDefaultThreadFactory ("AsyncAuditor");
   private final ExecutorService m_aSenderThreadPool;
 
+  private static final class MyCollector extends ConcurrentCollectorMultiple <IAuditItem>
+  {
+    public MyCollector (@Nonnull final IThrowingRunnableWithParameter <List <IAuditItem>> aPerformer)
+    {
+      setPerformer (aPerformer);
+    }
+  }
+
   public AsynchronousAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider,
                               @Nonnull final IThrowingRunnableWithParameter <List <IAuditItem>> aPerformer)
   {
     super (aUserIDProvider);
     ValueEnforcer.notNull (aPerformer, "Performer");
 
-    m_aCollector = new ConcurrentCollectorMultiple <IAuditItem> (aPerformer);
+    m_aCollector = new MyCollector (aPerformer);
     m_aSenderThreadPool = Executors.newSingleThreadExecutor (s_aThreadFactory);
     m_aSenderThreadPool.submit (m_aCollector);
   }
@@ -99,7 +107,7 @@ public class AsynchronousAuditor extends AbstractAuditor
    * When using this auditor, it is important to call this stop method before
    * shutdown. It avoids further queuing of objects and waits until all items
    * are handled. This method blocks until all remaining objects are handled.
-   * 
+   *
    * @return {@link EChange#CHANGED} if the shutdown was performed,
    *         {@link EChange#UNCHANGED} if the auditor was already shut down.
    */

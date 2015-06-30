@@ -26,13 +26,13 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.collections.attrs.MapBasedAttributeContainer;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
@@ -44,7 +44,7 @@ import com.helger.photon.basic.security.CSecurity;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class UserGroup extends MapBasedAttributeContainer implements IUserGroup
+public final class UserGroup extends MapBasedAttributeContainerAny <String>implements IUserGroup
 {
   private final String m_sID;
   private String m_sName;
@@ -71,7 +71,7 @@ public final class UserGroup extends MapBasedAttributeContainer implements IUser
   }
 
   @Nonnull
-  public ObjectType getTypeID ()
+  public ObjectType getObjectType ()
   {
     return CSecurity.TYPE_USERGROUP;
   }
@@ -110,7 +110,7 @@ public final class UserGroup extends MapBasedAttributeContainer implements IUser
   @Nonnull
   EChange setDescription (@Nullable final String sDescription)
   {
-    if (EqualsUtils.equals (sDescription, m_sDescription))
+    if (EqualsHelper.equals (sDescription, m_sDescription))
       return EChange.UNCHANGED;
     m_sDescription = sDescription;
     return EChange.CHANGED;

@@ -24,7 +24,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.impl.MicroElement;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.PDTFactory;
 import com.helger.web.datetime.PDTWebDateUtils;

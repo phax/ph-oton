@@ -23,8 +23,8 @@ import javax.annotation.concurrent.Immutable;
 import org.joda.time.DateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.object.AbstractBaseObject;
 import com.helger.photon.basic.object.StubObject;

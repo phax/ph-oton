@@ -23,7 +23,7 @@ import javax.annotation.concurrent.Immutable;
 import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;

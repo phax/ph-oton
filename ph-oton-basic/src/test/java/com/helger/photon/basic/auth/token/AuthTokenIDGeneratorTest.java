@@ -23,8 +23,6 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import com.helger.photon.basic.auth.token.AuthTokenIDGenerator;
-
 /**
  * Test class for class AuthTokenIDGenerator.
  *

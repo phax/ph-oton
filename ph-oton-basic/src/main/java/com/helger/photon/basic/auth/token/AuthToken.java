@@ -24,7 +24,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Seconds;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;

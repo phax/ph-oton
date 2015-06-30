@@ -23,23 +23,23 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.joda.time.DateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.collections.attrs.MapBasedAttributeContainer;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.IHasID;
-import com.helger.commons.scopes.domain.ISessionScope;
+import com.helger.commons.scope.ISessionScope;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.security.user.IUser;
 
 /**
  * Represents the information of a single logged in user.
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class LoginInfo extends MapBasedAttributeContainer implements IHasID <String>
+public final class LoginInfo extends MapBasedAttributeContainerAny <String>implements IHasID <String>
 {
   private final IUser m_aUser;
   private final ISessionScope m_aSessionScope;
@@ -157,7 +157,7 @@ public final class LoginInfo extends MapBasedAttributeContainer implements IHasI
            m_aSessionScope.getID ().equals (rhs.m_aSessionScope.getID ()) &&
            m_aLoginDT.equals (rhs.m_aLoginDT) &&
            m_aLastAccessDT.equals (rhs.m_aLastAccessDT) &&
-           EqualsUtils.equals (m_aLogoutDT, rhs.m_aLogoutDT);
+           EqualsHelper.equals (m_aLogoutDT, rhs.m_aLogoutDT);
   }
 
   @Override

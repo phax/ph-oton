@@ -31,18 +31,18 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.IHasStringRepresentation;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.ArrayHelper;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.concurrent.ComparatorThreadID;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.lang.IHasStringRepresentation;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.microdom.IHasMicroNodeRepresentation;
 import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.impl.MicroElement;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.thread.ComparatorThreadID;
 import com.helger.commons.timing.StopWatch;
 
 /**
@@ -181,7 +181,7 @@ public class ThreadDescriptorList implements IHasStringRepresentation, IHasMicro
   public static ThreadDescriptorList createWithAllThreads ()
   {
     // add dump of all threads
-    final StopWatch aSW = new StopWatch (true);
+    final StopWatch aSW = StopWatch.createdStarted ();
     final ThreadDescriptorList ret = new ThreadDescriptorList ();
     try
     {
@@ -192,8 +192,8 @@ public class ThreadDescriptorList implements IHasStringRepresentation, IHasMicro
       {
         final StackTraceElement [] aStackTrace = aEntry.getValue ();
         final String sStackTrace = ArrayHelper.isEmpty (aStackTrace) ? "No stack trace available!\n"
-                                                                    : StackTraceHelper.getStackAsString (aStackTrace,
-                                                                                                         false);
+                                                                     : StackTraceHelper.getStackAsString (aStackTrace,
+                                                                                                          false);
         ret.addDescriptor (new ThreadDescriptor (aEntry.getKey (), sStackTrace));
       }
     }

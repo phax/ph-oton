@@ -16,7 +16,7 @@
  */
 package com.helger.photon.basic.app.menu.filter;
 
-import com.helger.commons.filter.ISerializableFilter;
+import com.helger.commons.filter.IFilter;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.menu.IMenuObject;
 
@@ -25,7 +25,7 @@ import com.helger.photon.basic.app.menu.IMenuObject;
  *
  * @author Philip Helger
  */
-public abstract class AbstractMenuObjectFilter implements ISerializableFilter <IMenuObject>
+public abstract class AbstractMenuObjectFilter implements IFilter <IMenuObject>
 {
   @Override
   public String toString ()

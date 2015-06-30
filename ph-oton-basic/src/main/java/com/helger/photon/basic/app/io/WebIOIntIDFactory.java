@@ -19,7 +19,7 @@ package com.helger.photon.basic.app.io;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.helger.commons.idfactory.FileIntIDFactory;
+import com.helger.commons.id.factory.FileIntIDFactory;
 
 /**
  * A special {@link FileIntIDFactory} that uses {@link WebFileIO} to get the

@@ -20,19 +20,21 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.ContainsSoftMigration;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.microdom.IMicroElement;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
-import com.helger.commons.microdom.impl.MicroElement;
-import com.helger.commons.microdom.utils.MicroUtils;
+import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 
 public final class SystemMigrationResultMicroTypeConverter implements IMicroTypeConverter
 {
   private static final String ATTR_MIGRATION_ID = "id";
-  private static final String ATTR_EXECUTION_DT = "executiondt";
+  private static final String ATTR_EXECUTION_LDT = "executionldt";
   private static final String ATTR_SUCCESS = "success";
   private static final String ELEMENT_ERROR_MSG = "errormsg";
 
@@ -44,7 +46,7 @@ public final class SystemMigrationResultMicroTypeConverter implements IMicroType
     final SystemMigrationResult aValue = (SystemMigrationResult) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     aElement.setAttribute (ATTR_MIGRATION_ID, aValue.getID ());
-    aElement.setAttributeWithConversion (ATTR_EXECUTION_DT, aValue.getExecutionDateTime ());
+    aElement.setAttributeWithConversion (ATTR_EXECUTION_LDT, aValue.getExecutionDateTime ());
     aElement.setAttribute (ATTR_SUCCESS, Boolean.toString (aValue.isSuccess ()));
     if (StringHelper.hasText (aValue.getErrorMessage ()))
       aElement.appendElement (sNamespaceURI, ELEMENT_ERROR_MSG).appendText (aValue.getErrorMessage ());
@@ -52,13 +54,21 @@ public final class SystemMigrationResultMicroTypeConverter implements IMicroType
   }
 
   @Nonnull
+  @ContainsSoftMigration
   public SystemMigrationResult convertToNative (@Nonnull final IMicroElement aElement)
   {
     final String sID = aElement.getAttributeValue (ATTR_MIGRATION_ID);
-    final DateTime aExecDT = aElement.getAttributeValueWithConversion (ATTR_EXECUTION_DT, DateTime.class);
+    LocalDateTime aExecLDT = aElement.getAttributeValueWithConversion (ATTR_EXECUTION_LDT, LocalDateTime.class);
+    if (aExecLDT == null)
+    {
+      // Soft migration
+      final DateTime aExecDT = aElement.getAttributeValueWithConversion ("executiondt", DateTime.class);
+      if (aExecDT != null)
+        aExecLDT = aExecDT.toLocalDateTime ();
+    }
     final String sSuccess = aElement.getAttributeValue (ATTR_SUCCESS);
     final boolean bSuccess = StringParser.parseBool (sSuccess);
-    final String sErrorMsg = MicroUtils.getChildTextContent (aElement, ELEMENT_ERROR_MSG);
-    return new SystemMigrationResult (sID, aExecDT, bSuccess, sErrorMsg);
+    final String sErrorMsg = MicroHelper.getChildTextContent (aElement, ELEMENT_ERROR_MSG);
+    return new SystemMigrationResult (sID, aExecLDT, bSuccess, sErrorMsg);
   }
 }

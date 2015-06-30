@@ -18,13 +18,18 @@ package com.helger.photon.basic;
 
 import org.junit.Test;
 
-import com.helger.commons.mock.PHTestUtils;
+import com.helger.commons.mock.CommonsTestHelper;
 
+/**
+ * SPI definition test
+ * 
+ * @author Philip Helger
+ */
 public final class SPITest
 {
   @Test
   public void testBasic () throws Exception
   {
-    PHTestUtils.testIfAllSPIImplementationsAreValid ();
+    CommonsTestHelper.testIfAllSPIImplementationsAreValid ();
   }
 }

@@ -19,7 +19,7 @@ package com.helger.photon.basic.object.config;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.annotations.PresentForCodeCoverage;
+import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistry;
 import com.helger.photon.basic.object.accarea.AccountingArea;
 import com.helger.photon.basic.object.accarea.AccountingAreaMicroTypeConverter;

@@ -22,9 +22,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.lang.ServiceLoaderUtils;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.lang.ServiceLoaderHelper;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 
 /**
@@ -41,7 +41,7 @@ public final class AuthCredentialToSubjectResolverManager
 
   static
   {
-    s_aHdlList = ServiceLoaderUtils.getAllSPIImplementations (IAuthCredentialToSubjectResolverSPI.class);
+    s_aHdlList = ServiceLoaderHelper.getAllSPIImplementations (IAuthCredentialToSubjectResolverSPI.class);
     // list may be empty...
   }
 

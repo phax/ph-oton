@@ -23,9 +23,9 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.security.password.salt.IPasswordSalt;
 
@@ -90,7 +90,7 @@ public final class PasswordHash implements Serializable
       return false;
     final PasswordHash rhs = (PasswordHash) o;
     return m_sAlgorithmName.equals (rhs.m_sAlgorithmName) &&
-           EqualsUtils.equals (m_aSalt, rhs.m_aSalt) &&
+           EqualsHelper.equals (m_aSalt, rhs.m_aSalt) &&
            m_sPasswordHashValue.equals (rhs.m_sPasswordHashValue);
   }
 

@@ -19,7 +19,7 @@ package com.helger.photon.basic.app.menu;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.hierarchy.DefaultHierarchyWalkerCallback;
+import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 
 /**
@@ -27,7 +27,7 @@ import com.helger.commons.tree.withid.DefaultTreeItemWithID;
  *
  * @author Philip Helger
  */
-public abstract class AbstractMenuItemDeterminatorCallback extends DefaultHierarchyWalkerCallback <DefaultTreeItemWithID <String, IMenuObject>> implements IMenuItemDeterminatorCallback
+public abstract class AbstractMenuItemDeterminatorCallback extends DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>implements IMenuItemDeterminatorCallback
 {
   private final IMenuTree m_aMenuTree;
 

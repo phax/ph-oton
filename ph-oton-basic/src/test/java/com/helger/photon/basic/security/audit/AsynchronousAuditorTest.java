@@ -28,17 +28,14 @@ import javax.annotation.Nonnull;
 import org.junit.Test;
 
 import com.helger.commons.callback.IThrowingRunnableWithParameter;
-import com.helger.commons.concurrent.ThreadUtils;
 import com.helger.commons.mutable.MutableInt;
+import com.helger.commons.thread.ThreadHelper;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
-import com.helger.photon.basic.security.audit.AsynchronousAuditor;
-import com.helger.photon.basic.security.audit.AuditUtils;
-import com.helger.photon.basic.security.audit.IAuditItem;
 
 /**
  * Test class for class {@link AsynchronousAuditor}.
- * 
+ *
  * @author Philip Helger
  */
 public class AsynchronousAuditorTest
@@ -67,7 +64,7 @@ public class AsynchronousAuditorTest
       AuditUtils.onAuditDeleteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
       AuditUtils.onAuditDeleteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
       AuditUtils.onAuditUndeleteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      ThreadUtils.sleep (10);
+      ThreadHelper.sleep (10);
       AuditUtils.onAuditUndeleteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
       AuditUtils.onAuditExecuteSuccess ("spawn", "this", "is", Integer.valueOf (2), "a", "test");
       AuditUtils.onAuditExecuteFailure ("spawn", "this", "is", Integer.valueOf (2), "a", "test");

@@ -21,7 +21,6 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import com.helger.photon.basic.security.password.hash.PasswordHashCreatorPBKDF2_1000_48;
 import com.helger.photon.basic.security.password.salt.IPasswordSalt;
 import com.helger.photon.basic.security.password.salt.PasswordSalt;
 

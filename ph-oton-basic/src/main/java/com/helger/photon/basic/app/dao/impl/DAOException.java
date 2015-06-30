@@ -16,7 +16,7 @@
  */
 package com.helger.photon.basic.app.dao.impl;
 
-import com.helger.commons.exceptions.LoggedException;
+import com.helger.commons.exception.LoggedException;
 
 /**
  * Special exception class for DAO read/write errors.

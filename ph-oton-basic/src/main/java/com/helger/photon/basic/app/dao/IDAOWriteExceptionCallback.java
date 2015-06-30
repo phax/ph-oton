@@ -19,7 +19,7 @@ package com.helger.photon.basic.app.dao;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.callback.ICallback;
-import com.helger.commons.io.IReadableResource;
+import com.helger.commons.io.resource.IReadableResource;
 
 /**
  * Callback interface to handle thrown exception objects in DAO write actions.

@@ -29,10 +29,10 @@ import javax.annotation.Nullable;
 import org.joda.time.DateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.io.IReadableResource;
-import com.helger.commons.microdom.reader.XMLMapHandler;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.microdom.util.XMLMapHandler;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;

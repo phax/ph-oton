@@ -18,7 +18,7 @@ package com.helger.photon.basic.atom;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 
 /**
  * Text identification type

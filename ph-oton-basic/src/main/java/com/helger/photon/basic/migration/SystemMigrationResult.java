@@ -20,12 +20,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.string.ToStringGenerator;
@@ -40,12 +40,12 @@ import com.helger.datetime.PDTFactory;
 public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
 {
   private final String m_sMigrationID;
-  private final DateTime m_aExecutionDT;
+  private final LocalDateTime m_aExecutionDT;
   private final boolean m_bSuccess;
   private final String m_sErrorMessage;
 
   protected SystemMigrationResult (@Nonnull @Nonempty final String sMigrationID,
-                                   @Nonnull final DateTime aExecutionDT,
+                                   @Nonnull final LocalDateTime aExecutionDT,
                                    final boolean bSuccess,
                                    @Nullable final String sErrorMessage)
   {
@@ -62,7 +62,7 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
   }
 
   @Nonnull
-  public DateTime getExecutionDateTime ()
+  public LocalDateTime getExecutionDateTime ()
   {
     return m_aExecutionDT;
   }
@@ -94,7 +94,7 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
     return m_sMigrationID.equals (rhs.m_sMigrationID) &&
            m_aExecutionDT.equals (rhs.m_aExecutionDT) &&
            m_bSuccess == rhs.m_bSuccess &&
-           EqualsUtils.equals (m_sErrorMessage, rhs.m_sErrorMessage);
+           EqualsHelper.equals (m_sErrorMessage, rhs.m_sErrorMessage);
   }
 
   @Override
@@ -120,13 +120,13 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
   @Nonnull
   public static SystemMigrationResult createSuccess (@Nonnull @Nonempty final String sMigrationID)
   {
-    return new SystemMigrationResult (sMigrationID, PDTFactory.getCurrentDateTime (), true, null);
+    return new SystemMigrationResult (sMigrationID, PDTFactory.getCurrentLocalDateTime (), true, null);
   }
 
   @Nonnull
   public static SystemMigrationResult createFailure (@Nonnull @Nonempty final String sMigrationID,
                                                      @Nonnull final String sErrorMsg)
   {
-    return new SystemMigrationResult (sMigrationID, PDTFactory.getCurrentDateTime (), false, sErrorMsg);
+    return new SystemMigrationResult (sMigrationID, PDTFactory.getCurrentLocalDateTime (), false, sErrorMsg);
   }
 }

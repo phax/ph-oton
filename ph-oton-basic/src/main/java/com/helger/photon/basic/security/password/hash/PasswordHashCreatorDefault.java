@@ -53,9 +53,9 @@ public final class PasswordHashCreatorDefault extends AbstractPasswordHashCreato
   {
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
 
-    final byte [] aDigest = MessageDigestGeneratorHelper.getDigest (USER_PASSWORD_ALGO,
-                                                                    sPlainTextPassword,
-                                                                    CCharset.CHARSET_UTF_8_OBJ);
+    final byte [] aDigest = MessageDigestGeneratorHelper.getAllDigestBytes (USER_PASSWORD_ALGO,
+                                                                            sPlainTextPassword,
+                                                                            CCharset.CHARSET_UTF_8_OBJ);
     return MessageDigestGeneratorHelper.getHexValueFromDigest (aDigest);
   }
 }

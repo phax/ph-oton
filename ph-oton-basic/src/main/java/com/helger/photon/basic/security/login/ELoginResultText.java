@@ -20,10 +20,11 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 
 /**
  * Login result explanations
@@ -33,25 +34,25 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 @Translatable
 public enum ELoginResultText implements IHasDisplayText
 {
-  SUCCESS ("Die Anmeldung war erfolgreich.", "User logged in successfully."),
-  SUCCESS_WITH_LOGOUT ("Die Anmeldung war erfolgreich. Eine andere Sitzung wurde automatisch beendet.", "User logged in successfully. Another session was automatically closed."),
-  USER_NOT_EXISTING ("Der Benutzername ist ungültig.", "No such user exists."),
-  USER_IS_DELETED ("Der Benutzer existiert nicht mehr.", "The user not longer exists."),
-  USER_IS_DISABLED ("Der Benutzer ist deaktiviert.", "The user is disabled."),
-  USER_IS_MISSING_ROLE ("Der Benutzer hat keine Berechtigung sich anzumelden.", "The user has no rights to login."),
-  INVALID_PASSWORD ("Das Passwort ist ungültig.", "Invalid password provided."),
-  USER_ALREADY_LOGGED_IN ("Der Benutzer ist bereits angemeldet.", "The user is already logged in."),
-  SESSION_ALREADY_HAS_USER ("Es ist bereits ein anderer Benutzer angemeldet.", "Another user is already logged in.");
+ SUCCESS ("Die Anmeldung war erfolgreich.", "User logged in successfully."),
+ SUCCESS_WITH_LOGOUT ("Die Anmeldung war erfolgreich. Eine andere Sitzung wurde automatisch beendet.", "User logged in successfully. Another session was automatically closed."),
+ USER_NOT_EXISTING ("Der Benutzername ist ungültig.", "No such user exists."),
+ USER_IS_DELETED ("Der Benutzer existiert nicht mehr.", "The user not longer exists."),
+ USER_IS_DISABLED ("Der Benutzer ist deaktiviert.", "The user is disabled."),
+ USER_IS_MISSING_ROLE ("Der Benutzer hat keine Berechtigung sich anzumelden.", "The user has no rights to login."),
+ INVALID_PASSWORD ("Das Passwort ist ungültig.", "Invalid password provided."),
+ USER_ALREADY_LOGGED_IN ("Der Benutzer ist bereits angemeldet.", "The user is already logged in."),
+ SESSION_ALREADY_HAS_USER ("Es ist bereits ein anderer Benutzer angemeldet.", "Another user is already logged in.");
 
-  private final TextProvider m_aTP;
+  private final IMultilingualText m_aTP;
 
   private ELoginResultText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
-    m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+    m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }
 
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }
 }

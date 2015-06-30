@@ -21,8 +21,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.object.client.AbstractHasClient;
 import com.helger.photon.basic.object.client.IClient;
@@ -81,8 +81,8 @@ public abstract class AbstractHasAccountingAreaOptionalObject extends AbstractHa
   {
     return aAccountingAreaObject != null &&
            hasSameClientID (aAccountingAreaObject) &&
-           (m_aAccountingArea == null || m_aAccountingArea.getID ()
-                                                          .equals (aAccountingAreaObject.getAccountingAreaID ()));
+           (m_aAccountingArea == null ||
+            m_aAccountingArea.getID ().equals (aAccountingAreaObject.getAccountingAreaID ()));
   }
 
   @Override
@@ -93,7 +93,7 @@ public abstract class AbstractHasAccountingAreaOptionalObject extends AbstractHa
     if (!super.equals (o))
       return false;
     final AbstractHasAccountingAreaOptionalObject rhs = (AbstractHasAccountingAreaOptionalObject) o;
-    return EqualsUtils.equals (m_aAccountingArea, rhs.m_aAccountingArea);
+    return EqualsHelper.equals (m_aAccountingArea, rhs.m_aAccountingArea);
   }
 
   @Override

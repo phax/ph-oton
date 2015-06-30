@@ -18,7 +18,7 @@ package com.helger.photon.basic.security.login.callback;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.photon.basic.security.login.ELoginResult;
 import com.helger.photon.basic.security.login.LoginInfo;
 

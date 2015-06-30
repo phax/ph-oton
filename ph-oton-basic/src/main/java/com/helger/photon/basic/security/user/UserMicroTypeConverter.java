@@ -25,13 +25,13 @@ import javax.annotation.Nullable;
 
 import org.joda.time.DateTime;
 
-import com.helger.commons.annotations.ContainsSoftMigration;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.ContainsSoftMigration;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.microdom.IMicroElement;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
-import com.helger.commons.microdom.impl.MicroElement;
-import com.helger.commons.microdom.utils.MicroUtils;
+import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.photon.basic.security.password.hash.PasswordHash;
@@ -112,8 +112,8 @@ public final class UserMicroTypeConverter implements IMicroTypeConverter
     final DateTime aCreationDT = eUser.getAttributeValueWithConversion (ATTR_CREATIONDT, DateTime.class);
     final DateTime aLastModificationDT = eUser.getAttributeValueWithConversion (ATTR_LASTMODDT, DateTime.class);
     final DateTime aDeletionDT = eUser.getAttributeValueWithConversion (ATTR_DELETIONDT, DateTime.class);
-    final String sLoginName = MicroUtils.getChildTextContentTrimmed (eUser, ELEMENT_LOGINNAME);
-    final String sEmailAddress = MicroUtils.getChildTextContentTrimmed (eUser, ELEMENT_EMAILADDRESS);
+    final String sLoginName = MicroHelper.getChildTextContentTrimmed (eUser, ELEMENT_LOGINNAME);
+    final String sEmailAddress = MicroHelper.getChildTextContentTrimmed (eUser, ELEMENT_EMAILADDRESS);
     final IMicroElement ePasswordHash = eUser.getFirstChildElement (ELEMENT_PASSWORDHASH);
     String sPasswordHashAlgorithm = ePasswordHash.getAttributeValue (ATTR_ALGORITHM);
     if (sPasswordHashAlgorithm == null)
@@ -125,11 +125,11 @@ public final class UserMicroTypeConverter implements IMicroTypeConverter
     final IPasswordSalt aSalt = PasswordSalt.createFromStringMaybe (sSalt);
     final String sPasswordHashValue = ePasswordHash.getTextContentTrimmed ();
     final PasswordHash aPasswordHash = new PasswordHash (sPasswordHashAlgorithm, aSalt, sPasswordHashValue);
-    final String sFirstName = MicroUtils.getChildTextContentTrimmed (eUser, ELEMENT_FIRSTNAME);
-    final String sLastName = MicroUtils.getChildTextContentTrimmed (eUser, ELEMENT_LASTNAME);
-    final String sDescription = MicroUtils.getChildTextContentTrimmed (eUser, ELEMENT_DESCRIPTION);
+    final String sFirstName = MicroHelper.getChildTextContentTrimmed (eUser, ELEMENT_FIRSTNAME);
+    final String sLastName = MicroHelper.getChildTextContentTrimmed (eUser, ELEMENT_LASTNAME);
+    final String sDescription = MicroHelper.getChildTextContentTrimmed (eUser, ELEMENT_DESCRIPTION);
     final String sDesiredLocale = eUser.getAttributeValue (ATTR_DESIREDLOCALE);
-    final Locale aDesiredLocale = sDesiredLocale == null ? null : LocaleCache.getLocale (sDesiredLocale);
+    final Locale aDesiredLocale = sDesiredLocale == null ? null : LocaleCache.getInstance ().getLocale (sDesiredLocale);
     final DateTime aLastLoginDT = eUser.getAttributeValueWithConversion (ATTR_LASTLOGINDT, DateTime.class);
     final int nLoginCount = StringParser.parseInt (eUser.getAttributeValue (ATTR_LOGINCOUNT), 0);
     final int nConsecutiveFailedLoginCount = StringParser.parseInt (eUser.getAttributeValue (ATTR_CONSECUTIVEFAILEDLOGINCOUNT),

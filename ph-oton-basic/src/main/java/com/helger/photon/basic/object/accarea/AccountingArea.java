@@ -23,8 +23,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.equals.EqualsUtils;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
@@ -161,7 +161,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   }
 
   @Nonnull
-  public ObjectType getTypeID ()
+  public ObjectType getObjectType ()
   {
     return OT;
   }
@@ -193,7 +193,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public EChange setCompanyType (@Nullable final String sCompanyType)
   {
-    if (EqualsUtils.equals (sCompanyType, m_sCompanyType))
+    if (EqualsHelper.equals (sCompanyType, m_sCompanyType))
       return EChange.UNCHANGED;
     m_sCompanyType = sCompanyType;
     return EChange.CHANGED;
@@ -208,7 +208,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public EChange setCompanyVATIN (@Nullable final String sCompanyVATIN)
   {
-    if (EqualsUtils.equals (sCompanyVATIN, m_sCompanyVATIN))
+    if (EqualsHelper.equals (sCompanyVATIN, m_sCompanyVATIN))
       return EChange.UNCHANGED;
     m_sCompanyVATIN = sCompanyVATIN;
     return EChange.CHANGED;
@@ -223,7 +223,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public EChange setCompanyNumber (@Nullable final String sCompanyNumber)
   {
-    if (EqualsUtils.equals (sCompanyNumber, m_sCompanyNumber))
+    if (EqualsHelper.equals (sCompanyNumber, m_sCompanyNumber))
       return EChange.UNCHANGED;
     m_sCompanyNumber = sCompanyNumber;
     return EChange.CHANGED;
@@ -256,7 +256,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public EChange setTelephone (@Nullable final String sTelephone)
   {
-    if (EqualsUtils.equals (sTelephone, m_sTelephone))
+    if (EqualsHelper.equals (sTelephone, m_sTelephone))
       return EChange.UNCHANGED;
     m_sTelephone = sTelephone;
     return EChange.CHANGED;
@@ -271,7 +271,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public EChange setFax (@Nullable final String sFax)
   {
-    if (EqualsUtils.equals (sFax, m_sFax))
+    if (EqualsHelper.equals (sFax, m_sFax))
       return EChange.UNCHANGED;
     m_sFax = sFax;
     return EChange.CHANGED;
@@ -286,7 +286,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public EChange setEmailAddress (@Nullable final String sEmailAddress)
   {
-    if (EqualsUtils.equals (sEmailAddress, m_sEmailAddress))
+    if (EqualsHelper.equals (sEmailAddress, m_sEmailAddress))
       return EChange.UNCHANGED;
     m_sEmailAddress = sEmailAddress;
     return EChange.CHANGED;
@@ -301,7 +301,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public EChange setWebSite (@Nullable final String sWebSite)
   {
-    if (EqualsUtils.equals (sWebSite, m_sWebSite))
+    if (EqualsHelper.equals (sWebSite, m_sWebSite))
       return EChange.UNCHANGED;
     m_sWebSite = sWebSite;
     return EChange.CHANGED;
@@ -322,7 +322,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public EChange setDefaultCurrency (@Nullable final ECurrency eDefaultCurrency)
   {
-    if (EqualsUtils.equals (eDefaultCurrency, m_eDefaultCurrency))
+    if (EqualsHelper.equals (eDefaultCurrency, m_eDefaultCurrency))
       return EChange.UNCHANGED;
     m_eDefaultCurrency = eDefaultCurrency;
     return EChange.CHANGED;
@@ -337,7 +337,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public EChange setOfficeLocation (@Nullable final String sOfficeLocation)
   {
-    if (EqualsUtils.equals (sOfficeLocation, m_sOfficeLocation))
+    if (EqualsHelper.equals (sOfficeLocation, m_sOfficeLocation))
       return EChange.UNCHANGED;
     m_sOfficeLocation = sOfficeLocation;
     return EChange.CHANGED;
@@ -352,7 +352,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public EChange setCommercialRegistrationNumber (@Nullable final String sCommercialRegistrationNumber)
   {
-    if (EqualsUtils.equals (sCommercialRegistrationNumber, m_sCommercialRegistrationNumber))
+    if (EqualsHelper.equals (sCommercialRegistrationNumber, m_sCommercialRegistrationNumber))
       return EChange.UNCHANGED;
     m_sCommercialRegistrationNumber = sCommercialRegistrationNumber;
     return EChange.CHANGED;
@@ -367,7 +367,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   @Nonnull
   public EChange setCommercialCourt (@Nullable final String sCommercialCourt)
   {
-    if (EqualsUtils.equals (sCommercialCourt, m_sCommercialCourt))
+    if (EqualsHelper.equals (sCommercialCourt, m_sCommercialCourt))
       return EChange.UNCHANGED;
     m_sCommercialCourt = sCommercialCourt;
     return EChange.CHANGED;

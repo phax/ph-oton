@@ -25,17 +25,17 @@ import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ELockType;
-import com.helger.commons.annotations.MustBeLocked;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.callback.AdapterRunnableToCallable;
-import com.helger.commons.callback.AdapterThrowingRunnableToCallable;
+import com.helger.commons.annotation.ELockType;
+import com.helger.commons.annotation.MustBeLocked;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.callback.INonThrowingCallable;
 import com.helger.commons.callback.INonThrowingRunnable;
 import com.helger.commons.callback.IThrowingCallable;
 import com.helger.commons.callback.IThrowingRunnable;
-import com.helger.commons.collections.NonBlockingStack;
+import com.helger.commons.callback.adapter.AdapterRunnableToCallable;
+import com.helger.commons.callback.adapter.AdapterThrowingRunnableToCallable;
+import com.helger.commons.collection.impl.NonBlockingStack;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.IDAO;
 import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
@@ -68,14 +68,14 @@ public abstract class AbstractDAO implements IDAO
   {}
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public static final CallbackList <IDAOReadExceptionCallback> getExceptionHandlersRead ()
   {
     return s_aExceptionHandlersRead;
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public static final CallbackList <IDAOWriteExceptionCallback> getExceptionHandlersWrite ()
   {
     return s_aExceptionHandlersWrite;

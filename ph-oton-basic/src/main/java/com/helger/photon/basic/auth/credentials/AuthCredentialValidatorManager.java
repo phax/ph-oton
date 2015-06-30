@@ -23,10 +23,10 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.exceptions.InitializationException;
-import com.helger.commons.lang.ServiceLoaderUtils;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.exception.InitializationException;
+import com.helger.commons.lang.ServiceLoaderHelper;
 import com.helger.commons.string.StringHelper;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -38,7 +38,7 @@ public final class AuthCredentialValidatorManager
 
   static
   {
-    s_aHdlList = ServiceLoaderUtils.getAllSPIImplementations (IAuthCredentialValidatorSPI.class);
+    s_aHdlList = ServiceLoaderHelper.getAllSPIImplementations (IAuthCredentialValidatorSPI.class);
     if (s_aHdlList.isEmpty ())
       throw new InitializationException ("No class implementing " + IAuthCredentialValidatorSPI.class + " was found!");
   }

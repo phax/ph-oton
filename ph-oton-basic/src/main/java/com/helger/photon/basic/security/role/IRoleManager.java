@@ -22,9 +22,9 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.security.role.callback.IRoleModificationCallback;
@@ -40,7 +40,7 @@ public interface IRoleManager
    * @return The role callback list. Never <code>null</code>.
    */
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   CallbackList <IRoleModificationCallback> getRoleModificationCallbacks ();
 
   /**

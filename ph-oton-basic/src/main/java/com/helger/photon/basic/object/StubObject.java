@@ -21,8 +21,8 @@ import javax.annotation.Nullable;
 
 import org.joda.time.DateTime;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.type.ObjectType;
 import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
@@ -60,7 +60,7 @@ public final class StubObject extends AbstractObject
   }
 
   @Nonnull
-  public ObjectType getTypeID ()
+  public ObjectType getObjectType ()
   {
     return OT_STUB;
   }

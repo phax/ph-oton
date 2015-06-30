@@ -16,10 +16,10 @@
  */
 package com.helger.photon.basic.security.usergroup;
 
-import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
-import com.helger.commons.collections.attrs.IReadonlyAttributeContainer;
-import com.helger.commons.name.IHasDescription;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.name.IHasName;
+import com.helger.commons.text.IHasDescription;
 import com.helger.commons.type.ITypedObject;
 import com.helger.photon.basic.security.role.IRoleContainer;
 import com.helger.photon.basic.security.user.IUserContainer;
@@ -30,7 +30,7 @@ import com.helger.photon.basic.security.user.IUserContainer;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IUserGroup extends ITypedObject <String>, IHasName, IHasDescription, IUserContainer, IRoleContainer, IReadonlyAttributeContainer
+public interface IUserGroup extends ITypedObject <String>, IHasName, IHasDescription, IUserContainer, IRoleContainer, IAttributeContainer <String, Object>
 {
   /* empty */
 }

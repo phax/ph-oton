@@ -19,13 +19,13 @@ package com.helger.photon.basic.auth.credentials.userpw;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
  * Default implementation of the {@link IUserNamePasswordCredentials} interface.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -60,7 +60,7 @@ public class UserNamePasswordCredentials implements IUserNamePasswordCredentials
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final UserNamePasswordCredentials rhs = (UserNamePasswordCredentials) o;
-    return EqualsUtils.equals (m_sUserName, rhs.m_sUserName) && EqualsUtils.equals (m_sPassword, rhs.m_sPassword);
+    return EqualsHelper.equals (m_sUserName, rhs.m_sUserName) && EqualsHelper.equals (m_sPassword, rhs.m_sPassword);
   }
 
   @Override

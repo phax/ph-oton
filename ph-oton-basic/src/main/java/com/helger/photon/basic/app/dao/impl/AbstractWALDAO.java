@@ -35,8 +35,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -48,41 +46,41 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.GlobalDebug;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ELockType;
-import com.helger.commons.annotations.IsLocked;
-import com.helger.commons.annotations.MustBeLocked;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.UsedViaReflection;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.ELockType;
+import com.helger.commons.annotation.IsLocked;
+import com.helger.commons.annotation.MustBeLocked;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.concurrent.ManagedExecutorService;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.EAppend;
-import com.helger.commons.io.IReadableResource;
+import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileIOError;
-import com.helger.commons.io.file.FileUtils;
 import com.helger.commons.io.resource.FileSystemResource;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.TimeValue;
 import com.helger.commons.microdom.IMicroComment;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
+import com.helger.commons.microdom.MicroComment;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
-import com.helger.commons.microdom.impl.MicroComment;
 import com.helger.commons.microdom.serialize.MicroReader;
 import com.helger.commons.microdom.serialize.MicroWriter;
-import com.helger.commons.scopes.IScope;
-import com.helger.commons.scopes.singleton.GlobalSingleton;
+import com.helger.commons.scope.IScope;
+import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
-import com.helger.commons.stats.IStatisticsHandlerCounter;
-import com.helger.commons.stats.IStatisticsHandlerTimer;
-import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
+import com.helger.commons.statistics.IMutableStatisticsHandlerTimer;
+import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
-import com.helger.commons.xml.serialize.IXMLWriterSettings;
-import com.helger.commons.xml.serialize.XMLWriterSettings;
+import com.helger.commons.xml.serialize.write.IXMLWriterSettings;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.photon.basic.app.dao.IDAOIO;
@@ -107,26 +105,26 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   protected static final TimeValue DEFAULT_WAITING_TIME = new TimeValue (TimeUnit.SECONDS, 10);
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWALDAO.class);
 
-  private final IStatisticsHandlerCounter m_aStatsCounterInitTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                          "$init-total");
-  private final IStatisticsHandlerCounter m_aStatsCounterInitSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                            "$init-success");
-  private final IStatisticsHandlerTimer m_aStatsCounterInitTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
-                                                                                                      "$init");
-  private final IStatisticsHandlerCounter m_aStatsCounterReadTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                          "$read-total");
-  private final IStatisticsHandlerCounter m_aStatsCounterReadSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                            "$read-success");
-  private final IStatisticsHandlerTimer m_aStatsCounterReadTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
-                                                                                                      "$read");
-  private final IStatisticsHandlerCounter m_aStatsCounterWriteTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                           "$write-total");
-  private final IStatisticsHandlerCounter m_aStatsCounterWriteSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                             "$write-success");
-  private final IStatisticsHandlerCounter m_aStatsCounterWriteExceptions = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                                "$write-exceptions");
-  private final IStatisticsHandlerTimer m_aStatsCounterWriteTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
-                                                                                                       "$write");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterInitTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                 "$init-total");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterInitSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                   "$init-success");
+  private final IMutableStatisticsHandlerTimer m_aStatsCounterInitTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
+                                                                                                             "$init");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterReadTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                 "$read-total");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterReadSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                   "$read-success");
+  private final IMutableStatisticsHandlerTimer m_aStatsCounterReadTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
+                                                                                                             "$read");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterWriteTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                  "$write-total");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterWriteSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                    "$write-success");
+  private final IMutableStatisticsHandlerCounter m_aStatsCounterWriteExceptions = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                       "$write-exceptions");
+  private final IMutableStatisticsHandlerTimer m_aStatsCounterWriteTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
+                                                                                                              "$write");
 
   private Class <DATATYPE> m_aDataTypeClass;
   private final IDAOIO m_aDAOIO;
@@ -234,7 +232,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       {
         case READ:
           // Check for read-rights
-          if (!FileUtils.canRead (aFile))
+          if (!FileHelper.canRead (aFile))
             throw new DAOException ("The DAO of class " +
                                     getClass ().getName () +
                                     " has no access rights to read from '" +
@@ -243,7 +241,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
           break;
         case WRITE:
           // Check for write-rights
-          if (!FileUtils.canWrite (aFile))
+          if (!FileHelper.canWrite (aFile))
             throw new DAOException ("The DAO of class " +
                                     getClass ().getName () +
                                     " has no access rights to write to '" +
@@ -300,7 +298,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
         catch (final Throwable t2)
         {
           s_aLogger.error ("Error in custom exception handler for reading " +
-                               (aRes == null ? "memory-only" : aRes.toString ()),
+                           (aRes == null ? "memory-only" : aRes.toString ()),
                            t2);
         }
       }
@@ -405,7 +403,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
           try
           {
             m_aStatsCounterInitTotal.increment ();
-            final StopWatch aSW = new StopWatch (true);
+            final StopWatch aSW = StopWatch.createdStarted ();
 
             if (onInit ().isChanged ())
               if (aFile != null)
@@ -441,7 +439,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
             beginWithoutAutoSave ();
             try
             {
-              final StopWatch aSW = new StopWatch (true);
+              final StopWatch aSW = StopWatch.createdStarted ();
 
               if (onRead (aDoc).isChanged ())
                 eWriteSuccess = _writeToFile ();
@@ -481,7 +479,8 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                 (bIsInitialization ? "initializing" : "reading") +
                                 " the file '" +
                                 aFile.getAbsolutePath () +
-                                "'", t);
+                                "'",
+                                t);
       }
 
       // Check if there is anything to recover
@@ -497,7 +496,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
         // Avoid writing the recovery actions to the WAL file again :)
         try
         {
-          aOIS = new DataInputStream (FileUtils.getInputStream (aWALFile));
+          aOIS = new DataInputStream (FileHelper.getInputStream (aWALFile));
           while (true)
           {
             // Read action type
@@ -553,7 +552,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
         }
         finally
         {
-          StreamUtils.close (aOIS);
+          StreamHelper.close (aOIS);
         }
 
         if (bFinishedSuccessful)
@@ -744,7 +743,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       aFile = getSafeFile (sFilename, EMode.WRITE);
 
       m_aStatsCounterWriteTotal.increment ();
-      final StopWatch aSW = new StopWatch (true);
+      final StopWatch aSW = StopWatch.createdStarted ();
 
       // Create XML document to write
       aDoc = createWriteData ();
@@ -759,7 +758,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       beforeWriteToFile (sFilename, aFile);
 
       // Get the output stream
-      final OutputStream aOS = FileUtils.getOutputStream (aFile);
+      final OutputStream aOS = FileHelper.getOutputStream (aFile);
       if (aOS == null)
       {
         // Happens, when another application has the file open!
@@ -786,7 +785,8 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                        getClass ().getName () +
                        " failed to write the DAO data to '" +
                        sErrorFilename +
-                       "'", t);
+                       "'",
+                       t);
 
       triggerExceptionHandlersWrite (t, sErrorFilename, aDoc);
       m_aStatsCounterWriteExceptions.increment ();
@@ -815,7 +815,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
    *
    * @author Philip Helger
    */
-  public static final class WALListener extends GlobalSingleton
+  public static final class WALListener extends AbstractGlobalSingleton
   {
     /**
      * A single scheduled action consisting of the scheduled {@link Future} as
@@ -846,7 +846,6 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
         return t;
       }
     });
-    private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
     @GuardedBy ("m_aRWLock")
     private final Set <String> m_aWaitingDAOs = new HashSet <String> ();
     @GuardedBy ("m_aRWLock")
@@ -968,7 +967,9 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
         };
 
         // Schedule exactly once in 10 seconds
-        final ScheduledFuture <?> aFuture = m_aES.schedule (r, aWaitingWime.getDuration (), aWaitingWime.getTimeUnit ());
+        final ScheduledFuture <?> aFuture = m_aES.schedule (r,
+                                                            aWaitingWime.getDuration (),
+                                                            aWaitingWime.getTimeUnit ());
 
         m_aRWLock.writeLock ().lock ();
         try
@@ -1055,7 +1056,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     }
     finally
     {
-      StreamUtils.close (aDOS);
+      StreamHelper.close (aDOS);
     }
     return ESuccess.FAILURE;
   }

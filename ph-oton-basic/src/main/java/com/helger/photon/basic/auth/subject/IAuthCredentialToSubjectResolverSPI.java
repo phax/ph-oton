@@ -19,7 +19,7 @@ package com.helger.photon.basic.auth.subject;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.IsSPIInterface;
+import com.helger.commons.annotation.IsSPIInterface;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 
 /**

@@ -21,9 +21,9 @@ import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 
 import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.impl.MicroElement;
-import com.helger.commons.name.IHasDescription;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.text.IHasDescription;
 
 /**
  * Represents the generator of a feed.

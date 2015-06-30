@@ -21,8 +21,8 @@ import java.io.File;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.IHasStringRepresentation;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.lang.IHasStringRepresentation;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.string.ToStringGenerator;

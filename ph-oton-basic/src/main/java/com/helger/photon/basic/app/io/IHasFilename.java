@@ -18,7 +18,7 @@ package com.helger.photon.basic.app.io;
 
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 
 /**
  * Interface for objects providing a filename

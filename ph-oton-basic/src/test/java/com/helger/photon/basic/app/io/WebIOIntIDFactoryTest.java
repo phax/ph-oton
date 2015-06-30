@@ -25,8 +25,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.idfactory.IIntIDFactory;
-import com.helger.photon.basic.app.io.WebIOIntIDFactory;
+import com.helger.commons.id.factory.IIntIDFactory;
 import com.helger.photon.basic.mock.PhotonBasicTestRule;
 
 /**

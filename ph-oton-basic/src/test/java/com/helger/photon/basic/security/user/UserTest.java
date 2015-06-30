@@ -26,13 +26,12 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 import com.helger.photon.basic.security.password.salt.PasswordSalt;
-import com.helger.photon.basic.security.user.User;
 
 /**
  * Test class for class {@link User}.

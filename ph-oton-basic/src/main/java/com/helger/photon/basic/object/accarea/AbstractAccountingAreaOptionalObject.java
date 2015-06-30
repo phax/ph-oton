@@ -23,9 +23,9 @@ import javax.annotation.concurrent.Immutable;
 import org.joda.time.DateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.object.AbstractBaseObject;
 import com.helger.photon.basic.object.StubObject;
@@ -35,7 +35,7 @@ import com.helger.photon.basic.object.client.IClientObject;
 /**
  * Like {@link AbstractAccountingAreaObject} but with an optional accounting
  * area
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -155,8 +155,8 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBaseO
   {
     return aAccountingAreaObject != null &&
            hasSameClientID (aAccountingAreaObject) &&
-           (m_aAccountingArea == null || m_aAccountingArea.getID ()
-                                                          .equals (aAccountingAreaObject.getAccountingAreaID ()));
+           (m_aAccountingArea == null ||
+            m_aAccountingArea.getID ().equals (aAccountingAreaObject.getAccountingAreaID ()));
   }
 
   @Override
@@ -168,7 +168,7 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBaseO
       return false;
     final AbstractAccountingAreaOptionalObject rhs = (AbstractAccountingAreaOptionalObject) o;
     return m_aClient.equals (rhs.m_aClient) &&
-           EqualsUtils.equals (m_aAccountingArea, rhs.m_aAccountingArea) &&
+           EqualsHelper.equals (m_aAccountingArea, rhs.m_aAccountingArea) &&
            getID ().equals (rhs.getID ());
   }
 

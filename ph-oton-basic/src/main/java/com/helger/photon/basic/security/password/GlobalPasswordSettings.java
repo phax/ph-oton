@@ -28,10 +28,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.PresentForCodeCoverage;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.lang.ServiceLoaderUtils;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.lang.ServiceLoaderHelper;
 import com.helger.photon.basic.security.password.constraint.IPasswordConstraintList;
 import com.helger.photon.basic.security.password.constraint.PasswordConstraintList;
 import com.helger.photon.basic.security.password.hash.IPasswordHashCreatorRegistrarSPI;
@@ -67,7 +67,7 @@ public final class GlobalPasswordSettings
     s_aPHCMgr.setDefaultPasswordHashCreatorAlgorithm (PasswordHashCreatorPBKDF2_1000_48.ALGORITHM);
 
     // Register all custom SPI implementations
-    for (final IPasswordHashCreatorRegistrarSPI aSPI : ServiceLoaderUtils.getAllSPIImplementations (IPasswordHashCreatorRegistrarSPI.class))
+    for (final IPasswordHashCreatorRegistrarSPI aSPI : ServiceLoaderHelper.getAllSPIImplementations (IPasswordHashCreatorRegistrarSPI.class))
       aSPI.registerPasswordHashCreators (s_aPHCMgr);
   }
 

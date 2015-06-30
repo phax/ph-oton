@@ -27,7 +27,6 @@ import org.junit.Test;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.url.SMap;
-import com.helger.photon.basic.security.usergroup.UserGroup;
 
 /**
  * Test class for class {@link UserGroup}.

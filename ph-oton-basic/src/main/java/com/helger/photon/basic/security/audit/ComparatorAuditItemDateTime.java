@@ -16,63 +16,17 @@
  */
 package com.helger.photon.basic.security.audit;
 
-import java.util.Comparator;
-
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import com.helger.commons.compare.AbstractComparator;
-import com.helger.commons.compare.ESortOrder;
+import org.joda.time.LocalDateTime;
 
-public class ComparatorAuditItemDateTime extends AbstractComparator <IAuditItem>
+import com.helger.commons.compare.AbstractPartComparatorComparable;
+
+public class ComparatorAuditItemDateTime extends AbstractPartComparatorComparable <IAuditItem, LocalDateTime>
 {
-  /**
-   * Comparator with default sort order and no nested comparator.
-   */
-  public ComparatorAuditItemDateTime ()
-  {}
-
-  /**
-   * Constructor with sort order.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   */
-  public ComparatorAuditItemDateTime (@Nonnull final ESortOrder eSortOrder)
-  {
-    super (eSortOrder);
-  }
-
-  /**
-   * Comparator with default sort order and a nested comparator.
-   * 
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorAuditItemDateTime (@Nullable final Comparator <? super IAuditItem> aNestedComparator)
-  {
-    super (aNestedComparator);
-  }
-
-  /**
-   * Comparator with sort order and a nested comparator.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorAuditItemDateTime (@Nonnull final ESortOrder eSortOrder,
-                                      @Nullable final Comparator <? super IAuditItem> aNestedComparator)
-  {
-    super (eSortOrder, aNestedComparator);
-  }
-
   @Override
-  protected int mainCompare (@Nonnull final IAuditItem aElement1, @Nonnull final IAuditItem aElement2)
+  protected LocalDateTime getPart (@Nonnull final IAuditItem aElement)
   {
-    return aElement1.getDateTime ().compareTo (aElement2.getDateTime ());
+    return aElement.getDateTime ();
   }
 }

@@ -29,13 +29,13 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.annotations.UsedViaReflection;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.scopes.singleton.GlobalSingleton;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.security.login.ELoginResult;
@@ -60,7 +60,7 @@ import com.helger.photon.basic.security.usergroup.callback.IUserGroupModificatio
  * @author Philip Helger
  */
 @ThreadSafe
-public final class AccessManager extends GlobalSingleton implements IAccessManager
+public final class AccessManager extends AbstractGlobalSingleton implements IAccessManager
 {
   public static final String DEFAULT_BASE_PATH = "security/";
   public static final String FILENAME_USERS_XML = "users.xml";
@@ -144,7 +144,7 @@ public final class AccessManager extends GlobalSingleton implements IAccessManag
   // User API
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IUserModificationCallback> getUserModificationCallbacks ()
   {
     return m_aUserMgr.getUserModificationCallbacks ();
@@ -336,7 +336,7 @@ public final class AccessManager extends GlobalSingleton implements IAccessManag
 
   // UserGroup API
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IUserGroupModificationCallback> getUserGroupModificationCallbacks ()
   {
     return m_aUserGroupMgr.getUserGroupModificationCallbacks ();
@@ -475,7 +475,7 @@ public final class AccessManager extends GlobalSingleton implements IAccessManag
   // Role API
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IRoleModificationCallback> getRoleModificationCallbacks ()
   {
     return m_aRoleMgr.getRoleModificationCallbacks ();

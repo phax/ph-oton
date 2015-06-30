@@ -28,7 +28,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.photon.basic.mock.PhotonBasicTestRule;
 
 /**
@@ -58,7 +58,7 @@ public final class PathRelativeFileIOTest
       final OutputStream aOS = aIO.getOutputStream (sTestFile);
       assertNotNull (aOS);
       aOS.write (sTestContent.getBytes ());
-      assertTrue (StreamUtils.close (aOS).isSuccess ());
+      assertTrue (StreamHelper.close (aOS).isSuccess ());
 
       // rename a to b
       assertTrue (aIO.existsFile (sTestFile));
@@ -78,7 +78,7 @@ public final class PathRelativeFileIOTest
       // read file
       final InputStream aIS = aIO.getResource (sTestFile).getInputStream ();
       assertNotNull (aIS);
-      StreamUtils.close (aIS);
+      StreamHelper.close (aIS);
     }
     finally
     {

@@ -27,11 +27,11 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.joda.time.DateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.collections.attrs.MapBasedAttributeContainer;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -46,7 +46,7 @@ import com.helger.photon.basic.security.password.hash.PasswordHash;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class User extends MapBasedAttributeContainer implements IUser
+public class User extends MapBasedAttributeContainerAny <String>implements IUser
 {
   private final String m_sID;
   private final DateTime m_aCreationDT;
@@ -227,7 +227,7 @@ public class User extends MapBasedAttributeContainer implements IUser
   }
 
   @Nonnull
-  public ObjectType getTypeID ()
+  public ObjectType getObjectType ()
   {
     return CSecurity.TYPE_USER;
   }
@@ -301,7 +301,7 @@ public class User extends MapBasedAttributeContainer implements IUser
   @Nonnull
   EChange setEmailAddress (@Nullable final String sEmailAddress)
   {
-    if (EqualsUtils.equals (sEmailAddress, m_sEmailAddress))
+    if (EqualsHelper.equals (sEmailAddress, m_sEmailAddress))
       return EChange.UNCHANGED;
     m_sEmailAddress = sEmailAddress;
     return EChange.CHANGED;
@@ -334,7 +334,7 @@ public class User extends MapBasedAttributeContainer implements IUser
   @Nonnull
   EChange setFirstName (@Nullable final String sFirstName)
   {
-    if (EqualsUtils.equals (sFirstName, m_sFirstName))
+    if (EqualsHelper.equals (sFirstName, m_sFirstName))
       return EChange.UNCHANGED;
     m_sFirstName = sFirstName;
     return EChange.CHANGED;
@@ -349,7 +349,7 @@ public class User extends MapBasedAttributeContainer implements IUser
   @Nonnull
   EChange setLastName (@Nullable final String sLastName)
   {
-    if (EqualsUtils.equals (sLastName, m_sLastName))
+    if (EqualsHelper.equals (sLastName, m_sLastName))
       return EChange.UNCHANGED;
     m_sLastName = sLastName;
     return EChange.CHANGED;
@@ -364,7 +364,7 @@ public class User extends MapBasedAttributeContainer implements IUser
   @Nonnull
   EChange setDescription (@Nullable final String sDescription)
   {
-    if (EqualsUtils.equals (sDescription, m_sDescription))
+    if (EqualsHelper.equals (sDescription, m_sDescription))
       return EChange.UNCHANGED;
     m_sDescription = sDescription;
     return EChange.CHANGED;
@@ -379,7 +379,7 @@ public class User extends MapBasedAttributeContainer implements IUser
   @Nonnull
   EChange setDesiredLocale (@Nullable final Locale aDesiredLocale)
   {
-    if (EqualsUtils.equals (aDesiredLocale, m_aDesiredLocale))
+    if (EqualsHelper.equals (aDesiredLocale, m_aDesiredLocale))
       return EChange.UNCHANGED;
     m_aDesiredLocale = aDesiredLocale;
     return EChange.CHANGED;

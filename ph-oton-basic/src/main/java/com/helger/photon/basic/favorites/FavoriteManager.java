@@ -25,19 +25,19 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.helger.commons.IHasSize;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ELockType;
-import com.helger.commons.annotations.MustBeLocked;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.collections.multimap.IMultiMapListBased;
-import com.helger.commons.collections.multimap.MultiHashMapArrayListBased;
+import com.helger.commons.annotation.ELockType;
+import com.helger.commons.annotation.MustBeLocked;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.multimap.IMultiMapListBased;
+import com.helger.commons.collection.multimap.MultiHashMapArrayListBased;
+import com.helger.commons.lang.IHasSize;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
+import com.helger.commons.microdom.MicroDocument;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
-import com.helger.commons.microdom.impl.MicroDocument;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -52,7 +52,7 @@ import com.helger.photon.basic.security.audit.AuditUtils;
  * @author Philip Helger
  */
 @ThreadSafe
-public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSize
+public class FavoriteManager extends AbstractWALDAO <Favorite>implements IHasSize
 {
   private static final String ELEMENT_FAVORITES = "favorites";
   private static final String ELEMENT_FAVORITE = "favorite";
@@ -126,7 +126,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
   }
 
   @Nonnegative
-  public int size ()
+  public int getSize ()
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -226,7 +226,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
       return false;
 
     final Map <String, String> aRealAdditionalParams = aAdditionalParams == null ? new HashMap <String, String> ()
-                                                                                : aAdditionalParams;
+                                                                                 : aAdditionalParams;
     for (final IFavorite aFavorite : getAllFavoritesOfUser (sUserID))
       if (aFavorite.hasSameContent (sApplicationID, sMenuItemID, aRealAdditionalParams))
         return true;
@@ -256,7 +256,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
     {
 
       final Map <String, String> aRealAdditionalParams = aAdditionalParams == null ? new HashMap <String, String> ()
-                                                                                  : aAdditionalParams;
+                                                                                   : aAdditionalParams;
       for (final IFavorite aFavorite : getAllFavoritesOfUser (sUserID))
         if (aFavorite.hasSameContent (sApplicationID, sMenuItemID, aRealAdditionalParams))
           return aFavorite;

@@ -21,10 +21,10 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.collections.attrs.MapBasedAttributeContainer;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.filter.IFilter;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -35,7 +35,7 @@ import com.helger.commons.string.ToStringGenerator;
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <IMPLTYPE>> extends MapBasedAttributeContainer implements IMenuObject
+public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <IMPLTYPE>> extends MapBasedAttributeContainerAny <String>implements IMenuObject
 {
   private final String m_sID;
   private IFilter <IMenuObject> m_aDisplayFilter;

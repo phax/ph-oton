@@ -18,10 +18,10 @@ package com.helger.photon.basic.app.menu;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.UsedViaReflection;
-import com.helger.commons.scopes.mgr.ScopeManager;
-import com.helger.commons.scopes.singleton.ApplicationSingleton;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.scope.mgr.ScopeManager;
+import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -29,7 +29,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-public final class ApplicationMenuTree extends ApplicationSingleton
+public final class ApplicationMenuTree extends AbstractApplicationSingleton
 {
   @Nonnull
   private final IMenuTree m_aProxy = new MenuTree ();

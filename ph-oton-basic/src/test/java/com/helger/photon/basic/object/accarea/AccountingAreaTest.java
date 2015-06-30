@@ -24,13 +24,12 @@ import java.util.Locale;
 import org.junit.Rule;
 import org.junit.Test;
 
-import com.helger.commons.idfactory.GlobalIDFactory;
-import com.helger.commons.idfactory.MemoryIntIDFactory;
-import com.helger.commons.mock.PHTestUtils;
+import com.helger.commons.id.factory.GlobalIDFactory;
+import com.helger.commons.id.factory.MemoryIntIDFactory;
+import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.masterdata.address.Address;
 import com.helger.masterdata.address.EAddressType;
 import com.helger.masterdata.currency.ECurrency;
-import com.helger.photon.basic.object.accarea.AccountingArea;
 import com.helger.photon.basic.object.client.Client;
 import com.helger.photon.basic.object.client.IClient;
 import com.helger.web.scopes.mock.WebScopeTestRule;
@@ -93,6 +92,6 @@ public final class AccountingAreaTest
     assertEquals ("ABC", a.getCommercialRegistrationNumber ());
     assertEquals ("Wien2", a.getCommercialCourt ());
 
-    PHTestUtils.testMicroTypeConversion (a);
+    CommonsTestHelper.testMicroTypeConversion (a);
   }
 }

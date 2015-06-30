@@ -16,10 +16,10 @@
  */
 package com.helger.photon.basic.security.role;
 
-import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
-import com.helger.commons.collections.attrs.IReadonlyAttributeContainer;
-import com.helger.commons.name.IHasDescription;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.name.IHasName;
+import com.helger.commons.text.IHasDescription;
 import com.helger.commons.type.ITypedObject;
 
 /**
@@ -28,7 +28,7 @@ import com.helger.commons.type.ITypedObject;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IRole extends ITypedObject <String>, IHasName, IHasDescription, IReadonlyAttributeContainer
+public interface IRole extends ITypedObject <String>, IHasName, IHasDescription, IAttributeContainer <String, Object>
 {
   /* empty */
 }

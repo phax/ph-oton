@@ -24,14 +24,14 @@ import javax.annotation.Nullable;
 import org.joda.time.LocalDateTime;
 
 import com.helger.commons.microdom.IMicroElement;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
-import com.helger.commons.microdom.impl.MicroElement;
 import com.helger.commons.microdom.serialize.MicroReader;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringParser;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.ReadonlyMultiLingualText;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.ReadOnlyMultilingualText;
 import com.helger.commons.url.SimpleURL;
 
 public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeConverter
@@ -79,8 +79,8 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
     final LocalDateTime aEndDateTime = aElement.getAttributeValueWithConversion (ATTR_ENDDT, LocalDateTime.class);
     final ESuccess eExecSuccess = ESuccess.valueOf (StringParser.parseBool (aElement.getAttributeValue (ATTR_EXECSUCCESS)));
     final String sStartingUserID = aElement.getAttributeValue (ATTR_STARTINGUSERID);
-    final IReadonlyMultiLingualText aJobDescription = MicroTypeConverter.convertToNative (aElement.getFirstChildElement (ELEMENT_DESCRIPTION),
-                                                                                          ReadonlyMultiLingualText.class);
+    final IMultilingualText aJobDescription = MicroTypeConverter.convertToNative (aElement.getFirstChildElement (ELEMENT_DESCRIPTION),
+                                                                                  ReadOnlyMultilingualText.class);
     final IMicroElement eResult = aElement.getFirstChildElement (ELEMENT_RESULT);
     final ELongRunningJobResultType eResultType = ELongRunningJobResultType.getFromIDOrNull (eResult.getAttributeValue (ATTR_TYPE));
     final String sResultText = eResult.getTextContent ();

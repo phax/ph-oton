@@ -24,11 +24,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.equals.EqualsUtils;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.impl.MicroDocument;
-import com.helger.commons.microdom.utils.MicroUtils;
+import com.helger.commons.microdom.MicroDocument;
+import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -85,7 +85,7 @@ public final class SystemMessageManager extends AbstractSimpleDAO
     final IMicroElement eRoot = aDoc.getDocumentElement ();
     m_aLastUpdate = eRoot.getAttributeValueWithConversion (ATTR_LAST_UPDATE, LocalDateTime.class);
     m_eMessageType = ESystemMessageType.getFromIDOrDefault (eRoot.getAttributeValue (ATTR_MESSAGE_TYPE));
-    m_sMessage = MicroUtils.getChildTextContent (eRoot, ELEMENT_MESSAGE);
+    m_sMessage = MicroHelper.getChildTextContent (eRoot, ELEMENT_MESSAGE);
     return EChange.UNCHANGED;
   }
 
@@ -155,7 +155,7 @@ public final class SystemMessageManager extends AbstractSimpleDAO
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (m_eMessageType.equals (eMessageType) && EqualsUtils.equals (m_sMessage, sMessage))
+      if (m_eMessageType.equals (eMessageType) && EqualsHelper.equals (m_sMessage, sMessage))
         return EChange.UNCHANGED;
 
       m_eMessageType = eMessageType;

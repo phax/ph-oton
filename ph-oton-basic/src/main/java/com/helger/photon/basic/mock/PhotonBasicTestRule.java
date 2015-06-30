@@ -21,7 +21,7 @@ import java.io.File;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.scopes.mock.ScopeTestRule;
+import com.helger.commons.scope.mock.ScopeTestRule;
 
 /**
  * Non-web scope aware test rule, with a defined storage root directory

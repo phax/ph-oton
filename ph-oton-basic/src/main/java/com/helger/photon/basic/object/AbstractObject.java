@@ -21,12 +21,12 @@ import javax.annotation.Nullable;
 
 import org.joda.time.DateTime;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.hashcode.HashCodeGenerator;
 
 /**
  * Abstract base implementation of {@link IObject} that handles everything
- * except {@link #getTypeID()}.
+ * except {@link #getObjectType()}.
  *
  * @author Philip Helger
  */

@@ -23,8 +23,6 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 
 import com.helger.photon.basic.mock.PhotonBasicTestRule;
-import com.helger.photon.basic.security.AccessManager;
-import com.helger.photon.basic.security.CSecurity;
 import com.helger.photon.basic.security.role.Role;
 
 /**

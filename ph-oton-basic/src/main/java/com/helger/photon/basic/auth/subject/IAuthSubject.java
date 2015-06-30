@@ -16,7 +16,7 @@
  */
 package com.helger.photon.basic.auth.subject;
 
-import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.name.IHasName;
 
 /**

@@ -19,7 +19,7 @@ package com.helger.photon.basic.app.menu;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collections.attrs.IAttributeContainer;
+import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
 import com.helger.commons.filter.IFilter;
 import com.helger.commons.id.IHasID;
 
@@ -28,7 +28,7 @@ import com.helger.commons.id.IHasID;
  *
  * @author Philip Helger
  */
-public interface IMenuObject extends IHasID <String>, IAttributeContainer
+public interface IMenuObject extends IHasID <String>, IMutableAttributeContainerAny <String>
 {
   @Nonnull
   EMenuObjectType getMenuObjectType ();

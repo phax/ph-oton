@@ -22,11 +22,11 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
-import com.helger.commons.microdom.impl.MicroElement;
-import com.helger.commons.microdom.utils.MicroUtils;
+import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.string.StringHelper;
 
 /**
@@ -53,7 +53,7 @@ public final class RoleMicroTypeConverter implements IMicroTypeConverter
     if (StringHelper.hasText (aRole.getDescription ()))
       eRole.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aRole.getDescription ());
     for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aRole.getAllAttributes ())
-                                                                  .entrySet ())
+                                                                   .entrySet ())
     {
       final IMicroElement eCustom = eRole.appendElement (ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
@@ -67,7 +67,7 @@ public final class RoleMicroTypeConverter implements IMicroTypeConverter
   {
     final String sID = eRole.getAttributeValue (ATTR_ID);
     final String sName = eRole.getAttributeValue (ATTR_NAME);
-    final String sDescription = MicroUtils.getChildTextContentTrimmed (eRole, ELEMENT_DESCRIPTION);
+    final String sDescription = MicroHelper.getChildTextContentTrimmed (eRole, ELEMENT_DESCRIPTION);
     final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
     for (final IMicroElement eCustom : eRole.getAllChildElements (ELEMENT_CUSTOM))
       aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());

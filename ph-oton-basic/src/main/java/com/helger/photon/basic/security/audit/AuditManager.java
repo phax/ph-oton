@@ -31,16 +31,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.callback.IThrowingRunnableWithParameter;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.impl.MicroDocument;
+import com.helger.commons.microdom.MicroDocument;
 import com.helger.commons.microdom.serialize.MicroReader;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
@@ -48,7 +48,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
-import com.helger.datetime.io.PDTIOHelper;
+import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.app.io.IHasFilename;
@@ -92,7 +92,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
       if (o == null || !getClass ().equals (o.getClass ()))
         return false;
       final AuditHasFilename rhs = (AuditHasFilename) o;
-      return EqualsUtils.equals (m_sBaseDir, rhs.m_sBaseDir);
+      return EqualsHelper.equals (m_sBaseDir, rhs.m_sBaseDir);
     }
 
     @Override
@@ -145,7 +145,8 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
    * @throws DAOException
    *         In case reading failed
    */
-  public AuditManager (@Nullable final String sBaseDir, @Nonnull final ICurrentUserIDProvider aUserIDProvider) throws DAOException
+  public AuditManager (@Nullable final String sBaseDir,
+                       @Nonnull final ICurrentUserIDProvider aUserIDProvider) throws DAOException
   {
     super (new AuditHasFilename (sBaseDir));
     ValueEnforcer.notNull (aUserIDProvider, "UserIDProvider");

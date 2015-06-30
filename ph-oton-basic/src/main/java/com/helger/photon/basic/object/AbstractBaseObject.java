@@ -24,18 +24,19 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
-import com.helger.datetime.PDTUtils;
+import com.helger.datetime.util.PDTHelper;
 import com.helger.photon.basic.security.CSecurity;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 
 /**
  * Abstract base implementation of {@link IObject} that handles everything
- * except {@link #getTypeID()}, {@link #equals(Object)} and {@link #hashCode()}.
+ * except {@link #getObjectType()}, {@link #equals(Object)} and
+ * {@link #hashCode()}.
  *
  * @author Philip Helger
  */
@@ -152,7 +153,8 @@ public abstract class AbstractBaseObject implements IObject
   }
 
   @Nonnull
-  public final EChange setDeletion (@Nonnull final DateTime aDeletionDT, @Nonnull @Nonempty final String sDeletionUserID)
+  public final EChange setDeletion (@Nonnull final DateTime aDeletionDT,
+                                    @Nonnull @Nonempty final String sDeletionUserID)
   {
     ValueEnforcer.notNull (aDeletionDT, "DeletionDT");
     ValueEnforcer.notEmpty (sDeletionUserID, "DeletionUserID");
@@ -201,7 +203,7 @@ public abstract class AbstractBaseObject implements IObject
   public final boolean isDeleted (@Nonnull final DateTime aDT)
   {
     ValueEnforcer.notNull (aDT, "DateTime");
-    return m_aDeletionDT != null && PDTUtils.isLessOrEqual (m_aDeletionDT, aDT);
+    return m_aDeletionDT != null && PDTHelper.isLessOrEqual (m_aDeletionDT, aDT);
   }
 
   public final boolean isDeleted (@Nonnull final LocalDateTime aDT)

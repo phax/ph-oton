@@ -27,12 +27,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.collections.attrs.AbstractGenericReadonlyAttributeContainer;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.attr.AbstractReadOnlyAttributeContainer;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.locale.country.CountryCache;
-import com.helger.commons.scopes.domain.ISessionScope;
-import com.helger.commons.scopes.mgr.ScopeManager;
+import com.helger.commons.scope.ISessionScope;
+import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
@@ -174,9 +174,9 @@ public class RequestManager implements IRequestManager
     final Map <String, Object> aParams = getParametersFromRequest (aRequestScope);
 
     // determine page from request and store in request
-    final String sMenuItemID = AbstractGenericReadonlyAttributeContainer.getAsString (m_sRequestParamNameMenuItem,
-                                                                                      aParams.get (m_sRequestParamNameMenuItem),
-                                                                                      null);
+    final String sMenuItemID = AbstractReadOnlyAttributeContainer.getAsString (m_sRequestParamNameMenuItem,
+                                                                               aParams.get (m_sRequestParamNameMenuItem),
+                                                                               null);
     if (sMenuItemID != null)
     {
       // Validate the menu item ID and check the display filter!
@@ -189,12 +189,12 @@ public class RequestManager implements IRequestManager
     }
 
     // determine locale from request and store in session
-    final String sDisplayLocale = AbstractGenericReadonlyAttributeContainer.getAsString (m_sRequestParamNameLocale,
-                                                                                         aParams.get (m_sRequestParamNameLocale),
-                                                                                         null);
+    final String sDisplayLocale = AbstractReadOnlyAttributeContainer.getAsString (m_sRequestParamNameLocale,
+                                                                                  aParams.get (m_sRequestParamNameLocale),
+                                                                                  null);
     if (sDisplayLocale != null)
     {
-      final Locale aDisplayLocale = LocaleCache.getLocale (sDisplayLocale);
+      final Locale aDisplayLocale = LocaleCache.getInstance ().getLocale (sDisplayLocale);
       if (aDisplayLocale != null)
       {
         // Check if the locale is present in the locale manager
@@ -301,7 +301,10 @@ public class RequestManager implements IRequestManager
     if (m_bUsePaths)
     {
       // Encode menuitem parameter into path
-      return new SimpleURL (aRequestScope.encodeURL (sPath + m_sRequestParamNameMenuItem + SEPARATOR_CHAR + sMenuItemID));
+      return new SimpleURL (aRequestScope.encodeURL (sPath +
+                                                     m_sRequestParamNameMenuItem +
+                                                     SEPARATOR_CHAR +
+                                                     sMenuItemID));
     }
     // Add menu item parameter as URL parameter
     return new SimpleURL (aRequestScope.encodeURL (sPath)).add (m_sRequestParamNameMenuItem, sMenuItemID);
@@ -327,9 +330,9 @@ public class RequestManager implements IRequestManager
       return null;
 
     final Map <String, ?> aParams = getParametersFromURL (aURL);
-    return AbstractGenericReadonlyAttributeContainer.getAsString (m_sRequestParamNameMenuItem,
-                                                                  aParams.get (m_sRequestParamNameMenuItem),
-                                                                  null);
+    return AbstractReadOnlyAttributeContainer.getAsString (m_sRequestParamNameMenuItem,
+                                                           aParams.get (m_sRequestParamNameMenuItem),
+                                                           null);
   }
 
   @Nullable
@@ -339,9 +342,9 @@ public class RequestManager implements IRequestManager
       return null;
 
     final Map <String, ?> aParams = getParametersFromURL (aURL);
-    return AbstractGenericReadonlyAttributeContainer.getAsString (m_sRequestParamNameLocale,
-                                                                  aParams.get (m_sRequestParamNameLocale),
-                                                                  null);
+    return AbstractReadOnlyAttributeContainer.getAsString (m_sRequestParamNameLocale,
+                                                           aParams.get (m_sRequestParamNameLocale),
+                                                           null);
   }
 
   @Override

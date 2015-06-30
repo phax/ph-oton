@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import org.joda.time.LocalDateTime;
 
-import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.state.ISuccessIndicator;
 import com.helger.photon.basic.security.CSecurity;

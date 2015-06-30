@@ -18,7 +18,7 @@ package com.helger.photon.basic.object;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.annotations.PresentForCodeCoverage;
+import com.helger.commons.annotation.PresentForCodeCoverage;
 
 /**
  * Constants for {@link IObject} etc.

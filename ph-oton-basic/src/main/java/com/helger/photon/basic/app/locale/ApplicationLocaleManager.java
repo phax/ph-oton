@@ -19,10 +19,10 @@ package com.helger.photon.basic.app.locale;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.UsedViaReflection;
-import com.helger.commons.scopes.mgr.ScopeManager;
-import com.helger.commons.scopes.singleton.ApplicationSingleton;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.scope.mgr.ScopeManager;
+import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -31,7 +31,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class ApplicationLocaleManager extends ApplicationSingleton
+public final class ApplicationLocaleManager extends AbstractApplicationSingleton
 {
   private final LocaleManager m_aProxy = new LocaleManager ();
 

@@ -21,11 +21,11 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.UsedViaReflection;
-import com.helger.commons.exceptions.InitializationException;
-import com.helger.commons.lang.CGStringHelper;
-import com.helger.commons.scopes.IScope;
-import com.helger.commons.scopes.singleton.GlobalSingleton;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.exception.InitializationException;
+import com.helger.commons.lang.ClassHelper;
+import com.helger.commons.scope.IScope;
+import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.photon.basic.app.systemmsg.SystemMessageManager;
 import com.helger.photon.basic.favorites.FavoriteManager;
 import com.helger.photon.basic.longrun.LongRunningJobManager;
@@ -50,18 +50,14 @@ import com.helger.photon.basic.security.login.LoggedInUserManager;
  *
  * @author Philip Helger
  */
-public final class PhotonBasicManager extends GlobalSingleton
+public final class PhotonBasicManager extends AbstractGlobalSingleton
 {
   public static final String DIRECTORY_AUDITS = "audits/";
   public static final String DIRECTORY_HTML = "html/";
-  public static final String SMTP_SETTINGS_XML = "smtpsettings.xml";
-  public static final String FAILED_MAILS_XML = "failedmails.xml";
   public static final String FAVORITES_XML = "favorites.xml";
+  public static final String LONG_RUNNING_JOB_RESULTS_XML = "long-running-job-results.xml";
   public static final String SYSTEM_MIGRATIONS_XML = "systemmigrations.xml";
   public static final String SYSTEM_MESSAGE_XML = "systemmessage.xml";
-  public static final String GO_XML = "go.xml";
-  public static final String RESOURCE_BUNDLES_XML = "resource-bundles.xml";
-  public static final String LONG_RUNNING_JOB_RESULTS_XML = "long-running-job-results.xml";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonBasicManager.class);
 
@@ -95,11 +91,11 @@ public final class PhotonBasicManager extends GlobalSingleton
       m_aLongRunningJobResultMgr = new LongRunningJobResultManager (LONG_RUNNING_JOB_RESULTS_XML);
       m_aLongRunningJobMgr = new LongRunningJobManager (m_aLongRunningJobResultMgr);
 
-      s_aLogger.info (CGStringHelper.getClassLocalName (this) + " was initialized");
+      s_aLogger.info (ClassHelper.getClassLocalName (this) + " was initialized");
     }
     catch (final Throwable t)
     {
-      throw new InitializationException ("Failed to init " + CGStringHelper.getClassLocalName (this), t);
+      throw new InitializationException ("Failed to init " + ClassHelper.getClassLocalName (this), t);
     }
   }
 

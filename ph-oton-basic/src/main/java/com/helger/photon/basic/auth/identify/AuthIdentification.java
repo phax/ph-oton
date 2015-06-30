@@ -22,8 +22,8 @@ import javax.annotation.concurrent.Immutable;
 
 import org.joda.time.DateTime;
 
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
@@ -69,7 +69,7 @@ public final class AuthIdentification implements IAuthIdentification
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final AuthIdentification rhs = (AuthIdentification) o;
-    return EqualsUtils.equals (m_aSubject, rhs.m_aSubject) && m_aIdentificationDT.equals (rhs.m_aIdentificationDT);
+    return EqualsHelper.equals (m_aSubject, rhs.m_aSubject) && m_aIdentificationDT.equals (rhs.m_aIdentificationDT);
   }
 
   @Override

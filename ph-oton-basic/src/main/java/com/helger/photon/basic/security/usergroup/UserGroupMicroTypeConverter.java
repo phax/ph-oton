@@ -22,11 +22,11 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
-import com.helger.commons.microdom.impl.MicroElement;
-import com.helger.commons.microdom.utils.MicroUtils;
+import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.string.StringHelper;
 
 public final class UserGroupMicroTypeConverter implements IMicroTypeConverter
@@ -50,7 +50,7 @@ public final class UserGroupMicroTypeConverter implements IMicroTypeConverter
     if (StringHelper.hasText (aUserGroup.getDescription ()))
       eUserGroup.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aUserGroup.getDescription ());
     for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aUserGroup.getAllAttributes ())
-                                                                  .entrySet ())
+                                                                   .entrySet ())
     {
       final IMicroElement eCustom = eUserGroup.appendElement (ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
@@ -68,7 +68,7 @@ public final class UserGroupMicroTypeConverter implements IMicroTypeConverter
   {
     final String sID = eUserGroup.getAttributeValue (ATTR_ID);
     final String sName = eUserGroup.getAttributeValue (ATTR_NAME);
-    final String sDescription = MicroUtils.getChildTextContentTrimmed (eUserGroup, ELEMENT_DESCRIPTION);
+    final String sDescription = MicroHelper.getChildTextContentTrimmed (eUserGroup, ELEMENT_DESCRIPTION);
     final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
     for (final IMicroElement eCustom : eUserGroup.getAllChildElements (ELEMENT_CUSTOM))
       aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());

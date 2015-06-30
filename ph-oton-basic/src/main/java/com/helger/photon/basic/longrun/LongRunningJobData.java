@@ -24,13 +24,12 @@ import org.joda.time.Duration;
 import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.text.IMultilingualText;
 import com.helger.datetime.PDTFactory;
-import com.helger.datetime.PDTUtils;
 
 /**
  * This class contains the data for a single long running job.
@@ -43,7 +42,7 @@ public final class LongRunningJobData implements IHasID <String>
   private final String m_sID;
 
   // Initial job data
-  private final IReadonlyMultiLingualText m_aJobDescription;
+  private final IMultilingualText m_aJobDescription;
   private final LocalDateTime m_aStartDateTime;
   private final String m_sStartingUserID;
 
@@ -53,7 +52,7 @@ public final class LongRunningJobData implements IHasID <String>
   private LongRunningJobResult m_aResult;
 
   public LongRunningJobData (@Nonnull @Nonempty final String sJobID,
-                             @Nonnull final IReadonlyMultiLingualText aJobDescription,
+                             @Nonnull final IMultilingualText aJobDescription,
                              @Nullable final String sStartingUserID)
   {
     m_sID = ValueEnforcer.notEmpty (sJobID, "JobID");
@@ -67,7 +66,7 @@ public final class LongRunningJobData implements IHasID <String>
                       @Nonnull final LocalDateTime aEndDateTime,
                       @Nonnull final ESuccess eExecSuccess,
                       @Nullable final String sStartingUserID,
-                      @Nonnull final IReadonlyMultiLingualText aJobDescription,
+                      @Nonnull final IMultilingualText aJobDescription,
                       @Nonnull final LongRunningJobResult aResult)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
@@ -90,7 +89,7 @@ public final class LongRunningJobData implements IHasID <String>
    * @return The description of the underlying job. Never <code>null</code>.
    */
   @Nonnull
-  public IReadonlyMultiLingualText getJobDescription ()
+  public IMultilingualText getJobDescription ()
   {
     return m_aJobDescription;
   }
@@ -154,7 +153,7 @@ public final class LongRunningJobData implements IHasID <String>
   {
     if (!isEnded ())
       throw new IllegalStateException ("Job is still running!");
-    return PDTUtils.createDuration (m_aStartDateTime, getEndDateTime ());
+    return PDTFactory.createDuration (m_aStartDateTime, getEndDateTime ());
   }
 
   /**

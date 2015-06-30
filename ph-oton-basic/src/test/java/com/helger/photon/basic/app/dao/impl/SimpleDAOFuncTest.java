@@ -27,10 +27,8 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 
 import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.impl.MicroDocument;
+import com.helger.commons.microdom.MicroDocument;
 import com.helger.commons.state.EChange;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.mock.PhotonBasicTestRule;
 
 /**

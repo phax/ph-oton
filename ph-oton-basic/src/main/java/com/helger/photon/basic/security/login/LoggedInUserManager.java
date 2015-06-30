@@ -22,8 +22,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -36,16 +34,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.annotations.UsedViaReflection;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.scopes.IScope;
-import com.helger.commons.scopes.domain.ISessionScope;
-import com.helger.commons.scopes.mgr.ScopeManager;
-import com.helger.commons.scopes.singleton.GlobalSingleton;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.scope.IScope;
+import com.helger.commons.scope.ISessionScope;
+import com.helger.commons.scope.mgr.ScopeManager;
+import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -67,7 +65,7 @@ import com.helger.web.scopes.singleton.SessionWebSingleton;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class LoggedInUserManager extends GlobalSingleton implements ICurrentUserIDProvider
+public final class LoggedInUserManager extends AbstractGlobalSingleton implements ICurrentUserIDProvider
 {
   /**
    * This class manages the user ID of the current session. This is an internal
@@ -194,7 +192,7 @@ public final class LoggedInUserManager extends GlobalSingleton implements ICurre
   /**
    * Special logout callback that is executed every time a user logs out. It
    * removes all objects from the {@link ObjectLockManager}.
-   * 
+   *
    * @author Philip Helger
    */
   final class UserLogoutCallbackUnlockAllObjects extends DefaultUserLogoutCallback
@@ -212,7 +210,6 @@ public final class LoggedInUserManager extends GlobalSingleton implements ICurre
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (LoggedInUserManager.class);
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   // Set of logged in user IDs
   @GuardedBy ("m_aRWLock")
   private final Map <String, LoginInfo> m_aLoggedInUsers = new HashMap <String, LoginInfo> ();
@@ -241,7 +238,7 @@ public final class LoggedInUserManager extends GlobalSingleton implements ICurre
    * @return The user login callback list. Never <code>null</code>.
    */
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IUserLoginCallback> getUserLoginCallbacks ()
   {
     return m_aUserLoginCallbacks;
@@ -251,7 +248,7 @@ public final class LoggedInUserManager extends GlobalSingleton implements ICurre
    * @return The user logout callback list. Never <code>null</code>.
    */
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IUserLogoutCallback> getUserLogoutCallbacks ()
   {
     return m_aUserLogoutCallbacks;
@@ -347,7 +344,8 @@ public final class LoggedInUserManager extends GlobalSingleton implements ICurre
                          sUserID +
                          "," +
                          eLoginResult.toString () +
-                         ")", t);
+                         ")",
+                         t);
       }
     return eLoginResult;
   }
@@ -505,10 +503,10 @@ public final class LoggedInUserManager extends GlobalSingleton implements ICurre
       catch (final Throwable t)
       {
         s_aLogger.error ("Failed to invoke onUserLogin callback on " +
-                             aUserLoginCallback.toString () +
-                             "(" +
-                             aInfo.toString () +
-                             ")",
+                         aUserLoginCallback.toString () +
+                         "(" +
+                         aInfo.toString () +
+                         ")",
                          t);
       }
 
@@ -566,10 +564,10 @@ public final class LoggedInUserManager extends GlobalSingleton implements ICurre
       catch (final Throwable t)
       {
         s_aLogger.error ("Failed to invoke onUserLogout callback on " +
-                             aUserLogoutCallback.toString () +
-                             "(" +
-                             aInfo.toString () +
-                             ")",
+                         aUserLogoutCallback.toString () +
+                         "(" +
+                         aInfo.toString () +
+                         ")",
                          t);
       }
 

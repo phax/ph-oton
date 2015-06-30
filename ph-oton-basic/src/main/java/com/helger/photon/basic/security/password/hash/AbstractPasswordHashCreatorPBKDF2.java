@@ -24,7 +24,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 import com.helger.commons.CGlobal;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 
 /**
  * Base class for {@link IPasswordHashCreator} using the PBKDF2 algorithm.

@@ -19,38 +19,21 @@ package com.helger.photon.basic.longrun;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.compare.AbstractComparator;
-import com.helger.commons.compare.CompareUtils;
-import com.helger.commons.compare.ESortOrder;
+import org.joda.time.LocalDateTime;
+
+import com.helger.commons.compare.AbstractPartComparatorComparable;
 
 /**
  * Compare {@link LongRunningJobData} objects by their end date
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class ComparatorLongRunningJobDataEndDate extends AbstractComparator <LongRunningJobData>
+public class ComparatorLongRunningJobDataEndDate extends AbstractPartComparatorComparable <LongRunningJobData, LocalDateTime>
 {
-  /**
-   * Comparator with default sort order.
-   */
-  public ComparatorLongRunningJobDataEndDate ()
-  {}
-
-  /**
-   * Constructor with sort order.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   */
-  public ComparatorLongRunningJobDataEndDate (@Nonnull final ESortOrder eSortOrder)
-  {
-    super (eSortOrder);
-  }
-
   @Override
-  protected int mainCompare (@Nonnull final LongRunningJobData aData1, @Nonnull final LongRunningJobData aData2)
+  protected LocalDateTime getPart (@Nonnull final LongRunningJobData aData)
   {
-    return CompareUtils.nullSafeCompare (aData1.getEndDateTime (), aData2.getEndDateTime ());
+    return aData.getEndDateTime ();
   }
 }

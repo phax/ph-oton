@@ -34,7 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.EAppend;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.LoggingFileOperationCallback;

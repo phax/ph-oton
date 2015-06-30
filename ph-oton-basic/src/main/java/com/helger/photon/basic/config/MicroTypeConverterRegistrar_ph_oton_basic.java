@@ -18,7 +18,7 @@ package com.helger.photon.basic.config;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.IsSPIImplementation;
+import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistry;
 import com.helger.photon.basic.favorites.Favorite;

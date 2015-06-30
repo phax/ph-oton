@@ -21,16 +21,16 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collections.attrs.IReadonlyAttributeContainer;
+import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.id.IHasID;
-import com.helger.commons.name.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayText;
 
 /**
  * The base interface for a single page of content.
  *
  * @author Philip Helger
  */
-public interface IPage extends IHasID <String>, IHasDisplayText, IReadonlyAttributeContainer
+public interface IPage extends IHasID <String>, IHasDisplayText, IAttributeContainer <String, Object>
 {
   /**
    * Get the description of the page in the passed locale.

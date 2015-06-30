@@ -26,9 +26,9 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import org.joda.time.DateTime;
 
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.UsedViaReflection;
-import com.helger.commons.scopes.singleton.GlobalSingleton;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
@@ -39,7 +39,7 @@ import com.helger.photon.basic.security.login.LoggedInUserManager;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class ObjectLockManager extends GlobalSingleton implements ILockManager <String>
+public final class ObjectLockManager extends AbstractGlobalSingleton implements ILockManager <String>
 {
   private final DefaultLockManager <String> m_aMgr = new DefaultLockManager <String> (LoggedInUserManager.getInstance ());
 

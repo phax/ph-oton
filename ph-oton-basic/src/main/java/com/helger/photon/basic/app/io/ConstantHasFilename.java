@@ -19,8 +19,8 @@ package com.helger.photon.basic.app.io;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -54,7 +54,7 @@ public class ConstantHasFilename implements IHasFilename
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ConstantHasFilename rhs = (ConstantHasFilename) o;
-    return EqualsUtils.equals (m_sFilename, rhs.m_sFilename);
+    return EqualsHelper.equals (m_sFilename, rhs.m_sFilename);
   }
 
   @Override

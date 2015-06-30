@@ -33,9 +33,9 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.ESuccess;
 
 @ThreadSafe

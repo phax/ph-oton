@@ -26,17 +26,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.callback.INonThrowingRunnableWithParameter;
-import com.helger.commons.collections.ArrayHelper;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
-import com.helger.commons.hierarchy.DefaultHierarchyWalkerCallback;
-import com.helger.commons.lang.CGStringHelper;
-import com.helger.commons.name.IHasDisplayText;
+import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
+import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.tree.utils.walk.TreeWalker;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 import com.helger.commons.url.ISimpleURL;
@@ -47,7 +48,7 @@ import com.helger.photon.basic.app.page.IPage;
  *
  * @author Philip Helger
  */
-public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject> implements IMenuTree
+public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject>implements IMenuTree
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (MenuTree.class);
 
@@ -170,13 +171,13 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   public void setDefaultMenuItemIDs (@Nullable final String... aDefaultMenuItemIDs)
   {
     m_aDefaultMenuItemIDs = ArrayHelper.isEmpty (aDefaultMenuItemIDs) ? null
-                                                                     : CollectionHelper.newList (aDefaultMenuItemIDs);
+                                                                      : CollectionHelper.newList (aDefaultMenuItemIDs);
   }
 
   public void setDefaultMenuItemIDs (@Nullable final List <String> aDefaultMenuItemIDs)
   {
     m_aDefaultMenuItemIDs = CollectionHelper.isEmpty (aDefaultMenuItemIDs) ? null
-                                                                         : CollectionHelper.newList (aDefaultMenuItemIDs);
+                                                                           : CollectionHelper.newList (aDefaultMenuItemIDs);
   }
 
   @Nullable
@@ -207,7 +208,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
         s_aLogger.warn ("The default menu object ID '" +
                         sMenuItemID +
                         "' does not resolve to an IMenuItemPage but to " +
-                        CGStringHelper.getSafeClassName (aMenuItem));
+                        ClassHelper.getSafeClassName (aMenuItem));
       }
       else
         s_aLogger.warn ("Failed to resolve the default menu item ID '" + sMenuItemID + "'");
@@ -246,12 +247,13 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   {
     ValueEnforcer.notNull (aCallback, "Callback");
 
-    TreeWalker.walkTree (this, new DefaultHierarchyWalkerCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
+    TreeVisitor.visitTree (this, new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
     {
       @Override
-      public final void onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
+      public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
       {
         aCallback.run (aItem.getData ());
+        return EHierarchyVisitorReturn.CONTINUE;
       }
     });
   }
@@ -301,7 +303,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     if (!super.equals (o))
       return false;
     final MenuTree rhs = (MenuTree) o;
-    return EqualsUtils.equals (m_aDefaultMenuItemIDs, rhs.m_aDefaultMenuItemIDs);
+    return EqualsHelper.equals (m_aDefaultMenuItemIDs, rhs.m_aDefaultMenuItemIDs);
   }
 
   @Override

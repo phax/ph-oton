@@ -24,12 +24,13 @@ import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.hierarchy.DefaultHierarchyWalkerCallback;
-import com.helger.commons.tree.utils.walk.TreeWalker;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
+import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 
 /**
@@ -68,7 +69,7 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
   }
 
   @Override
-  public final void onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
+  public final EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
   {
     boolean bShow;
     boolean bAddAllChildrenOnThisLevel = false;
@@ -136,6 +137,8 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
       for (final DefaultTreeItemWithID <String, IMenuObject> aSibling : aItem.getParent ().getAllChildren ())
         if (isMenuItemValidToBeDisplayed (aSibling.getData ()))
           rememberMenuItemForDisplay (aSibling.getID (), false);
+
+    return EHierarchyVisitorReturn.CONTINUE;
   }
 
   /**
@@ -163,7 +166,7 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
   {
     ValueEnforcer.notNull (aDeterminator, "Determinator");
 
-    TreeWalker.walkTree (aDeterminator.getMenuTree (), aDeterminator);
+    TreeVisitor.visitTree (aDeterminator.getMenuTree (), aDeterminator);
     return aDeterminator.getAllItemIDs ();
   }
 
@@ -183,14 +186,16 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
 
     final Map <String, Boolean> ret = new HashMap <String, Boolean> ();
-    TreeWalker.walkTree (aMenuTree, new DefaultHierarchyWalkerCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
-    {
-      @Override
-      public void onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
-      {
-        ret.put (aItem.getID (), Boolean.valueOf (aItem.hasChildren ()));
-      }
-    });
+    TreeVisitor.visitTree (aMenuTree,
+                           new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
+                           {
+                             @Override
+                             public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
+                             {
+                               ret.put (aItem.getID (), Boolean.valueOf (aItem.hasChildren ()));
+                               return EHierarchyVisitorReturn.CONTINUE;
+                             }
+                           });
     return ret;
   }
 }

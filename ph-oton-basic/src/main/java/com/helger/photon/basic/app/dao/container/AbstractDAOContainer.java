@@ -25,9 +25,9 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.callback.AdapterRunnableToCallable;
 import com.helger.commons.callback.INonThrowingCallable;
 import com.helger.commons.callback.INonThrowingRunnable;
+import com.helger.commons.callback.adapter.AdapterRunnableToCallable;
 import com.helger.photon.basic.app.dao.IDAO;
 
 @ThreadSafe

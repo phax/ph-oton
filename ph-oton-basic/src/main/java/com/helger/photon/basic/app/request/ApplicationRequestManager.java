@@ -18,8 +18,8 @@ package com.helger.photon.basic.app.request;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.UsedViaReflection;
-import com.helger.commons.scopes.singleton.GlobalSingleton;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -31,7 +31,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-public final class ApplicationRequestManager extends GlobalSingleton
+public final class ApplicationRequestManager extends AbstractGlobalSingleton
 {
   private final RequestManager m_aProxy = new RequestManager ();
 

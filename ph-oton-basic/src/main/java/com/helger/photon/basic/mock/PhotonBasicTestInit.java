@@ -22,8 +22,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.cleanup.CommonsCleanup;
-import com.helger.commons.idfactory.GlobalIDFactory;
-import com.helger.commons.idfactory.MemoryIntIDFactory;
+import com.helger.commons.id.factory.GlobalIDFactory;
+import com.helger.commons.id.factory.MemoryIntIDFactory;
 import com.helger.photon.basic.app.io.WebFileIO;
 
 /**

@@ -31,19 +31,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.charset.CharsetManager;
-import com.helger.commons.exceptions.InitializationException;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.exception.InitializationException;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.EAppend;
+import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.io.file.FileOperationManager;
-import com.helger.commons.io.file.FileUtils;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.iterate.FileSystemRecursiveIterator;
 import com.helger.commons.io.resource.FileSystemResource;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
@@ -63,7 +63,7 @@ public class PathRelativeFileIO implements IPathRelativeIO
   private void _checkAccessRights ()
   {
     // Check read/write/execute
-    final StopWatch aSW = new StopWatch (true);
+    final StopWatch aSW = StopWatch.createdStarted ();
     s_aLogger.info ("Checking file access in " + m_aBasePath);
     int nFiles = 0;
     int nDirs = 0;
@@ -71,20 +71,20 @@ public class PathRelativeFileIO implements IPathRelativeIO
       if (aFile.isFile ())
       {
         // Check if files are read-write
-        if (!FileUtils.canRead (aFile))
+        if (!FileHelper.canRead (aFile))
           throw new IllegalArgumentException ("Cannot read file " + aFile);
-        if (!FileUtils.canWrite (aFile))
+        if (!FileHelper.canWrite (aFile))
           s_aLogger.warn ("Cannot write file " + aFile);
         ++nFiles;
       }
       else
         if (aFile.isDirectory ())
         {
-          if (!FileUtils.canRead (aFile))
+          if (!FileHelper.canRead (aFile))
             throw new IllegalArgumentException ("Cannot read in directory " + aFile);
-          if (!FileUtils.canWrite (aFile))
+          if (!FileHelper.canWrite (aFile))
             s_aLogger.warn ("Cannot write in directory " + aFile);
-          if (!FileUtils.canExecute (aFile))
+          if (!FileHelper.canExecute (aFile))
             s_aLogger.warn ("Cannot execute in directory " + aFile);
           ++nDirs;
         }
@@ -145,12 +145,12 @@ public class PathRelativeFileIO implements IPathRelativeIO
 
   public boolean existsFile (@Nonnull final String sRelativePath)
   {
-    return FileUtils.existsFile (getFile (sRelativePath));
+    return FileHelper.existsFile (getFile (sRelativePath));
   }
 
   public boolean existsDir (@Nonnull final String sRelativePath)
   {
-    return FileUtils.existsDir (getFile (sRelativePath));
+    return FileHelper.existsDir (getFile (sRelativePath));
   }
 
   @Nonnull
@@ -202,7 +202,7 @@ public class PathRelativeFileIO implements IPathRelativeIO
   {
     final File aDir = getFile (sRelativePath);
     return bRecursive ? getFileOperationMgr ().createDirRecursiveIfNotExisting (aDir)
-                     : getFileOperationMgr ().createDirIfNotExisting (aDir);
+                      : getFileOperationMgr ().createDirIfNotExisting (aDir);
   }
 
   @Nonnull
@@ -239,7 +239,7 @@ public class PathRelativeFileIO implements IPathRelativeIO
   public FileIOError deleteDirectory (@Nonnull final File fDir, final boolean bDeleteRecursively)
   {
     return bDeleteRecursively ? getFileOperationMgr ().deleteDirRecursive (fDir)
-                             : getFileOperationMgr ().deleteDir (fDir);
+                              : getFileOperationMgr ().deleteDir (fDir);
   }
 
   @Nonnull
@@ -252,7 +252,7 @@ public class PathRelativeFileIO implements IPathRelativeIO
   public FileIOError deleteDirectoryIfExisting (@Nonnull final File fDir, final boolean bDeleteRecursively)
   {
     return bDeleteRecursively ? getFileOperationMgr ().deleteDirRecursiveIfExisting (fDir)
-                             : getFileOperationMgr ().deleteDirIfExisting (fDir);
+                              : getFileOperationMgr ().deleteDirIfExisting (fDir);
   }
 
   @Nonnull
@@ -296,7 +296,7 @@ public class PathRelativeFileIO implements IPathRelativeIO
     }
 
     // Close the OS automatically!
-    return StreamUtils.writeStream (aOS, aBytes);
+    return StreamHelper.writeStream (aOS, aBytes);
   }
 
   @Nonnull

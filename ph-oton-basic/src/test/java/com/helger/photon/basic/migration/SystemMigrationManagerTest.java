@@ -23,8 +23,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.migration.SystemMigrationManager;
-import com.helger.photon.basic.migration.SystemMigrationResult;
 
 public final class SystemMigrationManagerTest
 {

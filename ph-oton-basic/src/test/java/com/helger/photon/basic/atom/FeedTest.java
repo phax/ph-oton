@@ -25,13 +25,6 @@ import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.HCDiv;
-import com.helger.photon.basic.atom.Feed;
-import com.helger.photon.basic.atom.FeedDate;
-import com.helger.photon.basic.atom.FeedEntry;
-import com.helger.photon.basic.atom.FeedLink;
-import com.helger.photon.basic.atom.FeedPerson;
-import com.helger.photon.basic.atom.FeedPlainTextConstruct;
-import com.helger.photon.basic.atom.FeedXHTMLContent;
 
 public final class FeedTest
 {
