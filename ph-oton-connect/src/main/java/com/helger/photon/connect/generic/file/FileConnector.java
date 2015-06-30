@@ -26,10 +26,10 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.filter.IFilter;
+import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileOperations;
-import com.helger.commons.io.file.FileUtils;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
@@ -95,13 +95,13 @@ public class FileConnector implements IConnectorFileBased <File, File>
       if (m_aChannel != null)
       {
         final File aFile = new File (m_aChannel, sFilename);
-        return StreamUtils.copyInputStreamToOutputStream (FileUtils.getInputStream (aFile), aOS);
+        return StreamHelper.copyInputStreamToOutputStream (FileHelper.getInputStream (aFile), aOS);
       }
       return ESuccess.FAILURE;
     }
     finally
     {
-      StreamUtils.close (aOS);
+      StreamHelper.close (aOS);
     }
   }
 
@@ -113,13 +113,13 @@ public class FileConnector implements IConnectorFileBased <File, File>
       if (m_aChannel != null)
       {
         final File aFile = new File (m_aChannel, sFilename);
-        return StreamUtils.copyInputStreamToOutputStream (aIS, FileUtils.getOutputStream (aFile));
+        return StreamHelper.copyInputStreamToOutputStream (aIS, FileHelper.getOutputStream (aFile));
       }
       return ESuccess.FAILURE;
     }
     finally
     {
-      StreamUtils.close (aIS);
+      StreamHelper.close (aIS);
     }
   }
 

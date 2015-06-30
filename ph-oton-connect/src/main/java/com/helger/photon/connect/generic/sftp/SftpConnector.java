@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.filter.IFilter;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
@@ -120,7 +120,7 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
     }
     finally
     {
-      StreamUtils.close (aOS);
+      StreamHelper.close (aOS);
     }
   }
 
@@ -144,7 +144,7 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
     }
     finally
     {
-      StreamUtils.close (aIS);
+      StreamHelper.close (aIS);
     }
   }
 

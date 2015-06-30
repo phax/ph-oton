@@ -23,7 +23,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileFilter;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 
 public final class FTPFileFilterFileEndsWith implements FTPFileFilter
 {

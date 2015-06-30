@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.state.EChange;
-import com.helger.commons.stats.IStatisticsHandlerCounter;
-import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
+import com.helger.commons.statistics.StatisticsManager;
 import com.helger.photon.connect.connection.IBaseServerConnectionSettings;
 import com.helger.photon.connect.connection.IServerConnectionSettingsKeyPair;
 import com.helger.photon.connect.connection.IServerConnectionSettingsPassword;
@@ -37,17 +37,17 @@ import com.jcraft.jsch.Session;
 
 /**
  * Utility class to create JSch sessions.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
 public final class JSchSessionFactory
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (JSchSessionFactory.class);
-  private static final IStatisticsHandlerCounter s_aStatsCounterCreated = StatisticsManager.getCounterHandler (JSchSessionFactory.class +
-                                                                                                               "$created");
-  private static final IStatisticsHandlerCounter s_aStatsCounterDestroyed = StatisticsManager.getCounterHandler (JSchSessionFactory.class +
-                                                                                                                 "$destroyed");
+  private static final IMutableStatisticsHandlerCounter s_aStatsCounterCreated = StatisticsManager.getCounterHandler (JSchSessionFactory.class +
+                                                                                                                      "$created");
+  private static final IMutableStatisticsHandlerCounter s_aStatsCounterDestroyed = StatisticsManager.getCounterHandler (JSchSessionFactory.class +
+                                                                                                                        "$destroyed");
 
   private JSchSessionFactory ()
   {}

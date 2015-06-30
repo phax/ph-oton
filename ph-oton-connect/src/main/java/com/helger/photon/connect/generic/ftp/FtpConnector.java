@@ -31,9 +31,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collections.ArrayHelper;
+import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.filter.IFilter;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
@@ -136,7 +136,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
     }
     finally
     {
-      StreamUtils.close (aOS);
+      StreamHelper.close (aOS);
     }
   }
 
@@ -164,7 +164,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
     }
     finally
     {
-      StreamUtils.close (aIS);
+      StreamHelper.close (aIS);
     }
   }
 
@@ -183,7 +183,10 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
       }
       catch (final IOException ex)
       {
-        s_aLogger.error ("Error changing working directory to '" + sDirectory + "': " + m_aChannel.getReplyString (),
+        s_aLogger.error ("Error changing working directory to '" +
+                         sDirectory +
+                         "': " +
+                         m_aChannel.getReplyString (),
                          ex);
       }
     return ESuccess.FAILURE;
