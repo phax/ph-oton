@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger</groupId>
     <artifactId>ph-oton-parent-pom</artifactId>
-    <version>5.2.1-SNAPSHOT</version>
+    <version>6.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>ph-oton-bootstrap3-stub</artifactId>
   <packaging>bundle</packaging>
