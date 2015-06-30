@@ -19,7 +19,7 @@ package com.helger.photon.tinymce4;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.annotations.PresentForCodeCoverage;
+import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.html.js.builder.JSAssocArray;
 import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSInvocation;

@@ -28,10 +28,10 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
@@ -873,7 +873,7 @@ public class HCTinyMCE4 implements IHCNodeBuilder
   // --- User interface ---
 
   @Nullable
-  @ReturnsMutableObject (reason = "Design")
+  @ReturnsMutableObject ("Design")
   public TinyMCE4ToolbarControlList getToolbar ()
   {
     return m_aToolbar;
@@ -914,7 +914,7 @@ public class HCTinyMCE4 implements IHCNodeBuilder
   }
 
   @Nullable
-  @ReturnsMutableObject (reason = "Design")
+  @ReturnsMutableObject ("Design")
   public TinyMCE4MenubarItemList getMenubar ()
   {
     return m_aMenubar;

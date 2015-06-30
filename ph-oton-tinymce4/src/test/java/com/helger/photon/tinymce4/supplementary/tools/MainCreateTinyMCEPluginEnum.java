@@ -29,7 +29,7 @@ public class MainCreateTinyMCEPluginEnum
   {
     // Last update: 2013-11-22
     for (final File aFile : FileSystemIterator.create ("src/main/resources/tinymce-dev/plugins",
-                                                       FileFilterDirectoryPublic.getInstance ()))
+                                                       new FileFilterDirectoryPublic ()))
     {
       final String sID = FilenameHelper.getBaseName (aFile);
       System.out.println (sID.toUpperCase (Locale.US) + " (\"" + sID + "\"),");

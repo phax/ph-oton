@@ -20,7 +20,7 @@ import java.io.File;
 import java.util.Locale;
 
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.file.filter.FilenameFilterEndsWith;
+import com.helger.commons.io.file.filter.FileFilterFilenameEndsWith;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.locale.LocaleCache;
 
@@ -30,10 +30,10 @@ public class MainCreateTinyMCELanguageEnum
   {
     // Last update: 2013-11-22
     for (final File aFile : FileSystemIterator.create ("src/main/resources/tinymce-dev/langs",
-                                                       new FilenameFilterEndsWith (".js")))
+                                                       new FileFilterFilenameEndsWith (".js")))
     {
       final String sID = FilenameHelper.getBaseName (aFile);
-      if (!LocaleCache.containsLocale (sID))
+      if (!LocaleCache.getInstance ().containsLocale (sID))
       {
         System.out.println ("/* Note: this is not a valid Java locale! */");
       }
