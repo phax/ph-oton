@@ -19,8 +19,8 @@ package com.helger.photon.uicore.serverlog;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.UsedViaReflection;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;

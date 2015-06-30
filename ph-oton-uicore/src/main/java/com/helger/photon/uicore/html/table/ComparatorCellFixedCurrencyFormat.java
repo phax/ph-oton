@@ -27,10 +27,10 @@ import com.helger.masterdata.currency.ECurrency;
 /**
  * A cell comparator that handles currency formatted cells that all use the same
  * currency.
- * 
+ *
  * @author Philip Helger
  */
-public final class ComparatorCellFixedCurrencyFormat extends ComparatorCellDouble
+public final class ComparatorCellFixedCurrencyFormat extends ComparatorCellBigDecimal
 {
   private final ECurrency m_eCurrency;
 
@@ -40,9 +40,16 @@ public final class ComparatorCellFixedCurrencyFormat extends ComparatorCellDoubl
     m_eCurrency = ValueEnforcer.notNull (eCurrency, "Currency");
   }
 
-  @Override
-  protected double asDouble (final String sCellText)
+  @Nonnull
+  public ECurrency getCurrency ()
   {
-    return m_eCurrency.parseCurrencyFormat (sCellText, BigDecimal.ZERO).doubleValue ();
+    return m_eCurrency;
+  }
+
+  @Override
+  @Nonnull
+  protected BigDecimal getAsBigDecimal (@Nonnull final String sCellText)
+  {
+    return m_eCurrency.parseCurrencyFormat (sCellText, BigDecimal.ZERO);
   }
 }

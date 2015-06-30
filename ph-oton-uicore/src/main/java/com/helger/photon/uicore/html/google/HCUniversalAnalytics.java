@@ -19,9 +19,9 @@ package com.helger.photon.uicore.html.google;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.GlobalDebug;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.html.HCScript;
 import com.helger.html.js.builder.JSAnonymousFunction;

@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.equals.EqualsUtils;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
@@ -78,7 +78,7 @@ public class WebPageExecutionContext extends LayoutExecutionContext implements I
 
   public boolean hasAction (@Nullable final String sAction)
   {
-    return EqualsUtils.equals (getAction (), sAction);
+    return EqualsHelper.equals (getAction (), sAction);
   }
 
   @Nullable
@@ -89,7 +89,7 @@ public class WebPageExecutionContext extends LayoutExecutionContext implements I
 
   public boolean hasSubAction (@Nullable final String sSubAction)
   {
-    return EqualsUtils.equals (getSubAction (), sSubAction);
+    return EqualsHelper.equals (getSubAction (), sSubAction);
   }
 
   @Override

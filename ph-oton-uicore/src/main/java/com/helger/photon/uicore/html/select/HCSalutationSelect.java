@@ -20,7 +20,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.person.ESalutation;
 

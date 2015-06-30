@@ -21,7 +21,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.vat.ComparatorVATItemPercentage;
 import com.helger.masterdata.vat.IVATItem;

@@ -24,10 +24,11 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.HCH1;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.uicore.page.AbstractWebPage;
@@ -45,20 +46,20 @@ public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> exte
   @Translatable
   protected static enum ETextBase implements IHasDisplayText
   {
-    PAGENAME ("Seite nicht gefunden", "Page not found"),
-    MESSAGE ("Die von Ihnen gesuchte Seite existiert leider nicht!", "The page you are looking for does not exist!");
+   PAGENAME ("Seite nicht gefunden", "Page not found"),
+   MESSAGE ("Die von Ihnen gesuchte Seite existiert leider nicht!", "The page you are looking for does not exist!");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private ETextBase (@Nonnull final String sDE, @Nonnull final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 

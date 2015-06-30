@@ -20,7 +20,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.IsSPIInterface;
+import com.helger.commons.annotation.IsSPIInterface;
 
 @IsSPIInterface
 public interface IFacebookObjectProvider

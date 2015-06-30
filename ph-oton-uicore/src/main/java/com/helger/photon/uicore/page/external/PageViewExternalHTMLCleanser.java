@@ -20,7 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.hierarchy.DefaultHierarchyWalkerCallback;
+import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.microdom.IMicroComment;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.IMicroNode;
@@ -40,7 +41,7 @@ import com.helger.html.EHTMLVersion;
  *
  * @author Philip Helger
  */
-public class PageViewExternalHTMLCleanser extends DefaultHierarchyWalkerCallback <IMicroNode>
+public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallback <IMicroNode>
 {
   private final EHTMLVersion m_eHTMLVersion;
   private final String m_sNamespaceURI;
@@ -77,7 +78,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyWalkerCallback
   }
 
   @Override
-  public void onItemBeforeChildren (final IMicroNode aItem)
+  public EHierarchyVisitorReturn onItemBeforeChildren (final IMicroNode aItem)
   {
     if (aItem instanceof IMicroComment)
     {
@@ -105,5 +106,6 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyWalkerCallback
           e.appendText ("");
         }
       }
+    return EHierarchyVisitorReturn.CONTINUE;
   }
 }

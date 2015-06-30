@@ -24,10 +24,9 @@ import javax.annotation.Nullable;
 import org.joda.time.DateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.compare.AbstractComparator;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.compare.AbstractPartComparatorComparable;
 import com.helger.commons.string.StringHelper;
-import com.helger.datetime.PDTUtils;
 import com.helger.datetime.format.PDTFromString;
 import com.helger.datetime.format.SerializableDateTimeFormatter;
 import com.helger.datetime.format.SerializableDateTimeFormatter.EFormatStyle;
@@ -35,10 +34,10 @@ import com.helger.html.hc.IHCCell;
 
 /**
  * This comparator is responsible for sorting cells by date and/or time.
- * 
+ *
  * @author Philip Helger
  */
-public class ComparatorCellDateTime extends AbstractComparator <IHCCell <?>>
+public class ComparatorCellDateTime extends AbstractPartComparatorComparable <IHCCell <?>, DateTime>
 {
   private final SerializableDateTimeFormatter m_aFormatter;
   private final String m_sCommonPrefix;
@@ -91,12 +90,9 @@ public class ComparatorCellDateTime extends AbstractComparator <IHCCell <?>>
   }
 
   @Override
-  protected final int mainCompare (final IHCCell <?> aCell1, final IHCCell <?> aCell2)
+  protected DateTime getPart (@Nonnull final IHCCell <?> aCell)
   {
-    final String sText1 = getCellText (aCell1);
-    final String sText2 = getCellText (aCell2);
-    final DateTime aDT1 = PDTFromString.getDateTimeFromString (sText1, m_aFormatter.getFormatter ());
-    final DateTime aDT2 = PDTFromString.getDateTimeFromString (sText2, m_aFormatter.getFormatter ());
-    return PDTUtils.nullSafeCompare (aDT1, aDT2);
+    final String sText = getCellText (aCell);
+    return PDTFromString.getDateTimeFromString (sText, m_aFormatter.getFormatter ());
   }
 }

@@ -83,11 +83,6 @@ public final class CPageParam
   public static final String ACTION_UNDELETE = "undelete";
   public static final String ACTION_UNDELETE_ALL = "undelete-all";
 
-  // predefined values
-  // Don't change them - it is expected that they are "true" and "false"!
-  public static final String VALUE_CHECKED = Boolean.TRUE.toString ();
-  public static final String VALUE_UNCHECKED = Boolean.FALSE.toString ();
-
   // CSRF nonce field
   public static final String FIELD_NONCE = "$ph_nonce";
 

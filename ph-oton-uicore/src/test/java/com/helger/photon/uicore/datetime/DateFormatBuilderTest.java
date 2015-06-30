@@ -28,7 +28,7 @@ import org.joda.time.LocalTime;
 import org.junit.Test;
 
 import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.mock.AbstractPHTestCase;
+import com.helger.commons.mock.AbstractCommonsTestCase;
 import com.helger.datetime.format.PDTFormatPatterns;
 
 /**
@@ -36,7 +36,7 @@ import com.helger.datetime.format.PDTFormatPatterns;
  *
  * @author Philip Helger
  */
-public final class DateFormatBuilderTest extends AbstractPHTestCase
+public final class DateFormatBuilderTest extends AbstractCommonsTestCase
 {
   @Test
   public void testAll ()
@@ -84,7 +84,7 @@ public final class DateFormatBuilderTest extends AbstractPHTestCase
     String sPattern;
     IDateFormatBuilder aDFB;
 
-    for (final Locale aLocale : LocaleCache.getAllLocales ())
+    for (final Locale aLocale : LocaleCache.getInstance ().getAllLocales ())
     {
       sPattern = PDTFormatPatterns.getDefaultPatternDateTime (aLocale);
       aDFB = DateFormatBuilder.fromJavaPattern (sPattern);

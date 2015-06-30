@@ -20,7 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.error.EErrorLevel;
-import com.helger.commons.log.LogUtils;
+import com.helger.commons.error.IErrorLevel;
+import com.helger.commons.log.LogHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
@@ -29,13 +30,13 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 public class AjaxExecutorServerLog extends AbstractAjaxExecutor
 {
-  private static final EErrorLevel DEFAULT_SEVERITY = EErrorLevel.INFO;
+  private static final IErrorLevel DEFAULT_SEVERITY = EErrorLevel.INFO;
   private static final String PARAM_SEVERITY = "severity";
   private static final String PARAM_MESSAGE = "message";
   private static final String PARAM_KEY = "key";
 
   @Nonnull
-  public static EErrorLevel getErrorLevelFromString (@Nullable final String sSeverity)
+  public static IErrorLevel getErrorLevelFromString (@Nullable final String sSeverity)
   {
     if (StringHelper.hasText (sSeverity))
     {
@@ -67,8 +68,8 @@ public class AjaxExecutorServerLog extends AbstractAjaxExecutor
       return AjaxDefaultResponse.createError (null);
 
     // Main logging
-    final EErrorLevel eSeverity = getErrorLevelFromString (sSeverity);
-    LogUtils.log (AjaxExecutorServerLog.class, eSeverity, sMessage);
+    final IErrorLevel aSeverity = getErrorLevelFromString (sSeverity);
+    LogHelper.log (AjaxExecutorServerLog.class, aSeverity, sMessage);
 
     // Convert the response to JSON
     return AjaxDefaultResponse.createSuccess (aRequestScope);

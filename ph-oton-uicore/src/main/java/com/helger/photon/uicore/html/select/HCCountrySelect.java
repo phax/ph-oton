@@ -25,12 +25,12 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.IHasBooleanRepresentation;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.compare.AbstractCollationComparator;
-import com.helger.commons.locale.country.ComparatorLocaleDisplayCountryInLocale;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.lang.IHasBooleanRepresentation;
+import com.helger.commons.locale.country.CollatingComparatorLocaleDisplayCountryInLocale;
 import com.helger.commons.locale.country.CountryCache;
-import com.helger.commons.name.IDisplayTextProvider;
+import com.helger.commons.text.display.CollatingComparatorDisplayTextProvider;
+import com.helger.commons.text.display.IDisplayTextProvider;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.locale.DeprecatedLocaleHandler;
 
@@ -38,8 +38,8 @@ public class HCCountrySelect extends HCExtSelect
 {
   public static enum EWithDeprecated implements IHasBooleanRepresentation
   {
-    TRUE,
-    FALSE;
+   TRUE,
+   FALSE;
 
     public static final EWithDeprecated DEFAULT = FALSE;
 
@@ -113,22 +113,17 @@ public class HCCountrySelect extends HCExtSelect
 
     Comparator <Locale> aComp;
     if (aDisplayTextProvider == null)
-      aComp = new ComparatorLocaleDisplayCountryInLocale (aDisplayLocale, aDisplayLocale);
+      aComp = new CollatingComparatorLocaleDisplayCountryInLocale (aDisplayLocale, aDisplayLocale);
     else
-      aComp = new AbstractCollationComparator <Locale> (aDisplayLocale)
-      {
-        @Override
-        protected String asString (final Locale aObject)
-        {
-          return aDisplayTextProvider.getDisplayText (aObject, aDisplayLocale);
-        }
-      };
+      aComp = new CollatingComparatorDisplayTextProvider <Locale> (aDisplayLocale,
+                                                                   aDisplayTextProvider,
+                                                                   aDisplayLocale);
     for (final Locale aCountry : CollectionHelper.getSorted (aLocales, aComp))
 
     {
       final String sDisplayCountry = aDisplayTextProvider != null ? aDisplayTextProvider.getDisplayText (aCountry,
                                                                                                          aDisplayLocale)
-                                                                 : aCountry.getDisplayCountry (aDisplayLocale);
+                                                                  : aCountry.getDisplayCountry (aDisplayLocale);
       addOption (aCountry.getCountry (), sDisplayCountry);
     }
 

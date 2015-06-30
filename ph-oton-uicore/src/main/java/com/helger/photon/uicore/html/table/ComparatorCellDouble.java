@@ -22,13 +22,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.compare.AbstractNumericComparator;
-import com.helger.commons.locale.LocaleFormatter;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.compare.AbstractDoubleComparator;
+import com.helger.commons.locale.LocaleParser;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCCell;
 
-public class ComparatorCellDouble extends AbstractNumericComparator <IHCCell <?>>
+public class ComparatorCellDouble extends AbstractDoubleComparator <IHCCell <?>>
 {
   protected final Locale m_aLocale;
   private final String m_sCommonPrefix;
@@ -67,13 +67,13 @@ public class ComparatorCellDouble extends AbstractNumericComparator <IHCCell <?>
   }
 
   @OverrideOnDemand
-  protected double asDouble (final String sCellText)
+  protected double getAsDouble (final String sCellText)
   {
-    return LocaleFormatter.parseDouble (sCellText, m_aLocale, 0);
+    return LocaleParser.parseDouble (sCellText, m_aLocale, 0);
   }
 
   @Override
-  protected final double asDouble (@Nullable final IHCCell <?> aCell)
+  protected double getAsDouble (@Nullable final IHCCell <?> aCell)
   {
     final String sText = getCellText (aCell);
 
@@ -81,6 +81,6 @@ public class ComparatorCellDouble extends AbstractNumericComparator <IHCCell <?>
     // ones with non-numeric content
     if (StringHelper.hasNoText (sText))
       return Double.MIN_VALUE;
-    return asDouble (sText);
+    return getAsDouble (sText);
   }
 }

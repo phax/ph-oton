@@ -16,14 +16,13 @@
  */
 package com.helger.photon.uicore.facebook.opengraph;
 
-import com.helger.commons.compare.AbstractComparator;
-import com.helger.commons.compare.CompareUtils;
+import com.helger.commons.compare.AbstractIntComparator;
 
-public class ComparatorFacebookObjectProviderSpecifity extends AbstractComparator <IFacebookObjectProvider>
+public class ComparatorFacebookObjectProviderSpecifity extends AbstractIntComparator <IFacebookObjectProvider>
 {
   @Override
-  protected int mainCompare (final IFacebookObjectProvider aProvider1, final IFacebookObjectProvider aProvider2)
+  protected int getAsInt (final IFacebookObjectProvider aProvider)
   {
-    return CompareUtils.compare (aProvider1.getSpecifity (), aProvider2.getSpecifity ());
+    return aProvider.getSpecifity ();
   }
 }

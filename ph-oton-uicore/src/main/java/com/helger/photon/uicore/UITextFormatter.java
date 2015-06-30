@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.microdom.IMicroContainer;
-import com.helger.commons.microdom.utils.MicroWalker;
+import com.helger.commons.microdom.util.MicroVisitor;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLVersion;
@@ -124,7 +124,7 @@ public final class UITextFormatter
       throw new IllegalStateException ("Failed to parse HTML code: " + s);
 
     // Do standard cleansing also setting the correct namespace URI
-    MicroWalker.walkNode (ret, new PageViewExternalHTMLCleanser (HCSettings.getConversionSettings ().getHTMLVersion ()));
+    MicroVisitor.visit (ret, new PageViewExternalHTMLCleanser (HCSettings.getConversionSettings ().getHTMLVersion ()));
 
     // Convert micro container to IHCNode
     return new HCDOMWrapper (ret);

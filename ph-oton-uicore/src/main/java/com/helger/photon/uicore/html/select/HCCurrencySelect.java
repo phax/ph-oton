@@ -20,7 +20,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.currency.ECurrency;
 

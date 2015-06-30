@@ -24,13 +24,13 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.state.EValidity;
 import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.text.IMultilingualText;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNode;
@@ -115,7 +115,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    * @param aName
    *        The name of the page. May not be <code>null</code>.
    */
-  public AbstractWebPage (@Nonnull @Nonempty final String sID, @Nonnull final IReadonlyMultiLingualText aName)
+  public AbstractWebPage (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
     super (sID, aName);
   }
@@ -131,8 +131,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    *        Optional description of the page. May be <code>null</code>.
    */
   public AbstractWebPage (@Nonnull @Nonempty final String sID,
-                          @Nonnull final IReadonlyMultiLingualText aName,
-                          @Nullable final IReadonlyMultiLingualText aDescription)
+                          @Nonnull final IMultilingualText aName,
+                          @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }

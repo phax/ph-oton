@@ -18,14 +18,15 @@ package com.helger.photon.uicore.html.table;
 
 import java.util.Locale;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.compare.AbstractCollationComparator;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.compare.AbstractCollatingComparator;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCCell;
 
-public class ComparatorCellString extends AbstractCollationComparator <IHCCell <?>>
+public class ComparatorCellString extends AbstractCollatingComparator <IHCCell <?>>
 {
   private final String m_sCommonPrefix;
   private final String m_sCommonSuffix;
@@ -62,7 +63,8 @@ public class ComparatorCellString extends AbstractCollationComparator <IHCCell <
   }
 
   @Override
-  protected final String asString (@Nullable final IHCCell <?> aCell)
+  @Nullable
+  protected String getPart (@Nonnull final IHCCell <?> aCell)
   {
     return getCellText (aCell);
   }

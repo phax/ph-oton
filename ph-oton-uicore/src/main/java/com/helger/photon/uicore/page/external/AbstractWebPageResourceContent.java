@@ -28,16 +28,16 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.GlobalDebug;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.charset.CCharset;
-import com.helger.commons.io.IReadableResource;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.microdom.IMicroContainer;
-import com.helger.commons.microdom.utils.MicroWalker;
+import com.helger.commons.microdom.util.MicroVisitor;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.xml.serialize.SAXReaderSettings;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.xml.serialize.read.SAXReaderSettings;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.parser.XHTMLParser;
@@ -87,7 +87,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
       s_aLogger.warn ("Reading an HTML page fragment with HTML5 may fail because of missing HTML entities!");
 
     // Read content once
-    final String sContent = StreamUtils.getAllBytesAsString (aResource, aCharset);
+    final String sContent = StreamHelper.getAllBytesAsString (aResource, aCharset);
     if (sContent == null)
       throw new IllegalStateException ("Failed to read resource " + aResource.toString ());
 
@@ -99,7 +99,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
       throw new IllegalStateException ("Failed to parse HTML code of resource " + aResource.toString ());
 
     // Do standard cleansing
-    MicroWalker.walkNode (ret, new PageViewExternalHTMLCleanser (eHTMLVersion));
+    MicroVisitor.visit (ret, new PageViewExternalHTMLCleanser (eHTMLVersion));
 
     return ret;
   }
@@ -109,8 +109,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
     super (sID, sName);
   }
 
-  public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID,
-                                         @Nonnull final IReadonlyMultiLingualText aName)
+  public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
     super (sID, aName);
   }

@@ -20,12 +20,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.collections.NonBlockingStack;
-import com.helger.commons.hierarchy.DefaultHierarchyWalkerCallback;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.tree.utils.walk.TreeWalker;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.impl.NonBlockingStack;
+import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCLI;
@@ -42,7 +43,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
 {
-  private static final class ShowChildrenCallback <WPECTYPE extends IWebPageExecutionContext> extends DefaultHierarchyWalkerCallback <DefaultTreeItemWithID <String, IMenuObject>>
+  private static final class ShowChildrenCallback <WPECTYPE extends IWebPageExecutionContext> extends DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
   {
     private final WPECTYPE m_aWPEC;
     private final NonBlockingStack <HCUL> m_aStack;
@@ -88,7 +89,7 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     }
 
     @Override
-    public void onItemBeforeChildren (@Nullable final DefaultTreeItemWithID <String, IMenuObject> aTreeItem)
+    public EHierarchyVisitorReturn onItemBeforeChildren (@Nullable final DefaultTreeItemWithID <String, IMenuObject> aTreeItem)
     {
       final IMenuObject aMenuObj = aTreeItem == null ? null : aTreeItem.getData ();
       if (aMenuObj != null)
@@ -122,6 +123,7 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
         // Call after render callback
         m_aRenderer.afterAddRenderedMenuItem (m_aWPEC, aMenuObj, aNewLI);
       }
+      return EHierarchyVisitorReturn.CONTINUE;
     }
   }
 
@@ -129,14 +131,14 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
   private final PageShowChildrenRenderer m_aRenderer;
 
   public BasePageShowChildren (@Nonnull @Nonempty final String sID,
-                               @Nonnull final IReadonlyMultiLingualText aName,
+                               @Nonnull final IMultilingualText aName,
                                @Nonnull final IMenuTree aMenuTree)
   {
     this (sID, aName, aMenuTree, new PageShowChildrenRenderer ());
   }
 
   public BasePageShowChildren (@Nonnull @Nonempty final String sID,
-                               @Nonnull final IReadonlyMultiLingualText aName,
+                               @Nonnull final IMultilingualText aName,
                                @Nonnull final IMenuTree aMenuTree,
                                @Nonnull final PageShowChildrenRenderer aRenderer)
   {
@@ -178,7 +180,7 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     if (aMenuTreeItem != null && aMenuTreeItem.getData () instanceof IMenuItem)
     {
       final HCUL aUL = createRootUL ();
-      TreeWalker.walkSubTree (aMenuTreeItem, new ShowChildrenCallback <WPECTYPE> (aUL, aWPEC, m_aRenderer));
+      TreeVisitor.visitTreeItem (aMenuTreeItem, new ShowChildrenCallback <WPECTYPE> (aUL, aWPEC, m_aRenderer));
       aNodeList.addChild (aUL);
     }
   }

@@ -17,12 +17,11 @@
 package com.helger.photon.uicore.html.select;
 
 import java.util.Collection;
-import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.name.ComparatorHasName;
 import com.helger.html.hc.html.HCOption;
 import com.helger.photon.basic.security.AccessManager;
@@ -37,7 +36,6 @@ import com.helger.photon.core.form.RequestField;
 public class HCUserGroupForUserSelect extends HCExtSelect
 {
   public HCUserGroupForUserSelect (@Nonnull final RequestField aRF,
-                                   @Nonnull final Locale aSortLocale,
                                    @Nullable final Collection <String> aSelectedUserGroups)
   {
     super (aRF);
@@ -46,7 +44,7 @@ public class HCUserGroupForUserSelect extends HCExtSelect
     final Collection <? extends IUserGroup> aAllUserGroups = AccessManager.getInstance ().getAllUserGroups ();
     setSize (Math.min (10, aAllUserGroups.size ()));
     for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aAllUserGroups,
-                                                                   new ComparatorHasName <IUserGroup> (aSortLocale)))
+                                                                   new ComparatorHasName <IUserGroup> ()))
     {
       final HCOption aOption = addOption (aUserGroup.getID (), aUserGroup.getName ());
       if (aSelectedUserGroups != null && aSelectedUserGroups.contains (aUserGroup.getID ()))

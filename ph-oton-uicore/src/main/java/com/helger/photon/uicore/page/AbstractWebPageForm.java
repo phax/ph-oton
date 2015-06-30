@@ -27,15 +27,15 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.name.IHasDisplayName;
-import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLValidator;
@@ -59,10 +59,10 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.core.form.RequestField;
-import com.helger.photon.core.form.ajax.AjaxExecutorSaveFormState;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.css.CUICoreCSS;
+import com.helger.photon.uicore.form.ajax.AjaxExecutorSaveFormState;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
@@ -100,7 +100,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     super (sID, sName);
   }
 
-  public AbstractWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final IReadonlyMultiLingualText aName)
+  public AbstractWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
     super (sID, aName);
   }
@@ -113,8 +113,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   public AbstractWebPageForm (@Nonnull @Nonempty final String sID,
-                              @Nonnull final IReadonlyMultiLingualText aName,
-                              @Nullable final IReadonlyMultiLingualText aDescription)
+                              @Nonnull final IMultilingualText aName,
+                              @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -237,9 +237,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   @Nonnull
   public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final String sObjectID)
   {
-    return aLEC.getSelfHref ()
-               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW)
-               .add (CPageParam.PARAM_OBJECT, sObjectID);
+    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW).add (CPageParam.PARAM_OBJECT,
+                                                                                          sObjectID);
   }
 
   @Nonnull
@@ -286,9 +285,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   public static SimpleURL createEditURL (@Nonnull final ILayoutExecutionContext aLEC,
                                          @Nonnull final IHasID <String> aCurObject)
   {
-    return aLEC.getSelfHref ()
-               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT)
-               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT).add (CPageParam.PARAM_OBJECT,
+                                                                                          aCurObject.getID ());
   }
 
   @Nonnull
@@ -335,9 +333,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   public static SimpleURL createCopyURL (@Nonnull final ILayoutExecutionContext aLEC,
                                          @Nonnull final IHasID <String> aCurObject)
   {
-    return aLEC.getSelfHref ()
-               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_COPY)
-               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_COPY).add (CPageParam.PARAM_OBJECT,
+                                                                                          aCurObject.getID ());
   }
 
   @Nonnull
@@ -375,9 +372,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   public static SimpleURL createDeleteURL (@Nonnull final ILayoutExecutionContext aLEC,
                                            @Nonnull final IHasID <String> aCurObject)
   {
-    return aLEC.getSelfHref ()
-               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE)
-               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE).add (CPageParam.PARAM_OBJECT,
+                                                                                            aCurObject.getID ());
   }
 
   @Nonnull
@@ -393,9 +389,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   public static SimpleURL createUndeleteURL (@Nonnull final ILayoutExecutionContext aLEC,
                                              @Nonnull final IHasID <String> aCurObject)
   {
-    return aLEC.getSelfHref ()
-               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_UNDELETE)
-               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_UNDELETE).add (CPageParam.PARAM_OBJECT,
+                                                                                              aCurObject.getID ());
   }
 
   @Nonnull
@@ -774,7 +769,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           final String sObjectName = getObjectDisplayName (aWPEC, aSelectedObject);
           final String sDisplayObjectName = StringHelper.hasText (sObjectName) ? " '" + sObjectName + "'" : "";
           final String sDisplayUserName = aLockUser != null ? "'" + aLockUser.getDisplayName () + "'"
-                                                           : EWebPageText.LOCKING_OTHER_USER.getDisplayText (aDisplayLocale);
+                                                            : EWebPageText.LOCKING_OTHER_USER.getDisplayText (aDisplayLocale);
           aNodeList.addChild (createErrorBox (aWPEC,
                                               EWebPageText.LOCKING_FAILED.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                   sDisplayObjectName,
@@ -1192,7 +1187,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             // errors a n-th time
             bShowList = false;
             final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? createFormFileUploadSelf (aWPEC)
-                                                            : createFormSelf (aWPEC);
+                                                             : createFormSelf (aWPEC);
             aNodeList.addChild (aForm);
 
             // Set unique ID

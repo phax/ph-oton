@@ -22,14 +22,14 @@ import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.io.IReadableResource;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.microdom.IMicroContainer;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.text.IMultilingualText;
 import com.helger.html.hc.impl.HCDOMWrapper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -83,7 +83,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
   }
 
   public BasePageViewExternal (@Nonnull @Nonempty final String sID,
-                               @Nonnull final IReadonlyMultiLingualText aName,
+                               @Nonnull final IMultilingualText aName,
                                @Nonnull final IReadableResource aResource)
   {
     super (sID, aName);

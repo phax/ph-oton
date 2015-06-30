@@ -28,15 +28,15 @@ import javax.annotation.concurrent.NotThreadSafe;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.io.IReadableResource;
-import com.helger.commons.locale.LocaleUtils;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.microdom.IMicroContainer;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.text.IMultilingualText;
 import com.helger.html.hc.impl.HCDOMWrapper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -150,7 +150,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
   }
 
   public BasePageViewExternalMultilingual (@Nonnull @Nonempty final String sID,
-                                           @Nonnull final IReadonlyMultiLingualText aName,
+                                           @Nonnull final IMultilingualText aName,
                                            @Nonnull final Map <Locale, IReadableResource> aResources,
                                            @Nonnull final Locale aDefaultLocale)
   {
@@ -181,7 +181,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     try
     {
       // Determine locale to use
-      final Locale aLocaleToUse = LocaleUtils.getLocaleToUseOrNull (aLocale, m_aContent.keySet ());
+      final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrNull (aLocale, m_aContent.keySet ());
       if (aLocaleToUse == null)
         return null;
 
@@ -241,9 +241,9 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     {
       // Use the default locale as fallback, since we ensured that the default
       // locale is contained!
-      final Locale aLocaleToUse = LocaleUtils.getLocaleToUseOrFallback (aDisplayLocale,
-                                                                        m_aContent.keySet (),
-                                                                        m_aDefaultLocale);
+      final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrFallback (aDisplayLocale,
+                                                                         m_aContent.keySet (),
+                                                                         m_aDefaultLocale);
       final ContentPerLocale aContent = m_aContent.get (aLocaleToUse);
       if (aContent == null)
         throw new IllegalStateException ("Found no content for locale " +
@@ -253,7 +253,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
                                          " in page " +
                                          getID ());
       aNode = bReadFromResource ? _readFromResource (aLocaleToUse, aContent.getResource ())
-                               : aContent.getContainerClone ();
+                                : aContent.getContainerClone ();
     }
     finally
     {

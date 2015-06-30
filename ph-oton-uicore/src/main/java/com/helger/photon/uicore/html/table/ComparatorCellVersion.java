@@ -18,8 +18,8 @@ package com.helger.photon.uicore.html.table;
 
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.compare.AbstractComparator;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.compare.AbstractPartComparatorComparable;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.version.Version;
 import com.helger.html.hc.IHCCell;
@@ -29,7 +29,7 @@ import com.helger.html.hc.IHCCell;
  *
  * @author Philip Helger
  */
-public class ComparatorCellVersion extends AbstractComparator <IHCCell <?>>
+public class ComparatorCellVersion extends AbstractPartComparatorComparable <IHCCell <?>, Version>
 {
   private final String m_sCommonPrefix;
   private final String m_sCommonSuffix;
@@ -63,13 +63,9 @@ public class ComparatorCellVersion extends AbstractComparator <IHCCell <?>>
   }
 
   @Override
-  protected final int mainCompare (final IHCCell <?> aCell1, final IHCCell <?> aCell2)
+  protected Version getPart (final IHCCell <?> aCell)
   {
-    final String sText1 = getCellText (aCell1);
-    final String sText2 = getCellText (aCell2);
-
-    final Version aBD1 = new Version (sText1);
-    final Version aBD2 = new Version (sText2);
-    return aBD1.compareTo (aBD2);
+    final String sText = getCellText (aCell);
+    return new Version (sText);
   }
 }

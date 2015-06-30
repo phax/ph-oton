@@ -24,20 +24,22 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.compare.AbstractComparator;
-import com.helger.commons.locale.LocaleFormatter;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.compare.AbstractPartComparatorComparable;
+import com.helger.commons.locale.LocaleParser;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCCell;
 
 /**
  * This comparator is responsible for sorting cells by BigInteger
- * 
+ *
  * @author Philip Helger
  */
-public class ComparatorCellBigInteger extends AbstractComparator <IHCCell <?>>
+public class ComparatorCellBigInteger extends AbstractPartComparatorComparable <IHCCell <?>, BigInteger>
 {
-  private static final BigDecimal DEFAULT_VALUE = BigDecimal.ZERO;
+  private static final BigInteger DEFAULT_VALUE = BigInteger.ZERO;
+  private static final BigDecimal DEFAULT_VALUE_DECIMAL = new BigDecimal (DEFAULT_VALUE);
+
   private final Locale m_aLocale;
   private final String m_sCommonPrefix;
   private final String m_sCommonSuffix;
@@ -74,14 +76,24 @@ public class ComparatorCellBigInteger extends AbstractComparator <IHCCell <?>>
     return sText;
   }
 
-  @Override
-  protected final int mainCompare (final IHCCell <?> aCell1, final IHCCell <?> aCell2)
+  @Nonnull
+  protected BigInteger getAsBigInteger (@Nonnull final String sCellText)
   {
-    final String sText1 = getCellText (aCell1);
-    final String sText2 = getCellText (aCell2);
+    try
+    {
+      return LocaleParser.parseBigDecimal (sCellText, m_aLocale, DEFAULT_VALUE_DECIMAL).toBigIntegerExact ();
+    }
+    catch (final ArithmeticException ex)
+    {
+      // Not a BigInteger
+      return DEFAULT_VALUE;
+    }
+  }
 
-    final BigInteger aBD1 = LocaleFormatter.parseBigDecimal (sText1, m_aLocale, DEFAULT_VALUE).toBigIntegerExact ();
-    final BigInteger aBD2 = LocaleFormatter.parseBigDecimal (sText2, m_aLocale, DEFAULT_VALUE).toBigIntegerExact ();
-    return aBD1.compareTo (aBD2);
+  @Override
+  protected BigInteger getPart (@Nonnull final IHCCell <?> aCell)
+  {
+    final String sText = getCellText (aCell);
+    return getAsBigInteger (sText);
   }
 }

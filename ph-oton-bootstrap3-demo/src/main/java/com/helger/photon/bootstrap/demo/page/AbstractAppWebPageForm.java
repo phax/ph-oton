@@ -30,7 +30,7 @@ import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.core.app.layout.CLayout;
-import com.helger.photon.core.form.ajax.AjaxExecutorSaveFormState;
+import com.helger.photon.uicore.form.ajax.AjaxExecutorSaveFormState;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.js.JSFormHelper;
 import com.helger.photon.uicore.page.WebPageExecutionContext;

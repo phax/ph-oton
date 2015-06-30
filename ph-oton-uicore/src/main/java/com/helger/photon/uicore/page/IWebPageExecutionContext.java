@@ -19,9 +19,9 @@ package com.helger.photon.uicore.page;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.uicore.css.CPageParam;
 
 public interface IWebPageExecutionContext extends ILayoutExecutionContext
 {
@@ -39,7 +39,7 @@ public interface IWebPageExecutionContext extends ILayoutExecutionContext
 
   /**
    * @return The special request parameter value of
-   *         {@link CHCParam#PARAM_ACTION}. May be <code>null</code>.
+   *         {@link CPageParam#PARAM_ACTION}. May be <code>null</code>.
    */
   @Nullable
   String getAction ();
@@ -55,7 +55,7 @@ public interface IWebPageExecutionContext extends ILayoutExecutionContext
 
   /**
    * @return The special request parameter value of
-   *         {@link CHCParam#PARAM_SUBACTION}. May be <code>null</code>.
+   *         {@link CPageParam#PARAM_SUBACTION}. May be <code>null</code>.
    */
   @Nullable
   String getSubAction ();

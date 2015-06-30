@@ -23,18 +23,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.compare.AbstractComparator;
-import com.helger.commons.locale.LocaleFormatter;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.compare.AbstractPartComparatorComparable;
+import com.helger.commons.locale.LocaleParser;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCCell;
 
 /**
  * This comparator is responsible for sorting cells by BigDecimal
- * 
+ *
  * @author Philip Helger
  */
-public class ComparatorCellBigDecimal extends AbstractComparator <IHCCell <?>>
+public class ComparatorCellBigDecimal extends AbstractPartComparatorComparable <IHCCell <?>, BigDecimal>
 {
   private static final BigDecimal DEFAULT_VALUE = BigDecimal.ZERO;
   private final Locale m_aLocale;
@@ -73,14 +73,16 @@ public class ComparatorCellBigDecimal extends AbstractComparator <IHCCell <?>>
     return sText;
   }
 
-  @Override
-  protected final int mainCompare (final IHCCell <?> aCell1, final IHCCell <?> aCell2)
+  @Nonnull
+  protected BigDecimal getAsBigDecimal (@Nonnull final String sCellText)
   {
-    final String sText1 = getCellText (aCell1);
-    final String sText2 = getCellText (aCell2);
+    return LocaleParser.parseBigDecimal (sCellText, m_aLocale, DEFAULT_VALUE);
+  }
 
-    final BigDecimal aBD1 = LocaleFormatter.parseBigDecimal (sText1, m_aLocale, DEFAULT_VALUE);
-    final BigDecimal aBD2 = LocaleFormatter.parseBigDecimal (sText2, m_aLocale, DEFAULT_VALUE);
-    return aBD1.compareTo (aBD2);
+  @Override
+  protected BigDecimal getPart (@Nonnull final IHCCell <?> aCell)
+  {
+    final String sText = getCellText (aCell);
+    return getAsBigDecimal (sText);
   }
 }

@@ -22,13 +22,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.compare.AbstractIntegerComparator;
-import com.helger.commons.locale.LocaleFormatter;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.compare.AbstractLongComparator;
+import com.helger.commons.locale.LocaleParser;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCCell;
 
-public class ComparatorCellLong extends AbstractIntegerComparator <IHCCell <?>>
+public class ComparatorCellLong extends AbstractLongComparator <IHCCell <?>>
 {
   private final Locale m_aLocale;
   private final String m_sCommonPrefix;
@@ -67,7 +67,7 @@ public class ComparatorCellLong extends AbstractIntegerComparator <IHCCell <?>>
   }
 
   @Override
-  protected final long asLong (@Nullable final IHCCell <?> aCell)
+  protected long getAsLong (@Nullable final IHCCell <?> aCell)
   {
     final String sText = getCellText (aCell);
 
@@ -75,6 +75,6 @@ public class ComparatorCellLong extends AbstractIntegerComparator <IHCCell <?>>
     // ones with non-numeric content
     if (StringHelper.hasNoText (sText))
       return -1;
-    return LocaleFormatter.parseLong (sText, m_aLocale, 0);
+    return LocaleParser.parseLong (sText, m_aLocale, 0);
   }
 }
