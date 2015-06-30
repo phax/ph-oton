@@ -24,17 +24,17 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.name.ComparatorHasName;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.name.IHasDisplayTextWithArgs;
+import com.helger.commons.name.CollatingComparatorHasName;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.IHCTable;
@@ -70,39 +70,39 @@ import com.helger.validation.error.FormErrors;
 public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageSecurityObjectWithAttributes <IRole, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-    HEADER_NAME ("Name", "Name"),
-    HEADER_IN_USE ("Verwendet?", "In use?"),
-    HEADER_VALUE ("Wert", "Value"),
-    HEADER_DETAILS ("Details von Rolle {0}", "Details of role {0}"),
-    LABEL_NAME ("Name", "Name"),
-    LABEL_DESCRIPTION ("Beschreibung", "Description"),
-    LABEL_USERGROUPS_0 ("Benutzergruppen", "User groups"),
-    LABEL_USERGROUPS_N ("Benutzergruppen ({0})", "User groups ({0})"),
-    LABEL_ATTRIBUTES ("Attribute", "Attributes"),
-    NONE_ASSIGNED ("keine zugeordnet", "none assigned"),
-    DELETE_QUERY ("Soll die Rolle ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the role ''{0}''?"),
-    DELETE_SUCCESS ("Die Rolle ''{0}'' wurden erfolgreich gelöscht!", "The role ''{0}'' was successfully deleted!"),
-    DELETE_ERROR ("Fehler beim Löschen der Rolle ''{0}''!", "Error deleting the role ''{0}''!");
+   HEADER_NAME ("Name", "Name"),
+   HEADER_IN_USE ("Verwendet?", "In use?"),
+   HEADER_VALUE ("Wert", "Value"),
+   HEADER_DETAILS ("Details von Rolle {0}", "Details of role {0}"),
+   LABEL_NAME ("Name", "Name"),
+   LABEL_DESCRIPTION ("Beschreibung", "Description"),
+   LABEL_USERGROUPS_0 ("Benutzergruppen", "User groups"),
+   LABEL_USERGROUPS_N ("Benutzergruppen ({0})", "User groups ({0})"),
+   LABEL_ATTRIBUTES ("Attribute", "Attributes"),
+   NONE_ASSIGNED ("keine zugeordnet", "none assigned"),
+   DELETE_QUERY ("Soll die Rolle ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the role ''{0}''?"),
+   DELETE_SUCCESS ("Die Rolle ''{0}'' wurden erfolgreich gelöscht!", "The role ''{0}'' was successfully deleted!"),
+   DELETE_ERROR ("Fehler beim Löschen der Rolle ''{0}''!", "Error deleting the role ''{0}''!");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
 
     @Nullable
     public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
     {
-      return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
+      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 
@@ -124,8 +124,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   }
 
   public BasePageSecurityRoleManagement (@Nonnull @Nonempty final String sID,
-                                         @Nonnull final IReadonlyMultiLingualText aName,
-                                         @Nullable final IReadonlyMultiLingualText aDescription)
+                                         @Nonnull final IMultilingualText aName,
+                                         @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -186,7 +186,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
       for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aAssignedUserGroups,
-                                                                     new ComparatorHasName <IUserGroup> (aDisplayLocale)))
+                                                                     new CollatingComparatorHasName <IUserGroup> (aDisplayLocale)))
         aUserGroupUI.addChild (HCDiv.create (aUserGroup.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                Integer.toString (aAssignedUserGroups.size ())))

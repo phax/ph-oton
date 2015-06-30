@@ -21,12 +21,12 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
@@ -56,17 +56,17 @@ public class BasePageSysInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
     MSG_DOES_NOT_EXIST ("Die Konfigurationsdatei existiert nicht!", "The configuration file does not exist!"),
     MSG_NO_CONFIG_FILES ("Es sind keine Konfigurationsdateien registriert.", "No configuration files are registered.");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -88,8 +88,8 @@ public class BasePageSysInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
   }
 
   public BasePageSysInfoConfigurationFiles (@Nonnull @Nonempty final String sID,
-                                            @Nonnull final IReadonlyMultiLingualText aName,
-                                            @Nullable final IReadonlyMultiLingualText aDescription)
+                                            @Nonnull final IMultilingualText aName,
+                                            @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }

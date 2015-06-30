@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.pages.security;
 
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.PresentForCodeCoverage;
+import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.photon.basic.security.user.IUser;
 
 public final class SecurityUIHelper

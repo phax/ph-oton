@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap.demo.page.pub;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.html.HCCode;
 import com.helger.html.hc.impl.HCNodeList;

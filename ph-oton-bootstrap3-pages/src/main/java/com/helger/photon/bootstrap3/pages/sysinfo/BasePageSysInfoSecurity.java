@@ -29,18 +29,18 @@ import javax.annotation.Nullable;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLParameters;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.AbstractComparator;
-import com.helger.commons.compare.CompareUtils;
+import com.helger.commons.compare.CompareHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.type.EBaseType;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCRow;
@@ -68,38 +68,50 @@ import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
  */
 public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
+  public static final class ComparatorProviderNameAndVersion extends AbstractComparator <Provider>
+  {
+    @Override
+    protected int mainCompare (@Nonnull final Provider aElement1, @Nonnull final Provider aElement2)
+    {
+      int ret = aElement1.getName ().compareTo (aElement2.getName ());
+      if (ret == 0)
+        ret = CompareHelper.compare (aElement1.getVersion (), aElement2.getVersion ());
+      return ret;
+    }
+  }
+
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    TAB_PROVIDERS ("Provider", "Providers"),
-    TAB_ALGORITHMS ("Algorithmen", "Algorithms"),
-    TAB_SSLCONTEXT ("SSLContext", "SSLContext"),
-    MSG_KEY ("Name", "Name"),
-    MSG_VALUE ("Wert", "Value"),
-    MSG_NAME ("Name", "Name"),
-    MSG_VERSION ("Version", "Version"),
-    MSG_INFO ("Info", "Info"),
-    MSG_PROPS ("Eigenschaften", "Properties"),
-    MSG_PROVIDER ("Provider", "Provider"),
-    MSG_TYPE ("Typ", "Type"),
-    MSG_ALGORITHM ("Algorithmus", "Algorithm"),
-    MSG_CLASSNAME ("Klassenname", "Class name"),
-    MSG_DEFAULT_PROTOCOLS ("Standard Protokolle", "Default protocols"),
-    MSG_DEFAULT_CIPHER_SUITES ("Standard Cipher Suites", "Default cipher suites"),
-    MSG_SUPPORTED_PROTOCOLS ("Unterstützte Protokolle", "Supported protocols"),
-    MSG_SUPPORTED_CIPHER_SUITES ("Unterstützte Cipher Suites", "Supported cipher suites");
+   TAB_PROVIDERS ("Provider", "Providers"),
+   TAB_ALGORITHMS ("Algorithmen", "Algorithms"),
+   TAB_SSLCONTEXT ("SSLContext", "SSLContext"),
+   MSG_KEY ("Name", "Name"),
+   MSG_VALUE ("Wert", "Value"),
+   MSG_NAME ("Name", "Name"),
+   MSG_VERSION ("Version", "Version"),
+   MSG_INFO ("Info", "Info"),
+   MSG_PROPS ("Eigenschaften", "Properties"),
+   MSG_PROVIDER ("Provider", "Provider"),
+   MSG_TYPE ("Typ", "Type"),
+   MSG_ALGORITHM ("Algorithmus", "Algorithm"),
+   MSG_CLASSNAME ("Klassenname", "Class name"),
+   MSG_DEFAULT_PROTOCOLS ("Standard Protokolle", "Default protocols"),
+   MSG_DEFAULT_CIPHER_SUITES ("Standard Cipher Suites", "Default cipher suites"),
+   MSG_SUPPORTED_PROTOCOLS ("Unterstützte Protokolle", "Supported protocols"),
+   MSG_SUPPORTED_CIPHER_SUITES ("Unterstützte Cipher Suites", "Supported cipher suites");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -121,8 +133,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
   }
 
   public BasePageSysInfoSecurity (@Nonnull @Nonempty final String sID,
-                                  @Nonnull final IReadonlyMultiLingualText aName,
-                                  @Nullable final IReadonlyMultiLingualText aDescription)
+                                  @Nonnull final IMultilingualText aName,
+                                  @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -136,20 +148,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
     final ITabBox <?> aTabBox = new BootstrapTabBox ();
 
     final List <Provider> aSortedProviders = CollectionHelper.getSorted (Security.getProviders (),
-                                                                         new AbstractComparator <Provider> ()
-                                                                         {
-                                                                           @Override
-                                                                           protected int mainCompare (@Nonnull final Provider aElement1,
-                                                                                                      @Nonnull final Provider aElement2)
-                                                                           {
-                                                                             int ret = aElement1.getName ()
-                                                                                                .compareTo (aElement2.getName ());
-                                                                             if (ret == 0)
-                                                                               ret = CompareUtils.compare (aElement1.getVersion (),
-                                                                                                           aElement2.getVersion ());
-                                                                             return ret;
-                                                                           }
-                                                                         });
+                                                                         new ComparatorProviderNameAndVersion ());
 
     // show all providers
     {
@@ -170,8 +169,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
 
-      aTabBox.addTab (EText.TAB_PROVIDERS.getDisplayText (aDisplayLocale), new HCNodeList ().addChild (aTable)
-                                                                                            .addChild (aDataTables));
+      aTabBox.addTab (EText.TAB_PROVIDERS.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
     // Show all algorithms of all providers
@@ -200,8 +199,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
-      aTabBox.addTab (EText.TAB_ALGORITHMS.getDisplayText (aDisplayLocale), new HCNodeList ().addChild (aTable)
-                                                                                             .addChild (aDataTables));
+      aTabBox.addTab (EText.TAB_ALGORITHMS.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
     // one tab per provider
@@ -300,8 +299,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
-      aTabBox.addTab (EText.TAB_SSLCONTEXT.getDisplayText (aDisplayLocale), new HCNodeList ().addChild (aTable)
-                                                                                             .addChild (aDataTables));
+      aTabBox.addTab (EText.TAB_SSLCONTEXT.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
     aNodeList.addChild (aTabBox);

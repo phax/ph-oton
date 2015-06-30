@@ -20,10 +20,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
-import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.text.IMultilingualText;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
@@ -50,8 +50,7 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
     super (sID, sName);
   }
 
-  public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID,
-                                       @Nonnull final IReadonlyMultiLingualText aName)
+  public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
     super (sID, aName);
   }
@@ -64,8 +63,8 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
   }
 
   public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID,
-                                       @Nonnull final IReadonlyMultiLingualText aName,
-                                       @Nullable final IReadonlyMultiLingualText aDescription)
+                                       @Nonnull final IMultilingualText aName,
+                                       @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }

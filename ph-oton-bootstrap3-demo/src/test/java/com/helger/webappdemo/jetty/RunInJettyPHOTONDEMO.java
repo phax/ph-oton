@@ -35,7 +35,7 @@ import org.eclipse.jetty.webapp.WebXmlConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.SystemProperties;
+import com.helger.commons.system.SystemProperties;
 
 /**
  * Run ebiz4all as a standalone web application in Jetty on port 8080.<br>

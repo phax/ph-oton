@@ -22,12 +22,12 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.html.AbstractHCForm;
@@ -66,30 +66,30 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    DELETE_QUERY ("Sollen diese gemerkten Daten wirklich gelöscht werden?", "Are you sure to delete this saved data?"),
-    DELETE_SUCCESS ("Die gemerkten Daten wurden erfolgreich gelöscht!", "The saved data was successfully deleted!"),
-    DELETE_ERROR ("Fehler beim Löschen der gemerkten Daten!", "Error deleting the saved data!"),
-    DELETE_ALL_QUERY ("Sollen alle gemerkten Daten wirklich gelöscht werden?", "Are you sure to delete all saved data?"),
-    DELETE_ALL_SUCCESS ("Alle gemerkten Daten wurden erfolgreich gelöscht!", "All saved data was successfully deleted!"),
-    DELETE_ALL_ERROR ("Fehler beim Löschen der gemerkten Daten!", "Error deleting the saved data!"),
-    NONE_PRESENT ("Es sind keine gemerkten Daten vorhanden!", "No saved data is available"),
-    BUTTON_DELETE ("Alle löschen", "Delete all"),
-    SAVED_STATE_EDIT ("Daten weiter bearbeiten", "Continue editing this data"),
-    SAVED_STATE_DELETE ("Lösche diese gemerkten Daten", "Delete this saved state"),
-    HEADER_PAGE ("Seite", "Page"),
-    HEADER_REMEMBERED_AT ("Gemerkt am", "Remebered at");
+   DELETE_QUERY ("Sollen diese gemerkten Daten wirklich gelöscht werden?", "Are you sure to delete this saved data?"),
+   DELETE_SUCCESS ("Die gemerkten Daten wurden erfolgreich gelöscht!", "The saved data was successfully deleted!"),
+   DELETE_ERROR ("Fehler beim Löschen der gemerkten Daten!", "Error deleting the saved data!"),
+   DELETE_ALL_QUERY ("Sollen alle gemerkten Daten wirklich gelöscht werden?", "Are you sure to delete all saved data?"),
+   DELETE_ALL_SUCCESS ("Alle gemerkten Daten wurden erfolgreich gelöscht!", "All saved data was successfully deleted!"),
+   DELETE_ALL_ERROR ("Fehler beim Löschen der gemerkten Daten!", "Error deleting the saved data!"),
+   NONE_PRESENT ("Es sind keine gemerkten Daten vorhanden!", "No saved data is available"),
+   BUTTON_DELETE ("Alle löschen", "Delete all"),
+   SAVED_STATE_EDIT ("Daten weiter bearbeiten", "Continue editing this data"),
+   SAVED_STATE_DELETE ("Lösche diese gemerkten Daten", "Delete this saved state"),
+   HEADER_PAGE ("Seite", "Page"),
+   HEADER_REMEMBERED_AT ("Gemerkt am", "Remebered at");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -106,8 +106,8 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
   }
 
   public BasePageFormSavedStates (@Nonnull @Nonempty final String sID,
-                                  @Nonnull final IReadonlyMultiLingualText aName,
-                                  @Nullable final IReadonlyMultiLingualText aDescription)
+                                  @Nonnull final IMultilingualText aName,
+                                  @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -228,16 +228,17 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
 
         final IHCCell <?> aActionCell = aRow.addCell ();
         // Original action (currently always create even for copy)
-        final String sAction = aFormState.getAttributes ()
-                                         .getAttributeAsString (CPageParam.PARAM_ACTION, CPageParam.ACTION_CREATE);
+        final String sAction = aFormState.getAllAttributes ().getAttributeAsString (CPageParam.PARAM_ACTION,
+                                                                                    CPageParam.ACTION_CREATE);
         // Original object ID
-        final String sObjectID = aFormState.getAttributes ().getAttributeAsString (CPageParam.PARAM_OBJECT);
+        final String sObjectID = aFormState.getAllAttributes ().getAttributeAsString (CPageParam.PARAM_OBJECT);
         aActionCell.addChild (new HCA (aWPEC.getLinkToMenuItem (aFormState.getPageID ())
                                             .add (CPageParam.PARAM_ACTION, sAction)
                                             .addIfNonNull (CPageParam.PARAM_OBJECT, sObjectID)
                                             .add (FIELD_FLOW_ID, aFormState.getFlowID ())
-                                            .add (FIELD_RESTORE_FLOW_ID, aFormState.getFlowID ())).setTitle (EText.SAVED_STATE_EDIT.getDisplayText (aDisplayLocale))
-                                                                                                  .addChild (EDefaultIcon.NEW.getAsNode ()));
+                                            .add (FIELD_RESTORE_FLOW_ID,
+                                                  aFormState.getFlowID ())).setTitle (EText.SAVED_STATE_EDIT.getDisplayText (aDisplayLocale))
+                                                                           .addChild (EDefaultIcon.NEW.getAsNode ()));
         aActionCell.addChild (createDeleteLink (aWPEC,
                                                 aFormState,
                                                 EText.SAVED_STATE_DELETE.getDisplayText (aDisplayLocale)));

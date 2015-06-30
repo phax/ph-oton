@@ -23,18 +23,18 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.collections.multimap.IMultiMapListBased;
-import com.helger.commons.collections.multimap.MultiHashMapArrayListBased;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.multimap.IMultiMapListBased;
+import com.helger.commons.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.locale.ComparatorLocale;
 import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
@@ -62,21 +62,21 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> e
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_ID ("ID", "ID"),
-    MSG_NAME ("Name", "Name"),
-    MSG_LOCALES ("Locales", "Locales");
+   MSG_ID ("ID", "ID"),
+   MSG_NAME ("Name", "Name"),
+   MSG_LOCALES ("Locales", "Locales");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -98,8 +98,8 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> e
   }
 
   public BasePageDataLanguages (@Nonnull @Nonempty final String sID,
-                                @Nonnull final IReadonlyMultiLingualText aName,
-                                @Nullable final IReadonlyMultiLingualText aDescription)
+                                @Nonnull final IMultilingualText aName,
+                                @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -111,7 +111,7 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> e
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final IMultiMapListBased <String, Locale> aMapLanguageToLocale = new MultiHashMapArrayListBased <String, Locale> ();
-    for (final Locale aLocale : LocaleCache.getAllLocales ())
+    for (final Locale aLocale : LocaleCache.getInstance ().getAllLocales ())
     {
       final String sLanguage = aLocale.getLanguage ();
       if (sLanguage.length () > 0)

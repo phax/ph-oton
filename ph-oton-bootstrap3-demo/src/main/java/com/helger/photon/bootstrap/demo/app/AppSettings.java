@@ -19,10 +19,10 @@ package com.helger.photon.bootstrap.demo.app;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.GlobalDebug;
-import com.helger.commons.annotations.UsedViaReflection;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.scopes.singleton.GlobalSingleton;
+import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.settings.IReadonlySettings;
 import com.helger.settings.ISettings;
 import com.helger.settings.xchange.properties.SettingsPersistenceProperties;
@@ -33,7 +33,7 @@ import com.helger.settings.xchange.properties.SettingsPersistenceProperties;
  *
  * @author Philip Helger
  */
-public class AppSettings extends GlobalSingleton
+public class AppSettings extends AbstractGlobalSingleton
 {
   /** The name of the file containing the settings */
   public static final String FILENAME = "webapp.properties";

@@ -22,14 +22,14 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.name.IHasDisplayTextWithArgs;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.HCEditPassword;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.AccessManager;
@@ -61,34 +61,34 @@ import com.helger.validation.error.FormErrors;
 public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-    ERROR_NO_USER_PRESENT ("Es ist kein Benutzer angemeldet, daher kann auch das Passwort nicht geändert werden.", "Since no user is logged in no password change is possible."),
-    TITLE ("Passwort von ''{0}'' ändern", "Change password of ''{0}''"),
-    LABEL_OLD_PASSWORD ("Altes Passwort", "Old password"),
-    LABEL_PASSWORD ("Neues Passwort", "New password"),
-    LABEL_PASSWORD_CONFIRM ("Neues Passwort (Bestätigung)", "New password (confirmation)"),
-    ERROR_OLD_PASSWORD_INVALID ("Das alte Passwort ist ungültig!", "The old password is invalid!"),
-    ERROR_PASSWORDS_DONT_MATCH ("Die neuen Passwörter stimmen nicht überein!", "The new passwords don't match"),
-    SUCCESS_CHANGE_PW ("Das Passwort wurde erfolgreich geändert!", "Sucessfully changed the password!");
+   ERROR_NO_USER_PRESENT ("Es ist kein Benutzer angemeldet, daher kann auch das Passwort nicht geändert werden.", "Since no user is logged in no password change is possible."),
+   TITLE ("Passwort von ''{0}'' ändern", "Change password of ''{0}''"),
+   LABEL_OLD_PASSWORD ("Altes Passwort", "Old password"),
+   LABEL_PASSWORD ("Neues Passwort", "New password"),
+   LABEL_PASSWORD_CONFIRM ("Neues Passwort (Bestätigung)", "New password (confirmation)"),
+   ERROR_OLD_PASSWORD_INVALID ("Das alte Passwort ist ungültig!", "The old password is invalid!"),
+   ERROR_PASSWORDS_DONT_MATCH ("Die neuen Passwörter stimmen nicht überein!", "The new passwords don't match"),
+   SUCCESS_CHANGE_PW ("Das Passwort wurde erfolgreich geändert!", "Sucessfully changed the password!");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
 
     @Nullable
     public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
     {
-      return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
+      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 
@@ -114,8 +114,8 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
   }
 
   public BasePageSecurityChangePassword (@Nonnull @Nonempty final String sID,
-                                         @Nonnull final IReadonlyMultiLingualText aName,
-                                         @Nullable final IReadonlyMultiLingualText aDescription)
+                                         @Nonnull final IMultilingualText aName,
+                                         @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -155,7 +155,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
                                                                                                        aDisplayLocale);
           for (final String sPasswordError : aPasswordErrors)
             aFormErrors.addFieldError (FIELD_NEW_PASSWORD, sPasswordError);
-          if (!EqualsUtils.equals (sNewPlainTextPassword, sNewPlainTextPasswordConfirm))
+          if (!EqualsHelper.equals (sNewPlainTextPassword, sNewPlainTextPasswordConfirm))
             aFormErrors.addFieldError (FIELD_NEW_PASSWORD_CONFIRM,
                                        EText.ERROR_PASSWORDS_DONT_MATCH.getDisplayText (aDisplayLocale));
 
@@ -184,7 +184,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
         final String sLabelNewPassword = EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale);
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sLabelNewPassword,
                                                                 bHasAnyPasswordConstraint ? ELabelType.MANDATORY
-                                                                                         : ELabelType.OPTIONAL)
+                                                                                          : ELabelType.OPTIONAL)
                                                      .setCtrl (new HCEditPassword (FIELD_NEW_PASSWORD).setPlaceholder (sLabelNewPassword))
                                                      .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
                                                      .setErrorList (aFormErrors.getListOfField (FIELD_NEW_PASSWORD)));
@@ -192,7 +192,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
         final String sLabelNewPasswordConfirm = EText.LABEL_PASSWORD_CONFIRM.getDisplayText (aDisplayLocale);
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sLabelNewPasswordConfirm,
                                                                 bHasAnyPasswordConstraint ? ELabelType.MANDATORY
-                                                                                         : ELabelType.OPTIONAL)
+                                                                                          : ELabelType.OPTIONAL)
                                                      .setCtrl (new HCEditPassword (FIELD_NEW_PASSWORD_CONFIRM).setPlaceholder (sLabelNewPasswordConfirm))
                                                      .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
                                                      .setErrorList (aFormErrors.getListOfField (FIELD_NEW_PASSWORD_CONFIRM)));

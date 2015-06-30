@@ -23,15 +23,15 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.Translatable;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.name.IHasDisplayTextWithArgs;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
@@ -93,23 +93,23 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     LOGOUT_SUCCESS ("Benutzer ''{0}'' wurde erfolgreich abgemeldet.", "User ''{0}'' was successfully logged out."),
     LOGOUT_ERROR ("Benutzer ''{0}'' konnte nicht abgemeldet werden, weil er nicht mehr angemeldet war.", "User ''{0}'' could not be logged out because he was not logged in.");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
 
     @Nullable
     public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
     {
-      return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
+      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 
@@ -133,8 +133,8 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
   }
 
   public BasePageMonitoringLoginInfo (@Nonnull @Nonempty final String sID,
-                                      @Nonnull final IReadonlyMultiLingualText aName,
-                                      @Nullable final IReadonlyMultiLingualText aDescription)
+                                      @Nonnull final IMultilingualText aName,
+                                      @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }

@@ -25,10 +25,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.id.IHasID;
-import com.helger.commons.io.IReadableResource;
-import com.helger.commons.io.streams.StreamUtils;
-import com.helger.commons.name.IHasDescription;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.text.IHasDescription;
 import com.helger.photon.uictrls.prism.EPrismLanguage;
 
 @NotThreadSafe
@@ -76,7 +76,7 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
   @Nullable
   public String getContentAsString (@Nonnull final Charset aCharset)
   {
-    return StreamUtils.getAllBytesAsString (m_aRes, aCharset);
+    return StreamHelper.getAllBytesAsString (m_aRes, aCharset);
   }
 
   /**
@@ -99,7 +99,7 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
 
   /**
    * Set the description to use.
-   * 
+   *
    * @param sDescription
    *        The description for this configuration file. May be
    *        <code>null</code>.

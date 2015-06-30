@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap.demo.app.ui;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.hc.html.HCHtml;
 import com.helger.photon.basic.app.request.IRequestManager;
 import com.helger.photon.bootstrap.demo.app.CApp;

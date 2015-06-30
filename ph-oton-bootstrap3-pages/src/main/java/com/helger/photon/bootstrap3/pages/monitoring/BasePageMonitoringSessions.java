@@ -25,19 +25,19 @@ import javax.annotation.Nullable;
 import org.joda.time.LocalDateTime;
 
 import com.helger.commons.CGlobal;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.lang.CGStringHelper;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.name.IHasDisplayTextWithArgs;
-import com.helger.commons.scopes.domain.ISessionApplicationScope;
-import com.helger.commons.scopes.domain.ISessionScope;
-import com.helger.commons.scopes.mgr.ScopeSessionManager;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.lang.ClassHelper;
+import com.helger.commons.scope.ISessionApplicationScope;
+import com.helger.commons.scope.ISessionScope;
+import com.helger.commons.scope.mgr.ScopeSessionManager;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.PDTFactory;
@@ -78,46 +78,46 @@ import com.helger.web.scopes.domain.ISessionWebScope;
 public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <ISessionScope, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-    MSG_SESSION ("Session Kontext", "Session scope"),
-    MSG_SESSION_APPLICATION_SCOPE ("Session Application Kontext ''{0}''", "Session app scope ''{0}''"),
-    MSG_ID ("ID", "ID"),
-    MSG_ATTRCOUNT ("Attribute", "Attributes"),
-    MSG_LAST_ACCESS ("Letzter Zugriff", "Last access"),
-    MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
-    MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
-    MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
-    MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
-    MSG_SESSION_APPLICATION_SCOPES ("Session Application Kontexte", "Session application scopes"),
-    MSG_SCOPE_ATTRS ("Attribute", "Attributes"),
-    MSG_SCOPE_CREATION_DT ("Erstellungszeit", "Creation date time"),
-    MSG_SCOPE_LASTACCESS_DT ("Letzter Zugriff", "Last access date time"),
-    MSG_SCOPE_SESSION_TIMEOUT ("Session Timeout", "Session timeout"),
-    MSG_SCOPE_SESSION_TIMEOUT_TEXT ("{0} Sekunden (={1} Minuten)", "{0} seconds (={1} minutes)"),
-    MSG_SCOPE_EXPIRATION_DT ("Geplanter Ablauf", "Planned expiration date time"),
-    MSG_SCOPE_IS_NEW ("Neue Session?", "Is new session?"),
-    MSG_NAME ("Name", "Wert"),
-    MSG_TYPE ("Typ", "Type"),
-    MSG_VALUE ("Wert", "Value");
+   MSG_SESSION ("Session Kontext", "Session scope"),
+   MSG_SESSION_APPLICATION_SCOPE ("Session Application Kontext ''{0}''", "Session app scope ''{0}''"),
+   MSG_ID ("ID", "ID"),
+   MSG_ATTRCOUNT ("Attribute", "Attributes"),
+   MSG_LAST_ACCESS ("Letzter Zugriff", "Last access"),
+   MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
+   MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
+   MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
+   MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
+   MSG_SESSION_APPLICATION_SCOPES ("Session Application Kontexte", "Session application scopes"),
+   MSG_SCOPE_ATTRS ("Attribute", "Attributes"),
+   MSG_SCOPE_CREATION_DT ("Erstellungszeit", "Creation date time"),
+   MSG_SCOPE_LASTACCESS_DT ("Letzter Zugriff", "Last access date time"),
+   MSG_SCOPE_SESSION_TIMEOUT ("Session Timeout", "Session timeout"),
+   MSG_SCOPE_SESSION_TIMEOUT_TEXT ("{0} Sekunden (={1} Minuten)", "{0} seconds (={1} minutes)"),
+   MSG_SCOPE_EXPIRATION_DT ("Geplanter Ablauf", "Planned expiration date time"),
+   MSG_SCOPE_IS_NEW ("Neue Session?", "Is new session?"),
+   MSG_NAME ("Name", "Wert"),
+   MSG_TYPE ("Typ", "Type"),
+   MSG_VALUE ("Wert", "Value");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
 
     @Nullable
     public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
     {
-      return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
+      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 
@@ -139,8 +139,8 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
   }
 
   public BasePageMonitoringSessions (@Nonnull @Nonempty final String sID,
-                                     @Nonnull final IReadonlyMultiLingualText aName,
-                                     @Nullable final IReadonlyMultiLingualText aDescription)
+                                     @Nonnull final IMultilingualText aName,
+                                     @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -192,7 +192,8 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
       final LocalDateTime aLastAccessDT = PDTFactory.createLocalDateTimeFromMillis (aWebScope.getLastAccessedTime ());
 
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_CREATION_DT.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (PDTToString.getAsString (aCreationDT, aDisplayLocale)));
+                                                         .setCtrl (PDTToString.getAsString (aCreationDT,
+                                                                                            aDisplayLocale)));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_LASTACCESS_DT.getDisplayText (aDisplayLocale))
                                                          .setCtrl (PDTToString.getAsString (aLastAccessDT,
                                                                                             aDisplayLocale)));
@@ -217,7 +218,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
-                 .addCell (CGStringHelper.getClassLocalName (aEntry.getValue ()))
+                 .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
                  .addCell (UITextFormatter.getToStringContent (aEntry.getValue ()));
     ret.addChild (aTableAttrs);
 
@@ -258,7 +259,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
-                 .addCell (CGStringHelper.getClassLocalName (aEntry.getValue ()))
+                 .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
                  .addCell (UITextFormatter.getToStringContent (aEntry.getValue ()));
     aNodeList.addChild (aTableAttrs);
 
@@ -336,7 +337,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     for (final ISessionScope aSessionScope : ScopeSessionManager.getInstance ().getAllSessionScopes ())
     {
       final ISessionWebScope aWebScope = aSessionScope instanceof ISessionWebScope ? (ISessionWebScope) aSessionScope
-                                                                                  : null;
+                                                                                   : null;
       final ISimpleURL aViewLink = createViewURL (aWPEC, aSessionScope);
 
       final HCRow aRow = aTable.addBodyRow ();

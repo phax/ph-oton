@@ -26,17 +26,17 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.name.ComparatorHasName;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.name.IHasDisplayTextWithArgs;
+import com.helger.commons.name.CollatingComparatorHasName;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.IHCTable;
@@ -78,49 +78,49 @@ import com.helger.validation.error.FormErrors;
 public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageSecurityObjectWithAttributes <IUserGroup, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-    BUTTON_CREATE_NEW_USERGROUP ("Neue Benutzergruppe anlegen", "Create new user group"),
-    HEADER_NAME ("Name", "Name"),
-    HEADER_IN_USE ("Verwendet?", "In use?"),
-    HEADER_VALUE ("Wert", "Value"),
-    HEADER_DETAILS ("Details von Benutzergruppe {0}", "Details of user group {0}"),
-    LABEL_NAME ("Name", "Name"),
-    LABEL_DESCRIPTION ("Beschreibung", "Description"),
-    LABEL_USERS_0 ("Benutzer", "Users"),
-    LABEL_USERS_N ("Benutzer ({0})", "Users ({0})"),
-    LABEL_ROLES_0 ("Rollen", "Roles"),
-    LABEL_ROLES_N ("Rollen ({0})", "Roles ({0})"),
-    LABEL_ATTRIBUTES ("Attribute", "Attributes"),
-    NONE_ASSIGNED ("keine zugeordnet", "none assigned"),
-    TITLE_CREATE ("Neue Benutzergruppe anlegen", "Create new user group"),
-    TITLE_EDIT ("Benutzergruppe ''{0}'' bearbeiten", "Edit user group ''{0}''"),
-    ERROR_NAME_REQUIRED ("Es muss ein Name angegeben werden!", "A name must be specified!"),
-    ERROR_NO_ROLE ("Es muss mindestens eine Rolle ausgewählt werden!", "At least one role must be selected!"),
-    ERROR_INVALID_ROLES ("Mindestens eine der angegebenen Rolle ist ungültig!", "At least one selected role is invalid!"),
-    DELETE_QUERY ("Soll die Benutzergruppe ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the user group ''{0}''?"),
-    DELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurden erfolgreich gelöscht!", "The user group ''{0}'' was successfully deleted!"),
-    DELETE_ERROR ("Fehler beim Löschen der Benutzergruppe ''{0}''!", "Error deleting the user group ''{0}''!"),
-    SUCCESS_CREATE ("Die neue BenutzerGruppe wurde erfolgreich angelegt!", "Successfully created the new user group!"),
-    SUCCESS_EDIT ("Die Benutzergruppe wurde erfolgreich bearbeitet!", "Sucessfully edited the user group!");
+   BUTTON_CREATE_NEW_USERGROUP ("Neue Benutzergruppe anlegen", "Create new user group"),
+   HEADER_NAME ("Name", "Name"),
+   HEADER_IN_USE ("Verwendet?", "In use?"),
+   HEADER_VALUE ("Wert", "Value"),
+   HEADER_DETAILS ("Details von Benutzergruppe {0}", "Details of user group {0}"),
+   LABEL_NAME ("Name", "Name"),
+   LABEL_DESCRIPTION ("Beschreibung", "Description"),
+   LABEL_USERS_0 ("Benutzer", "Users"),
+   LABEL_USERS_N ("Benutzer ({0})", "Users ({0})"),
+   LABEL_ROLES_0 ("Rollen", "Roles"),
+   LABEL_ROLES_N ("Rollen ({0})", "Roles ({0})"),
+   LABEL_ATTRIBUTES ("Attribute", "Attributes"),
+   NONE_ASSIGNED ("keine zugeordnet", "none assigned"),
+   TITLE_CREATE ("Neue Benutzergruppe anlegen", "Create new user group"),
+   TITLE_EDIT ("Benutzergruppe ''{0}'' bearbeiten", "Edit user group ''{0}''"),
+   ERROR_NAME_REQUIRED ("Es muss ein Name angegeben werden!", "A name must be specified!"),
+   ERROR_NO_ROLE ("Es muss mindestens eine Rolle ausgewählt werden!", "At least one role must be selected!"),
+   ERROR_INVALID_ROLES ("Mindestens eine der angegebenen Rolle ist ungültig!", "At least one selected role is invalid!"),
+   DELETE_QUERY ("Soll die Benutzergruppe ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the user group ''{0}''?"),
+   DELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurden erfolgreich gelöscht!", "The user group ''{0}'' was successfully deleted!"),
+   DELETE_ERROR ("Fehler beim Löschen der Benutzergruppe ''{0}''!", "Error deleting the user group ''{0}''!"),
+   SUCCESS_CREATE ("Die neue BenutzerGruppe wurde erfolgreich angelegt!", "Successfully created the new user group!"),
+   SUCCESS_EDIT ("Die Benutzergruppe wurde erfolgreich bearbeitet!", "Sucessfully edited the user group!");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
 
     @Nullable
     public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
     {
-      return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
+      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 
@@ -133,7 +133,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     super (sID, EWebPageText.PAGE_NAME_SECURITY_USER_GROUPS.getAsMLT ());
   }
 
-  public BasePageSecurityUserGroupManagement (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
+  public BasePageSecurityUserGroupManagement (@Nonnull @Nonempty final String sID,
+                                              @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
   }
@@ -146,8 +147,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   }
 
   public BasePageSecurityUserGroupManagement (@Nonnull @Nonempty final String sID,
-                                              @Nonnull final IReadonlyMultiLingualText aName,
-                                              @Nullable final IReadonlyMultiLingualText aDescription)
+                                              @Nonnull final IMultilingualText aName,
+                                              @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -211,7 +212,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
       final HCNodeList aUserUI = new HCNodeList ();
       for (final IUser aUser : CollectionHelper.getSorted (aAssignedUsers,
-                                                           new ComparatorHasName <IUser> (aDisplayLocale)))
+                                                           new CollatingComparatorHasName <IUser> (aDisplayLocale)))
         aUserUI.addChild (HCDiv.create (aUser.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aAssignedUserIDs.size ())))
@@ -235,7 +236,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
       final HCNodeList aRoleUI = new HCNodeList ();
       for (final IRole aRole : CollectionHelper.getSorted (aAssignedRoles,
-                                                           new ComparatorHasName <IRole> (aDisplayLocale)))
+                                                           new CollatingComparatorHasName <IRole> (aDisplayLocale)))
         aRoleUI.addChild (HCDiv.create (aRole.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aAssignedRoleIDs.size ())))
@@ -353,7 +354,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     aForm.addChild (createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          aSelectedObject.getName ())
-                                                             : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
+                                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
 
     // Name
     {
@@ -361,7 +362,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sName)
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_NAME,
                                                                                            aSelectedObject == null ? null
-                                                                                                                  : aSelectedObject.getName ())).setPlaceholder (sName))
+                                                                                                                   : aSelectedObject.getName ())).setPlaceholder (sName))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_NAME)));
     }
 
@@ -371,17 +372,15 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sDescription)
                                                    .setCtrl (new HCTextAreaAutosize (new RequestField (FIELD_DESCRIPTION,
                                                                                                        aSelectedObject == null ? null
-                                                                                                                              : aSelectedObject.getDescription ())).setPlaceholder (sDescription))
+                                                                                                                               : aSelectedObject.getDescription ())).setPlaceholder (sDescription))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_DESCRIPTION)));
     }
 
     // Role assignment
     {
       final Collection <String> aRoleIDs = aSelectedObject == null ? aWPEC.getAttributeAsList (FIELD_ROLES)
-                                                                  : aSelectedObject.getAllContainedRoleIDs ();
-      final HCRoleForUserGroupSelect aSelect = new HCRoleForUserGroupSelect (new RequestField (FIELD_ROLES),
-                                                                             aDisplayLocale,
-                                                                             aRoleIDs);
+                                                                   : aSelectedObject.getAllContainedRoleIDs ();
+      final HCRoleForUserGroupSelect aSelect = new HCRoleForUserGroupSelect (new RequestField (FIELD_ROLES), aRoleIDs);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
                                                    .setCtrl (aSelect)
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_ROLES)));

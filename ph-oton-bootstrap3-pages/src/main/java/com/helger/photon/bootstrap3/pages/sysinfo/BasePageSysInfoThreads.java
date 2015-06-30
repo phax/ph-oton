@@ -22,17 +22,17 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.concurrent.ComparatorThreadID;
 import com.helger.commons.lang.StackTraceHelper;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.name.IHasDisplayTextWithArgs;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
+import com.helger.commons.thread.ComparatorThreadID;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
@@ -79,23 +79,23 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
     MSG_STATE ("Status", "State"),
     MSG_STACKTRACE ("Stacktrace", "Stacktrace");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
 
     @Nullable
     public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
     {
-      return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
+      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 
@@ -117,8 +117,8 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
   }
 
   public BasePageSysInfoThreads (@Nonnull @Nonempty final String sID,
-                                 @Nonnull final IReadonlyMultiLingualText aName,
-                                 @Nullable final IReadonlyMultiLingualText aDescription)
+                                 @Nonnull final IMultilingualText aName,
+                                 @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }

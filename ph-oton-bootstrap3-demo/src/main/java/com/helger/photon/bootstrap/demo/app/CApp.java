@@ -23,7 +23,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.photon.basic.security.CSecurity;
 
@@ -35,7 +35,7 @@ import com.helger.photon.basic.security.CSecurity;
 @Immutable
 public final class CApp
 {
-  public static final Locale DEFAULT_LOCALE = LocaleCache.getLocale ("en", "US");
+  public static final Locale DEFAULT_LOCALE = LocaleCache.getInstance ().getLocale ("en", "US");
 
   private static final String APPLICATION_TITLE = "ph-oton-bootstrap3-demo";
 

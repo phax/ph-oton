@@ -25,16 +25,16 @@ import javax.annotation.Nullable;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.compare.ComparatorString;
-import com.helger.commons.lang.CGStringHelper;
-import com.helger.commons.name.IHasDisplayText;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.compare.CollatingComparator;
+import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.htmlext.HCUtils;
 import com.helger.html.hc.impl.HCNodeList;
@@ -60,27 +60,27 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_HTTP_HEADERS ("HTTP Header", "HTTP header"),
-    MSG_COOKIES ("Cookies", "Cookies"),
-    MSG_PARAMETERS ("Request-Parameter", "Request parameters"),
-    MSG_PROPERTIES ("Request-Eigenschaften", "Request properties"),
-    MSG_ATTRIBUTES ("Request-Attribute", "Request attributes"),
-    MSG_NAME ("Name", "Name"),
-    MSG_TYPE ("Typ", "Type"),
-    MSG_VALUE ("Wert", "Value"),
-    MSG_DETAILS ("Details", "Details");
+   MSG_HTTP_HEADERS ("HTTP Header", "HTTP header"),
+   MSG_COOKIES ("Cookies", "Cookies"),
+   MSG_PARAMETERS ("Request-Parameter", "Request parameters"),
+   MSG_PROPERTIES ("Request-Eigenschaften", "Request properties"),
+   MSG_ATTRIBUTES ("Request-Attribute", "Request attributes"),
+   MSG_NAME ("Name", "Name"),
+   MSG_TYPE ("Typ", "Type"),
+   MSG_VALUE ("Wert", "Value"),
+   MSG_DETAILS ("Details", "Details");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -102,8 +102,8 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
   }
 
   public BasePageSysInfoRequest (@Nonnull @Nonempty final String sID,
-                                 @Nonnull final IReadonlyMultiLingualText aName,
-                                 @Nullable final IReadonlyMultiLingualText aDescription)
+                                 @Nonnull final IMultilingualText aName,
+                                 @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -128,7 +128,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, List <String>> aEntry : CollectionHelper.getSortedByKey (RequestHelper.getRequestHeaderMap (aHttpRequest)
                                                                                                           .getAllHeaders (),
-                                                                                             new ComparatorString (aDisplayLocale))
+                                                                                             new CollatingComparator (aDisplayLocale))
                                                                             .entrySet ())
       {
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (HCUtils.list2divList (aEntry.getValue ()));
@@ -144,7 +144,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale),
                                        EText.MSG_DETAILS.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, Cookie> aEntry : CollectionHelper.getSortedByKey (CookieHelper.getAllCookies (aHttpRequest),
-                                                                                      new ComparatorString (aDisplayLocale))
+                                                                                      new CollatingComparator (aDisplayLocale))
                                                                      .entrySet ())
       {
         final Cookie aCookie = aEntry.getValue ();
@@ -196,12 +196,12 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
                                        EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aRequestScope.getAllAttributes (),
-                                                                                      new ComparatorString (aDisplayLocale))
+                                                                                      new CollatingComparator (aDisplayLocale))
                                                                      .entrySet ())
       {
         aTable.addBodyRow ()
               .addCell (aEntry.getKey ())
-              .addCell (CGStringHelper.getClassLocalName (aEntry.getValue ()))
+              .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
               .addCell (String.valueOf (aEntry.getValue ()));
       }
       aTabBox.addTab (EText.MSG_ATTRIBUTES.getDisplayText (aDisplayLocale), aTable);

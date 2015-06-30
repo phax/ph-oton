@@ -24,7 +24,7 @@ import javax.servlet.ServletContext;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.photon.bootstrap.demo.app.AppSettings;
 import com.helger.photon.bootstrap.demo.app.init.AppSecurity;
 import com.helger.photon.bootstrap.demo.app.init.InitializerPublic;

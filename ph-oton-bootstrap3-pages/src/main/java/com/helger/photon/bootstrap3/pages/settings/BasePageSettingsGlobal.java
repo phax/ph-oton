@@ -23,13 +23,13 @@ import javax.annotation.Nullable;
 import javax.mail.event.ConnectionListener;
 import javax.mail.event.TransportListener;
 
-import com.helger.commons.GlobalDebug;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCEM;
@@ -77,17 +77,17 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
     MSG_NONE ("keiner", "none"),
     MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -112,8 +112,8 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
   }
 
   public BasePageSettingsGlobal (@Nonnull @Nonempty final String sID,
-                                 @Nonnull final IReadonlyMultiLingualText aName,
-                                 @Nullable final IReadonlyMultiLingualText aDescription)
+                                 @Nonnull final IMultilingualText aName,
+                                 @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }

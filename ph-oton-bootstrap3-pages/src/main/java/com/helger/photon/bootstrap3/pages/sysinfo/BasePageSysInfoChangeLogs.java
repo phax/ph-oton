@@ -23,19 +23,19 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
 import com.helger.commons.changelog.ChangeLog;
 import com.helger.commons.changelog.ChangeLogEntry;
 import com.helger.commons.changelog.ChangeLogSerializer;
-import com.helger.commons.changelog.ComparatorChangeLogEntryDate;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.changelog.ComparatorChangeLogEntryDateAndComponent;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.name.IHasDisplayText;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
@@ -61,22 +61,22 @@ public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_HEADER_DATE ("Datum", "Date"),
-    MSG_HEADER_COMPONENT ("Komponente", "Component"),
-    MSG_HEADER_CATEGORY ("Kategorie", "Category"),
-    MSG_HEADER_CHANGE ("Änderung", "Change");
+   MSG_HEADER_DATE ("Datum", "Date"),
+   MSG_HEADER_COMPONENT ("Komponente", "Component"),
+   MSG_HEADER_CATEGORY ("Kategorie", "Category"),
+   MSG_HEADER_CHANGE ("Änderung", "Change");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -100,8 +100,8 @@ public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
   }
 
   public BasePageSysInfoChangeLogs (@Nonnull @Nonempty final String sID,
-                                    @Nonnull final IReadonlyMultiLingualText aName,
-                                    @Nullable final IReadonlyMultiLingualText aDescription)
+                                    @Nonnull final IMultilingualText aName,
+                                    @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -111,7 +111,7 @@ public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
   {
     String ret = aEntry.getText (aDisplayLocale);
     if (StringHelper.hasNoText (ret))
-      if (aEntry.getAllTexts ().size () == 1)
+      if (aEntry.getAllTexts ().getSize () == 1)
         ret = CollectionHelper.getFirstElement (aEntry.getAllTexts ().getAllTexts ()).getValue ();
     return ret;
   }
@@ -131,7 +131,7 @@ public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
 
       // Show at last the 500 newest entries
       aChangeLogEntries = CollectionHelper.getSortedInline (aChangeLogEntries,
-                                                            new ComparatorChangeLogEntryDate (ESortOrder.DESCENDING));
+                                                            new ComparatorChangeLogEntryDateAndComponent ().setSortOrder (ESortOrder.DESCENDING));
       s_aCache = aChangeLogEntries.subList (0, Math.min (500, aChangeLogEntries.size ()));
     }
 

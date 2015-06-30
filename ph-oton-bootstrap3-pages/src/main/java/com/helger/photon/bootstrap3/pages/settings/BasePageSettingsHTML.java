@@ -21,12 +21,12 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.conversion.IHCConversionSettings;
 import com.helger.html.hc.html.HCCheckBox;
@@ -59,17 +59,17 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
     MSG_EXTRACT_OUT_OF_BAND_NODES ("Out-of-band Knoten extrahieren?", "Extract out-of-band nodes?"),
     MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -97,8 +97,8 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
   }
 
   public BasePageSettingsHTML (@Nonnull @Nonempty final String sID,
-                               @Nonnull final IReadonlyMultiLingualText aName,
-                               @Nullable final IReadonlyMultiLingualText aDescription)
+                               @Nonnull final IMultilingualText aName,
+                               @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }

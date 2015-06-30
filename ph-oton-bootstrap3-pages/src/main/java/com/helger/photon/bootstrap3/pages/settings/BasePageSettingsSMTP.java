@@ -24,19 +24,19 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.Translatable;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.Translatable;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.email.EmailAddressUtils;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.name.IHasDisplayTextWithArgs;
+import com.helger.commons.email.EmailAddressHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.vendor.VendorInfo;
 import com.helger.html.hc.IHCCell;
@@ -84,7 +84,7 @@ import com.helger.smtp.EEmailType;
 import com.helger.smtp.EmailGlobalSettings;
 import com.helger.smtp.ISMTPSettings;
 import com.helger.smtp.impl.EmailData;
-import com.helger.smtp.impl.ReadonlySMTPSettings;
+import com.helger.smtp.impl.ReadOnlySMTPSettings;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.validation.error.FormErrors;
 import com.helger.web.port.CNetworkPort;
@@ -92,71 +92,71 @@ import com.helger.web.port.CNetworkPort;
 public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <NamedSMTPSettings, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-    BUTTON_CREATE_NEW ("Neue SMTP-Einstellungen anlegen", "Create new SMTP settings"),
-    HEADER_NAME ("Name", "Name"),
-    HEADER_HOST ("Host-Name", "Host name"),
-    HEADER_USERNAME ("Benutzername", "User name"),
-    HEADER_DETAILS ("Details von SMTP-Einstellungen ''{0}''", "Details of SMTP settings ''{0}''"),
-    LABEL_NAME ("Name", "Name"),
-    LABEL_HOSTNAME ("Host", "Host name"),
-    LABEL_PORT ("Port", "Port"),
-    PORT_DEFAULT ("[Standard Port]", "[default port]"),
-    LABEL_USERNAME ("Benutzername", "User name"),
-    LABEL_PASSWORD ("Passwort", "Password"),
-    LABEL_CHARSET ("Zeichensatz", "Character set"),
-    LABEL_SSL ("Verwende SSL?", "Use SSL?"),
-    LABEL_STARTTLS ("Verwende STARTTLS?", "Use STARTTLS?"),
-    LABEL_CONNECTION_TIMEOUT ("Verbindungs-Timeout (ms)", "Connection timeout (ms)"),
-    LABEL_SOCKET_TIMEOUT ("Sende-Timeout (ms)", "Socket timeout (ms)"),
-    LABEL_DEBUG_SMTP ("SMTP Debug", "Debug SMTP"),
-    MSG_NO_PASSWORD_SET ("keines gesetzt", "none defined"),
-    TITLE_CREATE ("Neue SMTP-Einstellungen anlegen", "Create new SMTP settings"),
-    TITLE_EDIT ("SMTP-Einstellungen ''{0}'' bearbeiten", "Edit SMTP settings ''{0}''"),
-    ERROR_NAME_EMPTY ("Es muss ein Name für diese SMTP-Einstellungen angegeben werden!", "A name must be provided for these SMTP settings!"),
-    ERROR_HOSTNAME_EMPTY ("Es muss ein Host-Name oder eine IP-Adresse des SMTP-Servers angegeben werden!", "A name or IP address of the SMTP server must be provided!"),
-    ERROR_PORT_INVALID ("Der angegebene Port ist ungültig. Gültige Ports liegen zwischen {0} und {1}!", "The provided port is invalid. Valid ports must be between {0} and {1}!"),
-    ERROR_CHARSET_INVALID ("Der ausgewählte Zeichensatz ist ungültig!", "The selected character set is invalid!"),
-    ERROR_CONNECTION_TIMEOUT_INVALID ("Das Verbindungs-Timeout muss größer oder gleich 0 sein!", "The connection timeout must be greater or equal to 0!"),
-    ERROR_SOCKET_TIMEOUT_INVALID ("Das Verbindungs-Timeout muss größer oder gleich 0 sein!", "The connection timeout must be greater or equal to 0!"),
-    SUCCESS_CREATE ("Die neue SMTP-Einstellungen wurden erfolgreich angelegt!", "Successfully created the new SMTP settings!"),
-    SUCCESS_EDIT ("Die SMTP-Einstellungen wurde erfolgreich bearbeitet!", "Sucessfully edited the SMTP settings!"),
-    DELETE_QUERY ("Sollen die SMTP-Einstellungen ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the SMTP settings ''{0}''?"),
-    DELETE_SUCCESS ("Die SMTP-Einstellungen ''{0}'' wurden erfolgreich gelöscht!", "The SMTP settings ''{0}'' were successfully deleted!"),
-    DELETE_ERROR ("Fehler beim Löschen der SMTP-Einstellungen ''{0}''!", "Error deleting the SMTP settings ''{0}''!"),
-    TITLE_TEST_MAIL ("Test-E-Mail mit den SMTP-Einstellungen ''{0}'' versenden", "Send test email with SMTP settings ''{0}''"),
-    MSG_SEND_TEST_MAIL ("Test-E-Mail senden", "Send test mail"),
-    BUTTON_SEND_TEST_MAIL ("Test-E-Mail senden", "Send test mail"),
-    MSG_SENDER ("Absender", "Sender"),
-    MSG_RECEIVER ("Empfänger", "Receiver"),
-    MSG_SUBJECT ("Betreff", "Subject"),
-    MSG_BODY ("Inhalt", "Body"),
-    TEST_SUBJECT ("Test-E-Mail", "Test email"),
-    TEST_BODY ("Das ist eine automatisch generierte Test-E-Mail", "This is an automatically generated test email"),
-    ERR_SENDER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.", "A valid email address must be provided"),
-    ERR_RECEIVER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.", "A valid email address must be provided"),
-    ERR_SUBJECT_INVALID ("Es muss Betreff angegeben werden.", "An email subject must be provided"),
-    ERR_BODY_INVALID ("Es muss eine gültige Nachricht angegeben werden.", "A valid email message must be provided"),
-    SUCCESS_TEST_MAIL ("Die Test-Nachricht wurde zum Versand übermittelt.", "The test email message was scheduled for sending.");
+   BUTTON_CREATE_NEW ("Neue SMTP-Einstellungen anlegen", "Create new SMTP settings"),
+   HEADER_NAME ("Name", "Name"),
+   HEADER_HOST ("Host-Name", "Host name"),
+   HEADER_USERNAME ("Benutzername", "User name"),
+   HEADER_DETAILS ("Details von SMTP-Einstellungen ''{0}''", "Details of SMTP settings ''{0}''"),
+   LABEL_NAME ("Name", "Name"),
+   LABEL_HOSTNAME ("Host", "Host name"),
+   LABEL_PORT ("Port", "Port"),
+   PORT_DEFAULT ("[Standard Port]", "[default port]"),
+   LABEL_USERNAME ("Benutzername", "User name"),
+   LABEL_PASSWORD ("Passwort", "Password"),
+   LABEL_CHARSET ("Zeichensatz", "Character set"),
+   LABEL_SSL ("Verwende SSL?", "Use SSL?"),
+   LABEL_STARTTLS ("Verwende STARTTLS?", "Use STARTTLS?"),
+   LABEL_CONNECTION_TIMEOUT ("Verbindungs-Timeout (ms)", "Connection timeout (ms)"),
+   LABEL_SOCKET_TIMEOUT ("Sende-Timeout (ms)", "Socket timeout (ms)"),
+   LABEL_DEBUG_SMTP ("SMTP Debug", "Debug SMTP"),
+   MSG_NO_PASSWORD_SET ("keines gesetzt", "none defined"),
+   TITLE_CREATE ("Neue SMTP-Einstellungen anlegen", "Create new SMTP settings"),
+   TITLE_EDIT ("SMTP-Einstellungen ''{0}'' bearbeiten", "Edit SMTP settings ''{0}''"),
+   ERROR_NAME_EMPTY ("Es muss ein Name für diese SMTP-Einstellungen angegeben werden!", "A name must be provided for these SMTP settings!"),
+   ERROR_HOSTNAME_EMPTY ("Es muss ein Host-Name oder eine IP-Adresse des SMTP-Servers angegeben werden!", "A name or IP address of the SMTP server must be provided!"),
+   ERROR_PORT_INVALID ("Der angegebene Port ist ungültig. Gültige Ports liegen zwischen {0} und {1}!", "The provided port is invalid. Valid ports must be between {0} and {1}!"),
+   ERROR_CHARSET_INVALID ("Der ausgewählte Zeichensatz ist ungültig!", "The selected character set is invalid!"),
+   ERROR_CONNECTION_TIMEOUT_INVALID ("Das Verbindungs-Timeout muss größer oder gleich 0 sein!", "The connection timeout must be greater or equal to 0!"),
+   ERROR_SOCKET_TIMEOUT_INVALID ("Das Verbindungs-Timeout muss größer oder gleich 0 sein!", "The connection timeout must be greater or equal to 0!"),
+   SUCCESS_CREATE ("Die neue SMTP-Einstellungen wurden erfolgreich angelegt!", "Successfully created the new SMTP settings!"),
+   SUCCESS_EDIT ("Die SMTP-Einstellungen wurde erfolgreich bearbeitet!", "Sucessfully edited the SMTP settings!"),
+   DELETE_QUERY ("Sollen die SMTP-Einstellungen ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the SMTP settings ''{0}''?"),
+   DELETE_SUCCESS ("Die SMTP-Einstellungen ''{0}'' wurden erfolgreich gelöscht!", "The SMTP settings ''{0}'' were successfully deleted!"),
+   DELETE_ERROR ("Fehler beim Löschen der SMTP-Einstellungen ''{0}''!", "Error deleting the SMTP settings ''{0}''!"),
+   TITLE_TEST_MAIL ("Test-E-Mail mit den SMTP-Einstellungen ''{0}'' versenden", "Send test email with SMTP settings ''{0}''"),
+   MSG_SEND_TEST_MAIL ("Test-E-Mail senden", "Send test mail"),
+   BUTTON_SEND_TEST_MAIL ("Test-E-Mail senden", "Send test mail"),
+   MSG_SENDER ("Absender", "Sender"),
+   MSG_RECEIVER ("Empfänger", "Receiver"),
+   MSG_SUBJECT ("Betreff", "Subject"),
+   MSG_BODY ("Inhalt", "Body"),
+   TEST_SUBJECT ("Test-E-Mail", "Test email"),
+   TEST_BODY ("Das ist eine automatisch generierte Test-E-Mail", "This is an automatically generated test email"),
+   ERR_SENDER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.", "A valid email address must be provided"),
+   ERR_RECEIVER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.", "A valid email address must be provided"),
+   ERR_SUBJECT_INVALID ("Es muss Betreff angegeben werden.", "An email subject must be provided"),
+   ERR_BODY_INVALID ("Es muss eine gültige Nachricht angegeben werden.", "A valid email message must be provided"),
+   SUCCESS_TEST_MAIL ("Die Test-Nachricht wurde zum Versand übermittelt.", "The test email message was scheduled for sending.");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
 
     @Nullable
     public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
     {
-      return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
+      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 
@@ -209,8 +209,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
   public BasePageSettingsSMTP (@Nonnull final NamedSMTPSettingsManager aMgr,
                                @Nonnull @Nonempty final String sID,
-                               @Nonnull final IReadonlyMultiLingualText aName,
-                               @Nullable final IReadonlyMultiLingualText aDescription)
+                               @Nonnull final IMultilingualText aName,
+                               @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
     m_aMgr = ValueEnforcer.notNull (aMgr, "NamedSMTPSettingsManager");
@@ -224,7 +224,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
   @Override
   @Nullable
-  protected String getObjectDisplayName (@Nonnull final WPECTYPE aWPEC, @Nonnull final NamedSMTPSettings aSelectedObject)
+  protected String getObjectDisplayName (@Nonnull final WPECTYPE aWPEC,
+                                         @Nonnull final NamedSMTPSettings aSelectedObject)
   {
     return aSelectedObject.getName ();
   }
@@ -270,14 +271,14 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_PORT.getDisplayText (aDisplayLocale))
                                                  .setCtrl (aSettings.getPort () > 0 ? Integer.toString (aSettings.getPort ())
-                                                                                   : EText.PORT_DEFAULT.getDisplayText (aDisplayLocale)));
+                                                                                    : EText.PORT_DEFAULT.getDisplayText (aDisplayLocale)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERNAME.getDisplayText (aDisplayLocale))
                                                  .setCtrl (aSettings.getUserName ()));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale))
                                                  .setCtrl (StringHelper.hasText (aSettings.getPassword ()) ? "***"
-                                                                                                          : EText.MSG_NO_PASSWORD_SET.getDisplayText (aDisplayLocale)));
+                                                                                                           : EText.MSG_NO_PASSWORD_SET.getDisplayText (aDisplayLocale)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_CHARSET.getDisplayText (aDisplayLocale))
                                                  .setCtrl (aSettings.getCharset ()));
@@ -357,7 +358,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     if (aFormErrors.isEmpty ())
     {
       // All fields are valid -> save
-      final ReadonlySMTPSettings aSMTPSettings = new ReadonlySMTPSettings (sHostName,
+      final ReadOnlySMTPSettings aSMTPSettings = new ReadOnlySMTPSettings (sHostName,
                                                                            nPort,
                                                                            sUserName,
                                                                            sPassword,
@@ -395,14 +396,14 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
     aForm.addChild (createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          aSelectedObject.getName ())
-                                                             : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
+                                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
 
     {
       final String sName = EText.LABEL_NAME.getDisplayText (aDisplayLocale);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sName)
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_NAME,
                                                                                            aSelectedObject == null ? null
-                                                                                                                  : aSelectedObject.getName ())).setPlaceholder (sName))
+                                                                                                                   : aSelectedObject.getName ())).setPlaceholder (sName))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_NAME)));
     }
 
@@ -411,7 +412,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sHostName)
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_HOSTNAME,
                                                                                            aSettings == null ? null
-                                                                                                            : aSettings.getHostName ())).setPlaceholder (sHostName))
+                                                                                                             : aSettings.getHostName ())).setPlaceholder (sHostName))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_HOSTNAME)));
     }
 
@@ -421,8 +422,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sPort)
                                                    .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_PORT,
                                                                                                      aSettings == null ||
-                                                                                                         aSettings.getPort () < 0 ? ""
-                                                                                                                                 : Integer.toString (aSettings.getPort ())),
+                                                                                                                 aSettings.getPort () < 0 ? ""
+                                                                                                                                          : Integer.toString (aSettings.getPort ())),
                                                                                    aDisplayLocale).setMin (CNetworkPort.MINIMUM_PORT_NUMBER)
                                                                                                   .setMax (CNetworkPort.MAXIMUM_PORT_NUMBER)
                                                                                                   .setThousandSeparator (""))
@@ -434,7 +435,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sUserName)
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_USERNAME,
                                                                                            aSettings == null ? null
-                                                                                                            : aSettings.getUserName ())).setPlaceholder (sUserName))
+                                                                                                             : aSettings.getUserName ())).setPlaceholder (sUserName))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_USERNAME)));
     }
 
@@ -450,7 +451,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sCharset)
                                                    .setCtrl (new HCCharsetSelect (new RequestField (FIELD_CHARSET,
                                                                                                     aSettings == null ? DEFAULT_CHARSET
-                                                                                                                     : aSettings.getCharset ()),
+                                                                                                                      : aSettings.getCharset ()),
                                                                                   true,
                                                                                   aDisplayLocale))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_CHARSET)));
@@ -461,7 +462,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sSSL)
                                                    .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_SSL,
                                                                                                       aSettings == null ? EmailGlobalSettings.isUseSSL ()
-                                                                                                                       : aSettings.isSSLEnabled ())))
+                                                                                                                        : aSettings.isSSLEnabled ())))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_SSL)));
     }
 
@@ -470,7 +471,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sSTARTTLS)
                                                    .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_STARTTLS,
                                                                                                       aSettings == null ? EmailGlobalSettings.isUseSTARTTLS ()
-                                                                                                                       : aSettings.isSTARTTLSEnabled ())))
+                                                                                                                        : aSettings.isSTARTTLSEnabled ())))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_STARTTLS)));
     }
 
@@ -479,7 +480,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sConnectionTimeout)
                                                    .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_CONNECTION_TIMEOUT,
                                                                                                      aSettings == null ? EmailGlobalSettings.getConnectionTimeoutMilliSecs ()
-                                                                                                                      : aSettings.getConnectionTimeoutMilliSecs ()),
+                                                                                                                       : aSettings.getConnectionTimeoutMilliSecs ()),
                                                                                    aDisplayLocale).setMin (0)
                                                                                                   .setThousandSeparator (""))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_CONNECTION_TIMEOUT)));
@@ -490,7 +491,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sSocketTimeout)
                                                    .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_SOCKET_TIMEOUT,
                                                                                                      aSettings == null ? EmailGlobalSettings.getTimeoutMilliSecs ()
-                                                                                                                      : aSettings.getTimeoutMilliSecs ()),
+                                                                                                                       : aSettings.getTimeoutMilliSecs ()),
                                                                                    aDisplayLocale).setMin (0)
                                                                                                   .setThousandSeparator (""))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_SOCKET_TIMEOUT)));
@@ -501,7 +502,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sDebugSMTP)
                                                    .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_DEBUG_SMTP,
                                                                                                       aSettings == null ? EmailGlobalSettings.isDebugSMTP ()
-                                                                                                                       : aSettings.isDebugSMTP ())))
+                                                                                                                        : aSettings.isDebugSMTP ())))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_DEBUG_SMTP)));
     }
   }
@@ -554,9 +555,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
         final String sSubject = aWPEC.getAttributeAsString (FIELD_TEST_SUBJECT);
         final String sBody = aWPEC.getAttributeAsString (FIELD_TEST_BODY);
 
-        if (!EmailAddressUtils.isValid (sSender))
+        if (!EmailAddressHelper.isValid (sSender))
           aFormErrors.addFieldError (FIELD_TEST_SENDER, EText.ERR_SENDER_INVALID.getDisplayText (aDisplayLocale));
-        if (!EmailAddressUtils.isValid (sReceiver))
+        if (!EmailAddressHelper.isValid (sReceiver))
           aFormErrors.addFieldError (FIELD_TEST_RECEIVER, EText.ERR_RECEIVER_INVALID.getDisplayText (aDisplayLocale));
         if (StringHelper.hasNoText (sSubject))
           aFormErrors.addFieldError (FIELD_TEST_SUBJECT, EText.ERR_SUBJECT_INVALID.getDisplayText (aDisplayLocale));
@@ -657,8 +658,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
       aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
                                           .add (CPageParam.PARAM_ACTION, ACTION_TEST_MAIL)
-                                          .add (CPageParam.PARAM_OBJECT, aCurObject.getID ())).setTitle (EText.MSG_SEND_TEST_MAIL.getDisplayText (aDisplayLocale))
-                                                                                              .addChild (getTestMailIcon ()));
+                                          .add (CPageParam.PARAM_OBJECT,
+                                                aCurObject.getID ())).setTitle (EText.MSG_SEND_TEST_MAIL.getDisplayText (aDisplayLocale))
+                                                                     .addChild (getTestMailIcon ()));
     }
 
     aNodeList.addChild (aTable);

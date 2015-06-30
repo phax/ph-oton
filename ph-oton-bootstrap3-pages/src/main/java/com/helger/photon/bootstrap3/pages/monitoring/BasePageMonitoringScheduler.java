@@ -34,12 +34,12 @@ import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.utils.DirtyFlagMap;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.HCCol;
@@ -86,17 +86,17 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
     MSG_NOTHING_SCHEDULED ("Es sind keine Tasks geplant", "No actions are scheduled");
 
     @Nonnull
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -118,8 +118,8 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
   }
 
   public BasePageMonitoringScheduler (@Nonnull @Nonempty final String sID,
-                                      @Nonnull final IReadonlyMultiLingualText aName,
-                                      @Nullable final IReadonlyMultiLingualText aDescription)
+                                      @Nonnull final IMultilingualText aName,
+                                      @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }

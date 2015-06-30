@@ -22,17 +22,17 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.lang.CGStringHelper;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.name.IHasDisplayTextWithArgs;
-import com.helger.commons.scopes.domain.IApplicationScope;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.lang.ClassHelper;
+import com.helger.commons.scope.IApplicationScope;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
@@ -64,37 +64,37 @@ import com.helger.web.scopes.mgr.WebScopeManager;
 public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-    MSG_GLOBAL_SCOPE ("Globaler Kontext ''{0}''", "Global scope ''{0}''"),
-    MSG_APPLICATION_SCOPE ("Application Kontext ''{0}''", "Application scope ''{0}''"),
-    MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
-    MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
-    MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
-    MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
-    MSG_APPLICATION_SCOPES ("Application Kontexte", "Application scopes"),
-    MSG_SCOPE_ATTRS ("Attribute", "Attributes"),
-    MSG_NAME ("Name", "Wert"),
-    MSG_TYPE ("Typ", "Type"),
-    MSG_VALUE ("Wert", "Value");
+   MSG_GLOBAL_SCOPE ("Globaler Kontext ''{0}''", "Global scope ''{0}''"),
+   MSG_APPLICATION_SCOPE ("Application Kontext ''{0}''", "Application scope ''{0}''"),
+   MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
+   MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
+   MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
+   MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
+   MSG_APPLICATION_SCOPES ("Application Kontexte", "Application scopes"),
+   MSG_SCOPE_ATTRS ("Attribute", "Attributes"),
+   MSG_NAME ("Name", "Wert"),
+   MSG_TYPE ("Typ", "Type"),
+   MSG_VALUE ("Wert", "Value");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
 
     @Nullable
     public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
     {
-      return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
+      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 
@@ -116,8 +116,8 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
   }
 
   public BasePageMonitoringScopes (@Nonnull @Nonempty final String sID,
-                                   @Nonnull final IReadonlyMultiLingualText aName,
-                                   @Nullable final IReadonlyMultiLingualText aDescription)
+                                   @Nonnull final IMultilingualText aName,
+                                   @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -153,7 +153,7 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
-                 .addCell (CGStringHelper.getClassLocalName (aEntry.getValue ()))
+                 .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
                  .addCell (UITextFormatter.getToStringContent (aEntry.getValue ()));
     aNodeList.addChild (aTableAttrs);
 
@@ -193,7 +193,7 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
-                 .addCell (CGStringHelper.getClassLocalName (aEntry.getValue ()))
+                 .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
                  .addCell (UITextFormatter.getToStringContent (aEntry.getValue ()));
     aNodeList.addChild (aTableAttrs);
 

@@ -22,10 +22,10 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
-import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.text.IMultilingualText;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
@@ -42,7 +42,7 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
   }
 
   public AbstractWebPageSecurityObjectWithAttributes (@Nonnull @Nonempty final String sID,
-                                                      @Nonnull final IReadonlyMultiLingualText aName)
+                                                      @Nonnull final IMultilingualText aName)
   {
     super (sID, aName);
   }
@@ -55,8 +55,8 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
   }
 
   public AbstractWebPageSecurityObjectWithAttributes (@Nonnull @Nonempty final String sID,
-                                                      @Nonnull final IReadonlyMultiLingualText aName,
-                                                      @Nullable final IReadonlyMultiLingualText aDescription)
+                                                      @Nonnull final IMultilingualText aName,
+                                                      @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }

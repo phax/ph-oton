@@ -14,15 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.webappdemo;
+package com.helger.photon.bootstrap3.pages;
 
 import org.junit.Test;
 
 import com.helger.commons.mock.CommonsTestHelper;
-import com.helger.photon.core.mock.PhotonCoreValidator;
 
 /**
- * Test SPI definitions and web.xml
+ * Test SPI definitions
  * 
  * @author Philip Helger
  */
@@ -32,6 +31,5 @@ public final class SPITest
   public void testBasic () throws Exception
   {
     CommonsTestHelper.testIfAllSPIImplementationsAreValid ();
-    PhotonCoreValidator.validateExternalResources ();
   }
 }

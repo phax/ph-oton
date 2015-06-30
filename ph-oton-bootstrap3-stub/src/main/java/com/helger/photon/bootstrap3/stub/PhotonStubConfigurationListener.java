@@ -24,10 +24,10 @@ import javax.servlet.ServletContextListener;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
-import com.helger.commons.GlobalDebug;
-import com.helger.commons.SystemProperties;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.scopes.ScopeUtils;
+import com.helger.commons.scope.ScopeHelper;
+import com.helger.commons.system.SystemProperties;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.customize.HCDefaultCustomizer;
 import com.helger.html.hc.customize.HCMultiCustomizer;
@@ -118,7 +118,7 @@ public final class PhotonStubConfigurationListener implements ServletContextList
       if (GlobalDebug.isDebugMode ())
       {
         if (false)
-          ScopeUtils.setDebugSessionScopeEnabled (true);
+          ScopeHelper.setDebugSessionScopeEnabled (true);
 
         // Enable Java Serialization debug
         SystemProperties.setPropertyValue ("sun.io.serialization.extendedDebugInfo", "true");

@@ -19,9 +19,9 @@ package com.helger.photon.bootstrap3.pages;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.text.IReadonlyMultiLingualText;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.text.IMultilingualText;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
@@ -35,7 +35,7 @@ public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecuti
     super (sID, sName);
   }
 
-  public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID, @Nonnull final IReadonlyMultiLingualText aName)
+  public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
     super (sID, aName);
   }
@@ -48,8 +48,8 @@ public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecuti
   }
 
   public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID,
-                                   @Nonnull final IReadonlyMultiLingualText aName,
-                                   @Nullable final IReadonlyMultiLingualText aDescription)
+                                   @Nonnull final IMultilingualText aName,
+                                   @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }

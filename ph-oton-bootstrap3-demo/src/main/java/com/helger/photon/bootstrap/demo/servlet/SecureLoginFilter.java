@@ -21,7 +21,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.state.EContinue;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.login.LoggedInUserManager;

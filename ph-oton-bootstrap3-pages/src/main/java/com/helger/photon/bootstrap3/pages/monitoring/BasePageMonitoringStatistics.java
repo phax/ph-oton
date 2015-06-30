@@ -21,22 +21,22 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.stats.IStatisticsHandlerCache;
-import com.helger.commons.stats.IStatisticsHandlerCounter;
-import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
-import com.helger.commons.stats.IStatisticsHandlerKeyedSize;
-import com.helger.commons.stats.IStatisticsHandlerKeyedTimer;
-import com.helger.commons.stats.IStatisticsHandlerSize;
-import com.helger.commons.stats.IStatisticsHandlerTimer;
-import com.helger.commons.stats.visit.IStatisticsVisitor;
-import com.helger.commons.stats.visit.StatisticsWalker;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.statistics.IStatisticsHandlerCache;
+import com.helger.commons.statistics.IStatisticsHandlerCounter;
+import com.helger.commons.statistics.IStatisticsHandlerKeyedCounter;
+import com.helger.commons.statistics.IStatisticsHandlerKeyedSize;
+import com.helger.commons.statistics.IStatisticsHandlerKeyedTimer;
+import com.helger.commons.statistics.IStatisticsHandlerSize;
+import com.helger.commons.statistics.IStatisticsHandlerTimer;
+import com.helger.commons.statistics.util.IStatisticsVisitorCallback;
+import com.helger.commons.statistics.util.StatisticsVisitor;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.type.EBaseType;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
@@ -64,36 +64,36 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_TAB_TIMER ("Zeiten", "Timer"),
-    MSG_TAB_SIZE ("Größe", "Size"),
-    MSG_TAB_COUNTER ("Zähler", "Counter"),
-    MSG_TAB_CACHE ("Cache", "Cache"),
-    MSG_NAME ("Name", "Name"),
-    MSG_KEY ("Schlüssel", "Key"),
-    MSG_INVOCATION ("Aufrufe", "Invocations"),
-    MSG_TIMER_MIN ("Minimum (ms)", "Minimum (ms)"),
-    MSG_TIMER_MAX ("Maximum (ms)", "Maximum (ms)"),
-    MSG_TIMER_AVG ("Durchschnitt (ms)", "Average (ms)"),
-    MSG_TIMER_SUM ("Summe (ms)", "Sum (ms)"),
-    MSG_MIN ("Minimum", "Minimum"),
-    MSG_MAX ("Maximum", "Maximum"),
-    MSG_AVG ("Durchschnitt", "Average"),
-    MSG_SUM ("Summe", "Sum"),
-    MSG_COUNT ("Anzahl", "Count"),
-    MSG_CACHE_HIT ("Cache hit", "Cache hit"),
-    MSG_CACHE_MISS ("Cache miss", "Cache miss");
+   MSG_TAB_TIMER ("Zeiten", "Timer"),
+   MSG_TAB_SIZE ("Größe", "Size"),
+   MSG_TAB_COUNTER ("Zähler", "Counter"),
+   MSG_TAB_CACHE ("Cache", "Cache"),
+   MSG_NAME ("Name", "Name"),
+   MSG_KEY ("Schlüssel", "Key"),
+   MSG_INVOCATION ("Aufrufe", "Invocations"),
+   MSG_TIMER_MIN ("Minimum (ms)", "Minimum (ms)"),
+   MSG_TIMER_MAX ("Maximum (ms)", "Maximum (ms)"),
+   MSG_TIMER_AVG ("Durchschnitt (ms)", "Average (ms)"),
+   MSG_TIMER_SUM ("Summe (ms)", "Sum (ms)"),
+   MSG_MIN ("Minimum", "Minimum"),
+   MSG_MAX ("Maximum", "Maximum"),
+   MSG_AVG ("Durchschnitt", "Average"),
+   MSG_SUM ("Summe", "Sum"),
+   MSG_COUNT ("Anzahl", "Count"),
+   MSG_CACHE_HIT ("Cache hit", "Cache hit"),
+   MSG_CACHE_MISS ("Cache miss", "Cache miss");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -115,8 +115,8 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
   }
 
   public BasePageMonitoringStatistics (@Nonnull @Nonempty final String sID,
-                                       @Nonnull final IReadonlyMultiLingualText aName,
-                                       @Nullable final IReadonlyMultiLingualText aDescription)
+                                       @Nonnull final IMultilingualText aName,
+                                       @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -191,7 +191,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
                                                                                                                                                                 "cache");
 
     // Third party modules
-    StatisticsWalker.walkStatistics (new IStatisticsVisitor ()
+    StatisticsVisitor.visitStatistics (new IStatisticsVisitorCallback ()
     {
       public void onTimer (@Nonnull final String sName, @Nonnull final IStatisticsHandlerTimer aHandler)
       {

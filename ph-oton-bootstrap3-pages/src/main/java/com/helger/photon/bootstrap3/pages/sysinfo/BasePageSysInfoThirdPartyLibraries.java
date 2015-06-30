@@ -22,15 +22,15 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.name.ComparatorHasDisplayName;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.name.CollatingComparatorHasDisplayName;
 import com.helger.commons.name.IHasDisplayName;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.thirdparty.IThirdPartyModule;
 import com.helger.commons.thirdparty.ThirdPartyModuleRegistry;
 import com.helger.html.hc.IHCNode;
@@ -55,20 +55,20 @@ public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecut
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_TPM_HEADER ("Folgende externen Module werden verwendet", "The following external libraries are used"),
-    MSG_LICENSED_UNDER (" lizensiert unter ", " licensed under ");
+   MSG_TPM_HEADER ("Folgende externen Module werden verwendet", "The following external libraries are used"),
+   MSG_LICENSED_UNDER (" lizensiert unter ", " licensed under ");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -90,8 +90,8 @@ public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecut
   }
 
   public BasePageSysInfoThirdPartyLibraries (@Nonnull @Nonempty final String sID,
-                                             @Nonnull final IReadonlyMultiLingualText aName,
-                                             @Nullable final IReadonlyMultiLingualText aDescription)
+                                             @Nonnull final IMultilingualText aName,
+                                             @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -142,7 +142,7 @@ public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecut
 
     // Show all required modules, sorted by name
     for (final IThirdPartyModule aModule : CollectionHelper.getSorted (aModules,
-                                                                       new ComparatorHasDisplayName <IHasDisplayName> (aDisplayLocale)))
+                                                                       new CollatingComparatorHasDisplayName <IHasDisplayName> (aDisplayLocale)))
       if (!aModule.isOptional ())
         aUL.addItem (_getModuleHCNode (aModule, aDisplayLocale));
   }

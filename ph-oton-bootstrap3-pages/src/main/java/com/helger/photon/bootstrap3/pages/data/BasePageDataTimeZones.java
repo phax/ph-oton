@@ -24,14 +24,14 @@ import javax.annotation.Nullable;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.format.impl.StringSkipPrefixAndSuffixFormatter;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.IReadonlyMultiLingualText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.format.FormatterStringSkipPrefixAndSuffix;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.config.PDTConfig;
 import com.helger.html.hc.html.HCRow;
@@ -58,25 +58,25 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> e
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_CURRENT_TIMEZONE ("Eingestellte Zeitzone: ", "Time zone set: "),
-    MSG_ID ("ID", "ID"),
-    MSG_NAME ("Name", "Name"),
-    MSG_SHORTNAME ("Kurzer Name", "Short name"),
-    MSG_OFFSET ("Abweichung", "Offset"),
-    MSG_STANDARD_OFFSET ("Ist Std.?", "Is std?"),
-    MSG_FIXED ("Konstant?", "Fixed?");
+   MSG_CURRENT_TIMEZONE ("Eingestellte Zeitzone: ", "Time zone set: "),
+   MSG_ID ("ID", "ID"),
+   MSG_NAME ("Name", "Name"),
+   MSG_SHORTNAME ("Kurzer Name", "Short name"),
+   MSG_OFFSET ("Abweichung", "Offset"),
+   MSG_STANDARD_OFFSET ("Ist Std.?", "Is std?"),
+   MSG_FIXED ("Konstant?", "Fixed?");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (final String sDE, final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
-      return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
@@ -98,8 +98,8 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> e
   }
 
   public BasePageDataTimeZones (@Nonnull @Nonempty final String sID,
-                                @Nonnull final IReadonlyMultiLingualText aName,
-                                @Nullable final IReadonlyMultiLingualText aDescription)
+                                @Nonnull final IMultilingualText aName,
+                                @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -122,7 +122,7 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> e
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_SHORTNAME.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_OFFSET.getDisplayText (aDisplayLocale)).setComparator (new ComparatorDTInteger (new StringSkipPrefixAndSuffixFormatter ("PT",
+                                        new DTCol (EText.MSG_OFFSET.getDisplayText (aDisplayLocale)).setComparator (new ComparatorDTInteger (new FormatterStringSkipPrefixAndSuffix ("PT",
                                                                                                                                                                                      "S"),
                                                                                                                                              aDisplayLocale)),
                                         new DTCol (EText.MSG_STANDARD_OFFSET.getDisplayText (aDisplayLocale)),
