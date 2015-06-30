@@ -32,10 +32,10 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
-import com.helger.web.scopes.singleton.SessionWebSingleton;
+import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
 
 @ThreadSafe
-public final class ForcedRedirectManager extends SessionWebSingleton
+public final class ForcedRedirectManager extends AbstractSessionWebSingleton
 {
   public static final String REQUEST_PARAMETER_PRG_ACTIVE = "phprga";
 

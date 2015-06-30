@@ -40,7 +40,7 @@ import com.helger.commons.type.ObjectType;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.web.scopes.session.ISessionWebScopeDontPassivate;
-import com.helger.web.scopes.singleton.SessionWebSingleton;
+import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -50,7 +50,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class UIStateRegistry extends SessionWebSingleton implements IScopeRenewalAware, ISessionWebScopeDontPassivate
+public final class UIStateRegistry extends AbstractSessionWebSingleton implements IScopeRenewalAware, ISessionWebScopeDontPassivate
 {
   /** ObjectType */
   public static final ObjectType OT_HCNODE = new ObjectType ("hcnode");

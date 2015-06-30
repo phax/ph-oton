@@ -35,7 +35,7 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.string.StringHelper;
-import com.helger.web.scopes.singleton.GlobalWebSingleton;
+import com.helger.web.scopes.singleton.AbstractGlobalWebSingleton;
 
 /**
  * Global CSRF manager keeping track of the available nonces.
@@ -43,7 +43,7 @@ import com.helger.web.scopes.singleton.GlobalWebSingleton;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class CSRFManager extends GlobalWebSingleton
+public final class CSRFManager extends AbstractGlobalWebSingleton
 {
   public static final int NONCE_BYTES = 64;
 

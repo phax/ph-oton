@@ -35,10 +35,10 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.scopes.singleton.SessionWebSingleton;
+import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
 
 @ThreadSafe
-public class FormStateManager extends SessionWebSingleton
+public class FormStateManager extends AbstractSessionWebSingleton
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FormStateManager.class);
 

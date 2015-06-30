@@ -38,7 +38,7 @@ import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
 import com.helger.web.scopes.domain.IRequestWebScope;
 import com.helger.web.scopes.mgr.WebScopeManager;
-import com.helger.web.scopes.singleton.GlobalWebSingleton;
+import com.helger.web.scopes.singleton.AbstractGlobalWebSingleton;
 import com.helger.web.scopes.util.AbstractWebScopeAwareRunnable;
 
 /**
@@ -50,7 +50,7 @@ import com.helger.web.scopes.util.AbstractWebScopeAwareRunnable;
  * @since 4.0.0
  */
 @Immutable
-public final class RequestTracker extends GlobalWebSingleton
+public final class RequestTracker extends AbstractGlobalWebSingleton
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (RequestTracker.class);
 

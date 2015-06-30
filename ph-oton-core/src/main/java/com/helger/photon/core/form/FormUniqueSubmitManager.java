@@ -36,10 +36,10 @@ import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.state.EValidity;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.scopes.singleton.SessionWebSingleton;
+import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
 
 @ThreadSafe
-public class FormUniqueSubmitManager extends SessionWebSingleton
+public class FormUniqueSubmitManager extends AbstractSessionWebSingleton
 {
   /**
    * Number of bytes used to create a unique ID - results in a Unique ID string

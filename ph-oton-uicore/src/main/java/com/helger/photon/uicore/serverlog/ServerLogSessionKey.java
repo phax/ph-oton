@@ -24,7 +24,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.scopes.singleton.SessionWebSingleton;
+import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
 
 /**
  * Session singleton to create unique keys for server logging. Each generated
@@ -32,7 +32,7 @@ import com.helger.web.scopes.singleton.SessionWebSingleton;
  * 
  * @author Philip Helger
  */
-public final class ServerLogSessionKey extends SessionWebSingleton
+public final class ServerLogSessionKey extends AbstractSessionWebSingleton
 {
   private final String m_sGeneratedKey;
 

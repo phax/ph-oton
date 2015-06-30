@@ -26,7 +26,7 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.scope.IScope;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.scopes.singleton.SessionWebSingleton;
+import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
 
 /**
  * Per-session nonce manager.
@@ -34,7 +34,7 @@ import com.helger.web.scopes.singleton.SessionWebSingleton;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class CSRFSessionManager extends SessionWebSingleton
+public final class CSRFSessionManager extends AbstractSessionWebSingleton
 {
   @GuardedBy ("m_aRWLock")
   private String m_sNonce;
