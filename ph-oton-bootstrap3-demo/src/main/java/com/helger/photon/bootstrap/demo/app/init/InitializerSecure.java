@@ -18,6 +18,7 @@ package com.helger.photon.bootstrap.demo.app.init;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.bootstrap.demo.app.CApp;
@@ -25,12 +26,15 @@ import com.helger.photon.bootstrap.demo.app.action.secure.CActionSecure;
 import com.helger.photon.bootstrap.demo.app.ajax.secure.CAjaxSecure;
 import com.helger.photon.bootstrap.demo.app.menu.secure.MenuSecure;
 import com.helger.photon.bootstrap.demo.app.ui.LayoutAreaContentProviderSecure;
+import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFile;
+import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFileManager;
 import com.helger.photon.core.action.IActionInvoker;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.init.DefaultApplicationInitializer;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.app.layout.ILayoutManager;
+import com.helger.photon.uictrls.prism.EPrismLanguage;
 
 /**
  * Initialize the config application stuff
@@ -73,5 +77,11 @@ public final class InitializerSecure extends DefaultApplicationInitializer <Layo
 
   @Override
   public void initRest ()
-  {}
+  {
+    final ConfigurationFileManager aCfgMgr = ConfigurationFileManager.getInstance ();
+    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("log4j2.xml")).setDescription ("log4j configuration file")
+                                                                                                   .setSyntaxHighlightLanguage (EPrismLanguage.MARKUP));
+    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("webapp.properties")).setDescription ("Web application properties")
+                                                                                                          .setSyntaxHighlightLanguage (EPrismLanguage.APACHECONF));
+  }
 }

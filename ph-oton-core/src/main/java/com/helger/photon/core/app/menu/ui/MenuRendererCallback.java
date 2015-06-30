@@ -195,7 +195,7 @@ public class MenuRendererCallback <T extends AbstractHCList <?>> extends Default
     // Item should not be displayed
     // push fake item so the pop does not remove anything important!
     m_aMenuItemStack.push (new HCLI ());
-    return EHierarchyVisitorReturn.USE_PARENTS_NEXT_SIBLING;
+    return EHierarchyVisitorReturn.USE_NEXT_SIBLING;
   }
 
   @Override
