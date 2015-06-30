@@ -23,9 +23,8 @@ import javax.annotation.Nonnull;
 
 import org.junit.Test;
 
-import com.helger.commons.io.IReadableResource;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.xml.schema.XMLSchemaCache;
-import com.helger.photon.core.specs.CWebSpecs;
 
 public class CWebSpecsTest
 {

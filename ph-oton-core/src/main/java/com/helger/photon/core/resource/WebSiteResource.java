@@ -24,17 +24,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.charset.CCharset;
-import com.helger.commons.collections.ArrayHelper;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
-import com.helger.commons.io.IInputStreamProvider;
-import com.helger.commons.io.IReadableResource;
+import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.io.IHasInputStream;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.messagedigest.EMessageDigestAlgorithm;
 import com.helger.commons.messagedigest.MessageDigestGeneratorHelper;
 import com.helger.commons.string.StringHelper;
@@ -93,8 +93,8 @@ public class WebSiteResource
 
     if (m_bResourceExists)
     {
-      m_aContentHash = MessageDigestGeneratorHelper.getDigestFromInputStream (aRes.getInputStream (),
-                                                                              EMessageDigestAlgorithm.SHA_512);
+      m_aContentHash = MessageDigestGeneratorHelper.getAllDigestBytesFromInputStream (aRes.getInputStream (),
+                                                                                      EMessageDigestAlgorithm.SHA_512);
       m_sContentHash = StringHelper.getHexEncoded (m_aContentHash);
     }
     else
@@ -130,7 +130,7 @@ public class WebSiteResource
    * @return The modified String.
    */
   @Nonnull
-  private static String _readAndParseCSS (@Nonnull final IInputStreamProvider aISP,
+  private static String _readAndParseCSS (@Nonnull final IHasInputStream aISP,
                                           @Nonnull @Nonempty final String sBasePath,
                                           final boolean bRegular)
   {
@@ -138,7 +138,7 @@ public class WebSiteResource
     if (aCSS == null)
     {
       s_aLogger.error ("Failed to parse CSS. Returning 'as-is'");
-      return StreamUtils.getAllBytesAsString (aISP, CCharset.CHARSET_UTF_8_OBJ);
+      return StreamHelper.getAllBytesAsString (aISP, CCharset.CHARSET_UTF_8_OBJ);
     }
     CSSVisitor.visitCSSUrl (aCSS, new AbstractModifyingCSSUrlVisitor ()
     {
@@ -169,7 +169,7 @@ public class WebSiteResource
         // this has undesired side effects such that global functions are not
         // available etc.
         // In case of an error, fix the relevant JS file instead.
-        return StreamUtils.getAllBytesAsString (m_aResource.getInputStream (), CCharset.CHARSET_UTF_8_OBJ);
+        return StreamHelper.getAllBytesAsString (m_aResource.getInputStream (), CCharset.CHARSET_UTF_8_OBJ);
       case CSS:
         // Remove the filename from the path
         // Not using a requestScope is okay here, because we don't want to link
@@ -228,7 +228,7 @@ public class WebSiteResource
     final WebSiteResource rhs = (WebSiteResource) o;
     return m_eResourceType.equals (rhs.m_eResourceType) &&
            m_sPath.equals (rhs.m_sPath) &&
-           EqualsUtils.equals (m_aContentHash, rhs.m_aContentHash);
+           EqualsHelper.equals (m_aContentHash, rhs.m_aContentHash);
   }
 
   @Override

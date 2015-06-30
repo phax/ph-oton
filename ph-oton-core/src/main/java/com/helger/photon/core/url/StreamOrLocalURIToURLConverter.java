@@ -19,15 +19,15 @@ package com.helger.photon.core.url;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.io.IReadableResource;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.URLResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.IURIToURLConverter;
 import com.helger.commons.url.SimpleURL;
+import com.helger.commons.url.URLHelper;
 import com.helger.commons.url.URLProtocolRegistry;
-import com.helger.commons.url.URLUtils;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
@@ -70,7 +70,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
 
     // If the URL is absolute, use it
     if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI))
-      return new URLResource (URLUtils.getAsURL (sURI));
+      return new URLResource (URLHelper.getAsURL (sURI));
 
     // Absolute paths are project relative files and therefore are relative to
     // the servlet context directory

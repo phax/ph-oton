@@ -28,12 +28,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.io.EAppend;
-import com.helger.commons.io.IInputStreamProvider;
+import com.helger.commons.io.IHasInputStream;
 import com.helger.commons.io.resource.FileSystemResource;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
@@ -50,7 +50,7 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public class WebSiteResourceBundleSerialized implements IInputStreamProvider
+public class WebSiteResourceBundleSerialized implements IHasInputStream
 {
   public static final Charset CHARSET_TO_USE = CCharset.CHARSET_UTF_8_OBJ;
 
@@ -85,9 +85,8 @@ public class WebSiteResourceBundleSerialized implements IInputStreamProvider
     if (!aTargetRes.exists ())
     {
       // persist file by merging all items
-      final Writer aWriter = StreamUtils.getBuffered (aTargetRes.getWriter (CCharset.CHARSET_UTF_8_OBJ,
-                                                                            EAppend.TRUNCATE));
-      try
+      try (final Writer aWriter = StreamHelper.getBuffered (aTargetRes.getWriter (CCharset.CHARSET_UTF_8_OBJ,
+                                                                                  EAppend.TRUNCATE)))
       {
         // Write all used files into the result file (at least for now)
         for (final WebSiteResource aRes : m_aBundle.getAllResources ())
@@ -119,16 +118,13 @@ public class WebSiteResourceBundleSerialized implements IInputStreamProvider
                         m_aBundle.getAllResourcePaths () +
                         (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
                                                               m_aBundle.getConditionalComment () +
-                                                              "'" : ""));
+                                                              "'"
+                                                            : ""));
       }
       catch (final Throwable t)
       {
         s_aLogger.error ("Error serializing bundle '" + m_sBundleID + "' with " + m_aBundle.getAllResourcePaths (), t);
         throw new IllegalStateException (t);
-      }
-      finally
-      {
-        StreamUtils.close (aWriter);
       }
     }
   }
@@ -186,7 +182,8 @@ public class WebSiteResourceBundleSerialized implements IInputStreamProvider
     if (aURL == null)
     {
       // Use the ResourceBundleServlet path by default
-      aURL = LinkUtils.getURLWithContext (aRequestScope, ResourceBundleServlet.SERVLET_DEFAULT_PATH +
+      aURL = LinkUtils.getURLWithContext (aRequestScope,
+                                          ResourceBundleServlet.SERVLET_DEFAULT_PATH +
                                                          "/" +
                                                          m_sBundleID +
                                                          m_aBundle.getResourceType ().getFileExtension ());

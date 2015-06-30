@@ -22,8 +22,8 @@ import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
@@ -36,15 +36,15 @@ import com.helger.web.servlet.response.UnifiedResponse;
 public interface IActionInvoker
 {
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   CallbackList <IActionExceptionCallback> getExceptionCallbacks ();
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   CallbackList <IActionBeforeExecutionCallback> getBeforeExecutionCallbacks ();
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   CallbackList <IActionAfterExecutionCallback> getAfterExecutionCallbacks ();
 
   /**
@@ -63,7 +63,7 @@ public interface IActionInvoker
   void setLongRunningExecutionLimitTime (long nLongRunningExecutionLimitTime);
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   CallbackList <IActionLongRunningExecutionCallback> getLongRunningExecutionCallbacks ();
 
   /**

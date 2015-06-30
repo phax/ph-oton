@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.IsSPIInterface;
+import com.helger.commons.annotation.IsSPIInterface;
 import com.helger.photon.core.action.servlet.AbstractApplicationActionServlet;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 

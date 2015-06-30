@@ -22,7 +22,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.io.IReadableResourceProvider;
+import com.helger.commons.io.resourceprovider.IReadableResourceProvider;
 import com.helger.web.mock.MockServletContext;
 
 /**

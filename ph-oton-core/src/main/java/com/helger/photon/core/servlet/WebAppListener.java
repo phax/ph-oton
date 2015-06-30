@@ -40,32 +40,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
-import com.helger.commons.GlobalDebug;
-import com.helger.commons.SystemProperties;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.cleanup.CommonsCleanup;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.exceptions.InitializationException;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.exception.InitializationException;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.io.file.SimpleFileIO;
+import com.helger.commons.lang.ClassPathHelper;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.serialize.MicroWriter;
-import com.helger.commons.name.ComparatorHasDisplayName;
+import com.helger.commons.name.CollatingComparatorHasDisplayName;
 import com.helger.commons.name.IHasDisplayName;
-import com.helger.commons.stats.utils.StatisticsExporter;
+import com.helger.commons.statistics.util.StatisticsExporter;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.system.EJVMVendor;
+import com.helger.commons.system.SystemHelper;
+import com.helger.commons.system.SystemProperties;
 import com.helger.commons.thirdparty.IThirdPartyModule;
 import com.helger.commons.thirdparty.ThirdPartyModuleRegistry;
 import com.helger.commons.timing.StopWatch;
-import com.helger.commons.url.URLUtils;
-import com.helger.commons.utils.ClassPathHelper;
+import com.helger.commons.url.URLHelper;
 import com.helger.commons.vminit.VirtualMachineInitializer;
-import com.helger.commons.xml.serialize.XMLWriterSettings;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.datetime.PDTFactory;
-import com.helger.datetime.io.PDTIOHelper;
+import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOIntIDFactory;
 import com.helger.web.datetime.PDTWebDateUtils;
@@ -99,7 +100,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   /** Name of the initialization parameter for the storagePath. */
   public static final String INIT_PARAMETER_DATA_PATH = "dataPath";
 
-  /** Name of the initialization parameter to disable logging the startup info. */
+  /**
+   * Name of the initialization parameter to disable logging the startup info.
+   */
   public static final String INIT_PARAMETER_NO_STARTUP_INFO = "noStartupInfo";
 
   /**
@@ -207,7 +210,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     {
       s_aLogger.info ("Using the following third party modules:");
       for (final IThirdPartyModule aModule : CollectionHelper.getSorted (aModules,
-                                                                         new ComparatorHasDisplayName <IHasDisplayName> (null)))
+                                                                         new CollatingComparatorHasDisplayName <IHasDisplayName> (SystemHelper.getSystemLocale ())))
         if (!aModule.isOptional ())
         {
           String sMsg = "  " + aModule.getDisplayName ();
@@ -451,7 +454,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     if (s_aInited.getAndSet (true))
       throw new IllegalStateException ("WebAppListener was already instantiated!");
 
-    final StopWatch aSW = new StopWatch (true);
+    final StopWatch aSW = StopWatch.createdStarted ();
     m_aInitializationStartDT = PDTFactory.getCurrentLocalDateTime ();
 
     // set global debug/trace mode
@@ -472,7 +475,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       final String sInitParameter = getInitParameterServerURL (aSC, bProductionMode);
       if (StringHelper.hasText (sInitParameter))
       {
-        final URL aURL = URLUtils.getAsURL (sInitParameter);
+        final URL aURL = URLHelper.getAsURL (sInitParameter);
         if (aURL != null)
         {
           StaticServerInfo.init (aURL.getProtocol (), aURL.getHost (), aURL.getPort (), aSC.getContextPath ());
@@ -607,7 +610,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {
     final ServletContext aSC = aSCE.getServletContext ();
 
-    final StopWatch aSW = new StopWatch (true);
+    final StopWatch aSW = StopWatch.createdStarted ();
     if (s_aLogger.isInfoEnabled ())
       s_aLogger.info ("Servlet context '" + aSC.getServletContextName () + "' is being destroyed");
 

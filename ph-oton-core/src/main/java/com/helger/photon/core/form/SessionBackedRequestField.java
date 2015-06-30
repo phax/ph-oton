@@ -19,7 +19,7 @@ package com.helger.photon.core.form;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.html.request.IHCRequestField;
 import com.helger.web.scopes.util.SessionBackedRequestFieldData;
 

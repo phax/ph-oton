@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.schedule.job.AbstractScopeAwareJob;
 import com.helger.schedule.quartz.GlobalQuartzScheduler;

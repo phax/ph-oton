@@ -23,13 +23,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.annotations.UsedViaReflection;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.scopes.mgr.ScopeManager;
-import com.helger.commons.scopes.singleton.ApplicationSingleton;
+import com.helger.commons.scope.mgr.ScopeManager;
+import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -40,7 +40,7 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
  * @author Philip Helger
  */
 @ThreadSafe
-public class ApplicationAjaxManager extends ApplicationSingleton implements IAjaxInvoker
+public class ApplicationAjaxManager extends AbstractApplicationSingleton implements IAjaxInvoker
 {
   private final AjaxInvoker m_aInvoker = new AjaxInvoker ();
 
@@ -65,21 +65,21 @@ public class ApplicationAjaxManager extends ApplicationSingleton implements IAja
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IAjaxExceptionCallback> getExceptionCallbacks ()
   {
     return m_aInvoker.getExceptionCallbacks ();
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IAjaxBeforeExecutionCallback> getBeforeExecutionCallbacks ()
   {
     return m_aInvoker.getBeforeExecutionCallbacks ();
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IAjaxAfterExecutionCallback> getAfterExecutionCallbacks ()
   {
     return m_aInvoker.getAfterExecutionCallbacks ();
@@ -97,7 +97,7 @@ public class ApplicationAjaxManager extends ApplicationSingleton implements IAja
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IAjaxLongRunningExecutionCallback> getLongRunningExecutionCallbacks ()
   {
     return m_aInvoker.getLongRunningExecutionCallbacks ();

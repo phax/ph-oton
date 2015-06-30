@@ -23,8 +23,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.GlobalDebug;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
@@ -49,7 +49,7 @@ public class InternalErrorBuilder
   private Throwable m_aThrowable;
   private IRequestWebScopeWithoutResponse m_aRequestScope;
   private Map <String, String> m_aCustomData;
-  private IEmailAttachmentList m_aEmailAttachments;
+  private EmailAttachmentList m_aEmailAttachments;
   private Locale m_aDisplayLocale;
   private boolean m_bInvokeCustomExceptionHandler = DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER;
 
@@ -120,7 +120,7 @@ public class InternalErrorBuilder
   @Nonnull
   public InternalErrorBuilder setEmailAttachmentList (@Nullable final IEmailAttachmentList aEmailAttachments)
   {
-    m_aEmailAttachments = aEmailAttachments;
+    m_aEmailAttachments = aEmailAttachments == null ? null : new EmailAttachmentList (aEmailAttachments);
     return this;
   }
 

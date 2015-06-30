@@ -21,15 +21,15 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.hash.HashCodeGenerator;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ITypedObject;
 import com.helger.commons.type.ObjectType;
 import com.helger.smtp.ISMTPSettings;
-import com.helger.smtp.impl.ReadonlySMTPSettings;
+import com.helger.smtp.impl.ReadOnlySMTPSettings;
 
 public class NamedSMTPSettings implements ITypedObject <String>, Serializable
 {
@@ -37,7 +37,7 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
 
   private final String m_sID;
   private String m_sName;
-  private ReadonlySMTPSettings m_aSMTPSettings;
+  private ISMTPSettings m_aSMTPSettings;
 
   public NamedSMTPSettings (@Nonnull @Nonempty final String sName, @Nonnull final ISMTPSettings aSMTPSettings)
   {
@@ -55,7 +55,7 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
   }
 
   @Nonnull
-  public ObjectType getTypeID ()
+  public ObjectType getObjectType ()
   {
     return OT;
   }
@@ -97,7 +97,7 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
     ValueEnforcer.notNull (aSMTPSettings, "SMTPSettings");
 
     // Ensure that the implementation type is the same!
-    final ReadonlySMTPSettings aRealSMTPSettings = new ReadonlySMTPSettings (aSMTPSettings);
+    final ISMTPSettings aRealSMTPSettings = new ReadOnlySMTPSettings (aSMTPSettings);
     if (aRealSMTPSettings.equals (m_aSMTPSettings))
       return EChange.UNCHANGED;
     m_aSMTPSettings = aRealSMTPSettings;

@@ -18,8 +18,8 @@ package com.helger.photon.core.state;
 
 import java.io.Serializable;
 
-import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
-import com.helger.commons.type.IHasType;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.type.IHasObjectType;
 
 /**
  * Marker interface for object that can fit into {@link UIStateRegistry}.
@@ -27,7 +27,7 @@ import com.helger.commons.type.IHasType;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IHasUIState extends IHasType, Serializable
+public interface IHasUIState extends IHasObjectType, Serializable
 {
   /* empty */
 }

@@ -25,11 +25,11 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -66,13 +66,14 @@ public class WebSiteResourceBundle
       m_aResources.add (aResourceWithCond.getResource ());
     m_sConditionalComment = sConditionalComment;
     m_bCanBeBundled = bCanBeBundled;
-    m_aMediaList = aMediaList == null || aMediaList.isEmpty () ? null : new CSSMediaList (aMediaList);
+    m_aMediaList = aMediaList == null || aMediaList.hasNoMedia () ? null : new CSSMediaList (aMediaList);
     m_eResourceType = aResources.get (0).getResource ().getResourceType ();
 
     // Consistency check
     for (final WebSiteResourceWithCondition aResource : aResources)
       if (!aResource.getResource ().getResourceType ().equals (m_eResourceType))
-        throw new IllegalArgumentException ("The passed resources are mixed of different resource types: " + aResources);
+        throw new IllegalArgumentException ("The passed resources are mixed of different resource types: " +
+                                            aResources);
   }
 
   @Nonnegative
@@ -176,9 +177,9 @@ public class WebSiteResourceBundle
       return false;
     final WebSiteResourceBundle rhs = (WebSiteResourceBundle) o;
     return m_aResources.equals (rhs.m_aResources) &&
-           EqualsUtils.equals (m_sConditionalComment, rhs.m_sConditionalComment) &&
+           EqualsHelper.equals (m_sConditionalComment, rhs.m_sConditionalComment) &&
            m_bCanBeBundled == rhs.m_bCanBeBundled &&
-           EqualsUtils.equals (m_aMediaList, rhs.m_aMediaList);
+           EqualsHelper.equals (m_aMediaList, rhs.m_aMediaList);
   }
 
   @Override

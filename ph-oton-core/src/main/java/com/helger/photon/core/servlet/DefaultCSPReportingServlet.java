@@ -27,11 +27,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.charset.CharsetManager;
-import com.helger.commons.io.streams.NonBlockingByteArrayInputStream;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.json.IJson;
 import com.helger.json.parser.JsonReader;
 import com.helger.json.serialize.JsonWriterSettings;
@@ -75,13 +75,13 @@ public class DefaultCSPReportingServlet extends HttpServlet
   }
 
   @Override
-  protected void doPost (@Nonnull final HttpServletRequest aHttpRequest, final HttpServletResponse aHttpResponse) throws ServletException,
-                                                                                                                 IOException
+  protected void doPost (@Nonnull final HttpServletRequest aHttpRequest,
+                         final HttpServletResponse aHttpResponse) throws ServletException, IOException
   {
     ServletStatusManager.onServletInvocation (getClass ());
 
     // Read all request body bytes
-    final byte [] aBytes = StreamUtils.getAllBytes (aHttpRequest.getInputStream ());
+    final byte [] aBytes = StreamHelper.getAllBytes (aHttpRequest.getInputStream ());
 
     // Try to parse as JSON
     final IJson aJson = JsonReader.readFromStream (new NonBlockingByteArrayInputStream (aBytes));

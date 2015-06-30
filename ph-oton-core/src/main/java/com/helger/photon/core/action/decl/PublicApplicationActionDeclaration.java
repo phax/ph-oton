@@ -18,7 +18,7 @@ package com.helger.photon.core.action.decl;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.factory.IFactory;
 import com.helger.photon.core.action.IActionExecutor;
 import com.helger.photon.core.action.servlet.PublicApplicationActionServlet;

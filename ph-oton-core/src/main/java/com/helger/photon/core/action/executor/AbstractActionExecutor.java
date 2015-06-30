@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import org.joda.time.DateTime;
 
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.action.IActionExecutor;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;

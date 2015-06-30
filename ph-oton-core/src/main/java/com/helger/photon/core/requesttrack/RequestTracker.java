@@ -27,13 +27,13 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.annotations.UsedViaReflection;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.concurrent.ManagedExecutorService;
 import com.helger.commons.error.EErrorLevel;
-import com.helger.commons.scopes.IScope;
+import com.helger.commons.scope.IScope;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
 import com.helger.web.scopes.domain.IRequestWebScope;
@@ -135,14 +135,14 @@ public final class RequestTracker extends GlobalWebSingleton
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public static CallbackList <ILongRunningRequestCallback> getLongRunningRequestCallbacks ()
   {
     return getInstance ().m_aLongRunningCallbacks;
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public static CallbackList <IParallelRunningRequestCallback> getParallelRunningRequestCallbacks ()
   {
     return getInstance ().m_aParallelRunningCallbacks;

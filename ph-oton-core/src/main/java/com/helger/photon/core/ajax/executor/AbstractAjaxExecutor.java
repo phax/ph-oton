@@ -19,9 +19,9 @@ package com.helger.photon.core.ajax.executor;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.collections.attrs.MapBasedAttributeContainer;
-import com.helger.commons.lang.CGStringHelper;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
+import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
@@ -60,7 +60,7 @@ public abstract class AbstractAjaxExecutor implements IAjaxExecutor
   }
 
   @OverrideOnDemand
-  protected void modifyRequestParamMap (@Nonnull final MapBasedAttributeContainer aParams)
+  protected void modifyRequestParamMap (@Nonnull final IMutableAttributeContainerAny <String> aParams)
   {
     // Remove the jQuery timestamp parameter
     aParams.removeAttribute (REQUEST_PARAM_JQUERY_NO_CACHE);
@@ -86,7 +86,7 @@ public abstract class AbstractAjaxExecutor implements IAjaxExecutor
     final IAjaxResponse aResult = mainHandleRequest (aRequestScope);
     if (aResult == null)
       throw new IllegalStateException ("Invocation of " +
-                                       CGStringHelper.getClassLocalName (getClass ()) +
+                                       ClassHelper.getClassLocalName (getClass ()) +
                                        " returned null response!");
 
     // Return invocation result

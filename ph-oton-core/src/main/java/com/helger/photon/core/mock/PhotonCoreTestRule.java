@@ -21,7 +21,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.url.SMap;
 import com.helger.photon.core.servlet.WebAppListener;
 import com.helger.web.mock.MockHttpListener;

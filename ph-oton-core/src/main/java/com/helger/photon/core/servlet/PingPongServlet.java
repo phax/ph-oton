@@ -24,8 +24,8 @@ import javax.servlet.ServletException;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
-import com.helger.commons.stats.IStatisticsHandlerCounter;
-import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
+import com.helger.commons.statistics.StatisticsManager;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
@@ -50,7 +50,7 @@ public final class PingPongServlet extends AbstractUnifiedResponseServlet
   /** The response MIME type */
   public static final IMimeType RESPONSE_MIMETYPE = CMimeType.TEXT_PLAIN;
 
-  private static final IStatisticsHandlerCounter s_aStatsPingPong = StatisticsManager.getCounterHandler (PingPongServlet.class);
+  private static final IMutableStatisticsHandlerCounter s_aStatsPingPong = StatisticsManager.getCounterHandler (PingPongServlet.class);
 
   private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (PingPongServlet.class);
 

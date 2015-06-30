@@ -30,9 +30,6 @@ import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.mock.PhotonCoreTestRule;
-import com.helger.photon.core.resource.WebSiteResourceBundleManager;
-import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
-import com.helger.photon.core.resource.WebSiteResourceWithCondition;
 
 /**
  * Test class for class {@link WebSiteResourceBundleManager}.

@@ -27,24 +27,24 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.GlobalDebug;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableObject;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mutable.Wrapper;
 import com.helger.commons.state.EContinue;
-import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
-import com.helger.commons.stats.IStatisticsHandlerKeyedTimer;
-import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
+import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
+import com.helger.commons.wrapper.Wrapper;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
-import com.helger.web.CWebCharset;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
@@ -57,11 +57,11 @@ import com.helger.web.servlet.response.UnifiedResponse;
 public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAjaxServlet.class);
-  private static final IStatisticsHandlerKeyedTimer s_aStatsTimer = StatisticsManager.getKeyedTimerHandler (AbstractAjaxServlet.class);
-  private static final IStatisticsHandlerKeyedCounter s_aStatsCounterSuccess = StatisticsManager.getKeyedCounterHandler (AbstractAjaxServlet.class +
-                                                                                                                         "$success");
-  private static final IStatisticsHandlerKeyedCounter s_aStatsCounterError = StatisticsManager.getKeyedCounterHandler (AbstractAjaxServlet.class +
-                                                                                                                       "$error");
+  private static final IMutableStatisticsHandlerKeyedTimer s_aStatsTimer = StatisticsManager.getKeyedTimerHandler (AbstractAjaxServlet.class);
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsCounterSuccess = StatisticsManager.getKeyedCounterHandler (AbstractAjaxServlet.class +
+                                                                                                                                "$success");
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsCounterError = StatisticsManager.getKeyedCounterHandler (AbstractAjaxServlet.class +
+                                                                                                                              "$error");
 
   private static final String SCOPE_ATTR_NAME = "$ph-ajaxservlet.name";
   private static final String SCOPE_ATTR_INVOKER = "$ph-ajaxservlet.invoker";
@@ -73,7 +73,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
    * @return The callback list with the exception handlers
    */
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public static CallbackList <IAjaxExceptionCallback> getExceptionCallbacks ()
   {
     return s_aExceptionCallbacks;
@@ -158,7 +158,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
       try
       {
         // Start the timing
-        final StopWatch aSW = new StopWatch (true);
+        final StopWatch aSW = StopWatch.createdStarted ();
 
         // Invoke function
         final IAjaxResponse aResult = aAjaxInvoker.invokeFunction (sAjaxFunctionName, aAjaxExecutor, aRequestScope);
@@ -170,7 +170,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
 
         // Do not cache the result!
         aUnifiedResponse.disableCaching ()
-                        .setContentAndCharset (sResultJSON, CWebCharset.CHARSET_XML_OBJ)
+                        .setContentAndCharset (sResultJSON, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
                         .setMimeType (CMimeType.APPLICATION_JSON);
 
         // Remember the time

@@ -25,11 +25,11 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.GlobalDebug;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
-import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
+import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
@@ -57,10 +57,10 @@ public class GoServlet extends AbstractUnifiedResponseServlet
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (GoServlet.class);
-  private static final IStatisticsHandlerKeyedCounter s_aStatsError = StatisticsManager.getKeyedCounterHandler (GoServlet.class.getName () +
-                                                                                                                "$error");
-  private static final IStatisticsHandlerKeyedCounter s_aStatsOK = StatisticsManager.getKeyedCounterHandler (GoServlet.class.getName () +
-                                                                                                             "$ok");
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsError = StatisticsManager.getKeyedCounterHandler (GoServlet.class.getName () +
+                                                                                                                       "$error");
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsOK = StatisticsManager.getKeyedCounterHandler (GoServlet.class.getName () +
+                                                                                                                    "$ok");
   private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (GoServlet.class);
 
   public GoServlet ()

@@ -20,11 +20,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.microdom.IMicroElement;
+import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
-import com.helger.commons.microdom.impl.MicroElement;
-import com.helger.commons.microdom.utils.MicroUtils;
-import com.helger.smtp.impl.ReadonlySMTPSettings;
+import com.helger.commons.microdom.util.MicroHelper;
+import com.helger.smtp.ISMTPSettings;
+import com.helger.smtp.impl.ReadOnlySMTPSettings;
 
 public final class NamedSMTPSettingsMicroTypeConverter implements IMicroTypeConverter
 {
@@ -52,11 +53,10 @@ public final class NamedSMTPSettingsMicroTypeConverter implements IMicroTypeConv
   {
     final String sID = eNamedSMTPSettings.getAttributeValue (ATTR_ID);
 
-    final String sName = MicroUtils.getChildTextContent (eNamedSMTPSettings, ELEMENT_NAME);
+    final String sName = MicroHelper.getChildTextContent (eNamedSMTPSettings, ELEMENT_NAME);
 
     final IMicroElement eSMTPSettings = eNamedSMTPSettings.getFirstChildElement (ELEMENT_SMTPSETTINGS);
-    final ReadonlySMTPSettings aSMTPSettings = MicroTypeConverter.convertToNative (eSMTPSettings,
-                                                                                   ReadonlySMTPSettings.class);
+    final ISMTPSettings aSMTPSettings = MicroTypeConverter.convertToNative (eSMTPSettings, ReadOnlySMTPSettings.class);
 
     return new NamedSMTPSettings (sID, sName, aSMTPSettings);
   }

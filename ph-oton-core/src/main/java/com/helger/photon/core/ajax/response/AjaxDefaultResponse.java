@@ -20,10 +20,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.GlobalDebug;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCHasChildren;
 import com.helger.html.hc.IHCNode;
@@ -38,13 +38,13 @@ import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.json.IJson;
 import com.helger.json.impl.JsonObject;
 import com.helger.json.serialize.JsonWriter;
-import com.helger.photon.core.app.html.PhotonHTMLSettings;
 import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonHTMLSettings;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 @Immutable
-public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResponse> implements IAjaxResponse
+public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResponse>implements IAjaxResponse
 {
   /** Success property */
   public static final String PROPERTY_SUCCESS = "success";
@@ -59,7 +59,9 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
   public static final String PROPERTY_EXTERNAL_CSS = "externalcss";
   /** Additional inline CSS - only in case of success - contains a string */
   public static final String PROPERTY_INLINE_CSS = "inlinecss";
-  /** Additional JS files - only in case of success - contains a list of strings */
+  /**
+   * Additional JS files - only in case of success - contains a list of strings
+   */
   public static final String PROPERTY_EXTERNAL_JS = "externaljs";
   /** Additional inline JS - only in case of success - contains a string */
   public static final String PROPERTY_INLINE_JS = "inlinejs";
@@ -202,8 +204,8 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
       return false;
     final AjaxDefaultResponse rhs = (AjaxDefaultResponse) o;
     return m_bSuccess == rhs.m_bSuccess &&
-           EqualsUtils.equals (m_sErrorMessage, rhs.m_sErrorMessage) &&
-           EqualsUtils.equals (m_aSuccessValue, rhs.m_aSuccessValue);
+           EqualsHelper.equals (m_sErrorMessage, rhs.m_sErrorMessage) &&
+           EqualsHelper.equals (m_aSuccessValue, rhs.m_aSuccessValue);
   }
 
   @Override

@@ -23,7 +23,6 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.mime.CMimeType;
-import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.web.http.EHTTPMethod;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mock.MockServletRequestListenerScopeAware;

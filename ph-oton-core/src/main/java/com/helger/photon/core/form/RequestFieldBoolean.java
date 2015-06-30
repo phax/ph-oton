@@ -19,10 +19,9 @@ package com.helger.photon.core.form;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hc.CHCParam;
 import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -34,10 +33,15 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
  */
 public class RequestFieldBoolean extends RequestField implements IHCRequestFieldBoolean
 {
+  // predefined values
+  // Don't change them - it is expected that they are "true" and "false"!
+  public static final String VALUE_CHECKED = Boolean.TRUE.toString ();
+  public static final String VALUE_UNCHECKED = Boolean.FALSE.toString ();
+
   private final boolean m_bDefaultValue;
 
   /**
-   * Constructor using either {@link CHCParam#VALUE_CHECKED} .
+   * Constructor using either {@link #VALUE_CHECKED} .
    *
    * @param sFieldName
    *        Name of the field.
@@ -62,7 +66,7 @@ public class RequestFieldBoolean extends RequestField implements IHCRequestField
   @Nonempty
   public static String getStringValue (final boolean bValue)
   {
-    return bValue ? CHCParam.VALUE_CHECKED : CHCParam.VALUE_UNCHECKED;
+    return bValue ? VALUE_CHECKED : VALUE_UNCHECKED;
   }
 
   public boolean isChecked ()

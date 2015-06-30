@@ -31,15 +31,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.scopes.mgr.ScopeManager;
+import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.URLUtils;
+import com.helger.commons.url.URLHelper;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
@@ -71,8 +71,10 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
    * Therefore the ETag value is calculated only once and used to stream all
    * classpath resources.
    */
-  protected static final String ETAG_VALUE_OBJECT_DELIVERY_SERVLET = '"' + Long.toString (VerySecureRandom.getInstance ()
-                                                                                                          .nextLong ()) + '"';
+  protected static final String ETAG_VALUE_OBJECT_DELIVERY_SERVLET = '"' +
+                                                                     Long.toString (VerySecureRandom.getInstance ()
+                                                                                                    .nextLong ()) +
+                                                                     '"';
 
   private final Set <String> m_aDeniedFilenames = new LinkedHashSet <String> ();
   private final Set <String> m_aDeniedExtensions = new LinkedHashSet <String> ();
@@ -347,7 +349,7 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
                                         @Nonnull final UnifiedResponse aUnifiedResponse)
   {
     // cut the leading "/"
-    final String sFilename = URLUtils.urlDecode (aRequestScope.getPathWithinServlet ());
+    final String sFilename = URLHelper.urlDecode (aRequestScope.getPathWithinServlet ());
 
     if (StringHelper.hasNoText (sFilename) ||
         !isValidFilenameAccordingToTheRules (sFilename) ||

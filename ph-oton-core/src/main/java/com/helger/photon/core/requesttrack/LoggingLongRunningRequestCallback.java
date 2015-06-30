@@ -23,9 +23,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.error.EErrorLevel;
-import com.helger.commons.log.LogUtils;
+import com.helger.commons.error.IErrorLevel;
+import com.helger.commons.log.LogHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.scopes.domain.IRequestWebScope;
 import com.helger.web.servlet.request.RequestHelper;
@@ -41,39 +42,48 @@ public class LoggingLongRunningRequestCallback implements ILongRunningRequestCal
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingLongRunningRequestCallback.class);
 
-  private final EErrorLevel m_eErrorLevel;
+  private IErrorLevel m_aErrorLevel;
 
   public LoggingLongRunningRequestCallback ()
   {
     this (EErrorLevel.WARN);
   }
 
-  public LoggingLongRunningRequestCallback (@Nonnull final EErrorLevel eErrorLevel)
+  public LoggingLongRunningRequestCallback (@Nonnull final IErrorLevel aErrorLevel)
   {
-    m_eErrorLevel = ValueEnforcer.notNull (eErrorLevel, "ErrorLevel");
+    setErrorLevel (aErrorLevel);
   }
 
   @Nonnull
-  public EErrorLevel getErrorLevel ()
+  public IErrorLevel getErrorLevel ()
   {
-    return m_eErrorLevel;
+    return m_aErrorLevel;
+  }
+
+  @Nonnull
+  public LoggingLongRunningRequestCallback setErrorLevel (@Nonnull final IErrorLevel aErrorLevel)
+  {
+    m_aErrorLevel = ValueEnforcer.notNull (aErrorLevel, "ErrorLevel");
+    return this;
   }
 
   public void onLongRunningRequest (@Nonnull @Nonempty final String sUniqueRequestID,
                                     @Nonnull final IRequestWebScope aRequestScope,
                                     @Nonnegative final long nRunningMilliseconds)
   {
-    LogUtils.log (s_aLogger, m_eErrorLevel, "Long running request. ID=" +
-                                            sUniqueRequestID +
-                                            "; millisecs=" +
-                                            nRunningMilliseconds +
-                                            "; URL=" +
-                                            RequestHelper.getURL (aRequestScope.getRequest ()));
+    LogHelper.log (s_aLogger,
+                   m_aErrorLevel,
+                   "Long running request. ID=" +
+                                  sUniqueRequestID +
+                                  "; millisecs=" +
+                                  nRunningMilliseconds +
+                                  "; URL=" +
+                                  RequestHelper.getURL (aRequestScope.getRequest ()));
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("errorLevel", m_eErrorLevel).toString ();
+    return new ToStringGenerator (this).append ("errorLevel", m_aErrorLevel).toString ();
   }
 }

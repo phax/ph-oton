@@ -25,8 +25,10 @@ import javax.annotation.concurrent.Immutable;
 import org.joda.time.DateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.collections.attrs.MapBasedAttributeContainer;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ITypedObject;
 import com.helger.commons.type.ObjectType;
@@ -43,11 +45,11 @@ public class FormState implements ITypedObject <String>, Serializable
   private final String m_sPageID;
   private final DateTime m_aDT;
   private final String m_sFlowID;
-  private final MapBasedAttributeContainer m_aAttrs;
+  private final MapBasedAttributeContainerAny <String> m_aAttrs;
 
   public FormState (@Nonnull @Nonempty final String sPageID,
                     @Nonnull @Nonempty final String sFlowID,
-                    @Nonnull final MapBasedAttributeContainer aAttrs)
+                    @Nonnull final MapBasedAttributeContainerAny <String> aAttrs)
   {
     ValueEnforcer.notEmpty (sPageID, "PageID");
     ValueEnforcer.notEmpty (sFlowID, "FlowID");
@@ -60,7 +62,7 @@ public class FormState implements ITypedObject <String>, Serializable
   }
 
   @Nonnull
-  public ObjectType getTypeID ()
+  public ObjectType getObjectType ()
   {
     return OT_FORM_STATE;
   }
@@ -93,12 +95,14 @@ public class FormState implements ITypedObject <String>, Serializable
   }
 
   @Nonnull
-  public MapBasedAttributeContainer getAttributes ()
+  @ReturnsMutableObject ("design")
+  public MapBasedAttributeContainerAny <String> getAllAttributes ()
   {
     return m_aAttrs;
   }
 
   @Nonnull
+  @ReturnsMutableCopy
   public JSAssocArray getAsAssocArray ()
   {
     final JSAssocArray ret = new JSAssocArray ();

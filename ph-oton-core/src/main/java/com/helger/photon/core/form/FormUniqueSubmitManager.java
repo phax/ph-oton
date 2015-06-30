@@ -18,8 +18,6 @@ package com.helger.photon.core.form;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,10 +28,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.UsedViaReflection;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.state.EValidity;
 import com.helger.commons.string.StringHelper;
@@ -51,7 +49,6 @@ public class FormUniqueSubmitManager extends SessionWebSingleton
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (FormUniqueSubmitManager.class);
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private final Map <String, String> m_aMap = new HashMap <String, String> ();
 

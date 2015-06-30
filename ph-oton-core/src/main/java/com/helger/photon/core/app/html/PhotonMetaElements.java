@@ -32,9 +32,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.io.IReadableResource;
-import com.helger.commons.microdom.reader.XMLMapHandler;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.microdom.util.XMLMapHandler;
 import com.helger.html.meta.IMetaElement;
 import com.helger.html.meta.MetaElement;
 import com.helger.html.meta.MetaElementList;

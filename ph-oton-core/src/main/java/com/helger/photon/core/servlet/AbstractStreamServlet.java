@@ -28,16 +28,16 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.io.IReadableResource;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.mime.EMimeContentType;
 import com.helger.commons.mime.MimeTypeInfoManager;
-import com.helger.commons.scopes.mgr.ScopeManager;
+import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.state.EContinue;
-import com.helger.commons.stats.IStatisticsHandlerCounter;
-import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
-import com.helger.commons.stats.StatisticsManager;
-import com.helger.commons.xml.serialize.XMLWriterSettings;
+import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
+import com.helger.commons.statistics.StatisticsManager;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.datetime.PDTFactory;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.ResponseHelperSettings;
@@ -54,14 +54,14 @@ import com.helger.web.servlet.response.UnifiedResponse;
 public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServlet
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractStreamServlet.class);
-  private final IStatisticsHandlerCounter m_aStatsRequests = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                  "$requests");
-  private final IStatisticsHandlerKeyedCounter m_aStatsSuccess = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
-                                                                                                           "$success");
-  private final IStatisticsHandlerKeyedCounter m_aStatsNotFound = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
-                                                                                                            "$notfound");
-  private final IStatisticsHandlerKeyedCounter m_aStatsMIMEType = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
-                                                                                                            "$mimetype");
+  private final IMutableStatisticsHandlerCounter m_aStatsRequests = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                         "$requests");
+  private final IMutableStatisticsHandlerKeyedCounter m_aStatsSuccess = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
+                                                                                                                  "$success");
+  private final IMutableStatisticsHandlerKeyedCounter m_aStatsNotFound = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
+                                                                                                                   "$notfound");
+  private final IMutableStatisticsHandlerKeyedCounter m_aStatsMIMEType = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
+                                                                                                                   "$mimetype");
   private static final String REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                                       "stream.resource";
 

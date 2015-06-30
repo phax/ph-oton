@@ -27,7 +27,6 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.mock.PhotonCoreTestRule;
 
 /**

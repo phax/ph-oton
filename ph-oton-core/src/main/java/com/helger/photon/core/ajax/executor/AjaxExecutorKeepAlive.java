@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.GlobalDebug;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;

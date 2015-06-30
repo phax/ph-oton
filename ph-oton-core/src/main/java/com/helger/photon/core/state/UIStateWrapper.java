@@ -22,11 +22,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.IHasType;
+import com.helger.commons.type.IHasObjectType;
 import com.helger.commons.type.ObjectType;
 
 /**
@@ -52,7 +52,7 @@ public class UIStateWrapper <T extends Serializable> implements IHasUIState
   }
 
   @Nonnull
-  public ObjectType getTypeID ()
+  public ObjectType getObjectType ()
   {
     return m_aObjectType;
   }
@@ -81,7 +81,7 @@ public class UIStateWrapper <T extends Serializable> implements IHasUIState
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final UIStateWrapper <?> rhs = (UIStateWrapper <?>) o;
-    return m_aObjectType.equals (rhs.m_aObjectType) && EqualsUtils.equals (m_aObject, rhs.m_aObject);
+    return m_aObjectType.equals (rhs.m_aObjectType) && EqualsHelper.equals (m_aObject, rhs.m_aObject);
   }
 
   @Override
@@ -104,8 +104,8 @@ public class UIStateWrapper <T extends Serializable> implements IHasUIState
   }
 
   @Nonnull
-  public static <T extends Serializable & IHasType> UIStateWrapper <T> create (@Nonnull final T aObject)
+  public static <T extends Serializable & IHasObjectType> UIStateWrapper <T> create (@Nonnull final T aObject)
   {
-    return new UIStateWrapper <T> (aObject.getTypeID (), aObject);
+    return new UIStateWrapper <T> (aObject.getObjectType (), aObject);
   }
 }

@@ -23,8 +23,8 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.GlobalDebug;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.photon.core.action.IActionExceptionCallback;
 import com.helger.photon.core.action.IActionExecutor;
 import com.helger.photon.core.action.IActionInvoker;
@@ -48,7 +48,7 @@ public class LoggingActionExceptionCallback implements IActionExceptionCallback
   {
     if (t instanceof IOException)
     {
-      if (!StreamUtils.isKnownEOFException (t))
+      if (!StreamHelper.isKnownEOFException (t))
         s_aLogger.error ("Error writing result of Action '" + sActionName + "' with " + aActionExecutor, t);
     }
     else

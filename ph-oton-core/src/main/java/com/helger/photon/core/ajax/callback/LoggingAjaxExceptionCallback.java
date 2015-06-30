@@ -24,8 +24,8 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.GlobalDebug;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
@@ -49,7 +49,7 @@ public class LoggingAjaxExceptionCallback implements IAjaxExceptionCallback
   {
     if (t instanceof IOException)
     {
-      if (!StreamUtils.isKnownEOFException (t))
+      if (!StreamHelper.isKnownEOFException (t))
         s_aLogger.error ("Error writing result of Ajax function '" + sFunctionName + "' with " + aAjaxExecutor, t);
     }
     else

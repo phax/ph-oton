@@ -27,12 +27,12 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
-import com.helger.datetime.xml.PDTXMLConverter;
+import com.helger.datetime.util.PDTXMLConverter;
 
 /**
  * Special request field specially for dates.

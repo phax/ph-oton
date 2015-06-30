@@ -22,8 +22,8 @@ import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -37,15 +37,15 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 public interface IAjaxInvoker
 {
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   CallbackList <IAjaxExceptionCallback> getExceptionCallbacks ();
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   CallbackList <IAjaxBeforeExecutionCallback> getBeforeExecutionCallbacks ();
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   CallbackList <IAjaxAfterExecutionCallback> getAfterExecutionCallbacks ();
 
   /**

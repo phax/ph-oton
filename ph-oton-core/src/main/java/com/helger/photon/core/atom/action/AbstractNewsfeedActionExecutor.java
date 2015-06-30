@@ -26,16 +26,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mime.CMimeType;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
-import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
+import com.helger.commons.statistics.StatisticsManager;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.timing.StopWatch;
-import com.helger.commons.xml.serialize.XMLWriterSettings;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.photon.basic.atom.Feed;
 import com.helger.photon.basic.atom.FeedGenerator;
 import com.helger.photon.basic.atom.FeedLink;
@@ -51,10 +51,10 @@ import com.helger.web.servlet.response.UnifiedResponse;
 public abstract class AbstractNewsfeedActionExecutor extends AbstractActionExecutor implements IHasID <String>, IHasDisplayText
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractNewsfeedActionExecutor.class);
-  private static final IStatisticsHandlerKeyedCounter s_aStatsHdlExecute = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedActionExecutor.class.getName () +
-                                                                                                                     "$EXECUTE");
-  private static final IStatisticsHandlerKeyedCounter s_aStatsHdlError = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedActionExecutor.class.getName () +
-                                                                                                                   "$ERROR");
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlExecute = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedActionExecutor.class.getName () +
+                                                                                                                            "$EXECUTE");
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlError = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedActionExecutor.class.getName () +
+                                                                                                                          "$ERROR");
 
   private final IHasDisplayText m_aDisplayText;
   private final String m_sFeedID;
@@ -93,7 +93,7 @@ public abstract class AbstractNewsfeedActionExecutor extends AbstractActionExecu
                              @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     // Increment statistics counter
-    final StopWatch aSW = new StopWatch (true);
+    final StopWatch aSW = StopWatch.createdStarted ();
     s_aStatsHdlExecute.increment (m_sFeedID);
 
     final Feed aFeed = new Feed ();

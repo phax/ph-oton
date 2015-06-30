@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.photon.core.url.LinkUtils;

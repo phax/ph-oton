@@ -18,8 +18,6 @@ package com.helger.photon.core.app.redirect;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.UsedViaReflection;
+import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
@@ -43,7 +41,6 @@ public final class ForcedRedirectManager extends SessionWebSingleton
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (ForcedRedirectManager.class);
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private final Map <String, IHCNode> m_aMap = new HashMap <String, IHCNode> ();
 

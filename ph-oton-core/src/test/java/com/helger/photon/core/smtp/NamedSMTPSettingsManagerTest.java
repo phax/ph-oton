@@ -24,8 +24,6 @@ import org.junit.rules.TestRule;
 
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.core.mock.PhotonCoreTestRule;
-import com.helger.photon.core.smtp.CNamedSMTPSettings;
-import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 
 /**
  * Test class for class {@link NamedSMTPSettingsManager}.

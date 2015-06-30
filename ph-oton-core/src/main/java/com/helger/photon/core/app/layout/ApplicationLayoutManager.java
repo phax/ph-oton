@@ -22,11 +22,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.UsedViaReflection;
-import com.helger.commons.scopes.mgr.ScopeManager;
-import com.helger.commons.scopes.singleton.ApplicationSingleton;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.scope.mgr.ScopeManager;
+import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCHead;
@@ -40,7 +40,7 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
  *        Layout execution context type
  */
 @ThreadSafe
-public final class ApplicationLayoutManager <LECTYPE extends ILayoutExecutionContext> extends ApplicationSingleton implements ILayoutManager <LECTYPE>
+public final class ApplicationLayoutManager <LECTYPE extends ILayoutExecutionContext> extends AbstractApplicationSingleton implements ILayoutManager <LECTYPE>
 {
   private final LayoutManagerProxy <LECTYPE> m_aProxy = new LayoutManagerProxy <LECTYPE> ();
 

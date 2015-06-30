@@ -32,15 +32,15 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.stats.IStatisticsHandlerCounter;
-import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
-import com.helger.commons.stats.IStatisticsHandlerKeyedTimer;
-import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
+import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
@@ -56,16 +56,18 @@ import com.helger.web.servlet.response.UnifiedResponse;
 @ThreadSafe
 public class ActionInvoker implements IActionInvoker
 {
-  /** Default milliseconds until an implementation is considered long running. */
+  /**
+   * Default milliseconds until an implementation is considered long running.
+   */
   public static final long DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS = CGlobal.MILLISECONDS_PER_SECOND;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (ActionInvoker.class);
-  private static final IStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (ActionInvoker.class.getName () +
-                                                                                                             "$invocations");
-  private static final IStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (ActionInvoker.class.getName () +
-                                                                                                                         "$func");
-  private static final IStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (ActionInvoker.class.getName () +
-                                                                                                                    "$timer");
+  private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (ActionInvoker.class.getName () +
+                                                                                                                    "$invocations");
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (ActionInvoker.class.getName () +
+                                                                                                                                "$func");
+  private static final IMutableStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (ActionInvoker.class.getName () +
+                                                                                                                           "$timer");
 
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private final CallbackList <IActionExceptionCallback> m_aExceptionCallbacks = new CallbackList <IActionExceptionCallback> ();
@@ -90,21 +92,21 @@ public class ActionInvoker implements IActionInvoker
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IActionExceptionCallback> getExceptionCallbacks ()
   {
     return m_aExceptionCallbacks;
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IActionBeforeExecutionCallback> getBeforeExecutionCallbacks ()
   {
     return m_aBeforeExecutionCallbacks;
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IActionAfterExecutionCallback> getAfterExecutionCallbacks ()
   {
     return m_aAfterExecutionCallbacks;
@@ -138,7 +140,7 @@ public class ActionInvoker implements IActionInvoker
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IActionLongRunningExecutionCallback> getLongRunningExecutionCallbacks ()
   {
     return m_aLongRunningExecutionCallbacks;
@@ -234,7 +236,7 @@ public class ActionInvoker implements IActionInvoker
 
     try
     {
-      final StopWatch aSW = new StopWatch (true);
+      final StopWatch aSW = StopWatch.createdStarted ();
 
       // Global increment before invocation
       s_aStatsGlobalInvoke.increment ();
@@ -286,7 +288,8 @@ public class ActionInvoker implements IActionInvoker
           catch (final Throwable t)
           {
             s_aLogger.error ("Error invoking Action long running execution callback handler " +
-                             aLongRunningExecutionCallback, t);
+                             aLongRunningExecutionCallback,
+                             t);
           }
       }
     }

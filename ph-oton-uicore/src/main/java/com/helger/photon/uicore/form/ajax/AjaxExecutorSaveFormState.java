@@ -14,21 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.form.ajax;
+package com.helger.photon.uicore.form.ajax;
 
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.collections.attrs.MapBasedAttributeContainer;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.hc.CHCParam;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
@@ -45,7 +45,7 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
   @OverrideOnDemand
   protected void saveFormState (@Nonnull final String sPageID,
                                 @Nonnull final String sFlowID,
-                                @Nonnull final MapBasedAttributeContainer aFieldCont)
+                                @Nonnull final MapBasedAttributeContainerAny <String> aFieldCont)
   {
     FormStateManager.getInstance ().saveFormState (new FormState (sPageID, sFlowID, aFieldCont));
   }
@@ -60,7 +60,7 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
       return AjaxDefaultResponse.createError ("Page ID is missing!");
 
     // Filter all fields
-    final MapBasedAttributeContainer aFieldCont = new MapBasedAttributeContainer ();
+    final MapBasedAttributeContainerAny <String> aFieldCont = new MapBasedAttributeContainerAny <String> ();
     for (final Map.Entry <String, Object> aEntry : aRequestScope.getAllAttributes ().entrySet ())
       if (aEntry.getKey ().startsWith (PREFIX_FIELD))
       {
@@ -78,7 +78,7 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
     if (sFlowID == null)
       return AjaxDefaultResponse.createError ("Flow ID is missing!");
     aFieldCont.removeAttribute (FIELD_FLOW_ID);
-    aFieldCont.removeAttribute (CHCParam.PARAM_SUBACTION);
+    aFieldCont.removeAttribute (CPageParam.PARAM_SUBACTION);
     // Leave action and object
 
     saveFormState (sPageID, sFlowID, aFieldCont);

@@ -16,17 +16,14 @@
  */
 package com.helger.photon.core.form.csrf;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.UsedViaReflection;
-import com.helger.commons.scopes.IScope;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.scope.IScope;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.scopes.singleton.SessionWebSingleton;
@@ -39,7 +36,6 @@ import com.helger.web.scopes.singleton.SessionWebSingleton;
 @ThreadSafe
 public final class CSRFSessionManager extends SessionWebSingleton
 {
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private String m_sNonce;
 

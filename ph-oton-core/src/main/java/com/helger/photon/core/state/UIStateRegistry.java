@@ -18,8 +18,6 @@ package com.helger.photon.core.state;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,12 +27,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.UsedViaReflection;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.scopes.IScopeRenewalAware;
+import com.helger.commons.scope.IScopeRenewalAware;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -58,7 +56,6 @@ public final class UIStateRegistry extends SessionWebSingleton implements IScope
   public static final ObjectType OT_HCNODE = new ObjectType ("hcnode");
   private static final Logger s_aLogger = LoggerFactory.getLogger (UIStateRegistry.class);
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private final Map <ObjectType, Map <String, IHasUIState>> m_aMap = new HashMap <ObjectType, Map <String, IHasUIState>> ();
 
   @UsedViaReflection
@@ -165,7 +162,7 @@ public final class UIStateRegistry extends SessionWebSingleton implements IScope
     ValueEnforcer.notEmpty (sStateID, "StateID");
     ValueEnforcer.notNull (aNewState, "NewState");
 
-    final ObjectType aOT = aNewState.getTypeID ();
+    final ObjectType aOT = aNewState.getObjectType ();
     if (aOT == null)
       throw new IllegalStateException ("Object has no typeID: " + aNewState);
 
@@ -180,7 +177,7 @@ public final class UIStateRegistry extends SessionWebSingleton implements IScope
       }
 
       if (s_aLogger.isDebugEnabled () && aMap.containsKey (sStateID))
-        s_aLogger.debug ("Overwriting " + aOT.getObjectTypeName () + " with ID " + sStateID + " with new object");
+        s_aLogger.debug ("Overwriting " + aOT.getName () + " with ID " + sStateID + " with new object");
 
       aMap.put (sStateID, aNewState);
       return EChange.CHANGED;

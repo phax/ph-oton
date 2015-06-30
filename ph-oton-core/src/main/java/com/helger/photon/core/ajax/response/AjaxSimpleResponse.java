@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.json.IJson;
 
@@ -72,7 +72,7 @@ public class AjaxSimpleResponse implements IAjaxResponse
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final AjaxSimpleResponse rhs = (AjaxSimpleResponse) o;
-    return EqualsUtils.equals (m_aValue, rhs.m_aValue);
+    return EqualsHelper.equals (m_aValue, rhs.m_aValue);
   }
 
   @Override

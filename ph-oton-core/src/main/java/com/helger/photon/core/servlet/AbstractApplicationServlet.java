@@ -25,9 +25,9 @@ import javax.servlet.ServletException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.io.streams.StreamUtils;
-import com.helger.commons.lang.ServiceLoaderUtils;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.io.stream.StreamHelper;
+import com.helger.commons.lang.ServiceLoaderHelper;
 import com.helger.commons.state.EContinue;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.core.app.html.IHTMLProvider;
@@ -52,7 +52,7 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
 
   protected AbstractApplicationServlet ()
   {
-    m_aListeners = ServiceLoaderUtils.getAllSPIImplementations (IApplicationRequestListenerSPI.class);
+    m_aListeners = ServiceLoaderHelper.getAllSPIImplementations (IApplicationRequestListenerSPI.class);
   }
 
   @Override
@@ -148,7 +148,7 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
       if (handleApplicationException (aRequestScope, aUnifiedResponse, t).isContinue ())
       {
         // Do not show the exceptions that occur, when client cancels a request.
-        if (!StreamUtils.isKnownEOFException (t))
+        if (!StreamHelper.isKnownEOFException (t))
         {
           s_aLogger.error ("Error running application", t);
           // Catch Exception and re-throw

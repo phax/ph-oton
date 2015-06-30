@@ -19,7 +19,7 @@ package com.helger.photon.core.requesttrack;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.callback.ICallback;
 import com.helger.web.scopes.domain.IRequestWebScope;
 

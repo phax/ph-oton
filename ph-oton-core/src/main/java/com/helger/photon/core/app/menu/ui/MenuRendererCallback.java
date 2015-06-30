@@ -22,11 +22,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collections.NonBlockingStack;
+import com.helger.commons.collection.impl.NonBlockingStack;
 import com.helger.commons.factory.IFactory;
-import com.helger.commons.hierarchy.DefaultHierarchyWalkerDynamicCallback;
-import com.helger.commons.hierarchy.EHierarchyCallbackReturn;
-import com.helger.commons.tree.utils.walk.TreeWalkerDynamic;
+import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
+import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCList;
@@ -47,7 +47,7 @@ import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
  * @param <T>
  *        Parent element type
  */
-public class MenuRendererCallback <T extends AbstractHCList <?>> extends DefaultHierarchyWalkerDynamicCallback <DefaultTreeItemWithID <String, IMenuObject>>
+public class MenuRendererCallback <T extends AbstractHCList <?>> extends DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
 {
   private final ISimpleWebExecutionContext m_aSWEC;
   private final IFactory <T> m_aFactory;
@@ -114,7 +114,7 @@ public class MenuRendererCallback <T extends AbstractHCList <?>> extends Default
   }
 
   @Override
-  public final EHierarchyCallbackReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
+  public final EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
   {
     m_aTreeItemStack.push (aItem);
 
@@ -189,22 +189,22 @@ public class MenuRendererCallback <T extends AbstractHCList <?>> extends Default
             throw new IllegalStateException ("Unsupported menu object type: " + aMenuObj);
       }
       m_aChildCountStack.peek ().incrementAndGet ();
-      return EHierarchyCallbackReturn.CONTINUE;
+      return EHierarchyVisitorReturn.CONTINUE;
     }
 
     // Item should not be displayed
     // push fake item so the pop does not remove anything important!
     m_aMenuItemStack.push (new HCLI ());
-    return EHierarchyCallbackReturn.USE_NEXT_SIBLING;
+    return EHierarchyVisitorReturn.USE_PARENTS_NEXT_SIBLING;
   }
 
   @Override
   @Nonnull
-  public final EHierarchyCallbackReturn onItemAfterChildren (final DefaultTreeItemWithID <String, IMenuObject> aItem)
+  public final EHierarchyVisitorReturn onItemAfterChildren (final DefaultTreeItemWithID <String, IMenuObject> aItem)
   {
     m_aTreeItemStack.pop ();
     m_aMenuItemStack.pop ();
-    return EHierarchyCallbackReturn.CONTINUE;
+    return EHierarchyVisitorReturn.CONTINUE;
   }
 
   /**
@@ -318,11 +318,12 @@ public class MenuRendererCallback <T extends AbstractHCList <?>> extends Default
 
     final NonBlockingStack <T> aNodeStack = new NonBlockingStack <T> ();
     aNodeStack.push (aFactory.create ());
-    TreeWalkerDynamic.walkSubTree (aStartTreeItem, new MenuRendererCallback <T> (aLEC,
-                                                                                 aFactory,
-                                                                                 aNodeStack,
-                                                                                 aRenderer,
-                                                                                 aDisplayMenuItemIDs));
+    TreeVisitor.visitTreeItem (aStartTreeItem,
+                               new MenuRendererCallback <T> (aLEC,
+                                                             aFactory,
+                                                             aNodeStack,
+                                                             aRenderer,
+                                                             aDisplayMenuItemIDs));
     if (aNodeStack.size () != 1)
       throw new IllegalStateException ("Stack is inconsistent: " + aNodeStack);
 

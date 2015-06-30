@@ -18,7 +18,7 @@ package com.helger.photon.core.ajax.servlet;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.photon.core.ajax.ApplicationAjaxManager;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;

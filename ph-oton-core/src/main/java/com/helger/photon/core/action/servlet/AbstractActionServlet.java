@@ -28,16 +28,16 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableObject;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.mutable.Wrapper;
 import com.helger.commons.state.EContinue;
-import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
-import com.helger.commons.stats.IStatisticsHandlerKeyedTimer;
-import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
+import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
+import com.helger.commons.wrapper.Wrapper;
 import com.helger.photon.core.action.IActionExceptionCallback;
 import com.helger.photon.core.action.IActionExecutor;
 import com.helger.photon.core.action.IActionInvoker;
@@ -53,11 +53,11 @@ import com.helger.web.servlet.response.UnifiedResponse;
 public abstract class AbstractActionServlet extends AbstractUnifiedResponseServlet
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractActionServlet.class);
-  private static final IStatisticsHandlerKeyedTimer s_aStatsTimer = StatisticsManager.getKeyedTimerHandler (AbstractActionServlet.class);
-  private static final IStatisticsHandlerKeyedCounter s_aStatsCounterSuccess = StatisticsManager.getKeyedCounterHandler (AbstractActionServlet.class +
-                                                                                                                         "$success");
-  private static final IStatisticsHandlerKeyedCounter s_aStatsCounterError = StatisticsManager.getKeyedCounterHandler (AbstractActionServlet.class +
-                                                                                                                       "$error");
+  private static final IMutableStatisticsHandlerKeyedTimer s_aStatsTimer = StatisticsManager.getKeyedTimerHandler (AbstractActionServlet.class);
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsCounterSuccess = StatisticsManager.getKeyedCounterHandler (AbstractActionServlet.class +
+                                                                                                                                "$success");
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsCounterError = StatisticsManager.getKeyedCounterHandler (AbstractActionServlet.class +
+                                                                                                                              "$error");
   private static final String SCOPE_ATTR_NAME = "$ph-actionservlet.name";
   private static final String SCOPE_ATTR_INVOKER = "$ph-actionservlet.invoker";
   private static final String SCOPE_ATTR_EXECUTOR = "$ph-actionservlet.executor";
@@ -72,7 +72,7 @@ public abstract class AbstractActionServlet extends AbstractUnifiedResponseServl
    *         is set.
    */
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public static CallbackList <IActionExceptionCallback> getExceptionCallbacks ()
   {
     return s_aExceptionCallbacks;
@@ -143,7 +143,8 @@ public abstract class AbstractActionServlet extends AbstractUnifiedResponseServl
   @Nullable
   protected DateTime getLastModificationDateTime (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final IActionExecutor aActionExecutor = aRequestScope.getTypedAttribute (SCOPE_ATTR_EXECUTOR, IActionExecutor.class);
+    final IActionExecutor aActionExecutor = aRequestScope.getTypedAttribute (SCOPE_ATTR_EXECUTOR,
+                                                                             IActionExecutor.class);
     return aActionExecutor.getLastModificationDateTime ();
   }
 
@@ -154,8 +155,10 @@ public abstract class AbstractActionServlet extends AbstractUnifiedResponseServl
     // Action is present
     final String sActionName = aRequestScope.getAttributeAsString (SCOPE_ATTR_NAME);
     final IActionInvoker aActionInvoker = (IActionInvoker) aRequestScope.getTypedAttribute (SCOPE_ATTR_INVOKER,
-                                                                                            Wrapper.class).get ();
-    final IActionExecutor aActionExecutor = aRequestScope.getTypedAttribute (SCOPE_ATTR_EXECUTOR, IActionExecutor.class);
+                                                                                            Wrapper.class)
+                                                                        .get ();
+    final IActionExecutor aActionExecutor = aRequestScope.getTypedAttribute (SCOPE_ATTR_EXECUTOR,
+                                                                             IActionExecutor.class);
 
     // For actions caching is not an option, because it is dynamic content
     aUnifiedResponse.disableCaching ();
@@ -169,7 +172,7 @@ public abstract class AbstractActionServlet extends AbstractUnifiedResponseServl
       try
       {
         // Start the timing
-        final StopWatch aSW = new StopWatch (true);
+        final StopWatch aSW = StopWatch.createdStarted ();
 
         // Handle the main action
         aActionInvoker.invokeAction (sActionName, aActionExecutor, aRequestScope, aUnifiedResponse);

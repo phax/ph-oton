@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.string.StringHelper;
 import com.helger.web.servlet.request.RequestHelper;
 import com.helger.web.servlet.response.ResponseHelper;

@@ -23,8 +23,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collections.attrs.IAttributeContainer;
-import com.helger.commons.collections.attrs.IReadonlyAttributeContainer;
+import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.web.fileupload.IFileItem;
@@ -33,7 +32,7 @@ import com.helger.web.servlet.request.IRequestParamMap;
 import com.helger.web.useragent.IUserAgent;
 import com.helger.web.useragent.browser.BrowserInfo;
 
-public interface ISimpleWebExecutionContext extends IReadonlyAttributeContainer
+public interface ISimpleWebExecutionContext extends IAttributeContainer <String, Object>
 {
   /**
    * @return The current request scope. Never <code>null</code>.
@@ -154,13 +153,6 @@ public interface ISimpleWebExecutionContext extends IReadonlyAttributeContainer
    */
   @Nullable
   BrowserInfo getBrowserInfo ();
-
-  /**
-   * @return The custom attributes for this execution context. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  IAttributeContainer getCustomAttrs ();
 
   /**
    * Get the URL of the specified menu it.

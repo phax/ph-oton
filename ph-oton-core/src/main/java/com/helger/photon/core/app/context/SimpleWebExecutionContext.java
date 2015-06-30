@@ -19,7 +19,6 @@ package com.helger.photon.core.app.context;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -32,13 +31,9 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.collections.attrs.AbstractGenericReadonlyAttributeContainer;
-import com.helger.commons.collections.attrs.IAttributeContainer;
-import com.helger.commons.collections.attrs.IReadonlyAttributeContainer;
-import com.helger.commons.collections.attrs.MapBasedAttributeContainer;
-import com.helger.commons.equals.EqualsUtils;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.attr.AbstractReadOnlyAttributeContainer;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
@@ -49,7 +44,6 @@ import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.web.fileupload.IFileItem;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.request.IRequestParamMap;
-import com.helger.web.servlet.request.RequestHelper;
 import com.helger.web.useragent.IUserAgent;
 import com.helger.web.useragent.UserAgentDatabase;
 import com.helger.web.useragent.browser.BrowserInfo;
@@ -66,32 +60,21 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   private final IRequestWebScopeWithoutResponse m_aRequestScope;
   private final Locale m_aDisplayLocale;
   private final IMenuTree m_aMenuTree;
-  private final MapBasedAttributeContainer m_aCustomAttrs = new MapBasedAttributeContainer ();
   // Status vars
   private IRequestManager m_aARM;
 
   public SimpleWebExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC)
   {
-    this (aSWEC.getRequestScope (), aSWEC.getDisplayLocale (), aSWEC.getMenuTree (), aSWEC.getCustomAttrs ());
+    this (aSWEC.getRequestScope (), aSWEC.getDisplayLocale (), aSWEC.getMenuTree ());
   }
 
   public SimpleWebExecutionContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                     @Nonnull final Locale aDisplayLocale,
                                     @Nonnull final IMenuTree aMenuTree)
   {
-    this (aRequestScope, aDisplayLocale, aMenuTree, (IReadonlyAttributeContainer) null);
-  }
-
-  public SimpleWebExecutionContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                    @Nonnull final Locale aDisplayLocale,
-                                    @Nonnull final IMenuTree aMenuTree,
-                                    @Nullable final IReadonlyAttributeContainer aCustomAttrs)
-  {
     m_aRequestScope = ValueEnforcer.notNull (aRequestScope, "RequestScope");
     m_aDisplayLocale = ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
-    if (aCustomAttrs != null)
-      m_aCustomAttrs.setAttributes (aCustomAttrs);
   }
 
   @Nonnull
@@ -189,7 +172,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public int getAttributeAsInt (@Nullable final String sName, final int nDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractGenericReadonlyAttributeContainer.getAsInt (sName, getAttributeAsString (sName), nDefault);
+    return AbstractReadOnlyAttributeContainer.getAsInt (sName, getAttributeAsString (sName), nDefault);
   }
 
   public long getAttributeAsLong (@Nullable final String sName)
@@ -200,7 +183,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public long getAttributeAsLong (@Nullable final String sName, final long nDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractGenericReadonlyAttributeContainer.getAsLong (sName, getAttributeAsString (sName), nDefault);
+    return AbstractReadOnlyAttributeContainer.getAsLong (sName, getAttributeAsString (sName), nDefault);
   }
 
   public double getAttributeAsDouble (@Nullable final String sName)
@@ -211,7 +194,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public double getAttributeAsDouble (@Nullable final String sName, final double dDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractGenericReadonlyAttributeContainer.getAsDouble (sName, getAttributeAsString (sName), dDefault);
+    return AbstractReadOnlyAttributeContainer.getAsDouble (sName, getAttributeAsString (sName), dDefault);
   }
 
   public boolean getAttributeAsBoolean (@Nullable final String sName)
@@ -222,7 +205,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public boolean getAttributeAsBoolean (@Nullable final String sName, final boolean bDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractGenericReadonlyAttributeContainer.getAsBoolean (sName, getAttributeAsString (sName), bDefault);
+    return AbstractReadOnlyAttributeContainer.getAsBoolean (sName, getAttributeAsString (sName), bDefault);
   }
 
   @Nullable
@@ -235,7 +218,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public BigInteger getAttributeAsBigInteger (@Nullable final String sName, @Nullable final BigInteger aDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractGenericReadonlyAttributeContainer.getAsBigInteger (sName, getAttributeAsString (sName), aDefault);
+    return AbstractReadOnlyAttributeContainer.getAsBigInteger (sName, getAttributeAsString (sName), aDefault);
   }
 
   @Nullable
@@ -248,14 +231,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public BigDecimal getAttributeAsBigDecimal (@Nullable final String sName, @Nullable final BigDecimal aDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractGenericReadonlyAttributeContainer.getAsBigDecimal (sName, getAttributeAsString (sName), aDefault);
-  }
-
-  @Nonnull
-  @Deprecated
-  public Enumeration <String> getAttributeNames ()
-  {
-    return m_aRequestScope.getAttributeNames ();
+    return AbstractReadOnlyAttributeContainer.getAsBigDecimal (sName, getAttributeAsString (sName), aDefault);
   }
 
   @Nonnull
@@ -286,7 +262,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
 
   public boolean hasAttributeValue (@Nullable final String sName, @Nullable final String sDesiredValue)
   {
-    return EqualsUtils.equals (getAttributeAsString (sName), sDesiredValue);
+    return EqualsHelper.equals (getAttributeAsString (sName), sDesiredValue);
   }
 
   public boolean hasAttributeValue (@Nullable final String sName,
@@ -294,7 +270,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
                                     final boolean bDefault)
   {
     final String sValue = getAttributeAsString (sName);
-    return sValue == null ? bDefault : EqualsUtils.equals (sValue, sDesiredValue);
+    return sValue == null ? bDefault : EqualsHelper.equals (sValue, sDesiredValue);
   }
 
   public boolean getCheckBoxAttr (@Nullable final String sName, final boolean bDefaultValue)
@@ -332,13 +308,6 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "Design")
-  public IAttributeContainer getCustomAttrs ()
-  {
-    return m_aCustomAttrs;
-  }
-
-  @Nonnull
   public SimpleURL getLinkToMenuItem (@Nonnull final String sMenuItemID)
   {
     // Cache for performance reasons
@@ -356,10 +325,9 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("requestURL", RequestHelper.getURI (m_aRequestScope.getRequest ()))
+    return new ToStringGenerator (this).append ("requestURL", m_aRequestScope.getURL ())
                                        .append ("displayLocale", m_aDisplayLocale)
                                        .append ("menuTree", m_aMenuTree)
-                                       .append ("customAttrs", m_aCustomAttrs)
                                        .toString ();
   }
 }

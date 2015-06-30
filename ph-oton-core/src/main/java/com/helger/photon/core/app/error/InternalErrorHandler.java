@@ -36,29 +36,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
-import com.helger.commons.GlobalDebug;
-import com.helger.commons.ICloneable;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.base64.Base64;
-import com.helger.commons.collections.ArrayHelper;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.email.IEmailAddress;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.stream.StreamHelper;
+import com.helger.commons.lang.ICloneable;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.impl.MicroDocument;
+import com.helger.commons.microdom.MicroDocument;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mutable.MutableInt;
-import com.helger.commons.scopes.mgr.ScopeSessionManager;
+import com.helger.commons.scope.mgr.ScopeSessionManager;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.xml.serialize.XMLWriterSettings;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.datetime.PDTFactory;
-import com.helger.datetime.io.PDTIOHelper;
+import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.photon.basic.thread.ThreadDescriptor;
@@ -68,7 +68,6 @@ import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
 import com.helger.smtp.EEmailType;
 import com.helger.smtp.IEmailAttachmentDataSource;
 import com.helger.smtp.IEmailAttachmentList;
-import com.helger.smtp.IReadonlyEmailAttachmentList;
 import com.helger.smtp.ISMTPSettings;
 import com.helger.smtp.impl.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
@@ -444,7 +443,9 @@ public final class InternalErrorHandler
         nOccurranceCount = aMI.intValue ();
         if ((nOccurranceCount % 100) != 0)
         {
-          s_aLogger.warn ("Not sending internal error mail, because this error occurred " + nOccurranceCount + " times");
+          s_aLogger.warn ("Not sending internal error mail, because this error occurred " +
+                          nOccurranceCount +
+                          " times");
           return;
         }
       }
@@ -503,7 +504,7 @@ public final class InternalErrorHandler
     if (aAllThreads != null)
       eRoot.appendChild (aAllThreads.getAsMicroNode ());
 
-    final IReadonlyEmailAttachmentList aEmailAttachments = aEmailSettings.getAttachmentList ();
+    final IEmailAttachmentList aEmailAttachments = aEmailSettings.getAttachmentList ();
     if (aEmailAttachments != null)
     {
       final List <IEmailAttachmentDataSource> aAttachments = aEmailAttachments.getAsDataSourceList ();
@@ -517,7 +518,7 @@ public final class InternalErrorHandler
           eAttachment.setAttribute ("contenttype", aDS.getContentType ());
           try
           {
-            eAttachment.appendText (Base64.encodeBytes (StreamUtils.getAllBytes (aDS.getInputStream ())));
+            eAttachment.appendText (Base64.encodeBytes (StreamHelper.getAllBytes (aDS.getInputStream ())));
           }
           catch (final Exception ex)
           {
@@ -531,7 +532,8 @@ public final class InternalErrorHandler
     // Start saving
     final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getCurrentDateTimeForFilename (),
                                                                    "-",
-                                                                   aMetadata.getErrorID ()) + ".xml";
+                                                                   aMetadata.getErrorID ()) +
+                             ".xml";
     SimpleFileIO.writeFile (WebFileIO.getFile ("internal-errors/" + PDTFactory.getCurrentYear () + "/" + sFilename),
                             MicroWriter.getXMLString (aDoc),
                             XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);

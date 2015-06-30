@@ -36,20 +36,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.io.streams.StreamUtils;
-import com.helger.commons.lang.CGStringHelper;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.io.stream.StreamHelper;
+import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.scopes.mgr.ScopeManager;
+import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.state.EContinue;
-import com.helger.commons.stats.IStatisticsHandlerCounter;
-import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
-import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
+import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.PDTFactory;
-import com.helger.datetime.PDTUtils;
+import com.helger.datetime.util.PDTHelper;
 import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.web.http.CHTTPHeader;
@@ -91,42 +91,42 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   private static final AtomicLong s_aRequestID = new AtomicLong (0);
   private static final AtomicBoolean s_aFirstRequest = new AtomicBoolean (true);
 
-  private final IStatisticsHandlerKeyedCounter m_aStatsHttpVersion = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
-                                                                                                               "$httpversion");
-  private final IStatisticsHandlerKeyedCounter m_aStatsHttpMethodDisallowed = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
-                                                                                                                        "$httpmethod.disallowed");
-  private final IStatisticsHandlerKeyedCounter m_aStatsHttpMethodAllowed = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
-                                                                                                                     "$httpmethod.allowed");
-  private final IStatisticsHandlerCounter m_aStatsInitFailure = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                     "$init.failure");
-  private final IStatisticsHandlerCounter m_aStatsInitSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                     "$init.success");
-  private final IStatisticsHandlerCounter m_aStatsHasLastModification = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                             "$has-lastmodification");
-  private final IStatisticsHandlerCounter m_aStatsHasETag = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                 "$has-etag");
-  private final IStatisticsHandlerCounter m_aStatsNotModifiedIfModifiedSince = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                                    "$notmodified.if-modified-since");
-  private final IStatisticsHandlerCounter m_aStatsModifiedIfModifiedSince = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                                 "$modified.if-modified-since");
-  private final IStatisticsHandlerCounter m_aStatsNotModifiedIfUnmodifiedSince = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                                      "$notmodified.if-unmodified-since");
-  private final IStatisticsHandlerCounter m_aStatsModifiedIfUnmodifiedSince = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                                   "$modified.if-unmodified-since");
-  private final IStatisticsHandlerCounter m_aStatsNotModifiedIfNonMatch = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                               "$notmodified.if-unon-match");
-  private final IStatisticsHandlerCounter m_aStatsModifiedIfNonMatch = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                            "$modified.if-unon-match");
-  private final IStatisticsHandlerCounter m_aStatsOnRequestBeginFailure = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                               "$on-request-begin.failure");
-  private final IStatisticsHandlerCounter m_aStatsHandledRequestsTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                              "$handled-requests.total");
-  private final IStatisticsHandlerCounter m_aStatsHandledRequestsSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                                "$handled-requests.success");
-  private final IStatisticsHandlerCounter m_aStatsHandledRequestsFailure = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                                "$handled-requests.failure");
-  private final IStatisticsHandlerCounter m_aStatsOnRequestEndFailure = StatisticsManager.getCounterHandler (getClass ().getName () +
-                                                                                                             "$on-request-end.failure");
+  private final IMutableStatisticsHandlerKeyedCounter m_aStatsHttpVersion = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
+                                                                                                                      "$httpversion");
+  private final IMutableStatisticsHandlerKeyedCounter m_aStatsHttpMethodDisallowed = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
+                                                                                                                               "$httpmethod.disallowed");
+  private final IMutableStatisticsHandlerKeyedCounter m_aStatsHttpMethodAllowed = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
+                                                                                                                            "$httpmethod.allowed");
+  private final IMutableStatisticsHandlerCounter m_aStatsInitFailure = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                            "$init.failure");
+  private final IMutableStatisticsHandlerCounter m_aStatsInitSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                            "$init.success");
+  private final IMutableStatisticsHandlerCounter m_aStatsHasLastModification = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                    "$has-lastmodification");
+  private final IMutableStatisticsHandlerCounter m_aStatsHasETag = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                        "$has-etag");
+  private final IMutableStatisticsHandlerCounter m_aStatsNotModifiedIfModifiedSince = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                           "$notmodified.if-modified-since");
+  private final IMutableStatisticsHandlerCounter m_aStatsModifiedIfModifiedSince = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                        "$modified.if-modified-since");
+  private final IMutableStatisticsHandlerCounter m_aStatsNotModifiedIfUnmodifiedSince = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                             "$notmodified.if-unmodified-since");
+  private final IMutableStatisticsHandlerCounter m_aStatsModifiedIfUnmodifiedSince = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                          "$modified.if-unmodified-since");
+  private final IMutableStatisticsHandlerCounter m_aStatsNotModifiedIfNonMatch = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                      "$notmodified.if-unon-match");
+  private final IMutableStatisticsHandlerCounter m_aStatsModifiedIfNonMatch = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                   "$modified.if-unon-match");
+  private final IMutableStatisticsHandlerCounter m_aStatsOnRequestBeginFailure = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                      "$on-request-begin.failure");
+  private final IMutableStatisticsHandlerCounter m_aStatsHandledRequestsTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                     "$handled-requests.total");
+  private final IMutableStatisticsHandlerCounter m_aStatsHandledRequestsSuccess = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                       "$handled-requests.success");
+  private final IMutableStatisticsHandlerCounter m_aStatsHandledRequestsFailure = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                       "$handled-requests.failure");
+  private final IMutableStatisticsHandlerCounter m_aStatsOnRequestEndFailure = StatisticsManager.getCounterHandler (getClass ().getName () +
+                                                                                                                    "$on-request-end.failure");
 
   protected AbstractUnifiedResponseServlet ()
   {
@@ -294,7 +294,8 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                      " using " +
                      aRequestScope.getMethod () +
                      " on URI " +
-                     aRequestScope.getURL (), t);
+                     aRequestScope.getURL (),
+                     t);
   }
 
   /**
@@ -416,7 +417,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         if (nRequestIfModifiedSince >= 0)
         {
           final DateTime aRequestIfModifiedSince = convertMillisToDateTimeGMT (nRequestIfModifiedSince);
-          if (PDTUtils.isLessOrEqual (aLastModification, aRequestIfModifiedSince))
+          if (PDTHelper.isLessOrEqual (aLastModification, aRequestIfModifiedSince))
           {
             if (s_aLogger.isDebugEnabled ())
               s_aLogger.debug ("Requested resource was not modified: " + aRequestScope.getPathWithinServlet ());
@@ -434,7 +435,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         if (nRequestIfUnmodifiedSince >= 0)
         {
           final DateTime aRequestIfUnmodifiedSince = convertMillisToDateTimeGMT (nRequestIfUnmodifiedSince);
-          if (PDTUtils.isGreaterOrEqual (aLastModification, aRequestIfUnmodifiedSince))
+          if (PDTHelper.isGreaterOrEqual (aLastModification, aRequestIfUnmodifiedSince))
           {
             if (s_aLogger.isDebugEnabled ())
               s_aLogger.debug ("Requested resource was not modified: " + aRequestScope.getPathWithinServlet ());
@@ -523,13 +524,13 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     {
       m_aStatsHandledRequestsFailure.increment ();
       // Do not show the exceptions that occur, when client cancels a request.
-      if (StreamUtils.isKnownEOFException (t))
+      if (StreamHelper.isKnownEOFException (t))
       {
         if (s_aLogger.isDebugEnabled ())
           s_aLogger.debug ("Error delivering requested resource '" +
                            aRequestScope.getPathWithinServlet () +
                            "' - " +
-                           CGStringHelper.getClassLocalName (t) +
+                           ClassHelper.getClassLocalName (t) +
                            " - " +
                            t.getMessage ());
       }

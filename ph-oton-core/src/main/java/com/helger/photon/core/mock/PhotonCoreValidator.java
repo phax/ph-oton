@@ -28,7 +28,7 @@ import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.serialize.MicroReader;
-import com.helger.commons.microdom.utils.MicroRecursiveIterator;
+import com.helger.commons.microdom.util.MicroRecursiveIterator;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 

@@ -21,8 +21,8 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.url.SimpleURL;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;

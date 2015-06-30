@@ -19,7 +19,7 @@ package com.helger.photon.core.action.executor;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.mime.CMimeType;
-import com.helger.web.CWebCharset;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
@@ -34,7 +34,7 @@ public class ActionExecutorPing extends AbstractActionExecutor
   public void execute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                        @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
-    aUnifiedResponse.setContentAndCharset ("pong", CWebCharset.CHARSET_XML_OBJ)
+    aUnifiedResponse.setContentAndCharset ("pong", XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
                     .setMimeType (CMimeType.TEXT_PLAIN)
                     .disableCaching ();
   }

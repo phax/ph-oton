@@ -18,9 +18,9 @@ package com.helger.photon.core.userdata;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.io.IReadableResource;
-import com.helger.commons.url.URLUtils;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.url.URLHelper;
 import com.helger.photon.core.servlet.AbstractStreamServlet;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
@@ -44,7 +44,7 @@ public abstract class AbstractUserStreamServlet extends AbstractStreamServlet
                                               @Nonnull final String sFilename)
   {
     // URL decode is required because requests contain e.g. "%20"
-    final String sFilename1 = URLUtils.urlDecode (sFilename);
+    final String sFilename1 = URLHelper.urlDecode (sFilename);
 
     return new UserDataObject (sFilename1);
   }

@@ -32,15 +32,15 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.stats.IStatisticsHandlerCounter;
-import com.helger.commons.stats.IStatisticsHandlerKeyedCounter;
-import com.helger.commons.stats.IStatisticsHandlerKeyedTimer;
-import com.helger.commons.stats.StatisticsManager;
+import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
+import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
+import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
@@ -56,16 +56,18 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 @ThreadSafe
 public class AjaxInvoker implements IAjaxInvoker
 {
-  /** Default milliseconds until an implementation is considered long running. */
+  /**
+   * Default milliseconds until an implementation is considered long running.
+   */
   public static final long DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS = CGlobal.MILLISECONDS_PER_SECOND;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxInvoker.class);
-  private static final IStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (AjaxInvoker.class.getName () +
-                                                                                                             "$invocations");
-  private static final IStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (AjaxInvoker.class.getName () +
-                                                                                                                         "$func");
-  private static final IStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (AjaxInvoker.class.getName () +
-                                                                                                                    "$timer");
+  private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (AjaxInvoker.class.getName () +
+                                                                                                                    "$invocations");
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (AjaxInvoker.class.getName () +
+                                                                                                                                "$func");
+  private static final IMutableStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (AjaxInvoker.class.getName () +
+                                                                                                                           "$timer");
 
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private final CallbackList <IAjaxExceptionCallback> m_aExceptionCallbacks = new CallbackList <IAjaxExceptionCallback> ();
@@ -91,21 +93,21 @@ public class AjaxInvoker implements IAjaxInvoker
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IAjaxExceptionCallback> getExceptionCallbacks ()
   {
     return m_aExceptionCallbacks;
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IAjaxBeforeExecutionCallback> getBeforeExecutionCallbacks ()
   {
     return m_aBeforeExecutionCallbacks;
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IAjaxAfterExecutionCallback> getAfterExecutionCallbacks ()
   {
     return m_aAfterExecutionCallbacks;
@@ -139,7 +141,7 @@ public class AjaxInvoker implements IAjaxInvoker
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public CallbackList <IAjaxLongRunningExecutionCallback> getLongRunningExecutionCallbacks ()
   {
     return m_aLongRunningExecutionCallbacks;
@@ -235,7 +237,7 @@ public class AjaxInvoker implements IAjaxInvoker
 
     try
     {
-      final StopWatch aSW = new StopWatch (true);
+      final StopWatch aSW = StopWatch.createdStarted ();
 
       // Global increment before invocation
       s_aStatsGlobalInvoke.increment ();
@@ -300,7 +302,8 @@ public class AjaxInvoker implements IAjaxInvoker
           catch (final Throwable t)
           {
             s_aLogger.error ("Error invoking Ajax long running execution callback handler " +
-                             aLongRunningExecutionCallback, t);
+                             aLongRunningExecutionCallback,
+                             t);
           }
       }
       return aAjaxResponse;
