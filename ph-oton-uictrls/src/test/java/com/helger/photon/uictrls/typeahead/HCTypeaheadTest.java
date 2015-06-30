@@ -24,9 +24,6 @@ import com.helger.html.js.builder.JSAnonymousFunction;
 import com.helger.html.js.builder.html.JSHtml;
 import com.helger.html.js.builder.jquery.JQuery;
 import com.helger.html.js.writer.JSWriterSettings;
-import com.helger.photon.uictrls.typeahead.HCTypeahead;
-import com.helger.photon.uictrls.typeahead.TypeaheadDataset;
-import com.helger.photon.uictrls.typeahead.TypeaheadDatum;
 
 /**
  * Test class for class {@link HCTypeahead}.

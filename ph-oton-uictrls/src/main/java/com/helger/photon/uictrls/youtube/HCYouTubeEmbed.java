@@ -18,7 +18,7 @@ package com.helger.photon.uictrls.youtube;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SMap;

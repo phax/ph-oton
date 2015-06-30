@@ -19,33 +19,36 @@ package com.helger.photon.uictrls.colorbox;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 
 @Translatable
 public enum EColorBoxText implements IHasDisplayText
 {
-  CURRENT ("Bild {current} von {total}", "image {current} of {total}"),
-  PREVIOUS ("Vorheriges", "previous"),
-  NEXT ("Nächstes", "next"),
-  CLOSE ("Schließen", "close"),
-  XHR_ERROR ("Fehler beim Laden des Inhalts", "This content failed to load."),
-  IMG_ERROR ("Fehler beim Laden des Bildes", "This image failed to load."),
-  SLIDESHOW_START ("Slideshow starten", "start slideshow"),
-  SLIDESHOW_STOP ("Slideshow anhalten", "stop slideshow");
+ CURRENT ("Bild {current} von {total}", "image {current} of {total}"),
+ PREVIOUS ("Vorheriges", "previous"),
+ NEXT ("Nächstes", "next"),
+ CLOSE ("Schließen", "close"),
+ XHR_ERROR ("Fehler beim Laden des Inhalts", "This content failed to load."),
+ IMG_ERROR ("Fehler beim Laden des Bildes", "This image failed to load."),
+ SLIDESHOW_START ("Slideshow starten", "start slideshow"),
+ SLIDESHOW_STOP ("Slideshow anhalten", "stop slideshow");
 
-  private final TextProvider m_aTP;
+  private final IMultilingualText m_aTP;
 
   private EColorBoxText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
-    m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+    m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }
 
+  @Nullable
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }
 }

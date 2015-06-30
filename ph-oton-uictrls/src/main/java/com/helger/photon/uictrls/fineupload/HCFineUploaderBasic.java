@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCNode;

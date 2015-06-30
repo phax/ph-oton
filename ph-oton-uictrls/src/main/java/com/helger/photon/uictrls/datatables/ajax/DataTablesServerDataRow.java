@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.ReturnsMutableObject;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.conversion.IHCConversionSettings;
@@ -36,7 +36,7 @@ import com.helger.html.hc.html.HCRow;
 /**
  * This class holds table rows to be used by the DataTables server side
  * handling.
- * 
+ *
  * @author Philip Helger
  */
 public final class DataTablesServerDataRow implements Serializable
@@ -85,7 +85,7 @@ public final class DataTablesServerDataRow implements Serializable
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "speed")
+  @ReturnsMutableObject ("speed")
   public List <DataTablesServerDataCell> directGetAllCells ()
   {
     return m_aCells;

@@ -18,7 +18,7 @@ package com.helger.photon.uictrls.datatables;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 
 /**
  * DataTables column type

@@ -29,8 +29,7 @@ import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.lang.DecimalFormatSymbolsFactory;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -61,7 +60,7 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
  *        Implementation type
  */
 @NotThreadSafe
-public class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNumeric <IMPLTYPE>> extends AbstractHCInput <IMPLTYPE> implements IHCNodeWithJSOptions
+public class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNumeric <IMPLTYPE>> extends AbstractHCInput <IMPLTYPE>implements IHCNodeWithJSOptions
 {
   /** The special CSS class to use for numeric inputs */
   public static final ICSSClassProvider CSS_CLASS_AUTO_NUMERIC_EDIT = DefaultCSSClassProvider.create ("auto-numeric-edit");
@@ -95,7 +94,7 @@ public class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNumeric <IMPL
     // values by default!
     m_aMin = BigDecimal.valueOf (DEFAULT_MIN_VALUE);
 
-    final DecimalFormatSymbols m_aDFS = DecimalFormatSymbolsFactory.getInstance (aDisplayLocale);
+    final DecimalFormatSymbols m_aDFS = DecimalFormatSymbols.getInstance (aDisplayLocale);
     m_sThousandSeparator = Character.toString (m_aDFS.getGroupingSeparator ());
     m_sDecimalSeparator = Character.toString (m_aDFS.getDecimalSeparator ());
 

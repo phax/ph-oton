@@ -20,8 +20,6 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import com.helger.photon.uictrls.fineupload.FineUploaderBasic;
-
 /**
  * Test class for class {@link FineUploaderBasic}.
  * 

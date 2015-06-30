@@ -23,14 +23,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.format.IFormatter;
-import com.helger.commons.locale.LocaleFormatter;
+import com.helger.commons.locale.LocaleParser;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
  * This comparator is responsible for sorting cells by BigDecimal
- * 
+ *
  * @author Philip Helger
  */
 public class ComparatorDTBigDecimal extends AbstractComparatorDT
@@ -64,7 +64,7 @@ public class ComparatorDTBigDecimal extends AbstractComparatorDT
     // ones with non-numeric content
     if (sCellText.isEmpty ())
       return DEFAULT_VALUE;
-    return LocaleFormatter.parseBigDecimal (sCellText, m_aParseLocale, DEFAULT_VALUE);
+    return LocaleParser.parseBigDecimal (sCellText, m_aParseLocale, DEFAULT_VALUE);
   }
 
   @Override

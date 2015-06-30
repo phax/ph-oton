@@ -29,7 +29,6 @@ import com.helger.html.hc.conversion.HCConversionSettings;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.mock.PhotonCoreTestRule;
-import com.helger.photon.uictrls.autonumeric.HCAutoNumeric;
 
 public final class HCAutoNumericTest
 {

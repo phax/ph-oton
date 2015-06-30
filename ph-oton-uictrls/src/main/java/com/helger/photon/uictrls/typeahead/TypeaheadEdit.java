@@ -22,8 +22,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;

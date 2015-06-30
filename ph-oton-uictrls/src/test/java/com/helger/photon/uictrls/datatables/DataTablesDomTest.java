@@ -20,8 +20,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.helger.photon.uictrls.datatables.DataTablesDom;
-
 public final class DataTablesDomTest
 {
   @Test

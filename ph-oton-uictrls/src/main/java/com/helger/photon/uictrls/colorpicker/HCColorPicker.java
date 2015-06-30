@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableObject;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -48,7 +48,7 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
   {}
 
   @Nonnull
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public ColorPickerOptions getOptions ()
   {
     return m_aOptions;

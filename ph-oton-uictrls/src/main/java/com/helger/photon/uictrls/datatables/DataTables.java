@@ -16,6 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,15 +31,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.lang.CloneHelper;
-import com.helger.commons.lang.DecimalFormatSymbolsFactory;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
@@ -490,7 +490,7 @@ public class DataTables implements IHCNodeBuilder
   }
 
   @Nullable
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public DataTablesLengthMenuList getLengthMenu ()
   {
     return m_aLengthMenu;
@@ -708,7 +708,7 @@ public class DataTables implements IHCNodeBuilder
   }
 
   @Nullable
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public JSAssocArray getFixedHeaderOptions ()
   {
     return m_aFixedHeaderOptions;
@@ -807,7 +807,7 @@ public class DataTables implements IHCNodeBuilder
                                     .add ("sortDescending",
                                           EDataTablesText.SORT_DESCENDING.getDisplayText (aDisplayLocale)));
     // Translate??
-    aLanguage.add ("sDecimal", DecimalFormatSymbolsFactory.getInstance (aDisplayLocale).getDecimalSeparator ());
+    aLanguage.add ("sDecimal", DecimalFormatSymbols.getInstance (aDisplayLocale).getDecimalSeparator ());
     aLanguage.add ("emptyTable", EDataTablesText.EMPTY_TABLE.getDisplayText (aDisplayLocale));
     aLanguage.add ("info", EDataTablesText.INFO.getDisplayText (aDisplayLocale));
     aLanguage.add ("infoEmpty", EDataTablesText.INFO_EMPTY.getDisplayText (aDisplayLocale));
@@ -1012,7 +1012,7 @@ public class DataTables implements IHCNodeBuilder
       final JQueryAjaxBuilder aAjaxBuilder = new JQueryAjaxBuilder ().cache (false)
                                                                      .dataType ("json")
                                                                      .type (m_eServerMethod == null ? null
-                                                                                                   : m_eServerMethod.getName ())
+                                                                                                    : m_eServerMethod.getName ())
                                                                      .url (sSource)
                                                                      .data (aoData)
                                                                      .success (JSJQueryUtils.jqueryAjaxSuccessHandler (fnCallback,

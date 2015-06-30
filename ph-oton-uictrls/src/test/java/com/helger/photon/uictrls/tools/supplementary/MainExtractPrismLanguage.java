@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.helger.commons.charset.CCharset;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
@@ -32,7 +32,7 @@ public class MainExtractPrismLanguage
   public static void main (final String [] args)
   {
     final File f = new File ("src/main/resources/prismjs/prism.css");
-    String sLine = SimpleFileIO.readFileLines (f, CCharset.CHARSET_UTF_8_OBJ).get (0);
+    String sLine = SimpleFileIO.getAllFileLines (f, CCharset.CHARSET_UTF_8_OBJ).get (0);
     sLine = StringHelper.trimStartAndEnd (sLine, "/*", "*/").trim ();
     final ISimpleURL aURL = new SimpleURL (sLine);
     if (false)

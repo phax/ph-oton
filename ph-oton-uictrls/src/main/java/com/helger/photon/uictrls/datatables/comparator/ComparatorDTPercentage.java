@@ -20,13 +20,13 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.format.impl.StringSkipSuffixFormatter;
+import com.helger.commons.format.FormatterStringSkipSuffix;
 
 public class ComparatorDTPercentage extends ComparatorDTBigDecimal
 {
   public ComparatorDTPercentage (@Nonnull final Locale aParseLocale)
   {
     // Skip the "%" suffix
-    super (new StringSkipSuffixFormatter ("%"), aParseLocale);
+    super (new FormatterStringSkipSuffix ("%"), aParseLocale);
   }
 }

@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.html.hc.utils.HCSpecialNodes;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;

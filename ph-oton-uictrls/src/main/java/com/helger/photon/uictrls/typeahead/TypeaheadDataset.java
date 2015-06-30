@@ -26,10 +26,10 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
@@ -396,7 +396,7 @@ public class TypeaheadDataset
    *         with care!
    */
   @Nullable
-  @ReturnsMutableObject (reason = "Design")
+  @ReturnsMutableObject ("Design")
   public TypeaheadPrefetch getPrefetch ()
   {
     return m_aPrefetch;
@@ -427,7 +427,7 @@ public class TypeaheadDataset
    *         with care!
    */
   @Nullable
-  @ReturnsMutableObject (reason = "design")
+  @ReturnsMutableObject ("design")
   public TypeaheadRemote getRemote ()
   {
     return m_aRemote;

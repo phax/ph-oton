@@ -31,8 +31,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.collections.ArrayHelper;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
@@ -142,7 +142,7 @@ public final class DataTablesServerData implements IHasUIState
   }
 
   @Nonnull
-  public ObjectType getTypeID ()
+  public ObjectType getObjectType ()
   {
     return OT_DATATABLES;
   }
@@ -186,7 +186,7 @@ public final class DataTablesServerData implements IHasUIState
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "speed")
+  @ReturnsMutableObject ("speed")
   public List <DataTablesServerDataRow> directGetAllRows ()
   {
     return m_aRows;

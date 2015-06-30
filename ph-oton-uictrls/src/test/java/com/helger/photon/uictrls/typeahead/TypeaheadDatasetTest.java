@@ -25,10 +25,6 @@ import org.junit.Test;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.js.writer.JSWriterSettings;
-import com.helger.photon.uictrls.typeahead.TypeaheadDataset;
-import com.helger.photon.uictrls.typeahead.TypeaheadDatum;
-import com.helger.photon.uictrls.typeahead.TypeaheadPrefetch;
-import com.helger.photon.uictrls.typeahead.TypeaheadRemote;
 
 /**
  * Test class for class {@link TypeaheadDataset}.

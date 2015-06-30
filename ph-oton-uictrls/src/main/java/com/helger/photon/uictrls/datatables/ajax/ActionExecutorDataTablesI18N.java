@@ -65,7 +65,7 @@ public class ActionExecutorDataTablesI18N extends AbstractActionExecutor
   {
     // Resolve language
     final String sLanguage = aRequestScope.getAttributeAsString (LANGUAGE_ID);
-    Locale aLanguage = LocaleCache.getLocale (sLanguage);
+    Locale aLanguage = LocaleCache.getInstance ().getLocale (sLanguage);
     if (aLanguage == null)
     {
       // None or invalid locale specified - use default from constructor

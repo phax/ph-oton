@@ -20,9 +20,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.helger.commons.collections.CollectionHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.html.js.writer.JSWriterSettings;
-import com.helger.photon.uictrls.typeahead.TypeaheadDatum;
 
 /**
  * Test class for class {@link TypeaheadDatum}.

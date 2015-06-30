@@ -27,11 +27,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.name.IHasDisplayText;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.impl.ConstantTextProvider;
+import com.helger.commons.text.display.ConstantHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayText;
 
 public class DataTablesLengthMenuList
 {
@@ -51,7 +51,7 @@ public class DataTablesLengthMenuList
   @Nonnull
   public DataTablesLengthMenuList addItem (final int nItemCount)
   {
-    return addItem (nItemCount, new ConstantTextProvider (Integer.toString (nItemCount)));
+    return addItem (nItemCount, new ConstantHasDisplayText (Integer.toString (nItemCount)));
   }
 
   @Nonnull

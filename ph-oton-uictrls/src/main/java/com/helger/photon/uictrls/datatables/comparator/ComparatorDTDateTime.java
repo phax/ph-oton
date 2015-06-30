@@ -24,16 +24,16 @@ import javax.annotation.Nullable;
 import org.joda.time.DateTime;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.compare.CompareHelper;
 import com.helger.commons.format.IFormatter;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTUtils;
 import com.helger.datetime.format.PDTFromString;
 import com.helger.datetime.format.SerializableDateTimeFormatter;
 import com.helger.datetime.format.SerializableDateTimeFormatter.EFormatStyle;
 
 /**
  * This comparator is responsible for sorting cells by date and/or time.
- * 
+ *
  * @author Philip Helger
  */
 public class ComparatorDTDateTime extends AbstractComparatorDT
@@ -73,7 +73,7 @@ public class ComparatorDTDateTime extends AbstractComparatorDT
   {
     final DateTime aDT1 = PDTFromString.getDateTimeFromString (sText1, m_aDTFormatter.getFormatter ());
     final DateTime aDT2 = PDTFromString.getDateTimeFromString (sText2, m_aDTFormatter.getFormatter ());
-    return PDTUtils.nullSafeCompare (aDT1, aDT2);
+    return CompareHelper.compare (aDT1, aDT2, isNullValuesComeFirst ());
   }
 
   @Override

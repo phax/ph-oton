@@ -22,7 +22,6 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import com.helger.html.js.writer.JSWriterSettings;
-import com.helger.photon.uictrls.colorpicker.ColorPickerOptions;
 
 /**
  * Test class for class {@link ColorPickerOptions}.

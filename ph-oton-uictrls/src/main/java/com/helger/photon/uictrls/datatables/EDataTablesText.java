@@ -21,10 +21,11 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 
 /**
  * DataTables text array
@@ -34,41 +35,41 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 @Translatable
 public enum EDataTablesText implements IHasDisplayText
 {
-  // aria lables
-  SORT_ASCENDING (": aktivieren, um Spalte aufsteigend zu sortieren", ": activate to sort column ascending"),
-  SORT_DESCENDING (": aktivieren, um Spalte absteigend zu sortieren", ": activate to sort column descending"),
-  // paginate
-  FIRST ("Erster", "First"),
-  PREVIOUS ("Zurück", "Previous"),
-  NEXT ("Nächster", "Next"),
-  LAST ("Letzter", "Last"),
-  // main
-  EMPTY_TABLE ("Keine Einträge vorhanden", "No data available in table"),
-  INFO ("_START_ bis _END_ von _TOTAL_ Einträgen", "Showing _START_ to _END_ of _TOTAL_ entries"),
-  INFO_EMPTY ("0 bis 0 von 0 Einträgen", "Showing 0 to 0 of 0 entries"),
-  INFO_FILTERED ("(gefiltert von _MAX_ Einträgen)", "(filtered from _MAX_ total entries)"),
-  INFO_POSTFIX ("", ""),
-  INFO_THOUSANDS ("", ""),
-  LENGTH_MENU ("_MENU_ Einträge anzeigen", "Show _MENU_ entries"),
-  LOADING_RECORDS ("Lade...", "Loading..."),
-  PROCESSING ("Bitte warten...", "Processing..."),
-  SEARCH ("Suchen:", "Search:"),
-  ZERO_RECORDS ("Keine passenden Einträge vorhanden.", "No matching records found."),
-  // For length menu
-  ALL ("Alle", "all"),
-  // ColVis stuff
-  COL_VIS_BUTTON_TEXT ("Spalten wählen", "Select columns");
+ // aria lables
+ SORT_ASCENDING (": aktivieren, um Spalte aufsteigend zu sortieren", ": activate to sort column ascending"),
+ SORT_DESCENDING (": aktivieren, um Spalte absteigend zu sortieren", ": activate to sort column descending"),
+ // paginate
+ FIRST ("Erster", "First"),
+ PREVIOUS ("Zurück", "Previous"),
+ NEXT ("Nächster", "Next"),
+ LAST ("Letzter", "Last"),
+ // main
+ EMPTY_TABLE ("Keine Einträge vorhanden", "No data available in table"),
+ INFO ("_START_ bis _END_ von _TOTAL_ Einträgen", "Showing _START_ to _END_ of _TOTAL_ entries"),
+ INFO_EMPTY ("0 bis 0 von 0 Einträgen", "Showing 0 to 0 of 0 entries"),
+ INFO_FILTERED ("(gefiltert von _MAX_ Einträgen)", "(filtered from _MAX_ total entries)"),
+ INFO_POSTFIX ("", ""),
+ INFO_THOUSANDS ("", ""),
+ LENGTH_MENU ("_MENU_ Einträge anzeigen", "Show _MENU_ entries"),
+ LOADING_RECORDS ("Lade...", "Loading..."),
+ PROCESSING ("Bitte warten...", "Processing..."),
+ SEARCH ("Suchen:", "Search:"),
+ ZERO_RECORDS ("Keine passenden Einträge vorhanden.", "No matching records found."),
+ // For length menu
+ ALL ("Alle", "all"),
+ // ColVis stuff
+ COL_VIS_BUTTON_TEXT ("Spalten wählen", "Select columns");
 
-  private final TextProvider m_aTP;
+  private final IMultilingualText m_aTP;
 
   private EDataTablesText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
-    m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+    m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }
 
   @Nullable
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }
 }

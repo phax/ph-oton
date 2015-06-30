@@ -21,9 +21,9 @@ import javax.annotation.Nonnull;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mime.CMimeType;
-import com.helger.commons.stats.utils.StatisticsExporter;
+import com.helger.commons.statistics.util.StatisticsExporter;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.photon.core.action.executor.AbstractActionExecutor;
-import com.helger.web.CWebCharset;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
@@ -39,7 +39,7 @@ public class ActionExecutorExportStatisticsXML extends AbstractActionExecutor
                        @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
-    aUnifiedResponse.setContentAndCharset (MicroWriter.getXMLString (aDoc), CWebCharset.CHARSET_XML_OBJ)
+    aUnifiedResponse.setContentAndCharset (MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
                     .setMimeType (CMimeType.APPLICATION_XML)
                     .disableCaching ();
   }

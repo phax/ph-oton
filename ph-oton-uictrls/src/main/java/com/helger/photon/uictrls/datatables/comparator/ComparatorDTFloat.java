@@ -22,10 +22,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.compare.CompareUtils;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.compare.CompareHelper;
 import com.helger.commons.format.IFormatter;
-import com.helger.commons.locale.LocaleFormatter;
+import com.helger.commons.locale.LocaleParser;
 import com.helger.commons.string.ToStringGenerator;
 
 public class ComparatorDTFloat extends AbstractComparatorDT
@@ -56,7 +56,7 @@ public class ComparatorDTFloat extends AbstractComparatorDT
     // ones with non-numeric content
     if (sCellText.isEmpty ())
       return Float.MIN_VALUE;
-    return LocaleFormatter.parseFloat (sCellText, m_aParseLocale, 0);
+    return LocaleParser.parseFloat (sCellText, m_aParseLocale, 0);
   }
 
   @Override
@@ -64,7 +64,7 @@ public class ComparatorDTFloat extends AbstractComparatorDT
   {
     final float f1 = getAsFloat (sText1);
     final float f2 = getAsFloat (sText2);
-    return CompareUtils.compare (f1, f2);
+    return CompareHelper.compare (f1, f2);
   }
 
   @Override

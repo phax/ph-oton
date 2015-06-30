@@ -26,15 +26,15 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
  * Encapsulates the sorting information for the columns that are affected in
  * sorting. So the number of sort columns is always &ge; as the number of
  * overall columns.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -99,7 +99,7 @@ final class RequestDataSortColumn implements Serializable
     if (!(o instanceof RequestDataSortColumn))
       return false;
     final RequestDataSortColumn rhs = (RequestDataSortColumn) o;
-    return m_nColumnIndex == rhs.m_nColumnIndex && EqualsUtils.equals (m_eSortDirection, rhs.m_eSortDirection);
+    return m_nColumnIndex == rhs.m_nColumnIndex && EqualsHelper.equals (m_eSortDirection, rhs.m_eSortDirection);
   }
 
   @Override

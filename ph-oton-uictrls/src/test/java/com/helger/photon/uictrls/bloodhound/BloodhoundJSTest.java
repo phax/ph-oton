@@ -22,9 +22,6 @@ import org.junit.Test;
 
 import com.helger.html.js.builder.JSPackage;
 import com.helger.html.js.writer.JSWriterSettings;
-import com.helger.photon.uictrls.bloodhound.BloodhoundDatum;
-import com.helger.photon.uictrls.bloodhound.BloodhoundJS;
-import com.helger.photon.uictrls.bloodhound.BloodhoundOptions;
 
 public class BloodhoundJSTest
 {

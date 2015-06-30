@@ -18,8 +18,8 @@ package com.helger.photon.uictrls.datatables.ajax;
 
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.ArrayHelper;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;

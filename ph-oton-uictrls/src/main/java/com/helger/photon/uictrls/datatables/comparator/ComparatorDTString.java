@@ -22,7 +22,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.compare.CollatorUtils;
+import com.helger.commons.compare.CollatorHelper;
 import com.helger.commons.format.IFormatter;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -38,7 +38,7 @@ public class ComparatorDTString extends AbstractComparatorDT
   public ComparatorDTString (@Nullable final IFormatter aFormatter, @Nonnull final Locale aDisplayLocale)
   {
     super (aFormatter);
-    m_aCollator = CollatorUtils.getCollatorSpaceBeforeDot (aDisplayLocale);
+    m_aCollator = CollatorHelper.getCollatorSpaceBeforeDot (aDisplayLocale);
   }
 
   @Nonnull
