@@ -21,10 +21,11 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayTextWithArgs;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 
 /**
  * File type texts
@@ -34,18 +35,19 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 @Translatable
 public enum EExchangeFileTypeText implements IHasDisplayTextWithArgs
 {
-  EXPORT_AS ("Exportieren als {0}", "Export as {0}"),
-  SAVE_AS ("Speichern als {0}", "Save as {0}");
+ EXPORT_AS ("Exportieren als {0}", "Export as {0}"),
+ SAVE_AS ("Speichern als {0}", "Save as {0}");
 
-  private final TextProvider m_aTP;
+  private final IMultilingualText m_aTP;
 
   private EExchangeFileTypeText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
-    m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+    m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }
 
+  @Nullable
   public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
   {
-    return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
+    return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
   }
 }

@@ -34,7 +34,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.charset.EUnicodeBOM;
 import com.helger.commons.csv.CCSV;
 import com.helger.commons.csv.CSVWriter;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.system.SystemHelper;
 import com.helger.commons.typeconvert.TypeConverter;
@@ -146,32 +146,31 @@ public final class ExporterCSV implements IExporterFile
       if (aRecords.isEmpty ())
         return ESuccess.FAILURE;
 
-      CSVWriter aWriter = null;
-      try
-      {
-        // Write BOM if necessary
-        if (m_eBOM != null)
-          try
-          {
-            aOS.write (m_eBOM.getBytes ());
-          }
-          catch (final IOException ex)
-          {
-            s_aLogger.error ("Failed to write BOM on stream", ex);
-          }
+      // Write BOM if necessary
+      if (m_eBOM != null)
+        try
+        {
+          aOS.write (m_eBOM.getAllBytes ());
+        }
+        catch (final IOException ex)
+        {
+          s_aLogger.error ("Failed to write BOM on stream", ex);
+        }
 
-        aWriter = new CSVWriter (new OutputStreamWriter (aOS, m_aCharset)).setSeparator (m_cSeparator);
+      try (final CSVWriter aWriter = new CSVWriter (new OutputStreamWriter (aOS,
+                                                                            m_aCharset)).setSeparatorChar (m_cSeparator))
+      {
         aWriter.writeAll (aRecords);
         return ESuccess.SUCCESS;
       }
-      finally
+      catch (final IOException ex)
       {
-        StreamUtils.close (aWriter);
+        return ESuccess.FAILURE;
       }
     }
     finally
     {
-      StreamUtils.close (aOS);
+      StreamHelper.close (aOS);
     }
   }
 

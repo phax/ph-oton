@@ -32,9 +32,9 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.OverrideOnDemand;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.CPDT;
@@ -326,7 +326,7 @@ public class ExporterExcel implements IExporterFile
     }
     finally
     {
-      StreamUtils.close (aOS);
+      StreamHelper.close (aOS);
     }
   }
 

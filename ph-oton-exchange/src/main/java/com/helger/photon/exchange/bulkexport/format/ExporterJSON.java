@@ -29,11 +29,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableObject;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.charset.CCharset;
-import com.helger.commons.collections.iterate.IterableIterator;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.collection.iterate.IterableIterator;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
@@ -84,7 +84,7 @@ public final class ExporterJSON implements IExporterFile
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "Design")
+  @ReturnsMutableObject ("Design")
   public JsonWriterSettings getJsonWriterSettings ()
   {
     return m_aJWS;
@@ -159,27 +159,21 @@ public final class ExporterJSON implements IExporterFile
       if (aDoc == null)
         return ESuccess.FAILURE;
 
-      final Writer aWriter = StreamUtils.createWriter (aOS, m_aCharset);
-      try
+      try (final Writer aWriter = StreamHelper.createWriter (aOS, m_aCharset))
       {
         new JsonWriter (m_aJWS).writeNodeToWriter (aDoc, aWriter);
-      }
-      finally
-      {
-        // Important to close writer so that the content gets flushed!
-        StreamUtils.close (aWriter);
       }
       return ESuccess.SUCCESS;
     }
     catch (final IOException ex)
     {
-      if (!StreamUtils.isKnownEOFException (ex))
+      if (!StreamHelper.isKnownEOFException (ex))
         s_aLogger.error ("Failed to write JSON to output stream " + aOS, ex);
       return ESuccess.FAILURE;
     }
     finally
     {
-      StreamUtils.close (aOS);
+      StreamHelper.close (aOS);
     }
   }
 

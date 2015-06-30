@@ -24,13 +24,12 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 import com.helger.commons.charset.CCharset;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.io.streams.NonBlockingByteArrayOutputStream;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.datetime.PDTFactory;
 import com.helger.photon.exchange.bulkexport.ConstantExportRecordProvider;
 import com.helger.photon.exchange.bulkexport.EmptyExportRecordProvider;
 import com.helger.photon.exchange.bulkexport.ExportRecord;
-import com.helger.photon.exchange.bulkexport.format.ExporterCSV;
 
 /**
  * Test class for class {@link ExporterCSV}.

@@ -19,11 +19,13 @@ package com.helger.photon.exchange;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 
 /**
  * Exchange file type names.
@@ -33,28 +35,29 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 @Translatable
 public enum EExchangeFileTypeName implements IHasDisplayText
 {
-  /** CSV - comma separated values */
+ /** CSV - comma separated values */
   CSV ("CSV", "CSV"),
-  /** Old Excel */
+ /** Old Excel */
   XLS ("Excel 2003 (XLS)", "Excel 2003 (XLS)"),
-  /** New Excel */
+ /** New Excel */
   XLSX ("Excel 2007 (XLSX)", "Excel 2007 (XLSX)"),
-  /** XML structured text */
+ /** XML structured text */
   XML ("XML", "XML"),
-  /** Pure text file */
+ /** Pure text file */
   TXT ("Text", "Text"),
-  /** JSON file */
+ /** JSON file */
   JSON ("JSON", "JSON");
 
-  private final TextProvider m_aTP;
+  private final IMultilingualText m_aTP;
 
   private EExchangeFileTypeName (@Nonnull final String sDE, @Nonnull final String sEN)
   {
-    m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+    m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }
 
+  @Nullable
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }
 }

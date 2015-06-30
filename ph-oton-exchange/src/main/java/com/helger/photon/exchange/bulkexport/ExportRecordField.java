@@ -29,8 +29,8 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.EBaseType;
 
@@ -71,7 +71,7 @@ public class ExportRecordField implements IExportRecordField
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ExportRecordField rhs = (ExportRecordField) o;
-    return m_eFieldType.equals (rhs.m_eFieldType) && EqualsUtils.equals (m_aValue, rhs.m_aValue);
+    return m_eFieldType.equals (rhs.m_eFieldType) && EqualsHelper.equals (m_aValue, rhs.m_aValue);
   }
 
   @Override

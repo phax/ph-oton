@@ -24,14 +24,14 @@ import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableObject;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.impl.MicroDocument;
+import com.helger.commons.microdom.MicroDocument;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.state.ESuccess;
-import com.helger.commons.xml.serialize.XMLWriterSettings;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.photon.exchange.EExchangeFileType;
 import com.helger.photon.exchange.bulkexport.IExportRecord;
 import com.helger.photon.exchange.bulkexport.IExportRecordField;
@@ -73,7 +73,7 @@ public final class ExporterXML implements IExporterFile
   }
 
   @Nonnull
-  @ReturnsMutableObject (reason = "Design")
+  @ReturnsMutableObject ("Design")
   public XMLWriterSettings getXMLWriterSettings ()
   {
     return m_aXWS;
@@ -148,7 +148,7 @@ public final class ExporterXML implements IExporterFile
     }
     finally
     {
-      StreamUtils.close (aOS);
+      StreamHelper.close (aOS);
     }
   }
 

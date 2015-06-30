@@ -24,7 +24,6 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 import com.helger.datetime.PDTFactory;
-import com.helger.photon.exchange.bulkexport.ExportRecord;
 
 /**
  * Test class for class {@link ExportRecord}.

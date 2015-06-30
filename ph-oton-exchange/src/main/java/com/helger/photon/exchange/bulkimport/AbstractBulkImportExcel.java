@@ -26,21 +26,22 @@ import javax.annotation.Nullable;
 
 import org.apache.poi.ss.usermodel.Cell;
 
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.name.IHasDisplayTextWithArgs;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
-import com.helger.commons.text.impl.TextProvider;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.photon.exchange.EExchangeFileType;
 import com.helger.poi.excel.ExcelReadUtils;
 
 /**
  * Abstract base implementation of a bulk import based on MS Excel files.
- * 
+ *
  * @author Philip Helger
  */
 public abstract class AbstractBulkImportExcel extends AbstractBulkImport
@@ -48,22 +49,22 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
   @Translatable
   private static enum EText implements IHasDisplayTextWithArgs
   {
-    MSG_ERR_NO_STRING ("Zeile {0}, Spalte {1}: Zeichenkette erwartet", "Row {0}, Column {1}: expected string"),
-    MSG_ERR_NO_INT ("Zeile {0}, Spalte {1}: Ganzzahl erwartet", "Row {0}, Column {1}: expected integer"),
-    MSG_ERR_NO_DATE ("Zeile {0}, Spalte {1}: Datum erwartet", "Row {0}, Column {1}: expected date"),
-    MSG_ERR_NO_BOOLEAN ("Zeile {0}, Spalte {1}: Wahrheitswert erwartet", "Row {0}, Column {1}: expected boolean");
+   MSG_ERR_NO_STRING ("Zeile {0}, Spalte {1}: Zeichenkette erwartet", "Row {0}, Column {1}: expected string"),
+   MSG_ERR_NO_INT ("Zeile {0}, Spalte {1}: Ganzzahl erwartet", "Row {0}, Column {1}: expected integer"),
+   MSG_ERR_NO_DATE ("Zeile {0}, Spalte {1}: Datum erwartet", "Row {0}, Column {1}: expected date"),
+   MSG_ERR_NO_BOOLEAN ("Zeile {0}, Spalte {1}: Wahrheitswert erwartet", "Row {0}, Column {1}: expected boolean");
 
-    private final TextProvider m_aTP;
+    private final IMultilingualText m_aTP;
 
     private EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
-      m_aTP = TextProvider.create_DE_EN (sDE, sEN);
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
-    @Override
+    @Nullable
     public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
     {
-      return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
+      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 
