@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 
 /**
  * Defines the possible tokens for the dtp format.

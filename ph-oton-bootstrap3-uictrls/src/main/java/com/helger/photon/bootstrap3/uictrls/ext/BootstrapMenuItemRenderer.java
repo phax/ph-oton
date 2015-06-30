@@ -21,7 +21,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.OverrideOnDemand;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.factory.FactoryNewInstance;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCNode;

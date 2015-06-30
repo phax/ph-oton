@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap3.uictrls.datetimepicker;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 
 /**
  * Defines the different views of DTP.

@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap3.uictrls.treeview;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.js.builder.IJSExpression;

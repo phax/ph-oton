@@ -21,73 +21,73 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.string.StringHelper;
 
 /**
  * All locales available in the Bootstrap DateTimePicker
- * 
+ *
  * @author Philip Helger
  */
 public enum EDateTimePickerLanguage
 {
-  AR ("ar", "ar"),
-  BG ("bg", "bg"),
-  CA ("ca", "ca"),
-  CS ("cs", "cs"),
-  DA ("da", "da"),
-  DE ("de", "de"),
-  DE_AT ("de_AT", "de-AT"),
-  EE ("ee", "ee"),
-  EL ("el", "el"),
-  ES ("es", "es"),
-  FI ("fi", "fi"),
-  FR ("fr", "fr"),
-  /* Note: this is not a valid Java locale! */
-  HE ("he", "he"),
-  HR ("hr", "hr"),
-  HU ("hu", "hu"),
-  /* Note: this is not a valid Java locale! */
-  ID ("id", "id"),
-  IS ("is", "is"),
-  IT ("it", "it"),
-  JA ("ja", "ja"),
-  KO ("ko", "ko"),
-  KR ("kr", "kr"),
-  LT ("lt", "lt"),
-  LV ("lv", "lv"),
-  MS ("ms", "ms"),
-  NB ("nb", "nb"),
-  NL ("nl", "nl"),
-  NO ("no", "no"),
-  PL ("pl", "pl"),
-  PT ("pt", "pt"),
-  PT_BR ("pt_BR", "pt-BR"),
-  RO ("ro", "ro"),
-  /* Note: this is not a valid Java locale! */
-  RS ("rs", "rs"),
-  /* Note: this is not a valid Java locale! */
-  RS_LATIN ("rs_latin", "rs-latin"),
-  RU ("ru", "ru"),
-  SK ("sk", "sk"),
-  SL ("sl", "sl"),
-  SV ("sv", "sv"),
-  SW ("sw", "sw"),
-  TH ("th", "th"),
-  TR ("tr", "tr"),
-  /* Note: this is not a valid Java locale! */
-  UA ("ua", "ua"),
-  UK ("uk", "uk"),
-  ZH_CN ("zh_CN", "zh-CN"),
-  ZH_TW ("zh_TW", "zh-TW");
+ AR ("ar", "ar"),
+ BG ("bg", "bg"),
+ CA ("ca", "ca"),
+ CS ("cs", "cs"),
+ DA ("da", "da"),
+ DE ("de", "de"),
+ DE_AT ("de_AT", "de-AT"),
+ EE ("ee", "ee"),
+ EL ("el", "el"),
+ ES ("es", "es"),
+ FI ("fi", "fi"),
+ FR ("fr", "fr"),
+ /* Note: this is not a valid Java locale! */
+ HE ("he", "he"),
+ HR ("hr", "hr"),
+ HU ("hu", "hu"),
+ /* Note: this is not a valid Java locale! */
+ ID ("id", "id"),
+ IS ("is", "is"),
+ IT ("it", "it"),
+ JA ("ja", "ja"),
+ KO ("ko", "ko"),
+ KR ("kr", "kr"),
+ LT ("lt", "lt"),
+ LV ("lv", "lv"),
+ MS ("ms", "ms"),
+ NB ("nb", "nb"),
+ NL ("nl", "nl"),
+ NO ("no", "no"),
+ PL ("pl", "pl"),
+ PT ("pt", "pt"),
+ PT_BR ("pt_BR", "pt-BR"),
+ RO ("ro", "ro"),
+ /* Note: this is not a valid Java locale! */
+ RS ("rs", "rs"),
+ /* Note: this is not a valid Java locale! */
+ RS_LATIN ("rs_latin", "rs-latin"),
+ RU ("ru", "ru"),
+ SK ("sk", "sk"),
+ SL ("sl", "sl"),
+ SV ("sv", "sv"),
+ SW ("sw", "sw"),
+ TH ("th", "th"),
+ TR ("tr", "tr"),
+ /* Note: this is not a valid Java locale! */
+ UA ("ua", "ua"),
+ UK ("uk", "uk"),
+ ZH_CN ("zh_CN", "zh-CN"),
+ ZH_TW ("zh_TW", "zh-TW");
 
   private final Locale m_aLocale;
   private final String m_sLanguageID;
 
   private EDateTimePickerLanguage (@Nonnull final String sLocale, @Nonnull @Nonempty final String sLanguageID)
   {
-    m_aLocale = LocaleCache.getLocale (sLocale);
+    m_aLocale = LocaleCache.getInstance ().getLocale (sLocale);
     if (m_aLocale == null)
       throw new IllegalStateException ("Failed to resolve '" + sLocale + "'");
     m_sLanguageID = sLanguageID;
@@ -135,7 +135,7 @@ public enum EDateTimePickerLanguage
       if (StringHelper.hasText (aLocale.getCountry ()))
       {
         // Check locale with language and country only
-        final Locale aRealLocale = LocaleCache.getLocale (aLocale.getLanguage (), aLocale.getCountry ());
+        final Locale aRealLocale = LocaleCache.getInstance ().getLocale (aLocale.getLanguage (), aLocale.getCountry ());
         for (final EDateTimePickerLanguage e : values ())
           if (aRealLocale.equals (e.m_aLocale))
             return e;
@@ -144,7 +144,7 @@ public enum EDateTimePickerLanguage
       if (StringHelper.hasText (aLocale.getLanguage ()))
       {
         // Check locale with language only
-        final Locale aRealLocale = LocaleCache.getLocale (aLocale.getLanguage ());
+        final Locale aRealLocale = LocaleCache.getInstance ().getLocale (aLocale.getLanguage ());
         for (final EDateTimePickerLanguage e : values ())
           if (aRealLocale.equals (e.m_aLocale))
             return e;

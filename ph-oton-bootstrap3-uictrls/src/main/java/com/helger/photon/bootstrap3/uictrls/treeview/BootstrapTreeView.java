@@ -22,19 +22,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.collections.NonBlockingStack;
-import com.helger.commons.convert.IUnidirectionalConverter;
-import com.helger.commons.hierarchy.DefaultHierarchyWalkerCallback;
-import com.helger.commons.idfactory.GlobalIDFactory;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.NonBlockingStack;
+import com.helger.commons.convert.IConverter;
+import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.ETriState;
-import com.helger.commons.tree.simple.BasicTree;
-import com.helger.commons.tree.simple.DefaultTree;
-import com.helger.commons.tree.simple.DefaultTreeItem;
-import com.helger.commons.tree.simple.ITreeItem;
-import com.helger.commons.tree.utils.walk.TreeWalker;
+import com.helger.commons.tree.BasicTree;
+import com.helger.commons.tree.DefaultTree;
+import com.helger.commons.tree.DefaultTreeItem;
+import com.helger.commons.tree.ITreeItem;
+import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCScript;
@@ -247,25 +248,27 @@ public class BootstrapTreeView implements IHCNodeBuilder
 
   @Nonnull
   public static <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> BootstrapTreeView create (@Nonnull final BasicTree <DATATYPE, ITEMTYPE> aTree,
-                                                                                                      @Nonnull final IUnidirectionalConverter <DATATYPE, BootstrapTreeViewItem> aConverter)
+                                                                                                      @Nonnull final IConverter <DATATYPE, BootstrapTreeViewItem> aConverter)
   {
     final DefaultTree <BootstrapTreeViewItem> aNewTree = new DefaultTree <BootstrapTreeViewItem> ();
     final NonBlockingStack <DefaultTreeItem <BootstrapTreeViewItem>> aParents = new NonBlockingStack <DefaultTreeItem <BootstrapTreeViewItem>> ();
     aParents.push (aNewTree.getRootItem ());
-    TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
+    TreeVisitor.visitTree (aTree, new DefaultHierarchyVisitorCallback <ITEMTYPE> ()
     {
       @Override
-      public void onItemBeforeChildren (@Nonnull final ITEMTYPE aItem)
+      public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final ITEMTYPE aItem)
       {
         final DefaultTreeItem <BootstrapTreeViewItem> aChildItem = aParents.peek ()
                                                                            .createChildItem (aConverter.convert (aItem.getData ()));
         aParents.push (aChildItem);
+        return EHierarchyVisitorReturn.CONTINUE;
       }
 
       @Override
-      public void onItemAfterChildren (@Nonnull final ITEMTYPE aItem)
+      public EHierarchyVisitorReturn onItemAfterChildren (@Nonnull final ITEMTYPE aItem)
       {
         aParents.pop ();
+        return EHierarchyVisitorReturn.CONTINUE;
       }
     });
     return new BootstrapTreeView (aNewTree);

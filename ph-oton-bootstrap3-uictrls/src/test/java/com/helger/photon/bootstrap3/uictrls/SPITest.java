@@ -16,30 +16,20 @@
  */
 package com.helger.photon.bootstrap3.uictrls;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.mock.CommonsTestHelper;
 
 /**
- * Test class for class {@link EBootstrapUICtrlsJSPathProvider}.
- *
+ * Test SPI definitions
+ * 
  * @author Philip Helger
  */
-public final class EBootstrapUICtrlsJSPathProviderTest
+public final class SPITest
 {
   @Test
-  public void testBasic ()
+  public void testBasic () throws Exception
   {
-    for (final EBootstrapUICtrlsJSPathProvider e : EBootstrapUICtrlsJSPathProvider.values ())
-      if (e.canBeBundled ())
-      {
-        IReadableResource aRes = new ClassPathResource (e.getJSItemPath (true));
-        assertTrue (aRes.getPath (), aRes.exists ());
-        aRes = new ClassPathResource (e.getJSItemPath (false));
-        assertTrue (aRes.getPath (), aRes.exists ());
-      }
+    CommonsTestHelper.testIfAllSPIImplementationsAreValid ();
   }
 }
