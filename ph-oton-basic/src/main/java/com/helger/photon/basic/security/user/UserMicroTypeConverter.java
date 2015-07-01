@@ -23,30 +23,26 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
-import com.helger.commons.microdom.convert.IMicroTypeConverter;
 import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
+import com.helger.photon.basic.object.AbstractObjectMicroTypeConverter;
 import com.helger.photon.basic.security.password.hash.PasswordHash;
 import com.helger.photon.basic.security.password.hash.PasswordHashCreatorDefault;
 import com.helger.photon.basic.security.password.salt.IPasswordSalt;
 import com.helger.photon.basic.security.password.salt.PasswordSalt;
 
-public final class UserMicroTypeConverter implements IMicroTypeConverter
+public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConverter
 {
-  private static final String ATTR_ID = "id";
-  private static final String ATTR_CREATIONDT = "creationdt";
-  private static final String ATTR_LASTMODDT = "lastmoddt";
-  private static final String ATTR_DELETIONDT = "deletiondt";
   private static final String ATTR_DESIREDLOCALE = "desiredlocale";
-  private static final String ATTR_LASTLOGINDT = "lastlogindt";
+  private static final String ATTR_LASTLOGINLDT = "lastloginldt";
   private static final String ATTR_LOGINCOUNT = "logincount";
   private static final String ATTR_CONSECUTIVEFAILEDLOGINCOUNT = "consecutivefailedlogincount";
   private static final String ELEMENT_LOGINNAME = "loginname";
@@ -67,54 +63,54 @@ public final class UserMicroTypeConverter implements IMicroTypeConverter
                                               @Nonnull final String sTagName)
   {
     final IUser aUser = (IUser) aObject;
-    final IMicroElement eUser = new MicroElement (sNamespaceURI, sTagName);
-    eUser.setAttribute (ATTR_ID, aUser.getID ());
-    eUser.setAttributeWithConversion (ATTR_CREATIONDT, aUser.getCreationDateTime ());
-    eUser.setAttributeWithConversion (ATTR_LASTMODDT, aUser.getLastModificationDateTime ());
-    eUser.setAttributeWithConversion (ATTR_DELETIONDT, aUser.getDeletionDateTime ());
-    eUser.appendElement (ELEMENT_LOGINNAME).appendText (aUser.getLoginName ());
+    final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
+    aElement.setAttribute (ATTR_ID, aUser.getID ());
+    aElement.setAttributeWithConversion (ATTR_CREATIONLDT, aUser.getCreationDateTime ());
+    aElement.setAttributeWithConversion (ATTR_LASTMODLDT, aUser.getLastModificationDateTime ());
+    aElement.setAttributeWithConversion (ATTR_DELETIONLDT, aUser.getDeletionDateTime ());
+    aElement.appendElement (ELEMENT_LOGINNAME).appendText (aUser.getLoginName ());
     if (aUser.getEmailAddress () != null)
-      eUser.appendElement (ELEMENT_EMAILADDRESS).appendText (aUser.getEmailAddress ());
-    final IMicroElement ePasswordHash = eUser.appendElement (ELEMENT_PASSWORDHASH);
+      aElement.appendElement (ELEMENT_EMAILADDRESS).appendText (aUser.getEmailAddress ());
+    final IMicroElement ePasswordHash = aElement.appendElement (ELEMENT_PASSWORDHASH);
     ePasswordHash.setAttribute (ATTR_ALGORITHM, aUser.getPasswordHash ().getAlgorithmName ());
     if (aUser.getPasswordHash ().hasSalt ())
       ePasswordHash.setAttribute (ATTR_SALT, aUser.getPasswordHash ().getSaltAsString ());
     ePasswordHash.appendText (aUser.getPasswordHash ().getPasswordHashValue ());
     if (aUser.getFirstName () != null)
-      eUser.appendElement (ELEMENT_FIRSTNAME).appendText (aUser.getFirstName ());
+      aElement.appendElement (ELEMENT_FIRSTNAME).appendText (aUser.getFirstName ());
     if (aUser.getLastName () != null)
-      eUser.appendElement (ELEMENT_LASTNAME).appendText (aUser.getLastName ());
+      aElement.appendElement (ELEMENT_LASTNAME).appendText (aUser.getLastName ());
     if (StringHelper.hasText (aUser.getDescription ()))
-      eUser.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aUser.getDescription ());
+      aElement.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aUser.getDescription ());
     if (aUser.getDesiredLocale () != null)
-      eUser.setAttribute (ATTR_DESIREDLOCALE, aUser.getDesiredLocale ().toString ());
+      aElement.setAttribute (ATTR_DESIREDLOCALE, aUser.getDesiredLocale ().toString ());
     if (aUser.getLastLoginDateTime () != null)
-      eUser.setAttributeWithConversion (ATTR_LASTLOGINDT, aUser.getLastLoginDateTime ());
-    eUser.setAttribute (ATTR_LOGINCOUNT, aUser.getLoginCount ());
-    eUser.setAttribute (ATTR_CONSECUTIVEFAILEDLOGINCOUNT, aUser.getConsecutiveFailedLoginCount ());
+      aElement.setAttributeWithConversion (ATTR_LASTLOGINLDT, aUser.getLastLoginDateTime ());
+    aElement.setAttribute (ATTR_LOGINCOUNT, aUser.getLoginCount ());
+    aElement.setAttribute (ATTR_CONSECUTIVEFAILEDLOGINCOUNT, aUser.getConsecutiveFailedLoginCount ());
     for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aUser.getAllAttributes ())
                                                                    .entrySet ())
     {
-      final IMicroElement eCustom = eUser.appendElement (ELEMENT_CUSTOM);
+      final IMicroElement eCustom = aElement.appendElement (ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
       eCustom.appendText (String.valueOf (aEntry.getValue ()));
     }
-    eUser.setAttribute (ATTR_DELETED, Boolean.toString (aUser.isDeleted ()));
-    eUser.setAttribute (ATTR_DISABLED, Boolean.toString (aUser.isDisabled ()));
-    return eUser;
+    aElement.setAttribute (ATTR_DELETED, Boolean.toString (aUser.isDeleted ()));
+    aElement.setAttribute (ATTR_DISABLED, Boolean.toString (aUser.isDisabled ()));
+    return aElement;
   }
 
   @ContainsSoftMigration
   @Nonnull
-  public User convertToNative (@Nonnull final IMicroElement eUser)
+  public User convertToNative (@Nonnull final IMicroElement aElement)
   {
-    final String sID = eUser.getAttributeValue (ATTR_ID);
-    final DateTime aCreationDT = eUser.getAttributeValueWithConversion (ATTR_CREATIONDT, DateTime.class);
-    final DateTime aLastModificationDT = eUser.getAttributeValueWithConversion (ATTR_LASTMODDT, DateTime.class);
-    final DateTime aDeletionDT = eUser.getAttributeValueWithConversion (ATTR_DELETIONDT, DateTime.class);
-    final String sLoginName = MicroHelper.getChildTextContentTrimmed (eUser, ELEMENT_LOGINNAME);
-    final String sEmailAddress = MicroHelper.getChildTextContentTrimmed (eUser, ELEMENT_EMAILADDRESS);
-    final IMicroElement ePasswordHash = eUser.getFirstChildElement (ELEMENT_PASSWORDHASH);
+    final String sID = aElement.getAttributeValue (ATTR_ID);
+    final LocalDateTime aCreationLDT = readAsLocalDateTime (aElement, ATTR_CREATIONLDT, "creationdt");
+    final LocalDateTime aLastModificationLDT = readAsLocalDateTime (aElement, ATTR_LASTMODLDT, "lastmodldt");
+    final LocalDateTime aDeletionLDT = readAsLocalDateTime (aElement, ATTR_DELETIONLDT, "deletiondt");
+    final String sLoginName = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_LOGINNAME);
+    final String sEmailAddress = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_EMAILADDRESS);
+    final IMicroElement ePasswordHash = aElement.getFirstChildElement (ELEMENT_PASSWORDHASH);
     String sPasswordHashAlgorithm = ePasswordHash.getAttributeValue (ATTR_ALGORITHM);
     if (sPasswordHashAlgorithm == null)
     {
@@ -125,27 +121,27 @@ public final class UserMicroTypeConverter implements IMicroTypeConverter
     final IPasswordSalt aSalt = PasswordSalt.createFromStringMaybe (sSalt);
     final String sPasswordHashValue = ePasswordHash.getTextContentTrimmed ();
     final PasswordHash aPasswordHash = new PasswordHash (sPasswordHashAlgorithm, aSalt, sPasswordHashValue);
-    final String sFirstName = MicroHelper.getChildTextContentTrimmed (eUser, ELEMENT_FIRSTNAME);
-    final String sLastName = MicroHelper.getChildTextContentTrimmed (eUser, ELEMENT_LASTNAME);
-    final String sDescription = MicroHelper.getChildTextContentTrimmed (eUser, ELEMENT_DESCRIPTION);
-    final String sDesiredLocale = eUser.getAttributeValue (ATTR_DESIREDLOCALE);
+    final String sFirstName = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_FIRSTNAME);
+    final String sLastName = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_LASTNAME);
+    final String sDescription = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_DESCRIPTION);
+    final String sDesiredLocale = aElement.getAttributeValue (ATTR_DESIREDLOCALE);
     final Locale aDesiredLocale = sDesiredLocale == null ? null : LocaleCache.getInstance ().getLocale (sDesiredLocale);
-    final DateTime aLastLoginDT = eUser.getAttributeValueWithConversion (ATTR_LASTLOGINDT, DateTime.class);
-    final int nLoginCount = StringParser.parseInt (eUser.getAttributeValue (ATTR_LOGINCOUNT), 0);
-    final int nConsecutiveFailedLoginCount = StringParser.parseInt (eUser.getAttributeValue (ATTR_CONSECUTIVEFAILEDLOGINCOUNT),
+    final LocalDateTime aLastLoginLDT = readAsLocalDateTime (aElement, ATTR_LASTLOGINLDT, "lastlogindt");
+    final int nLoginCount = StringParser.parseInt (aElement.getAttributeValue (ATTR_LOGINCOUNT), 0);
+    final int nConsecutiveFailedLoginCount = StringParser.parseInt (aElement.getAttributeValue (ATTR_CONSECUTIVEFAILEDLOGINCOUNT),
                                                                     0);
     final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
-    for (final IMicroElement eCustom : eUser.getAllChildElements (ELEMENT_CUSTOM))
+    for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
       aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
-    final String sDeleted = eUser.getAttributeValue (ATTR_DELETED);
+    final String sDeleted = aElement.getAttributeValue (ATTR_DELETED);
     final boolean bDeleted = StringParser.parseBool (sDeleted);
-    final String sDisabled = eUser.getAttributeValue (ATTR_DISABLED);
+    final String sDisabled = aElement.getAttributeValue (ATTR_DISABLED);
     final boolean bDisabled = StringParser.parseBool (sDisabled);
 
     return new User (sID,
-                     aCreationDT,
-                     aLastModificationDT,
-                     aDeletionDT,
+                     aCreationLDT,
+                     aLastModificationLDT,
+                     aDeletionLDT,
                      sLoginName,
                      sEmailAddress,
                      aPasswordHash,
@@ -153,7 +149,7 @@ public final class UserMicroTypeConverter implements IMicroTypeConverter
                      sLastName,
                      sDescription,
                      aDesiredLocale,
-                     aLastLoginDT,
+                     aLastLoginLDT,
                      nLoginCount,
                      nConsecutiveFailedLoginCount,
                      aCustomAttrs,

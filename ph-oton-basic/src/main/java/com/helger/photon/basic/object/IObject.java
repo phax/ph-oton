@@ -19,7 +19,6 @@ package com.helger.photon.basic.object;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 import com.helger.commons.type.ITypedObject;
@@ -29,7 +28,7 @@ import com.helger.photon.basic.datetime.IHasLastModificationInfo;
 
 /**
  * Base interface for all objects
- * 
+ *
  * @author Philip Helger
  */
 public interface IObject extends ITypedObject <String>, IHasCreationInfo, IHasLastModificationInfo, IHasDeletionInfo
@@ -38,7 +37,7 @@ public interface IObject extends ITypedObject <String>, IHasCreationInfo, IHasLa
    * @return The <code>null</code>-able creation date time of the object
    */
   @Nullable
-  DateTime getCreationDateTime ();
+  LocalDateTime getCreationDateTime ();
 
   /**
    * @return The user ID who created the object. May be <code>null</code> in
@@ -54,20 +53,9 @@ public interface IObject extends ITypedObject <String>, IHasCreationInfo, IHasLa
   boolean isDeleted ();
 
   /**
-   * Check if the object was deleted at the specified date time. This is true,
-   * if the deletion time is &le; than the specified date time.
-   * 
-   * @param aDT
-   *        The time to check for deletion. May not be <code>null</code>.
-   * @return <code>true</code> if this object was deleted, <code>false</code> if
-   *         not.
-   */
-  boolean isDeleted (@Nonnull DateTime aDT);
-
-  /**
    * Check if the object was deleted at the specified local date time. This is
    * true, if the deletion time is &le; than the specified local date time.
-   * 
+   *
    * @param aDT
    *        The time to check for deletion. May not be <code>null</code>.
    * @return <code>true</code> if this object was deleted, <code>false</code> if

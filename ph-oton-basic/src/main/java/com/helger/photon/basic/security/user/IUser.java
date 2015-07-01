@@ -22,7 +22,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
@@ -30,9 +30,9 @@ import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.text.IHasDescription;
 import com.helger.commons.type.ITypedObject;
-import com.helger.datetime.IHasCreationDateTime;
-import com.helger.datetime.IHasDeletionDateTime;
-import com.helger.datetime.IHasLastModificationDateTime;
+import com.helger.datetime.domain.IHasCreationDateTime;
+import com.helger.datetime.domain.IHasDeletionDateTime;
+import com.helger.datetime.domain.IHasLastModificationDateTime;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.basic.security.CSecurity;
 import com.helger.photon.basic.security.password.hash.PasswordHash;
@@ -104,7 +104,7 @@ public interface IUser extends ITypedObject <String>, IHasDisplayName, IHasDescr
    * @since 2.4.2
    */
   @Nullable
-  DateTime getLastLoginDateTime ();
+  LocalDateTime getLastLoginDateTime ();
 
   /**
    * @return The number of times the user logged in. Always &ge; 0.

@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -45,7 +45,8 @@ public abstract class AbstractAccountingAreaObject extends AbstractBaseObject im
     m_aAccountingArea = aOther.getAccountingArea ();
   }
 
-  public AbstractAccountingAreaObject (@Nonnull final IAccountingArea aAccountingArea, @Nonnull final StubObject aObject)
+  public AbstractAccountingAreaObject (@Nonnull final IAccountingArea aAccountingArea,
+                                       @Nonnull final StubObject aObject)
   {
     this (aAccountingArea.getClient (), aAccountingArea, aObject);
   }
@@ -71,11 +72,11 @@ public abstract class AbstractAccountingAreaObject extends AbstractBaseObject im
   public AbstractAccountingAreaObject (@Nonnull final IClient aClient,
                                        @Nonnull final IAccountingArea aAccountingArea,
                                        @Nonnull @Nonempty final String sID,
-                                       @Nonnull final DateTime aCreationDT,
+                                       @Nonnull final LocalDateTime aCreationDT,
                                        @Nullable final String sCreationUserID,
-                                       @Nullable final DateTime aLastModificationDT,
+                                       @Nullable final LocalDateTime aLastModificationDT,
                                        @Nullable final String sLastModificationUserID,
-                                       @Nullable final DateTime aDeletionDT,
+                                       @Nullable final LocalDateTime aDeletionDT,
                                        @Nullable final String sDeletionUserID)
   {
     super (sID,

@@ -44,7 +44,7 @@ public final class UserTest
   public void testBasic ()
   {
     final User aUser = new User ("id1",
-                                 PDTFactory.getCurrentDateTime (),
+                                 PDTFactory.getCurrentLocalDateTime (),
                                  null,
                                  null,
                                  "MyName",
@@ -54,7 +54,7 @@ public final class UserTest
                                  "Helger",
                                  "bla",
                                  Locale.GERMANY,
-                                 PDTFactory.getCurrentDateTime (),
+                                 PDTFactory.getCurrentLocalDateTime (),
                                  0,
                                  0,
                                  null,
@@ -81,7 +81,7 @@ public final class UserTest
   public void testBasic2 ()
   {
     final User aUser = new User ("id1",
-                                 PDTFactory.getCurrentDateTime (),
+                                 PDTFactory.getCurrentLocalDateTime (),
                                  null,
                                  null,
                                  "MyName",
@@ -91,7 +91,7 @@ public final class UserTest
                                  null,
                                  null,
                                  Locale.GERMANY,
-                                 PDTFactory.getCurrentDateTime (),
+                                 PDTFactory.getCurrentLocalDateTime (),
                                  0,
                                  0,
                                  null,
@@ -127,7 +127,7 @@ public final class UserTest
   public void testMicroConversion ()
   {
     final User aUser = new User ("id1",
-                                 PDTFactory.getCurrentDateTime (),
+                                 PDTFactory.getCurrentLocalDateTime (),
                                  null,
                                  null,
                                  "MyName",
@@ -137,7 +137,7 @@ public final class UserTest
                                  "Helger",
                                  "bla",
                                  Locale.GERMANY,
-                                 PDTFactory.getCurrentDateTime (),
+                                 PDTFactory.getCurrentLocalDateTime (),
                                  0,
                                  0,
                                  CollectionHelper.newMap ("locale", "de_DE"),

@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -49,9 +49,9 @@ import com.helger.photon.basic.security.password.hash.PasswordHash;
 public class User extends MapBasedAttributeContainerAny <String>implements IUser
 {
   private final String m_sID;
-  private final DateTime m_aCreationDT;
-  private DateTime m_aLastModificationDT;
-  private DateTime m_aDeletionDT;
+  private final LocalDateTime m_aCreationDT;
+  private LocalDateTime m_aLastModificationDT;
+  private LocalDateTime m_aDeletionDT;
   private String m_sLoginName;
   private String m_sEmailAddress;
   private PasswordHash m_aPasswordHash;
@@ -59,7 +59,7 @@ public class User extends MapBasedAttributeContainerAny <String>implements IUser
   private String m_sLastName;
   private String m_sDescription;
   private Locale m_aDesiredLocale;
-  private DateTime m_aLastLoginDT;
+  private LocalDateTime m_aLastLoginDT;
   private int m_nLoginCount;
   private int m_nConsecutiveFailedLoginCount;
   private boolean m_bDeleted;
@@ -98,9 +98,9 @@ public class User extends MapBasedAttributeContainerAny <String>implements IUser
                final boolean bDisabled)
   {
     this (GlobalIDFactory.getNewPersistentStringID (),
-          PDTFactory.getCurrentDateTime (),
-          (DateTime) null,
-          (DateTime) null,
+          PDTFactory.getCurrentLocalDateTime (),
+          (LocalDateTime) null,
+          (LocalDateTime) null,
           sLoginName,
           sEmailAddress,
           aPasswordHash,
@@ -108,7 +108,7 @@ public class User extends MapBasedAttributeContainerAny <String>implements IUser
           sLastName,
           sDescription,
           aDesiredLocale,
-          (DateTime) null,
+          (LocalDateTime) null,
           0,
           0,
           aCustomAttrs,
@@ -129,9 +129,9 @@ public class User extends MapBasedAttributeContainerAny <String>implements IUser
         final boolean bDisabled)
   {
     this (sID,
-          PDTFactory.getCurrentDateTime (),
-          (DateTime) null,
-          (DateTime) null,
+          PDTFactory.getCurrentLocalDateTime (),
+          (LocalDateTime) null,
+          (LocalDateTime) null,
           sLoginName,
           sEmailAddress,
           aPasswordHash,
@@ -139,7 +139,7 @@ public class User extends MapBasedAttributeContainerAny <String>implements IUser
           sLastName,
           sDescription,
           aDesiredLocale,
-          (DateTime) null,
+          (LocalDateTime) null,
           0,
           0,
           aCustomAttrs,
@@ -186,9 +186,9 @@ public class User extends MapBasedAttributeContainerAny <String>implements IUser
    *        <code>true</code> if the user is disabled
    */
   User (@Nonnull @Nonempty final String sID,
-        @Nonnull final DateTime aCreationDT,
-        @Nullable final DateTime aLastModificationDT,
-        @Nullable final DateTime aDeletionDT,
+        @Nonnull final LocalDateTime aCreationDT,
+        @Nullable final LocalDateTime aLastModificationDT,
+        @Nullable final LocalDateTime aDeletionDT,
         @Nonnull @Nonempty final String sLoginName,
         @Nullable final String sEmailAddress,
         @Nonnull final PasswordHash aPasswordHash,
@@ -196,7 +196,7 @@ public class User extends MapBasedAttributeContainerAny <String>implements IUser
         @Nullable final String sLastName,
         @Nullable final String sDescription,
         @Nullable final Locale aDesiredLocale,
-        @Nullable final DateTime aLastLoginDT,
+        @Nullable final LocalDateTime aLastLoginDT,
         @Nonnegative final int nLoginCount,
         @Nonnegative final int nConsecutiveFailedLoginCount,
         @Nullable final Map <String, ?> aCustomAttrs,
@@ -245,24 +245,24 @@ public class User extends MapBasedAttributeContainerAny <String>implements IUser
   }
 
   @Nonnull
-  public DateTime getCreationDateTime ()
+  public LocalDateTime getCreationDateTime ()
   {
     return m_aCreationDT;
   }
 
   @Nullable
-  public DateTime getLastModificationDateTime ()
+  public LocalDateTime getLastModificationDateTime ()
   {
     return m_aLastModificationDT;
   }
 
   void updateLastModified ()
   {
-    m_aLastModificationDT = PDTFactory.getCurrentDateTime ();
+    m_aLastModificationDT = PDTFactory.getCurrentLocalDateTime ();
   }
 
   @Nullable
-  public DateTime getDeletionDateTime ()
+  public LocalDateTime getDeletionDateTime ()
   {
     return m_aDeletionDT;
   }
@@ -386,7 +386,7 @@ public class User extends MapBasedAttributeContainerAny <String>implements IUser
   }
 
   @Nullable
-  public DateTime getLastLoginDateTime ()
+  public LocalDateTime getLastLoginDateTime ()
   {
     return m_aLastLoginDT;
   }
@@ -405,7 +405,7 @@ public class User extends MapBasedAttributeContainerAny <String>implements IUser
 
   void onSuccessfulLogin ()
   {
-    m_aLastLoginDT = PDTFactory.getCurrentDateTime ();
+    m_aLastLoginDT = PDTFactory.getCurrentLocalDateTime ();
     m_nLoginCount++;
     m_nConsecutiveFailedLoginCount = 0;
   }
@@ -432,7 +432,7 @@ public class User extends MapBasedAttributeContainerAny <String>implements IUser
     if (bDeleted == m_bDeleted)
       return EChange.UNCHANGED;
     m_bDeleted = bDeleted;
-    m_aDeletionDT = bDeleted ? PDTFactory.getCurrentDateTime () : null;
+    m_aDeletionDT = bDeleted ? PDTFactory.getCurrentLocalDateTime () : null;
     return EChange.CHANGED;
   }
 

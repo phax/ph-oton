@@ -17,9 +17,12 @@
 package com.helger.photon.basic.object;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
+import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
 
@@ -30,41 +33,77 @@ import com.helger.commons.microdom.convert.IMicroTypeConverter;
  */
 public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConverter
 {
-  private static final String ATTR_ID = "id";
-  private static final String ATTR_CREATIONDT = "creationdt";
-  private static final String ATTR_CREATIONUSERID = "creationuserid";
-  private static final String ATTR_LASTMODDT = "lastmoddt";
-  private static final String ATTR_LASTMODUSERID = "lastmoduserid";
-  private static final String ATTR_DELETIONDT = "deletiondt";
-  private static final String ATTR_DELETIONUSERID = "deletionuserid";
+  protected static final String ATTR_ID = "id";
+  protected static final String ATTR_CREATIONLDT = "creationldt";
+  protected static final String ATTR_CREATIONUSERID = "creationuserid";
+  protected static final String ATTR_LASTMODLDT = "lastmodldt";
+  protected static final String ATTR_LASTMODUSERID = "lastmoduserid";
+  protected static final String ATTR_DELETIONLDT = "deletionldt";
+  protected static final String ATTR_DELETIONUSERID = "deletionuserid";
 
   public static final void setObjectFields (@Nonnull final IObject aValue, @Nonnull final IMicroElement aElement)
   {
     aElement.setAttribute (ATTR_ID, aValue.getID ());
-    aElement.setAttributeWithConversion (ATTR_CREATIONDT, aValue.getCreationDateTime ());
+    aElement.setAttributeWithConversion (ATTR_CREATIONLDT, aValue.getCreationDateTime ());
     aElement.setAttribute (ATTR_CREATIONUSERID, aValue.getCreationUserID ());
-    aElement.setAttributeWithConversion (ATTR_LASTMODDT, aValue.getLastModificationDateTime ());
+    aElement.setAttributeWithConversion (ATTR_LASTMODLDT, aValue.getLastModificationDateTime ());
     aElement.setAttribute (ATTR_LASTMODUSERID, aValue.getLastModificationUserID ());
-    aElement.setAttributeWithConversion (ATTR_DELETIONDT, aValue.getDeletionDateTime ());
+    aElement.setAttributeWithConversion (ATTR_DELETIONLDT, aValue.getDeletionDateTime ());
     aElement.setAttribute (ATTR_DELETIONUSERID, aValue.getDeletionUserID ());
+  }
+
+  /**
+   * For migration purposes - read LocalDateTime - if no present fall back to
+   * DateTime
+   *
+   * @param aElement
+   *        Element
+   * @param sLDTName
+   *        new local date time element name
+   * @param sDTName
+   *        old date time element name
+   * @return May be <code>null</code>.
+   */
+  @Nullable
+  @ContainsSoftMigration
+  protected static LocalDateTime readAsLocalDateTime (@Nonnull final IMicroElement aElement,
+                                                      @Nonnull final String sLDTName,
+                                                      @Nonnull final String sDTName)
+  {
+    LocalDateTime aLDT = aElement.getAttributeValueWithConversion (sLDTName, LocalDateTime.class);
+    if (aLDT == null)
+    {
+      final DateTime aDT = aElement.getAttributeValueWithConversion (sDTName, DateTime.class);
+      if (aDT != null)
+        aLDT = aDT.toLocalDateTime ();
+    }
+    return aLDT;
   }
 
   @Nonnull
   public static final StubObject getStubObject (@Nonnull final IMicroElement aElement)
   {
+    // ID
     final String sID = aElement.getAttributeValue (ATTR_ID);
-    final DateTime aCreationDT = aElement.getAttributeValueWithConversion (ATTR_CREATIONDT, DateTime.class);
+
+    // Creation
+    final LocalDateTime aCreationLDT = readAsLocalDateTime (aElement, ATTR_CREATIONLDT, "creationdt");
     final String sCreationUserID = aElement.getAttributeValue (ATTR_CREATIONUSERID);
-    final DateTime aLastModificationDT = aElement.getAttributeValueWithConversion (ATTR_LASTMODDT, DateTime.class);
+
+    // Last modification
+    final LocalDateTime aLastModificationLDT = readAsLocalDateTime (aElement, ATTR_LASTMODLDT, "lastmodldt");
     final String sLastModificationUserID = aElement.getAttributeValue (ATTR_LASTMODUSERID);
-    final DateTime aDeletionDT = aElement.getAttributeValueWithConversion (ATTR_DELETIONDT, DateTime.class);
+
+    // Deletion
+    final LocalDateTime aDeletionLDT = readAsLocalDateTime (aElement, ATTR_DELETIONLDT, "deletiondt");
     final String sDeletionUserID = aElement.getAttributeValue (ATTR_DELETIONUSERID);
+
     return new StubObject (sID,
-                           aCreationDT,
+                           aCreationLDT,
                            sCreationUserID,
-                           aLastModificationDT,
+                           aLastModificationLDT,
                            sLastModificationUserID,
-                           aDeletionDT,
+                           aDeletionLDT,
                            sDeletionUserID);
   }
 }

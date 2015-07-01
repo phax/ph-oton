@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
@@ -44,11 +43,11 @@ import com.helger.photon.basic.security.login.LoggedInUserManager;
 public abstract class AbstractBaseObject implements IObject
 {
   private final String m_sID;
-  private final DateTime m_aCreationDT;
+  private final LocalDateTime m_aCreationDT;
   private final String m_sCreationUserID;
-  private DateTime m_aLastModificationDT;
+  private LocalDateTime m_aLastModificationDT;
   private String m_sLastModificationUserID;
-  private DateTime m_aDeletionDT;
+  private LocalDateTime m_aDeletionDT;
   private String m_sDeletionUserID;
 
   public AbstractBaseObject (@Nonnull final IObject aObject)
@@ -63,11 +62,11 @@ public abstract class AbstractBaseObject implements IObject
   }
 
   public AbstractBaseObject (@Nonnull @Nonempty final String sID,
-                             @Nullable final DateTime aCreationDT,
+                             @Nullable final LocalDateTime aCreationDT,
                              @Nullable final String sCreationUserID,
-                             @Nullable final DateTime aLastModificationDT,
+                             @Nullable final LocalDateTime aLastModificationDT,
                              @Nullable final String sLastModificationUserID,
-                             @Nullable final DateTime aDeletionDT,
+                             @Nullable final LocalDateTime aDeletionDT,
                              @Nullable final String sDeletionUserID)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
@@ -87,7 +86,7 @@ public abstract class AbstractBaseObject implements IObject
   }
 
   @Nullable
-  public final DateTime getCreationDateTime ()
+  public final LocalDateTime getCreationDateTime ()
   {
     return m_aCreationDT;
   }
@@ -99,7 +98,7 @@ public abstract class AbstractBaseObject implements IObject
   }
 
   @Nullable
-  public final DateTime getLastModificationDateTime ()
+  public final LocalDateTime getLastModificationDateTime ()
   {
     return m_aLastModificationDT;
   }
@@ -118,10 +117,10 @@ public abstract class AbstractBaseObject implements IObject
       // No user is logged in- use the internal guest user ID
       sCurrentUserID = CSecurity.USER_ID_NONE_LOGGED_IN;
     }
-    setLastModification (PDTFactory.getCurrentDateTime (), sCurrentUserID);
+    setLastModification (PDTFactory.getCurrentLocalDateTime (), sCurrentUserID);
   }
 
-  public final void setLastModification (@Nonnull final DateTime aLastModificationDT,
+  public final void setLastModification (@Nonnull final LocalDateTime aLastModificationDT,
                                          @Nonnull @Nonempty final String sLastModificationUserID)
   {
     ValueEnforcer.notNull (aLastModificationDT, "LastModificationDT");
@@ -135,7 +134,7 @@ public abstract class AbstractBaseObject implements IObject
   }
 
   @Nullable
-  public final DateTime getDeletionDateTime ()
+  public final LocalDateTime getDeletionDateTime ()
   {
     return m_aDeletionDT;
   }
@@ -149,11 +148,11 @@ public abstract class AbstractBaseObject implements IObject
   @Nonnull
   public final EChange setDeletionNow ()
   {
-    return setDeletion (PDTFactory.getCurrentDateTime (), LoggedInUserManager.getInstance ().getCurrentUserID ());
+    return setDeletion (PDTFactory.getCurrentLocalDateTime (), LoggedInUserManager.getInstance ().getCurrentUserID ());
   }
 
   @Nonnull
-  public final EChange setDeletion (@Nonnull final DateTime aDeletionDT,
+  public final EChange setDeletion (@Nonnull final LocalDateTime aDeletionDT,
                                     @Nonnull @Nonempty final String sDeletionUserID)
   {
     ValueEnforcer.notNull (aDeletionDT, "DeletionDT");
@@ -173,11 +172,12 @@ public abstract class AbstractBaseObject implements IObject
   @Nonnull
   public final EChange setUndeletionNow ()
   {
-    return setUndeletion (PDTFactory.getCurrentDateTime (), LoggedInUserManager.getInstance ().getCurrentUserID ());
+    return setUndeletion (PDTFactory.getCurrentLocalDateTime (),
+                          LoggedInUserManager.getInstance ().getCurrentUserID ());
   }
 
   @Nonnull
-  public final EChange setUndeletion (@Nonnull final DateTime aUndeletionDT,
+  public final EChange setUndeletion (@Nonnull final LocalDateTime aUndeletionDT,
                                       @Nonnull @Nonempty final String sUndeletionUserID)
   {
     ValueEnforcer.notNull (aUndeletionDT, "UndeletionDT");
@@ -200,16 +200,10 @@ public abstract class AbstractBaseObject implements IObject
     return m_aDeletionDT != null;
   }
 
-  public final boolean isDeleted (@Nonnull final DateTime aDT)
-  {
-    ValueEnforcer.notNull (aDT, "DateTime");
-    return m_aDeletionDT != null && PDTHelper.isLessOrEqual (m_aDeletionDT, aDT);
-  }
-
   public final boolean isDeleted (@Nonnull final LocalDateTime aDT)
   {
     ValueEnforcer.notNull (aDT, "DateTime");
-    return isDeleted (PDTFactory.createDateTime (aDT));
+    return m_aDeletionDT != null && PDTHelper.isLessOrEqual (m_aDeletionDT, aDT);
   }
 
   @Override

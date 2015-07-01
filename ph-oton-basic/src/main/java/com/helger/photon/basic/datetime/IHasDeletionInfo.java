@@ -18,7 +18,7 @@ package com.helger.photon.basic.datetime;
 
 import javax.annotation.Nullable;
 
-import com.helger.datetime.IHasDeletionDateTime;
+import com.helger.datetime.domain.IHasDeletionDateTime;
 
 /**
  * Base interface for an object that has a date time and a user ID.
