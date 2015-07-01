@@ -43,8 +43,38 @@ import com.helger.html.js.builder.jquery.IJQuerySelector;
 import com.helger.html.js.builder.jquery.JQuerySelector;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 
+/**
+ * Bootstrap Tooltip
+ * 
+ * @author Philip Helger
+ */
 public class BootstrapTooltip implements IHCNodeBuilder
 {
+  /**
+   * This event fires immediately when the show instance method is called.
+   */
+  public static final String JS_EVENT_SHOW = "show.bs.tooltip";
+  /**
+   * This event is fired when the tooltip has been made visible to the user
+   * (will wait for CSS transitions to complete).
+   */
+  public static final String JS_EVENT_SHOWN = "shown.bs.tooltip";
+  /**
+   * This event is fired immediately when the hide instance method has been
+   * called.
+   */
+  public static final String JS_EVENT_HIDE = "hide.bs.tooltip";
+  /**
+   * This event is fired when the tooltip has finished being hidden from the
+   * user (will wait for CSS transitions to complete).
+   */
+  public static final String JS_EVENT_HIDDEN = "hidden.bs.tooltip";
+  /**
+   * This event is fired after the show.bs.tooltip event when the tooltip
+   * template has been added to the DOM.
+   */
+  public static final String JS_EVENT_INSERTED = "inserted.bs.tooltip";
+
   public static final boolean DEFAULT_ANIMATION = true;
   public static final boolean DEFAULT_HTML = false;
   public static final EBootstrapTooltipPosition DEFAULT_PLACEMENT = EBootstrapTooltipPosition.TOP;

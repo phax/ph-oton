@@ -34,6 +34,26 @@ import com.helger.photon.bootstrap3.base.BootstrapCaret;
 
 public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
 {
+  /**
+   * This event fires immediately when the show instance method is called.
+   */
+  public static final String JS_EVENT_SHOW = "show.bs.dropdown";
+  /**
+   * This event is fired when the dropdown has been made visible to the user
+   * (will wait for CSS transitions, to complete).
+   */
+  public static final String JS_EVENT_SHOWN = "shown.bs.dropdown";
+  /**
+   * This event is fired immediately when the hide instance method has been
+   * called.
+   */
+  public static final String JS_EVENT_HIDE = "hide.bs.dropdown";
+  /**
+   * This event is fired when the dropdown has finished being hidden from the
+   * user (will wait for CSS transitions, to complete).
+   */
+  public static final String JS_EVENT_HIDDEN = "hidden.bs.dropdown";
+
   public BootstrapDropdown (@Nonnull final EBootstrapDropdownType eDropdownType,
                             @Nonnull final IHCElementWithChildren <?> aSelector,
                             @Nonnull final BootstrapDropdownMenu aMenu)

@@ -41,14 +41,36 @@ import com.helger.photon.bootstrap3.base.BootstrapCloseIcon;
 
 public class BootstrapModal implements IHCNodeBuilder, IHasID <String>
 {
+  /**
+   * This event fires immediately when the show instance method is called. If
+   * caused by a click, the clicked element is available as the relatedTarget
+   * property of the event.
+   */
+  public static final String JS_EVENT_SHOW = "show.bs.modal";
+  /**
+   * This event is fired when the modal has been made visible to the user (will
+   * wait for CSS transitions to complete). If caused by a click, the clicked
+   * element is available as the relatedTarget property of the event.
+   */
+  public static final String JS_EVENT_SHOWN = "shown.bs.modal";
+  /**
+   * This event is fired immediately when the hide instance method has been
+   * called.
+   */
+  public static final String JS_EVENT_HIDE = "hide.bs.modal";
+  /**
+   * This event is fired when the modal has finished being hidden from the user
+   * (will wait for CSS transitions to complete).
+   */
+  public static final String JS_EVENT_HIDDEN = "hidden.bs.modal";
+  /**
+   * This event is fired when the modal has loaded content using the remote
+   * option.
+   */
+  public static final String JS_EVENT_LOADED = "loaded.bs.modal";
+
   public static final boolean DEFAULT_FADE = true;
   public static final boolean DEFAULT_SHOW_CLOSE = true;
-
-  public static final String JS_EVENT_SHOW = "show.bs.modal";
-  public static final String JS_EVENT_SHOWN = "shown.bs.modal";
-  public static final String JS_EVENT_HIDE = "hide.bs.modal";
-  public static final String JS_EVENT_HIDDEN = "hidden.bs.modal";
-  public static final String JS_EVENT_LOADED = "loaded.bs.modal";
 
   private final String m_sID;
   private final EBootstrapModalSize m_eSize;
@@ -291,5 +313,18 @@ public class BootstrapModal implements IHCNodeBuilder, IHasID <String>
   public JSInvocation jsModalHide ()
   {
     return jsModal ().arg ("hide");
+  }
+
+  /**
+   * Readjusts the modal's positioning to counter a scrollbar in case one should
+   * appear, which would make the modal jump to the left. Only needed when the
+   * height of the modal changes while it is open.
+   *
+   * @return JS invocation
+   */
+  @Nonnull
+  public JSInvocation jsModalHandleUpdate ()
+  {
+    return jsModal ().arg ("handleUpdate");
   }
 }
