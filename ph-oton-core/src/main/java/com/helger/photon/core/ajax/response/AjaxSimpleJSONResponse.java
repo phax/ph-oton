@@ -22,6 +22,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.mime.CMimeType;
+import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.json.IJson;
 
@@ -31,12 +33,12 @@ import com.helger.json.IJson;
  * @author Philip Helger
  */
 @Immutable
-public class AjaxSimpleResponse implements IAjaxResponse
+public class AjaxSimpleJSONResponse implements IAjaxResponse
 {
   private final boolean m_bSuccess;
   private final IJson m_aValue;
 
-  public AjaxSimpleResponse (final boolean bSuccess, @Nullable final IJson aValue)
+  public AjaxSimpleJSONResponse (final boolean bSuccess, @Nullable final IJson aValue)
   {
     m_bSuccess = bSuccess;
     m_aValue = aValue;
@@ -59,7 +61,13 @@ public class AjaxSimpleResponse implements IAjaxResponse
   }
 
   @Nonnull
-  public String getSerializedAsJSON (final boolean bIndentAndAlign)
+  public IMimeType getMimeType ()
+  {
+    return CMimeType.APPLICATION_JSON;
+  }
+
+  @Nonnull
+  public String getResponseAsString (final boolean bIndentAndAlign)
   {
     return m_aValue == null ? "" : m_aValue.getAsString ();
   }
@@ -71,7 +79,7 @@ public class AjaxSimpleResponse implements IAjaxResponse
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final AjaxSimpleResponse rhs = (AjaxSimpleResponse) o;
+    final AjaxSimpleJSONResponse rhs = (AjaxSimpleJSONResponse) o;
     return EqualsHelper.equals (m_aValue, rhs.m_aValue);
   }
 

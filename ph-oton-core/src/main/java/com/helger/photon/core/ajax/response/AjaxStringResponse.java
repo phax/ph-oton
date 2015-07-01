@@ -20,7 +20,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -34,11 +36,13 @@ public class AjaxStringResponse implements IAjaxResponse
 {
   private final boolean m_bSuccess;
   private final String m_sValue;
+  private final IMimeType m_aMimeType;
 
-  public AjaxStringResponse (final boolean bSuccess, @Nullable final String sValue)
+  public AjaxStringResponse (final boolean bSuccess, @Nullable final String sValue, @Nonnull final IMimeType aMimeType)
   {
     m_bSuccess = bSuccess;
     m_sValue = StringHelper.getNotNull (sValue);
+    m_aMimeType = ValueEnforcer.notNull (aMimeType, "MimeType");
   }
 
   public boolean isSuccess ()
@@ -52,7 +56,13 @@ public class AjaxStringResponse implements IAjaxResponse
   }
 
   @Nonnull
-  public String getSerializedAsJSON (final boolean bIndentAndAlign)
+  public IMimeType getMimeType ()
+  {
+    return m_aMimeType;
+  }
+
+  @Nonnull
+  public String getResponseAsString (final boolean bIndentAndAlign)
   {
     return m_sValue;
   }

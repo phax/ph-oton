@@ -35,7 +35,7 @@ import com.helger.json.impl.JsonArray;
 import com.helger.json.impl.JsonObject;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutorWithContext;
 import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
-import com.helger.photon.core.ajax.response.AjaxSimpleResponse;
+import com.helger.photon.core.ajax.response.AjaxSimpleJSONResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
@@ -264,6 +264,6 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
       ret.add (aDatum.getAsJson ());
 
     // Use the simple response, because the response layout is predefined!
-    return new AjaxSimpleResponse (true, ret);
+    return new AjaxSimpleJSONResponse (true, ret);
   }
 }

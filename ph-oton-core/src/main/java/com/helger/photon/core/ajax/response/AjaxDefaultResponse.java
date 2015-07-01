@@ -24,6 +24,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.mime.CMimeType;
+import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCHasChildren;
 import com.helger.html.hc.IHCNode;
@@ -171,7 +173,13 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
   }
 
   @Nonnull
-  public String getSerializedAsJSON (final boolean bIndentAndAlign)
+  public IMimeType getMimeType ()
+  {
+    return CMimeType.APPLICATION_JSON;
+  }
+
+  @Nonnull
+  public String getResponseAsString (final boolean bIndentAndAlign)
   {
     final JsonObject aAssocArray = new JsonObject ();
     aAssocArray.add (PROPERTY_SUCCESS, m_bSuccess);

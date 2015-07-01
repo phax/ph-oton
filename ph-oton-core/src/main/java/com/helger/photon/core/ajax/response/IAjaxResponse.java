@@ -18,22 +18,29 @@ package com.helger.photon.core.ajax.response;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.mime.IMimeType;
 import com.helger.commons.state.ISuccessIndicator;
 
 /**
  * Base interface for an Ajax response with a JSON representation.
- * 
+ *
  * @author Philip Helger
  */
 public interface IAjaxResponse extends ISuccessIndicator
 {
   /**
+   * @return The MIME type to be returned.
+   */
+  @Nonnull
+  IMimeType getMimeType ();
+
+  /**
    * Get the Ajax response as JSON
-   * 
+   *
    * @param bIndentAndAlign
    *        <code>true</code> if the JSON code should be indented and aligned
    * @return Never <code>null</code>.
    */
   @Nonnull
-  String getSerializedAsJSON (boolean bIndentAndAlign);
+  String getResponseAsString (boolean bIndentAndAlign);
 }

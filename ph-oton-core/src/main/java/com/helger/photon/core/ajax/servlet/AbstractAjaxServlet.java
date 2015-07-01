@@ -31,7 +31,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.mime.CMimeType;
+import com.helger.commons.mime.IMimeType;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
@@ -165,13 +165,16 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
         if (s_aLogger.isTraceEnabled ())
           s_aLogger.trace ("  AJAX Result: " + aResult);
 
-        // Convert to JSON String
-        final String sResultJSON = aResult.getSerializedAsJSON (GlobalDebug.isDebugMode ());
+        // Get the return MIME type to use
+        final IMimeType aResultMimeType = aResult.getMimeType ();
+
+        // Convert to (JSON) String
+        final String sResultJSON = aResult.getResponseAsString (GlobalDebug.isDebugMode ());
 
         // Do not cache the result!
         aUnifiedResponse.disableCaching ()
                         .setContentAndCharset (sResultJSON, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
-                        .setMimeType (CMimeType.APPLICATION_JSON);
+                        .setMimeType (aResultMimeType);
 
         // Remember the time
         s_aStatsTimer.addTime (sAjaxFunctionName, aSW.stopAndGetMillis ());
