@@ -1,8 +1,8 @@
 /**
  * Schema.js
  *
- * Copyright, Moxiecode Systems AB
  * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
  *
  * License: http://www.tinymce.com/license
  * Contributing: http://www.tinymce.com/contributing
@@ -304,6 +304,9 @@ define("tinymce/html/Schema", [
 
 		// Caption can't have tables
 		delete schema.caption.children.table;
+
+		// Delete scripts by default due to possible XSS
+		delete schema.script;
 
 		// TODO: LI:s can only have value if parent is OL
 

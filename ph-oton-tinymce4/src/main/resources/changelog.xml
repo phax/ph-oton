@@ -18,6 +18,11 @@
 
 -->
 <changelog xmlns="http://www.helger.com/xsd/changelog/1.0" version="1.0" component="ph-oton-tinymce4">
+  <entry date="2015-07-01" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to TinyMCE 4.2.1</text>
+    </change>
+  </entry>
   <entry date="2015-05-08" category="tech" action="update">
     <change>
       <text locale="en">Updated to TinyMCE 4.1.10</text>
