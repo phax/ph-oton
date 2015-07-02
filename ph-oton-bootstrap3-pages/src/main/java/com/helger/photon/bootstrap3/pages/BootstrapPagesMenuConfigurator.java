@@ -22,10 +22,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.filter.IFilter;
 import com.helger.photon.basic.app.menu.IMenuItem;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
-import com.helger.photon.basic.app.menu.IMenuObject;
+import com.helger.photon.basic.app.menu.IMenuObjectFilter;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.photon.basic.migration.SystemMigrationManager;
@@ -129,7 +128,7 @@ public final class BootstrapPagesMenuConfigurator
   @Nonnull
   public static <WPECTYPE extends IWebPageExecutionContext> IMenuItemPage addMonitoringItems (@Nonnull final IMenuTree aMenuTree,
                                                                                               @Nonnull final IMenuItem aParent,
-                                                                                              @Nullable final IFilter <IMenuObject> aDisplayFilter)
+                                                                                              @Nullable final IMenuObjectFilter aDisplayFilter)
   {
     return BootstrapPagesMenuConfigurator.<WPECTYPE> addMonitoringItems (aMenuTree,
                                                                          aParent,
@@ -145,7 +144,7 @@ public final class BootstrapPagesMenuConfigurator
   @Nonnull
   public static <WPECTYPE extends IWebPageExecutionContext> IMenuItemPage addMonitoringItems (@Nonnull final IMenuTree aMenuTree,
                                                                                               @Nonnull final IMenuItem aParent,
-                                                                                              @Nullable final IFilter <IMenuObject> aDisplayFilter,
+                                                                                              @Nullable final IMenuObjectFilter aDisplayFilter,
                                                                                               @Nullable final IAuditManager aAuditMgr,
                                                                                               @Nullable final FailedMailQueue aFailedMailQueue,
                                                                                               @Nullable final ILockManager <String> aLockManager,
@@ -228,7 +227,7 @@ public final class BootstrapPagesMenuConfigurator
   @Nonnull
   public static <WPECTYPE extends IWebPageExecutionContext> IMenuItemPage addSecurityItems (@Nonnull final IMenuTree aMenuTree,
                                                                                             @Nonnull final IMenuItem aParent,
-                                                                                            @Nullable final IFilter <IMenuObject> aDisplayFilter,
+                                                                                            @Nullable final IMenuObjectFilter aDisplayFilter,
                                                                                             @Nonnull final Locale aDefaultLocale)
   {
     final IMenuItemPage aAdminSecurity = aMenuTree.createItem (aParent,
@@ -250,7 +249,7 @@ public final class BootstrapPagesMenuConfigurator
   @Nonnull
   public static <WPECTYPE extends IWebPageExecutionContext> IMenuItemPage addSettingsItems (@Nonnull final IMenuTree aMenuTree,
                                                                                             @Nonnull final IMenuItem aParent,
-                                                                                            @Nullable final IFilter <IMenuObject> aDisplayFilter)
+                                                                                            @Nullable final IMenuObjectFilter aDisplayFilter)
   {
     return BootstrapPagesMenuConfigurator.<WPECTYPE> addSettingsItems (aMenuTree,
                                                                        aParent,
@@ -261,7 +260,7 @@ public final class BootstrapPagesMenuConfigurator
   @Nonnull
   public static <WPECTYPE extends IWebPageExecutionContext> IMenuItemPage addSettingsItems (@Nonnull final IMenuTree aMenuTree,
                                                                                             @Nonnull final IMenuItem aParent,
-                                                                                            @Nullable final IFilter <IMenuObject> aDisplayFilter,
+                                                                                            @Nullable final IMenuObjectFilter aDisplayFilter,
                                                                                             @Nullable final NamedSMTPSettingsManager aNamedSMTPSettingsMgr)
   {
     final IMenuItemPage aAdminSettings = aMenuTree.createItem (aParent,
@@ -291,7 +290,7 @@ public final class BootstrapPagesMenuConfigurator
   @Nonnull
   public static <WPECTYPE extends IWebPageExecutionContext> IMenuItemPage addSysInfoItems (@Nonnull final IMenuTree aMenuTree,
                                                                                            @Nonnull final IMenuItem aParent,
-                                                                                           @Nullable final IFilter <IMenuObject> aDisplayFilter)
+                                                                                           @Nullable final IMenuObjectFilter aDisplayFilter)
   {
     final IMenuItemPage aAdminSysInfo = aMenuTree.createItem (aParent,
                                                               new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_SYSINFO,
@@ -325,7 +324,7 @@ public final class BootstrapPagesMenuConfigurator
   @Nonnull
   public static <WPECTYPE extends IWebPageExecutionContext> IMenuItemPage addDataItems (@Nonnull final IMenuTree aMenuTree,
                                                                                         @Nonnull final IMenuItem aParent,
-                                                                                        @Nullable final IFilter <IMenuObject> aDisplayFilter)
+                                                                                        @Nullable final IMenuObjectFilter aDisplayFilter)
   {
     final IMenuItemPage aAdminData = aMenuTree.createItem (aParent,
                                                            new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_DATA,

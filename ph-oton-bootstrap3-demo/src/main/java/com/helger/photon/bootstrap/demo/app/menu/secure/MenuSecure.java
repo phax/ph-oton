@@ -23,7 +23,7 @@ import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.menu.filter.AbstractMenuObjectFilter;
-import com.helger.photon.basic.app.menu.filter.MenuItemFilterUserAssignedToUserGroup;
+import com.helger.photon.basic.app.menu.filter.MenuObjectFilterUserAssignedToUserGroup;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.pages.form.BasePageFormSavedStates;
@@ -41,7 +41,7 @@ public final class MenuSecure
   {
     // We need this additional indirection layer, as the pages are initialized
     // statically!
-    final MenuItemFilterUserAssignedToUserGroup aFilterAdministrators = new MenuItemFilterUserAssignedToUserGroup (CApp.USERGROUP_ADMINISTRATORS_ID);
+    final MenuObjectFilterUserAssignedToUserGroup aFilterAdministrators = new MenuObjectFilterUserAssignedToUserGroup (CApp.USERGROUP_ADMINISTRATORS_ID);
 
     // Administrator
     {

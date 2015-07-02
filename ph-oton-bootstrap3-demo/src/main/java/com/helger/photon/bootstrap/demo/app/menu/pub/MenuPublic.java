@@ -21,7 +21,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.basic.app.menu.filter.MenuItemFilterNotLoggedIn;
+import com.helger.photon.basic.app.menu.filter.MenuObjectFilterNoUserLoggedIn;
 import com.helger.photon.bootstrap.demo.page.pub.PagePublicLogin;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uicore.page.external.BasePageViewExternal;
@@ -36,17 +36,17 @@ public final class MenuPublic
   {
     // Not logged in
     aMenuTree.createRootItem (new PagePublicLogin (CMenuPublic.MENU_LOGIN))
-             .setDisplayFilter (MenuItemFilterNotLoggedIn.getInstance ());
-    aMenuTree.createRootSeparator ().setDisplayFilter (MenuItemFilterNotLoggedIn.getInstance ());
+             .setDisplayFilter (new MenuObjectFilterNoUserLoggedIn ());
+    aMenuTree.createRootSeparator ().setDisplayFilter (new MenuObjectFilterNoUserLoggedIn ());
 
     // Common stuff
     aMenuTree.createRootItem (new BasePageViewExternal <WebPageExecutionContext> (CMenuPublic.MENU_SITENOTICE,
-                                                                              "Site notice",
-                                                                              new ClassPathResource ("viewpages/en/site-notice.xml")));
+                                                                                  "Site notice",
+                                                                                  new ClassPathResource ("viewpages/en/site-notice.xml")));
 
     aMenuTree.createRootItem (new BasePageViewExternal <WebPageExecutionContext> (CMenuPublic.MENU_GTC,
-                                                                              "GTC",
-                                                                              new ClassPathResource ("viewpages/en/gtc.xml")))
+                                                                                  "GTC",
+                                                                                  new ClassPathResource ("viewpages/en/gtc.xml")))
              .setAttribute (CMenuPublic.FLAG_FOOTER, Boolean.TRUE);
 
     // Set default
