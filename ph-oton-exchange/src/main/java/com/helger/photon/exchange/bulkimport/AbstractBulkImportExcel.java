@@ -37,7 +37,7 @@ import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.photon.exchange.EExchangeFileType;
-import com.helger.poi.excel.ExcelReadUtils;
+import com.helger.poi.excel.ExcelReadHelper;
 
 /**
  * Abstract base implementation of a bulk import based on MS Excel files.
@@ -90,7 +90,7 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
   @Nullable
   protected static final String getCellAsString (@Nonnull final Cell aCell)
   {
-    final String sValue = ExcelReadUtils.getCellValueString (aCell);
+    final String sValue = ExcelReadHelper.getCellValueString (aCell);
     if (sValue == null)
       return null;
 
@@ -107,7 +107,7 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
                                                    @Nonnull final BulkImportResult aRes,
                                                    @Nonnull final Locale aDisplayLocale)
   {
-    final Object aValue = ExcelReadUtils.getCellValueObject (aCell);
+    final Object aValue = ExcelReadHelper.getCellValueObject (aCell);
     if (aValue == null)
       return null;
     if (aValue instanceof Integer)
@@ -130,8 +130,8 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
                                              @Nonnull final BulkImportResult aRes,
                                              @Nonnull final Locale aDisplayLocale)
   {
-    final Date aValue = ExcelReadUtils.getCellValueJavaDate (aCell);
-    if (aValue == null && ExcelReadUtils.getCellValueObject (aCell) != null)
+    final Date aValue = ExcelReadHelper.getCellValueJavaDate (aCell);
+    if (aValue == null && ExcelReadHelper.getCellValueObject (aCell) != null)
     {
       aRes.addWarning (EText.MSG_ERR_NO_DATE.getDisplayTextWithArgs (aDisplayLocale,
                                                                      Integer.toString (nRowIndex),
@@ -147,7 +147,7 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
                                                      @Nonnull final BulkImportResult aRes,
                                                      @Nonnull final Locale aDisplayLocale)
   {
-    final Object aValue = ExcelReadUtils.getCellValueObject (aCell);
+    final Object aValue = ExcelReadHelper.getCellValueObject (aCell);
     if (aValue == null)
       return ETriState.UNDEFINED;
     if (!(aValue instanceof Boolean))
