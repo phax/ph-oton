@@ -23,8 +23,8 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
-import com.helger.settings.IReadonlySettings;
 import com.helger.settings.ISettings;
+import com.helger.settings.IMutableSettings;
 import com.helger.settings.xchange.properties.SettingsPersistenceProperties;
 
 /**
@@ -37,7 +37,7 @@ public class AppSettings extends AbstractGlobalSingleton
 {
   /** The name of the file containing the settings */
   public static final String FILENAME = "webapp.properties";
-  private static final ISettings s_aSettings;
+  private static final IMutableSettings s_aSettings;
 
   static
   {
@@ -50,7 +50,7 @@ public class AppSettings extends AbstractGlobalSingleton
   {}
 
   @Nonnull
-  public static IReadonlySettings getSettingsObject ()
+  public static ISettings getSettingsObject ()
   {
     return s_aSettings;
   }
