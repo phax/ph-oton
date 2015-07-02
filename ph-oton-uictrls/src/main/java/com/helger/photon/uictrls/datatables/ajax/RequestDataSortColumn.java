@@ -96,7 +96,7 @@ final class RequestDataSortColumn implements Serializable
   {
     if (o == this)
       return true;
-    if (!(o instanceof RequestDataSortColumn))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final RequestDataSortColumn rhs = (RequestDataSortColumn) o;
     return m_nColumnIndex == rhs.m_nColumnIndex && EqualsHelper.equals (m_eSortDirection, rhs.m_eSortDirection);

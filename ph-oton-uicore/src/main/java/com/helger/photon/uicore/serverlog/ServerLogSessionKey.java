@@ -29,7 +29,7 @@ import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
 /**
  * Session singleton to create unique keys for server logging. Each generated
  * String has a length of 16.
- * 
+ *
  * @author Philip Helger
  */
 public final class ServerLogSessionKey extends AbstractSessionWebSingleton
@@ -76,7 +76,7 @@ public final class ServerLogSessionKey extends AbstractSessionWebSingleton
   {
     if (o == this)
       return true;
-    if (!(o instanceof ServerLogSessionKey))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ServerLogSessionKey rhs = (ServerLogSessionKey) o;
     return m_sGeneratedKey.equals (rhs.m_sGeneratedKey);

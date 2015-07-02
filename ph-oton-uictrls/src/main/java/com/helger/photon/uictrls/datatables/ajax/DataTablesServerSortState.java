@@ -97,7 +97,7 @@ final class DataTablesServerSortState implements Serializable
   {
     if (o == this)
       return true;
-    if (!(o instanceof DataTablesServerSortState))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final DataTablesServerSortState rhs = (DataTablesServerSortState) o;
     return Arrays.equals (m_aSortState, rhs.m_aSortState);
