@@ -35,10 +35,11 @@ public interface IDAOReadExceptionCallback extends ICallback
    * @param t
    *        The exception. Never <code>null</code>.
    * @param bInit
-   *        If <code>true</code>, it is an init action, else it is a read action
-   * @param aRes
+   *        <code>true</code> if it is an init action <code>false</code> if it
+   *        is a read action.
+   * @param aResource
    *        The resource that failed. May be <code>null</code> if no file is
-   *        defined
+   *        defined.
    */
-  void onDAOReadException (@Nonnull Throwable t, boolean bInit, @Nullable IReadableResource aRes);
+  void onDAOReadException (@Nonnull Throwable t, boolean bInit, @Nullable IReadableResource aResource);
 }
