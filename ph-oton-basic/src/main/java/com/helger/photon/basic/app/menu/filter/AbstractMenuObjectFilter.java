@@ -16,20 +16,59 @@
  */
 package com.helger.photon.basic.app.menu.filter;
 
-import com.helger.commons.filter.IFilter;
+import java.util.Locale;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
+
+import com.helger.commons.CGlobal;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.app.menu.IMenuObject;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.ReadOnlyMultilingualText;
+import com.helger.photon.basic.app.menu.IMenuObjectFilter;
 
 /**
  * Abstract base class for a menu object filter.
  *
  * @author Philip Helger
  */
-public abstract class AbstractMenuObjectFilter implements IFilter <IMenuObject>
+@NotThreadSafe
+public abstract class AbstractMenuObjectFilter implements IMenuObjectFilter
 {
+  private IMultilingualText m_aDescription;
+
+  public AbstractMenuObjectFilter ()
+  {}
+
+  @Nullable
+  public IMultilingualText getDescription ()
+  {
+    return m_aDescription;
+  }
+
+  @Nonnull
+  public AbstractMenuObjectFilter setDescription (@Nullable final String sDescription)
+  {
+    return setDescription (new ReadOnlyMultilingualText (CGlobal.LOCALE_INDEPENDENT, sDescription));
+  }
+
+  @Nonnull
+  public AbstractMenuObjectFilter setDescription (@Nullable final IMultilingualText aDescription)
+  {
+    m_aDescription = aDescription;
+    return this;
+  }
+
+  @Nullable
+  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  {
+    return m_aDescription == null ? null : m_aDescription.getText (aContentLocale);
+  }
+
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).toString ();
+    return new ToStringGenerator (this).appendIfNotNull ("description", m_aDescription).toString ();
   }
 }

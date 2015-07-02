@@ -23,7 +23,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
-import com.helger.commons.filter.IFilter;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -38,7 +37,7 @@ import com.helger.commons.string.ToStringGenerator;
 public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <IMPLTYPE>> extends MapBasedAttributeContainerAny <String>implements IMenuObject
 {
   private final String m_sID;
-  private IFilter <IMenuObject> m_aDisplayFilter;
+  private IMenuObjectFilter m_aDisplayFilter;
 
   public AbstractMenuObject (@Nonnull @Nonempty final String sID)
   {
@@ -60,14 +59,14 @@ public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <I
   }
 
   @Nonnull
-  public final IMPLTYPE setDisplayFilter (@Nullable final IFilter <IMenuObject> aDisplayFilter)
+  public final IMPLTYPE setDisplayFilter (@Nullable final IMenuObjectFilter aDisplayFilter)
   {
     m_aDisplayFilter = aDisplayFilter;
     return thisAsT ();
   }
 
   @Nullable
-  public final IFilter <IMenuObject> getDisplayFilter ()
+  public final IMenuObjectFilter getDisplayFilter ()
   {
     return m_aDisplayFilter;
   }

@@ -16,39 +16,58 @@
  */
 package com.helger.photon.basic.app.menu.filter;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.photon.basic.EPhotonBasicText;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.security.util.SecurityUtils;
 
-public final class MenuItemFilterUserHasRole extends AbstractMenuObjectFilter
+/**
+ * This filter matches any menu item if a user is logged in and if the user is
+ * assigned to the specified user group ID.
+ *
+ * @author Philip Helger
+ */
+@NotThreadSafe
+public class MenuObjectFilterUserAssignedToUserGroup extends AbstractMenuObjectFilter
 {
-  private final String m_sRoleID;
+  private final String m_sUserGroupID;
 
-  public MenuItemFilterUserHasRole (@Nonnull @Nonempty final String sRoleID)
+  public MenuObjectFilterUserAssignedToUserGroup (@Nonnull @Nonempty final String sUserGroupID)
   {
-    m_sRoleID = ValueEnforcer.notEmpty (sRoleID, "RoleID");
+    m_sUserGroupID = ValueEnforcer.notEmpty (sUserGroupID, "UserGroupID");
   }
 
   @Nonnull
   @Nonempty
-  public String getRoleID ()
+  public String getUserGroupID ()
   {
-    return m_sRoleID;
+    return m_sUserGroupID;
+  }
+
+  @Override
+  @Nullable
+  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  {
+    return EPhotonBasicText.MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP.getDisplayTextWithArgs (aContentLocale,
+                                                                                              m_sUserGroupID);
   }
 
   public boolean matchesFilter (@Nullable final IMenuObject aValue)
   {
-    return SecurityUtils.hasCurrentUserRole (m_sRoleID);
+    return SecurityUtils.isCurrentUserAssignedToUserGroup (m_sUserGroupID);
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("roleID", m_sRoleID).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("userGroupID", m_sUserGroupID).toString ();
   }
 }

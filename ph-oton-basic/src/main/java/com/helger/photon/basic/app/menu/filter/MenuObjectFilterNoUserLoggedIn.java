@@ -16,32 +16,28 @@
  */
 package com.helger.photon.basic.app.menu.filter;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.photon.basic.EPhotonBasicText;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 
 /**
- * This filter matches any menu item if a user is logged in.
- * 
+ * This filter matches any menu item if no user is logged in.
+ *
  * @author Philip Helger
  */
-public final class MenuItemFilterLoggedIn extends AbstractMenuObjectFilter
+@NotThreadSafe
+public class MenuObjectFilterNoUserLoggedIn extends AbstractMenuObjectFilter
 {
-  private static final MenuItemFilterLoggedIn s_aInstance = new MenuItemFilterLoggedIn ();
-
-  private MenuItemFilterLoggedIn ()
-  {}
-
-  @Nonnull
-  public static MenuItemFilterLoggedIn getInstance ()
+  public MenuObjectFilterNoUserLoggedIn ()
   {
-    return s_aInstance;
+    setDescription (EPhotonBasicText.MENU_OBJECT_FILTER_NO_USER_LOGGED_IN.getMultilingualText ());
   }
 
   public boolean matchesFilter (@Nullable final IMenuObject aValue)
   {
-    return LoggedInUserManager.getInstance ().isUserLoggedInInCurrentSession ();
+    return !LoggedInUserManager.getInstance ().isUserLoggedInInCurrentSession ();
   }
 }

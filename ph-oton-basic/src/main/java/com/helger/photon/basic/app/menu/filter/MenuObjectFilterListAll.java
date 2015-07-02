@@ -18,30 +18,44 @@ package com.helger.photon.basic.app.menu.filter;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.commons.annotation.Nonempty;
+import com.helger.photon.basic.EPhotonBasicText;
 import com.helger.photon.basic.app.menu.IMenuObject;
-import com.helger.photon.basic.security.login.LoggedInUserManager;
+import com.helger.photon.basic.app.menu.IMenuObjectFilter;
 
 /**
- * This filter matches any menu item if no user is logged in.
- * 
+ * This filter wraps a set of several filters and ensures that all contained
+ * filters are matching.
+ *
  * @author Philip Helger
  */
-public final class MenuItemFilterNotLoggedIn extends AbstractMenuObjectFilter
+@NotThreadSafe
+public class MenuObjectFilterListAll extends AbstractMenuObjectFilterCollection
 {
-  private static final MenuItemFilterNotLoggedIn s_aInstance = new MenuItemFilterNotLoggedIn ();
-
-  private MenuItemFilterNotLoggedIn ()
-  {}
-
-  @Nonnull
-  public static MenuItemFilterNotLoggedIn getInstance ()
+  private void _init ()
   {
-    return s_aInstance;
+    setDescription (EPhotonBasicText.MENU_OBJECT_FILTER_ALL.getMultilingualText ());
+  }
+
+  public MenuObjectFilterListAll (@Nonnull @Nonempty final Iterable <? extends IMenuObjectFilter> aFilters)
+  {
+    super (aFilters);
+    _init ();
+  }
+
+  public MenuObjectFilterListAll (@Nonnull @Nonempty final IMenuObjectFilter... aFilters)
+  {
+    super (aFilters);
+    _init ();
   }
 
   public boolean matchesFilter (@Nullable final IMenuObject aValue)
   {
-    return !LoggedInUserManager.getInstance ().isUserLoggedInInCurrentSession ();
+    for (final IMenuObjectFilter aFilter : this)
+      if (!aFilter.matchesFilter (aValue))
+        return false;
+    return true;
   }
 }

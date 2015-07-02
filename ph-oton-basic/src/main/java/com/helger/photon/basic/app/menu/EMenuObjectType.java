@@ -16,11 +16,32 @@
  */
 package com.helger.photon.basic.app.menu;
 
-public enum EMenuObjectType
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.id.IHasID;
+import com.helger.commons.lang.EnumHelper;
+
+public enum EMenuObjectType implements IHasID <String>
 {
-  SEPARATOR,
-  PAGE,
-  EXTERNAL;
+ SEPARATOR ("separator"),
+ PAGE ("page"),
+ EXTERNAL ("external");
+
+  private final String m_sID;
+
+  private EMenuObjectType (@Nonnull @Nonempty final String sID)
+  {
+    m_sID = sID;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getID ()
+  {
+    return m_sID;
+  }
 
   public boolean isSeparator ()
   {
@@ -35,5 +56,11 @@ public enum EMenuObjectType
   public boolean isExternal ()
   {
     return this == EXTERNAL;
+  }
+
+  @Nullable
+  public static EMenuObjectType getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (EMenuObjectType.class, sID);
   }
 }

@@ -19,7 +19,6 @@ package com.helger.photon.basic.app.menu;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.filter.IFilter;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.html.HC_Target;
 
@@ -34,7 +33,7 @@ public interface IMenuItemExternal extends IMenuItem
    * {@inheritDoc}
    */
   @Nonnull
-  IMenuItemExternal setDisplayFilter (@Nullable IFilter <IMenuObject> aDisplayFilter);
+  IMenuItemExternal setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
 
   /**
    * @return The referenced external URL.

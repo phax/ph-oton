@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
-import com.helger.commons.filter.IFilter;
 import com.helger.commons.id.IHasID;
 
 /**
@@ -37,7 +36,7 @@ public interface IMenuObject extends IHasID <String>, IMutableAttributeContainer
    * @return An optional filter that toggles visibility.
    */
   @Nullable
-  IFilter <IMenuObject> getDisplayFilter ();
+  IMenuObjectFilter getDisplayFilter ();
 
   /**
    * Set a new display filter for this menu object.
@@ -48,7 +47,7 @@ public interface IMenuObject extends IHasID <String>, IMutableAttributeContainer
    * @return this
    */
   @Nonnull
-  IMenuObject setDisplayFilter (@Nullable IFilter <IMenuObject> aDisplayFilter);
+  IMenuObject setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
 
   /**
    * @return <code>true</code> if either no display filter is installed, or if

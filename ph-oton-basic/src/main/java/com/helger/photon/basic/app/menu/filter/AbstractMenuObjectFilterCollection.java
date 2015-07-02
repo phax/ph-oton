@@ -16,36 +16,41 @@
  */
 package com.helger.photon.basic.app.menu.filter;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.app.menu.IMenuObject;
+import com.helger.photon.basic.app.menu.IMenuObjectFilter;
 
 /**
- * This filter wraps a set of several filters and ensures that at least one
- * contained filter ist matching.
+ * Abstract menu object filter that encapsulates a list of other menu object
+ * filters
  *
  * @author Philip Helger
  */
-public final class MenuItemFilterListOne extends AbstractMenuObjectFilter
+@NotThreadSafe
+public abstract class AbstractMenuObjectFilterCollection extends AbstractMenuObjectFilter implements Iterable <IMenuObjectFilter>
 {
-  private final List <AbstractMenuObjectFilter> m_aFilters;
+  private final List <IMenuObjectFilter> m_aFilters;
 
-  public MenuItemFilterListOne (@Nonnull @Nonempty final Collection <? extends AbstractMenuObjectFilter> aFilters)
+  public AbstractMenuObjectFilterCollection (@Nonnull @Nonempty final Iterable <? extends IMenuObjectFilter> aFilters)
   {
     ValueEnforcer.notEmpty (aFilters, "Filters");
     m_aFilters = CollectionHelper.newList (aFilters);
   }
 
-  public MenuItemFilterListOne (@Nonnull @Nonempty final AbstractMenuObjectFilter... aFilters)
+  public AbstractMenuObjectFilterCollection (@Nonnull @Nonempty final IMenuObjectFilter... aFilters)
   {
     ValueEnforcer.notEmpty (aFilters, "Filters");
     m_aFilters = CollectionHelper.newList (aFilters);
@@ -53,17 +58,29 @@ public final class MenuItemFilterListOne extends AbstractMenuObjectFilter
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <AbstractMenuObjectFilter> getAllFilters ()
+  public List <IMenuObjectFilter> getAllContainedFilters ()
   {
     return CollectionHelper.newList (m_aFilters);
   }
 
-  public boolean matchesFilter (@Nullable final IMenuObject aValue)
+  @Nonnull
+  public Iterator <IMenuObjectFilter> iterator ()
   {
-    for (final AbstractMenuObjectFilter aFilter : m_aFilters)
-      if (aFilter.matchesFilter (aValue))
-        return true;
-    return false;
+    return m_aFilters.iterator ();
+  }
+
+  @Override
+  @Nullable
+  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  {
+    // Get this display text
+    final String sThisText = super.getDisplayText (aContentLocale);
+    final List <String> aNested = new ArrayList <> ();
+    // Get the display texts of all contained filters
+    for (final IMenuObjectFilter aFilter : m_aFilters)
+      aNested.add (aFilter.getDisplayText (aContentLocale));
+    // Combine all non-empty, separated by a semicolon
+    return StringHelper.getConcatenatedOnDemand (sThisText, ": ", StringHelper.getImplodedNonEmpty ("; ", aNested));
   }
 
   @Override

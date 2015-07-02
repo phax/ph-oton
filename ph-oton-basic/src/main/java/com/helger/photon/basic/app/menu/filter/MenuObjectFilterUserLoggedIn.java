@@ -14,21 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.app.menu;
+package com.helger.photon.basic.app.menu.filter;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
+
+import com.helger.photon.basic.EPhotonBasicText;
+import com.helger.photon.basic.app.menu.IMenuObject;
+import com.helger.photon.basic.security.login.LoggedInUserManager;
 
 /**
- * Interface for a menu item separator.
+ * This filter matches any menu item if a user is logged in.
  *
  * @author Philip Helger
  */
-public interface IMenuSeparator extends IMenuObject
+@NotThreadSafe
+public class MenuObjectFilterUserLoggedIn extends AbstractMenuObjectFilter
 {
-  /**
-   * {@inheritDoc}
-   */
-  @Nonnull
-  IMenuSeparator setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
+  public MenuObjectFilterUserLoggedIn ()
+  {
+    setDescription (EPhotonBasicText.MENU_OBJECT_FILTER_USER_LOGGED_IN.getMultilingualText ());
+  }
+
+  public boolean matchesFilter (@Nullable final IMenuObject aValue)
+  {
+    return LoggedInUserManager.getInstance ().isUserLoggedInInCurrentSession ();
+  }
 }

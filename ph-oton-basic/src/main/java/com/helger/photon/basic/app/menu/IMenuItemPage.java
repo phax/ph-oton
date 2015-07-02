@@ -19,12 +19,11 @@ package com.helger.photon.basic.app.menu;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.filter.IFilter;
 import com.helger.photon.basic.app.page.IPage;
 
 /**
  * Base interface for a single menu item referencing an internal page.
- * 
+ *
  * @author Philip Helger
  */
 public interface IMenuItemPage extends IMenuItem
@@ -33,7 +32,7 @@ public interface IMenuItemPage extends IMenuItem
    * {@inheritDoc}
    */
   @Nonnull
-  IMenuItemPage setDisplayFilter (@Nullable IFilter <IMenuObject> aDisplayFilter);
+  IMenuItemPage setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
 
   /**
    * @return The referenced page object.

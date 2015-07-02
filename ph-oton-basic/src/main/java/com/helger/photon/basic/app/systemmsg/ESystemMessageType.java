@@ -25,6 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.photon.basic.EPhotonBasicText;
 
 /**
  * This enumeration defines the different system message types.
@@ -33,17 +34,17 @@ import com.helger.commons.text.display.IHasDisplayText;
  */
 public enum ESystemMessageType implements IHasID <String>, IHasDisplayText
 {
-  INFO ("i", ESystemMessageTypeText.INFO),
-  WARNING ("w", ESystemMessageTypeText.WARNING),
-  ERROR ("e", ESystemMessageTypeText.ERROR),
-  SUCCESS ("s", ESystemMessageTypeText.SUCCESS);
+  INFO ("i", EPhotonBasicText.SYSTEM_MESSAGE_TYPE_INFO),
+  WARNING ("w", EPhotonBasicText.SYSTEM_MESSAGE_TYPE_WARNING),
+  ERROR ("e", EPhotonBasicText.SYSTEM_MESSAGE_TYPE_ERROR),
+  SUCCESS ("s", EPhotonBasicText.SYSTEM_MESSAGE_TYPE_SUCCESS);
 
   public static final ESystemMessageType DEFAULT = INFO;
 
   private final String m_sID;
-  private final ESystemMessageTypeText m_eText;
+  private final EPhotonBasicText m_eText;
 
-  private ESystemMessageType (@Nonnull @Nonempty final String sID, @Nonnull final ESystemMessageTypeText aText)
+  private ESystemMessageType (@Nonnull @Nonempty final String sID, @Nonnull final EPhotonBasicText aText)
   {
     m_sID = sID;
     m_eText = aText;
