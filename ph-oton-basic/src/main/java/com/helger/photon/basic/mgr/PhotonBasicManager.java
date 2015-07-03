@@ -106,6 +106,9 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
 
     if (m_aAuditMgr != null)
     {
+      // FIXME ph-commons 6.0.1 move to "onPreDestroy" to ensure that the
+      // AuditManager is still present! Otherwise the destruction order of the
+      // singletons is relevant!
       AuditUtils.onAuditExecuteSuccess ("audit-shutdown");
       AuditUtils.setDefaultAuditor ();
       m_aAuditMgr.stop ();
