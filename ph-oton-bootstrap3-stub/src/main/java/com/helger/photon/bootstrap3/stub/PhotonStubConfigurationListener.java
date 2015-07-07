@@ -47,6 +47,7 @@ import com.helger.photon.uictrls.autonumeric.AbstractHCAutoNumeric;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
 import com.helger.web.scopes.factory.ThrowingScopeFactory;
 import com.helger.web.scopes.mgr.WebScopeManager;
+import com.helger.web.servlet.response.UnifiedResponseDefaultSettings;
 
 /**
  * This class triggers some default configuration to run ph-oton applications
@@ -129,6 +130,10 @@ public final class PhotonStubConfigurationListener implements ServletContextList
         // Disable in debug mode
         RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);
       }
+
+      // Default response headers to be added
+      UnifiedResponseDefaultSettings.setAllowMimeSniffing (false);
+      UnifiedResponseDefaultSettings.setEnableXSSFilter (true);
 
       // Set default icon set if none is defined
       if (!DefaultIcons.areDefined ())
