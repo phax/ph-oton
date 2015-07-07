@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.conversion.HCSettings;
-import com.helger.json.impl.JsonObject;
+import com.helger.json.JsonObject;
 import com.helger.photon.basic.security.login.ELoginResult;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.photon.bootstrap.demo.app.CApp;

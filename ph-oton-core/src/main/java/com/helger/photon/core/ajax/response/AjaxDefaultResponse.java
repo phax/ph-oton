@@ -38,7 +38,7 @@ import com.helger.html.hc.utils.HCSpecialNodeHandler;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.json.IJson;
-import com.helger.json.impl.JsonObject;
+import com.helger.json.JsonObject;
 import com.helger.json.serialize.JsonWriter;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;

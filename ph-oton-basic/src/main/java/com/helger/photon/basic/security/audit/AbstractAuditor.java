@@ -25,8 +25,8 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.type.ObjectType;
-import com.helger.json.impl.JsonArray;
-import com.helger.json.impl.JsonObject;
+import com.helger.json.JsonArray;
+import com.helger.json.JsonObject;
 import com.helger.photon.basic.security.login.ICurrentUserIDProvider;
 
 /**

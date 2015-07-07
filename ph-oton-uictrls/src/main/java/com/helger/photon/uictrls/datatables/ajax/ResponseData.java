@@ -31,7 +31,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.utils.IHCSpecialNodes;
 import com.helger.json.IJsonObject;
 import com.helger.json.IJsonProvider;
-import com.helger.json.impl.JsonObject;
+import com.helger.json.JsonObject;
 
 /**
  * Encapsulates the response to a single DataTables AJAX request

@@ -35,7 +35,7 @@ import com.helger.commons.type.ObjectType;
 import com.helger.datetime.PDTFactory;
 import com.helger.html.js.builder.JSArray;
 import com.helger.html.js.builder.JSAssocArray;
-import com.helger.json.impl.JsonObject;
+import com.helger.json.JsonObject;
 
 @Immutable
 public class FormState implements ITypedObject <String>, Serializable

@@ -44,7 +44,7 @@ import com.helger.html.js.builder.JSAnonymousFunction;
 import com.helger.html.js.builder.JSAssocArray;
 import com.helger.html.js.builder.JSExpr;
 import com.helger.html.js.builder.JSInvocation;
-import com.helger.json.impl.JsonObject;
+import com.helger.json.JsonObject;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.tinymce4.type.ETinyMCE4ExternalPlugin;
 import com.helger.photon.tinymce4.type.ETinyMCE4Language;

@@ -70,7 +70,7 @@ import com.helger.html.js.builder.jquery.JQueryInvocation;
 import com.helger.html.js.builder.jquery.JQuerySelector;
 import com.helger.html.js.builder.jquery.JQuerySelectorList;
 import com.helger.json.IJsonObject;
-import com.helger.json.impl.JsonObject;
+import com.helger.json.JsonObject;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.state.UIStateRegistry;

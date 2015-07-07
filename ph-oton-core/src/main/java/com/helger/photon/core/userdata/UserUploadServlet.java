@@ -32,7 +32,7 @@ import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.json.IJsonObject;
-import com.helger.json.impl.JsonObject;
+import com.helger.json.JsonObject;
 import com.helger.json.serialize.JsonWriter;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.photon.core.servletstatus.ServletStatusManager;

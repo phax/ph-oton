@@ -34,8 +34,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.js.builder.JSArray;
 import com.helger.html.js.builder.JSAssocArray;
 import com.helger.json.IJsonProvider;
-import com.helger.json.impl.JsonArray;
-import com.helger.json.impl.JsonObject;
+import com.helger.json.JsonArray;
+import com.helger.json.JsonObject;
 
 /**
  * Represents a single typeahead datum (= data record) with the minimum data
