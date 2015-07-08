@@ -25,8 +25,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.html.hc.html.HC_Target;
 import com.helger.photon.basic.app.page.IPage;
 
 /**
@@ -35,10 +37,11 @@ import com.helger.photon.basic.app.page.IPage;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class MenuItemPage extends AbstractMenuObject <MenuItemPage> implements IMenuItemPage
+public class MenuItemPage extends AbstractMenuObject <MenuItemPage>implements IMenuItemPage
 {
   private final IPage m_aPage;
   private final IHasDisplayText m_aDisplayText;
+  private String m_sTarget;
 
   public MenuItemPage (@Nonnull @Nonempty final String sItemID, @Nonnull final IPage aPage)
   {
@@ -72,6 +75,30 @@ public class MenuItemPage extends AbstractMenuObject <MenuItemPage> implements I
     return m_aDisplayText.getDisplayText (aDisplayLocale);
   }
 
+  @Nullable
+  public String getTarget ()
+  {
+    return m_sTarget;
+  }
+
+  public boolean hasTarget ()
+  {
+    return StringHelper.hasText (m_sTarget);
+  }
+
+  @Nonnull
+  public MenuItemPage setTarget (@Nullable final HC_Target aTarget)
+  {
+    return setTarget (aTarget == null ? null : aTarget.getName ());
+  }
+
+  @Nonnull
+  public MenuItemPage setTarget (@Nullable final String sTarget)
+  {
+    m_sTarget = sTarget;
+    return this;
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -92,6 +119,10 @@ public class MenuItemPage extends AbstractMenuObject <MenuItemPage> implements I
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("page", m_aPage).toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("Page", m_aPage)
+                            .append ("DisplayText", m_aDisplayText)
+                            .append ("Target", m_sTarget)
+                            .toString ();
   }
 }

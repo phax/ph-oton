@@ -48,6 +48,11 @@ public enum EMenuObjectType implements IHasID <String>
     return this == SEPARATOR;
   }
 
+  public boolean isNotSeparator ()
+  {
+    return this != SEPARATOR;
+  }
+
   public boolean isPage ()
   {
     return this == PAGE;

@@ -16,14 +16,48 @@
  */
 package com.helger.photon.basic.app.menu;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.html.hc.html.HC_Target;
 
 /**
  * Base interface for a single menu item.
- * 
+ *
  * @author Philip Helger
  */
 public interface IMenuItem extends IMenuObject, IHasDisplayText
 {
-  /* empty */
+  /**
+   * @return The (HTML) target of the link. May be <code>null</code>.
+   */
+  @Nullable
+  String getTarget ();
+
+  /**
+   * @return <code>true</code> if an explicit target is defined,
+   *         <code>false</code> otherwise.
+   */
+  boolean hasTarget ();
+
+  /**
+   * Set the (HTML) target of the link.
+   *
+   * @param eTarget
+   *        The target window. May be <code>null</code>.
+   * @return this
+   */
+  @Nonnull
+  IMenuItem setTarget (@Nullable HC_Target eTarget);
+
+  /**
+   * Set the (HTML) target of the link.
+   *
+   * @param sTarget
+   *        The name of the target window. May be <code>null</code>.
+   * @return this
+   */
+  @Nonnull
+  IMenuItem setTarget (@Nullable String sTarget);
 }

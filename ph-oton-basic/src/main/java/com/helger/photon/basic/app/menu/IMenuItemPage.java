@@ -19,6 +19,7 @@ package com.helger.photon.basic.app.menu;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.html.hc.html.HC_Target;
 import com.helger.photon.basic.app.page.IPage;
 
 /**
@@ -39,4 +40,16 @@ public interface IMenuItemPage extends IMenuItem
    */
   @Nonnull
   IPage getPage ();
+
+  /*
+   * Change return type
+   */
+  @Nonnull
+  IMenuItemPage setTarget (@Nullable HC_Target eTarget);
+
+  /*
+   * Change return type
+   */
+  @Nonnull
+  IMenuItemPage setTarget (@Nullable String sTarget);
 }

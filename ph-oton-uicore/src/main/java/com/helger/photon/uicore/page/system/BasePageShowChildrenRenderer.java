@@ -17,17 +17,17 @@
 package com.helger.photon.uicore.page.system;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.string.StringHelper;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCA;
-import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HC_Target;
+import com.helger.html.hc.impl.AbstractHCElement;
 import com.helger.photon.basic.app.menu.EMenuObjectType;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
@@ -40,9 +40,9 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *
  * @author Philip Helger
  */
-public class PageShowChildrenRenderer implements Serializable
+public class BasePageShowChildrenRenderer implements Serializable
 {
-  public PageShowChildrenRenderer ()
+  public BasePageShowChildrenRenderer ()
   {}
 
   /**
@@ -53,12 +53,12 @@ public class PageShowChildrenRenderer implements Serializable
    * @param aMenuObj
    *        The menu object about to be rendered. Never <code>null</code>.
    * @param aPreviousLI
-   *        The previous LI from the last call. May be <code>null</code>.
+   *        The previous element from the last call. May be <code>null</code>.
    */
   @OverrideOnDemand
   protected void beforeAddRenderedMenuItem (@Nonnull final IWebPageExecutionContext aWPEC,
                                             @Nonnull final IMenuObject aMenuObj,
-                                            @Nullable final HCLI aPreviousLI)
+                                            @Nullable final AbstractHCElement <?> aPreviousLI)
   {
     if (aMenuObj.getMenuObjectType () == EMenuObjectType.SEPARATOR && aPreviousLI != null)
       aPreviousLI.addStyle (CCSSProperties.MARGIN_BOTTOM.newValue ("1em"));
@@ -97,7 +97,13 @@ public class PageShowChildrenRenderer implements Serializable
   {
     if (!aMenuItemPage.matchesDisplayFilter ())
       return null;
-    final HCA ret = new HCA (aWPEC.getLinkToMenuItem (aMenuItemPage.getID ())).addChild (aMenuItemPage.getDisplayText (aWPEC.getDisplayLocale ()));
+
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+    final HCA ret = new HCA (aWPEC.getLinkToMenuItem (aMenuItemPage.getID ()));
+    // Set window target (if defined)
+    if (aMenuItemPage.hasTarget ())
+      ret.setTarget (new HC_Target (aMenuItemPage.getTarget ()));
+    ret.addChild (aMenuItemPage.getDisplayText (aDisplayLocale));
     return ret;
   }
 
@@ -118,11 +124,12 @@ public class PageShowChildrenRenderer implements Serializable
     if (!aMenuItemExternal.matchesDisplayFilter ())
       return null;
 
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCA ret = new HCA (aMenuItemExternal.getURL ());
     // Set window target (if defined)
-    if (StringHelper.hasText (aMenuItemExternal.getTarget ()))
+    if (aMenuItemExternal.hasTarget ())
       ret.setTarget (new HC_Target (aMenuItemExternal.getTarget ()));
-    ret.addChild (aMenuItemExternal.getDisplayText (aWPEC.getDisplayLocale ()));
+    ret.addChild (aMenuItemExternal.getDisplayText (aDisplayLocale));
     return ret;
   }
 
@@ -132,12 +139,11 @@ public class PageShowChildrenRenderer implements Serializable
    * @param aMenuObj
    *        The menu object just rendered before. Never <code>null</code>.
    * @param aLI
-   *        The created LI element for the passed object. May be
-   *        <code>null</code>.
+   *        The created element for the passed object. May be <code>null</code>.
    */
   @OverrideOnDemand
   protected void afterAddRenderedMenuItem (@Nonnull final IWebPageExecutionContext aWPEC,
                                            @Nonnull final IMenuObject aMenuObj,
-                                           @Nullable final HCLI aLI)
+                                           @Nullable final AbstractHCElement <?> aLI)
   {}
 }

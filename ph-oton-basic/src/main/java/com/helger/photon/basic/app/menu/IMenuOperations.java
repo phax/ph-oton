@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.callback.INonThrowingRunnableWithParameter;
 import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.url.IHasSimpleURL;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.photon.basic.app.page.IPage;
 
@@ -156,6 +157,22 @@ public interface IMenuOperations
   IMenuItemExternal createRootItem (@Nonnull String sItemID, @Nonnull ISimpleURL aURL, @Nonnull IHasDisplayText aName);
 
   /**
+   * Append a new menu item at root level.
+   *
+   * @param sItemID
+   *        The new menu item ID. May not be <code>null</code>.
+   * @param aURL
+   *        The referenced URL. May not be <code>null</code>.
+   * @param aName
+   *        The name of the menu item. May not be <code>null</code>.
+   * @return The created menu item object. Never <code>null</code>.
+   */
+  @Nonnull
+  IMenuItemExternal createRootItem (@Nonnull String sItemID,
+                                    @Nonnull IHasSimpleURL aURL,
+                                    @Nonnull IHasDisplayText aName);
+
+  /**
    * Append a new menu item below the specified parent.
    *
    * @param aParent
@@ -180,6 +197,28 @@ public interface IMenuOperations
   /**
    * Append a new menu item below the specified parent.
    *
+   * @param aParent
+   *        The parent menu item to append the item to. May not be
+   *        <code>null</code>.
+   * @param sItemID
+   *        The new menu item ID. May not be <code>null</code>.
+   * @param aURL
+   *        The referenced URL. May not be <code>null</code>.
+   * @param aName
+   *        The name of the menu item. May not be <code>null</code>.
+   * @return The created menu item object. Never <code>null</code>.
+   * @throws IllegalArgumentException
+   *         If the passed parent menu item could not be resolved
+   */
+  @Nonnull
+  IMenuItemExternal createItem (@Nonnull IMenuItem aParent,
+                                @Nonnull String sItemID,
+                                @Nonnull IHasSimpleURL aURL,
+                                @Nonnull IHasDisplayText aName);
+
+  /**
+   * Append a new menu item below the specified parent.
+   *
    * @param sParentID
    *        The parent menu item ID to append the item to. May not be
    *        <code>null</code>.
@@ -197,6 +236,28 @@ public interface IMenuOperations
   IMenuItemExternal createItem (@Nonnull String sParentID,
                                 @Nonnull String sItemID,
                                 @Nonnull ISimpleURL aURL,
+                                @Nonnull IHasDisplayText aName);
+
+  /**
+   * Append a new menu item below the specified parent.
+   *
+   * @param sParentID
+   *        The parent menu item ID to append the item to. May not be
+   *        <code>null</code>.
+   * @param sItemID
+   *        The new menu item ID. May not be <code>null</code>.
+   * @param aURL
+   *        The referenced URL. May not be <code>null</code>.
+   * @param aName
+   *        The name of the menu item. May not be <code>null</code>.
+   * @return The created menu item object. Never <code>null</code>.
+   * @throws IllegalArgumentException
+   *         If the passed parent menu item could not be resolved
+   */
+  @Nonnull
+  IMenuItemExternal createItem (@Nonnull String sParentID,
+                                @Nonnull String sItemID,
+                                @Nonnull IHasSimpleURL aURL,
                                 @Nonnull IHasDisplayText aName);
 
   /**

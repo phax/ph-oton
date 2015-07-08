@@ -19,6 +19,7 @@ package com.helger.photon.basic.app.menu;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.url.IHasSimpleURL;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.html.HC_Target;
 
@@ -36,33 +37,25 @@ public interface IMenuItemExternal extends IMenuItem
   IMenuItemExternal setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
 
   /**
-   * @return The referenced external URL.
+   * @return The URL provider used internally. Never <code>null</code>.
+   */
+  @Nonnull
+  IHasSimpleURL getURLProvider ();
+
+  /**
+   * @return The referenced external URL. Never <code>null</code>.
    */
   @Nonnull
   ISimpleURL getURL ();
 
-  /**
-   * @return The (HTML) target of the link
-   */
-  @Nullable
-  String getTarget ();
-
-  /**
-   * Set the (HTML) target of the link.
-   *
-   * @param eTarget
-   *        The target window. May be <code>null</code>.
-   * @return this
+  /*
+   * Change return type
    */
   @Nonnull
   IMenuItemExternal setTarget (@Nullable HC_Target eTarget);
 
-  /**
-   * Set the (HTML) target of the link.
-   *
-   * @param sTarget
-   *        The name of the target window. May be <code>null</code>.
-   * @return this
+  /*
+   * Change return type
    */
   @Nonnull
   IMenuItemExternal setTarget (@Nullable String sTarget);

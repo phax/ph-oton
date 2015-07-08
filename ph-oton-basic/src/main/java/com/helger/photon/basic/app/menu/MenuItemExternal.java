@@ -25,8 +25,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.url.IHasSimpleURL;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.html.HC_Target;
 
@@ -36,14 +38,14 @@ import com.helger.html.hc.html.HC_Target;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal> implements IMenuItemExternal
+public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal>implements IMenuItemExternal
 {
-  private final ISimpleURL m_aURL;
+  private final IHasSimpleURL m_aURL;
   private final IHasDisplayText m_aDisplayText;
   private String m_sTarget;
 
   public MenuItemExternal (@Nonnull @Nonempty final String sItemID,
-                           @Nonnull final ISimpleURL aURL,
+                           @Nonnull final IHasSimpleURL aURL,
                            @Nonnull final IHasDisplayText aDisplayText)
   {
     super (sItemID);
@@ -58,9 +60,15 @@ public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal> impl
   }
 
   @Nonnull
-  public ISimpleURL getURL ()
+  public IHasSimpleURL getURLProvider ()
   {
     return m_aURL;
+  }
+
+  @Nonnull
+  public ISimpleURL getURL ()
+  {
+    return m_aURL.getSimpleURL ();
   }
 
   @Nullable
@@ -73,6 +81,11 @@ public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal> impl
   public String getTarget ()
   {
     return m_sTarget;
+  }
+
+  public boolean hasTarget ()
+  {
+    return StringHelper.hasText (m_sTarget);
   }
 
   @Nonnull
@@ -108,6 +121,10 @@ public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal> impl
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("URL", m_aURL).toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("URL", m_aURL)
+                            .append ("DisplayText", m_aDisplayText)
+                            .append ("Target", m_sTarget)
+                            .toString ();
   }
 }

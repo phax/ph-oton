@@ -32,7 +32,6 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HCUL;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.basic.app.menu.IMenuItem;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
@@ -47,11 +46,11 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
   {
     private final WPECTYPE m_aWPEC;
     private final NonBlockingStack <HCUL> m_aStack;
-    private final PageShowChildrenRenderer m_aRenderer;
+    private final BasePageShowChildrenRenderer m_aRenderer;
 
     ShowChildrenCallback (@Nonnull final HCUL aUL,
                           @Nonnull final WPECTYPE aWPEC,
-                          @Nonnull final PageShowChildrenRenderer aRenderer)
+                          @Nonnull final BasePageShowChildrenRenderer aRenderer)
     {
       ValueEnforcer.notNull (aUL, "UL");
       ValueEnforcer.notNull (aWPEC, "WPEC");
@@ -128,19 +127,19 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
   }
 
   private final IMenuTree m_aMenuTree;
-  private final PageShowChildrenRenderer m_aRenderer;
+  private final BasePageShowChildrenRenderer m_aRenderer;
 
   public BasePageShowChildren (@Nonnull @Nonempty final String sID,
                                @Nonnull final IMultilingualText aName,
                                @Nonnull final IMenuTree aMenuTree)
   {
-    this (sID, aName, aMenuTree, new PageShowChildrenRenderer ());
+    this (sID, aName, aMenuTree, new BasePageShowChildrenRenderer ());
   }
 
   public BasePageShowChildren (@Nonnull @Nonempty final String sID,
                                @Nonnull final IMultilingualText aName,
                                @Nonnull final IMenuTree aMenuTree,
-                               @Nonnull final PageShowChildrenRenderer aRenderer)
+                               @Nonnull final BasePageShowChildrenRenderer aRenderer)
   {
     super (sID, aName);
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
@@ -151,13 +150,13 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
                                @Nonnull final String sName,
                                @Nonnull final IMenuTree aMenuTree)
   {
-    this (sID, sName, aMenuTree, new PageShowChildrenRenderer ());
+    this (sID, sName, aMenuTree, new BasePageShowChildrenRenderer ());
   }
 
   public BasePageShowChildren (@Nonnull @Nonempty final String sID,
                                @Nonnull final String sName,
                                @Nonnull final IMenuTree aMenuTree,
-                               @Nonnull final PageShowChildrenRenderer aRenderer)
+                               @Nonnull final BasePageShowChildrenRenderer aRenderer)
   {
     super (sID, sName);
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
@@ -177,7 +176,7 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
     final DefaultTreeItemWithID <String, IMenuObject> aMenuTreeItem = m_aMenuTree.getItemWithID (getID ());
-    if (aMenuTreeItem != null && aMenuTreeItem.getData () instanceof IMenuItem)
+    if (aMenuTreeItem != null && aMenuTreeItem.getData ().getMenuObjectType ().isNotSeparator ())
     {
       final HCUL aUL = createRootUL ();
       TreeVisitor.visitTreeItem (aMenuTreeItem, new ShowChildrenCallback <WPECTYPE> (aUL, aWPEC, m_aRenderer));

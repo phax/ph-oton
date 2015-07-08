@@ -40,6 +40,8 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
+import com.helger.commons.url.ConstantHasSimpleURL;
+import com.helger.commons.url.IHasSimpleURL;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.photon.basic.app.page.IPage;
 
@@ -137,6 +139,14 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
                                            @Nonnull final ISimpleURL aURL,
                                            @Nonnull final IHasDisplayText aName)
   {
+    return createRootItem (sItemID, new ConstantHasSimpleURL (aURL), aName);
+  }
+
+  @Nonnull
+  public IMenuItemExternal createRootItem (@Nonnull final String sItemID,
+                                           @Nonnull final IHasSimpleURL aURL,
+                                           @Nonnull final IHasDisplayText aName)
+  {
     return _createChildItem (getRootItem (), new MenuItemExternal (sItemID, aURL, aName));
   }
 
@@ -144,6 +154,15 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   public IMenuItemExternal createItem (@Nonnull final IMenuItem aParent,
                                        @Nonnull final String sItemID,
                                        @Nonnull final ISimpleURL aURL,
+                                       @Nonnull final IHasDisplayText aName)
+  {
+    return createItem (aParent, sItemID, new ConstantHasSimpleURL (aURL), aName);
+  }
+
+  @Nonnull
+  public IMenuItemExternal createItem (@Nonnull final IMenuItem aParent,
+                                       @Nonnull final String sItemID,
+                                       @Nonnull final IHasSimpleURL aURL,
                                        @Nonnull final IHasDisplayText aName)
   {
     ValueEnforcer.notNull (aParent, "Parent");
@@ -155,6 +174,15 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   public IMenuItemExternal createItem (@Nonnull final String sParentID,
                                        @Nonnull final String sItemID,
                                        @Nonnull final ISimpleURL aURL,
+                                       @Nonnull final IHasDisplayText aName)
+  {
+    return createItem (sParentID, sItemID, new ConstantHasSimpleURL (aURL), aName);
+  }
+
+  @Nonnull
+  public IMenuItemExternal createItem (@Nonnull final String sParentID,
+                                       @Nonnull final String sItemID,
+                                       @Nonnull final IHasSimpleURL aURL,
                                        @Nonnull final IHasDisplayText aName)
   {
     final DefaultTreeItemWithID <String, IMenuObject> aParentItem = getItemWithID (sParentID);
