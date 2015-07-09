@@ -740,6 +740,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
                             .append ("loggedInUsers", m_aLoggedInUsers)
                             .append ("userLoginCallbacks", m_aUserLoginCallbacks)
                             .append ("userLogoutCallbacks", m_aUserLogoutCallbacks)
+                            .append ("logoutAlreadyLoggedInUser", m_bLogoutAlreadyLoggedInUser)
                             .toString ();
   }
 }
