@@ -38,7 +38,6 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.commons.url.URLValidator;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCNode;
@@ -47,9 +46,7 @@ import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.hc.html.HCSpan;
-import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.lock.LockResult;
 import com.helger.photon.basic.security.lock.ObjectLockManager;
@@ -400,24 +397,6 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   {
     final ISimpleURL aURL = createCreateURL (aLEC).add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
     return new HCA (aURL).setTitle (sTitle).addChild (EDefaultIcon.NEW.getAsNode ());
-  }
-
-  @Nullable
-  public static IHCNode createWebLink (@Nullable final String sWebSite)
-  {
-    return createWebLink (sWebSite, HC_Target.BLANK);
-  }
-
-  @Nullable
-  public static IHCNode createWebLink (@Nullable final String sWebSite, @Nullable final HC_Target aTarget)
-  {
-    // TODO replace with HCA.createLinkedWebsite in ph-html &gt; 4.7.4
-
-    if (StringHelper.hasNoText (sWebSite))
-      return null;
-    if (!URLValidator.isValid (sWebSite))
-      return new HCTextNode (sWebSite);
-    return new HCA (sWebSite).setTarget (aTarget).addChild (sWebSite);
   }
 
   /**
