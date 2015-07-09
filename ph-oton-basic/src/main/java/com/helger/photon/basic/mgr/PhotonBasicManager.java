@@ -100,16 +100,23 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
   }
 
   @Override
-  protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
+  protected void onBeforeDestroy (@Nonnull final IScope aScopeToBeDestroyed)
   {
-    // Don't reset the FailedMailQueue, as no global scope is available anymore!
-
     if (m_aAuditMgr != null)
     {
-      // FIXME ph-commons 6.0.1 move to "onPreDestroy" to ensure that the
-      // AuditManager is still present! Otherwise the destruction order of the
-      // singletons is relevant!
+      /*
+       * Call here to ensure that the AuditManager is still present! Otherwise
+       * the destruction order of the singletons is relevant!
+       */
       AuditUtils.onAuditExecuteSuccess ("audit-shutdown");
+    }
+  }
+
+  @Override
+  protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
+  {
+    if (m_aAuditMgr != null)
+    {
       AuditUtils.setDefaultAuditor ();
       m_aAuditMgr.stop ();
     }
