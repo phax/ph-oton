@@ -62,8 +62,7 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
   public AbstractAjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
                                           @Nonnull final IFactory <? extends IAjaxExecutor> aExecutorFactory)
   {
-    if (!AjaxInvoker.isValidFunctionName (sFunctionName))
-      throw new IllegalArgumentException ("functionName");
+    ValueEnforcer.isTrue (AjaxInvoker.isValidFunctionName (sFunctionName), "Invalid Ajax functionName provided");
     m_sFunctionName = sFunctionName;
     m_aExecutorFactory = ValueEnforcer.notNull (aExecutorFactory, "ExecutorFactory");
   }
@@ -129,8 +128,8 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("functionName", m_sFunctionName)
-                                       .append ("executorFactory", m_aExecutorFactory)
+    return new ToStringGenerator (this).append ("FunctionName", m_sFunctionName)
+                                       .append ("ExecutorFactory", m_aExecutorFactory)
                                        .toString ();
   }
 }
