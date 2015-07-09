@@ -19,14 +19,14 @@ package com.helger.photon.core.action;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * Web action executor interface.
- * 
+ *
  * @author Philip Helger
  */
 public interface IActionExecutor
@@ -34,7 +34,7 @@ public interface IActionExecutor
   /**
    * Initialization method that is called before the main execution is called.
    * This can e.g be used to determine the last modification date time.
-   * 
+   *
    * @param aRequestScope
    *        The request scope to be used, to extract parameters. Never
    *        <code>null</code>.
@@ -47,11 +47,11 @@ public interface IActionExecutor
    *         the HTTP response last modification date time.
    */
   @Nullable
-  DateTime getLastModificationDateTime ();
+  LocalDateTime getLastModificationDateTime ();
 
   /**
    * Execute the action on the passed HTTP request/response.
-   * 
+   *
    * @param aRequestScope
    *        The request scope. Never <code>null</code>.
    * @param aUnifiedResponse
@@ -59,5 +59,6 @@ public interface IActionExecutor
    * @throws Throwable
    *         In case something goes wrong.
    */
-  void execute (@Nonnull IRequestWebScopeWithoutResponse aRequestScope, @Nonnull UnifiedResponse aUnifiedResponse) throws Throwable;
+  void execute (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+                @Nonnull UnifiedResponse aUnifiedResponse) throws Throwable;
 }

@@ -30,8 +30,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,10 +140,10 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   }
 
   @Nonnull
-  protected static final DateTime convertMillisToDateTimeGMT (final long nMillis)
+  protected static final LocalDateTime convertMillisToDateTimeGMT (final long nMillis)
   {
     // Round down to the nearest second for a proper compare
-    return PDTFactory.createLocalDateTimeFromMillis (getUnifiedMillis (nMillis)).toDateTime (DateTimeZone.UTC);
+    return PDTFactory.createLocalDateTimeFromMillis (getUnifiedMillis (nMillis));
   }
 
   @Override
@@ -227,7 +226,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
    */
   @OverrideOnDemand
   @Nullable
-  protected DateTime getLastModificationDateTime (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  protected LocalDateTime getLastModificationDateTime (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return null;
   }
@@ -407,7 +406,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     // Check for last-modification on GET and HEAD
     if (eHTTPMethod == EHTTPMethod.GET || eHTTPMethod == EHTTPMethod.HEAD)
     {
-      final DateTime aLastModification = getLastModificationDateTime (aRequestScope);
+      final LocalDateTime aLastModification = getLastModificationDateTime (aRequestScope);
       if (aLastModification != null)
       {
         m_aStatsHasLastModification.increment ();
@@ -416,7 +415,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         final long nRequestIfModifiedSince = aHttpRequest.getDateHeader (CHTTPHeader.IF_MODIFIED_SINCE);
         if (nRequestIfModifiedSince >= 0)
         {
-          final DateTime aRequestIfModifiedSince = convertMillisToDateTimeGMT (nRequestIfModifiedSince);
+          final LocalDateTime aRequestIfModifiedSince = convertMillisToDateTimeGMT (nRequestIfModifiedSince);
           if (PDTHelper.isLessOrEqual (aLastModification, aRequestIfModifiedSince))
           {
             if (s_aLogger.isDebugEnabled ())
@@ -434,7 +433,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         final long nRequestIfUnmodifiedSince = aHttpRequest.getDateHeader (CHTTPHeader.IF_UNMODIFIED_SINCE);
         if (nRequestIfUnmodifiedSince >= 0)
         {
-          final DateTime aRequestIfUnmodifiedSince = convertMillisToDateTimeGMT (nRequestIfUnmodifiedSince);
+          final LocalDateTime aRequestIfUnmodifiedSince = convertMillisToDateTimeGMT (nRequestIfUnmodifiedSince);
           if (PDTHelper.isGreaterOrEqual (aLastModification, aRequestIfUnmodifiedSince))
           {
             if (s_aLogger.isDebugEnabled ())

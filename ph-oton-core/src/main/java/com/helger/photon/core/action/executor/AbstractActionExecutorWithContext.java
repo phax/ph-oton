@@ -26,7 +26,7 @@ public abstract class AbstractActionExecutorWithContext <LECTYPE extends ILayout
 {
   /**
    * Create the layout execution context
-   * 
+   *
    * @param aRequestScope
    *        The request scope to use. Never <code>null</code>.
    * @return Never <code>null</code>.
@@ -36,16 +36,17 @@ public abstract class AbstractActionExecutorWithContext <LECTYPE extends ILayout
 
   /**
    * This method must be overridden by every handler
-   * 
+   *
    * @param aLEC
-   *        The lyout execution context. Never <code>null</code>.
+   *        The layout execution context. Never <code>null</code>.
    * @param aUnifiedResponse
    *        The response to write to. Never <code>null</code>.
    * @throws Throwable
    *         in case of an error
    */
   @Nonnull
-  protected abstract void mainExecute (@Nonnull LECTYPE aLEC, @Nonnull UnifiedResponse aUnifiedResponse) throws Throwable;
+  protected abstract void mainExecute (@Nonnull LECTYPE aLEC,
+                                       @Nonnull UnifiedResponse aUnifiedResponse) throws Throwable;
 
   public final void execute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final UnifiedResponse aUnifiedResponse) throws Throwable

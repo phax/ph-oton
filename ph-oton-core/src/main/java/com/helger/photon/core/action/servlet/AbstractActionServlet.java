@@ -24,7 +24,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,7 +141,7 @@ public abstract class AbstractActionServlet extends AbstractUnifiedResponseServl
   @Override
   @OverrideOnDemand
   @Nullable
-  protected DateTime getLastModificationDateTime (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  protected LocalDateTime getLastModificationDateTime (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     final IActionExecutor aActionExecutor = aRequestScope.getTypedAttribute (SCOPE_ATTR_EXECUTOR,
                                                                              IActionExecutor.class);

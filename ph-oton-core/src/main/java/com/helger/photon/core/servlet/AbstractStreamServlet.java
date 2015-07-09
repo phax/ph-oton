@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.servlet.http.HttpServletResponse;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,7 +110,7 @@ public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServle
 
   @Override
   @Nullable
-  protected DateTime getLastModificationDateTime (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  protected LocalDateTime getLastModificationDateTime (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // We have an existing resource
     final IReadableResource aRes = aRequestScope.<IReadableResource> getCastedAttribute (REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE);
@@ -123,8 +123,7 @@ public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServle
       final long nLastModified = aFile.lastModified ();
       if (nLastModified > 0)
       {
-        // Use our time zone as is
-        return PDTFactory.createDateTimeFromMillis (getUnifiedMillis (nLastModified));
+        return PDTFactory.createLocalDateTimeFromMillis (getUnifiedMillis (nLastModified));
       }
     }
     return null;

@@ -20,7 +20,6 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,7 +117,7 @@ public abstract class AbstractNewsfeedActionExecutor extends AbstractActionExecu
     {
       final LocalDateTime aLDT = aFeed.getUpdated ().getDateTime ();
       if (aLDT != null)
-        aUnifiedResponse.setLastModified (aLDT.toDateTime (DateTimeZone.UTC));
+        aUnifiedResponse.setLastModified (aLDT);
     }
 
     final String sXML = MicroWriter.getXMLString (aFeed.getAsDocument ());

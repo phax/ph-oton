@@ -19,7 +19,7 @@ package com.helger.photon.core.action.executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.string.ToStringGenerator;
@@ -42,7 +42,7 @@ public abstract class AbstractActionExecutor implements IActionExecutor
 
   @Nullable
   @OverrideOnDemand
-  public DateTime getLastModificationDateTime ()
+  public LocalDateTime getLastModificationDateTime ()
   {
     return null;
   }
