@@ -121,6 +121,11 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
     return LinkUtils.getURLWithContext (aRequestScope, getPathWithoutContext (), aParams);
   }
 
+  public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    return true;
+  }
+
   @Override
   public String toString ()
   {

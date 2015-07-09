@@ -42,6 +42,7 @@ import com.helger.commons.wrapper.Wrapper;
 import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
+import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
@@ -118,13 +119,30 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
       sFunctionName = sFunctionName.substring (1);
 
     final IAjaxInvoker aAjaxInvoker = getAjaxInvoker (aRequestScope);
-    final IAjaxExecutor aAjaxExecutor = aAjaxInvoker.createExecutor (sFunctionName);
-    if (aAjaxExecutor == null)
+    final IAjaxFunctionDeclaration aAjaxDeclaration = aAjaxInvoker.getRegisteredFunction (sFunctionName);
+    if (aAjaxDeclaration == null)
     {
       s_aLogger.warn ("Unknown Ajax function '" + sFunctionName + "' provided!");
 
       // No such action
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
+      return EContinue.BREAK;
+    }
+
+    // Is the declaration applicable for the current scope?
+    if (!aAjaxDeclaration.canExecute (aRequestScope))
+    {
+      s_aLogger.warn ("Ajax function '" + sFunctionName + "' cannot be executed in the current scope.");
+      aUnifiedResponse.setStatus (HttpServletResponse.SC_UNAUTHORIZED);
+      return EContinue.BREAK;
+    }
+
+    // Create the executor itself
+    final IAjaxExecutor aAjaxExecutor = aAjaxDeclaration.getExecutorFactory ().create ();
+    if (aAjaxExecutor == null)
+    {
+      s_aLogger.warn ("No AjaxExecutor created for action " + aAjaxDeclaration);
+      aUnifiedResponse.setStatus (HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       return EContinue.BREAK;
     }
 

@@ -42,7 +42,7 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 @ThreadSafe
 public class ApplicationAjaxManager extends AbstractApplicationSingleton implements IAjaxInvoker
 {
-  private final AjaxInvoker m_aInvoker = new AjaxInvoker ();
+  private final IAjaxInvoker m_aInvoker = new AjaxInvoker ();
 
   /**
    * Private constructor. Avoid outside instantiation
@@ -114,12 +114,6 @@ public class ApplicationAjaxManager extends AbstractApplicationSingleton impleme
   public IAjaxFunctionDeclaration getRegisteredFunction (@Nullable final String sFunctionName)
   {
     return m_aInvoker.getRegisteredFunction (sFunctionName);
-  }
-
-  @Nullable
-  public IAjaxExecutor createExecutor (@Nullable final String sFunctionName)
-  {
-    return m_aInvoker.createExecutor (sFunctionName);
   }
 
   public boolean isRegisteredFunction (@Nullable final String sFunctionName)

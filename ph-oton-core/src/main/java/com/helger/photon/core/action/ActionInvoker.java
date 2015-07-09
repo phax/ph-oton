@@ -164,6 +164,9 @@ public class ActionInvoker implements IActionInvoker
   @Nullable
   public IActionDeclaration getRegisteredAction (@Nullable final String sActionName)
   {
+    if (StringHelper.hasNoText (sActionName))
+      return null;
+
     m_aRWLock.readLock ().lock ();
     try
     {
@@ -177,6 +180,9 @@ public class ActionInvoker implements IActionInvoker
 
   public boolean isRegisteredAction (@Nullable final String sActionName)
   {
+    if (StringHelper.hasNoText (sActionName))
+      return false;
+
     m_aRWLock.readLock ().lock ();
     try
     {
@@ -198,7 +204,7 @@ public class ActionInvoker implements IActionInvoker
     try
     {
       if (m_aMap.containsKey (sActionName))
-        throw new IllegalArgumentException ("An Action with the name '" + sActionName + "' is already contained!");
+        throw new IllegalArgumentException ("An Action with the name '" + sActionName + "' is already registered!");
 
       m_aMap.put (sActionName, aActionDeclaration);
     }

@@ -165,6 +165,9 @@ public class AjaxInvoker implements IAjaxInvoker
   @Nullable
   public IAjaxFunctionDeclaration getRegisteredFunction (@Nullable final String sFunctionName)
   {
+    if (StringHelper.hasNoText (sFunctionName))
+      return null;
+
     m_aRWLock.readLock ().lock ();
     try
     {
@@ -176,15 +179,11 @@ public class AjaxInvoker implements IAjaxInvoker
     }
   }
 
-  @Nullable
-  public IAjaxExecutor createExecutor (@Nullable final String sFunctionName)
-  {
-    final IAjaxFunctionDeclaration aFunction = getRegisteredFunction (sFunctionName);
-    return aFunction == null ? null : aFunction.getExecutorFactory ().create ();
-  }
-
   public boolean isRegisteredFunction (@Nullable final String sFunctionName)
   {
+    if (StringHelper.hasNoText (sFunctionName))
+      return false;
+
     m_aRWLock.readLock ().lock ();
     try
     {
@@ -198,7 +197,7 @@ public class AjaxInvoker implements IAjaxInvoker
 
   public void registerFunction (@Nonnull final IAjaxFunctionDeclaration aFunctionDeclaration)
   {
-    ValueEnforcer.notNull (aFunctionDeclaration, "Function");
+    ValueEnforcer.notNull (aFunctionDeclaration, "FunctionDeclaration");
 
     final String sFunctionName = aFunctionDeclaration.getName ();
 

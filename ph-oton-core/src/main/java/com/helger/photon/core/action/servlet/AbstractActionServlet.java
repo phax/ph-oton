@@ -126,6 +126,7 @@ public abstract class AbstractActionServlet extends AbstractUnifiedResponseServl
       return EContinue.BREAK;
     }
 
+    // Is the declaration applicable for the current scope?
     if (!aActionDeclaration.canExecute (aRequestScope))
     {
       s_aLogger.warn ("Action '" + sActionName + "' cannot be executed in the current scope.");
@@ -133,6 +134,7 @@ public abstract class AbstractActionServlet extends AbstractUnifiedResponseServl
       return EContinue.BREAK;
     }
 
+    // Create the executor itself
     final IActionExecutor aActionExecutor = aActionDeclaration.getExecutorFactory ().create ();
     if (aActionExecutor == null)
     {

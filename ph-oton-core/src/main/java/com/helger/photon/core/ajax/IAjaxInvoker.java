@@ -70,21 +70,15 @@ public interface IAjaxInvoker
   @ReturnsMutableCopy
   Map <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ();
 
-  @Nullable
-  IAjaxFunctionDeclaration getRegisteredFunction (@Nullable String sFunctionName);
-
   /**
-   * Create an executor associated with the given AJAX function. This is a
-   * shortcut for
-   * <code>getRegisteredFunction (sFunctionName).getExecutorFactory ().create()</code>
-   *
+   * Get the registered AJAX function with the specified name
+   * 
    * @param sFunctionName
-   *        The name of the AJAX function to instantiate. May be
-   *        <code>null</code>.
-   * @return <code>null</code> if no such action exists.
+   *        The AJAX function name to search. May be <code>null</code>.
+   * @return <code>null</code> if no such AJAX function is registered.
    */
   @Nullable
-  IAjaxExecutor createExecutor (@Nullable String sFunctionName);
+  IAjaxFunctionDeclaration getRegisteredFunction (@Nullable String sFunctionName);
 
   /**
    * Check whether an AJAX function with the given name is present

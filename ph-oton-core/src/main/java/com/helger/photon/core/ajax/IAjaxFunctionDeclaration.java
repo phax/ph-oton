@@ -106,4 +106,15 @@ public interface IAjaxFunctionDeclaration extends IHasName
   @Nonnull
   ISimpleURL getInvocationURL (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
                                @Nullable Map <String, String> aParams);
+
+  /**
+   * Check if this AJAX function can be executed for the passed request.
+   *
+   * @param aRequestScope
+   *        The request scope to be used for evaluation. Never <code>null</code>
+   *        .
+   * @return <code>true</code> if this AJAX function can be executed,
+   *         <code>false</code> otherwise.
+   */
+  boolean canExecute (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
 }
