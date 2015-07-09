@@ -114,12 +114,6 @@ public final class ApplicationActionManager extends AbstractApplicationSingleton
     return m_aInvoker.getRegisteredAction (sActionName);
   }
 
-  @Nullable
-  public IActionExecutor createExecutor (@Nullable final String sActionName)
-  {
-    return m_aInvoker.createExecutor (sActionName);
-  }
-
   public boolean isRegisteredAction (@Nullable final String sActionName)
   {
     return m_aInvoker.isRegisteredAction (sActionName);

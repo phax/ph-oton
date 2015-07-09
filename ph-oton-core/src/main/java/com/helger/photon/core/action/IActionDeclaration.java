@@ -104,4 +104,15 @@ public interface IActionDeclaration extends IHasName
   @Nonnull
   ISimpleURL getInvocationURL (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
                                @Nullable Map <String, String> aParams);
+
+  /**
+   * Check if this action declaration can be executed for the passed request.
+   * 
+   * @param aRequestScope
+   *        The request scope to be used for evaluation. Never <code>null</code>
+   *        .
+   * @return <code>true</code> if action can be executed, <code>false</code>
+   *         otherwise.
+   */
+  boolean canExecute (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
 }

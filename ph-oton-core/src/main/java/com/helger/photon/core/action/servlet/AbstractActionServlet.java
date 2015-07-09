@@ -38,6 +38,7 @@ import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
 import com.helger.commons.wrapper.Wrapper;
+import com.helger.photon.core.action.IActionDeclaration;
 import com.helger.photon.core.action.IActionExceptionCallback;
 import com.helger.photon.core.action.IActionExecutor;
 import com.helger.photon.core.action.IActionInvoker;
@@ -112,18 +113,31 @@ public abstract class AbstractActionServlet extends AbstractUnifiedResponseServl
                                         @Nonnull final UnifiedResponse aUnifiedResponse)
   {
     // cut the leading "/"
-    String sActionName = aRequestScope.getPathWithinServlet ();
-    if (StringHelper.startsWith (sActionName, '/'))
-      sActionName = sActionName.substring (1);
+    final String sActionName = StringHelper.trimStart (aRequestScope.getPathWithinServlet (), "/");
 
     final IActionInvoker aActionInvoker = getActionInvoker (aRequestScope);
-    final IActionExecutor aActionExecutor = aActionInvoker.createExecutor (sActionName);
-    if (aActionExecutor == null)
+    final IActionDeclaration aActionDeclaration = aActionInvoker.getRegisteredAction (sActionName);
+    if (aActionDeclaration == null)
     {
       s_aLogger.warn ("Unknown action '" + sActionName + "' provided!");
 
       // No such action
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
+      return EContinue.BREAK;
+    }
+
+    if (!aActionDeclaration.canExecute (aRequestScope))
+    {
+      s_aLogger.warn ("Action '" + sActionName + "' cannot be executed in the current scope.");
+      aUnifiedResponse.setStatus (HttpServletResponse.SC_UNAUTHORIZED);
+      return EContinue.BREAK;
+    }
+
+    final IActionExecutor aActionExecutor = aActionDeclaration.getExecutorFactory ().create ();
+    if (aActionExecutor == null)
+    {
+      s_aLogger.warn ("No ActionExecutor created for action " + aActionDeclaration);
+      aUnifiedResponse.setStatus (HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       return EContinue.BREAK;
     }
 

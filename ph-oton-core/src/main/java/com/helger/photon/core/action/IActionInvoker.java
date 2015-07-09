@@ -48,7 +48,7 @@ public interface IActionInvoker
   CallbackList <IActionAfterExecutionCallback> getAfterExecutionCallbacks ();
 
   /**
-   * @return The milli seconds after which an execution is considered long
+   * @return The milliseconds after which an execution is considered long
    *         running. Only values &gt; 0 are considered.
    */
   @CheckForSigned
@@ -83,17 +83,6 @@ public interface IActionInvoker
    */
   @Nullable
   IActionDeclaration getRegisteredAction (@Nullable String sActionName);
-
-  /**
-   * Create an executor associated with the given action. This is a shortcut for
-   * <code>getRegisteredExecutor (sActionName).create()</code>
-   *
-   * @param sActionName
-   *        The name of the action to instantiate. May be <code>null</code>.
-   * @return <code>null</code> if no such action exists.
-   */
-  @Nullable
-  IActionExecutor createExecutor (@Nullable String sActionName);
 
   /**
    * Check whether an action with the given name is present

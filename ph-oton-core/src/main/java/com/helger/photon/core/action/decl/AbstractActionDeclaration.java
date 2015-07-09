@@ -62,8 +62,7 @@ public abstract class AbstractActionDeclaration implements IActionDeclaration
   public AbstractActionDeclaration (@Nonnull @Nonempty final String sActionName,
                                     @Nonnull final IFactory <? extends IActionExecutor> aExecutorFactory)
   {
-    if (!ActionInvoker.isValidActionName (sActionName))
-      throw new IllegalArgumentException ("actionName");
+    ValueEnforcer.isTrue (ActionInvoker.isValidActionName (sActionName), "Invalid action name provided!");
     m_sActionName = sActionName;
     m_aExecutorFactory = ValueEnforcer.notNull (aExecutorFactory, "ExecutorFactory");
   }
@@ -121,11 +120,16 @@ public abstract class AbstractActionDeclaration implements IActionDeclaration
     return LinkUtils.getURLWithContext (aRequestScope, getPathWithoutContext (), aParams);
   }
 
+  public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    return true;
+  }
+
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("actionName", m_sActionName)
-                                       .append ("executorFactory", m_aExecutorFactory)
+    return new ToStringGenerator (this).append ("ActionName", m_sActionName)
+                                       .append ("ExecutorFactory", m_aExecutorFactory)
                                        .toString ();
   }
 }

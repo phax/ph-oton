@@ -175,13 +175,6 @@ public class ActionInvoker implements IActionInvoker
     }
   }
 
-  @Nullable
-  public IActionExecutor createExecutor (@Nullable final String sActionName)
-  {
-    final IActionDeclaration aAction = getRegisteredAction (sActionName);
-    return aAction == null ? null : aAction.getExecutorFactory ().create ();
-  }
-
   public boolean isRegisteredAction (@Nullable final String sActionName)
   {
     m_aRWLock.readLock ().lock ();
@@ -205,7 +198,7 @@ public class ActionInvoker implements IActionInvoker
     try
     {
       if (m_aMap.containsKey (sActionName))
-        throw new IllegalArgumentException ("Action '" + sActionName + "' is already contained!");
+        throw new IllegalArgumentException ("An Action with the name '" + sActionName + "' is already contained!");
 
       m_aMap.put (sActionName, aActionDeclaration);
     }
