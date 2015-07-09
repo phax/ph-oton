@@ -81,23 +81,6 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
   }
 
   /**
-   * Check if it is valid in the current scope to invoke the passed AJAX
-   * function.
-   *
-   * @param sAjaxFunctionName
-   *        The AJAX function that was desired to be invoked.
-   * @param aRequestScope
-   *        The current request scope. Never <code>null</code>.
-   * @return <code>true</code> if the AJAX function may be invoked.
-   */
-  @OverrideOnDemand
-  protected boolean isValidToInvokeActionFunction (@Nonnull final String sAjaxFunctionName,
-                                                   @Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
-  {
-    return true;
-  }
-
-  /**
    * Get the AJAX invoker matching the passed request
    *
    * @param aRequestScope
@@ -167,62 +150,56 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
                                                                   .get ();
     final IAjaxExecutor aAjaxExecutor = aRequestScope.getTypedAttribute (SCOPE_ATTR_EXECUTOR, IAjaxExecutor.class);
 
-    if (!isValidToInvokeActionFunction (sAjaxFunctionName, aRequestScope))
+    try
     {
-      s_aLogger.warn ("Invoking the AJAX function '" + sAjaxFunctionName + "' is not valid in this context!");
-      aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_ACCEPTABLE);
+      // Start the timing
+      final StopWatch aSW = StopWatch.createdStarted ();
+
+      // Invoke function
+      final IAjaxResponse aResult = aAjaxInvoker.invokeFunction (sAjaxFunctionName, aAjaxExecutor, aRequestScope);
+      if (s_aLogger.isTraceEnabled ())
+        s_aLogger.trace ("  AJAX Result: " + aResult);
+
+      // Get the return MIME type to use
+      final IMimeType aResultMimeType = aResult.getMimeType ();
+
+      // Convert to (JSON) String
+      final String sResultJSON = aResult.getResponseAsString (GlobalDebug.isDebugMode ());
+
+      // Do not cache the result!
+      aUnifiedResponse.disableCaching ()
+                      .setContentAndCharset (sResultJSON, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
+                      .setMimeType (aResultMimeType);
+
+      // Remember the time
+      s_aStatsTimer.addTime (sAjaxFunctionName, aSW.stopAndGetMillis ());
+      s_aStatsCounterSuccess.increment (sAjaxFunctionName);
     }
-    else
-      try
-      {
-        // Start the timing
-        final StopWatch aSW = StopWatch.createdStarted ();
+    catch (final Throwable t)
+    {
+      s_aStatsCounterError.increment (sAjaxFunctionName);
 
-        // Invoke function
-        final IAjaxResponse aResult = aAjaxInvoker.invokeFunction (sAjaxFunctionName, aAjaxExecutor, aRequestScope);
-        if (s_aLogger.isTraceEnabled ())
-          s_aLogger.trace ("  AJAX Result: " + aResult);
+      // Notify custom exception handler
+      for (final IAjaxExceptionCallback aExceptionCallback : getExceptionCallbacks ().getAllCallbacks ())
+        try
+        {
+          aExceptionCallback.onAjaxExecutionException (aAjaxInvoker,
+                                                       sAjaxFunctionName,
+                                                       aAjaxExecutor,
+                                                       aRequestScope,
+                                                       t);
+        }
+        catch (final Throwable t2)
+        {
+          s_aLogger.error ("Exception in custom AJAX exception handler of function '" + sAjaxFunctionName + "'", t2);
+        }
 
-        // Get the return MIME type to use
-        final IMimeType aResultMimeType = aResult.getMimeType ();
-
-        // Convert to (JSON) String
-        final String sResultJSON = aResult.getResponseAsString (GlobalDebug.isDebugMode ());
-
-        // Do not cache the result!
-        aUnifiedResponse.disableCaching ()
-                        .setContentAndCharset (sResultJSON, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
-                        .setMimeType (aResultMimeType);
-
-        // Remember the time
-        s_aStatsTimer.addTime (sAjaxFunctionName, aSW.stopAndGetMillis ());
-        s_aStatsCounterSuccess.increment (sAjaxFunctionName);
-      }
-      catch (final Throwable t)
-      {
-        s_aStatsCounterError.increment (sAjaxFunctionName);
-
-        // Notify custom exception handler
-        for (final IAjaxExceptionCallback aExceptionCallback : getExceptionCallbacks ().getAllCallbacks ())
-          try
-          {
-            aExceptionCallback.onAjaxExecutionException (aAjaxInvoker,
-                                                         sAjaxFunctionName,
-                                                         aAjaxExecutor,
-                                                         aRequestScope,
-                                                         t);
-          }
-          catch (final Throwable t2)
-          {
-            s_aLogger.error ("Exception in custom AJAX exception handler of function '" + sAjaxFunctionName + "'", t2);
-          }
-
-        // Re-throw
-        if (t instanceof IOException)
-          throw (IOException) t;
-        if (t instanceof ServletException)
-          throw (ServletException) t;
-        throw new ServletException ("Error invoking AJAX function '" + sAjaxFunctionName + "'", t);
-      }
+      // Re-throw
+      if (t instanceof IOException)
+        throw (IOException) t;
+      if (t instanceof ServletException)
+        throw (ServletException) t;
+      throw new ServletException ("Error invoking AJAX function '" + sAjaxFunctionName + "'", t);
+    }
   }
 }

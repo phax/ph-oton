@@ -80,23 +80,6 @@ public abstract class AbstractActionServlet extends AbstractUnifiedResponseServl
   }
 
   /**
-   * Check if it is valid in the current scope to invoke the passed Action. This
-   * method is called after initRequestState was invoked.
-   *
-   * @param sActionName
-   *        The Action that was desired to be invoked.
-   * @param aRequestScope
-   *        The current request scope. Never <code>null</code>.
-   * @return <code>true</code> if the Action may be invoked.
-   */
-  @OverrideOnDemand
-  protected boolean isValidToInvokeAction (@Nonnull final String sActionName,
-                                           @Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
-  {
-    return true;
-  }
-
-  /**
    * Get the action invoker matching the passed request
    *
    * @param aRequestScope
@@ -179,49 +162,43 @@ public abstract class AbstractActionServlet extends AbstractUnifiedResponseServl
     // For actions caching is not an option, because it is dynamic content
     aUnifiedResponse.disableCaching ();
 
-    if (!isValidToInvokeAction (sActionName, aRequestScope))
+    try
     {
-      s_aLogger.warn ("Invoking the Action '" + sActionName + "' is not valid in this context!");
-      aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_ACCEPTABLE);
+      // Start the timing
+      final StopWatch aSW = StopWatch.createdStarted ();
+
+      // Handle the main action
+      aActionInvoker.invokeAction (sActionName, aActionExecutor, aRequestScope, aUnifiedResponse);
+
+      // Remember the time
+      s_aStatsTimer.addTime (sActionName, aSW.stopAndGetMillis ());
+      s_aStatsCounterSuccess.increment (sActionName);
     }
-    else
-      try
-      {
-        // Start the timing
-        final StopWatch aSW = StopWatch.createdStarted ();
+    catch (final Throwable t)
+    {
+      s_aStatsCounterError.increment (sActionName);
 
-        // Handle the main action
-        aActionInvoker.invokeAction (sActionName, aActionExecutor, aRequestScope, aUnifiedResponse);
+      // Notify custom exception handler
+      for (final IActionExceptionCallback aExceptionCallback : getExceptionCallbacks ().getAllCallbacks ())
+        try
+        {
+          aExceptionCallback.onActionExecutionException (aActionInvoker,
+                                                         sActionName,
+                                                         aActionExecutor,
+                                                         aRequestScope,
+                                                         t);
+        }
+        catch (final Throwable t2)
+        {
+          s_aLogger.error ("Exception in custom Action exception handler of function '" + sActionName + "'", t2);
+        }
 
-        // Remember the time
-        s_aStatsTimer.addTime (sActionName, aSW.stopAndGetMillis ());
-        s_aStatsCounterSuccess.increment (sActionName);
-      }
-      catch (final Throwable t)
-      {
-        s_aStatsCounterError.increment (sActionName);
-
-        // Notify custom exception handler
-        for (final IActionExceptionCallback aExceptionCallback : getExceptionCallbacks ().getAllCallbacks ())
-          try
-          {
-            aExceptionCallback.onActionExecutionException (aActionInvoker,
-                                                           sActionName,
-                                                           aActionExecutor,
-                                                           aRequestScope,
-                                                           t);
-          }
-          catch (final Throwable t2)
-          {
-            s_aLogger.error ("Exception in custom Action exception handler of function '" + sActionName + "'", t2);
-          }
-
-        // Re-throw
-        if (t instanceof IOException)
-          throw (IOException) t;
-        if (t instanceof ServletException)
-          throw (ServletException) t;
-        throw new ServletException ("Error invoking Action '" + sActionName + "'", t);
-      }
+      // Re-throw
+      if (t instanceof IOException)
+        throw (IOException) t;
+      if (t instanceof ServletException)
+        throw (ServletException) t;
+      throw new ServletException ("Error invoking Action '" + sActionName + "'", t);
+    }
   }
 }

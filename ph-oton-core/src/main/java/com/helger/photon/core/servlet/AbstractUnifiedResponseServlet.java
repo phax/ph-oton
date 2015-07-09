@@ -250,8 +250,8 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
 
   /**
    * Called before a valid request is handled. This method is only called if
-   * HTTP version matches, HTTP method is supported and caching is not an
-   * option.
+   * HTTP version matches, HTTP method is supported and sending a cached HTTP
+   * response is not an option.
    *
    * @param aRequestScope
    *        The request scope that will be used for processing the request.
@@ -262,7 +262,8 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   {}
 
   /**
-   * Overwrite this method to fill your response.
+   * This is the main request handling method. Overwrite this method to fill
+   * your HTTP response.
    *
    * @param aRequestScope
    *        The request scope to use. There is no direct access to the
@@ -298,8 +299,9 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   }
 
   /**
-   * Called after a valid request was processed. This method is not called if
-   * HTTP version or HTTP method are not supported.
+   * Called after a valid request was processed. This method is only called if
+   * the handleRequest method was invoked. If an exception occurred this method
+   * is called after onException
    *
    * @param bExceptionOccurred
    *        if <code>true</code> an exception occurred in request processing.
