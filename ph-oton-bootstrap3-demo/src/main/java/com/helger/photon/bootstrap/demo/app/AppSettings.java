@@ -24,8 +24,8 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.settings.ISettings;
+import com.helger.settings.exchange.properties.SettingsPersistenceProperties;
 import com.helger.settings.IMutableSettings;
-import com.helger.settings.xchange.properties.SettingsPersistenceProperties;
 
 /**
  * This class provides access to the settings as contained in the
