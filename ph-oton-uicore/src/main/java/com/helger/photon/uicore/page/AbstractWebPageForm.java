@@ -715,8 +715,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The currently selected object. May be <code>null</code> if no object
    *        is selected.
    * @param eFormAction
-   *        The current form action. May be <code>null</code> if a non-standard
-   *        action is handled.
+   *        The current form action. Never <code>null</code>.
    * @return {@link EContinue#CONTINUE} if normal execution can continue or
    *         {@link EContinue#BREAK} if execution cannot continue (e.g. because
    *         object is already locked).
@@ -726,7 +725,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   @OverridingMethodsMustInvokeSuper
   protected EContinue beforeProcessing (@Nonnull final WPECTYPE aWPEC,
                                         @Nullable final DATATYPE aSelectedObject,
-                                        @Nullable final EWebPageFormAction eFormAction)
+                                        @Nonnull final EWebPageFormAction eFormAction)
   {
     if (isObjectLockingEnabled ())
     {
@@ -774,20 +773,19 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The currently selected object. May be <code>null</code> if no object
    *        is selected.
    * @param eFormAction
-   *        The current form action. May be <code>null</code> if a non-standard
-   *        action is handled.
+   *        The current form action. Never <code>null</code>.
    */
   @OverrideOnDemand
   protected void afterProcessing (@Nonnull final WPECTYPE aWPEC,
                                   @Nullable final DATATYPE aSelectedObject,
-                                  @Nullable final EWebPageFormAction eFormAction)
+                                  @Nonnull final EWebPageFormAction eFormAction)
   {}
 
   /**
    * @param aWPEC
-   *        The web page execution context
+   *        The web page execution context. Never <code>null</code>.
    * @param aSelectedObject
-   *        The currently selected object
+   *        The currently selected object. Never <code>null</code>.
    */
   protected abstract void showSelectedObject (@Nonnull WPECTYPE aWPEC, @Nonnull DATATYPE aSelectedObject);
 
