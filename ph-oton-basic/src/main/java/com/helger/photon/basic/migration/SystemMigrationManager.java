@@ -80,7 +80,8 @@ public class SystemMigrationManager extends AbstractSimpleDAO
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_SYSTEM_MIGRATION_RESULTS);
     for (final List <SystemMigrationResult> aMigrationResults : CollectionHelper.getSortedByKey (m_aMap).values ())
       for (final SystemMigrationResult aMigrationResult : aMigrationResults)
-        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aMigrationResult, ELEMENT_SYSTEM_MIGRATION_RESULT));
+        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aMigrationResult,
+                                                                     ELEMENT_SYSTEM_MIGRATION_RESULT));
     return aDoc;
   }
 
@@ -228,8 +229,12 @@ public class SystemMigrationManager extends AbstractSimpleDAO
     {
       try
       {
+        s_aLogger.info ("Performing migration '" + sMigrationID + "'");
+
         // Invoke the callback
         aMigrationAction.run ();
+
+        s_aLogger.info ("Finished performing migration '" + sMigrationID + "'");
 
         // Always assume success
         addMigrationResultSuccess (sMigrationID);
@@ -261,8 +266,15 @@ public class SystemMigrationManager extends AbstractSimpleDAO
     {
       try
       {
+        s_aLogger.info ("Performing migration '" + sMigrationID + "'");
+
         // Invoke the callback
         final SuccessWithValue <String> ret = aMigrationAction.call ();
+
+        s_aLogger.info ("Finished performing migration '" +
+                        sMigrationID +
+                        "' with status " +
+                        (ret.isSuccess () ? "success" : "error"));
 
         // Success or error
         if (ret.isSuccess ())
