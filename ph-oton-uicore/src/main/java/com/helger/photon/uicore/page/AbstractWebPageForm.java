@@ -447,9 +447,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * the edit button.
    *
    * @param aWPEC
-   *        The display locale to use
+   *        The web page execution context. Never <code>null</code>.
    * @param bCanGoBack
-   *        true to enable back button
+   *        <code>true</code> to enable back button
    * @param aSelectedObject
    *        The selected object
    * @return Never <code>null</code>.
