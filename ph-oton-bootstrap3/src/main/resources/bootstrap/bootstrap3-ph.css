@@ -35,7 +35,7 @@ table > label.form-label{
   margin-bottom: 0;
 }
 
-/* Display all dropdown elements as inline-block by default */
+/* Display all dropdown/dropup elements as inline-block by default */
 .dropdown,
 .dropup {
   display:inline-block;
@@ -51,4 +51,9 @@ table > label.form-label{
   line-height: 1.1;
   color: inherit;
   font-family: inherit;
+}
+
+/* Tabs below button bars get a margin */
+.btn-toolbar + .nav-tabs {
+  margin-top: 1em;
 }
