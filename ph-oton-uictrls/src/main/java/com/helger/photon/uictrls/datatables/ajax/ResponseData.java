@@ -30,7 +30,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.utils.IHCSpecialNodes;
 import com.helger.json.IJsonObject;
-import com.helger.json.IJsonProvider;
+import com.helger.json.IHasJson;
 import com.helger.json.JsonObject;
 
 /**
@@ -38,7 +38,7 @@ import com.helger.json.JsonObject;
  *
  * @author Philip Helger
  */
-final class ResponseData implements IJsonProvider
+final class ResponseData implements IHasJson
 {
   private final int m_nTotalRecords;
   private final int m_nTotalDisplayRecords;

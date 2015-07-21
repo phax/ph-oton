@@ -33,7 +33,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.js.builder.JSArray;
 import com.helger.html.js.builder.JSAssocArray;
-import com.helger.json.IJsonProvider;
+import com.helger.json.IHasJson;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 
@@ -45,7 +45,7 @@ import com.helger.json.JsonObject;
  * @author Philip Helger
  */
 @Immutable
-public class BloodhoundDatum implements IJsonProvider, Comparable <BloodhoundDatum>
+public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
 {
   public static final String JSON_VALUE = "value";
   public static final String JSON_TOKENS = "tokens";

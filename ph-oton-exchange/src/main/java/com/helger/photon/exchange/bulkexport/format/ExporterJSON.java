@@ -161,7 +161,7 @@ public final class ExporterJSON implements IExporterFile
 
       try (final Writer aWriter = StreamHelper.createWriter (aOS, m_aCharset))
       {
-        new JsonWriter (m_aJWS).writeNodeToWriter (aDoc, aWriter);
+        new JsonWriter (m_aJWS).writeToWriter (aDoc, aWriter);
       }
       return ESuccess.SUCCESS;
     }

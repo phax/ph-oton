@@ -33,7 +33,7 @@ import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.json.IJson;
-import com.helger.json.parser.JsonReader;
+import com.helger.json.serialize.JsonReader;
 import com.helger.json.serialize.JsonWriterSettings;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
 
