@@ -29,7 +29,7 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.masterdata.address.Address;
-import com.helger.masterdata.address.IReadonlyAddress;
+import com.helger.masterdata.address.IAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.object.StubObject;
 import com.helger.photon.basic.object.client.AbstractClientObject;
@@ -98,7 +98,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
                          @Nullable final String sCompanyType,
                          @Nullable final String sCompanyVATIN,
                          @Nullable final String sCompanyNumber,
-                         @Nonnull final IReadonlyAddress aAddress,
+                         @Nonnull final IAddress aAddress,
                          @Nullable final String sTelephone,
                          @Nullable final String sFax,
                          @Nullable final String sEmailAddress,
@@ -133,7 +133,7 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
                   @Nullable final String sCompanyType,
                   @Nullable final String sCompanyVATIN,
                   @Nullable final String sCompanyNumber,
-                  @Nonnull final IReadonlyAddress aAddress,
+                  @Nonnull final IAddress aAddress,
                   @Nullable final String sTelephone,
                   @Nullable final String sFax,
                   @Nullable final String sEmailAddress,
@@ -230,13 +230,13 @@ public final class AccountingArea extends AbstractClientObject implements IAccou
   }
 
   @Nonnull
-  public IReadonlyAddress getAddress ()
+  public IAddress getAddress ()
   {
     return m_aAddress;
   }
 
   @Nonnull
-  public EChange setAddress (@Nonnull final IReadonlyAddress aAddress, @Nonnull final Locale aDisplayLocale)
+  public EChange setAddress (@Nonnull final IAddress aAddress, @Nonnull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aAddress, "Address");
 

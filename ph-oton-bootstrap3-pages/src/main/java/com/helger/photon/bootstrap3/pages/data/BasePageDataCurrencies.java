@@ -37,7 +37,7 @@ import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.masterdata.currency.CurrencyUtils;
+import com.helger.masterdata.currency.CurrencyHelper;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.masterdata.locale.ContinentUtils;
 import com.helger.masterdata.locale.EContinent;
@@ -124,7 +124,7 @@ public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext> 
                                         new DTCol (EText.MSG_EXAMPLE.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_CONTINENTS.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_LOCALE.getDisplayText (aDisplayLocale))).setID (getID ());
-    for (final Map.Entry <Locale, Currency> aEntry : CurrencyUtils.getLocaleToCurrencyMap ().entrySet ())
+    for (final Map.Entry <Locale, Currency> aEntry : CurrencyHelper.getLocaleToCurrencyMap ().entrySet ())
     {
       final Locale aLocale = aEntry.getKey ();
       final Currency aCurrency = aEntry.getValue ();

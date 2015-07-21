@@ -36,7 +36,7 @@ import com.helger.commons.microdom.MicroDocument;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
-import com.helger.masterdata.address.IReadonlyAddress;
+import com.helger.masterdata.address.IAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
@@ -97,7 +97,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                                @Nullable final String sCompanyType,
                                                @Nonnull @Nonempty final String sCompanyVATIN,
                                                @Nonnull @Nonempty final String sCompanyNumber,
-                                               @Nonnull final IReadonlyAddress aAddress,
+                                               @Nonnull final IAddress aAddress,
                                                @Nonnull final String sTelephone,
                                                @Nullable final String sFax,
                                                @Nullable final String sEmailAddress,
@@ -157,7 +157,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                        @Nullable final String sCompanyType,
                                        @Nonnull @Nonempty final String sCompanyVATIN,
                                        @Nonnull @Nonempty final String sCompanyNumber,
-                                       @Nonnull final IReadonlyAddress aAddress,
+                                       @Nonnull final IAddress aAddress,
                                        @Nonnull final String sTelephone,
                                        @Nullable final String sFax,
                                        @Nullable final String sEmailAddress,

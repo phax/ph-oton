@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.name.IHasDisplayName;
-import com.helger.masterdata.address.IReadonlyAddress;
+import com.helger.masterdata.address.IAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.object.client.IClientObject;
 import com.helger.photon.basic.uitext.IHasUIText;
@@ -55,7 +55,7 @@ public interface IAccountingArea extends IClientObject, IHasDisplayName, IHasUIT
    * @return The address of the owner.
    */
   @Nonnull
-  IReadonlyAddress getAddress ();
+  IAddress getAddress ();
 
   /**
    * @return The telephone number. May be <code>null</code>.
