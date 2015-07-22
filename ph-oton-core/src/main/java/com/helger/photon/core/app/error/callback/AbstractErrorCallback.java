@@ -31,7 +31,7 @@ import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.error.InternalErrorHandler;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 
 /**
  * A base class for a central error callback that handles all kind of errors and

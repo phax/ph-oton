@@ -42,8 +42,8 @@ import com.helger.css.media.ECSSMedium;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.photon.core.app.resource.CSSResourceSet;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
-import com.helger.web.scopes.mgr.WebScopeManager;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * This class keeps track of all the CSS files that must be included globally or

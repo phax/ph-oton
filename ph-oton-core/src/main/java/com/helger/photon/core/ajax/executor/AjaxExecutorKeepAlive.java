@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 
 /**
  * A dummy AJAX handler that can be invoked to keep the session alive.

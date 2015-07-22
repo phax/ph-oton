@@ -66,7 +66,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.validation.error.FormErrors;
-import com.helger.web.scopes.domain.ISessionWebScope;
+import com.helger.web.scope.domain.ISessionWebScope;
 
 /**
  * Show information on all active sessions

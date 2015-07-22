@@ -34,8 +34,8 @@ import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLProtocolRegistry;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
-import com.helger.web.scopes.mgr.WebScopeManager;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * Misc utilities to create link URLs.

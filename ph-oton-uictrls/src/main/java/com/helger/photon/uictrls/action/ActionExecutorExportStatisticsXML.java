@@ -24,7 +24,7 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.statistics.util.StatisticsExporter;
 import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.photon.core.action.executor.AbstractActionExecutor;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 /**

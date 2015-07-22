@@ -43,7 +43,7 @@ import com.helger.json.serialize.JsonWriter;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
 import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 
 @Immutable
 public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResponse>implements IAjaxResponse

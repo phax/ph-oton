@@ -51,8 +51,8 @@ import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.url.LinkHelper;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
-import com.helger.web.scopes.mgr.WebScopeManager;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * Manager for {@link GoMappingItem} objects.

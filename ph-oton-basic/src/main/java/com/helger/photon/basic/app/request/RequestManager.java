@@ -44,9 +44,9 @@ import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
-import com.helger.web.scopes.domain.ISessionWebScope;
-import com.helger.web.scopes.mgr.WebScopeManager;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.ISessionWebScope;
+import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * This class holds the per-request configuration settings.

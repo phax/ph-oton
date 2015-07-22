@@ -41,7 +41,7 @@ import com.helger.datetime.PDTFactory;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.url.LinkHelper;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 
 /**
  * This class combines a {@link WebSiteResourceBundle} with an internal ID and a

@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import org.joda.time.LocalDateTime;
 
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 /**

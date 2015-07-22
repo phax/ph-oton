@@ -51,8 +51,8 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.web.scopes.domain.IGlobalWebScope;
-import com.helger.web.scopes.mgr.WebScopeManager;
+import com.helger.web.scope.domain.IGlobalWebScope;
+import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * Show information on global and application scopes

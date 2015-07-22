@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.request.IHCRequestField;
-import com.helger.web.scopes.util.SessionBackedRequestFieldData;
+import com.helger.web.scope.util.SessionBackedRequestFieldData;
 
 public class SessionBackedRequestField extends SessionBackedRequestFieldData implements IHCRequestField
 {

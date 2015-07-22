@@ -37,7 +37,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
-import com.helger.web.scopes.domain.IRequestWebScope;
+import com.helger.web.scope.domain.IRequestWebScope;
 
 /**
  * The request time manager manages all currently running requests.

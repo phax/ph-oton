@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.photon.core.action.ApplicationActionManager;
 import com.helger.photon.core.action.IActionInvoker;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 
 /**
  * Abstract action handling servlet using {@link ApplicationActionManager}.

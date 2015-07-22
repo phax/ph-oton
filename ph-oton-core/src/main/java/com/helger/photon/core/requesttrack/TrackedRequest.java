@@ -24,7 +24,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
-import com.helger.web.scopes.domain.IRequestWebScope;
+import com.helger.web.scope.domain.IRequestWebScope;
 
 /**
  * This class represents a single tracked request.

@@ -46,7 +46,7 @@ import com.helger.smtp.EmailGlobalSettings;
 import com.helger.smtp.transport.listener.LoggingConnectionListener;
 import com.helger.web.mock.MockHttpServletResponse;
 import com.helger.web.mock.OfflineHttpServletRequest;
-import com.helger.web.scopes.mgr.WebScopeManager;
+import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * Callbacks for the application server

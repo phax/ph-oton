@@ -56,7 +56,7 @@ import com.helger.photon.tinymce4.type.TinyMCE4ExternalPlugin;
 import com.helger.photon.tinymce4.type.TinyMCE4MenubarItemList;
 import com.helger.photon.tinymce4.type.TinyMCE4ToolbarControlList;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 
 /**
  * Wraps TinyMCE4 into an HC node. The only required settings is

@@ -44,7 +44,7 @@ import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.core.resource.WebSiteResourceWithCondition;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 
 /**
  * Main class for creating HTML output

@@ -35,7 +35,7 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.string.StringHelper;
-import com.helger.web.scopes.singleton.AbstractGlobalWebSingleton;
+import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
  * Global CSRF manager keeping track of the available nonces.

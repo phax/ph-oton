@@ -25,7 +25,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.html.js.writer.JSWriterSettings;
 import com.helger.photon.tinymce4.type.ETinyMCE4Resize;
-import com.helger.web.scopes.mock.WebScopeTestRule;
+import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
  * Test class for class {@link HCTinyMCE4}.

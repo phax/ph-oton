@@ -24,8 +24,8 @@ import org.junit.Test;
 
 import com.helger.commons.charset.CCharset;
 import com.helger.web.mock.MockHttpServletResponse;
-import com.helger.web.scopes.mock.WebScopeAwareTestSetup;
-import com.helger.web.scopes.mock.WebScopeTestRule;
+import com.helger.web.scope.mock.WebScopeAwareTestSetup;
+import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
  * Test class for class {@link AbstractUnifiedResponseServlet}.

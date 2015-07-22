@@ -22,9 +22,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
-import com.helger.web.scopes.mgr.WebScopeManager;
-import com.helger.web.scopes.mock.WebScopeTestRule;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.mgr.WebScopeManager;
+import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
  * Test class for class {@link LinkHelper}.

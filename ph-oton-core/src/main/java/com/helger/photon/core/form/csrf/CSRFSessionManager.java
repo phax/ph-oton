@@ -26,7 +26,7 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.scope.IScope;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
+import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
 /**
  * Per-session nonce manager.

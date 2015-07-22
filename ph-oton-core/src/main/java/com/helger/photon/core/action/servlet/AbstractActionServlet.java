@@ -43,7 +43,7 @@ import com.helger.photon.core.action.IActionExceptionCallback;
 import com.helger.photon.core.action.IActionExecutor;
 import com.helger.photon.core.action.IActionInvoker;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 /**

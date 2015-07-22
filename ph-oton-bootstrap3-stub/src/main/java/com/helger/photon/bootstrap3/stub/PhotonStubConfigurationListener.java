@@ -45,8 +45,8 @@ import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.autonumeric.AbstractHCAutoNumeric;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
-import com.helger.web.scopes.factory.ThrowingScopeFactory;
-import com.helger.web.scopes.mgr.WebScopeManager;
+import com.helger.web.scope.factory.ThrowingScopeFactory;
+import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.web.servlet.response.UnifiedResponseDefaultSettings;
 
 /**

@@ -39,8 +39,8 @@ import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.web.scopes.domain.IGlobalWebScope;
-import com.helger.web.scopes.mgr.WebScopeManager;
+import com.helger.web.scope.domain.IGlobalWebScope;
+import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * A manager for keeping track of the default servlets state.

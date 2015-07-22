@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.html.request.IHCRequestField;
-import com.helger.web.scopes.util.RequestFieldData;
+import com.helger.web.scope.util.RequestFieldData;
 
 public class RequestField extends RequestFieldData implements IHCRequestField
 {

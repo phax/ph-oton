@@ -32,7 +32,7 @@ import com.helger.masterdata.address.EAddressType;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.object.client.Client;
 import com.helger.photon.basic.object.client.IClient;
-import com.helger.web.scopes.mock.WebScopeTestRule;
+import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
  * Test class for class {@link AccountingArea}

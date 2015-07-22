@@ -24,7 +24,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
+import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
 /**
  * Session singleton to create unique keys for server logging. Each generated

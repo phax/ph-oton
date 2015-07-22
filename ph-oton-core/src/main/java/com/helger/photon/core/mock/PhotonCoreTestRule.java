@@ -25,8 +25,8 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.url.SMap;
 import com.helger.photon.core.servlet.WebAppListener;
 import com.helger.web.mock.MockHttpListener;
-import com.helger.web.scopes.mock.MockServletRequestListenerScopeAware;
-import com.helger.web.scopes.mock.WebScopeTestRule;
+import com.helger.web.scope.mock.MockServletRequestListenerScopeAware;
+import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
  * A JUnit test rule that is suitable for all ph-oton projects. It is optimized

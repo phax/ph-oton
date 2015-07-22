@@ -36,7 +36,7 @@ import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.state.EValidity;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
+import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
 @ThreadSafe
 public class FormUniqueSubmitManager extends AbstractSessionWebSingleton

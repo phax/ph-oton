@@ -24,7 +24,7 @@ import org.joda.time.LocalDateTime;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.action.IActionExecutor;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 
 /**
  * Abstract base class in case there will be some common functionality some

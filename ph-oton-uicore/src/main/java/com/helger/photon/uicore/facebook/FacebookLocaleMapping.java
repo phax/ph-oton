@@ -31,7 +31,7 @@ import com.helger.commons.cache.AbstractNotifyingCache;
 import com.helger.commons.cache.IMutableCache;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.scope.IScope;
-import com.helger.web.scopes.singleton.AbstractGlobalWebSingleton;
+import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 public final class FacebookLocaleMapping extends AbstractGlobalWebSingleton
 {

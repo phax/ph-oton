@@ -55,9 +55,9 @@ import com.helger.photon.basic.security.login.callback.IUserLoginCallback;
 import com.helger.photon.basic.security.login.callback.IUserLogoutCallback;
 import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 import com.helger.photon.basic.security.user.IUser;
-import com.helger.web.scopes.domain.ISessionWebScope;
-import com.helger.web.scopes.session.ISessionWebScopeActivationHandler;
-import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
+import com.helger.web.scope.domain.ISessionWebScope;
+import com.helger.web.scope.session.ISessionWebScopeActivationHandler;
+import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
 /**
  * This class manages all logged-in users.

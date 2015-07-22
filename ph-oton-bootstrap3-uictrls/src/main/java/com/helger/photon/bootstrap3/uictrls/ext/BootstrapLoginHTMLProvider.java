@@ -44,7 +44,7 @@ import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.login.CLogin;
 import com.helger.photon.core.login.LoginHTMLProvider;
-import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
 
 /**
  * A special {@link LoginHTMLProvider} with Bootstrap UI.

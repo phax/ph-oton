@@ -41,7 +41,7 @@ import com.helger.commons.scope.IScope;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.web.scopes.singleton.AbstractSessionWebSingleton;
+import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
 /**
  * A per-session manager, that handles all the uploaded files while the process
