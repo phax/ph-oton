@@ -31,7 +31,7 @@ import com.helger.html.js.writer.JSWriterSettings;
  *
  * @author Philip Helger
  */
-public class TypeaheadDatasetTest
+public final class TypeaheadDatasetTest
 {
   @Test
   public void testBasic ()
@@ -42,8 +42,8 @@ public class TypeaheadDatasetTest
     final TypeaheadDataset d = new TypeaheadDataset ("test");
     assertEquals ("{name:'test'}", d.getAsJSObject ().getJSCode (new JSWriterSettings ().setIndentAndAlign (false)));
     d.setLocal (d1, d2);
-    assertEquals ("{name:'test',local:[{value:'v1',tokens:['a']},{value:'v2',tokens:['b']}]}", d.getAsJSObject ()
-                                                                                                .getJSCode (aJSWS));
+    assertEquals ("{name:'test',local:[{value:'v1',tokens:['a']},{value:'v2',tokens:['b']}]}",
+                  d.getAsJSObject ().getJSCode (aJSWS));
     d.setLocal ((List <? extends TypeaheadDatum>) null);
     d.setPrefetch (new SimpleURL ("prefetch.x"));
     assertEquals ("{name:'test',prefetch:{url:'prefetch.x'}}", d.getAsJSObject ().getJSCode (aJSWS));

@@ -38,7 +38,7 @@ import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
  *
  * @author Philip Helger
  */
-public class AsynchronousAuditorTest
+public final class AsynchronousAuditorTest
 {
   @Test
   public void testBasic ()

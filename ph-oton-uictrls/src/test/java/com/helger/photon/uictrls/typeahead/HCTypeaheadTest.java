@@ -30,7 +30,7 @@ import com.helger.html.js.writer.JSWriterSettings;
  *
  * @author Philip Helger
  */
-public class HCTypeaheadTest
+public final class HCTypeaheadTest
 {
   @Test
   public void testBasic ()
@@ -43,9 +43,9 @@ public class HCTypeaheadTest
                   t.getAsJSObject ().getJSCode (new JSWriterSettings ().setIndentAndAlign (false)));
     t.setOnOpened (new JSAnonymousFunction (JSHtml.windowAlert ("o")));
     t.setOnAutoCompleted (new JSAnonymousFunction (JSHtml.windowAlert ("a")));
-    assertEquals ("$('#abc').typeahead({name:'test',local:[{value:'v1',tokens:['a']}]})"
-                      + ".on('typeahead:opened',function(){window.alert('o');})"
-                      + ".on('typeahead:autocompleted',function(){window.alert('a');});",
+    assertEquals ("$('#abc').typeahead({name:'test',local:[{value:'v1',tokens:['a']}]})" +
+                  ".on('typeahead:opened',function(){window.alert('o');})" +
+                  ".on('typeahead:autocompleted',function(){window.alert('a');});",
                   t.getAsJSObject ().getJSCode (new JSWriterSettings ().setIndentAndAlign (false)));
   }
 }

@@ -23,10 +23,10 @@ import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
 
 /**
  * Test class for class {@link LoggingAuditor}.
- * 
+ *
  * @author Philip Helger
  */
-public class LoggingAuditorTest
+public final class LoggingAuditorTest
 {
   @Test
   public void testBasic ()

@@ -23,7 +23,7 @@ import org.junit.Test;
 import com.helger.html.js.builder.JSPackage;
 import com.helger.html.js.writer.JSWriterSettings;
 
-public class BloodhoundJSTest
+public final class BloodhoundJSTest
 {
   @Test
   public void testBasic ()

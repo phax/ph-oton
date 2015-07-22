@@ -27,7 +27,7 @@ import com.helger.html.hc.conversion.HCSettings;
  *
  * @author Philip Helger
  */
-public class OpenGraphMetaElementTest
+public final class OpenGraphMetaElementTest
 {
   @Test
   public void testBasic ()

@@ -28,7 +28,7 @@ import com.helger.html.js.writer.JSWriterSettings;
  *
  * @author Philip Helger
  */
-public class TypeaheadDatumTest
+public final class TypeaheadDatumTest
 {
   @Test
   public void testBasic ()
@@ -37,8 +37,8 @@ public class TypeaheadDatumTest
     final TypeaheadDatum p = new TypeaheadDatum ("Value", "Token", "for", "this", "value");
     assertEquals ("Value", p.getValue ());
     assertEquals (CollectionHelper.newList ("Token", "for", "this", "value"), p.getAllTokens ());
-    assertEquals ("{\"value\":\"Value\",\"tokens\":[\"Token\",\"for\",\"this\",\"value\"]}", p.getAsJson ()
-                                                                                              .getAsString ());
+    assertEquals ("{\"value\":\"Value\",\"tokens\":[\"Token\",\"for\",\"this\",\"value\"]}",
+                  p.getAsJson ().getAsString ());
     assertEquals ("{value:'Value',tokens:['Token','for','this','value']}", p.getAsJSObject ().getJSCode (aJSWS));
   }
 }

@@ -30,7 +30,7 @@ import com.helger.html.js.writer.JSWriterSettings;
  *
  * @author Philip Helger
  */
-public class TypeaheadRemoteTest
+public final class TypeaheadRemoteTest
 {
   @Test
   public void testBasic ()
@@ -45,8 +45,8 @@ public class TypeaheadRemoteTest
     p.setTimeout (1000);
     assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000}", p.getAsJSObject ().getJSCode (aJSWS));
     p.setWildcard ("$Q");
-    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000,wildcard:'$Q'}", p.getAsJSObject ()
-                                                                                             .getJSCode (aJSWS));
+    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000,wildcard:'$Q'}",
+                  p.getAsJSObject ().getJSCode (aJSWS));
     p.setReplace (new JSAnonymousFunction (JSHtml.windowAlert ("x")));
     assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000,wildcard:'$Q',replace:function(){window.alert('x');}}",
                   p.getAsJSObject ().getJSCode (aJSWS));

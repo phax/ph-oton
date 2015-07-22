@@ -26,7 +26,12 @@ import org.junit.Test;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.xml.schema.XMLSchemaCache;
 
-public class CWebSpecsTest
+/**
+ * Test class for class {@link CWebSpecs}.
+ * 
+ * @author Philip Helger
+ */
+public final class CWebSpecsTest
 {
   private void _testXSD (@Nonnull final IReadableResource aXSD)
   {

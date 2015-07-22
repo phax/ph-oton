@@ -30,7 +30,7 @@ import com.helger.html.js.writer.JSWriterSettings;
  *
  * @author Philip Helger
  */
-public class TypeaheadPrefetchTest
+public final class TypeaheadPrefetchTest
 {
   @Test
   public void testBasic ()

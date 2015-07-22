@@ -22,10 +22,10 @@ import org.junit.Test;
 
 /**
  * Test class for class {@link FineUploaderBasic}.
- * 
+ *
  * @author helger
  */
-public class FineUploaderBasicTest
+public final class FineUploaderBasicTest
 {
   @Test
   public void testBasic ()

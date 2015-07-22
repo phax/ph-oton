@@ -19,7 +19,12 @@ package com.helger.photon.uicore.facebook.xfbml;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class FBLikeTest
+/**
+ * Test class for class {@link FBLike}.
+ * 
+ * @author Philip Helger
+ */
+public final class FBLikeTest
 {
   private static final String VALID = "abcdefghijabcdefghijabcdefghijabcdefghij123456789";
   private static final String VALID_PUNCT = "abcdefgh+/=-.:_ijabcdefghijabcdefghijabcdefghij12";
@@ -33,5 +38,4 @@ public class FBLikeTest
     Assert.assertEquals (VALID_PUNCT, FBLike.createRefText (VALID_PUNCT));
     Assert.assertEquals ("a+/.:-_", FBLike.createRefText (INVALID));
   }
-
 }
