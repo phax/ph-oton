@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.go;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -34,7 +36,7 @@ import com.helger.photon.core.url.LinkHelper;
  * @author Philip Helger
  */
 @Immutable
-public class GoMappingItem
+public class GoMappingItem implements Serializable
 {
   private final String m_sKey;
   private final boolean m_bIsInternal;
@@ -137,7 +139,7 @@ public class GoMappingItem
     final GoMappingItem rhs = (GoMappingItem) o;
     return m_sKey.equals (rhs.m_sKey) &&
            m_bIsInternal == rhs.m_bIsInternal &&
-           m_aTargetURL.equals (rhs.m_aTargetURL) &
+           m_aTargetURL.equals (rhs.m_aTargetURL) &&
            m_bIsEditable == rhs.m_bIsEditable;
   }
 
