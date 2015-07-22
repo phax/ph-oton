@@ -19,7 +19,7 @@ package com.helger.photon.core.action.executor;
 import javax.annotation.Nonnull;
 
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 public abstract class AbstractActionExecutorWithContext <LECTYPE extends ILayoutExecutionContext> extends AbstractActionExecutor

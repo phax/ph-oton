@@ -22,7 +22,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.url.URLHelper;
 import com.helger.photon.core.servlet.AbstractStreamServlet;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public abstract class AbstractUserStreamServlet extends AbstractStreamServlet
 {

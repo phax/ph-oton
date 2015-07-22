@@ -34,7 +34,7 @@ import com.helger.photon.uicore.form.ajax.AjaxExecutorSaveFormState;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.js.JSFormHelper;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public abstract class AbstractAppWebPageForm <DATATYPE extends IHasID <String>> extends AbstractBootstrapWebPageForm <DATATYPE, WebPageExecutionContext>
 {

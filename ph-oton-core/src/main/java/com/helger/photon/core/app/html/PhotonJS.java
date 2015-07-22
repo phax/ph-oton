@@ -39,7 +39,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.core.app.resource.JSResourceSet;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 
 /**

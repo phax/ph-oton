@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.security.audit.AuditHelper;
-import com.helger.web.scope.domain.IRequestWebScope;
+import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.servlet.request.RequestHelper;
 
 /**

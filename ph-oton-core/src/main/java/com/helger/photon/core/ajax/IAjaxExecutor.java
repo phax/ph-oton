@@ -19,7 +19,7 @@ package com.helger.photon.core.ajax;
 import javax.annotation.Nonnull;
 
 import com.helger.photon.core.ajax.response.IAjaxResponse;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Base interface for a single AJAX function handler.

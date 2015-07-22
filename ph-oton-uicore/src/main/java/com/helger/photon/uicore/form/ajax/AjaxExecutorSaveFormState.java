@@ -29,7 +29,7 @@ import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.uicore.css.CPageParam;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
 {

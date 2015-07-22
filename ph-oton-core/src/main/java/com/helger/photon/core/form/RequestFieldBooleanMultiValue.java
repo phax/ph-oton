@@ -26,7 +26,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Special request field specially for check boxes where the same field name can

@@ -38,7 +38,7 @@ import com.helger.commons.microdom.util.XMLMapHandler;
 import com.helger.html.meta.IMetaElement;
 import com.helger.html.meta.MetaElement;
 import com.helger.html.meta.MetaElementList;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 
 /**

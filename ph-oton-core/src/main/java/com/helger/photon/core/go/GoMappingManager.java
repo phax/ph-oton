@@ -51,7 +51,7 @@ import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.url.LinkHelper;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 
 /**

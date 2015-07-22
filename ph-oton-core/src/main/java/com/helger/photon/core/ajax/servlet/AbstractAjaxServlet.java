@@ -46,7 +46,7 @@ import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 /**

@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutExecutionContext> extends AbstractAjaxExecutor
 {

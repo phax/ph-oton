@@ -32,7 +32,7 @@ import com.helger.photon.core.app.error.uihandler.UIInternalErrorHandler;
 import com.helger.smtp.IEmailAttachment;
 import com.helger.smtp.IEmailAttachmentList;
 import com.helger.smtp.impl.EmailAttachmentList;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Builder class for internal error triggering. Call all relevant setters and

@@ -54,14 +54,14 @@ import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.web.http.CHTTPHeader;
 import com.helger.web.http.EHTTPMethod;
 import com.helger.web.http.EHTTPVersion;
-import com.helger.web.scope.domain.IRequestWebScope;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScope;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
-import com.helger.web.scope.servlet.AbstractScopeAwareHttpServlet;
-import com.helger.web.scope.servlet.RequestScopeInitializer;
+import com.helger.web.scope.request.RequestScopeInitializer;
 import com.helger.web.servlet.request.RequestHelper;
 import com.helger.web.servlet.response.UnifiedResponse;
 import com.helger.web.servlet.server.StaticServerInfo;
+import com.helger.web.servlets.scope.AbstractScopeAwareHttpServlet;
 
 /**
  * Abstract base class for a servlets delivering responses via

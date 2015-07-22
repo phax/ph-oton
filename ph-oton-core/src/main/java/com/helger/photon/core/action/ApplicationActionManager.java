@@ -31,7 +31,7 @@ import com.helger.commons.callback.CallbackList;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 /**

@@ -29,7 +29,7 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLHelper;
 import com.helger.commons.url.URLProtocolRegistry;
 import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * The default implementation of {@link IURIToURLConverter} that uses

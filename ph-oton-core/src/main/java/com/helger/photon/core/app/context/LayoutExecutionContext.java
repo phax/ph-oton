@@ -35,7 +35,7 @@ import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestManager;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
 import com.helger.photon.core.app.redirect.ForcedRedirectManager;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * This object is instantiated per page view and contains the current request

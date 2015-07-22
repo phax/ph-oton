@@ -29,7 +29,7 @@ import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.app.ui.AppLoginManager;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseFilter;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 /**

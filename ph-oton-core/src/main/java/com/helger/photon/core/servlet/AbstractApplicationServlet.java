@@ -35,7 +35,7 @@ import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
 import com.helger.photon.core.app.redirect.ForcedRedirectManager;
 import com.helger.photon.core.spi.IApplicationRequestListenerSPI;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.ERedirectMode;
 import com.helger.web.servlet.response.UnifiedResponse;
 

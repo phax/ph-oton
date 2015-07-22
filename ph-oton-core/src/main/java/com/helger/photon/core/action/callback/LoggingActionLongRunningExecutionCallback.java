@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.photon.core.action.IActionExecutor;
 import com.helger.photon.core.action.IActionInvoker;
 import com.helger.photon.core.action.IActionLongRunningExecutionCallback;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class LoggingActionLongRunningExecutionCallback implements IActionLongRunningExecutionCallback
 {

@@ -35,7 +35,7 @@ import com.helger.photon.basic.security.login.LoginInfo;
 import com.helger.photon.basic.security.user.IUser;
 import com.helger.photon.core.app.html.IHTMLProvider;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 import com.helger.web.useragent.UserAgentDatabase;
 

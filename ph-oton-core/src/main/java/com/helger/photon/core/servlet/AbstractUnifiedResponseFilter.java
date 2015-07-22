@@ -26,11 +26,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.helger.commons.state.EContinue;
 import com.helger.web.http.EHTTPMethod;
 import com.helger.web.http.EHTTPVersion;
-import com.helger.web.scope.domain.IRequestWebScope;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.servlet.AbstractScopeAwareFilter;
+import com.helger.web.scope.IRequestWebScope;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.request.RequestHelper;
 import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.web.servlets.scope.AbstractScopeAwareFilter;
 
 /**
  * Abstract base class for a filter performing actions via

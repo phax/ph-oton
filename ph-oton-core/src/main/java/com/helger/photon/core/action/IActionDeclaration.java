@@ -25,7 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.factory.IFactory;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Interface for all action declarations

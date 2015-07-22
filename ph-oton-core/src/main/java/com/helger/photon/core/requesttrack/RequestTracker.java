@@ -36,7 +36,7 @@ import com.helger.commons.error.EErrorLevel;
 import com.helger.commons.scope.IScope;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
-import com.helger.web.scope.domain.IRequestWebScope;
+import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 import com.helger.web.scope.util.AbstractWebScopeAwareRunnable;

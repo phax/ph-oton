@@ -44,8 +44,8 @@ import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.domain.ISessionWebScope;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
 
 /**

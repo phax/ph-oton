@@ -30,7 +30,7 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.io.IPathRelativeIO;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.url.LinkHelper;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Manager for {@link IUserDataObject} objects.

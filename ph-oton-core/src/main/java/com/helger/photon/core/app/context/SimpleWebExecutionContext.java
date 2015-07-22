@@ -42,7 +42,7 @@ import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestManager;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.web.fileupload.IFileItem;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.request.IRequestParamMap;
 import com.helger.web.useragent.IUserAgent;
 import com.helger.web.useragent.UserAgentDatabase;

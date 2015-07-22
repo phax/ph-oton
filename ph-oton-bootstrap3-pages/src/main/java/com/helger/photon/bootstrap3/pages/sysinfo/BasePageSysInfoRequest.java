@@ -43,7 +43,7 @@ import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.cookie.CookieHelper;
 import com.helger.web.servlet.request.RequestHelper;
 import com.helger.web.servlet.request.RequestLogger;

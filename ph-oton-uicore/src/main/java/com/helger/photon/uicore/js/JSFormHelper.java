@@ -32,7 +32,7 @@ import com.helger.html.js.builder.JSRef;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Java JavaScript wrapper for form.js

@@ -28,7 +28,7 @@ import com.helger.commons.error.EErrorLevel;
 import com.helger.commons.error.IErrorLevel;
 import com.helger.commons.log.LogHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.scope.domain.IRequestWebScope;
+import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.servlet.request.RequestHelper;
 
 /**

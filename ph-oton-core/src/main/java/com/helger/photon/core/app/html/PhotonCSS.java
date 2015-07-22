@@ -42,7 +42,7 @@ import com.helger.css.media.ECSSMedium;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.photon.core.app.resource.CSSResourceSet;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 
 /**

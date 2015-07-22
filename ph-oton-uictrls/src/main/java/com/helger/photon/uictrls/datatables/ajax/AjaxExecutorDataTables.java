@@ -38,7 +38,7 @@ import com.helger.photon.core.state.UIStateRegistry;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uictrls.datatables.CDataTables;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * AJAX handler for filling DataTables

@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.xml.serialize.write.XMLWriterSettings;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 /**

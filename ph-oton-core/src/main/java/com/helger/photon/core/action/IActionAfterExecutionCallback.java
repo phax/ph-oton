@@ -19,7 +19,7 @@ package com.helger.photon.core.action;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.callback.ICallback;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Callback interface to be used with the {@link IActionInvoker} to get notified

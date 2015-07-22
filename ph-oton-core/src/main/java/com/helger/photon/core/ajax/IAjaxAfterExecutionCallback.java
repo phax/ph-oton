@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.callback.ICallback;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Callback interface to be used with the {@link IAjaxInvoker} to get notified

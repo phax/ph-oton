@@ -49,7 +49,7 @@ import com.helger.css.writer.CSSWriter;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
 import com.helger.photon.core.url.StreamOrLocalURIToURLConverter;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * A single web site resource. This class is only used internally in

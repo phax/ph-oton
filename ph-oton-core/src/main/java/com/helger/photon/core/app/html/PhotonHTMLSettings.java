@@ -32,7 +32,7 @@ import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.core.url.IWebURIToURLConverter;
 import com.helger.photon.core.url.StreamOrLocalURIToURLConverter;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * This class holds the central configuration settings.

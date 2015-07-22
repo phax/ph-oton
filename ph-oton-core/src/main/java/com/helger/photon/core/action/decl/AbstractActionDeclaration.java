@@ -34,7 +34,7 @@ import com.helger.photon.core.action.ActionInvoker;
 import com.helger.photon.core.action.IActionDeclaration;
 import com.helger.photon.core.action.IActionExecutor;
 import com.helger.photon.core.url.LinkHelper;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Abstract base implementation of {@link IActionDeclaration}

@@ -46,7 +46,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.photon.core.ajax.callback.LoggingAjaxExceptionCallback;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * The default implementation of {@link IAjaxInvoker}.

@@ -28,7 +28,7 @@ import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
-import com.helger.web.scope.domain.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Represents a single web accessible object, that was provided by the user.
