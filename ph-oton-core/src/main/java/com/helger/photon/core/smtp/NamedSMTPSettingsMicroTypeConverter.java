@@ -24,8 +24,8 @@ import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.microdom.util.MicroHelper;
-import com.helger.smtp.ISMTPSettings;
-import com.helger.smtp.impl.ReadOnlySMTPSettings;
+import com.helger.smtp.settings.ISMTPSettings;
+import com.helger.smtp.settings.ReadOnlySMTPSettings;
 
 public final class NamedSMTPSettingsMicroTypeConverter implements IMicroTypeConverter
 {

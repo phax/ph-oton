@@ -69,13 +69,13 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.smtp.IEmailAttachment;
-import com.helger.smtp.IEmailAttachmentList;
-import com.helger.smtp.IEmailData;
-import com.helger.smtp.ISMTPSettings;
+import com.helger.smtp.data.IEmailAttachment;
+import com.helger.smtp.data.IEmailAttachmentList;
+import com.helger.smtp.data.IEmailData;
 import com.helger.smtp.failed.FailedMailData;
 import com.helger.smtp.failed.FailedMailQueue;
 import com.helger.smtp.scope.ScopedMailAPI;
+import com.helger.smtp.settings.ISMTPSettings;
 import com.helger.validation.error.FormErrors;
 
 /**

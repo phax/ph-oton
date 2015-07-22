@@ -28,8 +28,8 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ITypedObject;
 import com.helger.commons.type.ObjectType;
-import com.helger.smtp.ISMTPSettings;
-import com.helger.smtp.impl.ReadOnlySMTPSettings;
+import com.helger.smtp.settings.ISMTPSettings;
+import com.helger.smtp.settings.ReadOnlySMTPSettings;
 
 public class NamedSMTPSettings implements ITypedObject <String>, Serializable
 {

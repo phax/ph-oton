@@ -29,9 +29,9 @@ import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
 import com.helger.photon.core.app.error.uihandler.UIInternalErrorHandler;
-import com.helger.smtp.IEmailAttachment;
-import com.helger.smtp.IEmailAttachmentList;
-import com.helger.smtp.impl.EmailAttachmentList;
+import com.helger.smtp.data.EmailAttachmentList;
+import com.helger.smtp.data.IEmailAttachment;
+import com.helger.smtp.data.IEmailAttachmentList;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

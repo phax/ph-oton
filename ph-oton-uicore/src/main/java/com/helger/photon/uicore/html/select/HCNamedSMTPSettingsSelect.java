@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.smtp.NamedSMTPSettings;
-import com.helger.smtp.ISMTPSettings;
+import com.helger.smtp.settings.ISMTPSettings;
 
 public class HCNamedSMTPSettingsSelect extends HCExtSelect
 {

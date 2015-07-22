@@ -47,7 +47,7 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.smtp.EmailGlobalSettings;
-import com.helger.smtp.IEmailDataTransportListener;
+import com.helger.smtp.listener.IEmailDataTransportListener;
 
 /**
  * Page with global basic settings

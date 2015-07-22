@@ -80,12 +80,12 @@ import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
 import com.helger.smtp.CSMTP;
-import com.helger.smtp.EEmailType;
 import com.helger.smtp.EmailGlobalSettings;
-import com.helger.smtp.ISMTPSettings;
-import com.helger.smtp.impl.EmailData;
-import com.helger.smtp.impl.ReadOnlySMTPSettings;
+import com.helger.smtp.data.EEmailType;
+import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
+import com.helger.smtp.settings.ISMTPSettings;
+import com.helger.smtp.settings.ReadOnlySMTPSettings;
 import com.helger.validation.error.FormErrors;
 import com.helger.web.port.CNetworkPort;
 
