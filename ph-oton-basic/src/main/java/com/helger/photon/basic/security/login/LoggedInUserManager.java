@@ -48,7 +48,7 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.security.AccessManager;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 import com.helger.photon.basic.security.lock.ObjectLockManager;
 import com.helger.photon.basic.security.login.callback.DefaultUserLogoutCallback;
 import com.helger.photon.basic.security.login.callback.IUserLoginCallback;
@@ -322,7 +322,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     final IUser aUser = AccessManager.getInstance ().getUserOfLoginName (sLoginName);
     if (aUser == null)
     {
-      AuditUtils.onAuditExecuteFailure ("login", sLoginName, "no-such-loginname");
+      AuditHelper.onAuditExecuteFailure ("login", sLoginName, "no-such-loginname");
       return ELoginResult.USER_NOT_EXISTING;
     }
     return loginUser (aUser, sPlainTextPassword, aRequiredRoleIDs);
@@ -394,14 +394,14 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     // Deleted user?
     if (aUser.isDeleted ())
     {
-      AuditUtils.onAuditExecuteFailure ("login", sUserID, "user-is-deleted");
+      AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-is-deleted");
       return _onLoginError (sUserID, ELoginResult.USER_IS_DELETED);
     }
 
     // Disabled user?
     if (aUser.isDisabled ())
     {
-      AuditUtils.onAuditExecuteFailure ("login", sUserID, "user-is-disabled");
+      AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-is-disabled");
       return _onLoginError (sUserID, ELoginResult.USER_IS_DISABLED);
     }
 
@@ -410,7 +410,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     // Are all roles present?
     if (!aAccessMgr.hasUserAllRoles (sUserID, aRequiredRoleIDs))
     {
-      AuditUtils.onAuditExecuteFailure ("login",
+      AuditHelper.onAuditExecuteFailure ("login",
                                         sUserID,
                                         "user-is-missing-required-roles",
                                         StringHelper.getToString (aRequiredRoleIDs));
@@ -420,7 +420,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     // Check the password
     if (!aAccessMgr.areUserIDAndPasswordValid (sUserID, sPlainTextPassword))
     {
-      AuditUtils.onAuditExecuteFailure ("login", sUserID, "invalid-password");
+      AuditHelper.onAuditExecuteFailure ("login", sUserID, "invalid-password");
       return _onLoginError (sUserID, ELoginResult.INVALID_PASSWORD);
     }
 
@@ -459,12 +459,12 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
           if (m_aLoggedInUsers.containsKey (sUserID))
             throw new IllegalStateException ("Failed to logout '" + sUserID + "'");
 
-          AuditUtils.onAuditExecuteSuccess ("logout-in-login", sUserID);
+          AuditHelper.onAuditExecuteSuccess ("logout-in-login", sUserID);
           bLoggedOutUser = true;
         }
         else
         {
-          AuditUtils.onAuditExecuteFailure ("login", sUserID, "user-already-logged-in");
+          AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-already-logged-in");
           return _onLoginError (sUserID, ELoginResult.USER_ALREADY_LOGGED_IN);
         }
       }
@@ -478,7 +478,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
                         "' so the new ID '" +
                         sUserID +
                         "' will not be set!");
-        AuditUtils.onAuditExecuteFailure ("login", sUserID, "session-already-has-user");
+        AuditHelper.onAuditExecuteFailure ("login", sUserID, "session-already-has-user");
         return _onLoginError (sUserID, ELoginResult.SESSION_ALREADY_HAS_USER);
       }
 
@@ -492,7 +492,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     }
 
     s_aLogger.info ("Logged in user '" + sUserID + "' with login name '" + aUser.getLoginName () + "'");
-    AuditUtils.onAuditExecuteSuccess ("login", sUserID, aUser.getLoginName ());
+    AuditHelper.onAuditExecuteSuccess ("login", sUserID, aUser.getLoginName ());
 
     // Execute callback as the very last action
     for (final IUserLoginCallback aUserLoginCallback : m_aUserLoginCallbacks.getAllCallbacks ())
@@ -530,7 +530,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       aInfo = m_aLoggedInUsers.remove (sUserID);
       if (aInfo == null)
       {
-        AuditUtils.onAuditExecuteSuccess ("logout", sUserID, "user-not-logged-in");
+        AuditHelper.onAuditExecuteSuccess ("logout", sUserID, "user-not-logged-in");
         return EChange.UNCHANGED;
       }
 
@@ -553,7 +553,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
                     sUserID +
                     "' after " +
                     new Period (aInfo.getLoginDT (), aInfo.getLogoutDT ()).toString ());
-    AuditUtils.onAuditExecuteSuccess ("logout", sUserID);
+    AuditHelper.onAuditExecuteSuccess ("logout", sUserID);
 
     // Execute callback as the very last action
     for (final IUserLogoutCallback aUserLogoutCallback : m_aUserLogoutCallbacks.getAllCallbacks ())

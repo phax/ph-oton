@@ -39,7 +39,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.conversion.IHCConversionSettings;
-import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.utils.HCSpecialNodeHandler;
 import com.helger.html.hc.utils.HCSpecialNodes;
@@ -102,7 +102,7 @@ public final class DataTablesServerDataCell implements Serializable
     m_aContent = HCSpecialNodeHandler.extractSpecialContent (aCellChildren, m_aSpecialNodes, false);
 
     // Finally customize all nodes
-    HCUtils.customizeNodes (m_aContent, HCSettings.getConversionSettings ());
+    HCHelper.customizeNodes (m_aContent, HCSettings.getConversionSettings ());
 
     // Convert to IMicroNode and to String
     final IMicroNode aNode = m_aContent.convertToNode (m_aCS);

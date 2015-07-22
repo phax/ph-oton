@@ -35,7 +35,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 
 /**
  * This class manages global system messages.
@@ -169,7 +169,7 @@ public final class SystemMessageManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditExecuteSuccess ("update-system-message", eMessageType, sMessage);
+    AuditHelper.onAuditExecuteSuccess ("update-system-message", eMessageType, sMessage);
     return EChange.CHANGED;
   }
 

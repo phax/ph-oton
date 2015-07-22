@@ -34,7 +34,7 @@ import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.masterdata.locale.ContinentUtils;
+import com.helger.masterdata.locale.ContinentHelper;
 import com.helger.masterdata.locale.EContinent;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -130,7 +130,7 @@ public class BasePageDataCountries <WPECTYPE extends IWebPageExecutionContext> e
       aRow.addCell (aDiv);
 
       // Continents
-      final Set <EContinent> aContinents = ContinentUtils.getContinentsOfCountry (aCountry);
+      final Set <EContinent> aContinents = ContinentHelper.getContinentsOfCountry (aCountry);
       final StringBuilder aSB = new StringBuilder ();
       if (aContinents != null)
         for (final EContinent eContinent : aContinents)

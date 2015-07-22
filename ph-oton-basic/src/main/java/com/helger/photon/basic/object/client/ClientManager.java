@@ -38,7 +38,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.object.CObject;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 
 /**
  * Manages all available clients.
@@ -114,7 +114,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditCreateSuccess (Client.OT, aClient.getID (), sDisplayName);
+    AuditHelper.onAuditCreateSuccess (Client.OT, aClient.getID (), sDisplayName);
     return aClient;
   }
 
@@ -127,7 +127,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
       final Client aClient = m_aMap.get (sClientID);
       if (aClient == null)
       {
-        AuditUtils.onAuditModifyFailure (Client.OT, sClientID, "no-such-id");
+        AuditHelper.onAuditModifyFailure (Client.OT, sClientID, "no-such-id");
         return EChange.UNCHANGED;
       }
 
@@ -143,7 +143,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditModifySuccess (Client.OT, "all", sClientID, sDisplayName);
+    AuditHelper.onAuditModifySuccess (Client.OT, "all", sClientID, sDisplayName);
     return EChange.CHANGED;
   }
 

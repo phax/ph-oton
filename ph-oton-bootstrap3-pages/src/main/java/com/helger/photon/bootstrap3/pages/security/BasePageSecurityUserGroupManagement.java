@@ -47,7 +47,7 @@ import com.helger.html.hc.html.HCEM;
 import com.helger.html.hc.html.HCEdit;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;
-import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.CSecurity;
@@ -193,7 +193,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
     if (StringHelper.hasText (aSelectedObject.getDescription ()))
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCUtils.nl2divList (aSelectedObject.getDescription ())));
+                                                   .setCtrl (HCHelper.nl2divList (aSelectedObject.getDescription ())));
 
     // All users assigned to this user group
     final Collection <String> aAssignedUserIDs = aSelectedObject.getAllContainedUserIDs ();

@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 
 /**
  * A simple implementation of {@link IParallelRunningRequestCallback} simply
@@ -44,12 +44,12 @@ public class AuditingParallelRunningRequestCallback implements IParallelRunningR
     final List <String> aURLs = new ArrayList <String> ();
     for (final TrackedRequest aRequest : aRequests)
       aURLs.add (aRequest.getRequestScope ().getURL ());
-    AuditUtils.onAuditExecuteSuccess ("parallel-running-requests", Integer.valueOf (nParallelRequests), aURLs);
+    AuditHelper.onAuditExecuteSuccess ("parallel-running-requests", Integer.valueOf (nParallelRequests), aURLs);
   }
 
   public void onParallelRunningRequestsBelowLimit ()
   {
-    AuditUtils.onAuditExecuteSuccess ("parallel-running-requests", "back-to-normal");
+    AuditHelper.onAuditExecuteSuccess ("parallel-running-requests", "back-to-normal");
   }
 
   @Override

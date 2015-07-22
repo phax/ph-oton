@@ -57,7 +57,7 @@ import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
 import com.helger.web.networkinterface.ComparatorNetworkInterfaceName;
-import com.helger.web.networkinterface.NetworkInterfaceUtils;
+import com.helger.web.networkinterface.NetworkInterfaceHelper;
 
 /**
  * Page with information on the current network settings
@@ -145,7 +145,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
                                                                                                                    "-ni");
       try
       {
-        final DefaultTreeWithGlobalUniqueID <String, NetworkInterface> aNITree = NetworkInterfaceUtils.createNetworkInterfaceTree ();
+        final DefaultTreeWithGlobalUniqueID <String, NetworkInterface> aNITree = NetworkInterfaceHelper.createNetworkInterfaceTree ();
         // Sort on each level
         TreeWithIDSorter.sortByValue (aNITree, new ComparatorNetworkInterfaceName ());
         TreeVisitor.visitTree (aNITree,

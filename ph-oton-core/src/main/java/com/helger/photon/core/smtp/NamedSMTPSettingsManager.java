@@ -41,7 +41,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 import com.helger.smtp.ISMTPSettings;
 import com.helger.smtp.impl.SMTPSettings;
 
@@ -326,7 +326,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
       m_aRWLock.writeLock ().unlock ();
     }
 
-    AuditUtils.onAuditCreateSuccess (NamedSMTPSettings.OT,
+    AuditHelper.onAuditCreateSuccess (NamedSMTPSettings.OT,
                                      aNamedSettings.getID (),
                                      aNamedSettings.getName (),
                                      aSettings.getHostName (),
@@ -360,7 +360,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
     final NamedSMTPSettings aNamedSettings = getSettings (sID);
     if (aNamedSettings == null)
     {
-      AuditUtils.onAuditModifyFailure (NamedSMTPSettings.OT, sID, "no-such-id");
+      AuditHelper.onAuditModifyFailure (NamedSMTPSettings.OT, sID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -378,7 +378,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditModifySuccess (NamedSMTPSettings.OT,
+    AuditHelper.onAuditModifySuccess (NamedSMTPSettings.OT,
                                      aNamedSettings.getID (),
                                      aNamedSettings.getName (),
                                      aSettings.getHostName (),
@@ -414,9 +414,9 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
       m_aRWLock.writeLock ().unlock ();
     }
     if (eChange.isChanged ())
-      AuditUtils.onAuditDeleteSuccess (NamedSMTPSettings.OT, sID);
+      AuditHelper.onAuditDeleteSuccess (NamedSMTPSettings.OT, sID);
     else
-      AuditUtils.onAuditDeleteFailure (NamedSMTPSettings.OT, sID, "no-such-id");
+      AuditHelper.onAuditDeleteFailure (NamedSMTPSettings.OT, sID, "no-such-id");
     return eChange;
   }
 

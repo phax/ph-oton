@@ -41,7 +41,7 @@ import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.object.client.IClient;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 
 /**
  * Manages all available accounting areas.
@@ -134,7 +134,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditCreateSuccess (AccountingArea.OT,
+    AuditHelper.onAuditCreateSuccess (AccountingArea.OT,
                                      aAccountingArea.getID (),
                                      sDisplayName,
                                      sCompanyType,
@@ -174,7 +174,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
       final AccountingArea aAccountingArea = m_aMap.get (sAccountingAreaID);
       if (aAccountingArea == null)
       {
-        AuditUtils.onAuditModifyFailure (AccountingArea.OT, sAccountingAreaID, "no-such-id");
+        AuditHelper.onAuditModifyFailure (AccountingArea.OT, sAccountingAreaID, "no-such-id");
         return EChange.UNCHANGED;
       }
 
@@ -202,7 +202,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditModifySuccess (AccountingArea.OT,
+    AuditHelper.onAuditModifySuccess (AccountingArea.OT,
                                      "all",
                                      sAccountingAreaID,
                                      sDisplayName,

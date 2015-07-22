@@ -50,7 +50,7 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
-import com.helger.photon.core.url.LinkUtils;
+import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.mgr.WebScopeManager;
 
@@ -416,7 +416,7 @@ public class GoMappingManager extends AbstractSimpleDAO
     if (PhotonCoreManager.getGoMappingMgr ().getItemOfKey (sKey) == null)
       s_aLogger.warn ("Building URL from invalid go-mapping item '" + sKey + "'");
 
-    return LinkUtils.getURLWithContext (GoServlet.SERVLET_DEFAULT_NAME + "/" + sKey);
+    return LinkHelper.getURLWithContext (GoServlet.SERVLET_DEFAULT_NAME + "/" + sKey);
   }
 
   /**
@@ -435,6 +435,6 @@ public class GoMappingManager extends AbstractSimpleDAO
     if (PhotonCoreManager.getGoMappingMgr ().getItemOfKey (sKey) == null)
       s_aLogger.warn ("Building URL from invalid go-mapping item '" + sKey + "'");
 
-    return LinkUtils.getURLWithContext (aRequestScope, GoServlet.SERVLET_DEFAULT_NAME + "/" + sKey);
+    return LinkHelper.getURLWithContext (aRequestScope, GoServlet.SERVLET_DEFAULT_NAME + "/" + sKey);
   }
 }

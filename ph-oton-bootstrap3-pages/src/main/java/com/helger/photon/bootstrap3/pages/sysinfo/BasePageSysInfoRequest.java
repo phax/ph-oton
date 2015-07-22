@@ -36,7 +36,7 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.HCCol;
-import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
@@ -131,7 +131,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
                                                                                              new CollatingComparator (aDisplayLocale))
                                                                             .entrySet ())
       {
-        aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (HCUtils.list2divList (aEntry.getValue ()));
+        aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (HCHelper.list2divList (aEntry.getValue ()));
       }
       aTabBox.addTab (EText.MSG_HTTP_HEADERS.getDisplayText (aDisplayLocale), aTable);
     }

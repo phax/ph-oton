@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 
 /**
@@ -53,6 +53,6 @@ public final class BootstrapSecurityUI
     if (aTexts.isEmpty ())
       return null;
 
-    return HCUtils.list2divList (aTexts);
+    return HCHelper.list2divList (aTexts);
   }
 }

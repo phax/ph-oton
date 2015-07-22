@@ -32,25 +32,25 @@ public final class LoggingAuditorTest
   public void testBasic ()
   {
     final ObjectType aOT = new ObjectType ("mock");
-    AuditUtils.setAuditor (new LoggingAuditor (new MockCurrentUserIDProvider ("userid")));
+    AuditHelper.setAuditor (new LoggingAuditor (new MockCurrentUserIDProvider ("userid")));
     try
     {
-      AuditUtils.onAuditCreateSuccess (aOT);
-      AuditUtils.onAuditCreateSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditModifySuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditModifyFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditDeleteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditDeleteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditUndeleteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditUndeleteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditExecuteSuccess ("spawn", "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditExecuteFailure ("spawn", "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditExecuteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditExecuteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditCreateSuccess (aOT);
+      AuditHelper.onAuditCreateSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditModifySuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditModifyFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditDeleteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditDeleteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditUndeleteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditUndeleteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditExecuteSuccess ("spawn", "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditExecuteFailure ("spawn", "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditExecuteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditExecuteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
     }
     finally
     {
-      AuditUtils.setDefaultAuditor ();
+      AuditHelper.setDefaultAuditor ();
     }
   }
 }

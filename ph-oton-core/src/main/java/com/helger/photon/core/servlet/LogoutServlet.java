@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
-import com.helger.photon.core.url.LinkUtils;
+import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.http.EHTTPMethod;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
@@ -74,7 +74,7 @@ public class LogoutServlet extends AbstractUnifiedResponseServlet
   protected ISimpleURL getRedirectURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // No need for a session ID upon logout
-    return LinkUtils.getHomeLinkWithoutSession ();
+    return LinkHelper.getHomeLinkWithoutSession ();
   }
 
   /**

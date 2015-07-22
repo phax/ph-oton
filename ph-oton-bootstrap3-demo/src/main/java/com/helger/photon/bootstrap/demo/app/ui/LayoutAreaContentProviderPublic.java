@@ -47,7 +47,7 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.menu.MenuItemDeterminatorCallback;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.photon.basic.security.user.IUser;
-import com.helger.photon.basic.security.util.SecurityUtils;
+import com.helger.photon.basic.security.util.SecurityHelper;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.app.menu.pub.CMenuPublic;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
@@ -68,7 +68,7 @@ import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.app.layout.ILayoutAreaContentProvider;
 import com.helger.photon.core.servlet.LogoutServlet;
-import com.helger.photon.core.url.LinkUtils;
+import com.helger.photon.core.url.LinkHelper;
 import com.helger.photon.uicore.page.IWebPage;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
@@ -108,10 +108,10 @@ public final class LayoutAreaContentProviderPublic implements ILayoutAreaContent
       final BootstrapNav aNav = new BootstrapNav ();
       aNav.addItem (new HCSpan ().addClass (CBootstrapCSS.NAVBAR_TEXT)
                                  .addChild ("Logged in as ")
-                                 .addChild (new HCStrong ().addChild (SecurityUtils.getUserDisplayName (aUser,
+                                 .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
                                                                                                         aDisplayLocale))));
 
-      aNav.addItem (new HCA (LinkUtils.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
+      aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
       aNavbar.addNav (EBootstrapNavbarPosition.COLLAPSIBLE_RIGHT, aNav);
     }
     else

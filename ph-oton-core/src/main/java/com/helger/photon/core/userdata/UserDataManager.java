@@ -29,7 +29,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.io.IPathRelativeIO;
 import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.photon.core.url.LinkUtils;
+import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**
@@ -150,7 +150,7 @@ public final class UserDataManager
   @Nonempty
   public static String getContextAndUserDataPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return LinkUtils.getURIWithContext (aRequestScope, getUserDataPath ());
+    return LinkHelper.getURIWithContext (aRequestScope, getUserDataPath ());
   }
 
   /**
@@ -174,7 +174,7 @@ public final class UserDataManager
   {
     ValueEnforcer.notNull (aUDO, "UDO");
 
-    return LinkUtils.getURIWithContext (aRequestScope, getUserDataPath () + aUDO.getPath ());
+    return LinkHelper.getURIWithContext (aRequestScope, getUserDataPath () + aUDO.getPath ());
   }
 
   /**

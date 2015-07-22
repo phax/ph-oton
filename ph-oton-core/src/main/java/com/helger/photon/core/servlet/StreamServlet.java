@@ -24,7 +24,7 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.url.URLHelper;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
-import com.helger.photon.core.url.LinkUtils;
+import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**
@@ -34,7 +34,7 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
  */
 public class StreamServlet extends AbstractStreamServlet
 {
-  public static final String SERVLET_DEFAULT_NAME = LinkUtils.DEFAULT_STREAM_SERVLET_NAME;
+  public static final String SERVLET_DEFAULT_NAME = LinkHelper.DEFAULT_STREAM_SERVLET_NAME;
   public static final String SERVLET_DEFAULT_PATH = "/" + SERVLET_DEFAULT_NAME;
 
   private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (StreamServlet.class);

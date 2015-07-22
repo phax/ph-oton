@@ -75,7 +75,7 @@ import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.state.UIStateRegistry;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.photon.uicore.js.JSJQueryUtils;
+import com.helger.photon.uicore.js.JSJQueryHelper;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.ajax.DataTablesServerData;
@@ -1015,11 +1015,11 @@ public class DataTables implements IHCNodeBuilder
                                                                                                     : m_eServerMethod.getName ())
                                                                      .url (sSource)
                                                                      .data (aoData)
-                                                                     .success (JSJQueryUtils.jqueryAjaxSuccessHandler (fnCallback,
+                                                                     .success (JSJQueryHelper.jqueryAjaxSuccessHandler (fnCallback,
                                                                                                                        true));
       aAF.body ().assign (oSettings.ref ("jqXHR"), aAjaxBuilder.build ());
       aParams.add ("fnServerData", aAF);
-      JSJQueryUtils.registerExternalResources ();
+      JSJQueryHelper.registerExternalResources ();
     }
     if (m_bDeferRender != DEFAULT_DEFER_RENDER)
       aParams.add ("deferRender", m_bDeferRender);

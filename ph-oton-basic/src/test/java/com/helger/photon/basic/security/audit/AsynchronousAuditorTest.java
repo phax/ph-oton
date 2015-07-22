@@ -54,22 +54,22 @@ public final class AsynchronousAuditorTest
       }
     };
     final AsynchronousAuditor aAuditor = new AsynchronousAuditor (new MockCurrentUserIDProvider ("userid"), aPerformer);
-    AuditUtils.setAuditor (aAuditor);
+    AuditHelper.setAuditor (aAuditor);
     try
     {
-      AuditUtils.onAuditCreateSuccess (aOT);
-      AuditUtils.onAuditCreateSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditModifySuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditModifyFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditDeleteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditDeleteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditUndeleteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditCreateSuccess (aOT);
+      AuditHelper.onAuditCreateSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditModifySuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditModifyFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditDeleteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditDeleteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditUndeleteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
       ThreadHelper.sleep (10);
-      AuditUtils.onAuditUndeleteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditExecuteSuccess ("spawn", "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditExecuteFailure ("spawn", "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditExecuteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
-      AuditUtils.onAuditExecuteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditUndeleteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditExecuteSuccess ("spawn", "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditExecuteFailure ("spawn", "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditExecuteSuccess (aOT, "this", "is", Integer.valueOf (2), "a", "test");
+      AuditHelper.onAuditExecuteFailure (aOT, "this", "is", Integer.valueOf (2), "a", "test");
       // Stop!
       assertTrue (aAuditor.stop ().isChanged ());
       assertFalse (aAuditor.stop ().isChanged ());
@@ -80,7 +80,7 @@ public final class AsynchronousAuditorTest
       // And now, after we stopped...
       try
       {
-        AuditUtils.onAuditExecuteFailure (aOT, "this", "is", "a", "test");
+        AuditHelper.onAuditExecuteFailure (aOT, "this", "is", "a", "test");
         fail ();
       }
       catch (final IllegalStateException ex)
@@ -93,7 +93,7 @@ public final class AsynchronousAuditorTest
     }
     finally
     {
-      AuditUtils.setDefaultAuditor ();
+      AuditHelper.setDefaultAuditor ();
     }
   }
 }

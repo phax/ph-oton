@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.mail.event.TransportEvent;
 
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 import com.helger.smtp.IEmailData;
 import com.helger.smtp.IEmailDataTransportListener;
 import com.helger.smtp.ISMTPSettings;
@@ -39,7 +39,7 @@ public class AuditingEmailDataTransportListener implements IEmailDataTransportLi
                                 @Nonnull final IEmailData aEmailData,
                                 @Nonnull final TransportEvent aEvent)
   {
-    AuditUtils.onAuditExecuteSuccess ("email-message-delivered",
+    AuditHelper.onAuditExecuteSuccess ("email-message-delivered",
                                       aEmailData.getSubject (),
                                       aEvent.getValidSentAddresses (),
                                       aEvent.getValidUnsentAddresses (),
@@ -51,7 +51,7 @@ public class AuditingEmailDataTransportListener implements IEmailDataTransportLi
                                    @Nonnull final IEmailData aEmailData,
                                    @Nonnull final TransportEvent aEvent)
   {
-    AuditUtils.onAuditExecuteFailure ("email-message-delivered",
+    AuditHelper.onAuditExecuteFailure ("email-message-delivered",
                                       "not-delivered",
                                       aEmailData.getSubject (),
                                       aEvent.getValidSentAddresses (),
@@ -64,7 +64,7 @@ public class AuditingEmailDataTransportListener implements IEmailDataTransportLi
                                          @Nonnull final IEmailData aEmailData,
                                          @Nonnull final TransportEvent aEvent)
   {
-    AuditUtils.onAuditExecuteFailure ("email-message-delivered",
+    AuditHelper.onAuditExecuteFailure ("email-message-delivered",
                                       "partially-delivered",
                                       aEmailData.getSubject (),
                                       aEvent.getValidSentAddresses (),

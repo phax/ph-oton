@@ -27,7 +27,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.EPhotonBasicText;
 import com.helger.photon.basic.app.menu.IMenuObject;
-import com.helger.photon.basic.security.util.SecurityUtils;
+import com.helger.photon.basic.security.util.SecurityHelper;
 
 /**
  * This filter matches any menu item if a user is logged in and if the user is
@@ -62,7 +62,7 @@ public class MenuObjectFilterUserAssignedToUserGroup extends AbstractMenuObjectF
 
   public boolean matchesFilter (@Nullable final IMenuObject aValue)
   {
-    return SecurityUtils.isCurrentUserAssignedToUserGroup (m_sUserGroupID);
+    return SecurityHelper.isCurrentUserAssignedToUserGroup (m_sUserGroupID);
   }
 
   @Override

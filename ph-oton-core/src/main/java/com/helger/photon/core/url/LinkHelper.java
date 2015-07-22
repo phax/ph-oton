@@ -43,7 +43,7 @@ import com.helger.web.scopes.mgr.WebScopeManager;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class LinkUtils
+public final class LinkHelper
 {
   public static final String STREAM_SERVLET_NAME_REGEX = "[a-zA-Z0-9-_]+";
 
@@ -53,13 +53,13 @@ public final class LinkUtils
    */
   public static final String DEFAULT_STREAM_SERVLET_NAME = "stream";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LinkUtils.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (LinkHelper.class);
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
   private static String s_sStreamServletName = DEFAULT_STREAM_SERVLET_NAME;
 
-  private LinkUtils ()
+  private LinkHelper ()
   {}
 
   public static void setStreamServletName (@Nonnull @Nonempty final String sStreamServletName)

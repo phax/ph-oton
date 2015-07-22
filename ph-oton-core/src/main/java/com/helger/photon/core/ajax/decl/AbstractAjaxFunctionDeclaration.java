@@ -33,7 +33,7 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.photon.core.ajax.AjaxInvoker;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
-import com.helger.photon.core.url.LinkUtils;
+import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**
@@ -90,7 +90,7 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
   @Nonnull
   public String getInvocationURI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return LinkUtils.getURIWithContext (aRequestScope, getPathWithoutContext ());
+    return LinkHelper.getURIWithContext (aRequestScope, getPathWithoutContext ());
   }
 
   @Nonnull
@@ -117,7 +117,7 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
   public ISimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                       @Nullable final Map <String, String> aParams)
   {
-    return LinkUtils.getURLWithContext (aRequestScope, getPathWithoutContext (), aParams);
+    return LinkHelper.getURLWithContext (aRequestScope, getPathWithoutContext (), aParams);
   }
 
   public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)

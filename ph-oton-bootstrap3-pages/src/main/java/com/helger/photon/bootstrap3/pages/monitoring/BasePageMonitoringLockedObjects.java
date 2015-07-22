@@ -37,7 +37,7 @@ import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.lock.ILockInfo;
 import com.helger.photon.basic.security.lock.ILockManager;
-import com.helger.photon.basic.security.util.SecurityUtils;
+import com.helger.photon.basic.security.util.SecurityHelper;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -147,7 +147,7 @@ public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecution
 
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (PDTToString.getAsString (aInfo.getLockDateTime (), aDisplayLocale));
-      aRow.addCell (SecurityUtils.getUserDisplayName (aInfo.getLockUserID (), aDisplayLocale));
+      aRow.addCell (SecurityHelper.getUserDisplayName (aInfo.getLockUserID (), aDisplayLocale));
       aRow.addCell (sObjectID);
     }
     aNodeList.addChild (aTable);

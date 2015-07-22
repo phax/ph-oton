@@ -35,12 +35,12 @@ import com.helger.photon.basic.security.user.IUser;
  * @author Philip Helger
  */
 @Immutable
-public final class SecurityUtils
+public final class SecurityHelper
 {
   @PresentForCodeCoverage
-  private static final SecurityUtils s_aInstance = new SecurityUtils ();
+  private static final SecurityHelper s_aInstance = new SecurityHelper ();
 
-  private SecurityUtils ()
+  private SecurityHelper ()
   {}
 
   public static boolean isCurrentUserAssignedToUserGroup (@Nullable final String sUserGroupID)

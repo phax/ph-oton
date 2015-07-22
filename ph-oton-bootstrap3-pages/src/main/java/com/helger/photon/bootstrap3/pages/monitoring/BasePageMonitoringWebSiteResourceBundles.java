@@ -34,7 +34,7 @@ import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;
-import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
@@ -165,7 +165,7 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (aBundle.getBundleID ());
       aRow.addCell (PDTToString.getAsString (aBundle.getCreationDT (), aDisplayLocale));
-      aRow.addCell (HCUtils.list2divList (aBundle.getBundle ().getAllResourcePaths ()));
+      aRow.addCell (HCHelper.list2divList (aBundle.getBundle ().getAllResourcePaths ()));
       aRow.addCell (aBundle.getBundle ().getConditionalComment ());
       aRow.addCell (aBundle.getBundle ().hasMediaList () ? aBundle.getBundle ().getMediaList ().getMediaString ()
                                                         : null);

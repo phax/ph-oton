@@ -46,7 +46,7 @@ import com.helger.photon.basic.app.dao.IReloadableDAO;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.security.CSecurity;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 import com.helger.photon.basic.security.role.callback.IRoleModificationCallback;
 
 /**
@@ -192,7 +192,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditCreateSuccess (CSecurity.TYPE_ROLE, aRole.getID (), sName);
+    AuditHelper.onAuditCreateSuccess (CSecurity.TYPE_ROLE, aRole.getID (), sName);
 
     // Execute callback as the very last action
     for (final IRoleModificationCallback aRoleCallback : m_aRoleCallbacks.getAllCallbacks ())
@@ -229,7 +229,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditCreateSuccess (CSecurity.TYPE_ROLE, aRole.getID (), "predefind-role", sName);
+    AuditHelper.onAuditCreateSuccess (CSecurity.TYPE_ROLE, aRole.getID (), "predefind-role", sName);
 
     // Execute callback as the very last action
     for (final IRoleModificationCallback aRoleCallback : m_aRoleCallbacks.getAllCallbacks ())
@@ -322,7 +322,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
       aDeletedRole = m_aRoles.remove (sRoleID);
       if (aDeletedRole == null)
       {
-        AuditUtils.onAuditDeleteFailure (CSecurity.TYPE_ROLE, "no-such-role-id", sRoleID);
+        AuditHelper.onAuditDeleteFailure (CSecurity.TYPE_ROLE, "no-such-role-id", sRoleID);
         return EChange.UNCHANGED;
       }
       markAsChanged ();
@@ -331,7 +331,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditDeleteSuccess (CSecurity.TYPE_ROLE, sRoleID);
+    AuditHelper.onAuditDeleteSuccess (CSecurity.TYPE_ROLE, sRoleID);
 
     // Execute callback as the very last action
     for (final IRoleModificationCallback aRoleCallback : m_aRoleCallbacks.getAllCallbacks ())
@@ -354,7 +354,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     final Role aRole = getRoleOfID (sRoleID);
     if (aRole == null)
     {
-      AuditUtils.onAuditModifyFailure (CSecurity.TYPE_ROLE, sRoleID, "no-such-id");
+      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_ROLE, sRoleID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -369,7 +369,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditModifySuccess (CSecurity.TYPE_ROLE, "name", sRoleID, sNewName);
+    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_ROLE, "name", sRoleID, sNewName);
 
     // Execute callback as the very last action
     for (final IRoleModificationCallback aRoleCallback : m_aRoleCallbacks.getAllCallbacks ())
@@ -395,7 +395,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     final Role aRole = getRoleOfID (sRoleID);
     if (aRole == null)
     {
-      AuditUtils.onAuditModifyFailure (CSecurity.TYPE_ROLE, sRoleID, "no-such-role-id");
+      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_ROLE, sRoleID, "no-such-role-id");
       return EChange.UNCHANGED;
     }
 
@@ -414,7 +414,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditUtils.onAuditModifySuccess (CSecurity.TYPE_ROLE,
+    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_ROLE,
                                      "all",
                                      aRole.getID (),
                                      sNewName,

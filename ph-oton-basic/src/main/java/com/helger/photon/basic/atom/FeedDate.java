@@ -27,7 +27,7 @@ import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.PDTFactory;
-import com.helger.web.datetime.PDTWebDateUtils;
+import com.helger.web.datetime.PDTWebDateHelper;
 
 /**
  * ATOM date construct.
@@ -63,7 +63,7 @@ public class FeedDate extends AbstractFeedElement
   public IMicroElement getAsElement (final String sElementName)
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
-    aElement.appendText (PDTWebDateUtils.getAsStringW3C (m_aDT));
+    aElement.appendText (PDTWebDateHelper.getAsStringW3C (m_aDT));
     if (StringHelper.hasText (getLanguage ()))
       aElement.setAttribute (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;

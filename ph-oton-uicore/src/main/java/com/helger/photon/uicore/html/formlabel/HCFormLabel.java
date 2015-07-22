@@ -63,7 +63,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
     ValueEnforcer.notNull (sText, "Text");
     ValueEnforcer.notNull (eType, "Type");
     assignFormLabelClasses (this, eType);
-    addChild (new HCTextNode (HCFormLabelUtils.getTextWithState (sText, eType)));
+    addChild (new HCTextNode (HCFormLabelHelper.getTextWithState (sText, eType)));
     m_eType = eType;
     m_bTextLabel = true;
     m_sPlainText = sText;
@@ -76,7 +76,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
     assignFormLabelClasses (this, eType);
     // Set the label text, before the signs are appended!
     m_sPlainText = aNode.getPlainText ();
-    addChild (HCFormLabelUtils.getNodeWithState (aNode, eType));
+    addChild (HCFormLabelHelper.getNodeWithState (aNode, eType));
     m_eType = eType;
     m_bTextLabel = false;
   }

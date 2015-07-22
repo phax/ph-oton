@@ -45,7 +45,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 
 @ThreadSafe
 public class SystemMigrationManager extends AbstractSimpleDAO
@@ -108,7 +108,7 @@ public class SystemMigrationManager extends AbstractSimpleDAO
       m_aRWLock.writeLock ().unlock ();
     }
 
-    AuditUtils.onAuditCreateSuccess (OT_SYSTEM_MIGRATION_RESULT,
+    AuditHelper.onAuditCreateSuccess (OT_SYSTEM_MIGRATION_RESULT,
                                      aMigrationResult.getID (),
                                      Boolean.valueOf (aMigrationResult.isSuccess ()),
                                      aMigrationResult.getErrorMessage ());

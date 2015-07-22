@@ -37,7 +37,7 @@ import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.audit.IAuditItem;
 import com.helger.photon.basic.security.audit.IAuditManager;
-import com.helger.photon.basic.security.util.SecurityUtils;
+import com.helger.photon.basic.security.util.SecurityHelper;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -156,7 +156,7 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
     {
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (PDTToString.getAsString (aItem.getDateTime (), aDisplayLocale));
-      aRow.addCell (SecurityUtils.getUserDisplayName (aItem.getUserID (), aDisplayLocale));
+      aRow.addCell (SecurityHelper.getUserDisplayName (aItem.getUserID (), aDisplayLocale));
       aRow.addCell (aItem.getType ().getID ());
       aRow.addCell (EPhotonCoreText.getYesOrNo (aItem.getSuccess ().isSuccess (), aDisplayLocale));
       aRow.addCell (getActionString (aItem));

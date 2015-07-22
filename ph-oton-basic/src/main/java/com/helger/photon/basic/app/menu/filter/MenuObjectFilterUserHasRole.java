@@ -27,7 +27,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.EPhotonBasicText;
 import com.helger.photon.basic.app.menu.IMenuObject;
-import com.helger.photon.basic.security.util.SecurityUtils;
+import com.helger.photon.basic.security.util.SecurityHelper;
 
 /**
  * This filter checks that a user is logged in, and that the logged in user is
@@ -61,7 +61,7 @@ public class MenuObjectFilterUserHasRole extends AbstractMenuObjectFilter
 
   public boolean matchesFilter (@Nullable final IMenuObject aValue)
   {
-    return SecurityUtils.hasCurrentUserRole (m_sRoleID);
+    return SecurityHelper.hasCurrentUserRole (m_sRoleID);
   }
 
   @Override

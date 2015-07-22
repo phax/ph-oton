@@ -34,7 +34,7 @@ import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class AuditUtils
+public final class AuditHelper
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
@@ -51,7 +51,7 @@ public final class AuditUtils
   // meaningful!
   private static IAuditor s_aAuditor = DEFAULT_AUDITOR;
 
-  private AuditUtils ()
+  private AuditHelper ()
   {}
 
   @Nonnull

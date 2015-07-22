@@ -88,7 +88,7 @@ import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
 import com.helger.photon.basic.app.dao.IDAOWriteExceptionCallback;
 import com.helger.photon.basic.app.io.ConstantHasFilename;
 import com.helger.photon.basic.app.io.IHasFilename;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -524,17 +524,17 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                 case CREATE:
                   onRecoveryCreate (aElement);
                   bPerformedAtLeastOnRecovery = true;
-                  AuditUtils.onAuditExecuteSuccess ("recovery", "create", aElement);
+                  AuditHelper.onAuditExecuteSuccess ("recovery", "create", aElement);
                   break;
                 case UPDATE:
                   onRecoveryUpdate (aElement);
                   bPerformedAtLeastOnRecovery = true;
-                  AuditUtils.onAuditExecuteSuccess ("recovery", "update", aElement);
+                  AuditHelper.onAuditExecuteSuccess ("recovery", "update", aElement);
                   break;
                 case DELETE:
                   onRecoveryDelete (aElement);
                   bPerformedAtLeastOnRecovery = true;
-                  AuditUtils.onAuditExecuteSuccess ("recovery", "delete", aElement);
+                  AuditHelper.onAuditExecuteSuccess ("recovery", "delete", aElement);
                   break;
                 default:
                   throw new IllegalStateException ("Unsupported action type provided: " + eActionType);

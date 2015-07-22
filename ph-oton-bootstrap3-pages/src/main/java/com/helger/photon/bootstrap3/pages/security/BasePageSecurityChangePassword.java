@@ -36,7 +36,7 @@ import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 import com.helger.photon.basic.security.user.IUser;
-import com.helger.photon.basic.security.util.SecurityUtils;
+import com.helger.photon.basic.security.util.SecurityHelper;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
@@ -173,7 +173,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
         final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
         final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
         aForm.addChild (createActionHeader (EText.TITLE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                SecurityUtils.getUserDisplayName (aCurrentUser,
+                                                                                SecurityHelper.getUserDisplayName (aCurrentUser,
                                                                                                                   aDisplayLocale))));
 
         final String sLabelOldPassword = EText.LABEL_OLD_PASSWORD.getDisplayText (aDisplayLocale);

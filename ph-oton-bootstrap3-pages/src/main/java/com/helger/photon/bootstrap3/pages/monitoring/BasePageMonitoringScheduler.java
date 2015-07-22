@@ -46,7 +46,7 @@ import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.html.HCUL;
-import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
@@ -149,7 +149,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
 
         final BootstrapViewForm aDetailsTable = new BootstrapViewForm ();
         aDetailsTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SUMMARY.getDisplayText (aDisplayLocale))
-                                                             .setCtrl (HCUtils.nl2divList (aScheduler.getMetaData ()
+                                                             .setCtrl (HCHelper.nl2divList (aScheduler.getMetaData ()
                                                                                                      .getSummary ())));
         aDetailsTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXECUTING_JOBS.getDisplayText (aDisplayLocale))
                                                              .setCtrl (Integer.toString (aScheduler.getCurrentlyExecutingJobs ()
@@ -159,7 +159,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
         for (final JobListener aJobListener : aScheduler.getListenerManager ().getJobListeners ())
           aListeners.add (aJobListener.getName () + " - " + aJobListener.getClass ().getName ());
         aDetailsTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LISTENERS.getDisplayText (aDisplayLocale))
-                                                             .setCtrl (HCUtils.list2divList (aListeners)));
+                                                             .setCtrl (HCHelper.list2divList (aListeners)));
         aTab.addChild (aDetailsTable);
 
         final HCUL aDetailUL = new HCUL ();

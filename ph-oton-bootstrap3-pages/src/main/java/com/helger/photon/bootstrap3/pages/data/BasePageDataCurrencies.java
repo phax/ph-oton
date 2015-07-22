@@ -39,7 +39,7 @@ import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.masterdata.currency.CurrencyHelper;
 import com.helger.masterdata.currency.ECurrency;
-import com.helger.masterdata.locale.ContinentUtils;
+import com.helger.masterdata.locale.ContinentHelper;
 import com.helger.masterdata.locale.EContinent;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -139,7 +139,7 @@ public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext> 
       aRow.addCell (NumberFormat.getCurrencyInstance (aLocale).format (12.3456));
 
       // Continents
-      final Set <EContinent> aContinents = ContinentUtils.getContinentsOfCountry (aLocale);
+      final Set <EContinent> aContinents = ContinentHelper.getContinentsOfCountry (aLocale);
       final StringBuilder aSB = new StringBuilder ();
       if (aContinents != null)
         for (final EContinent eContinent : aContinents)

@@ -32,9 +32,9 @@ import com.helger.photon.uicore.EUICoreJSPathProvider;
  * @author Philip Helger
  */
 @Immutable
-public final class JSJQueryUtils
+public final class JSJQueryHelper
 {
-  private JSJQueryUtils ()
+  private JSJQueryHelper ()
   {}
 
   public static void registerExternalResources ()

@@ -27,11 +27,11 @@ import com.helger.web.scopes.mgr.WebScopeManager;
 import com.helger.web.scopes.mock.WebScopeTestRule;
 
 /**
- * Test class for class {@link LinkUtils}.
+ * Test class for class {@link LinkHelper}.
  * 
  * @author Philip Helger
  */
-public final class LinkUtilsTest
+public final class LinkHelperTest
 {
   @Rule
   public final TestRule m_aRules = new WebScopeTestRule ().setContextPath ("");
@@ -39,13 +39,13 @@ public final class LinkUtilsTest
   @Test
   public void testStreamServletName ()
   {
-    assertEquals (LinkUtils.DEFAULT_STREAM_SERVLET_NAME, LinkUtils.getStreamServletName ());
-    LinkUtils.setStreamServletName ("abc");
+    assertEquals (LinkHelper.DEFAULT_STREAM_SERVLET_NAME, LinkHelper.getStreamServletName ());
+    LinkHelper.setStreamServletName ("abc");
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
-    assertEquals ("/abc/x", LinkUtils.getStreamURL (aRequestScope, "x").getAsString ());
-    LinkUtils.setStreamServletName (LinkUtils.DEFAULT_STREAM_SERVLET_NAME);
-    assertEquals (LinkUtils.DEFAULT_STREAM_SERVLET_NAME, LinkUtils.getStreamServletName ());
-    assertEquals ("/" + LinkUtils.DEFAULT_STREAM_SERVLET_NAME + "/x", LinkUtils.getStreamURL (aRequestScope, "x")
+    assertEquals ("/abc/x", LinkHelper.getStreamURL (aRequestScope, "x").getAsString ());
+    LinkHelper.setStreamServletName (LinkHelper.DEFAULT_STREAM_SERVLET_NAME);
+    assertEquals (LinkHelper.DEFAULT_STREAM_SERVLET_NAME, LinkHelper.getStreamServletName ());
+    assertEquals ("/" + LinkHelper.DEFAULT_STREAM_SERVLET_NAME + "/x", LinkHelper.getStreamURL (aRequestScope, "x")
                                                                                .getAsString ());
   }
 }

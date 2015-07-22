@@ -72,7 +72,7 @@ import com.helger.smtp.ISMTPSettings;
 import com.helger.smtp.impl.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.smtp.transport.MailAPI;
-import com.helger.web.datetime.PDTWebDateUtils;
+import com.helger.web.datetime.PDTWebDateHelper;
 import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 import com.helger.web.scopes.domain.ISessionWebScope;
 import com.helger.web.scopes.mgr.WebScopeManager;
@@ -549,7 +549,7 @@ public final class InternalErrorHandler
     // Date and time
     try
     {
-      aMetadata.addField ("Time", PDTWebDateUtils.getAsStringXSD (PDTFactory.getCurrentDateTime ()));
+      aMetadata.addField ("Time", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentDateTime ()));
     }
     catch (final Throwable t2)
     {

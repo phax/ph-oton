@@ -54,7 +54,7 @@ import com.helger.html.hc.html.HCEditPassword;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.htmlext.HCA_MailTo;
-import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.basic.security.AccessManager;
@@ -62,7 +62,7 @@ import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 import com.helger.photon.basic.security.role.IRole;
 import com.helger.photon.basic.security.user.IUser;
 import com.helger.photon.basic.security.usergroup.IUserGroup;
-import com.helger.photon.basic.security.util.SecurityUtils;
+import com.helger.photon.basic.security.util.SecurityHelper;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
@@ -241,7 +241,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
   protected String getObjectDisplayName (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    return SecurityUtils.getUserDisplayName (aSelectedObject, aDisplayLocale);
+    return SecurityHelper.getUserDisplayName (aSelectedObject, aDisplayLocale);
   }
 
   @Override
@@ -311,7 +311,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final AccessManager aMgr = AccessManager.getInstance ();
 
     aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                         SecurityUtils.getUserDisplayName (aSelectedObject,
+                                                                                         SecurityHelper.getUserDisplayName (aSelectedObject,
                                                                                                                            aDisplayLocale))));
     final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
     onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
@@ -331,7 +331,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                                                        aDisplayLocale)));
     if (StringHelper.hasText (aSelectedObject.getDescription ()))
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCUtils.nl2divList (aSelectedObject.getDescription ())));
+                                                   .setCtrl (HCHelper.nl2divList (aSelectedObject.getDescription ())));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DELETED.getDisplayText (aDisplayLocale))
                                                  .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isDeleted (),
                                                                                        aDisplayLocale)));
@@ -579,7 +579,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final AccessManager aMgr = AccessManager.getInstance ();
 
     aForm.addChild (createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                         SecurityUtils.getUserDisplayName (aSelectedObject,
+                                                                                                         SecurityHelper.getUserDisplayName (aSelectedObject,
                                                                                                                                            aDisplayLocale))
                                                               : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
     if (!useEmailAddressAsLoginName ())
@@ -725,7 +725,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
           {
             AccessManager.getInstance ().setUserPassword (aSelectedObject.getID (), sPlainTextPassword);
             aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                          SecurityUtils.getUserDisplayName (aSelectedObject,
+                                                                                                                          SecurityHelper.getUserDisplayName (aSelectedObject,
                                                                                                                                                             aDisplayLocale))));
             return true;
           }
@@ -737,7 +737,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
         final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
         aForm.addChild (createActionHeader (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                               SecurityUtils.getUserDisplayName (aSelectedObject,
+                                                                                               SecurityHelper.getUserDisplayName (aSelectedObject,
                                                                                                                                  aDisplayLocale))));
 
         final String sPassword = EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale);
@@ -800,7 +800,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       final ISimpleURL aViewLink = createViewURL (aWPEC, aCurUser);
 
       final HCRow aRow = aTable.addBodyRow ();
-      aRow.addCell (new HCA (aViewLink).addChild (SecurityUtils.getUserDisplayName (aCurUser, aDisplayLocale)));
+      aRow.addCell (new HCA (aViewLink).addChild (SecurityHelper.getUserDisplayName (aCurUser, aDisplayLocale)));
       if (bSeparateLoginName)
         aRow.addCell (new HCA (aViewLink).addChild (aCurUser.getLoginName ()));
       aRow.addCell (new HCA (aViewLink).addChild (aCurUser.getEmailAddress ()));
@@ -837,7 +837,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                             .add (CPageParam.PARAM_ACTION, ACTION_RESET_PASSWORD)
                                             .add (CPageParam.PARAM_OBJECT,
                                                   aCurUser.getID ())).setTitle (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                   SecurityUtils.getUserDisplayName (aCurUser,
+                                                                                                                                   SecurityHelper.getUserDisplayName (aCurUser,
                                                                                                                                                                      aDisplayLocale)))
                                                                      .addChild (getResetPasswordIcon ()));
       }

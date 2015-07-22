@@ -35,13 +35,13 @@ import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCLabel;
 import com.helger.html.hc.html.HCRadioButton;
-import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.AbstractHCInput;
 import com.helger.photon.bootstrap3.BootstrapHelper;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
-import com.helger.photon.uicore.html.formlabel.HCFormLabelUtils;
+import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
 import com.helger.validation.error.IError;
 import com.helger.validation.error.IErrorList;
 
@@ -104,10 +104,10 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         else
         {
           // Trim eventually trailing ":" from string
-          String sNewPlaceholder = StringHelper.trimEnd (aLabel.getPlainText (), HCFormLabelUtils.LABEL_END);
+          String sNewPlaceholder = StringHelper.trimEnd (aLabel.getPlainText (), HCFormLabelHelper.LABEL_END);
           // Trim trailing "*" or "°" marker
-          sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelUtils.SIGN_ALTERNATIVE);
-          sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelUtils.SIGN_MANDATORY);
+          sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_ALTERNATIVE);
+          sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_MANDATORY);
           aEdit.setPlaceholder (sNewPlaceholder);
         }
       }
@@ -202,7 +202,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     if (eState == null)
       eState = aFormGroup.getState ();
 
-    final List <IHCControl <?>> aAllCtrls = HCUtils.getAllHCControls (aCtrls);
+    final List <IHCControl <?>> aAllCtrls = HCHelper.getAllHCControls (aCtrls);
 
     // Set CSS class to all contained controls
     BootstrapHelper.markAsFormControls (aAllCtrls);

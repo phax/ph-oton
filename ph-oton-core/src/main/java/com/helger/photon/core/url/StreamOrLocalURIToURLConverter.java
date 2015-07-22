@@ -33,7 +33,7 @@ import com.helger.web.scopes.domain.IRequestWebScopeWithoutResponse;
 
 /**
  * The default implementation of {@link IURIToURLConverter} that uses
- * {@link LinkUtils#getStreamURL(IRequestWebScopeWithoutResponse, String)} to
+ * {@link LinkHelper#getStreamURL(IRequestWebScopeWithoutResponse, String)} to
  * convert relative URIs to URLs. If you are using a different stream servlet
  * path, you may need to provide your own implementation and use it in
  * {@link com.helger.photon.core.ajax.response.AjaxDefaultResponse}!
@@ -94,14 +94,14 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
     if (_isProjectRelativeURI (sURI))
     {
       // Just add the context
-      return LinkUtils.getURLWithContext (sURI);
+      return LinkHelper.getURLWithContext (sURI);
     }
 
     // It's relative and therefore streamed
-    final StringBuilder aPrefix = new StringBuilder (LinkUtils.getStreamServletPath ());
+    final StringBuilder aPrefix = new StringBuilder (LinkHelper.getStreamServletPath ());
     if (!StringHelper.startsWith (sURI, '/'))
       aPrefix.append ('/');
-    return LinkUtils.getURLWithContext (aPrefix.append (sURI).toString ());
+    return LinkHelper.getURLWithContext (aPrefix.append (sURI).toString ());
   }
 
   @Nonnull
@@ -117,9 +117,9 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
 
     // Absolute paths stay
     if (_isProjectRelativeURI (sURI))
-      return LinkUtils.getURLWithContext (aRequestScope, sURI);
+      return LinkHelper.getURLWithContext (aRequestScope, sURI);
 
     // Relative paths will get streamed
-    return LinkUtils.getStreamURL (aRequestScope, sURI);
+    return LinkHelper.getStreamURL (aRequestScope, sURI);
   }
 }

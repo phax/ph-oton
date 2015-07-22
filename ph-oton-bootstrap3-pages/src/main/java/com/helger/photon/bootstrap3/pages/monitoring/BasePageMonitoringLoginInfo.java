@@ -45,7 +45,7 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.photon.basic.security.login.LoginInfo;
 import com.helger.photon.basic.security.user.IUser;
-import com.helger.photon.basic.security.util.SecurityUtils;
+import com.helger.photon.basic.security.util.SecurityHelper;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
@@ -150,7 +150,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
   protected String getObjectDisplayName (@Nonnull final WPECTYPE aWPEC, @Nonnull final LoginInfo aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    return SecurityUtils.getUserDisplayName (aSelectedObject.getUser (), aDisplayLocale);
+    return SecurityHelper.getUserDisplayName (aSelectedObject.getUser (), aDisplayLocale);
   }
 
   @Override
@@ -181,7 +181,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USERID.getDisplayText (aDisplayLocale))
                                                   .setCtrl (aSelectedObject.getUserID ()));
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USERNAME.getDisplayText (aDisplayLocale))
-                                                  .setCtrl (SecurityUtils.getUserDisplayName (aSelectedObject.getUser (),
+                                                  .setCtrl (SecurityHelper.getUserDisplayName (aSelectedObject.getUser (),
                                                                                               aDisplayLocale)));
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale))
                                                   .setCtrl (PDTToString.getAsString (aSelectedObject.getLoginDT (),
@@ -261,7 +261,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
 
       final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
       final HCNodeList aNodeList = aWPEC.getNodeList ();
-      final String sUserName = SecurityUtils.getUserDisplayName (aSelectedObject.getUser (), aDisplayLocale);
+      final String sUserName = SecurityHelper.getUserDisplayName (aSelectedObject.getUser (), aDisplayLocale);
 
       if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
       {
@@ -324,7 +324,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       final ISimpleURL aViewLink = createViewURL (aWPEC, aLoginInfo);
 
       final HCRow aRow = aTable.addBodyRow ();
-      aRow.addCell (new HCA (aViewLink).addChild (SecurityUtils.getUserDisplayName (aLoginInfo.getUser (),
+      aRow.addCell (new HCA (aViewLink).addChild (SecurityHelper.getUserDisplayName (aLoginInfo.getUser (),
                                                                                     aDisplayLocale)));
       aRow.addCell (PDTToString.getAsString (aLoginInfo.getLoginDT (), aDisplayLocale));
       aRow.addCell (PDTToString.getAsString (aLoginInfo.getLastAccessDT (), aDisplayLocale));
@@ -332,7 +332,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       final IHCCell <?> aActionCell = aRow.addCell ();
       if (canLogoutUser (aLoginInfo.getUser ()))
       {
-        final String sUserName = SecurityUtils.getUserDisplayName (aLoginInfo.getUser (), aDisplayLocale);
+        final String sUserName = SecurityHelper.getUserDisplayName (aLoginInfo.getUser (), aDisplayLocale);
         aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
                                             .add (CPageParam.PARAM_ACTION, ACTION_LOGOUT_USER)
                                             .add (CPageParam.PARAM_OBJECT, aLoginInfo.getID ())).setTitle (EText.MSG_LOGOUT_USER.getDisplayTextWithArgs (aDisplayLocale,

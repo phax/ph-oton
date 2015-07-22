@@ -69,7 +69,7 @@ import com.helger.datetime.PDTFactory;
 import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOIntIDFactory;
-import com.helger.web.datetime.PDTWebDateUtils;
+import com.helger.web.datetime.PDTWebDateHelper;
 import com.helger.web.scopes.mgr.WebScopeManager;
 import com.helger.web.servlet.server.StaticServerInfo;
 
@@ -597,7 +597,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
       aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
       aDoc.getDocumentElement ().setAttribute ("datetime",
-                                               PDTWebDateUtils.getAsStringXSD (PDTFactory.getCurrentDateTime ()));
+                                               PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentDateTime ()));
       SimpleFileIO.writeFile (aDestPath, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
     }
     catch (final Throwable t)

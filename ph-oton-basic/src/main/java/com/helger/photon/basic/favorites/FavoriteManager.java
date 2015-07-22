@@ -44,7 +44,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.impl.AbstractWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.app.dao.impl.EDAOActionType;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 
 /**
  * This class manages {@link Favorite} objects.
@@ -300,7 +300,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>implements IHasSiz
       m_aRWLock.writeLock ().unlock ();
     }
 
-    AuditUtils.onAuditCreateSuccess (Favorite.OT_FAVOURITE,
+    AuditHelper.onAuditCreateSuccess (Favorite.OT_FAVOURITE,
                                      aFavorite.getID (),
                                      sUserID,
                                      sApplicationID,
@@ -349,7 +349,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>implements IHasSiz
 
     if (aFavorite == null)
     {
-      AuditUtils.onAuditModifyFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
+      AuditHelper.onAuditModifyFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -366,7 +366,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>implements IHasSiz
       m_aRWLock.writeLock ().unlock ();
     }
 
-    AuditUtils.onAuditModifySuccess (Favorite.OT_FAVOURITE, aFavorite.getID (), sUserID, sDisplayName);
+    AuditHelper.onAuditModifySuccess (Favorite.OT_FAVOURITE, aFavorite.getID (), sUserID, sDisplayName);
 
     return EChange.CHANGED;
   }
@@ -405,7 +405,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>implements IHasSiz
 
     if (aFavorite == null)
     {
-      AuditUtils.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
+      AuditHelper.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -422,9 +422,9 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>implements IHasSiz
       m_aRWLock.writeLock ().unlock ();
     }
     if (eChange.isChanged ())
-      AuditUtils.onAuditDeleteSuccess (Favorite.OT_FAVOURITE, sID);
+      AuditHelper.onAuditDeleteSuccess (Favorite.OT_FAVOURITE, sID);
     else
-      AuditUtils.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
+      AuditHelper.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
     return eChange;
   }
 
@@ -452,9 +452,9 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>implements IHasSiz
       m_aRWLock.writeLock ().unlock ();
     }
     if (eChange.isChanged ())
-      AuditUtils.onAuditDeleteSuccess (Favorite.OT_FAVOURITE, sUserID);
+      AuditHelper.onAuditDeleteSuccess (Favorite.OT_FAVOURITE, sUserID);
     else
-      AuditUtils.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sUserID, "no-such-user-id");
+      AuditHelper.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sUserID, "no-such-user-id");
     return eChange;
   }
 

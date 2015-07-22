@@ -26,7 +26,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.photon.core.url.LinkUtils;
+import com.helger.photon.core.url.LinkHelper;
 
 /**
  * Default implementation of go-mapping for absolute URLs.
@@ -48,7 +48,7 @@ public class GoMappingItem
   {
     this (sKey,
           bIsInternal,
-          bIsInternal ? LinkUtils.getURLWithContext (sTargetURL) : new SimpleURL (sTargetURL),
+          bIsInternal ? LinkHelper.getURLWithContext (sTargetURL) : new SimpleURL (sTargetURL),
           bIsEditable);
   }
 

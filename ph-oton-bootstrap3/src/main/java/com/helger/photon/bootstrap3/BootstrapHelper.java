@@ -28,7 +28,7 @@ import com.helger.html.hc.html.AbstractHCScript;
 import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCRadioButton;
-import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.html.hc.htmlext.HCHelper;
 
 @Immutable
 public final class BootstrapHelper
@@ -63,7 +63,7 @@ public final class BootstrapHelper
   {
     if (aParent != null)
       for (final IHCNode aChild : aParent.getAllChildren ())
-        markAsFormControls (HCUtils.getAllHCControls (aChild));
+        markAsFormControls (HCHelper.getAllHCControls (aChild));
   }
 
   public static boolean containsFormControlStatic (@Nullable final IHCNode aNode)

@@ -31,7 +31,7 @@ import com.helger.html.hc.IHCHasChildren;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.conversion.HCSettings;
-import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.utils.AbstractHCSpecialNodes;
 import com.helger.html.hc.utils.HCSpecialNodeHandler;
@@ -109,7 +109,7 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
     {
       // Customize before extracting special content
       if (aNode instanceof IHCNodeWithChildren <?>)
-        HCUtils.customizeNodes ((IHCNodeWithChildren <?>) aNode, HCSettings.getConversionSettings ());
+        HCHelper.customizeNodes ((IHCNodeWithChildren <?>) aNode, HCSettings.getConversionSettings ());
 
       IHCNode aRealNode;
       if (aNode instanceof IHCHasChildren)

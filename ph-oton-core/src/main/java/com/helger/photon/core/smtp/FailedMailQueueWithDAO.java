@@ -36,7 +36,7 @@ import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 import com.helger.smtp.failed.FailedMailData;
 import com.helger.smtp.failed.FailedMailQueue;
 
@@ -169,7 +169,7 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
     super.add (aFailedMailData);
     _markAsChanged ();
     if (bAudit)
-      AuditUtils.onAuditExecuteSuccess ("failedmail-add", aFailedMailData);
+      AuditHelper.onAuditExecuteSuccess ("failedmail-add", aFailedMailData);
   }
 
   @Override
@@ -180,10 +180,10 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
     if (ret != null)
     {
       _markAsChanged ();
-      AuditUtils.onAuditExecuteSuccess ("failedmail-remove", sID);
+      AuditHelper.onAuditExecuteSuccess ("failedmail-remove", sID);
     }
     else
-      AuditUtils.onAuditExecuteFailure ("failedmail-remove", sID);
+      AuditHelper.onAuditExecuteFailure ("failedmail-remove", sID);
     return ret;
   }
 
@@ -196,7 +196,7 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
     if (!ret.isEmpty ())
     {
       _markAsChanged ();
-      AuditUtils.onAuditExecuteSuccess ("failedmail-remove-all", Integer.valueOf (ret.size ()));
+      AuditHelper.onAuditExecuteSuccess ("failedmail-remove-all", Integer.valueOf (ret.size ()));
     }
     return ret;
   }

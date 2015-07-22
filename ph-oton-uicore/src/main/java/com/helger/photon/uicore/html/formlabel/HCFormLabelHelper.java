@@ -22,16 +22,16 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNodeWithChildren;
-import com.helger.html.hc.htmlext.HCUtils;
+import com.helger.html.hc.htmlext.HCHelper;
 
 @Immutable
-public final class HCFormLabelUtils
+public final class HCFormLabelHelper
 {
   public static final String SIGN_MANDATORY = "*";
   public static final String SIGN_ALTERNATIVE = "°";
   public static final String LABEL_END = ":";
 
-  private HCFormLabelUtils ()
+  private HCFormLabelHelper ()
   {}
 
   @Nonnull
@@ -73,7 +73,7 @@ public final class HCFormLabelUtils
     ValueEnforcer.notNull (eType, "Type");
 
     // Only append the suffix, if at least one text child is present
-    if (HCUtils.recursiveContainsAtLeastOneTextNode (aNode))
+    if (HCHelper.recursiveContainsAtLeastOneTextNode (aNode))
     {
       final String sPlainText = aNode.getPlainText ();
       if (sPlainText.length () > 0)

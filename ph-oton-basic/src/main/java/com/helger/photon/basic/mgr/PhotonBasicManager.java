@@ -32,7 +32,7 @@ import com.helger.photon.basic.longrun.LongRunningJobManager;
 import com.helger.photon.basic.longrun.LongRunningJobResultManager;
 import com.helger.photon.basic.migration.SystemMigrationManager;
 import com.helger.photon.basic.security.audit.AuditManager;
-import com.helger.photon.basic.security.audit.AuditUtils;
+import com.helger.photon.basic.security.audit.AuditHelper;
 import com.helger.photon.basic.security.lock.ObjectLockManager;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
 
@@ -79,8 +79,8 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
     try
     {
       m_aAuditMgr = new AuditManager (DIRECTORY_AUDITS, LoggedInUserManager.getInstance ());
-      AuditUtils.setAuditor (m_aAuditMgr.getAuditor ());
-      AuditUtils.onAuditExecuteSuccess ("audit-initialized");
+      AuditHelper.setAuditor (m_aAuditMgr.getAuditor ());
+      AuditHelper.onAuditExecuteSuccess ("audit-initialized");
 
       m_aFavoriteManager = new FavoriteManager (FAVORITES_XML);
 
@@ -108,7 +108,7 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
        * Call here to ensure that the AuditManager is still present! Otherwise
        * the destruction order of the singletons is relevant!
        */
-      AuditUtils.onAuditExecuteSuccess ("audit-shutdown");
+      AuditHelper.onAuditExecuteSuccess ("audit-shutdown");
     }
   }
 
@@ -117,7 +117,7 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
   {
     if (m_aAuditMgr != null)
     {
-      AuditUtils.setDefaultAuditor ();
+      AuditHelper.setDefaultAuditor ();
       m_aAuditMgr.stop ();
     }
   }
