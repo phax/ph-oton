@@ -23,12 +23,12 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.io.provider.IInputStreamProvider;
+import com.helger.commons.io.IHasInputStream;
 import com.helger.photon.exchange.EExchangeFileType;
 
 /**
  * Base interface for a bulk import action.
- * 
+ *
  * @author Philip Helger
  */
 public interface IBulkImport
@@ -54,7 +54,7 @@ public interface IBulkImport
 
   /**
    * Get a list of all column descriptions.
-   * 
+   *
    * @param aContentLocale
    *        The locale to be used.
    * @return The non-<code>null</code>, non-empty list of column descriptions.
@@ -65,7 +65,7 @@ public interface IBulkImport
 
   /**
    * Read the objects from the passed input stream.
-   * 
+   *
    * @param aIIS
    *        The input stream provider to read from. May not be <code>null</code>
    *        .
@@ -74,5 +74,5 @@ public interface IBulkImport
    * @return The import result. Never <code>null</code>.
    */
   @Nonnull
-  BulkImportResult importObjects (@Nonnull IInputStreamProvider aIIS, @Nonnull Locale aDisplayLocale);
+  BulkImportResult importObjects (@Nonnull IHasInputStream aIIS, @Nonnull Locale aDisplayLocale);
 }
