@@ -32,9 +32,10 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EBootstrapUICtrlsCSSPathProvider implements ICSSPathProvider
 {
-  BOOTSTRAP_DATATABLES ("bootstrap/datatables/bootstrap3-datatables.css"),
-  DATETIMEPICKER ("bootstrap/datetimepicker/bootstrap-datetimepicker.css"),
-  TREE_VIEW ("bootstrap/treeview/bootstrap-treeview.css");
+ BOOTSTRAP_DATATABLES ("bootstrap/datatables/bootstrap3-datatables.css"),
+ BOOTSTRAP_DATATABLES_PH ("bootstrap/datatables/bootstrap3-datatables-ph.css"),
+ DATETIMEPICKER ("bootstrap/datetimepicker/bootstrap-datetimepicker.css"),
+ TREE_VIEW ("bootstrap/treeview/bootstrap-treeview.css");
 
   private final ConstantCSSPathProvider m_aPP;
 
@@ -43,7 +44,8 @@ public enum EBootstrapUICtrlsCSSPathProvider implements ICSSPathProvider
     this (sPath, null);
   }
 
-  private EBootstrapUICtrlsCSSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
+  private EBootstrapUICtrlsCSSPathProvider (@Nonnull @Nonempty final String sPath,
+                                            @Nullable final String sConditionalComment)
   {
     m_aPP = new ConstantCSSPathProvider (sPath, sConditionalComment, (ICSSMediaList) null);
   }

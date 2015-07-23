@@ -73,6 +73,7 @@ public class BootstrapDataTables extends DataTables
   {
     PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.BOOTSTRAP_DATATABLES);
     PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.BOOTSTRAP_DATATABLES);
+    PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.BOOTSTRAP_DATATABLES_PH);
   }
 
   @Nullable

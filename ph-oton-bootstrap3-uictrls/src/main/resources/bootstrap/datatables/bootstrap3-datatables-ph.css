@@ -1,0 +1,5 @@
+/** Data tables in a tab needs special treatment */
+.tab-pane > div.dataTables_wrapper {
+  width:98%;
+  margin-top:0.5em;
+}
