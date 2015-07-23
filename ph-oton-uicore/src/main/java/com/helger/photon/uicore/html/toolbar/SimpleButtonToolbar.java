@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.HCButton;
 import com.helger.html.hc.html.HCButton_Submit;
-import com.helger.html.js.IJSCodeProvider;
+import com.helger.html.js.IHasJSCode;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.icon.IIcon;
 
@@ -45,7 +45,7 @@ public class SimpleButtonToolbar extends AbstractButtonToolbar <SimpleButtonTool
 
   @Nonnull
   public final HCButton addAndReturnButton (@Nullable final String sCaption,
-                                            @Nullable final IJSCodeProvider aOnClick,
+                                            @Nullable final IHasJSCode aOnClick,
                                             @Nullable final IIcon aIcon)
   {
     return addAndReturnChild (new HCButton ().addChild (aIcon == null ? null : aIcon.getAsNode ())
@@ -55,7 +55,7 @@ public class SimpleButtonToolbar extends AbstractButtonToolbar <SimpleButtonTool
 
   @Nonnull
   public final HCButton_Submit addAndReturnSubmitButton (@Nullable final String sCaption,
-                                                         @Nullable final IJSCodeProvider aOnClick,
+                                                         @Nullable final IHasJSCode aOnClick,
                                                          @Nullable final IIcon aIcon)
   {
     return addAndReturnChild (new HCButton_Submit ().addChild (aIcon == null ? null : aIcon.getAsNode ())

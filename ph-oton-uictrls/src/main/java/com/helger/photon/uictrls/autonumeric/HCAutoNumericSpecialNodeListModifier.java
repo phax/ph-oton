@@ -26,7 +26,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
-import com.helger.html.hc.utils.IHCSpecialNodeListModifier;
+import com.helger.html.hc.special.IHCSpecialNodeListModifier;
 import com.helger.html.js.builder.JSAssocArray;
 import com.helger.html.js.builder.jquery.IJQuerySelector;
 import com.helger.html.js.builder.jquery.JQuerySelector;

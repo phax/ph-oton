@@ -23,7 +23,7 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCOL;
 import com.helger.html.hc.htmlext.HCA_JS;
-import com.helger.html.js.IJSCodeProvider;
+import com.helger.html.js.IHasJSCode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
@@ -46,7 +46,7 @@ public class BootstrapBreadcrumbs extends HCOL
   }
 
   @Nonnull
-  public BootstrapBreadcrumbs addLink (@Nonnull final IJSCodeProvider aJSCodeProvider, @Nonnull final String sText)
+  public BootstrapBreadcrumbs addLink (@Nonnull final IHasJSCode aJSCodeProvider, @Nonnull final String sText)
   {
     addItem (new HCA_JS (aJSCodeProvider).addChild (sText));
     return this;

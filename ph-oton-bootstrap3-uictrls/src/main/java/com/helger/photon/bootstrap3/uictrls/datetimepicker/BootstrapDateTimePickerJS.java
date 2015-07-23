@@ -19,9 +19,9 @@ package com.helger.photon.bootstrap3.uictrls.datetimepicker;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.annotations.OutOfBandNode;
+import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.html.HCScript;
-import com.helger.html.hc.utils.SpecialNodeListModifier;
+import com.helger.html.hc.special.SpecialNodeListModifier;
 
 /**
  * A special script that initializes the {@link BootstrapDateTimePicker}. It is

@@ -22,10 +22,10 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.annotations.OutOfBandNode;
+import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
-import com.helger.html.hc.utils.SpecialNodeListModifier;
-import com.helger.html.js.IJSCodeProvider;
+import com.helger.html.hc.special.SpecialNodeListModifier;
+import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.builder.JSInvocation;
 import com.helger.html.js.builder.jquery.JQuery;
 import com.helger.html.js.builder.jquery.JQueryInvocation;
@@ -46,7 +46,7 @@ public class HCAutoNumericJS extends HCScriptOnDocumentReady
   private final AbstractHCAutoNumeric <?> m_aAutoNumeric;
 
   @Nonnull
-  public static IJSCodeProvider createInitCode (@Nullable final JQueryInvocation aExplicitAutoNumeric,
+  public static IHasJSCode createInitCode (@Nullable final JQueryInvocation aExplicitAutoNumeric,
                                                 @Nonnull final AbstractHCAutoNumeric <?> aAutoNumeric)
   {
     final JQueryInvocation aInvocation = aExplicitAutoNumeric != null ? aExplicitAutoNumeric

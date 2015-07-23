@@ -27,7 +27,7 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.AbstractHCDiv;
 import com.helger.html.hc.html.HCHiddenField;
-import com.helger.html.js.IJSCodeProvider;
+import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.builder.html.JSHtml;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.icon.EDefaultIcon;
@@ -79,14 +79,14 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   }
 
   @Nonnull
-  public final IMPLTYPE addButton (@Nullable final String sCaption, @Nonnull final IJSCodeProvider aJSCode)
+  public final IMPLTYPE addButton (@Nullable final String sCaption, @Nonnull final IHasJSCode aJSCode)
   {
     return addButton (sCaption, aJSCode, (IIcon) null);
   }
 
   @Nonnull
   public final IMPLTYPE addButton (@Nullable final String sCaption,
-                                   @Nonnull final IJSCodeProvider aOnClick,
+                                   @Nonnull final IHasJSCode aOnClick,
                                    @Nullable final IIcon aIcon)
   {
     addAndReturnButton (sCaption, aOnClick, aIcon);
@@ -114,7 +114,7 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   }
 
   @Nonnull
-  public IMPLTYPE addButtonBack (@Nonnull final Locale aDisplayLocale, @Nonnull final IJSCodeProvider aOnBack)
+  public IMPLTYPE addButtonBack (@Nonnull final Locale aDisplayLocale, @Nonnull final IHasJSCode aOnBack)
   {
     return addButton (EPhotonCoreText.BUTTON_BACK.getDisplayText (aDisplayLocale), aOnBack, EDefaultIcon.BACK);
   }
@@ -132,7 +132,7 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   }
 
   @Nonnull
-  public IMPLTYPE addButtonCancel (@Nonnull final Locale aDisplayLocale, @Nonnull final IJSCodeProvider aOnCancel)
+  public IMPLTYPE addButtonCancel (@Nonnull final Locale aDisplayLocale, @Nonnull final IHasJSCode aOnCancel)
   {
     return addButton (EPhotonCoreText.BUTTON_CANCEL.getDisplayText (aDisplayLocale), aOnCancel, EDefaultIcon.CANCEL);
   }
@@ -150,7 +150,7 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   }
 
   @Nonnull
-  public IMPLTYPE addButtonNo (@Nonnull final Locale aDisplayLocale, @Nonnull final IJSCodeProvider aOnNo)
+  public IMPLTYPE addButtonNo (@Nonnull final Locale aDisplayLocale, @Nonnull final IHasJSCode aOnNo)
   {
     return addButton (EPhotonCoreText.BUTTON_NO.getDisplayText (aDisplayLocale), aOnNo, EDefaultIcon.NO);
   }
@@ -168,7 +168,7 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   }
 
   @Nonnull
-  public IMPLTYPE addButtonEdit (@Nonnull final Locale aDisplayLocale, @Nonnull final IJSCodeProvider aOnEdit)
+  public IMPLTYPE addButtonEdit (@Nonnull final Locale aDisplayLocale, @Nonnull final IHasJSCode aOnEdit)
   {
     return addButton (EPhotonCoreText.BUTTON_EDIT.getDisplayText (aDisplayLocale), aOnEdit, EDefaultIcon.EDIT);
   }
@@ -180,7 +180,7 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   }
 
   @Nonnull
-  public IMPLTYPE addButtonSave (@Nonnull final Locale aDisplayLocale, @Nonnull final IJSCodeProvider aOnSave)
+  public IMPLTYPE addButtonSave (@Nonnull final Locale aDisplayLocale, @Nonnull final IHasJSCode aOnSave)
   {
     return addButton (EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale), aOnSave, EDefaultIcon.SAVE);
   }
@@ -194,18 +194,18 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   @Nonnull
   public final IMPLTYPE addSubmitButton (@Nullable final String sCaption)
   {
-    return addSubmitButton (sCaption, (IJSCodeProvider) null, (IIcon) null);
+    return addSubmitButton (sCaption, (IHasJSCode) null, (IIcon) null);
   }
 
   @Nonnull
-  public final IMPLTYPE addSubmitButton (@Nullable final String sCaption, @Nullable final IJSCodeProvider aOnClick)
+  public final IMPLTYPE addSubmitButton (@Nullable final String sCaption, @Nullable final IHasJSCode aOnClick)
   {
     return addSubmitButton (sCaption, aOnClick, (IIcon) null);
   }
 
   @Nonnull
   public final IMPLTYPE addSubmitButton (@Nullable final String sCaption,
-                                         @Nullable final IJSCodeProvider aOnClick,
+                                         @Nullable final IHasJSCode aOnClick,
                                          @Nullable final IIcon aIcon)
   {
     addAndReturnSubmitButton (sCaption, aOnClick, aIcon);
@@ -215,7 +215,7 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   @Nonnull
   public final IMPLTYPE addSubmitButton (@Nullable final String sCaption, @Nullable final IIcon aIcon)
   {
-    return addSubmitButton (sCaption, (IJSCodeProvider) null, aIcon);
+    return addSubmitButton (sCaption, (IHasJSCode) null, aIcon);
   }
 
   @Nonnull

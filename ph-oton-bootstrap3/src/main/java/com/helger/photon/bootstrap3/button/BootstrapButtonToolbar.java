@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.EHTMLRole;
-import com.helger.html.js.IJSCodeProvider;
+import com.helger.html.js.IHasJSCode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.html.toolbar.AbstractButtonToolbar;
@@ -49,7 +49,7 @@ public class BootstrapButtonToolbar extends AbstractButtonToolbar <BootstrapButt
 
   @Nonnull
   public final BootstrapButton addAndReturnButton (@Nullable final String sCaption,
-                                                   @Nullable final IJSCodeProvider aJSCode,
+                                                   @Nullable final IHasJSCode aJSCode,
                                                    @Nullable final IIcon aIcon)
   {
     return addAndReturnChild (new BootstrapButton ().setIcon (aIcon).addChild (sCaption).setOnClick (aJSCode));
@@ -57,7 +57,7 @@ public class BootstrapButtonToolbar extends AbstractButtonToolbar <BootstrapButt
 
   @Nonnull
   public final BootstrapButton addAndReturnSubmitButton (@Nullable final String sCaption,
-                                                         @Nullable final IJSCodeProvider aOnClick,
+                                                         @Nullable final IHasJSCode aOnClick,
                                                          @Nullable final IIcon aIcon)
   {
     return addAndReturnChild (new BootstrapSubmitButton ().setIcon (aIcon).setOnClick (aOnClick).addChild (sCaption));

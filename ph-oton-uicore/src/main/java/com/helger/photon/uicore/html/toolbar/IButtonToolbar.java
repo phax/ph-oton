@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCDiv;
 import com.helger.html.hc.html.AbstractHCButton;
-import com.helger.html.js.IJSCodeProvider;
+import com.helger.html.js.IHasJSCode;
 import com.helger.photon.uicore.icon.IIcon;
 
 /**
@@ -47,14 +47,14 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   IMPLTYPE addHiddenFields (@Nullable Map <String, String> aValues);
 
   @Nonnull
-  IMPLTYPE addButton (@Nullable String sCaption, @Nonnull IJSCodeProvider aJSCode);
+  IMPLTYPE addButton (@Nullable String sCaption, @Nonnull IHasJSCode aJSCode);
 
   @Nonnull
-  IMPLTYPE addButton (@Nullable String sCaption, @Nonnull IJSCodeProvider aJSCode, @Nullable IIcon aIcon);
+  IMPLTYPE addButton (@Nullable String sCaption, @Nonnull IHasJSCode aJSCode, @Nullable IIcon aIcon);
 
   @Nonnull
   AbstractHCButton <?> addAndReturnButton (@Nullable String sCaption,
-                                           @Nullable IJSCodeProvider aOnClick,
+                                           @Nullable IHasJSCode aOnClick,
                                            @Nullable IIcon aIcon);
 
   @Nonnull
@@ -67,7 +67,7 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   IMPLTYPE addButtonBack (@Nonnull Locale aDisplayLocale, @Nonnull ISimpleURL aURL);
 
   @Nonnull
-  IMPLTYPE addButtonBack (@Nonnull Locale aDisplayLocale, @Nonnull IJSCodeProvider aOnBack);
+  IMPLTYPE addButtonBack (@Nonnull Locale aDisplayLocale, @Nonnull IHasJSCode aOnBack);
 
   @Nonnull
   IMPLTYPE addButtonBack (@Nonnull Locale aDisplayLocale);
@@ -76,7 +76,7 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   IMPLTYPE addButtonCancel (@Nonnull Locale aDisplayLocale, @Nonnull ISimpleURL aURL);
 
   @Nonnull
-  IMPLTYPE addButtonCancel (@Nonnull Locale aDisplayLocale, @Nonnull IJSCodeProvider aOnCancel);
+  IMPLTYPE addButtonCancel (@Nonnull Locale aDisplayLocale, @Nonnull IHasJSCode aOnCancel);
 
   @Nonnull
   IMPLTYPE addButtonCancel (@Nonnull Locale aDisplayLocale);
@@ -85,7 +85,7 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   IMPLTYPE addButtonNo (@Nonnull Locale aDisplayLocale, @Nonnull ISimpleURL aURL);
 
   @Nonnull
-  IMPLTYPE addButtonNo (@Nonnull Locale aDisplayLocale, @Nonnull IJSCodeProvider aOnNo);
+  IMPLTYPE addButtonNo (@Nonnull Locale aDisplayLocale, @Nonnull IHasJSCode aOnNo);
 
   @Nonnull
   IMPLTYPE addButtonNo (@Nonnull Locale aDisplayLocale);
@@ -94,13 +94,13 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   IMPLTYPE addButtonEdit (@Nonnull Locale aDisplayLocale, @Nonnull ISimpleURL aURL);
 
   @Nonnull
-  IMPLTYPE addButtonEdit (@Nonnull Locale aDisplayLocale, @Nonnull IJSCodeProvider aOnEdit);
+  IMPLTYPE addButtonEdit (@Nonnull Locale aDisplayLocale, @Nonnull IHasJSCode aOnEdit);
 
   @Nonnull
   IMPLTYPE addButtonSave (@Nonnull Locale aDisplayLocale, @Nonnull ISimpleURL aURL);
 
   @Nonnull
-  IMPLTYPE addButtonSave (@Nonnull Locale aDisplayLocale, @Nonnull IJSCodeProvider aOnSave);
+  IMPLTYPE addButtonSave (@Nonnull Locale aDisplayLocale, @Nonnull IHasJSCode aOnSave);
 
   @Nonnull
   IMPLTYPE addButtonNew (@Nullable String sCaption, @Nonnull ISimpleURL aURL);
@@ -109,18 +109,18 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   IMPLTYPE addSubmitButton (@Nullable String sCaption);
 
   @Nonnull
-  IMPLTYPE addSubmitButton (@Nullable String sCaption, @Nullable IJSCodeProvider aOnClick);
+  IMPLTYPE addSubmitButton (@Nullable String sCaption, @Nullable IHasJSCode aOnClick);
 
   @Nonnull
   IMPLTYPE addSubmitButton (@Nullable String sCaption, @Nullable IIcon aIcon);
 
   @Nonnull
   AbstractHCButton <?> addAndReturnSubmitButton (@Nullable String sCaption,
-                                                 @Nullable IJSCodeProvider aOnClick,
+                                                 @Nullable IHasJSCode aOnClick,
                                                  @Nullable IIcon aIcon);
 
   @Nonnull
-  IMPLTYPE addSubmitButton (@Nullable String sCaption, @Nullable IJSCodeProvider aOnClick, @Nullable IIcon aIcon);
+  IMPLTYPE addSubmitButton (@Nullable String sCaption, @Nullable IHasJSCode aOnClick, @Nullable IIcon aIcon);
 
   @Nonnull
   IMPLTYPE addSubmitButtonSave (@Nonnull Locale aDisplayLocale);

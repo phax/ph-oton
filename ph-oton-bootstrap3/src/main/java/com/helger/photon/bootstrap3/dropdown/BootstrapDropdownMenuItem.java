@@ -28,7 +28,7 @@ import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.htmlext.HCA_JS;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.html.js.provider.IJSCodeProviderWithSettings;
+import com.helger.html.js.writer.IHasJSCodeWithSettings;
 import com.helger.photon.bootstrap3.AbstractBootstrapObject;
 
 /**
@@ -42,7 +42,7 @@ public class BootstrapDropdownMenuItem extends AbstractBootstrapObject <Bootstra
   public static final boolean DEFAULT_DISABLED = false;
 
   private ISimpleURL m_aURL;
-  private IJSCodeProviderWithSettings m_aJSCode;
+  private IHasJSCodeWithSettings m_aJSCode;
   private IHCNode m_aLabel;
   private HC_Target m_aTarget;
   private boolean m_bActive = DEFAULT_ACTIVE;
@@ -61,7 +61,7 @@ public class BootstrapDropdownMenuItem extends AbstractBootstrapObject <Bootstra
   }
 
   @Nonnull
-  public BootstrapDropdownMenuItem setLinkAction (@Nonnull final IJSCodeProviderWithSettings aJSCode)
+  public BootstrapDropdownMenuItem setLinkAction (@Nonnull final IHasJSCodeWithSettings aJSCode)
   {
     ValueEnforcer.notNull (aJSCode, "JSCode");
     m_aURL = null;

@@ -26,11 +26,11 @@ import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
+import com.helger.html.hc.html.HCCanvas;
 import com.helger.html.hc.html.HCLegend;
 import com.helger.html.hc.html.HCScript;
-import com.helger.html.hc.html5.HCCanvas;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.html.js.IJSCodeProvider;
+import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.builder.IJSExpression;
 import com.helger.html.js.builder.JSAssocArray;
 import com.helger.html.js.builder.JSDefinedClass;
@@ -280,7 +280,7 @@ public class HCChart implements IHCNodeBuilder
    * @return The JS code needed to do so.
    */
   @Nonnull
-  public IJSCodeProvider getJSUpdateCode (@Nonnull final IJSExpression aJSDataVar)
+  public IHasJSCode getJSUpdateCode (@Nonnull final IJSExpression aJSDataVar)
   {
     final JSPackage ret = new JSPackage ();
     // Cleanup old chart

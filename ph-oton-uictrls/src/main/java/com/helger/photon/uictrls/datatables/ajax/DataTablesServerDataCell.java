@@ -41,9 +41,9 @@ import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.conversion.IHCConversionSettings;
 import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.html.hc.utils.HCSpecialNodeHandler;
-import com.helger.html.hc.utils.HCSpecialNodes;
-import com.helger.html.hc.utils.IHCSpecialNodes;
+import com.helger.html.hc.special.HCSpecialNodeHandler;
+import com.helger.html.hc.special.HCSpecialNodes;
+import com.helger.html.hc.special.IHCSpecialNodes;
 
 /**
  * This class holds table cells to be used by the DataTables server side

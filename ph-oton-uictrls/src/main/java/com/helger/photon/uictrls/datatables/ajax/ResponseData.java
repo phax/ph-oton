@@ -28,7 +28,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hc.utils.IHCSpecialNodes;
+import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.json.IJsonObject;
 import com.helger.json.IHasJson;
 import com.helger.json.JsonObject;

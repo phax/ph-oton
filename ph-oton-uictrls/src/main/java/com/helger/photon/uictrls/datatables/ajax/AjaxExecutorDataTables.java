@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.html.hc.utils.HCSpecialNodes;
+import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;

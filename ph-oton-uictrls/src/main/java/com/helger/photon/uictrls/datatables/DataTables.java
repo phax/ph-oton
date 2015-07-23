@@ -53,7 +53,7 @@ import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCColGroup;
 import com.helger.html.hc.html.HCScript;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
-import com.helger.html.js.IJSCodeProvider;
+import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.builder.JSAnonymousFunction;
 import com.helger.html.js.builder.JSArray;
 import com.helger.html.js.builder.JSAssocArray;
@@ -1106,7 +1106,7 @@ public class DataTables implements IHCNodeBuilder
    * @return The non-<code>null</code> HCNode
    */
   @Nonnull
-  public IHCNode getWrapped (@Nonnull final IJSCodeProvider aJSCode)
+  public IHCNode getWrapped (@Nonnull final IHasJSCode aJSCode)
   {
     return m_bGenerateOnDocumentReady ? new HCScriptOnDocumentReady (aJSCode) : new HCScript (aJSCode);
   }
@@ -1187,7 +1187,7 @@ public class DataTables implements IHCNodeBuilder
    * @return The created JS code
    */
   @Nonnull
-  public IJSCodeProvider getMoveRowUpCode (@Nonnull final JQueryInvocation aRowSelect, final boolean bSwapUsingJQuery)
+  public IHasJSCode getMoveRowUpCode (@Nonnull final JQueryInvocation aRowSelect, final boolean bSwapUsingJQuery)
   {
     final JSRef jsTable = JSExpr.ref (m_sGeneratedJSVariableName);
 
@@ -1225,7 +1225,7 @@ public class DataTables implements IHCNodeBuilder
    * @return The created JS code
    */
   @Nonnull
-  public IJSCodeProvider getMoveRowDownCode (@Nonnull final JQueryInvocation aRowSelect, final boolean bSwapUsingJQuery)
+  public IHasJSCode getMoveRowDownCode (@Nonnull final JQueryInvocation aRowSelect, final boolean bSwapUsingJQuery)
   {
     final JSRef jsTable = JSExpr.ref (m_sGeneratedJSVariableName);
 
