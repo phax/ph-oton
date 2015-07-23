@@ -59,6 +59,9 @@ import com.helger.web.scope.mgr.WebScopeManager;
  */
 public class RequestManager implements IRequestManager
 {
+  public static final String SESSION_ATTR_MENUITEM_PREFIX = "$ph-menuitem-";
+  public static final String SESSION_ATTR_LOCALE_PREFIX = "$ph-displaylocale-";
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (RequestManager.class);
 
   private boolean m_bUsePaths = DEFAULT_USE_PATHS;
@@ -128,14 +131,14 @@ public class RequestManager implements IRequestManager
   @Nonempty
   protected String getSessionAttrMenuItem ()
   {
-    return "$ph-menuitem-" + ScopeManager.getRequestApplicationID ();
+    return SESSION_ATTR_MENUITEM_PREFIX + ScopeManager.getRequestApplicationID ();
   }
 
   @Nonnull
   @Nonempty
   protected String getSessionAttrLocale ()
   {
-    return "$ph-displaylocale-" + ScopeManager.getRequestApplicationID ();
+    return SESSION_ATTR_LOCALE_PREFIX + ScopeManager.getRequestApplicationID ();
   }
 
   @Nonnull
