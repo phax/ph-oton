@@ -525,6 +525,12 @@ public class DataTables implements IHCNodeBuilder
     return this;
   }
 
+  @Nonnull
+  public DataTables setDisplayAll ()
+  {
+    return setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
+  }
+
   // Server side handling params
 
   @Nullable
@@ -1016,7 +1022,7 @@ public class DataTables implements IHCNodeBuilder
                                                                      .url (sSource)
                                                                      .data (aoData)
                                                                      .success (JSJQueryHelper.jqueryAjaxSuccessHandler (fnCallback,
-                                                                                                                       true));
+                                                                                                                        true));
       aAF.body ().assign (oSettings.ref ("jqXHR"), aAjaxBuilder.build ());
       aParams.add ("fnServerData", aAF);
       JSJQueryHelper.registerExternalResources ();

@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -33,8 +34,10 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.ConstantHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayText;
 
+@NotThreadSafe
 public class DataTablesLengthMenuList
 {
+  /** The numerical value representing 'show all items' */
   public static final int COUNT_ALL = -1;
 
   private final List <DataTablesLengthMenuItem> m_aList = new ArrayList <DataTablesLengthMenuItem> ();
