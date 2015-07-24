@@ -96,7 +96,7 @@ public final class PhotonStubConfigurationListener implements ServletContextList
     PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.X_UA_COMPATIBLE.getAsMetaElement ("IE=Edge,chrome=1"));
     PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.VIEWPORT.getAsMetaElement ("width=device-width, initial-scale=1.0"));
 
-    // Finally read everything that may be defined within the application
+    // Finally read stuff from files that may be defined within the application
     PhotonCSS.readCSSIncludesForGlobal (new ClassPathResource (PhotonCSS.DEFAULT_FILENAME));
     PhotonJS.readJSIncludesForGlobal (new ClassPathResource (PhotonJS.DEFAULT_FILENAME));
     PhotonMetaElements.readMetaElementsForGlobal (new ClassPathResource (PhotonMetaElements.DEFAULT_FILENAME));
@@ -113,7 +113,7 @@ public final class PhotonStubConfigurationListener implements ServletContextList
       // Default JS and CSS
       registerDefaultResources ();
 
-      // Scope handling
+      // Ensure that only web scopes are created and never non-web scopes
       ThrowingScopeFactory.installToMetaScopeFactory ();
 
       if (GlobalDebug.isDebugMode ())
@@ -135,21 +135,19 @@ public final class PhotonStubConfigurationListener implements ServletContextList
       UnifiedResponseDefaultSettings.setAllowMimeSniffing (false);
       UnifiedResponseDefaultSettings.setEnableXSSFilter (true);
 
+      // Special Bootstrap customizer
+      // Default customizer: disable CSS classes - should fix issue with
+      // checkbox in form in IE9
+      HCSettings.getConversionSettingsProvider ()
+                .setCustomizer (new HCMultiCustomizer (new HCDefaultCustomizer (false), new BootstrapCustomizer ()));
+
       // Set default icon set if none is defined
       if (!DefaultIcons.areDefined ())
         EFamFamIcon.setAsDefault ();
 
       // Never use a thousand separator in HCAutoNumeric fields because of
-      // parsing
-      // problems
+      // parsing problems
       AbstractHCAutoNumeric.setDefaultThousandSeparator ("");
-
-      // Special Bootstrap customizer
-      // Default customizer: disable CSS classes - should fix issue with
-      // checkbox
-      // in form in IE9
-      HCSettings.getConversionSettingsProvider ()
-                .setCustomizer (new HCMultiCustomizer (new HCDefaultCustomizer (false), new BootstrapCustomizer ()));
     }
   }
 
@@ -158,6 +156,6 @@ public final class PhotonStubConfigurationListener implements ServletContextList
     onContextInitialized ();
   }
 
-  public void contextDestroyed (final ServletContextEvent sce)
+  public void contextDestroyed (@Nonnull final ServletContextEvent aSCE)
   {}
 }
