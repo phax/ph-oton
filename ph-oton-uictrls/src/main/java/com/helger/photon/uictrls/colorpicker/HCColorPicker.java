@@ -45,7 +45,9 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
   private ColorPickerOptions m_aOptions = new ColorPickerOptions ();
 
   public HCColorPicker ()
-  {}
+  {
+    // No input type needed
+  }
 
   @Nonnull
   @ReturnsMutableObject ("design")
