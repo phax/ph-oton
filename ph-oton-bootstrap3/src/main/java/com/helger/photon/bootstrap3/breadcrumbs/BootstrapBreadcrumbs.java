@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCOL;
-import com.helger.html.hc.htmlext.HCA_JS;
+import com.helger.html.hcext.html.HCA_JS;
 import com.helger.html.js.IHasJSCode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 

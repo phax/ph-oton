@@ -46,9 +46,9 @@ import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.html.HCUL;
-import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hcext.html.HCHTMLHelper;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
@@ -153,7 +153,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
 
         final BootstrapViewForm aDetailsForm = new BootstrapViewForm ();
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SUMMARY.getDisplayText (aDisplayLocale))
-                                                            .setCtrl (HCHelper.nl2divList (aScheduler.getMetaData ()
+                                                            .setCtrl (HCHTMLHelper.nl2divList (aScheduler.getMetaData ()
                                                                                                      .getSummary ())));
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXECUTING_JOBS.getDisplayText (aDisplayLocale))
                                                             .setCtrl (Integer.toString (aScheduler.getCurrentlyExecutingJobs ()
@@ -164,7 +164,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
         for (final JobListener aJobListener : aScheduler.getListenerManager ().getJobListeners ())
           aListeners.add (aJobListener.getName () + " - " + aJobListener.getClass ().getName ());
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LISTENERS.getDisplayText (aDisplayLocale))
-                                                            .setCtrl (HCHelper.list2divList (aListeners)));
+                                                            .setCtrl (HCHTMLHelper.list2divList (aListeners)));
         aTab.addChild (aDetailsForm);
 
         // Add all scheduled jobs

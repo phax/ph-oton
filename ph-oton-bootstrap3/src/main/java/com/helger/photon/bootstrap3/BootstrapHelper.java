@@ -20,6 +20,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCControl;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCHasChildren;
@@ -28,7 +29,6 @@ import com.helger.html.hc.html.AbstractHCScript;
 import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCRadioButton;
-import com.helger.html.hc.htmlext.HCHelper;
 
 @Immutable
 public final class BootstrapHelper

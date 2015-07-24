@@ -36,16 +36,16 @@ import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hc.IHCCell;
-import com.helger.html.hc.IHCTable;
+import com.helger.html.hc.api.IHCCell;
+import com.helger.html.hc.api.IHCTable;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCEM;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;
-import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hcext.html.HCHTMLHelper;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.CSecurity;
 import com.helger.photon.basic.security.role.IRole;
@@ -172,7 +172,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
     if (StringHelper.hasText (aSelectedObject.getDescription ()))
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCHelper.nl2divList (aSelectedObject.getDescription ())));
+                                                   .setCtrl (HCHTMLHelper.nl2divList (aSelectedObject.getDescription ())));
 
     // All user groups to which the role is assigned
     final Collection <IUserGroup> aAssignedUserGroups = AccessManager.getInstance ()

@@ -21,8 +21,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCNodeWithChildren;
-import com.helger.html.hc.htmlext.HCHelper;
 
 @Immutable
 public final class HCFormLabelHelper

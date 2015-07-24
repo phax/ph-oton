@@ -41,9 +41,9 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.IHCCell;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCTable;
+import com.helger.html.hc.api.IHCCell;
+import com.helger.html.hc.api.IHCTable;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.hc.html.HCCol;
@@ -53,10 +53,10 @@ import com.helger.html.hc.html.HCEdit;
 import com.helger.html.hc.html.HCEditPassword;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;
-import com.helger.html.hc.htmlext.HCA_MailTo;
-import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hcext.html.HCA_MailTo;
+import com.helger.html.hcext.html.HCHTMLHelper;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 import com.helger.photon.basic.security.role.IRole;
@@ -331,7 +331,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                                                        aDisplayLocale)));
     if (StringHelper.hasText (aSelectedObject.getDescription ()))
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCHelper.nl2divList (aSelectedObject.getDescription ())));
+                                                   .setCtrl (HCHTMLHelper.nl2divList (aSelectedObject.getDescription ())));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DELETED.getDisplayText (aDisplayLocale))
                                                  .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isDeleted (),
                                                                                        aDisplayLocale)));

@@ -41,7 +41,7 @@ import com.helger.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 import com.helger.commons.type.EBaseType;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
-import com.helger.html.hc.IHCCell;
+import com.helger.html.hc.api.IHCCell;
 import com.helger.html.hc.html.HCEM;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;

@@ -25,9 +25,9 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCA;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HC_Target;
-import com.helger.html.hc.htmlext.HCA_JS;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hcext.html.HCA_JS;
 import com.helger.html.js.writer.IHasJSCodeWithSettings;
 import com.helger.photon.bootstrap3.AbstractBootstrapObject;
 

@@ -21,12 +21,12 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
-import com.helger.html.hc.html.HCCheckBox;
+import com.helger.html.hc.html.HCRadioButton;
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
-public class BootstrapRadioButton extends HCCheckBox
+public class BootstrapRadioButton extends HCRadioButton
 {
   public BootstrapRadioButton (@Nonnull final IHCRequestFieldBoolean aRF)
   {

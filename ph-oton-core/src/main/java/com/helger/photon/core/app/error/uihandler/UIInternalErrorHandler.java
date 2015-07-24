@@ -31,7 +31,7 @@ import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCH1;
 import com.helger.html.hc.html.HCTextArea;
-import com.helger.html.hc.htmlext.HCHelper;
+import com.helger.html.hcext.html.HCHTMLHelper;
 import com.helger.photon.core.EPhotonCoreText;
 
 /**
@@ -59,7 +59,7 @@ public class UIInternalErrorHandler implements IUIInternalErrorHandler
                                @Nonnull final Locale aDisplayLocale)
   {
     m_aParentNode.addChild (new HCH1 ().addChild (EPhotonCoreText.INTERNAL_ERROR_TITLE.getDisplayText (aDisplayLocale)));
-    m_aParentNode.addChild (new HCDiv ().addChildren (HCHelper.nl2brList (EPhotonCoreText.INTERNAL_ERROR_DESCRIPTION.getDisplayTextWithArgs (aDisplayLocale,
+    m_aParentNode.addChild (new HCDiv ().addChildren (HCHTMLHelper.nl2brList (EPhotonCoreText.INTERNAL_ERROR_DESCRIPTION.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                            sErrorID))));
 
     // Show stack trace details

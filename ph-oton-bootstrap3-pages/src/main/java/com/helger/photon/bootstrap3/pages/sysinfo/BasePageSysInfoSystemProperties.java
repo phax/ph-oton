@@ -47,9 +47,9 @@ import com.helger.html.hc.html.HCEM;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.html.HCUL;
-import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hcext.html.HCHTMLHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
@@ -289,7 +289,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         {
           // Special handling for paths
           aRow.addCell (sName);
-          aRow.addCell (HCHelper.nl2brList (StringHelper.replaceAll (sValue, sPathSep, "\n")));
+          aRow.addCell (HCHTMLHelper.nl2brList (StringHelper.replaceAll (sValue, sPathSep, "\n")));
         }
         else
           aRow.addCells (sName, sValue);

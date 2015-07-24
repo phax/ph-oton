@@ -36,8 +36,8 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;
-import com.helger.html.hc.htmlext.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hcext.html.HCHTMLHelper;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
@@ -146,9 +146,9 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
         final List <String> aInitParams = new ArrayList <String> ();
         for (final Map.Entry <String, String> aEntry : aRegistration.getInitParameters ().entrySet ())
           aInitParams.add (aEntry.getKey () + "=" + aEntry.getValue ());
-        aRow.addCell (HCHelper.list2divList (aInitParams));
+        aRow.addCell (HCHTMLHelper.list2divList (aInitParams));
 
-        aRow.addCell (HCHelper.list2divList (aRegistration.getMappings ()));
+        aRow.addCell (HCHTMLHelper.list2divList (aRegistration.getMappings ()));
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
@@ -174,10 +174,10 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
         final List <String> aInitParams = new ArrayList <String> ();
         for (final Map.Entry <String, String> aEntry : aRegistration.getInitParameters ().entrySet ())
           aInitParams.add (aEntry.getKey () + "=" + aEntry.getValue ());
-        aRow.addCell (HCHelper.list2divList (aInitParams));
+        aRow.addCell (HCHTMLHelper.list2divList (aInitParams));
 
-        aRow.addCell (HCHelper.list2divList (aRegistration.getServletNameMappings ()));
-        aRow.addCell (HCHelper.list2divList (aRegistration.getUrlPatternMappings ()));
+        aRow.addCell (HCHTMLHelper.list2divList (aRegistration.getServletNameMappings ()));
+        aRow.addCell (HCHTMLHelper.list2divList (aRegistration.getUrlPatternMappings ()));
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
