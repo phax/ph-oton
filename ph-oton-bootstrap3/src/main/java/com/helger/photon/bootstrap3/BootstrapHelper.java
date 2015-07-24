@@ -25,7 +25,7 @@ import com.helger.html.hc.IHCControl;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCHasChildren;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCScript;
+import com.helger.html.hc.base.IHCScript;
 import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCRadioButton;
@@ -70,7 +70,7 @@ public final class BootstrapHelper
   {
     if (aNode instanceof IHCElement <?>)
     {
-      if (!(aNode instanceof IHCControl <?>) && !(aNode instanceof AbstractHCScript <?>))
+      if (!(aNode instanceof IHCControl <?>) && !(aNode instanceof IHCScript <?>))
         return true;
       return false;
     }
@@ -93,7 +93,7 @@ public final class BootstrapHelper
   {
     if (aNode instanceof IHCElement <?>)
     {
-      if (!(aNode instanceof IHCControl <?>) && !(aNode instanceof AbstractHCScript <?>))
+      if (!(aNode instanceof IHCControl <?>) && !(aNode instanceof IHCScript <?>))
       {
         ((IHCElement <?>) aNode).addClass (CBootstrapCSS.FORM_CONTROL_STATIC);
       }

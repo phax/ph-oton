@@ -25,7 +25,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.css.property.CCSSProperties;
-import com.helger.html.hc.api.IHCTable;
+import com.helger.html.hc.base.IHCTable;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCEdit;
 import com.helger.html.hc.html.HCEditPassword;

@@ -36,7 +36,7 @@ import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.html.hc.api.IHCTable;
+import com.helger.html.hc.base.IHCTable;
 import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.conversion.IHCConversionSettings;
 import com.helger.html.hc.html.HCRow;
