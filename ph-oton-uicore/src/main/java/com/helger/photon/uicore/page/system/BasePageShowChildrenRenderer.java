@@ -24,10 +24,10 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.css.property.CCSSProperties;
+import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HC_Target;
-import com.helger.html.hc.impl.AbstractHCElement;
 import com.helger.photon.basic.app.menu.EMenuObjectType;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
@@ -58,7 +58,7 @@ public class BasePageShowChildrenRenderer implements Serializable
   @OverrideOnDemand
   protected void beforeAddRenderedMenuItem (@Nonnull final IWebPageExecutionContext aWPEC,
                                             @Nonnull final IMenuObject aMenuObj,
-                                            @Nullable final AbstractHCElement <?> aPreviousLI)
+                                            @Nullable final IHCElement <?> aPreviousLI)
   {
     if (aMenuObj.getMenuObjectType () == EMenuObjectType.SEPARATOR && aPreviousLI != null)
       aPreviousLI.addStyle (CCSSProperties.MARGIN_BOTTOM.newValue ("1em"));
@@ -144,6 +144,6 @@ public class BasePageShowChildrenRenderer implements Serializable
   @OverrideOnDemand
   protected void afterAddRenderedMenuItem (@Nonnull final IWebPageExecutionContext aWPEC,
                                            @Nonnull final IMenuObject aMenuObj,
-                                           @Nullable final AbstractHCElement <?> aLI)
+                                           @Nullable final IHCElement <?> aLI)
   {}
 }
