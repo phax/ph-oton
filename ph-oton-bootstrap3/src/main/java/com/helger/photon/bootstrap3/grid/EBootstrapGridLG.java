@@ -29,18 +29,18 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
  */
 public enum EBootstrapGridLG implements IBootstrapGridElementExtended
 {
-  LG_1 (1, CBootstrapCSS.COL_LG_1, CBootstrapCSS.COL_LG_OFFSET_1, CBootstrapCSS.COL_LG_PUSH_1, CBootstrapCSS.COL_LG_PULL_1),
-  LG_2 (2, CBootstrapCSS.COL_LG_2, CBootstrapCSS.COL_LG_OFFSET_2, CBootstrapCSS.COL_LG_PUSH_2, CBootstrapCSS.COL_LG_PULL_2),
-  LG_3 (3, CBootstrapCSS.COL_LG_3, CBootstrapCSS.COL_LG_OFFSET_3, CBootstrapCSS.COL_LG_PUSH_3, CBootstrapCSS.COL_LG_PULL_3),
-  LG_4 (4, CBootstrapCSS.COL_LG_4, CBootstrapCSS.COL_LG_OFFSET_4, CBootstrapCSS.COL_LG_PUSH_4, CBootstrapCSS.COL_LG_PULL_4),
-  LG_5 (5, CBootstrapCSS.COL_LG_5, CBootstrapCSS.COL_LG_OFFSET_5, CBootstrapCSS.COL_LG_PUSH_5, CBootstrapCSS.COL_LG_PULL_5),
-  LG_6 (6, CBootstrapCSS.COL_LG_6, CBootstrapCSS.COL_LG_OFFSET_6, CBootstrapCSS.COL_LG_PUSH_6, CBootstrapCSS.COL_LG_PULL_6),
-  LG_7 (7, CBootstrapCSS.COL_LG_7, CBootstrapCSS.COL_LG_OFFSET_7, CBootstrapCSS.COL_LG_PUSH_7, CBootstrapCSS.COL_LG_PULL_7),
-  LG_8 (8, CBootstrapCSS.COL_LG_8, CBootstrapCSS.COL_LG_OFFSET_8, CBootstrapCSS.COL_LG_PUSH_8, CBootstrapCSS.COL_LG_PULL_8),
-  LG_9 (9, CBootstrapCSS.COL_LG_9, CBootstrapCSS.COL_LG_OFFSET_9, CBootstrapCSS.COL_LG_PUSH_9, CBootstrapCSS.COL_LG_PULL_9),
-  LG_10 (10, CBootstrapCSS.COL_LG_10, CBootstrapCSS.COL_LG_OFFSET_10, CBootstrapCSS.COL_LG_PUSH_10, CBootstrapCSS.COL_LG_PULL_10),
-  LG_11 (11, CBootstrapCSS.COL_LG_11, CBootstrapCSS.COL_LG_OFFSET_11, CBootstrapCSS.COL_LG_PUSH_11, CBootstrapCSS.COL_LG_PULL_11),
-  LG_12 (12, CBootstrapCSS.COL_LG_12, CBootstrapCSS.COL_LG_OFFSET_12, CBootstrapCSS.COL_LG_PUSH_12, CBootstrapCSS.COL_LG_PULL_12);
+ LG_1 (1, CBootstrapCSS.COL_LG_1, CBootstrapCSS.COL_LG_OFFSET_1, CBootstrapCSS.COL_LG_PUSH_1, CBootstrapCSS.COL_LG_PULL_1),
+ LG_2 (2, CBootstrapCSS.COL_LG_2, CBootstrapCSS.COL_LG_OFFSET_2, CBootstrapCSS.COL_LG_PUSH_2, CBootstrapCSS.COL_LG_PULL_2),
+ LG_3 (3, CBootstrapCSS.COL_LG_3, CBootstrapCSS.COL_LG_OFFSET_3, CBootstrapCSS.COL_LG_PUSH_3, CBootstrapCSS.COL_LG_PULL_3),
+ LG_4 (4, CBootstrapCSS.COL_LG_4, CBootstrapCSS.COL_LG_OFFSET_4, CBootstrapCSS.COL_LG_PUSH_4, CBootstrapCSS.COL_LG_PULL_4),
+ LG_5 (5, CBootstrapCSS.COL_LG_5, CBootstrapCSS.COL_LG_OFFSET_5, CBootstrapCSS.COL_LG_PUSH_5, CBootstrapCSS.COL_LG_PULL_5),
+ LG_6 (6, CBootstrapCSS.COL_LG_6, CBootstrapCSS.COL_LG_OFFSET_6, CBootstrapCSS.COL_LG_PUSH_6, CBootstrapCSS.COL_LG_PULL_6),
+ LG_7 (7, CBootstrapCSS.COL_LG_7, CBootstrapCSS.COL_LG_OFFSET_7, CBootstrapCSS.COL_LG_PUSH_7, CBootstrapCSS.COL_LG_PULL_7),
+ LG_8 (8, CBootstrapCSS.COL_LG_8, CBootstrapCSS.COL_LG_OFFSET_8, CBootstrapCSS.COL_LG_PUSH_8, CBootstrapCSS.COL_LG_PULL_8),
+ LG_9 (9, CBootstrapCSS.COL_LG_9, CBootstrapCSS.COL_LG_OFFSET_9, CBootstrapCSS.COL_LG_PUSH_9, CBootstrapCSS.COL_LG_PULL_9),
+ LG_10 (10, CBootstrapCSS.COL_LG_10, CBootstrapCSS.COL_LG_OFFSET_10, CBootstrapCSS.COL_LG_PUSH_10, CBootstrapCSS.COL_LG_PULL_10),
+ LG_11 (11, CBootstrapCSS.COL_LG_11, CBootstrapCSS.COL_LG_OFFSET_11, CBootstrapCSS.COL_LG_PUSH_11, CBootstrapCSS.COL_LG_PULL_11),
+ LG_12 (12, CBootstrapCSS.COL_LG_12, CBootstrapCSS.COL_LG_OFFSET_12, CBootstrapCSS.COL_LG_PUSH_12, CBootstrapCSS.COL_LG_PULL_12);
 
   private final int m_nParts;
   private final ICSSClassProvider m_aCSSClass;
@@ -123,5 +123,10 @@ public enum EBootstrapGridLG implements IBootstrapGridElementExtended
       default:
         return null;
     }
+  }
+
+  public boolean isMax ()
+  {
+    return this == LG_12;
   }
 }
