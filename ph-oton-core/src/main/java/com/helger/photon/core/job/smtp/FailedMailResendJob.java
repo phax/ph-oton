@@ -48,13 +48,19 @@ public class FailedMailResendJob extends AbstractPhotonJob
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FailedMailResendJob.class);
 
+  /**
+   * Public no argument constructor must be available.
+   */
+  public FailedMailResendJob ()
+  {}
+
   @Override
   protected void onExecute (final JobExecutionContext aContext) throws JobExecutionException
   {
     final List <FailedMailData> aFailedMails = PhotonCoreManager.getFailedMailQueue ().removeAll ();
     if (!aFailedMails.isEmpty ())
     {
-      s_aLogger.info ("Trying to resend " + aFailedMails.size () + " failed mails!");
+      s_aLogger.info ("Resending " + aFailedMails.size () + " failed mails!");
       for (final FailedMailData aFailedMailData : aFailedMails)
         ScopedMailAPI.getInstance ().queueMail (aFailedMailData.getSMTPSettings (), aFailedMailData.getEmailData ());
     }

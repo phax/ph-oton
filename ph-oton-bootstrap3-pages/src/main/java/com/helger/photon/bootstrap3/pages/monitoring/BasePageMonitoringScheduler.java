@@ -72,18 +72,19 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_CONTEXT ("Kontext", "Context"),
-    MSG_SUMMARY ("Zusammenfassung", "Summary"),
-    MSG_EXECUTING_JOBS ("Laufende Jobs", "Currently executing jobs"),
-    MSG_LISTENERS ("Job Listener", "Job listeners"),
-    MSG_JOB_CLASS ("Job: ", "Job: "),
-    MSG_START_TIME ("Startzeit: ", "Start time: "),
-    MSG_END_TIME ("Endzeit: ", "End time: "),
-    MSG_PREVIOUS_FIRE_TIME ("Letzter Aufruf: ", "Previous fire time: "),
-    MSG_NEXT_FIRE_TIME ("Nächster Aufruf: ", "Next fire time: "),
-    MSG_JOB_DATA ("JobData: ", "JobData: "),
-    MSG_NONE ("keine", "none"),
-    MSG_NOTHING_SCHEDULED ("Es sind keine Tasks geplant", "No actions are scheduled");
+   MSG_CONTEXT ("Kontext", "Context"),
+   MSG_SUMMARY ("Zusammenfassung", "Summary"),
+   MSG_EXECUTING_JOBS ("Laufende Jobs", "Currently executing jobs"),
+   MSG_LISTENERS ("Job Listener", "Job listeners"),
+   MSG_JOB_CLASS ("Job: ", "Job: "),
+   MSG_TRIGGER_KEY ("Key: ", "Key: "),
+   MSG_START_TIME ("Startzeit: ", "Start time: "),
+   MSG_END_TIME ("Endzeit: ", "End time: "),
+   MSG_PREVIOUS_FIRE_TIME ("Letzter Aufruf: ", "Previous fire time: "),
+   MSG_NEXT_FIRE_TIME ("Nächster Aufruf: ", "Next fire time: "),
+   MSG_JOB_DATA ("JobData: ", "JobData: "),
+   MSG_NONE ("keine", "none"),
+   MSG_NOTHING_SCHEDULED ("Es sind keine Tasks geplant", "No actions are scheduled");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -133,10 +134,13 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
     try
     {
       final ITabBox <?> aTabBox = new BootstrapTabBox ();
+
+      // For all schedulers
       for (final Scheduler aScheduler : QuartzSchedulerHelper.getSchedulerFactory ().getAllSchedulers ())
       {
         final HCNodeList aTab = new HCNodeList ();
 
+        // Context
         final DirtyFlagMap <String, Object> aContext = aScheduler.getContext ();
         if (!aContext.isEmpty ())
         {
@@ -147,21 +151,23 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
           aTab.addChild (aContextTable);
         }
 
-        final BootstrapViewForm aDetailsTable = new BootstrapViewForm ();
-        aDetailsTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SUMMARY.getDisplayText (aDisplayLocale))
-                                                             .setCtrl (HCHelper.nl2divList (aScheduler.getMetaData ()
+        final BootstrapViewForm aDetailsForm = new BootstrapViewForm ();
+        aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SUMMARY.getDisplayText (aDisplayLocale))
+                                                            .setCtrl (HCHelper.nl2divList (aScheduler.getMetaData ()
                                                                                                      .getSummary ())));
-        aDetailsTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXECUTING_JOBS.getDisplayText (aDisplayLocale))
-                                                             .setCtrl (Integer.toString (aScheduler.getCurrentlyExecutingJobs ()
-                                                                                                   .size ())));
+        aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXECUTING_JOBS.getDisplayText (aDisplayLocale))
+                                                            .setCtrl (Integer.toString (aScheduler.getCurrentlyExecutingJobs ()
+                                                                                                  .size ())));
 
-        final List <String> aListeners = new ArrayList <String> ();
+        // All job listener
+        final List <String> aListeners = new ArrayList <> ();
         for (final JobListener aJobListener : aScheduler.getListenerManager ().getJobListeners ())
           aListeners.add (aJobListener.getName () + " - " + aJobListener.getClass ().getName ());
-        aDetailsTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LISTENERS.getDisplayText (aDisplayLocale))
-                                                             .setCtrl (HCHelper.list2divList (aListeners)));
-        aTab.addChild (aDetailsTable);
+        aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LISTENERS.getDisplayText (aDisplayLocale))
+                                                            .setCtrl (HCHelper.list2divList (aListeners)));
+        aTab.addChild (aDetailsForm);
 
+        // Add all scheduled jobs
         final HCUL aDetailUL = new HCUL ();
         for (final String sTriggerGroupName : aScheduler.getTriggerGroupNames ())
           for (final TriggerKey aTriggerKey : aScheduler.getTriggerKeys (GroupMatcher.triggerGroupEquals (sTriggerGroupName)))
@@ -172,6 +178,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
             final HCLI aLI = aDetailUL.addAndReturnItem (aJobKey.getName ());
             final HCUL aUL2 = aLI.addAndReturnChild (new HCUL ());
             aUL2.addItem (EText.MSG_JOB_CLASS.getDisplayText (aDisplayLocale) + aDetail.getJobClass ().getName ());
+            aUL2.addItem (EText.MSG_TRIGGER_KEY.getDisplayText (aDisplayLocale) + aTrigger.getKey ().toString ());
             aUL2.addItem (EText.MSG_START_TIME.getDisplayText (aDisplayLocale) +
                           PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getStartTime ()),
                                                    aDisplayLocale));
@@ -191,7 +198,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
 
             aUL2.addItem (new HCTextNode (EText.MSG_JOB_DATA.getDisplayText (aDisplayLocale)),
                           aJobDataTable.hasBodyRows () ? aJobDataTable
-                                                      : new HCTextNode (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
+                                                       : new HCTextNode (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
           }
         aTab.addChild (aDetailUL);
 
