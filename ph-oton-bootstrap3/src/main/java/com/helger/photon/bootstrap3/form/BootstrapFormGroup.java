@@ -127,7 +127,7 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
   }
 
   @Nonnull
-  public final BootstrapFormGroup setCtrl (@Nullable final IHCNodeBuilder aCtrlBuilder)
+  public final BootstrapFormGroup buildAndSetCtrl (@Nullable final IHCNodeBuilder aCtrlBuilder)
   {
     return setCtrl (aCtrlBuilder == null ? null : aCtrlBuilder.build ());
   }

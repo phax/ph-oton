@@ -42,19 +42,9 @@ public class BootstrapInputGroup implements IHCNodeBuilder
   private final IHCNode m_aInput;
   private final List <IHCNode> m_aSuffixes = new ArrayList <IHCNode> ();
 
-  public BootstrapInputGroup (@Nonnull final IHCNodeBuilder aNodeBuilder)
-  {
-    this (EBootstrapInputGroupSize.DEFAULT, aNodeBuilder);
-  }
-
   public BootstrapInputGroup (@Nonnull final IHCNode aInput)
   {
     this (EBootstrapInputGroupSize.DEFAULT, aInput);
-  }
-
-  public BootstrapInputGroup (@Nonnull final EBootstrapInputGroupSize eSize, @Nonnull final IHCNodeBuilder aNodeBuilder)
-  {
-    this (eSize, aNodeBuilder.build ());
   }
 
   public BootstrapInputGroup (@Nonnull final EBootstrapInputGroupSize eSize, @Nonnull final IHCNode aInput)
