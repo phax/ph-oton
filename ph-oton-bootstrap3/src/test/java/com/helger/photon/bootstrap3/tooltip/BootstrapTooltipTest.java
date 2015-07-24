@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.helger.html.js.builder.jquery.JQuerySelector;
+import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.js.writer.JSWriterSettings;
 
 /**

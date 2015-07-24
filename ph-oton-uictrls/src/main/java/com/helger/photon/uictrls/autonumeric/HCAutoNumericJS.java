@@ -25,10 +25,10 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.hc.special.SpecialNodeListModifier;
+import com.helger.html.jquery.JQuery;
+import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.builder.JSInvocation;
-import com.helger.html.js.builder.jquery.JQuery;
-import com.helger.html.js.builder.jquery.JQueryInvocation;
 
 /**
  * A special script that initializes the auto numeric. It is a separate class,

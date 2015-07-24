@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.html.jquery.IJQuerySelector;
 import com.helger.html.js.builder.JSInvocation;
-import com.helger.html.js.builder.jquery.IJQuerySelector;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;

@@ -31,10 +31,10 @@ import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.html.HCEdit;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.jquery.JQuery;
+import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.js.builder.JSAnonymousFunction;
 import com.helger.html.js.builder.JSVar;
-import com.helger.html.js.builder.jquery.JQuery;
-import com.helger.html.js.builder.jquery.JQuerySelector;
 import com.helger.photon.core.form.RequestField;
 
 /**

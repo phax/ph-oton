@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
-import com.helger.html.js.builder.jquery.JQuery;
+import com.helger.html.jquery.JQuery;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;

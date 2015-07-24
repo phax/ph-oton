@@ -26,9 +26,9 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HCScript;
 import com.helger.html.hc.special.IHCSpecialNodeListModifier;
+import com.helger.html.jquery.IJQuerySelector;
+import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.js.builder.JSAssocArray;
-import com.helger.html.js.builder.jquery.IJQuerySelector;
-import com.helger.html.js.builder.jquery.JQuerySelector;
 import com.helger.html.js.provider.CollectingJSCodeProvider;
 
 public final class BootstrapDateTimePickerSpecialNodeListModifier implements IHCSpecialNodeListModifier
