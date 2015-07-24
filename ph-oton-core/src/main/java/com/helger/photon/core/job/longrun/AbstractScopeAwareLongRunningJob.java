@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.longrun;
+package com.helger.photon.core.job.longrun;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,6 +26,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.state.ESuccess;
+import com.helger.photon.basic.longrun.ILongRunningJob;
+import com.helger.photon.basic.longrun.LongRunningJobManager;
+import com.helger.photon.basic.longrun.LongRunningJobResult;
 import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.schedule.job.AbstractScopeAwareJob;
 
@@ -57,7 +60,7 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
    *         <code>null</code>.
    */
   @Nonnull
-  protected final LongRunningJobManager getLongRunningJobManager ()
+  protected LongRunningJobManager getLongRunningJobManager ()
   {
     return PhotonBasicManager.getLongRunningJobMgr ();
   }

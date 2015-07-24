@@ -14,57 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.smtp;
+package com.helger.photon.core.job.smtp;
 
 import java.util.List;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import org.quartz.DisallowConcurrentExecution;
-import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.SimpleScheduleBuilder;
+import org.quartz.ScheduleBuilder;
+import org.quartz.SimpleTrigger;
 import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.photon.core.mgr.PhotonCoreManager;
-import com.helger.schedule.job.AbstractScopeAwareJob;
 import com.helger.schedule.quartz.GlobalQuartzScheduler;
 import com.helger.smtp.failed.FailedMailData;
 import com.helger.smtp.scope.ScopedMailAPI;
 
 /**
- * A Quartz job, that tries to resend failed mails.
+ * A Quartz job, that tries to re-send failed mails.
  *
  * @author Philip Helger
  */
 @DisallowConcurrentExecution
-public class FailedMailResendJob extends AbstractScopeAwareJob
+public class FailedMailResendJob extends AbstractPhotonJob
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FailedMailResendJob.class);
-
-  private static String s_sAppID;
-
-  protected static void setApplicationScopeID (@Nonnull @Nonempty final String sApplicationID)
-  {
-    ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
-    if (s_sAppID != null)
-      throw new IllegalStateException ("This job is already scheduled!");
-
-    s_sAppID = sApplicationID;
-  }
-
-  @Override
-  protected final String getApplicationScopeID (@Nonnull final JobDataMap aJobDataMap,
-                                                @Nonnull final JobExecutionContext aContext)
-  {
-    return s_sAppID;
-  }
 
   @Override
   protected void onExecute (final JobExecutionContext aContext) throws JobExecutionException
@@ -78,17 +60,28 @@ public class FailedMailResendJob extends AbstractScopeAwareJob
     }
   }
 
-  public static void scheduleMe (@Nonnull @Nonempty final String sApplicationID, @Nonnegative final int nPollingMinutes)
+  /**
+   * @param aScheduleBuilder
+   *        The schedule builder to be used. May not be <code>null</code>.
+   *        Example:
+   *        <code>SimpleScheduleBuilder.repeatMinutelyForever (60)</code>
+   * @param sApplicationID
+   *        The internal application ID to be used. May neither be
+   *        <code>null</code> nor empty.
+   * @return The created trigger key for further usage. Never <code>null</code>.
+   */
+  @Nonnull
+  public static TriggerKey schedule (@Nonnull final ScheduleBuilder <SimpleTrigger> aScheduleBuilder,
+                                     @Nonnull @Nonempty final String sApplicationID)
   {
-    ValueEnforcer.isGT0 (nPollingMinutes, "PollingMinutes");
+    ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
 
     setApplicationScopeID (sApplicationID);
-    GlobalQuartzScheduler.getInstance ()
-                         .scheduleJob (FailedMailResendJob.class.getName (),
-                                       TriggerBuilder.newTrigger ()
-                                                     .startNow ()
-                                                     .withSchedule (SimpleScheduleBuilder.repeatMinutelyForever (nPollingMinutes)),
-                                       FailedMailResendJob.class,
-                                       null);
+    return GlobalQuartzScheduler.getInstance ().scheduleJob (FailedMailResendJob.class.getName (),
+                                                             TriggerBuilder.newTrigger ()
+                                                                           .startNow ()
+                                                                           .withSchedule (aScheduleBuilder),
+                                                             FailedMailResendJob.class,
+                                                             null);
   }
 }

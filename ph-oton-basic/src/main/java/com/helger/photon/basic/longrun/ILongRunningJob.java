@@ -18,8 +18,6 @@ package com.helger.photon.basic.longrun;
 
 import javax.annotation.Nonnull;
 
-import org.quartz.Job;
-
 import com.helger.commons.text.IMultilingualText;
 
 /**
@@ -27,7 +25,7 @@ import com.helger.commons.text.IMultilingualText;
  *
  * @author Philip Helger
  */
-public interface ILongRunningJob extends Job
+public interface ILongRunningJob
 {
   /**
    * @return A description of this long running job. May not be
