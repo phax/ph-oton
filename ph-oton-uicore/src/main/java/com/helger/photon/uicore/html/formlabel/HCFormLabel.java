@@ -25,7 +25,7 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNodeWithChildren;
-import com.helger.html.hc.html.AbstractHCLabel;
+import com.helger.html.hc.base.AbstractHCLabel;
 import com.helger.html.hc.impl.HCTextNode;
 
 public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormLabel
