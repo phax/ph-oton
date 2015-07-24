@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.css.property.CCSSProperties;
 import com.helger.css.propertyvalue.CCSSValue;
 import com.helger.html.EHTMLRole;
-import com.helger.html.hc.html.AbstractHCDiv;
+import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.html.hc.html.HCEdit;
 import com.helger.html.hc.html.HCEditFile;
 import com.helger.html.hc.html.HCScript;

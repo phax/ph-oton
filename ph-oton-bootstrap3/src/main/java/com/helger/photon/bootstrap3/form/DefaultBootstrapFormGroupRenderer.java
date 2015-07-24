@@ -32,7 +32,7 @@ import com.helger.html.hc.IHCControl;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCInput;
+import com.helger.html.hc.base.IHCInput;
 import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCLabel;
@@ -87,9 +87,9 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
                                                      @Nonnull final IHCControl <?> aFirstControl)
   {
     // Set the default placeholder (if none is present)
-    if (aFirstControl instanceof AbstractHCInput <?>)
+    if (aFirstControl instanceof IHCInput <?>)
     {
-      final AbstractHCInput <?> aEdit = (AbstractHCInput <?>) aFirstControl;
+      final IHCInput <?> aEdit = (IHCInput <?>) aFirstControl;
 
       // Only check for null, so that empty string overrides this
       // default behaviour
@@ -255,7 +255,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     else
     {
       // Icons for edits?
-      bUseIcons = isUseIcons () && eState.isNotNone () && aFirstControl instanceof AbstractHCInput <?>;
+      bUseIcons = isUseIcons () && eState.isNotNone () && aFirstControl instanceof IHCInput <?>;
 
       // Set static class for all direct children which are not controls
       final boolean bContainsFormControlStatic = aAllCtrls.isEmpty () &&

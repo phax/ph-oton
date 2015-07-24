@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap3.table;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hc.api.IHCCol;
+import com.helger.html.hc.base.IHCCol;
 import com.helger.html.hc.html.AbstractHCTable;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;

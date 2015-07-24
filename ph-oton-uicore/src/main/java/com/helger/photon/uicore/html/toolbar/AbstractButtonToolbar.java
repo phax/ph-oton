@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hc.html.AbstractHCDiv;
+import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.builder.html.JSHtml;

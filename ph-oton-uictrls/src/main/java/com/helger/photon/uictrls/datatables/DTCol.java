@@ -28,7 +28,7 @@ import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.type.EBaseType;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCCol;
+import com.helger.html.hc.base.AbstractHCCol;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.uicore.css.CUICoreCSS;

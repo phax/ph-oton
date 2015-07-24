@@ -23,8 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hc.api.IHCDiv;
-import com.helger.html.hc.html.AbstractHCButton;
+import com.helger.html.hc.base.IHCButton;
+import com.helger.html.hc.base.IHCDiv;
 import com.helger.html.js.IHasJSCode;
 import com.helger.photon.uicore.icon.IIcon;
 
@@ -53,9 +53,7 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   IMPLTYPE addButton (@Nullable String sCaption, @Nonnull IHasJSCode aJSCode, @Nullable IIcon aIcon);
 
   @Nonnull
-  AbstractHCButton <?> addAndReturnButton (@Nullable String sCaption,
-                                           @Nullable IHasJSCode aOnClick,
-                                           @Nullable IIcon aIcon);
+  IHCButton <?> addAndReturnButton (@Nullable String sCaption, @Nullable IHasJSCode aOnClick, @Nullable IIcon aIcon);
 
   @Nonnull
   IMPLTYPE addButton (@Nullable String sCaption, @Nonnull ISimpleURL aURL);
@@ -115,9 +113,9 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   IMPLTYPE addSubmitButton (@Nullable String sCaption, @Nullable IIcon aIcon);
 
   @Nonnull
-  AbstractHCButton <?> addAndReturnSubmitButton (@Nullable String sCaption,
-                                                 @Nullable IHasJSCode aOnClick,
-                                                 @Nullable IIcon aIcon);
+  IHCButton <?> addAndReturnSubmitButton (@Nullable String sCaption,
+                                          @Nullable IHasJSCode aOnClick,
+                                          @Nullable IIcon aIcon);
 
   @Nonnull
   IMPLTYPE addSubmitButton (@Nullable String sCaption, @Nullable IHasJSCode aOnClick, @Nullable IIcon aIcon);

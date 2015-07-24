@@ -23,7 +23,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.html.hc.IHCElementWithChildren;
-import com.helger.html.hc.html.AbstractHCDiv;
+import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
 

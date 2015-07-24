@@ -36,7 +36,7 @@ import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.api.IHCCell;
+import com.helger.html.hc.base.IHCCell;
 import com.helger.html.hc.html.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCRow;

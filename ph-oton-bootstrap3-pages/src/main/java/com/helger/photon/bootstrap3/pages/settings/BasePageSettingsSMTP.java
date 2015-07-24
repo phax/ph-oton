@@ -40,7 +40,7 @@ import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.vendor.VendorInfo;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.api.IHCCell;
+import com.helger.html.hc.base.IHCCell;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCheckBox;
 import com.helger.html.hc.html.HCEdit;

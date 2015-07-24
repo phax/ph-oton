@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCA;
+import com.helger.html.hc.base.IHCA;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.impl.HCNodeList;
@@ -138,12 +138,12 @@ public class BootstrapDropdownMenuItem extends AbstractBootstrapObject <Bootstra
   }
 
   @Nonnull
-  public AbstractHCA <?> createLink ()
+  public IHCA <?> createLink ()
   {
     if (m_aURL == null && m_aJSCode == null)
       throw new IllegalStateException ("No LinkAction specified!");
 
-    AbstractHCA <?> ret;
+    IHCA <?> ret;
     if (m_aURL != null)
       ret = new HCA (m_aURL);
     else

@@ -27,7 +27,7 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.css.ECSSUnit;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNodeWithChildren;
-import com.helger.html.hc.html.AbstractHCDiv;
+import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.html.hc.html.HCScript;
 import com.helger.html.js.builder.JSAssocArray;
 import com.helger.html.js.builder.JSExpr;

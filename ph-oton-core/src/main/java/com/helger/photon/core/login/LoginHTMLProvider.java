@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.api.IHCCell;
+import com.helger.html.hc.base.IHCCell;
 import com.helger.html.hc.html.HCBody;
 import com.helger.html.hc.html.HCButton_Submit;
 import com.helger.html.hc.html.HCCenter;

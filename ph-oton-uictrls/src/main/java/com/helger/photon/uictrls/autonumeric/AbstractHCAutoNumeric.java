@@ -35,7 +35,7 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.api.EHCInputType;
-import com.helger.html.hc.html.AbstractHCInput;
+import com.helger.html.hc.base.AbstractHCInput;
 import com.helger.html.hcext.IHCNodeWithJSOptions;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.js.builder.IJSExpression;

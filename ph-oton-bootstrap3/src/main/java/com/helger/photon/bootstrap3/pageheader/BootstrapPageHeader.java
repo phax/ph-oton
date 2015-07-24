@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap3.pageheader;
 import javax.annotation.Nullable;
 
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCDiv;
+import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
