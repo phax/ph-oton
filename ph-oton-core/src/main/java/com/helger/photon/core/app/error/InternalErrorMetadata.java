@@ -102,16 +102,19 @@ public class InternalErrorMetadata implements IHasStringRepresentation, IHasMicr
     return m_sErrorID;
   }
 
-  public void addField (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @Nonnull
+  public InternalErrorMetadata addField (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aFields.add (new Entry (sKey, sValue));
+    return this;
   }
 
-  public void addField (@Nonnull @Nonempty final String sKey, @Nonnull final Throwable t)
+  @Nonnull
+  public InternalErrorMetadata addField (@Nonnull @Nonempty final String sKey, @Nonnull final Throwable t)
   {
     final String sValue = "Failed to get " + sKey + ": " + t.getMessage () + " -- " + t.getClass ().getName ();
     s_aLogger.warn (sValue);
-    addField (sKey, sValue);
+    return addField (sKey, sValue);
   }
 
   @Nonnull
@@ -121,9 +124,11 @@ public class InternalErrorMetadata implements IHasStringRepresentation, IHasMicr
     return CollectionHelper.newList (m_aFields);
   }
 
-  public void addRequestField (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @Nonnull
+  public InternalErrorMetadata addRequestField (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aRequestFields.add (new Entry (sKey, sValue));
+    return this;
   }
 
   @Nonnull
@@ -133,9 +138,11 @@ public class InternalErrorMetadata implements IHasStringRepresentation, IHasMicr
     return CollectionHelper.newList (m_aRequestFields);
   }
 
-  public void addRequestHeader (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @Nonnull
+  public InternalErrorMetadata addRequestHeader (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aRequestHeaders.add (new Entry (sKey, sValue));
+    return this;
   }
 
   @Nonnull
@@ -145,9 +152,11 @@ public class InternalErrorMetadata implements IHasStringRepresentation, IHasMicr
     return CollectionHelper.newList (m_aRequestHeaders);
   }
 
-  public void addRequestParameter (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @Nonnull
+  public InternalErrorMetadata addRequestParameter (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aRequestParameters.add (new Entry (sKey, sValue));
+    return this;
   }
 
   @Nonnull
@@ -157,9 +166,11 @@ public class InternalErrorMetadata implements IHasStringRepresentation, IHasMicr
     return CollectionHelper.newList (m_aRequestParameters);
   }
 
-  public void addRequestCookie (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @Nonnull
+  public InternalErrorMetadata addRequestCookie (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aRequestCookies.add (new Entry (sKey, sValue));
+    return this;
   }
 
   @Nonnull
@@ -169,9 +180,11 @@ public class InternalErrorMetadata implements IHasStringRepresentation, IHasMicr
     return CollectionHelper.newList (m_aRequestCookies);
   }
 
-  public void addSessionField (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @Nonnull
+  public InternalErrorMetadata addSessionField (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aSessionFields.add (new Entry (sKey, sValue));
+    return this;
   }
 
   @Nonnull
