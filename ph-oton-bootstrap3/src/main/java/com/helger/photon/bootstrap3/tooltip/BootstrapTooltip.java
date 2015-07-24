@@ -394,7 +394,7 @@ public class BootstrapTooltip implements IHCNodeBuilder
   {
     final HCSpan aSpan = new HCSpan ().addChild (EBootstrapIcon.QUESTION_SIGN.getAsNode ());
     final BootstrapTooltip aTooltip = new BootstrapTooltip (aSpan).setTitle (sTitle);
-    return new HCNodeList ().addChild (aSpan).addChild (aTooltip);
+    return new HCNodeList ().addChild (aSpan).buildAndAddChild (aTooltip);
   }
 
   @Nonnull
@@ -402,7 +402,7 @@ public class BootstrapTooltip implements IHCNodeBuilder
   {
     final HCSpan aSpan = new HCSpan ().addChild (EBootstrapIcon.QUESTION_SIGN.getAsNode ());
     final BootstrapTooltip aTooltip = new BootstrapTooltip (aSpan).setTitle (aTitle);
-    return new HCNodeList ().addChild (aSpan).addChild (aTooltip);
+    return new HCNodeList ().addChild (aSpan).buildAndAddChild (aTooltip);
   }
 
   @Nonnull

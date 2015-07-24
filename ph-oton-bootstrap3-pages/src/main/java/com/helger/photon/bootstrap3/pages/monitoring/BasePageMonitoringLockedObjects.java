@@ -153,6 +153,6 @@ public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecution
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.addChild (aDataTables);
+    aNodeList.buildAndAddChild (aDataTables);
   }
 }

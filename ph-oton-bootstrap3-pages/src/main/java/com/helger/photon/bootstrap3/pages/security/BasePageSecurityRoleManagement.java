@@ -318,6 +318,6 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.addChild (aDataTables);
+    aNodeList.buildAndAddChild (aDataTables);
   }
 }

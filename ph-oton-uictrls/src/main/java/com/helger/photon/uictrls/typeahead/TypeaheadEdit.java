@@ -146,7 +146,7 @@ public class TypeaheadEdit implements IHCNodeBuilder
     ret.addChild (new HCHiddenField (m_aRFHidden).setID (m_sHiddenFieldID));
 
     // JS code
-    ret.addChild (m_aScript);
+    ret.buildAndAddChild (m_aScript);
 
     HCTypeahead.registerExternalResources ();
 

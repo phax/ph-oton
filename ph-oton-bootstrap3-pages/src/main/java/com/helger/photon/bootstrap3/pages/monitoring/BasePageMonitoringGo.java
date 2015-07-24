@@ -156,6 +156,6 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.addChild (aDataTables);
+    aNodeList.buildAndAddChild (aDataTables);
   }
 }

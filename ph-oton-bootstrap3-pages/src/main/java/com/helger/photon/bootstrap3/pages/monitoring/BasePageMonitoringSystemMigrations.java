@@ -153,6 +153,6 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.addChild (aDataTables);
+    aNodeList.buildAndAddChild (aDataTables);
   }
 }

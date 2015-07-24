@@ -263,8 +263,8 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
       aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
 
       aTabBox.addTab (EText.MSG_NETWORK_INTERFACES.getDisplayText (aDisplayLocale),
-                      new HCNodeList ().addChild (aTable).addChild (aDataTables));
+                      new HCNodeList ().addChild (aTable).buildAndAddChild (aDataTables));
     }
-    aNodeList.addChild (aTabBox);
+    aNodeList.buildAndAddChild (aTabBox);
   }
 }

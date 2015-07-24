@@ -143,7 +143,7 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
           aTab.addChild (aTable);
 
           final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-          aTab.addChild (aDataTables);
+          aTab.buildAndAddChild (aDataTables);
         }
 
         // Show all callbacks
@@ -166,7 +166,7 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
           aTab.addChild (aTable);
 
           final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-          aTab.addChild (aDataTables);
+          aTab.buildAndAddChild (aDataTables);
         }
 
         // Add to tab box
@@ -175,7 +175,7 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
     }
 
     if (aTabBox.getTabCount () > 0)
-      aNodeList.addChild (aTabBox);
+      aNodeList.buildAndAddChild (aTabBox);
     else
       aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NONE_FOUND.getDisplayText (aDisplayLocale)));
   }

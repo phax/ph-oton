@@ -201,7 +201,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
       if (aTabBox.hasNoTabs ())
         aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NOTHING_SCHEDULED.getDisplayText (aDisplayLocale)));
       else
-        aNodeList.addChild (aTabBox);
+        aNodeList.buildAndAddChild (aTabBox);
     }
     catch (final SchedulerException ex)
     {

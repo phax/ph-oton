@@ -200,7 +200,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
       aTabBox.addTab (EText.MSG_HEADER_EMAIL.getDisplayText (aDisplayLocale), aForm);
     }
 
-    aForm0.addChild (aTabBox);
+    aForm0.buildAndAddChild (aTabBox);
 
     final IButtonToolbar <?> aToolbar = aForm0.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_SAVE);

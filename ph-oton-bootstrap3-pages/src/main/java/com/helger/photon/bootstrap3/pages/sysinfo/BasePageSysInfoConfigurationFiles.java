@@ -135,6 +135,6 @@ public class BasePageSysInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
     if (aTabBox.hasNoTabs ())
       aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NO_CONFIG_FILES.getDisplayText (aDisplayLocale)));
     else
-      aNodeList.addChild (aTabBox);
+      aNodeList.buildAndAddChild (aTabBox);
   }
 }

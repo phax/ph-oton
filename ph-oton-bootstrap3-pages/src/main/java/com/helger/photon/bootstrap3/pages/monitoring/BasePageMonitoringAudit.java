@@ -164,6 +164,6 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.addChild (aDataTables);
+    aNodeList.buildAndAddChild (aDataTables);
   }
 }

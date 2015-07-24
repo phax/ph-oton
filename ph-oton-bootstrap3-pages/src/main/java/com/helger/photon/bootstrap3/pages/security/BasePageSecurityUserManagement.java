@@ -849,7 +849,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.addChild (aDataTables);
+    aNodeList.buildAndAddChild (aDataTables);
 
     // Required for best layout inside a tab!
     aTable.removeAllColumns ();
@@ -883,6 +883,6 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final Collection <? extends IUser> aDeletedUsers = aMgr.getAllDeletedUsers ();
     aTabBox.addTab (EText.TAB_DELETED.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aDeletedUsers.size ())),
                     getTabWithUsers (aWPEC, aDeletedUsers, getID () + "3"));
-    aNodeList.addChild (aTabBox);
+    aNodeList.buildAndAddChild (aTabBox);
   }
 }

@@ -158,7 +158,7 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     aNodeList.addChild (aTableAttrs);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    aNodeList.addChild (aDataTables);
+    aNodeList.buildAndAddChild (aDataTables);
 
     return aNodeList;
   }
@@ -198,7 +198,7 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     aNodeList.addChild (aTableAttrs);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    aNodeList.addChild (aDataTables);
+    aNodeList.buildAndAddChild (aDataTables);
 
     return aNodeList;
   }
@@ -228,6 +228,6 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
       aTabBox.addTab (EText.MSG_APPLICATION_SCOPE.getDisplayTextWithArgs (aDisplayLocale, aAppScope.getID ()),
                       _getApplicationScopeInfo (aWPEC, aAppScope));
 
-    aNodeList.addChild (aTabBox);
+    aNodeList.buildAndAddChild (aTabBox);
   }
 }
