@@ -34,6 +34,8 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
+import com.helger.html.hc.html.HCDiv;
+import com.helger.html.hc.html.HCEM;
 import com.helger.html.hc.html.HCRow;
 import com.helger.html.hc.html.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
@@ -64,15 +66,16 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_SERVLETS ("Servlets", "Servlets"),
-    MSG_LISTENERS ("Listener", "Listeners"),
-    MSG_FILTERS ("Filter", "Filters"),
-    MSG_NAME ("Name", "Name"),
-    MSG_CLASS_NAME ("Klasse", "Class name"),
-    MSG_INIT_PARAMS ("Init Params", "Init params"),
-    MSG_MAPPINGS ("Mappings", "Mappings"),
-    MSG_SERVLET_MAPPINGS ("Servlet Mappings", "Servlet mappings"),
-    MSG_URL_MAPPINGS ("URL Mappings", "URL mappings");
+   MSG_SERVLETS ("Servlets", "Servlets"),
+   MSG_LISTENERS ("Listener", "Listeners"),
+   MSG_FILTERS ("Filter", "Filters"),
+   MSG_NAME ("Name", "Name"),
+   MSG_CLASS_NAME ("Klasse", "Class name"),
+   MSG_INIT_PARAMS ("Init Params", "Init params"),
+   MSG_MAPPINGS ("Mappings", "Mappings"),
+   MSG_SERVLET_MAPPINGS ("Servlet Mappings", "Servlet mappings"),
+   MSG_URL_MAPPINGS ("URL Mappings", "URL mappings"),
+   MSG_ROOT_MAPPING ("ROOT Mapping", "ROOT mapping");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -177,7 +180,14 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
         aRow.addCell (HCHTMLHelper.list2divList (aInitParams));
 
         aRow.addCell (HCHTMLHelper.list2divList (aRegistration.getServletNameMappings ()));
-        aRow.addCell (HCHTMLHelper.list2divList (aRegistration.getUrlPatternMappings ()));
+
+        final HCNodeList aURLPatterns = new HCNodeList ();
+        for (final String sText : aRegistration.getUrlPatternMappings ())
+          if (sText.length () == 0)
+            aURLPatterns.addChild (new HCDiv ().addChild (new HCEM ().addChild (EText.MSG_ROOT_MAPPING.getDisplayText (aDisplayLocale))));
+          else
+            aURLPatterns.addChild (new HCDiv ().addChild (sText));
+        aRow.addCell (aURLPatterns);
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
