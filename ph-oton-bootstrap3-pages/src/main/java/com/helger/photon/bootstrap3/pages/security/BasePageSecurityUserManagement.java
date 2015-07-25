@@ -312,7 +312,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
     aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                          SecurityHelper.getUserDisplayName (aSelectedObject,
-                                                                                                                           aDisplayLocale))));
+                                                                                                                            aDisplayLocale))));
     final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
     onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
     if (!useEmailAddressAsLoginName ())
@@ -580,7 +580,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
     aForm.addChild (createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          SecurityHelper.getUserDisplayName (aSelectedObject,
-                                                                                                                                           aDisplayLocale))
+                                                                                                                                            aDisplayLocale))
                                                               : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
     if (!useEmailAddressAsLoginName ())
     {
@@ -597,7 +597,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sFirstName)
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_FIRSTNAME,
                                                                                            aSelectedObject == null ? null
-                                                                                                                   : aSelectedObject.getFirstName ())).setPlaceholder (sFirstName))
+                                                                                                                   : aSelectedObject.getFirstName ())).setPlaceholder (sFirstName)
+                                                                                                                                                      .setFocused (eFormAction.isCreate ()))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_FIRSTNAME)));
     }
 
@@ -726,7 +727,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
             AccessManager.getInstance ().setUserPassword (aSelectedObject.getID (), sPlainTextPassword);
             aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                           SecurityHelper.getUserDisplayName (aSelectedObject,
-                                                                                                                                                            aDisplayLocale))));
+                                                                                                                                                             aDisplayLocale))));
             return true;
           }
         }
@@ -738,7 +739,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
         aForm.addChild (createActionHeader (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                SecurityHelper.getUserDisplayName (aSelectedObject,
-                                                                                                                                 aDisplayLocale))));
+                                                                                                                                  aDisplayLocale))));
 
         final String sPassword = EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale);
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPassword,
@@ -838,7 +839,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                             .add (CPageParam.PARAM_OBJECT,
                                                   aCurUser.getID ())).setTitle (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                    SecurityHelper.getUserDisplayName (aCurUser,
-                                                                                                                                                                     aDisplayLocale)))
+                                                                                                                                                                      aDisplayLocale)))
                                                                      .addChild (getResetPasswordIcon ()));
       }
       else
