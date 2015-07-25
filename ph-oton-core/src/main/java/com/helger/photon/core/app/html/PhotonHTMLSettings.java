@@ -65,7 +65,7 @@ public class PhotonHTMLSettings
     ValueEnforcer.notNull (eHTMLVersion, "HTMLVersion");
 
     // Update the HCSettings
-    HCSettings.getConversionSettingsProvider ().setHTMLVersion (eHTMLVersion);
+    HCSettings.getMutableConversionSettings ().setHTMLVersion (eHTMLVersion);
 
     if (eHTMLVersion.isAtLeastHTML5 ())
     {

@@ -48,7 +48,7 @@ public abstract class AbstractWebAppListenerMultiAppBootstrap <LECTYPE extends I
     PhotonHTMLSettings.setDefaultHTMLVersion (EHTMLVersion.HTML5);
 
     // Add special Bootstrap customizer
-    HCSettings.getConversionSettingsProvider ()
+    HCSettings.getMutableConversionSettings ()
               .setCustomizer (new HCMultiCustomizer (HCConversionSettings.createDefaultCustomizer (),
                                                      new BootstrapCustomizer ()));
 

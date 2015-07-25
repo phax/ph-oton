@@ -91,7 +91,7 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
     else
     {
       // HTML output settings
-      HCSettings.getConversionSettingsProvider ().setToOptimized ();
+      HCSettings.getMutableConversionSettings ().setToOptimized ();
     }
   }
 

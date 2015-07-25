@@ -126,7 +126,7 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
                                                                     aConversionSettings.isExtractOutOfBandNodes ());
 
       // Apply the settings
-      HCSettings.getConversionSettingsProvider ()
+      HCSettings.getMutableConversionSettings ()
                 .setXMLWriterSettingsOptimized (!bFormatHTML)
                 .setCSSWriterSettingsOptimized (!bFormatCSS)
                 .setJSWriterSettingsOptimized (!bFormatJS)
