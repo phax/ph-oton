@@ -28,6 +28,7 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.scope.ScopeHelper;
 import com.helger.commons.system.SystemProperties;
+import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.customize.HCDefaultCustomizer;
 import com.helger.html.hc.customize.HCMultiCustomizer;
@@ -134,6 +135,9 @@ public final class PhotonStubConfigurationListener implements ServletContextList
       // Default response headers to be added
       UnifiedResponseDefaultSettings.setAllowMimeSniffing (false);
       UnifiedResponseDefaultSettings.setEnableXSSFilter (true);
+
+      // Always use HTML5 for Bootstrap3
+      HCSettings.setDefaultHTMLVersion (EHTMLVersion.HTML5);
 
       // Special Bootstrap customizer
       // Default customizer: disable CSS classes - should fix issue with

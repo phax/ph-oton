@@ -18,13 +18,8 @@ package com.helger.photon.bootstrap3.servlet;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import com.helger.html.EHTMLVersion;
-import com.helger.html.hc.config.HCSettings;
-import com.helger.html.hc.conversion.HCConversionSettings;
-import com.helger.html.hc.customize.HCMultiCustomizer;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.photon.core.app.html.PhotonHTMLSettings;
 import com.helger.photon.core.servlet.AbstractWebAppListenerMultiApp;
 
 /**
@@ -43,14 +38,6 @@ public abstract class AbstractWebAppListenerMultiAppBootstrap <LECTYPE extends I
     super.initGlobals ();
 
     // UI stuff:
-
-    // Always use HTML5 for Bootstrap3
-    PhotonHTMLSettings.setDefaultHTMLVersion (EHTMLVersion.HTML5);
-
-    // Add special Bootstrap customizer
-    HCSettings.getMutableConversionSettings ()
-              .setCustomizer (new HCMultiCustomizer (HCConversionSettings.createDefaultCustomizer (),
-                                                     new BootstrapCustomizer ()));
 
     // Using Bootstrap icon set by default
     EBootstrapIcon.setAsDefault ();

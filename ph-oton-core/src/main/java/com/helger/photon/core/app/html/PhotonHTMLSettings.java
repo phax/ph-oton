@@ -25,9 +25,6 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.EHTMLVersion;
-import com.helger.html.hc.config.HCSettings;
-import com.helger.html.hc.html.HCScript;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.core.url.IWebURIToURLConverter;
@@ -51,33 +48,6 @@ public class PhotonHTMLSettings
 
   private PhotonHTMLSettings ()
   {}
-
-  /**
-   * Set the default HTML version to use. This sets the HTML version in the
-   * {@link HCSettings} class and performs some additional modifications
-   * depending on the chosen version.
-   *
-   * @param eHTMLVersion
-   *        The HTML version to use. May not be <code>null</code>.
-   */
-  public static void setDefaultHTMLVersion (@Nonnull final EHTMLVersion eHTMLVersion)
-  {
-    ValueEnforcer.notNull (eHTMLVersion, "HTMLVersion");
-
-    // Update the HCSettings
-    HCSettings.getMutableConversionSettings ().setHTMLVersion (eHTMLVersion);
-
-    if (eHTMLVersion.isAtLeastHTML5 ())
-    {
-      // No need to put anything in a comment
-      HCScript.setDefaultMode (HCScript.EMode.PLAIN_TEXT_NO_ESCAPE);
-    }
-    else
-    {
-      // Use default mode
-      HCScript.setDefaultMode (HCScript.DEFAULT_MODE);
-    }
-  }
 
   @Nonnull
   public static IWebURIToURLConverter getURIToURLConverter ()
