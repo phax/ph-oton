@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCList;
+import com.helger.html.hc.base.IHCList;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCLI;
 import com.helger.html.hc.html.HC_Target;
@@ -40,7 +40,7 @@ import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
  * @param <T>
  *        Parent element type
  */
-public class DefaultMenuItemRenderer <T extends AbstractHCList <?>> extends AbstractMenuItemRenderer <T>
+public class DefaultMenuItemRenderer <T extends IHCList <?>> extends AbstractMenuItemRenderer <T>
 {
   /** CSS class for a menu separator */
   public static final ICSSClassProvider CSS_CLASS_MENU_SEPARATOR = DefaultCSSClassProvider.create ("menu_separator");

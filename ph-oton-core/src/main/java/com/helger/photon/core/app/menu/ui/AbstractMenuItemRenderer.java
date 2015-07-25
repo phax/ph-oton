@@ -21,7 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.html.hc.html.AbstractHCList;
+import com.helger.html.hc.base.IHCList;
 import com.helger.html.hc.html.HCLI;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 
@@ -32,7 +32,7 @@ import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
  * @param <T>
  *        Parent element type
  */
-public abstract class AbstractMenuItemRenderer <T extends AbstractHCList <?>> implements IMenuItemRenderer <T>
+public abstract class AbstractMenuItemRenderer <T extends IHCList <?>> implements IMenuItemRenderer <T>
 {
   private final Locale m_aContentLocale;
 

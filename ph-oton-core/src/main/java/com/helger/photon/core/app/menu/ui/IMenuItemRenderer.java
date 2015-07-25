@@ -19,7 +19,7 @@ package com.helger.photon.core.app.menu.ui;
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCList;
+import com.helger.html.hc.base.IHCList;
 import com.helger.html.hc.html.HCLI;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
@@ -33,7 +33,7 @@ import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
  * @param <T>
  *        Parent element type
  */
-public interface IMenuItemRenderer <T extends AbstractHCList <?>>
+public interface IMenuItemRenderer <T extends IHCList <?>>
 {
   /**
    * @param aSWEC

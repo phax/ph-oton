@@ -38,7 +38,7 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCForm;
+import com.helger.html.hc.base.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.security.AccessManager;

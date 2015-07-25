@@ -29,7 +29,7 @@ import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCList;
+import com.helger.html.hc.base.IHCList;
 import com.helger.html.hc.html.HCLI;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
@@ -47,7 +47,7 @@ import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
  * @param <T>
  *        Parent element type
  */
-public class MenuRendererCallback <T extends AbstractHCList <?>> extends DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
+public class MenuRendererCallback <T extends IHCList <?>> extends DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
 {
   private final ISimpleWebExecutionContext m_aSWEC;
   private final IFactory <T> m_aFactory;
@@ -221,9 +221,9 @@ public class MenuRendererCallback <T extends AbstractHCList <?>> extends Default
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static <T extends AbstractHCList <T>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                     @Nonnull final IFactory <T> aFactory,
-                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer)
+  public static <T extends IHCList <T>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
+                                                              @Nonnull final IFactory <T> aFactory,
+                                                              @Nonnull final IMenuItemRenderer <T> aRenderer)
   {
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
     return createRenderedMenu (aLEC,
@@ -250,10 +250,10 @@ public class MenuRendererCallback <T extends AbstractHCList <?>> extends Default
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static <T extends AbstractHCList <?>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                     @Nonnull final IFactory <T> aFactory,
-                                                                     @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
-                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer)
+  public static <T extends IHCList <?>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
+                                                              @Nonnull final IFactory <T> aFactory,
+                                                              @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
+                                                              @Nonnull final IMenuItemRenderer <T> aRenderer)
   {
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
     return createRenderedMenu (aLEC,
@@ -281,10 +281,10 @@ public class MenuRendererCallback <T extends AbstractHCList <?>> extends Default
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static <T extends AbstractHCList <?>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                     @Nonnull final IFactory <T> aFactory,
-                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer,
-                                                                     @Nonnull final Map <String, Boolean> aDisplayMenuItemIDs)
+  public static <T extends IHCList <?>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
+                                                              @Nonnull final IFactory <T> aFactory,
+                                                              @Nonnull final IMenuItemRenderer <T> aRenderer,
+                                                              @Nonnull final Map <String, Boolean> aDisplayMenuItemIDs)
   {
     return createRenderedMenu (aLEC, aFactory, aLEC.getMenuTree ().getRootItem (), aRenderer, aDisplayMenuItemIDs);
   }
@@ -308,11 +308,11 @@ public class MenuRendererCallback <T extends AbstractHCList <?>> extends Default
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static <T extends AbstractHCList <?>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                     @Nonnull final IFactory <T> aFactory,
-                                                                     @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
-                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer,
-                                                                     @Nonnull final Map <String, Boolean> aDisplayMenuItemIDs)
+  public static <T extends IHCList <?>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
+                                                              @Nonnull final IFactory <T> aFactory,
+                                                              @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
+                                                              @Nonnull final IMenuItemRenderer <T> aRenderer,
+                                                              @Nonnull final Map <String, Boolean> aDisplayMenuItemIDs)
   {
     ValueEnforcer.notNull (aFactory, "Factory");
 

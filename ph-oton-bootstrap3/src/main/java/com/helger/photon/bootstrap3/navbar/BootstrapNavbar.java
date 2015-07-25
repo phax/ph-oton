@@ -27,7 +27,7 @@ import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCForm;
+import com.helger.html.hc.base.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCButton;
 import com.helger.html.hc.html.HCDiv;

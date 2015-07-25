@@ -41,7 +41,7 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.AbstractHCForm;
+import com.helger.html.hc.base.AbstractHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
