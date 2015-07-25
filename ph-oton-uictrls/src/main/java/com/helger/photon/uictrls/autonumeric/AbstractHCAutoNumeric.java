@@ -60,7 +60,7 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
  *        Implementation type
  */
 @NotThreadSafe
-public class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNumeric <IMPLTYPE>> extends AbstractHCInput <IMPLTYPE>implements IHCNodeWithJSOptions
+public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNumeric <IMPLTYPE>> extends AbstractHCInput <IMPLTYPE>implements IHCNodeWithJSOptions
 {
   /** The special CSS class to use for numeric inputs */
   public static final ICSSClassProvider CSS_CLASS_AUTO_NUMERIC_EDIT = DefaultCSSClassProvider.create ("auto-numeric-edit");
