@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.name.IHasDisplayName;
@@ -47,6 +48,8 @@ import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.jscode.JSArray;
+import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.lock.LockResult;
 import com.helger.photon.basic.security.lock.ObjectLockManager;
@@ -1044,6 +1047,30 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   protected abstract void showListOfExistingObjects (@Nonnull WPECTYPE aWPEC);
 
+  @Nonnull
+  @ReturnsMutableCopy
+  private static JSAssocArray _getAsAssocArray (final FormState aFormState)
+  {
+    final JSAssocArray ret = new JSAssocArray ();
+    for (final Map.Entry <String, Object> aEntry : aFormState.getAllAttributes ().getAllAttributes ().entrySet ())
+    {
+      final String sKey = aEntry.getKey ();
+      final Object aValue = aEntry.getValue ();
+      if (aValue instanceof String)
+        ret.add (sKey, (String) aValue);
+      else
+        if (aValue instanceof String [])
+        {
+          final JSArray aArray = new JSArray ();
+          for (final String sElement : (String []) aValue)
+            aArray.add (sElement);
+          ret.add (sKey, aArray);
+        }
+      // else e.g. fileitem -> ignore
+    }
+    return ret;
+  }
+
   @Override
   protected final void fillContent (@Nonnull final WPECTYPE aWPEC)
   {
@@ -1192,7 +1219,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
               {
                 // Restore all form values
                 aForm.addChild (new HCScriptOnDocumentReady (JSFormHelper.setAllFormValues (FORM_ID_INPUT,
-                                                                                            aSavedState.getAsAssocArray ())));
+                                                                                            _getAsAssocArray (aSavedState))));
               }
             }
 

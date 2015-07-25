@@ -26,15 +26,12 @@ import org.joda.time.DateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ITypedObject;
 import com.helger.commons.type.ObjectType;
 import com.helger.datetime.PDTFactory;
-import com.helger.html.jscode.JSArray;
-import com.helger.html.jscode.JSAssocArray;
 import com.helger.json.JsonObject;
 
 @Immutable
@@ -99,30 +96,6 @@ public class FormState implements ITypedObject <String>, Serializable
   public MapBasedAttributeContainerAny <String> getAllAttributes ()
   {
     return m_aAttrs;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public JSAssocArray getAsAssocArray ()
-  {
-    final JSAssocArray ret = new JSAssocArray ();
-    for (final Map.Entry <String, Object> aEntry : m_aAttrs.getAllAttributes ().entrySet ())
-    {
-      final String sKey = aEntry.getKey ();
-      final Object aValue = aEntry.getValue ();
-      if (aValue instanceof String)
-        ret.add (sKey, (String) aValue);
-      else
-        if (aValue instanceof String [])
-        {
-          final JSArray aArray = new JSArray ();
-          for (final String sElement : (String []) aValue)
-            aArray.add (sElement);
-          ret.add (sKey, aArray);
-        }
-      // else e.g. fileitem -> ignore
-    }
-    return ret;
   }
 
   @Nonnull
