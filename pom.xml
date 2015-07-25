@@ -134,6 +134,11 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
+        <artifactId>ph-html-jscode</artifactId>
+        <version>5.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
         <artifactId>ph-html-jquery</artifactId>
         <version>5.0.0-SNAPSHOT</version>
       </dependency>
