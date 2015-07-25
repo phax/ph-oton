@@ -18,8 +18,8 @@ package com.helger.photon.tinymce4.type;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.js.builder.IJSExpression;
-import com.helger.html.js.builder.JSExpr;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSExpr;
 
 /**
  * All TinyMCE4 resize options

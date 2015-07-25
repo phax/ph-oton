@@ -35,11 +35,11 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
-import com.helger.html.js.builder.IJSExpression;
-import com.helger.html.js.builder.JSArray;
-import com.helger.html.js.builder.JSAssocArray;
-import com.helger.html.js.builder.JSExpr;
-import com.helger.html.js.builder.JSStringLiteral;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSArray;
+import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSExpr;
+import com.helger.html.jscode.JSStringLiteral;
 
 /**
  * Represents a single typeahead dataset.

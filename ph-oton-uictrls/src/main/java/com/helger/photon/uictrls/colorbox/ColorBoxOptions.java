@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.JSAssocArray;
 
 /**
  * jQuery colorbox plugin from

@@ -29,8 +29,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.jquery.JQueryAjaxBuilder;
-import com.helger.html.js.builder.IJSExpression;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSAssocArray;
 
 /**
  * Represent a remote object used in Bloodhound options

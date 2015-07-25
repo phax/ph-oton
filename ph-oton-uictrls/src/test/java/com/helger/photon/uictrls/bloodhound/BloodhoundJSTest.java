@@ -20,8 +20,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.helger.html.js.builder.JSPackage;
 import com.helger.html.js.writer.JSWriterSettings;
+import com.helger.html.jscode.JSPackage;
 
 public final class BloodhoundJSTest
 {

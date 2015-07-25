@@ -21,7 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.JSAssocArray;
 
 public class FineUploader extends FineUploaderBasic
 {

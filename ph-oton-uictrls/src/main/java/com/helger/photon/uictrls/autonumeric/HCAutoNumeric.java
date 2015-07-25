@@ -22,11 +22,11 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.html.js.builder.IJSExpression;
-import com.helger.html.js.builder.JSAssocArray;
-import com.helger.html.js.builder.JSExpr;
-import com.helger.html.js.builder.JSGlobal;
-import com.helger.html.js.builder.JSInvocation;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSExpr;
+import com.helger.html.jscode.JSGlobal;
+import com.helger.html.jscode.JSInvocation;
 import com.helger.photon.core.form.RequestField;
 
 /**

@@ -35,8 +35,8 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.jquery.JQuery;
-import com.helger.html.js.builder.JSArray;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.JSArray;
+import com.helger.html.jscode.JSAssocArray;
 
 /**
  * Wrapper for Fineuploader 3.1.1

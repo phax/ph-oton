@@ -31,9 +31,9 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.mutable.MutableBigDecimal;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.js.builder.IJSExpression;
-import com.helger.html.js.builder.JSArray;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSArray;
+import com.helger.html.jscode.JSAssocArray;
 
 /**
  * Base chart for Line and Radar

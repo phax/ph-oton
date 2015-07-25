@@ -20,10 +20,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.html.js.builder.JSAssocArray;
-import com.helger.html.js.builder.JSExpr;
-import com.helger.html.js.builder.JSInvocation;
-import com.helger.html.js.builder.JSRef;
+import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSExpr;
+import com.helger.html.jscode.JSInvocation;
+import com.helger.html.jscode.JSRef;
 
 /**
  * JS wrapped for TinyMCE4

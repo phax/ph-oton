@@ -19,8 +19,8 @@ package com.helger.photon.bootstrap3.modal;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.js.builder.IJSExpression;
-import com.helger.html.js.builder.JSExpr;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSExpr;
 
 /**
  * Modal dialog backdrop option

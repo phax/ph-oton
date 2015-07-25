@@ -32,13 +32,13 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.js.builder.IJSExpression;
-import com.helger.html.js.builder.JSAnonymousFunction;
-import com.helger.html.js.builder.JSArray;
-import com.helger.html.js.builder.JSAssocArray;
-import com.helger.html.js.builder.JSFieldRef;
-import com.helger.html.js.builder.JSReturn;
-import com.helger.html.js.builder.JSVar;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSArray;
+import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSFieldRef;
+import com.helger.html.jscode.JSReturn;
+import com.helger.html.jscode.JSVar;
 
 @NotThreadSafe
 public class BloodhoundOptions implements ICloneable <BloodhoundOptions>

@@ -33,8 +33,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ITypedObject;
 import com.helger.commons.type.ObjectType;
 import com.helger.datetime.PDTFactory;
-import com.helger.html.js.builder.JSArray;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.JSArray;
+import com.helger.html.jscode.JSAssocArray;
 import com.helger.json.JsonObject;
 
 @Immutable

@@ -28,7 +28,7 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.js.IHasJSCode;
-import com.helger.html.js.builder.html.JSHtml;
+import com.helger.html.jscode.html.JSHtml;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;

@@ -28,8 +28,8 @@ import com.helger.html.hc.html.HCEditFile;
 import com.helger.html.hc.html.HCScript;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.jquery.JQuery;
-import com.helger.html.js.builder.JSAnonymousFunction;
-import com.helger.html.js.builder.JSExpr;
+import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSExpr;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**

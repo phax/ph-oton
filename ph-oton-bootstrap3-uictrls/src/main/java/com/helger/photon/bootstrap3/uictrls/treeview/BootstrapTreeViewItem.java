@@ -22,9 +22,9 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
-import com.helger.html.js.builder.IJSExpression;
-import com.helger.html.js.builder.JSAssocArray;
-import com.helger.html.js.builder.JSExpr;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSExpr;
 
 public class BootstrapTreeViewItem
 {

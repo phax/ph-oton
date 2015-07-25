@@ -24,7 +24,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.JSAssocArray;
 
 @NotThreadSafe
 public class TypeaheadOptions implements ICloneable <TypeaheadOptions>

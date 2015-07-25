@@ -25,14 +25,14 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.HCScript;
-import com.helger.html.js.builder.JSAnonymousFunction;
-import com.helger.html.js.builder.JSArray;
-import com.helger.html.js.builder.JSExpr;
-import com.helger.html.js.builder.JSInvocation;
-import com.helger.html.js.builder.JSOp;
-import com.helger.html.js.builder.JSPackage;
-import com.helger.html.js.builder.JSVar;
-import com.helger.html.js.builder.html.JSHtml;
+import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSArray;
+import com.helger.html.jscode.JSExpr;
+import com.helger.html.jscode.JSInvocation;
+import com.helger.html.jscode.JSOp;
+import com.helger.html.jscode.JSPackage;
+import com.helger.html.jscode.JSVar;
+import com.helger.html.jscode.html.JSHtml;
 
 /**
  * Control for emitting Google Analytics code.

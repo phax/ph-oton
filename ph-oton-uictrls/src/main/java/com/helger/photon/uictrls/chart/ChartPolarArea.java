@@ -22,7 +22,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.state.ETriState;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.JSAssocArray;
 
 /**
  * PolarArea Chart

@@ -19,10 +19,10 @@ package com.helger.photon.uicore.js;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.html.js.builder.IJSExpression;
-import com.helger.html.js.builder.JSAnonymousFunction;
-import com.helger.html.js.builder.JSExpr;
-import com.helger.html.js.builder.JSVar;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSExpr;
+import com.helger.html.jscode.JSVar;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 

@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.js.builder.JSArray;
+import com.helger.html.jscode.JSArray;
 
 /**
  * Defines a DataTables sortable column

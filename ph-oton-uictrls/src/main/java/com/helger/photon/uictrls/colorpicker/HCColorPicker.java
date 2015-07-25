@@ -28,7 +28,7 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.css.UncheckedCSSClassProvider;
 import com.helger.html.hc.base.AbstractHCInput;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 

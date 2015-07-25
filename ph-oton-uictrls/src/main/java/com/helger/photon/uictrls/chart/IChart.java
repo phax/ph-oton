@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.html.js.builder.IJSExpression;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSAssocArray;
 
 /**
  * Base class for all chartjs.org charts.

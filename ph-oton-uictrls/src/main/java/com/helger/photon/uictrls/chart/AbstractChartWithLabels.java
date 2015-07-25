@@ -26,8 +26,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.lang.GenericReflection;
-import com.helger.html.js.builder.JSArray;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.JSArray;
+import com.helger.html.jscode.JSAssocArray;
 
 /**
  * Base chart for Line, Radar and Bar

@@ -23,13 +23,13 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.jquery.JQuery;
-import com.helger.html.js.builder.JSAnonymousFunction;
-import com.helger.html.js.builder.JSAssocArray;
-import com.helger.html.js.builder.JSBlock;
-import com.helger.html.js.builder.JSExpr;
-import com.helger.html.js.builder.JSGlobal;
-import com.helger.html.js.builder.JSOp;
-import com.helger.html.js.builder.JSVar;
+import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSBlock;
+import com.helger.html.jscode.JSExpr;
+import com.helger.html.jscode.JSGlobal;
+import com.helger.html.jscode.JSOp;
+import com.helger.html.jscode.JSVar;
 
 /**
  * Some sanity functionality for {@link DataTables} objects.

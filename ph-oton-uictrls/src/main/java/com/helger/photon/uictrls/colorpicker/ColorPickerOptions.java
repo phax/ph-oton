@@ -26,8 +26,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.css.utils.ECSSColorName;
 import com.helger.html.CHTMLAttributes;
-import com.helger.html.js.builder.JSAnonymousFunction;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSAssocArray;
 
 /**
  * This class collects all options for the {@link HCColorPicker} class.

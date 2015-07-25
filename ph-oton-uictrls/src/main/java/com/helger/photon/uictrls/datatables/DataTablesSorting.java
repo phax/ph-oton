@@ -23,7 +23,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.compare.ESortOrder;
-import com.helger.html.js.builder.JSArray;
+import com.helger.html.jscode.JSArray;
 
 public final class DataTablesSorting
 {

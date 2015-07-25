@@ -33,9 +33,9 @@ import com.helger.html.hc.html.HCH4;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.jquery.JQuery;
-import com.helger.html.js.builder.JSAssocArray;
-import com.helger.html.js.builder.JSInvocation;
-import com.helger.html.js.builder.JSPackage;
+import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSInvocation;
+import com.helger.html.jscode.JSPackage;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.base.BootstrapCloseIcon;
 

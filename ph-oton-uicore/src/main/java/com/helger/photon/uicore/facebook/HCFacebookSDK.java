@@ -25,8 +25,8 @@ import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCScript;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.html.js.builder.JSExpr;
-import com.helger.html.js.builder.JSInvocation;
+import com.helger.html.jscode.JSExpr;
+import com.helger.html.jscode.JSInvocation;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 

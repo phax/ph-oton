@@ -38,9 +38,9 @@ import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.jquery.IJQuerySelector;
 import com.helger.html.jquery.JQuerySelector;
-import com.helger.html.js.builder.JSAnonymousFunction;
-import com.helger.html.js.builder.JSAssocArray;
-import com.helger.html.js.builder.JSInvocation;
+import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSInvocation;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 
 /**

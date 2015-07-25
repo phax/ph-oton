@@ -24,12 +24,12 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.html.js.builder.AbstractJSInvocation;
-import com.helger.html.js.builder.IJSExpression;
-import com.helger.html.js.builder.IJSGeneratable;
-import com.helger.html.js.builder.JSAnonymousFunction;
-import com.helger.html.js.builder.JSArray;
-import com.helger.html.js.builder.JSExpr;
+import com.helger.html.jscode.AbstractJSInvocation;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.IJSGeneratable;
+import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSArray;
+import com.helger.html.jscode.JSExpr;
 
 /**
  * Special Bloodhound invocation. Offers all methods as of 0.10.2

@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.js.builder.IJSExpression;
+import com.helger.html.jscode.IJSExpression;
 
 /**
  * Represents a single typeahead dataset.

@@ -27,8 +27,8 @@ import com.helger.commons.lang.ICloneable;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.js.builder.JSAnonymousFunction;
-import com.helger.html.js.builder.JSAssocArray;
+import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSAssocArray;
 
 /**
  * Represent a prefetch object used in a dataset
