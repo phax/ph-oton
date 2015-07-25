@@ -39,7 +39,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.xml.serialize.read.SAXReaderSettings;
 import com.helger.html.EHTMLVersion;
-import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.parser.XHTMLParser;
 import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;

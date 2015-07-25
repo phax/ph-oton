@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.js.builder.IJSExpression;
 import com.helger.html.js.builder.JSAssocArray;
 import com.helger.html.js.builder.JSExpr;

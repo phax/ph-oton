@@ -23,7 +23,7 @@ import org.junit.Test;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.config.HCSettings;
 
 /**
  * Test class for class {@link HCSWFObject}.

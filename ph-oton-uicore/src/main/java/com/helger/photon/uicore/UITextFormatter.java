@@ -32,7 +32,7 @@ import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCP;
 import com.helger.html.hc.impl.HCDOMWrapper;

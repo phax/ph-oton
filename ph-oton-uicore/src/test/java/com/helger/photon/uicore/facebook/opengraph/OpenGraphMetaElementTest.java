@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.config.HCSettings;
 
 /**
  * Test class for class {@link OpenGraphMetaElement}.

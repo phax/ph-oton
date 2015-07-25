@@ -32,7 +32,7 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
-import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.impl.HCNodeList;

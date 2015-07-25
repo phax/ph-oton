@@ -38,7 +38,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.base.IHCCell;
-import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.conversion.IHCConversionSettings;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.special.HCSpecialNodeHandler;

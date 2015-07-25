@@ -22,7 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.js.builder.IJSExpression;
 import com.helger.html.js.builder.JSArray;
 import com.helger.html.js.builder.JSAssocArray;

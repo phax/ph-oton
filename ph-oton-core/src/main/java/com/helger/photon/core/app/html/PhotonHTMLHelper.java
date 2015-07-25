@@ -24,7 +24,7 @@ import com.helger.commons.mime.IMimeType;
 import com.helger.commons.mime.MimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.HCHtml;
 import com.helger.html.hc.html.HCLink;
 import com.helger.html.hc.html.HCScriptFile;

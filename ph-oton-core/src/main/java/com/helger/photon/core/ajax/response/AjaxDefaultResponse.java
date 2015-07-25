@@ -31,7 +31,7 @@ import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCHasChildren;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeWithChildren;
-import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.special.AbstractHCSpecialNodes;
 import com.helger.html.hc.special.HCSpecialNodeHandler;

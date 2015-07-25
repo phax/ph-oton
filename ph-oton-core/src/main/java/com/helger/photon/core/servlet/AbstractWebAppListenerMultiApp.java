@@ -29,7 +29,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.html.hc.conversion.HCSettings;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.security.password.GlobalPasswordSettings;

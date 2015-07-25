@@ -27,8 +27,8 @@ import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLDocTypes;
 import com.helger.html.EHTMLVersion;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.conversion.HCConversionSettings;
-import com.helger.html.hc.conversion.HCSettings;
 import com.helger.html.hc.html.HCDiv;
 
 public abstract class AbstractFeedXHTML extends AbstractFeedElement
