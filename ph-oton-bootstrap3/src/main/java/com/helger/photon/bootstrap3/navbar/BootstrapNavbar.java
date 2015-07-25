@@ -27,7 +27,7 @@ import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.AbstractHCForm;
+import com.helger.html.hc.base.IHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCButton;
 import com.helger.html.hc.html.HCDiv;
@@ -115,7 +115,7 @@ public class BootstrapNavbar extends HCNav
   }
 
   @Nonnull
-  public BootstrapNavbar addForm (@Nonnull final EBootstrapNavbarPosition ePos, @Nonnull final AbstractHCForm <?> aForm)
+  public BootstrapNavbar addForm (@Nonnull final EBootstrapNavbarPosition ePos, @Nonnull final IHCForm <?> aForm)
   {
     aForm.addClass (CBootstrapCSS.NAVBAR_FORM);
     return _addNode (ePos, aForm);

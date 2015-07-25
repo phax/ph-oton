@@ -36,7 +36,6 @@ import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.AbstractHCForm;
 import com.helger.html.hc.base.IHCCell;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCRow;
@@ -76,22 +75,22 @@ import com.helger.validation.error.FormErrors;
 public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <LoginInfo, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-    MSG_USERNAME ("Benutzername", "User name"),
-    MSG_LOGINDT ("Anmeldezeit", "Login time"),
-    MSG_LASTACCESSDT ("Letzter Zugriff", "Last access"),
-    HEADER_DETAILS ("Details des angemeldeten Benutzers", "Details of logged in user"),
-    MSG_USERID ("Benutzer-ID", "User ID"),
-    MSG_LOGOUTDT ("Abmeldezeit", "Logout time"),
-    MSG_SESSION_ID ("Session-ID", "Session ID"),
-    MSG_ATTRS ("Attribute", "Attributes"),
-    MSG_NAME ("Name", "Wert"),
-    MSG_VALUE ("Wert", "Value"),
-    MSG_LOGOUT_USER ("Benutzer {0} abmelden", "Log out user {0}"),
-    LOGOUT_QUESTION ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' abmelden wollen?", "Are you sure you want to log out user ''{0}''?"),
-    LOGOUT_SUCCESS ("Benutzer ''{0}'' wurde erfolgreich abgemeldet.", "User ''{0}'' was successfully logged out."),
-    LOGOUT_ERROR ("Benutzer ''{0}'' konnte nicht abgemeldet werden, weil er nicht mehr angemeldet war.", "User ''{0}'' could not be logged out because he was not logged in.");
+   MSG_USERNAME ("Benutzername", "User name"),
+   MSG_LOGINDT ("Anmeldezeit", "Login time"),
+   MSG_LASTACCESSDT ("Letzter Zugriff", "Last access"),
+   HEADER_DETAILS ("Details des angemeldeten Benutzers", "Details of logged in user"),
+   MSG_USERID ("Benutzer-ID", "User ID"),
+   MSG_LOGOUTDT ("Abmeldezeit", "Logout time"),
+   MSG_SESSION_ID ("Session-ID", "Session ID"),
+   MSG_ATTRS ("Attribute", "Attributes"),
+   MSG_NAME ("Name", "Wert"),
+   MSG_VALUE ("Wert", "Value"),
+   MSG_LOGOUT_USER ("Benutzer {0} abmelden", "Log out user {0}"),
+   LOGOUT_QUESTION ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' abmelden wollen?", "Are you sure you want to log out user ''{0}''?"),
+   LOGOUT_SUCCESS ("Benutzer ''{0}'' wurde erfolgreich abgemeldet.", "User ''{0}'' was successfully logged out."),
+   LOGOUT_ERROR ("Benutzer ''{0}'' konnte nicht abgemeldet werden, weil er nicht mehr angemeldet war.", "User ''{0}'' could not be logged out because he was not logged in.");
 
     private final IMultilingualText m_aTP;
 
@@ -182,7 +181,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                                   .setCtrl (aSelectedObject.getUserID ()));
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USERNAME.getDisplayText (aDisplayLocale))
                                                   .setCtrl (SecurityHelper.getUserDisplayName (aSelectedObject.getUser (),
-                                                                                              aDisplayLocale)));
+                                                                                               aDisplayLocale)));
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale))
                                                   .setCtrl (PDTToString.getAsString (aSelectedObject.getLoginDT (),
                                                                                      aDisplayLocale)));
@@ -285,7 +284,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       }
 
       // Show question
-      final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+      final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
       aForm.addChild (new BootstrapSuccessBox ().addChild (EText.LOGOUT_QUESTION.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          sUserName)));
 
@@ -325,7 +324,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
 
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (new HCA (aViewLink).addChild (SecurityHelper.getUserDisplayName (aLoginInfo.getUser (),
-                                                                                    aDisplayLocale)));
+                                                                                     aDisplayLocale)));
       aRow.addCell (PDTToString.getAsString (aLoginInfo.getLoginDT (), aDisplayLocale));
       aRow.addCell (PDTToString.getAsString (aLoginInfo.getLastAccessDT (), aDisplayLocale));
 
@@ -335,9 +334,10 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
         final String sUserName = SecurityHelper.getUserDisplayName (aLoginInfo.getUser (), aDisplayLocale);
         aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
                                             .add (CPageParam.PARAM_ACTION, ACTION_LOGOUT_USER)
-                                            .add (CPageParam.PARAM_OBJECT, aLoginInfo.getID ())).setTitle (EText.MSG_LOGOUT_USER.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                         sUserName))
-                                                                                                .addChild (getLogoutUserIcon ()));
+                                            .add (CPageParam.PARAM_OBJECT,
+                                                  aLoginInfo.getID ())).setTitle (EText.MSG_LOGOUT_USER.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                sUserName))
+                                                                       .addChild (getLogoutUserIcon ()));
       }
       else
       {

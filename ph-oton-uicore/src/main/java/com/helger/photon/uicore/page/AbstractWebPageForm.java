@@ -41,7 +41,7 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.AbstractHCForm;
+import com.helger.html.hc.base.IHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCHiddenField;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
@@ -81,7 +81,7 @@ import com.helger.validation.error.FormErrors;
  *        The form implementation type.
  */
 @NotThreadSafe
-public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends AbstractHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>> extends AbstractWebPage <WPECTYPE>
+public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>> extends AbstractWebPage <WPECTYPE>
 {
   // all internal IDs starting with "$" to prevent accidental overwrite with
   // actual field
@@ -161,7 +161,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
    * @return <code>true</code> if the form for
-   *         {@link #showInputForm(IWebPageExecutionContext, IHasID, AbstractHCForm, EWebPageFormAction, FormErrors)}
+   *         {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrors)}
    *         should be a file-upload form, <code>false</code> if a regular form
    *         is sufficient.
    */
@@ -842,7 +842,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   /**
    * Add additional form IDs (e.g. client and accounting area). This method is
    * called before
-   * {@link #showInputForm(IWebPageExecutionContext, IHasID, AbstractHCForm, EWebPageFormAction, FormErrors)}
+   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrors)}
    * is called.
    *
    * @param aWPEC
@@ -880,7 +880,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   /**
    * Add additional form IDs (e.g. client and accounting area). This method is
    * called after
-   * {@link #showInputForm(IWebPageExecutionContext, IHasID, AbstractHCForm, EWebPageFormAction, FormErrors)}
+   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrors)}
    * was called but before the toolbars are added.
    *
    * @param aWPEC

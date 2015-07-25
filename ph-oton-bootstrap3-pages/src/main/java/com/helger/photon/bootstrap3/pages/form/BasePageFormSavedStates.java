@@ -29,7 +29,6 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hc.base.AbstractHCForm;
 import com.helger.html.hc.base.IHCCell;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCCol;
@@ -176,7 +175,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
         return true;
       }
 
-      final AbstractHCForm <?> aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+      final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
       aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_ALL_QUERY.getDisplayText (aDisplayLocale)));
       final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
       aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE_ALL);
