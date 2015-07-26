@@ -21,6 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCScript;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
@@ -64,13 +65,10 @@ public class HCFacebookSDK extends HCNodeList
                                                                        .arg (bEnableCookies)
                                                                        .arg (bUseXFBML)));
     }
-    registerExternalResources ();
   }
 
-  /**
-   * Registers all external resources (CSS or JS files) this control needs
-   */
-  public static void registerExternalResources ()
+  @Override
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.FACEBOOK);
   }
