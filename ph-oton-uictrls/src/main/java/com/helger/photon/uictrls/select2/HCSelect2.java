@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.select2;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.IHCHasChildrenMutable;
-import com.helger.html.hc.IHCNodeWithChildren;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.request.IHCRequestField;
@@ -40,22 +40,15 @@ public class HCSelect2 extends HCExtSelect
   }
 
   @Override
-  public void onAdded (@Nonnegative final int nIndex, @Nonnull final IHCHasChildrenMutable <?, ?> aParent)
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    registerExternalResources ();
-
     // Add special JS code
-    ((IHCNodeWithChildren <?>) aParent).addChild (new HCScriptOnDocumentReady (JQuery.idRef (this).invoke ("select2")));
+    aTargetNode.addChild (new HCScriptOnDocumentReady (JQuery.idRef (this).invoke ("select2")));
   }
 
   @Override
-  public void onRemoved (@Nonnegative final int nIndex, @Nonnull final IHCHasChildrenMutable <?, ?> aParent)
-  {
-    // Remove the JS that is now on that index
-    aParent.removeChild (nIndex);
-  }
-
-  public static void registerExternalResources ()
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.SELECT2);
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_MOUSEWHEEL);

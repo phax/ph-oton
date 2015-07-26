@@ -28,10 +28,10 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.HCHelper;
-import com.helger.html.hc.IHCHasChildren;
+import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.conversion.IHCConversionSettings;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.special.AbstractHCSpecialNodes;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
@@ -98,7 +98,7 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
    *        The response HTML node. May be <code>null</code>.
    */
   protected AjaxDefaultResponse (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                 @Nullable final IHCNode aNode)
+                                 @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
   {
     // Do it first
     _addCSSAndJS (aRequestScope);
@@ -107,20 +107,17 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
     final JsonObject aObj = new JsonObject ();
     if (aNode != null)
     {
-      // Customize before extracting special content
-      if (aNode instanceof IHCNodeWithChildren <?>)
-        HCHelper.customizeNodes ((IHCNodeWithChildren <?>) aNode, HCSettings.getConversionSettings ());
+      final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettings ();
 
-      IHCNode aRealNode;
-      if (aNode instanceof IHCHasChildren)
-      {
-        // no need to keepOnDocumentReady stuff as the document is already
-        // loaded
-        final boolean bKeepOnDocumentReady = false;
-        aRealNode = HCSpecialNodeHandler.extractSpecialContent ((IHCHasChildren) aNode, this, bKeepOnDocumentReady);
-      }
-      else
-        aRealNode = aNode;
+      // Customize before extracting special content
+      HCHelper.customizeNodes (aNode, aNode, aConversionSettings);
+
+      HCHelper.finalizeAndRegisterResources (aNode, aNode, aConversionSettings);
+
+      // no need to keepOnDocumentReady stuff as the document is already
+      // loaded
+      final boolean bKeepOnDocumentReady = false;
+      final IHCNode aRealNode = HCSpecialNodeHandler.extractSpecialContent (aNode, this, bKeepOnDocumentReady);
 
       // Serialize remaining node to HTML
       aObj.add (PROPERTY_HTML, HCSettings.getAsHTMLStringWithoutNamespaces (aRealNode));
@@ -259,7 +256,7 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
 
   @Nonnull
   public static AjaxDefaultResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                   @Nullable final IHCNode aNode)
+                                                   @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
   {
     // Special case required
     return new AjaxDefaultResponse (aRequestScope, aNode);

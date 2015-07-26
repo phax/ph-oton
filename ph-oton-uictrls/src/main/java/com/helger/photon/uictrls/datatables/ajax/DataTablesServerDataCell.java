@@ -38,7 +38,6 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.base.IHCCell;
-import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.conversion.IHCConversionSettings;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
@@ -97,12 +96,13 @@ public final class DataTablesServerDataCell implements Serializable
   {
     m_aSpecialNodes.clear ();
 
+    // Customize all nodes
+    HCHelper.customizeNodes (aCellChildren, aCellChildren, m_aCS);
+    HCHelper.finalizeAndRegisterResources (aCellChildren, aCellChildren, m_aCS);
+
     // Add the content without the out-of-band nodes (but no document.ready()
     // because this is invoked per AJAX)
     m_aContent = HCSpecialNodeHandler.extractSpecialContent (aCellChildren, m_aSpecialNodes, false);
-
-    // Finally customize all nodes
-    HCHelper.customizeNodes (m_aContent, HCSettings.getConversionSettings ());
 
     // Convert to IMicroNode and to String
     final IMicroNode aNode = m_aContent.convertToMicroNode (m_aCS);

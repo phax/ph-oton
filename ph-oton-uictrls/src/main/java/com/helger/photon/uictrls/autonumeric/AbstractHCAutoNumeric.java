@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -33,9 +32,10 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCHasChildrenMutable;
-import com.helger.html.hc.IHCNodeWithChildren;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.api.EHCInputType;
 import com.helger.html.hc.base.AbstractHCInput;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
@@ -370,20 +370,18 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   }
 
   @Override
-  public void onAdded (@Nonnegative final int nIndex, @Nonnull final IHCHasChildrenMutable <?, ?> aParent)
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  {
+    // Add special JS code
+    aTargetNode.addChild (new HCAutoNumericJS (this));
+  }
+
+  @Override
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Register resources
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.AUTONUMERIC);
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTONUMERIC);
-
-    // Add special JS code
-    ((IHCNodeWithChildren <?>) aParent).addChild (new HCAutoNumericJS (this));
-  }
-
-  @Override
-  public void onRemoved (@Nonnegative final int nIndex, @Nonnull final IHCHasChildrenMutable <?, ?> aParent)
-  {
-    // Remove the JS that is now on that index
-    aParent.removeChild (nIndex);
   }
 }

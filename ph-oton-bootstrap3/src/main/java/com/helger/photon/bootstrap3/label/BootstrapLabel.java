@@ -21,6 +21,8 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
@@ -61,9 +63,9 @@ public class BootstrapLabel extends AbstractHCDiv <BootstrapLabel>
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void beforeConvertToMicroNodeOnce (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    super.beforeConvertToMicroNodeOnce (aConversionSettings);
     addClasses (CBootstrapCSS.LABEL, m_eType);
   }
 }

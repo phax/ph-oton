@@ -35,9 +35,9 @@ public class BootstrapCustomizer extends HCEmptyCustomizer
   {}
 
   @Override
-  public void customizeNode (@Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aParentElement,
-                             @Nonnull final IHCNode aNode,
-                             @Nonnull final EHTMLVersion eHTMLVersion)
+  public void customizeNode (@Nonnull final IHCNode aNode,
+                             @Nonnull final EHTMLVersion eHTMLVersion,
+                             @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aParentElement)
   {
     if (false && aNode instanceof HCImg)
     {

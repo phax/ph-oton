@@ -22,6 +22,8 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.base.AbstractHCButton;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.impl.HCTextNode;
@@ -104,10 +106,9 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void beforeConvertToMicroNodeOnce (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    super.beforeConvertToMicroNodeOnce (aConversionSettings);
-
     // apply type and size
     addClasses (getButtonType (), getButtonSize ());
 

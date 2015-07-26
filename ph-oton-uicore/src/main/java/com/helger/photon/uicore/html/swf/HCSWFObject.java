@@ -19,15 +19,15 @@ package com.helger.photon.uicore.html.swf;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.url.ISimpleURL;
 import com.helger.css.ECSSUnit;
 import com.helger.html.hc.IHCHasChildrenMutable;
-import com.helger.html.hc.IHCNodeWithChildren;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.base.AbstractHCDiv;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCScript;
 import com.helger.html.js.marshal.JSMarshaller;
 import com.helger.html.jscode.JSAssocArray;
@@ -264,53 +264,49 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
   }
 
   @Override
-  public void onAdded (@Nonnegative final int nIndex, @Nonnull final IHCHasChildrenMutable <?, ?> aParent)
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  // Add special JS code
   {
-    // Register resources
-    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.SWFOBJECT);
+    // JS init code
+    final JSAssocArray jsFlashvars = new JSAssocArray ();
+    if (m_aFlashVars != null)
+      for (final Map.Entry <String, Object> aEntry : m_aFlashVars.entrySet ())
+        jsFlashvars.add (aEntry.getKey (), JSExpr.direct (JSMarshaller.objectToJSString (aEntry.getValue ())));
 
-    // Add special JS code
-    {
-      // JS init code
-      final JSAssocArray jsFlashvars = new JSAssocArray ();
-      if (m_aFlashVars != null)
-        for (final Map.Entry <String, Object> aEntry : m_aFlashVars.entrySet ())
-          jsFlashvars.add (aEntry.getKey (), JSExpr.direct (JSMarshaller.objectToJSString (aEntry.getValue ())));
+    final JSAssocArray jsParams = new JSAssocArray ();
+    if (m_aObjectParams != null)
+      for (final Map.Entry <String, String> aEntry : m_aObjectParams.entrySet ())
+        jsParams.add (aEntry.getKey (), JSExpr.direct (JSMarshaller.objectToJSString (aEntry.getValue ())));
 
-      final JSAssocArray jsParams = new JSAssocArray ();
-      if (m_aObjectParams != null)
-        for (final Map.Entry <String, String> aEntry : m_aObjectParams.entrySet ())
-          jsParams.add (aEntry.getKey (), JSExpr.direct (JSMarshaller.objectToJSString (aEntry.getValue ())));
+    final JSAssocArray jsAttributes = new JSAssocArray ();
+    if (m_aObjectAttrs != null)
+      for (final Map.Entry <String, String> aEntry : m_aObjectAttrs.entrySet ())
+        jsAttributes.add (aEntry.getKey (), JSExpr.direct (JSMarshaller.objectToJSString (aEntry.getValue ())));
 
-      final JSAssocArray jsAttributes = new JSAssocArray ();
-      if (m_aObjectAttrs != null)
-        for (final Map.Entry <String, String> aEntry : m_aObjectAttrs.entrySet ())
-          jsAttributes.add (aEntry.getKey (), JSExpr.direct (JSMarshaller.objectToJSString (aEntry.getValue ())));
+    // Call embedder
+    final JSInvocation aInvocation = JSExpr.ref ("swfobject")
+                                           .invoke ("embedSWF")
+                                           .arg (m_aSWFURL.getAsString ())
+                                           .arg (getID ())
+                                           .arg (m_sWidth)
+                                           .arg (m_sHeight)
+                                           .arg (m_sRequiredSWFVersion);
+    // only supported by Flash Player 6.0.65; m_nWidth >= 310 && m_nHeight >=
+    // 147;
+    if (m_aExpressInstallSWFURL != null)
+      aInvocation.arg (m_aExpressInstallSWFURL.getAsString ());
+    else
+      aInvocation.argNull ();
+    aInvocation.arg (jsFlashvars).arg (jsParams).arg (jsAttributes);
 
-      // Call embedder
-      final JSInvocation aInvocation = JSExpr.ref ("swfobject")
-                                             .invoke ("embedSWF")
-                                             .arg (m_aSWFURL.getAsString ())
-                                             .arg (getID ())
-                                             .arg (m_sWidth)
-                                             .arg (m_sHeight)
-                                             .arg (m_sRequiredSWFVersion);
-      // only supported by Flash Player 6.0.65; m_nWidth >= 310 && m_nHeight >=
-      // 147;
-      if (m_aExpressInstallSWFURL != null)
-        aInvocation.arg (m_aExpressInstallSWFURL.getAsString ());
-      else
-        aInvocation.argNull ();
-      aInvocation.arg (jsFlashvars).arg (jsParams).arg (jsAttributes);
-
-      ((IHCNodeWithChildren <?>) aParent).addChild (new HCScript (aInvocation));
-    }
+    aTargetNode.addChild (new HCScript (aInvocation));
   }
 
   @Override
-  public void onRemoved (@Nonnegative final int nIndex, @Nonnull final IHCHasChildrenMutable <?, ?> aParent)
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    // Remove the JS that is now on that index
-    aParent.removeChild (nIndex);
+    // Register resources
+    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.SWFOBJECT);
   }
 }

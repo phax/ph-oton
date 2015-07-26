@@ -16,11 +16,10 @@
  */
 package com.helger.photon.uictrls.autosize;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCTextArea;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.app.html.PhotonJS;
@@ -53,13 +52,7 @@ public class HCTextAreaAutosize extends HCTextArea
   }
 
   @Override
-  public void onAdded (@Nonnegative final int nIndex, @Nonnull final IHCHasChildrenMutable <?, ?> aParent)
-  {
-    super.onAdded (nIndex, aParent);
-    registerExternalResources ();
-  }
-
-  public static void registerExternalResources ()
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE);
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE_ALL);
