@@ -26,8 +26,8 @@ import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.html.hc.base.AbstractHCPre;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
-import com.helger.html.hc.html.HCPre;
 import com.helger.html.hc.impl.HCHasCSSClasses;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
@@ -39,7 +39,7 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
  *
  * @author Philip Helger
  */
-public class HCPrismJS extends HCPre
+public class HCPrismJS extends AbstractHCPre <HCPrismJS>
 {
   public static final ICSSClassProvider CSS_CLASS_PRISMJS = DefaultCSSClassProvider.create ("prismjs");
 
@@ -49,7 +49,6 @@ public class HCPrismJS extends HCPre
   public HCPrismJS (@Nonnull final EPrismLanguage eLanguage)
   {
     m_eLanguage = ValueEnforcer.notNull (eLanguage, "Language");
-    registerExternalResources ();
   }
 
   @Nonnull
@@ -83,7 +82,8 @@ public class HCPrismJS extends HCPre
     super.fillMicroElement (eCode, aConversionSettings);
   }
 
-  public static void registerExternalResources ()
+  @Override
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.PRISMJS);
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.PRISMJS_BOOTSTRAP);
