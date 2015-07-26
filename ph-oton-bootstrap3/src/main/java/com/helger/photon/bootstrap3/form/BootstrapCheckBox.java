@@ -62,12 +62,12 @@ public class BootstrapCheckBox extends HCCheckBox
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void applyProperties (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     // Before calling super
     if (isDisabled ())
       addClass (CBootstrapCSS.DISABLED);
 
-    super.applyProperties (aElement, aConversionSettings);
+    super.fillMicroElement (aElement, aConversionSettings);
   }
 }

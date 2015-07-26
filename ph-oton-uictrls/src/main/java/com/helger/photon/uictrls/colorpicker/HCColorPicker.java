@@ -67,10 +67,10 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void applyProperties (@Nonnull final IMicroElement aElement,
+  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    super.applyProperties (aElement, aConversionSettings);
+    super.fillMicroElement (aElement, aConversionSettings);
     registerExternalResources ();
 
     final JSAssocArray aJSOptions = m_aOptions.getJSOptions ();

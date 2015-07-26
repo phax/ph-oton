@@ -104,9 +104,9 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void internalBeforeConvertToNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void beforeConvertToMicroNodeOnce (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    super.internalBeforeConvertToNode (aConversionSettings);
+    super.beforeConvertToMicroNodeOnce (aConversionSettings);
 
     // apply type and size
     addClasses (getButtonType (), getButtonSize ());

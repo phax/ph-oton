@@ -67,8 +67,8 @@ public class HCPrismJS extends HCPre
   }
 
   @Override
-  protected void applyProperties (@Nonnull final IMicroElement aElement,
-                                  @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
+                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Plugins must go on pre
     final HCHasCSSClasses p = new HCHasCSSClasses ();
@@ -79,8 +79,8 @@ public class HCPrismJS extends HCPre
 
     // Create nested code tag
     final IMicroElement eCode = aElement.appendElement (aElement.getNamespaceURI (),
-                                                        EHTMLElement.CODE.getElementNameLowerCase ());
-    super.applyProperties (eCode, aConversionSettings);
+                                                        EHTMLElement.CODE.getElementName ());
+    super.fillMicroElement (eCode, aConversionSettings);
   }
 
   public static void registerExternalResources ()

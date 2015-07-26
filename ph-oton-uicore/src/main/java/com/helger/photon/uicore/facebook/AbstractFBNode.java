@@ -90,7 +90,7 @@ public abstract class AbstractFBNode extends AbstractHCNode
 
   @Override
   @Nonnull
-  protected IMicroNode internalConvertToNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected IMicroNode internalConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Create the element itself
     final IMicroElement ret = createElement (aConversionSettings);

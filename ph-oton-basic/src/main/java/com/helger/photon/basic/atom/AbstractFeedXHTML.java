@@ -63,7 +63,7 @@ public abstract class AbstractFeedXHTML extends AbstractFeedElement
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
     aElement.setAttribute ("type", getType ());
     {
-      final IMicroNode aDivNode = m_aDiv.convertToNode (HCCONV_SETTINGS);
+      final IMicroNode aDivNode = m_aDiv.convertToMicroNode (HCCONV_SETTINGS);
       ((IMicroElement) aDivNode).setNamespaceURI (CHTMLDocTypes.DOCTYPE_XHTML_URI);
       aElement.appendChild (aDivNode);
     }

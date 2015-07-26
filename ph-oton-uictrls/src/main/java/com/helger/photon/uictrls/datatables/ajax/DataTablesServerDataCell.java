@@ -105,7 +105,7 @@ public final class DataTablesServerDataCell implements Serializable
     HCHelper.customizeNodes (m_aContent, HCSettings.getConversionSettings ());
 
     // Convert to IMicroNode and to String
-    final IMicroNode aNode = m_aContent.convertToNode (m_aCS);
+    final IMicroNode aNode = m_aContent.convertToMicroNode (m_aCS);
     if (aNode == null)
     {
       m_sHTML = "";

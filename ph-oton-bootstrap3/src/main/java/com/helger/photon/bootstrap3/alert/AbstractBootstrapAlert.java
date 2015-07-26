@@ -85,9 +85,9 @@ public abstract class AbstractBootstrapAlert <THISTYPE extends AbstractBootstrap
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void internalBeforeConvertToNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void beforeConvertToMicroNodeOnce (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    super.internalBeforeConvertToNode (aConversionSettings);
+    super.beforeConvertToMicroNodeOnce (aConversionSettings);
     addClasses (CBootstrapCSS.ALERT, m_eType);
     if (m_bShowClose)
     {
