@@ -24,7 +24,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
-import com.helger.html.hc.html.HCScriptInline;
+import com.helger.html.annotation.OutOfBandNode;
+import com.helger.html.hc.base.AbstractHCScriptInline;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSExpr;
@@ -39,7 +40,8 @@ import com.helger.html.jscode.html.JSHtml;
  *
  * @author Philip Helger
  */
-public class HCGoogleAnalytics extends HCScriptInline
+@OutOfBandNode
+public class HCGoogleAnalytics extends AbstractHCScriptInline <HCGoogleAnalytics>
 {
   private final String m_sAccount;
 
@@ -58,9 +60,10 @@ public class HCGoogleAnalytics extends HCScriptInline
       // Source:
       // http://support.google.com/analytics/bin/answer.py?hl=en&answer=2558867
       // Must be before the _trackPageview!
-      aPkg.add (gaq.invoke ("push").arg (new JSArray ().add ("_require")
-                                                       .add ("inpage_linkid")
-                                                       .add ("//www.google-analytics.com/plugins/ga/inpage_linkid.js")));
+      aPkg.add (gaq.invoke ("push")
+                   .arg (new JSArray ().add ("_require")
+                                       .add ("inpage_linkid")
+                                       .add ("//www.google-analytics.com/plugins/ga/inpage_linkid.js")));
     }
     if (bAnonymizeIP)
     {
@@ -75,11 +78,12 @@ public class HCGoogleAnalytics extends HCScriptInline
     final JSVar ga = aAnonFunction.body ().var ("ga", JSHtml.documentCreateElement (EHTMLElement.SCRIPT));
     aAnonFunction.body ().add (ga.ref ("type").assign (CMimeType.TEXT_JAVASCRIPT.getAsString ()));
     aAnonFunction.body ().add (ga.ref ("async").assign (true));
-    aAnonFunction.body ().add (ga.ref ("src").assign (JSOp.cond (JSExpr.lit ("https:")
-                                                                       .eq (JSHtml.windowLocationProtocol ()),
-                                                                 JSExpr.lit ("https://ssl"),
-                                                                 JSExpr.lit ("http://www"))
-                                                          .plus (".google-analytics.com/ga.js")));
+    aAnonFunction.body ()
+                 .add (ga.ref ("src")
+                         .assign (JSOp.cond (JSExpr.lit ("https:").eq (JSHtml.windowLocationProtocol ()),
+                                             JSExpr.lit ("https://ssl"),
+                                             JSExpr.lit ("http://www"))
+                                      .plus (".google-analytics.com/ga.js")));
     final JSVar s = aAnonFunction.body ().var ("s",
                                                JSHtml.documentGetElementsByTagName (EHTMLElement.SCRIPT).component0 ());
     aAnonFunction.body ().add (s.ref ("parentNode").invoke ("insertBefore").arg (ga).arg (s));

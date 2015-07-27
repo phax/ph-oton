@@ -19,7 +19,8 @@ package com.helger.photon.uicore.js;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.html.hc.html.HCScriptInline;
+import com.helger.html.annotation.OutOfBandNode;
+import com.helger.html.hc.base.AbstractHCScriptInline;
 import com.helger.html.js.provider.UnparsedJSCodeProvider;
 
 /**
@@ -27,7 +28,8 @@ import com.helger.html.js.provider.UnparsedJSCodeProvider;
  *
  * @author Philip Helger
  */
-public class JSLocalStorageDeterminator extends HCScriptInline
+@OutOfBandNode
+public class JSLocalStorageDeterminator extends AbstractHCScriptInline <JSLocalStorageDeterminator>
 {
   public static final String VARNAME = "g_aLocalStorage";
 
