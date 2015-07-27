@@ -27,18 +27,18 @@ import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.base.AbstractHCNav;
 import com.helger.html.hc.base.IHCDiv;
 import com.helger.html.hc.base.IHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCButton;
 import com.helger.html.hc.html.HCDiv;
-import com.helger.html.hc.html.HCNav;
 import com.helger.html.hc.html.HCP;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.EBootstrapText;
-import com.helger.photon.bootstrap3.base.BootstrapContainerFluid;
+import com.helger.photon.bootstrap3.base.BootstrapContainer;
 import com.helger.photon.bootstrap3.nav.BootstrapNav;
 
 /**
@@ -46,7 +46,7 @@ import com.helger.photon.bootstrap3.nav.BootstrapNav;
  *
  * @author Philip Helger
  */
-public class BootstrapNavbar extends HCNav
+public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
 {
   private final IHCDiv <?> m_aContainer;
   private final BootstrapNavbarHeader m_aHeader;
@@ -59,7 +59,7 @@ public class BootstrapNavbar extends HCNav
     addClasses (CBootstrapCSS.NAVBAR, CBootstrapCSS.NAVBAR_DEFAULT, eType);
     setRole (EHTMLRole.NAVIGATION);
 
-    m_aContainer = addAndReturnChild (new BootstrapContainerFluid ());
+    m_aContainer = addAndReturnChild (new BootstrapContainer ());
     m_aHeader = m_aContainer.addAndReturnChild (new BootstrapNavbarHeader ());
 
     // Create the main container

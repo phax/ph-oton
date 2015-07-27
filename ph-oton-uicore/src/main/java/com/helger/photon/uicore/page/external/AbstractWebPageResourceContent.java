@@ -25,9 +25,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.debug.GlobalDebug;
@@ -57,8 +54,6 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
 {
   public static final Charset DEFAULT_CHARSET = CCharset.CHARSET_UTF_8_OBJ;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageResourceContent.class);
-
   protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
 
   @GuardedBy ("m_aRWLock")
@@ -67,14 +62,10 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
   @Nonnull
   public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource)
   {
-    // XXX hack - explicitly use XHTML 1.1 for reading, to avoid problems with
-    // entity resolving, because HTML5 has no public ID and therefore the entity
-    // resolver is not called!
-    EHTMLVersion eHTMLVersion = HCSettings.getConversionSettings ().getHTMLVersion ();
-    if (eHTMLVersion.isAtLeastHTML5 ())
-      eHTMLVersion = EHTMLVersion.XHTML11;
-
-    return readHTMLPageFragment (aResource, DEFAULT_CHARSET, eHTMLVersion, (SAXReaderSettings) null);
+    return readHTMLPageFragment (aResource,
+                                 DEFAULT_CHARSET,
+                                 HCSettings.getConversionSettings ().getHTMLVersion (),
+                                 (SAXReaderSettings) null);
   }
 
   @Nonnull
@@ -83,22 +74,24 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
                                                       @Nonnull final EHTMLVersion eHTMLVersion,
                                                       @Nullable final SAXReaderSettings aAdditionalSaxReaderSettings)
   {
-    if (eHTMLVersion.isAtLeastHTML5 ())
-      s_aLogger.warn ("Reading an HTML page fragment with HTML5 may fail because of missing HTML entities!");
-
     // Read content once
     final String sContent = StreamHelper.getAllBytesAsString (aResource, aCharset);
     if (sContent == null)
       throw new IllegalStateException ("Failed to read resource " + aResource.toString ());
 
     // Parse content
-    final XHTMLParser aXHTMLParser = new XHTMLParser (eHTMLVersion);
+
+    // XXX hack - explicitly use XHTML 1.1 for reading, to avoid problems with
+    // entity resolving, because HTML5 has no public ID and therefore the entity
+    // resolver is not called!
+    final EHTMLVersion eParseHTMLVersion = eHTMLVersion.isAtLeastHTML5 () ? EHTMLVersion.XHTML11 : eHTMLVersion;
+    final XHTMLParser aXHTMLParser = new XHTMLParser (eParseHTMLVersion);
     aXHTMLParser.setAdditionalSAXReaderSettings (aAdditionalSaxReaderSettings);
     final IMicroContainer ret = aXHTMLParser.unescapeXHTMLFragment (sContent);
     if (ret == null)
       throw new IllegalStateException ("Failed to parse HTML code of resource " + aResource.toString ());
 
-    // Do standard cleansing
+    // Do standard cleansing with the provided HTML version!
     MicroVisitor.visit (ret, new PageViewExternalHTMLCleanser (eHTMLVersion));
 
     return ret;

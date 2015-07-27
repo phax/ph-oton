@@ -30,6 +30,7 @@ import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.conversion.HCConversionSettings;
 import com.helger.html.hc.html.HCDiv;
+import com.helger.html.hc.render.HCRenderer;
 
 public abstract class AbstractFeedXHTML extends AbstractFeedElement
 {
@@ -63,7 +64,7 @@ public abstract class AbstractFeedXHTML extends AbstractFeedElement
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
     aElement.setAttribute ("type", getType ());
     {
-      final IMicroNode aDivNode = m_aDiv.convertToMicroNode (HCCONV_SETTINGS);
+      final IMicroNode aDivNode = HCRenderer.getAsNode (m_aDiv, HCCONV_SETTINGS);
       ((IMicroElement) aDivNode).setNamespaceURI (CHTMLDocTypes.DOCTYPE_XHTML_URI);
       aElement.appendChild (aDivNode);
     }
