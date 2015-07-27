@@ -22,7 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
@@ -74,7 +74,7 @@ public final class JSFormHelper
   public static JSInvocation updateElementDirect (@Nonnull @Nonempty final String sFieldID,
                                                   @Nonnull final IHCNode aHCNode)
   {
-    return updateElementDirect (sFieldID, HCSettings.getAsHTMLStringWithoutNamespaces (aHCNode));
+    return updateElementDirect (sFieldID, HCRenderer.getAsHTMLStringWithoutNamespaces (aHCNode));
   }
 
   @Nonnull
@@ -111,7 +111,7 @@ public final class JSFormHelper
   @Nonnull
   public static JSAssocArray createUpdateParam (@Nonnull @Nonempty final String sFieldID, @Nonnull final IHCNode aHCNode)
   {
-    return new JSAssocArray ().add ("id", sFieldID).add ("html", HCSettings.getAsHTMLStringWithoutNamespaces (aHCNode));
+    return new JSAssocArray ().add ("id", sFieldID).add ("html", HCRenderer.getAsHTMLStringWithoutNamespaces (aHCNode));
   }
 
   @Nonnull

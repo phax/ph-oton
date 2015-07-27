@@ -21,9 +21,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Rule;
 import org.junit.Test;
 
-import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.HCScript;
 import com.helger.html.hc.html.HCScript.EMode;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.mock.HCTestRuleOptimized;
 
 /**
@@ -55,7 +55,7 @@ public final class HCGoogleAnalyticsTest
                       + "s.parentNode.insertBefore(ga,s);"
                       + "})();"
                       + "</script>",
-                  HCSettings.getAsHTMLString (aGA));
+                  HCRenderer.getAsHTMLString (aGA));
     HCScript.setDefaultMode (HCScript.DEFAULT_MODE);
   }
 }

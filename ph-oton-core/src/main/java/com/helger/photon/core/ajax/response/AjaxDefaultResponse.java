@@ -33,6 +33,7 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.conversion.IHCConversionSettings;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.AbstractHCSpecialNodes;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
 import com.helger.html.resource.css.ICSSPathProvider;
@@ -120,7 +121,7 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
       final IHCNode aRealNode = HCSpecialNodeHandler.extractSpecialContent (aNode, this, bKeepOnDocumentReady);
 
       // Serialize remaining node to HTML
-      aObj.add (PROPERTY_HTML, HCSettings.getAsHTMLStringWithoutNamespaces (aRealNode));
+      aObj.add (PROPERTY_HTML, HCRenderer.getAsHTMLStringWithoutNamespaces (aRealNode));
     }
     m_bSuccess = true;
     m_sErrorMessage = null;

@@ -34,7 +34,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
@@ -244,7 +244,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setHeader (@Nullable final IHCNode aHeader)
   {
-    return setHeader (aHeader != null ? HCSettings.getAsHTMLStringWithoutNamespaces (aHeader) : (String) null);
+    return setHeader (aHeader != null ? HCRenderer.getAsHTMLStringWithoutNamespaces (aHeader) : (String) null);
   }
 
   /**
@@ -297,7 +297,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setFooter (@Nullable final IHCNode aFooter)
   {
-    return setFooter (aFooter != null ? HCSettings.getAsHTMLStringWithoutNamespaces (aFooter) : (String) null);
+    return setFooter (aFooter != null ? HCRenderer.getAsHTMLStringWithoutNamespaces (aFooter) : (String) null);
   }
 
   /**

@@ -23,7 +23,7 @@ import org.junit.Test;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.render.HCRenderer;
 
 /**
  * Test class for class {@link HCSWFObject}.
@@ -41,7 +41,7 @@ public final class HCSWFObjectTest
     x.setWidth (500).setHeight (300);
     x.setRequiredSWFVersion ("9.0.0");
     x.addFlashVar ("flash1", "Wert");
-    final IMicroNode aNode = HCSettings.getAsNode (x);
+    final IMicroNode aNode = HCRenderer.getAsNode (x);
     assertNotNull (aNode);
     if (false)
       System.out.println (MicroWriter.getXMLString (aNode));

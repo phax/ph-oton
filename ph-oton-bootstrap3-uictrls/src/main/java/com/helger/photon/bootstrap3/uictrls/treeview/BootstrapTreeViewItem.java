@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
@@ -32,7 +32,7 @@ public class BootstrapTreeViewItem
 
   public BootstrapTreeViewItem (@Nonnull final IHCNode aText)
   {
-    this (HCSettings.getAsHTMLStringWithoutNamespaces (aText));
+    this (HCRenderer.getAsHTMLStringWithoutNamespaces (aText));
   }
 
   public BootstrapTreeViewItem (@Nonnull final String sText)

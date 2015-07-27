@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.JsonObject;
 import com.helger.photon.basic.security.login.ELoginResult;
 import com.helger.photon.basic.security.login.LoggedInUserManager;
@@ -77,6 +77,6 @@ public final class AjaxExecutorPublicLogin extends AbstractAjaxExecutor
     // Set as result property
     return AjaxDefaultResponse.createSuccess (aRequestScope,
                                               new JsonObject ().add (JSON_LOGGEDIN, false)
-                                                               .add (JSON_HTML, HCSettings.getAsHTMLString (aRoot)));
+                                                               .add (JSON_HTML, HCRenderer.getAsHTMLString (aRoot)));
   }
 }

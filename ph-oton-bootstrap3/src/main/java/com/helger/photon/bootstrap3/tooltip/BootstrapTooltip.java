@@ -32,10 +32,10 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
-import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.jquery.IJQuerySelector;
 import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -211,7 +211,7 @@ public class BootstrapTooltip implements IHCNodeBuilder
   public BootstrapTooltip setTitle (@Nullable final IHCNode aTitle)
   {
     setHTML (true);
-    m_sTitle = aTitle == null ? null : HCSettings.getAsHTMLStringWithoutNamespaces (aTitle);
+    m_sTitle = aTitle == null ? null : HCRenderer.getAsHTMLStringWithoutNamespaces (aTitle);
     m_aTitleFunc = null;
     return this;
   }

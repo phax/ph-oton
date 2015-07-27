@@ -25,9 +25,9 @@ import org.junit.Test;
 
 import com.helger.commons.system.ENewLineMode;
 import com.helger.html.EHTMLVersion;
-import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.conversion.HCConversionSettings;
 import com.helger.html.hc.html.HCDiv;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.mock.PhotonCoreTestRule;
 
@@ -47,14 +47,14 @@ public final class HCAutoNumericTest
                   sID +
                   "\" class=\"auto-numeric-edit\" name=\"dummy\" type=\"text\" value=\"\" />" +
                   CRLF,
-                  HCSettings.getAsHTMLString (a, new HCConversionSettings (EHTMLVersion.HTML5)));
+                  HCRenderer.getAsHTMLString (a, new HCConversionSettings (EHTMLVersion.HTML5)));
 
     a.setThousandSeparator ("");
     assertEquals ("<input id=\"" +
                   sID +
                   "\" class=\"auto-numeric-edit\" name=\"dummy\" type=\"text\" value=\"\" />" +
                   CRLF,
-                  HCSettings.getAsHTMLString (a, new HCConversionSettings (EHTMLVersion.HTML5)));
+                  HCRenderer.getAsHTMLString (a, new HCConversionSettings (EHTMLVersion.HTML5)));
   }
 
   @Test

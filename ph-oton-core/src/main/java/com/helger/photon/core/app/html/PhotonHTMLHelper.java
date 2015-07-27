@@ -29,6 +29,7 @@ import com.helger.html.hc.html.HCHtml;
 import com.helger.html.hc.html.HCLink;
 import com.helger.html.hc.html.HCScriptFile;
 import com.helger.html.hc.impl.HCConditionalCommentNode;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -97,7 +98,7 @@ public final class PhotonHTMLHelper
     final HCHtml aHtml = aHTMLProvider.createHTML (aRequestScope);
 
     // Convert HTML to String, including namespaces
-    final String sXMLCode = HCSettings.getAsHTMLString (aHtml);
+    final String sXMLCode = HCRenderer.getAsHTMLString (aHtml);
 
     // Write to response
     final IMimeType aMimeType = getMimeType (aRequestScope);
