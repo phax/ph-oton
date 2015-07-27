@@ -16,7 +16,6 @@
  */
 package com.helger.photon.bootstrap3.uictrls.datetimepicker;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -42,11 +41,12 @@ import com.helger.datetime.format.PDTFormatPatterns;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCElement;
+import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeBuilder;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCEdit;
 import com.helger.html.hc.html.HCSpan;
-import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hc.impl.AbstractHCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryInvocation;
@@ -72,7 +72,7 @@ import com.helger.photon.core.form.RequestFieldDate;
  *
  * @author Philip Helger
  */
-public class BootstrapDateTimePicker implements IHCNodeBuilder, Serializable
+public class BootstrapDateTimePicker extends AbstractHCNodeList <BootstrapDateTimePicker>
 {
   public static final ICSSClassProvider CSS_CLASS_DATE = DefaultCSSClassProvider.create ("date");
 
@@ -548,7 +548,7 @@ public class BootstrapDateTimePicker implements IHCNodeBuilder, Serializable
     else
     {
       final String sDefaultFormat = BootstrapDateTimePickerFormatBuilder.fromJavaPattern (isShowTime () ? PDTFormatPatterns.getDefaultPatternDateTime (m_aDisplayLocale)
-                                                                                                       : PDTFormatPatterns.getDefaultPatternDate (m_aDisplayLocale))
+                                                                                                        : PDTFormatPatterns.getDefaultPatternDate (m_aDisplayLocale))
                                                                         .getJSFormatString ();
       aOptions.add ("format", sDefaultFormat);
     }
@@ -598,11 +598,10 @@ public class BootstrapDateTimePicker implements IHCNodeBuilder, Serializable
     return aOptions;
   }
 
-  @Nonnull
-  public HCNodeList build ()
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    registerExternalResources (m_eLanguage);
-
     // Create control
     final BootstrapInputGroup aBIG = new BootstrapInputGroup (m_aEdit);
     for (final IHCNode aPrefix : m_aPrefixes)
@@ -623,16 +622,19 @@ public class BootstrapDateTimePicker implements IHCNodeBuilder, Serializable
       aCtrl.setID (m_sContainerID).addClass (CSS_CLASS_DATE);
 
     // Assemble
-    return new HCNodeList ().addChild (aCtrl).addChild (new BootstrapDateTimePickerJS (this));
+    addChild (aCtrl);
+    addChild (new BootstrapDateTimePickerJS (this));
   }
 
-  public static void registerExternalResources (@Nullable final EDateTimePickerLanguage eLanguage)
+  @Override
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForceRegistration)
   {
     PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER);
-    if (eLanguage != null)
+    if (m_eLanguage != null)
     {
       // Locales must be after the main datetime picker
-      PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER_LOCALE.getInstance (eLanguage.getLanguageID ()));
+      PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER_LOCALE.getInstance (m_eLanguage.getLanguageID ()));
     }
     PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.DATETIMEPICKER);
   }

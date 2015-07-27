@@ -861,7 +861,7 @@ public class DataTables implements IHCNodeBuilder
   }
 
   @Nullable
-  public final IHCNode build ()
+  public final HCScript build ()
   {
     registerExternalResources ();
     if (m_bUseColVis)
@@ -1112,7 +1112,7 @@ public class DataTables implements IHCNodeBuilder
    * @return The non-<code>null</code> HCNode
    */
   @Nonnull
-  public IHCNode getWrapped (@Nonnull final IHasJSCode aJSCode)
+  public HCScript getWrapped (@Nonnull final IHasJSCode aJSCode)
   {
     return m_bGenerateOnDocumentReady ? new HCScriptOnDocumentReady (aJSCode) : new HCScript (aJSCode);
   }
