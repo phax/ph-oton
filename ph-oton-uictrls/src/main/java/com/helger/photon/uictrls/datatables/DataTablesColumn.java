@@ -29,7 +29,7 @@ import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCHasCSSClasses;
-import com.helger.html.hc.impl.HCHasCSSClasses;
+import com.helger.html.hcext.HCHasCSSClasses;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;

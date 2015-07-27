@@ -27,8 +27,8 @@ import com.helger.commons.string.StringHelper;
 import com.helger.css.property.CCSSProperties;
 import com.helger.css.property.ECSSProperty;
 import com.helger.html.hc.IHCElement;
-import com.helger.html.hc.impl.HCHasCSSClasses;
-import com.helger.html.hc.impl.HCHasCSSStyles;
+import com.helger.html.hcext.HCHasCSSClasses;
+import com.helger.html.hcext.HCHasCSSStyles;
 
 /**
  * Base class for common bootstrap objects.

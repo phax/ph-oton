@@ -68,7 +68,8 @@ public class HCFacebookSDK extends HCNodeList
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForcedRegistration)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.FACEBOOK);
   }

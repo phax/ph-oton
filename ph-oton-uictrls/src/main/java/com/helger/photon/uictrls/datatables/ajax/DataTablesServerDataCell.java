@@ -36,10 +36,10 @@ import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.base.IHCCell;
 import com.helger.html.hc.conversion.IHCConversionSettings;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.html.hc.special.IHCSpecialNodes;
@@ -54,7 +54,7 @@ public final class DataTablesServerDataCell implements Serializable
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesServerDataCell.class);
 
-  private IHCConversionSettings m_aCS;
+  private IHCConversionSettings m_aConversionSettings;
   private HCNodeList m_aContent;
   private HCSpecialNodes m_aSpecialNodes = new HCSpecialNodes ();
   private String m_sHTML;
@@ -67,7 +67,7 @@ public final class DataTablesServerDataCell implements Serializable
     if (aCell.hasAnyClass ())
       s_aLogger.warn ("Cell has classes assigned which will be lost: " + aCell.getAllClasses ());
 
-    m_aCS = aCS;
+    m_aConversionSettings = aCS;
     final HCNodeList aCellContent = aCell.getAllChildrenAsNodeList ();
 
     // Remember cell content
@@ -85,7 +85,7 @@ public final class DataTablesServerDataCell implements Serializable
   private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
   {
     // Always the same CS
-    m_aCS = DataTablesServerData.createConversionSettings ();
+    m_aConversionSettings = DataTablesServerData.createConversionSettings ();
     m_aContent = (HCNodeList) in.readObject ();
     m_aSpecialNodes = (HCSpecialNodes) in.readObject ();
     m_sHTML = in.readUTF ();
@@ -96,40 +96,45 @@ public final class DataTablesServerDataCell implements Serializable
   {
     m_aSpecialNodes.clear ();
 
-    // Customize all nodes
-    HCHelper.customizeNodes (aCellChildren, aCellChildren, m_aCS);
-    HCHelper.finalizeAndRegisterResources (aCellChildren, aCellChildren, m_aCS);
+    // customize, finalize and extract resources
+    HCRenderer.prepareForConversion (aCellChildren, aCellChildren, m_aConversionSettings);
 
-    // Add the content without the out-of-band nodes (but no document.ready()
-    // because this is invoked per AJAX)
-    m_aContent = HCSpecialNodeHandler.extractSpecialContent (aCellChildren, m_aSpecialNodes, false);
+    if (m_aConversionSettings.isExtractOutOfBandNodes ())
+    {
+      // Add the content without the out-of-band nodes (but no document.ready()
+      // because this is invoked per AJAX)
+      final boolean bKeepOnDocumentReady = false;
+      HCSpecialNodeHandler.extractSpecialContent (aCellChildren, m_aSpecialNodes, bKeepOnDocumentReady);
+    }
 
-    // Convert to IMicroNode and to String
-    final IMicroNode aNode = m_aContent.convertToMicroNode (m_aCS);
-    if (aNode == null)
+    m_aContent = aCellChildren;
+
+    // Convert to HC node to Micro node
+    final IMicroNode aMicroNode = m_aContent.convertToMicroNode (m_aConversionSettings);
+    if (aMicroNode == null)
     {
       m_sHTML = "";
       m_sTextContent = null;
     }
     else
     {
-      m_sHTML = MicroWriter.getNodeAsString (aNode, m_aCS.getXMLWriterSettings ());
+      m_sHTML = MicroWriter.getNodeAsString (aMicroNode, m_aConversionSettings.getXMLWriterSettings ());
 
-      if (aNode instanceof IMicroNodeWithChildren)
-        m_sTextContent = ((IMicroNodeWithChildren) aNode).getTextContent ();
+      if (aMicroNode instanceof IMicroNodeWithChildren)
+        m_sTextContent = ((IMicroNodeWithChildren) aMicroNode).getTextContent ();
       else
-        if (aNode.isText ())
+        if (aMicroNode.isText ())
         {
           // ignore whitespace-only content
-          if (!((IMicroText) aNode).isElementContentWhitespace ())
-            m_sTextContent = aNode.getNodeValue ();
+          if (!((IMicroText) aMicroNode).isElementContentWhitespace ())
+            m_sTextContent = aMicroNode.getNodeValue ();
           else
             m_sTextContent = null;
         }
         else
-          if (aNode.isCDATA ())
+          if (aMicroNode.isCDATA ())
           {
-            m_sTextContent = aNode.getNodeValue ();
+            m_sTextContent = aMicroNode.getNodeValue ();
           }
           else
             m_sTextContent = null;

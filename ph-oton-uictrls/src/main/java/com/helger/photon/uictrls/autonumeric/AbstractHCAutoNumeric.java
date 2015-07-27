@@ -378,7 +378,8 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForcedRegistration)
   {
     // Register resources
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.AUTONUMERIC);

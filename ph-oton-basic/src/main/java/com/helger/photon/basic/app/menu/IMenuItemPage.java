@@ -19,7 +19,7 @@ package com.helger.photon.basic.app.menu;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hc.html.HC_Target;
+import com.helger.html.hc.api.HC_Target;
 import com.helger.photon.basic.app.page.IPage;
 
 /**

@@ -304,7 +304,8 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForcedRegistration)
   {
     // Register resources
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.SWFOBJECT);

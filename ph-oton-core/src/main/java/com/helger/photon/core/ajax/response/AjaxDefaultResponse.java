@@ -27,15 +27,15 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.conversion.IHCConversionSettings;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
-import com.helger.html.hc.special.AbstractHCSpecialNodes;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
+import com.helger.html.hc.special.HCSpecialNodes;
+import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.json.IJson;
@@ -47,7 +47,7 @@ import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 @Immutable
-public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResponse>implements IAjaxResponse
+public class AjaxDefaultResponse implements IAjaxResponse
 {
   /** Success property */
   public static final String PROPERTY_SUCCESS = "success";
@@ -76,6 +76,7 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
   private final boolean m_bSuccess;
   private final String m_sErrorMessage;
   private final IJson m_aSuccessValue;
+  private final HCSpecialNodes m_aSpecialNodes = new HCSpecialNodes ();
 
   private void _addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
@@ -86,10 +87,10 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
     final boolean bRegular = GlobalDebug.isDebugMode ();
 
     for (final ICSSPathProvider aCSS : PhotonCSS.getAllRegisteredCSSIncludesForThisRequest ())
-      addExternalCSS (PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular).getAsString ());
+      m_aSpecialNodes.addExternalCSS (PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular).getAsString ());
 
     for (final IJSPathProvider aJS : PhotonJS.getAllRegisteredJSIncludesForThisRequest ())
-      addExternalJS (PhotonHTMLSettings.getJSPath (aRequestScope, aJS, bRegular).getAsString ());
+      m_aSpecialNodes.addExternalJS (PhotonHTMLSettings.getJSPath (aRequestScope, aJS, bRegular).getAsString ());
   }
 
   /**
@@ -110,18 +111,19 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
     {
       final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettings ();
 
-      // Customize before extracting special content
-      HCHelper.customizeNodes (aNode, aNode, aConversionSettings);
+      // customize, finalize and extract resources
+      HCRenderer.prepareForConversion (aNode, aNode, aConversionSettings);
 
-      HCHelper.finalizeAndRegisterResources (aNode, aNode, aConversionSettings);
-
-      // no need to keepOnDocumentReady stuff as the document is already
-      // loaded
-      final boolean bKeepOnDocumentReady = false;
-      final IHCNode aRealNode = HCSpecialNodeHandler.extractSpecialContent (aNode, this, bKeepOnDocumentReady);
+      if (aConversionSettings.isExtractOutOfBandNodes ())
+      {
+        // no need to keepOnDocumentReady stuff as the document is already
+        // loaded
+        final boolean bKeepOnDocumentReady = false;
+        HCSpecialNodeHandler.extractSpecialContent (aNode, m_aSpecialNodes, bKeepOnDocumentReady);
+      }
 
       // Serialize remaining node to HTML
-      aObj.add (PROPERTY_HTML, HCRenderer.getAsHTMLStringWithoutNamespaces (aRealNode));
+      aObj.add (PROPERTY_HTML, HCRenderer.getAsHTMLStringWithoutNamespaces (aNode));
     }
     m_bSuccess = true;
     m_sErrorMessage = null;
@@ -171,6 +173,19 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
   }
 
   @Nonnull
+  public IHCSpecialNodes getSpecialNodes ()
+  {
+    return m_aSpecialNodes;
+  }
+
+  @Nonnull
+  public AjaxDefaultResponse addSpecialNodes (@Nonnull final IHCSpecialNodes aSpecialNodes)
+  {
+    m_aSpecialNodes.addAll (aSpecialNodes);
+    return this;
+  }
+
+  @Nonnull
   public IMimeType getMimeType ()
   {
     return CMimeType.APPLICATION_JSON;
@@ -185,14 +200,15 @@ public class AjaxDefaultResponse extends AbstractHCSpecialNodes <AjaxDefaultResp
     {
       if (m_aSuccessValue != null)
         aAssocArray.add (PROPERTY_VALUE, m_aSuccessValue);
-      if (hasExternalCSSs ())
-        aAssocArray.add (PROPERTY_EXTERNAL_CSS, getAllExternalCSSs ());
-      if (hasInlineCSS ())
-        aAssocArray.add (PROPERTY_INLINE_CSS, getInlineCSS ());
-      if (hasExternalJSs ())
-        aAssocArray.add (PROPERTY_EXTERNAL_JS, getAllExternalJSs ());
-      if (hasInlineJS ())
-        aAssocArray.add (PROPERTY_INLINE_JS, getInlineJS ().getJSCode ());
+      // Apply special nodes
+      if (m_aSpecialNodes.hasExternalCSSs ())
+        aAssocArray.add (PROPERTY_EXTERNAL_CSS, m_aSpecialNodes.getAllExternalCSSs ());
+      if (m_aSpecialNodes.hasInlineCSS ())
+        aAssocArray.add (PROPERTY_INLINE_CSS, m_aSpecialNodes.getInlineCSS ());
+      if (m_aSpecialNodes.hasExternalJSs ())
+        aAssocArray.add (PROPERTY_EXTERNAL_JS, m_aSpecialNodes.getAllExternalJSs ());
+      if (m_aSpecialNodes.hasInlineJS ())
+        aAssocArray.add (PROPERTY_INLINE_JS, m_aSpecialNodes.getInlineJS ().getJSCode ());
     }
     else
     {

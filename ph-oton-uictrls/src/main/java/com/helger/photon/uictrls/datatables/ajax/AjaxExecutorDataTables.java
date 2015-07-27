@@ -307,8 +307,8 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
       final int nCSortCol = Math.max (aRequestScope.getAttributeAsInt (SORT_COL_PREFIX + i), 0);
       final String sCSortDir = aRequestScope.getAttributeAsString (SORT_DIR_PREFIX + i);
       final ESortOrder eCSortDir = CDataTables.SORT_ASC.equals (sCSortDir) ? ESortOrder.ASCENDING
-                                                                          : CDataTables.SORT_DESC.equals (sCSortDir) ? ESortOrder.DESCENDING
-                                                                                                                    : null;
+                                                                           : CDataTables.SORT_DESC.equals (sCSortDir) ? ESortOrder.DESCENDING
+                                                                                                                      : null;
       aSortColumns[i] = new RequestDataSortColumn (nCSortCol, eCSortDir);
     }
     final RequestData aRequestData = new RequestData (nDisplayStart,
@@ -321,9 +321,9 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
 
     // Resolve dataTables
     final String sDataTablesID = aRequestScope.getAttributeAsString (OBJECT_ID);
-    final DataTablesServerData aServerData = UIStateRegistry.getCurrent ()
-                                                            .getCastedState (DataTablesServerData.OT_DATATABLES,
-                                                                             sDataTablesID);
+    final DataTablesServerData aServerData = UIStateRegistry.getCurrent ().getCastedState (
+                                                                                           DataTablesServerData.OT_DATATABLES,
+                                                                                           sDataTablesID);
     if (aServerData == null)
       return AjaxDefaultResponse.createError ("No such data tables ID: " + sDataTablesID);
 
@@ -332,6 +332,6 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
 
     // Convert the response to JSON and add the special nodes
     return AjaxDefaultResponse.createSuccess (aRequestScope, aResponseData.getAsJson ())
-                              .addAll (aResponseData.getSpecialNodes ());
+                              .addSpecialNodes (aResponseData.getSpecialNodes ());
   }
 }
