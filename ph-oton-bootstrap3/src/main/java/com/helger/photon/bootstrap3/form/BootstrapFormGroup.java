@@ -23,7 +23,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
@@ -124,12 +123,6 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
       for (final String sValue : aValues)
         aNodeList.addChild (new HCDiv ().addChild (sValue));
     return setCtrl (aNodeList);
-  }
-
-  @Nonnull
-  public final BootstrapFormGroup buildAndSetCtrl (@Nullable final IHCNodeBuilder aCtrlBuilder)
-  {
-    return setCtrl (aCtrlBuilder == null ? null : aCtrlBuilder.build ());
   }
 
   @Nonnull

@@ -30,8 +30,9 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCElement;
+import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeBuilder;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.impl.HCNodeList;
@@ -48,7 +49,7 @@ import com.helger.photon.bootstrap3.EBootstrapIcon;
  *
  * @author Philip Helger
  */
-public class BootstrapTooltip implements IHCNodeBuilder
+public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
 {
   /**
    * This event fires immediately when the show instance method is called.
@@ -89,8 +90,8 @@ public class BootstrapTooltip implements IHCNodeBuilder
   private boolean m_bPlacementAuto = DEFAULT_PLACEMENT_AUTO;
   private JSAnonymousFunction m_aPlacementFunc;
   private String m_sSelector;
-  private String m_sTitle;
-  private JSAnonymousFunction m_aTitleFunc;
+  private String m_sTooltipTitle;
+  private JSAnonymousFunction m_aTooltipTitleFunc;
   private Set <EBootstrapTooltipTrigger> m_aTrigger = DEFAULT_TRIGGER;
   private int m_nShowDelay = 0;
   private int m_nHideDelay = 0;
@@ -188,31 +189,31 @@ public class BootstrapTooltip implements IHCNodeBuilder
   }
 
   @Nullable
-  public String getTitleString ()
+  public String getTooltipTitleString ()
   {
-    return m_sTitle;
+    return m_sTooltipTitle;
   }
 
   @Nullable
-  public JSAnonymousFunction getTitleFunction ()
+  public JSAnonymousFunction getTooltipTitleFunction ()
   {
-    return m_aTitleFunc;
+    return m_aTooltipTitleFunc;
   }
 
   @Nonnull
-  public BootstrapTooltip setTitle (@Nullable final String sTitle)
+  public BootstrapTooltip setTooltipTitle (@Nullable final String sTitle)
   {
-    m_sTitle = sTitle;
-    m_aTitleFunc = null;
+    m_sTooltipTitle = sTitle;
+    m_aTooltipTitleFunc = null;
     return this;
   }
 
   @Nonnull
-  public BootstrapTooltip setTitle (@Nullable final IHCNode aTitle)
+  public BootstrapTooltip setTooltipTitle (@Nullable final IHCNode aTooltipTitle)
   {
     setHTML (true);
-    m_sTitle = aTitle == null ? null : HCRenderer.getAsHTMLStringWithoutNamespaces (aTitle);
-    m_aTitleFunc = null;
+    m_sTooltipTitle = aTooltipTitle == null ? null : HCRenderer.getAsHTMLStringWithoutNamespaces (aTooltipTitle);
+    m_aTooltipTitleFunc = null;
     return this;
   }
 
@@ -222,10 +223,10 @@ public class BootstrapTooltip implements IHCNodeBuilder
    * @return this
    */
   @Nonnull
-  public BootstrapTooltip setTitle (@Nullable final JSAnonymousFunction aFunction)
+  public BootstrapTooltip setTooltipTitle (@Nullable final JSAnonymousFunction aFunction)
   {
-    m_sTitle = null;
-    m_aTitleFunc = aFunction;
+    m_sTooltipTitle = null;
+    m_aTooltipTitleFunc = aFunction;
     return this;
   }
 
@@ -319,11 +320,11 @@ public class BootstrapTooltip implements IHCNodeBuilder
       aOptions.add ("placement", m_aPlacementFunc);
     if (StringHelper.hasText (m_sSelector))
       aOptions.add ("selector", m_sSelector);
-    if (StringHelper.hasText (m_sTitle))
-      aOptions.add ("title", m_sTitle);
+    if (StringHelper.hasText (m_sTooltipTitle))
+      aOptions.add ("title", m_sTooltipTitle);
     else
-      if (m_aTitleFunc != null)
-        aOptions.add ("title", m_aTitleFunc);
+      if (m_aTooltipTitleFunc != null)
+        aOptions.add ("title", m_aTooltipTitleFunc);
     if (CollectionHelper.isNotEmpty (m_aTrigger) && !DEFAULT_TRIGGER.equals (m_aTrigger))
     {
       final StringBuilder aSB = new StringBuilder ();
@@ -383,26 +384,27 @@ public class BootstrapTooltip implements IHCNodeBuilder
     return jsInvoke ().arg ("destroy");
   }
 
-  @Nullable
-  public IHCNode build ()
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    return new HCScriptInlineOnDocumentReady (jsAttach ());
+    setOnDocumentReadyCode (jsAttach ());
   }
 
   @Nonnull
   public static IHCNode createSimpleTooltip (@Nonnull final String sTitle)
   {
     final HCSpan aSpan = new HCSpan ().addChild (EBootstrapIcon.QUESTION_SIGN.getAsNode ());
-    final BootstrapTooltip aTooltip = new BootstrapTooltip (aSpan).setTitle (sTitle);
-    return new HCNodeList ().addChild (aSpan).buildAndAddChild (aTooltip);
+    final BootstrapTooltip aTooltip = new BootstrapTooltip (aSpan).setTooltipTitle (sTitle);
+    return new HCNodeList ().addChild (aSpan).addChild (aTooltip);
   }
 
   @Nonnull
   public static IHCNode createSimpleTooltip (@Nonnull final IHCNode aTitle)
   {
     final HCSpan aSpan = new HCSpan ().addChild (EBootstrapIcon.QUESTION_SIGN.getAsNode ());
-    final BootstrapTooltip aTooltip = new BootstrapTooltip (aSpan).setTitle (aTitle);
-    return new HCNodeList ().addChild (aSpan).buildAndAddChild (aTooltip);
+    final BootstrapTooltip aTooltip = new BootstrapTooltip (aSpan).setTooltipTitle (aTitle);
+    return new HCNodeList ().addChild (aSpan).addChild (aTooltip);
   }
 
   @Nonnull

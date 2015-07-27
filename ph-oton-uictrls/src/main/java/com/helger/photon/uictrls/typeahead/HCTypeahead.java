@@ -29,9 +29,10 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeBuilder;
-import com.helger.html.hc.html.HCScriptInline;
+import com.helger.html.hc.base.AbstractHCScriptInline;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.jquery.IJQuerySelector;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -42,7 +43,7 @@ import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
-public class HCTypeahead implements IHCNodeBuilder
+public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
 {
   public static final ICSSClassProvider TT_QUERY = DefaultCSSClassProvider.create ("tt-query");
   public static final ICSSClassProvider TT_HINT = DefaultCSSClassProvider.create ("tt-hint");
@@ -269,10 +270,20 @@ public class HCTypeahead implements IHCNodeBuilder
     return ret;
   }
 
-  @Nullable
-  public IHCNode build ()
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    return new HCScriptInline (getAsJSObject ());
+    setJSCodeProvider (getAsJSObject ());
+  }
+
+  @Override
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForceRegistration)
+  {
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_0_9);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_PH);
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.TYPEAHEAD_BOOTSTRAP);
   }
 
   @Override
@@ -304,12 +315,5 @@ public class HCTypeahead implements IHCNodeBuilder
   public static JSInvocation typeaheadSetQuery (@Nonnull final IJSExpression aTypeahead, @Nonnull final String sQuery)
   {
     return invoke (aTypeahead).arg ("setQuery").arg (sQuery);
-  }
-
-  public static void registerExternalResources ()
-  {
-    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_0_9);
-    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_PH);
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.TYPEAHEAD_BOOTSTRAP);
   }
 }

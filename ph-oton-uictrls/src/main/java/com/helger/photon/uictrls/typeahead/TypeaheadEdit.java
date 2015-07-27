@@ -19,18 +19,18 @@ package com.helger.photon.uictrls.typeahead;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
+import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeBuilder;
-import com.helger.html.hc.html.HCEdit;
+import com.helger.html.hc.api.EHCInputType;
+import com.helger.html.hc.base.AbstractHCInput;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCHiddenField;
-import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -43,11 +43,10 @@ import com.helger.photon.core.form.RequestField;
  *
  * @author Philip Helger
  */
-public class TypeaheadEdit implements IHCNodeBuilder
+public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
 {
   public static final String JSON_ID = "id";
 
-  private final HCEdit m_aEdit;
   private final RequestField m_aRFHidden;
   private final String m_sHiddenFieldID;
   private final JSAnonymousFunction m_aSelectionCallback;
@@ -58,13 +57,16 @@ public class TypeaheadEdit implements IHCNodeBuilder
                         @Nonnull final ISimpleURL aAjaxInvocationURL,
                         @Nonnull final Locale aDisplayLocale)
   {
+    super (EHCInputType.TEXT);
+
     ValueEnforcer.notNull (aRFEdit, "RequestFieldEdit");
     ValueEnforcer.notNull (aRFHidden, "RequestFieldHidden");
     ValueEnforcer.notNull (aAjaxInvocationURL, "AjaxInvocationURL");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
-    m_aEdit = new HCEdit (aRFEdit).setAutoComplete (false)
-                                  .setPlaceholder (ETypeaheadText.ENTER_SEARCH_STRING.getDisplayText (aDisplayLocale));
+    setName (aRFEdit.getFieldName ());
+    setValue (aRFEdit.getRequestValue ());
+    setAutoComplete (false).setPlaceholder (ETypeaheadText.ENTER_SEARCH_STRING.getDisplayText (aDisplayLocale));
 
     m_aRFHidden = aRFHidden;
     m_sHiddenFieldID = GlobalIDFactory.getNewStringID ();
@@ -86,18 +88,7 @@ public class TypeaheadEdit implements IHCNodeBuilder
     final TypeaheadRemote aRemote = new TypeaheadRemote (aRealURL).setCache (false);
     // Ensure unique dataset name
     final TypeaheadDataset aDS = new TypeaheadDataset (m_sHiddenFieldID).setRemote (aRemote);
-    m_aScript = new HCTypeahead (JQuerySelector.id (m_aEdit)).addDataset (aDS).setOnSelected (m_aSelectionCallback);
-  }
-
-  /**
-   * @return The contained edit field that will hold the selected name. Never
-   *         <code>null</code>. Changes on the edit only have an effect if they
-   *         are performed before this control is build!
-   */
-  @Nonnull
-  public HCEdit getEdit ()
-  {
-    return m_aEdit;
+    m_aScript = new HCTypeahead (JQuerySelector.id (this)).addDataset (aDS).setOnSelected (m_aSelectionCallback);
   }
 
   /**
@@ -134,22 +125,14 @@ public class TypeaheadEdit implements IHCNodeBuilder
     return m_aScript;
   }
 
-  @Nullable
-  public IHCNode build ()
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    final HCNodeList ret = new HCNodeList ();
-
-    // Edit
-    ret.addChild (m_aEdit);
-
     // HiddenField
-    ret.addChild (new HCHiddenField (m_aRFHidden).setID (m_sHiddenFieldID));
+    aTargetNode.addChild (new HCHiddenField (m_aRFHidden).setID (m_sHiddenFieldID));
 
     // JS code
-    ret.buildAndAddChild (m_aScript);
-
-    HCTypeahead.registerExternalResources ();
-
-    return ret;
+    aTargetNode.addChild (m_aScript);
   }
 }

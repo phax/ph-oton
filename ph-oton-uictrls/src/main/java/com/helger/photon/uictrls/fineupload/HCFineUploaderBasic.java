@@ -23,11 +23,12 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCElement;
+import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeBuilder;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
-import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hc.impl.AbstractHCNodeList;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.jscode.IJSAssignmentTarget;
@@ -41,7 +42,7 @@ import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.web.scope.mgr.WebScopeManager;
 
-public class HCFineUploaderBasic implements IHCNodeBuilder
+public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic>
 {
   private final FineUploaderBasic m_aUploader;
   private IHCElement <?> m_aButton;
@@ -66,17 +67,16 @@ public class HCFineUploaderBasic implements IHCNodeBuilder
     return this;
   }
 
-  @Nullable
-  public IHCNode build ()
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    registerExternalResources ();
     final String sID = GlobalIDFactory.getNewStringID ();
-    final HCNodeList ret = new HCNodeList ();
-    ret.addChild (new HCDiv ().setID (sID));
+    addChild (new HCDiv ().setID (sID));
     if (m_aButton != null)
     {
       // We have a special button to use
-      ret.addChild (m_aButton);
+      addChild (m_aButton);
       m_aUploader.setButtonElementID (m_aButton.ensureID ().getID ());
     }
 
@@ -137,11 +137,12 @@ public class HCFineUploaderBasic implements IHCNodeBuilder
       // element and set the "click" handler
       aPkg.addStatement (JQuerySelector.submit.invoke ().arg (aForm).click (aOnClick));
     }
-    ret.addChild (new HCScriptInlineOnDocumentReady (aPkg));
-    return ret;
+    addChild (new HCScriptInlineOnDocumentReady (aPkg));
   }
 
-  public static final void registerExternalResources ()
+  @Override
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForceRegistration)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.FINEUPLOADER_320);
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.FINEUPLOADER_320);
