@@ -158,7 +158,7 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     aNodeList.addChild (aTableAttrs);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
 
     return aNodeList;
   }
@@ -198,7 +198,7 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
     aNodeList.addChild (aTableAttrs);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
 
     return aNodeList;
   }

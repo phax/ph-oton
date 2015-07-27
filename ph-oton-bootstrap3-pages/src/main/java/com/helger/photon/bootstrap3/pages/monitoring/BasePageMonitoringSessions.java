@@ -223,7 +223,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     ret.addChild (aTableAttrs);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    ret.buildAndAddChild (aDataTables);
+    ret.addChild (aDataTables);
 
     return ret;
   }
@@ -264,7 +264,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aNodeList.addChild (aTableAttrs);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
 
     return aNodeList;
   }
@@ -356,6 +356,6 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
   }
 }

@@ -297,7 +297,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
       aNodeList.addChild (aTable);
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aNodeList.buildAndAddChild (aDataTables);
+      aNodeList.addChild (aDataTables);
     }
   }
 }

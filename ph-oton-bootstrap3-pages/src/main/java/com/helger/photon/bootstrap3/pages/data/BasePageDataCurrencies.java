@@ -63,13 +63,13 @@ public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext> 
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_CODE ("Code", "Code"),
-    MSG_NAME ("Name", "Name"),
-    MSG_SYMBOL ("Symbol", "Symbol"),
-    MSG_DEFAULT_FRACTION_DIGITS ("Nachkommastellen", "Fraction digits"),
-    MSG_EXAMPLE ("Beispiel", "Example"),
-    MSG_CONTINENTS ("Kontinente", "Continents"),
-    MSG_LOCALE ("Locale", "Locale");
+   MSG_CODE ("Code", "Code"),
+   MSG_NAME ("Name", "Name"),
+   MSG_SYMBOL ("Symbol", "Symbol"),
+   MSG_DEFAULT_FRACTION_DIGITS ("Nachkommastellen", "Fraction digits"),
+   MSG_EXAMPLE ("Beispiel", "Example"),
+   MSG_CONTINENTS ("Kontinente", "Continents"),
+   MSG_LOCALE ("Locale", "Locale");
 
     private final IMultilingualText m_aTP;
 
@@ -165,7 +165,7 @@ public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext> 
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
 
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.FAMFAM_FLAGS);
   }

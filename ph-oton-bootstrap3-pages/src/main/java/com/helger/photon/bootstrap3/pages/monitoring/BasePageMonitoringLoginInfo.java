@@ -208,7 +208,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aCustomAttrTable);
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ATTRS.getDisplayText (aDisplayLocale))
-                                                    .setCtrl (aCustomAttrTable, aDataTables.build ()));
+                                                    .setCtrl (aCustomAttrTable, aDataTables));
     }
   }
 
@@ -348,6 +348,6 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
   }
 }

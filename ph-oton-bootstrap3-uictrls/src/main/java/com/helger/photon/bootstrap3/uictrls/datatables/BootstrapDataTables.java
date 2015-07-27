@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.hc.base.IHCTable;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.table.AbstractBootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsCSSPathProvider;
@@ -64,13 +65,10 @@ public class BootstrapDataTables extends DataTables
   }
 
   @Override
-  protected void onRegisterExternalResources ()
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForceRegistration)
   {
-    registerExternalResources ();
-  }
-
-  public static void registerExternalResources ()
-  {
+    super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
     PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.BOOTSTRAP_DATATABLES);
     PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.BOOTSTRAP_DATATABLES);
     PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.BOOTSTRAP_DATATABLES_PH);

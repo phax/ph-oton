@@ -153,6 +153,6 @@ public class BasePageSysInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
   }
 }

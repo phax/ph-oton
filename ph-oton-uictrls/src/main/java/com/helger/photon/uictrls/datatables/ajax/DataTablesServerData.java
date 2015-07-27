@@ -110,7 +110,9 @@ public final class DataTablesServerData implements IHasUIState
           throw new IllegalArgumentException ("DataTablesColumn is targeting illegal column index " +
                                               nTarget +
                                               "; must be >= 0 and < " +
-                                              nColumnCount);
+                                              nColumnCount +
+                                              " in table " +
+                                              aTable.getID ());
         m_aColumns[nTarget] = aColumnData;
       }
     }

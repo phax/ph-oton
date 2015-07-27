@@ -38,7 +38,7 @@ import com.helger.commons.tree.ITreeItem;
 import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.html.HCDiv;
-import com.helger.html.hc.html.HCScript;
+import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hcext.HCHasCSSClasses;
 import com.helger.html.jquery.JQuery;
@@ -229,7 +229,7 @@ public class BootstrapTreeView implements IHCNodeBuilder
 
     // JS Code
     final JSAssocArray aJSOptions = getJSOptions ();
-    ret.addChild (new HCScript (invoke ().arg (aJSOptions)));
+    ret.addChild (new HCScriptInline (invoke ().arg (aJSOptions)));
 
     return ret;
   }

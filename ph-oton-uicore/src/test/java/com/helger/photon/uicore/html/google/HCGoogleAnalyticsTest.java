@@ -21,8 +21,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Rule;
 import org.junit.Test;
 
-import com.helger.html.hc.html.HCScript;
-import com.helger.html.hc.html.HCScript.EMode;
+import com.helger.html.hc.api.EHCScriptInlineMode;
+import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.mock.HCTestRuleOptimized;
 
@@ -39,7 +39,7 @@ public final class HCGoogleAnalyticsTest
   @Test
   public void testBasic1 ()
   {
-    HCScript.setDefaultMode (EMode.PLAIN_TEXT_NO_ESCAPE);
+    HCScriptInline.setDefaultMode (EHCScriptInlineMode.PLAIN_TEXT_NO_ESCAPE);
     final HCGoogleAnalytics aGA = new HCGoogleAnalytics ("abc", false);
     assertEquals ("<script xmlns=\"http://www.w3.org/1999/xhtml\" type=\"text/javascript\">"
                       + "var _gaq=(_gaq||[]);"
@@ -56,6 +56,6 @@ public final class HCGoogleAnalyticsTest
                       + "})();"
                       + "</script>",
                   HCRenderer.getAsHTMLString (aGA));
-    HCScript.setDefaultMode (HCScript.DEFAULT_MODE);
+    HCScriptInline.setDefaultMode (HCScriptInline.DEFAULT_MODE);
   }
 }

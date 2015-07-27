@@ -59,10 +59,10 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_ID ("ID", "ID"),
-    MSG_DATE ("Datum", "Date"),
-    MSG_SUCCESS ("Erfolg?", "Success?"),
-    MSG_ERRORMESSAGE ("Fehlermeldung", "Error message");
+   MSG_ID ("ID", "ID"),
+   MSG_DATE ("Datum", "Date"),
+   MSG_SUCCESS ("Erfolg?", "Success?"),
+   MSG_ERRORMESSAGE ("Fehlermeldung", "Error message");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -137,7 +137,8 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
                                         new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
                                                                                                                    aDisplayLocale)
                                                                                                   .setInitialSorting (ESortOrder.DESCENDING),
-                                        new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)).setDataSort (2, 1),
+                                        new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)).setDataSort (2,
+                                                                                                                   1),
                                         new DTCol (EText.MSG_ERRORMESSAGE.getDisplayText (aDisplayLocale)).setDataSort (3,
                                                                                                                         2,
                                                                                                                         1)).setID (getID ());
@@ -153,6 +154,6 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
   }
 }

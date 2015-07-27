@@ -60,10 +60,10 @@ public class BasePageMonitoringServletStatus <WPECTYPE extends IWebPageExecution
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_SERVLET ("Servlet Klasse", "Servlet class"),
-    MSG_STATUS ("Status", "Status"),
-    MSG_INVOCATION_COUNT ("Aufrufe", "Inocations"),
-    MSG_INIT_DT ("Initialisiert", "Initialzed");
+   MSG_SERVLET ("Servlet Klasse", "Servlet class"),
+   MSG_STATUS ("Status", "Status"),
+   MSG_INVOCATION_COUNT ("Aufrufe", "Inocations"),
+   MSG_INIT_DT ("Initialisiert", "Initialzed");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -132,11 +132,12 @@ public class BasePageMonitoringServletStatus <WPECTYPE extends IWebPageExecution
       aRow.addCell (aItem.getKey ());
       aRow.addCell (aServletStatus.getCurrentStatus ().getDisplayText (aDisplayLocale));
       aRow.addCell (Integer.toString (aServletStatus.getInvocationCount ()));
-      aRow.addCell (PDTToString.getAsString (aServletStatus.getDateTimeOfStatus (EServletStatus.INITED), aDisplayLocale));
+      aRow.addCell (PDTToString.getAsString (aServletStatus.getDateTimeOfStatus (EServletStatus.INITED),
+                                             aDisplayLocale));
     }
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
   }
 }

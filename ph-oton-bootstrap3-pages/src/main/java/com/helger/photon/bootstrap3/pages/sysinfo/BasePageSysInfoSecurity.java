@@ -170,7 +170,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
 
       aTabBox.addTab (EText.TAB_PROVIDERS.getDisplayText (aDisplayLocale),
-                      new HCNodeList ().addChild (aTable).buildAndAddChild (aDataTables));
+                      new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
     // Show all algorithms of all providers
@@ -200,7 +200,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
       aTabBox.addTab (EText.TAB_ALGORITHMS.getDisplayText (aDisplayLocale),
-                      new HCNodeList ().addChild (aTable).buildAndAddChild (aDataTables));
+                      new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
     // one tab per provider
@@ -243,7 +243,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
         aTabBox.addTab (sProviderName,
                         new HCNodeList ().addChild (aTable)
-                                         .buildAndAddChild (aDataTables)
+                                         .addChild (aDataTables)
                                          .addChild (createDataGroupHeader (EText.MSG_PROPS.getDisplayText (aDisplayLocale)))
                                          .addChild (aPropsTable));
       }
@@ -300,7 +300,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
       aTabBox.addTab (EText.TAB_SSLCONTEXT.getDisplayText (aDisplayLocale),
-                      new HCNodeList ().addChild (aTable).buildAndAddChild (aDataTables));
+                      new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
     aNodeList.buildAndAddChild (aTabBox);

@@ -666,6 +666,6 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
   }
 }

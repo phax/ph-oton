@@ -157,7 +157,7 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
 
       aTabBox.addTab (EText.MSG_SERVLETS.getDisplayText (aDisplayLocale),
-                      new HCNodeList ().addChild (aTable).buildAndAddChild (aDataTables));
+                      new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
     {
@@ -193,7 +193,7 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
 
       aTabBox.addTab (EText.MSG_FILTERS.getDisplayText (aDisplayLocale),
-                      new HCNodeList ().addChild (aTable).buildAndAddChild (aDataTables));
+                      new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
     aNodeList.buildAndAddChild (aTabBox);

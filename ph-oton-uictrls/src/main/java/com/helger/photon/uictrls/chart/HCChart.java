@@ -28,7 +28,7 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.html.HCCanvas;
 import com.helger.html.hc.html.HCLegend;
-import com.helger.html.hc.html.HCScript;
+import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.IJSExpression;
@@ -267,7 +267,7 @@ public class HCChart implements IHCNodeBuilder
                        .assign (aJSChart.invoke ("generateLegend")));
     }
 
-    ret.addChild (new HCScript (aCode));
+    ret.addChild (new HCScriptInline (aCode));
 
     return ret;
   }

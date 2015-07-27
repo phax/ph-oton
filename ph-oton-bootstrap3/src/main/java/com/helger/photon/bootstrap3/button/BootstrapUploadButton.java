@@ -25,7 +25,7 @@ import com.helger.html.EHTMLRole;
 import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.html.hc.html.HCEdit;
 import com.helger.html.hc.html.HCEditFile;
-import com.helger.html.hc.html.HCScript;
+import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -86,7 +86,7 @@ public class BootstrapUploadButton extends AbstractHCDiv <BootstrapUploadButton>
   public HCNodeList createSelectedFileEdit (@Nullable final String sPlaceholder)
   {
     final HCEdit aEdit = new HCEdit ().setPlaceholder (sPlaceholder).setReadonly (true);
-    final HCScript aScript = new HCScript (JQuery.idRef (m_aEdit)
+    final HCScriptInline aScript = new HCScriptInline (JQuery.idRef (m_aEdit)
                                                  .on ("change",
                                                       new JSAnonymousFunction (JQuery.idRef (aEdit)
                                                                                      .val (JSExpr.THIS.ref ("value")))));

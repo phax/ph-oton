@@ -61,9 +61,9 @@ public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecution
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_DATE ("Datum", "Date"),
-    MSG_USER ("Benutzer", "User"),
-    MSG_OBJECTID ("ID", "ID");
+   MSG_DATE ("Datum", "Date"),
+   MSG_USER ("Benutzer", "User"),
+   MSG_OBJECTID ("ID", "ID");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -153,6 +153,6 @@ public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecution
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
   }
 }

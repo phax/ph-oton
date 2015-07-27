@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,13 +46,15 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.base.IHCCol;
 import com.helger.html.hc.base.IHCTable;
+import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCColGroup;
-import com.helger.html.hc.html.HCScript;
+import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.hc.html.HCScriptOnDocumentReady;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryAjaxBuilder;
@@ -81,7 +84,7 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.ajax.DataTablesServerData;
 import com.helger.web.http.EHTTPMethod;
 
-public class DataTables implements IHCNodeBuilder
+public class DataTables extends HCScriptInline
 {
   public static final boolean DEFAULT_GENERATE_ON_DOCUMENT_READY = false;
   public static final boolean DEFAULT_AUTOWIDTH = true;
@@ -834,14 +837,6 @@ public class DataTables implements IHCNodeBuilder
     return aLanguage;
   }
 
-  /**
-   * Optional callback to add additional resources. The data tables itself as
-   * well as all the plugins are registered automatically.
-   */
-  @OverrideOnDemand
-  protected void onRegisterExternalResources ()
-  {}
-
   @Nonnull
   public JQueryInvocation invokeDataTables ()
   {
@@ -860,33 +855,10 @@ public class DataTables implements IHCNodeBuilder
     aDom.setPosition (0).addColVis ().openDiv ("clear").closeDiv ();
   }
 
-  @Nullable
-  public final HCScript build ()
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    registerExternalResources ();
-    if (m_bUseColVis)
-    {
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_COL_VIS);
-      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_COL_VIS);
-    }
-    if (m_bUseFixedHeader)
-    {
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_FIXED_HEADER);
-      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_FIXED_HEADER);
-    }
-    if (m_bUseSearchHighlight)
-    {
-      PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_HIGHLIGHT);
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
-      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
-    }
-    if (m_bUseScroller)
-    {
-      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_SCROLLER);
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_SCROLLER);
-    }
-    onRegisterExternalResources ();
-
     // init parameters
     final JSAssocArray aParams = new JSAssocArray ();
     if (m_bAutoWidth != DEFAULT_AUTOWIDTH)
@@ -1099,22 +1071,44 @@ public class DataTables implements IHCNodeBuilder
     }
     addCodeAfterDataTables (aJSCode, aJSTable);
 
-    return getWrapped (aJSCode);
+    // Main HTML code for this element :)
+    setJSCodeProvider (m_bGenerateOnDocumentReady ? HCSettings.getOnDocumentReadyProvider ()
+                                                              .createOnDocumentReady (aJSCode)
+                                                  : aJSCode);
+
+    // Must be called AFTER we set the JS!
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
   }
 
-  /**
-   * Depending on {@link #isGenerateOnDocumentReady()} wrap the passed JSCode in
-   * the matching HTML element (either {@link HCScriptOnDocumentReady} or in
-   * {@link HCScript}.
-   *
-   * @param aJSCode
-   *        The JS code to be wrapped. May not be <code>null</code>.
-   * @return The non-<code>null</code> HCNode
-   */
-  @Nonnull
-  public HCScript getWrapped (@Nonnull final IHasJSCode aJSCode)
+  @Override
+  @OverridingMethodsMustInvokeSuper
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForceRegistration)
   {
-    return m_bGenerateOnDocumentReady ? new HCScriptOnDocumentReady (aJSCode) : new HCScript (aJSCode);
+    super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_1_10);
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_1_10);
+    if (m_bUseColVis)
+    {
+      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_COL_VIS);
+      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_COL_VIS);
+    }
+    if (m_bUseFixedHeader)
+    {
+      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_FIXED_HEADER);
+      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_FIXED_HEADER);
+    }
+    if (m_bUseSearchHighlight)
+    {
+      PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_HIGHLIGHT);
+      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
+      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
+    }
+    if (m_bUseScroller)
+    {
+      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_SCROLLER);
+      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_SCROLLER);
+    }
   }
 
   /**
@@ -1130,9 +1124,9 @@ public class DataTables implements IHCNodeBuilder
   }
 
   /**
-   * Create an {@link HCScript} or {@link HCScriptOnDocumentReady} block that
-   * handles expand and collapse. The following pre-conditions must be met: The
-   * first column must be the expand/collapse column and it must contain an
+   * Create an {@link HCScriptInline} or {@link HCScriptOnDocumentReady} block
+   * that handles expand and collapse. The following pre-conditions must be met:
+   * The first column must be the expand/collapse column and it must contain an
    * image where the event handler is registered.
    *
    * @param aExpandImgURL
@@ -1181,7 +1175,7 @@ public class DataTables implements IHCNodeBuilder
                                                       JQuerySelector.element (EHTMLElement.TD),
                                                       JQuerySelector.element (EHTMLElement.IMG)))
                         .arg (aOpenCloseCallback));
-    return getWrapped (aPackage);
+    return m_bGenerateOnDocumentReady ? new HCScriptOnDocumentReady (aPackage) : new HCScriptInline (aPackage);
   }
 
   /**

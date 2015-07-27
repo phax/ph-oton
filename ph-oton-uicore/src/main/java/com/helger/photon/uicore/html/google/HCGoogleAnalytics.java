@@ -24,7 +24,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
-import com.helger.html.hc.html.HCScript;
+import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSExpr;
@@ -39,7 +39,7 @@ import com.helger.html.jscode.html.JSHtml;
  *
  * @author Philip Helger
  */
-public class HCGoogleAnalytics extends HCScript
+public class HCGoogleAnalytics extends HCScriptInline
 {
   private final String m_sAccount;
 

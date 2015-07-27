@@ -28,7 +28,7 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
-import com.helger.html.hc.html.HCScript;
+import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.js.marshal.JSMarshaller;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
@@ -300,7 +300,7 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
       aInvocation.argNull ();
     aInvocation.arg (jsFlashvars).arg (jsParams).arg (jsAttributes);
 
-    aTargetNode.addChild (new HCScript (aInvocation));
+    aTargetNode.addChild (new HCScriptInline (aInvocation));
   }
 
   @Override

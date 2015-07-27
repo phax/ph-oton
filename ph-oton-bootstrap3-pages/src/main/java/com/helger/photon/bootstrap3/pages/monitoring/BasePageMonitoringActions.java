@@ -62,13 +62,13 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_KEY ("ID", "ID"),
-    MSG_FACTORY ("Factory", "Factory"),
-    MSG_URL ("Ziel-URL", "Target URL"),
-    MSG_CALLBACKS ("Callbacks", "Callbacks"),
-    MSG_TYPE ("Typ", "Type"),
-    MSG_CALLBACK ("Callback", "Callback"),
-    MSG_NONE_FOUND ("Keine Daten gefunden.", "No data found.");
+   MSG_KEY ("ID", "ID"),
+   MSG_FACTORY ("Factory", "Factory"),
+   MSG_URL ("Ziel-URL", "Target URL"),
+   MSG_CALLBACKS ("Callbacks", "Callbacks"),
+   MSG_TYPE ("Typ", "Type"),
+   MSG_CALLBACK ("Callback", "Callback"),
+   MSG_NONE_FOUND ("Keine Daten gefunden.", "No data found.");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -143,7 +143,7 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
           aTab.addChild (aTable);
 
           final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-          aTab.buildAndAddChild (aDataTables);
+          aTab.addChild (aDataTables);
         }
 
         // Show all callbacks
@@ -166,7 +166,7 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
           aTab.addChild (aTable);
 
           final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-          aTab.buildAndAddChild (aDataTables);
+          aTab.addChild (aDataTables);
         }
 
         // Add to tab box

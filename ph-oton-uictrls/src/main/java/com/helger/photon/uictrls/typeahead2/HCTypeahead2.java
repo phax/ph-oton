@@ -32,7 +32,7 @@ import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
-import com.helger.html.hc.html.HCScript;
+import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.jquery.IJQuerySelector;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -340,7 +340,7 @@ public class HCTypeahead2 implements IHCNodeBuilder
   @Nullable
   public IHCNode build ()
   {
-    return new HCScript (getAsJSObject ());
+    return new HCScriptInline (getAsJSObject ());
   }
 
   @Override

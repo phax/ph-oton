@@ -850,10 +850,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
-
-    // Required for best layout inside a tab!
-    aTable.removeAllColumns ();
+    aNodeList.addChild (aDataTables);
 
     return aNodeList;
   }

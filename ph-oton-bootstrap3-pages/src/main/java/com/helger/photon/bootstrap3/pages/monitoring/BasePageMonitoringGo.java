@@ -60,11 +60,11 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_GO_SERVLET ("GoServlet registriert: ", "GoServlet registered: "),
-    MSG_KEY ("ID", "ID"),
-    MSG_INTERNAL ("Intern?", "Internal?"),
-    MSG_URL ("Ziel-URL", "Target URL"),
-    MSG_EDITABLE ("Editierbar?", "Editable?");
+   MSG_GO_SERVLET ("GoServlet registriert: ", "GoServlet registered: "),
+   MSG_KEY ("ID", "ID"),
+   MSG_INTERNAL ("Intern?", "Internal?"),
+   MSG_URL ("Ziel-URL", "Target URL"),
+   MSG_EDITABLE ("Editierbar?", "Editable?");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -156,6 +156,6 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
   }
 }

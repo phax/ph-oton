@@ -19,14 +19,14 @@ package com.helger.photon.uicore.js;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.html.hc.html.HCScript;
+import com.helger.html.hc.html.HCScriptInline;
 
 /**
  * A Script to determine, if local storage is available.
  * 
  * @author Philip Helger
  */
-public class JSLocalStorageDeterminator extends HCScript
+public class JSLocalStorageDeterminator extends HCScriptInline
 {
   public static final String VARNAME = "g_aLocalStorage";
 

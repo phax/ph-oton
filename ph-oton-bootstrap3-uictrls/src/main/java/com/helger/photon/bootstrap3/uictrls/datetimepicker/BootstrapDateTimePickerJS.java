@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
-import com.helger.html.hc.html.HCScript;
+import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.hc.special.SpecialNodeListModifier;
 
 /**
@@ -32,7 +32,7 @@ import com.helger.html.hc.special.SpecialNodeListModifier;
  */
 @OutOfBandNode
 @SpecialNodeListModifier (BootstrapDateTimePickerSpecialNodeListModifier.class)
-public class BootstrapDateTimePickerJS extends HCScript
+public class BootstrapDateTimePickerJS extends HCScriptInline
 {
   private final BootstrapDateTimePicker m_aDTP;
 

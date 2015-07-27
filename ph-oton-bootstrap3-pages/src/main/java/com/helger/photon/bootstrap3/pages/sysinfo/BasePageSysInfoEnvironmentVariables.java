@@ -51,8 +51,8 @@ public class BasePageSysInfoEnvironmentVariables <WPECTYPE extends IWebPageExecu
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_NAME ("Name", "Name"),
-    MSG_VALUE ("Wert", "Value");
+   MSG_NAME ("Name", "Name"),
+   MSG_VALUE ("Wert", "Value");
 
     private final IMultilingualText m_aTP;
 
@@ -111,6 +111,6 @@ public class BasePageSysInfoEnvironmentVariables <WPECTYPE extends IWebPageExecu
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
   }
 }

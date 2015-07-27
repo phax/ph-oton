@@ -38,7 +38,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.api.EHCTextDirection;
-import com.helger.html.hc.html.HCScript;
+import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
@@ -1292,10 +1292,10 @@ public class HCTinyMCE4 implements IHCNodeBuilder
   }
 
   @Nonnull
-  public HCScript build ()
+  public HCScriptInline build ()
   {
     registerExternalResources ();
-    return new HCScript (getJSInvocation ());
+    return new HCScriptInline (getJSInvocation ());
   }
 
   public static void registerExternalResources ()

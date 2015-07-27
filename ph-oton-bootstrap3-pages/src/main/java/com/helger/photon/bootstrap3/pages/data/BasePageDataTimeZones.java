@@ -141,6 +141,6 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> e
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
   }
 }

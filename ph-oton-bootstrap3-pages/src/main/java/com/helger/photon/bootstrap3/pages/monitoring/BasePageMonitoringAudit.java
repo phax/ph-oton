@@ -60,11 +60,11 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_DATE ("Datum", "Date"),
-    MSG_USER ("Benutzer", "User"),
-    MSG_TYPE ("Typ", "Type"),
-    MSG_SUCCESS ("Erfolg?", "Success?"),
-    MSG_ACTION ("Aktion", "Action");
+   MSG_DATE ("Datum", "Date"),
+   MSG_USER ("Benutzer", "User"),
+   MSG_TYPE ("Typ", "Type"),
+   MSG_SUCCESS ("Erfolg?", "Success?"),
+   MSG_ACTION ("Aktion", "Action");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -151,7 +151,8 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
                                         new DTCol (EText.MSG_USER.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_ACTION.getDisplayText (aDisplayLocale)).setDataSort (4, 0)).setID (getID ());
+                                        new DTCol (EText.MSG_ACTION.getDisplayText (aDisplayLocale)).setDataSort (4,
+                                                                                                                  0)).setID (getID ());
     for (final IAuditItem aItem : m_aAuditMgr.getLastAuditItems (nMaxItems))
     {
       final HCRow aRow = aTable.addBodyRow ();
@@ -164,6 +165,6 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.buildAndAddChild (aDataTables);
+    aNodeList.addChild (aDataTables);
   }
 }
