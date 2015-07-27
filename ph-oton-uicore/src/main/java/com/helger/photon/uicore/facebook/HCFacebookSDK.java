@@ -24,7 +24,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCScriptInline;
-import com.helger.html.hc.html.HCScriptOnDocumentReady;
+import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
@@ -44,7 +44,7 @@ public class HCFacebookSDK extends HCNodeList
     addChild (new HCDiv ().setID (FB_ROOT_ID));
     if (true)
     {
-      addChild (new HCScriptOnDocumentReady (JSExpr.invoke ("facebookLoadSDKjQuery")
+      addChild (new HCScriptInlineOnDocumentReady (JSExpr.invoke ("facebookLoadSDKjQuery")
                                                    .arg (sAppID)
                                                    .arg (FacebookLocaleMapping.getInstance ()
                                                                               .getFBLocale (aDisplayLocale)

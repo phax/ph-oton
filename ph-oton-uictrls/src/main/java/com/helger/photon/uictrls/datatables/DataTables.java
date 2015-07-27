@@ -55,7 +55,7 @@ import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCCol;
 import com.helger.html.hc.html.HCColGroup;
 import com.helger.html.hc.html.HCScriptInline;
-import com.helger.html.hc.html.HCScriptOnDocumentReady;
+import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jquery.JQueryInvocation;
@@ -1124,7 +1124,7 @@ public class DataTables extends HCScriptInline
   }
 
   /**
-   * Create an {@link HCScriptInline} or {@link HCScriptOnDocumentReady} block
+   * Create an {@link HCScriptInline} or {@link HCScriptInlineOnDocumentReady} block
    * that handles expand and collapse. The following pre-conditions must be met:
    * The first column must be the expand/collapse column and it must contain an
    * image where the event handler is registered.
@@ -1175,7 +1175,7 @@ public class DataTables extends HCScriptInline
                                                       JQuerySelector.element (EHTMLElement.TD),
                                                       JQuerySelector.element (EHTMLElement.IMG)))
                         .arg (aOpenCloseCallback));
-    return m_bGenerateOnDocumentReady ? new HCScriptOnDocumentReady (aPackage) : new HCScriptInline (aPackage);
+    return m_bGenerateOnDocumentReady ? new HCScriptInlineOnDocumentReady (aPackage) : new HCScriptInline (aPackage);
   }
 
   /**

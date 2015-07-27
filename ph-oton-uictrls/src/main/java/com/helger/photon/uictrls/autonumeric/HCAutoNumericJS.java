@@ -23,7 +23,7 @@ import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
-import com.helger.html.hc.html.HCScriptOnDocumentReady;
+import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.special.SpecialNodeListModifier;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryInvocation;
@@ -32,7 +32,8 @@ import com.helger.html.jscode.JSInvocation;
 
 /**
  * A special script that initializes the auto numeric. It is a separate class,
- * so that potentially identical options can be merged to a single invocation.<br>
+ * so that potentially identical options can be merged to a single invocation.
+ * <br>
  * Must implement equals and hashcode to be able to get removed "stateless" from
  * a node
  *
@@ -41,16 +42,16 @@ import com.helger.html.jscode.JSInvocation;
 @OutOfBandNode
 @MustImplementEqualsAndHashcode
 @SpecialNodeListModifier (HCAutoNumericSpecialNodeListModifier.class)
-public class HCAutoNumericJS extends HCScriptOnDocumentReady
+public class HCAutoNumericJS extends HCScriptInlineOnDocumentReady
 {
   private final AbstractHCAutoNumeric <?> m_aAutoNumeric;
 
   @Nonnull
   public static IHasJSCode createInitCode (@Nullable final JQueryInvocation aExplicitAutoNumeric,
-                                                @Nonnull final AbstractHCAutoNumeric <?> aAutoNumeric)
+                                           @Nonnull final AbstractHCAutoNumeric <?> aAutoNumeric)
   {
     final JQueryInvocation aInvocation = aExplicitAutoNumeric != null ? aExplicitAutoNumeric
-                                                                     : JQuery.idRef (aAutoNumeric);
+                                                                      : JQuery.idRef (aAutoNumeric);
 
     final JSInvocation ret = HCAutoNumeric.autoNumericInit (aInvocation, aAutoNumeric.getJSOptions ());
     return ret;

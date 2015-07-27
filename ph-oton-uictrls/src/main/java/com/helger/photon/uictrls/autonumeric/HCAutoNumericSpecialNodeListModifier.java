@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.HCScriptOnDocumentReady;
+import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.special.IHCSpecialNodeListModifier;
 import com.helger.html.jquery.IJQuerySelector;
 import com.helger.html.jquery.JQuerySelector;
@@ -101,7 +101,7 @@ public final class HCAutoNumericSpecialNodeListModifier implements IHCSpecialNod
     }
 
     // Add at the first index, where it was in the source list
-    ret.add (nFirstIndex, new HCScriptOnDocumentReady (aMergedJS));
+    ret.add (nFirstIndex, new HCScriptInlineOnDocumentReady (aMergedJS));
     return ret;
   }
 }

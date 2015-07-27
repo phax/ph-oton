@@ -32,7 +32,7 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
-import com.helger.html.hc.html.HCScriptOnDocumentReady;
+import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
@@ -386,7 +386,7 @@ public class BootstrapTooltip implements IHCNodeBuilder
   @Nullable
   public IHCNode build ()
   {
-    return new HCScriptOnDocumentReady (jsAttach ());
+    return new HCScriptInlineOnDocumentReady (jsAttach ());
   }
 
   @Nonnull

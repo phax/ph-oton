@@ -45,7 +45,7 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.base.IHCForm;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCHiddenField;
-import com.helger.html.hc.html.HCScriptOnDocumentReady;
+import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.jscode.JSArray;
@@ -1218,7 +1218,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
               if (aSavedState != null)
               {
                 // Restore all form values
-                aForm.addChild (new HCScriptOnDocumentReady (JSFormHelper.setAllFormValues (FORM_ID_INPUT,
+                aForm.addChild (new HCScriptInlineOnDocumentReady (JSFormHelper.setAllFormValues (FORM_ID_INPUT,
                                                                                             _getAsAssocArray (aSavedState))));
               }
             }

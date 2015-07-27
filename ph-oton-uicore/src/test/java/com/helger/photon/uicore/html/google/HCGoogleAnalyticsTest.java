@@ -22,7 +22,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import com.helger.html.hc.api.EHCScriptInlineMode;
-import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.mock.HCTestRuleOptimized;
 
@@ -39,23 +38,22 @@ public final class HCGoogleAnalyticsTest
   @Test
   public void testBasic1 ()
   {
-    HCScriptInline.setDefaultMode (EHCScriptInlineMode.PLAIN_TEXT_NO_ESCAPE);
     final HCGoogleAnalytics aGA = new HCGoogleAnalytics ("abc", false);
-    assertEquals ("<script xmlns=\"http://www.w3.org/1999/xhtml\" type=\"text/javascript\">"
-                      + "var _gaq=(_gaq||[]);"
-                      + "_gaq.push(['_setAccount','abc']);"
-                      + "_gaq.push(['_trackPageview']);"
-                      + "_gaq.push(['_trackPageLoadTime']);"
-                      + "(function(){"
-                      + "var ga=document.createElement('script');"
-                      + "ga.type='text\\/javascript';"
-                      + "ga.async=true;"
-                      + "ga.src=((('https:'==window.location.protocol)?'https:\\/\\/ssl':'http:\\/\\/www')+'.google-analytics.com\\/ga.js');"
-                      + "var s=document.getElementsByTagName('script')[0];"
-                      + "s.parentNode.insertBefore(ga,s);"
-                      + "})();"
-                      + "</script>",
+    aGA.setMode (EHCScriptInlineMode.PLAIN_TEXT_NO_ESCAPE);
+    assertEquals ("<script xmlns=\"http://www.w3.org/1999/xhtml\" type=\"text/javascript\">" +
+                  "var _gaq=(_gaq||[]);" +
+                  "_gaq.push(['_setAccount','abc']);" +
+                  "_gaq.push(['_trackPageview']);" +
+                  "_gaq.push(['_trackPageLoadTime']);" +
+                  "(function(){" +
+                  "var ga=document.createElement('script');" +
+                  "ga.type='text\\/javascript';" +
+                  "ga.async=true;" +
+                  "ga.src=((('https:'==window.location.protocol)?'https:\\/\\/ssl':'http:\\/\\/www')+'.google-analytics.com\\/ga.js');" +
+                  "var s=document.getElementsByTagName('script')[0];" +
+                  "s.parentNode.insertBefore(ga,s);" +
+                  "})();" +
+                  "</script>",
                   HCRenderer.getAsHTMLString (aGA));
-    HCScriptInline.setDefaultMode (HCScriptInline.DEFAULT_MODE);
   }
 }

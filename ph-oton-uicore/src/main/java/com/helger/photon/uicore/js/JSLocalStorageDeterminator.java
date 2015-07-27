@@ -20,10 +20,11 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.hc.html.HCScriptInline;
+import com.helger.html.js.provider.UnparsedJSCodeProvider;
 
 /**
  * A Script to determine, if local storage is available.
- * 
+ *
  * @author Philip Helger
  */
 public class JSLocalStorageDeterminator extends HCScriptInline
@@ -37,14 +38,14 @@ public class JSLocalStorageDeterminator extends HCScriptInline
 
   public JSLocalStorageDeterminator (@Nonnull @Nonempty final String sVarName)
   {
-    super ("var " +
-           sVarName +
-           "=(function(){var uid=new Date,storage,result;try {" +
-           "(storage=window.localStorage).setItem(uid, uid);" +
-           "result=storage.getItem(uid)==uid;" +
-           "storage.removeItem(uid);" +
-           "return result && storage;" +
-           "} catch(e) {}" +
-           "}());");
+    super (new UnparsedJSCodeProvider ("var " +
+                                       sVarName +
+                                       "=(function(){var uid=new Date,storage,result;try {" +
+                                       "(storage=window.localStorage).setItem(uid, uid);" +
+                                       "result=storage.getItem(uid)==uid;" +
+                                       "storage.removeItem(uid);" +
+                                       "return result && storage;" +
+                                       "} catch(e) {}" +
+                                       "}());"));
   }
 }

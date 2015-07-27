@@ -26,7 +26,7 @@ import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeBuilder;
 import com.helger.html.hc.html.HCDiv;
-import com.helger.html.hc.html.HCScriptOnDocumentReady;
+import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQuerySelector;
@@ -137,7 +137,7 @@ public class HCFineUploaderBasic implements IHCNodeBuilder
       // element and set the "click" handler
       aPkg.addStatement (JQuerySelector.submit.invoke ().arg (aForm).click (aOnClick));
     }
-    ret.addChild (new HCScriptOnDocumentReady (aPkg));
+    ret.addChild (new HCScriptInlineOnDocumentReady (aPkg));
     return ret;
   }
 

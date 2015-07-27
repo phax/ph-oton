@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
-import com.helger.html.hc.html.HCScriptOnDocumentReady;
+import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.app.html.PhotonCSS;
@@ -44,7 +44,7 @@ public class HCSelect2 extends HCExtSelect
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     // Add special JS code
-    aTargetNode.addChild (new HCScriptOnDocumentReady (JQuery.idRef (this).invoke ("select2")));
+    aTargetNode.addChild (new HCScriptInlineOnDocumentReady (JQuery.idRef (this).invoke ("select2")));
   }
 
   @Override
