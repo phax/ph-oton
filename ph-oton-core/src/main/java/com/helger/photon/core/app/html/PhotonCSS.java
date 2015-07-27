@@ -241,14 +241,20 @@ public final class PhotonCSS
   public static Set <ICSSPathProvider> getAllRegisteredCSSIncludesForThisRequest ()
   {
     final CSSResourceSet aSet = _getPerRequestSet (false);
-    return aSet == null ? new LinkedHashSet <ICSSPathProvider> () : aSet.getAllItems ();
+    if (aSet == null)
+      return new LinkedHashSet <ICSSPathProvider> ();
+    aSet.markAsCollected ();
+    return aSet.getAllItems ();
   }
 
   public static void getAllRegisteredCSSIncludesForThisRequest (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
   {
     final CSSResourceSet aSet = _getPerRequestSet (false);
     if (aSet != null)
+    {
+      aSet.markAsCollected ();
       aSet.getAllItems (aTarget);
+    }
   }
 
   /**

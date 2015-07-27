@@ -218,14 +218,20 @@ public final class PhotonJS
   public static Set <IJSPathProvider> getAllRegisteredJSIncludesForThisRequest ()
   {
     final JSResourceSet aSet = _getPerRequestSet (false);
-    return aSet == null ? new LinkedHashSet <IJSPathProvider> () : aSet.getAllItems ();
+    if (aSet == null)
+      return new LinkedHashSet <IJSPathProvider> ();
+    aSet.markAsCollected ();
+    return aSet.getAllItems ();
   }
 
   public static void getAllRegisteredJSIncludesForThisRequest (@Nonnull final Collection <? super IJSPathProvider> aTarget)
   {
     final JSResourceSet aSet = _getPerRequestSet (false);
     if (aSet != null)
+    {
+      aSet.markAsCollected ();
       aSet.getAllItems (aTarget);
+    }
   }
 
   /**

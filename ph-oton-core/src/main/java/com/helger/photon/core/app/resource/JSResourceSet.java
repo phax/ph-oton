@@ -28,11 +28,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.lang.ICloneable;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.resource.js.IJSPathProvider;
@@ -44,11 +46,15 @@ import com.helger.html.resource.js.IJSPathProvider;
  * @author Philip Helger
  */
 @ThreadSafe
-public class JSResourceSet implements IWebResourceSet <IJSPathProvider>, ICloneable <JSResourceSet>
+public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (JSResourceSet.class);
+
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private final Set <IJSPathProvider> m_aItems = new LinkedHashSet <IJSPathProvider> ();
+  @GuardedBy ("m_aRWLock")
+  private boolean m_bIsCollected = false;
 
   public JSResourceSet ()
   {}
@@ -72,6 +78,11 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>, IClonea
       m_aItems.add (aItem);
   }
 
+  private static void _collectWarn (@Nonnull final String sMsg)
+  {
+    s_aLogger.warn (sMsg);
+  }
+
   @Nonnull
   public EChange addItem (@Nonnull final IJSPathProvider aJSPathProvider)
   {
@@ -80,7 +91,11 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>, IClonea
     m_aRWLock.writeLock ().lock ();
     try
     {
-      return EChange.valueOf (m_aItems.add (aJSPathProvider));
+      if (!m_aItems.add (aJSPathProvider))
+        return EChange.UNCHANGED;
+      if (m_bIsCollected)
+        _collectWarn ("Adding item " + aJSPathProvider + " after collection!");
+      return EChange.CHANGED;
     }
     finally
     {
@@ -107,7 +122,11 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>, IClonea
     m_aRWLock.writeLock ().lock ();
     try
     {
-      return EChange.valueOf (m_aItems.remove (aJSPathProvider));
+      if (!m_aItems.remove (aJSPathProvider))
+        return EChange.UNCHANGED;
+      if (m_bIsCollected)
+        _collectWarn ("Removed item " + aJSPathProvider + " after collection!");
+      return EChange.CHANGED;
     }
     finally
     {
@@ -124,6 +143,8 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>, IClonea
       if (m_aItems.isEmpty ())
         return EChange.UNCHANGED;
       m_aItems.clear ();
+      if (m_bIsCollected)
+        _collectWarn ("Removed all items after collection!");
       return EChange.CHANGED;
     }
     finally
@@ -208,18 +229,18 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>, IClonea
     }
   }
 
-  @Nonnull
-  @ReturnsMutableCopy
-  public JSResourceSet getClone ()
+  public void markAsCollected ()
   {
-    m_aRWLock.readLock ().lock ();
+    m_aRWLock.writeLock ().lock ();
     try
     {
-      return new JSResourceSet (this);
+      if (m_bIsCollected)
+        _collectWarn ("Resource set was already collected before!");
+      m_bIsCollected = true;
     }
     finally
     {
-      m_aRWLock.readLock ().unlock ();
+      m_aRWLock.writeLock ().unlock ();
     }
   }
 

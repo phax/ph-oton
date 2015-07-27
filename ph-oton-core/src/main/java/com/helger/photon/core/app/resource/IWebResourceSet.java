@@ -27,7 +27,7 @@ import com.helger.commons.state.EChange;
 
 /**
  * Base interface for CSS and JS resource sets.
- * 
+ *
  * @author Philip Helger
  * @param <T>
  *        The contained data type.
@@ -87,6 +87,13 @@ public interface IWebResourceSet <T> extends Serializable, Iterable <T>
    *        The container to add the items to. May not be <code>null</code>.
    */
   void getAllItems (@Nonnull Collection <? super T> aTarget);
+
+  /**
+   * Call this method to mark the resource set as
+   * "collected for further processing". This state may be used to determine
+   * additions afterwards which will potentially not be gathered.
+   */
+  void markAsCollected ();
 
   /**
    * @return <code>true</code> if no item is contained

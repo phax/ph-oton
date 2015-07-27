@@ -24,6 +24,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.microdom.IMicroNode;
+import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
@@ -109,7 +111,7 @@ public class AjaxDefaultResponse implements IAjaxResponse
     final JsonObject aObj = new JsonObject ();
     if (aNode != null)
     {
-      final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettings ();
+      final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettingsWithoutNamespaces ();
 
       // customize, finalize and extract resources
       HCRenderer.prepareForConversion (aNode, aNode, aConversionSettings);
@@ -123,7 +125,12 @@ public class AjaxDefaultResponse implements IAjaxResponse
       }
 
       // Serialize remaining node to HTML
-      aObj.add (PROPERTY_HTML, HCRenderer.getAsHTMLStringWithoutNamespaces (aNode));
+      final IMicroNode aMicroNode = aNode.convertToMicroNode (aConversionSettings);
+      final String sHTML = aMicroNode == null ? ""
+                                              : MicroWriter.getNodeAsString (aMicroNode,
+                                                                             aConversionSettings.getXMLWriterSettings ());
+
+      aObj.add (PROPERTY_HTML, sHTML);
     }
     m_bSuccess = true;
     m_sErrorMessage = null;

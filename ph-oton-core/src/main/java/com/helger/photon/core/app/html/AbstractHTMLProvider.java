@@ -28,8 +28,10 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.HCHead;
 import com.helger.html.hc.html.HCHtml;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.IMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
@@ -132,7 +134,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    *        The HTML head object. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void addCSSToHead (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHead aHead)
+  protected void addCSSToHead (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                               @Nonnull final HCHead aHead)
   {
     final boolean bRegular = useRegularResources ();
     final boolean bAggregateCSS = useWebSiteResourceBundlesForCSS ();
@@ -226,7 +229,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    * @param aHtml
    *        HTML object to be filled
    */
-  protected abstract void fillBody (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull HCHtml aHtml) throws ForcedRedirectException;
+  protected abstract void fillBody (@Nonnull final ISimpleWebExecutionContext aSWEC,
+                                    @Nonnull HCHtml aHtml) throws ForcedRedirectException;
 
   @Nonnull
   public final HCHtml createHTML (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws ForcedRedirectException
@@ -243,6 +247,10 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
     // fill body
     fillBody (aSWEC, aHtml);
+
+    // Do this before the head is filled
+    // customize, finalize, extract resources, handle OOB nodes
+    HCRenderer.prepareForConversion (aHtml, HCSettings.getConversionSettings ());
 
     // build HTML header (after body for per-request stuff)
     fillHead (aSWEC, aHtml);
