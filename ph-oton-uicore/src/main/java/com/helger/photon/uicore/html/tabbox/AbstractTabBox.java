@@ -30,20 +30,20 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.impl.AbstractHCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 
 /**
  * Represent a single tab box
  *
  * @author Philip Helger
- * @param <IMPLTYPE>
+ * @param <THISTYPE>
  *        Implementation type
  */
-public abstract class AbstractTabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> implements ITabBox <IMPLTYPE>
+public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>> extends AbstractHCNodeList <THISTYPE>implements ITabBox <THISTYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractTabBox.class);
 
@@ -53,20 +53,13 @@ public abstract class AbstractTabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> imple
   public AbstractTabBox ()
   {}
 
-  @Nonnull
-  protected final IMPLTYPE thisAsT ()
-  {
-    // Avoid the unchecked cast warning in all places
-    return GenericReflection.<AbstractTabBox <IMPLTYPE>, IMPLTYPE> uncheckedCast (this);
-  }
-
   public String getActiveTabID ()
   {
     return m_sActiveTabID;
   }
 
   @Nonnull
-  public IMPLTYPE setActiveTabID (@Nullable final String sID)
+  public THISTYPE setActiveTabID (@Nullable final String sID)
   {
     m_sActiveTabID = sID;
     if (StringHelper.hasText (sID) && !m_aTabs.containsKey (sID))
@@ -147,7 +140,7 @@ public abstract class AbstractTabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> imple
   }
 
   @Nonnull
-  public IMPLTYPE addTab (@Nonnull final Tab aTab, final boolean bActive)
+  public THISTYPE addTab (@Nonnull final Tab aTab, final boolean bActive)
   {
     ValueEnforcer.notNull (aTab, "Tab");
 

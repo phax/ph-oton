@@ -61,21 +61,21 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_HEADER_GLOBAL ("Globale Einstellungen", "Global settings"),
-    MSG_GLOBAL_DEBUG ("Debug-Modus", "Debug mode"),
-    MSG_GLOBAL_PRODUCTION ("Produktions-Modus", "Production mode"),
-    MSG_HEADER_EMAIL ("E-Mail Standard Einstellungen", "Email default settings"),
-    MSG_EMAIL_MAILQUEUE_LENGTH ("E-Mail Queue Länge", "Email queue length"),
-    MSG_EMAIL_MAX_SEND_COUNT ("Maximal versendete Mails", "Maximum send count"),
-    MSG_EMAIL_USE_SSL ("SSL", "SSL"),
-    MSG_EMAIL_USE_STARTTLS ("STARTTLS", "STARTTLS"),
-    MSG_EMAIL_CONNECTION_TIMEOUT ("Verbindungs-Timeout", "Connection timeout"),
-    MSG_EMAIL_SOCKET_TIMEOUT ("Socket-Timeout", "Socket timeout"),
-    MSG_EMAIL_CONNECTION_LISTENER ("ConnectionListener", "ConnectionListener"),
-    MSG_EMAIL_TRANSPORT_LISTENER ("TransportListener", "TransportListener"),
-    MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER ("EmailDataTransportListener", "EmailDataTransportListener"),
-    MSG_NONE ("keiner", "none"),
-    MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
+   MSG_HEADER_GLOBAL ("Globale Einstellungen", "Global settings"),
+   MSG_GLOBAL_DEBUG ("Debug-Modus", "Debug mode"),
+   MSG_GLOBAL_PRODUCTION ("Produktions-Modus", "Production mode"),
+   MSG_HEADER_EMAIL ("E-Mail Standard Einstellungen", "Email default settings"),
+   MSG_EMAIL_MAILQUEUE_LENGTH ("E-Mail Queue Länge", "Email queue length"),
+   MSG_EMAIL_MAX_SEND_COUNT ("Maximal versendete Mails", "Maximum send count"),
+   MSG_EMAIL_USE_SSL ("SSL", "SSL"),
+   MSG_EMAIL_USE_STARTTLS ("STARTTLS", "STARTTLS"),
+   MSG_EMAIL_CONNECTION_TIMEOUT ("Verbindungs-Timeout", "Connection timeout"),
+   MSG_EMAIL_SOCKET_TIMEOUT ("Socket-Timeout", "Socket timeout"),
+   MSG_EMAIL_CONNECTION_LISTENER ("ConnectionListener", "ConnectionListener"),
+   MSG_EMAIL_TRANSPORT_LISTENER ("TransportListener", "TransportListener"),
+   MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER ("EmailDataTransportListener", "EmailDataTransportListener"),
+   MSG_NONE ("keiner", "none"),
+   MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
 
     private final IMultilingualText m_aTP;
 
@@ -128,7 +128,8 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
     {
       // Save changes
       final boolean bGlobalDebug = aWPEC.getCheckBoxAttr (FIELD_GLOBAL_DEBUG, GlobalDebug.isDebugMode ());
-      final boolean bGlobalProduction = aWPEC.getCheckBoxAttr (FIELD_GLOBAL_PRODUCTION, GlobalDebug.isProductionMode ());
+      final boolean bGlobalProduction = aWPEC.getCheckBoxAttr (FIELD_GLOBAL_PRODUCTION,
+                                                               GlobalDebug.isProductionMode ());
 
       GlobalDebug.setDebugModeDirect (bGlobalDebug);
       GlobalDebug.setProductionModeDirect (bGlobalProduction);
@@ -200,7 +201,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
       aTabBox.addTab (EText.MSG_HEADER_EMAIL.getDisplayText (aDisplayLocale), aForm);
     }
 
-    aForm0.buildAndAddChild (aTabBox);
+    aForm0.addChild (aTabBox);
 
     final IButtonToolbar <?> aToolbar = aForm0.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_SAVE);

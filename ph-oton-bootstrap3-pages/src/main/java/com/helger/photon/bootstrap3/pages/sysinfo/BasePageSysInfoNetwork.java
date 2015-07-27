@@ -265,6 +265,6 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
       aTabBox.addTab (EText.MSG_NETWORK_INTERFACES.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
-    aNodeList.buildAndAddChild (aTabBox);
+    aNodeList.addChild (aTabBox);
   }
 }

@@ -175,7 +175,7 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
     }
 
     if (aTabBox.getTabCount () > 0)
-      aNodeList.buildAndAddChild (aTabBox);
+      aNodeList.addChild (aTabBox);
     else
       aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NONE_FOUND.getDisplayText (aDisplayLocale)));
   }

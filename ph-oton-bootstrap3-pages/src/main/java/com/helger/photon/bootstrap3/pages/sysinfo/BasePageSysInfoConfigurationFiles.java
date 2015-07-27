@@ -53,8 +53,8 @@ public class BasePageSysInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_DOES_NOT_EXIST ("Die Konfigurationsdatei existiert nicht!", "The configuration file does not exist!"),
-    MSG_NO_CONFIG_FILES ("Es sind keine Konfigurationsdateien registriert.", "No configuration files are registered.");
+   MSG_DOES_NOT_EXIST ("Die Konfigurationsdatei existiert nicht!", "The configuration file does not exist!"),
+   MSG_NO_CONFIG_FILES ("Es sind keine Konfigurationsdateien registriert.", "No configuration files are registered.");
 
     private final IMultilingualText m_aTP;
 
@@ -135,6 +135,6 @@ public class BasePageSysInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
     if (aTabBox.hasNoTabs ())
       aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NO_CONFIG_FILES.getDisplayText (aDisplayLocale)));
     else
-      aNodeList.buildAndAddChild (aTabBox);
+      aNodeList.addChild (aTabBox);
   }
 }

@@ -196,6 +196,6 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
-    aNodeList.buildAndAddChild (aTabBox);
+    aNodeList.addChild (aTabBox);
   }
 }

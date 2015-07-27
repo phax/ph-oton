@@ -320,6 +320,6 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       aTabBox.addTab (EText.MSG_TAB_CACHE.getDisplayText (aDisplayLocale), aNL);
     }
 
-    aNodeList.buildAndAddChild (aTabBox);
+    aNodeList.addChild (aTabBox);
   }
 }

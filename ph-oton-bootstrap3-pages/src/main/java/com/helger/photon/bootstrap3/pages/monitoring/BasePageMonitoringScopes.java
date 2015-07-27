@@ -228,6 +228,6 @@ public class BasePageMonitoringScopes <WPECTYPE extends IWebPageExecutionContext
       aTabBox.addTab (EText.MSG_APPLICATION_SCOPE.getDisplayTextWithArgs (aDisplayLocale, aAppScope.getID ()),
                       _getApplicationScopeInfo (aWPEC, aAppScope));
 
-    aNodeList.buildAndAddChild (aTabBox);
+    aNodeList.addChild (aTabBox);
   }
 }

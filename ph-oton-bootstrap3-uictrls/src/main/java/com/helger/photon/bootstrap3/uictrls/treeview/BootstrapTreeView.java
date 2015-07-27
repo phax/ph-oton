@@ -22,24 +22,23 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.NonBlockingStack;
 import com.helger.commons.convert.IConverter;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
-import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.tree.BasicTree;
 import com.helger.commons.tree.DefaultTree;
 import com.helger.commons.tree.DefaultTreeItem;
 import com.helger.commons.tree.ITreeItem;
 import com.helger.commons.tree.util.TreeVisitor;
-import com.helger.html.hc.IHCNodeBuilder;
-import com.helger.html.hc.html.HCDiv;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.base.AbstractHCDiv;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCScriptInline;
-import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hcext.HCHasCSSClasses;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jscode.JSArray;
@@ -55,10 +54,9 @@ import com.helger.photon.core.app.html.PhotonJS;
  *
  * @author Philip Helger
  */
-public class BootstrapTreeView implements IHCNodeBuilder
+public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
 {
   private final DefaultTree <BootstrapTreeViewItem> m_aTree;
-  private final String m_sTreeID;
 
   private HCHasCSSClasses m_aCollapseIcon;
   private HCHasCSSClasses m_aEmptyIcon;
@@ -78,14 +76,7 @@ public class BootstrapTreeView implements IHCNodeBuilder
   public BootstrapTreeView (@Nonnull final DefaultTree <BootstrapTreeViewItem> aTree)
   {
     m_aTree = ValueEnforcer.notNull (aTree, "Tree");
-    m_sTreeID = "tree" + GlobalIDFactory.getNewIntID ();
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getTreeID ()
-  {
-    return m_sTreeID;
+    ensureID ();
   }
 
   @Nonnull
@@ -154,7 +145,13 @@ public class BootstrapTreeView implements IHCNodeBuilder
   @Nonnull
   public JSInvocation invoke ()
   {
-    return JQuery.idRef (m_sTreeID).invoke ("treeview");
+    return JQuery.idRef (this).invoke ("treeview");
+  }
+
+  @Nonnull
+  public JSInvocation getJSRemoveInvocation ()
+  {
+    return invoke ().arg ("remove");
   }
 
   private static void _recursiveFillJSTree (@Nullable final List <DefaultTreeItem <BootstrapTreeViewItem>> aTreeItems,
@@ -217,33 +214,21 @@ public class BootstrapTreeView implements IHCNodeBuilder
     return aJSOptions;
   }
 
-  @Nullable
-  public HCNodeList build ()
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    registerExternalResources ();
-
-    final HCNodeList ret = new HCNodeList ();
-
-    // Placeholder
-    ret.addChild (new HCDiv ().setID (m_sTreeID));
-
     // JS Code
     final JSAssocArray aJSOptions = getJSOptions ();
-    ret.addChild (new HCScriptInline (invoke ().arg (aJSOptions)));
-
-    return ret;
+    aTargetNode.addChild (new HCScriptInline (invoke ().arg (aJSOptions)));
   }
 
-  public static void registerExternalResources ()
+  @Override
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForceRegistration)
   {
     PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.TREE_VIEW);
     PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.TREE_VIEW);
-  }
-
-  @Nonnull
-  public JSInvocation getJSRemoveInvocation ()
-  {
-    return invoke ().arg ("remove");
   }
 
   @Nonnull

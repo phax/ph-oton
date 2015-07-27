@@ -303,6 +303,6 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
-    aNodeList.buildAndAddChild (aTabBox);
+    aNodeList.addChild (aTabBox);
   }
 }

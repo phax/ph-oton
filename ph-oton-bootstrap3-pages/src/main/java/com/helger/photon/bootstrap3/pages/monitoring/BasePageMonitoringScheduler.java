@@ -154,7 +154,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
         final BootstrapViewForm aDetailsForm = new BootstrapViewForm ();
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SUMMARY.getDisplayText (aDisplayLocale))
                                                             .setCtrl (HCHTMLHelper.nl2divList (aScheduler.getMetaData ()
-                                                                                                     .getSummary ())));
+                                                                                                         .getSummary ())));
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXECUTING_JOBS.getDisplayText (aDisplayLocale))
                                                             .setCtrl (Integer.toString (aScheduler.getCurrentlyExecutingJobs ()
                                                                                                   .size ())));
@@ -208,7 +208,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
       if (aTabBox.hasNoTabs ())
         aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NOTHING_SCHEDULED.getDisplayText (aDisplayLocale)));
       else
-        aNodeList.buildAndAddChild (aTabBox);
+        aNodeList.addChild (aTabBox);
     }
     catch (final SchedulerException ex)
     {

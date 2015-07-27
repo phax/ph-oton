@@ -292,7 +292,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
       aTabBox.addTab (EText.MSG_SESSION_APPLICATION_SCOPES.getDisplayTextWithArgs (aDisplayLocale,
                                                                                    aSessionAppScope.getID ()),
                       _getSessionApplicationScopeInfo (aWPEC, aSessionAppScope));
-    aNodeList.buildAndAddChild (aTabBox);
+    aNodeList.addChild (aTabBox);
   }
 
   @Override

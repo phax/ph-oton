@@ -881,6 +881,6 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final Collection <? extends IUser> aDeletedUsers = aMgr.getAllDeletedUsers ();
     aTabBox.addTab (EText.TAB_DELETED.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aDeletedUsers.size ())),
                     getTabWithUsers (aWPEC, aDeletedUsers, getID () + "3"));
-    aNodeList.buildAndAddChild (aTabBox);
+    aNodeList.addChild (aTabBox);
   }
 }

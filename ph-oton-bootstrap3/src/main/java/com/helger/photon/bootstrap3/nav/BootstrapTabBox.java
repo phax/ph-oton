@@ -16,15 +16,16 @@
  */
 package com.helger.photon.bootstrap3.nav;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.hc.IHCNodeWithChildren;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCLI;
-import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.uicore.html.tabbox.AbstractTabBox;
 import com.helger.photon.uicore.html.tabbox.Tab;
@@ -65,11 +66,17 @@ public class BootstrapTabBox extends AbstractTabBox <BootstrapTabBox>
   public BootstrapTabBox ()
   {}
 
-  @Nullable
-  public IHCNodeWithChildren <?> build ()
+  @Override
+  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    if (m_aTabs.isEmpty ())
-      return null;
+    return !m_aTabs.isEmpty ();
+  }
+
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
     String sActiveTabID = getActiveTabID ();
     if (StringHelper.hasNoText (sActiveTabID))
@@ -108,6 +115,8 @@ public class BootstrapTabBox extends AbstractTabBox <BootstrapTabBox>
         aPane.addClass (CBootstrapCSS.ACTIVE);
     }
 
-    return HCNodeList.create (aNav, aContent);
+    addChild (aNav);
+
+    addChild (aContent);
   }
 }

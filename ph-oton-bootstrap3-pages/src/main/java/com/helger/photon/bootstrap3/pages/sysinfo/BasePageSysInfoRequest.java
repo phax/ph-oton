@@ -206,6 +206,6 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
       }
       aTabBox.addTab (EText.MSG_ATTRIBUTES.getDisplayText (aDisplayLocale), aTable);
     }
-    aNodeList.buildAndAddChild (aTabBox);
+    aNodeList.addChild (aTabBox);
   }
 }

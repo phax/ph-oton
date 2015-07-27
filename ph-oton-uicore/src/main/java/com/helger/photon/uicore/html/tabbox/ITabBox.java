@@ -24,16 +24,16 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.state.EChange;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeBuilder;
+import com.helger.html.hc.IHCNodeList;
 
 /**
  * Base interface for a tab box
- * 
+ *
  * @author Philip Helger
- * @param <IMPLTYPE>
+ * @param <THISTYPE>
  *        Implementation type
  */
-public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeBuilder
+public interface ITabBox <THISTYPE extends ITabBox <THISTYPE>> extends IHCNodeList <THISTYPE>
 {
   /** By default a tab is not active */
   boolean DEFAULT_ACTIVE = false;
@@ -44,7 +44,7 @@ public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeBu
   String getActiveTabID ();
 
   @Nonnull
-  IMPLTYPE setActiveTabID (@Nullable String sID);
+  THISTYPE setActiveTabID (@Nullable String sID);
 
   @Nonnull
   Tab addTab (@Nullable String sLabel, @Nullable IHCNode aContent);
@@ -78,7 +78,7 @@ public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeBu
               boolean bDisabled);
 
   @Nonnull
-  IMPLTYPE addTab (Tab aTab, boolean bActive);
+  THISTYPE addTab (Tab aTab, boolean bActive);
 
   @Nonnull
   @ReturnsMutableCopy
