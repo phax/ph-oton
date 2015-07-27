@@ -250,7 +250,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
     // Do this before the head is filled
     // customize, finalize, extract resources, handle OOB nodes
-    HCRenderer.prepareForConversion (aHtml, HCSettings.getConversionSettings ());
+    HCRenderer.prepareHtmlForConversion (aHtml, HCSettings.getConversionSettings ());
 
     // build HTML header (after body for per-request stuff)
     fillHead (aSWEC, aHtml);
