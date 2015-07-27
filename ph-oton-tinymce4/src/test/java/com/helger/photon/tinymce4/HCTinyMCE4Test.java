@@ -17,7 +17,6 @@
 package com.helger.photon.tinymce4;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,6 +50,5 @@ public final class HCTinyMCE4Test
     assertEquals ("{selector:'textarea',resize:'both'}", aEditor.getJSInitOptions ().getJSCode (aJSSettings));
     aEditor.setResize (null);
     assertEquals ("{selector:'textarea'}", aEditor.getJSInitOptions ().getJSCode (aJSSettings));
-    assertNotNull (aEditor.build ());
   }
 }

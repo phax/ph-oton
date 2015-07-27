@@ -17,17 +17,17 @@
 package com.helger.photon.bootstrap3.base;
 
 import com.helger.html.hc.html.HCSpan;
-import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hc.impl.AbstractHCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Represents a caret symbol (e.g. for dropdowns) as the combination of a space
  * (" ") and the span with class=caret
- * 
+ *
  * @author Philip Helger
  */
-public class BootstrapCaret extends HCNodeList
+public class BootstrapCaret extends AbstractHCNodeList <BootstrapCaret>
 {
   public BootstrapCaret ()
   {

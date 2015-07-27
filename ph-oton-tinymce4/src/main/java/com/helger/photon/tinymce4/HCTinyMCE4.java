@@ -36,8 +36,11 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hc.IHCNodeBuilder;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.api.EHCTextDirection;
+import com.helger.html.hc.base.AbstractHCTextArea;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -46,6 +49,7 @@ import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.core.form.RequestField;
 import com.helger.photon.tinymce4.type.ETinyMCE4ExternalPlugin;
 import com.helger.photon.tinymce4.type.ETinyMCE4Language;
 import com.helger.photon.tinymce4.type.ETinyMCE4Plugin;
@@ -67,7 +71,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public class HCTinyMCE4 implements IHCNodeBuilder
+public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
 {
   // General options
   public static final boolean DEFAULT_BROWSER_SPELLCHECK = false;
@@ -100,7 +104,7 @@ public class HCTinyMCE4 implements IHCNodeBuilder
   private String m_sAutoFocus;
   private EHCTextDirection m_eDirectionality;
   private ETriState m_eBrowserSpellcheck = ETriState.UNDEFINED;
-  private ETinyMCE4Language m_eLanguage;
+  private ETinyMCE4Language m_eTinyMCELanguage;
   private ISimpleURL m_aLanguageURL;
   private ETriState m_eNoWrap = ETriState.UNDEFINED;
   private ETriState m_eObjectResizing = ETriState.UNDEFINED;
@@ -178,6 +182,23 @@ public class HCTinyMCE4 implements IHCNodeBuilder
 
   // Custom
   private final Map <String, IJSExpression> m_aCustom = new LinkedHashMap <String, IJSExpression> ();
+
+  private void _init ()
+  {
+    // Select this textarea by default
+    setSelector ('#' + ensureID ().getID ());
+  }
+
+  public HCTinyMCE4 ()
+  {
+    _init ();
+  }
+
+  public HCTinyMCE4 (@Nonnull final RequestField aRF)
+  {
+    super (aRF);
+    _init ();
+  }
 
   @Nullable
   public String getAutoFocus ()
@@ -263,22 +284,22 @@ public class HCTinyMCE4 implements IHCNodeBuilder
   }
 
   @Nullable
-  public ETinyMCE4Language getLanguage ()
+  public ETinyMCE4Language getTinyMCELanguage ()
   {
-    return m_eLanguage;
+    return m_eTinyMCELanguage;
   }
 
   /**
    * Set the language of the UI texts
    *
-   * @param eLanguage
+   * @param eTinyMCELanguage
    *        The language to use. <code>null</code> means English
    * @return this
    */
   @Nonnull
-  public HCTinyMCE4 setLanguage (@Nullable final ETinyMCE4Language eLanguage)
+  public HCTinyMCE4 setTinyMCELanguage (@Nullable final ETinyMCE4Language eTinyMCELanguage)
   {
-    m_eLanguage = eLanguage;
+    m_eTinyMCELanguage = eTinyMCELanguage;
     return this;
   }
 
@@ -1196,8 +1217,8 @@ public class HCTinyMCE4 implements IHCNodeBuilder
       aOptions.add ("browser_spellcheck", isBrowserSpellcheck ());
     if (m_eDirectionality != null)
       aOptions.add ("directionality", m_eDirectionality.getAttrValue ());
-    if (m_eLanguage != null)
-      aOptions.add ("language", m_eLanguage.getValue ());
+    if (m_eTinyMCELanguage != null)
+      aOptions.add ("language", m_eTinyMCELanguage.getValue ());
     if (m_aLanguageURL != null)
       aOptions.add ("language_url", m_aLanguageURL.getAsString ());
     if (m_eNoWrap.isDefined ())
@@ -1291,15 +1312,19 @@ public class HCTinyMCE4 implements IHCNodeBuilder
     return JSTinyMCE4.init (getJSInitOptions ());
   }
 
-  @Nonnull
-  public HCScriptInline build ()
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    registerExternalResources ();
-    return new HCScriptInline (getJSInvocation ());
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+    aTargetNode.addChild (new HCScriptInline (getJSInvocation ()));
   }
 
-  public static void registerExternalResources ()
+  @Override
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForceRegistration)
   {
+    super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_1);
     PhotonJS.registerJSIncludeForThisRequest (ETinyMCE4JSPathProvider.TINYMCE_4);
   }

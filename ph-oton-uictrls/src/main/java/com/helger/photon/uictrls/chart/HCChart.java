@@ -24,12 +24,12 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeBuilder;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCCanvas;
 import com.helger.html.hc.html.HCLegend;
 import com.helger.html.hc.html.HCScriptInline;
-import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
@@ -48,7 +48,7 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
  *
  * @author Philip Helger
  */
-public class HCChart implements IHCNodeBuilder
+public class HCChart extends HCCanvas
 {
   // Main chart
   private final IChart m_aChart;
@@ -62,7 +62,9 @@ public class HCChart implements IHCNodeBuilder
   private String m_sScaleLabel;
   private String m_sTooltipTemplate;
   // Default:
-  // "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+  // "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0;
+  // i<datasets.length; i++){%><li><span
+  // style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
   private String m_sLegendTemplate;
   // Customizations
   private ETriState m_eShowLegend = ETriState.UNDEFINED;
@@ -71,6 +73,7 @@ public class HCChart implements IHCNodeBuilder
   {
     m_aChart = ValueEnforcer.notNull (aChart, "Chart");
     m_nID = GlobalIDFactory.getNewIntID ();
+    setID (getCanvasID ());
   }
 
   /**
@@ -199,13 +202,6 @@ public class HCChart implements IHCNodeBuilder
     return "chart" + m_nID;
   }
 
-  public static void registerExternalResources ()
-  {
-    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.CHART);
-    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.EXCANVAS);
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.CHART);
-  }
-
   @Nonnull
   public JSAssocArray getJSOptions ()
   {
@@ -227,17 +223,13 @@ public class HCChart implements IHCNodeBuilder
     return aJSOptions;
   }
 
-  @Nullable
-  public IHCNode build ()
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    registerExternalResources ();
-
-    final HCNodeList ret = new HCNodeList ();
-    final HCCanvas aCanvas = ret.addAndReturnChild (new HCCanvas ().setID (getCanvasID ()));
-
     final JSPackage aCode = new JSPackage ();
 
-    final JSVar aJSCanvas = aCode.var (getCanvasID (), JSHtml.documentGetElementById (aCanvas));
+    final JSVar aJSCanvas = aCode.var (getCanvasID (), JSHtml.documentGetElementById (this));
     if (m_aWidth != null)
       aCode.add (aJSCanvas.ref ("width").assign (m_aWidth));
     if (m_aHeight != null)
@@ -261,15 +253,22 @@ public class HCChart implements IHCNodeBuilder
 
     if (m_eShowLegend.isTrue ())
     {
-      final HCLegend aLegendDiv = ret.addAndReturnChild (new HCLegend ().setID (getLegendID ()));
+      final HCLegend aLegendDiv = addAndReturnChild (new HCLegend ().setID (getLegendID ()));
       aCode.add (JSHtml.documentGetElementById (aLegendDiv)
                        .ref ("innerHTML")
                        .assign (aJSChart.invoke ("generateLegend")));
     }
 
-    ret.addChild (new HCScriptInline (aCode));
+    addChild (new HCScriptInline (aCode));
+  }
 
-    return ret;
+  @Override
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForceRegistration)
+  {
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.CHART);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.EXCANVAS);
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.CHART);
   }
 
   /**

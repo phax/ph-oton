@@ -87,9 +87,9 @@ public final class BootstrapDateTimePickerSpecialNodeListModifier implements IHC
       {
         // We have multiple objects with the same options
         // Create a common selector
-        IJQuerySelector aJQI = JQuerySelector.id (aCurrent.getDateTimePicker ().getContainerID ());
+        IJQuerySelector aJQI = JQuerySelector.id (aCurrent.getDateTimePicker ());
         for (final BootstrapDateTimePickerJS aSameOption : aSameOptions)
-          aJQI = aJQI.multiple (JQuerySelector.id (aSameOption.getDateTimePicker ().getContainerID ()));
+          aJQI = aJQI.multiple (JQuerySelector.id (aSameOption.getDateTimePicker ()));
         // And apply once
         aMergedJS.append (BootstrapDateTimePicker.invoke (aJQI.invoke (), aCurrentJSOptions));
       }

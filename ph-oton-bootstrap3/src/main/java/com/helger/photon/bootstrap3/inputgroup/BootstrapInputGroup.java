@@ -27,15 +27,16 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.state.EChange;
+import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeBuilder;
-import com.helger.html.hc.html.HCDiv;
+import com.helger.html.hc.base.AbstractHCDiv;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.button.BootstrapButton;
 
-public class BootstrapInputGroup implements IHCNodeBuilder
+public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
 {
   private final EBootstrapInputGroupSize m_eSize;
   private final List <IHCNode> m_aPrefixes = new ArrayList <IHCNode> ();
@@ -227,31 +228,36 @@ public class BootstrapInputGroup implements IHCNodeBuilder
     return m_aSuffixes.size ();
   }
 
-  @Nullable
-  public IHCNode build ()
+  public boolean hasNeitherPrefixNoSuffix ()
   {
-    if (m_aPrefixes.isEmpty () && m_aSuffixes.isEmpty ())
-      return m_aInput;
+    return m_aPrefixes.isEmpty () && m_aSuffixes.isEmpty ();
+  }
 
-    final HCDiv aInputGroup = new HCDiv ().addClasses (CBootstrapCSS.INPUT_GROUP, m_eSize);
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  {
+    if (hasNeitherPrefixNoSuffix ())
+      throw new IllegalStateException ("Neither prefix nor suffix present!");
+
+    addClasses (CBootstrapCSS.INPUT_GROUP, m_eSize);
 
     for (final IHCNode aPrefix : m_aPrefixes)
     {
       if (aPrefix instanceof BootstrapButton)
-        aInputGroup.addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_BTN).addChild (aPrefix));
+        addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_BTN).addChild (aPrefix));
       else
-        aInputGroup.addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_ADDON).addChild (aPrefix));
+        addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_ADDON).addChild (aPrefix));
     }
 
-    aInputGroup.addChild (m_aInput);
+    addChild (m_aInput);
 
     for (final IHCNode aSuffix : m_aSuffixes)
     {
       if (aSuffix instanceof BootstrapButton)
-        aInputGroup.addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_BTN).addChild (aSuffix));
+        addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_BTN).addChild (aSuffix));
       else
-        aInputGroup.addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_ADDON).addChild (aSuffix));
+        addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_ADDON).addChild (aSuffix));
     }
-    return aInputGroup;
   }
 }

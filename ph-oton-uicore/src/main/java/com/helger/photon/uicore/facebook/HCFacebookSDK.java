@@ -25,13 +25,13 @@ import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
-import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hc.impl.AbstractHCNodeList;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 
-public class HCFacebookSDK extends HCNodeList
+public class HCFacebookSDK extends AbstractHCNodeList <HCFacebookSDK>
 {
   private static final String FB_ROOT_ID = "fb-root";
 
@@ -42,28 +42,25 @@ public class HCFacebookSDK extends HCNodeList
                         final boolean bUseXFBML)
   {
     addChild (new HCDiv ().setID (FB_ROOT_ID));
+    final String sLocale = FacebookLocaleMapping.getInstance ().getFBLocale (aDisplayLocale).toString ();
     if (true)
     {
       addChild (new HCScriptInlineOnDocumentReady (JSExpr.invoke ("facebookLoadSDKjQuery")
-                                                   .arg (sAppID)
-                                                   .arg (FacebookLocaleMapping.getInstance ()
-                                                                              .getFBLocale (aDisplayLocale)
-                                                                              .toString ())
-                                                   .arg (FB_ROOT_ID)
-                                                   .arg (bCheckLoginStatus)
-                                                   .arg (bEnableCookies)
-                                                   .arg (bUseXFBML)));
+                                                         .arg (sAppID)
+                                                         .arg (sLocale)
+                                                         .arg (FB_ROOT_ID)
+                                                         .arg (bCheckLoginStatus)
+                                                         .arg (bEnableCookies)
+                                                         .arg (bUseXFBML)));
     }
     else
     {
       addChild (new HCScriptInline (new JSInvocation ("facebookLoadSDKAsync").arg (sAppID)
-                                                                       .arg (FacebookLocaleMapping.getInstance ()
-                                                                                                  .getFBLocale (aDisplayLocale)
-                                                                                                  .toString ())
-                                                                       .arg (FB_ROOT_ID)
-                                                                       .arg (bCheckLoginStatus)
-                                                                       .arg (bEnableCookies)
-                                                                       .arg (bUseXFBML)));
+                                                                             .arg (sLocale)
+                                                                             .arg (FB_ROOT_ID)
+                                                                             .arg (bCheckLoginStatus)
+                                                                             .arg (bEnableCookies)
+                                                                             .arg (bUseXFBML)));
     }
   }
 

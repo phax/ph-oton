@@ -16,9 +16,7 @@
  */
 package com.helger.photon.bootstrap3.uictrls.datetimepicker;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -31,23 +29,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTFormatPatterns;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCEdit;
-import com.helger.html.hc.html.HCSpan;
-import com.helger.html.hc.impl.AbstractHCNodeList;
-import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.jscode.JSArray;
@@ -72,7 +64,7 @@ import com.helger.photon.core.form.RequestFieldDate;
  *
  * @author Philip Helger
  */
-public class BootstrapDateTimePicker extends AbstractHCNodeList <BootstrapDateTimePicker>
+public class BootstrapDateTimePicker extends BootstrapInputGroup
 {
   public static final ICSSClassProvider CSS_CLASS_DATE = DefaultCSSClassProvider.create ("date");
 
@@ -88,7 +80,6 @@ public class BootstrapDateTimePicker extends AbstractHCNodeList <BootstrapDateTi
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (BootstrapDateTimePicker.class);
 
-  private final String m_sContainerID;
   private final HCEdit m_aEdit;
   private final Locale m_aDisplayLocale;
   private final EDateTimePickerLanguage m_eLanguage;
@@ -113,8 +104,6 @@ public class BootstrapDateTimePicker extends AbstractHCNodeList <BootstrapDateTi
   private LocalDate m_aInitialDate;
 
   // UI options
-  private final List <IHCNode> m_aPrefixes = new ArrayList <IHCNode> ();
-  private final List <IHCNode> m_aSuffixes = new ArrayList <IHCNode> ();
   private boolean m_bShowResetButton = DEFAULT_SHOW_RESET_BUTTON;
 
   public BootstrapDateTimePicker (@Nonnull final RequestFieldDate aRFD)
@@ -131,10 +120,11 @@ public class BootstrapDateTimePicker extends AbstractHCNodeList <BootstrapDateTi
                                   @Nullable final String sValue,
                                   @Nonnull final Locale aDisplayLocale)
   {
+    super (new HCEdit (new RequestField (sName, sValue)).setPlaceholder (""));
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
-    m_sContainerID = GlobalIDFactory.getNewStringID ();
-    m_aEdit = new HCEdit (new RequestField (sName, sValue)).setPlaceholder ("");
+    ensureID ();
+    m_aEdit = (HCEdit) getInput ();
     m_aDisplayLocale = aDisplayLocale;
     m_eLanguage = EDateTimePickerLanguage.getFromLocaleOrNull (aDisplayLocale);
     if (m_eLanguage == null && !"en".equals (aDisplayLocale.getLanguage ()))
@@ -142,19 +132,9 @@ public class BootstrapDateTimePicker extends AbstractHCNodeList <BootstrapDateTi
     m_eWeekStart = EDateTimePickerDayOfWeek.getFromJavaValueOrNull (Calendar.getInstance (aDisplayLocale)
                                                                             .getFirstDayOfWeek ());
     // Use the calendar icon as default prefix
-    m_aPrefixes.add (EBootstrapIcon.CALENDAR.getAsNode ());
+    addPrefix (EBootstrapIcon.CALENDAR.getAsNode ());
     // Default to end date + 1 year
     setEndDate (PDTFactory.getCurrentLocalDate ().plusYears (1));
-  }
-
-  /**
-   * @return The ID used to identify the input group.
-   */
-  @Nonnull
-  @Nonempty
-  public String getContainerID ()
-  {
-    return m_sContainerID;
   }
 
   /**
@@ -170,7 +150,7 @@ public class BootstrapDateTimePicker extends AbstractHCNodeList <BootstrapDateTi
    * @return The datetime picker language to use. May be <code>null</code>.
    */
   @Nullable
-  public EDateTimePickerLanguage getLanguage ()
+  public EDateTimePickerLanguage getDateTimeLanguage ()
   {
     return m_eLanguage;
   }
@@ -423,88 +403,6 @@ public class BootstrapDateTimePicker extends AbstractHCNodeList <BootstrapDateTi
     return this;
   }
 
-  @Nonnull
-  public BootstrapDateTimePicker addPrefix (@Nullable final String sPrefix)
-  {
-    return addPrefix (HCTextNode.createOnDemand (sPrefix));
-  }
-
-  @Nonnull
-  public BootstrapDateTimePicker addPrefix (@Nullable final IHCNode aPrefix)
-  {
-    if (aPrefix != null)
-      m_aPrefixes.add (aPrefix);
-    return this;
-  }
-
-  @Nonnull
-  public BootstrapDateTimePicker addPrefix (@Nonnegative final int nIndex, @Nullable final String sPrefix)
-  {
-    return addPrefix (nIndex, HCTextNode.createOnDemand (sPrefix));
-  }
-
-  @Nonnull
-  public BootstrapDateTimePicker addPrefix (@Nonnegative final int nIndex, @Nullable final IHCNode aPrefix)
-  {
-    if (nIndex < 0)
-      throw new IllegalArgumentException ("Index too small: " + nIndex);
-
-    if (aPrefix != null)
-      if (nIndex >= m_aPrefixes.size ())
-        m_aPrefixes.add (aPrefix);
-      else
-        m_aPrefixes.add (nIndex, aPrefix);
-    return this;
-  }
-
-  @Nonnull
-  public BootstrapDateTimePicker removeAllPrefixes ()
-  {
-    m_aPrefixes.clear ();
-    return this;
-  }
-
-  @Nonnull
-  public BootstrapDateTimePicker addSuffix (@Nullable final String sSuffix)
-  {
-    return addSuffix (HCTextNode.createOnDemand (sSuffix));
-  }
-
-  @Nonnull
-  public BootstrapDateTimePicker addSuffix (@Nullable final IHCNode aSuffix)
-  {
-    if (aSuffix != null)
-      m_aSuffixes.add (aSuffix);
-    return this;
-  }
-
-  @Nonnull
-  public BootstrapDateTimePicker addSuffix (@Nonnegative final int nIndex, @Nullable final String sSuffix)
-  {
-    return addSuffix (nIndex, HCTextNode.createOnDemand (sSuffix));
-  }
-
-  @Nonnull
-  public BootstrapDateTimePicker addSuffix (@Nonnegative final int nIndex, @Nullable final IHCNode aSuffix)
-  {
-    if (nIndex < 0)
-      throw new IllegalArgumentException ("Index too small: " + nIndex);
-
-    if (aSuffix != null)
-      if (nIndex >= m_aSuffixes.size ())
-        m_aSuffixes.add (aSuffix);
-      else
-        m_aSuffixes.add (nIndex, aSuffix);
-    return this;
-  }
-
-  @Nonnull
-  public BootstrapDateTimePicker removeAllSuffixes ()
-  {
-    m_aSuffixes.clear ();
-    return this;
-  }
-
   public boolean isShowTime ()
   {
     return m_eMinView == null || m_eMinView.isLessThan (EDateTimePickerViewType.MONTH);
@@ -519,7 +417,7 @@ public class BootstrapDateTimePicker extends AbstractHCNodeList <BootstrapDateTi
   @Nonnull
   public JSInvocation invoke ()
   {
-    return invoke (JQuery.idRef (m_sContainerID));
+    return invoke (JQuery.idRef (this));
   }
 
   @Nonnull
@@ -602,27 +500,14 @@ public class BootstrapDateTimePicker extends AbstractHCNodeList <BootstrapDateTi
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    // Create control
-    final BootstrapInputGroup aBIG = new BootstrapInputGroup (m_aEdit);
-    for (final IHCNode aPrefix : m_aPrefixes)
-      aBIG.addPrefix (aPrefix);
-    for (final IHCNode aSuffix : m_aSuffixes)
-      aBIG.addSuffix (aSuffix);
-    if (m_bShowResetButton)
-      aBIG.addSuffix (EBootstrapIcon.REMOVE.getAsNode ());
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
-    // It's either a div or an edit
-    IHCElement <?> aCtrl = (IHCElement <?>) aBIG.build ();
-    if (aCtrl == m_aEdit)
-    {
-      // No input group created - wrap in dummy span
-      aCtrl = new HCSpan ().setID (m_sContainerID).addClass (CSS_CLASS_DATE).addChild (aCtrl);
-    }
-    else
-      aCtrl.setID (m_sContainerID).addClass (CSS_CLASS_DATE);
+    if (m_bShowResetButton)
+      addSuffix (EBootstrapIcon.REMOVE.getAsNode ());
+
+    addClass (CSS_CLASS_DATE);
 
     // Assemble
-    addChild (aCtrl);
     addChild (new BootstrapDateTimePickerJS (this));
   }
 
@@ -630,6 +515,7 @@ public class BootstrapDateTimePicker extends AbstractHCNodeList <BootstrapDateTi
   protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
+    super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
     PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER);
     if (m_eLanguage != null)
     {

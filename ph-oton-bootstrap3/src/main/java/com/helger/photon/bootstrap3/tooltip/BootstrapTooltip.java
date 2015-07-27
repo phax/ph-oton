@@ -45,7 +45,7 @@ import com.helger.photon.bootstrap3.EBootstrapIcon;
 
 /**
  * Bootstrap Tooltip
- * 
+ *
  * @author Philip Helger
  */
 public class BootstrapTooltip implements IHCNodeBuilder

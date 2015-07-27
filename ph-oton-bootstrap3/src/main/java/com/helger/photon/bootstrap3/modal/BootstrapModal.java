@@ -21,13 +21,13 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLRole;
+import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeBuilder;
+import com.helger.html.hc.base.AbstractHCDiv;
+import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.html.HCH4;
 import com.helger.html.hc.impl.HCNodeList;
@@ -39,7 +39,7 @@ import com.helger.html.jscode.JSPackage;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.base.BootstrapCloseIcon;
 
-public class BootstrapModal implements IHCNodeBuilder, IHasID <String>
+public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
 {
   /**
    * This event fires immediately when the show instance method is called. If
@@ -72,7 +72,6 @@ public class BootstrapModal implements IHCNodeBuilder, IHasID <String>
   public static final boolean DEFAULT_FADE = true;
   public static final boolean DEFAULT_SHOW_CLOSE = true;
 
-  private final String m_sID;
   private final EBootstrapModalSize m_eSize;
   private boolean m_bFade = DEFAULT_FADE;
   private boolean m_bShowClose = DEFAULT_SHOW_CLOSE;
@@ -88,15 +87,8 @@ public class BootstrapModal implements IHCNodeBuilder, IHasID <String>
   public BootstrapModal (@Nonnull final EBootstrapModalSize eSize)
   {
     ValueEnforcer.notNull (eSize, "Size");
-    m_sID = GlobalIDFactory.getNewStringID ();
+    ensureID ();
     m_eSize = eSize;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getID ()
-  {
-    return m_sID;
   }
 
   @Nonnull
@@ -190,33 +182,31 @@ public class BootstrapModal implements IHCNodeBuilder, IHasID <String>
   @Nonempty
   private String _getContentID ()
   {
-    return m_sID + "content";
+    return getID () + "content";
   }
 
   @Nonnull
   @Nonempty
   private String _getTitleID ()
   {
-    return m_sID + "title";
+    return getID () + "title";
   }
 
-  @Nullable
-  public HCDiv build ()
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    final HCDiv ret = new HCDiv ().addClass (CBootstrapCSS.MODAL)
-                                  .setRole (EHTMLRole.DIALOG)
-                                  .setCustomAttr (CHTMLAttributes.ARIA_HIDDEN, "true")
-                                  .setID (m_sID);
+    addClass (CBootstrapCSS.MODAL).setRole (EHTMLRole.DIALOG).setCustomAttr (CHTMLAttributes.ARIA_HIDDEN, "true");
     if (m_bFade)
-      ret.addClass (CBootstrapCSS.FADE);
+      addClass (CBootstrapCSS.FADE);
 
-    final HCDiv aDialog = ret.addAndReturnChild (new HCDiv ().addClasses (CBootstrapCSS.MODAL_DIALOG, m_eSize));
+    final HCDiv aDialog = addAndReturnChild (new HCDiv ().addClasses (CBootstrapCSS.MODAL_DIALOG, m_eSize));
     final HCDiv aContent = aDialog.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.MODAL_CONTENT)
                                                                   .setID (_getContentID ()));
     if (m_aHeader != null)
     {
       final String sTitleID = _getTitleID ();
-      ret.setCustomAttr (CHTMLAttributes.ARIA_LABELLEDBY, sTitleID);
+      setCustomAttr (CHTMLAttributes.ARIA_LABELLEDBY, sTitleID);
       final HCDiv aHeader = aContent.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.MODAL_HEADER));
       if (m_bShowClose)
         aHeader.addChild (new BootstrapCloseIcon ().setDataAttr ("dismiss", "modal"));
@@ -226,7 +216,6 @@ public class BootstrapModal implements IHCNodeBuilder, IHasID <String>
       aContent.addChild (new HCDiv ().addClass (CBootstrapCSS.MODAL_BODY).addChild (m_aBody));
     if (m_aFooter != null)
       aContent.addChild (new HCDiv ().addClass (CBootstrapCSS.MODAL_FOOTER).addChild (m_aFooter));
-    return ret;
   }
 
   /**
@@ -235,7 +224,7 @@ public class BootstrapModal implements IHCNodeBuilder, IHasID <String>
   @Nonnull
   public JSInvocation jsModal ()
   {
-    return JQuery.idRef (m_sID).invoke ("modal");
+    return JQuery.idRef (this).invoke ("modal");
   }
 
   /**
