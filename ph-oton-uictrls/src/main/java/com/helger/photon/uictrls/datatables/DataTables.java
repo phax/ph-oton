@@ -45,9 +45,11 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
+import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.base.AbstractHCScriptInline;
 import com.helger.html.hc.base.IHCCol;
 import com.helger.html.hc.base.IHCTable;
 import com.helger.html.hc.config.HCSettings;
@@ -84,7 +86,8 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.ajax.DataTablesServerData;
 import com.helger.web.http.EHTTPMethod;
 
-public class DataTables extends HCScriptInline
+@OutOfBandNode
+public class DataTables extends AbstractHCScriptInline <DataTables>
 {
   public static final boolean DEFAULT_GENERATE_ON_DOCUMENT_READY = false;
   public static final boolean DEFAULT_AUTOWIDTH = true;
@@ -1124,10 +1127,10 @@ public class DataTables extends HCScriptInline
   }
 
   /**
-   * Create an {@link HCScriptInline} or {@link HCScriptInlineOnDocumentReady} block
-   * that handles expand and collapse. The following pre-conditions must be met:
-   * The first column must be the expand/collapse column and it must contain an
-   * image where the event handler is registered.
+   * Create an {@link HCScriptInline} or {@link HCScriptInlineOnDocumentReady}
+   * block that handles expand and collapse. The following pre-conditions must
+   * be met: The first column must be the expand/collapse column and it must
+   * contain an image where the event handler is registered.
    *
    * @param aExpandImgURL
    *        The URL of the expand icon (closed state)

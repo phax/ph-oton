@@ -20,19 +20,19 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
-import com.helger.html.hc.html.HCScriptInline;
+import com.helger.html.hc.base.AbstractHCScriptInline;
 import com.helger.html.hc.special.SpecialNodeListModifier;
 
 /**
  * A special script that initializes the {@link BootstrapDateTimePicker}. It is
  * a separate class, so that potentially identical options can be merged to a
  * single invocation.
- * 
+ *
  * @author Philip Helger
  */
 @OutOfBandNode
 @SpecialNodeListModifier (BootstrapDateTimePickerSpecialNodeListModifier.class)
-public class BootstrapDateTimePickerJS extends HCScriptInline
+public class BootstrapDateTimePickerJS extends AbstractHCScriptInline <BootstrapDateTimePickerJS>
 {
   private final BootstrapDateTimePicker m_aDTP;
 
