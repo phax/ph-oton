@@ -22,14 +22,17 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.html.css.DefaultCSSClassProvider;
+import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
 
 @NotThreadSafe
-public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> implements IMutableBootstrapFormGroupContainer
+public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm>implements IMutableBootstrapFormGroupContainer
 {
+  public static final ICSSClassProvider CSS_CLASS_VIEW_FORM = DefaultCSSClassProvider.create ("view-form");
   public static final int DEFAULT_LEFT_PART = 3;
   public static final int DEFAULT_RIGHT_PART = CBootstrap.GRID_SYSTEM_MAX - DEFAULT_LEFT_PART;
 
@@ -41,6 +44,7 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
   public BootstrapViewForm ()
   {
     this (EBootstrapFormType.HORIZONTAL);
+    addClass (CSS_CLASS_VIEW_FORM);
   }
 
   public BootstrapViewForm (@Nonnull final EBootstrapFormType eFormType)
@@ -111,7 +115,10 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
     ValueEnforcer.isBetweenInclusive (nLeftPartsMD, "LeftPartsMD", 1, CBootstrap.GRID_SYSTEM_MAX);
     ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 1, CBootstrap.GRID_SYSTEM_MAX);
 
-    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS, nLeftPartsSM, nLeftPartsMD, nLeftPartsLG);
+    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS,
+                                                                 nLeftPartsSM,
+                                                                 nLeftPartsMD,
+                                                                 nLeftPartsLG);
     final BootstrapGridSpec aNewRight = BootstrapGridSpec.create (_getRight (nLeftPartsXS),
                                                                   _getRight (nLeftPartsSM),
                                                                   _getRight (nLeftPartsMD),
@@ -121,7 +128,8 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
 
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft, @Nonnull final BootstrapGridSpec aRight)
+  public BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft,
+                                         @Nonnull final BootstrapGridSpec aRight)
   {
     ValueEnforcer.notNull (aLeft, "Left");
     ValueEnforcer.notNull (aRight, "Right");
