@@ -31,6 +31,7 @@ import com.helger.html.hc.api.EHCInputType;
 import com.helger.html.hc.base.AbstractHCInput;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCHiddenField;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -130,9 +131,11 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     // HiddenField
-    aTargetNode.addChild (new HCHiddenField (m_aRFHidden).setID (m_sHiddenFieldID));
+    aTargetNode.addChild (HCRenderer.getPreparedNode (new HCHiddenField (m_aRFHidden).setID (m_sHiddenFieldID),
+                                                      aTargetNode,
+                                                      aConversionSettings));
 
     // JS code
-    aTargetNode.addChild (m_aScript);
+    aTargetNode.addChild (HCRenderer.getPreparedNode (m_aScript, aTargetNode, aConversionSettings));
   }
 }
