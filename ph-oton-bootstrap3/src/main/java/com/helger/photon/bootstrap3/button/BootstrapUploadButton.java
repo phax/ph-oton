@@ -75,21 +75,21 @@ public class BootstrapUploadButton extends AbstractHCDiv <BootstrapUploadButton>
   }
 
   /**
-   * Create a readonly edit that contains the value of the selected file. It can
-   * be placed anywhere in the DOM.
+   * Create a read only edit that contains the value of the selected file. It
+   * can be placed anywhere in the DOM.
    *
    * @param sPlaceholder
    *        The placeholder text to be used if no file is selected.
-   * @return A nodelist with the edit and a JavaScript
+   * @return A node list with the edit and a JavaScript
    */
   @Nonnull
   public HCNodeList createSelectedFileEdit (@Nullable final String sPlaceholder)
   {
     final HCEdit aEdit = new HCEdit ().setPlaceholder (sPlaceholder).setReadonly (true);
     final HCScriptInline aScript = new HCScriptInline (JQuery.idRef (m_aEdit)
-                                                 .on ("change",
-                                                      new JSAnonymousFunction (JQuery.idRef (aEdit)
-                                                                                     .val (JSExpr.THIS.ref ("value")))));
+                                                             .on ("change",
+                                                                  new JSAnonymousFunction (JQuery.idRef (aEdit)
+                                                                                                 .val (JSExpr.THIS.ref ("value")))));
     return new HCNodeList ().addChildren (aEdit, aScript);
   }
 }

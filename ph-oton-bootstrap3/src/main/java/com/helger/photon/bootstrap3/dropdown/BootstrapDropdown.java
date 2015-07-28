@@ -105,7 +105,7 @@ public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
         {
           final IHCNode aChild = getChildAtIndex (i);
           if (!HCSpecialNodeHandler.isOutOfBandNode (aChild))
-            HCConsistencyChecker.consistencyWarning ("A BootstrapDropdown must have only 2 children or scripts!");
+            HCConsistencyChecker.consistencyError ("A BootstrapDropdown must have only 2 children or scripts!");
         }
     }
   }

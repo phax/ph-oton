@@ -23,7 +23,6 @@ import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCControl;
 import com.helger.html.hc.IHCElement;
-import com.helger.html.hc.IHCHasChildren;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.base.IHCScript;
 import com.helger.html.hc.html.HCCheckBox;
@@ -59,7 +58,7 @@ public final class BootstrapHelper
         markAsFormControl (aCurCtrl);
   }
 
-  public static void markChildrenAsFormControls (@Nullable final IHCHasChildren aParent)
+  public static void markChildrenAsFormControls (@Nullable final IHCNode aParent)
   {
     if (aParent != null)
       for (final IHCNode aChild : aParent.getAllChildren ())
@@ -75,13 +74,12 @@ public final class BootstrapHelper
       return false;
     }
 
-    // Decend only in non-elements
-    if (aNode instanceof IHCHasChildren)
+    // Descend only in non-elements
+    if (aNode != null)
     {
       // E.g. HCNodeList
-      final IHCHasChildren aParent = (IHCHasChildren) aNode;
-      if (aParent.hasChildren ())
-        for (final IHCNode aChild : aParent.getAllChildren ())
+      if (aNode.hasChildren ())
+        for (final IHCNode aChild : aNode.getAllChildren ())
           if (containsFormControlStatic (aChild))
             return true;
     }
@@ -99,13 +97,12 @@ public final class BootstrapHelper
       }
     }
     else
-      // Decend only in non-elements
-      if (aNode instanceof IHCHasChildren)
+      // Descend only in non-elements
+      if (aNode != null)
       {
         // E.g. HCNodeList
-        final IHCHasChildren aParent = (IHCHasChildren) aNode;
-        if (aParent.hasChildren ())
-          for (final IHCNode aChild : aParent.getAllChildren ())
+        if (aNode.hasChildren ())
+          for (final IHCNode aChild : aNode.getAllChildren ())
             makeFormControlStatic (aChild);
       }
   }
