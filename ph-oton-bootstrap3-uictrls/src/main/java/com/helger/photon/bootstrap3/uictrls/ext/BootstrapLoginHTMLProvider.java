@@ -150,7 +150,7 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
     aRow.createColumn (0, 2, 3, 3);
     final HCDiv aCol2 = aRow.createColumn (12, 8, 6, 6);
     if (StringHelper.hasText (m_sPageTitle))
-      aCol2.addChild (new BootstrapPageHeader ().addChild (HCH2.create (m_sPageTitle)));
+      aCol2.addChild (new BootstrapPageHeader ().addChild (new HCH2 ().addChild (m_sPageTitle)));
     aCol2.addChild (aForm);
     aRow.createColumn (0, 2, 3, 3);
 

@@ -155,14 +155,14 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
       // The property may contain several paths
       for (final String sPart : StringHelper.getExploded (SystemProperties.getPathSeparator (), sDir))
       {
-        aList.add (HCDiv.create (sPart));
+        aList.add (new HCDiv ().addChild (sPart));
         final HCUL aUL = new HCUL ();
         aList.add (aUL);
         final File aEndorsedDir = new File (sPart);
         if (!aEndorsedDir.exists ())
         {
           // Directory does not exist
-          aUL.addItem (HCEM.create (EText.MSG_DIR_NOT_EXISTING.getDisplayText (aDisplayLocale)));
+          aUL.addItem (new HCEM ().addChild (EText.MSG_DIR_NOT_EXISTING.getDisplayText (aDisplayLocale)));
         }
         else
         {
@@ -171,7 +171,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
           if (aFiles.isEmpty ())
           {
             // Directory is empty
-            aUL.addItem (HCEM.create (EText.MSG_DIR_EMPTY.getDisplayText (aDisplayLocale)));
+            aUL.addItem (new HCEM ().addChild (EText.MSG_DIR_EMPTY.getDisplayText (aDisplayLocale)));
           }
           else
           {

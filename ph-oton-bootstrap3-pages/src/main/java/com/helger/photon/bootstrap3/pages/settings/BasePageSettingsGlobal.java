@@ -176,7 +176,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
         for (final ConnectionListener aListener : EmailGlobalSettings.getAllConnectionListeners ())
           aCtrl.addChild (new HCDiv ().addChild (String.valueOf (aListener)));
         if (!aCtrl.hasChildren ())
-          aCtrl.addChild (HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
+          aCtrl.addChild (new HCEM ().addChild (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_CONNECTION_LISTENER.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aCtrl));
       }
@@ -185,7 +185,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
         for (final TransportListener aListener : EmailGlobalSettings.getAllTransportListeners ())
           aCtrl.addChild (new HCDiv ().addChild (String.valueOf (aListener)));
         if (!aCtrl.hasChildren ())
-          aCtrl.addChild (HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
+          aCtrl.addChild (new HCEM ().addChild (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aCtrl));
       }
@@ -194,7 +194,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
         for (final IEmailDataTransportListener aListener : EmailGlobalSettings.getAllEmailDataTransportListeners ())
           aCtrl.addChild (new HCDiv ().addChild (String.valueOf (aListener)));
         if (!aCtrl.hasChildren ())
-          aCtrl.addChild (HCEM.create (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
+          aCtrl.addChild (new HCEM ().addChild (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aCtrl));
       }

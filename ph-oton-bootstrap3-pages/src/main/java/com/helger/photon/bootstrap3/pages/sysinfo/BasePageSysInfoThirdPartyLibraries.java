@@ -133,7 +133,7 @@ public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecut
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    aNodeList.addChild (HCH4.create (EText.MSG_TPM_HEADER.getDisplayText (aDisplayLocale)));
+    aNodeList.addChild (new HCH4 ().addChild (EText.MSG_TPM_HEADER.getDisplayText (aDisplayLocale)));
 
     // Third party modules
     final Set <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()

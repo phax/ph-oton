@@ -66,7 +66,7 @@ public final class FeedTest
     final Feed aFeed = _createSimpleFeed (5);
     assertTrue (aFeed.isValid ());
     final FeedEntry aEntry = aFeed.getAllEntries ().get (4);
-    aEntry.setContent (new FeedXHTMLContent (HCDiv.create ("Super!")));
+    aEntry.setContent (new FeedXHTMLContent (new HCDiv ().addChild ("Super!")));
     assertNotNull (aFeed.getAsDocument ());
   }
 }

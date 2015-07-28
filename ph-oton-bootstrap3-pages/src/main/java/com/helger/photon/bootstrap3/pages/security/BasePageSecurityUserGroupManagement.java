@@ -200,7 +200,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     if (aAssignedUserIDs.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_0.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCEM.create (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
+                                                   .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
     }
     else
     {
@@ -213,7 +213,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       final HCNodeList aUserUI = new HCNodeList ();
       for (final IUser aUser : CollectionHelper.getSorted (aAssignedUsers,
                                                            new CollatingComparatorHasName <IUser> (aDisplayLocale)))
-        aUserUI.addChild (HCDiv.create (aUser.getName ()));
+        aUserUI.addChild (new HCDiv ().addChild (aUser.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aAssignedUserIDs.size ())))
                                                    .setCtrl (aUserUI));
@@ -224,7 +224,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     if (aAssignedRoleIDs.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCEM.create (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
+                                                   .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
     }
     else
     {
@@ -237,7 +237,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       final HCNodeList aRoleUI = new HCNodeList ();
       for (final IRole aRole : CollectionHelper.getSorted (aAssignedRoles,
                                                            new CollatingComparatorHasName <IRole> (aDisplayLocale)))
-        aRoleUI.addChild (HCDiv.create (aRole.getName ()));
+        aRoleUI.addChild (new HCDiv ().addChild (aRole.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aAssignedRoleIDs.size ())))
                                                    .setCtrl (aRoleUI));

@@ -41,7 +41,7 @@ public class BootstrapPagination extends HCUL
   public BootstrapPagination addItemActive (@Nullable final String sContent)
   {
     if (StringHelper.hasText (sContent))
-      addItemActive (HCSpan.create (sContent));
+      addItemActive (new HCSpan ().addChild (sContent));
     return this;
   }
 
@@ -56,7 +56,7 @@ public class BootstrapPagination extends HCUL
   public BootstrapPagination addItemDisabled (@Nullable final String sContent)
   {
     if (StringHelper.hasText (sContent))
-      addItemDisabled (HCSpan.create (sContent));
+      addItemDisabled (new HCSpan ().addChild (sContent));
     return this;
   }
 

@@ -172,7 +172,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
                                    }
                                    catch (final SocketException ex)
                                    {
-                                     aRow.addCell (HCEM.create (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+                                     aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
                                    // network interface is up and running.
@@ -182,7 +182,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
                                    }
                                    catch (final SocketException ex)
                                    {
-                                     aRow.addCell (HCEM.create (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+                                     aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
                                    // network interface is a loopback interface.
@@ -192,7 +192,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
                                    }
                                    catch (final SocketException ex)
                                    {
-                                     aRow.addCell (HCEM.create (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+                                     aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
                                    // network interface is a point to point
@@ -206,7 +206,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
                                    }
                                    catch (final SocketException ex)
                                    {
-                                     aRow.addCell (HCEM.create (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+                                     aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
                                    // network interface supports multicasting or
@@ -218,7 +218,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
                                    }
                                    catch (final SocketException ex)
                                    {
-                                     aRow.addCell (HCEM.create (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+                                     aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
                                    // Maximum Transmission Unit (MTU) of this

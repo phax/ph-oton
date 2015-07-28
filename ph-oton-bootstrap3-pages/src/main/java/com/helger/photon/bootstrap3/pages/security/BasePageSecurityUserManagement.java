@@ -338,7 +338,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LAST_LOGIN.getDisplayText (aDisplayLocale))
                                                  .setCtrl (aSelectedObject.getLastLoginDateTime () != null ? new HCTextNode (PDTToString.getAsString (aSelectedObject.getLastLoginDateTime (),
                                                                                                                                                       aDisplayLocale))
-                                                                                                           : HCEM.create (EText.LABEL_LAST_LOGIN_NEVER.getDisplayText (aDisplayLocale))));
+                                                                                                           : new HCEM ().addChild (EText.LABEL_LAST_LOGIN_NEVER.getDisplayText (aDisplayLocale))));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LOGIN_COUNT.getDisplayText (aDisplayLocale))
                                                  .setCtrl (Integer.toString (aSelectedObject.getLoginCount ())));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_CONSECUTIVE_FAILED_LOGIN_COUNT.getDisplayText (aDisplayLocale))
@@ -352,14 +352,14 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     if (aUserGroups.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCEM.create (EText.NONE_DEFINED.getDisplayText (aDisplayLocale))));
+                                                   .setCtrl (new HCEM ().addChild (EText.NONE_DEFINED.getDisplayText (aDisplayLocale))));
     }
     else
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
       for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aUserGroups,
                                                                      new CollatingComparatorHasName <IUserGroup> (aDisplayLocale)))
-        aUserGroupUI.addChild (HCDiv.create (aUserGroup.getName ()));
+        aUserGroupUI.addChild (new HCDiv ().addChild (aUserGroup.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                Integer.toString (aUserGroups.size ())))
                                                    .setCtrl (aUserGroupUI));
@@ -370,14 +370,14 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     if (aUserRoles.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCEM.create (EText.NONE_DEFINED.getDisplayText (aDisplayLocale))));
+                                                   .setCtrl (new HCEM ().addChild (EText.NONE_DEFINED.getDisplayText (aDisplayLocale))));
     }
     else
     {
       final HCNodeList aRoleUI = new HCNodeList ();
       for (final IRole aRole : CollectionHelper.getSorted (aUserRoles,
                                                            new CollatingComparatorHasName <IRole> (aDisplayLocale)))
-        aRoleUI.addChild (HCDiv.create (aRole.getName ()));
+        aRoleUI.addChild (new HCDiv ().addChild (aRole.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aUserRoles.size ())))
                                                    .setCtrl (aRoleUI));

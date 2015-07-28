@@ -78,7 +78,7 @@ public final class UITextFormatter
 
         final HCNodeList ret = new HCNodeList ();
         for (final String s : aParts)
-          ret.addChild (HCDiv.create (s));
+          ret.addChild (new HCDiv ().addChild (s));
         return ret;
       }
       catch (final Exception ex)

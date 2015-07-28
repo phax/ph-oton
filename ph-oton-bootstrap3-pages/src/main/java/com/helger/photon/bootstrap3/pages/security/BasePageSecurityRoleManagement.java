@@ -180,14 +180,14 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     if (aAssignedUserGroups.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCEM.create (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
+                                                   .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
     }
     else
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
       for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aAssignedUserGroups,
                                                                      new CollatingComparatorHasName <IUserGroup> (aDisplayLocale)))
-        aUserGroupUI.addChild (HCDiv.create (aUserGroup.getName ()));
+        aUserGroupUI.addChild (new HCDiv ().addChild (aUserGroup.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                Integer.toString (aAssignedUserGroups.size ())))
                                                    .setCtrl (aUserGroupUI));
