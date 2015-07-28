@@ -215,10 +215,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
     // Add all meta elements
     addMetaElementsToHead (aRequestScope, aHead);
-
-    // Add CSS and JS
-    addCSSToHead (aRequestScope, aHead);
-    addJSToHead (aRequestScope, aHead);
   }
 
   /**
@@ -248,12 +244,16 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     // fill body
     fillBody (aSWEC, aHtml);
 
-    // Do this before the head is filled
+    // build HTML header (after body for per-request stuff)
+    fillHead (aSWEC, aHtml);
+
+    // Do this before the CSS/JS are filled
     // customize, finalize, extract resources, handle OOB nodes
     HCRenderer.prepareHtmlForConversion (aHtml, HCSettings.getConversionSettings ());
 
-    // build HTML header (after body for per-request stuff)
-    fillHead (aSWEC, aHtml);
+    // Add CSS and JS
+    addCSSToHead (aRequestScope, aHtml.getHead ());
+    addJSToHead (aRequestScope, aHtml.getHead ());
 
     return aHtml;
   }
