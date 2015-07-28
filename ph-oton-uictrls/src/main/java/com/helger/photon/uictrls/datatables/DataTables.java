@@ -360,7 +360,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
           final DTCol aDTCol = (DTCol) aCol;
           aColumn = new DataTablesColumn (nColIndex, aDTCol);
           if (aDTCol.hasInitialSorting ())
-            setInitialSorting (nColIndex, aDTCol.getInitialSorting ());
+            setInitialSorting (new DataTablesSorting ().addColumn (nColIndex, aDTCol.getInitialSorting ()));
         }
         else
         {
