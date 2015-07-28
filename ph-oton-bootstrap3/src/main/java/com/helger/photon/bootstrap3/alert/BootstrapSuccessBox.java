@@ -16,11 +16,6 @@
  */
 package com.helger.photon.bootstrap3.alert;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.html.hc.IHCNode;
-
 /**
  * Bootstrap success box
  *
@@ -31,70 +26,5 @@ public class BootstrapSuccessBox extends AbstractBootstrapAlert <BootstrapSucces
   public BootstrapSuccessBox ()
   {
     super (EBootstrapAlertType.SUCCESS);
-  }
-
-  /**
-   * Create a new element with the passed child text
-   *
-   * @param sChild
-   *        The child to be appended. May be <code>null</code>
-   * @return The created BootstrapSuccessBox element and never <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapSuccessBox create (@Nullable final String sChild)
-  {
-    return new BootstrapSuccessBox ().addChild (sChild);
-  }
-
-  /**
-   * Create a new element with the passed child texts
-   *
-   * @param aChildren
-   *        The child texts to be appended. May be <code>null</code>
-   * @return The created BootstrapSuccessBox element and never <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapSuccessBox create (@Nullable final String... aChildren)
-  {
-    return new BootstrapSuccessBox ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new element with the passed child node
-   *
-   * @param aChild
-   *        The child node to be appended. May be <code>null</code>
-   * @return The created BootstrapSuccessBox element and never <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapSuccessBox create (@Nullable final IHCNode aChild)
-  {
-    return new BootstrapSuccessBox ().addChild (aChild);
-  }
-
-  /**
-   * Create a new element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created BootstrapSuccessBox element and never <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapSuccessBox create (@Nullable final IHCNode... aChildren)
-  {
-    return new BootstrapSuccessBox ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created BootstrapSuccessBox element and never <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapSuccessBox create (@Nullable final Iterable <? extends IHCNode> aChildren)
-  {
-    return new BootstrapSuccessBox ().addChildren (aChildren);
   }
 }

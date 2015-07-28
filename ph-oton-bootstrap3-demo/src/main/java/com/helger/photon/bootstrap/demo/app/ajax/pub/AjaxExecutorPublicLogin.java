@@ -70,13 +70,14 @@ public final class AjaxExecutorPublicLogin extends AbstractAjaxExecutor
       s_aLogger.warn ("Login of '" + sLoginName + "' failed because " + eLoginResult);
 
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
-    final IHCNode aRoot = BootstrapErrorBox.create (EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) +
-                                                    " " +
-                                                    eLoginResult.getDisplayText (aDisplayLocale));
+    final IHCNode aRoot = new BootstrapErrorBox ().addChild (EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) +
+                                                             " " +
+                                                             eLoginResult.getDisplayText (aDisplayLocale));
 
     // Set as result property
     return AjaxDefaultResponse.createSuccess (aRequestScope,
                                               new JsonObject ().add (JSON_LOGGEDIN, false)
-                                                               .add (JSON_HTML, HCRenderer.getAsHTMLString (aRoot)));
+                                                               .add (JSON_HTML,
+                                                                     HCRenderer.getAsHTMLStringWithoutNamespaces (aRoot)));
   }
 }

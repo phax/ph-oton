@@ -65,18 +65,20 @@ public abstract class AbstractAppWebPageForm <DATATYPE extends IHasID <String>> 
                                                          CAjaxSecure.UPDATE_MENU_VIEW));
 
     // Update special area directly with code
-    IHCNode aSpecialNode = BootstrapInfoBox.create ("Data was successfully saved!");
+    IHCNode aSpecialNode = new BootstrapInfoBox ().addChild ("Data was successfully saved!");
     aSuccessUpdates.add (JSFormHelper.createUpdateParam (CLayout.LAYOUT_AREAID_SPECIAL, aSpecialNode));
     final JSArray aFailureUpdates = new JSArray ();
     // Update special area directly with code
-    aSpecialNode = BootstrapErrorBox.create ("Error saving the data!");
+    aSpecialNode = new BootstrapErrorBox ().addChild ("Error saving the data!");
     aFailureUpdates.add (JSFormHelper.createUpdateParam (CLayout.LAYOUT_AREAID_SPECIAL, aSpecialNode));
-    aToolbar.addButton ("Remember", JSFormHelper.saveFormData (aRequestScope,
-                                                               FORM_ID_INPUT,
-                                                               AjaxExecutorSaveFormState.PREFIX_FIELD,
-                                                               getID (),
-                                                               CAjaxSecure.SAVE_FORM_STATE,
-                                                               aSuccessUpdates,
-                                                               aFailureUpdates), EDefaultIcon.SAVE);
+    aToolbar.addButton ("Remember",
+                        JSFormHelper.saveFormData (aRequestScope,
+                                                   FORM_ID_INPUT,
+                                                   AjaxExecutorSaveFormState.PREFIX_FIELD,
+                                                   getID (),
+                                                   CAjaxSecure.SAVE_FORM_STATE,
+                                                   aSuccessUpdates,
+                                                   aFailureUpdates),
+                        EDefaultIcon.SAVE);
   }
 }

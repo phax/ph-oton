@@ -37,6 +37,7 @@ public class BootstrapDTColAction extends DTCol
   private void _init ()
   {
     addClass (CUICoreCSS.CSS_CLASS_ACTION_COL);
+    addClass (CUICoreCSS.CSS_CLASS_RIGHT);
     setSortable (false);
     setSearchable (false);
   }

@@ -16,11 +16,6 @@
  */
 package com.helger.photon.bootstrap3.alert;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.html.hc.IHCNode;
-
 /**
  * Bootstrap3 question box
  *
@@ -31,75 +26,5 @@ public class BootstrapQuestionBox extends AbstractBootstrapAlert <BootstrapQuest
   public BootstrapQuestionBox ()
   {
     super (EBootstrapAlertType.INFO);
-  }
-
-  /**
-   * Create a new element with the passed child text
-   *
-   * @param sChild
-   *        The child to be appended. May be <code>null</code>
-   * @return The created BootstrapQuestionBox element and never
-   *         <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapQuestionBox create (@Nullable final String sChild)
-  {
-    return new BootstrapQuestionBox ().addChild (sChild);
-  }
-
-  /**
-   * Create a new element with the passed child texts
-   *
-   * @param aChildren
-   *        The child texts to be appended. May be <code>null</code>
-   * @return The created BootstrapQuestionBox element and never
-   *         <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapQuestionBox create (@Nullable final String... aChildren)
-  {
-    return new BootstrapQuestionBox ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new element with the passed child node
-   *
-   * @param aChild
-   *        The child node to be appended. May be <code>null</code>
-   * @return The created BootstrapQuestionBox element and never
-   *         <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapQuestionBox create (@Nullable final IHCNode aChild)
-  {
-    return new BootstrapQuestionBox ().addChild (aChild);
-  }
-
-  /**
-   * Create a new element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created BootstrapQuestionBox element and never
-   *         <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapQuestionBox create (@Nullable final IHCNode... aChildren)
-  {
-    return new BootstrapQuestionBox ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created BootstrapQuestionBox element and never
-   *         <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapQuestionBox create (@Nullable final Iterable <? extends IHCNode> aChildren)
-  {
-    return new BootstrapQuestionBox ().addChildren (aChildren);
   }
 }

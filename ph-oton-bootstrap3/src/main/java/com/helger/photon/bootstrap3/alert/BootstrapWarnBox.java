@@ -16,11 +16,6 @@
  */
 package com.helger.photon.bootstrap3.alert;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.html.hc.IHCNode;
-
 /**
  * Bootstrap warning box
  *
@@ -31,70 +26,5 @@ public class BootstrapWarnBox extends AbstractBootstrapAlert <BootstrapWarnBox>
   public BootstrapWarnBox ()
   {
     super (EBootstrapAlertType.WARNING);
-  }
-
-  /**
-   * Create a new element with the passed child text
-   *
-   * @param sChild
-   *        The child to be appended. May be <code>null</code>
-   * @return The created BootstrapWarnBox element and never <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapWarnBox create (@Nullable final String sChild)
-  {
-    return new BootstrapWarnBox ().addChild (sChild);
-  }
-
-  /**
-   * Create a new element with the passed child texts
-   *
-   * @param aChildren
-   *        The child texts to be appended. May be <code>null</code>
-   * @return The created BootstrapWarnBox element and never <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapWarnBox create (@Nullable final String... aChildren)
-  {
-    return new BootstrapWarnBox ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new element with the passed child node
-   *
-   * @param aChild
-   *        The child node to be appended. May be <code>null</code>
-   * @return The created BootstrapWarnBox element and never <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapWarnBox create (@Nullable final IHCNode aChild)
-  {
-    return new BootstrapWarnBox ().addChild (aChild);
-  }
-
-  /**
-   * Create a new element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created BootstrapWarnBox element and never <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapWarnBox create (@Nullable final IHCNode... aChildren)
-  {
-    return new BootstrapWarnBox ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created BootstrapWarnBox element and never <code>null</code>
-   */
-  @Nonnull
-  public static BootstrapWarnBox create (@Nullable final Iterable <? extends IHCNode> aChildren)
-  {
-    return new BootstrapWarnBox ().addChildren (aChildren);
   }
 }
