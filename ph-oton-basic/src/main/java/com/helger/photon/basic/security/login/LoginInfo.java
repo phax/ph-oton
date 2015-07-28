@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -43,15 +43,15 @@ public final class LoginInfo extends MapBasedAttributeContainerAny <String>imple
 {
   private final IUser m_aUser;
   private final ISessionScope m_aSessionScope;
-  private final DateTime m_aLoginDT;
-  private DateTime m_aLastAccessDT;
-  private DateTime m_aLogoutDT;
+  private final LocalDateTime m_aLoginDT;
+  private LocalDateTime m_aLastAccessDT;
+  private LocalDateTime m_aLogoutDT;
 
   LoginInfo (@Nonnull final IUser aUser, @Nonnull final ISessionScope aSessionScope)
   {
     m_aUser = ValueEnforcer.notNull (aUser, "User");
     m_aSessionScope = ValueEnforcer.notNull (aSessionScope, "SessionScope");
-    m_aLoginDT = PDTFactory.getCurrentDateTime ();
+    m_aLoginDT = PDTFactory.getCurrentLocalDateTime ();
     m_aLastAccessDT = m_aLoginDT;
   }
 
@@ -96,7 +96,7 @@ public final class LoginInfo extends MapBasedAttributeContainerAny <String>imple
    * @return The login data and time. Never <code>null</code>.
    */
   @Nonnull
-  public DateTime getLoginDT ()
+  public LocalDateTime getLoginDT ()
   {
     return m_aLoginDT;
   }
@@ -105,7 +105,7 @@ public final class LoginInfo extends MapBasedAttributeContainerAny <String>imple
    * @return The last access data and time. Never <code>null</code>.
    */
   @Nonnull
-  public DateTime getLastAccessDT ()
+  public LocalDateTime getLastAccessDT ()
   {
     return m_aLastAccessDT;
   }
@@ -115,7 +115,7 @@ public final class LoginInfo extends MapBasedAttributeContainerAny <String>imple
    */
   public void setLastAccessDTNow ()
   {
-    m_aLastAccessDT = PDTFactory.getCurrentDateTime ();
+    m_aLastAccessDT = PDTFactory.getCurrentLocalDateTime ();
   }
 
   /**
@@ -123,7 +123,7 @@ public final class LoginInfo extends MapBasedAttributeContainerAny <String>imple
    *         when the user is still logged in :)
    */
   @Nullable
-  public DateTime getLogoutDT ()
+  public LocalDateTime getLogoutDT ()
   {
     return m_aLogoutDT;
   }
@@ -133,7 +133,7 @@ public final class LoginInfo extends MapBasedAttributeContainerAny <String>imple
    */
   void setLogoutDTNow ()
   {
-    m_aLogoutDT = PDTFactory.getCurrentDateTime ();
+    m_aLogoutDT = PDTFactory.getCurrentLocalDateTime ();
   }
 
   /**
