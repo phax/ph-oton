@@ -23,6 +23,7 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.base.BootstrapCloseIcon;
 
@@ -90,7 +91,9 @@ public abstract class AbstractBootstrapAlert <THISTYPE extends AbstractBootstrap
     if (m_bShowClose)
     {
       addClass (CBootstrapCSS.ALERT_DISMISSABLE);
-      addChild (0, new BootstrapCloseIcon ().setDataAttr ("dismiss", "alert"));
+      addChild (0, HCRenderer.getPreparedNode (new BootstrapCloseIcon ().setDataAttr ("dismiss", "alert"),
+                                               aTargetNode,
+                                               aConversionSettings));
     }
   }
 }

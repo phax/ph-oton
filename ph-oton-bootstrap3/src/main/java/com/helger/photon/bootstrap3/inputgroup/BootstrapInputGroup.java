@@ -33,6 +33,7 @@ import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.button.BootstrapButton;
 
@@ -250,7 +251,7 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
         addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_ADDON).addChild (aPrefix));
     }
 
-    addChild (m_aInput);
+    addChild (HCRenderer.getPreparedNode (m_aInput, aTargetNode, aConversionSettings));
 
     for (final IHCNode aSuffix : m_aSuffixes)
     {

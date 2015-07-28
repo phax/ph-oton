@@ -27,6 +27,7 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.base.AbstractHCButton;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.uicore.icon.IIcon;
 
@@ -116,7 +117,7 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
     if (getIcon () != null)
     {
       final boolean bAddSeparator = hasChildren ();
-      addChild (0, getIcon ().getAsNode ());
+      addChild (0, HCRenderer.getPreparedNode (getIcon ().getAsNode (), aTargetNode, aConversionSettings));
       if (bAddSeparator)
       {
         // Add spacer
