@@ -27,6 +27,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -43,6 +44,7 @@ import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
+@OutOfBandNode
 public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
 {
   public static final ICSSClassProvider TT_QUERY = DefaultCSSClassProvider.create ("tt-query");

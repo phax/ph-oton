@@ -28,6 +28,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.WorkInProgress;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -46,6 +47,7 @@ import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.typeahead.TypeaheadDataset;
 
+@OutOfBandNode
 @WorkInProgress
 public class HCTypeahead2 extends AbstractHCScriptInline <HCTypeahead2>
 {

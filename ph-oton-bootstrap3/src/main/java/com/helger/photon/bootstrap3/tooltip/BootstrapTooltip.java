@@ -29,6 +29,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
+import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCElement;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -49,6 +50,7 @@ import com.helger.photon.bootstrap3.EBootstrapIcon;
  *
  * @author Philip Helger
  */
+@OutOfBandNode
 public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
 {
   /**

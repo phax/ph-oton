@@ -1256,13 +1256,4 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     }
     return aPackage;
   }
-
-  /**
-   * Register basic DataTables CSS and JS
-   */
-  public static void registerExternalResources ()
-  {
-    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_1_10);
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_1_10);
-  }
 }

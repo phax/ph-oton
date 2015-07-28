@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.base.IHCTable;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
@@ -32,6 +33,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.DataTablesDom;
 
+@OutOfBandNode
 public class BootstrapDataTables extends DataTables
 {
   private static IBootstrapDataTablesConfigurator s_aConfigurator;
