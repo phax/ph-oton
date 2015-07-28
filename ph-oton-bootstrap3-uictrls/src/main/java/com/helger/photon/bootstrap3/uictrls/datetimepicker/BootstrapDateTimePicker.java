@@ -40,7 +40,6 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCEdit;
-import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.jscode.JSArray;
@@ -509,7 +508,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     addClass (CSS_CLASS_DATE);
 
     // Assemble
-    addChild (HCRenderer.getPreparedNode (new BootstrapDateTimePickerJS (this), aTargetNode, aConversionSettings));
+    addChild (new BootstrapDateTimePickerJS (this));
   }
 
   @Override

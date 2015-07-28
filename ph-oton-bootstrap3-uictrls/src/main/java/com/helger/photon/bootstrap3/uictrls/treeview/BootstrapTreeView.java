@@ -39,7 +39,6 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.base.AbstractHCDiv;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCScriptInline;
-import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hcext.HCHasCSSClasses;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jscode.JSArray;
@@ -221,9 +220,7 @@ public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
   {
     // JS Code
     final JSAssocArray aJSOptions = getJSOptions ();
-    aTargetNode.addChild (HCRenderer.getPreparedNode (new HCScriptInline (invoke ().arg (aJSOptions)),
-                                                      aTargetNode,
-                                                      aConversionSettings));
+    aTargetNode.addChild (new HCScriptInline (invoke ().arg (aJSOptions)));
   }
 
   @Override

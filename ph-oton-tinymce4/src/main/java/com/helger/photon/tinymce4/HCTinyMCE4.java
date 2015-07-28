@@ -42,7 +42,6 @@ import com.helger.html.hc.api.EHCTextDirection;
 import com.helger.html.hc.base.AbstractHCTextArea;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.HCScriptInline;
-import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
@@ -1318,9 +1317,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-    aTargetNode.addChild (HCRenderer.getPreparedNode (new HCScriptInline (getJSInvocation ()),
-                                                      aTargetNode,
-                                                      aConversionSettings));
+    aTargetNode.addChild (new HCScriptInline (getJSInvocation ()));
   }
 
   @Override
