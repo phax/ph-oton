@@ -143,7 +143,7 @@ public final class PhotonStubConfigurationListener implements ServletContextList
       // Default customizer: disable CSS classes - should fix issue with
       // checkbox in form in IE9
       HCSettings.getMutableConversionSettings ()
-                .setCustomizer (new HCMultiCustomizer (new HCDefaultCustomizer (false), new BootstrapCustomizer ()));
+                .setCustomizer (new HCMultiCustomizer (new HCDefaultCustomizer (), new BootstrapCustomizer ()));
 
       // Set default icon set if none is defined
       if (!DefaultIcons.areDefined ())
