@@ -18,12 +18,15 @@ package com.helger.photon.uicore.html.swf;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.render.HCRenderer;
+import com.helger.photon.core.mock.PhotonCoreTestRule;
 
 /**
  * Test class for class {@link HCSWFObject}.
@@ -32,11 +35,13 @@ import com.helger.html.hc.render.HCRenderer;
  */
 public final class HCSWFObjectTest
 {
+  @Rule
+  public final TestRule m_aRule = new PhotonCoreTestRule ();
+
   @Test
   public void testCodeGen ()
   {
     final HCSWFObject x = new HCSWFObject ();
-    x.setID ("div1");
     x.setSWFURL (new SimpleURL ("a.swf"));
     x.setWidth (500).setHeight (300);
     x.setRequiredSWFVersion ("9.0.0");
