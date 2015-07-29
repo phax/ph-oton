@@ -41,6 +41,8 @@ public final class HCTinyMCE4Test
   {
     final HCTinyMCE4 aEditor = new HCTinyMCE4 ();
     final JSWriterSettings aJSSettings = new JSWriterSettings ().setMinimumCodeSize (true);
+    assertEquals ("{selector:'#" + aEditor.getID () + "'}", aEditor.getJSInitOptions ().getJSCode (aJSSettings));
+    aEditor.setSelector ("textarea");
     assertEquals ("{selector:'textarea'}", aEditor.getJSInitOptions ().getJSCode (aJSSettings));
     aEditor.setResize (ETinyMCE4Resize.DISABLE);
     assertEquals ("{selector:'textarea',resize:false}", aEditor.getJSInitOptions ().getJSCode (aJSSettings));
