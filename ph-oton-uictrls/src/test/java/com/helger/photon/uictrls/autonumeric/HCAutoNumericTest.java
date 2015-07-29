@@ -22,12 +22,15 @@ import java.util.Locale;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.junit.rules.TestRule;
 
 import com.helger.commons.system.ENewLineMode;
 import com.helger.html.EHTMLVersion;
-import com.helger.html.hc.conversion.HCConversionSettings;
 import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.render.HCRenderer;
+import com.helger.html.mock.HCTestRuleHTMLVersion;
+import com.helger.html.mock.HCTestRuleOptimized;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.mock.PhotonCoreTestRule;
 
@@ -36,7 +39,9 @@ public final class HCAutoNumericTest
   private static final String CRLF = ENewLineMode.DEFAULT.getText ();
 
   @Rule
-  public final PhotonCoreTestRule m_aRule = new PhotonCoreTestRule ();
+  public final TestRule m_aRule = RuleChain.outerRule (new PhotonCoreTestRule ())
+                                           .around (new HCTestRuleOptimized ())
+                                           .around (new HCTestRuleHTMLVersion (EHTMLVersion.HTML5));
 
   @Test
   public void testGetJS ()
@@ -46,28 +51,39 @@ public final class HCAutoNumericTest
     assertEquals ("<input id=\"" +
                   sID +
                   "\" class=\"auto-numeric-edit\" name=\"dummy\" type=\"text\" value=\"\" />" +
+                  CRLF +
+                  "<script type=\"text/javascript\">$(document).ready(function(){$('#id10001').autoNumeric('init',{" +
+                  CRLF +
+                  "  aSep:'.'," +
+                  CRLF +
+                  "  aDec:','," +
+                  CRLF +
+                  "  vMin:'-999999999'" +
+                  CRLF +
+                  "});});</script>" +
                   CRLF,
-                  HCRenderer.getAsHTMLString (a, new HCConversionSettings (EHTMLVersion.HTML5)));
+                  HCRenderer.getAsHTMLString (a));
 
     a.setThousandSeparator ("");
+    // Script is not emitted afterwards, because it was already emitted
     assertEquals ("<input id=\"" +
                   sID +
                   "\" class=\"auto-numeric-edit\" name=\"dummy\" type=\"text\" value=\"\" />" +
                   CRLF,
-                  HCRenderer.getAsHTMLString (a, new HCConversionSettings (EHTMLVersion.HTML5)));
+                  HCRenderer.getAsHTMLString (a));
   }
 
   @Test
-  public void testAddAndRemove ()
+  public void testAddAndRender ()
   {
     final HCAutoNumeric a = new HCAutoNumeric (new RequestField ("dummy"), Locale.GERMANY);
     final HCDiv aDiv = new HCDiv ();
     assertEquals (0, aDiv.getChildCount ());
     // Add the auto numeric which also adds the JS
     aDiv.addChild (a);
+    assertEquals (1, aDiv.getChildCount ());
+    // Add the script node
+    HCRenderer.getAsNode (aDiv);
     assertEquals (2, aDiv.getChildCount ());
-    // Remove the auto numeric should also remove the JS
-    aDiv.removeChild (a);
-    assertEquals (0, aDiv.getChildCount ());
   }
 }
