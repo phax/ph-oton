@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.button;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hchtml.EHCButtonType;
+import com.helger.html.hchtml.form.EHCButtonType;
 
 /**
  * Bootstrap3 reset button.

@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap3.base;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.entity.EHTMLEntity;
 import com.helger.html.hcapi.impl.HCEntityNode;
-import com.helger.html.hchtml.base.AbstractHCButton;
+import com.helger.html.hchtml.form.AbstractHCButton;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 public class BootstrapCloseIcon extends AbstractHCButton <BootstrapCloseIcon>
