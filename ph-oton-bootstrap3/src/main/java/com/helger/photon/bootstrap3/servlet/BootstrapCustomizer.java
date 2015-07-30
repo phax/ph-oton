@@ -24,12 +24,12 @@ import com.helger.css.property.CCSSProperties;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hcapi.IHCHasChildrenMutable;
 import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hcapi.config.HCCustomizerDoNothing;
+import com.helger.html.hcapi.config.AbstractHCCustomizer;
 import com.helger.html.hchtml.embedded.HCImg;
 import com.helger.html.hchtml.forms.IHCControl;
 import com.helger.photon.bootstrap3.BootstrapHelper;
 
-public class BootstrapCustomizer extends HCCustomizerDoNothing
+public class BootstrapCustomizer extends AbstractHCCustomizer
 {
   public BootstrapCustomizer ()
   {}
