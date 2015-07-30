@@ -86,6 +86,7 @@ public abstract class AbstractBootstrapAlert <THISTYPE extends AbstractBootstrap
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClasses (CBootstrapCSS.ALERT, m_eType);
     if (m_bShowClose)
     {

@@ -276,6 +276,8 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
     setJSCodeProvider (getAsJSObject ());
   }
 

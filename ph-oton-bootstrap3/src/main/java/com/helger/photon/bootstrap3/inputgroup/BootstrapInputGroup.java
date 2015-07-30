@@ -237,6 +237,7 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClasses (CBootstrapCSS.INPUT_GROUP, m_eSize);
 
     for (final IHCNode aPrefix : m_aPrefixes)

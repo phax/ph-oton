@@ -227,6 +227,8 @@ public class HCChart extends AbstractHCCanvas <HCChart>
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
     final JSPackage aCode = new JSPackage ();
 
     final JSVar aJSCanvas = aCode.var (getCanvasID (), JSHtml.documentGetElementById (this));

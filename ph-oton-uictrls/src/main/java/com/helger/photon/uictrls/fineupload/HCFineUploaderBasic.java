@@ -71,6 +71,8 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
     final String sID = GlobalIDFactory.getNewStringID ();
     addChild (new HCDiv ().setID (sID));
     if (m_aButton != null)

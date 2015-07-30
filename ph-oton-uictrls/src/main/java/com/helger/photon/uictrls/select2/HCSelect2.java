@@ -43,6 +43,8 @@ public class HCSelect2 extends HCExtSelect
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
     // Add special JS code
     aTargetNode.addChild (new HCScriptInlineOnDocumentReady (JQuery.idRef (this).invoke ("select2")));
   }

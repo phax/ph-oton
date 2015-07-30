@@ -373,6 +373,8 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
     // Add special JS code
     aTargetNode.addChild (new HCAutoNumericJS (this));
   }

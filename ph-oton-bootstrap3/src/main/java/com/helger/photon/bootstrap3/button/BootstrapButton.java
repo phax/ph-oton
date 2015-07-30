@@ -109,6 +109,7 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     // apply type and size
     addClasses (getButtonType (), getButtonSize ());
 

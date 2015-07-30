@@ -66,6 +66,7 @@ public class BootstrapLabel extends AbstractHCDiv <BootstrapLabel>
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClasses (CBootstrapCSS.LABEL, m_eType);
   }
 }

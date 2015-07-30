@@ -862,6 +862,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
     // init parameters
     final JSAssocArray aParams = new JSAssocArray ();
     if (m_bAutoWidth != DEFAULT_AUTOWIDTH)

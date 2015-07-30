@@ -218,6 +218,8 @@ public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
     // JS Code
     final JSAssocArray aJSOptions = getJSOptions ();
     aTargetNode.addChild (new HCScriptInline (invoke ().arg (aJSOptions)));

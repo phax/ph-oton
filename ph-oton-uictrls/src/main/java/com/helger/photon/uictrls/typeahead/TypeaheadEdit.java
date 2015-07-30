@@ -129,6 +129,8 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
     // HiddenField
     aTargetNode.addChild (new HCHiddenField (m_aRFHidden).setID (m_sHiddenFieldID));
 

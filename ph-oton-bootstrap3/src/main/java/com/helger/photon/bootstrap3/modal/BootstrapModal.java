@@ -196,6 +196,7 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClass (CBootstrapCSS.MODAL).setRole (EHTMLRole.DIALOG).setCustomAttr (CHTMLAttributes.ARIA_HIDDEN, "true");
     if (m_bFade)
       addClass (CBootstrapCSS.FADE);

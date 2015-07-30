@@ -267,8 +267,9 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
-  // Add special JS code
   {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
     // JS init code
     final JSAssocArray jsFlashvars = new JSAssocArray ();
     if (m_aFlashVars != null)
