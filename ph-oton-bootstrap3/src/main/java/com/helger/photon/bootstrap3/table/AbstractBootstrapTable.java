@@ -19,9 +19,9 @@ package com.helger.photon.bootstrap3.table;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hchtml.base.AbstractHCTable;
-import com.helger.html.hchtml.base.IHCCol;
 import com.helger.html.hchtml.impl.HCDiv;
+import com.helger.html.hchtml.table.AbstractHCTable;
+import com.helger.html.hchtml.table.IHCCol;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 public abstract class AbstractBootstrapTable <THISTYPE extends AbstractHCTable <THISTYPE>> extends AbstractHCTable <THISTYPE>

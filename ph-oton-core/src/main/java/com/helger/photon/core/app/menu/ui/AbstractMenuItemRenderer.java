@@ -21,8 +21,8 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.html.hchtml.base.IHCList;
-import com.helger.html.hchtml.impl.HCLI;
+import com.helger.html.hchtml.list.IHCLI;
+import com.helger.html.hchtml.list.IHCList;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 
 /**
@@ -54,18 +54,18 @@ public abstract class AbstractMenuItemRenderer <T extends IHCList <?>> implement
   public void onLevelUp (@Nonnull final T aLastLevel)
   {}
 
-  public void onMenuSeparatorItem (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCLI aLI)
+  public void onMenuSeparatorItem (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final IHCLI <?> aLI)
   {}
 
   public void onMenuItemPageItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                  @Nonnull final HCLI aLI,
+                                  @Nonnull final IHCLI <?> aLI,
                                   final boolean bHasChildren,
                                   final boolean bIsSelected,
                                   final boolean bIsExpanded)
   {}
 
   public void onMenuItemExternalItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                      @Nonnull final HCLI aLI,
+                                      @Nonnull final IHCLI <?> aLI,
                                       final boolean bHasChildren,
                                       final boolean bIsSelected,
                                       final boolean bIsExpanded)

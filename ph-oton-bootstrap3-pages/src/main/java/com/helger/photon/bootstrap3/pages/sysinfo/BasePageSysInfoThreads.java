@@ -36,10 +36,10 @@ import com.helger.commons.thread.ComparatorThreadID;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
+import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hcapi.impl.HCNodeList;
-import com.helger.html.hchtml.HCHTMLHelper;
-import com.helger.html.hchtml.impl.HCRow;
-import com.helger.html.hchtml.impl.HCTable;
+import com.helger.html.hchtml.table.HCRow;
+import com.helger.html.hchtml.table.HCTable;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -186,7 +186,7 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
       aRow.addCell (String.valueOf (aThread.getState ()));
 
       // Stack trace
-      aRow.addCell (HCHTMLHelper.nl2brList (StackTraceHelper.getStackAsString (aEntry.getValue ())));
+      aRow.addCell (HCExtHelper.nl2brList (StackTraceHelper.getStackAsString (aEntry.getValue ())));
     }
     aNodeList.addChild (aTable);
 

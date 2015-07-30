@@ -43,7 +43,7 @@ import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.html.hcapi.IHCNodeList;
 import com.helger.html.hcapi.config.IHCConversionSettings;
 import com.helger.html.hcapi.impl.HCNodeList;
-import com.helger.html.hchtml.base.IHCCell;
+import com.helger.html.hchtml.table.IHCCell;
 
 /**
  * This class holds table cells to be used by the DataTables server side

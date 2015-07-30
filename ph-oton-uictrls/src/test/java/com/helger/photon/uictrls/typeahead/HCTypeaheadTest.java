@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.helger.html.jquery.JQuery;
-import com.helger.html.js.writer.JSWriterSettings;
+import com.helger.html.js.JSWriterSettings;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.html.JSHtml;
 

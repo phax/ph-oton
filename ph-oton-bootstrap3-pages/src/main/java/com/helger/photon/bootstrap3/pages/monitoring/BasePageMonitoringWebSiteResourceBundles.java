@@ -31,11 +31,11 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
+import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hcapi.impl.HCNodeList;
-import com.helger.html.hchtml.HCHTMLHelper;
 import com.helger.html.hchtml.impl.HCDiv;
-import com.helger.html.hchtml.impl.HCRow;
-import com.helger.html.hchtml.impl.HCTable;
+import com.helger.html.hchtml.table.HCRow;
+import com.helger.html.hchtml.table.HCTable;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -165,7 +165,7 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (aBundle.getBundleID ());
       aRow.addCell (PDTToString.getAsString (aBundle.getCreationDT (), aDisplayLocale));
-      aRow.addCell (HCHTMLHelper.list2divList (aBundle.getBundle ().getAllResourcePaths ()));
+      aRow.addCell (HCExtHelper.list2divList (aBundle.getBundle ().getAllResourcePaths ()));
       aRow.addCell (aBundle.getBundle ().getConditionalComment ());
       aRow.addCell (aBundle.getBundle ().hasMediaList () ? aBundle.getBundle ().getMediaList ().getMediaString ()
                                                          : null);

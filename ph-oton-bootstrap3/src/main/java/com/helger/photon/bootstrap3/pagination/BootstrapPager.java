@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hchtml.base.AbstractHCUL;
-import com.helger.html.hchtml.impl.HCLI;
+import com.helger.html.hchtml.list.AbstractHCUL;
+import com.helger.html.hchtml.list.IHCLI;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 public class BootstrapPager extends AbstractHCUL <BootstrapPager>
@@ -34,7 +34,7 @@ public class BootstrapPager extends AbstractHCUL <BootstrapPager>
   @Nonnull
   public BootstrapPager addItemPrev (@Nullable final IHCNode aContent, final boolean bDisabled)
   {
-    final HCLI aItem = addAndReturnItem (aContent).addClass (CBootstrapCSS.PREVIOUS);
+    final IHCLI <?> aItem = addAndReturnItem (aContent).addClass (CBootstrapCSS.PREVIOUS);
     if (bDisabled)
       aItem.addClass (CBootstrapCSS.DISABLED);
     return this;
@@ -43,7 +43,7 @@ public class BootstrapPager extends AbstractHCUL <BootstrapPager>
   @Nonnull
   public BootstrapPager addItemNext (@Nullable final IHCNode aContent, final boolean bDisabled)
   {
-    final HCLI aItem = addAndReturnItem (aContent).addClass (CBootstrapCSS.NEXT);
+    final IHCLI <?> aItem = addAndReturnItem (aContent).addClass (CBootstrapCSS.NEXT);
     if (bDisabled)
       aItem.addClass (CBootstrapCSS.DISABLED);
     return this;

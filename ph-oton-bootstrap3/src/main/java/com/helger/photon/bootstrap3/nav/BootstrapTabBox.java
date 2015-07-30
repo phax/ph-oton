@@ -25,7 +25,7 @@ import com.helger.html.hcapi.IHCHasChildrenMutable;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hchtml.impl.HCA;
 import com.helger.html.hchtml.impl.HCDiv;
-import com.helger.html.hchtml.impl.HCLI;
+import com.helger.html.hchtml.list.IHCLI;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.uicore.html.tabbox.AbstractTabBox;
 import com.helger.photon.uicore.html.tabbox.Tab;
@@ -94,7 +94,7 @@ public class BootstrapTabBox extends AbstractTabBox <BootstrapTabBox>
       final boolean bIsActiveTab = aTab.getID ().equals (sActiveTabID);
 
       // header
-      final HCLI aToggleLI = aNav.addItem ();
+      final IHCLI <?> aToggleLI = aNav.addItem ();
       if (bIsActiveTab)
         aToggleLI.addClass (CBootstrapCSS.ACTIVE);
       if (aTab.isDisabled ())

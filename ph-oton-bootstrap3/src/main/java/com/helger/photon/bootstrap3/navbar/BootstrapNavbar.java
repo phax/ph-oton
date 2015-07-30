@@ -30,7 +30,7 @@ import com.helger.html.hchtml.IHCElement;
 import com.helger.html.hchtml.IHCElementWithChildren;
 import com.helger.html.hchtml.base.AbstractHCNav;
 import com.helger.html.hchtml.base.IHCDiv;
-import com.helger.html.hchtml.base.IHCForm;
+import com.helger.html.hchtml.form.IHCForm;
 import com.helger.html.hchtml.impl.HCA;
 import com.helger.html.hchtml.impl.HCButton;
 import com.helger.html.hchtml.impl.HCDiv;

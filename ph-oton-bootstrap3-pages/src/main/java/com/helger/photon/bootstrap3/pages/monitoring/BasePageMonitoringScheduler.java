@@ -42,13 +42,13 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
+import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hcapi.impl.HCNodeList;
 import com.helger.html.hcapi.impl.HCTextNode;
-import com.helger.html.hchtml.HCHTMLHelper;
-import com.helger.html.hchtml.impl.HCCol;
-import com.helger.html.hchtml.impl.HCLI;
-import com.helger.html.hchtml.impl.HCTable;
-import com.helger.html.hchtml.impl.HCUL;
+import com.helger.html.hchtml.list.HCUL;
+import com.helger.html.hchtml.list.IHCLI;
+import com.helger.html.hchtml.table.HCCol;
+import com.helger.html.hchtml.table.HCTable;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
@@ -153,8 +153,8 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
 
         final BootstrapViewForm aDetailsForm = new BootstrapViewForm ();
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SUMMARY.getDisplayText (aDisplayLocale))
-                                                            .setCtrl (HCHTMLHelper.nl2divList (aScheduler.getMetaData ()
-                                                                                                         .getSummary ())));
+                                                            .setCtrl (HCExtHelper.nl2divList (aScheduler.getMetaData ()
+                                                                                                        .getSummary ())));
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXECUTING_JOBS.getDisplayText (aDisplayLocale))
                                                             .setCtrl (Integer.toString (aScheduler.getCurrentlyExecutingJobs ()
                                                                                                   .size ())));
@@ -164,7 +164,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
         for (final JobListener aJobListener : aScheduler.getListenerManager ().getJobListeners ())
           aListeners.add (aJobListener.getName () + " - " + aJobListener.getClass ().getName ());
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LISTENERS.getDisplayText (aDisplayLocale))
-                                                            .setCtrl (HCHTMLHelper.list2divList (aListeners)));
+                                                            .setCtrl (HCExtHelper.list2divList (aListeners)));
         aTab.addChild (aDetailsForm);
 
         // Add all scheduled jobs
@@ -175,7 +175,7 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
             final Trigger aTrigger = aScheduler.getTrigger (aTriggerKey);
             final JobKey aJobKey = aTrigger.getJobKey ();
             final JobDetail aDetail = aScheduler.getJobDetail (aJobKey);
-            final HCLI aLI = aDetailUL.addAndReturnItem (aJobKey.getName ());
+            final IHCLI <?> aLI = aDetailUL.addAndReturnItem (aJobKey.getName ());
             final HCUL aUL2 = aLI.addAndReturnChild (new HCUL ());
             aUL2.addItem (EText.MSG_JOB_CLASS.getDisplayText (aDisplayLocale) + aDetail.getJobClass ().getName ());
             aUL2.addItem (EText.MSG_TRIGGER_KEY.getDisplayText (aDisplayLocale) + aTrigger.getKey ().toString ());

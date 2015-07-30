@@ -40,16 +40,16 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
+import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCNodeList;
 import com.helger.html.hcapi.impl.HCTextNode;
-import com.helger.html.hchtml.HCHTMLHelper;
-import com.helger.html.hchtml.impl.HCCol;
 import com.helger.html.hchtml.impl.HCDiv;
 import com.helger.html.hchtml.impl.HCEM;
-import com.helger.html.hchtml.impl.HCRow;
-import com.helger.html.hchtml.impl.HCTable;
-import com.helger.html.hchtml.impl.HCUL;
+import com.helger.html.hchtml.list.HCUL;
+import com.helger.html.hchtml.table.HCCol;
+import com.helger.html.hchtml.table.HCRow;
+import com.helger.html.hchtml.table.HCTable;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
@@ -289,7 +289,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         {
           // Special handling for paths
           aRow.addCell (sName);
-          aRow.addCell (HCHTMLHelper.nl2brList (StringHelper.replaceAll (sValue, sPathSep, "\n")));
+          aRow.addCell (HCExtHelper.nl2brList (StringHelper.replaceAll (sValue, sPathSep, "\n")));
         }
         else
           aRow.addCells (sName, sValue);

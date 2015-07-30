@@ -40,14 +40,14 @@ import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
+import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCNodeList;
 import com.helger.html.hcapi.impl.HCTextNode;
-import com.helger.html.hchtml.HCHTMLHelper;
 import com.helger.html.hchtml.impl.HCA;
 import com.helger.html.hchtml.impl.HCDiv;
-import com.helger.html.hchtml.impl.HCRow;
-import com.helger.html.hchtml.impl.HCTable;
+import com.helger.html.hchtml.table.HCRow;
+import com.helger.html.hchtml.table.HCTable;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
@@ -288,7 +288,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
       switch (aEmailData.getEmailType ())
       {
         case TEXT:
-          aBody = HCHTMLHelper.nl2divList (aEmailData.getBody ());
+          aBody = HCExtHelper.nl2divList (aEmailData.getBody ());
           break;
         case HTML:
           aBody = CollectionHelper.newList (new HCTextNode (aEmailData.getBody ()));

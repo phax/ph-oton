@@ -42,21 +42,21 @@ import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.ext.HCA_MailTo;
+import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCNodeList;
 import com.helger.html.hcapi.impl.HCTextNode;
-import com.helger.html.hchtml.HCHTMLHelper;
-import com.helger.html.hchtml.base.IHCCell;
-import com.helger.html.hchtml.base.IHCTable;
+import com.helger.html.hchtml.form.HCCheckBox;
+import com.helger.html.hchtml.form.HCEdit;
+import com.helger.html.hchtml.form.HCEditPassword;
 import com.helger.html.hchtml.impl.HCA;
-import com.helger.html.hchtml.impl.HCCheckBox;
-import com.helger.html.hchtml.impl.HCCol;
 import com.helger.html.hchtml.impl.HCDiv;
 import com.helger.html.hchtml.impl.HCEM;
-import com.helger.html.hchtml.impl.HCEdit;
-import com.helger.html.hchtml.impl.HCEditPassword;
-import com.helger.html.hchtml.impl.HCRow;
-import com.helger.html.hchtml.impl.HCTable;
+import com.helger.html.hchtml.table.HCCol;
+import com.helger.html.hchtml.table.HCRow;
+import com.helger.html.hchtml.table.HCTable;
+import com.helger.html.hchtml.table.IHCCell;
+import com.helger.html.hchtml.table.IHCTable;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 import com.helger.photon.basic.security.role.IRole;
@@ -331,7 +331,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                                                        aDisplayLocale)));
     if (StringHelper.hasText (aSelectedObject.getDescription ()))
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCHTMLHelper.nl2divList (aSelectedObject.getDescription ())));
+                                                   .setCtrl (HCExtHelper.nl2divList (aSelectedObject.getDescription ())));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DELETED.getDisplayText (aDisplayLocale))
                                                  .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isDeleted (),
                                                                                        aDisplayLocale)));

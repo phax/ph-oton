@@ -22,7 +22,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.html.js.writer.JSWriterSettings;
+import com.helger.html.js.JSWriterSettings;
 import com.helger.photon.tinymce4.type.ETinyMCE4Resize;
 import com.helger.web.scope.mock.WebScopeTestRule;
 

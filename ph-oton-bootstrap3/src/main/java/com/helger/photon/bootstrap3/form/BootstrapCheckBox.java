@@ -21,7 +21,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.html.hcapi.IHCConversionSettingsToNode;
-import com.helger.html.hchtml.impl.HCCheckBox;
+import com.helger.html.hchtml.form.HCCheckBox;
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
 import com.helger.photon.bootstrap3.CBootstrapCSS;

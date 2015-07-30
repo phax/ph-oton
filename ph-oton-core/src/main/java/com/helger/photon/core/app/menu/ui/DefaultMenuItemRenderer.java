@@ -25,9 +25,9 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCEntityNode;
 import com.helger.html.hchtml.HC_Target;
-import com.helger.html.hchtml.base.IHCList;
 import com.helger.html.hchtml.impl.HCA;
-import com.helger.html.hchtml.impl.HCLI;
+import com.helger.html.hchtml.list.IHCLI;
+import com.helger.html.hchtml.list.IHCList;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuSeparator;
@@ -99,14 +99,14 @@ public class DefaultMenuItemRenderer <T extends IHCList <?>> extends AbstractMen
   }
 
   @Override
-  public void onMenuSeparatorItem (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCLI aLI)
+  public void onMenuSeparatorItem (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final IHCLI <?> aLI)
   {
     aLI.addClass (CSS_CLASS_MENU_SEPARATOR);
   }
 
   @Override
   public void onMenuItemPageItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                  @Nonnull final HCLI aLI,
+                                  @Nonnull final IHCLI <?> aLI,
                                   final boolean bHasChildren,
                                   final boolean bIsSelected,
                                   final boolean bIsExpanded)
@@ -116,7 +116,7 @@ public class DefaultMenuItemRenderer <T extends IHCList <?>> extends AbstractMen
 
   @Override
   public void onMenuItemExternalItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                      @Nonnull final HCLI aLI,
+                                      @Nonnull final IHCLI <?> aLI,
                                       final boolean bHasChildren,
                                       final boolean bIsSelected,
                                       final boolean bIsExpanded)

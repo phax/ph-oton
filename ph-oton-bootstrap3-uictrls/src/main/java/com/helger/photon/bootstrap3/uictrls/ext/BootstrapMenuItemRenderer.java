@@ -27,8 +27,9 @@ import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCTextNode;
 import com.helger.html.hchtml.IHCElement;
 import com.helger.html.hchtml.impl.HCA;
-import com.helger.html.hchtml.impl.HCLI;
-import com.helger.html.hchtml.impl.HCUL;
+import com.helger.html.hchtml.list.HCLI;
+import com.helger.html.hchtml.list.HCUL;
+import com.helger.html.hchtml.list.IHCLI;
 import com.helger.photon.basic.app.menu.IMenuItemDeterminatorCallback;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
@@ -149,7 +150,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
 
   @Override
   public void onMenuItemPageItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                  @Nonnull final HCLI aLI,
+                                  @Nonnull final IHCLI <?> aLI,
                                   final boolean bHasChildren,
                                   final boolean bSelected,
                                   final boolean bExpanded)
@@ -160,7 +161,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
 
   @Override
   public void onMenuItemExternalItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                      @Nonnull final HCLI aLI,
+                                      @Nonnull final IHCLI <?> aLI,
                                       final boolean bHasChildren,
                                       final boolean bSelected,
                                       final boolean bExpanded)
@@ -202,7 +203,8 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
                                                               FactoryNewInstance.create (HCUL.class),
                                                               aMenuTree.getRootItem (),
                                                               aRenderer,
-                                                              aAllDisplayMenuItemIDs).addClass (CBootstrapCSS.NAV);
+                                                              aAllDisplayMenuItemIDs)
+                                         .addClass (CBootstrapCSS.NAV);
     final BootstrapWell ret = new BootstrapWell (EBootstrapWellType.SMALL);
     ret.addChild (aUL);
     return ret;

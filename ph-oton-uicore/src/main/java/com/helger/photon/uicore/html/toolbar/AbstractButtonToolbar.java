@@ -26,7 +26,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hchtml.base.AbstractHCDiv;
-import com.helger.html.hchtml.impl.HCHiddenField;
+import com.helger.html.hchtml.form.HCHiddenField;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.photon.core.EPhotonCoreText;

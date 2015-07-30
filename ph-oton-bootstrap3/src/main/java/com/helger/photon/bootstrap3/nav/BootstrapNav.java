@@ -26,9 +26,9 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCTextNode;
 import com.helger.html.hchtml.IHCElementWithChildren;
-import com.helger.html.hchtml.base.AbstractHCUL;
 import com.helger.html.hchtml.impl.HCA;
-import com.helger.html.hchtml.impl.HCLI;
+import com.helger.html.hchtml.list.AbstractHCUL;
+import com.helger.html.hchtml.list.IHCLI;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdown;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdownMenu;
@@ -113,7 +113,7 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
                                final boolean bDisabled,
                                @Nullable final IIcon aIcon)
   {
-    final HCLI aItem = addAndReturnItem (aContent);
+    final IHCLI <?> aItem = addAndReturnItem (aContent);
     if (bDisabled)
       aItem.addClass (CBootstrapCSS.DISABLED);
     if (aIcon != null)
@@ -148,7 +148,7 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
   @Nonnull
   public BootstrapDropdownMenu addDropdownMenu (@Nullable final IHCNode aText)
   {
-    final HCLI aLI = addItem ().addClass (CBootstrapCSS.DROPDOWN);
+    final IHCLI <?> aLI = addItem ().addClass (CBootstrapCSS.DROPDOWN);
     aLI.addChild (BootstrapDropdown.makeDropdownToggle (new HCA (new SimpleURL ()).addChild (aText)));
     final BootstrapDropdownMenu aMenu = aLI.addAndReturnChild (new BootstrapDropdownMenu ());
     return aMenu;

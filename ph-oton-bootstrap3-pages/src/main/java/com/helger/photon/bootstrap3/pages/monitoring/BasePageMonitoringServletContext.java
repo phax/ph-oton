@@ -34,12 +34,12 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
+import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hcapi.impl.HCNodeList;
-import com.helger.html.hchtml.HCHTMLHelper;
 import com.helger.html.hchtml.impl.HCDiv;
 import com.helger.html.hchtml.impl.HCEM;
-import com.helger.html.hchtml.impl.HCRow;
-import com.helger.html.hchtml.impl.HCTable;
+import com.helger.html.hchtml.table.HCRow;
+import com.helger.html.hchtml.table.HCTable;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
@@ -149,9 +149,9 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
         final List <String> aInitParams = new ArrayList <String> ();
         for (final Map.Entry <String, String> aEntry : aRegistration.getInitParameters ().entrySet ())
           aInitParams.add (aEntry.getKey () + "=" + aEntry.getValue ());
-        aRow.addCell (HCHTMLHelper.list2divList (aInitParams));
+        aRow.addCell (HCExtHelper.list2divList (aInitParams));
 
-        aRow.addCell (HCHTMLHelper.list2divList (aRegistration.getMappings ()));
+        aRow.addCell (HCExtHelper.list2divList (aRegistration.getMappings ()));
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
@@ -177,9 +177,9 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
         final List <String> aInitParams = new ArrayList <String> ();
         for (final Map.Entry <String, String> aEntry : aRegistration.getInitParameters ().entrySet ())
           aInitParams.add (aEntry.getKey () + "=" + aEntry.getValue ());
-        aRow.addCell (HCHTMLHelper.list2divList (aInitParams));
+        aRow.addCell (HCExtHelper.list2divList (aInitParams));
 
-        aRow.addCell (HCHTMLHelper.list2divList (aRegistration.getServletNameMappings ()));
+        aRow.addCell (HCExtHelper.list2divList (aRegistration.getServletNameMappings ()));
 
         final HCNodeList aURLPatterns = new HCNodeList ();
         for (final String sText : aRegistration.getUrlPatternMappings ())

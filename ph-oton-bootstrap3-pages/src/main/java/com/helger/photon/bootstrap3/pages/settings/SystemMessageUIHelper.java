@@ -26,8 +26,8 @@ import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hchtml.HCHTMLHelper;
 import com.helger.html.hchtml.IHCElementWithChildren;
 import com.helger.photon.basic.app.systemmsg.ESystemMessageType;
 import com.helger.photon.basic.app.systemmsg.SystemMessageManager;
@@ -70,7 +70,7 @@ public final class SystemMessageUIHelper
   public static IHCElementWithChildren <?> createDefaultBox ()
   {
     final SystemMessageManager aSystemMsgMgr = PhotonBasicManager.getSystemMessageMgr ();
-    return createBox (aSystemMsgMgr.getMessageType (), HCHTMLHelper.nl2divList (aSystemMsgMgr.getSystemMessage ()));
+    return createBox (aSystemMsgMgr.getMessageType (), HCExtHelper.nl2divList (aSystemMsgMgr.getSystemMessage ()));
   }
 
   @Nullable

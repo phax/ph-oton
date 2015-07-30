@@ -30,7 +30,7 @@ import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hcapi.config.IHCConversionSettings;
 import com.helger.html.hcapi.impl.HCNodeList;
-import com.helger.html.hchtml.impl.HCCheckBox;
+import com.helger.html.hchtml.form.HCCheckBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;

@@ -29,7 +29,7 @@ import com.helger.commons.type.EBaseType;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCTextNode;
-import com.helger.html.hchtml.base.AbstractHCCol;
+import com.helger.html.hchtml.table.AbstractHCCol;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;

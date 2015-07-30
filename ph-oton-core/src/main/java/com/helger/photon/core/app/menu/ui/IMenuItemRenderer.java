@@ -19,8 +19,8 @@ package com.helger.photon.core.app.menu.ui;
 import javax.annotation.Nonnull;
 
 import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hchtml.base.IHCList;
-import com.helger.html.hchtml.impl.HCLI;
+import com.helger.html.hchtml.list.IHCLI;
+import com.helger.html.hchtml.list.IHCList;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuSeparator;
@@ -113,7 +113,7 @@ public interface IMenuItemRenderer <T extends IHCList <?>>
    * @param aLI
    *        HCNode
    */
-  void onMenuSeparatorItem (@Nonnull ISimpleWebExecutionContext aSWEC, @Nonnull HCLI aLI);
+  void onMenuSeparatorItem (@Nonnull ISimpleWebExecutionContext aSWEC, @Nonnull IHCLI <?> aLI);
 
   /**
    * Callback invoked on the created node.
@@ -130,7 +130,7 @@ public interface IMenuItemRenderer <T extends IHCList <?>>
    *        <code>true</code> if the menu item is expanded
    */
   void onMenuItemPageItem (@Nonnull ISimpleWebExecutionContext aSWEC,
-                           @Nonnull HCLI aLI,
+                           @Nonnull IHCLI <?> aLI,
                            boolean bHasChildren,
                            boolean bIsSelected,
                            boolean bIsExpanded);
@@ -150,7 +150,7 @@ public interface IMenuItemRenderer <T extends IHCList <?>>
    *        <code>true</code> if the menu item is expanded
    */
   void onMenuItemExternalItem (@Nonnull ISimpleWebExecutionContext aSWEC,
-                               @Nonnull HCLI aLI,
+                               @Nonnull IHCLI <?> aLI,
                                boolean bHasChildren,
                                boolean bIsSelected,
                                boolean bIsExpanded);

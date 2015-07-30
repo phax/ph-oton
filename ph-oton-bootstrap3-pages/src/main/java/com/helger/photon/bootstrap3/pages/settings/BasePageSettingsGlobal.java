@@ -31,7 +31,7 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hcapi.impl.HCNodeList;
-import com.helger.html.hchtml.impl.HCCheckBox;
+import com.helger.html.hchtml.form.HCCheckBox;
 import com.helger.html.hchtml.impl.HCDiv;
 import com.helger.html.hchtml.impl.HCEM;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;

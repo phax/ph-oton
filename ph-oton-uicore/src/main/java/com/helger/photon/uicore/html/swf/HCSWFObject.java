@@ -29,7 +29,8 @@ import com.helger.html.hcapi.IHCHasChildrenMutable;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hchtml.base.AbstractHCDiv;
 import com.helger.html.hchtml.impl.HCScriptInline;
-import com.helger.html.js.marshal.JSMarshaller;
+import com.helger.html.js.JSMarshaller;
+import com.helger.html.js.marshal.JSToString;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
@@ -272,17 +273,17 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
     final JSAssocArray jsFlashvars = new JSAssocArray ();
     if (m_aFlashVars != null)
       for (final Map.Entry <String, Object> aEntry : m_aFlashVars.entrySet ())
-        jsFlashvars.add (aEntry.getKey (), JSExpr.direct (JSMarshaller.objectToJSString (aEntry.getValue ())));
+        jsFlashvars.add (aEntry.getKey (), JSExpr.direct (JSToString.objectToJSString (aEntry.getValue ())));
 
     final JSAssocArray jsParams = new JSAssocArray ();
     if (m_aObjectParams != null)
       for (final Map.Entry <String, String> aEntry : m_aObjectParams.entrySet ())
-        jsParams.add (aEntry.getKey (), JSExpr.direct (JSMarshaller.objectToJSString (aEntry.getValue ())));
+        jsParams.add (aEntry.getKey (), JSExpr.direct (JSToString.objectToJSString (aEntry.getValue ())));
 
     final JSAssocArray jsAttributes = new JSAssocArray ();
     if (m_aObjectAttrs != null)
       for (final Map.Entry <String, String> aEntry : m_aObjectAttrs.entrySet ())
-        jsAttributes.add (aEntry.getKey (), JSExpr.direct (JSMarshaller.objectToJSString (aEntry.getValue ())));
+        jsAttributes.add (aEntry.getKey (), JSExpr.direct (JSToString.objectToJSString (aEntry.getValue ())));
 
     // Call embedder
     final JSInvocation aInvocation = JSExpr.ref ("swfobject")

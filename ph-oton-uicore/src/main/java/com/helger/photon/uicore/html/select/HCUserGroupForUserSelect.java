@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.name.ComparatorHasName;
-import com.helger.html.hchtml.impl.HCOption;
+import com.helger.html.hchtml.form.HCOption;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.usergroup.IUserGroup;
 import com.helger.photon.core.form.RequestField;

@@ -38,17 +38,17 @@ import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hcapi.impl.HCNodeList;
-import com.helger.html.hchtml.HCHTMLHelper;
-import com.helger.html.hchtml.base.IHCCell;
-import com.helger.html.hchtml.base.IHCTable;
+import com.helger.html.hchtml.form.HCEdit;
 import com.helger.html.hchtml.impl.HCA;
-import com.helger.html.hchtml.impl.HCCol;
 import com.helger.html.hchtml.impl.HCDiv;
 import com.helger.html.hchtml.impl.HCEM;
-import com.helger.html.hchtml.impl.HCEdit;
-import com.helger.html.hchtml.impl.HCRow;
-import com.helger.html.hchtml.impl.HCTable;
+import com.helger.html.hchtml.table.HCCol;
+import com.helger.html.hchtml.table.HCRow;
+import com.helger.html.hchtml.table.HCTable;
+import com.helger.html.hchtml.table.IHCCell;
+import com.helger.html.hchtml.table.IHCTable;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.CSecurity;
 import com.helger.photon.basic.security.role.IRole;
@@ -193,7 +193,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
     if (StringHelper.hasText (aSelectedObject.getDescription ()))
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCHTMLHelper.nl2divList (aSelectedObject.getDescription ())));
+                                                   .setCtrl (HCExtHelper.nl2divList (aSelectedObject.getDescription ())));
 
     // All users assigned to this user group
     final Collection <String> aAssignedUserIDs = aSelectedObject.getAllContainedUserIDs ();

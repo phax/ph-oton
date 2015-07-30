@@ -29,8 +29,9 @@ import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hchtml.base.IHCList;
-import com.helger.html.hchtml.impl.HCLI;
+import com.helger.html.hchtml.list.HCLI;
+import com.helger.html.hchtml.list.IHCLI;
+import com.helger.html.hchtml.list.IHCList;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
@@ -54,7 +55,7 @@ public class MenuRendererCallback <T extends IHCList <?>> extends DefaultHierarc
   private final NonBlockingStack <T> m_aMenuListStack;
   private final IMenuItemRenderer <T> m_aRenderer;
   private final Map <String, Boolean> m_aDisplayMenuItemIDs;
-  private final NonBlockingStack <HCLI> m_aMenuItemStack = new NonBlockingStack <HCLI> ();
+  private final NonBlockingStack <IHCLI <?>> m_aMenuItemStack = new NonBlockingStack <IHCLI <?>> ();
   private final NonBlockingStack <AtomicInteger> m_aChildCountStack = new NonBlockingStack <AtomicInteger> ();
   private final NonBlockingStack <DefaultTreeItemWithID <String, IMenuObject>> m_aTreeItemStack = new NonBlockingStack <DefaultTreeItemWithID <String, IMenuObject>> ();
   private final String m_sSelectedItem;
@@ -140,9 +141,9 @@ public class MenuRendererCallback <T extends IHCList <?>> extends DefaultHierarc
       {
         // separator
         final IHCNode aHCNode = m_aRenderer.renderSeparator (m_aSWEC, (IMenuSeparator) aMenuObj);
-        HCLI aLI;
-        if (aHCNode instanceof HCLI)
-          aLI = aParent.addAndReturnItem ((HCLI) aHCNode);
+        IHCLI <?> aLI;
+        if (aHCNode instanceof IHCLI <?>)
+          aLI = aParent.addAndReturnItem ((IHCLI <?>) aHCNode);
         else
           aLI = aParent.addAndReturnItem (aHCNode);
         m_aRenderer.onMenuSeparatorItem (m_aSWEC, aLI);
@@ -160,8 +161,8 @@ public class MenuRendererCallback <T extends IHCList <?>> extends DefaultHierarc
                                                                   bHasChildren,
                                                                   bSelected,
                                                                   bExpanded);
-          HCLI aLI;
-          if (aHCNode instanceof HCLI)
+          IHCLI <?> aLI;
+          if (aHCNode instanceof IHCLI <?>)
             aLI = aParent.addAndReturnItem ((HCLI) aHCNode);
           else
             aLI = aParent.addAndReturnItem (aHCNode);
@@ -177,9 +178,9 @@ public class MenuRendererCallback <T extends IHCList <?>> extends DefaultHierarc
                                                                         bHasChildren,
                                                                         bSelected,
                                                                         bExpanded);
-            HCLI aLI;
-            if (aHCNode instanceof HCLI)
-              aLI = aParent.addAndReturnItem ((HCLI) aHCNode);
+            IHCLI <?> aLI;
+            if (aHCNode instanceof IHCLI <?>)
+              aLI = aParent.addAndReturnItem ((IHCLI <?>) aHCNode);
             else
               aLI = aParent.addAndReturnItem (aHCNode);
             m_aRenderer.onMenuItemExternalItem (m_aSWEC, aLI, bHasChildren, bSelected, bExpanded);

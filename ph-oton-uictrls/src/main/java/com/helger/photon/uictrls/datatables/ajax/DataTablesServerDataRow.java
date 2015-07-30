@@ -30,8 +30,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hcapi.config.IHCConversionSettings;
-import com.helger.html.hchtml.base.IHCCell;
-import com.helger.html.hchtml.impl.HCRow;
+import com.helger.html.hchtml.table.HCRow;
+import com.helger.html.hchtml.table.IHCCell;
 
 /**
  * This class holds table rows to be used by the DataTables server side

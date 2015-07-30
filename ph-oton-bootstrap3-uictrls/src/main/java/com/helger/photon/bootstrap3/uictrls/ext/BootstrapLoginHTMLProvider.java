@@ -24,12 +24,12 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.hchtml.form.HCEdit;
+import com.helger.html.hchtml.form.HCEditPassword;
+import com.helger.html.hchtml.form.HCHiddenField;
 import com.helger.html.hchtml.impl.HCBody;
 import com.helger.html.hchtml.impl.HCDiv;
-import com.helger.html.hchtml.impl.HCEdit;
-import com.helger.html.hchtml.impl.HCEditPassword;
 import com.helger.html.hchtml.impl.HCH2;
-import com.helger.html.hchtml.impl.HCHiddenField;
 import com.helger.html.hchtml.impl.HCHtml;
 import com.helger.html.hchtml.impl.HCSpan;
 import com.helger.photon.basic.security.login.ELoginResult;

@@ -38,7 +38,7 @@ import com.helger.html.hcapi.impl.HCNodeList;
 import com.helger.html.hchtml.HC_Target;
 import com.helger.html.hchtml.impl.HCA;
 import com.helger.html.hchtml.impl.HCH4;
-import com.helger.html.hchtml.impl.HCUL;
+import com.helger.html.hchtml.list.HCUL;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;

@@ -40,7 +40,7 @@ import com.helger.html.hcapi.IHCConversionSettingsToNode;
 import com.helger.html.hcapi.IHCHasChildrenMutable;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hchtml.EHCTextDirection;
-import com.helger.html.hchtml.base.AbstractHCTextArea;
+import com.helger.html.hchtml.form.AbstractHCTextArea;
 import com.helger.html.hchtml.impl.HCScriptInline;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;

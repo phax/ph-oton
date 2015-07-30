@@ -39,7 +39,7 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCNodeList;
-import com.helger.html.hchtml.base.IHCForm;
+import com.helger.html.hchtml.form.IHCForm;
 import com.helger.html.hchtml.impl.HCA;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.lock.LockResult;

@@ -30,8 +30,8 @@ import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCNodeList;
-import com.helger.html.hchtml.impl.HCLI;
-import com.helger.html.hchtml.impl.HCUL;
+import com.helger.html.hchtml.list.HCUL;
+import com.helger.html.hchtml.list.IHCLI;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
@@ -95,7 +95,7 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
       {
         // Call before render callback
         {
-          final HCLI aLI = m_aStack.peek ().getLastChild ();
+          final IHCLI <?> aLI = m_aStack.peek ().getLastChild ();
           m_aRenderer.beforeAddRenderedMenuItem (m_aWPEC, aMenuObj, aLI);
         }
 
@@ -115,7 +115,7 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
             throw new IllegalStateException ("Unsupported menu object type: " + aMenuObj);
         }
 
-        HCLI aNewLI = null;
+        IHCLI <?> aNewLI = null;
         if (aNode != null)
           aNewLI = m_aStack.peek ().addAndReturnItem (aNode);
 

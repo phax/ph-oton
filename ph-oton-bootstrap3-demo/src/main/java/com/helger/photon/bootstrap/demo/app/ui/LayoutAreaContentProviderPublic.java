@@ -37,7 +37,7 @@ import com.helger.html.hchtml.impl.HCHead;
 import com.helger.html.hchtml.impl.HCP;
 import com.helger.html.hchtml.impl.HCSpan;
 import com.helger.html.hchtml.impl.HCStrong;
-import com.helger.html.hchtml.impl.HCUL;
+import com.helger.html.hchtml.list.HCUL;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
