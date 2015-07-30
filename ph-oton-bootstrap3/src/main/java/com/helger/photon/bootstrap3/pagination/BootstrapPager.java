@@ -19,9 +19,9 @@ package com.helger.photon.bootstrap3.pagination;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.AbstractHCUL;
-import com.helger.html.hc.html.HCLI;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.base.AbstractHCUL;
+import com.helger.html.hchtml.impl.HCLI;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 public class BootstrapPager extends AbstractHCUL <BootstrapPager>

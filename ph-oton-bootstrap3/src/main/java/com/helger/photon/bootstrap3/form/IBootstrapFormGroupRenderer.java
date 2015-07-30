@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.form;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hc.IHCElementWithChildren;
+import com.helger.html.hchtml.IHCElementWithChildren;
 
 /**
  * Interface for rendering a form group based on the form style.

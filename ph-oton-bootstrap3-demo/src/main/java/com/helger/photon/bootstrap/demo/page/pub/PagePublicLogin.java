@@ -21,8 +21,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.css.property.CCSSProperties;
-import com.helger.html.hc.html.HCCode;
-import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hchtml.impl.HCCode;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
 import com.helger.photon.bootstrap.demo.page.AbstractAppWebPage;

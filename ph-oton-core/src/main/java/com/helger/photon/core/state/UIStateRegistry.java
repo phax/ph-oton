@@ -37,8 +37,8 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.html.hc.IHCElement;
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.IHCElement;
 import com.helger.web.scope.session.ISessionWebScopeDontPassivate;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 

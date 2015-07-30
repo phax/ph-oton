@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hcapi.IHCNode;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.page.AbstractWebPage;

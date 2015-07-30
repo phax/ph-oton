@@ -27,12 +27,12 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.state.EChange;
-import com.helger.html.hc.IHCHasChildrenMutable;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.AbstractHCDiv;
-import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
-import com.helger.html.hc.html.HCSpan;
-import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hcapi.IHCConversionSettingsToNode;
+import com.helger.html.hcapi.IHCHasChildrenMutable;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hchtml.base.AbstractHCDiv;
+import com.helger.html.hchtml.impl.HCSpan;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.button.BootstrapButton;
 

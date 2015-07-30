@@ -24,11 +24,11 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.url.ISimpleURL;
 import com.helger.css.ECSSUnit;
-import com.helger.html.hc.IHCHasChildrenMutable;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.AbstractHCDiv;
-import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
-import com.helger.html.hc.html.HCScriptInline;
+import com.helger.html.hcapi.IHCConversionSettingsToNode;
+import com.helger.html.hcapi.IHCHasChildrenMutable;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.base.AbstractHCDiv;
+import com.helger.html.hchtml.impl.HCScriptInline;
 import com.helger.html.js.marshal.JSMarshaller;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;

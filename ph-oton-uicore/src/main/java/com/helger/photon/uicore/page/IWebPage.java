@@ -19,7 +19,7 @@ package com.helger.photon.uicore.page;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hcapi.IHCNode;
 import com.helger.photon.basic.app.page.IPage;
 
 /**

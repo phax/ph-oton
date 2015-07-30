@@ -28,8 +28,8 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.HCHead;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.impl.HCHead;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 /**

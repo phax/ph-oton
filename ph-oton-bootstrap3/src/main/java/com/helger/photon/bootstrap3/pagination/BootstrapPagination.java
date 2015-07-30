@@ -20,9 +20,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.string.StringHelper;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.AbstractHCUL;
-import com.helger.html.hc.html.HCSpan;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.base.AbstractHCUL;
+import com.helger.html.hchtml.impl.HCSpan;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 public class BootstrapPagination extends AbstractHCUL <BootstrapPagination>

@@ -28,7 +28,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.html.hc.api.HC_Target;
+import com.helger.html.hchtml.HC_Target;
 import com.helger.photon.basic.app.page.IPage;
 
 /**

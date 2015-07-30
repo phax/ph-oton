@@ -28,7 +28,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hcapi.IHCNode;
 
 /**
  * Represents a single tab within a tab box

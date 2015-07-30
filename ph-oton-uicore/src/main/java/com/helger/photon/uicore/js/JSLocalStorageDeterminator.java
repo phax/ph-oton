@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.annotation.OutOfBandNode;
-import com.helger.html.hc.base.AbstractHCScriptInline;
-import com.helger.html.js.provider.UnparsedJSCodeProvider;
+import com.helger.html.hchtml.base.AbstractHCScriptInline;
+import com.helger.html.js.UnparsedJSCodeProvider;
 
 /**
  * A Script to determine, if local storage is available.

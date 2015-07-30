@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.url.IHasSimpleURL;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hc.api.HC_Target;
+import com.helger.html.hchtml.HC_Target;
 
 /**
  * Base interface for a single menu item referencing an arbitrary URL.

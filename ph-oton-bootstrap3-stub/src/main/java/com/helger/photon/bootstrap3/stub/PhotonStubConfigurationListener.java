@@ -29,9 +29,9 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.scope.ScopeHelper;
 import com.helger.commons.system.SystemProperties;
 import com.helger.html.EHTMLVersion;
+import com.helger.html.hc.config.HCCustomizerDefault;
 import com.helger.html.hc.config.HCSettings;
-import com.helger.html.hc.customize.HCDefaultCustomizer;
-import com.helger.html.hc.customize.HCMultiCustomizer;
+import com.helger.html.hcapi.config.HCCustomizerMulti;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.photon.bootstrap3.EBootstrapCSSPathProvider;
 import com.helger.photon.bootstrap3.EBootstrapJSPathProvider;
@@ -143,7 +143,7 @@ public final class PhotonStubConfigurationListener implements ServletContextList
       // Default customizer: disable CSS classes - should fix issue with
       // checkbox in form in IE9
       HCSettings.getMutableConversionSettings ()
-                .setCustomizer (new HCMultiCustomizer (new HCDefaultCustomizer (), new BootstrapCustomizer ()));
+                .setCustomizer (new HCCustomizerMulti (new HCCustomizerDefault (), new BootstrapCustomizer ()));
 
       // Set default icon set if none is defined
       if (!DefaultIcons.areDefined ())

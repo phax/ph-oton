@@ -23,7 +23,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hcapi.IHCNode;
 
 /**
  * A wrapper around the FamFam flags icon set

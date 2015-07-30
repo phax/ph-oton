@@ -23,12 +23,12 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.factory.FactoryNewInstance;
-import com.helger.html.hc.IHCElement;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.HCA;
-import com.helger.html.hc.html.HCLI;
-import com.helger.html.hc.html.HCUL;
-import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hchtml.IHCElement;
+import com.helger.html.hchtml.impl.HCA;
+import com.helger.html.hchtml.impl.HCLI;
+import com.helger.html.hchtml.impl.HCUL;
 import com.helger.photon.basic.app.menu.IMenuItemDeterminatorCallback;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;

@@ -38,7 +38,7 @@ import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.PDTFactory;
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hcapi.IHCNode;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;

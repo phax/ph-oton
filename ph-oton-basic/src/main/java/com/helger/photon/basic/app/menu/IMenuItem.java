@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.html.hc.api.HC_Target;
+import com.helger.html.hchtml.HC_Target;
 
 /**
  * Base interface for a single menu item.

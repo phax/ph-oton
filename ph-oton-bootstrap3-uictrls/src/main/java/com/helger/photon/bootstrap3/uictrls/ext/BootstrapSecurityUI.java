@@ -23,8 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hcext.html.HCHTMLHelper;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.HCHTMLHelper;
 import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 
 /**

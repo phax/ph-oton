@@ -24,7 +24,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.annotation.OutOfBandNode;
-import com.helger.html.hc.base.AbstractHCScriptInline;
+import com.helger.html.hchtml.base.AbstractHCScriptInline;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;

@@ -22,11 +22,11 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.IHCElement;
-import com.helger.html.hc.IHCElementWithChildren;
-import com.helger.html.hc.IHCNodeWithChildren;
-import com.helger.html.hc.base.AbstractHCLabel;
-import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hcapi.IHCNodeWithChildren;
+import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hchtml.IHCElement;
+import com.helger.html.hchtml.IHCElementWithChildren;
+import com.helger.html.hchtml.base.AbstractHCLabel;
 
 public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormLabel
 {

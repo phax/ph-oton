@@ -18,7 +18,7 @@ package com.helger.photon.uicore.html.formlabel;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hcapi.IHCNode;
 
 /**
  * Represents the base interface for a single label (text field)

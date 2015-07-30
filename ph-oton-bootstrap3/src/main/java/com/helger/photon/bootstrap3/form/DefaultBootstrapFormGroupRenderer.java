@@ -27,16 +27,16 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.HCHelper;
-import com.helger.html.hc.IHCControl;
-import com.helger.html.hc.IHCElement;
-import com.helger.html.hc.IHCElementWithChildren;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.IHCInput;
-import com.helger.html.hc.html.HCCheckBox;
-import com.helger.html.hc.html.HCDiv;
-import com.helger.html.hc.html.HCLabel;
-import com.helger.html.hc.html.HCRadioButton;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.HCHTMLHelper;
+import com.helger.html.hchtml.IHCControl;
+import com.helger.html.hchtml.IHCElement;
+import com.helger.html.hchtml.IHCElementWithChildren;
+import com.helger.html.hchtml.base.IHCInput;
+import com.helger.html.hchtml.impl.HCCheckBox;
+import com.helger.html.hchtml.impl.HCDiv;
+import com.helger.html.hchtml.impl.HCLabel;
+import com.helger.html.hchtml.impl.HCRadioButton;
 import com.helger.photon.bootstrap3.BootstrapHelper;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
@@ -202,7 +202,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     if (eState == null)
       eState = aFormGroup.getState ();
 
-    final List <IHCControl <?>> aAllCtrls = HCHelper.getAllHCControls (aCtrls);
+    final List <IHCControl <?>> aAllCtrls = HCHTMLHelper.getAllHCControls (aCtrls);
 
     // Set CSS class to all contained controls
     BootstrapHelper.markAsFormControls (aAllCtrls);

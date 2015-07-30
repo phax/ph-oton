@@ -23,7 +23,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hcapi.impl.HCNodeList;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.uicore.css.CPageParam;

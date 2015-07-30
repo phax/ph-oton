@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hcapi.IHCNode;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
 

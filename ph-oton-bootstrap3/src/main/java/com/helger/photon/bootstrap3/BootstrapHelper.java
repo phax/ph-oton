@@ -20,14 +20,14 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.html.hc.HCHelper;
-import com.helger.html.hc.IHCControl;
-import com.helger.html.hc.IHCElement;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.IHCScript;
-import com.helger.html.hc.html.HCCheckBox;
-import com.helger.html.hc.html.HCHiddenField;
-import com.helger.html.hc.html.HCRadioButton;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.HCHTMLHelper;
+import com.helger.html.hchtml.IHCControl;
+import com.helger.html.hchtml.IHCElement;
+import com.helger.html.hchtml.base.IHCScript;
+import com.helger.html.hchtml.impl.HCCheckBox;
+import com.helger.html.hchtml.impl.HCHiddenField;
+import com.helger.html.hchtml.impl.HCRadioButton;
 
 @Immutable
 public final class BootstrapHelper
@@ -62,7 +62,7 @@ public final class BootstrapHelper
   {
     if (aParent != null)
       for (final IHCNode aChild : aParent.getAllChildren ())
-        markAsFormControls (HCHelper.getAllHCControls (aChild));
+        markAsFormControls (HCHTMLHelper.getAllHCControls (aChild));
   }
 
   public static boolean containsFormControlStatic (@Nullable final IHCNode aNode)

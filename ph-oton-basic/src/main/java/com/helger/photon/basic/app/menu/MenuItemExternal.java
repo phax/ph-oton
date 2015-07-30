@@ -30,7 +30,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.url.IHasSimpleURL;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hc.api.HC_Target;
+import com.helger.html.hchtml.HC_Target;
 
 /**
  * Default implementation of the {@link IMenuItemExternal} interface.

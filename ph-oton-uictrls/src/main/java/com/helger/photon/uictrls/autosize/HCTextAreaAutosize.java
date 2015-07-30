@@ -19,8 +19,8 @@ package com.helger.photon.uictrls.autosize;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hc.base.AbstractHCTextArea;
-import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
+import com.helger.html.hcapi.IHCConversionSettingsToNode;
+import com.helger.html.hchtml.base.AbstractHCTextArea;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;

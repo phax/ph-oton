@@ -27,11 +27,11 @@ import com.helger.commons.lang.StackTraceHelper;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
 import com.helger.css.propertyvalue.CCSSValue;
-import com.helger.html.hc.IHCNodeWithChildren;
-import com.helger.html.hc.html.HCDiv;
-import com.helger.html.hc.html.HCH1;
-import com.helger.html.hc.html.HCTextArea;
-import com.helger.html.hcext.html.HCHTMLHelper;
+import com.helger.html.hcapi.IHCNodeWithChildren;
+import com.helger.html.hchtml.HCHTMLHelper;
+import com.helger.html.hchtml.impl.HCDiv;
+import com.helger.html.hchtml.impl.HCH1;
+import com.helger.html.hchtml.impl.HCTextArea;
 import com.helger.photon.core.EPhotonCoreText;
 
 /**

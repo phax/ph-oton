@@ -24,14 +24,14 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLRole;
-import com.helger.html.hc.IHCHasChildrenMutable;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.AbstractHCDiv;
-import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
-import com.helger.html.hc.html.HCDiv;
-import com.helger.html.hc.html.HCH4;
-import com.helger.html.hc.impl.HCNodeList;
-import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hcapi.IHCConversionSettingsToNode;
+import com.helger.html.hcapi.IHCHasChildrenMutable;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hchtml.base.AbstractHCDiv;
+import com.helger.html.hchtml.impl.HCDiv;
+import com.helger.html.hchtml.impl.HCH4;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSInvocation;
@@ -137,7 +137,7 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
   @Nonnull
   public BootstrapModal setHeader (@Nullable final IHCNode... aFooter)
   {
-    return setHeader (HCNodeList.create (aFooter));
+    return setHeader (new HCNodeList ().addChildren (aFooter));
   }
 
   @Nonnull
@@ -156,7 +156,7 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
   @Nonnull
   public BootstrapModal setBody (@Nullable final IHCNode... aFooter)
   {
-    return setBody (HCNodeList.create (aFooter));
+    return setBody (new HCNodeList ().addChildren (aFooter));
   }
 
   @Nonnull
@@ -175,7 +175,7 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
   @Nonnull
   public BootstrapModal setFooter (@Nullable final IHCNode... aFooter)
   {
-    return setFooter (HCNodeList.create (aFooter));
+    return setFooter (new HCNodeList ().addChildren (aFooter));
   }
 
   @Nonnull

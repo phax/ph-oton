@@ -21,14 +21,14 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.api.HC_Target;
-import com.helger.html.hc.base.IHCA;
-import com.helger.html.hc.html.HCA;
-import com.helger.html.hc.impl.HCNodeList;
-import com.helger.html.hc.impl.HCTextNode;
-import com.helger.html.hcext.html.HCA_JS;
-import com.helger.html.js.writer.IHasJSCodeWithSettings;
+import com.helger.html.hc.ext.HCA_JS;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hchtml.HC_Target;
+import com.helger.html.hchtml.base.IHCA;
+import com.helger.html.hchtml.impl.HCA;
+import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.photon.bootstrap3.AbstractBootstrapObject;
 
 /**

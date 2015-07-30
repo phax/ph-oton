@@ -23,12 +23,12 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.html.CHTMLAttributes;
-import com.helger.html.hc.IHCElementWithChildren;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.AbstractHCDiv;
-import com.helger.html.hc.conversion.HCConsistencyChecker;
-import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
+import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
+import com.helger.html.hcapi.IHCConversionSettingsToNode;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.IHCElementWithChildren;
+import com.helger.html.hchtml.base.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.base.BootstrapCaret;
 

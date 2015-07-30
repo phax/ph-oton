@@ -18,7 +18,7 @@ package com.helger.photon.core.app.html;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hc.html.HCHtml;
+import com.helger.html.hchtml.impl.HCHtml;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

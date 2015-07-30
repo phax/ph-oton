@@ -20,9 +20,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hc.base.AbstractHCOL;
-import com.helger.html.hc.html.HCA;
-import com.helger.html.hcext.html.HCA_JS;
+import com.helger.html.hc.ext.HCA_JS;
+import com.helger.html.hchtml.base.AbstractHCOL;
+import com.helger.html.hchtml.impl.HCA;
 import com.helger.html.js.IHasJSCode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 

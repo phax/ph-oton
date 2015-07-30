@@ -27,8 +27,8 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.system.ENewLineMode;
 import com.helger.html.EHTMLVersion;
-import com.helger.html.hc.html.HCDiv;
 import com.helger.html.hc.render.HCRenderer;
+import com.helger.html.hchtml.impl.HCDiv;
 import com.helger.html.mock.HCTestRuleHTMLVersion;
 import com.helger.html.mock.HCTestRuleOptimized;
 import com.helger.photon.core.form.RequestField;

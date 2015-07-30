@@ -23,9 +23,9 @@ import javax.annotation.Nullable;
 
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.base.AbstractHCSelect;
-import com.helger.html.hc.html.HCOption;
-import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hchtml.base.AbstractHCSelect;
+import com.helger.html.hchtml.impl.HCOption;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.EPhotonCoreText;
 

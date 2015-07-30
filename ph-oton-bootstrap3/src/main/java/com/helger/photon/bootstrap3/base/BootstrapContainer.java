@@ -16,7 +16,7 @@
  */
 package com.helger.photon.bootstrap3.base;
 
-import com.helger.html.hc.base.AbstractHCDiv;
+import com.helger.html.hchtml.base.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**

@@ -21,11 +21,11 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
-import com.helger.html.hc.html.HCDiv;
-import com.helger.html.hc.html.HCScriptInline;
-import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
-import com.helger.html.hc.impl.AbstractHCNodeList;
+import com.helger.html.hcapi.IHCConversionSettingsToNode;
+import com.helger.html.hcapi.impl.AbstractHCNodeList;
+import com.helger.html.hchtml.impl.HCDiv;
+import com.helger.html.hchtml.impl.HCScriptInline;
+import com.helger.html.hchtml.impl.HCScriptInlineOnDocumentReady;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.photon.core.app.html.PhotonJS;

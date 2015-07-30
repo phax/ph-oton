@@ -22,14 +22,14 @@ import com.helger.commons.dimension.SizeInt;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.EHTMLVersion;
-import com.helger.html.hc.IHCControl;
-import com.helger.html.hc.IHCHasChildrenMutable;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.customize.HCEmptyCustomizer;
-import com.helger.html.hc.html.HCImg;
+import com.helger.html.hcapi.IHCHasChildrenMutable;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hcapi.config.HCCustomizerDoNothing;
+import com.helger.html.hchtml.IHCControl;
+import com.helger.html.hchtml.impl.HCImg;
 import com.helger.photon.bootstrap3.BootstrapHelper;
 
-public class BootstrapCustomizer extends HCEmptyCustomizer
+public class BootstrapCustomizer extends HCCustomizerDoNothing
 {
   public BootstrapCustomizer ()
   {}

@@ -24,8 +24,8 @@ import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.IHCElement;
-import com.helger.html.hc.html.HCSpan;
+import com.helger.html.hchtml.IHCElement;
+import com.helger.html.hchtml.impl.HCSpan;
 import com.helger.photon.uicore.icon.IIcon;
 
 /**

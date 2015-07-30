@@ -21,8 +21,8 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.html.hc.base.IHCList;
-import com.helger.html.hc.html.HCLI;
+import com.helger.html.hchtml.base.IHCList;
+import com.helger.html.hchtml.impl.HCLI;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 
 /**

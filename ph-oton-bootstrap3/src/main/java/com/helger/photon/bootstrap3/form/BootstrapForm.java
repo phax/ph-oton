@@ -25,8 +25,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.EHTMLRole;
-import com.helger.html.hc.IHCElementWithChildren;
-import com.helger.html.hc.base.AbstractHCForm;
+import com.helger.html.hchtml.IHCElementWithChildren;
+import com.helger.html.hchtml.base.AbstractHCForm;
 import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
 

@@ -21,8 +21,8 @@ import javax.annotation.Nullable;
 
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.IHCElement;
-import com.helger.html.hc.html.HCSpan;
+import com.helger.html.hchtml.IHCElement;
+import com.helger.html.hchtml.impl.HCSpan;
 import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;

@@ -28,9 +28,9 @@ import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.css.CCSS;
 import com.helger.css.media.ICSSMediaList;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.HCLink;
-import com.helger.html.hc.html.HCScriptFile;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.impl.HCLink;
+import com.helger.html.hchtml.impl.HCScriptFile;
 import com.helger.html.js.CJS;
 
 /**

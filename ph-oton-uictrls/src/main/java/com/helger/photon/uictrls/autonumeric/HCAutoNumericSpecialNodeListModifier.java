@@ -24,12 +24,12 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.special.IHCSpecialNodeListModifier;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.impl.HCScriptInlineOnDocumentReady;
 import com.helger.html.jquery.IJQuerySelector;
 import com.helger.html.jquery.JQuerySelector;
-import com.helger.html.js.provider.CollectingJSCodeProvider;
+import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.jscode.JSAssocArray;
 
 public final class HCAutoNumericSpecialNodeListModifier implements IHCSpecialNodeListModifier

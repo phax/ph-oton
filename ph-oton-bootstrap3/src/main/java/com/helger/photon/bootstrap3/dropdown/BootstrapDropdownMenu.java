@@ -22,8 +22,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLRole;
-import com.helger.html.hc.base.AbstractHCUL;
-import com.helger.html.hc.html.HCLI;
+import com.helger.html.hchtml.base.AbstractHCUL;
+import com.helger.html.hchtml.impl.HCLI;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 public class BootstrapDropdownMenu extends AbstractHCUL <BootstrapDropdownMenu>

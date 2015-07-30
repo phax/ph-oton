@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hc.html.HCButton;
-import com.helger.html.hc.html.HCButton_Submit;
+import com.helger.html.hchtml.impl.HCButton;
+import com.helger.html.hchtml.impl.HCButton_Submit;
 import com.helger.html.js.IHasJSCode;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.icon.IIcon;

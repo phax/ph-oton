@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hcapi.IHCNode;
 import com.helger.html.jscode.JSArray;
 import com.helger.photon.bootstrap.demo.app.ajax.secure.CAjaxSecure;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;

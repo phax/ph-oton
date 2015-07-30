@@ -22,10 +22,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.HCDiv;
-import com.helger.html.hc.impl.HCNodeList;
-import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hchtml.impl.HCDiv;
 import com.helger.photon.bootstrap3.AbstractBootstrapObject;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
@@ -136,13 +136,13 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
   @Nonnull
   public final BootstrapFormGroup setCtrl (@Nullable final IHCNode... aCtrls)
   {
-    return setCtrl (HCNodeList.create (aCtrls));
+    return setCtrl (new HCNodeList ().addChildren (aCtrls));
   }
 
   @Nonnull
   public final BootstrapFormGroup setCtrl (@Nullable final Iterable <? extends IHCNode> aCtrls)
   {
-    return setCtrl (HCNodeList.create (aCtrls));
+    return setCtrl (new HCNodeList ().addChildren (aCtrls));
   }
 
   @Nullable

@@ -18,9 +18,9 @@ package com.helger.photon.core.app.menu.ui;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.base.IHCList;
-import com.helger.html.hc.html.HCLI;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hchtml.base.IHCList;
+import com.helger.html.hchtml.impl.HCLI;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuSeparator;

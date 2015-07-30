@@ -30,7 +30,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.datetime.format.PDTFromString;
 import com.helger.datetime.format.SerializableDateTimeFormatter;
 import com.helger.datetime.format.SerializableDateTimeFormatter.EFormatStyle;
-import com.helger.html.hc.base.IHCCell;
+import com.helger.html.hchtml.base.IHCCell;
 
 /**
  * This comparator is responsible for sorting cells by date and/or time.

@@ -22,12 +22,12 @@ import javax.annotation.Nonnull;
 
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.api.HC_Target;
-import com.helger.html.hc.base.IHCList;
-import com.helger.html.hc.html.HCA;
-import com.helger.html.hc.html.HCLI;
-import com.helger.html.hc.impl.HCEntityNode;
+import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hcapi.impl.HCEntityNode;
+import com.helger.html.hchtml.HC_Target;
+import com.helger.html.hchtml.base.IHCList;
+import com.helger.html.hchtml.impl.HCA;
+import com.helger.html.hchtml.impl.HCLI;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuSeparator;

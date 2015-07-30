@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap.demo.app.ajax.secure;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hcapi.IHCNode;
 import com.helger.photon.bootstrap.demo.app.ui.LayoutAreaContentProviderSecure;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxDefaultResponse;

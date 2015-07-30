@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.html.hc.IHCNodeWithChildren;
+import com.helger.html.hcapi.IHCNodeWithChildren;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
 import com.helger.photon.core.app.error.uihandler.UIInternalErrorHandler;

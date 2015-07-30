@@ -36,13 +36,14 @@ import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hc.base.IHCCell;
-import com.helger.html.hc.conversion.IHCConversionSettings;
-import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.html.hc.special.IHCSpecialNodes;
+import com.helger.html.hcapi.IHCNodeList;
+import com.helger.html.hcapi.config.IHCConversionSettings;
+import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hchtml.base.IHCCell;
 
 /**
  * This class holds table cells to be used by the DataTables server side
@@ -55,7 +56,7 @@ public final class DataTablesServerDataCell implements Serializable
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesServerDataCell.class);
 
   private IHCConversionSettings m_aConversionSettings;
-  private HCNodeList m_aContent;
+  private IHCNodeList <?> m_aContent;
   private HCSpecialNodes m_aSpecialNodes = new HCSpecialNodes ();
   private String m_sHTML;
   private String m_sTextContent;
@@ -68,7 +69,7 @@ public final class DataTablesServerDataCell implements Serializable
       s_aLogger.warn ("Cell has classes assigned which will be lost: " + aCell.getAllClasses ());
 
     m_aConversionSettings = aCS;
-    final HCNodeList aCellContent = aCell.getAllChildrenAsNodeList ();
+    final IHCNodeList <?> aCellContent = aCell.getAllChildrenAsNodeList ();
 
     // Remember cell content
     setContent (aCellContent);
@@ -92,7 +93,7 @@ public final class DataTablesServerDataCell implements Serializable
     m_sTextContent = in.readUTF ();
   }
 
-  public void setContent (@Nonnull final HCNodeList aCellChildren)
+  public void setContent (@Nonnull final IHCNodeList <?> aCellChildren)
   {
     m_aSpecialNodes.clear ();
 
@@ -142,7 +143,7 @@ public final class DataTablesServerDataCell implements Serializable
   }
 
   @Nonnull
-  public HCNodeList getContent ()
+  public IHCNodeList <?> getContent ()
   {
     return m_aContent;
   }
