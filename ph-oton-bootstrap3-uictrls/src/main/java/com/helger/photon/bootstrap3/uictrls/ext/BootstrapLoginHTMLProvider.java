@@ -24,11 +24,11 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.hchtml.base.HCHtml;
 import com.helger.html.hchtml.forms.HCEdit;
 import com.helger.html.hchtml.forms.HCEditPassword;
 import com.helger.html.hchtml.forms.HCHiddenField;
 import com.helger.html.hchtml.grouping.HCDiv;
+import com.helger.html.hchtml.root.HCHtml;
 import com.helger.html.hchtml.sections.HCBody;
 import com.helger.html.hchtml.sections.HCH2;
 import com.helger.html.hchtml.textlevel.HCSpan;
