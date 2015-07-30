@@ -85,7 +85,7 @@ public class BootstrapUploadButton extends AbstractHCDiv <BootstrapUploadButton>
   @Nonnull
   public HCNodeList createSelectedFileEdit (@Nullable final String sPlaceholder)
   {
-    final HCEdit aEdit = new HCEdit ().setPlaceholder (sPlaceholder).setReadonly (true);
+    final HCEdit aEdit = new HCEdit ().setPlaceholder (sPlaceholder).setReadOnly (true);
     final HCScriptInline aScript = new HCScriptInline (JQuery.idRef (m_aEdit)
                                                              .on ("change",
                                                                   new JSAnonymousFunction (JQuery.idRef (aEdit)
