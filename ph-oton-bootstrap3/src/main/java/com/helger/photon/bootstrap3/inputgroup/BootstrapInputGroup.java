@@ -31,8 +31,8 @@ import com.helger.html.hcapi.IHCConversionSettingsToNode;
 import com.helger.html.hcapi.IHCHasChildrenMutable;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCTextNode;
-import com.helger.html.hchtml.base.AbstractHCDiv;
-import com.helger.html.hchtml.impl.HCSpan;
+import com.helger.html.hchtml.grouping.AbstractHCDiv;
+import com.helger.html.hchtml.textlevel.HCSpan;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.button.BootstrapButton;
 

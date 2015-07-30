@@ -21,8 +21,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hchtml.impl.HCSpan;
-import com.helger.html.hchtml.list.AbstractHCUL;
+import com.helger.html.hchtml.grouping.AbstractHCUL;
+import com.helger.html.hchtml.textlevel.HCSpan;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 public class BootstrapPagination extends AbstractHCUL <BootstrapPagination>

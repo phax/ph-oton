@@ -28,7 +28,7 @@ import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.hcapi.IHCConversionSettingsToNode;
-import com.helger.html.hchtml.base.AbstractHCPre;
+import com.helger.html.hchtml.grouping.AbstractHCPre;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;

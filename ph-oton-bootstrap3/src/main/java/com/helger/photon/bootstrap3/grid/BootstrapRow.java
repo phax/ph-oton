@@ -21,8 +21,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.html.hchtml.base.AbstractHCDiv;
-import com.helger.html.hchtml.impl.HCDiv;
+import com.helger.html.hchtml.grouping.AbstractHCDiv;
+import com.helger.html.hchtml.grouping.HCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**

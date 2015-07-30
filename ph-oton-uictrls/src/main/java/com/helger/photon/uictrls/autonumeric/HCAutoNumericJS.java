@@ -24,7 +24,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.special.SpecialNodeListModifier;
-import com.helger.html.hchtml.impl.HCScriptInlineOnDocumentReady;
+import com.helger.html.hchtml.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.js.IHasJSCode;

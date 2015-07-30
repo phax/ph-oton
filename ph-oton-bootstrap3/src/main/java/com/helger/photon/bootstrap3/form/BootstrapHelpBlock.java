@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hchtml.base.AbstractHCSpan;
+import com.helger.html.hchtml.textlevel.AbstractHCSpan;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**

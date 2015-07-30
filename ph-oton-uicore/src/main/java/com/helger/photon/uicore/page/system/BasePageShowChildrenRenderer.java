@@ -27,7 +27,7 @@ import com.helger.css.property.CCSSProperties;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hchtml.HC_Target;
 import com.helger.html.hchtml.IHCElement;
-import com.helger.html.hchtml.impl.HCA;
+import com.helger.html.hchtml.textlevel.HCA;
 import com.helger.photon.basic.app.menu.EMenuObjectType;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;

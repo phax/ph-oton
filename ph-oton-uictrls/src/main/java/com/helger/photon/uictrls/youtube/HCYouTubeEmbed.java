@@ -23,9 +23,9 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SMap;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hchtml.base.AbstractHCObject;
-import com.helger.html.hchtml.impl.HCEmbed;
-import com.helger.html.hchtml.impl.HCParam;
+import com.helger.html.hchtml.embedded.AbstractHCObject;
+import com.helger.html.hchtml.embedded.HCEmbed;
+import com.helger.html.hchtml.embedded.HCParam;
 
 /**
  * Embeds YouTube videos!<br>

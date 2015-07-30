@@ -25,8 +25,8 @@ import com.helger.html.EHTMLVersion;
 import com.helger.html.hcapi.IHCHasChildrenMutable;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.config.HCCustomizerDoNothing;
-import com.helger.html.hchtml.form.IHCControl;
-import com.helger.html.hchtml.impl.HCImg;
+import com.helger.html.hchtml.embedded.HCImg;
+import com.helger.html.hchtml.forms.IHCControl;
 import com.helger.photon.bootstrap3.BootstrapHelper;
 
 public class BootstrapCustomizer extends HCCustomizerDoNothing

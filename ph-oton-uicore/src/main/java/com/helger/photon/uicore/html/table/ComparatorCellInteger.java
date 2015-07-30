@@ -26,7 +26,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.compare.AbstractIntComparator;
 import com.helger.commons.locale.LocaleParser;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.hchtml.table.IHCCell;
+import com.helger.html.hchtml.tabular.IHCCell;
 
 public class ComparatorCellInteger extends AbstractIntComparator <IHCCell <?>>
 {

@@ -27,7 +27,7 @@ import com.helger.html.hcapi.IHCConversionSettingsToNode;
 import com.helger.html.hcapi.IHCHasChildrenMutable;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCTextNode;
-import com.helger.html.hchtml.base.AbstractHCA;
+import com.helger.html.hchtml.textlevel.AbstractHCA;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.uicore.icon.IIcon;
 

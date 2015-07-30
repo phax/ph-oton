@@ -24,7 +24,7 @@ import org.junit.Test;
 import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hchtml.impl.HCDiv;
+import com.helger.html.hchtml.grouping.HCDiv;
 
 public final class FeedTest
 {

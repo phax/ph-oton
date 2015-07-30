@@ -26,8 +26,8 @@ import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCNodeList;
 import com.helger.html.hcapi.impl.HCTextNode;
 import com.helger.html.hchtml.HC_Target;
-import com.helger.html.hchtml.base.IHCA;
-import com.helger.html.hchtml.impl.HCA;
+import com.helger.html.hchtml.textlevel.HCA;
+import com.helger.html.hchtml.textlevel.IHCA;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.photon.bootstrap3.AbstractBootstrapObject;
 

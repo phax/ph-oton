@@ -25,7 +25,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hcapi.impl.HCNodeList;
 import com.helger.html.hcapi.impl.HCTextNode;
-import com.helger.html.hchtml.impl.HCDiv;
+import com.helger.html.hchtml.grouping.HCDiv;
 import com.helger.photon.bootstrap3.AbstractBootstrapObject;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;

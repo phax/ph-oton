@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hchtml.impl.HCHead;
+import com.helger.html.hchtml.metadata.HCHead;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 public interface ILayoutManager <LECTYPE extends ILayoutExecutionContext>

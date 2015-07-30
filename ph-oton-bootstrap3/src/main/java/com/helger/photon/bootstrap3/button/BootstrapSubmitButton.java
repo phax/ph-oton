@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.button;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hchtml.form.EHCButtonType;
+import com.helger.html.hchtml.forms.EHCButtonType;
 
 /**
  * Bootstrap3 submit button.
