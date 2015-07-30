@@ -89,21 +89,20 @@ public final class BootstrapHelper
 
   public static void makeFormControlStatic (@Nullable final IHCNode aNode)
   {
-    if (aNode instanceof IHCElement <?>)
+    if (aNode != null)
     {
-      if (!(aNode instanceof IHCControl <?>) && !(aNode instanceof IHCScript <?>))
+      if (aNode instanceof IHCElement <?>)
       {
-        ((IHCElement <?>) aNode).addClass (CBootstrapCSS.FORM_CONTROL_STATIC);
+        if (!(aNode instanceof IHCControl <?>) && !(aNode instanceof IHCScript <?>))
+          ((IHCElement <?>) aNode).addClass (CBootstrapCSS.FORM_CONTROL_STATIC);
       }
-    }
-    else
-      // Descend only in non-elements
-      if (aNode != null)
+      else
       {
-        // E.g. HCNodeList
+        // Descend only in non-elements - e.g. HCNodeList
         if (aNode.hasChildren ())
           for (final IHCNode aChild : aNode.getAllChildren ())
             makeFormControlStatic (aChild);
       }
+    }
   }
 }

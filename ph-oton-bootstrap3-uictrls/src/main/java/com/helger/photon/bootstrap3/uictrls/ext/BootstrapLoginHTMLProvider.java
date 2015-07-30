@@ -133,8 +133,7 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
     final String sUserName = EPhotonCoreText.EMAIL_ADDRESS.getDisplayText (aDisplayLocale);
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sUserName)
                                                  .setCtrl (new HCEdit (CLogin.REQUEST_ATTR_USERID).setPlaceholder (sUserName)
-                                                                                                  .setAutoFocus (true)
-                                                                                                  .setFocused (true)));
+                                                                                                  .setAutoFocus (true)));
 
     final String sPassword = EPhotonCoreText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale);
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPassword)

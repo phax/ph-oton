@@ -598,7 +598,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_FIRSTNAME,
                                                                                            aSelectedObject == null ? null
                                                                                                                    : aSelectedObject.getFirstName ())).setPlaceholder (sFirstName)
-                                                                                                                                                      .setFocused (eFormAction.isCreate ()))
+                                                                                                                                                      .setAutoFocus (eFormAction.isCreate ()))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_FIRSTNAME)));
     }
 
