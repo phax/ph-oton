@@ -30,7 +30,7 @@ import com.helger.html.hcapi.IHCNode;
 import com.helger.html.hchtml.base.AbstractHCDiv;
 import com.helger.html.hchtml.impl.HCScriptInline;
 import com.helger.html.js.JSMarshaller;
-import com.helger.html.js.marshal.JSToString;
+import com.helger.html.js.tostring.JSToString;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
