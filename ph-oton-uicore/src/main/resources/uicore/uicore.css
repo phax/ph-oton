@@ -31,7 +31,7 @@
 }
 
 /* Special row only present for IE9 fix */
-tr.force_colspan {
+tr.force-colspan {
   height: 0px !important;
   line-height: 0px !important;
   display: none !important;
@@ -69,4 +69,13 @@ td {
   font-size: large;
   margin-top: 3px;
   margin-bottom: 3px;
+}
+
+/** Form fake button */
+.invisible-button {
+  width:0;
+  height:0;
+  border:none;
+  z-index:-1;
+  position:absolute
 }
