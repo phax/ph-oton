@@ -104,9 +104,6 @@ public class AjaxDefaultResponse implements IAjaxResponse
   protected AjaxDefaultResponse (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                  @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
   {
-    // Do it first
-    _addCSSAndJS (aRequestScope);
-
     // Now decompose the HCNode itself
     final JsonObject aObj = new JsonObject ();
     if (aNode != null)
@@ -132,6 +129,10 @@ public class AjaxDefaultResponse implements IAjaxResponse
 
       aObj.add (PROPERTY_HTML, sHTML);
     }
+
+    // Do it after all nodes were finalized etc
+    _addCSSAndJS (aRequestScope);
+
     m_bSuccess = true;
     m_sErrorMessage = null;
     m_aSuccessValue = aObj;
