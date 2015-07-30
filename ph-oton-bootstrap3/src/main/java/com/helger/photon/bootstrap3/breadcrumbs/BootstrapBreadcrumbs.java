@@ -20,18 +20,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.url.ISimpleURL;
+import com.helger.html.hc.base.AbstractHCOL;
 import com.helger.html.hc.html.HCA;
-import com.helger.html.hc.html.HCOL;
 import com.helger.html.hcext.html.HCA_JS;
 import com.helger.html.js.IHasJSCode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Breadcrumbs
- * 
+ *
  * @author Philip Helger
  */
-public class BootstrapBreadcrumbs extends HCOL
+public class BootstrapBreadcrumbs extends AbstractHCOL <BootstrapBreadcrumbs>
 {
   public BootstrapBreadcrumbs ()
   {

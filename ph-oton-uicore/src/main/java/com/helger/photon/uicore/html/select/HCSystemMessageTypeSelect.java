@@ -20,11 +20,10 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hc.html.HCSelect;
 import com.helger.photon.basic.app.systemmsg.ESystemMessageType;
 import com.helger.photon.core.form.RequestField;
 
-public final class HCSystemMessageTypeSelect extends HCSelect
+public class HCSystemMessageTypeSelect extends HCExtSelect
 {
   public HCSystemMessageTypeSelect (@Nonnull final RequestField aRF, @Nonnull final Locale aDisplayLocale)
   {

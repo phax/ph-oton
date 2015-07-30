@@ -23,17 +23,17 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SMap;
 import com.helger.commons.url.SimpleURL;
+import com.helger.html.hc.base.AbstractHCObject;
 import com.helger.html.hc.html.HCEmbed;
-import com.helger.html.hc.html.HCObject;
 import com.helger.html.hc.html.HCParam;
 
 /**
  * Embeds YouTube videos!<br>
  * Example code: <code>new YouTubeEmbed (640, 385, "93RkWNK3BZc")</code>
- * 
+ *
  * @author Philip Helger
  */
-public class HCYouTubeEmbed extends HCObject
+public class HCYouTubeEmbed extends AbstractHCObject <HCYouTubeEmbed>
 {
   private static final String PREFIX = "http://www.youtube.com/v/";
 

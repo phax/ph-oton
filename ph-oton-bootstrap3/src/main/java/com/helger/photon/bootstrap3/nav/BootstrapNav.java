@@ -25,9 +25,9 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCElementWithChildren;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.base.AbstractHCUL;
 import com.helger.html.hc.html.HCA;
 import com.helger.html.hc.html.HCLI;
-import com.helger.html.hc.html.HCUL;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdown;
@@ -39,7 +39,7 @@ import com.helger.photon.uicore.icon.IIcon;
  *
  * @author Philip Helger
  */
-public class BootstrapNav extends HCUL
+public class BootstrapNav extends AbstractHCUL <BootstrapNav>
 {
   /** By default an item is not disabled */
   public static final boolean DEFAULT_DISABLED = false;

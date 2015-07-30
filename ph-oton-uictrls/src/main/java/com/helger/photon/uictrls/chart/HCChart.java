@@ -26,8 +26,8 @@ import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.base.AbstractHCCanvas;
 import com.helger.html.hc.conversion.IHCConversionSettingsToNode;
-import com.helger.html.hc.html.HCCanvas;
 import com.helger.html.hc.html.HCLegend;
 import com.helger.html.hc.html.HCScriptInline;
 import com.helger.html.js.IHasJSCode;
@@ -48,7 +48,7 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
  *
  * @author Philip Helger
  */
-public class HCChart extends HCCanvas
+public class HCChart extends AbstractHCCanvas <HCChart>
 {
   // Main chart
   private final IChart m_aChart;

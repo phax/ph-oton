@@ -237,9 +237,6 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    if (hasNeitherPrefixNoSuffix ())
-      throw new IllegalStateException ("Neither prefix nor suffix present!");
-
     addClasses (CBootstrapCSS.INPUT_GROUP, m_eSize);
 
     for (final IHCNode aPrefix : m_aPrefixes)

@@ -20,11 +20,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.base.AbstractHCUL;
 import com.helger.html.hc.html.HCLI;
-import com.helger.html.hc.html.HCUL;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
-public class BootstrapPager extends HCUL
+public class BootstrapPager extends AbstractHCUL <BootstrapPager>
 {
   public BootstrapPager ()
   {

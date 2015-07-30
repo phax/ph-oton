@@ -23,13 +23,13 @@ import javax.annotation.Nullable;
 
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.html.hc.base.AbstractHCSelect;
 import com.helger.html.hc.html.HCOption;
-import com.helger.html.hc.html.HCSelect;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.EPhotonCoreText;
 
-public class HCExtSelect extends HCSelect
+public class HCExtSelect extends AbstractHCSelect <HCExtSelect>
 {
   /** The value of the "please select" field */
   public static final String VALUE_PLEASE_SELECT = "";

@@ -21,11 +21,11 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.base.AbstractHCUL;
 import com.helger.html.hc.html.HCSpan;
-import com.helger.html.hc.html.HCUL;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
-public class BootstrapPagination extends HCUL
+public class BootstrapPagination extends AbstractHCUL <BootstrapPagination>
 {
   public BootstrapPagination ()
   {

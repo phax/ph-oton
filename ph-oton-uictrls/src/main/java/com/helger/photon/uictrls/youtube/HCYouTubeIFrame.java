@@ -24,7 +24,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hc.html.HCIFrame;
+import com.helger.html.hc.base.AbstractHCIFrame;
 
 /**
  * Embeds YouTube videos as an IFrame<br>
@@ -32,7 +32,7 @@ import com.helger.html.hc.html.HCIFrame;
  *
  * @author Philip Helger
  */
-public class HCYouTubeIFrame extends HCIFrame
+public class HCYouTubeIFrame extends AbstractHCIFrame <HCYouTubeIFrame>
 {
   private static final String PREFIX = "http://www.youtube.com/embed/";
 
