@@ -32,25 +32,25 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EBootstrapCSSPathProvider implements ICSSPathProvider
 {
-  /** Main Bootstrap CSS */
+ /** Main Bootstrap CSS */
   BOOTSTRAP_335 ("bootstrap/3.3.5/css/bootstrap.css"),
-  /** Bootstrap theme CSS */
+ /** Bootstrap theme CSS */
   BOOTSTRAP_THEME_335 ("bootstrap/3.3.5/css/bootstrap-theme.css"),
-  /** Special Bootstrap CSS for IE < 10 */
+ /** Special Bootstrap CSS for IE < 10 */
   BOOTSTRAP_IE9 ("bootstrap/bootstrap3-ie9.css", "if lt IE 10"),
-  /** A some of default Bootstrap CSS adoptions etc. */
+ /** A some of default Bootstrap CSS adoptions etc. */
   BOOTSTRAP_PH ("bootstrap/bootstrap3-ph.css");
 
   private final ConstantCSSPathProvider m_aPP;
 
   private EBootstrapCSSPathProvider (@Nonnull @Nonempty final String sPath)
   {
-    this (sPath, null);
+    m_aPP = ConstantCSSPathProvider.create (sPath);
   }
 
   private EBootstrapCSSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
   {
-    m_aPP = new ConstantCSSPathProvider (sPath, sConditionalComment, (ICSSMediaList) null);
+    m_aPP = ConstantCSSPathProvider.createWithConditionalComment (sPath, sConditionalComment);
   }
 
   @Nonnull

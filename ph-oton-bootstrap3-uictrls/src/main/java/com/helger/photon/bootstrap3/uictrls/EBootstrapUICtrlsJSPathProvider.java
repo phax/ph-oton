@@ -25,23 +25,21 @@ import com.helger.html.resource.js.IJSPathProvider;
 
 public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
 {
-  BOOTSTRAP_DATATABLES ("bootstrap/datatables/bootstrap3-datatables.js"),
-  DATETIMEPICKER ("bootstrap/datetimepicker/bootstrap-datetimepicker.js"),
-  DATETIMEPICKER_LOCALE ("bootstrap/datetimepicker/locales/bootstrap-datetimepicker.{0}.js", null, false),
-  TREE_VIEW ("bootstrap/treeview/bootstrap-treeview.js");
+ BOOTSTRAP_DATATABLES ("bootstrap/datatables/bootstrap3-datatables.js"),
+ DATETIMEPICKER ("bootstrap/datetimepicker/bootstrap-datetimepicker.js"),
+ DATETIMEPICKER_LOCALE ("bootstrap/datetimepicker/locales/bootstrap-datetimepicker.{0}.js", false),
+ TREE_VIEW ("bootstrap/treeview/bootstrap-treeview.js");
 
   private final ConstantJSPathProvider m_aPP;
 
   private EBootstrapUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath)
   {
-    m_aPP = new ConstantJSPathProvider (sPath);
+    m_aPP = ConstantJSPathProvider.create (sPath);
   }
 
-  private EBootstrapUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath,
-                                    @Nullable final String sConditionalComment,
-                                    final boolean bCanBeBundled)
+  private EBootstrapUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath, final boolean bCanBeBundled)
   {
-    m_aPP = new ConstantJSPathProvider (sPath, sConditionalComment, bCanBeBundled);
+    m_aPP = ConstantJSPathProvider.createBundlable (sPath, bCanBeBundled);
   }
 
   @Nonnull
@@ -65,8 +63,8 @@ public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
   @Nonnull
   public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
   {
-    return new ConstantJSPathProvider (m_aPP.getJSItemPathRegular ().replace ("{0}", sLanguage),
-                                       m_aPP.getConditionalComment (),
-                                       true);
+    return ConstantJSPathProvider.createWithConditionalComment (m_aPP.getJSItemPathRegular ().replace ("{0}",
+                                                                                                       sLanguage),
+                                                                m_aPP.getConditionalComment ());
   }
 }

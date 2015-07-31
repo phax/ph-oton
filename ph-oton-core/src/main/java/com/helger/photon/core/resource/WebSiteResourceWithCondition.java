@@ -184,7 +184,9 @@ public class WebSiteResourceWithCondition
   {
     if (m_aResource.getResourceType () != EWebSiteResourceType.CSS)
       throw new IllegalStateException ("This can only be performed on a CSS resource!");
-    return new ConstantCSSPathProvider (m_aResource.getPath (), m_sConditionalComment, m_aMediaList);
+    return ConstantCSSPathProvider.createWithConditionalComment (m_aResource.getPath (),
+                                                                 m_sConditionalComment,
+                                                                 m_aMediaList);
   }
 
   @Nonnull
@@ -192,7 +194,7 @@ public class WebSiteResourceWithCondition
   {
     if (m_aResource.getResourceType () != EWebSiteResourceType.JS)
       throw new IllegalStateException ("This can only be performed on a JS resource!");
-    return new ConstantJSPathProvider (m_aResource.getPath (), m_sConditionalComment);
+    return ConstantJSPathProvider.createWithConditionalComment (m_aResource.getPath (), m_sConditionalComment);
   }
 
   @Override

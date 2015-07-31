@@ -32,38 +32,33 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
 {
-  /** https://github.com/daneden/animate.css */
+ /** https://github.com/daneden/animate.css */
   ANIMATE ("animate/animate.css"),
-  AUTONUMERIC ("autonumeric/autonumeric.css"),
-  CHART ("chart/Chart.css"),
-  COLORBOX ("colorbox/1.6.0/colorbox.css"),
-  DATATABLES_1_10 ("datatables/1.10.7/css/jquery.dataTables.css"),
-  DATATABLES_THEMEROLLER_1_10 ("datatables/1.10.7/css/jquery.dataTables_themeroller.css"),
-  DATATABLES_EXTRAS_COL_VIS ("datatables/ColVis-1.1.2/dataTables.colVis.css"),
-  DATATABLES_EXTRAS_FIXED_HEADER ("datatables/FixedHeader-2.1.2/dataTables.fixedHeader.css"),
-  DATATABLES_EXTRAS_SCROLLER ("datatables/Scroller-1.2.2/dataTables.scroller.css"),
-  DATATABLES_SEARCH_HIGHLIGHT ("datatables/searchHighlight/dataTables.searchHighlight.css"),
-  FAMFAM_ICONS ("famfam/013/famfam.css"),
-  FAMFAM_FLAGS ("famfam/flags/flags.css"),
-  FINEUPLOADER_320 ("fineupload/320/fineuploader.css"),
-  FINEUPLOADER_330 ("fineupload/330/fineuploader.css"),
-  /** http://fontawesome.io */
+ AUTONUMERIC ("autonumeric/autonumeric.css"),
+ CHART ("chart/Chart.css"),
+ COLORBOX ("colorbox/1.6.0/colorbox.css"),
+ DATATABLES_1_10 ("datatables/1.10.7/css/jquery.dataTables.css"),
+ DATATABLES_THEMEROLLER_1_10 ("datatables/1.10.7/css/jquery.dataTables_themeroller.css"),
+ DATATABLES_EXTRAS_COL_VIS ("datatables/ColVis-1.1.2/dataTables.colVis.css"),
+ DATATABLES_EXTRAS_FIXED_HEADER ("datatables/FixedHeader-2.1.2/dataTables.fixedHeader.css"),
+ DATATABLES_EXTRAS_SCROLLER ("datatables/Scroller-1.2.2/dataTables.scroller.css"),
+ DATATABLES_SEARCH_HIGHLIGHT ("datatables/searchHighlight/dataTables.searchHighlight.css"),
+ FAMFAM_ICONS ("famfam/013/famfam.css"),
+ FAMFAM_FLAGS ("famfam/flags/flags.css"),
+ FINEUPLOADER_320 ("fineupload/320/fineuploader.css"),
+ FINEUPLOADER_330 ("fineupload/330/fineuploader.css"),
+ /** http://fontawesome.io */
   FONT_AWESOME4 ("fontawesome/4.3.0/css/font-awesome.css"),
-  PRISMJS ("prismjs/prism.css"),
-  PRISMJS_BOOTSTRAP ("prismjs/prism-bootstrap.css"),
-  SELECT2 ("select2/4.0.0/css/select2.css"),
-  TYPEAHEAD_BOOTSTRAP ("typeahead/typeahead.js-bootstrap.css");
+ PRISMJS ("prismjs/prism.css"),
+ PRISMJS_BOOTSTRAP ("prismjs/prism-bootstrap.css"),
+ SELECT2 ("select2/4.0.0/css/select2.css"),
+ TYPEAHEAD_BOOTSTRAP ("typeahead/typeahead.js-bootstrap.css");
 
   private final ConstantCSSPathProvider m_aPP;
 
   private EUICtrlsCSSPathProvider (@Nonnull @Nonempty final String sPath)
   {
-    this (sPath, null);
-  }
-
-  private EUICtrlsCSSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
-  {
-    m_aPP = new ConstantCSSPathProvider (sPath, sConditionalComment, (ICSSMediaList) null);
+    m_aPP = ConstantCSSPathProvider.create (sPath);
   }
 
   @Nonnull

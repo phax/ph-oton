@@ -25,23 +25,16 @@ import com.helger.html.resource.js.IJSPathProvider;
 
 public enum EBootstrapJSPathProvider implements IJSPathProvider
 {
-  /** Default complete Bootstrap JS */
+ /** Default complete Bootstrap JS */
   BOOTSTRAP_335 ("bootstrap/3.3.5/js/bootstrap.js"),
-  /** Some Bootstrap JS extensions */
+ /** Some Bootstrap JS extensions */
   BOOTSTRAP_PH ("bootstrap/bootstrap3-ph.js");
 
   private final ConstantJSPathProvider m_aPP;
 
   private EBootstrapJSPathProvider (@Nonnull @Nonempty final String sPath)
   {
-    m_aPP = new ConstantJSPathProvider (sPath);
-  }
-
-  private EBootstrapJSPathProvider (@Nonnull @Nonempty final String sPath,
-                                    @Nullable final String sConditionalComment,
-                                    final boolean bCanBeBundled)
-  {
-    m_aPP = new ConstantJSPathProvider (sPath, sConditionalComment, bCanBeBundled);
+    m_aPP = ConstantJSPathProvider.create (sPath);
   }
 
   @Nonnull
@@ -60,13 +53,5 @@ public enum EBootstrapJSPathProvider implements IJSPathProvider
   public boolean canBeBundled ()
   {
     return m_aPP.canBeBundled ();
-  }
-
-  @Nonnull
-  public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
-  {
-    return new ConstantJSPathProvider (m_aPP.getJSItemPathRegular ().replace ("{0}", sLanguage),
-                                       m_aPP.getConditionalComment (),
-                                       true);
   }
 }

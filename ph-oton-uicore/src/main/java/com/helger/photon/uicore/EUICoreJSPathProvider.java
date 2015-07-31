@@ -30,53 +30,45 @@ import com.helger.html.resource.js.IJSPathProvider;
  */
 public enum EUICoreJSPathProvider implements IJSPathProvider
 {
-  FACEBOOK ("uicore/facebook/facebook.js"),
-  /** Insert in &lt;head&gt; element (after or before your CSS) for IE &lt; 9 */
+ FACEBOOK ("uicore/facebook/facebook.js"),
+ /** Insert in &lt;head&gt; element (after or before your CSS) for IE &lt; 9 */
   HTML5SHIV_3_7_2 ("uicore/html5shiv/3.7.2/html5shiv.js", "if lt IE 9"),
-  /** JQuery 1.x */
+ /** JQuery 1.x */
   JQUERY_1 ("uicore/jquery/jquery-1.11.3.js"),
-  /** JQuery 2.x */
+ /** JQuery 2.x */
   JQUERY_2 ("uicore/jquery/jquery-2.1.4.js"),
-  JQUERY_COOKIE ("uicore/jqueryplugins/jquery.cookie.js"),
-  JQUERY_HIGHLIGHT ("uicore/jqueryplugins/jquery.highlight.js"),
-  JQUERY_HOTKEYS ("uicore/jqueryplugins/jquery.hotkeys.js"),
-  JQUERY_MIGRATE ("uicore/jqueryplugins/jquery-migrate-1.2.1.js"),
-  JQUERY_MOUSEWHEEL ("uicore/jqueryplugins/jquery.mousewheel.js"),
-  JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/2.1.2/jquery.placeholder.js", "if lt IE 10"),
-  JQUERY_PLACEHOLDER_ALL ("uicore/jqueryplaceholder/jquery.placeholder-all.js", "if lt IE 10"),
+ JQUERY_COOKIE ("uicore/jqueryplugins/jquery.cookie.js"),
+ JQUERY_HIGHLIGHT ("uicore/jqueryplugins/jquery.highlight.js"),
+ JQUERY_HOTKEYS ("uicore/jqueryplugins/jquery.hotkeys.js"),
+ JQUERY_MIGRATE ("uicore/jqueryplugins/jquery-migrate-1.2.1.js"),
+ JQUERY_MOUSEWHEEL ("uicore/jqueryplugins/jquery.mousewheel.js"),
+ JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/2.1.2/jquery.placeholder.js", "if lt IE 10"),
+ JQUERY_PLACEHOLDER_ALL ("uicore/jqueryplaceholder/jquery.placeholder-all.js", "if lt IE 10"),
 
-  /** Edit placeholder fix for IE &lt; 10 */
-  @Deprecated
-  PLACEHOLDER_FIX ("uicore/placeholder/placeholder-fix.js", "if lt IE 10"),
-  /**
-   * Source: https://github.com/scottjehl/Respond - only for IE6-8 so use it
-   * only in a conditional comment!
-   */
+ /** Edit placeholder fix for IE &lt; 10 */
+  @Deprecated PLACEHOLDER_FIX ("uicore/placeholder/placeholder-fix.js", "if lt IE 10"),
+ /**
+  * Source: https://github.com/scottjehl/Respond - only for IE6-8 so use it only
+  * in a conditional comment!
+  */
   RESPOND ("uicore/respond/respond.js", "if lt IE 9"),
-  SERVERLOG ("uicore/serverlog/serverlog.js"),
-  /** https://github.com/stacktracejs/stacktrace.js/ */
+ SERVERLOG ("uicore/serverlog/serverlog.js"),
+ /** https://github.com/stacktracejs/stacktrace.js/ */
   STACKTRACE ("uicore/stacktrace/stacktrace.js"),
-  SWFOBJECT ("uicore/swf/swfobject.js"),
-  UICORE_FORM ("uicore/uicore-form.js"),
-  UICORE_JQUERY ("uicore/uicore-jquery.js");
+ SWFOBJECT ("uicore/swf/swfobject.js"),
+ UICORE_FORM ("uicore/uicore-form.js"),
+ UICORE_JQUERY ("uicore/uicore-jquery.js");
 
   private final ConstantJSPathProvider m_aPP;
 
   private EUICoreJSPathProvider (@Nonnull @Nonempty final String sPath)
   {
-    m_aPP = new ConstantJSPathProvider (sPath);
+    m_aPP = ConstantJSPathProvider.create (sPath);
   }
 
   private EUICoreJSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
   {
-    m_aPP = new ConstantJSPathProvider (sPath, sConditionalComment, true);
-  }
-
-  private EUICoreJSPathProvider (@Nonnull @Nonempty final String sPath,
-                                 @Nullable final String sConditionalComment,
-                                 final boolean bCanBeBundled)
-  {
-    m_aPP = new ConstantJSPathProvider (sPath, sConditionalComment, bCanBeBundled);
+    m_aPP = ConstantJSPathProvider.createWithConditionalComment (sPath, sConditionalComment);
   }
 
   @Nonnull
@@ -95,13 +87,5 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   public boolean canBeBundled ()
   {
     return m_aPP.canBeBundled ();
-  }
-
-  @Nonnull
-  public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
-  {
-    return new ConstantJSPathProvider (m_aPP.getJSItemPathRegular ().replace ("{0}", sLanguage),
-                                       m_aPP.getConditionalComment (),
-                                       true);
   }
 }

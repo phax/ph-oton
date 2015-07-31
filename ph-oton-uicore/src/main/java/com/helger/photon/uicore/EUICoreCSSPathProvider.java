@@ -32,23 +32,22 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EUICoreCSSPathProvider implements ICSSPathProvider
 {
-  JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/jquery.placeholder.css", "if lt IE 10"),
-  /** Edit placeholder fix for IE &lt; 10 */
-  @Deprecated
-  PLACEHOLDER_FIX ("uicore/placeholder/placeholder-fix.css", "if lt IE 10"),
-  /** Custom development */
+ JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/jquery.placeholder.css", "if lt IE 10"),
+ /** Edit placeholder fix for IE &lt; 10 */
+  @Deprecated PLACEHOLDER_FIX ("uicore/placeholder/placeholder-fix.css", "if lt IE 10"),
+ /** Custom development */
   UICORE ("uicore/uicore.css");
 
   private final ConstantCSSPathProvider m_aPP;
 
   private EUICoreCSSPathProvider (@Nonnull @Nonempty final String sPath)
   {
-    this (sPath, null);
+    m_aPP = ConstantCSSPathProvider.create (sPath);
   }
 
   private EUICoreCSSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
   {
-    m_aPP = new ConstantCSSPathProvider (sPath, sConditionalComment, (ICSSMediaList) null);
+    m_aPP = ConstantCSSPathProvider.createWithConditionalComment (sPath, sConditionalComment);
   }
 
   @Nonnull

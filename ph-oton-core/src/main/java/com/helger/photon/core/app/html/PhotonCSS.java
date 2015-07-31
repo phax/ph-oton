@@ -37,6 +37,7 @@ import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.serialize.MicroReader;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
+import com.helger.css.CSSFilenameHelper;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ECSSMedium;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
@@ -112,7 +113,10 @@ public final class PhotonCSS
           }
 
         // Add to target
-        aTarget.addItem (new ConstantCSSPathProvider (sPath, sConditionalComment, aMediaList));
+        aTarget.addItem (new ConstantCSSPathProvider (sPath,
+                                                      CSSFilenameHelper.getMinifiedCSSFilename (sPath),
+                                                      sConditionalComment,
+                                                      aMediaList));
       }
   }
 
