@@ -25,7 +25,7 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.annotation.OutOfBandNode;
-import com.helger.html.hchtml.script.AbstractHCScriptInline;
+import com.helger.html.hc.html.script.AbstractHCScriptInline;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSExpr;

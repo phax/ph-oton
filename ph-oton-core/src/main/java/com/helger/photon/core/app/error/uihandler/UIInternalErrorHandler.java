@@ -29,9 +29,9 @@ import com.helger.css.property.CCSSProperties;
 import com.helger.css.propertyvalue.CCSSValue;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.ext.HCExtHelper;
-import com.helger.html.hchtml.forms.HCTextArea;
-import com.helger.html.hchtml.grouping.HCDiv;
-import com.helger.html.hchtml.sections.HCH1;
+import com.helger.html.hc.html.forms.HCTextArea;
+import com.helger.html.hc.html.grouping.HCDiv;
+import com.helger.html.hc.html.sections.HCH1;
 import com.helger.photon.core.EPhotonCoreText;
 
 /**

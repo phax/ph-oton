@@ -18,7 +18,7 @@ package com.helger.photon.basic.atom;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hchtml.grouping.HCDiv;
+import com.helger.html.hc.html.grouping.HCDiv;
 
 /**
  * Feed entry XHTML content.

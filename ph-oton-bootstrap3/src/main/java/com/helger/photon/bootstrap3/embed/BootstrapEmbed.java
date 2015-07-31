@@ -18,10 +18,10 @@ package com.helger.photon.bootstrap3.embed;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hchtml.embedded.HCEmbed;
-import com.helger.html.hchtml.embedded.HCIFrame;
-import com.helger.html.hchtml.embedded.HCObject;
-import com.helger.html.hchtml.grouping.AbstractHCDiv;
+import com.helger.html.hc.html.embedded.HCEmbed;
+import com.helger.html.hc.html.embedded.HCIFrame;
+import com.helger.html.hc.html.embedded.HCObject;
+import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**

@@ -24,7 +24,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hchtml.embedded.AbstractHCIFrame;
+import com.helger.html.hc.html.embedded.AbstractHCIFrame;
 
 /**
  * Embeds YouTube videos as an IFrame<br>

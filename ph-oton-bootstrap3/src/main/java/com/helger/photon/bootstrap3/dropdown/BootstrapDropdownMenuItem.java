@@ -23,11 +23,11 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCA_JS;
+import com.helger.html.hc.html.HC_Target;
+import com.helger.html.hc.html.textlevel.HCA;
+import com.helger.html.hc.html.textlevel.IHCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.html.hchtml.HC_Target;
-import com.helger.html.hchtml.textlevel.HCA;
-import com.helger.html.hchtml.textlevel.IHCA;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.photon.bootstrap3.AbstractBootstrapObject;
 

@@ -19,7 +19,7 @@ package com.helger.photon.uictrls.colorpicker;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.html.hchtml.IHCHasHTMLAttributeValue;
+import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
 
 /**
  * Defines the basic color picker modes.

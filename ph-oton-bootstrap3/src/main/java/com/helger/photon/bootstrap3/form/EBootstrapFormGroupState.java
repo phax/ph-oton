@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap3.form;
 import javax.annotation.Nullable;
 
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hchtml.IHCElement;
+import com.helger.html.hc.html.IHCElement;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 

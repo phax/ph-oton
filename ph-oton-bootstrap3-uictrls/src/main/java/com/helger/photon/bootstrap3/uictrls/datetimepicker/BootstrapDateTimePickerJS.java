@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
+import com.helger.html.hc.html.script.AbstractHCScriptInline;
 import com.helger.html.hc.special.SpecialNodeListModifier;
-import com.helger.html.hchtml.script.AbstractHCScriptInline;
 
 /**
  * A special script that initializes the {@link BootstrapDateTimePicker}. It is

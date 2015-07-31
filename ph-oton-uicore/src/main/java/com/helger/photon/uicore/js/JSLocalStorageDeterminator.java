@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.annotation.OutOfBandNode;
-import com.helger.html.hchtml.script.AbstractHCScriptInline;
+import com.helger.html.hc.html.script.AbstractHCScriptInline;
 import com.helger.html.js.UnparsedJSCodeProvider;
 
 /**

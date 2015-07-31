@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hchtml.grouping.AbstractHCUL;
-import com.helger.html.hchtml.grouping.IHCLI;
+import com.helger.html.hc.html.grouping.AbstractHCUL;
+import com.helger.html.hc.html.grouping.IHCLI;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 public class BootstrapPager extends AbstractHCUL <BootstrapPager>

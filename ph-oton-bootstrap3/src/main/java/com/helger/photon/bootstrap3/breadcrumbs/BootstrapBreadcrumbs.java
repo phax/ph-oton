@@ -21,8 +21,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.ext.HCA_JS;
-import com.helger.html.hchtml.grouping.AbstractHCOL;
-import com.helger.html.hchtml.textlevel.HCA;
+import com.helger.html.hc.html.grouping.AbstractHCOL;
+import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.js.IHasJSCode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 

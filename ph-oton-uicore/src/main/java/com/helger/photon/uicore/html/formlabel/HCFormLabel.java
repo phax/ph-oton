@@ -23,10 +23,10 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNodeWithChildren;
+import com.helger.html.hc.html.IHCElement;
+import com.helger.html.hc.html.IHCElementWithChildren;
+import com.helger.html.hc.html.forms.AbstractHCLabel;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.html.hchtml.IHCElement;
-import com.helger.html.hchtml.IHCElementWithChildren;
-import com.helger.html.hchtml.forms.AbstractHCLabel;
 
 public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormLabel
 {

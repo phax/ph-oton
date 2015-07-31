@@ -25,8 +25,8 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.forms.AbstractHCButton;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.html.hchtml.forms.AbstractHCButton;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.uicore.icon.IIcon;
 

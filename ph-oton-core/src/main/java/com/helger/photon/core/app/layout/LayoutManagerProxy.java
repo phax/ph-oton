@@ -33,7 +33,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hchtml.metadata.HCHead;
+import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 /**

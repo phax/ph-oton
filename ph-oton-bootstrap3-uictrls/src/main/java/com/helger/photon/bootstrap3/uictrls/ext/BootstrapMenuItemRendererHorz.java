@@ -21,7 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hchtml.grouping.HCLI;
+import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 

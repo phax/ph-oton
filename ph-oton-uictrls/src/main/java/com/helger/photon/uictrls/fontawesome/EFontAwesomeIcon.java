@@ -20,9 +20,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hchtml.IHCElement;
-import com.helger.html.hchtml.textlevel.HCI;
-import com.helger.html.hchtml.textlevel.HCSpan;
+import com.helger.html.hc.html.IHCElement;
+import com.helger.html.hc.html.textlevel.HCI;
+import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;

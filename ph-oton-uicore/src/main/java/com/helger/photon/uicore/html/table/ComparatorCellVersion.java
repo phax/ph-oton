@@ -22,7 +22,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.compare.AbstractPartComparatorComparable;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.version.Version;
-import com.helger.html.hchtml.tabular.IHCCell;
+import com.helger.html.hc.html.tabular.IHCCell;
 
 /**
  * This comparator is responsible for sorting cells by {@link Version}

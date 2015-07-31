@@ -29,7 +29,7 @@ import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hchtml.metadata.HCHead;
+import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 /**

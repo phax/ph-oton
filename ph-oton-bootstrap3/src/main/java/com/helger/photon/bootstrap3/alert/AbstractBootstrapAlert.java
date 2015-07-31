@@ -22,7 +22,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hchtml.grouping.AbstractHCDiv;
+import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.base.BootstrapCloseIcon;
 

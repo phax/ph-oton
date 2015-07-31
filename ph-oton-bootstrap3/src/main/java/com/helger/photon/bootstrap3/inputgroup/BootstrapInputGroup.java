@@ -30,9 +30,9 @@ import com.helger.commons.state.EChange;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.grouping.AbstractHCDiv;
+import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.html.hchtml.grouping.AbstractHCDiv;
-import com.helger.html.hchtml.textlevel.HCSpan;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.button.BootstrapButton;
 

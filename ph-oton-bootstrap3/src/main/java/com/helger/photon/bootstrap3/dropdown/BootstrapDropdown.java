@@ -26,9 +26,9 @@ import com.helger.html.CHTMLAttributes;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCConsistencyChecker;
+import com.helger.html.hc.html.IHCElementWithChildren;
+import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
-import com.helger.html.hchtml.IHCElementWithChildren;
-import com.helger.html.hchtml.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.base.BootstrapCaret;
 

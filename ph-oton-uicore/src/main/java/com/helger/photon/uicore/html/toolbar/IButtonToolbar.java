@@ -23,8 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hchtml.forms.IHCButton;
-import com.helger.html.hchtml.grouping.IHCDiv;
+import com.helger.html.hc.html.forms.IHCButton;
+import com.helger.html.hc.html.grouping.IHCDiv;
 import com.helger.html.js.IHasJSCode;
 import com.helger.photon.uicore.icon.IIcon;
 

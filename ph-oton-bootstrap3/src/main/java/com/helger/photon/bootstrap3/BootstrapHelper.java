@@ -21,13 +21,13 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hchtml.IHCElement;
-import com.helger.html.hchtml.forms.HCCheckBox;
-import com.helger.html.hchtml.forms.HCCtrlHelper;
-import com.helger.html.hchtml.forms.HCHiddenField;
-import com.helger.html.hchtml.forms.HCRadioButton;
-import com.helger.html.hchtml.forms.IHCControl;
-import com.helger.html.hchtml.script.IHCScript;
+import com.helger.html.hc.html.IHCElement;
+import com.helger.html.hc.html.forms.HCCheckBox;
+import com.helger.html.hc.html.forms.HCCtrlHelper;
+import com.helger.html.hc.html.forms.HCHiddenField;
+import com.helger.html.hc.html.forms.HCRadioButton;
+import com.helger.html.hc.html.forms.IHCControl;
+import com.helger.html.hc.html.script.IHCScript;
 
 @Immutable
 public final class BootstrapHelper

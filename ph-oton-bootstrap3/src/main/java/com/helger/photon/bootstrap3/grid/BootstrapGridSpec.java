@@ -24,7 +24,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hchtml.IHCElement;
+import com.helger.html.hc.html.IHCElement;
 
 @Immutable
 public final class BootstrapGridSpec implements Serializable

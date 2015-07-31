@@ -24,9 +24,9 @@ import com.helger.css.property.CCSSProperties;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.embedded.HCImg;
+import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.impl.AbstractHCCustomizer;
-import com.helger.html.hchtml.embedded.HCImg;
-import com.helger.html.hchtml.forms.IHCControl;
 import com.helger.photon.bootstrap3.BootstrapHelper;
 
 public class BootstrapCustomizer extends AbstractHCCustomizer

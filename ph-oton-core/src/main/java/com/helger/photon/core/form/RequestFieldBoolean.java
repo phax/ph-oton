@@ -22,7 +22,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hchtml.forms.HCCheckBox;
+import com.helger.html.hc.html.forms.HCCheckBox;
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 

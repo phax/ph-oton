@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.form;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hchtml.IHCElementWithChildren;
+import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
 
 /**

@@ -28,7 +28,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
-import com.helger.html.hchtml.IHCElementWithChildren;
+import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.photon.basic.app.systemmsg.ESystemMessageType;
 import com.helger.photon.basic.app.systemmsg.SystemMessageManager;
 import com.helger.photon.basic.mgr.PhotonBasicManager;

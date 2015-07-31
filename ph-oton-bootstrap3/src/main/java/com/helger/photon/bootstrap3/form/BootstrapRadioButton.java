@@ -21,7 +21,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
-import com.helger.html.hchtml.forms.HCRadioButton;
+import com.helger.html.hc.html.forms.HCRadioButton;
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
 import com.helger.photon.bootstrap3.CBootstrapCSS;

@@ -34,7 +34,7 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hchtml.script.AbstractHCScriptInline;
+import com.helger.html.hc.html.script.AbstractHCScriptInline;
 import com.helger.html.jquery.IJQuerySelector;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;

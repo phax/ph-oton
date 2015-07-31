@@ -22,10 +22,10 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.html.grouping.HCDiv;
+import com.helger.html.hc.html.script.HCScriptInline;
+import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.impl.AbstractHCNodeList;
-import com.helger.html.hchtml.grouping.HCDiv;
-import com.helger.html.hchtml.script.HCScriptInline;
-import com.helger.html.hchtml.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.photon.core.app.html.PhotonJS;

@@ -16,7 +16,7 @@
  */
 package com.helger.photon.bootstrap3.navbar;
 
-import com.helger.html.hchtml.grouping.AbstractHCDiv;
+import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**

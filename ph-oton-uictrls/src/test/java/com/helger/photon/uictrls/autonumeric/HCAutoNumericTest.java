@@ -27,10 +27,10 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.system.ENewLineMode;
 import com.helger.html.EHTMLVersion;
+import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.mock.HCTestRuleHTMLVersion;
 import com.helger.html.hc.mock.HCTestRuleOptimized;
 import com.helger.html.hc.render.HCRenderer;
-import com.helger.html.hchtml.grouping.HCDiv;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.mock.PhotonCoreTestRule;
 

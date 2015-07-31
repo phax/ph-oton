@@ -29,8 +29,8 @@ import com.helger.html.CHTMLDocTypes;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.render.HCRenderer;
-import com.helger.html.hchtml.grouping.HCDiv;
 
 public abstract class AbstractFeedXHTML extends AbstractFeedElement
 {

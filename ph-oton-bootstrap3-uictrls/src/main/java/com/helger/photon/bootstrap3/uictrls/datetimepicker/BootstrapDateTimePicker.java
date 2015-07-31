@@ -39,7 +39,7 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hchtml.forms.HCEdit;
+import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.jscode.JSArray;

@@ -38,12 +38,12 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCNodeList;
+import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.html.hc.special.IHCSpecialNodes;
-import com.helger.html.hchtml.tabular.IHCCell;
 
 /**
  * This class holds table cells to be used by the DataTables server side

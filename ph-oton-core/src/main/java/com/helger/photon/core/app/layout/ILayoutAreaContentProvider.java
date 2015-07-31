@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hchtml.metadata.HCHead;
+import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 /**
