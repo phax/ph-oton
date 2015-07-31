@@ -24,6 +24,8 @@ import com.helger.commons.scope.ScopeHelper;
 import com.helger.commons.system.SystemProperties;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
+import com.helger.html.hc.impl.HCCustomizerList;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.photon.bootstrap3.EBootstrapCSSPathProvider;
 import com.helger.photon.bootstrap3.EBootstrapJSPathProvider;
@@ -122,7 +124,8 @@ public final class PhotonStubInitializer
     // Special Bootstrap customizer
     // Default customizer: disable CSS classes - should fix issue with
     // checkbox in form in IE9
-    HCSettings.getMutableConversionSettings ().setCustomizer (new BootstrapCustomizer ());
+    HCSettings.getMutableConversionSettings ()
+              .setCustomizer (new HCCustomizerList (new BootstrapCustomizer (), new HCCustomizerAutoFocusFirstCtrl ()));
 
     // Set default icon set if none is defined
     if (!DefaultIcons.areDefined ())

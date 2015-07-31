@@ -18,13 +18,9 @@ package com.helger.photon.bootstrap3.servlet;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.dimension.SizeInt;
-import com.helger.css.ECSSUnit;
-import com.helger.css.property.CCSSProperties;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.embedded.HCImg;
 import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.impl.AbstractHCCustomizer;
 import com.helger.photon.bootstrap3.BootstrapHelper;
@@ -39,24 +35,9 @@ public class BootstrapCustomizer extends AbstractHCCustomizer
                              @Nonnull final EHTMLVersion eHTMLVersion,
                              @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    if (false && aNode instanceof HCImg)
+    if (aNode instanceof IHCControl <?>)
     {
-      final HCImg aImg = (HCImg) aNode;
-      final SizeInt aExtent = aImg.getExtent ();
-      // Workaround for IE if a CSS contains "width:auto" and/or "height:auto"
-      // See https://github.com/twitter/bootstrap/issues/1899
-      // Or https://github.com/twbs/bootstrap/issues/4471
-      // Or https://github.com/twbs/bootstrap/issues/4935
-      if (aExtent != null)
-      {
-        aImg.addStyles (CCSSProperties.WIDTH.newValue (ECSSUnit.px (aExtent.getWidth ())),
-                        CCSSProperties.HEIGHT.newValue (ECSSUnit.px (aExtent.getHeight ())));
-      }
+      BootstrapHelper.markAsFormControl ((IHCControl <?>) aNode);
     }
-    else
-      if (aNode instanceof IHCControl <?>)
-      {
-        BootstrapHelper.markAsFormControl ((IHCControl <?>) aNode);
-      }
   }
 }
