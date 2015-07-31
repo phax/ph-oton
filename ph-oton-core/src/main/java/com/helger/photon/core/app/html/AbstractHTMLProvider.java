@@ -19,6 +19,7 @@ package com.helger.photon.core.app.html;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -26,11 +27,13 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hchtml.metadata.HCHead;
+import com.helger.html.hchtml.metadata.HCMeta;
 import com.helger.html.hchtml.root.HCHtml;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.IMetaElement;
@@ -122,7 +125,22 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     PhotonMetaElements.getAllRegisteredMetaElementsForThisRequest (aMetaElements);
 
     for (final IMetaElement aMetaElement : aMetaElements)
-      aHead.getMetaElementList ().addMetaElement (aMetaElement);
+      for (final Map.Entry <Locale, String> aEntry : aMetaElement.getContent ().entrySet ())
+      {
+        final HCMeta aMeta = new HCMeta ();
+        if (aMetaElement.isHttpEquiv ())
+          aMeta.setHttpEquiv (aMetaElement.getName ());
+        else
+          aMeta.setName (aMetaElement.getName ());
+
+        aMeta.setContent (aEntry.getValue ());
+
+        final Locale aContentLocale = aEntry.getKey ();
+        if (aContentLocale != null && !LocaleHelper.isSpecialLocale (aContentLocale))
+          aMeta.setLanguage (aContentLocale.toString ());
+
+        aHead.addMetaElement (aMeta);
+      }
   }
 
   /**
