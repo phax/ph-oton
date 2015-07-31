@@ -23,6 +23,8 @@ import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import com.helger.photon.bootstrap3.stub.init.PhotonStubServletInitializer;
+
 /**
  * ph-oton SCI
  * 

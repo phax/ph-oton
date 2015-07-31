@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.stub;
+package com.helger.photon.bootstrap3.stub.init;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.charset.CCharset;
+import com.helger.photon.bootstrap3.stub.PhotonStubServletContextListener;
 import com.helger.photon.core.action.servlet.PublicApplicationActionServlet;
 import com.helger.photon.core.action.servlet.SecureApplicationActionServlet;
 import com.helger.photon.core.ajax.servlet.PublicApplicationAjaxServlet;
@@ -180,7 +181,7 @@ public final class PhotonStubServletInitializer
       }
 
       {
-        aSC.addListener (PhotonStubConfigurationListener.class);
+        aSC.addListener (PhotonStubServletContextListener.class);
       }
 
       s_aLogger.info ("Finished registering default ph-oton listeners and servlets");

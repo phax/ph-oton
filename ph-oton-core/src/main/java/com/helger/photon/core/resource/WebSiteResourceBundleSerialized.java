@@ -183,16 +183,16 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
     {
       // Use the ResourceBundleServlet path by default
       aURL = LinkHelper.getURLWithContext (aRequestScope,
-                                          ResourceBundleServlet.SERVLET_DEFAULT_PATH +
-                                                         "/" +
-                                                         m_sBundleID +
-                                                         m_aBundle.getResourceType ().getFileExtension ());
+                                           ResourceBundleServlet.SERVLET_DEFAULT_PATH +
+                                                          "/" +
+                                                          m_sBundleID +
+                                                          m_aBundle.getResourceType ().getFileExtension ());
     }
 
     // Create the main node
     final IHCNode aNode = m_aBundle.getResourceType ().createNode (aURL, m_aBundle.getMediaList ());
 
-    // Wrap in conditional comment
+    // Wrap in conditional comment (if any)
     return m_aBundle.getWrapped (aNode);
   }
 

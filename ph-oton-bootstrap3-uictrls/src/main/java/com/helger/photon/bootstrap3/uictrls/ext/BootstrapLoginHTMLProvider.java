@@ -63,14 +63,6 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
     m_sPageTitle = sPageTitle;
   }
 
-  @Override
-  @OverridingMethodsMustInvokeSuper
-  protected void fillHead (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCHtml aHtml)
-  {
-    super.fillHead (aSWEC, aHtml);
-    aHtml.getHead ().setPageTitle (m_sPageTitle);
-  }
-
   /**
    * Customize the created form
    *
@@ -163,5 +155,13 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
     // Build body
     final HCBody aBody = aHtml.getBody ();
     aBody.addChild (aSpan);
+  }
+
+  @Override
+  @OverridingMethodsMustInvokeSuper
+  protected void fillHead (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCHtml aHtml)
+  {
+    super.fillHead (aSWEC, aHtml);
+    aHtml.getHead ().setPageTitle (m_sPageTitle);
   }
 }

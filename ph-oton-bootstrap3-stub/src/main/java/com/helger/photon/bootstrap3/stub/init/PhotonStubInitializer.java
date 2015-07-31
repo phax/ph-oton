@@ -14,13 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.stub;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.annotation.Nonnull;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+package com.helger.photon.bootstrap3.stub.init;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
@@ -54,15 +48,8 @@ import com.helger.web.servlet.response.UnifiedResponseDefaultSettings;
  *
  * @author Philip Helger
  */
-public final class PhotonStubConfigurationListener implements ServletContextListener
+public final class PhotonStubInitializer
 {
-  private static final AtomicBoolean s_aInitialized = new AtomicBoolean (false);
-
-  public static boolean isInitialized ()
-  {
-    return s_aInitialized.get ();
-  }
-
   public static void registerDefaultResources ()
   {
     // CSS
@@ -103,60 +90,46 @@ public final class PhotonStubConfigurationListener implements ServletContextList
 
   public static void onContextInitialized ()
   {
-    if (s_aInitialized.compareAndSet (false, true))
+    // Logging: JUL to SLF4J
+    SLF4JBridgeHandler.removeHandlersForRootLogger ();
+    SLF4JBridgeHandler.install ();
+
+    // Ensure that only web scopes are created and never non-web scopes
+    ThrowingScopeFactory.installToMetaScopeFactory ();
+
+    if (GlobalDebug.isDebugMode ())
     {
-      // Logging: JUL to SLF4J
-      SLF4JBridgeHandler.removeHandlersForRootLogger ();
-      SLF4JBridgeHandler.install ();
+      if (false)
+        ScopeHelper.setDebugSessionScopeEnabled (true);
 
-      // Default JS and CSS
-      registerDefaultResources ();
+      // Enable Java Serialization debug
+      SystemProperties.setPropertyValue ("sun.io.serialization.extendedDebugInfo", "true");
 
-      // Ensure that only web scopes are created and never non-web scopes
-      ThrowingScopeFactory.installToMetaScopeFactory ();
+      // Not production ready yet
+      WebScopeManager.setSessionPassivationAllowed (true);
 
-      if (GlobalDebug.isDebugMode ())
-      {
-        if (false)
-          ScopeHelper.setDebugSessionScopeEnabled (true);
-
-        // Enable Java Serialization debug
-        SystemProperties.setPropertyValue ("sun.io.serialization.extendedDebugInfo", "true");
-
-        // Not production ready yet
-        WebScopeManager.setSessionPassivationAllowed (true);
-
-        // Disable in debug mode
-        RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);
-      }
-
-      // Default response headers to be added
-      UnifiedResponseDefaultSettings.setAllowMimeSniffing (false);
-      UnifiedResponseDefaultSettings.setEnableXSSFilter (true);
-
-      // Always use HTML5 for Bootstrap3
-      HCSettings.setDefaultHTMLVersion (EHTMLVersion.HTML5);
-
-      // Special Bootstrap customizer
-      // Default customizer: disable CSS classes - should fix issue with
-      // checkbox in form in IE9
-      HCSettings.getMutableConversionSettings ().setCustomizer (new BootstrapCustomizer ());
-
-      // Set default icon set if none is defined
-      if (!DefaultIcons.areDefined ())
-        EFamFamIcon.setAsDefault ();
-
-      // Never use a thousand separator in HCAutoNumeric fields because of
-      // parsing problems
-      AbstractHCAutoNumeric.setDefaultThousandSeparator ("");
+      // Disable in debug mode
+      RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);
     }
-  }
 
-  public void contextInitialized (@Nonnull final ServletContextEvent aSCE)
-  {
-    onContextInitialized ();
-  }
+    // Default response headers to be added
+    UnifiedResponseDefaultSettings.setAllowMimeSniffing (false);
+    UnifiedResponseDefaultSettings.setEnableXSSFilter (true);
 
-  public void contextDestroyed (@Nonnull final ServletContextEvent aSCE)
-  {}
+    // Always use HTML5 for Bootstrap3
+    HCSettings.setDefaultHTMLVersion (EHTMLVersion.HTML5);
+
+    // Special Bootstrap customizer
+    // Default customizer: disable CSS classes - should fix issue with
+    // checkbox in form in IE9
+    HCSettings.getMutableConversionSettings ().setCustomizer (new BootstrapCustomizer ());
+
+    // Set default icon set if none is defined
+    if (!DefaultIcons.areDefined ())
+      EFamFamIcon.setAsDefault ();
+
+    // Never use a thousand separator in HCAutoNumeric fields because of
+    // parsing problems
+    AbstractHCAutoNumeric.setDefaultThousandSeparator ("");
+  }
 }

@@ -104,6 +104,17 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   }
 
   /**
+   * Fill the HTML body
+   *
+   * @param aSWEC
+   *        Web execution context
+   * @param aHtml
+   *        HTML object to be filled
+   */
+  protected abstract void fillBody (@Nonnull final ISimpleWebExecutionContext aSWEC,
+                                    @Nonnull HCHtml aHtml) throws ForcedRedirectException;
+
+  /**
    * Add all meta elements to the HTML head element.
    *
    * @param aRequestScope
@@ -235,17 +246,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     addMetaElementsToHead (aRequestScope, aHead);
   }
 
-  /**
-   * Fill the HTML body
-   *
-   * @param aSWEC
-   *        Web execution context
-   * @param aHtml
-   *        HTML object to be filled
-   */
-  protected abstract void fillBody (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                    @Nonnull HCHtml aHtml) throws ForcedRedirectException;
-
   @Nonnull
   public final HCHtml createHTML (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws ForcedRedirectException
   {
@@ -272,6 +272,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     // Add CSS and JS
     addCSSToHead (aRequestScope, aHtml.getHead ());
     addJSToHead (aRequestScope, aHtml.getHead ());
+
+    HCRenderer.prepareForConversion (aHtml.getHead (), aHtml.getBody (), HCSettings.getConversionSettings ());
 
     return aHtml;
   }
