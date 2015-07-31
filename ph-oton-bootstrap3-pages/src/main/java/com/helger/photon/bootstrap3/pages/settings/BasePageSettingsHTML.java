@@ -52,12 +52,13 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_FORMAT_HTML ("HTML formatieren?", "Format HTML?"),
-    MSG_FORMAT_CSS ("CSS formatieren?", "Format CSS?"),
-    MSG_FORMAT_JS ("JS formatieren?", "Format JS?"),
-    MSG_CONSISTENCY_CHECKS_ENABLED ("Konsistenzprüfungen aktiv?", "Consistency checks enabled?"),
-    MSG_EXTRACT_OUT_OF_BAND_NODES ("Out-of-band Knoten extrahieren?", "Extract out-of-band nodes?"),
-    MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
+   MSG_HTML_VERSION ("HTML-Version", "HTML version"),
+   MSG_FORMAT_HTML ("HTML formatieren?", "Format HTML?"),
+   MSG_FORMAT_CSS ("CSS formatieren?", "Format CSS?"),
+   MSG_FORMAT_JS ("JS formatieren?", "Format JS?"),
+   MSG_CONSISTENCY_CHECKS_ENABLED ("Konsistenzprüfungen aktiv?", "Consistency checks enabled?"),
+   MSG_EXTRACT_OUT_OF_BAND_NODES ("Out-of-band Knoten extrahieren?", "Extract out-of-band nodes?"),
+   MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
 
     private final IMultilingualText m_aTP;
 
@@ -113,13 +114,15 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
     if (aWPEC.hasAction (CPageParam.ACTION_SAVE))
     {
       // Save changes
-      final boolean bFormatHTML = aWPEC.getCheckBoxAttr (FIELD_FORMAT_HTML, aConversionSettings.getXMLWriterSettings ()
-                                                                                               .getIndent ()
-                                                                                               .isIndent ());
-      final boolean bFormatCSS = aWPEC.getCheckBoxAttr (FIELD_FORMAT_CSS, !aConversionSettings.getCSSWriterSettings ()
-                                                                                              .isOptimizedOutput ());
-      final boolean bFormatJS = aWPEC.getCheckBoxAttr (FIELD_FORMAT_JS, aConversionSettings.getJSWriterSettings ()
-                                                                                           .isIndentAndAlign ());
+      final boolean bFormatHTML = aWPEC.getCheckBoxAttr (FIELD_FORMAT_HTML,
+                                                         aConversionSettings.getXMLWriterSettings ()
+                                                                            .getIndent ()
+                                                                            .isIndent ());
+      final boolean bFormatCSS = aWPEC.getCheckBoxAttr (FIELD_FORMAT_CSS,
+                                                        !aConversionSettings.getCSSWriterSettings ()
+                                                                            .isOptimizedOutput ());
+      final boolean bFormatJS = aWPEC.getCheckBoxAttr (FIELD_FORMAT_JS,
+                                                       aConversionSettings.getJSWriterSettings ().isIndentAndAlign ());
       final boolean bConsistencyChecksEnabled = aWPEC.getCheckBoxAttr (FIELD_CONSISTENCY_CHECKS_ENABLED,
                                                                        aConversionSettings.areConsistencyChecksEnabled ());
       final boolean bExtractOutOfBandNodes = aWPEC.getCheckBoxAttr (FIELD_EXTRACT_OUT_OF_BAND_NODES,
@@ -138,8 +141,10 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
 
     final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
 
-    // HCSettings
+    // IHCConversionSettingsToNode
     {
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_HTML_VERSION.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (aConversionSettings.getHTMLVersion ().name ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_HTML.getDisplayText (aDisplayLocale))
                                                    .setCtrl (new HCCheckBox (FIELD_FORMAT_HTML,
                                                                              aConversionSettings.getXMLWriterSettings ()

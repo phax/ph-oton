@@ -273,7 +273,10 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     addCSSToHead (aRequestScope, aHtml.getHead ());
     addJSToHead (aRequestScope, aHtml.getHead ());
 
-    HCRenderer.prepareForConversion (aHtml.getHead (), aHtml.getBody (), HCSettings.getConversionSettings ());
+    // This is only required so that the additional CSS/JS nodes on the head get
+    // the correct HCNodeState
+    if (false)
+      HCRenderer.prepareForConversion (aHtml.getHead (), aHtml.getBody (), HCSettings.getConversionSettings ());
 
     return aHtml;
   }
