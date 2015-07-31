@@ -21,8 +21,8 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hchtml.IHCElement;
 import com.helger.html.hchtml.grouping.HCDiv;
 import com.helger.html.hchtml.metadata.HCHead;

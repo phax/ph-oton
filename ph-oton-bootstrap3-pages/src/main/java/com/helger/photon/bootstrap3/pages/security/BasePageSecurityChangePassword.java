@@ -30,7 +30,7 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hchtml.forms.HCEditPassword;
 import com.helger.photon.basic.security.AccessManager;
 import com.helger.photon.basic.security.login.LoggedInUserManager;

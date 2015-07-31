@@ -32,7 +32,7 @@ import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hchtml.IHCElementWithChildren;
 import com.helger.html.hchtml.forms.HCHiddenField;
 import com.helger.html.hchtml.grouping.HCDiv;

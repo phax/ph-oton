@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCNode;
 
 /**
  * This is a hack to allow for easy POST/Redirect/GET pattern implementation.

@@ -29,7 +29,7 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hchtml.tabular.HCRow;
 import com.helger.html.hchtml.tabular.HCTable;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;

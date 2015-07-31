@@ -28,7 +28,7 @@ import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hchtml.grouping.HCLI;
 import com.helger.html.hchtml.grouping.IHCLI;
 import com.helger.html.hchtml.grouping.IHCList;

@@ -29,7 +29,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hchtml.metadata.HCHead;
 import com.helger.html.hchtml.root.HCHtml;
 import com.helger.html.hchtml.sections.HCBody;

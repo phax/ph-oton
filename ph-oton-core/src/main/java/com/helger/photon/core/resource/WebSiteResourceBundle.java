@@ -35,8 +35,8 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ICSSMediaList;
-import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hchtml.HCConditionalCommentNode;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.ext.HCConditionalCommentNode;
 
 /**
  * This is a bundle of 1-n {@link WebSiteResource} objects that share the same

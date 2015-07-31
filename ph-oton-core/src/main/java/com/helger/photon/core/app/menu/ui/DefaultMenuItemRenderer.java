@@ -22,8 +22,8 @@ import javax.annotation.Nonnull;
 
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hcapi.impl.HCEntityNode;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.impl.HCEntityNode;
 import com.helger.html.hchtml.HC_Target;
 import com.helger.html.hchtml.grouping.IHCLI;
 import com.helger.html.hchtml.grouping.IHCList;

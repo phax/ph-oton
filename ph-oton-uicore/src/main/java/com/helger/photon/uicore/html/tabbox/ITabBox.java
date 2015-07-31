@@ -23,8 +23,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.state.EChange;
-import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hcapi.IHCNodeList;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.IHCNodeList;
 
 /**
  * Base interface for a tab box

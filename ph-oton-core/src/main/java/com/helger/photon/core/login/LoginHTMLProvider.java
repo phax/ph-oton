@@ -23,8 +23,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.hchtml.deprecated.HCCenter;
 import com.helger.html.hchtml.forms.HCButton_Submit;
 import com.helger.html.hchtml.forms.HCEdit;

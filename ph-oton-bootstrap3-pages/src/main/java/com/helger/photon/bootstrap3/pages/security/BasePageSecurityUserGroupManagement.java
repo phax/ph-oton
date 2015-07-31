@@ -39,7 +39,7 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.ext.HCExtHelper;
-import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hchtml.forms.HCEdit;
 import com.helger.html.hchtml.grouping.HCDiv;
 import com.helger.html.hchtml.tabular.HCCol;

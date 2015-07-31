@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap3.pagination;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hchtml.grouping.AbstractHCUL;
 import com.helger.html.hchtml.grouping.IHCLI;
 import com.helger.photon.bootstrap3.CBootstrapCSS;

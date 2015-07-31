@@ -18,7 +18,7 @@ package com.helger.photon.uicore.page;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCNode;
 
 /**
  * A base interface for icons

@@ -21,8 +21,8 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.html.hcapi.IHCConversionSettingsToNode;
-import com.helger.html.hcapi.impl.AbstractHCNodeList;
+import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.impl.AbstractHCNodeList;
 import com.helger.html.hchtml.grouping.HCDiv;
 import com.helger.html.hchtml.script.HCScriptInline;
 import com.helger.html.hchtml.script.HCScriptInlineOnDocumentReady;

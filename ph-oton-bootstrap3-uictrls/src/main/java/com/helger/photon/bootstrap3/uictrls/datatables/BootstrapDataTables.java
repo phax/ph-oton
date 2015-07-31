@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.annotation.OutOfBandNode;
-import com.helger.html.hcapi.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hchtml.tabular.IHCTable;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.table.AbstractBootstrapTable;

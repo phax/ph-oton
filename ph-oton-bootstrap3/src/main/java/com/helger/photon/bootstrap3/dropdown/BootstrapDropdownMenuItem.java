@@ -21,10 +21,10 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCA_JS;
-import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hcapi.impl.HCNodeList;
-import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.hchtml.HC_Target;
 import com.helger.html.hchtml.textlevel.HCA;
 import com.helger.html.hchtml.textlevel.IHCA;

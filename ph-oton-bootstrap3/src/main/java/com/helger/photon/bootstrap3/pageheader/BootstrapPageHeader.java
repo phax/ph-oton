@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.pageheader;
 
 import javax.annotation.Nullable;
 
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hchtml.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 

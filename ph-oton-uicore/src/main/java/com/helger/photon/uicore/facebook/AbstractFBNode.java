@@ -25,8 +25,8 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.MicroElement;
-import com.helger.html.hcapi.IHCConversionSettingsToNode;
-import com.helger.html.hcapi.impl.AbstractHCNode;
+import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.impl.AbstractHCNode;
 
 /**
  * Abstract base class for FB nodes

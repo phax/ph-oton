@@ -36,13 +36,13 @@ import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.html.hc.IHCConversionSettings;
+import com.helger.html.hc.IHCNodeList;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.html.hc.special.IHCSpecialNodes;
-import com.helger.html.hcapi.IHCNodeList;
-import com.helger.html.hcapi.config.IHCConversionSettings;
-import com.helger.html.hcapi.impl.HCNodeList;
 import com.helger.html.hchtml.tabular.IHCCell;
 
 /**

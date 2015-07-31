@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.css.property.CCSSProperties;
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hchtml.HC_Target;
 import com.helger.html.hchtml.IHCElement;
 import com.helger.html.hchtml.textlevel.HCA;

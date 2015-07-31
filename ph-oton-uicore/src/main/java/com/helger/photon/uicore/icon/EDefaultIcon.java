@@ -18,7 +18,7 @@ package com.helger.photon.uicore.icon;
 
 import javax.annotation.Nullable;
 
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCNode;
 
 /**
  * Contains all default icon types

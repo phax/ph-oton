@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.base;
 
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.entity.EHTMLEntity;
-import com.helger.html.hcapi.impl.HCEntityNode;
+import com.helger.html.hc.impl.HCEntityNode;
 import com.helger.html.hchtml.forms.AbstractHCButton;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 

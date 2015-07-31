@@ -19,7 +19,7 @@ package com.helger.photon.uictrls.autosize;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hcapi.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hchtml.forms.AbstractHCTextArea;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.app.html.PhotonJS;

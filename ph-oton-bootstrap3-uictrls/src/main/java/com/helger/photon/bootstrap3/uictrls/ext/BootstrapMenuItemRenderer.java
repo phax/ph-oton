@@ -23,8 +23,8 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.factory.FactoryNewInstance;
-import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.hchtml.IHCElement;
 import com.helger.html.hchtml.grouping.HCLI;
 import com.helger.html.hchtml.grouping.HCUL;

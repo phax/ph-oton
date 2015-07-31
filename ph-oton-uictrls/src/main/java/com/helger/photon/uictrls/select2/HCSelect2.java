@@ -18,9 +18,9 @@ package com.helger.photon.uictrls.select2;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hcapi.IHCConversionSettingsToNode;
-import com.helger.html.hcapi.IHCHasChildrenMutable;
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hchtml.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.request.IHCRequestField;

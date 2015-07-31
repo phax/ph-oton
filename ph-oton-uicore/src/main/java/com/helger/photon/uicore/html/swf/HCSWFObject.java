@@ -24,9 +24,9 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.url.ISimpleURL;
 import com.helger.css.ECSSUnit;
-import com.helger.html.hcapi.IHCConversionSettingsToNode;
-import com.helger.html.hcapi.IHCHasChildrenMutable;
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hchtml.grouping.AbstractHCDiv;
 import com.helger.html.hchtml.script.HCScriptInline;
 import com.helger.html.js.JSMarshaller;

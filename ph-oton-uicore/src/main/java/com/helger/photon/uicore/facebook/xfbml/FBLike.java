@@ -25,7 +25,7 @@ import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hcapi.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.photon.uicore.facebook.AbstractFBNode;
 
 public class FBLike extends AbstractFBNode

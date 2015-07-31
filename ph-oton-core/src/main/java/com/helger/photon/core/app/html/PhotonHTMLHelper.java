@@ -23,10 +23,10 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.mime.MimeType;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.ext.HCConditionalCommentNode;
 import com.helger.html.hc.render.HCRenderer;
-import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hchtml.HCConditionalCommentNode;
 import com.helger.html.hchtml.metadata.HCLink;
 import com.helger.html.hchtml.root.HCHtml;
 import com.helger.html.hchtml.script.HCScriptFile;
@@ -81,7 +81,9 @@ public final class PhotonHTMLHelper
                                    @Nonnull final IJSPathProvider aJS,
                                    final boolean bRegular)
   {
-    final HCScriptFile aScript = HCScriptFile.create (PhotonHTMLSettings.getJSPath (aRequestScope, aJS, bRegular));
+    final HCScriptFile aScript = new HCScriptFile ().setSrc (PhotonHTMLSettings.getJSPath (aRequestScope,
+                                                                                           aJS,
+                                                                                           bRegular));
 
     final String sConditionalComment = aJS.getConditionalComment ();
     if (StringHelper.hasText (sConditionalComment))

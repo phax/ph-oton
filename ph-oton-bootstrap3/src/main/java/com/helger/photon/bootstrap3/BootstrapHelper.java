@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hchtml.IHCElement;
 import com.helger.html.hchtml.forms.HCCheckBox;
 import com.helger.html.hchtml.forms.HCCtrlHelper;

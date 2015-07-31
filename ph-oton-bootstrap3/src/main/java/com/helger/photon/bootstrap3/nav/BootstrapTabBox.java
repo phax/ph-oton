@@ -20,9 +20,9 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.hcapi.IHCConversionSettingsToNode;
-import com.helger.html.hcapi.IHCHasChildrenMutable;
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hchtml.grouping.HCDiv;
 import com.helger.html.hchtml.grouping.IHCLI;
 import com.helger.html.hchtml.textlevel.HCA;

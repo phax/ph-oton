@@ -34,7 +34,7 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.config.PDTConfig;
-import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hchtml.tabular.HCRow;
 import com.helger.html.hchtml.tabular.HCTable;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;

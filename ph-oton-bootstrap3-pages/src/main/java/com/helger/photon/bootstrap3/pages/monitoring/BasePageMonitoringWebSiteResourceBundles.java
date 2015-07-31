@@ -32,7 +32,7 @@ import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.ext.HCExtHelper;
-import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hchtml.grouping.HCDiv;
 import com.helger.html.hchtml.tabular.HCRow;
 import com.helger.html.hchtml.tabular.HCTable;

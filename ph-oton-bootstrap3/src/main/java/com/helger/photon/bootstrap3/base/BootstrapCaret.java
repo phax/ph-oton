@@ -16,8 +16,8 @@
  */
 package com.helger.photon.bootstrap3.base;
 
-import com.helger.html.hcapi.impl.AbstractHCNodeList;
-import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hc.impl.AbstractHCNodeList;
+import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.hchtml.textlevel.HCSpan;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 

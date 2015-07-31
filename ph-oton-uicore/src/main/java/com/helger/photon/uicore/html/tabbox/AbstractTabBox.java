@@ -32,9 +32,9 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.hcapi.IHCNode;
-import com.helger.html.hcapi.impl.AbstractHCNodeList;
-import com.helger.html.hcapi.impl.HCTextNode;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.impl.AbstractHCNodeList;
+import com.helger.html.hc.impl.HCTextNode;
 
 /**
  * Represent a single tab box

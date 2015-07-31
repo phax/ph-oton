@@ -30,7 +30,7 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hchtml.forms.HCCheckBox;
 import com.helger.html.hchtml.grouping.HCDiv;
 import com.helger.html.hchtml.textlevel.HCEM;

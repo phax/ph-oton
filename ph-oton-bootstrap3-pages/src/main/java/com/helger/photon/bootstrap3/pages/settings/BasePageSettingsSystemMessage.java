@@ -33,7 +33,7 @@ import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.datetime.format.PDTToString;
-import com.helger.html.hcapi.impl.HCNodeList;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hchtml.IHCElementWithChildren;
 import com.helger.html.hchtml.forms.HCHiddenField;
 import com.helger.html.hchtml.grouping.HCDiv;

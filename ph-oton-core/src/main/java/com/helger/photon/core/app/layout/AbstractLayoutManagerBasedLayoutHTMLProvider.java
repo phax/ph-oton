@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hcapi.IHCNode;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hchtml.metadata.HCHead;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
