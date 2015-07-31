@@ -134,11 +134,17 @@ jqphClass.prototype = {
         callbackFctStart(data.value,textStatus,xhr);
       }
       
-      // Do we have inline JS?
+      // Do we have inline JS before external?
+      if (data.inlinejsBeforeExternal) {
+        // eval now
+        $.globalEval(data.inlinejsBeforeExternal);
+      }  
+      
+      // Do we have inline JS after external?
       var aInlineJSEval;
-      if(data.inlinejs){
+      if(data.inlinejsAfterExternal){
         // Include inline JS
-        aInlineJSEval = function() { $.globalEval(data.inlinejs); }
+        aInlineJSEval = function() { $.globalEval(data.inlinejsAfterExternal); }
       }
   
       if(data.externaljs){

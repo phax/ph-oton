@@ -69,7 +69,9 @@ public class AjaxDefaultResponse implements IAjaxResponse
    */
   public static final String PROPERTY_EXTERNAL_JS = "externaljs";
   /** Additional inline JS - only in case of success - contains a string */
-  public static final String PROPERTY_INLINE_JS = "inlinejs";
+  public static final String PROPERTY_INLINE_JS_BEFORE_EXTERNAL = "inlinejsBeforeExternal";
+  /** Additional inline JS - only in case of success - contains a string */
+  public static final String PROPERTY_INLINE_JS_AFTER_EXTERNAL = "inlinejsAfterExternal";
   /** Error message property - only in case of error */
   public static final String PROPERTY_ERRORMESSAGE = "errormessage";
   /** Default property for HTML content */
@@ -215,8 +217,10 @@ public class AjaxDefaultResponse implements IAjaxResponse
         aAssocArray.add (PROPERTY_INLINE_CSS, m_aSpecialNodes.getInlineCSS ());
       if (m_aSpecialNodes.hasExternalJSs ())
         aAssocArray.add (PROPERTY_EXTERNAL_JS, m_aSpecialNodes.getAllExternalJSs ());
-      if (m_aSpecialNodes.hasInlineJS ())
-        aAssocArray.add (PROPERTY_INLINE_JS, m_aSpecialNodes.getInlineJS ().getJSCode ());
+      if (m_aSpecialNodes.hasInlineJSBeforeExternal ())
+        aAssocArray.add (PROPERTY_INLINE_JS_BEFORE_EXTERNAL, m_aSpecialNodes.getInlineJSBeforeExternal ().getJSCode ());
+      if (m_aSpecialNodes.hasInlineJSAfterExternal ())
+        aAssocArray.add (PROPERTY_INLINE_JS_AFTER_EXTERNAL, m_aSpecialNodes.getInlineJSAfterExternal ().getJSCode ());
     }
     else
     {
