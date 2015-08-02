@@ -59,6 +59,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_ERROR_TEXT = DefaultCSSClassProvider.create ("form-group-error-text");
 
   private boolean m_bUseIcons = false;
+  private boolean m_bForceNoCheckBoxHandling = false;
 
   public DefaultBootstrapFormGroupRenderer ()
   {}
@@ -68,9 +69,23 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     return m_bUseIcons;
   }
 
-  public void setUseIcons (final boolean bUseIcons)
+  @Nonnull
+  public DefaultBootstrapFormGroupRenderer setUseIcons (final boolean bUseIcons)
   {
     m_bUseIcons = bUseIcons;
+    return this;
+  }
+
+  public boolean isForceNoCheckBoxHandling ()
+  {
+    return m_bForceNoCheckBoxHandling;
+  }
+
+  @Nonnull
+  public DefaultBootstrapFormGroupRenderer setForceNoCheckBoxHandling (final boolean bForceNoCheckBoxHandling)
+  {
+    m_bForceNoCheckBoxHandling = bForceNoCheckBoxHandling;
+    return this;
   }
 
   /**
@@ -209,8 +224,12 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 
     final IHCControl <?> aFirstControl = CollectionHelper.getFirstElement (aAllCtrls);
     HCDiv aFinalNode;
-    final boolean bFirstControlIsCheckBox = aAllCtrls.size () == 1 && aFirstControl instanceof HCCheckBox;
-    final boolean bFirstControlIsRadioButton = aAllCtrls.size () == 1 && aFirstControl instanceof HCRadioButton;
+    final boolean bFirstControlIsCheckBox = m_bForceNoCheckBoxHandling ? false
+                                                                       : aAllCtrls.size () == 1 &&
+                                                                         aFirstControl instanceof HCCheckBox;
+    final boolean bFirstControlIsRadioButton = m_bForceNoCheckBoxHandling ? false
+                                                                          : aAllCtrls.size () == 1 &&
+                                                                            aFirstControl instanceof HCRadioButton;
     boolean bUseIcons = false;
     if (bFirstControlIsCheckBox || bFirstControlIsRadioButton)
     {

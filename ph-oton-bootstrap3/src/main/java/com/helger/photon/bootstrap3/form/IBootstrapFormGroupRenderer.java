@@ -29,7 +29,8 @@ public interface IBootstrapFormGroupRenderer
 {
   boolean isUseIcons ();
 
-  void setUseIcons (boolean bUseIcons);
+  @Nonnull
+  IBootstrapFormGroupRenderer setUseIcons (boolean bUseIcons);
 
   /**
    * @param aForm
