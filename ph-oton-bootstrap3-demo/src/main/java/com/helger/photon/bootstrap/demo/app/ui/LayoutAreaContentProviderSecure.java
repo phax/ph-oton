@@ -45,6 +45,7 @@ import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarType;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRenderer;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
+import com.helger.photon.core.app.context.SimpleWebExecutionContext;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.app.layout.ILayoutAreaContentProvider;
 import com.helger.photon.core.servlet.LogoutServlet;
@@ -59,12 +60,12 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public final class LayoutAreaContentProviderSecure implements ILayoutAreaContentProvider <LayoutExecutionContext>
 {
   @Nonnull
-  private static IHCNode _getNavbar (@Nonnull final LayoutExecutionContext aLEC)
+  private static IHCNode _getNavbar (@Nonnull final SimpleWebExecutionContext aSWEC)
   {
-    final Locale aDisplayLocale = aLEC.getDisplayLocale ();
-    final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
+    final Locale aDisplayLocale = aSWEC.getDisplayLocale ();
+    final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
 
-    final ISimpleURL aLinkToStartPage = aLEC.getLinkToMenuItem (aLEC.getMenuTree ().getDefaultMenuItemID ());
+    final ISimpleURL aLinkToStartPage = aSWEC.getLinkToMenuItem (aSWEC.getMenuTree ().getDefaultMenuItemID ());
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar (EBootstrapNavbarType.STATIC_TOP, true, aDisplayLocale);
     aNavbar.addBrand (new HCNodeList ().addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO1)
@@ -78,11 +79,11 @@ public final class LayoutAreaContentProviderSecure implements ILayoutAreaContent
     aNav.addItem (new HCSpan ().addChild ("Logged in as ")
                                .addClass (CBootstrapCSS.NAVBAR_TEXT)
                                .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
-                                                                                                      aDisplayLocale))));
+                                                                                                       aDisplayLocale))));
 
-    aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
+    aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope,
+                                                         LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
     aNavbar.addNav (EBootstrapNavbarPosition.COLLAPSIBLE_RIGHT, aNav);
-
     return aNavbar;
   }
 
