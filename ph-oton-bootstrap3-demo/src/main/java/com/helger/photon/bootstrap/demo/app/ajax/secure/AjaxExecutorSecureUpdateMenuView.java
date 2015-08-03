@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap.demo.app.ajax.secure;
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.IHCNode;
-import com.helger.photon.bootstrap.demo.app.ui.LayoutAreaContentProviderSecure;
+import com.helger.photon.bootstrap.demo.app.ui.AppRendererSecure;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
@@ -40,7 +40,7 @@ public final class AjaxExecutorSecureUpdateMenuView extends AbstractAjaxExecutor
     final LayoutExecutionContext aLEC = LayoutExecutionContext.createForAjaxOrAction (aRequestScope);
 
     // Get the rendered content of the menu area
-    final IHCNode aRoot = LayoutAreaContentProviderSecure.getMenuContent (aLEC);
+    final IHCNode aRoot = AppRendererSecure.getMenuContent (aLEC);
 
     // Set as result property
     return AjaxDefaultResponse.createSuccess (aRequestScope, aRoot);

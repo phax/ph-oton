@@ -25,7 +25,7 @@ import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.app.action.secure.CActionSecure;
 import com.helger.photon.bootstrap.demo.app.ajax.secure.CAjaxSecure;
 import com.helger.photon.bootstrap.demo.app.menu.secure.MenuSecure;
-import com.helger.photon.bootstrap.demo.app.ui.LayoutAreaContentProviderSecure;
+import com.helger.photon.bootstrap.demo.app.ui.AppRendererSecure;
 import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFile;
 import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFileManager;
 import com.helger.photon.core.action.IActionInvoker;
@@ -53,7 +53,7 @@ public final class InitializerSecure extends DefaultApplicationInitializer <Layo
   @Override
   public void initLayout (@Nonnull final ILayoutManager <LayoutExecutionContext> aLayoutMgr)
   {
-    aLayoutMgr.registerAreaContentProvider (CLayout.LAYOUT_AREAID_VIEWPORT, new LayoutAreaContentProviderSecure ());
+    aLayoutMgr.registerAreaContentProvider (CLayout.LAYOUT_AREAID_VIEWPORT, new AppRendererSecure ());
   }
 
   @Override

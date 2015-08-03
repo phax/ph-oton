@@ -24,7 +24,7 @@ import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.app.action.pub.CActionPublic;
 import com.helger.photon.bootstrap.demo.app.ajax.pub.CAjaxPublic;
 import com.helger.photon.bootstrap.demo.app.menu.pub.MenuPublic;
-import com.helger.photon.bootstrap.demo.app.ui.LayoutAreaContentProviderPublic;
+import com.helger.photon.bootstrap.demo.app.ui.AppRendererPublic;
 import com.helger.photon.core.action.IActionInvoker;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
@@ -50,7 +50,7 @@ public final class InitializerPublic extends DefaultApplicationInitializer <Layo
   public void initLayout (@Nonnull final ILayoutManager <LayoutExecutionContext> aLayoutMgr)
   {
     // Register all layout area handler (order is important for SEO!)
-    aLayoutMgr.registerAreaContentProvider (CLayout.LAYOUT_AREAID_VIEWPORT, new LayoutAreaContentProviderPublic ());
+    aLayoutMgr.registerAreaContentProvider (CLayout.LAYOUT_AREAID_VIEWPORT, new AppRendererPublic ());
   }
 
   @Override

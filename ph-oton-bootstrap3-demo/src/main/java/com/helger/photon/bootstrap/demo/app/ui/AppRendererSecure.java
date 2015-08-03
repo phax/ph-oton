@@ -57,7 +57,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public final class LayoutAreaContentProviderSecure implements ILayoutAreaContentProvider <LayoutExecutionContext>
+public final class AppRendererSecure implements ILayoutAreaContentProvider <LayoutExecutionContext>
 {
   @Nonnull
   private static IHCNode _getNavbar (@Nonnull final SimpleWebExecutionContext aSWEC)
@@ -123,7 +123,7 @@ public final class LayoutAreaContentProviderSecure implements ILayoutAreaContent
       aCol1.addChild (new HCDiv ().setID (CLayout.LAYOUT_AREAID_SPECIAL));
 
       // content - determine is exactly same as for view
-      aCol2.addChild (LayoutAreaContentProviderPublic._getMainContent (aLEC));
+      aCol2.addChild (AppRendererPublic._getMainContent (aLEC));
     }
 
     return ret;

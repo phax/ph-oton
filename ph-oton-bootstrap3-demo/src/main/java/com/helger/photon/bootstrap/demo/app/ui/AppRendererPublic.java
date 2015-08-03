@@ -61,12 +61,14 @@ import com.helger.photon.bootstrap3.nav.BootstrapNav;
 import com.helger.photon.bootstrap3.navbar.BootstrapNavbar;
 import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarPosition;
 import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarType;
+import com.helger.photon.bootstrap3.pages.settings.SystemMessageUIHelper;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRenderer;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRendererHorz;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.app.layout.ILayoutAreaContentProvider;
+import com.helger.photon.core.app.redirect.ForcedRedirectManager;
 import com.helger.photon.core.servlet.LogoutServlet;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.photon.uicore.page.IWebPage;
@@ -78,13 +80,13 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public final class LayoutAreaContentProviderPublic implements ILayoutAreaContentProvider <LayoutExecutionContext>
+public final class AppRendererPublic implements ILayoutAreaContentProvider <LayoutExecutionContext>
 {
   private static final ICSSClassProvider CSS_CLASS_FOOTER_LINKS = DefaultCSSClassProvider.create ("footer-links");
 
   private final List <IMenuObject> m_aFooterObjects;
 
-  public LayoutAreaContentProviderPublic ()
+  public AppRendererPublic ()
   {
     m_aFooterObjects = new ArrayList <IMenuObject> ();
     ApplicationMenuTree.getTree ().iterateAllMenuObjects (new INonThrowingRunnableWithParameter <IMenuObject> ()
@@ -109,9 +111,10 @@ public final class LayoutAreaContentProviderPublic implements ILayoutAreaContent
       aNav.addItem (new HCSpan ().addClass (CBootstrapCSS.NAVBAR_TEXT)
                                  .addChild ("Logged in as ")
                                  .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
-                                                                                                        aDisplayLocale))));
+                                                                                                         aDisplayLocale))));
 
-      aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
+      aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope,
+                                                           LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
       aNavbar.addNav (EBootstrapNavbarPosition.COLLAPSIBLE_RIGHT, aNav);
     }
     else
@@ -130,7 +133,7 @@ public final class LayoutAreaContentProviderPublic implements ILayoutAreaContent
   }
 
   @Nonnull
-  private static BootstrapNavbar _getNavbar (final LayoutExecutionContext aLEC)
+  private static BootstrapNavbar _getNavbar (@Nonnull final LayoutExecutionContext aLEC)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     final ISimpleURL aLinkToStartPage = aLEC.getLinkToMenuItem (aLEC.getMenuTree ().getDefaultMenuItemID ());
@@ -193,6 +196,9 @@ public final class LayoutAreaContentProviderPublic implements ILayoutAreaContent
     // Build page content: header + content
     final HCNodeList aPageContainer = new HCNodeList ();
 
+    // First add the system message
+    aPageContainer.addChild (SystemMessageUIHelper.createDefaultBox ());
+
     // Handle 404 case here (see error404.jsp)
     if ("true".equals (aRequestScope.getAttributeAsString ("httpError")))
     {
@@ -206,16 +212,22 @@ public final class LayoutAreaContentProviderPublic implements ILayoutAreaContent
                                                                   ")" +
                                                                   (StringHelper.hasText (sHttpRequestURI) ? " for request URI " +
                                                                                                             sHttpRequestURI
-                                                                                                         : "")));
+                                                                                                          : "")));
+    }
+    else
+    {
+      // Add the forced redirect content here
+      if (aWPEC.containsAttribute (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE))
+        aPageContainer.addChild (ForcedRedirectManager.getLastForcedRedirectContent (aDisplayPage.getID ()));
     }
 
     // Add page header
     aPageContainer.addChild (aDisplayPage.getHeaderNode (aWPEC));
 
-    // Main fill content
+    // Main fill page content
     aDisplayPage.getContent (aWPEC);
 
-    // Add result
+    // Add page content to result
     aPageContainer.addChild (aWPEC.getNodeList ());
     return aPageContainer;
   }
