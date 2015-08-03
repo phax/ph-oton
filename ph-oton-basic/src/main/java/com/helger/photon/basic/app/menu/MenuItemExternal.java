@@ -40,16 +40,16 @@ import com.helger.html.hc.html.HC_Target;
 @NotThreadSafe
 public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal>implements IMenuItemExternal
 {
-  private final IHasSimpleURL m_aURL;
+  private final IHasSimpleURL m_aURLProvider;
   private final IHasDisplayText m_aDisplayText;
   private String m_sTarget;
 
   public MenuItemExternal (@Nonnull @Nonempty final String sItemID,
-                           @Nonnull final IHasSimpleURL aURL,
+                           @Nonnull final IHasSimpleURL aURLProvider,
                            @Nonnull final IHasDisplayText aDisplayText)
   {
     super (sItemID);
-    m_aURL = ValueEnforcer.notNull (aURL, "URL");
+    m_aURLProvider = ValueEnforcer.notNull (aURLProvider, "URL");
     m_aDisplayText = ValueEnforcer.notNull (aDisplayText, "DisplayText");
   }
 
@@ -62,13 +62,13 @@ public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal>imple
   @Nonnull
   public IHasSimpleURL getURLProvider ()
   {
-    return m_aURL;
+    return m_aURLProvider;
   }
 
   @Nonnull
   public ISimpleURL getURL ()
   {
-    return m_aURL.getSimpleURL ();
+    return m_aURLProvider.getSimpleURL ();
   }
 
   @Nullable
@@ -109,20 +109,20 @@ public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal>imple
     if (!super.equals (o))
       return false;
     final MenuItemExternal rhs = (MenuItemExternal) o;
-    return m_aURL.equals (rhs.m_aURL);
+    return m_aURLProvider.equals (rhs.m_aURLProvider);
   }
 
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aURL).getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aURLProvider).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("URL", m_aURL)
+                            .append ("URLProvider", m_aURLProvider)
                             .append ("DisplayText", m_aDisplayText)
                             .append ("Target", m_sTarget)
                             .toString ();
