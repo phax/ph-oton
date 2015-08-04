@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -53,6 +54,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.app.io.IHasFilename;
 import com.helger.photon.basic.app.io.IPathRelativeIO;
+import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.security.login.ICurrentUserIDProvider;
 
 /**
@@ -122,11 +124,23 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
   private final AuditItemList m_aItems = new AuditItemList ();
   private final AsynchronousAuditor m_aAuditor;
 
+  // status vars
+  private LocalDate m_aEarliestAuditDate;
+
+  @Nonnull
+  @Nonempty
+  public static String getRelativeAuditDirectoryYear (@Nonnull final int nYear)
+  {
+    return nYear + "/";
+  }
+
   @Nonnull
   @Nonempty
   public static String getRelativeAuditDirectory (@Nonnull final LocalDate aDate)
   {
-    return aDate.getYear () + "/" + StringHelper.getLeadingZero (aDate.getMonthOfYear (), 2) + "/";
+    return getRelativeAuditDirectoryYear (aDate.getYear ()) +
+           StringHelper.getLeadingZero (aDate.getMonthOfYear (), 2) +
+           "/";
   }
 
   @Nonnull
@@ -369,6 +383,48 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
       }
     });
     return ret;
+  }
+
+  @Nonnull
+  public LocalDate getEarliestAuditDate ()
+  {
+    if (m_aEarliestAuditDate == null)
+    {
+      final LocalDate aNow = PDTFactory.getCurrentLocalDate ();
+      LocalDate aEarliest = aNow;
+      // In in memory only the current data is available
+      if (!isInMemory ())
+      {
+        // check for year (from now back)
+        int nYear = aEarliest.getYear ();
+        while (WebFileIO.getFile (m_sBaseDir + getRelativeAuditDirectoryYear (nYear)).isDirectory ())
+          --nYear;
+
+        // Undo last "--"
+        ++nYear;
+
+        // Find first month
+        aEarliest = PDTFactory.createLocalDate (nYear, DateTimeConstants.JANUARY, 1);
+        for (int nMonth = DateTimeConstants.JANUARY; nMonth <= DateTimeConstants.DECEMBER; ++nMonth)
+        {
+          aEarliest = aEarliest.withMonthOfYear (nMonth);
+          if (WebFileIO.getFile (m_sBaseDir + getRelativeAuditDirectory (aEarliest)).isDirectory ())
+            break;
+        }
+
+        // Find first day - looks weird but should work even if an empty
+        // directory is present
+        while (aEarliest.isBefore (aNow))
+        {
+          aEarliest = aEarliest.plusDays (1);
+          if (WebFileIO.getFile (m_sBaseDir + getRelativeAuditFilename (aEarliest)).isFile ())
+            break;
+        }
+      }
+      // Cache result
+      m_aEarliestAuditDate = aEarliest;
+    }
+    return m_aEarliestAuditDate;
   }
 
   @Override

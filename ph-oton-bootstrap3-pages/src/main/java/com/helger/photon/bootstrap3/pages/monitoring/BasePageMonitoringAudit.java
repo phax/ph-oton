@@ -32,6 +32,7 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
+import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
@@ -60,6 +61,7 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
+   MSG_EARLIEST_DATA ("Älteste verfügbare Daten: ", "Earliest available data: "),
    MSG_DATE ("Datum", "Date"),
    MSG_USER ("Benutzer", "User"),
    MSG_TYPE ("Typ", "Type"),
@@ -80,6 +82,9 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
+
+  public static final int DEFAULT_MAX_ITEMS = 250;
+  public static final String PARAM_MAX_ITEMS = "maxitems";
 
   private final IAuditManager m_aAuditMgr;
 
@@ -141,9 +146,15 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    int nMaxItems = aWPEC.getAttributeAsInt ("maxitems");
+    // Info
+    aNodeList.addChild (new HCDiv ().addChild (EText.MSG_EARLIEST_DATA.getDisplayText (aDisplayLocale) +
+                                               PDTToString.getAsString (m_aAuditMgr.getEarliestAuditDate (),
+                                                                        aDisplayLocale)));
+
+    // Check max items parameter
+    int nMaxItems = aWPEC.getAttributeAsInt (PARAM_MAX_ITEMS);
     if (nMaxItems <= 0)
-      nMaxItems = 250;
+      nMaxItems = DEFAULT_MAX_ITEMS;
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
                                                                                                                    aDisplayLocale)

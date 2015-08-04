@@ -22,6 +22,8 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.joda.time.LocalDate;
+
 import com.helger.commons.annotation.ReturnsMutableCopy;
 
 /**
@@ -67,4 +69,12 @@ public interface IAuditManager
    * Consecutive calls to this method have no further effect.
    */
   void stop ();
+
+  /**
+   * @return The earliest date for which auditing information is present. If
+   *         this is an in-memory audit manager, it must return the current
+   *         date. Never <code>null</code>.
+   */
+  @Nonnull
+  LocalDate getEarliestAuditDate ();
 }
