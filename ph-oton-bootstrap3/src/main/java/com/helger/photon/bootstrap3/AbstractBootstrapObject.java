@@ -26,6 +26,8 @@ import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.string.StringHelper;
 import com.helger.css.property.CCSSProperties;
 import com.helger.css.property.ECSSProperty;
+import com.helger.html.hc.IHCHasID;
+import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.hc.ext.HCHasCSSStyles;
 import com.helger.html.hc.html.IHCElement;
@@ -34,11 +36,11 @@ import com.helger.html.hc.html.IHCElement;
  * Base class for common bootstrap objects.
  *
  * @author Philip Helger
- * @param <IMPLTYPE>
+ * @param <THISTYPE>
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractBootstrapObject <IMPLTYPE extends AbstractBootstrapObject <IMPLTYPE>>
+public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstrapObject <THISTYPE>> implements IHCHasID <THISTYPE>
 {
   private String m_sID;
   private HCHasCSSClasses m_aCSSClasses;
@@ -48,44 +50,12 @@ public abstract class AbstractBootstrapObject <IMPLTYPE extends AbstractBootstra
   {}
 
   @Nonnull
-  protected final IMPLTYPE thisAsT ()
+  protected final THISTYPE thisAsT ()
   {
     // Avoid the unchecked cast warning in all places
-    return GenericReflection.<AbstractBootstrapObject <IMPLTYPE>, IMPLTYPE> uncheckedCast (this);
+    return GenericReflection.<AbstractBootstrapObject <THISTYPE>, THISTYPE> uncheckedCast (this);
   }
 
-  /**
-   * Ensure that this form group has a unique ID. If an ID is already present,
-   * nothing happens.
-   *
-   * @return this
-   */
-  @Nonnull
-  public final IMPLTYPE ensureID ()
-  {
-    if (StringHelper.hasNoText (m_sID))
-      m_sID = GlobalIDFactory.getNewStringID ();
-    return thisAsT ();
-  }
-
-  /**
-   * Set the ID of this form group.
-   *
-   * @param sFormGroupID
-   *        The from group ID to be set. May be <code>null</code>.
-   * @return this
-   */
-  @Nonnull
-  public final IMPLTYPE setID (@Nullable final String sFormGroupID)
-  {
-    m_sID = sFormGroupID;
-    return thisAsT ();
-  }
-
-  /**
-   * @return <code>true</code> if an ID is present, <code>false</code>
-   *         otherwise.
-   */
   public final boolean hasID ()
   {
     return StringHelper.hasText (m_sID);
@@ -95,6 +65,50 @@ public abstract class AbstractBootstrapObject <IMPLTYPE extends AbstractBootstra
   public final String getID ()
   {
     return m_sID;
+  }
+
+  @Nonnull
+  public final THISTYPE setID (@Nullable final String sID)
+  {
+    // Check for existing ID
+    return setID (sID, false);
+  }
+
+  @Nonnull
+  public final THISTYPE setID (@Nullable final String sID, final boolean bImSureToOverwriteAnExistingID)
+  {
+    if (!bImSureToOverwriteAnExistingID && m_sID != null)
+      if (StringHelper.hasText (sID))
+      {
+        if (!m_sID.equals (sID))
+          HCConsistencyChecker.consistencyError ("Overwriting HC object ID '" +
+                                                 m_sID +
+                                                 "' with '" +
+                                                 sID +
+                                                 "' - this may have side effects!");
+      }
+      else
+      {
+        HCConsistencyChecker.consistencyError ("The HC object ID '" +
+                                               m_sID +
+                                               "' will be removed - this may have side effects");
+      }
+    m_sID = sID;
+    return thisAsT ();
+  }
+
+  @Nonnull
+  public final THISTYPE setUniqueID ()
+  {
+    return setID (GlobalIDFactory.getNewStringID ());
+  }
+
+  @Nonnull
+  public THISTYPE ensureID ()
+  {
+    if (!hasID ())
+      setUniqueID ();
+    return thisAsT ();
   }
 
   public final boolean hasCSSClasses ()
@@ -126,7 +140,7 @@ public abstract class AbstractBootstrapObject <IMPLTYPE extends AbstractBootstra
   }
 
   @Nonnull
-  public final IMPLTYPE setHidden (final boolean bHidden)
+  public final THISTYPE setHidden (final boolean bHidden)
   {
     if (bHidden)
       getCSSStyles ().addStyle (CCSSProperties.DISPLAY_NONE);
