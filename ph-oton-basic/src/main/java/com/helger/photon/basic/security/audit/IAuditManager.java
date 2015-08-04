@@ -20,16 +20,33 @@ import java.util.List;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 
 /**
  * Interface for a manager that can handle audit items.
- * 
+ *
  * @author Philip Helger
  */
 public interface IAuditManager
 {
+  /**
+   * @return <code>true</code> if this manager operates only in memory,
+   *         <code>false</code> if it keeps persistent files.
+   * @see #getBaseDir()
+   */
+  boolean isInMemory ();
+
+  /**
+   * @return The base directory used for audit entries. May be <code>null</code>
+   *         to indicate in-memory only auditing. If the results is not
+   *         <code>null</code> it must end with a path separator (slash).
+   * @see #isInMemory()
+   */
+  @Nullable
+  String getBaseDir ();
+
   /**
    * @return The underlying auditor. Never <code>null</code>.
    */

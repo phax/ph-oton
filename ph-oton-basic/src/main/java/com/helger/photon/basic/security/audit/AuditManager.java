@@ -124,14 +124,16 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
 
   @Nonnull
   @Nonempty
+  public static String getRelativeAuditDirectory (@Nonnull final LocalDate aDate)
+  {
+    return aDate.getYear () + "/" + StringHelper.getLeadingZero (aDate.getMonthOfYear (), 2) + "/";
+  }
+
+  @Nonnull
+  @Nonempty
   public static String getRelativeAuditFilename (@Nonnull final LocalDate aDate)
   {
-    return aDate.getYear () +
-           "/" +
-           StringHelper.getLeadingZero (aDate.getMonthOfYear (), 2) +
-           "/" +
-           PDTIOHelper.getDateForFilename (aDate) +
-           ".xml";
+    return getRelativeAuditDirectory (aDate) + PDTIOHelper.getDateForFilename (aDate) + ".xml";
   }
 
   /**
@@ -203,6 +205,17 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
 
     m_aAuditor = new AsynchronousAuditor (aUserIDProvider, aPerformer);
     initialRead ();
+  }
+
+  public boolean isInMemory ()
+  {
+    return m_sBaseDir == null;
+  }
+
+  @Nullable
+  public String getBaseDir ()
+  {
+    return m_sBaseDir;
   }
 
   @Nonnull
