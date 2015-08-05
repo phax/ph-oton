@@ -37,6 +37,7 @@ import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.state.UIStateRegistry;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uictrls.datatables.CDataTables;
+import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -285,7 +286,8 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
     // Read input parameters and ensure non negativeness
     final int nDisplayStart = Math.max (aRequestScope.getAttributeAsInt (DISPLAY_START, 0), 0);
     // -1 means show all
-    final int nDisplayLength = Math.max (aRequestScope.getAttributeAsInt (DISPLAY_LENGTH, 0), -1);
+    // This parameter is "" or "NaN" when scrolling is active - use -1 as well
+    final int nDisplayLength = aRequestScope.getAttributeAsInt (DISPLAY_LENGTH, DataTablesLengthMenuList.COUNT_ALL);
     final int nColumns = Math.max (aRequestScope.getAttributeAsInt (COLUMNS, 0), 0);
     final String sSearch = aRequestScope.getAttributeAsString (SEARCH);
     final boolean bRegEx = aRequestScope.getAttributeAsBoolean (REGEX, false);
