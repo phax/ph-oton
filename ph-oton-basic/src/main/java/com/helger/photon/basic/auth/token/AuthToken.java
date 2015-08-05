@@ -20,7 +20,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.joda.time.Seconds;
 
 import com.helger.commons.ValueEnforcer;
@@ -40,8 +40,8 @@ public final class AuthToken implements IAuthToken
 {
   private final String m_sID;
   private final IAuthIdentification m_aIdentification;
-  private final DateTime m_aCreationDT = PDTFactory.getCurrentDateTime ();
-  private DateTime m_aLastAccessDT = m_aCreationDT;
+  private final LocalDateTime m_aCreationDT = PDTFactory.getCurrentLocalDateTime ();
+  private LocalDateTime m_aLastAccessDT = m_aCreationDT;
   private boolean m_bExpired = false;
   private final int m_nExpirationSeconds;
 
@@ -72,13 +72,13 @@ public final class AuthToken implements IAuthToken
   }
 
   @Nonnull
-  public DateTime getCreationDate ()
+  public LocalDateTime getCreationDate ()
   {
     return m_aCreationDT;
   }
 
   @Nonnull
-  public DateTime getLastAccessDate ()
+  public LocalDateTime getLastAccessDate ()
   {
     return m_aLastAccessDT;
   }
@@ -86,7 +86,8 @@ public final class AuthToken implements IAuthToken
   public boolean isExpired ()
   {
     if (m_nExpirationSeconds > 0 &&
-        Seconds.secondsBetween (m_aLastAccessDT, PDTFactory.getCurrentDateTime ()).getSeconds () > m_nExpirationSeconds)
+        Seconds.secondsBetween (m_aLastAccessDT, PDTFactory.getCurrentLocalDateTime ())
+               .getSeconds () > m_nExpirationSeconds)
       m_bExpired = true;
     return m_bExpired;
   }
@@ -101,7 +102,7 @@ public final class AuthToken implements IAuthToken
    */
   void updateLastAccess ()
   {
-    m_aLastAccessDT = PDTFactory.getCurrentDateTime ();
+    m_aLastAccessDT = PDTFactory.getCurrentLocalDateTime ();
   }
 
   @Override

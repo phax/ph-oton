@@ -19,7 +19,7 @@ package com.helger.photon.basic.security.lock;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -36,12 +36,12 @@ import com.helger.datetime.PDTFactory;
 public final class LockInfo implements ILockInfo
 {
   private final String m_sUserID;
-  private final DateTime m_aLockTime;
+  private final LocalDateTime m_aLockTime;
 
   public LockInfo (@Nonnull @Nonempty final String sUserID)
   {
     m_sUserID = ValueEnforcer.notEmpty (sUserID, "UserID");
-    m_aLockTime = PDTFactory.getCurrentDateTime ();
+    m_aLockTime = PDTFactory.getCurrentLocalDateTime ();
   }
 
   @Nonnull
@@ -52,7 +52,7 @@ public final class LockInfo implements ILockInfo
   }
 
   @Nonnull
-  public DateTime getLockDateTime ()
+  public LocalDateTime getLockDateTime ()
   {
     return m_aLockTime;
   }

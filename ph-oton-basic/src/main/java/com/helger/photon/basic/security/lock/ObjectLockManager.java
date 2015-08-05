@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
@@ -79,7 +79,7 @@ public final class ObjectLockManager extends AbstractGlobalSingleton implements 
   }
 
   @Nullable
-  public DateTime getLockDateTime (@Nullable final String sObjID)
+  public LocalDateTime getLockDateTime (@Nullable final String sObjID)
   {
     return m_aMgr.getLockDateTime (sObjID);
   }

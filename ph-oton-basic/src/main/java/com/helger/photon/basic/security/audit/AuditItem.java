@@ -62,7 +62,7 @@ final class AuditItem implements IAuditItem
              @Nonnull final ESuccess eSuccess,
              @Nonnull final String sAction)
   {
-    m_aDateTime = ValueEnforcer.notNull (aDateTime, "DateTime");
+    m_aDateTime = ValueEnforcer.notNull (aDateTime, "LocalDateTime");
     m_sUserID = ValueEnforcer.notEmpty (sUserID, "UserID");
     m_eType = ValueEnforcer.notNull (eType, "Type");
     m_eSuccess = ValueEnforcer.notNull (eSuccess, "Success");

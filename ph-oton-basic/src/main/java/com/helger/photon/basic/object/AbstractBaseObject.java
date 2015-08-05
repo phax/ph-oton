@@ -202,7 +202,7 @@ public abstract class AbstractBaseObject implements IObject
 
   public final boolean isDeleted (@Nonnull final LocalDateTime aDT)
   {
-    ValueEnforcer.notNull (aDT, "DateTime");
+    ValueEnforcer.notNull (aDT, "LocalDateTime");
     return m_aDeletionDT != null && PDTHelper.isLessOrEqual (m_aDeletionDT, aDT);
   }
 

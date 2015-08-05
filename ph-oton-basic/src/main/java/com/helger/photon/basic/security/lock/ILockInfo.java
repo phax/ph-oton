@@ -20,11 +20,11 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 /**
  * A single lock information object.
- * 
+ *
  * @author Philip Helger
  */
 public interface ILockInfo extends Serializable
@@ -39,5 +39,5 @@ public interface ILockInfo extends Serializable
    * @return The date and time when the lock was created.
    */
   @Nonnull
-  DateTime getLockDateTime ();
+  LocalDateTime getLockDateTime ();
 }

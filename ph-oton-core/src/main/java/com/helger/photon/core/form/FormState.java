@@ -22,7 +22,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -40,7 +40,7 @@ public class FormState implements ITypedObject <String>, Serializable
   public static final ObjectType OT_FORM_STATE = new ObjectType ("formstate");
 
   private final String m_sPageID;
-  private final DateTime m_aDT;
+  private final LocalDateTime m_aDT;
   private final String m_sFlowID;
   private final MapBasedAttributeContainerAny <String> m_aAttrs;
 
@@ -53,7 +53,7 @@ public class FormState implements ITypedObject <String>, Serializable
     ValueEnforcer.notNull (aAttrs, "Attrs");
 
     m_sPageID = sPageID;
-    m_aDT = PDTFactory.getCurrentDateTime ();
+    m_aDT = PDTFactory.getCurrentLocalDateTime ();
     m_sFlowID = sFlowID;
     m_aAttrs = aAttrs;
   }
@@ -72,7 +72,7 @@ public class FormState implements ITypedObject <String>, Serializable
   }
 
   @Nonnull
-  public DateTime getDateTime ()
+  public LocalDateTime getDateTime ()
   {
     return m_aDT;
   }

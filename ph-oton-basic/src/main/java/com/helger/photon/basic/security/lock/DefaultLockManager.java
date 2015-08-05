@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -119,7 +119,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   }
 
   @Nullable
-  public final DateTime getLockDateTime (@Nullable final IDTYPE aObjID)
+  public final LocalDateTime getLockDateTime (@Nullable final IDTYPE aObjID)
   {
     final ILockInfo aLock = getLockInfo (aObjID);
     return aLock != null ? aLock.getLockDateTime () : null;

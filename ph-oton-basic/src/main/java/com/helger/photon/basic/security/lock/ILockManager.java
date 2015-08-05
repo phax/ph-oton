@@ -23,7 +23,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.state.EChange;
@@ -71,7 +71,7 @@ public interface ILockManager <IDTYPE>
    *         time otherwise
    */
   @Nullable
-  DateTime getLockDateTime (@Nullable IDTYPE aObjID);
+  LocalDateTime getLockDateTime (@Nullable IDTYPE aObjID);
 
   /**
    * Lock the object with the given ID. If the passed object is already locked

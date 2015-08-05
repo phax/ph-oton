@@ -37,10 +37,11 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ComparatorStringLongestFirst;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.format.PDTFromString;
+import com.helger.photon.uicore.datetime.IDateFormatBuilder;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-public final class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
+public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
 {
   private final List <Object> m_aList = new ArrayList <Object> ();
 
@@ -70,7 +71,7 @@ public final class BootstrapDateTimePickerFormatBuilder implements IDateFormatBu
   }
 
   @Nonnull
-  public String getJSFormatString ()
+  public String getJSCalendarFormatString ()
   {
     final StringBuilder aSB = new StringBuilder ();
     for (final Object o : m_aList)

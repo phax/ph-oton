@@ -18,14 +18,14 @@ package com.helger.photon.basic.auth.token;
 
 import javax.annotation.Nonnull;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.commons.id.IHasID;
 import com.helger.photon.basic.auth.identify.IAuthIdentification;
 
 /**
  * Interface for an auth token.
- * 
+ *
  * @author Philip Helger
  */
 public interface IAuthToken extends IHasID <String>
@@ -48,7 +48,7 @@ public interface IAuthToken extends IHasID <String>
    *         <code>null</code>.
    */
   @Nonnull
-  DateTime getCreationDate ();
+  LocalDateTime getCreationDate ();
 
   /**
    * @return The date and time when the token was last accessed. If the token
@@ -56,11 +56,11 @@ public interface IAuthToken extends IHasID <String>
    *         Never <code>null</code>.
    */
   @Nonnull
-  DateTime getLastAccessDate ();
+  LocalDateTime getLastAccessDate ();
 
   /**
    * Check if the token is expired. Expired tokens are considered invalid.
-   * 
+   *
    * @return <code>true</code> if the token is already expired.
    */
   boolean isExpired ();

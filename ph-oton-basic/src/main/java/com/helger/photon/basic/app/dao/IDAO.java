@@ -19,7 +19,7 @@ package com.helger.photon.basic.app.dao;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nullable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 /**
  * Base DAO interface. DAO = Data Access Object. A DAO implementation usually
@@ -30,15 +30,15 @@ import org.joda.time.DateTime;
  * <li>Reading - read existing data from a file</li>
  * <li>Write - write modified data to a file</li>
  * </ul>
- * 
+ *
  * @author Philip Helger
  */
 public interface IDAO extends IChangeable, IAutoSaveAware
 {
   public enum EMode
   {
-    READ,
-    WRITE;
+   READ,
+   WRITE;
   }
 
   /**
@@ -62,7 +62,7 @@ public interface IDAO extends IChangeable, IAutoSaveAware
    *         not persistent and only is valid until the application ends.
    */
   @Nullable
-  DateTime getLastInitDateTime ();
+  LocalDateTime getLastInitDateTime ();
 
   /**
    * @return The number of times this DAO was initialized. Always &ge; 0.
@@ -78,7 +78,7 @@ public interface IDAO extends IChangeable, IAutoSaveAware
    *         not persistent and only is valid until the application ends.
    */
   @Nullable
-  DateTime getLastReadDateTime ();
+  LocalDateTime getLastReadDateTime ();
 
   /**
    * @return The number of times this DAO was initialized. Always &ge; 0.
@@ -94,5 +94,5 @@ public interface IDAO extends IChangeable, IAutoSaveAware
    *         is not persistent and only is valid until the application ends.
    */
   @Nullable
-  DateTime getLastWriteDateTime ();
+  LocalDateTime getLastWriteDateTime ();
 }

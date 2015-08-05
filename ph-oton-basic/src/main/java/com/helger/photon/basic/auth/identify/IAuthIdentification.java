@@ -19,14 +19,14 @@ package com.helger.photon.basic.auth.identify;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 
 /**
  * The interface representing the successful login of a subject (e.g. user) at a
  * given time.
- * 
+ *
  * @author Philip Helger
  */
 public interface IAuthIdentification
@@ -39,10 +39,10 @@ public interface IAuthIdentification
   IAuthSubject getSubject ();
 
   /**
-   * Method to retrieve the timestamp of when this object was created.
-   * 
+   * Method to retrieve the time stamp of when this object was created.
+   *
    * @return The date time the identification occurred. Never <code>null</code>.
    */
   @Nonnull
-  DateTime getIdentificationDate ();
+  LocalDateTime getIdentificationDate ();
 }

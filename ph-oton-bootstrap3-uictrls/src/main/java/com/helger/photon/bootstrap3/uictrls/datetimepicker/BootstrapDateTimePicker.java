@@ -434,8 +434,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   /**
-   * @return A {@link JSAssocArray} with all options for this Datetime Picker.
-   *         Never <code>null</code>.
+   * @return A {@link JSAssocArray} with all options for this date and time
+   *         Picker. Never <code>null</code>.
    */
   @Nonnull
   public JSAssocArray getJSOptions ()
@@ -447,7 +447,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     {
       final String sDefaultFormat = BootstrapDateTimePickerFormatBuilder.fromJavaPattern (isShowTime () ? PDTFormatPatterns.getDefaultPatternDateTime (m_aDisplayLocale)
                                                                                                         : PDTFormatPatterns.getDefaultPatternDate (m_aDisplayLocale))
-                                                                        .getJSFormatString ();
+                                                                        .getJSCalendarFormatString ();
       aOptions.add ("format", sDefaultFormat);
     }
     if (m_eWeekStart != null)

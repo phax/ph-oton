@@ -42,7 +42,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -131,11 +131,11 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   private final IHasFilename m_aFilenameProvider;
   private String m_sPreviousFilename;
   private int m_nInitCount = 0;
-  private DateTime m_aLastInitDT;
+  private LocalDateTime m_aLastInitDT;
   private int m_nReadCount = 0;
-  private DateTime m_aLastReadDT;
+  private LocalDateTime m_aLastReadDT;
   private int m_nWriteCount = 0;
-  private DateTime m_aLastWriteDT;
+  private LocalDateTime m_aLastWriteDT;
   private boolean m_bCanWriteWAL = true;
   private TimeValue m_aWaitingTime = DEFAULT_WAITING_TIME;
 
@@ -412,7 +412,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
             m_aStatsCounterInitTimer.addTime (aSW.stopAndGetMillis ());
             m_aStatsCounterInitSuccess.increment ();
             m_nInitCount++;
-            m_aLastInitDT = PDTFactory.getCurrentDateTime ();
+            m_aLastInitDT = PDTFactory.getCurrentLocalDateTime ();
           }
           finally
           {
@@ -447,7 +447,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
               m_aStatsCounterReadTimer.addTime (aSW.stopAndGetMillis ());
               m_aStatsCounterReadSuccess.increment ();
               m_nReadCount++;
-              m_aLastReadDT = PDTFactory.getCurrentDateTime ();
+              m_aLastReadDT = PDTFactory.getCurrentLocalDateTime ();
             }
             finally
             {
@@ -774,7 +774,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       m_aStatsCounterWriteTimer.addTime (aSW.stopAndGetMillis ());
       m_aStatsCounterWriteSuccess.increment ();
       m_nWriteCount++;
-      m_aLastWriteDT = PDTFactory.getCurrentDateTime ();
+      m_aLastWriteDT = PDTFactory.getCurrentLocalDateTime ();
       return ESuccess.SUCCESS;
     }
     catch (final Throwable t)
@@ -1164,7 +1164,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   }
 
   @Nullable
-  public final DateTime getLastInitDateTime ()
+  public final LocalDateTime getLastInitDateTime ()
   {
     return m_aLastInitDT;
   }
@@ -1176,7 +1176,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   }
 
   @Nullable
-  public final DateTime getLastReadDateTime ()
+  public final LocalDateTime getLastReadDateTime ()
   {
     return m_aLastReadDT;
   }
@@ -1188,7 +1188,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   }
 
   @Nullable
-  public final DateTime getLastWriteDateTime ()
+  public final LocalDateTime getLastWriteDateTime ()
   {
     return m_aLastWriteDT;
   }
