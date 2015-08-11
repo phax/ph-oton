@@ -79,12 +79,15 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   private EAutoNumericLeadingZero m_eLeadingZero;
   private EAutoNumericRoundingMode m_eRoundingMode;
 
-  public AbstractHCAutoNumeric (@Nonnull final RequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public AbstractHCAutoNumeric (@Nullable final RequestField aRF, @Nonnull final Locale aDisplayLocale)
   {
     // Don't use NUMBER here - will create ugly spin buttons
     super (EHCInputType.TEXT);
-    setName (aRF.getFieldName ());
-    setValue (aRF.getRequestValue ());
+    if (aRF != null)
+    {
+      setName (aRF.getFieldName ());
+      setValue (aRF.getRequestValue ());
+    }
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     ensureID ();

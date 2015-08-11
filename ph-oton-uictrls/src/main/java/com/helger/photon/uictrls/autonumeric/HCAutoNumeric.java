@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.html.jscode.IJSExpression;
@@ -41,7 +42,7 @@ import com.helger.photon.core.form.RequestField;
 @NotThreadSafe
 public class HCAutoNumeric extends AbstractHCAutoNumeric <HCAutoNumeric>
 {
-  public HCAutoNumeric (@Nonnull final RequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCAutoNumeric (@Nullable final RequestField aRF, @Nonnull final Locale aDisplayLocale)
   {
     super (aRF, aDisplayLocale);
   }

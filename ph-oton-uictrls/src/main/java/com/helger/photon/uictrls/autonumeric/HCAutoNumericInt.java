@@ -19,6 +19,7 @@ package com.helger.photon.uictrls.autonumeric;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.photon.core.form.RequestField;
 
@@ -29,12 +30,7 @@ import com.helger.photon.core.form.RequestField;
  */
 public class HCAutoNumericInt extends AbstractHCAutoNumeric <HCAutoNumericInt>
 {
-  public HCAutoNumericInt (@Nonnull final RequestField aRF)
-  {
-    this (aRF, Locale.US);
-  }
-
-  public HCAutoNumericInt (@Nonnull final RequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCAutoNumericInt (@Nullable final RequestField aRF, @Nonnull final Locale aDisplayLocale)
   {
     super (aRF, aDisplayLocale);
     setDecimalPlaces (0);
