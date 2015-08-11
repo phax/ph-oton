@@ -999,7 +999,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
                                                                      .url (sSource)
                                                                      .data (aoData)
                                                                      .success (JSJQueryHelper.jqueryAjaxSuccessHandler (fnCallback,
-                                                                                                                        true));
+                                                                                                                        null));
       aAF.body ().assign (oSettings.ref ("jqXHR"), aAjaxBuilder.build ());
       aParams.add ("fnServerData", aAF);
       JSJQueryHelper.registerExternalResources ();

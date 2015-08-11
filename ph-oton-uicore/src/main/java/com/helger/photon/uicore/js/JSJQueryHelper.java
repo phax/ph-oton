@@ -17,6 +17,7 @@
 package com.helger.photon.uicore.js;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.html.jscode.IJSExpression;
@@ -46,19 +47,21 @@ public final class JSJQueryHelper
    * Create a JS anonymous function that can be used as a callback to the
    * jQuery.ajax success callback.
    *
-   * @param aHandler
+   * @param aHandlerBeforeInclude
    *        The JS expression that must resolve to a JS function that takes 3
    *        arguments. See jQuery.ajax success callback for details. Note: this
-   *        should not be in an invocation but an invokable!
-   * @param bInvokeHandlerFirst
-   *        <code>true</code> to invoke the handler before the inclusions take
-   *        place, <code>false</code> to invoke the handler after the inclusions
-   *        took place.
+   *        should not be in an invocation but an invokable! This handler is
+   *        invoked BEFORE the inclusions take place.
+   * @param aHandlerAfterInclude
+   *        The JS expression that must resolve to a JS function that takes 3
+   *        arguments. See jQuery.ajax success callback for details. Note: this
+   *        should not be in an invocation but an invokable! This handler is
+   *        invoked AFTER the inclusions take place.
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static JSAnonymousFunction jqueryAjaxSuccessHandler (@Nonnull final IJSExpression aHandler,
-                                                              final boolean bInvokeHandlerFirst)
+  public static JSAnonymousFunction jqueryAjaxSuccessHandler (@Nullable final IJSExpression aHandlerBeforeInclude,
+                                                              @Nullable final IJSExpression aHandlerAfterInclude)
   {
     final JSAnonymousFunction ret = new JSAnonymousFunction ();
     final JSVar aData = ret.param ("a");
@@ -70,8 +73,8 @@ public final class JSJQueryHelper
        .arg (aData)
        .arg (aTextStatus)
        .arg (aXHR)
-       .arg (bInvokeHandlerFirst ? aHandler : JSExpr.NULL)
-       .arg (bInvokeHandlerFirst ? JSExpr.NULL : aHandler);
+       .arg (aHandlerBeforeInclude != null ? aHandlerBeforeInclude : JSExpr.NULL)
+       .arg (aHandlerAfterInclude != null ? aHandlerAfterInclude : JSExpr.NULL);
     return ret;
   }
 }
