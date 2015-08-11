@@ -142,17 +142,22 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
                 aColumnSearchTexts = aGlobalSearchTexts;
                 bColumnSearchRegEx = bGlobalSearchRegEx;
               }
-              final BitSet aMatchingWords = new BitSet (aColumnSearchTexts.length);
 
-              // Main matching
-              if (bColumnSearchRegEx)
-                aCell.matchRegEx (aColumnSearchTexts, aMatchingWords);
-              else
-                aCell.matchPlainTextIgnoreCase (aColumnSearchTexts, aDisplayLocale, aMatchingWords);
-              if (!aMatchingWords.isEmpty ())
+              // Search text may be null!
+              if (aColumnSearchTexts != null)
               {
-                aFilteredRows.add (aRow);
-                break;
+                final BitSet aMatchingWords = new BitSet (aColumnSearchTexts.length);
+
+                // Main matching
+                if (bColumnSearchRegEx)
+                  aCell.matchRegEx (aColumnSearchTexts, aMatchingWords);
+                else
+                  aCell.matchPlainTextIgnoreCase (aColumnSearchTexts, aDisplayLocale, aMatchingWords);
+                if (!aMatchingWords.isEmpty ())
+                {
+                  aFilteredRows.add (aRow);
+                  break;
+                }
               }
               nSearchableCellIndex++;
             }
