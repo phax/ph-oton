@@ -51,6 +51,14 @@ public class RequestFieldDate extends RequestField
     m_aDisplayLocale = ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
   }
 
+  /**
+   * Constructor without a default value
+   * 
+   * @param sFieldName
+   *        Field name
+   * @param aDisplayLocale
+   *        Display locale to use.
+   */
   public RequestFieldDate (@Nonnull @Nonempty final String sFieldName, @Nonnull final Locale aDisplayLocale)
   {
     this (sFieldName, (String) null, aDisplayLocale);
