@@ -41,10 +41,10 @@ import com.helger.photon.bootstrap3.form.EBootstrapFormType;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.bootstrap3.uictrls.datatables.IBootstrapDataTablesConfigurator;
 import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.login.CLogin;
-import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.ajax.ActionExecutorDataTablesI18N;
@@ -66,11 +66,11 @@ public final class AppCommonUI
   {
     BootstrapDataTables.setConfigurator (new IBootstrapDataTablesConfigurator ()
     {
-      public void configure (@Nonnull final IWebPageExecutionContext aWPEC,
+      public void configure (@Nonnull final ILayoutExecutionContext aLEC,
                              @Nonnull final IHCTable <?> aTable,
                              @Nonnull final BootstrapDataTables aDataTables)
       {
-        final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
+        final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
         aDataTables.setAutoWidth (false)
                    .setLengthMenu (LENGTH_MENU)
                    .setUseJQueryAjax (true)
@@ -98,8 +98,9 @@ public final class AppCommonUI
     final String sIDPassword = GlobalIDFactory.getNewStringID ();
     final String sIDErrorField = GlobalIDFactory.getNewStringID ();
 
-    final BootstrapForm aForm = new BootstrapForm (aLEC.getSelfHref (), bFullUI ? EBootstrapFormType.HORIZONTAL
-                                                                               : EBootstrapFormType.DEFAULT);
+    final BootstrapForm aForm = new BootstrapForm (aLEC.getSelfHref (),
+                                                   bFullUI ? EBootstrapFormType.HORIZONTAL
+                                                           : EBootstrapFormType.DEFAULT);
     aForm.setLeft (3);
 
     // User name field

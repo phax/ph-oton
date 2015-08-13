@@ -27,9 +27,9 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.table.AbstractBootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsJSPathProvider;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.DataTablesDom;
 
@@ -88,17 +88,17 @@ public class BootstrapDataTables extends DataTables
   }
 
   @Nonnull
-  public static BootstrapDataTables createDefaultDataTables (@Nonnull final IWebPageExecutionContext aWPEC,
+  public static BootstrapDataTables createDefaultDataTables (@Nonnull final ILayoutExecutionContext aLEC,
                                                              @Nonnull final IHCTable <?> aTable)
   {
     // Assign special table class for Bootstrap look and feel
     aTable.addClass (CBootstrapCSS.TABLE).addClass (CBootstrapCSS.TABLE_STRIPED);
 
     final BootstrapDataTables ret = new BootstrapDataTables (aTable);
-    ret.setDisplayLocale (aWPEC.getDisplayLocale ());
+    ret.setDisplayLocale (aLEC.getDisplayLocale ());
     ret.addAllColumns (aTable);
     if (s_aConfigurator != null)
-      s_aConfigurator.configure (aWPEC, aTable, ret);
+      s_aConfigurator.configure (aLEC, aTable, ret);
     return ret;
   }
 }
