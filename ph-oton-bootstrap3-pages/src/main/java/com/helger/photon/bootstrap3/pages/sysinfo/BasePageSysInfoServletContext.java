@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.pages.monitoring;
+package com.helger.photon.bootstrap3.pages.sysinfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -92,24 +92,24 @@ public class BasePageMonitoringServletContext <WPECTYPE extends IWebPageExecutio
     }
   }
 
-  public BasePageMonitoringServletContext (@Nonnull @Nonempty final String sID)
+  public BasePageSysInfoServletContext (@Nonnull @Nonempty final String sID)
   {
-    super (sID, EWebPageText.PAGE_NAME_MONITORING_SERVLETCONTEXT.getAsMLT ());
+    super (sID, EWebPageText.PAGE_NAME_SYSINFO_SERVLETCONTEXT.getAsMLT ());
   }
 
-  public BasePageMonitoringServletContext (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
+  public BasePageSysInfoServletContext (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
     super (sID, sName);
   }
 
-  public BasePageMonitoringServletContext (@Nonnull @Nonempty final String sID,
+  public BasePageSysInfoServletContext (@Nonnull @Nonempty final String sID,
                                            @Nonnull final String sName,
                                            @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
-  public BasePageMonitoringServletContext (@Nonnull @Nonempty final String sID,
+  public BasePageSysInfoServletContext (@Nonnull @Nonempty final String sID,
                                            @Nonnull final IMultilingualText aName,
                                            @Nullable final IMultilingualText aDescription)
   {

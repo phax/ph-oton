@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.pages.sysinfo;
+package com.helger.photon.bootstrap3.pages.appinfo;
 
 import java.util.Locale;
 
@@ -33,6 +33,8 @@ import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
+import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFile;
+import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFileManager;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -48,7 +50,7 @@ import com.helger.photon.uictrls.prism.HCPrismJS;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoConfigurationFiles <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -70,24 +72,24 @@ public class BasePageSysInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
     }
   }
 
-  public BasePageSysInfoConfigurationFiles (@Nonnull @Nonempty final String sID)
+  public BasePageAppInfoConfigurationFiles (@Nonnull @Nonempty final String sID)
   {
-    super (sID, EWebPageText.PAGE_NAME_SYSINFO_CONFIG_FILES.getAsMLT ());
+    super (sID, EWebPageText.PAGE_NAME_APPINFO_CONFIG_FILES.getAsMLT ());
   }
 
-  public BasePageSysInfoConfigurationFiles (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
+  public BasePageAppInfoConfigurationFiles (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
   }
 
-  public BasePageSysInfoConfigurationFiles (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoConfigurationFiles (@Nonnull @Nonempty final String sID,
                                             @Nonnull final String sName,
                                             @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
-  public BasePageSysInfoConfigurationFiles (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoConfigurationFiles (@Nonnull @Nonempty final String sID,
                                             @Nonnull final IMultilingualText aName,
                                             @Nullable final IMultilingualText aDescription)
   {

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.pages.monitoring;
+package com.helger.photon.bootstrap3.pages.appinfo;
 
 import java.util.Locale;
 
@@ -55,7 +55,7 @@ import com.helger.photon.uictrls.datatables.DataTables;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoGo <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -83,13 +83,13 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
 
   private final GoMappingManager m_aGoMappingMgr;
 
-  public BasePageMonitoringGo (@Nonnull @Nonempty final String sID, @Nonnull final GoMappingManager aGoMappingMgr)
+  public BasePageAppInfoGo (@Nonnull @Nonempty final String sID, @Nonnull final GoMappingManager aGoMappingMgr)
   {
-    super (sID, EWebPageText.PAGE_NAME_MONITORING_GO.getAsMLT ());
+    super (sID, EWebPageText.PAGE_NAME_APPINFO_GO.getAsMLT ());
     m_aGoMappingMgr = ValueEnforcer.notNull (aGoMappingMgr, "GoMappingMgr");
   }
 
-  public BasePageMonitoringGo (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoGo (@Nonnull @Nonempty final String sID,
                                @Nonnull final String sName,
                                @Nonnull final GoMappingManager aGoMappingMgr)
   {
@@ -97,7 +97,7 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
     m_aGoMappingMgr = ValueEnforcer.notNull (aGoMappingMgr, "GoMappingMgr");
   }
 
-  public BasePageMonitoringGo (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoGo (@Nonnull @Nonempty final String sID,
                                @Nonnull final String sName,
                                @Nullable final String sDescription,
                                @Nonnull final GoMappingManager aGoMappingMgr)
@@ -106,7 +106,7 @@ public class BasePageMonitoringGo <WPECTYPE extends IWebPageExecutionContext> ex
     m_aGoMappingMgr = ValueEnforcer.notNull (aGoMappingMgr, "GoMappingMgr");
   }
 
-  public BasePageMonitoringGo (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoGo (@Nonnull @Nonempty final String sID,
                                @Nonnull final IMultilingualText aName,
                                @Nullable final IMultilingualText aDescription,
                                @Nonnull final GoMappingManager aGoMappingMgr)

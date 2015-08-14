@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.pages.monitoring;
+package com.helger.photon.bootstrap3.pages.appinfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +67,7 @@ import com.helger.schedule.quartz.QuartzSchedulerHelper;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -101,24 +101,24 @@ public class BasePageMonitoringScheduler <WPECTYPE extends IWebPageExecutionCont
     }
   }
 
-  public BasePageMonitoringScheduler (@Nonnull @Nonempty final String sID)
+  public BasePageAppInfoScheduler (@Nonnull @Nonempty final String sID)
   {
-    super (sID, EWebPageText.PAGE_NAME_MONITORING_SCHEDULER.getAsMLT ());
+    super (sID, EWebPageText.PAGE_NAME_APPINFO_SCHEDULER.getAsMLT ());
   }
 
-  public BasePageMonitoringScheduler (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
+  public BasePageAppInfoScheduler (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
     super (sID, sName);
   }
 
-  public BasePageMonitoringScheduler (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoScheduler (@Nonnull @Nonempty final String sID,
                                       @Nonnull final String sName,
                                       @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
-  public BasePageMonitoringScheduler (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoScheduler (@Nonnull @Nonempty final String sID,
                                       @Nonnull final IMultilingualText aName,
                                       @Nullable final IMultilingualText aDescription)
   {

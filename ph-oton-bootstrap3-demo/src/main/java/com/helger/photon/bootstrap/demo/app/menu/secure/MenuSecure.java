@@ -46,15 +46,11 @@ public final class MenuSecure
     // Administrator
     {
       final IMenuItemPage aAdmin = aMenuTree.createRootItem (new BasePageShowChildren <WebPageExecutionContext> (CMenuSecure.MENU_ADMIN,
-                                                                                                             "Administration",
-                                                                                                             aMenuTree))
+                                                                                                                 "Administration",
+                                                                                                                 aMenuTree))
                                             .setDisplayFilter (aFilterAdministrators);
 
-      BootstrapPagesMenuConfigurator.addSecurityItems (aMenuTree, aAdmin, aFilterAdministrators, CApp.DEFAULT_LOCALE);
-      BootstrapPagesMenuConfigurator.addMonitoringItems (aMenuTree, aAdmin, aFilterAdministrators);
-      BootstrapPagesMenuConfigurator.addSysInfoItems (aMenuTree, aAdmin, aFilterAdministrators);
-      BootstrapPagesMenuConfigurator.addDataItems (aMenuTree, aAdmin, aFilterAdministrators);
-      BootstrapPagesMenuConfigurator.addSettingsItems (aMenuTree, aAdmin, aFilterAdministrators);
+      BootstrapPagesMenuConfigurator.addAllItems (aMenuTree, aAdmin, aFilterAdministrators, CApp.DEFAULT_LOCALE);
     }
 
     // Saved states

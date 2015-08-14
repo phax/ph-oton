@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.pages.monitoring;
+package com.helger.photon.bootstrap3.pages.appinfo;
 
 import java.util.Locale;
 import java.util.Map;
@@ -55,7 +55,7 @@ import com.helger.photon.uictrls.datatables.DataTables;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageMonitoringServletStatus <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -80,24 +80,24 @@ public class BasePageMonitoringServletStatus <WPECTYPE extends IWebPageExecution
     }
   }
 
-  public BasePageMonitoringServletStatus (@Nonnull @Nonempty final String sID)
+  public BasePageAppInfoServletStatus (@Nonnull @Nonempty final String sID)
   {
-    super (sID, EWebPageText.PAGE_NAME_MONITORING_SERVLETSTATUS.getAsMLT ());
+    super (sID, EWebPageText.PAGE_NAME_APPINFO_SERVLETSTATUS.getAsMLT ());
   }
 
-  public BasePageMonitoringServletStatus (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
+  public BasePageAppInfoServletStatus (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
     super (sID, sName);
   }
 
-  public BasePageMonitoringServletStatus (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoServletStatus (@Nonnull @Nonempty final String sID,
                                           @Nonnull final String sName,
                                           @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
-  public BasePageMonitoringServletStatus (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoServletStatus (@Nonnull @Nonempty final String sID,
                                           @Nonnull final IMultilingualText aName,
                                           @Nullable final IMultilingualText aDescription)
   {

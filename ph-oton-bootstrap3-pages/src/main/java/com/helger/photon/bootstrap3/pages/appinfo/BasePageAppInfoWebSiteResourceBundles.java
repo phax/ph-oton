@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.pages.monitoring;
+package com.helger.photon.bootstrap3.pages.appinfo;
 
 import java.util.Locale;
 
@@ -58,7 +58,7 @@ import com.helger.photon.uictrls.datatables.DataTables;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -89,14 +89,14 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
 
   private final WebSiteResourceBundleManager m_aResBundleMgr;
 
-  public BasePageMonitoringWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
                                                    @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
   {
-    super (sID, EWebPageText.PAGE_NAME_MONITORING_WEBRESBUNDLE.getAsMLT ());
+    super (sID, EWebPageText.PAGE_NAME_APPINFO_WEBRESBUNDLE.getAsMLT ());
     m_aResBundleMgr = ValueEnforcer.notNull (aResBundleMgr, "ResBundleMgr");
   }
 
-  public BasePageMonitoringWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
                                                    @Nonnull final String sName,
                                                    @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
   {
@@ -104,7 +104,7 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
     m_aResBundleMgr = ValueEnforcer.notNull (aResBundleMgr, "ResBundleMgr");
   }
 
-  public BasePageMonitoringWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
                                                    @Nonnull final String sName,
                                                    @Nullable final String sDescription,
                                                    @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
@@ -113,7 +113,7 @@ public class BasePageMonitoringWebSiteResourceBundles <WPECTYPE extends IWebPage
     m_aResBundleMgr = ValueEnforcer.notNull (aResBundleMgr, "ResBundleMgr");
   }
 
-  public BasePageMonitoringWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
                                                    @Nonnull final IMultilingualText aName,
                                                    @Nullable final IMultilingualText aDescription,
                                                    @Nonnull final WebSiteResourceBundleManager aResBundleMgr)

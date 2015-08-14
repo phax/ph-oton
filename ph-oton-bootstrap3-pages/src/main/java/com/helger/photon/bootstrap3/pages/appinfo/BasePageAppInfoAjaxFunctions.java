@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.pages.monitoring;
+package com.helger.photon.bootstrap3.pages.appinfo;
 
 import java.util.Locale;
 import java.util.Map;
@@ -37,12 +37,13 @@ import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.action.ApplicationActionManager;
-import com.helger.photon.core.action.IActionAfterExecutionCallback;
-import com.helger.photon.core.action.IActionBeforeExecutionCallback;
-import com.helger.photon.core.action.IActionDeclaration;
-import com.helger.photon.core.action.IActionExceptionCallback;
-import com.helger.photon.core.action.IActionLongRunningExecutionCallback;
+import com.helger.photon.core.ajax.ApplicationAjaxManager;
+import com.helger.photon.core.ajax.IAjaxAfterExecutionCallback;
+import com.helger.photon.core.ajax.IAjaxBeforeExecutionCallback;
+import com.helger.photon.core.ajax.IAjaxExceptionCallback;
+import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
+import com.helger.photon.core.ajax.IAjaxLongRunningExecutionCallback;
+import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
@@ -51,13 +52,13 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
- * Show all registered actions.
+ * Show all registered AJAX functions.
  *
  * @author Philip Helger
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -85,26 +86,26 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
     }
   }
 
-  public BasePageMonitoringActions (@Nonnull @Nonempty final String sID)
+  public BasePageAppInfoAjaxFunctions (@Nonnull @Nonempty final String sID)
   {
-    super (sID, EWebPageText.PAGE_NAME_MONITORING_ACTIONS.getAsMLT ());
+    super (sID, EWebPageText.PAGE_NAME_APPINFO_AJAX_FUNCTIONS.getAsMLT ());
   }
 
-  public BasePageMonitoringActions (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
+  public BasePageAppInfoAjaxFunctions (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
     super (sID, sName);
   }
 
-  public BasePageMonitoringActions (@Nonnull @Nonempty final String sID,
-                                    @Nonnull final String sName,
-                                    @Nullable final String sDescription)
+  public BasePageAppInfoAjaxFunctions (@Nonnull @Nonempty final String sID,
+                                          @Nonnull final String sName,
+                                          @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
-  public BasePageMonitoringActions (@Nonnull @Nonempty final String sID,
-                                    @Nonnull final IMultilingualText aName,
-                                    @Nullable final IMultilingualText aDescription)
+  public BasePageAppInfoAjaxFunctions (@Nonnull @Nonempty final String sID,
+                                          @Nonnull final IMultilingualText aName,
+                                          @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -116,13 +117,13 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
 
-    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
+    final ITabBox <?> aTabBox = new BootstrapTabBox ();
 
     for (final IApplicationScope aAppScope : WebScopeManager.getGlobalScope ().getAllApplicationScopes ().values ())
     {
       final String sAppScopeID = aAppScope.getID ();
-      final ApplicationActionManager aMgr = AbstractSingleton.getSingletonIfInstantiated (aAppScope,
-                                                                                          ApplicationActionManager.class);
+      final ApplicationAjaxManager aMgr = AbstractSingleton.getSingletonIfInstantiated (aAppScope,
+                                                                                        ApplicationAjaxManager.class);
       if (aMgr != null)
       {
         final HCNodeList aTab = new HCNodeList ();
@@ -134,7 +135,8 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
                                               new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale))).setID (getID () +
                                                                                                                 sAppScopeID +
                                                                                                                 "-func");
-          for (final Map.Entry <String, IActionDeclaration> aEntry : aMgr.getAllRegisteredActions ().entrySet ())
+          for (final Map.Entry <String, IAjaxFunctionDeclaration> aEntry : aMgr.getAllRegisteredFunctions ()
+                                                                               .entrySet ())
           {
             aTable.addBodyRow ().addCells (aEntry.getKey (),
                                            aEntry.getValue ().getExecutorFactory ().toString (),
@@ -150,18 +152,20 @@ public class BasePageMonitoringActions <WPECTYPE extends IWebPageExecutionContex
         {
           aTab.addChild (createDataGroupHeader (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
 
-          final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+          final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                      1)
+                                                                                                        .setInitialSorting (ESortOrder.ASCENDING),
                                               new DTCol (EText.MSG_CALLBACK.getDisplayText (aDisplayLocale))).setID (getID () +
                                                                                                                      sAppScopeID +
                                                                                                                      "-cb");
-          for (final IActionExceptionCallback aCB : aMgr.getExceptionCallbacks ().getAllCallbacks ())
+          for (final IAjaxExceptionCallback aCB : aMgr.getExceptionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("Exception", aCB.toString ());
-          for (final IActionBeforeExecutionCallback aCB : aMgr.getBeforeExecutionCallbacks ().getAllCallbacks ())
+          for (final IAjaxBeforeExecutionCallback aCB : aMgr.getBeforeExecutionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("BeforeExecution", aCB.toString ());
-          for (final IActionAfterExecutionCallback aCB : aMgr.getAfterExecutionCallbacks ().getAllCallbacks ())
+          for (final IAjaxAfterExecutionCallback aCB : aMgr.getAfterExecutionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("AfterExecution", aCB.toString ());
-          for (final IActionLongRunningExecutionCallback aCB : aMgr.getLongRunningExecutionCallbacks ()
-                                                                   .getAllCallbacks ())
+          for (final IAjaxLongRunningExecutionCallback aCB : aMgr.getLongRunningExecutionCallbacks ()
+                                                                 .getAllCallbacks ())
             aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
           aTab.addChild (aTable);
 
