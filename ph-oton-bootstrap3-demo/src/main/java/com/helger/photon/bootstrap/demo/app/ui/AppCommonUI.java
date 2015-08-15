@@ -45,7 +45,7 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.login.CLogin;
-import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
+import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.ajax.ActionExecutorDataTablesI18N;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
@@ -54,7 +54,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 @Immutable
 public final class AppCommonUI
 {
-  private static final DataTablesLengthMenuList LENGTH_MENU = new DataTablesLengthMenuList ().addItem (25)
+  private static final DataTablesLengthMenu LENGTH_MENU = new DataTablesLengthMenu ().addItem (25)
                                                                                              .addItem (50)
                                                                                              .addItem (100)
                                                                                              .addItemAll ();

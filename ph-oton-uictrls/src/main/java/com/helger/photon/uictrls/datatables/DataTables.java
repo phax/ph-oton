@@ -36,6 +36,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.annotation.Since;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.id.factory.GlobalIDFactory;
@@ -90,55 +91,134 @@ import com.helger.web.http.EHTTPMethod;
 @OutOfBandNode
 public class DataTables extends AbstractHCScriptInline <DataTables>
 {
-  public static final boolean DEFAULT_GENERATE_ON_DOCUMENT_READY = false;
   public static final boolean DEFAULT_AUTOWIDTH = true;
-  public static final boolean DEFAULT_PAGINATE = true;
+  public static final boolean DEFAULT_PAGING = true;
   public static final boolean DEFAULT_STATE_SAVE = false;
   public static final boolean DEFAULT_JQUERY_UI = false;
   public static final boolean DEFAULT_SCROLL_X = false;
   public static final boolean DEFAULT_SCROLL_COLLAPSE = false;
   public static final boolean DEFAULT_USER_JQUERY_AJAX = false;
   public static final boolean DEFAULT_DEFER_RENDER = false;
-  public static final EDataTablesPaginationType DEFAULT_PAGINATION_TYPE = EDataTablesPaginationType.FULL_NUMBERS;
-  public static final int DEFAULT_DISPLAY_LENGTH = 10;
+  public static final EDataTablesPagingType DEFAULT_PAGING_TYPE = EDataTablesPagingType.SIMPLE_NUMBERS;
+  public static final int DEFAULT_PAGE_LENGTH = 10;
   public static final boolean DEFAULT_USE_COL_VIS = false;
   public static final boolean DEFAULT_USE_FIXED_HEADER = false;
   public static final boolean DEFAULT_USE_SEARCH_HIGHLIGHT = false;
   public static final boolean DEFAULT_USE_SCROLLER = false;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTables.class);
-  private static boolean s_bDefaultGenerateOnDocumentReady = DEFAULT_GENERATE_ON_DOCUMENT_READY;
 
+  // Status vars
   private final IHCTable <?> m_aTable;
-  private boolean m_bGenerateOnDocumentReady = s_bDefaultGenerateOnDocumentReady;
-  private Locale m_aDisplayLocale;
+
+  // DataTables - Features
   private boolean m_bAutoWidth = DEFAULT_AUTOWIDTH;
-  private boolean m_bPaging = DEFAULT_PAGINATE;
-  private boolean m_bStateSave = DEFAULT_STATE_SAVE;
+  private boolean m_bDeferRender = DEFAULT_DEFER_RENDER;
+  // missing info:boolean [true]
   private boolean m_bJQueryUI = DEFAULT_JQUERY_UI;
-  private final List <DataTablesColumn> m_aColumns = new ArrayList <DataTablesColumn> ();
-  private DataTablesSorting m_aInitialSorting;
-  private EDataTablesPaginationType m_ePagingType = DEFAULT_PAGINATION_TYPE;
+  // missing lengthChange:boolean [true]
+  // missing ordering:boolean [true]
+  private boolean m_bPaging = DEFAULT_PAGING;
+  // missing processing:boolean [false]
   private ETriState m_eScrollX = ETriState.UNDEFINED;
   private String m_sScrollY;
-  private boolean m_bScrollCollapse = DEFAULT_SCROLL_COLLAPSE;
-  private DataTablesLengthMenuList m_aLengthMenu;
-  private int m_nPageLength = DEFAULT_DISPLAY_LENGTH;
+  // missing searching:boolean [true]
+  // implicit serverSide:boolean [false]
+  private boolean m_bStateSave = DEFAULT_STATE_SAVE;
+
+  // DataTables - Data
+  // missing ajax.data:object or function ajax.data(data, settings)
+  // missing ajax.dataSrc:string or function ajax.dataSrc(data)
+  // missing ajax:string or object or function ajax(data, callback, settings)
+  // missing data:array
+
+  // DataTables - Callbacks
+  // missing createdRow
+  // missing drawCallback
+  private JSAnonymousFunction m_aHeaderCallback;
+  // missing formatNumber
+  private JSAnonymousFunction m_aFooterCallback;
+  // missing infoCallback
+  // missing initComplete
+  // missing preDrawCallback
+  // missing rowCallback
+  // missing stateLoadCallback
+  // missing stateLoaded
+  // missing stateLoadParams
+  // missing stateSaveCallback
+  // missing stateSaveParams
+
+  // DataTables - Options
+  /** Delay the loading of server-side data until second draw. */
+  // missing deferLoading:boolean [false]
+  /**
+   * Destroy any existing table matching the selector and replace with the new
+   * options.
+   */
+  // missing destroy:boolean [false]
+  /** Initial paging start point. */
+  // missing displayStart:int [0]
+  /**
+   * Define the table control elements to appear on the page and in what order.
+   */
   private DataTablesDom m_aDom;
+  /** Change the options in the page length select list. */
+  private DataTablesLengthMenu m_aLengthMenu;
+  /** Initial order (sort) to apply to the table. */
+  private DataTablesSort m_aOrder;
+  /**
+   * Control which cell the order event handler will be applied to in a column.
+   */
+  // missing orderCellsTop:boolean [false]
+  /** Highlight the columns being ordered in the table's body. */
+  // missing orderClasses:boolean [true]
+  /** Ordering to always be applied to the table. */
+  // missing orderFixed:array or object
+  /** Multiple column ordering ability control. */
+  // missing orderMulti:boolean [true]
+  /** Change the initial page length (number of rows per page). */
+  private int m_nPageLength = DEFAULT_PAGE_LENGTH;
+  /** Pagination button display options. */
+  private EDataTablesPagingType m_ePagingType = DEFAULT_PAGING_TYPE;
+  /** Display component renderer types. */
+  // missing renderer:string or object
+  /** Retrieve an existing DataTables instance. */
+  // missing retrieve:boolean [false]
+  /** Data property name that DataTables will use to set tr element DOM IDs. */
+  @Since ("1.10.8")
+  // missing rowId:string [DT_RowId]
+  /**
+   * Allow the table to reduce in height when a limited number of rows are
+   * shown.
+   */
+  private boolean m_bScrollCollapse = DEFAULT_SCROLL_COLLAPSE;
+  /** Control case-sensitive filtering option. */
+  // missing search.caseInsensitive:boolean [true]
+  /**
+   * Enable / disable escaping of regular expression characters in the search
+   * term.
+   */
+  // missing search.regex:boolean [false]
+  /** Set an initial filtering condition on the table. */
+  // missing search.search:string
+  /** Enable / disable DataTables' smart filtering. */
+  // missing search.smart:boolean [true]
+
+  // Rest
+  private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
+  private Locale m_aDisplayLocale;
+  private final List <DataTablesColumn> m_aColumns = new ArrayList <DataTablesColumn> ();
   // server side processing
   private ISimpleURL m_aAjaxSource;
   private EHTTPMethod m_eServerMethod;
   private Map <String, String> m_aServerParams;
   private boolean m_bUseJQueryAjax = DEFAULT_USER_JQUERY_AJAX;
   private EDataTablesFilterType m_eServerFilterType = EDataTablesFilterType.DEFAULT;
-  private boolean m_bDeferRender = DEFAULT_DEFER_RENDER;
   private final int m_nGeneratedJSVariableSuffix = GlobalIDFactory.getNewIntID ();
   private final String m_sGeneratedJSVariableName = "oTable" + m_nGeneratedJSVariableSuffix;
   private ISimpleURL m_aTextLoadingURL;
   private String m_sTextLoadingURLLocaleParameterName;
   private Map <String, String> m_aTextLoadingParams;
-  private JSAnonymousFunction m_aHeaderCallback;
-  private JSAnonymousFunction m_aFooterCallback;
 
   // ColVis stuff
   private boolean m_bUseColVis = DEFAULT_USE_COL_VIS;
@@ -152,16 +232,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   // Scroller plugin stuff
   private boolean m_bUseScroller = DEFAULT_USE_SCROLLER;
-
-  public static boolean isDefaultGenerateOnDocumentReady ()
-  {
-    return s_bDefaultGenerateOnDocumentReady;
-  }
-
-  public static void setDefaultGenerateOnDocumentReady (final boolean bGenerateOnDocumentReady)
-  {
-    s_bDefaultGenerateOnDocumentReady = bGenerateOnDocumentReady;
-  }
 
   /**
    * Apply to an existing table. If the table does not have an ID yet, a new one
@@ -362,7 +432,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
           final DTCol aDTCol = (DTCol) aCol;
           aColumn = new DataTablesColumn (nColIndex, aDTCol);
           if (aDTCol.hasInitialSorting ())
-            setInitialSorting (new DataTablesSorting ().addColumn (nColIndex, aDTCol.getInitialSorting ()));
+            setInitialSorting (new DataTablesSort ().addColumn (nColIndex, aDTCol.getInitialSorting ()));
         }
         else
         {
@@ -413,33 +483,33 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nullable
-  public DataTablesSorting getInitialSorting ()
+  public DataTablesSort getInitialSorting ()
   {
-    return m_aInitialSorting;
+    return m_aOrder;
   }
 
   @Nonnull
   @Deprecated
   public DataTables setInitialSorting (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
   {
-    return setInitialSorting (new DataTablesSorting ().addColumn (nIndex, eSortOrder));
+    return setInitialSorting (new DataTablesSort ().addColumn (nIndex, eSortOrder));
   }
 
   @Nonnull
-  public DataTables setInitialSorting (@Nullable final DataTablesSorting aInitialSorting)
+  public DataTables setInitialSorting (@Nullable final DataTablesSort aInitialSorting)
   {
-    m_aInitialSorting = aInitialSorting;
+    m_aOrder = aInitialSorting;
     return this;
   }
 
   @Nullable
-  public EDataTablesPaginationType getPaginationType ()
+  public EDataTablesPagingType getPaginationType ()
   {
     return m_ePagingType;
   }
 
   @Nonnull
-  public DataTables setPaginationType (@Nullable final EDataTablesPaginationType ePaginationType)
+  public DataTables setPaginationType (@Nullable final EDataTablesPagingType ePaginationType)
   {
     m_ePagingType = ePaginationType;
     return this;
@@ -498,13 +568,13 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   @Nullable
   @ReturnsMutableObject ("design")
-  public DataTablesLengthMenuList getLengthMenu ()
+  public DataTablesLengthMenu getLengthMenu ()
   {
     return m_aLengthMenu;
   }
 
   @Nonnull
-  public DataTables setLengthMenu (@Nullable final DataTablesLengthMenuList aLengthMenu)
+  public DataTables setLengthMenu (@Nullable final DataTablesLengthMenu aLengthMenu)
   {
     m_aLengthMenu = aLengthMenu;
     if (aLengthMenu != null && !aLengthMenu.isEmpty ())
@@ -535,7 +605,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   @Nonnull
   public DataTables setDisplayAll ()
   {
-    return setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
+    return setDisplayLength (DataTablesLengthMenu.COUNT_ALL);
   }
 
   // Server side handling params
@@ -869,7 +939,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     final JSAssocArray aParams = new JSAssocArray ();
     if (m_bAutoWidth != DEFAULT_AUTOWIDTH)
       aParams.add ("autoWidth", m_bAutoWidth);
-    if (m_bPaging != DEFAULT_PAGINATE)
+    if (m_bPaging != DEFAULT_PAGING)
       aParams.add ("paging", m_bPaging);
     if (m_bStateSave != DEFAULT_STATE_SAVE)
       aParams.add ("stateSave", m_bStateSave);
@@ -884,7 +954,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     }
     // Provide any empty array if no sorting is defined, because otherwise an
     // implicit sorting of the first column, ascending is done
-    aParams.add ("order", m_aInitialSorting != null ? m_aInitialSorting.getAsJS () : new JSArray ());
+    aParams.add ("order", m_aOrder != null ? m_aOrder.getAsJS () : new JSArray ());
     if (m_ePagingType != null)
       aParams.add ("pagingType", m_ePagingType.getName ());
     if (m_eScrollX.isDefined ())
@@ -920,7 +990,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       }
       aParams.add ("lengthMenu", new JSArray ().add (aArray1).add (aArray2));
     }
-    if (m_nPageLength != DEFAULT_DISPLAY_LENGTH)
+    if (m_nPageLength != DEFAULT_PAGE_LENGTH)
       aParams.add ("pageLength", m_nPageLength);
 
     // Server handling parameters

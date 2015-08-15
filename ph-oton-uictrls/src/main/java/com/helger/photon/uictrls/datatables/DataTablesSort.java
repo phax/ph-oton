@@ -16,38 +16,35 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Since;
-import com.helger.commons.name.IHasName;
+import com.helger.commons.compare.ESortOrder;
+import com.helger.html.jscode.JSArray;
 
-/**
- * DataTables pagination type
- *
- * @author Philip Helger
- */
-public enum EDataTablesPaginationType implements IHasName
+public final class DataTablesSort
 {
-  @Since ("1.10")
-  SIMPLE ("simple"),
-  @Since ("1.10")
-  SIMPLE_NUMBERS ("simple_numbers"),
-  @Since ("1.10")
-  FULL ("full"),
-  FULL_NUMBERS ("full_numbers");
+  private final List <DataTablesSortColumn> m_aSortColumns = new ArrayList <DataTablesSortColumn> ();
 
-  private final String m_sName;
+  public DataTablesSort ()
+  {}
 
-  private EDataTablesPaginationType (@Nonnull @Nonempty final String sName)
+  @Nonnull
+  public DataTablesSort addColumn (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
   {
-    m_sName = sName;
+    m_aSortColumns.add (new DataTablesSortColumn (nIndex, eSortOrder));
+    return this;
   }
 
   @Nonnull
-  @Nonempty
-  public String getName ()
+  public JSArray getAsJS ()
   {
-    return m_sName;
+    final JSArray ret = new JSArray ();
+    for (final DataTablesSortColumn aSortColumn : m_aSortColumns)
+      ret.add (aSortColumn.getAsJS ());
+    return ret;
   }
 }

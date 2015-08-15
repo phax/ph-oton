@@ -35,36 +35,36 @@ import com.helger.commons.text.display.ConstantHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayText;
 
 @NotThreadSafe
-public class DataTablesLengthMenuList
+public class DataTablesLengthMenu
 {
   /** The numerical value representing 'show all items' */
   public static final int COUNT_ALL = -1;
 
   private final List <DataTablesLengthMenuItem> m_aList = new ArrayList <DataTablesLengthMenuItem> ();
 
-  public DataTablesLengthMenuList ()
+  public DataTablesLengthMenu ()
   {}
 
   @Nonnull
-  public DataTablesLengthMenuList addItemAll ()
+  public DataTablesLengthMenu addItemAll ()
   {
     return addItem (COUNT_ALL, EDataTablesText.ALL);
   }
 
   @Nonnull
-  public DataTablesLengthMenuList addItem (final int nItemCount)
+  public DataTablesLengthMenu addItem (final int nItemCount)
   {
     return addItem (nItemCount, new ConstantHasDisplayText (Integer.toString (nItemCount)));
   }
 
   @Nonnull
-  public DataTablesLengthMenuList addItem (final int nItemCount, @Nonnull final IHasDisplayText aText)
+  public DataTablesLengthMenu addItem (final int nItemCount, @Nonnull final IHasDisplayText aText)
   {
     return addItem (new DataTablesLengthMenuItem (nItemCount, aText));
   }
 
   @Nonnull
-  public DataTablesLengthMenuList addItem (@Nonnull final DataTablesLengthMenuItem aItem)
+  public DataTablesLengthMenu addItem (@Nonnull final DataTablesLengthMenuItem aItem)
   {
     ValueEnforcer.notNull (aItem, "Item");
     m_aList.add (aItem);

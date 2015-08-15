@@ -55,7 +55,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.DataTablesLengthMenuList;
+import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.web.networkinterface.ComparatorNetworkInterfaceName;
 import com.helger.web.networkinterface.NetworkInterfaceHelper;
 
@@ -260,7 +260,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aDataTables.setDisplayLength (DataTablesLengthMenuList.COUNT_ALL);
+      aDataTables.setDisplayLength (DataTablesLengthMenu.COUNT_ALL);
 
       aTabBox.addTab (EText.MSG_NETWORK_INTERFACES.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));

@@ -32,7 +32,7 @@ public class BootstrapDataTablesScrollerDom extends DataTablesDom
     openDiv (CBootstrapCSS.ROW, CBootstrapCSS.HIDDEN_PRINT);
     {
       openDiv (CBootstrapCSS.COL_XS_12);
-      addSearchBox ();
+      addFiltering ();
       closeDiv ();
       addProcessing ();
     }
@@ -41,7 +41,7 @@ public class BootstrapDataTablesScrollerDom extends DataTablesDom
     openDiv (CBootstrapCSS.ROW, CBootstrapCSS.HIDDEN_PRINT);
     {
       openDiv (CBootstrapCSS.COL_XS_12);
-      addPositionIndicator ();
+      addInformationSummary ();
       closeDiv ();
     }
     closeDiv ();

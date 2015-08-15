@@ -170,10 +170,16 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   public DataTablesDom openDiv (@Nullable final String sCSSClasses)
   {
     if (StringHelper.hasText (sCSSClasses))
-      _internalOpenDiv (OPEN_DIV + "'" + sCSSClasses + "'");
-    else
-      _internalOpenDiv (OPEN_DIV);
-    return this;
+      return _internalOpenDiv (OPEN_DIV + "'" + sCSSClasses + "'");
+    return _internalOpenDiv (OPEN_DIV);
+  }
+
+  @Nonnull
+  public DataTablesDom openDivWithID (@Nullable final String sID)
+  {
+    if (StringHelper.hasText (sID))
+      return _internalOpenDiv (OPEN_DIV + "'#" + sID + "'");
+    return _internalOpenDiv (OPEN_DIV);
   }
 
   @Nonnull
@@ -203,9 +209,45 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
    * @return this
    */
   @Nonnull
-  public DataTablesDom addSearchBox ()
+  public DataTablesDom addFiltering ()
   {
     _internalAdd ("f");
+    return this;
+  }
+
+  /**
+   * Add "t"
+   *
+   * @return this
+   */
+  @Nonnull
+  public DataTablesDom addTable ()
+  {
+    _internalAdd ("t");
+    return this;
+  }
+
+  /**
+   * Add "i"
+   *
+   * @return this
+   */
+  @Nonnull
+  public DataTablesDom addInformationSummary ()
+  {
+    _internalAdd ("i");
+    return this;
+  }
+
+  /**
+   * Add "p"
+   *
+   * @return this
+   */
+  @Nonnull
+  public DataTablesDom addPagination ()
+  {
+    _internalAdd ("p");
     return this;
   }
 
@@ -235,43 +277,8 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   }
 
   /**
-   * Add "t"
-   *
-   * @return this
-   */
-  @Nonnull
-  public DataTablesDom addTable ()
-  {
-    _internalAdd ("t");
-    return this;
-  }
-
-  /**
-   * Add "i"
-   *
-   * @return this
-   */
-  @Nonnull
-  public DataTablesDom addPositionIndicator ()
-  {
-    _internalAdd ("i");
-    return this;
-  }
-
-  /**
-   * Add "p"
-   *
-   * @return this
-   */
-  @Nonnull
-  public DataTablesDom addPagination ()
-  {
-    _internalAdd ("p");
-    return this;
-  }
-
-  /**
-   * Add "S"
+   * Add "S".<br>
+   * requires the appropriate datatables plugin
    *
    * @return this
    */
@@ -294,7 +301,8 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   {
     if (m_nOpenDivs != 0)
       s_aLogger.error ("The DIVs are not balanced: " +
-                       (m_nOpenDivs > 0 ? m_nOpenDivs + " DIVs are open!" : m_nOpenDivs + " DIVs too many are closed!"));
+                       (m_nOpenDivs > 0 ? m_nOpenDivs + " DIVs are open!"
+                                        : m_nOpenDivs + " DIVs too many are closed!"));
     return StringHelper.getImploded (m_aElements);
   }
 
@@ -309,6 +317,7 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   {
     return new ToStringGenerator (this).append ("elements", m_aElements)
                                        .append ("openDivCount", m_nOpenDivs)
+                                       .append ("pos", m_nPos)
                                        .toString ();
   }
 }
