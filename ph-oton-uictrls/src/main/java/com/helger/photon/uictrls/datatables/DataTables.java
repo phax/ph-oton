@@ -962,41 +962,49 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
-    // init parameters
     final JSAssocArray aParams = new JSAssocArray ();
+
+    //
+    // features
+    //
+
     if (m_bAutoWidth != DEFAULT_AUTOWIDTH)
       aParams.add ("autoWidth", m_bAutoWidth);
-    if (m_bPaging != DEFAULT_PAGING)
-      aParams.add ("paging", m_bPaging);
-    if (m_bStateSave != DEFAULT_STATE_SAVE)
-      aParams.add ("stateSave", m_bStateSave);
+    if (m_bDeferRender != DEFAULT_DEFER_RENDER)
+      aParams.add ("deferRender", m_bDeferRender);
     if (m_bJQueryUI != DEFAULT_JQUERY_UI)
       aParams.add ("jQueryUI", m_bJQueryUI);
-    if (!m_aColumnDefs.isEmpty ())
-    {
-      final JSArray aArray = new JSArray ();
-      for (final DataTablesColumnDef aColumnDef : m_aColumnDefs)
-        aArray.add (aColumnDef.getAsJS ());
-      aParams.add ("columnDefs", aArray);
-    }
-    // Provide any empty array if no sorting is defined, because otherwise an
-    // implicit sorting of the first column, ascending is done
-    aParams.add ("order", m_aOrder != null ? m_aOrder.getAsJS () : new JSArray ());
-    if (m_ePagingType != null)
-      aParams.add ("pagingType", m_ePagingType.getName ());
+    if (m_bPaging != DEFAULT_PAGING)
+      aParams.add ("paging", m_bPaging);
     if (m_eScrollX.isDefined ())
       aParams.add ("scrollX", m_eScrollX.getAsBooleanValue (DEFAULT_SCROLL_X));
     if (StringHelper.hasText (m_sScrollY))
       aParams.add ("scrollY", m_sScrollY);
-    if (m_bScrollCollapse != DEFAULT_SCROLL_COLLAPSE)
-      aParams.add ("scrollCollapse", m_bScrollCollapse);
+    if (m_bStateSave != DEFAULT_STATE_SAVE)
+      aParams.add ("stateSave", m_bStateSave);
+
+    //
+    // data
+    //
+
+    //
+    // callbacks
+    //
+    if (m_aFooterCallback != null)
+      aParams.add ("footerCallback", m_aFooterCallback);
+    if (m_aHeaderCallback != null)
+      aParams.add ("headerCallback", m_aHeaderCallback);
+
+    //
+    // options
+    //
+
     {
       DataTablesDom aDom = m_aDom;
       if (m_bUseColVis)
       {
         if (aDom == null)
           aDom = new DataTablesDom ();
-
         weaveColVisIntoDom (aDom);
       }
       if (aDom != null)
@@ -1004,8 +1012,30 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     }
     if (m_aLengthMenu != null && !m_aLengthMenu.isEmpty ())
       aParams.add ("lengthMenu", m_aLengthMenu.getAsJSArray (m_aDisplayLocale));
+    // Provide any empty array if no sorting is defined, because otherwise an
+    // implicit sorting of the first column, ascending is done
+    aParams.add ("order", m_aOrder != null ? m_aOrder.getAsJS () : new JSArray ());
     if (m_nPageLength != DEFAULT_PAGE_LENGTH)
       aParams.add ("pageLength", m_nPageLength);
+    if (m_ePagingType != null)
+      aParams.add ("pagingType", m_ePagingType.getName ());
+    if (m_bScrollCollapse != DEFAULT_SCROLL_COLLAPSE)
+      aParams.add ("scrollCollapse", m_bScrollCollapse);
+
+    //
+    // columns
+    //
+    if (!m_aColumnDefs.isEmpty ())
+    {
+      final JSArray aArray = new JSArray ();
+      for (final DataTablesColumnDef aColumnDef : m_aColumnDefs)
+        aArray.add (aColumnDef.getAsJS ());
+      aParams.add ("columnDefs", aArray);
+    }
+
+    //
+    // rest
+    //
 
     // Server handling parameters
     final boolean bServerSide = m_aAjaxSource != null;
@@ -1089,8 +1119,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("fnServerData", aAF);
       JSJQueryHelper.registerExternalResources ();
     }
-    if (m_bDeferRender != DEFAULT_DEFER_RENDER)
-      aParams.add ("deferRender", m_bDeferRender);
 
     // Display texts
     if (m_aDisplayLocale != null)
@@ -1112,11 +1140,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       }
       aParams.add ("language", aLanguage);
     }
-
-    if (m_aHeaderCallback != null)
-      aParams.add ("headerCallback", m_aHeaderCallback);
-    if (m_aFooterCallback != null)
-      aParams.add ("footerCallback", m_aFooterCallback);
 
     // ColVis stuff
     if (m_bUseColVis)
