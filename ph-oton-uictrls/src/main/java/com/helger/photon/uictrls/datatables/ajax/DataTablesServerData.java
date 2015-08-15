@@ -103,7 +103,7 @@ public final class DataTablesServerData implements IHasUIState
     m_aColumns = new ColumnData [nColumnCount];
     for (final DataTablesColumnDef aColumn : aColumns)
     {
-      final ColumnData aColumnData = ColumnData.create (aColumn.getComparator ());
+      final ColumnData aColumnData = ColumnData.create (aColumn.getServerComparator ());
       for (final int nTarget : aColumn.getAllTargets ())
       {
         if (nTarget < 0 || nTarget >= nColumnCount)

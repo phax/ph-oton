@@ -94,7 +94,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   private String m_sWidth;
 
   /** Server side comparator */
-  private AbstractComparatorDT m_aComparator;
+  private AbstractComparatorDT m_aServerComparator;
 
   public DataTablesColumnDef (@Nonnegative final int nTarget)
   {
@@ -127,7 +127,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
       if (!aDTColumn.isStar ())
         setWidth (aDTColumn.getWidth ());
 
-    setComparator (aDTColumn.getComparator ());
+    setServerComparator (aDTColumn.getComparator ());
   }
 
   @Nonnull
@@ -458,15 +458,15 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   }
 
   @Nullable
-  public AbstractComparatorDT getComparator ()
+  public AbstractComparatorDT getServerComparator ()
   {
-    return m_aComparator;
+    return m_aServerComparator;
   }
 
   @Nonnull
-  public DataTablesColumnDef setComparator (@Nullable final AbstractComparatorDT aComparator)
+  public DataTablesColumnDef setServerComparator (@Nullable final AbstractComparatorDT aServerComparator)
   {
-    m_aComparator = aComparator;
+    m_aServerComparator = aServerComparator;
     return this;
   }
 

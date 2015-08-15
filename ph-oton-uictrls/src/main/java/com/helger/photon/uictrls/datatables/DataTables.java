@@ -227,7 +227,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // missing tabIndex:int [0]
 
   //
-  // DataTables - Options
+  // DataTables - Columns
   //
   /** Set column definition initialisation properties. */
   private final List <DataTablesColumnDef> m_aColumnDefs = new ArrayList <DataTablesColumnDef> ();
