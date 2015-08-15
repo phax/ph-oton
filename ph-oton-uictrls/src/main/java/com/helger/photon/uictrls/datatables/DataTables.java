@@ -40,6 +40,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.lang.CloneHelper;
+import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
@@ -94,6 +95,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public static final boolean DEFAULT_PAGINATE = true;
   public static final boolean DEFAULT_STATE_SAVE = false;
   public static final boolean DEFAULT_JQUERY_UI = false;
+  public static final boolean DEFAULT_SCROLL_X = false;
   public static final boolean DEFAULT_SCROLL_COLLAPSE = false;
   public static final boolean DEFAULT_USER_JQUERY_AJAX = false;
   public static final boolean DEFAULT_DEFER_RENDER = false;
@@ -117,7 +119,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   private final List <DataTablesColumn> m_aColumns = new ArrayList <DataTablesColumn> ();
   private DataTablesSorting m_aInitialSorting;
   private EDataTablesPaginationType m_ePagingType = DEFAULT_PAGINATION_TYPE;
-  private String m_sScrollX;
+  private ETriState m_eScrollX = ETriState.UNDEFINED;
   private String m_sScrollY;
   private boolean m_bScrollCollapse = DEFAULT_SCROLL_COLLAPSE;
   private DataTablesLengthMenuList m_aLengthMenu;
@@ -443,16 +445,15 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  @Nullable
-  public String getScrollX ()
+  public boolean isScrollX ()
   {
-    return m_sScrollX;
+    return m_eScrollX.getAsBooleanValue (DEFAULT_SCROLL_X);
   }
 
   @Nonnull
-  public DataTables setScrollX (@Nullable final String sScrollX)
+  public DataTables setScrollX (final boolean bScrollX)
   {
-    m_sScrollX = sScrollX;
+    m_eScrollX = ETriState.valueOf (bScrollX);
     return this;
   }
 
@@ -886,8 +887,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     aParams.add ("order", m_aInitialSorting != null ? m_aInitialSorting.getAsJS () : new JSArray ());
     if (m_ePagingType != null)
       aParams.add ("pagingType", m_ePagingType.getName ());
-    if (StringHelper.hasText (m_sScrollX))
-      aParams.add ("scrollX", m_sScrollX);
+    if (m_eScrollX.isDefined ())
+      aParams.add ("scrollX", m_eScrollX.getAsBooleanValue (DEFAULT_SCROLL_X));
     if (StringHelper.hasText (m_sScrollY))
       aParams.add ("scrollY", m_sScrollY);
     if (m_bScrollCollapse != DEFAULT_SCROLL_COLLAPSE)
