@@ -41,7 +41,7 @@ import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.photon.core.state.IHasUIState;
-import com.helger.photon.uictrls.datatables.DataTablesColumn;
+import com.helger.photon.uictrls.datatables.DataTablesColumnDef;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 
 /**
@@ -89,7 +89,7 @@ public final class DataTablesServerData implements IHasUIState
   private final EDataTablesFilterType m_eFilterType;
 
   public DataTablesServerData (@Nonnull final IHCTable <?> aTable,
-                               @Nonnull final List <DataTablesColumn> aColumns,
+                               @Nonnull final List <DataTablesColumnDef> aColumns,
                                @Nonnull final Locale aDisplayLocale,
                                @Nonnull final EDataTablesFilterType eFilterType)
   {
@@ -101,7 +101,7 @@ public final class DataTablesServerData implements IHasUIState
     // Column data
     final int nColumnCount = aTable.getColumnCount ();
     m_aColumns = new ColumnData [nColumnCount];
-    for (final DataTablesColumn aColumn : aColumns)
+    for (final DataTablesColumnDef aColumn : aColumns)
     {
       final ColumnData aColumnData = ColumnData.create (aColumn.getComparator ());
       for (final int nTarget : aColumn.getAllTargets ())

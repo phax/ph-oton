@@ -108,10 +108,13 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTables.class);
 
-  // Status vars
+  // Constructor parameters
   private final IHCTable <?> m_aTable;
 
+  //
   // DataTables - Features
+  //
+
   private boolean m_bAutoWidth = DEFAULT_AUTOWIDTH;
   private boolean m_bDeferRender = DEFAULT_DEFER_RENDER;
   // missing info:boolean [true]
@@ -126,13 +129,19 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // implicit serverSide:boolean [false]
   private boolean m_bStateSave = DEFAULT_STATE_SAVE;
 
+  //
   // DataTables - Data
+  //
+
   // missing ajax.data:object or function ajax.data(data, settings)
   // missing ajax.dataSrc:string or function ajax.dataSrc(data)
   // missing ajax:string or object or function ajax(data, callback, settings)
   // missing data:array
 
+  //
   // DataTables - Callbacks
+  //
+
   // missing createdRow
   // missing drawCallback
   private JSAnonymousFunction m_aHeaderCallback;
@@ -148,7 +157,10 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // missing stateSaveCallback
   // missing stateSaveParams
 
+  //
   // DataTables - Options
+  //
+
   /** Delay the loading of server-side data until second draw. */
   // missing deferLoading:boolean [false]
   /**
@@ -203,11 +215,26 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // missing search.search:string
   /** Enable / disable DataTables' smart filtering. */
   // missing search.smart:boolean [true]
+  /** Define an initial search for individual columns. */
+  // missing searchCols:array
+  /** Set a throttle frequency for searching. */
+  // missing searchDelay:int [null]
+  /** Saved state validity duration. In seconds. */
+  // missing stateDuration:int [7200]
+  /** Set the zebra stripe class names for the rows in the table. */
+  // missing stripeClasses:array
+  /** Tab index control for keyboard navigation. */
+  // missing tabIndex:int [0]
+
+  //
+  // DataTables - Options
+  //
+  /** Set column definition initialisation properties. */
+  private final List <DataTablesColumnDef> m_aColumnDefs = new ArrayList <DataTablesColumnDef> ();
 
   // Rest
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
   private Locale m_aDisplayLocale;
-  private final List <DataTablesColumn> m_aColumns = new ArrayList <DataTablesColumn> ();
   // server side processing
   private ISimpleURL m_aAjaxSource;
   private EHTTPMethod m_eServerMethod;
@@ -367,49 +394,49 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <DataTablesColumn> getAllColumns ()
+  public Collection <DataTablesColumnDef> getAllColumns ()
   {
-    return CollectionHelper.newList (m_aColumns);
+    return CollectionHelper.newList (m_aColumnDefs);
   }
 
   public boolean hasColumns ()
   {
-    return !m_aColumns.isEmpty ();
+    return !m_aColumnDefs.isEmpty ();
   }
 
   @Nonnegative
   public int getColumnCount ()
   {
-    return m_aColumns.size ();
+    return m_aColumnDefs.size ();
   }
 
   @Nonnull
   @Deprecated
-  public DataTablesColumn getOrCreateColumnOfTarget (@Nonnegative final int nTarget)
+  public DataTablesColumnDef getOrCreateColumnOfTarget (@Nonnegative final int nTarget)
   {
-    for (final DataTablesColumn aCurColumn : m_aColumns)
+    for (final DataTablesColumnDef aCurColumn : m_aColumnDefs)
       if (aCurColumn.hasTarget (nTarget))
         return aCurColumn;
 
-    final DataTablesColumn aColumn = new DataTablesColumn (nTarget);
-    m_aColumns.add (aColumn);
+    final DataTablesColumnDef aColumn = new DataTablesColumnDef (nTarget);
+    m_aColumnDefs.add (aColumn);
     return aColumn;
   }
 
   @Nonnull
-  public DataTables addColumn (@Nonnull final DataTablesColumn aColumn)
+  public DataTables addColumn (@Nonnull final DataTablesColumnDef aColumn)
   {
     ValueEnforcer.notNull (aColumn, "Column");
 
     // Check if targets are unique!
     for (final int nTarget : aColumn.getAllTargets ())
-      for (final DataTablesColumn aCurColumn : m_aColumns)
+      for (final DataTablesColumnDef aCurColumn : m_aColumnDefs)
         if (aCurColumn.hasTarget (nTarget))
         {
           s_aLogger.warn ("Another DataTablesColumn with target " + nTarget + " is already contained!");
           break;
         }
-    m_aColumns.add (aColumn);
+    m_aColumnDefs.add (aColumn);
     return this;
   }
 
@@ -425,19 +452,19 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       int nColIndex = 0;
       for (final IHCCol <?> aCol : aColGroup.getAllColumns ())
       {
-        DataTablesColumn aColumn;
+        DataTablesColumnDef aColumn;
         if (aCol instanceof DTCol)
         {
           // Copy data from DTColumn
           final DTCol aDTCol = (DTCol) aCol;
-          aColumn = new DataTablesColumn (nColIndex, aDTCol);
+          aColumn = new DataTablesColumnDef (nColIndex, aDTCol);
           if (aDTCol.hasInitialSorting ())
             setInitialSorting (new DataTablesSort ().addColumn (nColIndex, aDTCol.getInitialSorting ()));
         }
         else
         {
           // Raw column
-          aColumn = new DataTablesColumn (nColIndex);
+          aColumn = new DataTablesColumnDef (nColIndex);
           if (!aCol.isStar ())
             aColumn.setWidth (aCol.getWidth ());
         }
@@ -449,24 +476,24 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nonnull
-  public DataTables setAllColumnsSortable (final boolean bSortable)
+  public DataTables setAllColumnsOrderable (final boolean bSortable)
   {
-    for (final DataTablesColumn aColumn : m_aColumns)
-      aColumn.setSortable (bSortable);
+    for (final DataTablesColumnDef aColumn : m_aColumnDefs)
+      aColumn.setOrderable (bSortable);
     return this;
   }
 
   @Nonnull
   public DataTables setAllColumnsSearchable (final boolean bSearchable)
   {
-    for (final DataTablesColumn aColumn : m_aColumns)
+    for (final DataTablesColumnDef aColumn : m_aColumnDefs)
       aColumn.setSearchable (bSearchable);
     return this;
   }
 
   public boolean hasAnyInvisibleColumn ()
   {
-    for (final DataTablesColumn aColumn : m_aColumns)
+    for (final DataTablesColumnDef aColumn : m_aColumnDefs)
       if (!aColumn.isVisible ())
         return true;
     return false;
@@ -476,7 +503,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public int getVisibleColumnCount ()
   {
     int ret = 0;
-    for (final DataTablesColumn aColumn : m_aColumns)
+    for (final DataTablesColumnDef aColumn : m_aColumnDefs)
       if (aColumn.isVisible ())
         ++ret;
     return ret;
@@ -945,11 +972,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("stateSave", m_bStateSave);
     if (m_bJQueryUI != DEFAULT_JQUERY_UI)
       aParams.add ("jQueryUI", m_bJQueryUI);
-    if (!m_aColumns.isEmpty ())
+    if (!m_aColumnDefs.isEmpty ())
     {
       final JSArray aArray = new JSArray ();
-      for (final DataTablesColumn aColumn : m_aColumns)
-        aArray.add (aColumn.getAsJS ());
+      for (final DataTablesColumnDef aColumnDef : m_aColumnDefs)
+        aArray.add (aColumnDef.getAsJS ());
       aParams.add ("columnDefs", aArray);
     }
     // Provide any empty array if no sorting is defined, because otherwise an
@@ -976,20 +1003,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
         aParams.add ("dom", aDom.getAsString ());
     }
     if (m_aLengthMenu != null && !m_aLengthMenu.isEmpty ())
-    {
-      final JSArray aArray1 = new JSArray ();
-      final JSArray aArray2 = new JSArray ();
-      for (final DataTablesLengthMenuItem aItem : m_aLengthMenu.getAllItems ())
-      {
-        aArray1.add (aItem.getItemCount ());
-        final String sValue = aItem.getDisplayText (m_aDisplayLocale);
-        if (sValue != null)
-          aArray2.add (sValue);
-        else
-          aArray2.add (Integer.toString (aItem.getItemCount ()));
-      }
-      aParams.add ("lengthMenu", new JSArray ().add (aArray1).add (aArray2));
-    }
+      aParams.add ("lengthMenu", m_aLengthMenu.getAsJSArray (m_aDisplayLocale));
     if (m_nPageLength != DEFAULT_PAGE_LENGTH)
       aParams.add ("pageLength", m_nPageLength);
 
@@ -1000,7 +1014,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("serverSide", true);
       // This copies the content of the table
       final DataTablesServerData aServerData = new DataTablesServerData (m_aTable,
-                                                                         m_aColumns,
+                                                                         m_aColumnDefs,
                                                                          m_aDisplayLocale,
                                                                          m_eServerFilterType);
       UIStateRegistry.getCurrent ().registerState (m_aTable.getID (), aServerData);
@@ -1031,9 +1045,9 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
         // Note: disabled, as this may lead to HC table consistency warnings
         final HCColGroup aColGroup = m_aTable.getColGroup ();
         if (aColGroup != null)
-          for (int i = m_aColumns.size () - 1; i >= 0; --i)
+          for (int i = m_aColumnDefs.size () - 1; i >= 0; --i)
           {
-            final DataTablesColumn aColumn = m_aColumns.get (i);
+            final DataTablesColumnDef aColumn = m_aColumnDefs.get (i);
             if (!aColumn.isVisible ())
               aColGroup.removeColumnAtIndex (i);
           }
@@ -1112,7 +1126,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
         aJSColVisParams.add ("buttonText", EDataTablesText.COL_VIS_BUTTON_TEXT.getDisplayText (m_aDisplayLocale));
 
       final JSArray aExclude = new JSArray ();
-      for (final DataTablesColumn aColumn : m_aColumns)
+      for (final DataTablesColumnDef aColumn : m_aColumnDefs)
         if (!aColumn.isVisible ())
           aExclude.addAll (aColumn.getAllTargets ());
       aJSColVisParams.add ("exclude", aExclude);
@@ -1223,7 +1237,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
                                                @Nonnegative final int nColumnIndexWithDetails,
                                                @Nullable final ICSSClassProvider aCellClass)
   {
-    final DataTablesColumn aColumn = getOrCreateColumnOfTarget (nColumnIndexWithDetails);
+    final DataTablesColumnDef aColumn = getOrCreateColumnOfTarget (nColumnIndexWithDetails);
     if (aColumn != null && aColumn.isVisible ())
       s_aLogger.warn ("The column with the expand text, should not be visible!");
 

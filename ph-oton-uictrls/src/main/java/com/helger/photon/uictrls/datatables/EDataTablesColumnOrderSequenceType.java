@@ -16,9 +16,32 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import javax.annotation.Nonnull;
+
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.name.IHasName;
 
-public interface IDataTablesColumnType extends IHasName
+/**
+ * DataTables column order sequence type
+ *
+ * @author Philip Helger
+ */
+public enum EDataTablesColumnOrderSequenceType implements IHasName
 {
-  /* empty */
+ ASC ("asc"),
+ DESC ("desc");
+
+  private final String m_sName;
+
+  private EDataTablesColumnOrderSequenceType (@Nonnull @Nonempty final String sName)
+  {
+    m_sName = sName;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getName ()
+  {
+    return m_sName;
+  }
 }

@@ -52,9 +52,9 @@ public class DTCol extends AbstractHCCol <DTCol>
 {
   private IHCNode m_aHeaderNode;
   private ESortOrder m_eInitialSorting = null;
-  private boolean m_bSearchable = DataTablesColumn.DEFAULT_SEARCHABLE;
-  private boolean m_bSortable = DataTablesColumn.DEFAULT_SORTABLE;
-  private boolean m_bVisible = DataTablesColumn.DEFAULT_VISIBLE;
+  private boolean m_bSearchable = DataTablesColumnDef.DEFAULT_SEARCHABLE;
+  private boolean m_bOrderable = DataTablesColumnDef.DEFAULT_ORDERABLE;
+  private boolean m_bVisible = DataTablesColumnDef.DEFAULT_VISIBLE;
   private String m_sName;
   private int [] m_aDataSort;
   private AbstractComparatorDT m_aComparator;
@@ -86,7 +86,7 @@ public class DTCol extends AbstractHCCol <DTCol>
         // Nothing special
         break;
       case BYTE_ARRAY:
-        setSortable (false);
+        setOrderable (false);
         break;
       case DATE:
         setComparator (new ComparatorDTDate (aDisplayLocale));
@@ -105,7 +105,7 @@ public class DTCol extends AbstractHCCol <DTCol>
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         break;
       case MTEXT:
-        setSortable (false);
+        setOrderable (false);
         break;
       case TEXT:
         setComparator (new ComparatorDTString (aDisplayLocale));
@@ -115,7 +115,7 @@ public class DTCol extends AbstractHCCol <DTCol>
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         break;
       case XML:
-        setSortable (false);
+        setOrderable (false);
         break;
       default:
         throw new IllegalArgumentException ("Unsupported base type provided: " + eBaseType);
@@ -177,15 +177,15 @@ public class DTCol extends AbstractHCCol <DTCol>
     return this;
   }
 
-  public boolean isSortable ()
+  public boolean isOrderable ()
   {
-    return m_bSortable;
+    return m_bOrderable;
   }
 
   @Nonnull
-  public DTCol setSortable (final boolean bSortable)
+  public DTCol setOrderable (final boolean bOrderable)
   {
-    m_bSortable = bSortable;
+    m_bOrderable = bOrderable;
     return this;
   }
 

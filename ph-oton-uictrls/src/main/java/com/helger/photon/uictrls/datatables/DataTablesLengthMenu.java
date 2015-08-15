@@ -33,6 +33,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.ConstantHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.html.jscode.JSArray;
 
 @NotThreadSafe
 public class DataTablesLengthMenu
@@ -97,6 +98,23 @@ public class DataTablesLengthMenu
   public DataTablesLengthMenuItem getItemAtIndex (@Nonnegative final int nIndex)
   {
     return CollectionHelper.getSafe (m_aList, nIndex);
+  }
+
+  @Nonnull
+  public JSArray getAsJSArray (@Nonnull final Locale aDisplayLocale)
+  {
+    final JSArray aArray1 = new JSArray ();
+    final JSArray aArray2 = new JSArray ();
+    for (final DataTablesLengthMenuItem aItem : m_aList)
+    {
+      aArray1.add (aItem.getItemCount ());
+      final String sValue = aItem.getDisplayText (aDisplayLocale);
+      if (sValue != null)
+        aArray2.add (sValue);
+      else
+        aArray2.add (Integer.toString (aItem.getItemCount ()));
+    }
+    return new JSArray ().add (aArray1).add (aArray2);
   }
 
   @Override

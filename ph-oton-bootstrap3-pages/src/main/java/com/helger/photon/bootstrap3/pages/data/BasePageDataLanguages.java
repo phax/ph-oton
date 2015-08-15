@@ -120,7 +120,7 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> e
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_LOCALES.getDisplayText (aDisplayLocale)).setSortable (false)).setID (getID ());
+                                        new DTCol (EText.MSG_LOCALES.getDisplayText (aDisplayLocale)).setOrderable (false)).setID (getID ());
 
     // For all languages
     for (final Map.Entry <String, List <Locale>> aEntry : aMapLanguageToLocale.entrySet ())

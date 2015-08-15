@@ -19,18 +19,41 @@ package com.helger.photon.uictrls.datatables;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.name.IHasName;
 
 /**
  * DataTables column type
- * 
+ *
  * @author Philip Helger
  */
-public enum EDataTablesColumnType implements IDataTablesColumnType
+public enum EDataTablesColumnType implements IHasName
 {
-  STRING ("string"),
-  NUMERIC ("numeric"),
+ /**
+  * Date / time values. Note that DataTables' built in date parsing uses
+  * Javascript's Date.parse() method which supports only a very limited subset
+  * of dates. Additional date format support can be added through the use of
+  * plug-ins.
+  */
   DATE ("date"),
-  HTML ("html");
+ /** Simple number sorting. */
+  NUM ("num"),
+ /**
+  * Numeric sorting of formatted numbers. Numbers which are formatted with
+  * thousands separators, currency symbols or a percentage indicator will be
+  * sorted numerically automatically by DataTables.
+  */
+  NUM_FMT ("num-fmt"),
+ /** As per the {@link #NUM} option, but with HTML tags also in the data. */
+  HTML_NUM ("html-num"),
+ /** As per the {@link #NUM_FMT} option, but with HTML tags also in the data. */
+  HTML_NUM_FMT ("html-num-fmt"),
+ /** Basic string processing for HTML tags */
+  HTML ("html"),
+ /**
+  * Fall back type if the data in the column does not match the requirements for
+  * the other data types (above).
+  */
+  STRING ("string");
 
   private final String m_sName;
 

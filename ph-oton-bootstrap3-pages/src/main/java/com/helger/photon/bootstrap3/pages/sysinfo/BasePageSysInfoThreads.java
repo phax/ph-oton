@@ -162,7 +162,7 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
                                         new DTCol (EText.MSG_PRIORITY.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
                                                                                                                        aDisplayLocale),
                                         new DTCol (EText.MSG_STATE.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_STACKTRACE.getDisplayText (aDisplayLocale)).setSortable (false)).setID (getID ());
+                                        new DTCol (EText.MSG_STACKTRACE.getDisplayText (aDisplayLocale)).setOrderable (false)).setID (getID ());
     // For all system properties
     for (final Map.Entry <Thread, StackTraceElement []> aEntry : aThreads.entrySet ())
     {
