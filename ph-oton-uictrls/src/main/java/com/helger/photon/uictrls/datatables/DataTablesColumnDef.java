@@ -27,6 +27,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.ext.HCHasCSSClasses;
@@ -35,6 +36,7 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSExpr;
 import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
 
 /**
@@ -51,7 +53,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
 
   private final int [] m_aTargets;
   /** Cell type to be created for a column. */
-  private final String m_sCellType = DEFAULT_CELLTYPE;
+  private String m_sCellType = DEFAULT_CELLTYPE;
   /** Class to assign to each cell in the column. */
   private final HCHasCSSClasses m_aClassNames = new HCHasCSSClasses ();
   /**
@@ -110,11 +112,12 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   public DataTablesColumnDef (@Nonnegative final int nTarget, @Nonnull final DTCol aDTColumn)
   {
     this (nTarget);
-    setOrderable (aDTColumn.isOrderable ());
-    setSearchable (aDTColumn.isSearchable ());
-    setVisible (aDTColumn.isVisible ());
     addClasses (aDTColumn.getAllClasses ());
     setName (aDTColumn.getName ());
+    setOrderable (aDTColumn.isOrderable ());
+    setOrderData (aDTColumn.getDataSort ());
+    setSearchable (aDTColumn.isSearchable ());
+    setVisible (aDTColumn.isVisible ());
     if (!aDTColumn.isVisible ())
     {
       // Invisible columns always get width 0
@@ -123,7 +126,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     else
       if (!aDTColumn.isStar ())
         setWidth (aDTColumn.getWidth ());
-    setDataSort (aDTColumn.getDataSort ());
+
     setComparator (aDTColumn.getComparator ());
   }
 
@@ -140,39 +143,18 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return ArrayHelper.contains (m_aTargets, nTarget);
   }
 
-  public boolean isOrderable ()
+  @Nonnull
+  @Nonempty
+  public String getCellType ()
   {
-    return m_bOrderable;
+    return m_sCellType;
   }
 
   @Nonnull
-  public DataTablesColumnDef setOrderable (final boolean bOrderable)
+  public DataTablesColumnDef setCellType (@Nonnull @Nonempty final String sCellType)
   {
-    m_bOrderable = bOrderable;
-    return this;
-  }
-
-  public boolean isSearchable ()
-  {
-    return m_bSearchable;
-  }
-
-  @Nonnull
-  public DataTablesColumnDef setSearchable (final boolean bSearchable)
-  {
-    m_bSearchable = bSearchable;
-    return this;
-  }
-
-  public boolean isVisible ()
-  {
-    return m_bVisible;
-  }
-
-  @Nonnull
-  public DataTablesColumnDef setVisible (final boolean bVisible)
-  {
-    m_bVisible = bVisible;
+    ValueEnforcer.notEmpty (sCellType, "CellType");
+    m_sCellType = sCellType;
     return this;
   }
 
@@ -250,6 +232,76 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   }
 
   @Nullable
+  public String getContentPadding ()
+  {
+    return m_sContentPadding;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setContentPadding (@Nullable final String sContentPadding)
+  {
+    m_sContentPadding = sContentPadding;
+    return this;
+  }
+
+  @Nullable
+  public JSAnonymousFunction getCreatedCell ()
+  {
+    return m_aCreatedCell;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setCreatedCell (@Nullable final JSAnonymousFunction aCreatedCell)
+  {
+    m_aCreatedCell = aCreatedCell;
+    return this;
+  }
+
+  @Nullable
+  public IJSExpression getData ()
+  {
+    return m_aData;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setData (@Nonnegative final int nColumnIndex)
+  {
+    return setData (JSExpr.lit (nColumnIndex));
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setData (@Nonnull @Nonempty final String sPropertyName)
+  {
+    return setData (JSExpr.lit (sPropertyName));
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setDataNull ()
+  {
+    return setData (JSExpr.NULL);
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setData (@Nullable final IJSExpression aData)
+  {
+    m_aData = aData;
+    return this;
+  }
+
+  @Nullable
+  public String getDefaultContent ()
+  {
+    return m_sDefaultContent;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setDefaultContent (@Nullable final String sDefaultContent)
+  {
+    m_sDefaultContent = sDefaultContent;
+    return this;
+  }
+
+  @Nullable
   public String getName ()
   {
     return m_sName;
@@ -259,6 +311,136 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   public DataTablesColumnDef setName (@Nullable final String sName)
   {
     m_sName = sName;
+    return this;
+  }
+
+  public boolean isOrderable ()
+  {
+    return m_bOrderable;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setOrderable (final boolean bOrderable)
+  {
+    m_bOrderable = bOrderable;
+    return this;
+  }
+
+  @Nullable
+  @ReturnsMutableCopy
+  public int [] getOrderData ()
+  {
+    return ArrayHelper.getCopy (m_aOrderData);
+  }
+
+  /**
+   * Set the column indices to sort, when this column is sorted
+   *
+   * @param aOrderData
+   *        The sorting column (incl. this column!)
+   * @return this
+   */
+  @Nonnull
+  public DataTablesColumnDef setOrderData (@Nullable final int... aOrderData)
+  {
+    m_aOrderData = ArrayHelper.getCopy (aOrderData);
+    return this;
+  }
+
+  @Nullable
+  public String getOrderDataType ()
+  {
+    return m_sOrderDataType;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setOrderDataType (@Nullable final String sOrderDataType)
+  {
+    m_sOrderDataType = sOrderDataType;
+    return this;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <EDataTablesColumnOrderSequenceType> getOrderSequence ()
+  {
+    return CollectionHelper.newList (m_aOrderSequence);
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setOrderSequence (@Nullable final EDataTablesColumnOrderSequenceType... aOrderSequence)
+  {
+    m_aOrderSequence = ArrayHelper.isEmpty (aOrderSequence) ? null : CollectionHelper.newList (aOrderSequence);
+    return this;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setOrderSequence (@Nullable final List <EDataTablesColumnOrderSequenceType> aOrderSequence)
+  {
+    m_aOrderSequence = CollectionHelper.isEmpty (aOrderSequence) ? null : CollectionHelper.newList (aOrderSequence);
+    return this;
+  }
+
+  @Nullable
+  public IJSExpression getRender ()
+  {
+    return m_aRender;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setRender (@Nullable final IJSExpression aRender)
+  {
+    m_aRender = aRender;
+    return this;
+  }
+
+  public boolean isSearchable ()
+  {
+    return m_bSearchable;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setSearchable (final boolean bSearchable)
+  {
+    m_bSearchable = bSearchable;
+    return this;
+  }
+
+  @Nullable
+  public String getTitle ()
+  {
+    return m_sTitle;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setTitle (@Nullable final String sTitle)
+  {
+    m_sTitle = sTitle;
+    return this;
+  }
+
+  @Nullable
+  public EDataTablesColumnType getType ()
+  {
+    return m_eType;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setType (@Nullable final EDataTablesColumnType eType)
+  {
+    m_eType = eType;
+    return this;
+  }
+
+  public boolean isVisible ()
+  {
+    return m_bVisible;
+  }
+
+  @Nonnull
+  public DataTablesColumnDef setVisible (final boolean bVisible)
+  {
+    m_bVisible = bVisible;
     return this;
   }
 
@@ -272,27 +454,6 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   public DataTablesColumnDef setWidth (@Nullable final String sWidth)
   {
     m_sWidth = sWidth;
-    return this;
-  }
-
-  @Nullable
-  @ReturnsMutableCopy
-  public int [] getDataSort ()
-  {
-    return ArrayHelper.getCopy (m_aOrderData);
-  }
-
-  /**
-   * Set the column indices to sort, when this column is sorted
-   *
-   * @param aDataSort
-   *        The sorting column (incl. this column!)
-   * @return this
-   */
-  @Nonnull
-  public DataTablesColumnDef setDataSort (@Nullable final int... aDataSort)
-  {
-    m_aOrderData = ArrayHelper.getCopy (aDataSort);
     return this;
   }
 
