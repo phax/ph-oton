@@ -19,6 +19,7 @@ package com.helger.photon.uictrls.datatables.column;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.name.IHasName;
 
 /**
@@ -28,14 +29,17 @@ import com.helger.commons.name.IHasName;
  */
 public enum EDataTablesColumnOrderSequenceType implements IHasName
 {
- ASC ("asc"),
- DESC ("desc");
+ ASC ("asc", ESortOrder.ASCENDING),
+ DESC ("desc", ESortOrder.DESCENDING);
 
   private final String m_sName;
+  private final ESortOrder m_eSortOrder;
 
-  private EDataTablesColumnOrderSequenceType (@Nonnull @Nonempty final String sName)
+  private EDataTablesColumnOrderSequenceType (@Nonnull @Nonempty final String sName,
+                                              @Nonnull final ESortOrder eSortOrder)
   {
     m_sName = sName;
+    m_eSortOrder = eSortOrder;
   }
 
   @Nonnull
@@ -43,5 +47,11 @@ public enum EDataTablesColumnOrderSequenceType implements IHasName
   public String getName ()
   {
     return m_sName;
+  }
+
+  @Nonnull
+  public ESortOrder getSortOrder ()
+  {
+    return m_eSortOrder;
   }
 }
