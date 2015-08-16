@@ -29,12 +29,12 @@ import com.helger.html.jscode.JSArray;
  * 
  * @author Philip Helger
  */
-public final class DataTablesSortColumn
+public final class DataTablesOrderColumn
 {
   private final int m_nIndex;
   private final ESortOrder m_eSortOrder;
 
-  public DataTablesSortColumn (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
+  public DataTablesOrderColumn (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
   {
     ValueEnforcer.isGE0 (nIndex, "Index");
     ValueEnforcer.notNull (eSortOrder, "SortOrder");

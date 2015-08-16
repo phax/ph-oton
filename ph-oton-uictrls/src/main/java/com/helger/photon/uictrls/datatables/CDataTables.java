@@ -30,9 +30,11 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CDataTables
 {
   /** Sort something ascending. */
+  @Deprecated
   public static final String SORT_ASC = "asc";
 
   /** Sort something descending. */
+  @Deprecated
   public static final String SORT_DESC = "desc";
 
   public static final ICSSClassProvider CSS_CLASS_DATATABLES_FILTER = DefaultCSSClassProvider.create ("dataTables_filter");

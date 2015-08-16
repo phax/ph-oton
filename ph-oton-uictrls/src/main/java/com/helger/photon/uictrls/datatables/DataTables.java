@@ -94,13 +94,14 @@ import com.helger.web.http.EHTTPMethod;
 public class DataTables extends AbstractHCScriptInline <DataTables>
 {
   public static final boolean DEFAULT_AUTOWIDTH = true;
-  public static final boolean DEFAULT_PAGING = true;
-  public static final boolean DEFAULT_STATE_SAVE = false;
+  public static final boolean DEFAULT_DEFER_RENDER = false;
   public static final boolean DEFAULT_JQUERY_UI = false;
+  public static final boolean DEFAULT_PAGING = true;
   public static final boolean DEFAULT_SCROLL_X = false;
+  public static final boolean DEFAULT_STATE_SAVE = false;
+
   public static final boolean DEFAULT_SCROLL_COLLAPSE = false;
   public static final boolean DEFAULT_USER_JQUERY_AJAX = false;
-  public static final boolean DEFAULT_DEFER_RENDER = false;
   public static final EDataTablesPagingType DEFAULT_PAGING_TYPE = EDataTablesPagingType.SIMPLE_NUMBERS;
   public static final int DEFAULT_PAGE_LENGTH = 10;
   public static final boolean DEFAULT_USE_COL_VIS = false;
@@ -179,7 +180,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   /** Change the options in the page length select list. */
   private DataTablesLengthMenu m_aLengthMenu;
   /** Initial order (sort) to apply to the table. */
-  private DataTablesSort m_aOrder;
+  private DataTablesOrder m_aOrder;
   /**
    * Control which cell the order event handler will be applied to in a column.
    */
@@ -461,7 +462,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
           final DTCol aDTCol = (DTCol) aCol;
           aColumn = new DataTablesColumnDef (nColIndex, aDTCol);
           if (aDTCol.hasInitialSorting ())
-            setInitialSorting (new DataTablesSort ().addColumn (nColIndex, aDTCol.getInitialSorting ()));
+            setInitialSorting (new DataTablesOrder ().addColumn (nColIndex, aDTCol.getInitialSorting ()));
         }
         else
         {
@@ -512,7 +513,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nullable
-  public DataTablesSort getInitialSorting ()
+  public DataTablesOrder getInitialSorting ()
   {
     return m_aOrder;
   }
@@ -521,11 +522,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   @Deprecated
   public DataTables setInitialSorting (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
   {
-    return setInitialSorting (new DataTablesSort ().addColumn (nIndex, eSortOrder));
+    return setInitialSorting (new DataTablesOrder ().addColumn (nIndex, eSortOrder));
   }
 
   @Nonnull
-  public DataTables setInitialSorting (@Nullable final DataTablesSort aInitialSorting)
+  public DataTables setInitialSorting (@Nullable final DataTablesOrder aInitialSorting)
   {
     m_aOrder = aInitialSorting;
     return this;

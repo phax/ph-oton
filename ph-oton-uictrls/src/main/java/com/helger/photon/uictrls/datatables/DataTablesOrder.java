@@ -25,17 +25,17 @@ import javax.annotation.Nonnull;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.html.jscode.JSArray;
 
-public final class DataTablesSort
+public class DataTablesOrder
 {
-  private final List <DataTablesSortColumn> m_aSortColumns = new ArrayList <DataTablesSortColumn> ();
+  private final List <DataTablesOrderColumn> m_aColumns = new ArrayList <DataTablesOrderColumn> ();
 
-  public DataTablesSort ()
+  public DataTablesOrder ()
   {}
 
   @Nonnull
-  public DataTablesSort addColumn (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
+  public DataTablesOrder addColumn (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
   {
-    m_aSortColumns.add (new DataTablesSortColumn (nIndex, eSortOrder));
+    m_aColumns.add (new DataTablesOrderColumn (nIndex, eSortOrder));
     return this;
   }
 
@@ -43,7 +43,7 @@ public final class DataTablesSort
   public JSArray getAsJS ()
   {
     final JSArray ret = new JSArray ();
-    for (final DataTablesSortColumn aSortColumn : m_aSortColumns)
+    for (final DataTablesOrderColumn aSortColumn : m_aColumns)
       ret.add (aSortColumn.getAsJS ());
     return ret;
   }
