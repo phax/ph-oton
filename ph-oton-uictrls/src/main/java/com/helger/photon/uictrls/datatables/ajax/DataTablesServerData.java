@@ -41,8 +41,8 @@ import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.photon.core.state.IHasUIState;
-import com.helger.photon.uictrls.datatables.DataTablesColumnDef;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
+import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 
 /**
  * This class holds tables to be used by the DataTables server side handling.

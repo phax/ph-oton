@@ -49,8 +49,8 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
-import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.web.scope.IGlobalWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
 

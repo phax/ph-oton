@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.css.CUICoreCSS;
-import com.helger.photon.uictrls.datatables.DTCol;
+import com.helger.photon.uictrls.datatables.column.DTCol;
 
 /**
  * Special action column. Has a special CSS class and is never sortable nor

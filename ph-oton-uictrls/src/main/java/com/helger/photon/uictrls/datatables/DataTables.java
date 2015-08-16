@@ -86,6 +86,8 @@ import com.helger.photon.uicore.js.JSJQueryHelper;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.ajax.DataTablesServerData;
+import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 import com.helger.web.http.EHTTPMethod;
 
 @OutOfBandNode

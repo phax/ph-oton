@@ -47,8 +47,8 @@ import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
-import com.helger.photon.uictrls.datatables.DTCol;
 import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
 
 /**

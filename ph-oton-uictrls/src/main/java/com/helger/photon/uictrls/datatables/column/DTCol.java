@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls.datatables;
+package com.helger.photon.uictrls.datatables.column;
 
 import java.util.Locale;
 
@@ -32,6 +32,7 @@ import com.helger.html.hc.html.tabular.AbstractHCCol;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.uicore.css.CUICoreCSS;
+import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigDecimal;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigInteger;
