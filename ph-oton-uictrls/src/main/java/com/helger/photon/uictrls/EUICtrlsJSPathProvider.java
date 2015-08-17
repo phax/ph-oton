@@ -54,6 +54,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
  FINEUPLOADER_330 ("fineupload/330/fineuploader.js"),
  HANDLEBARS_3 ("handlebars/3.0.3/handlebars-v3.0.3.js"),
  JSCOLOR ("jscolor/1.4.4/jscolor.js"),
+ JSZIP ("jszip/2.5.0-6/jszip.js"),
  PRISMJS ("prismjs/prism.js"),
  SELECT2 ("select2/4.0.0/js/select2.js"),
  SELECT2_LOCALE ("select2/4.0.0/js/i18n/{0}.js", false),
