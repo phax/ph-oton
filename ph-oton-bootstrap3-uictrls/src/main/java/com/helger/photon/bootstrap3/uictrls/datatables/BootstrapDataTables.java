@@ -59,9 +59,9 @@ public class BootstrapDataTables extends DataTables
     if (i >= 0)
     {
       if (true)
-        aDom.setPosition (i + 5).addColVis ();
+        aDom.setPosition (i + 5).addCustom ("C");
       else
-        aDom.setPosition (i + 1).openDiv (CBootstrapCSS.COL_XS_12).addColVis ().closeDiv ();
+        aDom.setPosition (i + 1).openDiv (CBootstrapCSS.COL_XS_12).addCustom ("C").closeDiv ();
     }
     else
       super.weaveColVisIntoDom (aDom);

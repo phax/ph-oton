@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.state.EChange;
@@ -68,6 +69,12 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   {
     m_nPos = nNewPosition;
     return this;
+  }
+
+  @Nonnull
+  public DataTablesDom setPositionToEnd ()
+  {
+    return setPosition (m_aElements.size ());
   }
 
   @CheckForSigned
@@ -264,15 +271,17 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   }
 
   /**
-   * Add "C".<br>
-   * requires the appropriate datatables plugin
+   * Add a custom element
    *
+   * @param sStr
+   *        Custom element to add. May not be <code>null</code> nor empty.
    * @return this
    */
   @Nonnull
-  public DataTablesDom addColVis ()
+  public DataTablesDom addCustom (@Nonnull @Nonempty final String sStr)
   {
-    _internalAdd ("C");
+    ValueEnforcer.notEmpty (sStr, "Str");
+    _internalAdd (sStr);
     return this;
   }
 

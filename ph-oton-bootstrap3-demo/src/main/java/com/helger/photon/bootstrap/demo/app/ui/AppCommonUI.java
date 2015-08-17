@@ -49,6 +49,7 @@ import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.ajax.ActionExecutorDataTablesI18N;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
+import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginSearchHighlight;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 @Immutable
@@ -79,7 +80,7 @@ public final class AppCommonUI
                    .setServerFilterType (EDataTablesFilterType.ALL_TERMS_PER_ROW)
                    .setTextLoadingURL (CActionPublic.DATATABLES_I18N.getInvocationURL (aRequestScope),
                                        ActionExecutorDataTablesI18N.LANGUAGE_ID)
-                   .setUseSearchHighlight (true);
+                   .addPlugin (new DataTablesPluginSearchHighlight ());
       }
     });
   }

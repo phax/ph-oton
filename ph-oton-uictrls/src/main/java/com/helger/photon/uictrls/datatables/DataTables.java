@@ -71,7 +71,6 @@ import com.helger.json.JsonObject;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.state.UIStateRegistry;
-import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.photon.uicore.js.JSJQueryHelper;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
@@ -94,7 +93,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public static final int DEFAULT_PAGE_LENGTH = 10;
   public static final boolean DEFAULT_USE_COL_VIS = false;
   public static final boolean DEFAULT_USE_FIXED_HEADER = false;
-  public static final boolean DEFAULT_USE_SEARCH_HIGHLIGHT = false;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTables.class);
 
@@ -247,9 +245,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // FixedHeader stuff
   private boolean m_bUseFixedHeader = DEFAULT_USE_FIXED_HEADER;
   private JSAssocArray m_aFixedHeaderOptions;
-
-  // Search Highlight stuff
-  private boolean m_bUseSearchHighlight = DEFAULT_USE_SEARCH_HIGHLIGHT;
 
   /**
    * Apply to an existing table. If the table does not have an ID yet, a new one
@@ -859,18 +854,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  public boolean isUseSearchHighlight ()
-  {
-    return m_bUseSearchHighlight;
-  }
-
-  @Nonnull
-  public DataTables setUseSearchHighlight (final boolean bUseSearchHighlight)
-  {
-    m_bUseSearchHighlight = bUseSearchHighlight;
-    return this;
-  }
-
   /**
    * modify parameter map
    *
@@ -951,7 +934,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   @OverrideOnDemand
   protected void weaveColVisIntoDom (@Nonnull final DataTablesDom aDom)
   {
-    aDom.setPosition (0).addColVis ().openDiv ("clear").closeDiv ();
+    aDom.setPosition (0).addCustom ("C").openDiv ("clear").closeDiv ();
   }
 
   @Override
@@ -1127,10 +1110,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("colVis", aJSColVisParams);
     }
 
-    // Search highlight stuff
-    if (m_bUseSearchHighlight)
-      aParams.add ("searchHighlight", true);
-
     modifyParams (aParams);
 
     // main on document ready code
@@ -1180,12 +1159,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_FIXED_HEADER);
       PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_FIXED_HEADER);
     }
-    if (m_bUseSearchHighlight)
-    {
-      PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_HIGHLIGHT);
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
-      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
-    }
+
     for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
       if (aPlugin.canBeApplied (this))
         aPlugin.registerExternalResources (aConversionSettings);
