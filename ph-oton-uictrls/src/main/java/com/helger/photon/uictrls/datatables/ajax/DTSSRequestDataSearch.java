@@ -29,7 +29,7 @@ import com.helger.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
-final class RequestDataSearch
+final class DTSSRequestDataSearch
 {
   private final String [] m_aSearchTexts;
   private final boolean m_bRegEx;
@@ -43,7 +43,7 @@ final class RequestDataSearch
     return RegExHelper.getSplitToArray (sSearchText, "\\s+");
   }
 
-  public RequestDataSearch (@Nullable final String sSearchText, final boolean bSearchRegEx)
+  public DTSSRequestDataSearch (@Nullable final String sSearchText, final boolean bSearchRegEx)
   {
     m_aSearchTexts = getSearchTexts (sSearchText);
     m_bRegEx = bSearchRegEx;

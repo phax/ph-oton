@@ -17,16 +17,16 @@
 package com.helger.photon.uictrls.datatables.ajax;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.compare.ReverseComparator;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
@@ -40,25 +40,25 @@ import com.helger.photon.uictrls.datatables.comparator.ComparatorDTString;
  */
 final class DataTablesServerSortState implements Serializable
 {
-  private final RequestDataOrderColumn [] m_aSortState;
+  private final List <DTSSRequestDataOrderColumn> m_aOrderColumns;
 
   DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData, @Nonnull final Locale aDisplayLocale)
   {
-    this (aServerData, new RequestDataOrderColumn [0], aDisplayLocale);
+    this (aServerData, new ArrayList <DTSSRequestDataOrderColumn> (0), aDisplayLocale);
   }
 
   DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData,
-                             @Nonnull final RequestDataOrderColumn [] aSortCols,
+                             @Nonnull final List <DTSSRequestDataOrderColumn> aOrderColumns,
                              @Nonnull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aServerData, "ServerData");
-    ValueEnforcer.notNull (aSortCols, "SortColumns");
+    ValueEnforcer.notNull (aOrderColumns, "OrderColumns");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
-    m_aSortState = aSortCols;
+    m_aOrderColumns = aOrderColumns;
 
     // Extract the comparators for all sort columns
-    for (final RequestDataOrderColumn aSortColumn : aSortCols)
+    for (final DTSSRequestDataOrderColumn aSortColumn : aOrderColumns)
     {
       // Get the configured comparator
       Comparator <String> aStringComp = aServerData.getColumnComparator (aSortColumn.getColumnIndex ());
@@ -72,7 +72,7 @@ final class DataTablesServerSortState implements Serializable
         // Reverse the comparator
         aStringComp = ReverseComparator.create (aStringComp);
       }
-      aSortColumn.setComparator (aStringComp);
+      aSortColumn.setServerSideComparator (aStringComp);
     }
   }
 
@@ -82,14 +82,14 @@ final class DataTablesServerSortState implements Serializable
   @Nonnegative
   public int getSortingCols ()
   {
-    return m_aSortState.length;
+    return m_aOrderColumns.size ();
   }
 
   @Nonnull
-  @ReturnsMutableCopy
-  public RequestDataOrderColumn [] getSortCols ()
+  @ReturnsMutableObject ("speed")
+  public List <DTSSRequestDataOrderColumn> directGetAllOrderColumns ()
   {
-    return ArrayHelper.getCopy (m_aSortState);
+    return m_aOrderColumns;
   }
 
   @Override
@@ -100,18 +100,18 @@ final class DataTablesServerSortState implements Serializable
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final DataTablesServerSortState rhs = (DataTablesServerSortState) o;
-    return Arrays.equals (m_aSortState, rhs.m_aSortState);
+    return m_aOrderColumns.equals (rhs.m_aOrderColumns);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aSortState).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aOrderColumns).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("sortCols", m_aSortState).toString ();
+    return new ToStringGenerator (this).append ("OrderColumns", m_aOrderColumns).toString ();
   }
 }

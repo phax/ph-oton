@@ -27,15 +27,15 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-final class RequestDataColumn
+final class DTSSRequestDataColumn
 {
   private final String m_sData;
   private final String m_sName;
   private final boolean m_bSearchable;
   private final boolean m_bOrderable;
-  private final RequestDataSearch m_aSearch;
+  private final DTSSRequestDataSearch m_aSearch;
 
-  RequestDataColumn (@Nullable final String sData,
+  DTSSRequestDataColumn (@Nullable final String sData,
                      @Nullable final String sName,
                      final boolean bSearchable,
                      final boolean bOrderable,
@@ -46,7 +46,7 @@ final class RequestDataColumn
     m_sName = sName;
     m_bSearchable = bSearchable;
     m_bOrderable = bOrderable;
-    m_aSearch = bSearchable ? new RequestDataSearch (sSearchText, bSearchRegEx) : null;
+    m_aSearch = bSearchable ? new DTSSRequestDataSearch (sSearchText, bSearchRegEx) : null;
   }
 
   /**
@@ -90,7 +90,7 @@ final class RequestDataColumn
    *         is not searchable.
    */
   @Nullable
-  public RequestDataSearch getSearch ()
+  public DTSSRequestDataSearch getSearch ()
   {
     return m_aSearch;
   }

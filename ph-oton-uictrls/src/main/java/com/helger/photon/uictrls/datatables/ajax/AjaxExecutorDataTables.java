@@ -77,7 +77,8 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorDataTables.class);
 
-  private static void _sort (@Nonnull final RequestData aRequestData, @Nonnull final DataTablesServerData aServerData)
+  private static void _sort (@Nonnull final DTSSRequestData aRequestData,
+                             @Nonnull final DataTablesServerData aServerData)
   {
     // Sorting possible and necessary?
     if (aServerData.getRowCount () > 1)
@@ -85,7 +86,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
       final Locale aDisplayLocale = aServerData.getDisplayLocale ();
 
       final DataTablesServerSortState aNewServerSortState = new DataTablesServerSortState (aServerData,
-                                                                                           aRequestData.getSortColumnArray (),
+                                                                                           aRequestData.directGetAllOrderColumns (),
                                                                                            aDisplayLocale);
       // Must we change the sorting?
       if (!aServerData.areServerSortStateEqual (aNewServerSortState))
@@ -97,7 +98,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
   }
 
   @Nonnull
-  private static List <DataTablesServerDataRow> _filter (@Nonnull final RequestData aRequestData,
+  private static List <DataTablesServerDataRow> _filter (@Nonnull final DTSSRequestData aRequestData,
                                                          @Nonnull final DataTablesServerData aServerData)
   {
     List <DataTablesServerDataRow> aResultRows = aServerData.directGetAllRows ();
@@ -106,14 +107,14 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
       final Locale aDisplayLocale = aServerData.getDisplayLocale ();
 
       // filter rows
-      final RequestDataSearch aGlobalSearch = aRequestData.getSearch ();
+      final DTSSRequestDataSearch aGlobalSearch = aRequestData.getSearch ();
       final String [] aGlobalSearchTexts = aGlobalSearch.getSearchTexts ();
       final boolean bGlobalSearchRegEx = aGlobalSearch.isRegEx ();
-      final RequestDataColumn [] aColumns = aRequestData.getColumnDataArray ();
+      final DTSSRequestDataColumn [] aColumns = aRequestData.getColumnDataArray ();
       final EDataTablesFilterType eFilterType = aServerData.getFilterType ();
 
       boolean bContainsAnyColumnSpecificSearch = false;
-      for (final RequestDataColumn aColumn : aColumns)
+      for (final DTSSRequestDataColumn aColumn : aColumns)
         if (aColumn.isSearchable () && aColumn.getSearch ().hasSearchText ())
         {
           bContainsAnyColumnSpecificSearch = true;
@@ -131,11 +132,11 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
           int nSearchableCellIndex = 0;
           for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
           {
-            final RequestDataColumn aColumn = aColumns[nSearchableCellIndex];
+            final DTSSRequestDataColumn aColumn = aColumns[nSearchableCellIndex];
             if (aColumn.isSearchable ())
             {
               // Determine search texts
-              final RequestDataSearch aColumnSearch = aColumn.getSearch ();
+              final DTSSRequestDataSearch aColumnSearch = aColumn.getSearch ();
               String [] aColumnSearchTexts;
               boolean bColumnSearchRegEx;
               if (aColumnSearch.hasSearchText ())
@@ -184,7 +185,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
           int nSearchableCellIndex = 0;
           per_row: for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
           {
-            final RequestDataColumn aColumn = aColumns[nSearchableCellIndex];
+            final DTSSRequestDataColumn aColumn = aColumns[nSearchableCellIndex];
             if (aColumn.isSearchable ())
             {
               // Main matching
@@ -236,8 +237,8 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
   }
 
   @Nonnull
-  private static ResponseData _handleRequest (@Nonnull final RequestData aRequestData,
-                                              @Nonnull final DataTablesServerData aServerData)
+  private static DTSSResponseData _handleRequest (@Nonnull final DTSSRequestData aRequestData,
+                                                  @Nonnull final DataTablesServerData aServerData)
   {
     _sort (aRequestData, aServerData);
 
@@ -267,6 +268,8 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
         aRowData.add (DT_ROW_CLASS, aRow.getRowClass ());
       if (aRow.hasRowData ())
         aRowData.add (DT_ROW_DATA, aRow.directGetAllRowData ());
+      if (aRow.hasRowAttr ())
+        aRowData.add (DT_ROW_ATTR, aRow.directGetAllRowAttr ());
       int nCellIndex = 0;
       for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
       {
@@ -287,12 +290,12 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
     final int nTotalRecords = aServerData.getRowCount ();
     final int nTotalDisplayRecords = aResultRows.size ();
     final String sErrorMsg = null;
-    return new ResponseData (aRequestData.getEcho (),
-                             nTotalRecords,
-                             nTotalDisplayRecords,
-                             aData,
-                             sErrorMsg,
-                             aSpecialNodes);
+    return new DTSSResponseData (aRequestData.getDraw (),
+                                 nTotalRecords,
+                                 nTotalDisplayRecords,
+                                 aData,
+                                 sErrorMsg,
+                                 aSpecialNodes);
   }
 
   @Override
@@ -313,7 +316,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
     final boolean bSearchRegEx = aRequestScope.getAttributeAsBoolean (SEARCH_REGEX, false);
 
     // Read "order
-    final List <RequestDataOrderColumn> aOrderColumns = new ArrayList <> ();
+    final List <DTSSRequestDataOrderColumn> aOrderColumns = new ArrayList <> ();
     {
       final IRequestParamMap aOrder = aRequestScope.getRequestParamMap ().getMap (ORDER);
       int nIndex = 0;
@@ -331,13 +334,13 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
         final ESortOrder eOrderDir = CDataTables.SORT_ASC.equals (sOrderDir) ? ESortOrder.ASCENDING
                                                                              : CDataTables.SORT_DESC.equals (sOrderDir) ? ESortOrder.DESCENDING
                                                                                                                         : null;
-        aOrderColumns.add (new RequestDataOrderColumn (nOrderColumn, eOrderDir));
+        aOrderColumns.add (new DTSSRequestDataOrderColumn (nOrderColumn, eOrderDir));
 
         ++nIndex;
       } while (true);
     }
 
-    final List <RequestDataColumn> aColumnData = new ArrayList <RequestDataColumn> ();
+    final List <DTSSRequestDataColumn> aColumnData = new ArrayList <DTSSRequestDataColumn> ();
     {
       final IRequestParamMap aOrder = aRequestScope.getRequestParamMap ().getMap (COLUMNS);
       int nIndex = 0;
@@ -355,24 +358,24 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
         final boolean bCSearchRegEx = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_SEARCH,
                                                                                           COLUMNS_SEARCH_REGEX),
                                                               true);
-        aColumnData.add (new RequestDataColumn (sCData,
-                                                sCName,
-                                                bCSearchable,
-                                                bCOrderable,
-                                                sCSearchValue,
-                                                bCSearchRegEx));
+        aColumnData.add (new DTSSRequestDataColumn (sCData,
+                                                    sCName,
+                                                    bCSearchable,
+                                                    bCOrderable,
+                                                    sCSearchValue,
+                                                    bCSearchRegEx));
 
         ++nIndex;
       } while (true);
     }
 
-    final RequestData aRequestData = new RequestData (nDraw,
-                                                      nDisplayStart,
-                                                      nDisplayLength,
-                                                      sSearchValue,
-                                                      bSearchRegEx,
-                                                      aColumnData,
-                                                      aOrderColumns);
+    final DTSSRequestData aRequestData = new DTSSRequestData (nDraw,
+                                                              nDisplayStart,
+                                                              nDisplayLength,
+                                                              sSearchValue,
+                                                              bSearchRegEx,
+                                                              aColumnData,
+                                                              aOrderColumns);
 
     // Resolve dataTables
     final String sDataTablesID = aRequestScope.getAttributeAsString (OBJECT_ID);
@@ -383,7 +386,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
       return AjaxDefaultResponse.createError ("No such data tables ID: " + sDataTablesID);
 
     // Main request handling
-    final ResponseData aResponseData = _handleRequest (aRequestData, aServerData);
+    final DTSSResponseData aResponseData = _handleRequest (aRequestData, aServerData);
 
     // Convert the response to JSON and add the special nodes
     return AjaxDefaultResponse.createSuccess (aRequestScope, aResponseData.getAsJson ())

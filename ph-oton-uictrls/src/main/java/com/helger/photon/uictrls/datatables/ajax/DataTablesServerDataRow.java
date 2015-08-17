@@ -18,6 +18,7 @@ package com.helger.photon.uictrls.datatables.ajax;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +30,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCConversionSettings;
+import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCCell;
 
@@ -46,7 +49,8 @@ public final class DataTablesServerDataRow implements Serializable
 
   private final String m_sRowID;
   private final String m_sRowClass;
-  private final Map <String, String> m_aRowData;
+  private Map <String, String> m_aRowData;
+  private Map <String, String> m_aRowAttr;
   private final List <DataTablesServerDataCell> m_aCells;
 
   public DataTablesServerDataRow (@Nonnull final HCRow aRow, @Nonnull final IHCConversionSettings aCS)
@@ -56,7 +60,21 @@ public final class DataTablesServerDataRow implements Serializable
 
     m_sRowID = aRow.getID ();
     m_sRowClass = aRow.getAllClassesAsString ();
-    m_aRowData = aRow.getAllDataAttrs ();
+    for (final Map.Entry <String, String> aEntry : aRow.getAllCustomAttrs ().entrySet ())
+      if (AbstractHCElement.isDataAttrName (aEntry.getKey ()))
+      {
+        // Data attribute
+        if (m_aRowData == null)
+          m_aRowData = new LinkedHashMap <> ();
+        m_aRowData.put (aEntry.getKey (), aEntry.getValue ());
+      }
+      else
+      {
+        // Custom non-data attribute
+        if (m_aRowAttr == null)
+          m_aRowAttr = new LinkedHashMap <> ();
+        m_aRowAttr.put (aEntry.getKey (), aEntry.getValue ());
+      }
     m_aCells = new ArrayList <DataTablesServerDataCell> (aRow.getCellCount ());
     for (final IHCCell <?> aCell : aRow.getAllCells ())
       m_aCells.add (new DataTablesServerDataCell (aCell, aCS));
@@ -89,7 +107,7 @@ public final class DataTablesServerDataRow implements Serializable
 
   public boolean hasRowData ()
   {
-    return !m_aRowData.isEmpty ();
+    return CollectionHelper.isNotEmpty (m_aRowData);
   }
 
   @Nonnull
@@ -97,6 +115,18 @@ public final class DataTablesServerDataRow implements Serializable
   public Map <String, String> directGetAllRowData ()
   {
     return m_aRowData;
+  }
+
+  public boolean hasRowAttr ()
+  {
+    return CollectionHelper.isNotEmpty (m_aRowAttr);
+  }
+
+  @Nullable
+  @ReturnsMutableObject ("speed")
+  public Map <String, String> directGetAllRowAttr ()
+  {
+    return m_aRowAttr;
   }
 
   @Nonnull

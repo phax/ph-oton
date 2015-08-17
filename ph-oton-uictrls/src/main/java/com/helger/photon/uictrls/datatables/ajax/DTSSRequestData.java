@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -33,33 +34,41 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-final class RequestData
+final class DTSSRequestData
 {
+  private final int m_nDraw;
   private final int m_nDisplayStart;
   private final int m_nDisplayLength;
-  private final RequestDataSearch m_aSearch;
-  private final List <RequestDataColumn> m_aColumnData;
-  private final List <RequestDataOrderColumn> m_aSortColumns;
-  private final int m_nEcho;
+  private final DTSSRequestDataSearch m_aSearch;
+  private final List <DTSSRequestDataColumn> m_aColumnData;
+  private final List <DTSSRequestDataOrderColumn> m_aOrderColumns;
 
-  RequestData (final int nEcho,
-               final int nDisplayStart,
-               final int nDisplayLength,
-               @Nullable final String sSearchText,
-               final boolean bSearchRegEx,
-               @Nonnull final List <RequestDataColumn> aColumnData,
-               @Nonnull final List <RequestDataOrderColumn> aSortColumns)
+  DTSSRequestData (final int nDraw,
+                   final int nDisplayStart,
+                   final int nDisplayLength,
+                   @Nullable final String sSearchText,
+                   final boolean bSearchRegEx,
+                   @Nonnull final List <DTSSRequestDataColumn> aColumnData,
+                   @Nonnull final List <DTSSRequestDataOrderColumn> aOrderColumns)
   {
-    ValueEnforcer.notNull (aSortColumns, "SortColumns");
     ValueEnforcer.notNull (aColumnData, "ColumnData");
     if (CollectionHelper.containsAnyNullElement (aColumnData))
       throw new IllegalArgumentException ("ColumnData may not contain null elements");
+    ValueEnforcer.notNull (aOrderColumns, "OrderColumns");
+    m_nDraw = nDraw;
     m_nDisplayStart = nDisplayStart;
     m_nDisplayLength = nDisplayLength;
-    m_aSearch = new RequestDataSearch (sSearchText, bSearchRegEx);
+    m_aSearch = new DTSSRequestDataSearch (sSearchText, bSearchRegEx);
     m_aColumnData = aColumnData;
-    m_aSortColumns = aSortColumns;
-    m_nEcho = nEcho;
+    m_aOrderColumns = aOrderColumns;
+  }
+
+  /**
+   * @return Information for DataTables to use for rendering.
+   */
+  public int getDraw ()
+  {
+    return m_nDraw;
   }
 
   /**
@@ -110,7 +119,7 @@ final class RequestData
       return true;
 
     // Per-column search text present?
-    for (final RequestDataColumn aColumn : m_aColumnData)
+    for (final DTSSRequestDataColumn aColumn : m_aColumnData)
       if (aColumn.isSearchable () && aColumn.getSearch ().hasSearchText ())
         return true;
 
@@ -121,64 +130,56 @@ final class RequestData
    * @return Global search field
    */
   @Nonnull
-  public RequestDataSearch getSearch ()
+  public DTSSRequestDataSearch getSearch ()
   {
     return m_aSearch;
   }
 
   @Nonnull
-  public RequestDataColumn getColumn (@Nonnegative final int nIndex)
+  public DTSSRequestDataColumn getColumn (@Nonnegative final int nIndex)
   {
     return m_aColumnData.get (nIndex);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <RequestDataColumn> getColumnData ()
+  public List <DTSSRequestDataColumn> getColumnData ()
   {
     return CollectionHelper.newList (m_aColumnData);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public RequestDataColumn [] getColumnDataArray ()
+  public DTSSRequestDataColumn [] getColumnDataArray ()
   {
-    return ArrayHelper.newArray (m_aColumnData, RequestDataColumn.class);
+    return ArrayHelper.newArray (m_aColumnData, DTSSRequestDataColumn.class);
   }
 
   /**
    * @return Number of columns to sort on. Always &ge; 0.
    */
   @Nonnegative
-  public int getSortColumnCount ()
+  public int getOrderColumnCount ()
   {
-    return m_aSortColumns.size ();
+    return m_aOrderColumns.size ();
   }
 
   @Nonnull
-  @ReturnsMutableCopy
-  public RequestDataOrderColumn [] getSortColumnArray ()
+  @ReturnsMutableObject ("speed")
+  public List <DTSSRequestDataOrderColumn> directGetAllOrderColumns ()
   {
-    return ArrayHelper.newArray (m_aSortColumns, RequestDataOrderColumn.class);
-  }
-
-  /**
-   * @return Information for DataTables to use for rendering.
-   */
-  public int getEcho ()
-  {
-    return m_nEcho;
+    return m_aOrderColumns;
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("displayStart", m_nDisplayStart)
-                                       .append ("displayLength", m_nDisplayLength)
-                                       .append ("search", m_aSearch)
-                                       .append ("sortCols", m_aSortColumns)
-                                       .append ("columnData", m_aColumnData)
-                                       .append ("echo", m_nEcho)
+    return new ToStringGenerator (this).append ("Draw", m_nDraw)
+                                       .append ("DisplayStart", m_nDisplayStart)
+                                       .append ("DisplayLength", m_nDisplayLength)
+                                       .append ("Search", m_aSearch)
+                                       .append ("OrderColumns", m_aOrderColumns)
+                                       .append ("ColumnData", m_aColumnData)
                                        .toString ();
   }
 }

@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
@@ -24,29 +26,28 @@ import com.helger.commons.string.ToStringGenerator;
 
 final class ComparatorDataTablesServerDataRow extends AbstractComparator <DataTablesServerDataRow>
 {
-  private final RequestDataOrderColumn [] m_aSortCols;
+  private final List <DTSSRequestDataOrderColumn> m_aOrderColumns;
 
   ComparatorDataTablesServerDataRow (@Nonnull final DataTablesServerSortState aServerSortState)
   {
     ValueEnforcer.notNull (aServerSortState, "ServerSortState");
 
-    m_aSortCols = aServerSortState.getSortCols ();
+    m_aOrderColumns = aServerSortState.directGetAllOrderColumns ();
   }
 
   @Override
-  protected int mainCompare (@Nonnull final DataTablesServerDataRow aRow1,
-                             @Nonnull final DataTablesServerDataRow aRow2)
+  protected int mainCompare (@Nonnull final DataTablesServerDataRow aRow1, @Nonnull final DataTablesServerDataRow aRow2)
   {
     int ret = 0;
-    for (final RequestDataOrderColumn aSortCol : m_aSortCols)
+    for (final DTSSRequestDataOrderColumn aOrderColumn : m_aOrderColumns)
     {
       // Get the cells to compare
-      final int nSortColumnIndex = aSortCol.getColumnIndex ();
+      final int nSortColumnIndex = aOrderColumn.getColumnIndex ();
       final DataTablesServerDataCell aCell1 = aRow1.getCellAtIndex (nSortColumnIndex);
       final DataTablesServerDataCell aCell2 = aRow2.getCellAtIndex (nSortColumnIndex);
 
       // Main compare
-      ret = aSortCol.getComparator ().compare (aCell1.getTextContent (), aCell2.getTextContent ());
+      ret = aOrderColumn.getServerSideComparator ().compare (aCell1.getTextContent (), aCell2.getTextContent ());
       if (ret != 0)
         break;
     }
@@ -56,6 +57,6 @@ final class ComparatorDataTablesServerDataRow extends AbstractComparator <DataTa
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("sortCols", m_aSortCols).toString ();
+    return new ToStringGenerator (this).append ("OrderColumns", m_aOrderColumns).toString ();
   }
 }

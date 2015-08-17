@@ -38,16 +38,16 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-final class RequestDataOrderColumn implements Serializable
+final class DTSSRequestDataOrderColumn implements Serializable
 {
   private final int m_nColumnIndex;
-  private final ESortOrder m_eSortDirection;
-  private Comparator <String> m_aComparator;
+  private final ESortOrder m_eSortOrder;
+  private Comparator <String> m_aServerSideComparator;
 
-  RequestDataOrderColumn (@Nonnegative final int nColumnIndex, @Nullable final ESortOrder eSortDirection)
+  DTSSRequestDataOrderColumn (@Nonnegative final int nColumnIndex, @Nullable final ESortOrder eSortOrder)
   {
     m_nColumnIndex = nColumnIndex;
-    m_eSortDirection = eSortDirection;
+    m_eSortOrder = eSortOrder;
   }
 
   /**
@@ -63,9 +63,9 @@ final class RequestDataOrderColumn implements Serializable
    * @return Direction to be sorted
    */
   @Nullable
-  public ESortOrder getSortDirection ()
+  public ESortOrder getSortOrder ()
   {
-    return m_eSortDirection;
+    return m_eSortOrder;
   }
 
   /**
@@ -75,20 +75,20 @@ final class RequestDataOrderColumn implements Serializable
   @Nonnull
   public ESortOrder getSortDirectionOrDefault ()
   {
-    return m_eSortDirection == null ? ESortOrder.DEFAULT : m_eSortDirection;
+    return m_eSortOrder == null ? ESortOrder.DEFAULT : m_eSortOrder;
   }
 
   @Nonnull
-  public Comparator <String> getComparator ()
+  public Comparator <String> getServerSideComparator ()
   {
-    if (m_aComparator == null)
+    if (m_aServerSideComparator == null)
       throw new IllegalStateException ("No comparator defined!");
-    return m_aComparator;
+    return m_aServerSideComparator;
   }
 
-  public void setComparator (@Nonnull final Comparator <String> aComparator)
+  public void setServerSideComparator (@Nonnull final Comparator <String> aServerSideComparator)
   {
-    m_aComparator = ValueEnforcer.notNull (aComparator, "Comparator");
+    m_aServerSideComparator = ValueEnforcer.notNull (aServerSideComparator, "ServerSideComparator");
   }
 
   @Override
@@ -98,22 +98,22 @@ final class RequestDataOrderColumn implements Serializable
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final RequestDataOrderColumn rhs = (RequestDataOrderColumn) o;
-    return m_nColumnIndex == rhs.m_nColumnIndex && EqualsHelper.equals (m_eSortDirection, rhs.m_eSortDirection);
+    final DTSSRequestDataOrderColumn rhs = (DTSSRequestDataOrderColumn) o;
+    return m_nColumnIndex == rhs.m_nColumnIndex && EqualsHelper.equals (m_eSortOrder, rhs.m_eSortOrder);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_nColumnIndex).append (m_eSortDirection).getHashCode ();
+    return new HashCodeGenerator (this).append (m_nColumnIndex).append (m_eSortOrder).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("columnIndex", m_nColumnIndex)
-                                       .append ("sortDirection", m_eSortDirection)
-                                       .append ("comparator", m_aComparator)
+    return new ToStringGenerator (this).append ("SolumnIndex", m_nColumnIndex)
+                                       .append ("SortOrder", m_eSortOrder)
+                                       .append ("ServerSideComparator", m_aServerSideComparator)
                                        .toString ();
   }
 }
