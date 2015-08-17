@@ -1,6 +1,7 @@
 package com.helger.photon.uictrls.datatables;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -55,6 +56,6 @@ public interface IDataTablesPlugin
    * @return The initialization parameters to be added to the DT init
    *         JavaScript.
    */
-  @Nonnull
+  @Nullable
   IJSExpression getInitParams ();
 }
