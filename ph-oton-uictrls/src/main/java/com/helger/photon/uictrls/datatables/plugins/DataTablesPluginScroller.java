@@ -5,9 +5,13 @@ import javax.annotation.Nullable;
 
 import com.helger.css.propertyvalue.CCSSValue;
 import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.jquery.JQuery;
 import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
+import com.helger.html.jscode.JSPackage;
+import com.helger.html.jscode.JSVar;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
@@ -135,6 +139,14 @@ public class DataTablesPluginScroller extends AbstractDataTablesPlugin
       return JSExpr.TRUE;
     }
     return ret;
+  }
+
+  @Override
+  public void addInitJS (@Nonnull final DataTables aDT, @Nonnull final JSPackage aJSCode, @Nonnull final JSVar aJSTable)
+  {
+    // See http://legacy.datatables.net/ref#fnAdjustColumnSizing
+    aJSCode.add (JQuery.jQueryWindow ().bind ("resize",
+                                              new JSAnonymousFunction (aJSTable.invoke ("fnAdjustColumnSizing"))));
   }
 
   @Override

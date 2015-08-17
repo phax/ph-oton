@@ -276,26 +276,6 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
     return this;
   }
 
-  /**
-   * Add "S".<br>
-   * requires the appropriate datatables plugin
-   *
-   * @return this
-   */
-  @Nonnull
-  public DataTablesDom addScroller ()
-  {
-    _internalAdd ("S");
-    return this;
-  }
-
-  @Nonnull
-  public DataTablesDom removeScroller ()
-  {
-    remove ("S");
-    return this;
-  }
-
   @Nonnull
   public String getAsString ()
   {

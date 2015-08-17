@@ -95,7 +95,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public static final boolean DEFAULT_USE_COL_VIS = false;
   public static final boolean DEFAULT_USE_FIXED_HEADER = false;
   public static final boolean DEFAULT_USE_SEARCH_HIGHLIGHT = false;
-  public static final boolean DEFAULT_USE_SCROLLER = false;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTables.class);
 
@@ -251,9 +250,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   // Search Highlight stuff
   private boolean m_bUseSearchHighlight = DEFAULT_USE_SEARCH_HIGHLIGHT;
-
-  // Scroller plugin stuff
-  private boolean m_bUseScroller = DEFAULT_USE_SCROLLER;
 
   /**
    * Apply to an existing table. If the table does not have an ID yet, a new one
@@ -875,38 +871,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  public boolean isUseScroller ()
-  {
-    return m_bUseScroller;
-  }
-
-  /**
-   * Enable or disable the scroller plugin.
-   *
-   * @param bUseScroller
-   *        <code>true</code> to enable it, <code>false</code> to disable it.
-   * @param sScrollHeight
-   *        The CSS height definition for the height of the table.
-   * @return this
-   */
-  @Nonnull
-  public DataTables setUseScroller (final boolean bUseScroller, @Nullable final String sScrollHeight)
-  {
-    if (bUseScroller)
-      ValueEnforcer.notEmpty (sScrollHeight, "ScrollHeight");
-
-    m_bUseScroller = bUseScroller;
-    setScrollCollapse (true);
-    setScrollY (sScrollHeight);
-    setDeferRender (bUseScroller);
-    // Activate the Scroller extra
-    if (bUseScroller)
-      m_aDom.addScroller ();
-    else
-      m_aDom.removeScroller ();
-    return this;
-  }
-
   /**
    * modify parameter map
    *
@@ -1187,12 +1151,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
         aJSFixedHeader.arg (m_aFixedHeaderOptions);
       aJSCode.add (aJSFixedHeader);
     }
-    if (m_bUseScroller)
-    {
-      // See http://legacy.datatables.net/ref#fnAdjustColumnSizing
-      aJSCode.add (JQuery.jQueryWindow ().bind ("resize",
-                                                new JSAnonymousFunction (aJSTable.invoke ("fnAdjustColumnSizing"))));
-    }
     addCodeAfterDataTables (aJSCode, aJSTable);
 
     // Main HTML code for this element :)
@@ -1227,11 +1185,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_HIGHLIGHT);
       PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
       PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SEARCH_HIGHLIGHT);
-    }
-    if (m_bUseScroller)
-    {
-      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SCROLLER);
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SCROLLER);
     }
     for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
       if (aPlugin.canBeApplied (this))
