@@ -56,7 +56,6 @@ import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 
 /**
@@ -167,7 +166,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aDataTables.setDisplayLength (DataTablesLengthMenu.COUNT_ALL);
+      aDataTables.setPageLengthAll ();
 
       aTabBox.addTab (EText.TAB_PROVIDERS.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
@@ -198,7 +197,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aDataTables.setDisplayLength (DataTablesLengthMenu.COUNT_ALL);
+      aDataTables.setPageLengthAll ();
       aTabBox.addTab (EText.TAB_ALGORITHMS.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
@@ -225,7 +224,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
         }
 
         final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-        aDataTables.setDisplayLength (DataTablesLengthMenu.COUNT_ALL);
+        aDataTables.setPageLengthAll ();
 
         // Add properties of this provider
         final BootstrapTable aPropsTable = new BootstrapTable (HCCol.star (), HCCol.star ());
@@ -298,7 +297,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aDataTables.setDisplayLength (DataTablesLengthMenu.COUNT_ALL);
+      aDataTables.setPageLengthAll ();
       aTabBox.addTab (EText.TAB_SSLCONTEXT.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }

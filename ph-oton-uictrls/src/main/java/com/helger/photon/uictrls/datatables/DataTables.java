@@ -19,8 +19,10 @@ package com.helger.photon.uictrls.datatables;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -44,35 +46,23 @@ import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.CHTMLAttributes;
-import com.helger.html.EHTMLElement;
 import com.helger.html.annotation.OutOfBandNode;
-import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.script.AbstractHCScriptInline;
-import com.helger.html.hc.html.script.HCScriptInline;
-import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.html.tabular.HCColGroup;
 import com.helger.html.hc.html.tabular.IHCCol;
 import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jquery.JQueryInvocation;
-import com.helger.html.jquery.JQuerySelector;
-import com.helger.html.jquery.JQuerySelectorList;
-import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
-import com.helger.html.jscode.JSBlock;
-import com.helger.html.jscode.JSConditional;
-import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSPackage;
-import com.helger.html.jscode.JSRef;
 import com.helger.html.jscode.JSVar;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
@@ -241,6 +231,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   private ISimpleURL m_aTextLoadingURL;
   private String m_sTextLoadingURLLocaleParameterName;
 
+  //
+  // DataTables - Plugins
+  //
+  private final Map <String, IDataTablesPlugin> m_aPlugins = new LinkedHashMap <> ();
+
   // Custom properties
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
   private EDataTablesFilterType m_eServerFilterType = EDataTablesFilterType.DEFAULT;
@@ -317,30 +312,30 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aTable.getID ();
   }
 
-  public boolean isGenerateOnDocumentReady ()
+  /**
+   * @return The unique int ID that is appended to the JS datatables object. Use
+   *         this ID for other DataTables related objects as well.
+   */
+  public final int getGeneratedJSVariableSuffix ()
   {
-    return m_bGenerateOnDocumentReady;
+    return m_nGeneratedJSVariableSuffix;
   }
 
+  /**
+   * @return The name of the JS variable that contains the dataTable object. The
+   *         scope of the variable depends on the state of the
+   *         {@link #isGenerateOnDocumentReady()} method.
+   */
   @Nonnull
-  public DataTables setGenerateOnDocumentReady (final boolean bGenerateOnDocumentReady)
+  @Nonempty
+  public final String getJSVariableName ()
   {
-    m_bGenerateOnDocumentReady = bGenerateOnDocumentReady;
-    return this;
+    return m_sGeneratedJSVariableName;
   }
 
-  @Nullable
-  public Locale getDisplayLocale ()
-  {
-    return m_aDisplayLocale;
-  }
-
-  @Nonnull
-  public DataTables setDisplayLocale (@Nullable final Locale aDisplayLocale)
-  {
-    m_aDisplayLocale = aDisplayLocale;
-    return this;
-  }
+  //
+  // DataTables - Features
+  //
 
   public boolean isAutoWidth ()
   {
@@ -354,27 +349,15 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  public boolean isPaginate ()
+  public boolean isDeferRender ()
   {
-    return m_bPaging;
+    return m_bDeferRender;
   }
 
   @Nonnull
-  public DataTables setPaginate (final boolean bPaginate)
+  public DataTables setDeferRender (final boolean bDeferRender)
   {
-    m_bPaging = bPaginate;
-    return this;
-  }
-
-  public boolean isStateSave ()
-  {
-    return m_bStateSave;
-  }
-
-  @Nonnull
-  public DataTables setStateSave (final boolean bStateSave)
-  {
-    m_bStateSave = bStateSave;
+    m_bDeferRender = bDeferRender;
     return this;
   }
 
@@ -390,6 +373,249 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
+  public boolean isPaginate ()
+  {
+    return m_bPaging;
+  }
+
+  @Nonnull
+  public DataTables setPaginate (final boolean bPaginate)
+  {
+    m_bPaging = bPaginate;
+    return this;
+  }
+
+  public boolean isScrollX ()
+  {
+    return m_eScrollX.getAsBooleanValue (DEFAULT_SCROLL_X);
+  }
+
+  @Nonnull
+  public DataTables setScrollX (final boolean bScrollX)
+  {
+    m_eScrollX = ETriState.valueOf (bScrollX);
+    return this;
+  }
+
+  @Nullable
+  public String getScrollY ()
+  {
+    return m_sScrollY;
+  }
+
+  @Nonnull
+  public DataTables setScrollY (@Nullable final String sScrollY)
+  {
+    m_sScrollY = sScrollY;
+    return this;
+  }
+
+  public boolean isStateSave ()
+  {
+    return m_bStateSave;
+  }
+
+  @Nonnull
+  public DataTables setStateSave (final boolean bStateSave)
+  {
+    m_bStateSave = bStateSave;
+    return this;
+  }
+
+  //
+  // DataTables - Data
+  //
+
+  @Nullable
+  public JQueryAjaxBuilder getAjaxBuilder ()
+  {
+    return m_aAjaxBuilder;
+  }
+
+  @Nonnull
+  public DataTables setAjaxBuilder (@Nullable final JQueryAjaxBuilder aAjaxBuilder)
+  {
+    if (aAjaxBuilder != null)
+      aAjaxBuilder.cache (false).dataType ("json");
+
+    m_aAjaxBuilder = aAjaxBuilder;
+    return this;
+  }
+
+  @Nonnull
+  public EDataTablesFilterType getServerFilterType ()
+  {
+    return m_eServerFilterType;
+  }
+
+  @Nonnull
+  public DataTables setServerFilterType (@Nonnull final EDataTablesFilterType eServerFilterType)
+  {
+    m_eServerFilterType = ValueEnforcer.notNull (eServerFilterType, "ServerFilterType");
+    return this;
+  }
+
+  //
+  // DataTables - Callbacks
+  //
+
+  @Nullable
+  public JSAnonymousFunction getFooterCallback ()
+  {
+    return m_aFooterCallback;
+  }
+
+  /**
+   * Set footer callback - see
+   * https://datatables.net/examples/advanced_init/footer_callback.html
+   *
+   * @param aFooterCallback
+   *        function footerCallback( tfoot, data, start, end, display )
+   * @return this
+   */
+  @Nonnull
+  public DataTables setFooterCallback (@Nullable final JSAnonymousFunction aFooterCallback)
+  {
+    m_aFooterCallback = aFooterCallback;
+    return this;
+  }
+
+  @Nullable
+  public JSAnonymousFunction getHeaderCallback ()
+  {
+    return m_aHeaderCallback;
+  }
+
+  /**
+   * Set header callback - see
+   * https://datatables.net/reference/option/headerCallback
+   *
+   * @param aHeaderCallback
+   *        function headerCallback( thead, data, start, end, display )
+   * @return this
+   */
+  @Nonnull
+  public DataTables setHeaderCallback (@Nullable final JSAnonymousFunction aHeaderCallback)
+  {
+    m_aHeaderCallback = aHeaderCallback;
+    return this;
+  }
+
+  //
+  // DataTables - Options
+  //
+
+  @Nullable
+  @ReturnsMutableCopy
+  public DataTablesDom getDom ()
+  {
+    return CloneHelper.getCloneIfNotNull (m_aDom);
+  }
+
+  @Nullable
+  @ReturnsMutableObject ("design")
+  public DataTablesDom directGetDom ()
+  {
+    return m_aDom;
+  }
+
+  @Nonnull
+  public DataTables setDom (@Nullable final DataTablesDom aDom)
+  {
+    m_aDom = CloneHelper.getCloneIfNotNull (aDom);
+    return this;
+  }
+
+  @Nullable
+  @ReturnsMutableObject ("design")
+  public DataTablesLengthMenu getLengthMenu ()
+  {
+    return m_aLengthMenu;
+  }
+
+  @Nonnull
+  public DataTables setLengthMenu (@Nullable final DataTablesLengthMenu aLengthMenu)
+  {
+    m_aLengthMenu = aLengthMenu;
+    if (aLengthMenu != null && !aLengthMenu.isEmpty ())
+      setPageLength (aLengthMenu.getItemAtIndex (0).getItemCount ());
+    return this;
+  }
+
+  @Nullable
+  public DataTablesOrder getInitialOrder ()
+  {
+    return m_aInitialOrder;
+  }
+
+  @Nonnull
+  @Deprecated
+  public DataTables setInitialOrder (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
+  {
+    return setInitialOrder (new DataTablesOrder ().addColumn (nIndex, eSortOrder));
+  }
+
+  @Nonnull
+  public DataTables setInitialOrder (@Nullable final DataTablesOrder aInitialOrder)
+  {
+    m_aInitialOrder = aInitialOrder;
+    return this;
+  }
+
+  @Nonnegative
+  public int getPageLength ()
+  {
+    return m_nPageLength;
+  }
+
+  /**
+   * Set to -1 to show all
+   *
+   * @param nPageLength
+   *        Number of items to display per page
+   * @return this
+   */
+  @Nonnull
+  public DataTables setPageLength (final int nPageLength)
+  {
+    m_nPageLength = nPageLength;
+    return this;
+  }
+
+  @Nonnull
+  public DataTables setPageLengthAll ()
+  {
+    return setPageLength (DataTablesLengthMenu.COUNT_ALL);
+  }
+
+  @Nullable
+  public EDataTablesPagingType getPagingType ()
+  {
+    return m_ePagingType;
+  }
+
+  @Nonnull
+  public DataTables setPagingType (@Nullable final EDataTablesPagingType ePaginationType)
+  {
+    m_ePagingType = ePaginationType;
+    return this;
+  }
+
+  public boolean isScrollCollapse ()
+  {
+    return m_bScrollCollapse;
+  }
+
+  @Nonnull
+  public DataTables setScrollCollapse (final boolean bScrollCollapse)
+  {
+    m_bScrollCollapse = bScrollCollapse;
+    return this;
+  }
+
+  //
+  // DataTables - Columns
+  //
   @Nonnull
   @ReturnsMutableCopy
   public Collection <DataTablesColumnDef> getAllColumns ()
@@ -507,172 +733,20 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return ret;
   }
 
-  @Nullable
-  public DataTablesOrder getInitialOrder ()
-  {
-    return m_aInitialOrder;
-  }
-
-  @Nonnull
-  @Deprecated
-  public DataTables setInitialOrder (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
-  {
-    return setInitialOrder (new DataTablesOrder ().addColumn (nIndex, eSortOrder));
-  }
-
-  @Nonnull
-  public DataTables setInitialOrder (@Nullable final DataTablesOrder aInitialOrder)
-  {
-    m_aInitialOrder = aInitialOrder;
-    return this;
-  }
+  //
+  // DataTables - Internationalisation
+  //
 
   @Nullable
-  public EDataTablesPagingType getPaginationType ()
+  public Locale getDisplayLocale ()
   {
-    return m_ePagingType;
+    return m_aDisplayLocale;
   }
 
   @Nonnull
-  public DataTables setPaginationType (@Nullable final EDataTablesPagingType ePaginationType)
+  public DataTables setDisplayLocale (@Nullable final Locale aDisplayLocale)
   {
-    m_ePagingType = ePaginationType;
-    return this;
-  }
-
-  public boolean isScrollX ()
-  {
-    return m_eScrollX.getAsBooleanValue (DEFAULT_SCROLL_X);
-  }
-
-  @Nonnull
-  public DataTables setScrollX (final boolean bScrollX)
-  {
-    m_eScrollX = ETriState.valueOf (bScrollX);
-    return this;
-  }
-
-  @Nullable
-  public String getScrollY ()
-  {
-    return m_sScrollY;
-  }
-
-  @Nonnull
-  public DataTables setScrollY (@Nullable final String sScrollY)
-  {
-    m_sScrollY = sScrollY;
-    return this;
-  }
-
-  public boolean isScrollCollapse ()
-  {
-    return m_bScrollCollapse;
-  }
-
-  @Nonnull
-  public DataTables setScrollCollapse (final boolean bScrollCollapse)
-  {
-    m_bScrollCollapse = bScrollCollapse;
-    return this;
-  }
-
-  @Nullable
-  @ReturnsMutableCopy
-  public DataTablesDom getDom ()
-  {
-    return CloneHelper.getCloneIfNotNull (m_aDom);
-  }
-
-  @Nonnull
-  public DataTables setDom (@Nullable final DataTablesDom aDom)
-  {
-    m_aDom = CloneHelper.getCloneIfNotNull (aDom);
-    return this;
-  }
-
-  @Nullable
-  @ReturnsMutableObject ("design")
-  public DataTablesLengthMenu getLengthMenu ()
-  {
-    return m_aLengthMenu;
-  }
-
-  @Nonnull
-  public DataTables setLengthMenu (@Nullable final DataTablesLengthMenu aLengthMenu)
-  {
-    m_aLengthMenu = aLengthMenu;
-    if (aLengthMenu != null && !aLengthMenu.isEmpty ())
-      setDisplayLength (aLengthMenu.getItemAtIndex (0).getItemCount ());
-    return this;
-  }
-
-  @Nonnegative
-  public int getDisplayLength ()
-  {
-    return m_nPageLength;
-  }
-
-  /**
-   * Set to -1 to show all
-   *
-   * @param nDisplayLength
-   *        Number of items to display per page
-   * @return this
-   */
-  @Nonnull
-  public DataTables setDisplayLength (final int nDisplayLength)
-  {
-    m_nPageLength = nDisplayLength;
-    return this;
-  }
-
-  @Nonnull
-  public DataTables setDisplayAll ()
-  {
-    return setDisplayLength (DataTablesLengthMenu.COUNT_ALL);
-  }
-
-  // Server side handling params
-
-  @Nullable
-  public JQueryAjaxBuilder getAjaxBuilder ()
-  {
-    return m_aAjaxBuilder;
-  }
-
-  @Nonnull
-  public DataTables setAjaxBuilder (@Nullable final JQueryAjaxBuilder aAjaxBuilder)
-  {
-    if (aAjaxBuilder != null)
-      aAjaxBuilder.cache (false).dataType ("json");
-
-    m_aAjaxBuilder = aAjaxBuilder;
-    return this;
-  }
-
-  @Nonnull
-  public EDataTablesFilterType getServerFilterType ()
-  {
-    return m_eServerFilterType;
-  }
-
-  @Nonnull
-  public DataTables setServerFilterType (@Nonnull final EDataTablesFilterType eServerFilterType)
-  {
-    m_eServerFilterType = ValueEnforcer.notNull (eServerFilterType, "ServerFilterType");
-    return this;
-  }
-
-  public boolean isDeferRender ()
-  {
-    return m_bDeferRender;
-  }
-
-  @Nonnull
-  public DataTables setDeferRender (final boolean bDeferRender)
-  {
-    m_bDeferRender = bDeferRender;
+    m_aDisplayLocale = aDisplayLocale;
     return this;
   }
 
@@ -699,45 +773,41 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  @Nullable
-  public JSAnonymousFunction getHeaderCallback ()
-  {
-    return m_aHeaderCallback;
-  }
+  //
+  // DataTables - Plugins
+  //
 
-  /**
-   * Set header callback - see
-   * https://datatables.net/reference/option/headerCallback
-   *
-   * @param aHeaderCallback
-   *        function headerCallback( thead, data, start, end, display )
-   * @return this
-   */
   @Nonnull
-  public DataTables setHeaderCallback (@Nullable final JSAnonymousFunction aHeaderCallback)
+  public DataTables addPlugin (@Nonnull final IDataTablesPlugin aPlugin)
   {
-    m_aHeaderCallback = aHeaderCallback;
+    ValueEnforcer.notNull (aPlugin, "Plugin");
+    final String sName = aPlugin.getName ();
+    if (m_aPlugins.containsKey (sName))
+      throw new IllegalArgumentException ("A plugin with the name '" + sName + "' is already contained!");
+
+    m_aPlugins.put (sName, aPlugin);
     return this;
   }
 
   @Nullable
-  public JSAnonymousFunction getFooterCallback ()
+  public IDataTablesPlugin getPluginOfName (@Nullable final String sName)
   {
-    return m_aFooterCallback;
+    if (StringHelper.hasNoText (sName))
+      return null;
+    return m_aPlugins.get (sName);
   }
 
-  /**
-   * Set footer callback - see
-   * https://datatables.net/examples/advanced_init/footer_callback.html
-   *
-   * @param aFooterCallback
-   *        function footerCallback( tfoot, data, start, end, display )
-   * @return this
-   */
-  @Nonnull
-  public DataTables setFooterCallback (@Nullable final JSAnonymousFunction aFooterCallback)
+  // XXX The Rest
+
+  public boolean isGenerateOnDocumentReady ()
   {
-    m_aFooterCallback = aFooterCallback;
+    return m_bGenerateOnDocumentReady;
+  }
+
+  @Nonnull
+  public DataTables setGenerateOnDocumentReady (final boolean bGenerateOnDocumentReady)
+  {
+    m_bGenerateOnDocumentReady = bGenerateOnDocumentReady;
     return this;
   }
 
@@ -912,6 +982,10 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
+    // Finalize plugins
+    for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
+      aPlugin.finalizeDataTablesSettings (this);
+
     final JSAssocArray aParams = new JSAssocArray ();
 
     //
@@ -1002,7 +1076,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("scrollCollapse", m_bScrollCollapse);
 
     //
-    // columns
+    // DataTables - Columns
     //
     if (!m_aColumnDefs.isEmpty ())
     {
@@ -1033,6 +1107,12 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       }
       aParams.add ("language", aLanguage);
     }
+
+    //
+    // DataTables - Plugins
+    //
+    for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
+      aParams.add (aPlugin.getName (), aPlugin.getInitParams ());
 
     //
     // rest
@@ -1071,7 +1151,12 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     final JSPackage aJSCode = new JSPackage ();
 
     addCodeBeforeDataTables (aJSCode);
+
     final JSVar aJSTable = aJSCode.var (m_sGeneratedJSVariableName, invokeDataTables ().arg (aParams));
+
+    // Finalize plugins
+    for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
+      aPlugin.addInitJS (this, aJSCode, aJSTable);
 
     if (m_bUseFixedHeader)
     {
@@ -1126,150 +1211,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SCROLLER);
       PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SCROLLER);
     }
-  }
-
-  /**
-   * @return The name of the JS variable that contains the dataTable object. The
-   *         scope of the variable depends on the state of the
-   *         {@link #isGenerateOnDocumentReady()} method.
-   */
-  @Nonnull
-  @Nonempty
-  public final String getJSVariableName ()
-  {
-    return m_sGeneratedJSVariableName;
-  }
-
-  /**
-   * Create an {@link HCScriptInline} or {@link HCScriptInlineOnDocumentReady}
-   * block that handles expand and collapse. The following pre-conditions must
-   * be met: The first column must be the expand/collapse column and it must
-   * contain an image where the event handler is registered.
-   *
-   * @param aExpandImgURL
-   *        The URL of the expand icon (closed state)
-   * @param aCollapseImgURL
-   *        The URL of the collapse icon (open state)
-   * @param nColumnIndexWithDetails
-   *        The index of the column that contains the details. Must be &ge; 0
-   *        and is usually hidden.
-   * @param aCellClass
-   *        The CSS class to be applied to the created cell. May be
-   *        <code>null</code>.
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  public IHCNode createExpandCollapseHandling (@Nonnull final ISimpleURL aExpandImgURL,
-                                               @Nonnull final ISimpleURL aCollapseImgURL,
-                                               @Nonnegative final int nColumnIndexWithDetails,
-                                               @Nullable final ICSSClassProvider aCellClass)
-  {
-    final DataTablesColumnDef aColumn = getOrCreateColumnOfTarget (nColumnIndexWithDetails);
-    if (aColumn != null && aColumn.isVisible ())
-      s_aLogger.warn ("The column with the expand text, should not be visible!");
-
-    final JSRef jsTable = JSExpr.ref (m_sGeneratedJSVariableName);
-
-    final JSPackage aPackage = new JSPackage ();
-    final JSAnonymousFunction aOpenCloseCallback = new JSAnonymousFunction ();
-    {
-      final JSVar jsTR = aOpenCloseCallback.body ().var ("r",
-                                                         JQuery.jQueryThis ().parents (EHTMLElement.TR).component0 ());
-      final JSConditional aIf = aOpenCloseCallback.body ()._if (jsTable.invoke ("fnIsOpen").arg (jsTR));
-      aIf._then ().assign (JSExpr.THIS.ref (CHTMLAttributes.SRC), aExpandImgURL.getAsString ());
-      aIf._then ().invoke (jsTable, "fnClose").arg (jsTR);
-      aIf._else ().assign (JSExpr.THIS.ref (CHTMLAttributes.SRC), aCollapseImgURL.getAsString ());
-      aIf._else ()
-         .invoke (jsTable, "fnOpen")
-         .arg (jsTR)
-         .arg (jsTable.invoke ("fnGetData").arg (jsTR).component (nColumnIndexWithDetails))
-         .arg (aCellClass == null ? null : aCellClass.getCSSClass ());
-    }
-    aPackage.add (JQuery.idRef (m_aTable)
-                        .on ()
-                        .arg ("click")
-                        .arg (new JQuerySelectorList (JQuerySelector.element (EHTMLElement.TBODY),
-                                                      JQuerySelector.element (EHTMLElement.TD),
-                                                      JQuerySelector.element (EHTMLElement.IMG)))
-                        .arg (aOpenCloseCallback));
-    return m_bGenerateOnDocumentReady ? new HCScriptInlineOnDocumentReady (aPackage) : new HCScriptInline (aPackage);
-  }
-
-  /**
-   * @param aRowSelect
-   *        E.g. <code>JQuery.jQueryThis ().parents (EHTMLElement.TR)</code>
-   * @param bSwapUsingJQuery
-   *        Use it only, if if no actions can be performed on the table! This is
-   *        much quicker.
-   * @return The created JS code
-   */
-  @Nonnull
-  @Deprecated
-  public IHasJSCode getMoveRowUpCode (@Nonnull final JQueryInvocation aRowSelect, final boolean bSwapUsingJQuery)
-  {
-    final JSRef jsTable = JSExpr.ref (m_sGeneratedJSVariableName);
-
-    final JSPackage aPackage = new JSPackage ();
-    final JSVar aRow = aPackage.var ("row", aRowSelect);
-    final JSVar aPrevRow = aPackage.var ("prow", aRow.invoke ("prev"));
-    final JSBlock aIfPrev = aPackage._if (aPrevRow.ref ("length").gt (0))._then ();
-
-    if (bSwapUsingJQuery)
-    {
-      // This is much quicker, if sorting and searching is disabled
-      aIfPrev.add (aRow.invoke ("detach"));
-      aIfPrev.add (aPrevRow.invoke ("before").arg (aRow));
-    }
-    else
-    {
-      final JSVar aRow0 = aIfPrev.var ("row0", aRow.invoke ("get").arg (0));
-      final JSVar aPrevRow0 = aIfPrev.var ("prow0", aPrevRow.invoke ("get").arg (0));
-
-      final JSVar aData = aIfPrev.var ("data", jsTable.invoke ("fnGetData").arg (aRow0));
-      final JSVar aPrevData = aIfPrev.var ("prevdata", jsTable.invoke ("fnGetData").arg (aPrevRow0));
-
-      aIfPrev.invoke (jsTable, "fnUpdate").arg (aPrevData).arg (aRow0);
-      aIfPrev.invoke (jsTable, "fnUpdate").arg (aData).arg (aPrevRow0);
-    }
-    return aPackage;
-  }
-
-  /**
-   * @param aRowSelect
-   *        E.g. <code>JQuery.jQueryThis ().parents (EHTMLElement.TR)</code>
-   * @param bSwapUsingJQuery
-   *        Use it only, if if no actions can be performed on the table! This is
-   *        much quicker.
-   * @return The created JS code
-   */
-  @Nonnull
-  @Deprecated
-  public IHasJSCode getMoveRowDownCode (@Nonnull final JQueryInvocation aRowSelect, final boolean bSwapUsingJQuery)
-  {
-    final JSRef jsTable = JSExpr.ref (m_sGeneratedJSVariableName);
-
-    final JSPackage aPackage = new JSPackage ();
-    final JSVar aRow = aPackage.var ("row", aRowSelect);
-    final JSVar aNextRow = aPackage.var ("nrow", aRow.invoke ("next"));
-    final JSBlock aIfNext = aPackage._if (aNextRow.ref ("length").gt (0))._then ();
-
-    if (bSwapUsingJQuery)
-    {
-      // This is much quicker, if sorting and searching is disabled
-      aIfNext.add (aRow.invoke ("detach"));
-      aIfNext.add (aNextRow.invoke ("after").arg (aRow));
-    }
-    else
-    {
-      final JSVar aRow0 = aIfNext.var ("row0", aRow.invoke ("get").arg (0));
-      final JSVar aNextRow0 = aIfNext.var ("nrow0", aNextRow.invoke ("get").arg (0));
-
-      final JSVar aData = aIfNext.var ("data", jsTable.invoke ("fnGetData").arg (aRow0));
-      final JSVar aNextData = aIfNext.var ("nextdata", jsTable.invoke ("fnGetData").arg (aNextRow0));
-
-      aIfNext.invoke (jsTable, "fnUpdate").arg (aNextData).arg (aRow0);
-      aIfNext.invoke (jsTable, "fnUpdate").arg (aData).arg (aNextRow0);
-    }
-    return aPackage;
+    for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
+      aPlugin.registerExternalResources (aConversionSettings);
   }
 }
