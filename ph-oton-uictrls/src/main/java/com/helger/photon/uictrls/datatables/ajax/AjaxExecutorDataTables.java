@@ -37,9 +37,9 @@ import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.state.UIStateRegistry;
 import com.helger.photon.uicore.css.CPageParam;
-import com.helger.photon.uictrls.datatables.CDataTables;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
+import com.helger.photon.uictrls.datatables.EDataTablesOrderDirectionType;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.request.IRequestParamMap;
 
@@ -331,9 +331,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
                                                                                         0),
                                            0);
         final String sOrderDir = aOrderPerIndex.getString (ORDER_DIR);
-        final ESortOrder eOrderDir = CDataTables.SORT_ASC.equals (sOrderDir) ? ESortOrder.ASCENDING
-                                                                             : CDataTables.SORT_DESC.equals (sOrderDir) ? ESortOrder.DESCENDING
-                                                                                                                        : null;
+        final ESortOrder eOrderDir = EDataTablesOrderDirectionType.getSortOrderFromNameOrNull (sOrderDir);
         aOrderColumns.add (new DTSSRequestDataOrderColumn (nOrderColumn, eOrderDir));
 
         ++nIndex;

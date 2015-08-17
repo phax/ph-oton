@@ -37,6 +37,7 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
+import com.helger.photon.uictrls.datatables.EDataTablesOrderDirectionType;
 import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
 
 /**
@@ -79,7 +80,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   /** Live DOM sorting type assignment. */
   private String m_sOrderDataType;
   /** Order direction application sequence. */
-  private List <EDataTablesColumnOrderSequenceType> m_aOrderSequence;
+  private List <EDataTablesOrderDirectionType> m_aOrderSequence;
   /** Render (process) the data for use in the table. */
   private IJSExpression m_aRender;
   /** Enable or disable filtering on the data in this column. */
@@ -362,20 +363,20 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <EDataTablesColumnOrderSequenceType> getOrderSequence ()
+  public List <EDataTablesOrderDirectionType> getOrderSequence ()
   {
     return CollectionHelper.newList (m_aOrderSequence);
   }
 
   @Nonnull
-  public DataTablesColumnDef setOrderSequence (@Nullable final EDataTablesColumnOrderSequenceType... aOrderSequence)
+  public DataTablesColumnDef setOrderSequence (@Nullable final EDataTablesOrderDirectionType... aOrderSequence)
   {
     m_aOrderSequence = ArrayHelper.isEmpty (aOrderSequence) ? null : CollectionHelper.newList (aOrderSequence);
     return this;
   }
 
   @Nonnull
-  public DataTablesColumnDef setOrderSequence (@Nullable final List <EDataTablesColumnOrderSequenceType> aOrderSequence)
+  public DataTablesColumnDef setOrderSequence (@Nullable final List <EDataTablesOrderDirectionType> aOrderSequence)
   {
     m_aOrderSequence = CollectionHelper.isEmpty (aOrderSequence) ? null : CollectionHelper.newList (aOrderSequence);
     return this;
@@ -499,7 +500,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     if (m_aOrderSequence != null && !m_aOrderSequence.isEmpty ())
     {
       final JSArray aArray = new JSArray ();
-      for (final EDataTablesColumnOrderSequenceType eOrderSequence : m_aOrderSequence)
+      for (final EDataTablesOrderDirectionType eOrderSequence : m_aOrderSequence)
         aArray.add (eOrderSequence.getName ());
       ret.add ("orderSequence", aArray);
     }

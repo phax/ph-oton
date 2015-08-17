@@ -179,7 +179,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   /** Change the options in the page length select list. */
   private DataTablesLengthMenu m_aLengthMenu;
   /** Initial order (sort) to apply to the table. */
-  private DataTablesOrder m_aOrder;
+  private DataTablesOrder m_aInitialOrder;
   /**
    * Control which cell the order event handler will be applied to in a column.
    */
@@ -459,7 +459,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
           final DTCol aDTCol = (DTCol) aCol;
           aColumn = new DataTablesColumnDef (nColIndex, aDTCol);
           if (aDTCol.hasInitialSorting ())
-            setInitialSorting (new DataTablesOrder ().addColumn (nColIndex, aDTCol.getInitialSorting ()));
+            setInitialOrder (new DataTablesOrder ().addColumn (nColIndex, aDTCol.getInitialSorting ()));
         }
         else
         {
@@ -510,22 +510,22 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nullable
-  public DataTablesOrder getInitialSorting ()
+  public DataTablesOrder getInitialOrder ()
   {
-    return m_aOrder;
+    return m_aInitialOrder;
   }
 
   @Nonnull
   @Deprecated
-  public DataTables setInitialSorting (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
+  public DataTables setInitialOrder (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
   {
-    return setInitialSorting (new DataTablesOrder ().addColumn (nIndex, eSortOrder));
+    return setInitialOrder (new DataTablesOrder ().addColumn (nIndex, eSortOrder));
   }
 
   @Nonnull
-  public DataTables setInitialSorting (@Nullable final DataTablesOrder aInitialSorting)
+  public DataTables setInitialOrder (@Nullable final DataTablesOrder aInitialOrder)
   {
-    m_aOrder = aInitialSorting;
+    m_aInitialOrder = aInitialOrder;
     return this;
   }
 
@@ -978,7 +978,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("lengthMenu", m_aLengthMenu.getAsJSArray (m_aDisplayLocale));
     // Provide any empty array if no sorting is defined, because otherwise an
     // implicit sorting of the first column, ascending is done
-    aParams.add ("order", m_aOrder != null ? m_aOrder.getAsJS () : new JSArray ());
+    aParams.add ("order", m_aInitialOrder != null ? m_aInitialOrder.getAsJS () : new JSArray ());
     if (m_nPageLength != DEFAULT_PAGE_LENGTH)
       aParams.add ("pageLength", m_nPageLength);
     if (m_ePagingType != null)

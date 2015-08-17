@@ -25,7 +25,6 @@ import com.helger.html.resource.js.IJSPathProvider;
 
 public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
 {
- @Deprecated BOOTSTRAP_DATATABLES ("bootstrap/datatables/bootstrap3-datatables.js"),
  DATETIMEPICKER ("bootstrap/datetimepicker/bootstrap-datetimepicker.js"),
  DATETIMEPICKER_LOCALE ("bootstrap/datetimepicker/locales/bootstrap-datetimepicker.{0}.js", false),
  TREE_VIEW ("bootstrap/treeview/bootstrap-treeview.js");

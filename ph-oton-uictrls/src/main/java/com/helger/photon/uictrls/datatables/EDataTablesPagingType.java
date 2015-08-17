@@ -33,7 +33,8 @@ public enum EDataTablesPagingType implements IHasName
  SIMPLE ("simple"),
  SIMPLE_NUMBERS ("simple_numbers"),
  FULL ("full"),
- FULL_NUMBERS ("full_numbers");
+ FULL_NUMBERS ("full_numbers"),
+ BOOTSTRAP ("bootstrap");
 
   private final String m_sName;
 

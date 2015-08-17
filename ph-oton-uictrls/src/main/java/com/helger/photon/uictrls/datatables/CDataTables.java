@@ -29,15 +29,10 @@ import com.helger.html.css.ICSSClassProvider;
 @Immutable
 public final class CDataTables
 {
-  /** Sort something ascending. */
-  @Deprecated
-  public static final String SORT_ASC = "asc";
-
-  /** Sort something descending. */
-  @Deprecated
-  public static final String SORT_DESC = "desc";
-
+  public static final ICSSClassProvider CSS_CLASS_DATATABLES_LENGTH = DefaultCSSClassProvider.create ("dataTables_length");
   public static final ICSSClassProvider CSS_CLASS_DATATABLES_FILTER = DefaultCSSClassProvider.create ("dataTables_filter");
+  public static final ICSSClassProvider CSS_CLASS_DATATABLES_INFO = DefaultCSSClassProvider.create ("dataTables_info");
+  public static final ICSSClassProvider CSS_CLASS_DATATABLES_PAGINATE = DefaultCSSClassProvider.create ("dataTables_paginate");
 
   private CDataTables ()
   {}

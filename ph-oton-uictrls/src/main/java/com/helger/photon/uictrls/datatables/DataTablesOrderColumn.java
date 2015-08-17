@@ -25,8 +25,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.jscode.JSArray;
 
 /**
- * Defines a DataTables sortable column
- * 
+ * Defines a DataTables orderable column
+ *
  * @author Philip Helger
  */
 public final class DataTablesOrderColumn
@@ -59,7 +59,7 @@ public final class DataTablesOrderColumn
   {
     final JSArray ret = new JSArray ();
     ret.add (m_nIndex);
-    ret.add (m_eSortOrder.isAscending () ? CDataTables.SORT_ASC : CDataTables.SORT_DESC);
+    ret.add (EDataTablesOrderDirectionType.getNameFromSortOrderOrNull (m_eSortOrder));
     return ret;
   }
 
