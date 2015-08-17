@@ -39,16 +39,16 @@ final class RequestData
   private final int m_nDisplayLength;
   private final RequestDataSearch m_aSearch;
   private final List <RequestDataColumn> m_aColumnData;
-  private final RequestDataSortColumn [] m_aSortColumns;
+  private final List <RequestDataOrderColumn> m_aSortColumns;
   private final int m_nEcho;
 
-  RequestData (final int nDisplayStart,
+  RequestData (final int nEcho,
+               final int nDisplayStart,
                final int nDisplayLength,
                @Nullable final String sSearchText,
                final boolean bSearchRegEx,
                @Nonnull final List <RequestDataColumn> aColumnData,
-               @Nonnull final RequestDataSortColumn [] aSortColumns,
-               final int nEcho)
+               @Nonnull final List <RequestDataOrderColumn> aSortColumns)
   {
     ValueEnforcer.notNull (aSortColumns, "SortColumns");
     ValueEnforcer.notNull (aColumnData, "ColumnData");
@@ -152,14 +152,14 @@ final class RequestData
   @Nonnegative
   public int getSortColumnCount ()
   {
-    return m_aSortColumns.length;
+    return m_aSortColumns.size ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public RequestDataSortColumn [] getSortColumnArray ()
+  public RequestDataOrderColumn [] getSortColumnArray ()
   {
-    return ArrayHelper.getCopy (m_aSortColumns);
+    return ArrayHelper.newArray (m_aSortColumns, RequestDataOrderColumn.class);
   }
 
   /**

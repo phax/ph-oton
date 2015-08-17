@@ -24,7 +24,7 @@ import com.helger.commons.string.ToStringGenerator;
 
 final class ComparatorDataTablesServerDataRow extends AbstractComparator <DataTablesServerDataRow>
 {
-  private final RequestDataSortColumn [] m_aSortCols;
+  private final RequestDataOrderColumn [] m_aSortCols;
 
   ComparatorDataTablesServerDataRow (@Nonnull final DataTablesServerSortState aServerSortState)
   {
@@ -38,7 +38,7 @@ final class ComparatorDataTablesServerDataRow extends AbstractComparator <DataTa
                              @Nonnull final DataTablesServerDataRow aRow2)
   {
     int ret = 0;
-    for (final RequestDataSortColumn aSortCol : m_aSortCols)
+    for (final RequestDataOrderColumn aSortCol : m_aSortCols)
     {
       // Get the cells to compare
       final int nSortColumnIndex = aSortCol.getColumnIndex ();

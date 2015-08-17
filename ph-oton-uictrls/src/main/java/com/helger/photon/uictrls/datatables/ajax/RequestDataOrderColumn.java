@@ -38,13 +38,13 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-final class RequestDataSortColumn implements Serializable
+final class RequestDataOrderColumn implements Serializable
 {
   private final int m_nColumnIndex;
   private final ESortOrder m_eSortDirection;
   private Comparator <String> m_aComparator;
 
-  RequestDataSortColumn (@Nonnegative final int nColumnIndex, @Nullable final ESortOrder eSortDirection)
+  RequestDataOrderColumn (@Nonnegative final int nColumnIndex, @Nullable final ESortOrder eSortDirection)
   {
     m_nColumnIndex = nColumnIndex;
     m_eSortDirection = eSortDirection;
@@ -98,7 +98,7 @@ final class RequestDataSortColumn implements Serializable
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final RequestDataSortColumn rhs = (RequestDataSortColumn) o;
+    final RequestDataOrderColumn rhs = (RequestDataOrderColumn) o;
     return m_nColumnIndex == rhs.m_nColumnIndex && EqualsHelper.equals (m_eSortDirection, rhs.m_eSortDirection);
   }
 

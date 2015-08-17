@@ -16,9 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,11 +24,10 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.special.IHCSpecialNodes;
-import com.helger.json.IJsonObject;
 import com.helger.json.IHasJson;
+import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 
 /**
@@ -40,43 +37,55 @@ import com.helger.json.JsonObject;
  */
 final class ResponseData implements IHasJson
 {
+  private final int m_nDraw;
   private final int m_nTotalRecords;
   private final int m_nTotalDisplayRecords;
-  private final int m_nEcho;
-  private final String m_sColumns;
-  private final List <Map <String, String>> m_aData;
+  private final List <JsonObject> m_aData;
   private final IHCSpecialNodes m_aSpecialNodes;
+  private final String m_sErrorMsg;
 
   /**
+   * @param nDraw
+   *        As sent by the request
    * @param nTotalRecords
    *        Unfiltered number of records
    * @param nTotalDisplayRecords
    *        Total number of records after filtering
-   * @param nEcho
-   *        As sent by the request
-   * @param sColumns
-   *        Column names
    * @param aData
    *        Main data, where each list item represents a single row (as map from
    *        column-index to HTML content)
+   * @param sErrorMsg
+   *        Optional error message
    * @param aSpecialNodes
    *        Special nodes for the AJAX response
    */
-  ResponseData (final int nTotalRecords,
+  ResponseData (final int nDraw,
+                final int nTotalRecords,
                 final int nTotalDisplayRecords,
-                final int nEcho,
-                @Nullable final String sColumns,
-                @Nonnull final List <Map <String, String>> aData,
+                @Nullable final List <JsonObject> aData,
+                @Nullable final String sErrorMsg,
                 @Nonnull final IHCSpecialNodes aSpecialNodes)
   {
-    ValueEnforcer.notNull (aData, "Data");
     ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
+    m_nDraw = nDraw;
     m_nTotalRecords = nTotalRecords;
     m_nTotalDisplayRecords = nTotalDisplayRecords;
-    m_nEcho = nEcho;
-    m_sColumns = sColumns;
     m_aData = aData;
+    m_sErrorMsg = sErrorMsg;
     m_aSpecialNodes = aSpecialNodes;
+  }
+
+  /**
+   * @return The draw counter that this object is a response to - from the draw
+   *         parameter sent as part of the data request. Note that it is
+   *         strongly recommended for security reasons that you cast this
+   *         parameter to an integer, rather than simply echoing back to the
+   *         client what it sent in the draw parameter, in order to prevent
+   *         Cross Site Scripting (XSS) attacks
+   */
+  public int getDraw ()
+  {
+    return m_nDraw;
   }
 
   /**
@@ -91,7 +100,7 @@ final class ResponseData implements IHasJson
   /**
    * @return Total records, after filtering (i.e. the total number of records
    *         after filtering has been applied - not just the number of records
-   *         being returned in this result set)
+   *         being returned for this page of data).
    */
   public int getTotalDisplayRecords ()
   {
@@ -99,57 +108,33 @@ final class ResponseData implements IHasJson
   }
 
   /**
-   * @return An unaltered copy of sEcho sent from the client side. This
-   *         parameter will change with each draw (it is basically a draw count)
-   *         - so it is important that this is implemented.
-   */
-  public int getEcho ()
-  {
-    return m_nEcho;
-  }
-
-  /**
-   * @return Optional - this is a string of column names, comma separated (used
-   *         in combination with sName) which will allow DataTables to reorder
-   *         data on the client-side if required for display. Note that the
-   *         number of column names returned must exactly match the number of
-   *         columns in the table. For a more flexible JSON format, please
-   *         consider using mDataProp.
+   * @return The data to be displayed in the table. This is an array of data
+   *         source objects, one for each row, which will be used by DataTables.
    */
   @Nullable
-  public String getColumns ()
+  @ReturnsMutableCopy
+  public List <JsonObject> getData ()
   {
-    return m_sColumns;
+    return m_aData == null ? null : CollectionHelper.newList (m_aData);
   }
 
-  /**
-   * @return The data in a 2D array.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public List <Map <String, String>> getData ()
+  @Nullable
+  public String getErrorMessage ()
   {
-    return CollectionHelper.newList (m_aData);
+    return m_sErrorMsg;
   }
 
   @Nonnull
   public IJsonObject getAsJson ()
   {
     final IJsonObject ret = new JsonObject ();
+    ret.add ("draw", Integer.toString (m_nDraw));
     ret.add ("recordsTotal", m_nTotalRecords);
     ret.add ("recordsFiltered", m_nTotalDisplayRecords);
-    ret.add ("draw", Integer.toString (m_nEcho));
-    if (StringHelper.hasText (m_sColumns))
-      ret.add ("sColumns", m_sColumns);
-    final List <JsonObject> aObjs = new ArrayList <JsonObject> ();
-    for (final Map <String, String> aRow : m_aData)
-    {
-      final JsonObject aObj = new JsonObject ();
-      for (final Map.Entry <String, String> aEntry : aRow.entrySet ())
-        aObj.add (aEntry.getKey (), aEntry.getValue ());
-      aObjs.add (aObj);
-    }
-    ret.add ("aaData", aObjs);
+    if (m_aData != null)
+      ret.add ("data", m_aData);
+    else
+      ret.add ("error", m_sErrorMsg);
     return ret;
   }
 
@@ -162,11 +147,12 @@ final class ResponseData implements IHasJson
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("totalRecords", m_nTotalRecords)
-                                       .append ("totalDisplayRecords", m_nTotalDisplayRecords)
-                                       .append ("echo", m_nEcho)
-                                       .append ("columns", m_sColumns)
-                                       .append ("data", m_aData)
+    return new ToStringGenerator (this).append ("Draw", m_nDraw)
+                                       .append ("TotalRecords", m_nTotalRecords)
+                                       .append ("TotalDisplayRecords", m_nTotalDisplayRecords)
+                                       .append ("Data", m_aData)
+                                       .append ("ErrorMsg", m_sErrorMsg)
+                                       .append ("SpecialNodes", m_aSpecialNodes)
                                        .toString ();
   }
 }

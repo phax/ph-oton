@@ -18,10 +18,8 @@ package com.helger.photon.uictrls.datatables.ajax;
 
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -29,8 +27,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.attr.AbstractReadOnlyAttributeContainer;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.string.StringParser;
 import com.helger.html.hc.special.HCSpecialNodes;
+import com.helger.json.JsonObject;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
@@ -40,6 +41,7 @@ import com.helger.photon.uictrls.datatables.CDataTables;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.web.servlet.request.IRequestParamMap;
 
 /**
  * AJAX handler for filling DataTables
@@ -51,23 +53,27 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
   // This parameter must be passed to identify the table from the
   // UIStateRegistry!
   public static final String OBJECT_ID = CPageParam.PARAM_OBJECT;
-  private static final String DISPLAY_START = "iDisplayStart";
-  private static final String DISPLAY_LENGTH = "iDisplayLength";
-  private static final String COLUMNS = "iColumns";
-  private static final String SEARCH = "sSearch";
-  private static final String REGEX = "bRegEx";
-  private static final String SEARCHABLE_PREFIX = "bSearchable_";
-  private static final String SEARCH_PREFIX = "sSearch_";
-  private static final String REGEX_PREFIX = "bRegEx_";
-  private static final String SORTABLE_PREFIX = "bSortable_";
-  private static final String SORTING_COLS = "iSortingCols";
-  private static final String SORT_COL_PREFIX = "iSortCol_";
-  private static final String SORT_DIR_PREFIX = "sSortDir_";
-  private static final String DATA_PROP_PREFIX = "mDataProp_";
-  private static final String ECHO = "sEcho";
+  private static final String DRAW = "draw";
+  private static final String START = "start";
+  private static final String LENGTH = "length";
+  private static final String SEARCH_VALUE = "search[value]";
+  private static final String SEARCH_REGEX = "search[regex]";
+  private static final String ORDER = "order";
+  private static final String ORDER_COLUMN = "column";
+  private static final String ORDER_DIR = "dir";
+  private static final String COLUMNS = "columns";
+  private static final String COLUMNS_DATA = "data";
+  private static final String COLUMNS_NAME = "name";
+  private static final String COLUMNS_SEARCHABLE = "searchable";
+  private static final String COLUMNS_ORDERABLE = "orderable";
+  private static final String COLUMNS_SEARCH = "search";
+  private static final String COLUMNS_SEARCH_VALUE = "value";
+  private static final String COLUMNS_SEARCH_REGEX = "regex";
 
   private static final String DT_ROW_ID = "DT_RowId";
   private static final String DT_ROW_CLASS = "DT_RowClass";
+  private static final String DT_ROW_DATA = "DT_RowData";
+  private static final String DT_ROW_ATTR = "DT_RowAttr";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorDataTables.class);
 
@@ -239,7 +245,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
 
     // Build the resulting array
     final HCSpecialNodes aSpecialNodes = new HCSpecialNodes ();
-    final List <Map <String, String>> aData = new ArrayList <Map <String, String>> ();
+    final List <JsonObject> aData = new ArrayList <JsonObject> ();
     int nResultRowCount = 0;
     final boolean bAllEntries = aRequestData.showAllEntries ();
     // Just in case ;-)
@@ -254,15 +260,18 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
       }
 
       final DataTablesServerDataRow aRow = aResultRows.get (nRealIndex);
-      final Map <String, String> aRowData = new HashMap <String, String> ();
+      final JsonObject aRowData = new JsonObject ();
       if (aRow.hasRowID ())
-        aRowData.put (DT_ROW_ID, aRow.getRowID ());
+        aRowData.add (DT_ROW_ID, aRow.getRowID ());
       if (aRow.hasRowClass ())
-        aRowData.put (DT_ROW_CLASS, aRow.getRowClass ());
+        aRowData.add (DT_ROW_CLASS, aRow.getRowClass ());
+      if (aRow.hasRowData ())
+        aRowData.add (DT_ROW_DATA, aRow.directGetAllRowData ());
       int nCellIndex = 0;
       for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
       {
-        aRowData.put (Integer.toString (nCellIndex++), aCell.getHTML ());
+        // Assume the index is the "data"
+        aRowData.add (Integer.toString (nCellIndex++), aCell.getHTMLString ());
 
         // Merge all special nodes into the global ones
         aSpecialNodes.addAll (aCell.getSpecialNodes ());
@@ -277,7 +286,13 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
     // Main response
     final int nTotalRecords = aServerData.getRowCount ();
     final int nTotalDisplayRecords = aResultRows.size ();
-    return new ResponseData (nTotalRecords, nTotalDisplayRecords, aRequestData.getEcho (), null, aData, aSpecialNodes);
+    final String sErrorMsg = null;
+    return new ResponseData (aRequestData.getEcho (),
+                             nTotalRecords,
+                             nTotalDisplayRecords,
+                             aData,
+                             sErrorMsg,
+                             aSpecialNodes);
   }
 
   @Override
@@ -289,42 +304,75 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
                        CollectionHelper.getSortedByKey (aRequestScope.getAllAttributes ()));
 
     // Read input parameters and ensure non negativeness
-    final int nDisplayStart = Math.max (aRequestScope.getAttributeAsInt (DISPLAY_START, 0), 0);
+    final int nDraw = aRequestScope.getAttributeAsInt (DRAW);
+    final int nDisplayStart = Math.max (aRequestScope.getAttributeAsInt (START, 0), 0);
     // -1 means show all
     // This parameter is "" or "NaN" when scrolling is active - use -1 as well
-    final int nDisplayLength = aRequestScope.getAttributeAsInt (DISPLAY_LENGTH, DataTablesLengthMenu.COUNT_ALL);
-    final int nColumns = Math.max (aRequestScope.getAttributeAsInt (COLUMNS, 0), 0);
-    final String sSearch = aRequestScope.getAttributeAsString (SEARCH);
-    final boolean bRegEx = aRequestScope.getAttributeAsBoolean (REGEX, false);
-    final int nSortingCols = Math.max (aRequestScope.getAttributeAsInt (SORTING_COLS), 0);
-    final int nEcho = aRequestScope.getAttributeAsInt (ECHO);
-    final List <RequestDataColumn> aColumnData = new ArrayList <RequestDataColumn> (nColumns);
-    for (int nColumn = 0; nColumn < nColumns; ++nColumn)
+    final int nDisplayLength = aRequestScope.getAttributeAsInt (LENGTH, DataTablesLengthMenu.COUNT_ALL);
+    final String sSearchValue = aRequestScope.getAttributeAsString (SEARCH_VALUE);
+    final boolean bSearchRegEx = aRequestScope.getAttributeAsBoolean (SEARCH_REGEX, false);
+
+    // Read "order
+    final List <RequestDataOrderColumn> aOrderColumns = new ArrayList <> ();
     {
-      final boolean bCSearchable = aRequestScope.getAttributeAsBoolean (SEARCHABLE_PREFIX + nColumn);
-      final String sCSearch = aRequestScope.getAttributeAsString (SEARCH_PREFIX + nColumn);
-      final boolean bCRegEx = aRequestScope.getAttributeAsBoolean (REGEX_PREFIX + nColumn);
-      final boolean bCSortable = aRequestScope.getAttributeAsBoolean (SORTABLE_PREFIX + nColumn);
-      final String sCDataProp = aRequestScope.getAttributeAsString (DATA_PROP_PREFIX + nColumn);
-      aColumnData.add (new RequestDataColumn (bCSearchable, sCSearch, bCRegEx, bCSortable, sCDataProp));
+      final IRequestParamMap aOrder = aRequestScope.getRequestParamMap ().getMap (ORDER);
+      int nIndex = 0;
+      do
+      {
+        final IRequestParamMap aOrderPerIndex = aOrder.getMap (Integer.toString (nIndex));
+        if (aOrderPerIndex == null)
+          break;
+
+        final int nOrderColumn = Math.max (AbstractReadOnlyAttributeContainer.getAsInt (ORDER_COLUMN,
+                                                                                        aOrderPerIndex.getString (ORDER_COLUMN),
+                                                                                        0),
+                                           0);
+        final String sOrderDir = aOrderPerIndex.getString (ORDER_DIR);
+        final ESortOrder eOrderDir = CDataTables.SORT_ASC.equals (sOrderDir) ? ESortOrder.ASCENDING
+                                                                             : CDataTables.SORT_DESC.equals (sOrderDir) ? ESortOrder.DESCENDING
+                                                                                                                        : null;
+        aOrderColumns.add (new RequestDataOrderColumn (nOrderColumn, eOrderDir));
+
+        ++nIndex;
+      } while (true);
     }
-    final RequestDataSortColumn [] aSortColumns = new RequestDataSortColumn [nSortingCols];
-    for (int i = 0; i < nSortingCols; ++i)
+
+    final List <RequestDataColumn> aColumnData = new ArrayList <RequestDataColumn> ();
     {
-      final int nCSortCol = Math.max (aRequestScope.getAttributeAsInt (SORT_COL_PREFIX + i), 0);
-      final String sCSortDir = aRequestScope.getAttributeAsString (SORT_DIR_PREFIX + i);
-      final ESortOrder eCSortDir = CDataTables.SORT_ASC.equals (sCSortDir) ? ESortOrder.ASCENDING
-                                                                           : CDataTables.SORT_DESC.equals (sCSortDir) ? ESortOrder.DESCENDING
-                                                                                                                      : null;
-      aSortColumns[i] = new RequestDataSortColumn (nCSortCol, eCSortDir);
+      final IRequestParamMap aOrder = aRequestScope.getRequestParamMap ().getMap (COLUMNS);
+      int nIndex = 0;
+      do
+      {
+        final IRequestParamMap aColumnsPerIndex = aOrder.getMap (Integer.toString (nIndex));
+        if (aColumnsPerIndex == null)
+          break;
+
+        final String sCData = aColumnsPerIndex.getString (COLUMNS_DATA);
+        final String sCName = aColumnsPerIndex.getString (COLUMNS_NAME);
+        final boolean bCSearchable = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_SEARCHABLE), true);
+        final boolean bCOrderable = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_ORDERABLE), true);
+        final String sCSearchValue = aColumnsPerIndex.getString (COLUMNS_SEARCH, COLUMNS_SEARCH_VALUE);
+        final boolean bCSearchRegEx = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_SEARCH,
+                                                                                          COLUMNS_SEARCH_REGEX),
+                                                              true);
+        aColumnData.add (new RequestDataColumn (sCData,
+                                                sCName,
+                                                bCSearchable,
+                                                bCOrderable,
+                                                sCSearchValue,
+                                                bCSearchRegEx));
+
+        ++nIndex;
+      } while (true);
     }
-    final RequestData aRequestData = new RequestData (nDisplayStart,
+
+    final RequestData aRequestData = new RequestData (nDraw,
+                                                      nDisplayStart,
                                                       nDisplayLength,
-                                                      sSearch,
-                                                      bRegEx,
+                                                      sSearchValue,
+                                                      bSearchRegEx,
                                                       aColumnData,
-                                                      aSortColumns,
-                                                      nEcho);
+                                                      aOrderColumns);
 
     // Resolve dataTables
     final String sDataTablesID = aRequestScope.getAttributeAsString (OBJECT_ID);

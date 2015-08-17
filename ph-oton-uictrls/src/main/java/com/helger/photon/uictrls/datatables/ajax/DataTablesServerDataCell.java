@@ -149,7 +149,7 @@ public final class DataTablesServerDataCell implements Serializable
   }
 
   @Nullable
-  public String getHTML ()
+  public String getHTMLString ()
   {
     return m_sHTML;
   }

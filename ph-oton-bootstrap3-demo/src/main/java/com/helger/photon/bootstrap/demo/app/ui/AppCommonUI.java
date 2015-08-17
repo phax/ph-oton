@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.html.forms.HCEdit;
@@ -30,6 +29,7 @@ import com.helger.html.hc.html.forms.HCEditPassword;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.html.jquery.JQuery;
+import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSPackage;
 import com.helger.photon.bootstrap.demo.app.action.pub.CActionPublic;
@@ -55,9 +55,9 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public final class AppCommonUI
 {
   private static final DataTablesLengthMenu LENGTH_MENU = new DataTablesLengthMenu ().addItem (25)
-                                                                                             .addItem (50)
-                                                                                             .addItem (100)
-                                                                                             .addItemAll ();
+                                                                                     .addItem (50)
+                                                                                     .addItem (100)
+                                                                                     .addItemAll ();
 
   private AppCommonUI ()
   {}
@@ -73,9 +73,9 @@ public final class AppCommonUI
         final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
         aDataTables.setAutoWidth (false)
                    .setLengthMenu (LENGTH_MENU)
-                   .setUseJQueryAjax (true)
-                   .setAjaxSource (CAjaxPublic.DATATABLES.getInvocationURL (aRequestScope))
-                   .setServerParams (CollectionHelper.newMap (AjaxExecutorDataTables.OBJECT_ID, aTable.getID ()))
+                   .setAjaxBuilder (new JQueryAjaxBuilder ().url (CAjaxPublic.DATATABLES.getInvocationURL (aRequestScope))
+                                                            .data (new JSAssocArray ().add (AjaxExecutorDataTables.OBJECT_ID,
+                                                                                            aTable.getID ())))
                    .setServerFilterType (EDataTablesFilterType.ALL_TERMS_PER_ROW)
                    .setTextLoadingURL (CActionPublic.DATATABLES_I18N.getInvocationURL (aRequestScope),
                                        ActionExecutorDataTablesI18N.LANGUAGE_ID)

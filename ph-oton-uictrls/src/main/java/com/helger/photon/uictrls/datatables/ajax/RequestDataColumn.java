@@ -23,36 +23,66 @@ import com.helger.commons.string.ToStringGenerator;
 
 /**
  * Encapsulates the request data for a single column
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
 final class RequestDataColumn
 {
+  private final String m_sData;
+  private final String m_sName;
   private final boolean m_bSearchable;
+  private final boolean m_bOrderable;
   private final RequestDataSearch m_aSearch;
-  private final boolean m_bSortable;
-  private final String m_sDataProp;
 
-  RequestDataColumn (final boolean bSearchable,
+  RequestDataColumn (@Nullable final String sData,
+                     @Nullable final String sName,
+                     final boolean bSearchable,
+                     final boolean bOrderable,
                      @Nullable final String sSearchText,
-                     final boolean bSearchRegEx,
-                     final boolean bSortable,
-                     @Nullable final String sDataProp)
+                     final boolean bSearchRegEx)
   {
+    m_sData = sData;
+    m_sName = sName;
     m_bSearchable = bSearchable;
+    m_bOrderable = bOrderable;
     m_aSearch = bSearchable ? new RequestDataSearch (sSearchText, bSearchRegEx) : null;
-    m_bSortable = bSortable;
-    m_sDataProp = sDataProp;
   }
 
   /**
-   * @return Indicator for if a column is flagged as searchable or not on the
-   *         client-side
+   * @return Column's data source, as defined by columns.data.
+   */
+  @Nullable
+  public String getData ()
+  {
+    return m_sData;
+  }
+
+  /**
+   * @return Column's name, as defined by columns.name.
+   */
+  @Nullable
+  public String getName ()
+  {
+    return m_sName;
+  }
+
+  /**
+   * @return Flag to indicate if this column is searchable (true) or not
+   *         (false). This is controlled by columns.searchable
    */
   public boolean isSearchable ()
   {
     return m_bSearchable;
+  }
+
+  /**
+   * @return Flag to indicate if this column is orderable (true) or not (false).
+   *         This is controlled by columns.orderable.
+   */
+  public boolean isOrderable ()
+  {
+    return m_bOrderable;
   }
 
   /**
@@ -65,33 +95,14 @@ final class RequestDataColumn
     return m_aSearch;
   }
 
-  /**
-   * @return Indicator for if a column is flagged as sortable or not on the
-   *         client-side
-   */
-  public boolean isSortable ()
-  {
-    return m_bSortable;
-  }
-
-  /**
-   * @return The value specified by mDataProp for each column. This can be
-   *         useful for ensuring that the processing of data is independent from
-   *         the order of the columns.
-   */
-  @Nullable
-  public String getDataProp ()
-  {
-    return m_sDataProp;
-  }
-
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("searchable", m_bSearchable)
-                                       .append ("search", m_aSearch)
-                                       .append ("sortable", m_bSortable)
-                                       .append ("dataProp", m_sDataProp)
+    return new ToStringGenerator (this).append ("Data", m_sData)
+                                       .append ("Name", m_sName)
+                                       .append ("Searchable", m_bSearchable)
+                                       .append ("Orderable", m_bOrderable)
+                                       .append ("Search", m_aSearch)
                                        .toString ();
   }
 }

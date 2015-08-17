@@ -88,7 +88,6 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.ajax.DataTablesServerData;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
-import com.helger.web.http.EHTTPMethod;
 
 @OutOfBandNode
 public class DataTables extends AbstractHCScriptInline <DataTables>
@@ -101,7 +100,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public static final boolean DEFAULT_STATE_SAVE = false;
 
   public static final boolean DEFAULT_SCROLL_COLLAPSE = false;
-  public static final boolean DEFAULT_USER_JQUERY_AJAX = false;
   public static final EDataTablesPagingType DEFAULT_PAGING_TYPE = EDataTablesPagingType.SIMPLE_NUMBERS;
   public static final int DEFAULT_PAGE_LENGTH = 10;
   public static final boolean DEFAULT_USE_COL_VIS = false;
@@ -113,6 +111,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   // Constructor parameters
   private final IHCTable <?> m_aTable;
+  private final int m_nGeneratedJSVariableSuffix = GlobalIDFactory.getNewIntID ();
 
   //
   // DataTables - Features
@@ -238,13 +237,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // Rest
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
   private Locale m_aDisplayLocale;
+
   // server side processing
-  private ISimpleURL m_aAjaxSource;
-  private EHTTPMethod m_eServerMethod;
-  private Map <String, String> m_aServerParams;
-  private boolean m_bUseJQueryAjax = DEFAULT_USER_JQUERY_AJAX;
+  private JQueryAjaxBuilder m_aAjaxBuilder;
   private EDataTablesFilterType m_eServerFilterType = EDataTablesFilterType.DEFAULT;
-  private final int m_nGeneratedJSVariableSuffix = GlobalIDFactory.getNewIntID ();
+
   private final String m_sGeneratedJSVariableName = "oTable" + m_nGeneratedJSVariableSuffix;
   private ISimpleURL m_aTextLoadingURL;
   private String m_sTextLoadingURLLocaleParameterName;
@@ -641,54 +638,18 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // Server side handling params
 
   @Nullable
-  public ISimpleURL getAjaxSource ()
+  public JQueryAjaxBuilder getAjaxBuilder ()
   {
-    return m_aAjaxSource;
+    return m_aAjaxBuilder;
   }
 
   @Nonnull
-  public DataTables setAjaxSource (@Nullable final ISimpleURL aAjaxSource)
+  public DataTables setAjaxBuilder (@Nullable final JQueryAjaxBuilder aAjaxBuilder)
   {
-    m_aAjaxSource = aAjaxSource;
-    return this;
-  }
+    if (aAjaxBuilder != null)
+      aAjaxBuilder.cache (false).dataType ("json");
 
-  @Nullable
-  public EHTTPMethod getServerMethod ()
-  {
-    return m_eServerMethod;
-  }
-
-  @Nonnull
-  public DataTables setServerMethod (@Nullable final EHTTPMethod eServerMethod)
-  {
-    m_eServerMethod = eServerMethod;
-    return this;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public Map <String, String> getAllServerParams ()
-  {
-    return CollectionHelper.newMap (m_aServerParams);
-  }
-
-  @Nonnull
-  public DataTables setServerParams (@Nullable final Map <String, String> aServerParams)
-  {
-    m_aServerParams = aServerParams;
-    return this;
-  }
-
-  public boolean isUseJQueryAjax ()
-  {
-    return m_bUseJQueryAjax;
-  }
-
-  @Nonnull
-  public DataTables setUseJQueryAjax (final boolean bUseJQueryAjax)
-  {
-    m_bUseJQueryAjax = bUseJQueryAjax;
+    m_aAjaxBuilder = aAjaxBuilder;
     return this;
   }
 
@@ -1041,7 +1002,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     //
 
     // Server handling parameters
-    final boolean bServerSide = m_aAjaxSource != null;
+    final boolean bServerSide = m_aAjaxBuilder != null;
     if (bServerSide)
     {
       aParams.add ("serverSide", true);
@@ -1087,39 +1048,16 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       }
     }
 
-    if (m_aAjaxSource != null)
-      aParams.add ("sAjaxSource", m_aAjaxSource.getAsString ());
-    if (m_eServerMethod != null)
-      aParams.add ("sServerMethod", m_eServerMethod.getName ());
-    if (CollectionHelper.isNotEmpty (m_aServerParams))
+    if (bServerSide)
     {
       final JSAnonymousFunction aAF = new JSAnonymousFunction ();
-      final JSVar aData = aAF.param ("aoData");
-      for (final Map.Entry <String, String> aEntry : m_aServerParams.entrySet ())
-      {
-        aAF.body ()
-           .invoke (aData, "push")
-           .arg (new JSAssocArray ().add ("name", aEntry.getKey ()).add ("value", aEntry.getValue ()));
-      }
-      aParams.add ("fnServerParams", aAF);
-    }
-    if (m_bUseJQueryAjax)
-    {
-      final JSAnonymousFunction aAF = new JSAnonymousFunction ();
-      final JSVar sSource = aAF.param ("s");
-      final JSVar aoData = aAF.param ("t");
-      final JSVar fnCallback = aAF.param ("u");
-      final JSVar oSettings = aAF.param ("v");
-      final JQueryAjaxBuilder aAjaxBuilder = new JQueryAjaxBuilder ().cache (false)
-                                                                     .dataType ("json")
-                                                                     .type (m_eServerMethod == null ? null
-                                                                                                    : m_eServerMethod.getName ())
-                                                                     .url (sSource)
-                                                                     .data (aoData)
-                                                                     .success (JSJQueryHelper.jqueryAjaxSuccessHandler (fnCallback,
-                                                                                                                        null));
-      aAF.body ().assign (oSettings.ref ("jqXHR"), aAjaxBuilder.build ());
-      aParams.add ("fnServerData", aAF);
+      final JSVar aData = aAF.param ("d");
+      final JSVar aCallback = aAF.param ("cb");
+      aAF.param ("s");
+      m_aAjaxBuilder.success (JSJQueryHelper.jqueryAjaxSuccessHandler (aCallback, null));
+      m_aAjaxBuilder.data (JQuery.extend ().arg (aData).arg (m_aAjaxBuilder.data ()));
+      aAF.body ().add (m_aAjaxBuilder.build ());
+      aParams.add ("ajax", aAF);
       JSJQueryHelper.registerExternalResources ();
     }
 
@@ -1206,13 +1144,13 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_1_10);
     if (m_bUseColVis)
     {
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_COL_VIS);
-      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_COL_VIS);
+      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_COL_VIS);
+      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_COL_VIS);
     }
     if (m_bUseFixedHeader)
     {
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_FIXED_HEADER);
-      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_FIXED_HEADER);
+      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_FIXED_HEADER);
+      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_FIXED_HEADER);
     }
     if (m_bUseSearchHighlight)
     {
@@ -1222,8 +1160,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     }
     if (m_bUseScroller)
     {
-      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_EXTRAS_SCROLLER);
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_EXTRAS_SCROLLER);
+      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SCROLLER);
+      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SCROLLER);
     }
   }
 

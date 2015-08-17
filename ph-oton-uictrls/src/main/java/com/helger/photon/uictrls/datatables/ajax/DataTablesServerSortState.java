@@ -40,15 +40,15 @@ import com.helger.photon.uictrls.datatables.comparator.ComparatorDTString;
  */
 final class DataTablesServerSortState implements Serializable
 {
-  private final RequestDataSortColumn [] m_aSortState;
+  private final RequestDataOrderColumn [] m_aSortState;
 
   DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData, @Nonnull final Locale aDisplayLocale)
   {
-    this (aServerData, new RequestDataSortColumn [0], aDisplayLocale);
+    this (aServerData, new RequestDataOrderColumn [0], aDisplayLocale);
   }
 
   DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData,
-                             @Nonnull final RequestDataSortColumn [] aSortCols,
+                             @Nonnull final RequestDataOrderColumn [] aSortCols,
                              @Nonnull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aServerData, "ServerData");
@@ -58,7 +58,7 @@ final class DataTablesServerSortState implements Serializable
     m_aSortState = aSortCols;
 
     // Extract the comparators for all sort columns
-    for (final RequestDataSortColumn aSortColumn : aSortCols)
+    for (final RequestDataOrderColumn aSortColumn : aSortCols)
     {
       // Get the configured comparator
       Comparator <String> aStringComp = aServerData.getColumnComparator (aSortColumn.getColumnIndex ());
@@ -87,7 +87,7 @@ final class DataTablesServerSortState implements Serializable
 
   @Nonnull
   @ReturnsMutableCopy
-  public RequestDataSortColumn [] getSortCols ()
+  public RequestDataOrderColumn [] getSortCols ()
   {
     return ArrayHelper.getCopy (m_aSortState);
   }

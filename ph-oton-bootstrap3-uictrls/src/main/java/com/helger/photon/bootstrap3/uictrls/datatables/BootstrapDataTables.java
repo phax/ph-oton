@@ -30,6 +30,8 @@ import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsJSPathProvider;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
+import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.DataTablesDom;
 
@@ -71,8 +73,16 @@ public class BootstrapDataTables extends DataTables
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
-    PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.BOOTSTRAP_DATATABLES);
-    PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.BOOTSTRAP_DATATABLES);
+    if (false)
+    {
+      PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.BOOTSTRAP_DATATABLES);
+      PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.BOOTSTRAP_DATATABLES);
+    }
+    else
+    {
+      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_1_10_BOOTSTRAP);
+      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_1_10_BOOTSTRAP);
+    }
     PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.BOOTSTRAP_DATATABLES_PH);
   }
 

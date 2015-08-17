@@ -19,6 +19,7 @@ package com.helger.photon.uictrls.datatables.ajax;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -45,6 +46,7 @@ public final class DataTablesServerDataRow implements Serializable
 
   private final String m_sRowID;
   private final String m_sRowClass;
+  private final Map <String, String> m_aRowData;
   private final List <DataTablesServerDataCell> m_aCells;
 
   public DataTablesServerDataRow (@Nonnull final HCRow aRow, @Nonnull final IHCConversionSettings aCS)
@@ -54,9 +56,15 @@ public final class DataTablesServerDataRow implements Serializable
 
     m_sRowID = aRow.getID ();
     m_sRowClass = aRow.getAllClassesAsString ();
+    m_aRowData = aRow.getAllDataAttrs ();
     m_aCells = new ArrayList <DataTablesServerDataCell> (aRow.getCellCount ());
     for (final IHCCell <?> aCell : aRow.getAllCells ())
       m_aCells.add (new DataTablesServerDataCell (aCell, aCS));
+  }
+
+  public boolean hasRowID ()
+  {
+    return StringHelper.hasText (m_sRowID);
   }
 
   @Nullable
@@ -65,9 +73,9 @@ public final class DataTablesServerDataRow implements Serializable
     return m_sRowID;
   }
 
-  public boolean hasRowID ()
+  public boolean hasRowClass ()
   {
-    return StringHelper.hasText (m_sRowID);
+    return StringHelper.hasText (m_sRowClass);
   }
 
   /**
@@ -79,9 +87,16 @@ public final class DataTablesServerDataRow implements Serializable
     return m_sRowClass;
   }
 
-  public boolean hasRowClass ()
+  public boolean hasRowData ()
   {
-    return StringHelper.hasText (m_sRowClass);
+    return !m_aRowData.isEmpty ();
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("speed")
+  public Map <String, String> directGetAllRowData ()
+  {
+    return m_aRowData;
   }
 
   @Nonnull
