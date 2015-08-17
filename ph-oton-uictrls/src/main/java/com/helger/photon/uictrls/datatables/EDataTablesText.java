@@ -36,24 +36,25 @@ import com.helger.commons.text.util.TextHelper;
 public enum EDataTablesText implements IHasDisplayText
 {
  // aria lables
- SORT_ASCENDING (": aktivieren, um Spalte aufsteigend zu sortieren", ": activate to sort column ascending"),
- SORT_DESCENDING (": aktivieren, um Spalte absteigend zu sortieren", ": activate to sort column descending"),
+ ARIA_SORT_ASCENDING (": aktivieren, um Spalte aufsteigend zu sortieren", ": activate to sort column ascending"),
+ ARIA_SORT_DESCENDING (": aktivieren, um Spalte absteigend zu sortieren", ": activate to sort column descending"),
  // paginate
- FIRST ("Erster", "First"),
- PREVIOUS ("Zurück", "Previous"),
- NEXT ("Nächster", "Next"),
- LAST ("Letzter", "Last"),
+ PAGINATE_FIRST ("Erster", "First"),
+ PAGINATE_PREVIOUS ("Zurück", "Previous"),
+ PAGINATE_NEXT ("Nächster", "Next"),
+ PAGINATE_LAST ("Letzter", "Last"),
  // main
  EMPTY_TABLE ("Keine Einträge vorhanden", "No data available in table"),
  INFO ("_START_ bis _END_ von _TOTAL_ Einträgen", "Showing _START_ to _END_ of _TOTAL_ entries"),
  INFO_EMPTY ("0 bis 0 von 0 Einträgen", "Showing 0 to 0 of 0 entries"),
  INFO_FILTERED ("(gefiltert von _MAX_ Einträgen)", "(filtered from _MAX_ total entries)"),
  INFO_POSTFIX ("", ""),
- INFO_THOUSANDS ("", ""),
  LENGTH_MENU ("_MENU_ Einträge anzeigen", "Show _MENU_ entries"),
- LOADING_RECORDS ("Lade...", "Loading..."),
+ LOADING_RECORDS ("Wird geladen...", "Loading..."),
  PROCESSING ("Bitte warten...", "Processing..."),
  SEARCH ("Suchen:", "Search:"),
+ SEARCH_PLACEHOLDER ("Einträge suchen", "Search records"),
+ THOUSANDS ("", ""),
  ZERO_RECORDS ("Keine passenden Einträge vorhanden.", "No matching records found."),
  // For length menu
  ALL ("Alle", "all"),

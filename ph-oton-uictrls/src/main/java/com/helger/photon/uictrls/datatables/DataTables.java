@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -56,7 +55,6 @@ import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.script.AbstractHCScriptInline;
 import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
-import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCColGroup;
 import com.helger.html.hc.html.tabular.IHCCol;
 import com.helger.html.hc.html.tabular.IHCTable;
@@ -112,6 +110,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // Constructor parameters
   private final IHCTable <?> m_aTable;
   private final int m_nGeneratedJSVariableSuffix = GlobalIDFactory.getNewIntID ();
+  private final String m_sGeneratedJSVariableName = "dt" + m_nGeneratedJSVariableSuffix;
 
   //
   // DataTables - Features
@@ -139,6 +138,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // missing ajax.dataSrc:string or function ajax.dataSrc(data)
   // missing ajax:string or object or function ajax(data, callback, settings)
   // missing data:array
+  private JQueryAjaxBuilder m_aAjaxBuilder;
 
   //
   // DataTables - Callbacks
@@ -234,18 +234,16 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   /** Set column definition initialisation properties. */
   private final List <DataTablesColumnDef> m_aColumnDefs = new ArrayList <DataTablesColumnDef> ();
 
-  // Rest
-  private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
+  //
+  // DataTables - Internationalisation
+  //
   private Locale m_aDisplayLocale;
-
-  // server side processing
-  private JQueryAjaxBuilder m_aAjaxBuilder;
-  private EDataTablesFilterType m_eServerFilterType = EDataTablesFilterType.DEFAULT;
-
-  private final String m_sGeneratedJSVariableName = "oTable" + m_nGeneratedJSVariableSuffix;
   private ISimpleURL m_aTextLoadingURL;
   private String m_sTextLoadingURLLocaleParameterName;
-  private Map <String, String> m_aTextLoadingParams;
+
+  // Custom properties
+  private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
+  private EDataTablesFilterType m_eServerFilterType = EDataTablesFilterType.DEFAULT;
 
   // ColVis stuff
   private boolean m_bUseColVis = DEFAULT_USE_COL_VIS;
@@ -701,20 +699,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  @Nonnull
-  @ReturnsMutableCopy
-  public Map <String, String> getAllTextLoadingParams ()
-  {
-    return CollectionHelper.newMap (m_aTextLoadingParams);
-  }
-
-  @Nonnull
-  public DataTables setTextLoadingParams (@Nullable final Map <String, String> aTextLoadingParams)
-  {
-    m_aTextLoadingParams = aTextLoadingParams;
-    return this;
-  }
-
   @Nullable
   public JSAnonymousFunction getHeaderCallback ()
   {
@@ -877,11 +861,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     final JsonObject aLanguage = new JsonObject ();
     aLanguage.add ("aria",
                    new JsonObject ().add ("sortAscending",
-                                          EDataTablesText.SORT_ASCENDING.getDisplayText (aDisplayLocale))
+                                          EDataTablesText.ARIA_SORT_ASCENDING.getDisplayText (aDisplayLocale))
                                     .add ("sortDescending",
-                                          EDataTablesText.SORT_DESCENDING.getDisplayText (aDisplayLocale)));
+                                          EDataTablesText.ARIA_SORT_DESCENDING.getDisplayText (aDisplayLocale)));
     // Translate??
-    aLanguage.add ("sDecimal", DecimalFormatSymbols.getInstance (aDisplayLocale).getDecimalSeparator ());
+    aLanguage.add ("decimal", DecimalFormatSymbols.getInstance (aDisplayLocale).getDecimalSeparator ());
     aLanguage.add ("emptyTable", EDataTablesText.EMPTY_TABLE.getDisplayText (aDisplayLocale));
     aLanguage.add ("info", EDataTablesText.INFO.getDisplayText (aDisplayLocale));
     aLanguage.add ("infoEmpty", EDataTablesText.INFO_EMPTY.getDisplayText (aDisplayLocale));
@@ -890,13 +874,15 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     aLanguage.add ("lengthMenu", EDataTablesText.LENGTH_MENU.getDisplayText (aDisplayLocale));
     aLanguage.add ("loadingRecords", EDataTablesText.LOADING_RECORDS.getDisplayText (aDisplayLocale));
     aLanguage.add ("paginate",
-                   new JsonObject ().add ("first", EDataTablesText.FIRST.getDisplayText (aDisplayLocale))
-                                    .add ("last", EDataTablesText.LAST.getDisplayText (aDisplayLocale))
-                                    .add ("next", EDataTablesText.NEXT.getDisplayText (aDisplayLocale))
-                                    .add ("previous", EDataTablesText.PREVIOUS.getDisplayText (aDisplayLocale)));
+                   new JsonObject ().add ("first", EDataTablesText.PAGINATE_FIRST.getDisplayText (aDisplayLocale))
+                                    .add ("last", EDataTablesText.PAGINATE_LAST.getDisplayText (aDisplayLocale))
+                                    .add ("next", EDataTablesText.PAGINATE_NEXT.getDisplayText (aDisplayLocale))
+                                    .add ("previous",
+                                          EDataTablesText.PAGINATE_PREVIOUS.getDisplayText (aDisplayLocale)));
     aLanguage.add ("processing", EDataTablesText.PROCESSING.getDisplayText (aDisplayLocale));
     aLanguage.add ("search", EDataTablesText.SEARCH.getDisplayText (aDisplayLocale));
-    aLanguage.add ("thousands", EDataTablesText.INFO_THOUSANDS.getDisplayText (aDisplayLocale));
+    aLanguage.add ("searchPlaceholder", EDataTablesText.SEARCH_PLACEHOLDER.getDisplayText (aDisplayLocale));
+    aLanguage.add ("thousands", EDataTablesText.THOUSANDS.getDisplayText (aDisplayLocale));
     aLanguage.add ("url", "");
     aLanguage.add ("zeroRecords", EDataTablesText.ZERO_RECORDS.getDisplayText (aDisplayLocale));
     return aLanguage;
@@ -951,6 +937,32 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     // data
     //
 
+    // Server handling parameters
+    final boolean bServerSide = m_aAjaxBuilder != null;
+    if (bServerSide)
+    {
+      aParams.add ("serverSide", true);
+      // This copies the content of the table
+      final DataTablesServerData aServerData = new DataTablesServerData (m_aTable,
+                                                                         m_aColumnDefs,
+                                                                         m_aDisplayLocale,
+                                                                         m_eServerFilterType);
+      UIStateRegistry.getCurrent ().registerState (m_aTable.getID (), aServerData);
+      // Remove all body rows to avoid initial double painting, as the most
+      // reasonable state is retrieved from the server!
+      m_aTable.removeAllBodyRows ();
+
+      final JSAnonymousFunction aAF = new JSAnonymousFunction ();
+      final JSVar aData = aAF.param ("d");
+      final JSVar aCallback = aAF.param ("cb");
+      aAF.param ("s");
+      m_aAjaxBuilder.success (JSJQueryHelper.jqueryAjaxSuccessHandler (aCallback, null));
+      m_aAjaxBuilder.data (JQuery.extend ().arg (aData).arg (m_aAjaxBuilder.data ()));
+      aAF.body ().add (m_aAjaxBuilder.build ());
+      aParams.add ("ajax", aAF);
+      JSJQueryHelper.registerExternalResources ();
+    }
+
     //
     // callbacks
     //
@@ -975,7 +987,10 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
         aParams.add ("dom", aDom.getAsString ());
     }
     if (m_aLengthMenu != null && !m_aLengthMenu.isEmpty ())
-      aParams.add ("lengthMenu", m_aLengthMenu.getAsJSArray (m_aDisplayLocale));
+    {
+      final Locale aRealLocale = m_aDisplayLocale != null ? m_aDisplayLocale : Locale.US;
+      aParams.add ("lengthMenu", m_aLengthMenu.getAsJSArray (aRealLocale));
+    }
     // Provide any empty array if no sorting is defined, because otherwise an
     // implicit sorting of the first column, ascending is done
     aParams.add ("order", m_aInitialOrder != null ? m_aInitialOrder.getAsJS () : new JSArray ());
@@ -998,70 +1013,9 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     }
 
     //
-    // rest
+    // DataTables - Internationalisation
     //
 
-    // Server handling parameters
-    final boolean bServerSide = m_aAjaxBuilder != null;
-    if (bServerSide)
-    {
-      aParams.add ("serverSide", true);
-      // This copies the content of the table
-      final DataTablesServerData aServerData = new DataTablesServerData (m_aTable,
-                                                                         m_aColumnDefs,
-                                                                         m_aDisplayLocale,
-                                                                         m_eServerFilterType);
-      UIStateRegistry.getCurrent ().registerState (m_aTable.getID (), aServerData);
-      // Remove all body rows to avoid initial double painting, as the most
-      // reasonable state is retrieved from the server!
-      m_aTable.removeAllBodyRows ();
-    }
-
-    if (hasAnyInvisibleColumn ())
-    {
-      if (true)
-      {
-        // Remove all columns as this breaks the rendering
-        m_aTable.removeAllColumns ();
-        if (false)
-        {
-          // Just a small test
-          final int nVisibleColumnCount = getVisibleColumnCount ();
-          for (int i = 0; i < nVisibleColumnCount; ++i)
-            m_aTable.addColumn (new HCCol ());
-        }
-      }
-      else
-      {
-        // Delete all columns from the colgroup that are invisible, because this
-        // will break the rendered layout
-        // Note: back to front, so that the index does not need to be modified
-        // Note: disabled, as this may lead to HC table consistency warnings
-        final HCColGroup aColGroup = m_aTable.getColGroup ();
-        if (aColGroup != null)
-          for (int i = m_aColumnDefs.size () - 1; i >= 0; --i)
-          {
-            final DataTablesColumnDef aColumn = m_aColumnDefs.get (i);
-            if (!aColumn.isVisible ())
-              aColGroup.removeColumnAtIndex (i);
-          }
-      }
-    }
-
-    if (bServerSide)
-    {
-      final JSAnonymousFunction aAF = new JSAnonymousFunction ();
-      final JSVar aData = aAF.param ("d");
-      final JSVar aCallback = aAF.param ("cb");
-      aAF.param ("s");
-      m_aAjaxBuilder.success (JSJQueryHelper.jqueryAjaxSuccessHandler (aCallback, null));
-      m_aAjaxBuilder.data (JQuery.extend ().arg (aData).arg (m_aAjaxBuilder.data ()));
-      aAF.body ().add (m_aAjaxBuilder.build ());
-      aParams.add ("ajax", aAF);
-      JSJQueryHelper.registerExternalResources ();
-    }
-
-    // Display texts
     if (m_aDisplayLocale != null)
     {
       IJsonObject aLanguage;
@@ -1070,8 +1024,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
         // Load texts from there
         final SimpleURL aFinalURL = new SimpleURL (m_aTextLoadingURL).add (m_sTextLoadingURLLocaleParameterName,
                                                                            m_aDisplayLocale.getLanguage ());
-        if (m_aTextLoadingParams != null)
-          aFinalURL.addAll (m_aTextLoadingParams);
         aLanguage = new JsonObject ().add ("url", aFinalURL.getAsString ());
       }
       else
@@ -1080,6 +1032,17 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
         aLanguage = createLanguageJson (m_aDisplayLocale);
       }
       aParams.add ("language", aLanguage);
+    }
+
+    //
+    // rest
+    //
+
+    if (hasAnyInvisibleColumn ())
+    {
+      // Remove all columns as this breaks the rendering
+      // Note: do it after server side processing!
+      m_aTable.removeAllColumns ();
     }
 
     // ColVis stuff
@@ -1241,6 +1204,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    * @return The created JS code
    */
   @Nonnull
+  @Deprecated
   public IHasJSCode getMoveRowUpCode (@Nonnull final JQueryInvocation aRowSelect, final boolean bSwapUsingJQuery)
   {
     final JSRef jsTable = JSExpr.ref (m_sGeneratedJSVariableName);
@@ -1279,6 +1243,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    * @return The created JS code
    */
   @Nonnull
+  @Deprecated
   public IHasJSCode getMoveRowDownCode (@Nonnull final JQueryInvocation aRowSelect, final boolean bSwapUsingJQuery)
   {
     final JSRef jsTable = JSExpr.ref (m_sGeneratedJSVariableName);
