@@ -24,6 +24,15 @@ public interface IDataTablesPlugin
   String getName ();
 
   /**
+   * Check if this plugin can be applied to the passed datatables.
+   * 
+   * @param aDT
+   *        DataTables to use. Never <code>null</code>.
+   * @return <code>true</code> if it is applicable, <code>false</code> if not.
+   */
+  boolean canBeApplied (@Nonnull DataTables aDT);
+
+  /**
    * Apply all necessary information to the owning DataTables object. This can
    * be used to e.g. wave stuff into the DOM.
    *

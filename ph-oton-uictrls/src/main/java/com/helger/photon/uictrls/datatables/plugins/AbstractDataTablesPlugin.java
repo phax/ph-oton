@@ -26,17 +26,22 @@ public abstract class AbstractDataTablesPlugin implements IDataTablesPlugin
     return m_sName;
   }
 
-  public void finalizeDataTablesSettings (final DataTables aDT)
+  public boolean canBeApplied (@Nonnull final DataTables aDT)
+  {
+    return true;
+  }
+
+  public void finalizeDataTablesSettings (@Nonnull final DataTables aDT)
   {
     // empty
   }
 
-  public void addInitJS (final DataTables aDT, final JSPackage aJSCode, final JSVar aJSTable)
+  public void addInitJS (@Nonnull final DataTables aDT, @Nonnull final JSPackage aJSCode, @Nonnull final JSVar aJSTable)
   {
     // empty
   }
 
-  public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
+  public void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     // empty
   }

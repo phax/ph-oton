@@ -58,9 +58,11 @@ import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jquery.JQueryInvocation;
+import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSVar;
@@ -115,7 +117,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   private boolean m_bPaging = DEFAULT_PAGING;
   // missing processing:boolean [false]
   private ETriState m_eScrollX = ETriState.UNDEFINED;
-  private String m_sScrollY;
+  private IJSExpression m_aScrollY;
   // missing searching:boolean [true]
   // implicit serverSide:boolean [false]
   private boolean m_bStateSave = DEFAULT_STATE_SAVE;
@@ -373,15 +375,15 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  public boolean isPaginate ()
+  public boolean isPaging ()
   {
     return m_bPaging;
   }
 
   @Nonnull
-  public DataTables setPaginate (final boolean bPaginate)
+  public DataTables setPaging (final boolean bPaging)
   {
-    m_bPaging = bPaginate;
+    m_bPaging = bPaging;
     return this;
   }
 
@@ -398,15 +400,27 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nullable
-  public String getScrollY ()
+  public IJSExpression getScrollY ()
   {
-    return m_sScrollY;
+    return m_aScrollY;
+  }
+
+  @Nonnull
+  public DataTables setScrollY (final boolean bScrollY)
+  {
+    return setScrollY (JSExpr.lit (bScrollY));
   }
 
   @Nonnull
   public DataTables setScrollY (@Nullable final String sScrollY)
   {
-    m_sScrollY = sScrollY;
+    return setScrollY (JSExpr.lit (sScrollY));
+  }
+
+  @Nonnull
+  public DataTables setScrollY (@Nullable final IJSExpression aScrollY)
+  {
+    m_aScrollY = aScrollY;
     return this;
   }
 
@@ -982,8 +996,16 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
-    // Finalize plugins
+    // Determine all applicable plugins
+    final List <IDataTablesPlugin> aRelevantPlugins = new ArrayList <> ();
     for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
+      if (aPlugin.canBeApplied (this))
+        aRelevantPlugins.add (aPlugin);
+      else
+        s_aLogger.warn ("Plugin '" + aPlugin.getName () + "' cannot be applied to DataTable " + getTableID ());
+
+    // Finalize plugins
+    for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
       aPlugin.finalizeDataTablesSettings (this);
 
     final JSAssocArray aParams = new JSAssocArray ();
@@ -1002,8 +1024,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("paging", m_bPaging);
     if (m_eScrollX.isDefined ())
       aParams.add ("scrollX", m_eScrollX.getAsBooleanValue (DEFAULT_SCROLL_X));
-    if (StringHelper.hasText (m_sScrollY))
-      aParams.add ("scrollY", m_sScrollY);
+    if (m_aScrollY != null)
+      aParams.add ("scrollY", m_aScrollY);
     if (m_bStateSave != DEFAULT_STATE_SAVE)
       aParams.add ("stateSave", m_bStateSave);
 
@@ -1111,7 +1133,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     //
     // DataTables - Plugins
     //
-    for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
+    for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
       aParams.add (aPlugin.getName (), aPlugin.getInitParams ());
 
     //
@@ -1155,7 +1177,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     final JSVar aJSTable = aJSCode.var (m_sGeneratedJSVariableName, invokeDataTables ().arg (aParams));
 
     // Finalize plugins
-    for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
+    for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
       aPlugin.addInitJS (this, aJSCode, aJSTable);
 
     if (m_bUseFixedHeader)
@@ -1212,6 +1234,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SCROLLER);
     }
     for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
-      aPlugin.registerExternalResources (aConversionSettings);
+      if (aPlugin.canBeApplied (this))
+        aPlugin.registerExternalResources (aConversionSettings);
   }
 }
