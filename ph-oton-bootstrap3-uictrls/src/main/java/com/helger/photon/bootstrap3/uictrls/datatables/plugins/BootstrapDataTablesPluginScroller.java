@@ -11,6 +11,8 @@ public class BootstrapDataTablesPluginScroller extends DataTablesPluginScroller
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
+    // Change CSS
+    PhotonCSS.unregisterCSSIncludeFromThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SCROLLER);
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SCROLLER_BOOTSTRAP);
   }
 }

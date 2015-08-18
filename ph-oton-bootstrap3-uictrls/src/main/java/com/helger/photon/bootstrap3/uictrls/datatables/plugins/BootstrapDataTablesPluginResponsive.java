@@ -11,6 +11,8 @@ public class BootstrapDataTablesPluginResponsive extends DataTablesPluginRespons
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
+    // Change CSS
+    PhotonCSS.unregisterCSSIncludeFromThisRequest (EUICtrlsCSSPathProvider.DATATABLES_RESPONSIVE);
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_RESPONSIVE_BOOTSTRAP);
   }
 }

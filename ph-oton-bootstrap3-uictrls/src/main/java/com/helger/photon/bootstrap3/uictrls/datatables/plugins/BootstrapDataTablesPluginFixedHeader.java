@@ -11,6 +11,8 @@ public class BootstrapDataTablesPluginFixedHeader extends DataTablesPluginFixedH
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
+    // Change CSS
+    PhotonCSS.unregisterCSSIncludeFromThisRequest (EUICtrlsCSSPathProvider.DATATABLES_FIXED_HEADER);
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_FIXED_HEADER_BOOTSTRAP);
   }
 }

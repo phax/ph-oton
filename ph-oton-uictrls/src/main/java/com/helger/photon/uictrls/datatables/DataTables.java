@@ -42,6 +42,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.lang.CloneHelper;
+import com.helger.commons.state.EChange;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
@@ -788,12 +789,27 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
+  @Nonnull
+  public EChange removePlugin (@Nonnull final String sPluginName)
+  {
+    if (StringHelper.hasNoText (sPluginName))
+      return EChange.UNCHANGED;
+    return EChange.valueOf (m_aPlugins.remove (sPluginName) != null);
+  }
+
   @Nullable
   public IDataTablesPlugin getPluginOfName (@Nullable final String sName)
   {
     if (StringHelper.hasNoText (sName))
       return null;
     return m_aPlugins.get (sName);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <IDataTablesPlugin> getAllPlugins ()
+  {
+    return CollectionHelper.newList (m_aPlugins.values ());
   }
 
   // XXX The Rest

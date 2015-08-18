@@ -11,6 +11,8 @@ public class BootstrapDataTablesPluginFixedColumns extends DataTablesPluginFixed
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
+    // Change CSS
+    PhotonCSS.unregisterCSSIncludeFromThisRequest (EUICtrlsCSSPathProvider.DATATABLES_FIXED_COLUMNS);
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_FIXED_COLUMNS_BOOTSTRAP);
   }
 }
