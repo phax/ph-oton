@@ -57,9 +57,7 @@ public enum EDataTablesText implements IHasDisplayText
  THOUSANDS ("", ""),
  ZERO_RECORDS ("Keine passenden Einträge vorhanden.", "No matching records found."),
  // For length menu
- ALL ("Alle", "all"),
- // ColVis stuff
- COL_VIS_BUTTON_TEXT ("Spalten wählen", "Select columns");
+ ALL ("Alle", "all");
 
   private final IMultilingualText m_aTP;
 

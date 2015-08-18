@@ -1,0 +1,47 @@
+package com.helger.photon.uictrls.datatables.plugins;
+
+import javax.annotation.Nullable;
+
+import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSExpr;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
+import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
+
+/**
+ * Enable and configure the Select extension for DataTables.
+ *
+ * @author Philip Helger
+ */
+public class DataTablesPluginSelect extends AbstractDataTablesPlugin
+{
+  public DataTablesPluginSelect ()
+  {
+    super ("select");
+  }
+
+  // TODO Add DT Select plugin parameters
+
+  @Nullable
+  public IJSExpression getInitParams ()
+  {
+    final JSAssocArray ret = new JSAssocArray ();
+
+    if (ret.isEmpty ())
+    {
+      // No properties present
+      return JSExpr.TRUE;
+    }
+    return ret;
+  }
+
+  @Override
+  public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
+  {
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SELECT);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SELECT);
+  }
+}

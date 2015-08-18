@@ -19,12 +19,10 @@ package com.helger.photon.bootstrap3.uictrls.datatables;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
-import com.helger.photon.bootstrap3.table.AbstractBootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.html.PhotonCSS;
@@ -32,7 +30,6 @@ import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.DataTablesDom;
 
 @OutOfBandNode
 public class BootstrapDataTables extends DataTables
@@ -42,29 +39,7 @@ public class BootstrapDataTables extends DataTables
   public BootstrapDataTables (@Nonnull final IHCTable <?> aTable)
   {
     super (aTable);
-    if (aTable instanceof AbstractBootstrapTable <?>)
-    {
-      ((AbstractBootstrapTable <?>) aTable).setStriped (true);
-      ((AbstractBootstrapTable <?>) aTable).setHover (true);
-    }
     setDom (new BootstrapDataTablesDom ());
-  }
-
-  @Override
-  @OverrideOnDemand
-  protected void weaveColVisIntoDom (@Nonnull final DataTablesDom aDom)
-  {
-    // Check if it is a Bootstrap datatables DOM
-    final int i = aDom.indexOf (DataTablesDom.getDivString (CBootstrapCSS.ROW, CBootstrapCSS.HIDDEN_PRINT));
-    if (i >= 0)
-    {
-      if (true)
-        aDom.setPosition (i + 5).addCustom ("C");
-      else
-        aDom.setPosition (i + 1).openDiv (CBootstrapCSS.COL_XS_12).addCustom ("C").closeDiv ();
-    }
-    else
-      super.weaveColVisIntoDom (aDom);
   }
 
   @Override

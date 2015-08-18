@@ -6,14 +6,17 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSAtom;
 import com.helger.html.jscode.JSExpr;
 
 public class DTPButtonsButton
@@ -25,7 +28,7 @@ public class DTPButtonsButton
   /** function available( dt, config ) */
   private JSAnonymousFunction m_aAvailable;
   /** Set the class name for the button. */
-  private HCHasCSSClasses m_aClassNames;
+  private final HCHasCSSClasses m_aClassNames = new HCHasCSSClasses ();
   /** function destroy( dt, node, config ) */
   private JSAnonymousFunction m_aDestroy;
   /** Set a button's initial enabled state. */
@@ -202,8 +205,16 @@ public class DTPButtonsButton
     return this;
   }
 
+  /**
+   * @param ret
+   *        Associative array to be modified. Never <code>null</code>.
+   */
+  @OverrideOnDemand
+  protected void onGetAsJS (@Nonnull final JSAssocArray ret)
+  {}
+
   @Nonnull
-  public JSAssocArray getAsJS ()
+  public IJSExpression getAsJS ()
   {
     final JSAssocArray ret = new JSAssocArray ();
     if (m_aAction != null)
@@ -229,6 +240,24 @@ public class DTPButtonsButton
       ret.add ("namespace", m_sNamespace);
     if (m_aText != null)
       ret.add ("text", m_aText);
+    onGetAsJS (ret);
+
+    if (ret.size () == 1)
+    {
+      final IJSExpression aValue = ret.get (new JSAtom ("extend"));
+      if (aValue != null)
+        return aValue;
+    }
+
     return ret;
   }
+
+  /**
+   * Register additional resources for this button.
+   * 
+   * @param aConversionSettings
+   *        Current conversion settings. Never <code>null</code>.
+   */
+  public void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  {}
 }

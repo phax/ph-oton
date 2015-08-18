@@ -85,6 +85,11 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
     return m_aElements.indexOf (s);
   }
 
+  public boolean contains (@Nullable final String s)
+  {
+    return indexOf (s) >= 0;
+  }
+
   @Nonnull
   public EChange remove (@Nullable final String s)
   {
@@ -181,12 +186,16 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
     return _internalOpenDiv (OPEN_DIV);
   }
 
+  @Nullable
+  public static String getDivStringWithID (@Nullable final String sID)
+  {
+    return StringHelper.hasNoText (sID) ? OPEN_DIV : OPEN_DIV + "'#" + sID + "'";
+  }
+
   @Nonnull
   public DataTablesDom openDivWithID (@Nullable final String sID)
   {
-    if (StringHelper.hasText (sID))
-      return _internalOpenDiv (OPEN_DIV + "'#" + sID + "'");
-    return _internalOpenDiv (OPEN_DIV);
+    return _internalOpenDiv (getDivStringWithID (sID));
   }
 
   @Nonnull

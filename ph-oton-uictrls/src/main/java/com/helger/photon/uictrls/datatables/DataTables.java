@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -83,15 +84,22 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 {
   public static final boolean DEFAULT_AUTOWIDTH = true;
   public static final boolean DEFAULT_DEFER_RENDER = false;
+  public static final boolean DEFAULT_INFO = true;
   public static final boolean DEFAULT_JQUERY_UI = false;
+  public static final boolean DEFAULT_LENGTH_CHANGE = true;
+  public static final boolean DEFAULT_ORDERING = true;
   public static final boolean DEFAULT_PAGING = true;
+  public static final boolean DEFAULT_PROCESSING = false;
   public static final boolean DEFAULT_SCROLL_X = false;
+  public static final boolean DEFAULT_SEARCHING = true;
   public static final boolean DEFAULT_STATE_SAVE = false;
 
-  public static final boolean DEFAULT_SCROLL_COLLAPSE = false;
-  public static final EDataTablesPagingType DEFAULT_PAGING_TYPE = EDataTablesPagingType.SIMPLE_NUMBERS;
+  public static final boolean DEFAULT_DEFER_LOADING = false;
+  public static final boolean DEFAULT_DESTROY = false;
+  public static final int DEFAULT_DISPLAY_START = 0;
   public static final int DEFAULT_PAGE_LENGTH = 10;
-  public static final boolean DEFAULT_USE_COL_VIS = false;
+  public static final EDataTablesPagingType DEFAULT_PAGING_TYPE = EDataTablesPagingType.SIMPLE_NUMBERS;
+  public static final boolean DEFAULT_SCROLL_COLLAPSE = false;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTables.class);
 
@@ -106,15 +114,15 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   private boolean m_bAutoWidth = DEFAULT_AUTOWIDTH;
   private boolean m_bDeferRender = DEFAULT_DEFER_RENDER;
-  // missing info:boolean [true]
+  private boolean m_bInfo = DEFAULT_INFO;
   private boolean m_bJQueryUI = DEFAULT_JQUERY_UI;
-  // missing lengthChange:boolean [true]
-  // missing ordering:boolean [true]
+  private boolean m_bLengthChange = DEFAULT_LENGTH_CHANGE;
+  private boolean m_bOrdering = DEFAULT_ORDERING;
   private boolean m_bPaging = DEFAULT_PAGING;
-  // missing processing:boolean [false]
+  private boolean m_bProcessing = DEFAULT_PROCESSING;
   private ETriState m_eScrollX = ETriState.UNDEFINED;
   private IJSExpression m_aScrollY;
-  // missing searching:boolean [true]
+  private boolean m_bSearching = DEFAULT_SEARCHING;
   // implicit serverSide:boolean [false]
   private boolean m_bStateSave = DEFAULT_STATE_SAVE;
 
@@ -152,14 +160,14 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   //
 
   /** Delay the loading of server-side data until second draw. */
-  // missing deferLoading:boolean [false]
+  private boolean m_bDeferLoading = DEFAULT_DEFER_LOADING;
   /**
    * Destroy any existing table matching the selector and replace with the new
    * options.
    */
-  // missing destroy:boolean [false]
+  private boolean m_bDestroy = DEFAULT_DESTROY;
   /** Initial paging start point. */
-  // missing displayStart:int [0]
+  private int m_nDisplayStart = DEFAULT_DISPLAY_START;
   /**
    * Define the table control elements to appear on the page and in what order.
    */
@@ -237,9 +245,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // Custom properties
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
   private EDataTablesFilterType m_eServerFilterType = EDataTablesFilterType.DEFAULT;
-
-  // ColVis stuff
-  private boolean m_bUseColVis = DEFAULT_USE_COL_VIS;
 
   /**
    * Apply to an existing table. If the table does not have an ID yet, a new one
@@ -349,6 +354,18 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
+  public boolean isInfo ()
+  {
+    return m_bInfo;
+  }
+
+  @Nonnull
+  public DataTables setInfo (final boolean bInfo)
+  {
+    m_bInfo = bInfo;
+    return this;
+  }
+
   public boolean isJQueryUI ()
   {
     return m_bJQueryUI;
@@ -361,6 +378,30 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
+  public boolean isLengthChange ()
+  {
+    return m_bLengthChange;
+  }
+
+  @Nonnull
+  public DataTables setLengthChange (final boolean bLengthChange)
+  {
+    m_bLengthChange = bLengthChange;
+    return this;
+  }
+
+  public boolean isOrdering ()
+  {
+    return m_bOrdering;
+  }
+
+  @Nonnull
+  public DataTables setOrdering (final boolean bOrdering)
+  {
+    m_bOrdering = bOrdering;
+    return this;
+  }
+
   public boolean isPaging ()
   {
     return m_bPaging;
@@ -370,6 +411,18 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public DataTables setPaging (final boolean bPaging)
   {
     m_bPaging = bPaging;
+    return this;
+  }
+
+  public boolean isProcessing ()
+  {
+    return m_bProcessing;
+  }
+
+  @Nonnull
+  public DataTables setProcessing (final boolean bProcessing)
+  {
+    m_bProcessing = bProcessing;
     return this;
   }
 
@@ -407,6 +460,18 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public DataTables setScrollY (@Nullable final IJSExpression aScrollY)
   {
     m_aScrollY = aScrollY;
+    return this;
+  }
+
+  public boolean isSearching ()
+  {
+    return m_bSearching;
+  }
+
+  @Nonnull
+  public DataTables setSearching (final boolean bSearching)
+  {
+    m_bSearching = bSearching;
     return this;
   }
 
@@ -504,6 +569,42 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   //
   // DataTables - Options
   //
+  public boolean isDeferLoading ()
+  {
+    return m_bDeferLoading;
+  }
+
+  @Nonnull
+  public DataTables setDeferLoading (final boolean bDeferLoading)
+  {
+    m_bDeferLoading = bDeferLoading;
+    return this;
+  }
+
+  public boolean isDestroy ()
+  {
+    return m_bDestroy;
+  }
+
+  @Nonnull
+  public DataTables setDestroy (final boolean bDestroy)
+  {
+    m_bDestroy = bDestroy;
+    return this;
+  }
+
+  @Nonnegative
+  public int getDisplayStart ()
+  {
+    return m_nDisplayStart;
+  }
+
+  @Nonnull
+  public DataTables setDisplayStart (@Nonnegative final int nDisplayStart)
+  {
+    m_nDisplayStart = nDisplayStart;
+    return this;
+  }
 
   @Nullable
   @ReturnsMutableCopy
@@ -562,7 +663,10 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  @Nonnegative
+  /**
+   * @return -1 to display all records
+   */
+  @CheckForSigned
   public int getPageLength ()
   {
     return m_nPageLength;
@@ -826,18 +930,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  public boolean isUseColVis ()
-  {
-    return m_bUseColVis;
-  }
-
-  @Nonnull
-  public DataTables setUseColVis (final boolean bUseColVis)
-  {
-    m_bUseColVis = bUseColVis;
-    return this;
-  }
-
   /**
    * modify parameter map
    *
@@ -915,12 +1007,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return JQuery.idRef (m_aTable).jqinvoke ("DataTable");
   }
 
-  @OverrideOnDemand
-  protected void weaveColVisIntoDom (@Nonnull final DataTablesDom aDom)
-  {
-    aDom.setPosition (0).addCustom ("C").openDiv ("clear").closeDiv ();
-  }
-
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
@@ -949,14 +1035,24 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("autoWidth", m_bAutoWidth);
     if (m_bDeferRender != DEFAULT_DEFER_RENDER)
       aParams.add ("deferRender", m_bDeferRender);
+    if (m_bInfo != DEFAULT_INFO)
+      aParams.add ("info", m_bInfo);
     if (m_bJQueryUI != DEFAULT_JQUERY_UI)
       aParams.add ("jQueryUI", m_bJQueryUI);
+    if (m_bLengthChange != DEFAULT_LENGTH_CHANGE)
+      aParams.add ("lengthChange", m_bLengthChange);
+    if (m_bOrdering != DEFAULT_ORDERING)
+      aParams.add ("ordering", m_bOrdering);
     if (m_bPaging != DEFAULT_PAGING)
       aParams.add ("paging", m_bPaging);
+    if (m_bProcessing != DEFAULT_PROCESSING)
+      aParams.add ("processing", m_bProcessing);
     if (m_eScrollX.isDefined ())
       aParams.add ("scrollX", m_eScrollX.getAsBooleanValue (DEFAULT_SCROLL_X));
     if (m_aScrollY != null)
       aParams.add ("scrollY", m_aScrollY);
+    if (m_bSearching != DEFAULT_SEARCHING)
+      aParams.add ("searching", m_bSearching);
     if (m_bStateSave != DEFAULT_STATE_SAVE)
       aParams.add ("stateSave", m_bStateSave);
 
@@ -1002,17 +1098,14 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     // options
     //
 
-    {
-      DataTablesDom aDom = m_aDom;
-      if (m_bUseColVis)
-      {
-        if (aDom == null)
-          aDom = new DataTablesDom ();
-        weaveColVisIntoDom (aDom);
-      }
-      if (aDom != null)
-        aParams.add ("dom", aDom.getAsString ());
-    }
+    if (m_bDeferLoading != DEFAULT_DEFER_LOADING)
+      aParams.add ("deferLoading", m_bDeferLoading);
+    if (m_bDestroy != DEFAULT_DESTROY)
+      aParams.add ("destroy", m_bDestroy);
+    if (m_nDisplayStart != DEFAULT_DISPLAY_START)
+      aParams.add ("displayStart", m_nDisplayStart);
+    if (m_aDom != null)
+      aParams.add ("dom", m_aDom.getAsString ());
     if (m_aLengthMenu != null && !m_aLengthMenu.isEmpty ())
     {
       final Locale aRealLocale = m_aDisplayLocale != null ? m_aDisplayLocale : Locale.US;
@@ -1078,22 +1171,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       m_aTable.removeAllColumns ();
     }
 
-    // ColVis stuff
-    if (m_bUseColVis)
-    {
-      final JSAssocArray aJSColVisParams = new JSAssocArray ();
-      if (m_aDisplayLocale != null)
-        aJSColVisParams.add ("buttonText", EDataTablesText.COL_VIS_BUTTON_TEXT.getDisplayText (m_aDisplayLocale));
-
-      final JSArray aExclude = new JSArray ();
-      for (final DataTablesColumnDef aColumn : m_aColumnDefs)
-        if (!aColumn.isVisible ())
-          aExclude.addAll (aColumn.getAllTargets ());
-      aJSColVisParams.add ("exclude", aExclude);
-
-      aParams.add ("colVis", aJSColVisParams);
-    }
-
     modifyParams (aParams);
 
     // main on document ready code
@@ -1103,7 +1180,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
     final JSVar aJSTable = aJSCode.var (m_sGeneratedJSVariableName, invokeDataTables ().arg (aParams));
 
-    // Finalize plugins
+    // Add plugin init JS
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
       aPlugin.addInitJS (this, aJSCode, aJSTable);
 
@@ -1126,11 +1203,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_1_10);
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_1_10);
-    if (m_bUseColVis)
-    {
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_COL_VIS);
-      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_COL_VIS);
-    }
 
     for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
       if (aPlugin.canBeApplied (this))
