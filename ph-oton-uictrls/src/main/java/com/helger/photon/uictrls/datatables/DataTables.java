@@ -63,7 +63,6 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
-import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSVar;
 import com.helger.json.IJsonObject;
@@ -92,7 +91,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public static final EDataTablesPagingType DEFAULT_PAGING_TYPE = EDataTablesPagingType.SIMPLE_NUMBERS;
   public static final int DEFAULT_PAGE_LENGTH = 10;
   public static final boolean DEFAULT_USE_COL_VIS = false;
-  public static final boolean DEFAULT_USE_FIXED_HEADER = false;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTables.class);
 
@@ -241,10 +239,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   // ColVis stuff
   private boolean m_bUseColVis = DEFAULT_USE_COL_VIS;
-
-  // FixedHeader stuff
-  private boolean m_bUseFixedHeader = DEFAULT_USE_FIXED_HEADER;
-  private JSAssocArray m_aFixedHeaderOptions;
 
   /**
    * Apply to an existing table. If the table does not have an ID yet, a new one
@@ -828,32 +822,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  public boolean isUseFixedHeader ()
-  {
-    return m_bUseFixedHeader;
-  }
-
-  @Nonnull
-  public DataTables setUseFixedHeader (final boolean bUseFixedHeader)
-  {
-    m_bUseFixedHeader = bUseFixedHeader;
-    return this;
-  }
-
-  @Nullable
-  @ReturnsMutableObject ("design")
-  public JSAssocArray getFixedHeaderOptions ()
-  {
-    return m_aFixedHeaderOptions;
-  }
-
-  @Nonnull
-  public DataTables setFixedHeaderOptions (@Nullable final JSAssocArray aFixedHeaderOptions)
-  {
-    m_aFixedHeaderOptions = aFixedHeaderOptions;
-    return this;
-  }
-
   /**
    * modify parameter map
    *
@@ -1123,13 +1091,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
       aPlugin.addInitJS (this, aJSCode, aJSTable);
 
-    if (m_bUseFixedHeader)
-    {
-      final JSInvocation aJSFixedHeader = new JSInvocation ("new FixedHeader").arg (aJSTable);
-      if (m_aFixedHeaderOptions != null)
-        aJSFixedHeader.arg (m_aFixedHeaderOptions);
-      aJSCode.add (aJSFixedHeader);
-    }
     addCodeAfterDataTables (aJSCode, aJSTable);
 
     // Main HTML code for this element :)
@@ -1153,11 +1114,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     {
       PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_COL_VIS);
       PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_COL_VIS);
-    }
-    if (m_bUseFixedHeader)
-    {
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_FIXED_HEADER);
-      PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_FIXED_HEADER);
     }
 
     for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
