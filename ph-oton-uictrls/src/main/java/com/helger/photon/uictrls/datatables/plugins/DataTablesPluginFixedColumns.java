@@ -1,5 +1,6 @@
 package com.helger.photon.uictrls.datatables.plugins;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -24,6 +25,39 @@ public class DataTablesPluginFixedColumns extends AbstractDataTablesPlugin
   public DataTablesPluginFixedColumns ()
   {
     super ("fixedColumns");
+  }
+
+  @Nonnull
+  public DataTablesPluginFixedColumns setHeightMatch (@Nullable final EDTPFixedColumnsHeightMatch eHeightMatch)
+  {
+    m_eHeightMatch = eHeightMatch;
+    return this;
+  }
+
+  @Nonnull
+  public DataTablesPluginFixedColumns setLeftColumns (final int nLeftColumns)
+  {
+    return setLeftColumns (Integer.valueOf (nLeftColumns));
+  }
+
+  @Nonnull
+  public DataTablesPluginFixedColumns setLeftColumns (@Nullable final Integer aLeftColumns)
+  {
+    m_aLeftColumns = aLeftColumns;
+    return this;
+  }
+
+  @Nonnull
+  public DataTablesPluginFixedColumns setRightColumns (final int nRightColumns)
+  {
+    return setRightColumns (Integer.valueOf (nRightColumns));
+  }
+
+  @Nonnull
+  public DataTablesPluginFixedColumns setRightColumns (@Nullable final Integer aRightColumns)
+  {
+    m_aRightColumns = aRightColumns;
+    return this;
   }
 
   @Nullable
