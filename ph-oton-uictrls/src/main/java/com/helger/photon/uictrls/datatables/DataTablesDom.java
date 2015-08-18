@@ -100,6 +100,12 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   }
 
   @Nonnull
+  public EChange remove ()
+  {
+    return remove (m_nPos);
+  }
+
+  @Nonnull
   public EChange remove (@Nonnegative final int nIndex)
   {
     if (nIndex < 0 || nIndex >= m_aElements.size ())

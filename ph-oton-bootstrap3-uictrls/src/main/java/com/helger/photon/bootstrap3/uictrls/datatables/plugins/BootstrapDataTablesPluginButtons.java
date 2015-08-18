@@ -33,7 +33,13 @@ public class BootstrapDataTablesPluginButtons extends DataTablesPluginButtons
     final int i = aDom.indexOf (DataTablesDom.getDivString (CBootstrapCSS.ROW, CBootstrapCSS.HIDDEN_PRINT));
     if (i >= 0)
     {
-      aDom.setPosition (i + 5).addCustom ("B");
+      aDom.setPosition (i + 1);
+      aDom.remove ();
+      aDom.openDiv (CBootstrapCSS.COL_SM_4);
+      aDom.setPosition (i + 4).openDiv (CBootstrapCSS.COL_SM_4).addCustom ("B").closeDiv ();
+      aDom.setPosition (i + 7);
+      aDom.remove ();
+      aDom.openDiv (CBootstrapCSS.COL_SM_4);
     }
     else
       super.weaveIntoDom (aDom);

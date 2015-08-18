@@ -30,10 +30,10 @@ public class BootstrapDataTablesDom extends DataTablesDom
   {
     openDiv (CBootstrapCSS.ROW, CBootstrapCSS.HIDDEN_PRINT);
     {
-      openDiv (CBootstrapCSS.COL_XS_6);
+      openDiv (CBootstrapCSS.COL_SM_6);
       addLengthMenu ();
       closeDiv ();
-      openDiv (CBootstrapCSS.COL_XS_6);
+      openDiv (CBootstrapCSS.COL_SM_6);
       addFiltering ();
       closeDiv ();
       addProcessing ();
@@ -42,10 +42,10 @@ public class BootstrapDataTablesDom extends DataTablesDom
     addTable ();
     openDiv (CBootstrapCSS.ROW, CBootstrapCSS.HIDDEN_PRINT);
     {
-      openDiv (CBootstrapCSS.COL_XS_12, CBootstrapCSS.COL_SM_4);
+      openDiv (CBootstrapCSS.COL_SM_4);
       addInformationSummary ();
       closeDiv ();
-      openDiv (CBootstrapCSS.COL_XS_12, CBootstrapCSS.COL_SM_8);
+      openDiv (CBootstrapCSS.COL_SM_8);
       addPagination ();
       closeDiv ();
     }

@@ -31,11 +31,9 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.AbstractHCInput;
 import com.helger.html.hc.html.forms.EHCInputType;
 import com.helger.html.hc.html.forms.HCHiddenField;
-import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.jscode.JSAnonymousFunction;
-import com.helger.html.jscode.JSConditional;
 import com.helger.html.jscode.JSVar;
 import com.helger.photon.core.form.RequestField;
 
@@ -139,14 +137,5 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
 
     // JS code
     aTargetNode.addChild (m_aScript);
-
-    // If the edit is empty, clear the hidden field as well
-    if (false)
-    {
-      final JSAnonymousFunction aOnChange = new JSAnonymousFunction ();
-      final JSConditional aJSCond = aOnChange.body ()._if (JQuery.jQueryThis ().val ().eeq (""));
-      aJSCond._then ().add (JQuery.idRef (m_sHiddenFieldID).val (""));
-      aTargetNode.addChild (new HCScriptInline (JQuery.idRef (this).on ("change", aOnChange)));
-    }
   }
 }
