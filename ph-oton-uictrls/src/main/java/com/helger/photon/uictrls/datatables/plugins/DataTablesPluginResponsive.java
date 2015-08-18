@@ -15,7 +15,9 @@ import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
+import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
 public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
 {
@@ -119,6 +121,7 @@ public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
   @Override
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_RESPONSIVE);
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_RESPONSIVE);
   }
 }
