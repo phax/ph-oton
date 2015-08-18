@@ -60,6 +60,7 @@ import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jquery.JQueryInvocation;
+import com.helger.html.js.JSMarshaller;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
@@ -106,7 +107,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // Constructor parameters
   private final IHCTable <?> m_aTable;
   private final int m_nGeneratedJSVariableSuffix = GlobalIDFactory.getNewIntID ();
-  private final String m_sGeneratedJSVariableName = "dt" + m_nGeneratedJSVariableSuffix;
+  private String m_sJSVariableName = "dt" + m_nGeneratedJSVariableSuffix;
 
   //
   // DataTables - Features
@@ -323,7 +324,17 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   @Nonempty
   public final String getJSVariableName ()
   {
-    return m_sGeneratedJSVariableName;
+    return m_sJSVariableName;
+  }
+
+  @Nonnull
+  public DataTables setJSVariableName (@Nonnull @Nonempty final String sJSVariableName)
+  {
+    ValueEnforcer.notEmpty (sJSVariableName, "JSVariableName");
+    ValueEnforcer.isTrue (JSMarshaller.isJSIdentifier (sJSVariableName),
+                          "JS Variable name is not an identifier: " + sJSVariableName);
+    m_sJSVariableName = sJSVariableName;
+    return this;
   }
 
   //
@@ -1178,7 +1189,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
     addCodeBeforeDataTables (aJSCode);
 
-    final JSVar aJSTable = aJSCode.var (m_sGeneratedJSVariableName, invokeDataTables ().arg (aParams));
+    final JSVar aJSTable = aJSCode.var (m_sJSVariableName, invokeDataTables ().arg (aParams));
 
     // Add plugin init JS
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
