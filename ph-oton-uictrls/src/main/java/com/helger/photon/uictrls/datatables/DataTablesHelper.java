@@ -38,12 +38,14 @@ import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.jquery.JQuerySelectorList;
 import com.helger.html.js.IHasJSCode;
+import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSBlock;
 import com.helger.html.jscode.JSConditional;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSGlobal;
+import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSOp;
 import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSRef;
@@ -310,5 +312,24 @@ public final class DataTablesHelper
       aIfNext.invoke (jsTable, "fnUpdate").arg (aData).arg (aNextRow0);
     }
     return aPackage;
+  }
+
+  /**
+   * Remove all filters and redraw the data table
+   * 
+   * @param aDTSelect
+   *        JS expression that selects 1-n datatables
+   * @return The invocation to clear the filter. Never <code>null</code>.
+   */
+  @Nonnull
+  public static JSInvocation createClearFilterCode (@Nonnull final IJSExpression aDTSelect)
+  {
+    return aDTSelect.invoke ("DataTable")
+                    .invoke ("search")
+                    .arg ("")
+                    .invoke ("columns")
+                    .invoke ("search")
+                    .arg ("")
+                    .invoke ("draw");
   }
 }

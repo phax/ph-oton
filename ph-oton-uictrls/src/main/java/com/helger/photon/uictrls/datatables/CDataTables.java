@@ -29,6 +29,7 @@ import com.helger.html.css.ICSSClassProvider;
 @Immutable
 public final class CDataTables
 {
+  public static final ICSSClassProvider CSS_CLASS_DATATABLE = DefaultCSSClassProvider.create ("dataTable");
   public static final ICSSClassProvider CSS_CLASS_DATATABLES_LENGTH = DefaultCSSClassProvider.create ("dataTables_length");
   public static final ICSSClassProvider CSS_CLASS_DATATABLES_FILTER = DefaultCSSClassProvider.create ("dataTables_filter");
   public static final ICSSClassProvider CSS_CLASS_DATATABLES_INFO = DefaultCSSClassProvider.create ("dataTables_info");
