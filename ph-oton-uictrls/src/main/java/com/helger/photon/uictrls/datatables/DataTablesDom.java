@@ -110,7 +110,9 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   {
     if (nIndex < 0 || nIndex >= m_aElements.size ())
       return EChange.UNCHANGED;
-    m_aElements.remove (nIndex);
+    final String sValue = m_aElements.remove (nIndex);
+    if (sValue != null && sValue.startsWith (OPEN_DIV))
+      m_nOpenDivs--;
     return EChange.CHANGED;
   }
 
