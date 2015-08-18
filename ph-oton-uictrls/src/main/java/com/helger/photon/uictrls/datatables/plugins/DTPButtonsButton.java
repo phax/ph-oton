@@ -1,13 +1,10 @@
 package com.helger.photon.uictrls.datatables.plugins;
 
-import java.util.Set;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.ICSSClassProvider;
@@ -63,77 +60,25 @@ public class DTPButtonsButton
     return this;
   }
 
-  public boolean containsClass (@Nullable final ICSSClassProvider aCSSClassProvider)
-  {
-    return m_aClassNames.containsClass (aCSSClassProvider);
-  }
-
   @Nonnull
-  public DTPButtonsButton addClass (@Nullable final ICSSClassProvider aCSSClassProvider)
+  public DTPButtonsButton addClassName (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
     m_aClassNames.addClass (aCSSClassProvider);
     return this;
   }
 
-  @Deprecated
   @Nonnull
-  public DTPButtonsButton addClasses (@Nullable final ICSSClassProvider aCSSClassProvider)
-  {
-    m_aClassNames.addClasses (aCSSClassProvider);
-    return this;
-  }
-
-  @Nonnull
-  public DTPButtonsButton addClasses (@Nullable final ICSSClassProvider... aCSSClassProviders)
+  public DTPButtonsButton addClassName (@Nullable final ICSSClassProvider... aCSSClassProviders)
   {
     m_aClassNames.addClasses (aCSSClassProviders);
     return this;
   }
 
   @Nonnull
-  public DTPButtonsButton addClasses (@Nullable final Iterable <? extends ICSSClassProvider> aCSSClassProviders)
+  public DTPButtonsButton addClassName (@Nullable final Iterable <? extends ICSSClassProvider> aCSSClassProviders)
   {
     m_aClassNames.addClasses (aCSSClassProviders);
     return this;
-  }
-
-  @Nonnull
-  public DTPButtonsButton removeClass (@Nullable final ICSSClassProvider aCSSClassProvider)
-  {
-    m_aClassNames.removeClass (aCSSClassProvider);
-    return this;
-  }
-
-  @Nonnull
-  public DTPButtonsButton removeAllClasses ()
-  {
-    m_aClassNames.removeAllClasses ();
-    return this;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public Set <ICSSClassProvider> getAllClasses ()
-  {
-    return m_aClassNames.getAllClasses ();
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public Set <String> getAllClassNames ()
-  {
-    return m_aClassNames.getAllClassNames ();
-  }
-
-  @Nullable
-  public String getAllClassesAsString ()
-  {
-    return m_aClassNames.getAllClassesAsString ();
-  }
-
-  public boolean hasAnyClass ()
-  {
-    return m_aClassNames.hasAnyClass ();
   }
 
   @Nonnull
@@ -221,7 +166,7 @@ public class DTPButtonsButton
       ret.add ("action", m_aAction);
     if (m_aAvailable != null)
       ret.add ("available", m_aAvailable);
-    final String sClasses = getAllClassesAsString ();
+    final String sClasses = m_aClassNames.getAllClassesAsString ();
     if (StringHelper.hasText (sClasses))
       ret.add ("className", sClasses);
     if (m_aDestroy != null)
@@ -254,7 +199,7 @@ public class DTPButtonsButton
 
   /**
    * Register additional resources for this button.
-   * 
+   *
    * @param aConversionSettings
    *        Current conversion settings. Never <code>null</code>.
    */

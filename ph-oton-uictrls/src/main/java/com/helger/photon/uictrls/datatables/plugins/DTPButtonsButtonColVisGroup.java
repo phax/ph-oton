@@ -3,9 +3,10 @@ package com.helger.photon.uictrls.datatables.plugins;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSExpr;
 
 /**
  * Show and hide multiple columns. Please note that unlike most other buttons,
@@ -18,9 +19,9 @@ import com.helger.html.jscode.JSAssocArray;
 public class DTPButtonsButtonColVisGroup extends DTPButtonsButton
 {
   /** Column to make visible */
-  private String m_sShow;
+  private IJSExpression m_aShow;
   /** Column to remove from the visible display */
-  private String m_sHide;
+  private IJSExpression m_aHide;
 
   public DTPButtonsButtonColVisGroup ()
   {
@@ -30,24 +31,36 @@ public class DTPButtonsButtonColVisGroup extends DTPButtonsButton
   @Nonnull
   public DTPButtonsButtonColVisGroup setShow (@Nullable final String sShow)
   {
-    m_sShow = sShow;
+    return setShow (sShow == null ? null : JSExpr.lit (sShow));
+  }
+
+  @Nonnull
+  public DTPButtonsButtonColVisGroup setShow (@Nullable final IJSExpression aShow)
+  {
+    m_aShow = aShow;
     return this;
   }
 
   @Nonnull
   public DTPButtonsButtonColVisGroup setHide (@Nullable final String sHide)
   {
-    m_sHide = sHide;
+    return setHide (sHide == null ? null : JSExpr.lit (sHide));
+  }
+
+  @Nonnull
+  public DTPButtonsButtonColVisGroup setHide (@Nullable final IJSExpression aHide)
+  {
+    m_aHide = aHide;
     return this;
   }
 
   @Override
   protected void onGetAsJS (@Nonnull final JSAssocArray ret)
   {
-    if (StringHelper.hasText (m_sShow))
-      ret.add ("show", m_sShow);
-    if (StringHelper.hasText (m_sHide))
-      ret.add ("hide", m_sHide);
+    if (m_aShow != null)
+      ret.add ("show", m_aShow);
+    if (m_aHide != null)
+      ret.add ("hide", m_aHide);
   }
 
   @Override

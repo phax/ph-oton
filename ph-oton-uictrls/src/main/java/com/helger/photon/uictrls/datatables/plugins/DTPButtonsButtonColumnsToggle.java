@@ -3,6 +3,8 @@ package com.helger.photon.uictrls.datatables.plugins;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.state.ETriState;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
@@ -13,7 +15,7 @@ import com.helger.html.jscode.JSExpr;
  *
  * @author Philip Helger
  */
-public class DTPButtonsButtonColVis extends DTPButtonsButton
+public class DTPButtonsButtonColumnsToggle extends DTPButtonsButton
 {
   /**
    * Columns selector that defines the columns to include in the column
@@ -23,21 +25,41 @@ public class DTPButtonsButtonColVis extends DTPButtonsButton
    */
   private IJSExpression m_aColumns;
 
-  public DTPButtonsButtonColVis ()
+  /**
+   * The visibility value to set for the selected column(s). true will display
+   * the column, false will hide it and undefined will toggle its current state.
+   */
+  private ETriState m_eVisibility = ETriState.UNDEFINED;
+
+  public DTPButtonsButtonColumnsToggle ()
   {
-    setExtend (EDTPButtonsButtonType.COL_VIS.getName ());
+    setExtend (EDTPButtonsButtonType.COLUMNS_TOGGLE.getName ());
   }
 
   @Nonnull
-  public DTPButtonsButtonColVis setColumns (@Nullable final String sColumns)
+  public DTPButtonsButtonColumnsToggle setColumns (@Nullable final String sColumns)
   {
     return setColumns (sColumns == null ? null : JSExpr.lit (sColumns));
   }
 
   @Nonnull
-  public DTPButtonsButtonColVis setColumns (@Nullable final IJSExpression aColumns)
+  public DTPButtonsButtonColumnsToggle setColumns (@Nullable final IJSExpression aColumns)
   {
     m_aColumns = aColumns;
+    return this;
+  }
+
+  @Nonnull
+  public DTPButtonsButtonColumnsToggle setVisibility (final boolean bVisibility)
+  {
+    return setVisibility (ETriState.valueOf (bVisibility));
+  }
+
+  @Nonnull
+  public DTPButtonsButtonColumnsToggle setVisibility (@Nonnull final ETriState eVisibility)
+  {
+    ValueEnforcer.notNull (eVisibility, "Visibility");
+    m_eVisibility = eVisibility;
     return this;
   }
 
@@ -46,12 +68,14 @@ public class DTPButtonsButtonColVis extends DTPButtonsButton
   {
     if (m_aColumns != null)
       ret.add ("columns", m_aColumns);
+    if (m_eVisibility.isDefined ())
+      ret.add ("visibility", m_eVisibility.getAsBooleanValue (true));
   }
 
   @Override
   public void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
-    EDTPButtonsButtonType.COL_VIS.registerExternalResources ();
+    EDTPButtonsButtonType.COLUMNS_TOGGLE.registerExternalResources ();
   }
 }
