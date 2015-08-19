@@ -42,7 +42,6 @@ public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
  DATATABLES_1_10_BOOTSTRAP ("datatables/1.10.8/css/dataTables.bootstrap.css"),
  DATATABLES_BUTTONS ("datatables/Buttons-1.0.0/css/buttons.dataTables.css"),
  DATATABLES_BUTTONS_BOOTSTRAP ("datatables/Buttons-1.0.0/css/buttons.bootstrap.css"),
- @Deprecated DATATABLES_COL_VIS ("datatables/ColVis-1.1.2/dataTables.colVis.css"),
  DATATABLES_FIXED_COLUMNS ("datatables/FixedColumns-3.1.0/css/fixedColumns.dataTables.css"),
  DATATABLES_FIXED_COLUMNS_BOOTSTRAP ("datatables/FixedColumns-3.1.0/css/fixedColumns.bootstrap.css"),
  DATATABLES_FIXED_HEADER ("datatables/FixedHeader-3.0.0/css/fixedHeader.dataTables.css"),
