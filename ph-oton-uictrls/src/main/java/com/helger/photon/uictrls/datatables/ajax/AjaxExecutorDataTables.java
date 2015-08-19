@@ -318,53 +318,61 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
     // Read "order
     final List <DTSSRequestDataOrderColumn> aOrderColumns = new ArrayList <> ();
     {
+      // May be null
       final IRequestParamMap aOrder = aRequestScope.getRequestParamMap ().getMap (ORDER);
-      int nIndex = 0;
-      do
+      if (aOrder != null)
       {
-        final IRequestParamMap aOrderPerIndex = aOrder.getMap (Integer.toString (nIndex));
-        if (aOrderPerIndex == null)
-          break;
+        int nIndex = 0;
+        do
+        {
+          final IRequestParamMap aOrderPerIndex = aOrder.getMap (Integer.toString (nIndex));
+          if (aOrderPerIndex == null)
+            break;
 
-        final int nOrderColumn = Math.max (AbstractReadOnlyAttributeContainer.getAsInt (ORDER_COLUMN,
-                                                                                        aOrderPerIndex.getString (ORDER_COLUMN),
-                                                                                        0),
-                                           0);
-        final String sOrderDir = aOrderPerIndex.getString (ORDER_DIR);
-        final ESortOrder eOrderDir = EDataTablesOrderDirectionType.getSortOrderFromNameOrNull (sOrderDir);
-        aOrderColumns.add (new DTSSRequestDataOrderColumn (nOrderColumn, eOrderDir));
+          final int nOrderColumn = Math.max (AbstractReadOnlyAttributeContainer.getAsInt (ORDER_COLUMN,
+                                                                                          aOrderPerIndex.getString (ORDER_COLUMN),
+                                                                                          0),
+                                             0);
+          final String sOrderDir = aOrderPerIndex.getString (ORDER_DIR);
+          final ESortOrder eOrderDir = EDataTablesOrderDirectionType.getSortOrderFromNameOrNull (sOrderDir);
+          aOrderColumns.add (new DTSSRequestDataOrderColumn (nOrderColumn, eOrderDir));
 
-        ++nIndex;
-      } while (true);
+          ++nIndex;
+        } while (true);
+      }
     }
 
     final List <DTSSRequestDataColumn> aColumnData = new ArrayList <DTSSRequestDataColumn> ();
     {
-      final IRequestParamMap aOrder = aRequestScope.getRequestParamMap ().getMap (COLUMNS);
-      int nIndex = 0;
-      do
+      // May be null
+      final IRequestParamMap aColumns = aRequestScope.getRequestParamMap ().getMap (COLUMNS);
+      if (aColumns != null)
       {
-        final IRequestParamMap aColumnsPerIndex = aOrder.getMap (Integer.toString (nIndex));
-        if (aColumnsPerIndex == null)
-          break;
+        int nIndex = 0;
+        do
+        {
+          final IRequestParamMap aColumnsPerIndex = aColumns.getMap (Integer.toString (nIndex));
+          if (aColumnsPerIndex == null)
+            break;
 
-        final String sCData = aColumnsPerIndex.getString (COLUMNS_DATA);
-        final String sCName = aColumnsPerIndex.getString (COLUMNS_NAME);
-        final boolean bCSearchable = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_SEARCHABLE), true);
-        final boolean bCOrderable = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_ORDERABLE), true);
-        final String sCSearchValue = aColumnsPerIndex.getString (COLUMNS_SEARCH, COLUMNS_SEARCH_VALUE);
-        final boolean bCSearchRegEx = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_SEARCH,
-                                                                                          COLUMNS_SEARCH_REGEX),
-                                                              true);
-        aColumnData.add (new DTSSRequestDataColumn (sCData,
-                                                    sCName,
-                                                    bCSearchable,
-                                                    bCOrderable,
-                                                    sCSearchValue,
-                                                    bCSearchRegEx));
+          final String sCData = aColumnsPerIndex.getString (COLUMNS_DATA);
+          final String sCName = aColumnsPerIndex.getString (COLUMNS_NAME);
+          final boolean bCSearchable = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_SEARCHABLE), true);
+          final boolean bCOrderable = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_ORDERABLE), true);
+          final String sCSearchValue = aColumnsPerIndex.getString (COLUMNS_SEARCH, COLUMNS_SEARCH_VALUE);
+          final boolean bCSearchRegEx = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_SEARCH,
+                                                                                            COLUMNS_SEARCH_REGEX),
+                                                                true);
+          aColumnData.add (new DTSSRequestDataColumn (sCData,
+                                                      sCName,
+                                                      bCSearchable,
+                                                      bCOrderable,
+                                                      sCSearchValue,
+                                                      bCSearchRegEx));
 
-        ++nIndex;
-      } while (true);
+          ++nIndex;
+        } while (true);
+      }
     }
 
     final DTSSRequestData aRequestData = new DTSSRequestData (nDraw,
