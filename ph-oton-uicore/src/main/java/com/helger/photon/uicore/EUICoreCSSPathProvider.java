@@ -69,4 +69,9 @@ public enum EUICoreCSSPathProvider implements ICSSPathProvider
   {
     return m_aPP.getMediaList ();
   }
+
+  public boolean canBeBundled ()
+  {
+    return m_aPP.canBeBundled ();
+  }
 }

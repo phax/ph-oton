@@ -116,7 +116,8 @@ public final class PhotonCSS
         aTarget.addItem (new ConstantCSSPathProvider (sPath,
                                                       CSSFilenameHelper.getMinifiedCSSFilename (sPath),
                                                       sConditionalComment,
-                                                      aMediaList));
+                                                      aMediaList,
+                                                      ConstantCSSPathProvider.DEFAULT_CAN_BE_BUNDLED));
       }
   }
 

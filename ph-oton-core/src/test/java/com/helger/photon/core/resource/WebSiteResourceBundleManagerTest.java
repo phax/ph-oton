@@ -45,8 +45,8 @@ public final class WebSiteResourceBundleManagerTest
   public void testBasicJS ()
   {
     final List <WebSiteResourceWithCondition> aList = new ArrayList <WebSiteResourceWithCondition> ();
-    aList.add (new WebSiteResourceWithCondition (ConstantJSPathProvider.create ("/res/serverlog.js"), true));
-    aList.add (new WebSiteResourceWithCondition (ConstantJSPathProvider.create ("/res/stacktrace.js"), true));
+    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("/res/serverlog.js"), true));
+    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("/res/stacktrace.js"), true));
     final List <WebSiteResourceBundleSerialized> aBundles = PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                              .getResourceBundles (aList, true);
     assertNotNull (aBundles);
@@ -57,8 +57,8 @@ public final class WebSiteResourceBundleManagerTest
   public void testBasicCSS ()
   {
     final List <WebSiteResourceWithCondition> aList = new ArrayList <WebSiteResourceWithCondition> ();
-    aList.add (new WebSiteResourceWithCondition (ConstantCSSPathProvider.create ("/res/animate.css"), true));
-    aList.add (new WebSiteResourceWithCondition (ConstantCSSPathProvider.create ("/res/famfam.css"), true));
+    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("/res/animate.css"), true));
+    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("/res/famfam.css"), true));
     final List <WebSiteResourceBundleSerialized> aBundles = PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                              .getResourceBundles (aList, true);
     assertNotNull (aBundles);

@@ -60,11 +60,11 @@ final class DTSSResponseData implements IHasJson
    *        Special nodes for the AJAX response
    */
   DTSSResponseData (final int nDraw,
-                final int nTotalRecords,
-                final int nTotalDisplayRecords,
-                @Nullable final List <JsonObject> aData,
-                @Nullable final String sErrorMsg,
-                @Nonnull final IHCSpecialNodes aSpecialNodes)
+                    final int nTotalRecords,
+                    final int nTotalDisplayRecords,
+                    @Nullable final List <JsonObject> aData,
+                    @Nullable final String sErrorMsg,
+                    @Nonnull final IHCSpecialNodes aSpecialNodes)
   {
     ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
     m_nDraw = nDraw;

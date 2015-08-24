@@ -138,7 +138,7 @@ jqphClass.prototype = {
       if (data.inlinejsBeforeExternal) {
         // eval now
         $.globalEval(data.inlinejsBeforeExternal);
-      }  
+      }
       
       // Do we have inline JS after external?
       var aInlineJSEval;
@@ -190,17 +190,45 @@ jqphClass.prototype = {
           aInlineJSEval();
       }
       
+      var head=document.head || document.getElementsByTagName('head')[0];
+      var createStyle = function(media,content) {
+        var cssNode=document.createElement('style');
+        cssNode.type='text\/css';
+        cssNode.title='dynamicallyLoadedCSS';
+        cssNode.media=media;
+        if (cssNode.styleSheet)
+          cssNode.styleSheet.cssText=content;
+        else
+          cssNode.appendChild(document.createTextNode(content));
+        return cssNode;
+      };
+      
+      // Inline CSS before externals?
+      if(data.inlinecssBeforeExternal) {
+        for(var css in data.inlinecssBeforeExternal){
+          head.appendChild(createStyle (data.inlinecssBeforeExternal[css].media,
+                                        data.inlinecssBeforeExternal[css].content));
+        }
+      }
+      
+      // Externa CSS elements present?
       if(data.externalcss){
-        // Include external CSS elements
-        var head=document.getElementsByTagName('head')[0];
         for(var css in data.externalcss){
           var cssNode=document.createElement('link');
-          cssNode.href=data.externalcss[css];
+          cssNode.href=data.externalcss[css].href;
           cssNode.type='text\/css';
           cssNode.rel='stylesheet';
           cssNode.title='dynamicallyLoadedCSS';
-          cssNode.media='all';
+          cssNode.media=data.externalcss[css].media;
           head.appendChild(cssNode);
+        }
+      }
+
+      // Inline CSS after externals?
+      if(data.inlinecssAfterExternal) {
+        for(var css in data.inlinecssAfterExternal){
+          head.appendChild(createStyle (data.inlinecssAfterExternal[css].media,
+                                        data.inlinecssAfterExternal[css].content));
         }
       }
       

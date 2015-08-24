@@ -40,7 +40,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @author Philip Helger
  */
 @ThreadSafe
-public class PhotonHTMLSettings
+public final class PhotonHTMLSettings
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("s_aRWLock")

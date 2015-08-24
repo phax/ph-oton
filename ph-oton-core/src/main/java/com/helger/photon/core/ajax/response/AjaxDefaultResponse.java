@@ -16,6 +16,9 @@
  */
 package com.helger.photon.core.ajax.response;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -29,6 +32,7 @@ import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -41,6 +45,7 @@ import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.json.IJson;
+import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 import com.helger.json.serialize.JsonWriter;
 import com.helger.photon.core.app.html.PhotonCSS;
@@ -66,6 +71,12 @@ public class AjaxDefaultResponse implements IAjaxResponse
   public static final String PROPERTY_INLINE_CSS_BEFORE_EXTERNAL = "inlinecssBeforeExternal";
   /** Additional inline CSS - only in case of success - contains a string */
   public static final String PROPERTY_INLINE_CSS_AFTER_EXTERNAL = "inlinecssAfterExternal";
+  /** The sub key for CSS elements specifying the media list */
+  public static final String SUBPROPERTY_CSS_MEDIA = "media";
+  /** The sub key for CSS elements specifying the external CSS href */
+  public static final String SUBPROPERTY_CSS_HREF = "href";
+  /** The sub key for CSS elements specifying the inline CSS content */
+  public static final String SUBPROPERTY_CSS_CONTENT = "content";
   /**
    * Additional JS files - only in case of success - contains a list of strings
    */
@@ -93,7 +104,8 @@ public class AjaxDefaultResponse implements IAjaxResponse
     final boolean bRegular = GlobalDebug.isDebugMode ();
 
     for (final ICSSPathProvider aCSS : PhotonCSS.getAllRegisteredCSSIncludesForThisRequest ())
-      m_aSpecialNodes.addExternalCSS (PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular).getAsString ());
+      m_aSpecialNodes.addExternalCSS (aCSS.getMediaList (),
+                                      PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular).getAsString ());
 
     for (final IJSPathProvider aJS : PhotonJS.getAllRegisteredJSIncludesForThisRequest ())
       m_aSpecialNodes.addExternalJS (PhotonHTMLSettings.getJSPath (aRequestScope, aJS, bRegular).getAsString ());
@@ -214,11 +226,32 @@ public class AjaxDefaultResponse implements IAjaxResponse
         aAssocArray.add (PROPERTY_VALUE, m_aSuccessValue);
       // Apply special nodes
       if (m_aSpecialNodes.hasExternalCSSs ())
-        aAssocArray.add (PROPERTY_EXTERNAL_CSS, m_aSpecialNodes.getAllExternalCSSs ());
+      {
+        final JsonArray aList = new JsonArray ();
+        for (final Map.Entry <ICSSMediaList, List <String>> aEntry : m_aSpecialNodes.getAllExternalCSSs ().entrySet ())
+          for (final String sCSSFile : aEntry.getValue ())
+            aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
+                                        .add (SUBPROPERTY_CSS_HREF, sCSSFile));
+        aAssocArray.add (PROPERTY_EXTERNAL_CSS, aList);
+      }
       if (m_aSpecialNodes.hasInlineCSSBeforeExternal ())
-        aAssocArray.add (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, m_aSpecialNodes.getInlineCSSBeforeExternal ());
+      {
+        final JsonArray aList = new JsonArray ();
+        for (final Map.Entry <ICSSMediaList, StringBuilder> aEntry : m_aSpecialNodes.getAllInlineCSSBeforeExternal ()
+                                                                                    .entrySet ())
+          aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
+                                      .add (SUBPROPERTY_CSS_CONTENT, aEntry.getValue ()));
+        aAssocArray.add (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, aList);
+      }
       if (m_aSpecialNodes.hasInlineCSSAfterExternal ())
-        aAssocArray.add (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, m_aSpecialNodes.getInlineCSSAfterExternal ());
+      {
+        final JsonArray aList = new JsonArray ();
+        for (final Map.Entry <ICSSMediaList, StringBuilder> aEntry : m_aSpecialNodes.getAllInlineCSSAfterExternal ()
+                                                                                    .entrySet ())
+          aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
+                                      .add (SUBPROPERTY_CSS_CONTENT, aEntry.getValue ()));
+        aAssocArray.add (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, aList);
+      }
       if (m_aSpecialNodes.hasExternalJSs ())
         aAssocArray.add (PROPERTY_EXTERNAL_JS, m_aSpecialNodes.getAllExternalJSs ());
       if (m_aSpecialNodes.hasInlineJSBeforeExternal ())

@@ -125,8 +125,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    *        The HTML head object. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void addMetaElementsToHead (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull final HCHead aHead)
+  protected void addMetaElements (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                  @Nonnull final HCHead aHead)
   {
     final List <IMetaElement> aMetaElements = new ArrayList <IMetaElement> ();
     {
@@ -179,7 +179,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     {
       final List <WebSiteResourceWithCondition> aCSSRes = new ArrayList <WebSiteResourceWithCondition> ();
       for (final ICSSPathProvider aCSS : aCSSs)
-        aCSSRes.add (new WebSiteResourceWithCondition (aCSS, bRegular));
+        aCSSRes.add (WebSiteResourceWithCondition.createForCSS (aCSS, bRegular));
 
       for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                             .getResourceBundles (aCSSRes, bRegular))
@@ -218,7 +218,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     {
       final List <WebSiteResourceWithCondition> aJSRes = new ArrayList <WebSiteResourceWithCondition> ();
       for (final IJSPathProvider aJS : aJSs)
-        aJSRes.add (new WebSiteResourceWithCondition (aJS, bRegular));
+        aJSRes.add (WebSiteResourceWithCondition.createForJS (aJS, bRegular));
 
       for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                             .getResourceBundles (aJSRes, bRegular))
@@ -260,7 +260,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     final HCHead aHead = aHtml.getHead ();
 
     // Add all meta elements
-    addMetaElementsToHead (aRequestScope, aHead);
+    addMetaElements (aRequestScope, aHead);
   }
 
   @Nonnull

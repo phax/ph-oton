@@ -48,57 +48,35 @@ public class WebSiteResourceWithCondition
   private final CSSMediaList m_aMediaList;
 
   /**
-   * Constructor for JavaScript resources.
+   * Constructor
    *
-   * @param aPP
-   *        The path provider.
-   * @param bRegular
-   *        <code>true</code> for regular version, <code>false</code> for the
-   *        minified/optimized version.
+   * @param eType
+   *        Resource type. May not be <code>null</code>.
+   * @param sPath
+   *        Path to the resource. May neither be <code>null</code> nor empty.
+   * @param sConditionalComment
+   *        Optional conditional comment.
+   * @param bCanBeBundled
+   *        <code>true</code> if this resource can be bundled. Use
+   *        <code>true</code> if you are unsure.
+   * @param aMediaList
+   *        Optional media list, used only for CSS resources.
    */
-  public WebSiteResourceWithCondition (@Nonnull final IJSPathProvider aPP, final boolean bRegular)
-  {
-    // IWebURIToURLConverter is not needed for JS
-    this (EWebSiteResourceType.JS,
-          aPP.getJSItemPath (bRegular),
-          aPP.getConditionalComment (),
-          aPP.canBeBundled (),
-          (ICSSMediaList) null);
-  }
-
-  /**
-   * Constructor for CSS resources.
-   *
-   * @param aPP
-   *        The path provider.
-   * @param bRegular
-   *        <code>true</code> for regular version, <code>false</code> for the
-   *        minified/optimized version.
-   */
-  public WebSiteResourceWithCondition (@Nonnull final ICSSPathProvider aPP, final boolean bRegular)
-  {
-    this (EWebSiteResourceType.CSS,
-          aPP.getCSSItemPath (bRegular),
-          aPP.getConditionalComment (),
-          true,
-          aPP.getMediaList ());
-  }
-
-  private WebSiteResourceWithCondition (@Nonnull final EWebSiteResourceType eType,
-                                        @Nonnull @Nonempty final String sPath,
-                                        @Nullable final String sConditionalComment,
-                                        final boolean bCanBeBundled,
-                                        @Nullable final ICSSMediaList aMediaList)
+  public WebSiteResourceWithCondition (@Nonnull final EWebSiteResourceType eType,
+                                       @Nonnull @Nonempty final String sPath,
+                                       @Nullable final String sConditionalComment,
+                                       final boolean bCanBeBundled,
+                                       @Nullable final ICSSMediaList aMediaList)
   {
     this (WebSiteResourceCache.getOrCreateResource (eType, sPath), sConditionalComment, bCanBeBundled, aMediaList);
   }
 
-  protected WebSiteResourceWithCondition (@Nonnull final WebSiteResource aResource,
-                                          @Nullable final String sConditionalComment,
-                                          final boolean bCanBeBundled,
-                                          @Nullable final ICSSMediaList aMediaList)
+  public WebSiteResourceWithCondition (@Nonnull final WebSiteResource aResource,
+                                       @Nullable final String sConditionalComment,
+                                       final boolean bCanBeBundled,
+                                       @Nullable final ICSSMediaList aMediaList)
   {
-    m_aResource = aResource;
+    m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_sConditionalComment = sConditionalComment;
     m_bCanBeBundled = bCanBeBundled;
     m_aMediaList = aMediaList == null || aMediaList.hasNoMedia () ? null : new CSSMediaList (aMediaList);
@@ -229,5 +207,67 @@ public class WebSiteResourceWithCondition
                                        .append ("canBeBundled", m_bCanBeBundled)
                                        .appendIfNotNull ("mediaList", m_aMediaList)
                                        .toString ();
+  }
+
+  /**
+   * Factory method for JavaScript resources.
+   *
+   * @param aPP
+   *        The path provider.
+   * @param bRegular
+   *        <code>true</code> for regular version, <code>false</code> for the
+   *        minified/optimized version.
+   * @return New {@link WebSiteResourceWithCondition} object. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public static WebSiteResourceWithCondition createForJS (@Nonnull final IJSPathProvider aPP, final boolean bRegular)
+  {
+    return createForJS (aPP.getJSItemPath (bRegular), aPP.getConditionalComment (), aPP.canBeBundled ());
+  }
+
+  @Nonnull
+  public static WebSiteResourceWithCondition createForJS (@Nonnull @Nonempty final String sPath,
+                                                          @Nullable final String sConditionalComment,
+                                                          final boolean bCanBeBundled)
+  {
+    return new WebSiteResourceWithCondition (EWebSiteResourceType.JS,
+                                             sPath,
+                                             sConditionalComment,
+                                             bCanBeBundled,
+                                             (ICSSMediaList) null);
+  }
+
+  /**
+   * Factory method for CSS resources.
+   *
+   * @param aPP
+   *        The path provider.
+   * @param bRegular
+   *        <code>true</code> for regular version, <code>false</code> for the
+   *        minified/optimized version.
+   * @return New {@link WebSiteResourceWithCondition} object. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public static WebSiteResourceWithCondition createForCSS (@Nonnull final ICSSPathProvider aPP, final boolean bRegular)
+  {
+    return createForCSS (aPP.getCSSItemPath (bRegular),
+                         aPP.getConditionalComment (),
+                         aPP.canBeBundled (),
+                         aPP.getMediaList ());
+  }
+
+  @Nonnull
+  public static WebSiteResourceWithCondition createForCSS (@Nonnull @Nonempty final String sPath,
+                                                           @Nullable final String sConditionalComment,
+                                                           final boolean bCanBeBundled,
+                                                           @Nullable final ICSSMediaList aMediaList)
+  {
+    return new WebSiteResourceWithCondition (EWebSiteResourceType.CSS,
+                                             sPath,
+                                             sConditionalComment,
+                                             bCanBeBundled,
+                                             aMediaList);
   }
 }
