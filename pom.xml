@@ -68,6 +68,7 @@
     <m2e.jsf.activation>false</m2e.jsf.activation>
     <log4j.version>2.3</log4j.version>
     <jetty.version>9.2.12.v20150709</jetty.version>
+    <ph-html.version>5.0.1-SNAPSHOT</ph-html.version>
   </properties>
 
   <dependencyManagement>
@@ -130,17 +131,17 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-html</artifactId>
-        <version>5.0.0</version>
+        <version>${ph-html.version}</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-html-jscode</artifactId>
-        <version>5.0.0</version>
+        <version>${ph-html.version}</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-html-jquery</artifactId>
-        <version>5.0.0</version>
+        <version>${ph-html.version}</version>
       </dependency>
       
       <dependency>

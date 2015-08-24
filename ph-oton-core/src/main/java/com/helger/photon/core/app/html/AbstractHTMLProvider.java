@@ -30,10 +30,12 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.html.hc.html.metadata.HCMeta;
 import com.helger.html.hc.html.root.HCHtml;
+import com.helger.html.hc.html.sections.HCBody;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.IMetaElement;
@@ -159,15 +161,15 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    *
    * @param aRequestScope
    *        Current request scope. Never <code>null</code>.
-   * @param aHead
-   *        The HTML head object. Never <code>null</code>.
+   * @param aHtml
+   *        The current HTML object. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void addCSSToHead (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                               @Nonnull final HCHead aHead)
+  protected void addCSS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHtml aHtml)
   {
     final boolean bRegular = useRegularResources ();
     final boolean bAggregateCSS = useWebSiteResourceBundlesForCSS ();
+    final HCHead aHead = aHtml.getHead ();
 
     // Add configured and per-request CSS
     final Set <ICSSPathProvider> aCSSs = PhotonCSS.getAllRegisteredCSSIncludesForGlobal ();
@@ -196,14 +198,17 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    *
    * @param aRequestScope
    *        Current request scope. Never <code>null</code>.
-   * @param aHead
-   *        The HTML head object. Never <code>null</code>.
+   * @param aHtml
+   *        The current HTML object. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void addJSToHead (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHead aHead)
+  protected void addJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHtml aHtml)
   {
     final boolean bRegular = useRegularResources ();
     final boolean bAggregateJS = useWebSiteResourceBundlesForJS ();
+    final boolean bScriptInBody = HCSettings.isScriptsInBody ();
+    final HCHead aHead = aHtml.getHead ();
+    final HCBody aBody = aHtml.getBody ();
 
     // Add all configured and per-request JS
     final Set <IJSPathProvider> aJSs = PhotonJS.getAllRegisteredJSIncludesForGlobal ();
@@ -217,13 +222,25 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
       for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                             .getResourceBundles (aJSRes, bRegular))
-        aHead.addJS (aBundle.createNode (aRequestScope));
+      {
+        final IHCNode aJSNode = aBundle.createNode (aRequestScope);
+        if (bScriptInBody)
+          aBody.addChild (aJSNode);
+        else
+          aHead.addJS (aJSNode);
+      }
     }
     else
     {
       // Add each JS separately
       for (final IJSPathProvider aJS : aJSs)
-        aHead.addJS (PhotonHTMLHelper.getJSNode (aRequestScope, aJS, bRegular));
+      {
+        final IHCNode aJSNode = PhotonHTMLHelper.getJSNode (aRequestScope, aJS, bRegular);
+        if (bScriptInBody)
+          aBody.addChild (aJSNode);
+        else
+          aHead.addJS (aJSNode);
+      }
     }
   }
 
@@ -270,8 +287,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     HCRenderer.prepareHtmlForConversion (aHtml, HCSettings.getConversionSettings ());
 
     // Add CSS and JS
-    addCSSToHead (aRequestScope, aHtml.getHead ());
-    addJSToHead (aRequestScope, aHtml.getHead ());
+    addCSS (aRequestScope, aHtml);
+    addJS (aRequestScope, aHtml);
 
     // This is only required so that the additional CSS/JS nodes on the head get
     // the correct HCNodeState
