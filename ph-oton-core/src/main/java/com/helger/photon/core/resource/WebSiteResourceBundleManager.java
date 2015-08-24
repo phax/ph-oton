@@ -315,7 +315,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
       final WebSiteResourceBundle aBundle = new WebSiteResourceBundle (aBundleResources,
                                                                        aFirst.getConditionalComment (),
                                                                        aBundleResources.size () != 1 ||
-                                                                           aFirst.canBeBundled (),
+                                                                           aFirst.isBundlable (),
                                                                        aFirst.getMediaList ());
 
       // Try to find existing bundle (ID and serialized one)

@@ -44,7 +44,7 @@ public final class PhotonHTMLSettings
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("s_aRWLock")
-  private static IWebURIToURLConverter s_aURIToURLConverter = StreamOrLocalURIToURLConverter.getInstance ();
+  private static IWebURIToURLConverter s_aURIToURLConverter = new StreamOrLocalURIToURLConverter ();
 
   private PhotonHTMLSettings ()
   {}

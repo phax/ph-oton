@@ -48,7 +48,6 @@ import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriter;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
-import com.helger.photon.core.url.StreamOrLocalURIToURLConverter;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -179,7 +178,7 @@ public class WebSiteResource
                                                                            .getAsString ());
         return _readAndParseCSS (m_aResource, sBasePath, bRegular);
       default:
-        throw new IllegalStateException ("Unsupported resource type!");
+        throw new IllegalStateException ("Unsupported resource type " + m_eResourceType);
     }
   }
 
@@ -215,7 +214,7 @@ public class WebSiteResource
     // Cut it down to the first 16 bytes, because the SHA512 hash is 128 bytes
     // long
     final String sVersion = m_sContentHash.substring (0, 16);
-    return StreamOrLocalURIToURLConverter.getInstance ().getAsURL (aRequestScope, m_sPath).add ("version", sVersion);
+    return PhotonHTMLSettings.getURIToURLConverter ().getAsURL (aRequestScope, m_sPath).add ("version", sVersion);
   }
 
   @Override

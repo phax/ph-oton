@@ -26,8 +26,10 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.css.CSSFilenameHelper;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ICSSMediaList;
+import com.helger.html.js.JSFilenameHelper;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
@@ -44,7 +46,7 @@ public class WebSiteResourceWithCondition
 {
   private final WebSiteResource m_aResource;
   private final String m_sConditionalComment;
-  private final boolean m_bCanBeBundled;
+  private final boolean m_bIsBundlable;
   private final CSSMediaList m_aMediaList;
 
   /**
@@ -56,7 +58,7 @@ public class WebSiteResourceWithCondition
    *        Path to the resource. May neither be <code>null</code> nor empty.
    * @param sConditionalComment
    *        Optional conditional comment.
-   * @param bCanBeBundled
+   * @param bIsBundlable
    *        <code>true</code> if this resource can be bundled. Use
    *        <code>true</code> if you are unsure.
    * @param aMediaList
@@ -65,20 +67,20 @@ public class WebSiteResourceWithCondition
   public WebSiteResourceWithCondition (@Nonnull final EWebSiteResourceType eType,
                                        @Nonnull @Nonempty final String sPath,
                                        @Nullable final String sConditionalComment,
-                                       final boolean bCanBeBundled,
+                                       final boolean bIsBundlable,
                                        @Nullable final ICSSMediaList aMediaList)
   {
-    this (WebSiteResourceCache.getOrCreateResource (eType, sPath), sConditionalComment, bCanBeBundled, aMediaList);
+    this (WebSiteResourceCache.getOrCreateResource (eType, sPath), sConditionalComment, bIsBundlable, aMediaList);
   }
 
-  public WebSiteResourceWithCondition (@Nonnull final WebSiteResource aResource,
-                                       @Nullable final String sConditionalComment,
-                                       final boolean bCanBeBundled,
-                                       @Nullable final ICSSMediaList aMediaList)
+  protected WebSiteResourceWithCondition (@Nonnull final WebSiteResource aResource,
+                                          @Nullable final String sConditionalComment,
+                                          final boolean bIsBundlable,
+                                          @Nullable final ICSSMediaList aMediaList)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_sConditionalComment = sConditionalComment;
-    m_bCanBeBundled = bCanBeBundled;
+    m_bIsBundlable = bIsBundlable;
     m_aMediaList = aMediaList == null || aMediaList.hasNoMedia () ? null : new CSSMediaList (aMediaList);
   }
 
@@ -101,7 +103,7 @@ public class WebSiteResourceWithCondition
     ValueEnforcer.notNull (aOther, "Other");
 
     // Resource cannot be bundled at all
-    if (!m_bCanBeBundled || !aOther.canBeBundled ())
+    if (!m_bIsBundlable || !aOther.isBundlable ())
       return false;
 
     // Can only bundle resources of the same type
@@ -146,9 +148,9 @@ public class WebSiteResourceWithCondition
    * @return <code>true</code> if this resource can be bundled,
    *         <code>false</code> if not.
    */
-  public boolean canBeBundled ()
+  public boolean isBundlable ()
   {
-    return m_bCanBeBundled;
+    return m_bIsBundlable;
   }
 
   @Nullable
@@ -162,9 +164,11 @@ public class WebSiteResourceWithCondition
   {
     if (m_aResource.getResourceType () != EWebSiteResourceType.CSS)
       throw new IllegalStateException ("This can only be performed on a CSS resource!");
-    return ConstantCSSPathProvider.createWithConditionalComment (m_aResource.getPath (),
-                                                                 m_sConditionalComment,
-                                                                 m_aMediaList);
+    return new ConstantCSSPathProvider (m_aResource.getPath (),
+                                        CSSFilenameHelper.getMinifiedCSSFilename (m_aResource.getPath ()),
+                                        m_sConditionalComment,
+                                        m_aMediaList,
+                                        m_bIsBundlable);
   }
 
   @Nonnull
@@ -172,7 +176,10 @@ public class WebSiteResourceWithCondition
   {
     if (m_aResource.getResourceType () != EWebSiteResourceType.JS)
       throw new IllegalStateException ("This can only be performed on a JS resource!");
-    return ConstantJSPathProvider.createWithConditionalComment (m_aResource.getPath (), m_sConditionalComment);
+    return new ConstantJSPathProvider (m_aResource.getPath (),
+                                       JSFilenameHelper.getMinifiedJSFilename (m_aResource.getPath ()),
+                                       m_sConditionalComment,
+                                       m_bIsBundlable);
   }
 
   @Override
@@ -185,7 +192,7 @@ public class WebSiteResourceWithCondition
     final WebSiteResourceWithCondition rhs = (WebSiteResourceWithCondition) o;
     return m_aResource.equals (rhs.m_aResource) &&
            EqualsHelper.equals (m_sConditionalComment, rhs.m_sConditionalComment) &&
-           m_bCanBeBundled == rhs.m_bCanBeBundled &&
+           m_bIsBundlable == rhs.m_bIsBundlable &&
            EqualsHelper.equals (m_aMediaList, rhs.m_aMediaList);
   }
 
@@ -194,7 +201,7 @@ public class WebSiteResourceWithCondition
   {
     return new HashCodeGenerator (this).append (m_aResource)
                                        .append (m_sConditionalComment)
-                                       .append (m_bCanBeBundled)
+                                       .append (m_bIsBundlable)
                                        .append (m_aMediaList)
                                        .getHashCode ();
   }
@@ -204,7 +211,7 @@ public class WebSiteResourceWithCondition
   {
     return new ToStringGenerator (this).append ("resource", m_aResource)
                                        .appendIfNotNull ("conditionalComment", m_sConditionalComment)
-                                       .append ("canBeBundled", m_bCanBeBundled)
+                                       .append ("isBundlable", m_bIsBundlable)
                                        .appendIfNotNull ("mediaList", m_aMediaList)
                                        .toString ();
   }
@@ -223,18 +230,18 @@ public class WebSiteResourceWithCondition
   @Nonnull
   public static WebSiteResourceWithCondition createForJS (@Nonnull final IJSPathProvider aPP, final boolean bRegular)
   {
-    return createForJS (aPP.getJSItemPath (bRegular), aPP.getConditionalComment (), aPP.canBeBundled ());
+    return createForJS (aPP.getJSItemPath (bRegular), aPP.getConditionalComment (), aPP.isBundlable ());
   }
 
   @Nonnull
   public static WebSiteResourceWithCondition createForJS (@Nonnull @Nonempty final String sPath,
                                                           @Nullable final String sConditionalComment,
-                                                          final boolean bCanBeBundled)
+                                                          final boolean bIsBundlable)
   {
     return new WebSiteResourceWithCondition (EWebSiteResourceType.JS,
                                              sPath,
                                              sConditionalComment,
-                                             bCanBeBundled,
+                                             bIsBundlable,
                                              (ICSSMediaList) null);
   }
 
@@ -254,20 +261,20 @@ public class WebSiteResourceWithCondition
   {
     return createForCSS (aPP.getCSSItemPath (bRegular),
                          aPP.getConditionalComment (),
-                         aPP.canBeBundled (),
+                         aPP.isBundlable (),
                          aPP.getMediaList ());
   }
 
   @Nonnull
   public static WebSiteResourceWithCondition createForCSS (@Nonnull @Nonempty final String sPath,
                                                            @Nullable final String sConditionalComment,
-                                                           final boolean bCanBeBundled,
+                                                           final boolean bIsBundlable,
                                                            @Nullable final ICSSMediaList aMediaList)
   {
     return new WebSiteResourceWithCondition (EWebSiteResourceType.CSS,
                                              sPath,
                                              sConditionalComment,
-                                             bCanBeBundled,
+                                             bIsBundlable,
                                              aMediaList);
   }
 }

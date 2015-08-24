@@ -22,6 +22,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
@@ -44,7 +45,9 @@ public final class WebSiteResourceCache
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResourceCache.class);
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  @GuardedBy ("s_aRWLock")
   private static boolean s_bCacheEnabled = !GlobalDebug.isDebugMode ();
+  @GuardedBy ("s_aRWLock")
   private static final Map <String, WebSiteResource> s_aMap = new HashMap <String, WebSiteResource> ();
 
   @PresentForCodeCoverage
@@ -133,6 +136,7 @@ public final class WebSiteResourceCache
         ret = s_aMap.get (sCacheKey);
         if (ret == null)
         {
+          // Init and put in map
           ret = new WebSiteResource (eResourceType, sPath);
           s_aMap.put (sCacheKey, ret);
         }

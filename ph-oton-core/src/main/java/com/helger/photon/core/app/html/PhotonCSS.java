@@ -117,7 +117,7 @@ public final class PhotonCSS
                                                       CSSFilenameHelper.getMinifiedCSSFilename (sPath),
                                                       sConditionalComment,
                                                       aMediaList,
-                                                      ConstantCSSPathProvider.DEFAULT_CAN_BE_BUNDLED));
+                                                      ConstantCSSPathProvider.DEFAULT_IS_BUNDLABLE));
       }
   }
 

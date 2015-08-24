@@ -42,21 +42,10 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
 {
-  private static final StreamOrLocalURIToURLConverter s_aInstance = new StreamOrLocalURIToURLConverter ();
-
-  protected StreamOrLocalURIToURLConverter ()
+  public StreamOrLocalURIToURLConverter ()
   {}
 
-  /**
-   * @return The default instance of this class. Never <code>null</code>.
-   */
-  @Nonnull
-  public static StreamOrLocalURIToURLConverter getInstance ()
-  {
-    return s_aInstance;
-  }
-
-  private static boolean _isProjectRelativeURI (@Nonnull @Nonempty final String sURI)
+  protected static final boolean isProjectRelativeURI (@Nonnull @Nonempty final String sURI)
   {
     // Absolute paths are project relative files and therefore are relative to
     // the servlet context directory
@@ -66,6 +55,12 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   @Nonnull
   public IReadableResource getAsResource (@Nonnull @Nonempty final String sURI)
   {
+    return getAsResourceStatic (sURI);
+  }
+
+  @Nonnull
+  public static IReadableResource getAsResourceStatic (@Nonnull @Nonempty final String sURI)
+  {
     ValueEnforcer.notEmpty (sURI, "URI");
 
     // If the URL is absolute, use it
@@ -74,7 +69,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
 
     // Absolute paths are project relative files and therefore are relative to
     // the servlet context directory
-    if (_isProjectRelativeURI (sURI))
+    if (isProjectRelativeURI (sURI))
       return WebFileIO.getServletContextIO ().getResource (sURI);
 
     // Defaults to class path
@@ -84,6 +79,12 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   @Nonnull
   public SimpleURL getAsURL (@Nonnull @Nonempty final String sURI)
   {
+    return getAsURLStatic (sURI);
+  }
+
+  @Nonnull
+  public static SimpleURL getAsURLStatic (@Nonnull @Nonempty final String sURI)
+  {
     ValueEnforcer.notEmpty (sURI, "URI");
 
     // If the URL is absolute, use it
@@ -91,7 +92,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
       return new SimpleURL (sURI);
 
     // Absolute paths stays
-    if (_isProjectRelativeURI (sURI))
+    if (isProjectRelativeURI (sURI))
     {
       // Just add the context
       return LinkHelper.getURLWithContext (sURI);
@@ -108,6 +109,13 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   public SimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull @Nonempty final String sURI)
   {
+    return getAsURLStatic (aRequestScope, sURI);
+  }
+
+  @Nonnull
+  public static SimpleURL getAsURLStatic (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                          @Nonnull @Nonempty final String sURI)
+  {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notEmpty (sURI, "URI");
 
@@ -116,7 +124,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
       return new SimpleURL (sURI);
 
     // Absolute paths stay
-    if (_isProjectRelativeURI (sURI))
+    if (isProjectRelativeURI (sURI))
       return LinkHelper.getURLWithContext (aRequestScope, sURI);
 
     // Relative paths will get streamed

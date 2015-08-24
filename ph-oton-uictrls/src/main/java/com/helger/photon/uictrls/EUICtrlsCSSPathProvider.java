@@ -93,8 +93,8 @@ public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
     return m_aPP.getMediaList ();
   }
 
-  public boolean canBeBundled ()
+  public boolean isBundlable ()
   {
-    return m_aPP.canBeBundled ();
+    return m_aPP.isBundlable ();
   }
 }

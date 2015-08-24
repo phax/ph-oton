@@ -93,7 +93,7 @@ public final class PhotonJS
         aTarget.addItem (new ConstantJSPathProvider (sPath,
                                                      JSFilenameHelper.getMinifiedJSFilename (sPath),
                                                      sConditionalComment,
-                                                     ConstantJSPathProvider.DEFAULT_CAN_BE_BUNDLED));
+                                                     ConstantJSPathProvider.DEFAULT_IS_BUNDLABLE));
       }
   }
 

@@ -34,7 +34,7 @@ public final class EBootstrapJSPathProviderTest
   public void testBasic ()
   {
     for (final EBootstrapJSPathProvider e : EBootstrapJSPathProvider.values ())
-      if (e.canBeBundled ())
+      if (e.isBundlable ())
       {
         IReadableResource aRes = new ClassPathResource (e.getJSItemPath (true));
         assertTrue (aRes.getPath (), aRes.exists ());

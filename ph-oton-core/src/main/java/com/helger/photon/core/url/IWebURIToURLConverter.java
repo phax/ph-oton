@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.commons.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -32,7 +33,7 @@ public interface IWebURIToURLConverter
 {
   /**
    * Convert the passed URI to a resource.
-   * 
+   *
    * @param sURI
    *        The URI to be converted. May neither be <code>null</code> nor empty.
    * @return The created resource and never null.
@@ -48,7 +49,7 @@ public interface IWebURIToURLConverter
    * @return The created URL.
    */
   @Nonnull
-  ISimpleURL getAsURL (@Nonnull @Nonempty String sURI);
+  SimpleURL getAsURL (@Nonnull @Nonempty String sURI);
 
   /**
    * Convert the passed URI to a URL.
@@ -61,5 +62,5 @@ public interface IWebURIToURLConverter
    * @return The created URL.
    */
   @Nonnull
-  ISimpleURL getAsURL (@Nonnull IRequestWebScopeWithoutResponse aRequestScope, @Nonnull @Nonempty String sURI);
+  SimpleURL getAsURL (@Nonnull IRequestWebScopeWithoutResponse aRequestScope, @Nonnull @Nonempty String sURI);
 }

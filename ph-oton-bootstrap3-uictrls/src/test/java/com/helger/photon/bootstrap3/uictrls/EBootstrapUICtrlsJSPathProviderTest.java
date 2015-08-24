@@ -34,7 +34,7 @@ public final class EBootstrapUICtrlsJSPathProviderTest
   public void testBasic ()
   {
     for (final EBootstrapUICtrlsJSPathProvider e : EBootstrapUICtrlsJSPathProvider.values ())
-      if (e.canBeBundled ())
+      if (e.isBundlable ())
       {
         IReadableResource aRes = new ClassPathResource (e.getJSItemPath (true));
         assertTrue (aRes.getPath (), aRes.exists ());

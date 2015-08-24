@@ -54,9 +54,9 @@ public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
     return m_aPP.getConditionalComment ();
   }
 
-  public boolean canBeBundled ()
+  public boolean isBundlable ()
   {
-    return m_aPP.canBeBundled ();
+    return m_aPP.isBundlable ();
   }
 
   @Nonnull
