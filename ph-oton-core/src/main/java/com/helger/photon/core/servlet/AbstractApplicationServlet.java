@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.servlet;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -131,8 +132,9 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
   }
 
   @Override
-  protected final void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                      @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException
+  @OverridingMethodsMustInvokeSuper
+  protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                @Nonnull final UnifiedResponse aUnifiedResponse) throws IOException, ServletException
   {
     try
     {
@@ -150,10 +152,12 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
         // Do not show the exceptions that occur, when client cancels a request.
         if (!StreamHelper.isKnownEOFException (t))
         {
-          s_aLogger.error ("Error running application", t);
           // Catch Exception and re-throw
+          s_aLogger.error ("Error running application", t);
           if (t instanceof ServletException)
             throw (ServletException) t;
+          if (t instanceof IOException)
+            throw (IOException) t;
           throw new ServletException (t);
         }
       }
