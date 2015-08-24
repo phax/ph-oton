@@ -192,16 +192,18 @@ jqphClass.prototype = {
       
       if(data.externalcss){
         // Include external CSS elements
-        var firstcss=document.getElementsByTagName('link')[0];
+        var head=document.getElementsByTagName('head')[0];
         for(var css in data.externalcss){
           var cssNode=document.createElement('link');
           cssNode.href=data.externalcss[css];
           cssNode.type='text\/css';
           cssNode.rel='stylesheet';
           cssNode.title='dynamicallyLoadedCSS';
-          firstcss.parentNode.insertBefore(cssNode,firstcss);
+          cssNode.media='all';
+          head.appendChild(cssNode);
         }
       }
+      
       if (callbackFctEnd) {
         // Invoke callback after the inclusions
         callbackFctEnd(data.value,textStatus,xhr);

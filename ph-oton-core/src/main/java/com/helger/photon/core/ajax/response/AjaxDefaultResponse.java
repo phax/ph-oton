@@ -63,7 +63,9 @@ public class AjaxDefaultResponse implements IAjaxResponse
    */
   public static final String PROPERTY_EXTERNAL_CSS = "externalcss";
   /** Additional inline CSS - only in case of success - contains a string */
-  public static final String PROPERTY_INLINE_CSS = "inlinecss";
+  public static final String PROPERTY_INLINE_CSS_BEFORE_EXTERNAL = "inlinecssBeforeExternal";
+  /** Additional inline CSS - only in case of success - contains a string */
+  public static final String PROPERTY_INLINE_CSS_AFTER_EXTERNAL = "inlinecssAfterExternal";
   /**
    * Additional JS files - only in case of success - contains a list of strings
    */
@@ -213,8 +215,10 @@ public class AjaxDefaultResponse implements IAjaxResponse
       // Apply special nodes
       if (m_aSpecialNodes.hasExternalCSSs ())
         aAssocArray.add (PROPERTY_EXTERNAL_CSS, m_aSpecialNodes.getAllExternalCSSs ());
-      if (m_aSpecialNodes.hasInlineCSS ())
-        aAssocArray.add (PROPERTY_INLINE_CSS, m_aSpecialNodes.getInlineCSS ());
+      if (m_aSpecialNodes.hasInlineCSSBeforeExternal ())
+        aAssocArray.add (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, m_aSpecialNodes.getInlineCSSBeforeExternal ());
+      if (m_aSpecialNodes.hasInlineCSSAfterExternal ())
+        aAssocArray.add (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, m_aSpecialNodes.getInlineCSSAfterExternal ());
       if (m_aSpecialNodes.hasExternalJSs ())
         aAssocArray.add (PROPERTY_EXTERNAL_JS, m_aSpecialNodes.getAllExternalJSs ());
       if (m_aSpecialNodes.hasInlineJSBeforeExternal ())
