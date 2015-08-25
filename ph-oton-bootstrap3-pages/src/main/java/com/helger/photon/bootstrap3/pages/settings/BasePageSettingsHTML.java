@@ -58,6 +58,14 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
    MSG_FORMAT_JS ("JS formatieren?", "Format JS?"),
    MSG_CONSISTENCY_CHECKS_ENABLED ("Konsistenzprüfungen aktiv?", "Consistency checks enabled?"),
    MSG_EXTRACT_OUT_OF_BAND_NODES ("Out-of-band Knoten extrahieren?", "Extract out-of-band nodes?"),
+   MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS ("Auto-Vervollständigung für Passwort-Felder?", "Auto complete for password fields?"),
+   MSG_ON_DOCUMENT_READY_PROVIDER ("JavaScript document.ready Ersteller", "JavaScript document.ready provider"),
+   MSG_SCRIPT_INLINE_MODE ("<script> Modus", "<script> mode"),
+   MSG_STYLE_INLINE_MODE ("<style> Modus", "<style> mode"),
+   MSG_NEW_LINE_MODE ("Zeilenumbruch", "New line"),
+   MSG_OUT_OF_BAND_DEBUGGING ("Out-of-band Knoten debuggen?", "Debug out-of-band nodes?"),
+   MSG_SCRIPTS_IN_BODY ("<script>-Element in <body>?", "Put <script> elements in <body>?"),
+   MSG_USE_REGULAR_RESOURCES ("Nicht-optimierte JS/CSS inkludieren?", "Include non-minified JS/CSS?"),
    MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
 
     private final IMultilingualText m_aTP;
@@ -79,6 +87,10 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
   private static final String FIELD_FORMAT_JS = "formatjs";
   private static final String FIELD_CONSISTENCY_CHECKS_ENABLED = "consistencychecks";
   private static final String FIELD_EXTRACT_OUT_OF_BAND_NODES = "extractoobnodes";
+  private static final String FIELD_AUTO_COMPLETE_FOR_PASSWORD_EDITS = "autocompletepw";
+  private static final String FIELD_OUT_OF_BAND_DEBUG = "oobdebug";
+  private static final String FIELD_SCRIPTS_IN_BODY = "scriptsinbody";
+  private static final String FIELD_USE_REGULAR_RESOURCES = "useregular";
 
   public BasePageSettingsHTML (@Nonnull @Nonempty final String sID)
   {
@@ -127,6 +139,13 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
                                                                        aConversionSettings.areConsistencyChecksEnabled ());
       final boolean bExtractOutOfBandNodes = aWPEC.getCheckBoxAttr (FIELD_EXTRACT_OUT_OF_BAND_NODES,
                                                                     aConversionSettings.isExtractOutOfBandNodes ());
+      final boolean bAutoCompleteForPasswordEdits = aWPEC.getCheckBoxAttr (FIELD_AUTO_COMPLETE_FOR_PASSWORD_EDITS,
+                                                                           !HCSettings.isAutoCompleteOffForPasswordEdits ());
+      final boolean bOOBDebug = aWPEC.getCheckBoxAttr (FIELD_OUT_OF_BAND_DEBUG,
+                                                       HCSettings.isOutOfBandDebuggingEnabled ());
+      final boolean bScriptsInBody = aWPEC.getCheckBoxAttr (FIELD_SCRIPTS_IN_BODY, HCSettings.isScriptsInBody ());
+      final boolean bUseRegularResources = aWPEC.getCheckBoxAttr (FIELD_USE_REGULAR_RESOURCES,
+                                                                  HCSettings.isUseRegularResources ());
 
       // Apply the settings
       HCSettings.getMutableConversionSettings ()
@@ -135,13 +154,16 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
                 .setJSWriterSettingsOptimized (!bFormatJS)
                 .setConsistencyChecksEnabled (bConsistencyChecksEnabled)
                 .setExtractOutOfBandNodes (bExtractOutOfBandNodes);
+      HCSettings.setAutoCompleteOffForPasswordEdits (!bAutoCompleteForPasswordEdits);
+      HCSettings.setOutOfBandDebuggingEnabled (bOOBDebug);
+      HCSettings.setScriptsInBody (bScriptsInBody);
+      HCSettings.setUseRegularResources (bUseRegularResources);
 
       aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
     }
 
     final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
 
-    // IHCConversionSettingsToNode
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_HTML_VERSION.getDisplayText (aDisplayLocale))
                                                    .setCtrl (aConversionSettings.getHTMLVersion ().name ()));
@@ -164,6 +186,26 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXTRACT_OUT_OF_BAND_NODES.getDisplayText (aDisplayLocale))
                                                    .setCtrl (new HCCheckBox (FIELD_EXTRACT_OUT_OF_BAND_NODES,
                                                                              aConversionSettings.isExtractOutOfBandNodes ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCCheckBox (FIELD_AUTO_COMPLETE_FOR_PASSWORD_EDITS,
+                                                                             !HCSettings.isAutoCompleteOffForPasswordEdits ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ON_DOCUMENT_READY_PROVIDER.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (String.valueOf (HCSettings.getOnDocumentReadyProvider ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCRIPT_INLINE_MODE.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (HCSettings.getScriptInlineMode ().name ()));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_STYLE_INLINE_MODE.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (HCSettings.getStyleInlineMode ().name ()));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_NEW_LINE_MODE.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (HCSettings.getNewLineMode ().name ()));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_OUT_OF_BAND_DEBUGGING.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCCheckBox (FIELD_OUT_OF_BAND_DEBUG,
+                                                                             HCSettings.isOutOfBandDebuggingEnabled ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCRIPTS_IN_BODY.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCCheckBox (FIELD_SCRIPTS_IN_BODY,
+                                                                             HCSettings.isScriptsInBody ())));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USE_REGULAR_RESOURCES.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (new HCCheckBox (FIELD_USE_REGULAR_RESOURCES,
+                                                                             HCSettings.isUseRegularResources ())));
     }
 
     final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
