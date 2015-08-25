@@ -30,12 +30,10 @@ import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
-import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.html.hc.html.metadata.HCMeta;
 import com.helger.html.hc.html.root.HCHtml;
-import com.helger.html.hc.html.sections.HCBody;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.IMetaElement;
@@ -62,16 +60,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 {
   public AbstractHTMLProvider ()
   {}
-
-  /**
-   * @return <code>true</code> to use non-minified resources, <code>false</code>
-   *         to use minified resources.
-   */
-  @OverrideOnDemand
-  protected boolean isUseRegularResources ()
-  {
-    return HCSettings.isUseRegularResources ();
-  }
 
   @OverrideOnDemand
   protected boolean isUseWebSiteResourceBundlesForCSS ()
@@ -167,10 +155,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   @OverrideOnDemand
   protected void addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHtml aHtml)
   {
-    final boolean bRegular = isUseRegularResources ();
-    final boolean bScriptInBody = HCSettings.isScriptsInBody ();
+    final boolean bRegular = HCSettings.isUseRegularResources ();
     final HCHead aHead = aHtml.getHead ();
-    final HCBody aBody = aHtml.getBody ();
 
     // Add configured and per-request CSS
     final Set <ICSSPathProvider> aCSSs = PhotonCSS.getAllRegisteredCSSIncludesForGlobal ();
@@ -186,13 +172,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
     // Add each JS separately
     for (final IJSPathProvider aJS : aJSs)
-    {
-      final IHCNode aJSNode = PhotonHTMLHelper.getJSNode (aRequestScope, aJS, bRegular);
-      if (bScriptInBody)
-        aBody.addChild (aJSNode);
-      else
-        aHead.addJS (aJSNode);
-    }
+      aHead.addJS (PhotonHTMLHelper.getJSNode (aRequestScope, aJS, bRegular));
   }
 
   /**
@@ -216,9 +196,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
       return;
     }
 
-    final boolean bRegular = isUseRegularResources ();
+    final boolean bRegular = HCSettings.isUseRegularResources ();
     final HCHead aHead = aHtml.getHead ();
-    final HCBody aBody = aHtml.getBody ();
 
     if (bAggregateCSS)
     {
@@ -237,8 +216,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
     if (bAggregateJS)
     {
-      final boolean bScriptInBody = HCSettings.isScriptsInBody ();
-
       // Add all configured and per-request JS
       final Set <IJSPathProvider> aJSs = PhotonJS.getAllRegisteredJSIncludesForGlobal ();
       PhotonJS.getAllRegisteredJSIncludesForThisRequest (aJSs);
@@ -249,13 +226,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
       for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
                                                                             .getResourceBundles (aJSRes, bRegular))
-      {
-        final IHCNode aJSNode = aBundle.createNode (aRequestScope);
-        if (bScriptInBody)
-          aBody.addChild (aJSNode);
-        else
-          aHead.addJS (aJSNode);
-      }
+        aHead.addJS (aBundle.createNode (aRequestScope));
     }
   }
 
@@ -272,29 +243,17 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   protected void fillHead (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCHtml aHtml)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
-    final IHCConversionSettingsToNode aConversionSettings = HCSettings.getConversionSettings ();
     final HCHead aHead = aHtml.getHead ();
 
     // Add all meta elements
     addMetaElements (aRequestScope, aHead);
-
-    // customize, finalize and extract resources
-    // This must be done before the CSS and JS are included because per-request
-    // resource registration happens inside
-    HCRenderer.prepareForConversion (aHtml, aHtml.getBody (), aConversionSettings);
-
-    // Add global and per-request CSS and JS
-    addCSSAndJS (aRequestScope, aHtml);
-
-    // Extract and merge all out-of-band nodes
-    if (aConversionSettings.isExtractOutOfBandNodes ())
-      aHtml.extractAndReorderOutOfBandNodes ();
   }
 
   @Nonnull
   public final HCHtml createHTML (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws ForcedRedirectException
   {
     final Locale aDisplayLocale = getDisplayLocale ();
+    final IHCConversionSettingsToNode aConversionSettings = HCSettings.getConversionSettings ();
 
     // Build the execution scope
     final ISimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (aRequestScope,
@@ -310,13 +269,29 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     // build HTML header (after body for per-request stuff)
     fillHead (aSWEC, aHtml);
 
+    // customize, finalize and extract resources
+    // This must be done before the CSS and JS are included because per-request
+    // resource registration happens inside
+    HCRenderer.prepareForConversion (aHtml, aHtml.getBody (), aConversionSettings);
+
+    // Add global and per-request CSS and JS
+    addCSSAndJS (aRequestScope, aHtml);
+
+    // Extract and merge all out-of-band nodes
+    if (aConversionSettings.isExtractOutOfBandNodes ())
+      aHtml.extractAndReorderOutOfBandNodes ();
+
     // Add CSS and JS
     aggregateCSSAndJS (aRequestScope, aHtml);
+
+    // Move scripts to body? If so, after aggregation!
+    if (HCSettings.isScriptsInBody ())
+      aHtml.moveScriptElementsToBody ();
 
     // This is only required so that the additional CSS/JS nodes on the head get
     // the correct EHCNodeState
     if (false)
-      HCRenderer.prepareForConversion (aHtml.getHead (), aHtml.getBody (), HCSettings.getConversionSettings ());
+      HCRenderer.prepareForConversion (aHtml.getHead (), aHtml.getBody (), aConversionSettings);
 
     return aHtml;
   }
