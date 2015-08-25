@@ -30,10 +30,15 @@ import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.html.metadata.HCCSSNodeDetector;
 import com.helger.html.hc.html.metadata.HCHead;
+import com.helger.html.hc.html.metadata.HCLink;
 import com.helger.html.hc.html.metadata.HCMeta;
 import com.helger.html.hc.html.root.HCHtml;
+import com.helger.html.hc.html.script.HCJSNodeDetector;
+import com.helger.html.hc.html.script.HCScriptFile;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.IMetaElement;
@@ -47,6 +52,7 @@ import com.helger.photon.core.app.context.SimpleWebExecutionContext;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.resource.ResourceBundleServlet;
+import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.core.resource.WebSiteResourceWithCondition;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -153,7 +159,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    *        The current HTML object. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHtml aHtml)
+  protected void addGlobalAndPerRequestCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                 @Nonnull final HCHtml aHtml)
   {
     final boolean bRegular = HCSettings.isUseRegularResources ();
     final HCHead aHead = aHtml.getHead ();
@@ -196,37 +203,88 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
       return;
     }
 
+    final WebSiteResourceBundleManager aWSRBMgr = PhotonCoreManager.getWebSiteResourceBundleMgr ();
     final boolean bRegular = HCSettings.isUseRegularResources ();
     final HCHead aHead = aHtml.getHead ();
 
     if (bAggregateCSS)
     {
-      // Add configured and per-request CSS
-      final Set <ICSSPathProvider> aCSSs = PhotonCSS.getAllRegisteredCSSIncludesForGlobal ();
-      PhotonCSS.getAllRegisteredCSSIncludesForThisRequest (aCSSs);
+      // Extract all CSS nodes for merging
+      final List <IHCNode> aCSSNodes = new ArrayList <> ();
+      aHead.getAllAndRemoveAllCSSNodes (aCSSNodes);
 
-      final List <WebSiteResourceWithCondition> aCSSRes = new ArrayList <WebSiteResourceWithCondition> ();
-      for (final ICSSPathProvider aCSS : aCSSs)
-        aCSSRes.add (WebSiteResourceWithCondition.createForCSS (aCSS, bRegular));
+      final List <WebSiteResourceWithCondition> aCSSs = new ArrayList <> ();
+      for (final IHCNode aNode : aCSSNodes)
+      {
+        boolean bStartMerge = true;
+        if (HCCSSNodeDetector.isDirectCSSFileNode (aNode))
+        {
+          final ICSSPathProvider aPathProvider = ((HCLink) aNode).getPathProvider ();
+          if (aPathProvider != null)
+          {
+            aCSSs.add (WebSiteResourceWithCondition.createForCSS (aPathProvider, bRegular));
+            bStartMerge = false;
+          }
+        }
 
-      for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
-                                                                            .getResourceBundles (aCSSRes, bRegular))
-        aHead.addCSS (aBundle.createNode (aRequestScope));
+        if (bStartMerge)
+        {
+          if (!aCSSs.isEmpty ())
+          {
+            for (final WebSiteResourceBundleSerialized aBundle : aWSRBMgr.getResourceBundles (aCSSs, bRegular))
+              aHead.addCSS (aBundle.createNode (aRequestScope));
+            aCSSs.clear ();
+          }
+
+          // Add the current (non-mergable) node again to head after merging
+          aHead.addCSS (aNode);
+        }
+      }
+
+      // Add the remaining nodes (if any)
+      if (!aCSSs.isEmpty ())
+        for (final WebSiteResourceBundleSerialized aBundle : aWSRBMgr.getResourceBundles (aCSSs, bRegular))
+          aHead.addCSS (aBundle.createNode (aRequestScope));
     }
 
     if (bAggregateJS)
     {
-      // Add all configured and per-request JS
-      final Set <IJSPathProvider> aJSs = PhotonJS.getAllRegisteredJSIncludesForGlobal ();
-      PhotonJS.getAllRegisteredJSIncludesForThisRequest (aJSs);
+      // Extract all JS nodes for merging
+      final List <IHCNode> aJSNodes = new ArrayList <> ();
+      aHead.getAllAndRemoveAllJSNodes (aJSNodes);
 
-      final List <WebSiteResourceWithCondition> aJSRes = new ArrayList <WebSiteResourceWithCondition> ();
-      for (final IJSPathProvider aJS : aJSs)
-        aJSRes.add (WebSiteResourceWithCondition.createForJS (aJS, bRegular));
+      final List <WebSiteResourceWithCondition> aJSs = new ArrayList <> ();
+      for (final IHCNode aNode : aJSNodes)
+      {
+        boolean bStartMerge = true;
+        if (HCJSNodeDetector.isDirectJSFileNode (aNode))
+        {
+          final IJSPathProvider aPathProvider = ((HCScriptFile) aNode).getPathProvider ();
+          if (aPathProvider != null)
+          {
+            aJSs.add (WebSiteResourceWithCondition.createForJS (aPathProvider, bRegular));
+            bStartMerge = false;
+          }
+        }
 
-      for (final WebSiteResourceBundleSerialized aBundle : PhotonCoreManager.getWebSiteResourceBundleMgr ()
-                                                                            .getResourceBundles (aJSRes, bRegular))
-        aHead.addJS (aBundle.createNode (aRequestScope));
+        if (bStartMerge)
+        {
+          if (!aJSs.isEmpty ())
+          {
+            for (final WebSiteResourceBundleSerialized aBundle : aWSRBMgr.getResourceBundles (aJSs, bRegular))
+              aHead.addJS (aBundle.createNode (aRequestScope));
+            aJSs.clear ();
+          }
+
+          // Add the current (non-mergable) node again to head after merging
+          aHead.addJS (aNode);
+        }
+      }
+
+      // Add the remaining nodes (if any)
+      if (!aJSs.isEmpty ())
+        for (final WebSiteResourceBundleSerialized aBundle : aWSRBMgr.getResourceBundles (aJSs, bRegular))
+          aHead.addJS (aBundle.createNode (aRequestScope));
     }
   }
 
@@ -275,13 +333,16 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     HCRenderer.prepareForConversion (aHtml, aHtml.getBody (), aConversionSettings);
 
     // Add global and per-request CSS and JS
-    addCSSAndJS (aRequestScope, aHtml);
+    addGlobalAndPerRequestCSSAndJS (aRequestScope, aHtml);
 
     // Extract and merge all out-of-band nodes
     if (aConversionSettings.isExtractOutOfBandNodes ())
-      aHtml.extractAndReorderOutOfBandNodes ();
+    {
+      final List <IHCNode> aOOBNodes = aHtml.getAllOutOfBandNodesWithMergedInlineNodes ();
+      aHtml.addAllOutOfBandNodesToHead (aOOBNodes);
+    }
 
-    // Add CSS and JS
+    // Aggregate CSS and JS using the WebSiteResourceBundleManager etc.
     aggregateCSSAndJS (aRequestScope, aHtml);
 
     // Move scripts to body? If so, after aggregation!
