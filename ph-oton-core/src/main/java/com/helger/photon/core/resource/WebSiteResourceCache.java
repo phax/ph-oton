@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.resource;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -95,15 +96,17 @@ public final class WebSiteResourceCache
 
   @Nonnull
   public static WebSiteResource getOrCreateResource (@Nonnull final EWebSiteResourceType eResourceType,
-                                                     @Nonnull @Nonempty final String sPath)
+                                                     @Nonnull @Nonempty final String sPath,
+                                                     @Nonnull final Charset aCharset)
   {
     ValueEnforcer.notNull (eResourceType, "ResourceType");
     ValueEnforcer.notEmpty (sPath, "Path");
+    ValueEnforcer.notNull (aCharset, "Charset");
 
     if (!isCacheEnabled ())
     {
       // Always create a new resource to allow for modifications
-      final WebSiteResource aResource = new WebSiteResource (eResourceType, sPath);
+      final WebSiteResource aResource = new WebSiteResource (eResourceType, sPath, aCharset);
       if (!aResource.isExisting ())
         throw new IllegalArgumentException ("WebSiteResource '" +
                                             sPath +
@@ -137,7 +140,7 @@ public final class WebSiteResourceCache
         if (ret == null)
         {
           // Init and put in map
-          ret = new WebSiteResource (eResourceType, sPath);
+          ret = new WebSiteResource (eResourceType, sPath, aCharset);
           s_aMap.put (sCacheKey, ret);
         }
       }

@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.resource;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -59,10 +61,13 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 @Immutable
 public class WebSiteResource
 {
+  public static final Charset DEFAULT_CHARSET = CCharset.CHARSET_UTF_8_OBJ;
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResource.class);
 
   private final EWebSiteResourceType m_eResourceType;
   private final String m_sPath;
+  private final Charset m_aCharset;
   // Status vars
   private final IReadableResource m_aResource;
   private final boolean m_bResourceExists;
@@ -70,10 +75,13 @@ public class WebSiteResource
   private final String m_sContentHash;
   private Integer m_aHashCode;
 
-  public WebSiteResource (@Nonnull final EWebSiteResourceType eResourceType, @Nonnull @Nonempty final String sPath)
+  public WebSiteResource (@Nonnull final EWebSiteResourceType eResourceType,
+                          @Nonnull @Nonempty final String sPath,
+                          @Nonnull final Charset aCharset)
   {
     m_eResourceType = ValueEnforcer.notNull (eResourceType, "ResourceType");
     m_sPath = ValueEnforcer.notEmpty (sPath, "Path");
+    m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
 
     IReadableResource aRes = new ClassPathResource (m_sPath);
     if (aRes.exists ())
@@ -116,6 +124,12 @@ public class WebSiteResource
     return m_sPath;
   }
 
+  @Nonnull
+  public Charset getCharset ()
+  {
+    return m_aCharset;
+  }
+
   /**
    * Unify all paths in a CSS relative to the passed base path.
    *
@@ -129,15 +143,15 @@ public class WebSiteResource
    * @return The modified String.
    */
   @Nonnull
-  private static String _readAndParseCSS (@Nonnull final IHasInputStream aISP,
-                                          @Nonnull @Nonempty final String sBasePath,
-                                          final boolean bRegular)
+  private String _readAndParseCSS (@Nonnull final IHasInputStream aISP,
+                                   @Nonnull @Nonempty final String sBasePath,
+                                   final boolean bRegular)
   {
-    final CascadingStyleSheet aCSS = CSSReader.readFromStream (aISP, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30);
+    final CascadingStyleSheet aCSS = CSSReader.readFromStream (aISP, m_aCharset, ECSSVersion.CSS30);
     if (aCSS == null)
     {
       s_aLogger.error ("Failed to parse CSS. Returning 'as-is'");
-      return StreamHelper.getAllBytesAsString (aISP, CCharset.CHARSET_UTF_8_OBJ);
+      return StreamHelper.getAllBytesAsString (aISP, m_aCharset);
     }
     CSSVisitor.visitCSSUrl (aCSS, new AbstractModifyingCSSUrlVisitor ()
     {
@@ -168,7 +182,7 @@ public class WebSiteResource
         // this has undesired side effects such that global functions are not
         // available etc.
         // In case of an error, fix the relevant JS file instead.
-        return StreamHelper.getAllBytesAsString (m_aResource.getInputStream (), CCharset.CHARSET_UTF_8_OBJ);
+        return StreamHelper.getAllBytesAsString (m_aResource, m_aCharset);
       case CSS:
         // Remove the filename from the path
         // Not using a requestScope is okay here, because we don't want to link
@@ -227,6 +241,7 @@ public class WebSiteResource
     final WebSiteResource rhs = (WebSiteResource) o;
     return m_eResourceType.equals (rhs.m_eResourceType) &&
            m_sPath.equals (rhs.m_sPath) &&
+           m_aCharset.equals (rhs.m_aCharset) &&
            EqualsHelper.equals (m_aContentHash, rhs.m_aContentHash);
   }
 
@@ -237,6 +252,7 @@ public class WebSiteResource
     if (m_aHashCode == null)
       m_aHashCode = new HashCodeGenerator (this).append (m_eResourceType)
                                                 .append (m_sPath)
+                                                .append (m_aCharset)
                                                 .append (m_aContentHash)
                                                 .getHashCodeObj ();
     return m_aHashCode.intValue ();
@@ -245,6 +261,9 @@ public class WebSiteResource
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("type", m_eResourceType).append ("path", m_sPath).toString ();
+    return new ToStringGenerator (this).append ("ResourceType", m_eResourceType)
+                                       .append ("Path", m_sPath)
+                                       .append ("Charset", m_aCharset)
+                                       .toString ();
   }
 }

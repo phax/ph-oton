@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.resource;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.microdom.IMicroDocument;
@@ -62,6 +64,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
   private static final String ATTR_PATH = "path";
   private static final String ATTR_URL = "url";
   private static final String ATTR_CONTENT_HASH = "contenthash";
+  private static final String ATTR_CHARSET = "charset";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResourceBundleManager.class);
   @GuardedBy ("m_aRWLock")
@@ -116,8 +119,12 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
         final String sPath = eResource.getAttributeValue (ATTR_PATH);
         final String sURL = eResource.getAttributeValue (ATTR_URL);
         final String sHash = eResource.getAttributeValue (ATTR_CONTENT_HASH);
+        final String sCharset = eResource.getAttributeValue (ATTR_CHARSET);
+        // Soft migration as charset was added later
+        final Charset aCharset = sCharset == null ? WebSiteResource.DEFAULT_CHARSET
+                                                  : CharsetManager.getCharsetFromName (sCharset);
 
-        final WebSiteResource aNewResource = new WebSiteResource (eResourceType, sPath);
+        final WebSiteResource aNewResource = new WebSiteResource (eResourceType, sPath, aCharset);
         if (!aNewResource.isExisting ())
         {
           s_aLogger.info ("Skipping resource bundle '" +
@@ -213,6 +220,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
         eResource.setAttribute (ATTR_PATH, aResource.getPath ());
         eResource.setAttribute (ATTR_URL, aResource.getAsURLString ());
         eResource.setAttribute (ATTR_CONTENT_HASH, aResource.getContentHashAsString ());
+        eResource.setAttribute (ATTR_CHARSET, aResource.getCharset ().name ());
       }
     }
     return aDoc;

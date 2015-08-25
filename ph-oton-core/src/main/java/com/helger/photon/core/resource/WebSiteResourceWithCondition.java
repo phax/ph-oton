@@ -16,12 +16,15 @@
  */
 package com.helger.photon.core.resource;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.charset.CCharset;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.StringHelper;
@@ -56,6 +59,8 @@ public class WebSiteResourceWithCondition
    *        Resource type. May not be <code>null</code>.
    * @param sPath
    *        Path to the resource. May neither be <code>null</code> nor empty.
+   * @param aCharset
+   *        Charset to read the file contents. May not be <code>null</code>.
    * @param sConditionalComment
    *        Optional conditional comment.
    * @param bIsBundlable
@@ -66,11 +71,15 @@ public class WebSiteResourceWithCondition
    */
   public WebSiteResourceWithCondition (@Nonnull final EWebSiteResourceType eType,
                                        @Nonnull @Nonempty final String sPath,
+                                       @Nonnull final Charset aCharset,
                                        @Nullable final String sConditionalComment,
                                        final boolean bIsBundlable,
                                        @Nullable final ICSSMediaList aMediaList)
   {
-    this (WebSiteResourceCache.getOrCreateResource (eType, sPath), sConditionalComment, bIsBundlable, aMediaList);
+    this (WebSiteResourceCache.getOrCreateResource (eType, sPath, aCharset),
+          sConditionalComment,
+          bIsBundlable,
+          aMediaList);
   }
 
   protected WebSiteResourceWithCondition (@Nonnull final WebSiteResource aResource,
@@ -240,6 +249,7 @@ public class WebSiteResourceWithCondition
   {
     return new WebSiteResourceWithCondition (EWebSiteResourceType.JS,
                                              sPath,
+                                             CCharset.CHARSET_UTF_8_OBJ,
                                              sConditionalComment,
                                              bIsBundlable,
                                              (ICSSMediaList) null);
@@ -273,6 +283,7 @@ public class WebSiteResourceWithCondition
   {
     return new WebSiteResourceWithCondition (EWebSiteResourceType.CSS,
                                              sPath,
+                                             CCharset.CHARSET_UTF_8_OBJ,
                                              sConditionalComment,
                                              bIsBundlable,
                                              aMediaList);
