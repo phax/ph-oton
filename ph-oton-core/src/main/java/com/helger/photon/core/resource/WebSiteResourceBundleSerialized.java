@@ -171,7 +171,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
   public IHCNode createNode (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     ISimpleURL aURL = null;
-    if (m_aBundle.getResourceCount () == 1 && !m_aBundle.canBeBundled ())
+    if (m_aBundle.getResourceCount () == 1 && !m_aBundle.isBundlable ())
     {
       // Special handling for resource bundles with a single item - use the
       // original path (e.g. for TinyMCE because it cannot be bundled)

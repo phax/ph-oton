@@ -49,7 +49,7 @@ public class WebSiteResourceBundle
 {
   private final List <WebSiteResource> m_aResources;
   private final String m_sConditionalComment;
-  private final boolean m_bCanBeBundled;
+  private final boolean m_bIsBundlable;
   private final CSSMediaList m_aMediaList;
   // Status vars
   private final EWebSiteResourceType m_eResourceType;
@@ -57,7 +57,7 @@ public class WebSiteResourceBundle
 
   public WebSiteResourceBundle (@Nonnull @Nonempty final List <WebSiteResourceWithCondition> aResources,
                                 @Nullable final String sConditionalComment,
-                                final boolean bCanBeBundled,
+                                final boolean bIsBundlable,
                                 @Nullable final ICSSMediaList aMediaList)
   {
     ValueEnforcer.notEmptyNoNullValue (aResources, "Resources");
@@ -65,7 +65,7 @@ public class WebSiteResourceBundle
     for (final WebSiteResourceWithCondition aResourceWithCond : aResources)
       m_aResources.add (aResourceWithCond.getResource ());
     m_sConditionalComment = sConditionalComment;
-    m_bCanBeBundled = bCanBeBundled;
+    m_bIsBundlable = bIsBundlable;
     m_aMediaList = aMediaList == null || aMediaList.hasNoMedia () ? null : new CSSMediaList (aMediaList);
     m_eResourceType = aResources.get (0).getResource ().getResourceType ();
 
@@ -130,9 +130,9 @@ public class WebSiteResourceBundle
     return m_sConditionalComment;
   }
 
-  public boolean canBeBundled ()
+  public boolean isBundlable ()
   {
-    return m_bCanBeBundled;
+    return m_bIsBundlable;
   }
 
   @Nullable
@@ -178,7 +178,7 @@ public class WebSiteResourceBundle
     final WebSiteResourceBundle rhs = (WebSiteResourceBundle) o;
     return m_aResources.equals (rhs.m_aResources) &&
            EqualsHelper.equals (m_sConditionalComment, rhs.m_sConditionalComment) &&
-           m_bCanBeBundled == rhs.m_bCanBeBundled &&
+           m_bIsBundlable == rhs.m_bIsBundlable &&
            EqualsHelper.equals (m_aMediaList, rhs.m_aMediaList);
   }
 
@@ -188,7 +188,7 @@ public class WebSiteResourceBundle
     if (m_aHashCode == null)
       m_aHashCode = new HashCodeGenerator (this).append (m_aResources)
                                                 .append (m_sConditionalComment)
-                                                .append (m_bCanBeBundled)
+                                                .append (m_bIsBundlable)
                                                 .append (m_aMediaList)
                                                 .getHashCodeObj ();
     return m_aHashCode.intValue ();
@@ -199,7 +199,7 @@ public class WebSiteResourceBundle
   {
     return new ToStringGenerator (this).append ("resources", m_aResources)
                                        .appendIfNotNull ("ConditionalComment", m_sConditionalComment)
-                                       .append ("CanBeBundled", m_bCanBeBundled)
+                                       .append ("IsBundlable", m_bIsBundlable)
                                        .appendIfNotNull ("MediaList", m_aMediaList)
                                        .toString ();
   }

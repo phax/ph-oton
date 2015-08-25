@@ -54,7 +54,8 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
   private static final String ATTR_ID = "id";
   private static final String ATTR_CREATIONDT = "creationdt";
   private static final String ATTR_CONDITIONAL_COMMENT = "conditionalcomment";
-  private static final String ATTR_CAN_BE_BUNDLED = "canbebundled";
+  // Legacy name!
+  private static final String ATTR_IS_BUNDLABLE = "canbebundled";
   private static final String ELEMENT_MEDIUM = "medium";
   private static final String ELEMENT_RESOURCE = "resource";
   private static final String ATTR_RESOURCE_TYPE = "resourcetype";
@@ -88,7 +89,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
       final String sConditionalComment = eResourceBundle.getAttributeValue (ATTR_CONDITIONAL_COMMENT);
 
       // This attribute was added - default to true
-      final String sCanBeBundled = eResourceBundle.getAttributeValue (ATTR_CAN_BE_BUNDLED);
+      final String sCanBeBundled = eResourceBundle.getAttributeValue (ATTR_IS_BUNDLABLE);
       final boolean bCanBeBundled = StringParser.parseBool (sCanBeBundled, true);
 
       final CSSMediaList aMediaList = new CSSMediaList ();
@@ -156,7 +157,10 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
           bResourcesAreOutOfSync = true;
           continue;
         }
-        aResources.add (new WebSiteResourceWithCondition (aNewResource, sConditionalComment, bCanBeBundled, aMediaList));
+        aResources.add (new WebSiteResourceWithCondition (aNewResource,
+                                                          sConditionalComment,
+                                                          bCanBeBundled,
+                                                          aMediaList));
       }
 
       if (bResourcesAreOutOfSync)
@@ -198,7 +202,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
 
       final WebSiteResourceBundle aBundle = aResourceBundle.getBundle ();
       eBundle.setAttributeWithConversion (ATTR_CONDITIONAL_COMMENT, aBundle.getConditionalComment ());
-      eBundle.setAttribute (ATTR_CAN_BE_BUNDLED, Boolean.toString (aBundle.canBeBundled ()));
+      eBundle.setAttribute (ATTR_IS_BUNDLABLE, Boolean.toString (aBundle.isBundlable ()));
       if (aBundle.hasMediaList ())
         for (final ECSSMedium eMedium : aBundle.getMediaList ().getAllMedia ())
           eBundle.appendElement (ELEMENT_MEDIUM).appendText (eMedium.getName ());
@@ -315,7 +319,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
       final WebSiteResourceBundle aBundle = new WebSiteResourceBundle (aBundleResources,
                                                                        aFirst.getConditionalComment (),
                                                                        aBundleResources.size () != 1 ||
-                                                                           aFirst.isBundlable (),
+                                                                                                        aFirst.isBundlable (),
                                                                        aFirst.getMediaList ());
 
       // Try to find existing bundle (ID and serialized one)
