@@ -32,13 +32,9 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
-import com.helger.html.hc.html.metadata.HCCSSNodeDetector;
 import com.helger.html.hc.html.metadata.HCHead;
-import com.helger.html.hc.html.metadata.HCLink;
 import com.helger.html.hc.html.metadata.HCMeta;
 import com.helger.html.hc.html.root.HCHtml;
-import com.helger.html.hc.html.script.HCJSNodeDetector;
-import com.helger.html.hc.html.script.HCScriptFile;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.IMetaElement;
@@ -50,11 +46,7 @@ import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.context.SimpleWebExecutionContext;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
-import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.resource.ResourceBundleServlet;
-import com.helger.photon.core.resource.WebSiteResourceBundleManager;
-import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
-import com.helger.photon.core.resource.WebSiteResourceWithCondition;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -183,115 +175,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   }
 
   /**
-   * Merge external CSS and JS contents to a single resource for improved
-   * browser performance. All source nodes are taken from the head and all
-   * target nodes are written to the head.
-   *
-   * @param aRequestScope
-   *        Current request scope. Never <code>null</code>.
-   * @param aHead
-   *        The HTML head object. Never <code>null</code>.
-   * @param bMergeCSS
-   *        <code>true</code> to aggregate CSS entries.
-   * @param bMergeJS
-   *        <code>true</code> to aggregate JS entries.
-   */
-  public static void mergeExternalCSSAndJSNodes (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                 @Nonnull final HCHead aHead,
-                                                 final boolean bMergeCSS,
-                                                 final boolean bMergeJS)
-  {
-    if (!bMergeCSS && !bMergeJS)
-    {
-      // Nothing to do
-      return;
-    }
-
-    final WebSiteResourceBundleManager aWSRBMgr = PhotonCoreManager.getWebSiteResourceBundleMgr ();
-    final boolean bRegular = HCSettings.isUseRegularResources ();
-
-    if (bMergeCSS)
-    {
-      // Extract all CSS nodes for merging
-      final List <IHCNode> aCSSNodes = new ArrayList <> ();
-      aHead.getAllAndRemoveAllCSSNodes (aCSSNodes);
-
-      final List <WebSiteResourceWithCondition> aCSSs = new ArrayList <> ();
-      for (final IHCNode aNode : aCSSNodes)
-      {
-        boolean bStartMerge = true;
-        if (HCCSSNodeDetector.isDirectCSSFileNode (aNode))
-        {
-          final ICSSPathProvider aPathProvider = ((HCLink) aNode).getPathProvider ();
-          if (aPathProvider != null)
-          {
-            aCSSs.add (WebSiteResourceWithCondition.createForCSS (aPathProvider, bRegular));
-            bStartMerge = false;
-          }
-        }
-
-        if (bStartMerge)
-        {
-          if (!aCSSs.isEmpty ())
-          {
-            for (final WebSiteResourceBundleSerialized aBundle : aWSRBMgr.getResourceBundles (aCSSs, bRegular))
-              aHead.addCSS (aBundle.createNode (aRequestScope));
-            aCSSs.clear ();
-          }
-
-          // Add the current (non-mergable) node again to head after merging
-          aHead.addCSS (aNode);
-        }
-      }
-
-      // Add the remaining nodes (if any)
-      if (!aCSSs.isEmpty ())
-        for (final WebSiteResourceBundleSerialized aBundle : aWSRBMgr.getResourceBundles (aCSSs, bRegular))
-          aHead.addCSS (aBundle.createNode (aRequestScope));
-    }
-
-    if (bMergeJS)
-    {
-      // Extract all JS nodes for merging
-      final List <IHCNode> aJSNodes = new ArrayList <> ();
-      aHead.getAllAndRemoveAllJSNodes (aJSNodes);
-
-      final List <WebSiteResourceWithCondition> aJSs = new ArrayList <> ();
-      for (final IHCNode aNode : aJSNodes)
-      {
-        boolean bStartMerge = true;
-        if (HCJSNodeDetector.isDirectJSFileNode (aNode))
-        {
-          final IJSPathProvider aPathProvider = ((HCScriptFile) aNode).getPathProvider ();
-          if (aPathProvider != null)
-          {
-            aJSs.add (WebSiteResourceWithCondition.createForJS (aPathProvider, bRegular));
-            bStartMerge = false;
-          }
-        }
-
-        if (bStartMerge)
-        {
-          if (!aJSs.isEmpty ())
-          {
-            for (final WebSiteResourceBundleSerialized aBundle : aWSRBMgr.getResourceBundles (aJSs, bRegular))
-              aHead.addJS (aBundle.createNode (aRequestScope));
-            aJSs.clear ();
-          }
-
-          // Add the current (non-mergable) node again to head after merging
-          aHead.addJS (aNode);
-        }
-      }
-
-      // Add the remaining nodes (if any)
-      if (!aJSs.isEmpty ())
-        for (final WebSiteResourceBundleSerialized aBundle : aWSRBMgr.getResourceBundles (aJSs, bRegular))
-          aHead.addJS (aBundle.createNode (aRequestScope));
-    }
-  }
-
-  /**
    * Fill the HTML HEAD element.
    *
    * @param aSWEC
@@ -348,7 +231,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     // Merge all external CSS and JS nodes
     final boolean bMergeCSS = isMergeExternalCSSNodes ();
     final boolean bMergeJS = isMergeExternalJSNodes ();
-    mergeExternalCSSAndJSNodes (aRequestScope, aHtml.getHead (), bMergeCSS, bMergeJS);
+    PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope, aHtml.getHead (), bMergeCSS, bMergeJS);
 
     // Move scripts to body? If so, after aggregation!
     if (HCSettings.isScriptsInBody ())
