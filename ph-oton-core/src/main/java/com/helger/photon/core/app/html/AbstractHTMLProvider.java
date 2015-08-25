@@ -68,13 +68,13 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   {}
 
   @OverrideOnDemand
-  protected boolean isUseWebSiteResourceBundlesForCSS ()
+  protected boolean isMergeExternalCSSNodes ()
   {
     return ResourceBundleServlet.isActive ();
   }
 
   @OverrideOnDemand
-  protected boolean isUseWebSiteResourceBundlesForJS ()
+  protected boolean isMergeExternalJSNodes ()
   {
     return ResourceBundleServlet.isActive ();
   }
@@ -183,21 +183,25 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   }
 
   /**
-   * Add all CSS include to the HTML head element.
+   * Merge external CSS and JS contents to a single resource for improved
+   * browser performance. All source nodes are taken from the head and all
+   * target nodes are written to the head.
    *
    * @param aRequestScope
    *        Current request scope. Never <code>null</code>.
-   * @param aHtml
-   *        The current HTML object. Never <code>null</code>.
+   * @param aHead
+   *        The HTML head object. Never <code>null</code>.
+   * @param bMergeCSS
+   *        <code>true</code> to aggregate CSS entries.
+   * @param bMergeJS
+   *        <code>true</code> to aggregate JS entries.
    */
-  @OverrideOnDemand
-  protected void aggregateCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                    @Nonnull final HCHtml aHtml)
+  public static void mergeExternalCSSAndJSNodes (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                 @Nonnull final HCHead aHead,
+                                                 final boolean bMergeCSS,
+                                                 final boolean bMergeJS)
   {
-    final boolean bAggregateCSS = isUseWebSiteResourceBundlesForCSS ();
-    final boolean bAggregateJS = isUseWebSiteResourceBundlesForJS ();
-
-    if (!bAggregateCSS && !bAggregateJS)
+    if (!bMergeCSS && !bMergeJS)
     {
       // Nothing to do
       return;
@@ -205,9 +209,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 
     final WebSiteResourceBundleManager aWSRBMgr = PhotonCoreManager.getWebSiteResourceBundleMgr ();
     final boolean bRegular = HCSettings.isUseRegularResources ();
-    final HCHead aHead = aHtml.getHead ();
 
-    if (bAggregateCSS)
+    if (bMergeCSS)
     {
       // Extract all CSS nodes for merging
       final List <IHCNode> aCSSNodes = new ArrayList <> ();
@@ -247,7 +250,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
           aHead.addCSS (aBundle.createNode (aRequestScope));
     }
 
-    if (bAggregateJS)
+    if (bMergeJS)
     {
       // Extract all JS nodes for merging
       final List <IHCNode> aJSNodes = new ArrayList <> ();
@@ -335,15 +338,17 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     // Add global and per-request CSS and JS
     addGlobalAndPerRequestCSSAndJS (aRequestScope, aHtml);
 
-    // Extract and merge all out-of-band nodes
+    // Extract and merge all inline out-of-band nodes
     if (aConversionSettings.isExtractOutOfBandNodes ())
     {
       final List <IHCNode> aOOBNodes = aHtml.getAllOutOfBandNodesWithMergedInlineNodes ();
       aHtml.addAllOutOfBandNodesToHead (aOOBNodes);
     }
 
-    // Aggregate CSS and JS using the WebSiteResourceBundleManager etc.
-    aggregateCSSAndJS (aRequestScope, aHtml);
+    // Merge all external CSS and JS nodes
+    final boolean bMergeCSS = isMergeExternalCSSNodes ();
+    final boolean bMergeJS = isMergeExternalJSNodes ();
+    mergeExternalCSSAndJSNodes (aRequestScope, aHtml.getHead (), bMergeCSS, bMergeJS);
 
     // Move scripts to body? If so, after aggregation!
     if (HCSettings.isScriptsInBody ())
