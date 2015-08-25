@@ -66,8 +66,9 @@ public final class PhotonHTMLHelper
                                     @Nonnull final ICSSPathProvider aCSS,
                                     final boolean bRegular)
   {
-    final HCLink aLink = HCLink.createCSSLink (PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular));
-    aLink.setMedia (aCSS.getMediaList ()).setBundlable (aCSS.isBundlable ());
+    final HCLink aLink = HCLink.createCSSLink (PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular))
+                               .setMedia (aCSS.getMediaList ())
+                               .setPathProvider (aCSS);
 
     final String sConditionalComment = aCSS.getConditionalComment ();
     if (StringHelper.hasText (sConditionalComment))
@@ -83,8 +84,8 @@ public final class PhotonHTMLHelper
   {
     final HCScriptFile aScript = new HCScriptFile ().setSrc (PhotonHTMLSettings.getJSPath (aRequestScope,
                                                                                            aJS,
-                                                                                           bRegular));
-    aScript.setBundlable (aJS.isBundlable ());
+                                                                                           bRegular))
+                                                    .setPathProvider (aJS);
 
     final String sConditionalComment = aJS.getConditionalComment ();
     if (StringHelper.hasText (sConditionalComment))

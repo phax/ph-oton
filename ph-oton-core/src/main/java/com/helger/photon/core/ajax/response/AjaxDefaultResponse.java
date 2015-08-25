@@ -41,6 +41,7 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.html.hc.special.IHCSpecialNodes;
+import com.helger.html.resource.css.ICSSCodeProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.json.IJson;
@@ -236,19 +237,17 @@ public class AjaxDefaultResponse implements IAjaxResponse
       if (m_aSpecialNodes.hasInlineCSSBeforeExternal ())
       {
         final JsonArray aList = new JsonArray ();
-        for (final Map.Entry <ICSSMediaList, StringBuilder> aEntry : m_aSpecialNodes.getAllInlineCSSBeforeExternal ()
-                                                                                    .entrySet ())
-          aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
-                                      .add (SUBPROPERTY_CSS_CONTENT, aEntry.getValue ()));
+        for (final ICSSCodeProvider aEntry : m_aSpecialNodes.getAllInlineCSSBeforeExternal ())
+          aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
+                                      .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
         aAssocArray.add (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, aList);
       }
       if (m_aSpecialNodes.hasInlineCSSAfterExternal ())
       {
         final JsonArray aList = new JsonArray ();
-        for (final Map.Entry <ICSSMediaList, StringBuilder> aEntry : m_aSpecialNodes.getAllInlineCSSAfterExternal ()
-                                                                                    .entrySet ())
-          aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
-                                      .add (SUBPROPERTY_CSS_CONTENT, aEntry.getValue ()));
+        for (final ICSSCodeProvider aEntry : m_aSpecialNodes.getAllInlineCSSAfterExternal ())
+          aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
+                                      .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
         aAssocArray.add (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, aList);
       }
       if (m_aSpecialNodes.hasExternalJSs ())

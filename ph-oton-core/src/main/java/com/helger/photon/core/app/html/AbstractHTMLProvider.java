@@ -157,7 +157,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   }
 
   /**
-   * Add all CSS include to the HTML head element.
+   * Add all global and per-request CSS and JS includes to the HTML page.
    *
    * @param aRequestScope
    *        Current request scope. Never <code>null</code>.
@@ -165,10 +165,12 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    *        The current HTML object. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void addCSS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHtml aHtml)
+  protected void addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHtml aHtml)
   {
     final boolean bRegular = isUseRegularResources ();
+    final boolean bScriptInBody = HCSettings.isScriptsInBody ();
     final HCHead aHead = aHtml.getHead ();
+    final HCBody aBody = aHtml.getBody ();
 
     // Add configured and per-request CSS
     final Set <ICSSPathProvider> aCSSs = PhotonCSS.getAllRegisteredCSSIncludesForGlobal ();
@@ -177,23 +179,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     // Add each CSS separately
     for (final ICSSPathProvider aCSS : aCSSs)
       aHead.addCSS (PhotonHTMLHelper.getCSSNode (aRequestScope, aCSS, bRegular));
-  }
-
-  /**
-   * Add all JS includes to the HTML head element.
-   *
-   * @param aRequestScope
-   *        Current request scope. Never <code>null</code>.
-   * @param aHtml
-   *        The current HTML object. Never <code>null</code>.
-   */
-  @OverrideOnDemand
-  protected void addJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHtml aHtml)
-  {
-    final boolean bRegular = isUseRegularResources ();
-    final boolean bScriptInBody = HCSettings.isScriptsInBody ();
-    final HCHead aHead = aHtml.getHead ();
-    final HCBody aBody = aHtml.getBody ();
 
     // Add all configured and per-request JS
     final Set <IJSPathProvider> aJSs = PhotonJS.getAllRegisteredJSIncludesForGlobal ();
@@ -219,14 +204,24 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    *        The current HTML object. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void aggregateCSS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                               @Nonnull final HCHtml aHtml)
+  protected void aggregateCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                    @Nonnull final HCHtml aHtml)
   {
-    if (isUseWebSiteResourceBundlesForCSS ())
-    {
-      final boolean bRegular = isUseRegularResources ();
-      final HCHead aHead = aHtml.getHead ();
+    final boolean bAggregateCSS = isUseWebSiteResourceBundlesForCSS ();
+    final boolean bAggregateJS = isUseWebSiteResourceBundlesForJS ();
 
+    if (!bAggregateCSS && !bAggregateJS)
+    {
+      // Nothing to do
+      return;
+    }
+
+    final boolean bRegular = isUseRegularResources ();
+    final HCHead aHead = aHtml.getHead ();
+    final HCBody aBody = aHtml.getBody ();
+
+    if (bAggregateCSS)
+    {
       // Add configured and per-request CSS
       final Set <ICSSPathProvider> aCSSs = PhotonCSS.getAllRegisteredCSSIncludesForGlobal ();
       PhotonCSS.getAllRegisteredCSSIncludesForThisRequest (aCSSs);
@@ -239,25 +234,10 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
                                                                             .getResourceBundles (aCSSRes, bRegular))
         aHead.addCSS (aBundle.createNode (aRequestScope));
     }
-  }
 
-  /**
-   * Add all JS includes to the HTML head element.
-   *
-   * @param aRequestScope
-   *        Current request scope. Never <code>null</code>.
-   * @param aHtml
-   *        The current HTML object. Never <code>null</code>.
-   */
-  @OverrideOnDemand
-  protected void aggregateJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHtml aHtml)
-  {
-    if (isUseWebSiteResourceBundlesForJS ())
+    if (bAggregateJS)
     {
-      final boolean bRegular = isUseRegularResources ();
       final boolean bScriptInBody = HCSettings.isScriptsInBody ();
-      final HCHead aHead = aHtml.getHead ();
-      final HCBody aBody = aHtml.getBody ();
 
       // Add all configured and per-request JS
       final Set <IJSPathProvider> aJSs = PhotonJS.getAllRegisteredJSIncludesForGlobal ();
@@ -292,17 +272,29 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   protected void fillHead (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCHtml aHtml)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
+    final IHCConversionSettingsToNode aConversionSettings = HCSettings.getConversionSettings ();
     final HCHead aHead = aHtml.getHead ();
 
     // Add all meta elements
     addMetaElements (aRequestScope, aHead);
+
+    // customize, finalize and extract resources
+    // This must be done before the CSS and JS are included because per-request
+    // resource registration happens inside
+    HCRenderer.prepareForConversion (aHtml, aHtml.getBody (), aConversionSettings);
+
+    // Add global and per-request CSS and JS
+    addCSSAndJS (aRequestScope, aHtml);
+
+    // Extract and merge all out-of-band nodes
+    if (aConversionSettings.isExtractOutOfBandNodes ())
+      aHtml.extractAndReorderOutOfBandNodes ();
   }
 
   @Nonnull
   public final HCHtml createHTML (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws ForcedRedirectException
   {
     final Locale aDisplayLocale = getDisplayLocale ();
-    final IHCConversionSettingsToNode aConversionSettings = HCSettings.getConversionSettings ();
 
     // Build the execution scope
     final ISimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (aRequestScope,
@@ -318,25 +310,11 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     // build HTML header (after body for per-request stuff)
     fillHead (aSWEC, aHtml);
 
-    // customize, finalize and extract resources
-    // This must be done before the CSS and JS are included because resource
-    // registration happens inside
-    HCRenderer.prepareForConversion (aHtml, aHtml.getBody (), aConversionSettings);
-
     // Add CSS and JS
-    addCSS (aRequestScope, aHtml);
-    addJS (aRequestScope, aHtml);
-
-    // Extract and merge all out-of-band nodes
-    if (aConversionSettings.isExtractOutOfBandNodes ())
-      aHtml.extractAndReorderOutOfBandNodes ();
-
-    // Add CSS and JS
-    aggregateCSS (aRequestScope, aHtml);
-    aggregateJS (aRequestScope, aHtml);
+    aggregateCSSAndJS (aRequestScope, aHtml);
 
     // This is only required so that the additional CSS/JS nodes on the head get
-    // the correct HCNodeState
+    // the correct EHCNodeState
     if (false)
       HCRenderer.prepareForConversion (aHtml.getHead (), aHtml.getBody (), HCSettings.getConversionSettings ());
 
