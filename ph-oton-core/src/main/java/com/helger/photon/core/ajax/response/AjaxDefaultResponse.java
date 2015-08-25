@@ -24,7 +24,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.microdom.IMicroNode;
@@ -101,7 +100,7 @@ public class AjaxDefaultResponse implements IAjaxResponse
 
     // Grab per-request CSS/JS only in success case!
     // Grab all CSS/JS independent of conditional comment :(
-    final boolean bRegular = GlobalDebug.isDebugMode ();
+    final boolean bRegular = HCSettings.isUseRegularResources ();
 
     for (final ICSSPathProvider aCSS : PhotonCSS.getAllRegisteredCSSIncludesForThisRequest ())
       m_aSpecialNodes.addExternalCSS (aCSS.getMediaList (),
