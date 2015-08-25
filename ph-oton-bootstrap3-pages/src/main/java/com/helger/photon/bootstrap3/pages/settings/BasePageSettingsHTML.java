@@ -159,57 +159,59 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
       HCSettings.setScriptsInBody (bScriptsInBody);
       HCSettings.setUseRegularResources (bUseRegularResources);
 
-      aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
+      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
     }
-
-    final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
-
+    else
     {
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_HTML_VERSION.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (aConversionSettings.getHTMLVersion ().name ()));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_HTML.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCCheckBox (FIELD_FORMAT_HTML,
-                                                                             aConversionSettings.getXMLWriterSettings ()
-                                                                                                .getIndent ()
-                                                                                                .isIndent ())));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_CSS.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCCheckBox (FIELD_FORMAT_CSS,
-                                                                             !aConversionSettings.getCSSWriterSettings ()
-                                                                                                 .isOptimizedOutput ())));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_JS.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCCheckBox (FIELD_FORMAT_JS,
-                                                                             aConversionSettings.getJSWriterSettings ()
-                                                                                                .isIndentAndAlign ())));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_CONSISTENCY_CHECKS_ENABLED.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCCheckBox (FIELD_CONSISTENCY_CHECKS_ENABLED,
-                                                                             aConversionSettings.areConsistencyChecksEnabled ())));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXTRACT_OUT_OF_BAND_NODES.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCCheckBox (FIELD_EXTRACT_OUT_OF_BAND_NODES,
-                                                                             aConversionSettings.isExtractOutOfBandNodes ())));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCCheckBox (FIELD_AUTO_COMPLETE_FOR_PASSWORD_EDITS,
-                                                                             !HCSettings.isAutoCompleteOffForPasswordEdits ())));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ON_DOCUMENT_READY_PROVIDER.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (String.valueOf (HCSettings.getOnDocumentReadyProvider ())));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCRIPT_INLINE_MODE.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCSettings.getScriptInlineMode ().name ()));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_STYLE_INLINE_MODE.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCSettings.getStyleInlineMode ().name ()));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_NEW_LINE_MODE.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCSettings.getNewLineMode ().name ()));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_OUT_OF_BAND_DEBUGGING.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCCheckBox (FIELD_OUT_OF_BAND_DEBUG,
-                                                                             HCSettings.isOutOfBandDebuggingEnabled ())));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCRIPTS_IN_BODY.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCCheckBox (FIELD_SCRIPTS_IN_BODY,
-                                                                             HCSettings.isScriptsInBody ())));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USE_REGULAR_RESOURCES.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCCheckBox (FIELD_USE_REGULAR_RESOURCES,
-                                                                             HCSettings.isUseRegularResources ())));
-    }
+      final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
 
-    final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_SAVE);
-    aToolbar.addSubmitButtonSave (aDisplayLocale);
+      {
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_HTML_VERSION.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aConversionSettings.getHTMLVersion ().name ()));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_HTML.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCCheckBox (FIELD_FORMAT_HTML,
+                                                                               aConversionSettings.getXMLWriterSettings ()
+                                                                                                  .getIndent ()
+                                                                                                  .isIndent ())));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_CSS.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCCheckBox (FIELD_FORMAT_CSS,
+                                                                               !aConversionSettings.getCSSWriterSettings ()
+                                                                                                   .isOptimizedOutput ())));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_JS.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCCheckBox (FIELD_FORMAT_JS,
+                                                                               aConversionSettings.getJSWriterSettings ()
+                                                                                                  .isIndentAndAlign ())));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_CONSISTENCY_CHECKS_ENABLED.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCCheckBox (FIELD_CONSISTENCY_CHECKS_ENABLED,
+                                                                               aConversionSettings.areConsistencyChecksEnabled ())));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXTRACT_OUT_OF_BAND_NODES.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCCheckBox (FIELD_EXTRACT_OUT_OF_BAND_NODES,
+                                                                               aConversionSettings.isExtractOutOfBandNodes ())));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCCheckBox (FIELD_AUTO_COMPLETE_FOR_PASSWORD_EDITS,
+                                                                               !HCSettings.isAutoCompleteOffForPasswordEdits ())));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ON_DOCUMENT_READY_PROVIDER.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (String.valueOf (HCSettings.getOnDocumentReadyProvider ())));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCRIPT_INLINE_MODE.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (HCSettings.getScriptInlineMode ().name ()));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_STYLE_INLINE_MODE.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (HCSettings.getStyleInlineMode ().name ()));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_NEW_LINE_MODE.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (HCSettings.getNewLineMode ().name ()));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_OUT_OF_BAND_DEBUGGING.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCCheckBox (FIELD_OUT_OF_BAND_DEBUG,
+                                                                               HCSettings.isOutOfBandDebuggingEnabled ())));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCRIPTS_IN_BODY.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCCheckBox (FIELD_SCRIPTS_IN_BODY,
+                                                                               HCSettings.isScriptsInBody ())));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USE_REGULAR_RESOURCES.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCCheckBox (FIELD_USE_REGULAR_RESOURCES,
+                                                                               HCSettings.isUseRegularResources ())));
+      }
+
+      final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+      aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_SAVE);
+      aToolbar.addSubmitButtonSave (aDisplayLocale);
+    }
   }
 }
