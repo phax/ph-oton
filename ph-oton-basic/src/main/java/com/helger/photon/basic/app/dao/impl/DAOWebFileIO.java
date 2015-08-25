@@ -22,7 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.IDAOIO;
-import com.helger.photon.basic.app.io.IPathRelativeIO;
+import com.helger.photon.basic.app.io.IMutablePathRelativeIO;
 import com.helger.photon.basic.app.io.WebFileIO;
 
 @Immutable
@@ -40,7 +40,7 @@ public class DAOWebFileIO implements IDAOIO
   }
 
   @Nonnull
-  public IPathRelativeIO getFileIO ()
+  public IMutablePathRelativeIO getFileIO ()
   {
     return WebFileIO.getDataIO ();
   }

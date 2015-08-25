@@ -34,7 +34,7 @@ import com.helger.photon.basic.app.io.WebFileIO;
 
 /**
  * This class encapsulates the file IO base directory for the current user
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
@@ -74,7 +74,7 @@ public final class LoggedInUserStorage
 
   /**
    * Set the base directory to be used.
-   * 
+   *
    * @param sBaseDirectory
    *        The new base directory. May not be <code>null</code> but maybe
    *        empty.
@@ -126,7 +126,7 @@ public final class LoggedInUserStorage
                       sRealUserID +
                       "' to be used as a file system name!");
 
-    final File aDir = WebFileIO.getFile (getBaseDirectory () + sRealUserID);
+    final File aDir = WebFileIO.getDataIO ().getFile (getBaseDirectory () + sRealUserID);
     WebFileIO.getFileOpMgr ().createDirRecursiveIfNotExisting (aDir);
     return aDir;
   }

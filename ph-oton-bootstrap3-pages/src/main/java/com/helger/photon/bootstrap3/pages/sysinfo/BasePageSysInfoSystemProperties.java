@@ -239,7 +239,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_CLASSLOADER.getDisplayText (aDisplayLocale),
                                        ClassLoaderHelper.getSystemClassLoader ().toString ());
 
-        final File aBaseDir = WebFileIO.getBasePathFile ();
+        final File aBaseDir = WebFileIO.getDataIO ().getBasePathFile ();
         aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_BASEDIR.getDisplayText (aDisplayLocale), aBaseDir.toString ());
         aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_BASEDIR_TOTAL.getDisplayText (aDisplayLocale),
                                        aSH.getAsMatching (aBaseDir.getTotalSpace (), 2));

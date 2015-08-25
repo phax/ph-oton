@@ -44,7 +44,7 @@ public final class PathRelativeFileIOTest
   @Test
   public void testBasePath () throws IOException
   {
-    final IPathRelativeIO aIO = WebFileIO.getDataIO ();
+    final IMutablePathRelativeIO aIO = WebFileIO.getDataIO ();
     final String sTestFile = "testfile";
     final String sTestContent = "Das ist der Inhalt der TestDatei";
     final String sTestFile2 = "testfile2";

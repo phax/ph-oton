@@ -80,8 +80,9 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
 
   private void _ensureSerialized (final boolean bRegular)
   {
-    final FileSystemResource aTargetRes = WebFileIO.getResource (WebSiteResourceBundleManager.RESOURCE_BUNDLE_PATH +
-                                                                 m_sBundleID);
+    final FileSystemResource aTargetRes = WebFileIO.getDataIO ().getResource (
+                                                                              WebSiteResourceBundleManager.RESOURCE_BUNDLE_PATH +
+                                                                              m_sBundleID);
     if (!aTargetRes.exists ())
     {
       // persist file by merging all items
@@ -146,7 +147,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
   public static InputStream getInputStream (@Nonnull @Nonempty final String sBundleID)
   {
     ValueEnforcer.notEmpty (sBundleID, "BundleID");
-    return WebFileIO.getInputStream (WebSiteResourceBundleManager.RESOURCE_BUNDLE_PATH + sBundleID);
+    return WebFileIO.getDataIO ().getInputStream (WebSiteResourceBundleManager.RESOURCE_BUNDLE_PATH + sBundleID);
   }
 
   @Nullable

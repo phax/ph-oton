@@ -53,6 +53,7 @@ import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.app.io.IHasFilename;
+import com.helger.photon.basic.app.io.IMutablePathRelativeIO;
 import com.helger.photon.basic.app.io.IPathRelativeIO;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.security.login.ICurrentUserIDProvider;
@@ -171,7 +172,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
     m_sBaseDir = sBaseDir;
     if (StringHelper.hasText (sBaseDir))
     {
-      final IPathRelativeIO aIO = getDAOIO ().getFileIO ();
+      final IMutablePathRelativeIO aIO = getDAOIO ().getFileIO ();
       aIO.createDirectory (sBaseDir, true);
 
       // Migrate to new directory structure
@@ -395,9 +396,11 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
       // In in memory only the current data is available
       if (!isInMemory ())
       {
+        final IPathRelativeIO aDataIO = WebFileIO.getDataIO ();
+
         // check for year (from now back)
         int nYear = aEarliest.getYear ();
-        while (WebFileIO.getFile (m_sBaseDir + getRelativeAuditDirectoryYear (nYear)).isDirectory ())
+        while (aDataIO.getFile (m_sBaseDir + getRelativeAuditDirectoryYear (nYear)).isDirectory ())
           --nYear;
 
         // Undo last "--"
@@ -408,7 +411,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
         for (int nMonth = DateTimeConstants.JANUARY; nMonth <= DateTimeConstants.DECEMBER; ++nMonth)
         {
           aEarliest = aEarliest.withMonthOfYear (nMonth);
-          if (WebFileIO.getFile (m_sBaseDir + getRelativeAuditDirectory (aEarliest)).isDirectory ())
+          if (aDataIO.getFile (m_sBaseDir + getRelativeAuditDirectory (aEarliest)).isDirectory ())
             break;
         }
 
@@ -417,7 +420,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
         while (aEarliest.isBefore (aNow))
         {
           aEarliest = aEarliest.plusDays (1);
-          if (WebFileIO.getFile (m_sBaseDir + getRelativeAuditFilename (aEarliest)).isFile ())
+          if (aDataIO.getFile (m_sBaseDir + getRelativeAuditFilename (aEarliest)).isFile ())
             break;
         }
       }

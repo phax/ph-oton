@@ -54,7 +54,7 @@ import com.helger.commons.timing.StopWatch;
  * @author Philip Helger
  */
 @Immutable
-public class PathRelativeFileIO implements IPathRelativeIO
+public class PathRelativeFileIO implements IMutablePathRelativeIO
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (PathRelativeFileIO.class);
 

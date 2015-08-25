@@ -19,7 +19,7 @@ package com.helger.photon.basic.app.dao;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.io.file.FileOperationManager;
-import com.helger.photon.basic.app.io.IPathRelativeIO;
+import com.helger.photon.basic.app.io.IMutablePathRelativeIO;
 
 /**
  * The DAO file IO API
@@ -33,7 +33,7 @@ public interface IDAOIO
    * @since 2.7.4
    */
   @Nonnull
-  IPathRelativeIO getFileIO ();
+  IMutablePathRelativeIO getFileIO ();
 
   /**
    * @return The file operation manager to be used. Never <code>null</code>.

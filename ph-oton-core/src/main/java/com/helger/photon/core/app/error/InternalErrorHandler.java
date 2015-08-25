@@ -534,7 +534,8 @@ public final class InternalErrorHandler
                                                                    "-",
                                                                    aMetadata.getErrorID ()) +
                              ".xml";
-    SimpleFileIO.writeFile (WebFileIO.getFile ("internal-errors/" + PDTFactory.getCurrentYear () + "/" + sFilename),
+    SimpleFileIO.writeFile (WebFileIO.getDataIO ()
+                                     .getFile ("internal-errors/" + PDTFactory.getCurrentYear () + "/" + sFilename),
                             MicroWriter.getXMLString (aDoc),
                             XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
   }
@@ -662,7 +663,7 @@ public final class InternalErrorHandler
     }
 
     // Disk space info
-    final File aBasePath = WebFileIO.getBasePathFile ();
+    final File aBasePath = WebFileIO.getDataIO ().getBasePathFile ();
     aMetadata.addField ("BaseDirectory", aBasePath.getAbsolutePath ());
     aMetadata.addField ("Usable bytes", Long.toString (aBasePath.getUsableSpace ()));
     aMetadata.addField ("Free bytes", Long.toString (aBasePath.getFreeSpace ()));

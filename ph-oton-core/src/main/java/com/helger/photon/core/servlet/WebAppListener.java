@@ -593,7 +593,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     // serialize statistics
     try
     {
-      final File aDestPath = WebFileIO.getFile (getStatisticsFilename ());
+      final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
       final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
       aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
       aDoc.getDocumentElement ().setAttribute ("datetime",

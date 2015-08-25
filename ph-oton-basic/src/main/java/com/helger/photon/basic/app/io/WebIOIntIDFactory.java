@@ -32,6 +32,6 @@ public class WebIOIntIDFactory extends FileIntIDFactory
 {
   public WebIOIntIDFactory (@Nonnull final String sFilename)
   {
-    super (WebFileIO.getFile (sFilename));
+    super (WebFileIO.getDataIO ().getFile (sFilename));
   }
 }
