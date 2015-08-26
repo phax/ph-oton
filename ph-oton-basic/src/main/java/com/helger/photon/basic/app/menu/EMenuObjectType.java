@@ -23,11 +23,19 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
 
+/**
+ * Enumeration with the different type of menu objects.
+ * 
+ * @author Philip Helger
+ */
 public enum EMenuObjectType implements IHasID <String>
 {
- SEPARATOR ("separator"),
- PAGE ("page"),
- EXTERNAL ("external");
+ /** Separator */
+  SEPARATOR ("separator"),
+ /** Menu item pointing to an internal page */
+  PAGE ("page"),
+ /** Menu item pointing to an external page */
+  EXTERNAL ("external");
 
   private final String m_sID;
 

@@ -22,7 +22,7 @@ import com.helger.commons.io.file.FileOperationManager;
 import com.helger.photon.basic.app.io.IMutablePathRelativeIO;
 
 /**
- * The DAO file IO API
+ * The DAO file IO API. Used in simple DAOs and WAL (write ahead logging) DAOs.
  *
  * @author Philip Helger
  */

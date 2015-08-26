@@ -93,7 +93,7 @@ import com.helger.photon.basic.security.audit.AuditHelper;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * Base class for a simple DAO using write ahead logging.
+ * Base class for a simple DAO using write ahead logging (WAL).
  *
  * @author Philip Helger
  * @param <DATATYPE>

@@ -30,7 +30,7 @@ import com.helger.photon.basic.app.page.IPage;
 
 /**
  * Contains all the menu-specific menu operations. This is not meant to be
- * publically used. The {@link IMenuTree} should be used instead.
+ * publicly used. The {@link IMenuTree} should be used instead.
  *
  * @author philip
  */

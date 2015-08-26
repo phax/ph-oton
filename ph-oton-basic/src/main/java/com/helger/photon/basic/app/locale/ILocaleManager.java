@@ -25,11 +25,16 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.state.EChange;
 
+/**
+ * Base interface for an application Locale manager.
+ *
+ * @author Philip Helger
+ */
 public interface ILocaleManager
 {
   /**
    * Register a new locale
-   * 
+   *
    * @param aLocale
    *        The locale to be added. May not be <code>null</code>.
    * @return {@link EChange}.
@@ -38,8 +43,8 @@ public interface ILocaleManager
   EChange registerLocale (@Nonnull Locale aLocale);
 
   /**
-   * Set the default locale. Must be one of the previously registred locales!
-   * 
+   * Set the default locale. Must be one of the previously registered locales!
+   *
    * @param aDefaultLocale
    *        The locale to be used as the default. May not be <code>null</code>.
    * @return {@link EChange}
@@ -69,7 +74,7 @@ public interface ILocaleManager
 
   /**
    * Check if the passed locale is a supported locale.
-   * 
+   *
    * @param aLocale
    *        The locale to check
    * @return <code>true</code> if the passed locale is supported,

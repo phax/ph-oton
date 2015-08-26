@@ -23,11 +23,17 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
 
+/**
+ * Enumeration with the different actions that can occur in a DAO. This is used
+ * in the WAL DAO.
+ * 
+ * @author Philip Helger
+ */
 public enum EDAOActionType implements IHasID <String>
 {
-  CREATE ("create"),
-  UPDATE ("update"),
-  DELETE ("delete");
+ CREATE ("create"),
+ UPDATE ("update"),
+ DELETE ("delete");
 
   private final String m_sID;
 

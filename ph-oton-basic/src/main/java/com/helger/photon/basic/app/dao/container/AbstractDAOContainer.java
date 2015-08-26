@@ -30,6 +30,11 @@ import com.helger.commons.callback.INonThrowingRunnable;
 import com.helger.commons.callback.adapter.AdapterRunnableToCallable;
 import com.helger.photon.basic.app.dao.IDAO;
 
+/**
+ * Abstract base implementation of {@link IDAOContainer}.
+ * 
+ * @author Philip Helger
+ */
 @ThreadSafe
 public abstract class AbstractDAOContainer implements IDAOContainer
 {

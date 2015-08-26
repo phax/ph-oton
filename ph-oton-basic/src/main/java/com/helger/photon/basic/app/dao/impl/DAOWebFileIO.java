@@ -25,6 +25,11 @@ import com.helger.photon.basic.app.dao.IDAOIO;
 import com.helger.photon.basic.app.io.IMutablePathRelativeIO;
 import com.helger.photon.basic.app.io.WebFileIO;
 
+/**
+ * Implementation of {@link IDAOIO} based on {@link WebFileIO}.
+ * 
+ * @author Philip Helger
+ */
 @Immutable
 public class DAOWebFileIO implements IDAOIO
 {
