@@ -86,10 +86,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   @Override
   public void after ()
   {
-    super.after ();
-
-    // Shutdown afterwards because eg. WAL DAO must be shutdown before the data
-    // path is reset!
     PhotonBasicTestInit.shutdown ();
+    super.after ();
   }
 }

@@ -30,8 +30,16 @@ public class DAOWebFileIO implements IDAOIO
 {
   private static final DAOWebFileIO s_aInstance = new DAOWebFileIO ();
 
+  private final IMutablePathRelativeIO m_aFileIO;
+
   protected DAOWebFileIO ()
-  {}
+  {
+    // Save this instance because in certain cases the deinitialization order
+    // (upon shutdown) leads to a non-existing DataIO! For WAL based DAOs it is
+    // important to have the DataIO available upon shutdown to write their last
+    // changes to disk.
+    m_aFileIO = WebFileIO.getDataIO ();
+  }
 
   @Nonnull
   public static DAOWebFileIO getInstance ()
@@ -42,7 +50,7 @@ public class DAOWebFileIO implements IDAOIO
   @Nonnull
   public IMutablePathRelativeIO getFileIO ()
   {
-    return WebFileIO.getDataIO ();
+    return m_aFileIO;
   }
 
   @Nonnull
