@@ -85,7 +85,10 @@ public class PhotonBasicTestRule extends ScopeTestRule
   @Override
   public void after ()
   {
-    PhotonBasicTestInit.shutdown ();
     super.after ();
+
+    // Shutdown afterwards because eg. WAL DAO must be shutdown before the data
+    // path is reset!
+    PhotonBasicTestInit.shutdown ();
   }
 }
