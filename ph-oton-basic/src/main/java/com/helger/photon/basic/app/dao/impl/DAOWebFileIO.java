@@ -27,7 +27,7 @@ import com.helger.photon.basic.app.io.WebFileIO;
 
 /**
  * Implementation of {@link IDAOIO} based on {@link WebFileIO}.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -35,7 +35,7 @@ public class DAOWebFileIO implements IDAOIO
 {
   private static final DAOWebFileIO s_aInstance = new DAOWebFileIO ();
 
-  private final IMutablePathRelativeIO m_aFileIO;
+  private IMutablePathRelativeIO m_aFileIO;
 
   protected DAOWebFileIO ()
   {
@@ -43,7 +43,8 @@ public class DAOWebFileIO implements IDAOIO
     // (upon shutdown) leads to a non-existing DataIO! For WAL based DAOs it is
     // important to have the DataIO available upon shutdown to write their last
     // changes to disk.
-    m_aFileIO = WebFileIO.getDataIO ();
+    if (WebFileIO.isInited ())
+      m_aFileIO = WebFileIO.getDataIO ();
   }
 
   @Nonnull
@@ -55,7 +56,14 @@ public class DAOWebFileIO implements IDAOIO
   @Nonnull
   public IMutablePathRelativeIO getFileIO ()
   {
-    return m_aFileIO;
+    IMutablePathRelativeIO ret = m_aFileIO;
+    if (ret == null)
+    {
+      // Remember upon first access - in case the WebFileIO is not yet
+      // initialized in the ctor
+      ret = m_aFileIO = WebFileIO.getDataIO ();
+    }
+    return ret;
   }
 
   @Nonnull
