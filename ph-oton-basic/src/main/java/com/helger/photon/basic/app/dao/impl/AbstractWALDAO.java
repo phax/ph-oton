@@ -763,7 +763,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       {
         // Happens, when another application has the file open!
         // Logger warning already emitted
-        throw new DAOException ("Failed to open output stream");
+        throw new DAOException ("Failed to open output stream for '" + aFile.getAbsolutePath () + "'");
       }
 
       // Write to file (closes the OS)
@@ -909,7 +909,8 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                          @Nonnull final String sWALFilename,
                                          @Nonnull final TimeValue aWaitingWime)
     {
-      final String sKey = aDAO.getClass ().getName ();
+      // In case many DAOs of the same class exist, the filename is also added
+      final String sKey = aDAO.getClass ().getName () + "::" + sWALFilename;
 
       // Check if the passed DAO is already scheduled for writing
       boolean bDoScheduleForWriting;
