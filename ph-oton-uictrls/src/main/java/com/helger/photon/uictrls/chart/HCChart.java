@@ -30,6 +30,7 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.HCLegend;
 import com.helger.html.hc.html.script.AbstractHCCanvas;
 import com.helger.html.hc.html.script.HCScriptInline;
+import com.helger.html.jquery.JQuery;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
@@ -255,8 +256,13 @@ public class HCChart extends AbstractHCCanvas <HCChart>
 
     if (m_eShowLegend.isTrue ())
     {
-      final HCLegend aLegendDiv = addAndReturnChild (new HCLegend ().setID (getLegendID ()));
-      aCode.add (JSHtml.documentGetElementById (aLegendDiv)
+      // Create a <legend> for the legend :) This is just a stub element that is
+      // filled from chart.js
+      // Must be the next sibling of the canvas. Safest version is to use JS for
+      // insertion.
+      aCode.add (JQuery.jQuery (new HCLegend ().setID (getLegendID ())).insertAfter (JQuery.idRef (this)));
+      // Fill the stub legend with content
+      aCode.add (JSHtml.documentGetElementById (getLegendID ())
                        .ref ("innerHTML")
                        .assign (aJSChart.invoke ("generateLegend")));
     }
