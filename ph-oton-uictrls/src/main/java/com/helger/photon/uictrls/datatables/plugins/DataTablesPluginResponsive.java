@@ -8,6 +8,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.state.ETriState;
+import com.helger.html.css.DefaultCSSClassProvider;
+import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -18,9 +20,16 @@ import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
+import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 
 public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
 {
+  public static final ICSSClassProvider CSS_CLASS_ALL = DefaultCSSClassProvider.create ("all");
+  public static final ICSSClassProvider CSS_CLASS_CONTROL = DefaultCSSClassProvider.create ("control");
+  public static final ICSSClassProvider CSS_CLASS_NONE = DefaultCSSClassProvider.create ("none");
+  public static final ICSSClassProvider CSS_CLASS_NEVER = DefaultCSSClassProvider.create ("never");
+
   private List <DTPResponsiveBreakpoint> m_aBreakpoints;
   private ETriState m_eDetails = ETriState.UNDEFINED;
   /** function renderer( api, rowIdx ) */
@@ -82,6 +91,16 @@ public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
   {
     m_eDetailsType = eDetailsType;
     return this;
+  }
+
+  @Override
+  public void finalizeDataTablesSettings (@Nonnull final DataTables aDT)
+  {
+    // Source:
+    // https://github.com/DataTables/Responsive/issues/8
+    for (final DataTablesColumnDef aColumnDef : aDT.getAllColumns ())
+      if (!aColumnDef.isVisible ())
+        aColumnDef.addClass (CSS_CLASS_NEVER);
   }
 
   @Nullable
