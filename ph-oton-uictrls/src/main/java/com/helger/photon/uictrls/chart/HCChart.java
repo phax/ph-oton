@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
@@ -33,7 +34,9 @@ import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSBlock;
 import com.helger.html.jscode.JSDefinedClass;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSPackage;
@@ -224,35 +227,49 @@ public class HCChart extends AbstractHCCanvas <HCChart>
     return aJSOptions;
   }
 
+  /**
+   * Callback method to be implemented by implementing classes to add additional
+   * JS code.
+   *
+   * @param aJSBody
+   *        The JS body where code should be appended to.
+   */
+  @OverrideOnDemand
+  protected void onAddInitializationCode (@Nonnull final JSBlock aJSBody)
+  {}
+
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
-    final JSPackage aCode = new JSPackage ();
+    // Wrap everything in an anonymous function to avoid spamming the global
+    // variable space
+    final JSAnonymousFunction aJSFunc = new JSAnonymousFunction ();
+    final JSBlock aJSBody = aJSFunc.body ();
 
-    final JSVar aJSCanvas = aCode.var (getCanvasID (), JSHtml.documentGetElementById (this));
+    final JSVar aJSCanvas = aJSBody.var (getCanvasID (), JSHtml.documentGetElementById (this));
     if (m_aWidth != null)
-      aCode.add (aJSCanvas.ref ("width").assign (m_aWidth));
+      aJSBody.add (aJSCanvas.ref ("width").assign (m_aWidth));
     if (m_aHeight != null)
-      aCode.add (aJSCanvas.ref ("height").assign (m_aHeight));
+      aJSBody.add (aJSCanvas.ref ("height").assign (m_aHeight));
 
     // Init after width and height was of the canvas was set
 
     // Save data
-    final JSVar aJSData = aCode.var (getJSDataVar (), m_aChart.getJSData ());
+    final JSVar aJSData = aJSBody.var (getJSDataVar (), m_aChart.getJSData ());
 
     // First take options from chart
     final JSAssocArray aJSOptions = getJSOptions ();
 
     // Build main chart
-    final JSVar aJSChart = aCode.var (getJSChartVar (),
-                                      new JSDefinedClass ("Chart")._new ()
-                                                                  .arg (aJSCanvas.invoke ("getContext").arg ("2d"))
-                                                                  .invoke (m_aChart.getJSMethodName ())
-                                                                  .arg (aJSData)
-                                                                  .arg (aJSOptions));
+    final JSVar aJSChart = aJSBody.var (getJSChartVar (),
+                                        new JSDefinedClass ("Chart")._new ()
+                                                                    .arg (aJSCanvas.invoke ("getContext").arg ("2d"))
+                                                                    .invoke (m_aChart.getJSMethodName ())
+                                                                    .arg (aJSData)
+                                                                    .arg (aJSOptions));
 
     if (m_eShowLegend.isTrue ())
     {
@@ -260,14 +277,18 @@ public class HCChart extends AbstractHCCanvas <HCChart>
       // filled from chart.js
       // Must be the next sibling of the canvas. Safest version is to use JS for
       // insertion.
-      aCode.add (JQuery.jQuery (new HCLegend ().setID (getLegendID ())).insertAfter (JQuery.idRef (this)));
+      aJSBody.add (JQuery.jQuery (new HCLegend ().setID (getLegendID ())).insertAfter (JQuery.idRef (this)));
       // Fill the stub legend with content
-      aCode.add (JSHtml.documentGetElementById (getLegendID ())
-                       .ref ("innerHTML")
-                       .assign (aJSChart.invoke ("generateLegend")));
+      aJSBody.add (JSHtml.documentGetElementById (getLegendID ())
+                         .ref ("innerHTML")
+                         .assign (aJSChart.invoke ("generateLegend")));
     }
 
-    addChild (new HCScriptInline (aCode));
+    // Callback
+    onAddInitializationCode (aJSBody);
+
+    // Add inline code
+    addChild (new HCScriptInline (aJSFunc.invoke ()));
   }
 
   @Override
