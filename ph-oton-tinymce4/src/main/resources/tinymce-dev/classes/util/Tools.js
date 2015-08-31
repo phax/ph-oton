@@ -495,6 +495,21 @@ define("tinymce/util/Tools", [
 		};
 	}
 
+	function reduce(collection, iteratee, accumulator, thisArg) {
+		var i = 0;
+
+		if (arguments.length < 3) {
+			accumulator = collection[0];
+			i = 1;
+		}
+
+		for (; i < collection.length; i++) {
+			accumulator = iteratee.call(thisArg, accumulator, collection[i], i);
+		}
+
+		return accumulator;
+	}
+
 	function _addCacheSuffix(url) {
 		var cacheSuffix = Env.cacheSuffix;
 
@@ -523,6 +538,7 @@ define("tinymce/util/Tools", [
 		resolve: resolve,
 		explode: explode,
 		constant: constant,
+		reduce: reduce,
 		_addCacheSuffix: _addCacheSuffix
 	};
 });

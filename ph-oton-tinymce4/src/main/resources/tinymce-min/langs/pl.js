@@ -201,7 +201,7 @@ tinymce.addI18n('pl',{
 "Insert template": "Wstaw szablon",
 "Templates": "Szablony",
 "Background color": "Kolor t\u0142a",
-"Custom...": "Niestandardowy",
+"Custom...": "Niestandardowy...",
 "Custom color": "Kolor niestandardowy",
 "No color": "Bez koloru",
 "Text color": "Kolor tekstu",
