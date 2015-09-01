@@ -32,13 +32,14 @@ import com.helger.photon.uicore.css.CPageParam;
  */
 public enum EWebPageFormAction implements IHasID <String>
 {
-  VIEW (CPageParam.ACTION_VIEW),
-  CREATE (CPageParam.ACTION_CREATE),
-  EDIT (CPageParam.ACTION_EDIT),
-  COPY (CPageParam.ACTION_COPY),
-  DELETE (CPageParam.ACTION_DELETE),
-  UNDELETE (CPageParam.ACTION_UNDELETE),
-  CUSTOM ("$custom$");
+ SHOW_LIST ("$none$"),
+ VIEW (CPageParam.ACTION_VIEW),
+ CREATE (CPageParam.ACTION_CREATE),
+ EDIT (CPageParam.ACTION_EDIT),
+ COPY (CPageParam.ACTION_COPY),
+ DELETE (CPageParam.ACTION_DELETE),
+ UNDELETE (CPageParam.ACTION_UNDELETE),
+ CUSTOM ("$custom$");
 
   private final String m_sID;
 

@@ -1080,43 +1080,50 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final String sSelectedObjectID = getSelectedObjectID (aWPEC);
     final DATATYPE aSelectedObject = getSelectedObject (aWPEC, sSelectedObjectID);
 
-    boolean bShowList = true;
     final String sAction = aWPEC.getAction ();
 
-    // Default value is custom action
-    EWebPageFormAction eFormAction = EWebPageFormAction.CUSTOM;
-    if (CPageParam.ACTION_VIEW.equals (sAction))
+    // Default value is show list
+    EWebPageFormAction eFormAction = EWebPageFormAction.SHOW_LIST;
+    if (StringHelper.hasText (sAction))
     {
-      if (aSelectedObject != null)
-        eFormAction = EWebPageFormAction.VIEW;
-    }
-    else
-      if (CPageParam.ACTION_CREATE.equals (sAction))
-        eFormAction = EWebPageFormAction.CREATE;
+      if (CPageParam.ACTION_VIEW.equals (sAction))
+      {
+        if (aSelectedObject != null)
+          eFormAction = EWebPageFormAction.VIEW;
+      }
       else
-        if (CPageParam.ACTION_EDIT.equals (sAction))
-        {
-          if (aSelectedObject != null)
-            eFormAction = EWebPageFormAction.EDIT;
-        }
+        if (CPageParam.ACTION_CREATE.equals (sAction))
+          eFormAction = EWebPageFormAction.CREATE;
         else
-          if (CPageParam.ACTION_COPY.equals (sAction))
+          if (CPageParam.ACTION_EDIT.equals (sAction))
           {
             if (aSelectedObject != null)
-              eFormAction = EWebPageFormAction.COPY;
+              eFormAction = EWebPageFormAction.EDIT;
           }
           else
-            if (CPageParam.ACTION_DELETE.equals (sAction))
+            if (CPageParam.ACTION_COPY.equals (sAction))
             {
               if (aSelectedObject != null)
-                eFormAction = EWebPageFormAction.DELETE;
+                eFormAction = EWebPageFormAction.COPY;
             }
             else
-              if (CPageParam.ACTION_UNDELETE.equals (sAction))
+              if (CPageParam.ACTION_DELETE.equals (sAction))
               {
                 if (aSelectedObject != null)
-                  eFormAction = EWebPageFormAction.UNDELETE;
+                  eFormAction = EWebPageFormAction.DELETE;
               }
+              else
+                if (CPageParam.ACTION_UNDELETE.equals (sAction))
+                {
+                  if (aSelectedObject != null)
+                    eFormAction = EWebPageFormAction.UNDELETE;
+                }
+                else
+                {
+                  // Non standard action - must be custom
+                  eFormAction = EWebPageFormAction.CUSTOM;
+                }
+    }
 
     if (!eFormAction.isCustom ())
     {
@@ -1133,10 +1140,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     }
 
     // Try to lock object
+    boolean bShowList = true;
     if (beforeProcessing (aWPEC, aSelectedObject, eFormAction).isContinue ())
     {
       switch (eFormAction)
       {
+        case SHOW_LIST:
+        {
+          // Handled down there
+          break;
+        }
         case VIEW:
         {
           // Valid object found - show details
@@ -1219,7 +1232,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
               {
                 // Restore all form values
                 aForm.addChild (new HCScriptInlineOnDocumentReady (JSFormHelper.setAllFormValues (FORM_ID_INPUT,
-                                                                                            _getAsAssocArray (aSavedState))));
+                                                                                                  _getAsAssocArray (aSavedState))));
               }
             }
 
