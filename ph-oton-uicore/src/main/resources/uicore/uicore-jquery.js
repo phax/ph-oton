@@ -100,8 +100,11 @@ $(document).ajaxError (function(event, jqXHR, ajaxSettings, thrownError) {
 });
 
 jQuery.cachedScript = function(url, options) {
+  if (console.log)
+    console.log ("Dynamically loading Script "+url);
+
   // allow user to set any option except for dataType, cache, and url
-  options = $.extend(options || {}, {
+  options = jQuery.extend(options || {}, {
     dataType : "script",
     cache : true,
     url : url
@@ -109,6 +112,24 @@ jQuery.cachedScript = function(url, options) {
   // Use $.ajax() since it is more flexible than $.getScript
   // Return the jqXHR object so we can chain callbacks
   return jQuery.ajax(options);
+};
+
+jQuery.scriptCache = [];
+
+jQuery.cachedScriptWithJSCache = function(url, options, fctSuccess) {
+  if (jQuery.inArray(url, jQuery.scriptCache) >= 0) {
+    // No need to try again - already loaded
+    if (false && console.log)
+      console.log ("Script "+url+ " was already loaded - not loading again");
+    fctSuccess();
+  }
+  else {
+    jQuery.cachedScript (url, options).success(function () {
+      fctSuccess();
+      // Remember that it was already loaded
+      jQuery.scriptCache.push(url);
+    });
+  }
 };
 
 // Escape a string to a regular expression
@@ -119,6 +140,30 @@ jQuery.escapeRegExp = function(str) {
 
 function jqphClass(){}
 jqphClass.prototype = {
+  /**
+   * Load the provided JS URLs in the correct order
+   * @param jsUrls Array of JavaScript resource URLs
+   * @param finalCallback Function to be executed after the last script was loaded
+   */  
+  loadJSInOrder:function(jsUrls,finalCallback){
+    var index = 0;
+    function _loadCurrent (){
+      if (index < jsUrls.length) {
+        jQuery.cachedScriptWithJSCache (jsUrls[index], null, function() { 
+          // Recursive load next item
+          index++;
+          _loadCurrent ();
+        });
+      }
+      else {
+        if (finalCallback)
+          finalCallback();
+      }
+    }
+    // load first
+    _loadCurrent();
+  },
+    
   /**
    * Default jQuery AJAX success handler for ph AJAX server side components
    * @param data PlainObject The data returned from the server, formatted according to the dataType parameter
@@ -151,37 +196,10 @@ jqphClass.prototype = {
         // Include external JS elements
         if (aInlineJSEval) {
           // external JS and inline JS is present
-          // => synchronize them so that the inline JS is only evaluated after 
-          //    all external JS are loaded
-          var left = data.externaljs.length;
-          for(var js in data.externaljs){
-            $.cachedScript (data.externaljs[js]).always(function() { 
-              // One item less
-              left--; 
-            });
-          }
-          
-          // synchronize via setTimeout (timeout = 100*50ms = 5secs)
-          var timeout=100;
-          var poll = function(){
-            setTimeout(function (){
-              if (left > 0) {
-                // Still files left to load
-                if (--timeout > 0) poll();
-              }
-              else {
-                // All files loaded - eval inline JS
-                aInlineJSEval();
-              }  
-            }, 50); 
-          };
-          poll ();
+          this.loadJSInOrder (data.externaljs, aInlineJSEval);
         } else {
           // Only external JS present
-          // ==> no need to synchronize
-          for(var js in data.externaljs){
-            $.cachedScript (data.externaljs[js]);
-          }
+          this.loadJSInOrder (data.externaljs);
         }  
       }
       else{
