@@ -100,6 +100,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public static final int DEFAULT_DISPLAY_START = 0;
   public static final int DEFAULT_PAGE_LENGTH = 10;
   public static final EDataTablesPagingType DEFAULT_PAGING_TYPE = EDataTablesPagingType.SIMPLE_NUMBERS;
+  public static final boolean DEFAULT_RETRIEVE = false;
   public static final boolean DEFAULT_SCROLL_COLLAPSE = false;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTables.class);
@@ -194,7 +195,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   /** Display component renderer types. */
   // missing renderer:string or object
   /** Retrieve an existing DataTables instance. */
-  // missing retrieve:boolean [false]
+  private boolean m_bRetrieve = DEFAULT_RETRIEVE;
   /** Data property name that DataTables will use to set tr element DOM IDs. */
   @Since ("1.10.8")
   // missing rowId:string [DT_RowId]
@@ -716,6 +717,18 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
+  public boolean isRetrieve ()
+  {
+    return m_bRetrieve;
+  }
+
+  @Nonnull
+  public DataTables setRetrieve (final boolean bRetrieve)
+  {
+    m_bRetrieve = bRetrieve;
+    return this;
+  }
+
   public boolean isScrollCollapse ()
   {
     return m_bScrollCollapse;
@@ -1129,6 +1142,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("pageLength", m_nPageLength);
     if (m_ePagingType != null)
       aParams.add ("pagingType", m_ePagingType.getName ());
+    if (m_bRetrieve != DEFAULT_RETRIEVE)
+      aParams.add ("retrieve", m_bRetrieve);
     if (m_bScrollCollapse != DEFAULT_SCROLL_COLLAPSE)
       aParams.add ("scrollCollapse", m_bScrollCollapse);
 
