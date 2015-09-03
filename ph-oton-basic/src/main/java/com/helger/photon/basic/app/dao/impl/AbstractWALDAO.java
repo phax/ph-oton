@@ -362,17 +362,18 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   protected abstract void onRecoveryDelete (@Nonnull DATATYPE aElement);
 
   /**
-   * Because DataOutputStream.writeUTF has a limit of 64KB this methods provides
-   * a similar solution but simply writing the bytes.
+   * Because {@link DataOutputStream#writeUTF(String)} has a limit of 64KB this
+   * methods provides a similar solution but simply writing the bytes.
    *
    * @param aDOS
-   *        {@link DataOutputStream} to use. May not be <code>null</code>.
+   *        {@link DataOutputStream} to write to. May not be <code>null</code>.
    * @param s
    *        The string to be written. May be <code>null</code>.
    * @throws IOException
    *         on write error
+   * @see #readSafeUTF(DataInputStream)
    */
-  private static void _writeUTF (@Nonnull final DataOutputStream aDOS, @Nullable final String s) throws IOException
+  public static void writeSafeUTF (@Nonnull final DataOutputStream aDOS, @Nullable final String s) throws IOException
   {
     if (s == null)
       aDOS.writeByte (0);
@@ -385,18 +386,20 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   }
 
   /**
-   * Because DataOutputStream.writeUTF has a limit of 64KB this methods provides
-   * a similar solution for reading like DataInputStream.readUTF but what was
-   * written in _writeUTF.
+   * Because {@link DataOutputStream#writeUTF(String)} has a limit of 64KB this
+   * methods provides a similar solution for reading like
+   * {@link DataInputStream#readUTF()} but what was written in
+   * {@link #writeSafeUTF(DataOutputStream, String)}.
    *
-   * @param aDOS
-   *        {@link DataOutputStream} to use. May not be <code>null</code>.
+   * @param aDIS
+   *        {@link DataInputStream} to read from. May not be <code>null</code>.
    * @return The read string. May be <code>null</code>.
    * @throws IOException
    *         on read error
+   * @see #writeSafeUTF(DataOutputStream, String)
    */
   @Nullable
-  private static String _readUTF (@Nonnull final DataInputStream aDIS) throws IOException
+  public static String readSafeUTF (@Nonnull final DataInputStream aDIS) throws IOException
   {
     if (aDIS.readByte () == 0)
       return null;
@@ -551,7 +554,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
             String sActionType;
             try
             {
-              sActionType = _readUTF (aOIS);
+              sActionType = readSafeUTF (aOIS);
             }
             catch (final EOFException ex)
             {
@@ -563,7 +566,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
             // Read all elements
             for (int i = 0; i < nElements; ++i)
             {
-              final String sElement = _readUTF (aOIS);
+              final String sElement = readSafeUTF (aOIS);
               final DATATYPE aElement = convertToNative (sElement);
               if (aElement == null)
                 throw new IllegalStateException ("Action [" +
@@ -1092,14 +1095,14 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     {
       aDOS = new DataOutputStream (m_aDAOIO.getFileIO ().getOutputStream (sWALFilename, EAppend.APPEND));
       // Write action type ID
-      _writeUTF (aDOS, eActionType.getID ());
+      writeSafeUTF (aDOS, eActionType.getID ());
       // Write number of elements
       aDOS.writeInt (aModifiedElements.size ());
       // Write all data elements as XML Strings :)
       for (final DATATYPE aModifiedElement : aModifiedElements)
       {
         final String sElement = convertToString (aModifiedElement);
-        _writeUTF (aDOS, sElement);
+        writeSafeUTF (aDOS, sElement);
       }
       return ESuccess.SUCCESS;
     }
