@@ -20,6 +20,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -53,6 +54,7 @@ import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.concurrent.ManagedExecutorService;
 import com.helger.commons.debug.GlobalDebug;
@@ -360,6 +362,52 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   protected abstract void onRecoveryDelete (@Nonnull DATATYPE aElement);
 
   /**
+   * Because DataOutputStream.writeUTF has a limit of 64KB this methods provides
+   * a similar solution but simply writing the bytes.
+   *
+   * @param aDOS
+   *        {@link DataOutputStream} to use. May not be <code>null</code>.
+   * @param s
+   *        The string to be written. May be <code>null</code>.
+   * @throws IOException
+   *         on write error
+   */
+  private static void _writeUTF (@Nonnull final DataOutputStream aDOS, @Nullable final String s) throws IOException
+  {
+    if (s == null)
+      aDOS.writeByte (0);
+    else
+    {
+      aDOS.writeByte (1);
+      aDOS.writeInt (s.length ());
+      aDOS.write (s.getBytes (CCharset.CHARSET_UTF_8_OBJ));
+    }
+  }
+
+  /**
+   * Because DataOutputStream.writeUTF has a limit of 64KB this methods provides
+   * a similar solution for reading like DataInputStream.readUTF but what was
+   * written in _writeUTF.
+   *
+   * @param aDOS
+   *        {@link DataOutputStream} to use. May not be <code>null</code>.
+   * @return The read string. May be <code>null</code>.
+   * @throws IOException
+   *         on read error
+   */
+  @Nullable
+  private static String _readUTF (@Nonnull final DataInputStream aDIS) throws IOException
+  {
+    if (aDIS.readByte () == 0)
+      return null;
+
+    final int nLength = aDIS.readInt ();
+    final byte [] aData = new byte [nLength];
+    aDIS.read (aData);
+    return new String (aData, CCharset.CHARSET_UTF_8_OBJ);
+  }
+
+  /**
    * Call this method inside the constructor to read the file contents directly.
    * This method is write locked!
    *
@@ -503,7 +551,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
             String sActionType;
             try
             {
-              sActionType = aOIS.readUTF ();
+              sActionType = _readUTF (aOIS);
             }
             catch (final EOFException ex)
             {
@@ -515,10 +563,15 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
             // Read all elements
             for (int i = 0; i < nElements; ++i)
             {
-              final String sElement = aOIS.readUTF ();
+              final String sElement = _readUTF (aOIS);
               final DATATYPE aElement = convertToNative (sElement);
               if (aElement == null)
-                throw new IllegalStateException ("Failed to convert the following element to native:\n" + sElement);
+                throw new IllegalStateException ("Action [" +
+                                                 eActionType +
+                                                 "][" +
+                                                 i +
+                                                 "]: failed to convert the following element to native:\n" +
+                                                 sElement);
               switch (eActionType)
               {
                 case CREATE:
@@ -1039,14 +1092,14 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     {
       aDOS = new DataOutputStream (m_aDAOIO.getFileIO ().getOutputStream (sWALFilename, EAppend.APPEND));
       // Write action type ID
-      aDOS.writeUTF (eActionType.getID ());
+      _writeUTF (aDOS, eActionType.getID ());
       // Write number of elements
       aDOS.writeInt (aModifiedElements.size ());
       // Write all data elements as XML Strings :)
       for (final DATATYPE aModifiedElement : aModifiedElements)
       {
         final String sElement = convertToString (aModifiedElement);
-        aDOS.writeUTF (sElement);
+        _writeUTF (aDOS, sElement);
       }
       return ESuccess.SUCCESS;
     }
