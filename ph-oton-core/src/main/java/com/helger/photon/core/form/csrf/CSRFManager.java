@@ -63,6 +63,12 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
     return getGlobalSingleton (CSRFManager.class);
   }
 
+  @Nullable
+  public static CSRFManager getInstanceIfInstantiated ()
+  {
+    return getGlobalSingletonIfInstantiated (CSRFManager.class);
+  }
+
   @Nonnull
   @Nonempty
   public String createNewNonce ()

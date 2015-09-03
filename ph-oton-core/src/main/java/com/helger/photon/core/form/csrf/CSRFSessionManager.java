@@ -60,7 +60,10 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
     m_aRWLock.writeLock ().lock ();
     try
     {
-      CSRFManager.getInstance ().removeNonce (m_sNonce);
+      // May be null on global shutdown
+      final CSRFManager aMgr = CSRFManager.getInstanceIfInstantiated ();
+      if (aMgr != null)
+        aMgr.removeNonce (m_sNonce);
       m_sNonce = null;
     }
     finally
