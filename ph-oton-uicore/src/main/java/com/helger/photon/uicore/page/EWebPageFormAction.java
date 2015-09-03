@@ -56,6 +56,15 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
+   * @return <code>true</code> if this is {@link #SHOW_LIST}, <code>false</code>
+   *         otherwise.
+   */
+  public boolean isShowList ()
+  {
+    return this == EWebPageFormAction.SHOW_LIST;
+  }
+
+  /**
    * @return <code>true</code> if this is {@link #VIEW}, <code>false</code>
    *         otherwise.
    */
@@ -143,7 +152,7 @@ public enum EWebPageFormAction implements IHasID <String>
    */
   public boolean isReadonly ()
   {
-    return this == VIEW;
+    return this == SHOW_LIST || this == VIEW;
   }
 
   /**
