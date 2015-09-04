@@ -16,6 +16,7 @@
  */
 package com.helger.photon.uictrls.chart;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -34,12 +35,13 @@ import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.IJSExpression;
-import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSBlock;
 import com.helger.html.jscode.JSDefinedClass;
+import com.helger.html.jscode.JSDelete;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSPackage;
+import com.helger.html.jscode.JSRef;
 import com.helger.html.jscode.JSVar;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.photon.core.app.html.PhotonCSS;
@@ -75,8 +77,13 @@ public class HCChart extends AbstractHCCanvas <HCChart>
 
   public HCChart (@Nonnull final IChart aChart)
   {
+    this (aChart, GlobalIDFactory.getNewIntID ());
+  }
+
+  public HCChart (@Nonnull final IChart aChart, @Nonnegative final int nID)
+  {
     m_aChart = ValueEnforcer.notNull (aChart, "Chart");
-    m_nID = GlobalIDFactory.getNewIntID ();
+    m_nID = nID;
     setID (getCanvasID ());
   }
 
@@ -235,7 +242,7 @@ public class HCChart extends AbstractHCCanvas <HCChart>
    *        The JS body where code should be appended to.
    */
   @OverrideOnDemand
-  protected void onAddInitializationCode (@Nonnull final JSBlock aJSBody)
+  protected void onAddInitializationCode (@Nonnull final JSPackage aJSBody)
   {}
 
   @Override
@@ -246,8 +253,18 @@ public class HCChart extends AbstractHCCanvas <HCChart>
 
     // Wrap everything in an anonymous function to avoid spamming the global
     // variable space
-    final JSAnonymousFunction aJSFunc = new JSAnonymousFunction ();
-    final JSBlock aJSBody = aJSFunc.body ();
+    final JSPackage aJSBody = new JSPackage ();
+
+    // Add previous clean up code
+    {
+      final JSRef aOldData = JSExpr.ref (getJSDataVar ());
+      aJSBody._if (aOldData, new JSDelete (aOldData));
+
+      final JSRef aOldChart = JSExpr.ref (getJSChartVar ());
+      final JSBlock aJSDelOld = aJSBody._if (aOldChart)._then ();
+      aJSDelOld.add (aOldChart.invoke ("destroy"));
+      aJSDelOld.delete (aOldChart);
+    }
 
     final JSVar aJSCanvas = aJSBody.var (getCanvasID (), JSHtml.documentGetElementById (this));
     if (m_aWidth != null)
@@ -257,7 +274,7 @@ public class HCChart extends AbstractHCCanvas <HCChart>
 
     // Init after width and height was of the canvas was set
 
-    // Save data
+    // Get the data to be displayed
     final JSVar aJSData = aJSBody.var (getJSDataVar (), m_aChart.getJSData ());
 
     // First take options from chart
@@ -288,7 +305,7 @@ public class HCChart extends AbstractHCCanvas <HCChart>
     onAddInitializationCode (aJSBody);
 
     // Add inline code
-    addChild (new HCScriptInline (aJSFunc.invoke ()));
+    addChild (new HCScriptInline (aJSBody));
   }
 
   @Override
