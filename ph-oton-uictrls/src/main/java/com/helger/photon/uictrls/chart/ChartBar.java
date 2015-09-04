@@ -201,8 +201,8 @@ public class ChartBar extends AbstractChartWithLabels <ChartBar>
   public final JSAssocArray getJSData (@Nonnull final IJSExpression aJSDataSets)
   {
     final JSAssocArray aData = new JSAssocArray ();
-    if (hasLabels ())
-      aData.add ("labels", getLabelsAsArray ());
+    // Labels is a mandatory element to print always
+    aData.add ("labels", getLabelsAsArray ());
 
     aData.add ("datasets", aJSDataSets);
     return aData;
