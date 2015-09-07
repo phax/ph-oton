@@ -168,6 +168,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
    *         the internal structures that requires a writing.
    */
   @Nonnull
+  @MustBeLocked (ELockType.WRITE)
   protected abstract EChange onRead (@Nonnull IMicroDocument aDoc);
 
   @Nonnull

@@ -211,6 +211,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
    *         the internal structures that requires a writing.
    */
   @Nonnull
+  @MustBeLocked (ELockType.WRITE)
   protected abstract EChange onRead (@Nonnull IMicroDocument aDoc);
 
   @Nonnull
