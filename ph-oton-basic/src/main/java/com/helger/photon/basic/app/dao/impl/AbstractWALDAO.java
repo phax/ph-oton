@@ -23,24 +23,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.joda.time.LocalDateTime;
@@ -53,10 +42,8 @@ import com.helger.commons.annotation.IsLocked;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.concurrent.ManagedExecutorService;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.EAppend;
 import com.helger.commons.io.file.FileHelper;
@@ -72,8 +59,6 @@ import com.helger.commons.microdom.MicroComment;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.microdom.serialize.MicroReader;
 import com.helger.commons.microdom.serialize.MicroWriter;
-import com.helger.commons.scope.IScope;
-import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
@@ -104,7 +89,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @ThreadSafe
 public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends AbstractDAO
 {
-  protected static final TimeValue DEFAULT_WAITING_TIME = new TimeValue (TimeUnit.SECONDS, 10);
+  public static final TimeValue DEFAULT_WAITING_TIME = new TimeValue (TimeUnit.SECONDS, 10);
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWALDAO.class);
 
   private final IMutableStatisticsHandlerCounter m_aStatsCounterInitTotal = StatisticsManager.getCounterHandler (getClass ().getName () +
@@ -141,6 +126,9 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   private boolean m_bCanWriteWAL = true;
   private TimeValue m_aWaitingTime = DEFAULT_WAITING_TIME;
 
+  // Status vars
+  private WALListener m_aWALListener;
+
   protected AbstractWALDAO (@Nonnull final Class <DATATYPE> aDataTypeClass, @Nullable final String sFilename)
   {
     this (aDataTypeClass, new ConstantHasFilename (sFilename));
@@ -166,6 +154,9 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     m_aDataTypeClass = ValueEnforcer.notNull (aDataTypeClass, "DataTypeClass");
     m_aDAOIO = ValueEnforcer.notNull (aDAOIO, "DAOIO");
     m_aFilenameProvider = ValueEnforcer.notNull (aFilenameProvider, "FilenameProvider");
+
+    // Remember instance in case it is trigger upon shutdown
+    m_aWALListener = WALListener.getInstance ();
   }
 
   /**
@@ -867,186 +858,6 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   }
 
   /**
-   * The global write ahead logging manager that schedules future writings of a
-   * DAO.
-   *
-   * @author Philip Helger
-   */
-  public static final class WALListener extends AbstractGlobalSingleton
-  {
-    /**
-     * A single scheduled action consisting of the scheduled {@link Future} as
-     * well as the original {@link Runnable} for rescheduling upon shutdown.
-     *
-     * @author Philip Helger
-     */
-    private static final class WALItem
-    {
-      private final ScheduledFuture <?> m_aFuture;
-      private final Runnable m_aRunnable;
-
-      public WALItem (@Nonnull final ScheduledFuture <?> aFuture, @Nonnull final Runnable aRunnable)
-      {
-        m_aFuture = aFuture;
-        m_aRunnable = aRunnable;
-      }
-    }
-
-    // custom ThreadFactory to give the baby a name
-    private final ScheduledExecutorService m_aES = Executors.newSingleThreadScheduledExecutor (new ThreadFactory ()
-    {
-      private final AtomicInteger m_aCount = new AtomicInteger (0);
-
-      public Thread newThread (final Runnable r)
-      {
-        final Thread t = new Thread (r, "WAL-Listener-" + m_aCount.incrementAndGet ());
-        return t;
-      }
-    });
-    @GuardedBy ("m_aRWLock")
-    private final Set <String> m_aWaitingDAOs = new HashSet <String> ();
-    @GuardedBy ("m_aRWLock")
-    private final Map <String, WALItem> m_aScheduledItems = new HashMap <String, WALItem> ();
-
-    @Deprecated
-    @UsedViaReflection
-    public WALListener ()
-    {}
-
-    @Nonnull
-    public static WALListener getInstance ()
-    {
-      return getGlobalSingleton (WALListener.class);
-    }
-
-    @Override
-    protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
-    {
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
-        // Reschedule all existing scheduled items to run now
-        for (final Map.Entry <String, WALItem> aEntry : m_aScheduledItems.entrySet ())
-        {
-          final WALItem aItem = aEntry.getValue ();
-          if (aItem.m_aFuture.cancel (false))
-          {
-            // reschedule to perform it now
-            m_aES.submit (aItem.m_aRunnable);
-            s_aLogger.info ("Rescheduled DAO writing for " + aEntry.getKey () + " to happen now");
-          }
-          else
-            s_aLogger.info ("Cannot reschedule DAO writing for " + aEntry.getKey () + " because it is already running");
-        }
-        // ensure all are cleared
-        m_aScheduledItems.clear ();
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
-
-      // Wait until all tasks finished
-      ManagedExecutorService.shutdownAndWaitUntilAllTasksAreFinished (m_aES);
-    }
-
-    /**
-     * This is the main method for registration of later writing.
-     *
-     * @param aDAO
-     *        The DAO to be written
-     * @param sWALFilename
-     *        The filename of the WAL file for later deletion (in case the
-     *        filename changes over time).
-     * @param aWaitingWime
-     *        The time to wait, until the file is physically written. May not be
-     *        <code>null</code>.
-     */
-    public void registerForLaterWriting (@Nonnull final AbstractWALDAO <?> aDAO,
-                                         @Nonnull final String sWALFilename,
-                                         @Nonnull final TimeValue aWaitingWime)
-    {
-      // In case many DAOs of the same class exist, the filename is also added
-      final String sKey = aDAO.getClass ().getName () + "::" + sWALFilename;
-
-      // Check if the passed DAO is already scheduled for writing
-      boolean bDoScheduleForWriting;
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
-        bDoScheduleForWriting = m_aWaitingDAOs.add (sKey);
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
-
-      if (bDoScheduleForWriting)
-      {
-        // We need to schedule it now
-        if (s_aLogger.isDebugEnabled ())
-          s_aLogger.debug ("Now scheduling writing for DAO " + sKey);
-
-        // What should be executed upon writing
-        final Runnable r = new Runnable ()
-        {
-          public void run ()
-          {
-            // Use DAO lock!
-            aDAO.m_aRWLock.writeLock ().lock ();
-            try
-            {
-              // Main DAO writing
-              aDAO._writeToFileAndResetPendingChanges ("ScheduledWriter.run");
-              // Delete the WAL file
-              aDAO._deleteWALFile (sWALFilename);
-              s_aLogger.info ("Finished scheduled writing for DAO " + sKey);
-            }
-            finally
-            {
-              aDAO.m_aRWLock.writeLock ().unlock ();
-            }
-
-            // Remove from the internal set so that another job will be
-            // scheduled for the same DAO
-            // Do this after the writing to the file
-            m_aRWLock.writeLock ().lock ();
-            try
-            {
-              // Remove from the overall set as well as from the scheduled items
-              m_aWaitingDAOs.remove (sKey);
-              m_aScheduledItems.remove (sKey);
-            }
-            finally
-            {
-              m_aRWLock.writeLock ().unlock ();
-            }
-          }
-        };
-
-        // Schedule exactly once in 10 seconds
-        final ScheduledFuture <?> aFuture = m_aES.schedule (r,
-                                                            aWaitingWime.getDuration (),
-                                                            aWaitingWime.getTimeUnit ());
-
-        m_aRWLock.writeLock ().lock ();
-        try
-        {
-          // Remember the scheduled item and the runnable so that the task can
-          // be rescheduled upon shutdown.
-          m_aScheduledItems.put (sKey, new WALItem (aFuture, r));
-        }
-        finally
-        {
-          m_aRWLock.writeLock ().unlock ();
-        }
-      }
-      // else the writing of the passed DAO is already scheduled and no further
-      // action is necessary
-    }
-  }
-
-  /**
    * @return The name of the WAL file of this DAO or <code>null</code> if this
    *         DAO does not support WAL files.
    */
@@ -1063,7 +874,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
    * This method may only be triggered with valid WAL filenames, as the passed
    * file is deleted!
    */
-  private void _deleteWALFile (@Nonnull @Nonempty final String sWALFilename)
+  final void _deleteWALFile (@Nonnull @Nonempty final String sWALFilename)
   {
     ValueEnforcer.notEmpty (sWALFilename, "WALFilename");
     final File aWALFile = m_aDAOIO.getFileIO ().getFile (sWALFilename);
@@ -1184,7 +995,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       {
         // Remember change for later writing
         // Note: pass the WAL filename in case the filename changes over time!
-        WALListener.getInstance ().registerForLaterWriting (this, sWALFilename, m_aWaitingTime);
+        m_aWALListener.registerForLaterWriting (this, sWALFilename, m_aWaitingTime);
       }
       else
       {
