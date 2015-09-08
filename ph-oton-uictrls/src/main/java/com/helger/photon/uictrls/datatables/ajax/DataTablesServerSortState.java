@@ -47,9 +47,9 @@ final class DataTablesServerSortState implements Serializable
     this (aServerData, new ArrayList <DTSSRequestDataOrderColumn> (0), aDisplayLocale);
   }
 
-  DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData,
-                             @Nonnull final List <DTSSRequestDataOrderColumn> aOrderColumns,
-                             @Nonnull final Locale aDisplayLocale)
+  public DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData,
+                                    @Nonnull final List <DTSSRequestDataOrderColumn> aOrderColumns,
+                                    @Nonnull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aServerData, "ServerData");
     ValueEnforcer.notNull (aOrderColumns, "OrderColumns");

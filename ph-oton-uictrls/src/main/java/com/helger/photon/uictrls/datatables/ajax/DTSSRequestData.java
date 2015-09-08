@@ -34,7 +34,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-final class DTSSRequestData
+public final class DTSSRequestData
 {
   private final int m_nDraw;
   private final int m_nDisplayStart;

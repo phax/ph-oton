@@ -27,7 +27,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-final class DTSSRequestDataColumn
+public final class DTSSRequestDataColumn
 {
   private final String m_sData;
   private final String m_sName;
@@ -36,11 +36,11 @@ final class DTSSRequestDataColumn
   private final DTSSRequestDataSearch m_aSearch;
 
   DTSSRequestDataColumn (@Nullable final String sData,
-                     @Nullable final String sName,
-                     final boolean bSearchable,
-                     final boolean bOrderable,
-                     @Nullable final String sSearchText,
-                     final boolean bSearchRegEx)
+                         @Nullable final String sName,
+                         final boolean bSearchable,
+                         final boolean bOrderable,
+                         @Nullable final String sSearchText,
+                         final boolean bSearchRegEx)
   {
     m_sData = sData;
     m_sName = sName;

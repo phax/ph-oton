@@ -38,7 +38,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-final class DTSSRequestDataOrderColumn implements Serializable
+public final class DTSSRequestDataOrderColumn implements Serializable
 {
   private final int m_nColumnIndex;
   private final ESortOrder m_eSortOrder;

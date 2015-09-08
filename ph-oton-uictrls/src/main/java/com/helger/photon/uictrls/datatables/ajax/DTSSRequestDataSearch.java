@@ -26,10 +26,10 @@ import com.helger.commons.string.ToStringGenerator;
 
 /**
  * Represents search settings, either for the global request or per-column.
- * 
+ *
  * @author Philip Helger
  */
-final class DTSSRequestDataSearch
+public final class DTSSRequestDataSearch
 {
   private final String [] m_aSearchTexts;
   private final boolean m_bRegEx;
