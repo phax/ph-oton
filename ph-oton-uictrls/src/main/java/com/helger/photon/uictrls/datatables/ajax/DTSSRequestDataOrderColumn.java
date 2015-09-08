@@ -44,7 +44,7 @@ public final class DTSSRequestDataOrderColumn implements Serializable
   private final ESortOrder m_eSortOrder;
   private Comparator <String> m_aServerSideComparator;
 
-  DTSSRequestDataOrderColumn (@Nonnegative final int nColumnIndex, @Nullable final ESortOrder eSortOrder)
+  public DTSSRequestDataOrderColumn (@Nonnegative final int nColumnIndex, @Nullable final ESortOrder eSortOrder)
   {
     m_nColumnIndex = nColumnIndex;
     m_eSortOrder = eSortOrder;

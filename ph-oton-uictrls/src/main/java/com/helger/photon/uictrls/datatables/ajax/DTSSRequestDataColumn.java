@@ -35,12 +35,12 @@ public final class DTSSRequestDataColumn
   private final boolean m_bOrderable;
   private final DTSSRequestDataSearch m_aSearch;
 
-  DTSSRequestDataColumn (@Nullable final String sData,
-                         @Nullable final String sName,
-                         final boolean bSearchable,
-                         final boolean bOrderable,
-                         @Nullable final String sSearchText,
-                         final boolean bSearchRegEx)
+  public DTSSRequestDataColumn (@Nullable final String sData,
+                                @Nullable final String sName,
+                                final boolean bSearchable,
+                                final boolean bOrderable,
+                                @Nullable final String sSearchText,
+                                final boolean bSearchRegEx)
   {
     m_sData = sData;
     m_sName = sName;

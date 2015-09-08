@@ -43,13 +43,13 @@ public final class DTSSRequestData
   private final List <DTSSRequestDataColumn> m_aColumnData;
   private final List <DTSSRequestDataOrderColumn> m_aOrderColumns;
 
-  DTSSRequestData (final int nDraw,
-                   final int nDisplayStart,
-                   final int nDisplayLength,
-                   @Nullable final String sSearchText,
-                   final boolean bSearchRegEx,
-                   @Nonnull final List <DTSSRequestDataColumn> aColumnData,
-                   @Nonnull final List <DTSSRequestDataOrderColumn> aOrderColumns)
+  public DTSSRequestData (final int nDraw,
+                          final int nDisplayStart,
+                          final int nDisplayLength,
+                          @Nullable final String sSearchText,
+                          final boolean bSearchRegEx,
+                          @Nonnull final List <DTSSRequestDataColumn> aColumnData,
+                          @Nonnull final List <DTSSRequestDataOrderColumn> aOrderColumns)
   {
     ValueEnforcer.notNull (aColumnData, "ColumnData");
     if (CollectionHelper.containsAnyNullElement (aColumnData))

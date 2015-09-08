@@ -35,7 +35,7 @@ import com.helger.json.JsonObject;
  *
  * @author Philip Helger
  */
-final class DTSSResponseData implements IHasJson
+public final class DTSSResponseData implements IHasJson
 {
   private final int m_nDraw;
   private final int m_nTotalRecords;
@@ -59,12 +59,12 @@ final class DTSSResponseData implements IHasJson
    * @param aSpecialNodes
    *        Special nodes for the AJAX response
    */
-  DTSSResponseData (final int nDraw,
-                    final int nTotalRecords,
-                    final int nTotalDisplayRecords,
-                    @Nullable final List <JsonObject> aData,
-                    @Nullable final String sErrorMsg,
-                    @Nonnull final IHCSpecialNodes aSpecialNodes)
+  public DTSSResponseData (final int nDraw,
+                           final int nTotalRecords,
+                           final int nTotalDisplayRecords,
+                           @Nullable final List <JsonObject> aData,
+                           @Nullable final String sErrorMsg,
+                           @Nonnull final IHCSpecialNodes aSpecialNodes)
   {
     ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
     m_nDraw = nDraw;
