@@ -463,6 +463,12 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nonnull
+  public DataTables setScrollY (final int nScrollY)
+  {
+    return setScrollY (JSExpr.lit (nScrollY));
+  }
+
+  @Nonnull
   public DataTables setScrollY (@Nullable final String sScrollY)
   {
     return setScrollY (JSExpr.lit (sScrollY));

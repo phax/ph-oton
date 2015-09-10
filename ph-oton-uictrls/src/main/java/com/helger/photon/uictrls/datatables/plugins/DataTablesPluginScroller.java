@@ -115,7 +115,9 @@ public class DataTablesPluginScroller extends AbstractDataTablesPlugin
   public void finalizeDataTablesSettings (@Nonnull final DataTables aDT)
   {
     aDT.setDeferRender (true);
-    aDT.setScrollY (true);
+    // Forces some browsers to use an arbitrary height for the whole datatables
+    if (false)
+      aDT.setScrollY (true);
   }
 
   @Nullable
