@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.hc.IHCNode;
+import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uictrls.datatables.column.DTCol;
@@ -38,6 +39,7 @@ public class BootstrapDTColAction extends DTCol
   {
     addClass (CUICoreCSS.CSS_CLASS_ACTION_COL);
     addClass (CUICoreCSS.CSS_CLASS_RIGHT);
+    addClass (CBootstrapCSS.HIDDEN_PRINT);
     setOrderable (false);
     setSearchable (false);
   }
