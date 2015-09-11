@@ -16,18 +16,17 @@
  */
 package com.helger.photon.bootstrap3.base;
 
-import com.helger.html.hc.html.grouping.AbstractHCDiv;
-import com.helger.photon.bootstrap3.CBootstrapCSS;
-
 /**
  * A full width container, spanning the entire width of your viewport.
  *
  * @author Philip Helger
+ * @deprecated Use {@link BootstrapContainer} with setFluid directly
  */
-public class BootstrapContainerFluid extends AbstractHCDiv <BootstrapContainerFluid>
+@Deprecated
+public class BootstrapContainerFluid extends BootstrapContainer
 {
   public BootstrapContainerFluid ()
   {
-    addClass (CBootstrapCSS.CONTAINER_FLUID);
+    super (true);
   }
 }

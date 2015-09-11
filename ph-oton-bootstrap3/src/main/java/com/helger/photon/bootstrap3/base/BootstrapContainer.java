@@ -16,18 +16,53 @@
  */
 package com.helger.photon.bootstrap3.base;
 
+import javax.annotation.Nonnull;
+
+import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * A responsive fixed width container.
- * 
+ *
  * @author Philip Helger
  */
 public class BootstrapContainer extends AbstractHCDiv <BootstrapContainer>
 {
+  private boolean m_bFluid;
+
   public BootstrapContainer ()
   {
-    addClass (CBootstrapCSS.CONTAINER);
+    this (false);
+  }
+
+  public BootstrapContainer (final boolean bFluid)
+  {
+    m_bFluid = bFluid;
+  }
+
+  public boolean isFluid ()
+  {
+    return m_bFluid;
+  }
+
+  @Nonnull
+  public BootstrapContainer setFluid (final boolean bFluid)
+  {
+    m_bFluid = bFluid;
+    return this;
+  }
+
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+    if (m_bFluid)
+      addClass (CBootstrapCSS.CONTAINER_FLUID);
+    else
+      addClass (CBootstrapCSS.CONTAINER);
   }
 }
