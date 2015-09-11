@@ -20,7 +20,8 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.uictrls.datatables.DataTablesDom;
 
 /**
- * The data tables "dom" to be used for Bootstrap.
+ * The data tables "dom" to be used for Bootstrap. This is default DOM as
+ * created by dataTables.bootstrap except for the added "hidden-print" classes.
  *
  * @author Philip Helger
  */
@@ -39,13 +40,19 @@ public class BootstrapDataTablesDom extends DataTablesDom
       addProcessing ();
     }
     closeDiv ();
-    addTable ();
+    openDiv (CBootstrapCSS.ROW);
+    {
+      openDiv (CBootstrapCSS.COL_SM_12);
+      addTable ();
+      closeDiv ();
+    }
+    closeDiv ();
     openDiv (CBootstrapCSS.ROW, CBootstrapCSS.HIDDEN_PRINT);
     {
-      openDiv (CBootstrapCSS.COL_SM_4);
+      openDiv (CBootstrapCSS.COL_SM_5);
       addInformationSummary ();
       closeDiv ();
-      openDiv (CBootstrapCSS.COL_SM_8);
+      openDiv (CBootstrapCSS.COL_SM_7);
       addPagination ();
       closeDiv ();
     }
