@@ -45,9 +45,9 @@ public final class AsynchronousAuditorTest
   {
     final ObjectType aOT = new ObjectType ("mock");
     final MutableInt aPerformCount = new MutableInt (0);
-    final IThrowingRunnableWithParameter <List <IAuditItem>> aPerformer = new IThrowingRunnableWithParameter <List <IAuditItem>> ()
+    final IThrowingRunnableWithParameter <List <IAuditItem>, Exception> aPerformer = new IThrowingRunnableWithParameter <List <IAuditItem>, Exception> ()
     {
-      public void run (@Nonnull final List <IAuditItem> aItems) throws Exception
+      public void run (@Nonnull final List <IAuditItem> aItems)
       {
         // Count number of items to be handled
         aPerformCount.inc (aItems.size ());

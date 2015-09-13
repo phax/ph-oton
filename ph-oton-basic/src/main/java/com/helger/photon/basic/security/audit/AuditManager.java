@@ -194,9 +194,9 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
       }
     }
 
-    final IThrowingRunnableWithParameter <List <IAuditItem>> aPerformer = new IThrowingRunnableWithParameter <List <IAuditItem>> ()
+    final IThrowingRunnableWithParameter <List <IAuditItem>, Exception> aPerformer = new IThrowingRunnableWithParameter <List <IAuditItem>, Exception> ()
     {
-      public void run (@Nonnull final List <IAuditItem> aAuditItems) throws Exception
+      public void run (@Nonnull final List <IAuditItem> aAuditItems)
       {
         if (!aAuditItems.isEmpty ())
         {

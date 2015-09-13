@@ -16,9 +16,6 @@
  */
 package com.helger.photon.basic.app.dao.impl;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -36,6 +33,7 @@ import com.helger.commons.callback.IThrowingRunnable;
 import com.helger.commons.callback.adapter.AdapterRunnableToCallable;
 import com.helger.commons.callback.adapter.AdapterThrowingRunnableToCallable;
 import com.helger.commons.collection.impl.NonBlockingStack;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.IDAO;
 import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
@@ -55,7 +53,7 @@ public abstract class AbstractDAO implements IDAO
   private static CallbackList <IDAOReadExceptionCallback> s_aExceptionHandlersRead = new CallbackList <IDAOReadExceptionCallback> ();
   private static CallbackList <IDAOWriteExceptionCallback> s_aExceptionHandlersWrite = new CallbackList <IDAOWriteExceptionCallback> ();
 
-  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("m_aRWLock")
   private final NonBlockingStack <Boolean> m_aAutoSaveStack = new NonBlockingStack <Boolean> ();
@@ -222,7 +220,7 @@ public abstract class AbstractDAO implements IDAO
    * @throws Exception
    *         In case of an error
    */
-  public final void performWithoutAutoSave (@Nonnull final IThrowingRunnable aRunnable) throws Exception
+  public final <EXTYPE extends Exception> void performWithoutAutoSave (@Nonnull final IThrowingRunnable <EXTYPE> aRunnable) throws Exception
   {
     performWithoutAutoSave (AdapterThrowingRunnableToCallable.createAdapter (aRunnable));
   }
@@ -238,7 +236,7 @@ public abstract class AbstractDAO implements IDAO
    *         In case of an error
    */
   @Nullable
-  public final <RETURNTYPE> RETURNTYPE performWithoutAutoSave (@Nonnull final IThrowingCallable <RETURNTYPE> aCallable) throws Exception
+  public final <RETURNTYPE, EXTYPE extends Exception> RETURNTYPE performWithoutAutoSave (@Nonnull final IThrowingCallable <RETURNTYPE, EXTYPE> aCallable) throws EXTYPE
   {
     ValueEnforcer.notNull (aCallable, "Callable");
 

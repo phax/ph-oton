@@ -56,14 +56,14 @@ public class AsynchronousAuditor extends AbstractAuditor
 
   private static final class MyCollector extends ConcurrentCollectorMultiple <IAuditItem>
   {
-    public MyCollector (@Nonnull final IThrowingRunnableWithParameter <List <IAuditItem>> aPerformer)
+    public MyCollector (@Nonnull final IThrowingRunnableWithParameter <List <IAuditItem>, ? extends Throwable> aPerformer)
     {
       setPerformer (aPerformer);
     }
   }
 
   public AsynchronousAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider,
-                              @Nonnull final IThrowingRunnableWithParameter <List <IAuditItem>> aPerformer)
+                              @Nonnull final IThrowingRunnableWithParameter <List <IAuditItem>, ? extends Throwable> aPerformer)
   {
     super (aUserIDProvider);
     ValueEnforcer.notNull (aPerformer, "Performer");
