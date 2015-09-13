@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.attr.AbstractReadOnlyAttributeContainer;
+import com.helger.commons.collection.attr.AttributeValueConverter;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.scope.ISessionScope;
@@ -177,9 +177,9 @@ public class RequestManager implements IRequestManager
     final Map <String, Object> aParams = getParametersFromRequest (aRequestScope);
 
     // determine page from request and store in request
-    final String sMenuItemID = AbstractReadOnlyAttributeContainer.getAsString (m_sRequestParamNameMenuItem,
-                                                                               aParams.get (m_sRequestParamNameMenuItem),
-                                                                               null);
+    final String sMenuItemID = AttributeValueConverter.getAsString (m_sRequestParamNameMenuItem,
+                                                                    aParams.get (m_sRequestParamNameMenuItem),
+                                                                    null);
     if (sMenuItemID != null)
     {
       // Validate the menu item ID and check the display filter!
@@ -192,9 +192,9 @@ public class RequestManager implements IRequestManager
     }
 
     // determine locale from request and store in session
-    final String sDisplayLocale = AbstractReadOnlyAttributeContainer.getAsString (m_sRequestParamNameLocale,
-                                                                                  aParams.get (m_sRequestParamNameLocale),
-                                                                                  null);
+    final String sDisplayLocale = AttributeValueConverter.getAsString (m_sRequestParamNameLocale,
+                                                                       aParams.get (m_sRequestParamNameLocale),
+                                                                       null);
     if (sDisplayLocale != null)
     {
       final Locale aDisplayLocale = LocaleCache.getInstance ().getLocale (sDisplayLocale);
@@ -333,9 +333,9 @@ public class RequestManager implements IRequestManager
       return null;
 
     final Map <String, ?> aParams = getParametersFromURL (aURL);
-    return AbstractReadOnlyAttributeContainer.getAsString (m_sRequestParamNameMenuItem,
-                                                           aParams.get (m_sRequestParamNameMenuItem),
-                                                           null);
+    return AttributeValueConverter.getAsString (m_sRequestParamNameMenuItem,
+                                                aParams.get (m_sRequestParamNameMenuItem),
+                                                null);
   }
 
   @Nullable
@@ -345,9 +345,9 @@ public class RequestManager implements IRequestManager
       return null;
 
     final Map <String, ?> aParams = getParametersFromURL (aURL);
-    return AbstractReadOnlyAttributeContainer.getAsString (m_sRequestParamNameLocale,
-                                                           aParams.get (m_sRequestParamNameLocale),
-                                                           null);
+    return AttributeValueConverter.getAsString (m_sRequestParamNameLocale,
+                                                aParams.get (m_sRequestParamNameLocale),
+                                                null);
   }
 
   @Override

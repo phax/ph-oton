@@ -32,7 +32,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.attr.AbstractReadOnlyAttributeContainer;
+import com.helger.commons.collection.attr.AttributeValueConverter;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -172,7 +172,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public int getAttributeAsInt (@Nullable final String sName, final int nDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractReadOnlyAttributeContainer.getAsInt (sName, getAttributeAsString (sName), nDefault);
+    return AttributeValueConverter.getAsInt (sName, getAttributeAsString (sName), nDefault);
   }
 
   public long getAttributeAsLong (@Nullable final String sName)
@@ -183,7 +183,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public long getAttributeAsLong (@Nullable final String sName, final long nDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractReadOnlyAttributeContainer.getAsLong (sName, getAttributeAsString (sName), nDefault);
+    return AttributeValueConverter.getAsLong (sName, getAttributeAsString (sName), nDefault);
   }
 
   public double getAttributeAsDouble (@Nullable final String sName)
@@ -194,7 +194,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public double getAttributeAsDouble (@Nullable final String sName, final double dDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractReadOnlyAttributeContainer.getAsDouble (sName, getAttributeAsString (sName), dDefault);
+    return AttributeValueConverter.getAsDouble (sName, getAttributeAsString (sName), dDefault);
   }
 
   public boolean getAttributeAsBoolean (@Nullable final String sName)
@@ -205,7 +205,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public boolean getAttributeAsBoolean (@Nullable final String sName, final boolean bDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractReadOnlyAttributeContainer.getAsBoolean (sName, getAttributeAsString (sName), bDefault);
+    return AttributeValueConverter.getAsBoolean (sName, getAttributeAsString (sName), bDefault);
   }
 
   @Nullable
@@ -218,7 +218,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public BigInteger getAttributeAsBigInteger (@Nullable final String sName, @Nullable final BigInteger aDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractReadOnlyAttributeContainer.getAsBigInteger (sName, getAttributeAsString (sName), aDefault);
+    return AttributeValueConverter.getAsBigInteger (sName, getAttributeAsString (sName), aDefault);
   }
 
   @Nullable
@@ -231,7 +231,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public BigDecimal getAttributeAsBigDecimal (@Nullable final String sName, @Nullable final BigDecimal aDefault)
   {
     // Always use String because we're handling request parameters
-    return AbstractReadOnlyAttributeContainer.getAsBigDecimal (sName, getAttributeAsString (sName), aDefault);
+    return AttributeValueConverter.getAsBigDecimal (sName, getAttributeAsString (sName), aDefault);
   }
 
   @Nonnull

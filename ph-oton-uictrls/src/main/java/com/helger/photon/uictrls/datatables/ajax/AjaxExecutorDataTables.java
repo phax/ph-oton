@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.attr.AbstractReadOnlyAttributeContainer;
+import com.helger.commons.collection.attr.AttributeValueConverter;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.string.StringParser;
 import com.helger.html.hc.special.HCSpecialNodes;
@@ -329,9 +329,9 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
           if (aOrderPerIndex == null)
             break;
 
-          final int nOrderColumn = Math.max (AbstractReadOnlyAttributeContainer.getAsInt (ORDER_COLUMN,
-                                                                                          aOrderPerIndex.getString (ORDER_COLUMN),
-                                                                                          0),
+          final int nOrderColumn = Math.max (AttributeValueConverter.getAsInt (ORDER_COLUMN,
+                                                                               aOrderPerIndex.getString (ORDER_COLUMN),
+                                                                               0),
                                              0);
           final String sOrderDir = aOrderPerIndex.getString (ORDER_DIR);
           final ESortOrder eOrderDir = EDataTablesOrderDirectionType.getSortOrderFromNameOrNull (sOrderDir);
