@@ -20,7 +20,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.List;
@@ -42,7 +41,6 @@ import com.helger.commons.annotation.IsLocked;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.EAppend;
@@ -354,55 +352,6 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   protected abstract void onRecoveryDelete (@Nonnull DATATYPE aElement);
 
   /**
-   * Because {@link DataOutputStream#writeUTF(String)} has a limit of 64KB this
-   * methods provides a similar solution but simply writing the bytes.
-   *
-   * @param aDOS
-   *        {@link DataOutputStream} to write to. May not be <code>null</code>.
-   * @param s
-   *        The string to be written. May be <code>null</code>.
-   * @throws IOException
-   *         on write error
-   * @see #readSafeUTF(DataInputStream)
-   */
-  public static void writeSafeUTF (@Nonnull final DataOutputStream aDOS, @Nullable final String s) throws IOException
-  {
-    if (s == null)
-      aDOS.writeByte (0);
-    else
-    {
-      aDOS.writeByte (1);
-      aDOS.writeInt (s.length ());
-      aDOS.write (s.getBytes (CCharset.CHARSET_UTF_8_OBJ));
-    }
-  }
-
-  /**
-   * Because {@link DataOutputStream#writeUTF(String)} has a limit of 64KB this
-   * methods provides a similar solution for reading like
-   * {@link DataInputStream#readUTF()} but what was written in
-   * {@link #writeSafeUTF(DataOutputStream, String)}.
-   *
-   * @param aDIS
-   *        {@link DataInputStream} to read from. May not be <code>null</code>.
-   * @return The read string. May be <code>null</code>.
-   * @throws IOException
-   *         on read error
-   * @see #writeSafeUTF(DataOutputStream, String)
-   */
-  @Nullable
-  public static String readSafeUTF (@Nonnull final DataInputStream aDIS) throws IOException
-  {
-    if (aDIS.readByte () == 0)
-      return null;
-
-    final int nLength = aDIS.readInt ();
-    final byte [] aData = new byte [nLength];
-    aDIS.read (aData);
-    return new String (aData, CCharset.CHARSET_UTF_8_OBJ);
-  }
-
-  /**
    * Call this method inside the constructor to read the file contents directly.
    * This method is write locked!
    *
@@ -546,7 +495,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
             String sActionType;
             try
             {
-              sActionType = readSafeUTF (aOIS);
+              sActionType = StreamHelper.readSafeUTF (aOIS);
             }
             catch (final EOFException ex)
             {
@@ -558,7 +507,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
             // Read all elements
             for (int i = 0; i < nElements; ++i)
             {
-              final String sElement = readSafeUTF (aOIS);
+              final String sElement = StreamHelper.readSafeUTF (aOIS);
               final DATATYPE aElement = convertToNative (sElement);
               if (aElement == null)
                 throw new IllegalStateException ("Action [" +
@@ -907,14 +856,14 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     {
       aDOS = new DataOutputStream (m_aDAOIO.getFileIO ().getOutputStream (sWALFilename, EAppend.APPEND));
       // Write action type ID
-      writeSafeUTF (aDOS, eActionType.getID ());
+      StreamHelper.writeSafeUTF (aDOS, eActionType.getID ());
       // Write number of elements
       aDOS.writeInt (aModifiedElements.size ());
       // Write all data elements as XML Strings :)
       for (final DATATYPE aModifiedElement : aModifiedElements)
       {
         final String sElement = convertToString (aModifiedElement);
-        writeSafeUTF (aDOS, sElement);
+        StreamHelper.writeSafeUTF (aDOS, sElement);
       }
       return ESuccess.SUCCESS;
     }
