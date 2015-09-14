@@ -18,6 +18,7 @@
 
 -->
 <changelog xmlns="http://www.helger.com/xsd/changelog/1.0" version="1.0" component="ph-oton-core">
+  <release date="2015-09-14" version="6.0.0" />
   <entry date="2015-03-27" category="tech" action="update">
     <change>
       <text locale="en">Renamed from ph-webbasics to ph-oton-core</text>
