@@ -114,6 +114,8 @@ public class AjaxDefaultResponse implements IAjaxResponse
   /**
    * Success constructor for HC nodes
    *
+   * @param aRequestScope
+   *        The source request scope. May not be <code>null</code>.
    * @param aNode
    *        The response HTML node. May be <code>null</code>.
    */

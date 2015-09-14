@@ -24,7 +24,7 @@ import com.helger.commons.callback.INonThrowingRunnable;
 
 /**
  * Abstraction layer around auto save stuff.
- * 
+ *
  * @author Philip Helger
  */
 public interface IAutoSaveAware
@@ -52,7 +52,7 @@ public interface IAutoSaveAware
    * read). If first turns automatic saving off, runs the desired operations and
    * finally restores the initial state of the "automatic save" flag and tries
    * to write any pending changes.
-   * 
+   *
    * @param aRunnable
    *        The runnable to be executed. May not be <code>null</code>.
    */
@@ -63,10 +63,12 @@ public interface IAutoSaveAware
    * read). If first turns automatic saving off, runs the desired operations and
    * finally restores the initial state of the "automatic save" flag and tries
    * to write any pending changes.
-   * 
+   *
    * @param aCallable
    *        The runnable to be executed. May not be <code>null</code>.
    * @return the result of the callable.
+   * @param <RETURNTYPE>
+   *        Return type of the callable
    */
   @Nullable
   <RETURNTYPE> RETURNTYPE performWithoutAutoSave (@Nonnull INonThrowingCallable <RETURNTYPE> aCallable);

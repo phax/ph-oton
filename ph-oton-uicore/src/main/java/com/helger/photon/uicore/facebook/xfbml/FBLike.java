@@ -154,8 +154,10 @@ public class FBLike extends AbstractFBNode
    * Creates a label for tracking referrals from the passed String; Will be less
    * than 50 characters and can contain alphanumeric characters and some
    * punctuation (currently +/=-.:_).
-   * 
-   * @return a valid referrer text
+   *
+   * @param sText
+   *        Source text. May be <code>null</code>.
+   * @return a valid referrer text. Never <code>null</code>.
    */
   @Nonnull
   protected static String createRefText (@Nullable final String sText)

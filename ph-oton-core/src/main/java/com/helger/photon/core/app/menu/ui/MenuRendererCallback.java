@@ -220,6 +220,8 @@ public class MenuRendererCallback <T extends IHCList <?>> extends DefaultHierarc
    * @param aRenderer
    *        The renderer to use
    * @return Never <code>null</code>.
+   * @param <T>
+   *        HC list type to be instantiated
    */
   @Nonnull
   public static <T extends IHCList <T>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
@@ -249,9 +251,11 @@ public class MenuRendererCallback <T extends IHCList <?>> extends DefaultHierarc
    * @param aRenderer
    *        The renderer to use
    * @return Never <code>null</code>.
+   * @param <T>
+   *        HC list type to be instantiated
    */
   @Nonnull
-  public static <T extends IHCList <?>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
+  public static <T extends IHCList <T>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
                                                               @Nonnull final IFactory <T> aFactory,
                                                               @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
                                                               @Nonnull final IMenuItemRenderer <T> aRenderer)
@@ -280,9 +284,11 @@ public class MenuRendererCallback <T extends IHCList <?>> extends DefaultHierarc
    *        The menu items to display as a map from menu item ID to expanded
    *        state
    * @return Never <code>null</code>.
+   * @param <T>
+   *        HC list type to be instantiated
    */
   @Nonnull
-  public static <T extends IHCList <?>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
+  public static <T extends IHCList <T>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
                                                               @Nonnull final IFactory <T> aFactory,
                                                               @Nonnull final IMenuItemRenderer <T> aRenderer,
                                                               @Nonnull final Map <String, Boolean> aDisplayMenuItemIDs)
@@ -307,9 +313,11 @@ public class MenuRendererCallback <T extends IHCList <?>> extends DefaultHierarc
    *        The menu items to display as a map from menu item ID to expanded
    *        state. May not be <code>null</code>.
    * @return Never <code>null</code>.
+   * @param <T>
+   *        HC list type to be instantiated
    */
   @Nonnull
-  public static <T extends IHCList <?>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
+  public static <T extends IHCList <T>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
                                                               @Nonnull final IFactory <T> aFactory,
                                                               @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
                                                               @Nonnull final IMenuItemRenderer <T> aRenderer,

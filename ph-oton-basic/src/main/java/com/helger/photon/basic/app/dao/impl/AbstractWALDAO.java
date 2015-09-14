@@ -934,6 +934,11 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
    * This method must be called every time something changed in the DAO. It
    * triggers the writing to a file if auto-save is active. This method must be
    * called within a write-lock as it is not locked!
+   *
+   * @param aModifiedElement
+   *        The modified data element. May not be <code>null</code>.
+   * @param eActionType
+   *        The action that was performed. May not be <code>null</code>.
    */
   @MustBeLocked (ELockType.WRITE)
   protected final void markAsChanged (@Nonnull final DATATYPE aModifiedElement,

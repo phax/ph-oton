@@ -62,7 +62,7 @@ public abstract class AbstractAjaxExecutor implements IAjaxExecutor
   @OverrideOnDemand
   protected void modifyRequestParamMap (@Nonnull final IMutableAttributeContainerAny <String> aParams)
   {
-    // Remove the jQuery timestamp parameter
+    // Remove the jQuery time stamp parameter
     aParams.removeAttribute (REQUEST_PARAM_JQUERY_NO_CACHE);
   }
 
@@ -73,6 +73,7 @@ public abstract class AbstractAjaxExecutor implements IAjaxExecutor
    *        The current request scope. Never <code>null</code>.
    * @return the result object. May not be <code>null</code>
    * @throws Exception
+   *         In case of an error
    */
   @OverrideOnDemand
   @Nonnull

@@ -331,7 +331,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
 
   /**
    * This option will make the editable are behave like very much like a
-   * &lt;pre> tag, and add a scroll instead of wrapping text.
+   * &lt;pre&gt; tag, and add a scroll instead of wrapping text.
    *
    * @param bNoWrap
    *        <code>true</code> to enabled, <code>false</code> to disable
@@ -346,7 +346,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
 
   /**
    * This option will make the editable are behave like very much like a
-   * &lt;pre> tag, and add a scroll instead of wrapping text.
+   * &lt;pre&gt; tag, and add a scroll instead of wrapping text.
    *
    * @param aNoWrap
    *        <code>true</code> to enabled, <code>false</code> to disable and
@@ -1032,7 +1032,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * Set the width of the editor.
    *
    * @param nWidth
-   *        New width. Only values >= 0 are considered!
+   *        New width. Only values &ge; 0 are considered!
    * @return this
    */
   @Nonnull
@@ -1051,7 +1051,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * Set the height of the editor.
    *
    * @param nHeight
-   *        New height. Only values >= 0 are considered!
+   *        New height. Only values &ge; 0 are considered!
    * @return this
    */
   @Nonnull

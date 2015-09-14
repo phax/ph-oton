@@ -285,6 +285,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
    * @param aRequestScope
    *        The source request scope. Never <code>null</code>.
    * @param t
+   *        The Throwable that occurred. Never <code>null</code>.
    */
   @OverrideOnDemand
   protected void onException (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final Throwable t)

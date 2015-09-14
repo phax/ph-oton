@@ -127,6 +127,8 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
    * @param sStateID
    *        The state ID to be resolved.
    * @return <code>null</code> if no such object was found.
+   * @param <T>
+   *        Return type
    */
   @Nullable
   public <T> T getCastedState (@Nullable final ObjectType aOT, @Nullable final String sStateID)

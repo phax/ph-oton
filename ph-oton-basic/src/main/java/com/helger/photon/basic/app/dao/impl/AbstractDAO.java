@@ -217,10 +217,12 @@ public abstract class AbstractDAO implements IDAO
    *
    * @param aRunnable
    *        The callback to be executed
-   * @throws Exception
+   * @throws EXTYPE
    *         In case of an error
+   * @param <EXTYPE>
+   *        Exception type that may be thrown
    */
-  public final <EXTYPE extends Exception> void performWithoutAutoSave (@Nonnull final IThrowingRunnable <EXTYPE> aRunnable) throws Exception
+  public final <EXTYPE extends Exception> void performWithoutAutoSave (@Nonnull final IThrowingRunnable <EXTYPE> aRunnable) throws EXTYPE
   {
     performWithoutAutoSave (AdapterThrowingRunnableToCallable.createAdapter (aRunnable));
   }
@@ -232,8 +234,12 @@ public abstract class AbstractDAO implements IDAO
    * @param aCallable
    *        The callback to be executed
    * @return The result of the callback. May be <code>null</code>.
-   * @throws Exception
+   * @throws EXTYPE
    *         In case of an error
+   * @param <RETURNTYPE>
+   *        Return type of the callable
+   * @param <EXTYPE>
+   *        Exception type that may be thrown
    */
   @Nullable
   public final <RETURNTYPE, EXTYPE extends Exception> RETURNTYPE performWithoutAutoSave (@Nonnull final IThrowingCallable <RETURNTYPE, EXTYPE> aCallable) throws EXTYPE

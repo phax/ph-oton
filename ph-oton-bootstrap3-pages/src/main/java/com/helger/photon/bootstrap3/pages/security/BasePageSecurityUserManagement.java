@@ -277,10 +277,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
   /**
    * @param aWPEC
-   * @param aTable
-   *        Table to be filled.
+   *        Current web page execution context. Never <code>null</code>.
+   * @param aForm
+   *        Form to be filled. Never <code>null</code>.
    * @param aSelectedObject
-   *        Current user.
+   *        Current user. Never <code>null</code>.
    */
   @Override
   @OverrideOnDemand
