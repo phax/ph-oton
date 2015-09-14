@@ -56,6 +56,10 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
+      <artifactId>ph-commons</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
       <artifactId>ph-oton-bootstrap3-uictrls</artifactId>
     </dependency>
 
