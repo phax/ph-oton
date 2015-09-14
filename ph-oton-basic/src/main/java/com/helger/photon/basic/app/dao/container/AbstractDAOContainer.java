@@ -16,9 +16,6 @@
  */
 package com.helger.photon.basic.app.dao.container;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -28,17 +25,18 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.callback.INonThrowingCallable;
 import com.helger.commons.callback.INonThrowingRunnable;
 import com.helger.commons.callback.adapter.AdapterRunnableToCallable;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.photon.basic.app.dao.IDAO;
 
 /**
  * Abstract base implementation of {@link IDAOContainer}.
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
 public abstract class AbstractDAOContainer implements IDAOContainer
 {
-  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
 
   @OverridingMethodsMustInvokeSuper
   public boolean isAutoSaveEnabled ()

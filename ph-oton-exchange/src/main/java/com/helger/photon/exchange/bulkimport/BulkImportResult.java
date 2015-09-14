@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -33,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.type.ITypedObject;
 
@@ -54,7 +53,7 @@ public class BulkImportResult implements ISuccessIndicator
   public static final int DEFAULT_MAX_WARNINGS = 1000;
   private static final Logger s_aLogger = LoggerFactory.getLogger (BulkImportResult.class);
 
-  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final int m_nMaxWarnings;
   private boolean m_bSuccess = DEFAULT_SUCCESS;
   private final Map <String, ITypedObject <String>> m_aAdded = new LinkedHashMap <String, ITypedObject <String>> ();

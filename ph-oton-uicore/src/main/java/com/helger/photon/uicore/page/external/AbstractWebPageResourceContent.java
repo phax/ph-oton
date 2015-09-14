@@ -17,8 +17,6 @@
 package com.helger.photon.uicore.page.external;
 
 import java.nio.charset.Charset;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,6 +25,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.charset.CCharset;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
@@ -54,7 +53,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
 {
   public static final Charset DEFAULT_CHARSET = CCharset.CHARSET_UTF_8_OBJ;
 
-  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("m_aRWLock")
   private boolean m_bReadEveryTime = GlobalDebug.isDebugMode ();
