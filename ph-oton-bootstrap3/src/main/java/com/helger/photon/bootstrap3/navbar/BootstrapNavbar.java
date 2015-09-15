@@ -31,7 +31,6 @@ import com.helger.html.hc.html.forms.HCButton;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.grouping.HCP;
-import com.helger.html.hc.html.grouping.IHCDiv;
 import com.helger.html.hc.html.sections.AbstractHCNav;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCSpan;
@@ -48,7 +47,7 @@ import com.helger.photon.bootstrap3.nav.BootstrapNav;
  */
 public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
 {
-  private final IHCDiv <?> m_aContainer;
+  private final BootstrapContainer m_aContainer;
   private final BootstrapNavbarHeader m_aHeader;
   private final HCDiv m_aContent;
 
@@ -86,7 +85,7 @@ public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
   }
 
   @Nonnull
-  public final IHCDiv <?> getContainer ()
+  public final BootstrapContainer getContainer ()
   {
     return m_aContainer;
   }
