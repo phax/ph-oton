@@ -21,12 +21,12 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.IsSPIInterface;
-import com.helger.photon.core.action.servlet.AbstractApplicationActionServlet;
+import com.helger.photon.core.servlet.AbstractApplicationServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * SPI interface that is invoked in {@link AbstractApplicationActionServlet}.
- * 
+ * SPI interface that is invoked in {@link AbstractApplicationServlet}.
+ *
  * @author Philip Helger
  */
 @IsSPIInterface
@@ -34,7 +34,7 @@ public interface IApplicationRequestListenerSPI extends Serializable
 {
   /**
    * Called at the very beginning of a request.
-   * 
+   *
    * @param aRequestScope
    *        The scope of the current request.
    */
@@ -42,7 +42,7 @@ public interface IApplicationRequestListenerSPI extends Serializable
 
   /**
    * Called at the end of a request.
-   * 
+   *
    * @param bExceptionOccurred
    *        <code>true</code> if an exception occurred, <code>false</code> if
    *        not.
