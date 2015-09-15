@@ -18,8 +18,8 @@ package com.helger.photon.core.ajax.response;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.mime.IMimeType;
 import com.helger.commons.state.ISuccessIndicator;
+import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * Base interface for an Ajax response with a JSON representation.
@@ -29,18 +29,10 @@ import com.helger.commons.state.ISuccessIndicator;
 public interface IAjaxResponse extends ISuccessIndicator
 {
   /**
-   * @return The MIME type to be returned.
+   * Apply the AJAX response onto the passed {@link UnifiedResponse}.
+   * 
+   * @param aUnifiedResponse
+   *        The unified response. Never <code>null</code>.
    */
-  @Nonnull
-  IMimeType getMimeType ();
-
-  /**
-   * Get the Ajax response as JSON
-   *
-   * @param bIndentAndAlign
-   *        <code>true</code> if the JSON code should be indented and aligned
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  String getResponseAsString (boolean bIndentAndAlign);
+  void applyToResponse (@Nonnull UnifiedResponse aUnifiedResponse);
 }

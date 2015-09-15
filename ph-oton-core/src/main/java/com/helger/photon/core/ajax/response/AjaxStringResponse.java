@@ -25,6 +25,8 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.xml.serialize.write.XMLWriterSettings;
+import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * A simple AJAX response, based on an {@link String} value.
@@ -62,9 +64,15 @@ public class AjaxStringResponse implements IAjaxResponse
   }
 
   @Nonnull
-  public String getResponseAsString (final boolean bIndentAndAlign)
+  public String getResponseString ()
   {
     return m_sValue;
+  }
+
+  public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
+  {
+    aUnifiedResponse.setContentAndCharset (m_sValue, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
+                    .setMimeType (m_aMimeType);
   }
 
   @Override

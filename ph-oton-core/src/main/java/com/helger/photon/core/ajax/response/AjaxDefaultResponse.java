@@ -24,12 +24,12 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.charset.CCharset;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCConversionSettings;
@@ -45,13 +45,14 @@ import com.helger.html.resource.css.ICSSCodeProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.json.IJson;
+import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
-import com.helger.json.serialize.JsonWriter;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.web.servlet.response.UnifiedResponse;
 
 @Immutable
 public class AjaxDefaultResponse implements IAjaxResponse
@@ -212,13 +213,7 @@ public class AjaxDefaultResponse implements IAjaxResponse
   }
 
   @Nonnull
-  public IMimeType getMimeType ()
-  {
-    return CMimeType.APPLICATION_JSON;
-  }
-
-  @Nonnull
-  public String getResponseAsString (final boolean bIndentAndAlign)
+  public JsonObject getResponseAsJSON ()
   {
     final JsonObject aAssocArray = new JsonObject ();
     aAssocArray.add (PROPERTY_SUCCESS, m_bSuccess);
@@ -263,7 +258,14 @@ public class AjaxDefaultResponse implements IAjaxResponse
     {
       aAssocArray.add (PROPERTY_ERRORMESSAGE, m_sErrorMessage != null ? m_sErrorMessage : "");
     }
-    return JsonWriter.getAsString (aAssocArray);
+    return aAssocArray;
+  }
+
+  public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
+  {
+    final IJsonObject aJson = getResponseAsJSON ();
+    aUnifiedResponse.setContentAndCharset (aJson.getAsString (), CCharset.CHARSET_UTF_8_OBJ)
+                    .setMimeType (CMimeType.APPLICATION_JSON);
   }
 
   @Override

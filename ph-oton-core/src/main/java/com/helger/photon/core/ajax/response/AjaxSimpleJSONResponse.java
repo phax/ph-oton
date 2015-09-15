@@ -20,12 +20,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.charset.CCharset;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.json.IJson;
+import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * A simple AJAX response, based on an {@link IJson} value.
@@ -60,16 +61,11 @@ public class AjaxSimpleJSONResponse implements IAjaxResponse
     return m_aValue;
   }
 
-  @Nonnull
-  public IMimeType getMimeType ()
+  public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
   {
-    return CMimeType.APPLICATION_JSON;
-  }
-
-  @Nonnull
-  public String getResponseAsString (final boolean bIndentAndAlign)
-  {
-    return m_aValue == null ? "" : m_aValue.getAsString ();
+    final String sResponse = m_aValue != null ? m_aValue.getAsString () : "";
+    aUnifiedResponse.setContentAndCharset (sResponse, CCharset.CHARSET_UTF_8_OBJ)
+                    .setMimeType (CMimeType.APPLICATION_JSON);
   }
 
   @Override
