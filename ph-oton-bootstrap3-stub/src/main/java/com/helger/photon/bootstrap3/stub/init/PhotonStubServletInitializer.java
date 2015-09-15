@@ -31,8 +31,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.charset.CCharset;
 import com.helger.photon.bootstrap3.stub.PhotonStubServletContextListener;
-import com.helger.photon.core.action.servlet.PublicApplicationActionServlet;
-import com.helger.photon.core.action.servlet.SecureApplicationActionServlet;
 import com.helger.photon.core.ajax.servlet.PublicApplicationAjaxServlet;
 import com.helger.photon.core.ajax.servlet.SecureApplicationAjaxServlet;
 import com.helger.photon.core.go.GoServlet;
@@ -73,7 +71,7 @@ public final class PhotonStubServletInitializer
 
   /**
    * Register all ph-oton servlets to the passed {@link ServletContext}.
-   * 
+   *
    * @param aSC
    *        The {@link ServletContext} to use. May not be <code>null</code>.
    */
@@ -102,20 +100,6 @@ public final class PhotonStubServletInitializer
           aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_FORCE_ENCODING, Boolean.TRUE.toString ());
           aFilter.addMappingForUrlPatterns (null, false, "/*");
         }
-      }
-
-      {
-        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationActionServlet",
-                                                                     SecureApplicationActionServlet.class);
-        if (aServlet != null)
-          aServlet.addMapping (SecureApplicationActionServlet.SERVLET_DEFAULT_PATH + "/*");
-      }
-
-      {
-        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PublicApplicationActionServlet",
-                                                                     PublicApplicationActionServlet.class);
-        if (aServlet != null)
-          aServlet.addMapping (PublicApplicationActionServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {

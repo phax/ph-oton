@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.core.action.IActionInvoker;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.layout.ILayoutManager;
@@ -48,9 +47,6 @@ public class DefaultApplicationInitializer <LECTYPE extends ILayoutExecutionCont
   {}
 
   public void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
-  {}
-
-  public void initActions (@Nonnull final IActionInvoker aActionInvoker)
   {}
 
   public void initRest ()

@@ -34,25 +34,14 @@ import com.helger.web.servlet.response.UnifiedResponse;
  * @author Philip Helger
  */
 @Immutable
-public class AjaxSimpleJSONResponse implements IAjaxResponse
+public class AjaxSimpleJSONResponse extends AbstractAjaxResponse
 {
-  private final boolean m_bSuccess;
   private final IJson m_aValue;
 
   public AjaxSimpleJSONResponse (final boolean bSuccess, @Nullable final IJson aValue)
   {
-    m_bSuccess = bSuccess;
+    super (bSuccess);
     m_aValue = aValue;
-  }
-
-  public boolean isSuccess ()
-  {
-    return m_bSuccess;
-  }
-
-  public boolean isFailure ()
-  {
-    return !m_bSuccess;
   }
 
   @Nullable
@@ -88,6 +77,6 @@ public class AjaxSimpleJSONResponse implements IAjaxResponse
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("value", m_aValue).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("value", m_aValue).toString ();
   }
 }

@@ -29,7 +29,9 @@ import com.helger.commons.mime.MimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLCharset;
 import com.helger.json.IJsonObject;
-import com.helger.photon.core.action.executor.AbstractActionExecutor;
+import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
+import com.helger.photon.core.ajax.response.AbstractAjaxResponse;
+import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.ResponseHelperSettings;
@@ -40,19 +42,19 @@ import com.helger.web.servlet.response.UnifiedResponse;
  *
  * @author Philip Helger
  */
-public class ActionExecutorDataTablesI18N extends AbstractActionExecutor
+public class AjaxExecutorDataTablesI18N extends AbstractAjaxExecutor
 {
   // This parameter must contain the locale - otherwise English is returned
   public static final String LANGUAGE_ID = "language";
 
   private final Locale m_aDefaultLocale;
 
-  public ActionExecutorDataTablesI18N ()
+  public AjaxExecutorDataTablesI18N ()
   {
     this (CGlobal.DEFAULT_LOCALE);
   }
 
-  public ActionExecutorDataTablesI18N (@Nonnull final Locale aDefaultLocale)
+  public AjaxExecutorDataTablesI18N (@Nonnull final Locale aDefaultLocale)
   {
     ValueEnforcer.notNull (aDefaultLocale, "DefaultLocale");
     if (StringHelper.hasNoText (aDefaultLocale.getLanguage ()))
@@ -60,8 +62,9 @@ public class ActionExecutorDataTablesI18N extends AbstractActionExecutor
     m_aDefaultLocale = aDefaultLocale;
   }
 
-  public void execute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                       @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  @Override
+  @Nonnull
+  protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     // Resolve language
     final String sLanguage = aRequestScope.getAttributeAsString (LANGUAGE_ID);
@@ -75,11 +78,17 @@ public class ActionExecutorDataTablesI18N extends AbstractActionExecutor
     // Main action
     final IJsonObject aData = DataTables.createLanguageJson (aLanguage);
 
-    // Fill HTTP response
-    final Charset aCharset = CHTMLCharset.CHARSET_HTML_OBJ;
-    aUnifiedResponse.setContentAndCharset (aData.getAsString (), aCharset)
-                    .setMimeType (new MimeType (CMimeType.APPLICATION_JSON).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
-                                                                                          aCharset.name ()))
-                    .enableCaching (ResponseHelperSettings.getExpirationSeconds ());
+    return new AbstractAjaxResponse (true)
+    {
+      public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
+      {
+        // Fill HTTP response
+        final Charset aCharset = CHTMLCharset.CHARSET_HTML_OBJ;
+        aUnifiedResponse.setContentAndCharset (aData.getAsString (), aCharset)
+                        .setMimeType (new MimeType (CMimeType.APPLICATION_JSON).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
+                                                                                              aCharset.name ()))
+                        .enableCaching (ResponseHelperSettings.getExpirationSeconds ());
+      }
+    };
   }
 }

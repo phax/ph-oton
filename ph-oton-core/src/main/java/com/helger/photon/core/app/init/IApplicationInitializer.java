@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.core.action.IActionInvoker;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.layout.ILayoutManager;
@@ -72,14 +71,6 @@ public interface IApplicationInitializer <LECTYPE extends ILayoutExecutionContex
    *        The ajax invoker to use
    */
   void initAjax (@Nonnull IAjaxInvoker aAjaxInvoker);
-
-  /**
-   * Register all actions
-   *
-   * @param aActionInvoker
-   *        The action invoker to use
-   */
-  void initActions (@Nonnull IActionInvoker aActionInvoker);
 
   /**
    * Init all things for which no special method is present after the predefined

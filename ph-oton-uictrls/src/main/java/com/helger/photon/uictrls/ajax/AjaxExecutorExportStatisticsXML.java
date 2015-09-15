@@ -14,33 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls.action;
+package com.helger.photon.uictrls.ajax;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.serialize.MicroWriter;
-import com.helger.commons.mime.CMimeType;
 import com.helger.commons.statistics.util.StatisticsExporter;
-import com.helger.commons.xml.serialize.write.XMLWriterSettings;
-import com.helger.photon.core.action.executor.AbstractActionExecutor;
+import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
+import com.helger.photon.core.ajax.response.AjaxStringResponse;
+import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * A simple actions that exports the current statistics as XML
  *
  * @author Philip Helger
  */
-public class ActionExecutorExportStatisticsXML extends AbstractActionExecutor
+public class AjaxExecutorExportStatisticsXML extends AbstractAjaxExecutor
 {
   @Override
-  public void execute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                       @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  @Nonnull
+  protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
-    aUnifiedResponse.setContentAndCharset (MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
-                    .setMimeType (CMimeType.APPLICATION_XML)
-                    .disableCaching ();
+    final String sXMLString = MicroWriter.getXMLString (aDoc);
+    return AjaxStringResponse.createForXML (true, sXMLString);
   }
 }

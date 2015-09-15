@@ -35,7 +35,6 @@ import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.security.password.GlobalPasswordSettings;
 import com.helger.photon.basic.security.password.constraint.PasswordConstraintList;
 import com.helger.photon.basic.security.password.constraint.PasswordConstraintMinLength;
-import com.helger.photon.core.action.ApplicationActionManager;
 import com.helger.photon.core.ajax.ApplicationAjaxManager;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
@@ -131,9 +130,6 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
 
         // Register all Ajax functions here
         aInitializer.initAjax (ApplicationAjaxManager.getInstance ());
-
-        // Register all actions here
-        aInitializer.initActions (ApplicationActionManager.getInstance ());
 
         // All other things come last
         aInitializer.initRest ();

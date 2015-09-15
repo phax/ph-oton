@@ -21,11 +21,9 @@ import javax.annotation.Nonnull;
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap.demo.app.action.pub.CActionPublic;
 import com.helger.photon.bootstrap.demo.app.ajax.pub.CAjaxPublic;
 import com.helger.photon.bootstrap.demo.app.menu.pub.MenuPublic;
 import com.helger.photon.bootstrap.demo.app.ui.AppRendererPublic;
-import com.helger.photon.core.action.IActionInvoker;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.init.DefaultApplicationInitializer;
@@ -65,12 +63,7 @@ public final class InitializerPublic extends DefaultApplicationInitializer <Layo
     aAjaxInvoker.registerFunction (CAjaxPublic.DATATABLES);
     aAjaxInvoker.registerFunction (CAjaxPublic.LOGIN);
     aAjaxInvoker.registerFunction (CAjaxPublic.UPDATE_MENU_VIEW);
-  }
-
-  @Override
-  public void initActions (@Nonnull final IActionInvoker aActionInvoker)
-  {
-    aActionInvoker.registerAction (CActionPublic.DATATABLES_I18N);
+    aAjaxInvoker.registerFunction (CAjaxPublic.DATATABLES_I18N);
   }
 
   @Override

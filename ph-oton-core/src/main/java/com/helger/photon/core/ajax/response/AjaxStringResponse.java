@@ -16,12 +16,15 @@
  */
 package com.helger.photon.core.ajax.response;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -34,33 +37,21 @@ import com.helger.web.servlet.response.UnifiedResponse;
  * @author Philip Helger
  */
 @Immutable
-public class AjaxStringResponse implements IAjaxResponse
+public class AjaxStringResponse extends AbstractAjaxResponse
 {
-  private final boolean m_bSuccess;
   private final String m_sValue;
+  private final Charset m_aCharset;
   private final IMimeType m_aMimeType;
 
-  public AjaxStringResponse (final boolean bSuccess, @Nullable final String sValue, @Nonnull final IMimeType aMimeType)
+  public AjaxStringResponse (final boolean bSuccess,
+                             @Nullable final String sValue,
+                             @Nonnull final Charset aCharset,
+                             @Nonnull final IMimeType aMimeType)
   {
-    m_bSuccess = bSuccess;
+    super (bSuccess);
     m_sValue = StringHelper.getNotNull (sValue);
+    m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
     m_aMimeType = ValueEnforcer.notNull (aMimeType, "MimeType");
-  }
-
-  public boolean isSuccess ()
-  {
-    return m_bSuccess;
-  }
-
-  public boolean isFailure ()
-  {
-    return !m_bSuccess;
-  }
-
-  @Nonnull
-  public IMimeType getMimeType ()
-  {
-    return m_aMimeType;
   }
 
   @Nonnull
@@ -69,10 +60,21 @@ public class AjaxStringResponse implements IAjaxResponse
     return m_sValue;
   }
 
+  @Nonnull
+  public Charset getCharset ()
+  {
+    return m_aCharset;
+  }
+
+  @Nonnull
+  public IMimeType getMimeType ()
+  {
+    return m_aMimeType;
+  }
+
   public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
   {
-    aUnifiedResponse.setContentAndCharset (m_sValue, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
-                    .setMimeType (m_aMimeType);
+    aUnifiedResponse.setContentAndCharset (m_sValue, m_aCharset).setMimeType (m_aMimeType);
   }
 
   @Override
@@ -95,6 +97,18 @@ public class AjaxStringResponse implements IAjaxResponse
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("value", m_sValue).toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("Value", m_sValue)
+                            .append ("MimeType", m_aMimeType)
+                            .toString ();
+  }
+
+  @Nonnull
+  public static AjaxStringResponse createForXML (final boolean bSuccess, @Nullable final String sValue)
+  {
+    return new AjaxStringResponse (bSuccess,
+                                   sValue,
+                                   XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ,
+                                   CMimeType.APPLICATION_XML);
   }
 }

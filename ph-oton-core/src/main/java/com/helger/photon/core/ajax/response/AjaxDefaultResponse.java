@@ -55,7 +55,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 @Immutable
-public class AjaxDefaultResponse implements IAjaxResponse
+public class AjaxDefaultResponse extends AbstractAjaxResponse
 {
   /** Success property */
   public static final String PROPERTY_SUCCESS = "success";
@@ -91,7 +91,6 @@ public class AjaxDefaultResponse implements IAjaxResponse
   /** Default property for HTML content */
   public static final String PROPERTY_HTML = "html";
 
-  private final boolean m_bSuccess;
   private final String m_sErrorMessage;
   private final IJson m_aSuccessValue;
   private final HCSpecialNodes m_aSpecialNodes = new HCSpecialNodes ();
@@ -123,6 +122,8 @@ public class AjaxDefaultResponse implements IAjaxResponse
   protected AjaxDefaultResponse (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                  @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
   {
+    super (true);
+
     // Now decompose the HCNode itself
     final JsonObject aObj = new JsonObject ();
     if (aNode != null)
@@ -152,7 +153,6 @@ public class AjaxDefaultResponse implements IAjaxResponse
     // Do it after all nodes were finalized etc
     _addCSSAndJS (aRequestScope);
 
-    m_bSuccess = true;
     m_sErrorMessage = null;
     m_aSuccessValue = aObj;
   }
@@ -162,21 +162,11 @@ public class AjaxDefaultResponse implements IAjaxResponse
                                  @Nullable final IJson aSuccessValue,
                                  @Nullable final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    m_bSuccess = bSuccess;
+    super (bSuccess);
     m_sErrorMessage = sErrorMessage;
     m_aSuccessValue = aSuccessValue;
     if (bSuccess)
       _addCSSAndJS (aRequestScope);
-  }
-
-  public boolean isSuccess ()
-  {
-    return m_bSuccess;
-  }
-
-  public boolean isFailure ()
-  {
-    return !m_bSuccess;
   }
 
   /**
@@ -216,8 +206,8 @@ public class AjaxDefaultResponse implements IAjaxResponse
   public JsonObject getResponseAsJSON ()
   {
     final JsonObject aAssocArray = new JsonObject ();
-    aAssocArray.add (PROPERTY_SUCCESS, m_bSuccess);
-    if (m_bSuccess)
+    aAssocArray.add (PROPERTY_SUCCESS, isSuccess ());
+    if (isSuccess ())
     {
       if (m_aSuccessValue != null)
         aAssocArray.add (PROPERTY_VALUE, m_aSuccessValue);
@@ -276,7 +266,7 @@ public class AjaxDefaultResponse implements IAjaxResponse
     if (!super.equals (o))
       return false;
     final AjaxDefaultResponse rhs = (AjaxDefaultResponse) o;
-    return m_bSuccess == rhs.m_bSuccess &&
+    return isSuccess () == rhs.isSuccess () &&
            EqualsHelper.equals (m_sErrorMessage, rhs.m_sErrorMessage) &&
            EqualsHelper.equals (m_aSuccessValue, rhs.m_aSuccessValue);
   }
@@ -285,7 +275,7 @@ public class AjaxDefaultResponse implements IAjaxResponse
   public int hashCode ()
   {
     return HashCodeGenerator.getDerived (super.hashCode ())
-                            .append (m_bSuccess)
+                            .append (isSuccess ())
                             .append (m_sErrorMessage)
                             .append (m_aSuccessValue)
                             .getHashCode ();
@@ -295,7 +285,6 @@ public class AjaxDefaultResponse implements IAjaxResponse
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("success", m_bSuccess)
                             .appendIfNotNull ("errorMsg", m_sErrorMessage)
                             .appendIfNotNull ("successValue", m_aSuccessValue)
                             .toString ();

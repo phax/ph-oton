@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.atom.action;
+package com.helger.photon.core.atom.ajax;
 
 import java.util.Locale;
 
@@ -38,7 +38,9 @@ import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.photon.basic.atom.Feed;
 import com.helger.photon.basic.atom.FeedGenerator;
 import com.helger.photon.basic.atom.FeedLink;
-import com.helger.photon.core.action.executor.AbstractActionExecutor;
+import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
+import com.helger.photon.core.ajax.response.AjaxStringResponse;
+import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
@@ -47,19 +49,19 @@ import com.helger.web.servlet.response.UnifiedResponse;
  *
  * @author Philip Helger
  */
-public abstract class AbstractNewsfeedActionExecutor extends AbstractActionExecutor implements IHasID <String>, IHasDisplayText
+public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor implements IHasID <String>, IHasDisplayText
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractNewsfeedActionExecutor.class);
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlExecute = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedActionExecutor.class.getName () +
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractNewsfeedAjaxExecutor.class);
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlExecute = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
                                                                                                                             "$EXECUTE");
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlError = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedActionExecutor.class.getName () +
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlError = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
                                                                                                                           "$ERROR");
 
   private final IHasDisplayText m_aDisplayText;
   private final String m_sFeedID;
 
-  public AbstractNewsfeedActionExecutor (@Nonnull final IHasDisplayText aDisplayText,
-                                         @Nonnull @Nonempty final String sFeedID)
+  public AbstractNewsfeedAjaxExecutor (@Nonnull final IHasDisplayText aDisplayText,
+                                       @Nonnull @Nonempty final String sFeedID)
   {
     ValueEnforcer.notNull (aDisplayText, "DisplayText");
     ValueEnforcer.notNull (sFeedID, "FeedID");
@@ -88,8 +90,8 @@ public abstract class AbstractNewsfeedActionExecutor extends AbstractActionExecu
 
   protected abstract void fillNewsfeed (@Nonnull Feed aFeed);
 
-  public final void execute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  @Override
+  protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     // Increment statistics counter
     final StopWatch aSW = StopWatch.createdStarted ();
@@ -113,17 +115,24 @@ public abstract class AbstractNewsfeedActionExecutor extends AbstractActionExecu
     }
 
     // Performance improvement: set the Last-Modified HTTP header if available
-    if (aFeed.getUpdated () != null)
-    {
-      final LocalDateTime aLDT = aFeed.getUpdated ().getDateTime ();
-      if (aLDT != null)
-        aUnifiedResponse.setLastModified (aLDT);
-    }
+    final LocalDateTime aLDT = aFeed.getUpdated () != null ? aFeed.getUpdated ().getDateTime () : null;
 
     final String sXML = MicroWriter.getXMLString (aFeed.getAsDocument ());
-    aUnifiedResponse.setContentAndCharset (sXML, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
-                    .setMimeType (CMimeType.APPLICATION_ATOM_XML);
-    StatisticsManager.getTimerHandler (AbstractNewsfeedActionExecutor.class.getName () + "$TIMER." + m_sFeedID)
+    StatisticsManager.getTimerHandler (AbstractNewsfeedAjaxExecutor.class.getName () + "$TIMER." + m_sFeedID)
                      .addTime (aSW.stopAndGetMillis ());
+
+    return new AjaxStringResponse (true,
+                                   sXML,
+                                   XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ,
+                                   CMimeType.APPLICATION_ATOM_XML)
+    {
+      @Override
+      public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
+      {
+        super.applyToResponse (aUnifiedResponse);
+        if (aLDT != null)
+          aUnifiedResponse.setLastModified (aLDT);
+      }
+    };
   }
 }

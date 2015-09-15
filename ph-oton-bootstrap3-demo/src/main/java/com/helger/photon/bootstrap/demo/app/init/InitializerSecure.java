@@ -22,13 +22,11 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap.demo.app.action.secure.CActionSecure;
 import com.helger.photon.bootstrap.demo.app.ajax.secure.CAjaxSecure;
 import com.helger.photon.bootstrap.demo.app.menu.secure.MenuSecure;
 import com.helger.photon.bootstrap.demo.app.ui.AppRendererSecure;
 import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFile;
 import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFileManager;
-import com.helger.photon.core.action.IActionInvoker;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.init.DefaultApplicationInitializer;
@@ -67,12 +65,6 @@ public final class InitializerSecure extends DefaultApplicationInitializer <Layo
   {
     aAjaxInvoker.registerFunction (CAjaxSecure.SAVE_FORM_STATE);
     aAjaxInvoker.registerFunction (CAjaxSecure.UPDATE_MENU_VIEW);
-  }
-
-  @Override
-  public void initActions (@Nonnull final IActionInvoker aActionInvoker)
-  {
-    aActionInvoker.registerAction (CActionSecure.PING);
   }
 
   @Override

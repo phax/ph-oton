@@ -32,7 +32,6 @@ import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSPackage;
-import com.helger.photon.bootstrap.demo.app.action.pub.CActionPublic;
 import com.helger.photon.bootstrap.demo.app.ajax.pub.CAjaxPublic;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
@@ -47,8 +46,8 @@ import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.login.CLogin;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
-import com.helger.photon.uictrls.datatables.ajax.ActionExecutorDataTablesI18N;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
+import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesI18N;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginSearchHighlight;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -78,8 +77,8 @@ public final class AppCommonUI
                                                             .data (new JSAssocArray ().add (AjaxExecutorDataTables.OBJECT_ID,
                                                                                             aTable.getID ())))
                    .setServerFilterType (EDataTablesFilterType.ALL_TERMS_PER_ROW)
-                   .setTextLoadingURL (CActionPublic.DATATABLES_I18N.getInvocationURL (aRequestScope),
-                                       ActionExecutorDataTablesI18N.LANGUAGE_ID)
+                   .setTextLoadingURL (CAjaxPublic.DATATABLES_I18N.getInvocationURL (aRequestScope),
+                                       AjaxExecutorDataTablesI18N.LANGUAGE_ID)
                    .addPlugin (new DataTablesPluginSearchHighlight ());
       }
     });

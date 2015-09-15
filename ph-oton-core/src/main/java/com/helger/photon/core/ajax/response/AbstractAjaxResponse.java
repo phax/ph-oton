@@ -14,25 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.app.action.secure;
+package com.helger.photon.core.ajax.response;
 
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.photon.core.action.IActionDeclaration;
-import com.helger.photon.core.action.decl.SecureApplicationActionDeclaration;
-import com.helger.photon.core.action.executor.ActionExecutorPing;
+import com.helger.commons.string.ToStringGenerator;
 
 /**
- * This class defines the available actions for the config app
+ * Base class for AJAX response.
  *
  * @author Philip Helger
  */
-@Immutable
-public final class CActionSecure
+public abstract class AbstractAjaxResponse implements IAjaxResponse
 {
-  public static final IActionDeclaration PING = new SecureApplicationActionDeclaration ("ping",
-                                                                                        ActionExecutorPing.class);
+  private final boolean m_bSuccess;
 
-  private CActionSecure ()
-  {}
+  protected AbstractAjaxResponse (final boolean bSuccess)
+  {
+    m_bSuccess = bSuccess;
+  }
+
+  public final boolean isSuccess ()
+  {
+    return m_bSuccess;
+  }
+
+  public final boolean isFailure ()
+  {
+    return !m_bSuccess;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("success", m_bSuccess).toString ();
+  }
 }

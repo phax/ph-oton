@@ -24,9 +24,6 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
 import com.helger.photon.basic.app.dao.IDAOWriteExceptionCallback;
-import com.helger.photon.core.action.IActionExceptionCallback;
-import com.helger.photon.core.action.IActionExecutor;
-import com.helger.photon.core.action.IActionInvoker;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
@@ -39,7 +36,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public abstract class AbstractErrorCallback implements IAjaxExceptionCallback, IActionExceptionCallback, IDAOReadExceptionCallback, IDAOWriteExceptionCallback
+public abstract class AbstractErrorCallback implements IAjaxExceptionCallback, IDAOReadExceptionCallback, IDAOWriteExceptionCallback
 {
   /**
    * Implement this method to handle all errors in a similar way.
@@ -66,16 +63,6 @@ public abstract class AbstractErrorCallback implements IAjaxExceptionCallback, I
     final String sErrorCode = "ajax-error-" +
                               (StringHelper.hasText (sAjaxFunctionName) ? sAjaxFunctionName + "-" : "") +
                               InternalErrorHandler.createNewErrorID ();
-    onError (t, aRequestScope, sErrorCode);
-  }
-
-  public void onActionExecutionException (@Nonnull final IActionInvoker aActionInvoker,
-                                          @Nonnull final String sActionName,
-                                          @Nonnull final IActionExecutor aActionExecutor,
-                                          @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                          @Nonnull final Throwable t)
-  {
-    final String sErrorCode = "action-error-" + sActionName + "-" + InternalErrorHandler.createNewErrorID ();
     onError (t, aRequestScope, sErrorCode);
   }
 
