@@ -147,6 +147,9 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
                                                                   .get ();
     final IAjaxExecutor aAjaxExecutor = aRequestScope.getTypedAttribute (SCOPE_ATTR_EXECUTOR, IAjaxExecutor.class);
 
+    // Never cache the result but the executor may overwrite it
+    aUnifiedResponse.disableCaching ();
+
     try
     {
       // Start the timing
@@ -157,10 +160,8 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
       if (s_aLogger.isTraceEnabled ())
         s_aLogger.trace ("  AJAX Result: " + aResult);
 
+      // Write result to the passed response
       aResult.applyToResponse (aUnifiedResponse);
-
-      // Never cache the result!
-      aUnifiedResponse.disableCaching ();
 
       // Remember the time
       s_aStatsTimer.addTime (sAjaxFunctionName, aSW.stopAndGetMillis ());
