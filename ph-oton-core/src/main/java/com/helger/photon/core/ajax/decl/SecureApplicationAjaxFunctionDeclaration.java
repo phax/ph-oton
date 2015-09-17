@@ -17,11 +17,14 @@
 package com.helger.photon.core.ajax.decl;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.factory.IFactory;
+import com.helger.commons.filter.IFilter;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.servlet.SecureApplicationAjaxServlet;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Ajax function declaration for the secure application
@@ -43,9 +46,10 @@ public class SecureApplicationAjaxFunctionDeclaration extends AbstractAjaxFuncti
   }
 
   public SecureApplicationAjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
-                                                   @Nonnull final IFactory <? extends IAjaxExecutor> aExecutorFactory)
+                                                   @Nonnull final IFactory <? extends IAjaxExecutor> aExecutorFactory,
+                                                   @Nullable final IFilter <IRequestWebScopeWithoutResponse> aExecutionFilter)
   {
-    super (sFunctionName, aExecutorFactory);
+    super (sFunctionName, aExecutorFactory, aExecutionFilter);
   }
 
   @Nonnull

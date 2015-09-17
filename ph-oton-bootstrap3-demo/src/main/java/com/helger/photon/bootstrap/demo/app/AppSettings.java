@@ -23,9 +23,9 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
+import com.helger.settings.IMutableSettings;
 import com.helger.settings.ISettings;
 import com.helger.settings.exchange.properties.SettingsPersistenceProperties;
-import com.helger.settings.IMutableSettings;
 
 /**
  * This class provides access to the settings as contained in the
@@ -33,7 +33,7 @@ import com.helger.settings.IMutableSettings;
  *
  * @author Philip Helger
  */
-public class AppSettings extends AbstractGlobalSingleton
+public final class AppSettings extends AbstractGlobalSingleton
 {
   /** The name of the file containing the settings */
   public static final String FILENAME = "webapp.properties";

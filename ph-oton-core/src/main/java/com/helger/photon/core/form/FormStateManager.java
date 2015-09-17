@@ -38,7 +38,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
 @ThreadSafe
-public class FormStateManager extends AbstractSessionWebSingleton
+public final class FormStateManager extends AbstractSessionWebSingleton
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FormStateManager.class);
 

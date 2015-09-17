@@ -29,8 +29,10 @@ import com.helger.web.servlet.response.UnifiedResponse;
 public interface IAjaxResponse extends ISuccessIndicator
 {
   /**
-   * Apply the AJAX response onto the passed {@link UnifiedResponse}.
-   * 
+   * Apply the AJAX response onto the passed {@link UnifiedResponse}. This
+   * happens in both success and error case. It's up to the implementation to
+   * decide internally what to do.
+   *
    * @param aUnifiedResponse
    *        The unified response. Never <code>null</code>.
    */

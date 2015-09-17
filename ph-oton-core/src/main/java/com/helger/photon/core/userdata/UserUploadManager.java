@@ -50,7 +50,7 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
  * @author Philip Helger
  */
 @ThreadSafe
-public class UserUploadManager extends AbstractSessionWebSingleton
+public final class UserUploadManager extends AbstractSessionWebSingleton
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (UserUploadManager.class);
 

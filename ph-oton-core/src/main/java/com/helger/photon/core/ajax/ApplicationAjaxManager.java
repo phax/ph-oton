@@ -29,10 +29,10 @@ import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.scope.mgr.ScopeManager;
-import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.singleton.AbstractApplicationWebSingleton;
 
 /**
  * A per-application AJAX manager.
@@ -40,7 +40,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @author Philip Helger
  */
 @ThreadSafe
-public class ApplicationAjaxManager extends AbstractApplicationSingleton implements IAjaxInvoker
+public final class ApplicationAjaxManager extends AbstractApplicationWebSingleton implements IAjaxInvoker
 {
   private final IAjaxInvoker m_aInvoker = new AjaxInvoker ();
 

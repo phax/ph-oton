@@ -28,6 +28,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.factory.FactoryConstantValue;
 import com.helger.commons.factory.FactoryNewInstance;
 import com.helger.commons.factory.IFactory;
+import com.helger.commons.filter.IFilter;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.photon.core.ajax.AjaxInvoker;
@@ -46,25 +47,28 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
 {
   private final String m_sFunctionName;
   private final IFactory <? extends IAjaxExecutor> m_aExecutorFactory;
+  private final IFilter <IRequestWebScopeWithoutResponse> m_aExecutionFilter;
 
   public AbstractAjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
                                           @Nonnull final IAjaxExecutor aExecutor)
   {
-    this (sFunctionName, FactoryConstantValue.create (aExecutor));
+    this (sFunctionName, FactoryConstantValue.create (aExecutor), (IFilter <IRequestWebScopeWithoutResponse>) null);
   }
 
   public AbstractAjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
                                           @Nonnull final Class <? extends IAjaxExecutor> aExecutorClass)
   {
-    this (sFunctionName, FactoryNewInstance.create (aExecutorClass));
+    this (sFunctionName, FactoryNewInstance.create (aExecutorClass), (IFilter <IRequestWebScopeWithoutResponse>) null);
   }
 
   public AbstractAjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
-                                          @Nonnull final IFactory <? extends IAjaxExecutor> aExecutorFactory)
+                                          @Nonnull final IFactory <? extends IAjaxExecutor> aExecutorFactory,
+                                          @Nullable final IFilter <IRequestWebScopeWithoutResponse> aExecutionFilter)
   {
     ValueEnforcer.isTrue (AjaxInvoker.isValidFunctionName (sFunctionName), "Invalid Ajax functionName provided");
     m_sFunctionName = sFunctionName;
     m_aExecutorFactory = ValueEnforcer.notNull (aExecutorFactory, "ExecutorFactory");
+    m_aExecutionFilter = aExecutionFilter;
   }
 
   @Nonnull
@@ -78,6 +82,12 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
   public final IFactory <? extends IAjaxExecutor> getExecutorFactory ()
   {
     return m_aExecutorFactory;
+  }
+
+  @Nullable
+  public final IFilter <IRequestWebScopeWithoutResponse> getExecutionFilter ()
+  {
+    return m_aExecutionFilter;
   }
 
   @Nonnull
@@ -122,7 +132,10 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
 
   public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return true;
+    if (m_aExecutionFilter == null)
+      return true;
+
+    return m_aExecutionFilter.matchesFilter (aRequestScope);
   }
 
   @Override
@@ -130,6 +143,7 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
   {
     return new ToStringGenerator (this).append ("FunctionName", m_sFunctionName)
                                        .append ("ExecutorFactory", m_aExecutorFactory)
+                                       .appendIfNotNull ("ExecutorFilter", m_aExecutionFilter)
                                        .toString ();
   }
 }
