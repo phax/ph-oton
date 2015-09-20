@@ -33,9 +33,13 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCConversionSettings;
+import com.helger.html.hc.IHCCustomizer;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
+import com.helger.html.hc.impl.HCCustomizerList;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
@@ -129,6 +133,14 @@ public class AjaxDefaultResponse extends AbstractAjaxResponse
     if (aNode != null)
     {
       final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettingsWithoutNamespaces ();
+
+      // Remove any "HCCustomizerAutoFocusFirstCtrl" customizer for AJAX calls
+      final IHCCustomizer aCustomizer = aConversionSettings.getCustomizer ();
+      if (aCustomizer instanceof HCCustomizerAutoFocusFirstCtrl)
+        ((HCConversionSettings) aConversionSettings).setCustomizer (null);
+      else
+        if (aCustomizer instanceof HCCustomizerList)
+          ((HCCustomizerList) aCustomizer).removeAllCustomizersOfClass (HCCustomizerAutoFocusFirstCtrl.class);
 
       // customize, finalize and extract resources
       HCRenderer.prepareForConversion (aNode, aNode, aConversionSettings);
