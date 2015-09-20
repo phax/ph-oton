@@ -26,7 +26,7 @@
     <relativePath />
   </parent>
   <artifactId>ph-oton-parent-pom</artifactId>
-  <version>6.0.1-SNAPSHOT</version>
+  <version>6.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ph-oton</name>
   <description>Base POM to build the ph web stack</description>
@@ -68,7 +68,7 @@
     <m2e.jsf.activation>false</m2e.jsf.activation>
     <log4j.version>2.3</log4j.version>
     <jetty.version>9.2.13.v20150730</jetty.version>
-    <ph-html.version>5.0.1</ph-html.version>
+    <ph-html.version>5.0.2</ph-html.version>
   </properties>
 
   <dependencyManagement>
