@@ -33,7 +33,7 @@ import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
+import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.login.CLogin;
@@ -63,7 +63,7 @@ public final class AjaxExecutorPublicLogin extends AbstractAjaxExecutor
                                                                                     sPassword,
                                                                                     CApp.REQUIRED_ROLE_IDS_VIEW);
     if (eLoginResult.isSuccess ())
-      return AjaxDefaultResponse.createSuccess (aRequestScope, new JsonObject ().add (JSON_LOGGEDIN, true));
+      return AjaxHtmlResponse.createSuccess (aRequestScope, new JsonObject ().add (JSON_LOGGEDIN, true));
 
     // Get the rendered content of the menu area
     if (GlobalDebug.isDebugMode ())
@@ -75,7 +75,7 @@ public final class AjaxExecutorPublicLogin extends AbstractAjaxExecutor
                                                              eLoginResult.getDisplayText (aDisplayLocale));
 
     // Set as result property
-    return AjaxDefaultResponse.createSuccess (aRequestScope,
+    return AjaxHtmlResponse.createSuccess (aRequestScope,
                                               new JsonObject ().add (JSON_LOGGEDIN, false)
                                                                .add (JSON_HTML,
                                                                      HCRenderer.getAsHTMLStringWithoutNamespaces (aRoot)));

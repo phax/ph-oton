@@ -24,7 +24,7 @@ import com.helger.commons.error.IErrorLevel;
 import com.helger.commons.log.LogHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
+import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -65,13 +65,13 @@ public class AjaxExecutorServerLog extends AbstractAjaxExecutor
     final String sKey = aRequestScope.getAttributeAsString (PARAM_KEY);
     final String sExpectedKey = ServerLogSessionKey.getGeneratedSessionKey ();
     if (StringHelper.hasNoText (sMessage) || sExpectedKey == null || !sExpectedKey.equals (sKey))
-      return AjaxDefaultResponse.createError (null);
+      return AjaxHtmlResponse.createError (null);
 
     // Main logging
     final IErrorLevel aSeverity = getErrorLevelFromString (sSeverity);
     LogHelper.log (AjaxExecutorServerLog.class, aSeverity, sMessage);
 
     // Convert the response to JSON
-    return AjaxDefaultResponse.createSuccess (aRequestScope);
+    return AjaxHtmlResponse.createSuccess (aRequestScope);
   }
 }

@@ -59,7 +59,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 @Immutable
-public class AjaxDefaultResponse extends AbstractAjaxResponse
+public class AjaxHtmlResponse extends AbstractAjaxResponse
 {
   /** Success property */
   public static final String PROPERTY_SUCCESS = "success";
@@ -123,7 +123,7 @@ public class AjaxDefaultResponse extends AbstractAjaxResponse
    * @param aNode
    *        The response HTML node. May be <code>null</code>.
    */
-  protected AjaxDefaultResponse (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+  protected AjaxHtmlResponse (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                  @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
   {
     super (true);
@@ -169,7 +169,7 @@ public class AjaxDefaultResponse extends AbstractAjaxResponse
     m_aSuccessValue = aObj;
   }
 
-  protected AjaxDefaultResponse (final boolean bSuccess,
+  protected AjaxHtmlResponse (final boolean bSuccess,
                                  @Nullable final String sErrorMessage,
                                  @Nullable final IJson aSuccessValue,
                                  @Nullable final IRequestWebScopeWithoutResponse aRequestScope)
@@ -208,7 +208,7 @@ public class AjaxDefaultResponse extends AbstractAjaxResponse
   }
 
   @Nonnull
-  public AjaxDefaultResponse addSpecialNodes (@Nonnull final IHCSpecialNodes aSpecialNodes)
+  public AjaxHtmlResponse addSpecialNodes (@Nonnull final IHCSpecialNodes aSpecialNodes)
   {
     m_aSpecialNodes.addAll (aSpecialNodes);
     return this;
@@ -277,7 +277,7 @@ public class AjaxDefaultResponse extends AbstractAjaxResponse
       return true;
     if (!super.equals (o))
       return false;
-    final AjaxDefaultResponse rhs = (AjaxDefaultResponse) o;
+    final AjaxHtmlResponse rhs = (AjaxHtmlResponse) o;
     return isSuccess () == rhs.isSuccess () &&
            EqualsHelper.equals (m_sErrorMessage, rhs.m_sErrorMessage) &&
            EqualsHelper.equals (m_aSuccessValue, rhs.m_aSuccessValue);
@@ -303,20 +303,20 @@ public class AjaxDefaultResponse extends AbstractAjaxResponse
   }
 
   @Nonnull
-  public static AjaxDefaultResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return createSuccess (aRequestScope, (IJson) null);
   }
 
   @Nonnull
-  public static AjaxDefaultResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+  public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                                    @Nullable final IJson aSuccessValue)
   {
-    return new AjaxDefaultResponse (true, null, aSuccessValue, aRequestScope);
+    return new AjaxHtmlResponse (true, null, aSuccessValue, aRequestScope);
   }
 
   @Nonnull
-  public static AjaxDefaultResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+  public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                                    @Nullable final IHCNode... aNodes)
   {
     // Use the default converter here
@@ -324,24 +324,24 @@ public class AjaxDefaultResponse extends AbstractAjaxResponse
   }
 
   @Nonnull
-  public static AjaxDefaultResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+  public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                                    @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
   {
     // Special case required
-    return new AjaxDefaultResponse (aRequestScope, aNode);
+    return new AjaxHtmlResponse (aRequestScope, aNode);
   }
 
   @Nonnull
-  public static AjaxDefaultResponse createError ()
+  public static AjaxHtmlResponse createError ()
   {
     return createError ((String) null);
   }
 
   @Nonnull
-  public static AjaxDefaultResponse createError (@Nullable final String sErrorMessage)
+  public static AjaxHtmlResponse createError (@Nullable final String sErrorMessage)
   {
     // No request scope needed in case of error!
     // No converter needed in case of error!
-    return new AjaxDefaultResponse (false, sErrorMessage, (IJson) null, (IRequestWebScopeWithoutResponse) null);
+    return new AjaxHtmlResponse (false, sErrorMessage, (IJson) null, (IRequestWebScopeWithoutResponse) null);
   }
 }

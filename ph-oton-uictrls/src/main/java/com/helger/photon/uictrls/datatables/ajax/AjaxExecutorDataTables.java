@@ -33,7 +33,7 @@ import com.helger.commons.string.StringParser;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
+import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.state.UIStateRegistry;
 import com.helger.photon.uicore.css.CPageParam;
@@ -389,13 +389,13 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
                                                                                            DataTablesServerData.OT_DATATABLES,
                                                                                            sDataTablesID);
     if (aServerData == null)
-      return AjaxDefaultResponse.createError ("No such data tables ID: " + sDataTablesID);
+      return AjaxHtmlResponse.createError ("No such data tables ID: " + sDataTablesID);
 
     // Main request handling
     final DTSSResponseData aResponseData = _handleRequest (aRequestData, aServerData);
 
     // Convert the response to JSON and add the special nodes
-    return AjaxDefaultResponse.createSuccess (aRequestScope, aResponseData.getAsJson ())
+    return AjaxHtmlResponse.createSuccess (aRequestScope, aResponseData.getAsJson ())
                               .addSpecialNodes (aResponseData.getSpecialNodes ());
   }
 }

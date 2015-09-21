@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap.demo.app.ui.AppRendererSecure;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxDefaultResponse;
+import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -43,6 +43,6 @@ public final class AjaxExecutorSecureUpdateMenuView extends AbstractAjaxExecutor
     final IHCNode aRoot = AppRendererSecure.getMenuContent (aLEC);
 
     // Set as result property
-    return AjaxDefaultResponse.createSuccess (aRequestScope, aRoot);
+    return AjaxHtmlResponse.createSuccess (aRequestScope, aRoot);
   }
 }
