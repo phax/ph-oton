@@ -50,6 +50,7 @@ public final class ExporterXML implements IExporterFile
   private static final String ELEMENT_HEADER = "header";
   private static final String ELEMENT_BODY = "body";
   private static final String ELEMENT_FOOTER = "footer";
+  private static final String ELEMENT_RECORD = "record";
   private static final String ELEMENT_FIELD = "field";
   private static final String ATTR_TYPE = "type";
 
@@ -88,10 +89,11 @@ public final class ExporterXML implements IExporterFile
 
   private void _emitRecord (@Nonnull final IMicroElement eParentRow, @Nonnull final IExportRecord aRecord)
   {
+    final IMicroElement eRecord = eParentRow.appendElement (ELEMENT_RECORD);
     for (final IExportRecordField aField : aRecord.getAllFields ())
     {
       final Object aFieldValue = aField.getFieldValue ();
-      final IMicroElement eField = eParentRow.appendElement (ELEMENT_FIELD);
+      final IMicroElement eField = eRecord.appendElement (ELEMENT_FIELD);
       if (m_bEmitTypeAttr)
         eField.setAttribute (ATTR_TYPE, aField.getFieldType ().getID ());
       if (aFieldValue != null)

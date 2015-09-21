@@ -128,18 +128,27 @@ public final class ExporterJSON implements IExporterFile
     final IJsonObject aDoc = new JsonObject ();
 
     // Header
+    final JsonArray aHeader = new JsonArray ();
     for (final IExportRecord aHeaderRecord : aProvider.getHeaderRecords ())
-      aDoc.add (ELEMENT_HEADER, _emitRecord (aHeaderRecord));
+      aHeader.add (_emitRecord (aHeaderRecord));
+    if (!aHeader.isEmpty ())
+      aDoc.add (ELEMENT_HEADER, aHeader);
 
     // Body
+    final JsonArray aBody = new JsonArray ();
     for (final IExportRecord aBodyRecord : IterableIterator.create (aProvider.getBodyRecords ()))
-      aDoc.add (ELEMENT_BODY, _emitRecord (aBodyRecord));
+      aBody.add (_emitRecord (aBodyRecord));
+    if (!aBody.isEmpty ())
+      aDoc.add (ELEMENT_BODY, aBody);
 
     // Footer
+    final JsonArray aFooter = new JsonArray ();
     for (final IExportRecord aFooterRecord : aProvider.getFooterRecords ())
-      aDoc.add (ELEMENT_FOOTER, _emitRecord (aFooterRecord));
+      aFooter.add (_emitRecord (aFooterRecord));
+    if (!aFooter.isEmpty ())
+      aDoc.add (ELEMENT_FOOTER, aFooter);
 
-    if (aDoc.isEmpty ())
+    if (aHeader.isEmpty () && aBody.isEmpty () && aFooter.isEmpty ())
       return null;
 
     return aDoc;
