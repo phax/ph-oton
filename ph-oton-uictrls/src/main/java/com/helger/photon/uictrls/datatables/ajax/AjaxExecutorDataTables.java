@@ -396,6 +396,6 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
 
     // Convert the response to JSON and add the special nodes
     return AjaxHtmlResponse.createSuccess (aRequestScope, aResponseData.getAsJson ())
-                              .addSpecialNodes (aResponseData.getSpecialNodes ());
+                           .addSpecialNodes (aResponseData.getSpecialNodes ());
   }
 }

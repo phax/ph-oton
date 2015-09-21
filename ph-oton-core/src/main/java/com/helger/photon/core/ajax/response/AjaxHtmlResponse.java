@@ -33,13 +33,9 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCConversionSettings;
-import com.helger.html.hc.IHCCustomizer;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
-import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
-import com.helger.html.hc.impl.HCCustomizerList;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
@@ -124,7 +120,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
    *        The response HTML node. May be <code>null</code>.
    */
   protected AjaxHtmlResponse (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                 @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
+                              @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
   {
     super (true);
 
@@ -133,14 +129,6 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
     if (aNode != null)
     {
       final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettingsWithoutNamespaces ();
-
-      // Remove any "HCCustomizerAutoFocusFirstCtrl" customizer for AJAX calls
-      final IHCCustomizer aCustomizer = aConversionSettings.getCustomizer ();
-      if (aCustomizer instanceof HCCustomizerAutoFocusFirstCtrl)
-        ((HCConversionSettings) aConversionSettings).setCustomizer (null);
-      else
-        if (aCustomizer instanceof HCCustomizerList)
-          ((HCCustomizerList) aCustomizer).removeAllCustomizersOfClass (HCCustomizerAutoFocusFirstCtrl.class);
 
       // customize, finalize and extract resources
       HCRenderer.prepareForConversion (aNode, aNode, aConversionSettings);
@@ -170,9 +158,9 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
   }
 
   protected AjaxHtmlResponse (final boolean bSuccess,
-                                 @Nullable final String sErrorMessage,
-                                 @Nullable final IJson aSuccessValue,
-                                 @Nullable final IRequestWebScopeWithoutResponse aRequestScope)
+                              @Nullable final String sErrorMessage,
+                              @Nullable final IJson aSuccessValue,
+                              @Nullable final IRequestWebScopeWithoutResponse aRequestScope)
   {
     super (bSuccess);
     m_sErrorMessage = sErrorMessage;
@@ -310,14 +298,14 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
 
   @Nonnull
   public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                   @Nullable final IJson aSuccessValue)
+                                                @Nullable final IJson aSuccessValue)
   {
     return new AjaxHtmlResponse (true, null, aSuccessValue, aRequestScope);
   }
 
   @Nonnull
   public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                   @Nullable final IHCNode... aNodes)
+                                                @Nullable final IHCNode... aNodes)
   {
     // Use the default converter here
     return createSuccess (aRequestScope, new HCNodeList ().addChildren (aNodes));
@@ -325,7 +313,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
 
   @Nonnull
   public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                   @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
+                                                @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
   {
     // Special case required
     return new AjaxHtmlResponse (aRequestScope, aNode);

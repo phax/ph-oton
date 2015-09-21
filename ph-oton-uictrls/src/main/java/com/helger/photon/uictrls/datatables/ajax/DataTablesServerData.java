@@ -37,9 +37,13 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.html.hc.IHCConversionSettings;
+import com.helger.html.hc.IHCCustomizer;
+import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCTable;
+import com.helger.html.hc.impl.HCCustomizerList;
 import com.helger.photon.core.state.IHasUIState;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
@@ -138,8 +142,18 @@ public final class DataTablesServerData implements IHasUIState
   public static IHCConversionSettings createConversionSettings ()
   {
     // Create HTML without namespaces
-    final IHCConversionSettings aRealCS = HCSettings.getConversionSettings ().getClone ();
+    final HCConversionSettings aRealCS = HCSettings.getMutableConversionSettings ().getClone ();
     aRealCS.getMutableXMLWriterSettings ().setEmitNamespaces (false);
+
+    // Remove any "HCCustomizerAutoFocusFirstCtrl" customizer for AJAX calls on
+    // DataTables
+    final IHCCustomizer aCustomizer = aRealCS.getCustomizer ();
+    if (aCustomizer instanceof HCCustomizerAutoFocusFirstCtrl)
+      aRealCS.setCustomizer (null);
+    else
+      if (aCustomizer instanceof HCCustomizerList)
+        ((HCCustomizerList) aCustomizer).removeAllCustomizersOfClass (HCCustomizerAutoFocusFirstCtrl.class);
+
     return aRealCS;
   }
 

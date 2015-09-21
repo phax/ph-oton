@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -35,6 +36,7 @@ import com.helger.json.JsonObject;
  *
  * @author Philip Helger
  */
+@Immutable
 public final class DTSSResponseData implements IHasJson
 {
   private final int m_nDraw;
