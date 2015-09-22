@@ -40,7 +40,6 @@ import com.helger.photon.basic.atom.FeedGenerator;
 import com.helger.photon.basic.atom.FeedLink;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxStringResponse;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
@@ -91,7 +90,7 @@ public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor 
   protected abstract void fillNewsfeed (@Nonnull Feed aFeed);
 
   @Override
-  protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  protected AjaxStringResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     // Increment statistics counter
     final StopWatch aSW = StopWatch.createdStarted ();

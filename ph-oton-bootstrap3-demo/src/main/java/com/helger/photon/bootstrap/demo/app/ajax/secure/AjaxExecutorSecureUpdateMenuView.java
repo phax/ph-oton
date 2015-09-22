@@ -22,7 +22,6 @@ import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap.demo.app.ui.AppRendererSecure;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -35,7 +34,7 @@ public final class AjaxExecutorSecureUpdateMenuView extends AbstractAjaxExecutor
 {
   @Override
   @Nonnull
-  protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  protected AjaxHtmlResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     final LayoutExecutionContext aLEC = LayoutExecutionContext.createForAjaxOrAction (aRequestScope);
 

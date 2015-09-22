@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.nio.charset.Charset;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -24,14 +23,10 @@ import javax.annotation.Nonnull;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mime.MimeType;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.CHTMLCharset;
 import com.helger.json.IJsonObject;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AbstractAjaxResponse;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
+import com.helger.photon.core.ajax.response.AjaxJsonResponse;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.ResponseHelperSettings;
@@ -64,7 +59,7 @@ public class AjaxExecutorDataTablesI18N extends AbstractAjaxExecutor
 
   @Override
   @Nonnull
-  protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     // Resolve language
     final String sLanguage = aRequestScope.getAttributeAsString (LANGUAGE_ID);
@@ -78,16 +73,13 @@ public class AjaxExecutorDataTablesI18N extends AbstractAjaxExecutor
     // Main action
     final IJsonObject aData = DataTables.createLanguageJson (aLanguage);
 
-    return new AbstractAjaxResponse (true)
+    return new AjaxJsonResponse (true, aData)
     {
+      @Override
       public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
       {
-        // Fill HTTP response
-        final Charset aCharset = CHTMLCharset.CHARSET_HTML_OBJ;
-        aUnifiedResponse.setContentAndCharset (aData.getAsString (), aCharset)
-                        .setMimeType (new MimeType (CMimeType.APPLICATION_JSON).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
-                                                                                              aCharset.name ()))
-                        .enableCaching (ResponseHelperSettings.getExpirationSeconds ());
+        super.applyToResponse (aUnifiedResponse);
+        aUnifiedResponse.enableCaching (ResponseHelperSettings.getExpirationSeconds ());
       }
     };
   }

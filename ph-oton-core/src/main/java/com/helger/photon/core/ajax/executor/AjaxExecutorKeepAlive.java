@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.photon.core.ajax.response.AjaxJsonResponse;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -37,7 +36,7 @@ public final class AjaxExecutorKeepAlive extends AbstractAjaxExecutor
 
   @Override
   @Nonnull
-  protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     if (GlobalDebug.isDebugMode ())
       s_aLogger.info ("AJAX Keep alive!");
