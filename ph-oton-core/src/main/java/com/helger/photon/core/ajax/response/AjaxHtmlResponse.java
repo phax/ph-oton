@@ -335,6 +335,14 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
 
   @Nonnull
   public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                @Nullable final IHCNode aNode,
+                                                @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
+  {
+    return createSuccess (aRequestScope, new HCNodeList ().addChild (aNode), aOnDocumentReadyProvider);
+  }
+
+  @Nonnull
+  public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                                 @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
   {
     return createSuccess (aRequestScope, aNode, (IHCOnDocumentReadyProvider) null);
