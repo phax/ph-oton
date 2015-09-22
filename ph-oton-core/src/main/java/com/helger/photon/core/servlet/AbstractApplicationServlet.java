@@ -148,10 +148,12 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
   protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                 @Nonnull final UnifiedResponse aUnifiedResponse) throws IOException, ServletException
   {
+    final String sApplicationID = getApplicationID ();
+
     try
     {
       // Set the last application ID in the session
-      PhotonSessionState.getInstance ().setLastApplicationID (getApplicationID ());
+      PhotonSessionState.getInstance ().setLastApplicationID (sApplicationID);
 
       // Who is responsible for creating the HTML?
       final IHTMLProvider aHTMLProvider = createHTMLProvider (aRequestScope);
@@ -161,14 +163,14 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
     }
     catch (final Throwable t)
     {
-      // Call callback
+      // Call exception callback
       if (handleApplicationException (aRequestScope, aUnifiedResponse, t).isContinue ())
       {
         // Do not show the exceptions that occur, when client cancels a request.
         if (!StreamHelper.isKnownEOFException (t))
         {
           // Catch Exception and re-throw
-          s_aLogger.error ("Error running application", t);
+          s_aLogger.error ("Error running application '" + sApplicationID + "'", t);
           if (t instanceof ServletException)
             throw (ServletException) t;
           if (t instanceof IOException)
