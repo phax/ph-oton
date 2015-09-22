@@ -31,6 +31,7 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ServiceLoaderHelper;
 import com.helger.commons.state.EContinue;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
+import com.helger.photon.core.app.PhotonSessionState;
 import com.helger.photon.core.app.html.IHTMLProvider;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
@@ -54,9 +55,12 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
   protected AbstractApplicationServlet ()
   {
     m_aListeners = ServiceLoaderHelper.getAllSPIImplementations (IApplicationRequestListenerSPI.class);
+    if (!m_aListeners.isEmpty ())
+      s_aLogger.info ("Loaded " + m_aListeners.size () + " IApplicationRequestListenerSPI implementations");
   }
 
   @Override
+  @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
   protected void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
@@ -71,11 +75,12 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
       }
       catch (final Throwable t)
       {
-        s_aLogger.error ("Failed to invoke onRequestBegin on " + aListener, t);
+        s_aLogger.error ("Failed to invoke onRequestBegin on " + aListener + " with request " + aRequestScope, t);
       }
   }
 
   @Override
+  @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
   protected void onRequestEnd (final boolean bExceptionOccurred)
   {
@@ -87,7 +92,11 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
       }
       catch (final Throwable t)
       {
-        s_aLogger.error ("Failed to invoke onRequestEnd on " + aListener, t);
+        s_aLogger.error ("Failed to invoke onRequestEnd on " +
+                         aListener +
+                         "; exceptionOccured=" +
+                         bExceptionOccurred,
+                         t);
       }
   }
 
@@ -97,12 +106,14 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
    * @return The HTML provider that creates the content. May not be
    *         <code>null</code>.
    */
-  @OverrideOnDemand
   @Nonnull
   protected abstract IHTMLProvider createHTMLProvider (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope);
 
   /**
-   * Callback method instantiated upon exception
+   * Callback method instantiated upon exception. If you override this
+   * application ensure to call the method of this class as well as it handles
+   * the POST-REDIRECT-GET pattern in here (using the
+   * {@link ForcedRedirectException}).
    *
    * @param aRequestScope
    *        Initial request scope
@@ -114,6 +125,7 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
    */
   @Nonnull
   @OverrideOnDemand
+  @OverridingMethodsMustInvokeSuper
   protected EContinue handleApplicationException (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                                   @Nonnull final UnifiedResponse aUnifiedResponse,
                                                   @Nonnull final Throwable t)
@@ -138,6 +150,9 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
   {
     try
     {
+      // Set the last application ID in the session
+      PhotonSessionState.getInstance ().setLastApplicationID (getApplicationID ());
+
       // Who is responsible for creating the HTML?
       final IHTMLProvider aHTMLProvider = createHTMLProvider (aRequestScope);
 
