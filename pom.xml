@@ -68,7 +68,7 @@
     <m2e.jsf.activation>false</m2e.jsf.activation>
     <log4j.version>2.3</log4j.version>
     <jetty.version>9.2.13.v20150730</jetty.version>
-    <ph-html.version>5.0.3-SNAPSHOT</ph-html.version>
+    <ph-html.version>5.0.3</ph-html.version>
   </properties>
 
   <dependencyManagement>
