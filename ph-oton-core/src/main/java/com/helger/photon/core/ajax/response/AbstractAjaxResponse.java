@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.ajax.response;
 
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -40,6 +41,23 @@ public abstract class AbstractAjaxResponse implements IAjaxResponse
   public final boolean isFailure ()
   {
     return !m_bSuccess;
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+    final AbstractAjaxResponse rhs = (AbstractAjaxResponse) o;
+    return m_bSuccess == rhs.m_bSuccess;
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_bSuccess).getHashCode ();
   }
 
   @Override

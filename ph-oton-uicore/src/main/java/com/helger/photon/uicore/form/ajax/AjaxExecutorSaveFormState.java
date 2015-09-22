@@ -24,7 +24,8 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
+import com.helger.photon.core.ajax.response.AjaxJsonResponse;
+import com.helger.photon.core.ajax.response.AjaxStringResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
@@ -57,10 +58,10 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
     // Extract page ID
     final String sPageID = aRequestScope.getAttributeAsString (ATTR_PAGE_ID);
     if (sPageID == null)
-      return AjaxHtmlResponse.createError ("Page ID is missing!");
+      return AjaxStringResponse.createForText (false, "Page ID is missing!");
 
     // Filter all fields
-    final MapBasedAttributeContainerAny <String> aFieldCont = new MapBasedAttributeContainerAny <String> ();
+    final MapBasedAttributeContainerAny <String> aFieldCont = new MapBasedAttributeContainerAny <> ();
     for (final Map.Entry <String, Object> aEntry : aRequestScope.getAllAttributes ().entrySet ())
       if (aEntry.getKey ().startsWith (PREFIX_FIELD))
       {
@@ -76,12 +77,13 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
     // Extract the flow ID
     final String sFlowID = aFieldCont.getAttributeAsString (FIELD_FLOW_ID);
     if (sFlowID == null)
-      return AjaxHtmlResponse.createError ("Flow ID is missing!");
+      return AjaxStringResponse.createForText (false, "Flow ID is missing!");
+
     aFieldCont.removeAttribute (FIELD_FLOW_ID);
     aFieldCont.removeAttribute (CPageParam.PARAM_SUBACTION);
     // Leave action and object
 
     saveFormState (sPageID, sFlowID, aFieldCont);
-    return AjaxHtmlResponse.createSuccess (aRequestScope);
+    return AjaxJsonResponse.createSuccess ();
   }
 }

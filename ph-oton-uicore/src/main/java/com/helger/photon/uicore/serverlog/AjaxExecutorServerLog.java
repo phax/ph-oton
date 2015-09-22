@@ -24,8 +24,7 @@ import com.helger.commons.error.IErrorLevel;
 import com.helger.commons.log.LogHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
+import com.helger.photon.core.ajax.response.AjaxJsonResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class AjaxExecutorServerLog extends AbstractAjaxExecutor
@@ -58,20 +57,19 @@ public class AjaxExecutorServerLog extends AbstractAjaxExecutor
 
   @Override
   @Nonnull
-  protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     final String sSeverity = aRequestScope.getAttributeAsString (PARAM_SEVERITY);
     final String sMessage = aRequestScope.getAttributeAsString (PARAM_MESSAGE);
     final String sKey = aRequestScope.getAttributeAsString (PARAM_KEY);
     final String sExpectedKey = ServerLogSessionKey.getGeneratedSessionKey ();
     if (StringHelper.hasNoText (sMessage) || sExpectedKey == null || !sExpectedKey.equals (sKey))
-      return AjaxHtmlResponse.createError (null);
+      return AjaxJsonResponse.createError ("Missing required parameter");
 
     // Main logging
     final IErrorLevel aSeverity = getErrorLevelFromString (sSeverity);
     LogHelper.log (AjaxExecutorServerLog.class, aSeverity, sMessage);
 
-    // Convert the response to JSON
-    return AjaxHtmlResponse.createSuccess (aRequestScope);
+    return AjaxJsonResponse.createSuccess ();
   }
 }

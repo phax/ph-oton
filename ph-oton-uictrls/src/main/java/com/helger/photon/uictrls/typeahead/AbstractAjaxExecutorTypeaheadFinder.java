@@ -32,11 +32,8 @@ import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.json.JsonArray;
-import com.helger.json.JsonObject;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutorWithContext;
-import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
 import com.helger.photon.core.ajax.response.AjaxJsonResponse;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 /**
@@ -243,13 +240,13 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
 
   @Override
   @Nonnull
-  protected final IAjaxResponse mainHandleRequest (@Nonnull final LECTYPE aLEC) throws Exception
+  protected final AjaxJsonResponse mainHandleRequest (@Nonnull final LECTYPE aLEC) throws Exception
   {
     final String sOriginalQuery = getQueryString (aLEC);
     if (StringHelper.hasNoTextAfterTrim (sOriginalQuery))
     {
-      // May happen when the user enters "  " (only spaces)
-      return AjaxHtmlResponse.createSuccess (aLEC.getRequestScope (), new JsonObject ());
+      // May happen when the user enters " " (only spaces)
+      return AjaxJsonResponse.createSuccess ();
     }
 
     // Create the main Finder object
@@ -264,6 +261,6 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
       ret.add (aDatum.getAsJson ());
 
     // Use the simple response, because the response layout is predefined!
-    return new AjaxJsonResponse (true, ret);
+    return AjaxJsonResponse.createSuccess (ret);
   }
 }

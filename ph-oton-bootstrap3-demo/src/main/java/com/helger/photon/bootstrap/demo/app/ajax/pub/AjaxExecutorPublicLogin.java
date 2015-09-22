@@ -33,8 +33,7 @@ import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
+import com.helger.photon.core.ajax.response.AjaxJsonResponse;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.login.CLogin;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -52,7 +51,7 @@ public final class AjaxExecutorPublicLogin extends AbstractAjaxExecutor
 
   @Override
   @Nonnull
-  protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     final LayoutExecutionContext aLEC = LayoutExecutionContext.createForAjaxOrAction (aRequestScope);
     final String sLoginName = aRequestScope.getAttributeAsString (CLogin.REQUEST_ATTR_USERID);
@@ -63,7 +62,7 @@ public final class AjaxExecutorPublicLogin extends AbstractAjaxExecutor
                                                                                     sPassword,
                                                                                     CApp.REQUIRED_ROLE_IDS_VIEW);
     if (eLoginResult.isSuccess ())
-      return AjaxHtmlResponse.createSuccess (aRequestScope, new JsonObject ().add (JSON_LOGGEDIN, true));
+      return AjaxJsonResponse.createSuccess (new JsonObject ().add (JSON_LOGGEDIN, true));
 
     // Get the rendered content of the menu area
     if (GlobalDebug.isDebugMode ())
@@ -75,9 +74,8 @@ public final class AjaxExecutorPublicLogin extends AbstractAjaxExecutor
                                                              eLoginResult.getDisplayText (aDisplayLocale));
 
     // Set as result property
-    return AjaxHtmlResponse.createSuccess (aRequestScope,
-                                              new JsonObject ().add (JSON_LOGGEDIN, false)
-                                                               .add (JSON_HTML,
-                                                                     HCRenderer.getAsHTMLStringWithoutNamespaces (aRoot)));
+    return AjaxJsonResponse.createSuccess (new JsonObject ().add (JSON_LOGGEDIN, false)
+                                                            .add (JSON_HTML,
+                                                                  HCRenderer.getAsHTMLStringWithoutNamespaces (aRoot)));
   }
 }

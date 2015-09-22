@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
+import com.helger.photon.core.ajax.response.AjaxJsonResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -43,6 +43,6 @@ public final class AjaxExecutorKeepAlive extends AbstractAjaxExecutor
       s_aLogger.info ("AJAX Keep alive!");
 
     // Always success
-    return AjaxHtmlResponse.createSuccess (aRequestScope);
+    return AjaxJsonResponse.createSuccess ();
   }
 }

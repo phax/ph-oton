@@ -38,6 +38,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCNodeList;
+import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
@@ -104,8 +105,8 @@ public final class DataTablesServerDataCell implements Serializable
     {
       // Add the content without the out-of-band nodes (but no document.ready()
       // because this is invoked per AJAX)
-      final boolean bKeepOnDocumentReady = false;
-      HCSpecialNodeHandler.extractSpecialContent (aCellChildren, m_aSpecialNodes, bKeepOnDocumentReady);
+      final IHCOnDocumentReadyProvider aOnDocumentReadyProvider = null;
+      HCSpecialNodeHandler.extractSpecialContent (aCellChildren, m_aSpecialNodes, aOnDocumentReadyProvider);
     }
 
     m_aContent = aCellChildren;

@@ -26,6 +26,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.json.IJson;
+import com.helger.json.JsonValue;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
@@ -62,7 +63,7 @@ public class AjaxJsonResponse extends AbstractAjaxResponse
   {
     if (o == this)
       return true;
-    if (o == null || !getClass ().equals (o.getClass ()))
+    if (!super.equals (o))
       return false;
     final AjaxJsonResponse rhs = (AjaxJsonResponse) o;
     return EqualsHelper.equals (m_aValue, rhs.m_aValue);
@@ -71,12 +72,30 @@ public class AjaxJsonResponse extends AbstractAjaxResponse
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aValue).getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aValue).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ()).append ("value", m_aValue).toString ();
+  }
+
+  @Nonnull
+  public static AjaxJsonResponse createSuccess ()
+  {
+    return createSuccess ((IJson) null);
+  }
+
+  @Nonnull
+  public static AjaxJsonResponse createSuccess (@Nullable final IJson aValue)
+  {
+    return new AjaxJsonResponse (true, aValue);
+  }
+
+  @Nonnull
+  public static AjaxJsonResponse createError (@Nonnull final String sErrorMsg)
+  {
+    return new AjaxJsonResponse (false, JsonValue.create (sErrorMsg));
   }
 }

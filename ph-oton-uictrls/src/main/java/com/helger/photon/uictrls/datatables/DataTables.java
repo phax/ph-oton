@@ -103,6 +103,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public static final boolean DEFAULT_RETRIEVE = false;
   public static final boolean DEFAULT_SCROLL_COLLAPSE = false;
 
+  public static final String EVENT_INIT = "init.dt";
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTables.class);
 
   // Constructor parameters
@@ -149,6 +151,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   private JSAnonymousFunction m_aFooterCallback;
   // missing infoCallback
   // missing initComplete
+  private JSAnonymousFunction m_aInitComplete;
   // missing preDrawCallback
   // missing rowCallback
   // missing stateLoadCallback
@@ -581,6 +584,26 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public DataTables setHeaderCallback (@Nullable final JSAnonymousFunction aHeaderCallback)
   {
     m_aHeaderCallback = aHeaderCallback;
+    return this;
+  }
+
+  @Nullable
+  public JSAnonymousFunction getInitComplete ()
+  {
+    return m_aInitComplete;
+  }
+
+  /**
+   * Set init complete - see http://datatables.net/reference/option/initComplete
+   *
+   * @param aInitComplete
+   *        initComplete( settings, json )
+   * @return this
+   */
+  @Nonnull
+  public DataTables setInitComplete (@Nullable final JSAnonymousFunction aInitComplete)
+  {
+    m_aInitComplete = aInitComplete;
     return this;
   }
 
@@ -1109,9 +1132,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       final JSVar aData = aAF.param ("d");
       final JSVar aCallback = aAF.param ("cb");
       aAF.param ("s");
-      m_aAjaxBuilder.success (JSJQueryHelper.jqueryAjaxSuccessHandler (aCallback, null));
-      m_aAjaxBuilder.data (JQuery.extend ().arg (aData).arg (m_aAjaxBuilder.data ()));
-      aAF.body ().add (m_aAjaxBuilder.build ());
+      aAF.body ()
+         .add (m_aAjaxBuilder.getClone ()
+                             .data (JQuery.extend ().arg (aData).arg (m_aAjaxBuilder.data ()))
+                             .success (JSJQueryHelper.jqueryAjaxSuccessHandler (aCallback, null))
+                             .build ());
       aParams.add ("ajax", aAF);
       JSJQueryHelper.registerExternalResources ();
     }
@@ -1123,6 +1148,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("footerCallback", m_aFooterCallback);
     if (m_aHeaderCallback != null)
       aParams.add ("headerCallback", m_aHeaderCallback);
+    if (m_aInitComplete != null)
+      aParams.add ("initComplete", m_aInitComplete);
 
     //
     // options

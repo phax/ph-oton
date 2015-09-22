@@ -82,7 +82,7 @@ public class AjaxStringResponse extends AbstractAjaxResponse
   {
     if (o == this)
       return true;
-    if (o == null || !getClass ().equals (o.getClass ()))
+    if (!super.equals (o))
       return false;
     final AjaxStringResponse rhs = (AjaxStringResponse) o;
     return m_sValue.equals (rhs.m_sValue);
@@ -91,7 +91,7 @@ public class AjaxStringResponse extends AbstractAjaxResponse
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sValue).getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_sValue).getHashCode ();
   }
 
   @Override
@@ -110,5 +110,11 @@ public class AjaxStringResponse extends AbstractAjaxResponse
                                    sValue,
                                    XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ,
                                    CMimeType.APPLICATION_XML);
+  }
+
+  @Nonnull
+  public static AjaxStringResponse createForText (final boolean bSuccess, @Nullable final String sValue)
+  {
+    return new AjaxStringResponse (bSuccess, sValue, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ, CMimeType.TEXT_PLAIN);
   }
 }

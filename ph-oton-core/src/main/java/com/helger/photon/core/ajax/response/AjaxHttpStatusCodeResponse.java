@@ -59,7 +59,7 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   {
     if (o == this)
       return true;
-    if (o == null || !getClass ().equals (o.getClass ()))
+    if (!super.equals (o))
       return false;
     final AjaxHttpStatusCodeResponse rhs = (AjaxHttpStatusCodeResponse) o;
     return m_nStatusCode == rhs.m_nStatusCode;
@@ -68,7 +68,7 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_nStatusCode).getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_nStatusCode).getHashCode ();
   }
 
   @Override

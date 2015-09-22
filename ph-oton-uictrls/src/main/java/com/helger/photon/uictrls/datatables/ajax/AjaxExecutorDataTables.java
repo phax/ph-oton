@@ -395,7 +395,6 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
     final DTSSResponseData aResponseData = _handleRequest (aRequestData, aServerData);
 
     // Convert the response to JSON and add the special nodes
-    return AjaxHtmlResponse.createSuccess (aRequestScope, aResponseData.getAsJson ())
-                           .addSpecialNodes (aResponseData.getSpecialNodes ());
+    return new AjaxDatatablesResponse (aResponseData.getAsJson (), aResponseData.getSpecialNodes ());
   }
 }

@@ -21,7 +21,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.charset.CCharset;
@@ -30,12 +30,14 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mime.CMimeType;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
@@ -44,7 +46,6 @@ import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.html.resource.css.ICSSCodeProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
-import com.helger.json.IJson;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
@@ -54,7 +55,13 @@ import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
-@Immutable
+/**
+ * Ajax response with HTML content. The returned Content-Type is JSON and the
+ * detailed information are in separate objects. See the public properties.
+ *
+ * @author Philip Helger
+ */
+@NotThreadSafe
 public class AjaxHtmlResponse extends AbstractAjaxResponse
 {
   /** Success property */
@@ -91,11 +98,41 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
   /** Default property for HTML content */
   public static final String PROPERTY_HTML = "html";
 
-  private final String m_sErrorMessage;
-  private final IJson m_aSuccessValue;
+  private final IJsonObject m_aSuccessValue;
   private final HCSpecialNodes m_aSpecialNodes = new HCSpecialNodes ();
+  private final String m_sErrorMessage;
 
-  private void _addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @Nonnull
+  public static String getHTMLString (@Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
+                                      @Nonnull final HCSpecialNodes aSpecialNodes,
+                                      @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
+  {
+    if (aNode == null)
+      return "";
+
+    final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettingsWithoutNamespaces ();
+
+    // customize, finalize and extract resources
+    HCRenderer.prepareForConversion (aNode, aNode, aConversionSettings);
+
+    if (aConversionSettings.isExtractOutOfBandNodes ())
+    {
+      // no need to keep onDocumentReady stuff as the document is already
+      // loaded
+      HCSpecialNodeHandler.extractSpecialContent (aNode, aSpecialNodes, aOnDocumentReadyProvider);
+    }
+
+    // Serialize remaining node to HTML
+    final IMicroNode aMicroNode = aNode.convertToMicroNode (aConversionSettings);
+    final String sHTML = aMicroNode == null ? ""
+                                            : MicroWriter.getNodeAsString (aMicroNode,
+                                                                           aConversionSettings.getXMLWriterSettings ());
+
+    return sHTML;
+  }
+
+  public static final void addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                        @Nonnull final HCSpecialNodes aSpecialNodes)
   {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
 
@@ -104,79 +141,54 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
     final boolean bRegular = HCSettings.isUseRegularResources ();
 
     for (final ICSSPathProvider aCSS : PhotonCSS.getAllRegisteredCSSIncludesForThisRequest ())
-      m_aSpecialNodes.addExternalCSS (aCSS.getMediaList (),
-                                      PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular).getAsString ());
+      aSpecialNodes.addExternalCSS (aCSS.getMediaList (),
+                                    PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular).getAsString ());
 
     for (final IJSPathProvider aJS : PhotonJS.getAllRegisteredJSIncludesForThisRequest ())
-      m_aSpecialNodes.addExternalJS (PhotonHTMLSettings.getJSPath (aRequestScope, aJS, bRegular).getAsString ());
+      aSpecialNodes.addExternalJS (PhotonHTMLSettings.getJSPath (aRequestScope, aJS, bRegular).getAsString ());
   }
 
   /**
    * Success constructor for HC nodes
    *
+   * @param bSuccess
+   *        Success indicator
    * @param aRequestScope
    *        The source request scope. May not be <code>null</code>.
    * @param aNode
    *        The response HTML node. May be <code>null</code>.
+   * @param aOnDocumentReadyProvider
+   *        if not <code>null</code> than all combined document.ready() scripts
+   *        are kept as document.ready() scripts using this provider. If
+   *        <code>null</code> than all document.ready() scripts are converted to
+   *        regular scripts and are executed after all other scripts. For AJAX
+   *        calls, this should be <code>null</code> as there is no
+   *        "document ready" callback - alternatively you can provide a custom
+   *        "on document ready" provider.
+   * @param sErrorMessage
+   *        Optional error message if success if <code>false</code>
    */
-  protected AjaxHtmlResponse (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                              @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
-  {
-    super (true);
-
-    // Now decompose the HCNode itself
-    final JsonObject aObj = new JsonObject ();
-    if (aNode != null)
-    {
-      final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettingsWithoutNamespaces ();
-
-      // customize, finalize and extract resources
-      HCRenderer.prepareForConversion (aNode, aNode, aConversionSettings);
-
-      if (aConversionSettings.isExtractOutOfBandNodes ())
-      {
-        // no need to keepOnDocumentReady stuff as the document is already
-        // loaded
-        final boolean bKeepOnDocumentReady = false;
-        HCSpecialNodeHandler.extractSpecialContent (aNode, m_aSpecialNodes, bKeepOnDocumentReady);
-      }
-
-      // Serialize remaining node to HTML
-      final IMicroNode aMicroNode = aNode.convertToMicroNode (aConversionSettings);
-      final String sHTML = aMicroNode == null ? ""
-                                              : MicroWriter.getNodeAsString (aMicroNode,
-                                                                             aConversionSettings.getXMLWriterSettings ());
-
-      aObj.add (PROPERTY_HTML, sHTML);
-    }
-
-    // Do it after all nodes were finalized etc
-    _addCSSAndJS (aRequestScope);
-
-    m_sErrorMessage = null;
-    m_aSuccessValue = aObj;
-  }
-
   protected AjaxHtmlResponse (final boolean bSuccess,
-                              @Nullable final String sErrorMessage,
-                              @Nullable final IJson aSuccessValue,
-                              @Nullable final IRequestWebScopeWithoutResponse aRequestScope)
+                              @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
+                              @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
+                              @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider,
+                              @Nullable final String sErrorMessage)
   {
     super (bSuccess);
-    m_sErrorMessage = sErrorMessage;
-    m_aSuccessValue = aSuccessValue;
-    if (bSuccess)
-      _addCSSAndJS (aRequestScope);
-  }
 
-  /**
-   * @return In case this is a failure, this field contains the error message.
-   *         May be <code>null</code>.
-   */
-  @Nullable
-  public String getErrorMessage ()
-  {
-    return m_sErrorMessage;
+    // Now decompose the HCNode itself and set it in "html" property
+    final JsonObject aObj = new JsonObject ();
+    if (bSuccess)
+    {
+      // First extract the HTML
+      aObj.add (PROPERTY_HTML, getHTMLString (aNode, m_aSpecialNodes, aOnDocumentReadyProvider));
+
+      // Do it after all nodes were finalized etc
+      addCSSAndJS (aRequestScope, m_aSpecialNodes);
+    }
+
+    m_aSuccessValue = aObj;
+    m_sErrorMessage = sErrorMessage;
   }
 
   /**
@@ -184,7 +196,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
    *         May be <code>null</code>.
    */
   @Nullable
-  public IJson getSuccessValue ()
+  public IJsonObject getSuccessValue ()
   {
     return m_aSuccessValue;
   }
@@ -202,53 +214,73 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
     return this;
   }
 
+  /**
+   * @return In case this is a failure, this field contains the error message.
+   *         May be <code>null</code>.
+   */
+  @Nullable
+  public String getErrorMessage ()
+  {
+    return m_sErrorMessage;
+  }
+
   @Nonnull
-  public JsonObject getResponseAsJSON ()
+  public static JsonObject getResponseAsJSON (final boolean bIsSuccess,
+                                              @Nullable final IJsonObject aSuccessValue,
+                                              @Nonnull final HCSpecialNodes aSpecialNodes,
+                                              @Nullable final String sErrorMessage)
   {
     final JsonObject aAssocArray = new JsonObject ();
-    aAssocArray.add (PROPERTY_SUCCESS, isSuccess ());
-    if (isSuccess ())
+    aAssocArray.add (PROPERTY_SUCCESS, bIsSuccess);
+    if (bIsSuccess)
     {
-      if (m_aSuccessValue != null)
-        aAssocArray.add (PROPERTY_VALUE, m_aSuccessValue);
+      if (aSuccessValue != null)
+        aAssocArray.add (PROPERTY_VALUE, aSuccessValue);
+
       // Apply special nodes
-      if (m_aSpecialNodes.hasExternalCSSs ())
+      if (aSpecialNodes.hasExternalCSSs ())
       {
         final JsonArray aList = new JsonArray ();
-        for (final Map.Entry <ICSSMediaList, List <String>> aEntry : m_aSpecialNodes.getAllExternalCSSs ().entrySet ())
+        for (final Map.Entry <ICSSMediaList, List <String>> aEntry : aSpecialNodes.getAllExternalCSSs ().entrySet ())
           for (final String sCSSFile : aEntry.getValue ())
             aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
                                         .add (SUBPROPERTY_CSS_HREF, sCSSFile));
         aAssocArray.add (PROPERTY_EXTERNAL_CSS, aList);
       }
-      if (m_aSpecialNodes.hasInlineCSSBeforeExternal ())
+      if (aSpecialNodes.hasInlineCSSBeforeExternal ())
       {
         final JsonArray aList = new JsonArray ();
-        for (final ICSSCodeProvider aEntry : m_aSpecialNodes.getAllInlineCSSBeforeExternal ())
+        for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSBeforeExternal ())
           aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
                                       .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
         aAssocArray.add (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, aList);
       }
-      if (m_aSpecialNodes.hasInlineCSSAfterExternal ())
+      if (aSpecialNodes.hasInlineCSSAfterExternal ())
       {
         final JsonArray aList = new JsonArray ();
-        for (final ICSSCodeProvider aEntry : m_aSpecialNodes.getAllInlineCSSAfterExternal ())
+        for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSAfterExternal ())
           aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
                                       .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
         aAssocArray.add (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, aList);
       }
-      if (m_aSpecialNodes.hasExternalJSs ())
-        aAssocArray.add (PROPERTY_EXTERNAL_JS, m_aSpecialNodes.getAllExternalJSs ());
-      if (m_aSpecialNodes.hasInlineJSBeforeExternal ())
-        aAssocArray.add (PROPERTY_INLINE_JS_BEFORE_EXTERNAL, m_aSpecialNodes.getInlineJSBeforeExternal ().getJSCode ());
-      if (m_aSpecialNodes.hasInlineJSAfterExternal ())
-        aAssocArray.add (PROPERTY_INLINE_JS_AFTER_EXTERNAL, m_aSpecialNodes.getInlineJSAfterExternal ().getJSCode ());
+      if (aSpecialNodes.hasExternalJSs ())
+        aAssocArray.add (PROPERTY_EXTERNAL_JS, aSpecialNodes.getAllExternalJSs ());
+      if (aSpecialNodes.hasInlineJSBeforeExternal ())
+        aAssocArray.add (PROPERTY_INLINE_JS_BEFORE_EXTERNAL, aSpecialNodes.getInlineJSBeforeExternal ().getJSCode ());
+      if (aSpecialNodes.hasInlineJSAfterExternal ())
+        aAssocArray.add (PROPERTY_INLINE_JS_AFTER_EXTERNAL, aSpecialNodes.getInlineJSAfterExternal ().getJSCode ());
     }
     else
     {
-      aAssocArray.add (PROPERTY_ERRORMESSAGE, m_sErrorMessage != null ? m_sErrorMessage : "");
+      aAssocArray.add (PROPERTY_ERRORMESSAGE, StringHelper.getNotNull (sErrorMessage));
     }
     return aAssocArray;
+  }
+
+  @Nonnull
+  public JsonObject getResponseAsJSON ()
+  {
+    return getResponseAsJSON (isSuccess (), m_aSuccessValue, m_aSpecialNodes, m_sErrorMessage);
   }
 
   public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
@@ -266,8 +298,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
     if (!super.equals (o))
       return false;
     final AjaxHtmlResponse rhs = (AjaxHtmlResponse) o;
-    return isSuccess () == rhs.isSuccess () &&
-           EqualsHelper.equals (m_sErrorMessage, rhs.m_sErrorMessage) &&
+    return EqualsHelper.equals (m_sErrorMessage, rhs.m_sErrorMessage) &&
            EqualsHelper.equals (m_aSuccessValue, rhs.m_aSuccessValue);
   }
 
@@ -275,7 +306,6 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
   public int hashCode ()
   {
     return HashCodeGenerator.getDerived (super.hashCode ())
-                            .append (isSuccess ())
                             .append (m_sErrorMessage)
                             .append (m_aSuccessValue)
                             .getHashCode ();
@@ -293,21 +323,13 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
   @Nonnull
   public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return createSuccess (aRequestScope, (IJson) null);
-  }
-
-  @Nonnull
-  public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                @Nullable final IJson aSuccessValue)
-  {
-    return new AjaxHtmlResponse (true, null, aSuccessValue, aRequestScope);
+    return createSuccess (aRequestScope, (IHCHasChildrenMutable <?, IHCNode>) null, (IHCOnDocumentReadyProvider) null);
   }
 
   @Nonnull
   public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                                 @Nullable final IHCNode... aNodes)
   {
-    // Use the default converter here
     return createSuccess (aRequestScope, new HCNodeList ().addChildren (aNodes));
   }
 
@@ -315,21 +337,24 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
   public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                                 @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode)
   {
-    // Special case required
-    return new AjaxHtmlResponse (aRequestScope, aNode);
+    return createSuccess (aRequestScope, aNode, (IHCOnDocumentReadyProvider) null);
   }
 
   @Nonnull
-  public static AjaxHtmlResponse createError ()
+  public static AjaxHtmlResponse createSuccess (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
+                                                @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
-    return createError ((String) null);
+    return new AjaxHtmlResponse (true, aRequestScope, aNode, aOnDocumentReadyProvider, (String) null);
   }
 
   @Nonnull
   public static AjaxHtmlResponse createError (@Nullable final String sErrorMessage)
   {
-    // No request scope needed in case of error!
-    // No converter needed in case of error!
-    return new AjaxHtmlResponse (false, sErrorMessage, (IJson) null, (IRequestWebScopeWithoutResponse) null);
+    return new AjaxHtmlResponse (false,
+                                 (IRequestWebScopeWithoutResponse) null,
+                                 (IHCHasChildrenMutable <?, IHCNode>) null,
+                                 (IHCOnDocumentReadyProvider) null,
+                                 sErrorMessage);
   }
 }

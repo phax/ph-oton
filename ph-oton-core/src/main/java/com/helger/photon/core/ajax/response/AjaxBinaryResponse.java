@@ -106,7 +106,7 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
   {
     if (o == this)
       return true;
-    if (o == null || !getClass ().equals (o.getClass ()))
+    if (!super.equals (o))
       return false;
     final AjaxBinaryResponse rhs = (AjaxBinaryResponse) o;
     return EqualsHelper.equals (m_aValue, rhs.m_aValue) &&
@@ -117,10 +117,11 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aValue)
-                                       .append (m_aMimeType)
-                                       .append (m_sDispositionFilename)
-                                       .getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ())
+                            .append (m_aValue)
+                            .append (m_aMimeType)
+                            .append (m_sDispositionFilename)
+                            .getHashCode ();
   }
 
   @Override
