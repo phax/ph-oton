@@ -30,6 +30,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 
 /**
@@ -70,6 +71,30 @@ public final class PhotonPathMapper
     try
     {
       s_aMap.put (sApplicationID, sPath);
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  /**
+   * Remove the path mapped to the specified application ID
+   *
+   * @param sApplicationID
+   *        Application ID to be removed. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if the path was successfully removed
+   */
+  @Nonnull
+  public static EChange removePathMapping (@Nullable final String sApplicationID)
+  {
+    if (StringHelper.hasNoText (sApplicationID))
+      return EChange.UNCHANGED;
+
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      return EChange.valueOf (s_aMap.remove (sApplicationID) != null);
     }
     finally
     {
