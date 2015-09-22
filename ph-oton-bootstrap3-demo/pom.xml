@@ -70,11 +70,6 @@
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-jsp</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-annotations</artifactId>
       <scope>test</scope>
     </dependency>
@@ -141,7 +136,11 @@
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>src/main/webapp/*.jsp</exclude>
+            <exclude>src/main/webapp/**/*.jsp</exclude>
+            <exclude>src/main/webapp/**/*.min.js</exclude>
+            <exclude>src/main/webapp/**/*.min.css</exclude>
+            <exclude>**/NOTICE</exclude>
+            <exclude>**/LICENSE</exclude>
           </excludes>
         </configuration>
       </plugin>

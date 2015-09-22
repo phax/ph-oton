@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.html.jscode.JSExpr;
-import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
 
 @Immutable
@@ -34,12 +33,5 @@ public final class CAppJS
   {
     // Match the JS file in src/main/webapp/js
     return JSExpr.ref ("App");
-  }
-
-  @Nonnull
-  public static JSInvocation viewLogin ()
-  {
-    // Invoke the JS function "viewLogin" on the object
-    return getApp ().invoke ("viewLogin");
   }
 }
