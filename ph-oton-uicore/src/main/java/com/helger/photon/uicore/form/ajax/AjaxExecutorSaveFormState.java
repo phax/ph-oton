@@ -25,8 +25,6 @@ import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxJsonResponse;
-import com.helger.photon.core.ajax.response.AjaxStringResponse;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.uicore.css.CPageParam;
@@ -53,12 +51,12 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
 
   @Override
   @Nonnull
-  protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     // Extract page ID
     final String sPageID = aRequestScope.getAttributeAsString (ATTR_PAGE_ID);
     if (sPageID == null)
-      return AjaxStringResponse.createForText (false, "Page ID is missing!");
+      return AjaxJsonResponse.createError ("Page ID is missing!");
 
     // Filter all fields
     final MapBasedAttributeContainerAny <String> aFieldCont = new MapBasedAttributeContainerAny <> ();
@@ -77,7 +75,7 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
     // Extract the flow ID
     final String sFlowID = aFieldCont.getAttributeAsString (FIELD_FLOW_ID);
     if (sFlowID == null)
-      return AjaxStringResponse.createForText (false, "Flow ID is missing!");
+      return AjaxJsonResponse.createError ("Flow ID is missing!");
 
     aFieldCont.removeAttribute (FIELD_FLOW_ID);
     aFieldCont.removeAttribute (CPageParam.PARAM_SUBACTION);
