@@ -49,7 +49,7 @@ import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 
 /**
- * Show web site resource bundles.
+ * Show web site go-mappings.
  *
  * @author Philip Helger
  * @param <WPECTYPE>
@@ -90,26 +90,26 @@ public class BasePageAppInfoGo <WPECTYPE extends IWebPageExecutionContext> exten
   }
 
   public BasePageAppInfoGo (@Nonnull @Nonempty final String sID,
-                               @Nonnull final String sName,
-                               @Nonnull final GoMappingManager aGoMappingMgr)
+                            @Nonnull final String sName,
+                            @Nonnull final GoMappingManager aGoMappingMgr)
   {
     super (sID, sName);
     m_aGoMappingMgr = ValueEnforcer.notNull (aGoMappingMgr, "GoMappingMgr");
   }
 
   public BasePageAppInfoGo (@Nonnull @Nonempty final String sID,
-                               @Nonnull final String sName,
-                               @Nullable final String sDescription,
-                               @Nonnull final GoMappingManager aGoMappingMgr)
+                            @Nonnull final String sName,
+                            @Nullable final String sDescription,
+                            @Nonnull final GoMappingManager aGoMappingMgr)
   {
     super (sID, sName, sDescription);
     m_aGoMappingMgr = ValueEnforcer.notNull (aGoMappingMgr, "GoMappingMgr");
   }
 
   public BasePageAppInfoGo (@Nonnull @Nonempty final String sID,
-                               @Nonnull final IMultilingualText aName,
-                               @Nullable final IMultilingualText aDescription,
-                               @Nonnull final GoMappingManager aGoMappingMgr)
+                            @Nonnull final IMultilingualText aName,
+                            @Nullable final IMultilingualText aDescription,
+                            @Nonnull final GoMappingManager aGoMappingMgr)
   {
     super (sID, aName, aDescription);
     m_aGoMappingMgr = ValueEnforcer.notNull (aGoMappingMgr, "GoMappingMgr");
