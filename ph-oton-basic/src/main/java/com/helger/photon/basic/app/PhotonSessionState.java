@@ -16,9 +16,16 @@
  */
 package com.helger.photon.basic.app;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -30,9 +37,12 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
  * @author Philip Helger
  * @since 6.1.0
  */
+@NotThreadSafe
 public final class PhotonSessionState extends AbstractSessionWebSingleton
 {
   private String m_sLastApplicationID;
+  private final Map <String, String> m_aSelectedMenuItems = new HashMap <> ();
+  private final Map <String, Locale> m_aSelectedLocales = new HashMap <> ();
 
   @Deprecated
   @UsedViaReflection
@@ -42,11 +52,23 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
   /**
    * @return The one and only instance for the current session. Never
    *         <code>null</code>.
+   * @see #getInstanceIfInstantiated()
    */
   @Nonnull
   public static PhotonSessionState getInstance ()
   {
     return getSessionSingleton (PhotonSessionState.class);
+  }
+
+  /**
+   * @return The one and only instance for the current session. It may be
+   *         <code>null</code> if this singleton was not yet instantiated.
+   * @see #getInstance()
+   */
+  @Nullable
+  public static PhotonSessionState getInstanceIfInstantiated ()
+  {
+    return getSessionSingletonIfInstantiated (PhotonSessionState.class);
   }
 
   /**
@@ -79,11 +101,58 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
     m_sLastApplicationID = sLastApplicationID;
   }
 
+  public void setSelectedMenuItemID (@Nonnull @Nonempty final String sApplicationID,
+                                     @Nonnull @Nonempty final String sMenuItemID)
+  {
+    ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
+    ValueEnforcer.notEmpty (sMenuItemID, "MenuItemID");
+    m_aSelectedMenuItems.put (sApplicationID, sMenuItemID);
+  }
+
+  @Nullable
+  public String getSelectedMenuItemID (@Nullable final String sApplicationID)
+  {
+    if (StringHelper.hasNoText (sApplicationID))
+      return null;
+    return m_aSelectedMenuItems.get (sApplicationID);
+  }
+
+  @Nullable
+  public static String getSelectedMenuItemIDOfCurrentSession (@Nullable final String sApplicationID)
+  {
+    final PhotonSessionState aSessionState = getInstanceIfInstantiated ();
+    return aSessionState == null ? null : aSessionState.getSelectedMenuItemID (sApplicationID);
+  }
+
+  public void setSelectedLocale (@Nonnull @Nonempty final String sApplicationID, @Nonnull final Locale aLocale)
+  {
+    ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
+    ValueEnforcer.notNull (aLocale, "Locale");
+    m_aSelectedLocales.put (sApplicationID, aLocale);
+  }
+
+  @Nullable
+  public Locale getSelectedLocale (@Nullable final String sApplicationID)
+  {
+    if (StringHelper.hasNoText (sApplicationID))
+      return null;
+    return m_aSelectedLocales.get (sApplicationID);
+  }
+
+  @Nullable
+  public static Locale getSelectedLocaleOfCurrentSession (@Nullable final String sApplicationID)
+  {
+    final PhotonSessionState aSessionState = getInstanceIfInstantiated ();
+    return aSessionState == null ? null : aSessionState.getSelectedLocale (sApplicationID);
+  }
+
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotEmpty ("LastApplicationID", m_sLastApplicationID)
+                            .append ("LastApplicationID", m_sLastApplicationID)
+                            .append ("SelectedMenuItems", m_aSelectedMenuItems)
+                            .append ("SelectedLocales", m_aSelectedLocales)
                             .toString ();
   }
 }

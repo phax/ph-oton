@@ -31,13 +31,13 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.attr.AttributeValueConverter;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.locale.country.CountryCache;
-import com.helger.commons.scope.ISessionScope;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
+import com.helger.photon.basic.app.PhotonSessionState;
 import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
@@ -45,8 +45,6 @@ import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.ISessionWebScope;
-import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * This class holds the per-request configuration settings.
@@ -59,9 +57,6 @@ import com.helger.web.scope.mgr.WebScopeManager;
  */
 public class RequestManager implements IRequestManager
 {
-  public static final String SESSION_ATTR_MENUITEM_PREFIX = "$ph-menuitem-";
-  public static final String SESSION_ATTR_LOCALE_PREFIX = "$ph-displaylocale-";
-
   private static final Logger s_aLogger = LoggerFactory.getLogger (RequestManager.class);
 
   private boolean m_bUsePaths = DEFAULT_USE_PATHS;
@@ -128,20 +123,6 @@ public class RequestManager implements IRequestManager
   }
 
   @Nonnull
-  @Nonempty
-  protected String getSessionAttrMenuItem ()
-  {
-    return SESSION_ATTR_MENUITEM_PREFIX + ScopeManager.getRequestApplicationID ();
-  }
-
-  @Nonnull
-  @Nonempty
-  protected String getSessionAttrLocale ()
-  {
-    return SESSION_ATTR_LOCALE_PREFIX + ScopeManager.getRequestApplicationID ();
-  }
-
-  @Nonnull
   private static Map <String, Object> _getParametersFromPath (@Nonnull final String sPath)
   {
     // Use paths for standard menu items
@@ -172,7 +153,8 @@ public class RequestManager implements IRequestManager
     return ret;
   }
 
-  public void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                              @Nonnull @Nonempty final String sApplicationID)
   {
     final Map <String, Object> aParams = getParametersFromRequest (aRequestScope);
 
@@ -186,8 +168,7 @@ public class RequestManager implements IRequestManager
       final IMenuObject aMenuObject = getMenuTree ().getMenuObjectOfID (sMenuItemID);
       if (aMenuObject instanceof IMenuItemPage && aMenuObject.matchesDisplayFilter ())
       {
-        final ISessionWebScope aSessionScope = WebScopeManager.getSessionScope (true);
-        aSessionScope.setAttribute (getSessionAttrMenuItem (), aMenuObject.getID ());
+        PhotonSessionState.getInstance ().setSelectedMenuItemID (sApplicationID, aMenuObject.getID ());
       }
     }
 
@@ -204,8 +185,7 @@ public class RequestManager implements IRequestManager
         if (getLocaleManager ().isSupportedLocale (aDisplayLocale))
         {
           // A valid locale was provided
-          final ISessionWebScope aSessionScope = WebScopeManager.getSessionScope (true);
-          aSessionScope.setAttribute (getSessionAttrLocale (), aDisplayLocale);
+          PhotonSessionState.getInstance ().setSelectedLocale (sApplicationID, aDisplayLocale);
         }
       }
       else
@@ -216,16 +196,12 @@ public class RequestManager implements IRequestManager
   @Nullable
   public IMenuItemPage getSessionMenuItem ()
   {
-    final ISessionWebScope aSessionScope = WebScopeManager.getSessionScope (false);
-    if (aSessionScope != null)
+    final String sMenuItemID = PhotonSessionState.getSelectedMenuItemIDOfCurrentSession (ScopeManager.getRequestApplicationID ());
+    if (sMenuItemID != null)
     {
-      final String sMenuItemID = aSessionScope.getAttributeAsString (getSessionAttrMenuItem ());
-      if (sMenuItemID != null)
-      {
-        final IMenuObject aMenuObj = getMenuTree ().getMenuObjectOfID (sMenuItemID);
-        if (aMenuObj instanceof IMenuItemPage)
-          return (IMenuItemPage) aMenuObj;
-      }
+      final IMenuObject aMenuObj = getMenuTree ().getMenuObjectOfID (sMenuItemID);
+      if (aMenuObj instanceof IMenuItemPage)
+        return (IMenuItemPage) aMenuObj;
     }
     return null;
   }
@@ -264,24 +240,25 @@ public class RequestManager implements IRequestManager
     return getRequestMenuItem ().getID ();
   }
 
+  @Nullable
+  public Locale getSessionDisplayLocale ()
+  {
+    // Was a request locale set in session scope?
+    final Locale aSessionDisplayLocale = PhotonSessionState.getSelectedLocaleOfCurrentSession (ScopeManager.getRequestApplicationID ());
+    if (aSessionDisplayLocale != null)
+      return aSessionDisplayLocale;
+
+    // Nothing specified - use application default locale
+    return getLocaleManager ().getDefaultLocale ();
+  }
+
   @Nonnull
   public Locale getRequestDisplayLocale ()
   {
-    // Was a request locale set in session scope?
-    final ISessionScope aSessionScope = WebScopeManager.getSessionScope (false);
-    if (aSessionScope != null)
-    {
-      final Locale aSessionDisplayLocale = aSessionScope.getCastedAttribute (getSessionAttrLocale ());
-      if (aSessionDisplayLocale != null)
-        return aSessionDisplayLocale;
-    }
-
-    // Nothing specified - use application default locale
-    final ILocaleManager aLocaleManager = getLocaleManager ();
-    final Locale aDefaultLocale = aLocaleManager.getDefaultLocale ();
-    if (aDefaultLocale == null)
-      throw new IllegalStateException ("No default locale is specified in " + aLocaleManager);
-    return aDefaultLocale;
+    final Locale aLocale = getSessionDisplayLocale ();
+    if (aLocale == null)
+      throw new IllegalStateException ("No session locale and no default locale is available");
+    return aLocale;
   }
 
   @Nonnull

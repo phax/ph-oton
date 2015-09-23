@@ -65,7 +65,7 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
   protected void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Run default request initialization (menu item and locale)
-    ApplicationRequestManager.getRequestMgr ().onRequestBegin (aRequestScope);
+    ApplicationRequestManager.getRequestMgr ().onRequestBegin (aRequestScope, getApplicationID ());
 
     // Invoke all "request begin" listener
     for (final IApplicationRequestListenerSPI aListener : m_aListeners)

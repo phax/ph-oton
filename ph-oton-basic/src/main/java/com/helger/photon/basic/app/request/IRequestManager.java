@@ -70,8 +70,11 @@ public interface IRequestManager
    *
    * @param aRequestScope
    *        The request scope that just begun. May not be <code>null</code>.
+   * @param sApplicationID
+   *        The current application ID
    */
-  void onRequestBegin (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  void onRequestBegin (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+                       @Nonnull @Nonempty String sApplicationID);
 
   /**
    * @return The ID of the last requested menu item, or <code>null</code> if the
@@ -96,6 +99,16 @@ public interface IRequestManager
    */
   @Nonnull
   String getRequestMenuItemID ();
+
+  /**
+   * Get the locale stored in the session. If neither request nor session data
+   * is present, the default locale is returned.
+   *
+   * @return May be <code>null</code> if neither session locale nor default
+   *         locale is present.
+   */
+  @Nullable
+  Locale getSessionDisplayLocale ();
 
   /**
    * Get the locale to be used for this request. If no parameter is present, the
