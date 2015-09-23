@@ -53,6 +53,7 @@ public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContex
   protected static enum EText implements IHasDisplayText
   {
    MSG_APPID ("Application ID", "Application ID"),
+   MSG_IS_DEFAULT (" [Standard]", " [default]"),
    MSG_PATH ("Pfad", "Path");
 
     @Nonnull
@@ -103,10 +104,14 @@ public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContex
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_APPID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_PATH.getDisplayText (aDisplayLocale))).setID (getID ());
 
+    final String sDefaultAppID = PhotonPathMapper.getDefaultApplicationID ();
     for (final Map.Entry <String, String> aEntry : PhotonPathMapper.getApplicationIDToPathMap ().entrySet ())
     {
+      final String sAppID = aEntry.getKey ();
+      final boolean bIsDefault = sAppID.equals (sDefaultAppID);
+
       final HCRow aRow = aTable.addBodyRow ();
-      aRow.addCell (aEntry.getKey ());
+      aRow.addCell (sAppID + (bIsDefault ? EText.MSG_IS_DEFAULT.getDisplayText (aDisplayLocale) : ""));
       aRow.addCell (aEntry.getValue ());
     }
     aNodeList.addChild (aTable);

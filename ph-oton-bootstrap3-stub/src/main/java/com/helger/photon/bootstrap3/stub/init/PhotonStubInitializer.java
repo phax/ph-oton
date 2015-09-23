@@ -142,5 +142,6 @@ public final class PhotonStubInitializer
     // Add mapping from Application ID to path
     PhotonPathMapper.setPathMapping (CApplication.APP_ID_PUBLIC, AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
     PhotonPathMapper.setPathMapping (CApplication.APP_ID_SECURE, AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
+    PhotonPathMapper.setDefaultApplicationID (CApplication.APP_ID_PUBLIC);
   }
 }

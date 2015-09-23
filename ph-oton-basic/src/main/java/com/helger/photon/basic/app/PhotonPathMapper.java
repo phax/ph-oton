@@ -45,6 +45,8 @@ public final class PhotonPathMapper
 
   @GuardedBy ("s_aRWLock")
   private static Map <String, String> s_aMap = new HashMap <> ();
+  @GuardedBy ("s_aRWLock")
+  private static String s_sDefaultAppID;
 
   private PhotonPathMapper ()
   {}
@@ -79,7 +81,9 @@ public final class PhotonPathMapper
   }
 
   /**
-   * Remove the path mapped to the specified application ID
+   * Remove the path mapped to the specified application ID. If the specified
+   * application ID is the default one, the default application ID is set to
+   * <code>null</code>.
    *
    * @param sApplicationID
    *        Application ID to be removed. May be <code>null</code>.
@@ -88,18 +92,25 @@ public final class PhotonPathMapper
   @Nonnull
   public static EChange removePathMapping (@Nullable final String sApplicationID)
   {
-    if (StringHelper.hasNoText (sApplicationID))
-      return EChange.UNCHANGED;
-
-    s_aRWLock.writeLock ().lock ();
-    try
+    if (StringHelper.hasText (sApplicationID))
     {
-      return EChange.valueOf (s_aMap.remove (sApplicationID) != null);
+      s_aRWLock.writeLock ().lock ();
+      try
+      {
+        if (s_aMap.remove (sApplicationID) != null)
+        {
+          // Check if we deleted the default
+          if (sApplicationID.equals (s_sDefaultAppID))
+            s_sDefaultAppID = null;
+          return EChange.CHANGED;
+        }
+      }
+      finally
+      {
+        s_aRWLock.writeLock ().unlock ();
+      }
     }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    return EChange.UNCHANGED;
   }
 
   /**
@@ -143,5 +154,90 @@ public final class PhotonPathMapper
     {
       s_aRWLock.readLock ().unlock ();
     }
+  }
+
+  /**
+   * Set the default application ID. This must be called AFTER the path mapping
+   * was registered.
+   *
+   * @param sApplicationID
+   *        The application ID to set as the default. May neither be
+   *        <code>null</code> nor empty.
+   * @see #setPathMapping(String, String)
+   * @see #getDefaultApplicationID()
+   */
+  public static void setDefaultApplicationID (@Nonnull @Nonempty final String sApplicationID)
+  {
+    ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
+
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (!s_aMap.containsKey (sApplicationID))
+        throw new IllegalArgumentException ("The passed application ID '" + sApplicationID + "' is unknown!");
+      s_sDefaultAppID = sApplicationID;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  /**
+   * @return The default application ID. May be <code>null</code> if not set.
+   * @see #setDefaultApplicationID(String)
+   */
+  @Nullable
+  public static String getDefaultApplicationID ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_sDefaultAppID;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Get the path mapped to the default application ID
+   *
+   * @return <code>null</code> if no default application ID is set. A path
+   *         starting with a slash but not ending with a slash otherwise.
+   * @see #getDefaultApplicationID()
+   */
+  @Nullable
+  public static String getPathOfDefaultApplicationID ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aMap.get (s_sDefaultAppID);
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Get the path mapped to the specified application ID or (if no such
+   * application ID is present) return the path of the default application ID
+   *
+   * @param sApplicationID
+   *        Application ID to check. May be <code>null</code>.
+   * @return <code>null</code> if no mapping was found and no default path is
+   *         specified. A path starting with a slash but not ending with a slash
+   *         otherwise.
+   * @see #getPathOfApplicationID(String)
+   * @see #getPathOfDefaultApplicationID()
+   */
+  @Nullable
+  public static String getPathOfApplicationIDOrDefault (@Nullable final String sApplicationID)
+  {
+    final String sPath = getPathOfApplicationID (sApplicationID);
+    return sPath != null ? sPath : getPathOfDefaultApplicationID ();
   }
 }
