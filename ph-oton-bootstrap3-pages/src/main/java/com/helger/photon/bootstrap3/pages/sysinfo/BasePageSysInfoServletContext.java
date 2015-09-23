@@ -103,15 +103,15 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
   }
 
   public BasePageSysInfoServletContext (@Nonnull @Nonempty final String sID,
-                                           @Nonnull final String sName,
-                                           @Nullable final String sDescription)
+                                        @Nonnull final String sName,
+                                        @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
   public BasePageSysInfoServletContext (@Nonnull @Nonempty final String sID,
-                                           @Nonnull final IMultilingualText aName,
-                                           @Nullable final IMultilingualText aDescription)
+                                        @Nonnull final IMultilingualText aName,
+                                        @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -151,7 +151,13 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
           aInitParams.add (aEntry.getKey () + "=" + aEntry.getValue ());
         aRow.addCell (HCExtHelper.list2divList (aInitParams));
 
-        aRow.addCell (HCExtHelper.list2divList (aRegistration.getMappings ()));
+        final HCNodeList aURLPatterns = new HCNodeList ();
+        for (final String sText : aRegistration.getMappings ())
+          if (sText.length () == 0)
+            aURLPatterns.addChild (new HCDiv ().addChild (new HCEM ().addChild (EText.MSG_ROOT_MAPPING.getDisplayText (aDisplayLocale))));
+          else
+            aURLPatterns.addChild (new HCDiv ().addChild (sText));
+        aRow.addCell (aURLPatterns);
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
@@ -187,6 +193,7 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
             aURLPatterns.addChild (new HCDiv ().addChild (new HCEM ().addChild (EText.MSG_ROOT_MAPPING.getDisplayText (aDisplayLocale))));
           else
             aURLPatterns.addChild (new HCDiv ().addChild (sText));
+
         aRow.addCell (aURLPatterns);
       }
 
