@@ -18,6 +18,11 @@
 
 -->
 <changelog xmlns="http://www.helger.com/xsd/changelog/1.0" version="1.0" component="ph-oton-uicore">
+  <entry date="2015-09-23" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to Datatables 1.10.9</text>
+    </change>
+  </entry>
   <release date="2015-09-14" version="6.0.0" />
   <entry date="2015-08-15" category="tech" action="update">
     <change>

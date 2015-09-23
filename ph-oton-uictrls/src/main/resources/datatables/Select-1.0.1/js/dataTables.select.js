@@ -1,4 +1,4 @@
-/*! Select for DataTables 1.0.0
+/*! Select for DataTables 1.0.1
  * 2015 SpryMedia Ltd - datatables.net/license/mit
  */
 
@@ -6,7 +6,7 @@
  * @summary     Select for DataTables
  * @description A collection of API methods, events and buttons for DataTables
  *   that provides selection options of the items in a DataTable
- * @version     1.0.0
+ * @version     1.0.1
  * @file        dataTables.select.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
  * @contact     datatables.net/forums
@@ -29,7 +29,7 @@ var factory = function( $, DataTable ) {
 
 // Version information for debugger
 DataTable.select = {};
-DataTable.select.version = '1.0.0';
+DataTable.select.version = '1.0.1';
 
 /*
 
@@ -319,7 +319,7 @@ function info ( api )
 {
 	var ctx = api.settings()[0];
 
-	if ( ! ctx._select.info ) {
+	if ( ! ctx._select.info || ! ctx.aanFeatures.i ) {
 		return;
 	}
 
@@ -868,7 +868,7 @@ $.extend( DataTable.ext.buttons, {
 
 			// .DT namespace listeners are removed by DataTables automatically
 			// on table destroy
-			dt.on( 'select.dt.DT deselect.dt.DT', function () {
+			dt.on( 'draw.dt.DT select.dt.DT deselect.dt.DT', function () {
 				var enable = that.rows( { selected: true } ).any() ||
 				             that.columns( { selected: true } ).any() ||
 				             that.cells( { selected: true } ).any();
@@ -885,7 +885,7 @@ $.extend( DataTable.ext.buttons, {
 		init: function ( dt, button, config ) {
 			var that = this;
 
-			dt.on( 'select.dt.DT deselect.dt.DT', function () {
+			dt.on( 'draw.dt.DT select.dt.DT deselect.dt.DT', function () {
 				var count = dt.rows( { selected: true } ).flatten().length +
 				            dt.columns( { selected: true } ).flatten().length +
 				            dt.cells( { selected: true } ).flatten().length;
