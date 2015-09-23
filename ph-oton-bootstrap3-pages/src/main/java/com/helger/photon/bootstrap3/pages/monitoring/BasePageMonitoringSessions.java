@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.joda.time.LocalDateTime;
+import org.joda.time.Period;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.Nonempty;
@@ -42,6 +43,7 @@ import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
+import com.helger.datetime.format.PeriodFormatMultilingual;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -57,7 +59,6 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.UITextFormatter;
-import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
@@ -67,6 +68,7 @@ import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.validation.error.FormErrors;
 import com.helger.web.scope.ISessionWebScope;
+import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * Show information on all active sessions
@@ -86,6 +88,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
    MSG_ATTRCOUNT ("Attribute", "Attributes"),
    MSG_LAST_ACCESS ("Letzter Zugriff", "Last access"),
    MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
+   MSG_SCOPE_MY_SESSION ("Meine Session?", "My session?"),
    MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
    MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
    MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
@@ -93,13 +96,15 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
    MSG_SCOPE_ATTRS ("Attribute", "Attributes"),
    MSG_SCOPE_CREATION_DT ("Erstellungszeit", "Creation date time"),
    MSG_SCOPE_LASTACCESS_DT ("Letzter Zugriff", "Last access date time"),
+   MSG_SCOPE_SESSION_AGE ("Session-Alter", "Session age"),
    MSG_SCOPE_SESSION_TIMEOUT ("Session Timeout", "Session timeout"),
    MSG_SCOPE_SESSION_TIMEOUT_TEXT ("{0} Sekunden (={1} Minuten)", "{0} seconds (={1} minutes)"),
    MSG_SCOPE_EXPIRATION_DT ("Geplanter Ablauf", "Planned expiration date time"),
    MSG_SCOPE_IS_NEW ("Neue Session?", "Is new session?"),
    MSG_NAME ("Name", "Wert"),
    MSG_TYPE ("Typ", "Type"),
-   MSG_VALUE ("Wert", "Value");
+   MSG_VALUE ("Wert", "Value"),
+   MSG_MY_SESSION (" [ich]", " [me]");
 
     private final IMultilingualText m_aTP;
 
@@ -168,9 +173,13 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList ret = new HCNodeList ();
 
+    final boolean bIsMySession = aScope.getID ().equals (WebScopeManager.getSessionScope ().getID ());
     final BootstrapViewForm aTableScope = ret.addAndReturnChild (new BootstrapViewForm ());
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ID.getDisplayText (aDisplayLocale))
                                                        .setCtrl (aScope.getID ()));
+    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_MY_SESSION.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (EPhotonCoreText.getYesOrNo (bIsMySession,
+                                                                                             aDisplayLocale)));
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
                                                        .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (),
                                                                                              aDisplayLocale)));
@@ -195,8 +204,12 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                                          .setCtrl (PDTToString.getAsString (aCreationDT,
                                                                                             aDisplayLocale)));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_LASTACCESS_DT.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (PDTToString.getAsString (aLastAccessDT,
-                                                                                            aDisplayLocale)));
+                                .setCtrl (PDTToString.getAsString (aLastAccessDT,
+                                                                   aDisplayLocale)));
+      aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_AGE.getDisplayText (aDisplayLocale))
+                                                         .setCtrl (PeriodFormatMultilingual.getFormatterLong (aDisplayLocale)
+                                                                                           .print (new Period (aCreationDT,
+                                                                                                               PDTFactory.getCurrentLocalDateTime ()))));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_TIMEOUT.getDisplayText (aDisplayLocale))
                                                          .setCtrl (EText.MSG_SCOPE_SESSION_TIMEOUT_TEXT.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                 Long.toString (aWebScope.getMaxInactiveInterval ()),
@@ -276,7 +289,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     // Refresh button
-    final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
+    final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
     aToolbar.addButton (EPhotonCoreText.BACK_TO_OVERVIEW.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.BACK_TO_LIST);
@@ -285,7 +298,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final ITabBox <?> aTabBox = new BootstrapTabBox ();
+    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
     aTabBox.addTab (EText.MSG_SESSION.getDisplayText (aDisplayLocale), _getSessionScopeInfo (aWPEC, aScope));
     for (final ISessionApplicationScope aSessionAppScope : CollectionHelper.getSortedByKey (aScope.getAllSessionApplicationScopes ())
                                                                            .values ())
@@ -334,14 +347,20 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                                                                                                           aDisplayLocale)
                                                                                                          .setInitialSorting (ESortOrder.DESCENDING),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
+
+    final String sMySessionID = WebScopeManager.getSessionScope ().getID ();
+
     for (final ISessionScope aSessionScope : ScopeSessionManager.getInstance ().getAllSessionScopes ())
     {
       final ISessionWebScope aWebScope = aSessionScope instanceof ISessionWebScope ? (ISessionWebScope) aSessionScope
                                                                                    : null;
       final ISimpleURL aViewLink = createViewURL (aWPEC, aSessionScope);
+      final boolean bIsMySession = aSessionScope.getID ().equals (sMySessionID);
 
       final HCRow aRow = aTable.addBodyRow ();
-      aRow.addCell (new HCA (aViewLink).addChild (aSessionScope.getID ()));
+      aRow.addCell (new HCA (aViewLink).addChild (aSessionScope.getID () +
+                                                  (bIsMySession ? EText.MSG_MY_SESSION.getDisplayText (aDisplayLocale)
+                                                                : "")));
       aRow.addCell (Integer.toString (aSessionScope.getAttributeCount ()));
       if (aWebScope != null)
         aRow.addCell (PDTToString.getAsString (PDTFactory.createLocalDateTimeFromMillis (aWebScope.getLastAccessedTime ()),
