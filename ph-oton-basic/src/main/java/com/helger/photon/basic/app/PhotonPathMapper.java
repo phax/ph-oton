@@ -157,6 +157,23 @@ public final class PhotonPathMapper
   }
 
   /**
+   * @return <code>true</code> if mappings are already defined,
+   *         <code>false</code> otherwise.
+   */
+  public static boolean containsMappings ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return !s_aMap.isEmpty ();
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
    * Set the default application ID. This must be called AFTER the path mapping
    * was registered.
    *
