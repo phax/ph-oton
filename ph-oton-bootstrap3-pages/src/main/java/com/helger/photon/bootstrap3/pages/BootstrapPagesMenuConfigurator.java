@@ -34,6 +34,7 @@ import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoAjaxFunctions;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoChangeLogs;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoConfigurationFiles;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoGo;
+import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoPathMapper;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoScheduler;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoScopes;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoServletStatus;
@@ -105,6 +106,7 @@ public final class BootstrapPagesMenuConfigurator
   public static final String MENU_ADMIN_APPINFO_CHANGELOGS = "admin_appinfo_changelog";
   public static final String MENU_ADMIN_APPINFO_CONFIGFILES = "admin_appinfo_configfiles";
   public static final String MENU_ADMIN_APPINFO_GO = "admin_appinfo_go";
+  public static final String MENU_ADMIN_APPINFO_PATH_MAPPER = "admin_appinfo_pathmapper";
   public static final String MENU_ADMIN_APPINFO_SCHEDULER = "admin_appinfo_scheduler";
   public static final String MENU_ADMIN_APPINFO_SCOPES = "admin_appinfo_scopes";
   public static final String MENU_ADMIN_APPINFO_SERVLETSTATUS = "admin_appinfo_servletstatus";
@@ -282,6 +284,8 @@ public final class BootstrapPagesMenuConfigurator
       aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoGo <WPECTYPE> (MENU_ADMIN_APPINFO_GO, aGoMappingMgr))
                .setDisplayFilter (aDisplayFilter);
     }
+    aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoPathMapper <WPECTYPE> (MENU_ADMIN_APPINFO_PATH_MAPPER))
+             .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoScheduler <WPECTYPE> (MENU_ADMIN_APPINFO_SCHEDULER))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoScopes <WPECTYPE> (MENU_ADMIN_APPINFO_SCOPES))

@@ -70,6 +70,7 @@ public enum EWebPageText implements IHasDisplayText,IHasDisplayTextWithArgs
  PAGE_NAME_APPINFO_CHANGELOGS ("Änderungshistorie", "Change logs"),
  PAGE_NAME_APPINFO_CONFIG_FILES ("Konfigurationsdateien", "Configuration files"),
  PAGE_NAME_APPINFO_GO ("Go Mappings", "Go mappings"),
+ PAGE_NAME_APPINFO_PATH_MAPPER ("AppID-Pfad-Mapping", "AppID path mapping"),
  PAGE_NAME_APPINFO_SCHEDULER ("Geplante Tasks", "Scheduled actions"),
  PAGE_NAME_APPINFO_SCOPES ("Kontexte", "Scopes"),
  PAGE_NAME_APPINFO_SERVLETSTATUS ("Servlet Status", "Servlet status"),

@@ -27,13 +27,17 @@ import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
 import com.helger.html.hc.impl.HCCustomizerList;
 import com.helger.html.meta.EStandardMetaElement;
+import com.helger.photon.basic.app.PhotonPathMapper;
 import com.helger.photon.bootstrap3.EBootstrapCSSPathProvider;
 import com.helger.photon.bootstrap3.EBootstrapJSPathProvider;
 import com.helger.photon.bootstrap3.servlet.BootstrapCustomizer;
+import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.app.html.PhotonMetaElements;
 import com.helger.photon.core.requesttrack.RequestTracker;
+import com.helger.photon.core.servlet.AbstractPublicApplicationServlet;
+import com.helger.photon.core.servlet.AbstractSecureApplicationServlet;
 import com.helger.photon.uicore.EUICoreCSSPathProvider;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.photon.uicore.icon.DefaultIcons;
@@ -134,5 +138,9 @@ public final class PhotonStubInitializer
     // Never use a thousand separator in HCAutoNumeric fields because of
     // parsing problems
     AbstractHCAutoNumeric.setDefaultThousandSeparator ("");
+
+    // Add mapping from Application ID to path
+    PhotonPathMapper.setPathMapping (CApplication.APP_ID_PUBLIC, AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
+    PhotonPathMapper.setPathMapping (CApplication.APP_ID_SECURE, AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
   }
 }
