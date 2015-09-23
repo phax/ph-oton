@@ -62,8 +62,8 @@ public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionCon
   {
    MSG_SERVLET ("Servlet Klasse", "Servlet class"),
    MSG_STATUS ("Status", "Status"),
-   MSG_INVOCATION_COUNT ("Aufrufe", "Inocations"),
-   MSG_INIT_DT ("Initialisiert", "Initialzed");
+   MSG_INVOCATION_COUNT ("Aufrufe", "Invocations"),
+   MSG_INIT_DT ("Initialisiert", "Initialized");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -91,15 +91,15 @@ public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionCon
   }
 
   public BasePageAppInfoServletStatus (@Nonnull @Nonempty final String sID,
-                                          @Nonnull final String sName,
-                                          @Nullable final String sDescription)
+                                       @Nonnull final String sName,
+                                       @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
   public BasePageAppInfoServletStatus (@Nonnull @Nonempty final String sID,
-                                          @Nonnull final IMultilingualText aName,
-                                          @Nullable final IMultilingualText aDescription)
+                                       @Nonnull final IMultilingualText aName,
+                                       @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
