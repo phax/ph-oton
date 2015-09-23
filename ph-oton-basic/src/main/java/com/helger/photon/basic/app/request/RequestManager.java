@@ -37,6 +37,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
+import com.helger.photon.basic.app.PhotonPathMapper;
 import com.helger.photon.basic.app.PhotonSessionState;
 import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
 import com.helger.photon.basic.app.locale.ILocaleManager;
@@ -277,7 +278,20 @@ public class RequestManager implements IRequestManager
   public SimpleURL getLinkToMenuItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                       @Nonnull final String sMenuItemID)
   {
-    final String sPath = aRequestScope.getContextAndServletPath ();
+    String sPath;
+    if (true)
+    {
+      final String sAppID = PhotonSessionState.getInstance ().getLastApplicationID ();
+      final String sServletPath = PhotonPathMapper.getPathOfApplicationIDOrDefault (sAppID);
+      if (sServletPath == null)
+        throw new IllegalStateException ("Failed to determine the current servlet path. Please make sure you initialized PhotonPathMapper correctly!");
+      sPath = aRequestScope.getContextPath () + sServletPath + "/";
+    }
+    else
+    {
+      sPath = aRequestScope.getContextAndServletPath ();
+    }
+
     if (m_bUsePaths)
     {
       // Encode menuitem parameter into path
