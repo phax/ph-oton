@@ -102,6 +102,7 @@ public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor 
     final FeedGenerator aGenerator = new FeedGenerator ("urn:ph-oton-core");
     aGenerator.setDescription (getFeedDescription ());
     aFeed.setGenerator (aGenerator);
+    // Using the full context and servlet path is OK here
     aFeed.addLink (new FeedLink (aRequestScope.getFullContextAndServletPath () + m_sFeedID, FeedLink.REL_SELF));
 
     // Abstract filling
