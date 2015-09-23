@@ -519,20 +519,44 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
               switch (eActionType)
               {
                 case CREATE:
-                  onRecoveryCreate (aElement);
-                  bPerformedAtLeastOnRecovery = true;
-                  AuditHelper.onAuditExecuteSuccess ("recovery", "create", aElement);
+                  try
+                  {
+                    onRecoveryCreate (aElement);
+                    bPerformedAtLeastOnRecovery = true;
+                    AuditHelper.onAuditExecuteSuccess ("wal-recovery", "create", aElement);
+                  }
+                  catch (final RuntimeException ex)
+                  {
+                    AuditHelper.onAuditExecuteFailure ("wal-recovery", "create", aElement, ex);
+                    throw ex;
+                  }
                   break;
                 case UPDATE:
-                  onRecoveryUpdate (aElement);
-                  bPerformedAtLeastOnRecovery = true;
-                  AuditHelper.onAuditExecuteSuccess ("recovery", "update", aElement);
-                  break;
+                  try
+                  {
+                    onRecoveryUpdate (aElement);
+                    bPerformedAtLeastOnRecovery = true;
+                    AuditHelper.onAuditExecuteSuccess ("wal-recovery", "update", aElement);
+                    break;
+                  }
+                  catch (final RuntimeException ex)
+                  {
+                    AuditHelper.onAuditExecuteFailure ("wal-recovery", "update", aElement, ex);
+                    throw ex;
+                  }
                 case DELETE:
-                  onRecoveryDelete (aElement);
-                  bPerformedAtLeastOnRecovery = true;
-                  AuditHelper.onAuditExecuteSuccess ("recovery", "delete", aElement);
-                  break;
+                  try
+                  {
+                    onRecoveryDelete (aElement);
+                    bPerformedAtLeastOnRecovery = true;
+                    AuditHelper.onAuditExecuteSuccess ("wal-recovery", "delete", aElement);
+                    break;
+                  }
+                  catch (final RuntimeException ex)
+                  {
+                    AuditHelper.onAuditExecuteFailure ("wal-recovery", "delete", aElement, ex);
+                    throw ex;
+                  }
                 default:
                   throw new IllegalStateException ("Unsupported action type provided: " + eActionType);
               }
