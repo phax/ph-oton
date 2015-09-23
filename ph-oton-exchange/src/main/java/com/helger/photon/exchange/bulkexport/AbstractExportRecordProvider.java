@@ -16,7 +16,12 @@
  */
 package com.helger.photon.exchange.bulkexport;
 
+import java.util.ArrayList;
+
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
+
+import com.helger.commons.string.ToStringGenerator;
 
 /**
  * A special implementation of {@link IExportRecordProvider} delivering an empty
@@ -25,5 +30,29 @@ import javax.annotation.concurrent.Immutable;
  * @author Philip Helger
  */
 @Immutable
-public class EmptyExportRecordProvider extends AbstractExportRecordProvider
-{}
+public abstract class AbstractExportRecordProvider implements IExportRecordProvider
+{
+  @Nonnull
+  public Iterable <? extends IExportRecord> getHeaderRecords ()
+  {
+    return new ArrayList <IExportRecord> ();
+  }
+
+  @Nonnull
+  public Iterable <? extends IExportRecord> getBodyRecords ()
+  {
+    return new ArrayList <IExportRecord> ();
+  }
+
+  @Nonnull
+  public Iterable <? extends IExportRecord> getFooterRecords ()
+  {
+    return new ArrayList <IExportRecord> ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).toString ();
+  }
+}

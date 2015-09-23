@@ -64,21 +64,21 @@ public final class ExporterExcelTest
                                            new NonBlockingByteArrayOutputStream ())
                            .isSuccess ());
       assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (CollectionHelper.newList (aRecordWithAllTypes,
-                                                                                                      aRecordWithAllTypes,
-                                                                                                      aEmptyRecord)),
+                                                                                                       aRecordWithAllTypes,
+                                                                                                       aEmptyRecord)),
                                            new NonBlockingByteArrayOutputStream ())
                            .isSuccess ());
       assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (null,
                                                                              CollectionHelper.newList (aRecordWithAllTypes,
-                                                                                                      aRecordWithAllTypes,
-                                                                                                      aEmptyRecord),
+                                                                                                       aRecordWithAllTypes,
+                                                                                                       aEmptyRecord),
                                                                              aRecordWithAllTypes),
                                            new NonBlockingByteArrayOutputStream ())
                            .isSuccess ());
       assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (aRecordWithAllTypes,
                                                                              CollectionHelper.newList (aRecordWithAllTypes,
-                                                                                                      aRecordWithAllTypes,
-                                                                                                      aEmptyRecord),
+                                                                                                       aRecordWithAllTypes,
+                                                                                                       aEmptyRecord),
                                                                              aRecordWithAllTypes),
                                            new NonBlockingByteArrayOutputStream ())
                            .isSuccess ());
