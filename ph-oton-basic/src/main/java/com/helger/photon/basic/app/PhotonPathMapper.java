@@ -114,6 +114,31 @@ public final class PhotonPathMapper
   }
 
   /**
+   * Remove all contained path mappings (clearing).
+   * 
+   * @return {@link EChange#CHANGED} if at least one path was removed,
+   *         {@link EChange#UNCHANGED} otherwise.
+   */
+  @Nonnull
+  public static EChange removeAllPathMappings ()
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (s_aMap.isEmpty ())
+        return EChange.UNCHANGED;
+
+      s_aMap.clear ();
+      s_sDefaultAppID = null;
+      return EChange.CHANGED;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  /**
    * Get the path mapped to the specified application ID
    *
    * @param sApplicationID
