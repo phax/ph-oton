@@ -214,7 +214,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                          @Nonnull final String sMenuItemID,
                                          @Nonnull final IHasID <String> aCurObject)
   {
-    return createViewURL (aLEC, sMenuItemID, aCurObject.getID ());
+    return createViewURL (aLEC, sMenuItemID, aCurObject, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                         @Nonnull final String sMenuItemID,
+                                         @Nonnull final IHasID <String> aCurObject,
+                                         @Nullable final Map <String, String> aParams)
+  {
+    return createViewURL (aLEC, sMenuItemID, aCurObject.getID (), aParams);
   }
 
   @Nonnull
@@ -222,23 +231,51 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                          @Nonnull final String sMenuItemID,
                                          @Nonnull final String sObjectID)
   {
+    return createViewURL (aLEC, sMenuItemID, sObjectID, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                         @Nonnull final String sMenuItemID,
+                                         @Nonnull final String sObjectID,
+                                         @Nullable final Map <String, String> aParams)
+  {
     return aLEC.getLinkToMenuItem (sMenuItemID)
                .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW)
-               .add (CPageParam.PARAM_OBJECT, sObjectID);
+               .add (CPageParam.PARAM_OBJECT, sObjectID)
+               .addAll (aParams);
   }
 
   @Nonnull
   public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
                                          @Nonnull final IHasID <String> aCurObject)
   {
-    return createViewURL (aLEC, aCurObject.getID ());
+    return createViewURL (aLEC, aCurObject, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                         @Nonnull final IHasID <String> aCurObject,
+                                         @Nullable final Map <String, String> aParams)
+  {
+    return createViewURL (aLEC, aCurObject.getID (), aParams);
   }
 
   @Nonnull
   public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final String sObjectID)
   {
-    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW).add (CPageParam.PARAM_OBJECT,
-                                                                                          sObjectID);
+    return createViewURL (aLEC, sObjectID, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                         @Nonnull final String sObjectID,
+                                         @Nullable final Map <String, String> aParams)
+  {
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW)
+               .add (CPageParam.PARAM_OBJECT, sObjectID)
+               .addAll (aParams);
   }
 
   @Nonnull
