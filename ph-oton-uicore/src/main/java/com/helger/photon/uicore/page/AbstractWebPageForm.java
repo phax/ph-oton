@@ -333,8 +333,18 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   public static SimpleURL createCopyURL (@Nonnull final ILayoutExecutionContext aLEC,
                                          @Nonnull final IHasID <String> aCurObject)
   {
-    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_COPY).add (CPageParam.PARAM_OBJECT,
-                                                                                          aCurObject.getID ());
+    return createCopyURL (aLEC, aCurObject, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static SimpleURL createCopyURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                         @Nonnull final IHasID <String> aCurObject,
+                                         @Nullable final Map <String, String> aParams)
+  {
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_COPY)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ())
+               .addAll (aParams);
   }
 
   @Nonnull
@@ -342,7 +352,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                     @Nonnull final IHasID <String> aCurObject,
                                     @Nullable final String sTitle)
   {
-    final ISimpleURL aCopyURL = createCopyURL (aLEC, aCurObject);
+    return createCopyLink (aLEC, aCurObject, sTitle, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                    @Nonnull final IHasID <String> aCurObject,
+                                    @Nullable final String sTitle,
+                                    @Nullable final Map <String, String> aParams)
+  {
+    final ISimpleURL aCopyURL = createCopyURL (aLEC, aCurObject, aParams);
     return new HCA (aCopyURL).setTitle (sTitle).addChild (EDefaultIcon.COPY.getAsNode ());
   }
 
@@ -372,8 +391,18 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   public static SimpleURL createDeleteURL (@Nonnull final ILayoutExecutionContext aLEC,
                                            @Nonnull final IHasID <String> aCurObject)
   {
-    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE).add (CPageParam.PARAM_OBJECT,
-                                                                                            aCurObject.getID ());
+    return createDeleteURL (aLEC, aCurObject, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static SimpleURL createDeleteURL (@Nonnull final ILayoutExecutionContext aLEC,
+                                           @Nonnull final IHasID <String> aCurObject,
+                                           @Nullable final Map <String, String> aParams)
+  {
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ())
+               .addAll (aParams);
   }
 
   @Nonnull
@@ -381,7 +410,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                       @Nonnull final IHasID <String> aCurObject,
                                       @Nullable final String sTitle)
   {
-    final ISimpleURL aURL = createDeleteURL (aLEC, aCurObject);
+    return createDeleteLink (aLEC, aCurObject, sTitle, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static HCA createDeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                      @Nonnull final IHasID <String> aCurObject,
+                                      @Nullable final String sTitle,
+                                      @Nullable final Map <String, String> aParams)
+  {
+    final ISimpleURL aURL = createDeleteURL (aLEC, aCurObject, aParams);
     return new HCA (aURL).setTitle (sTitle).addChild (EDefaultIcon.DELETE.getAsNode ());
   }
 
