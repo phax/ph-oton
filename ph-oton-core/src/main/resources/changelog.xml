@@ -18,8 +18,14 @@
 
 -->
 <changelog xmlns="http://www.helger.com/xsd/changelog/1.0" version="1.0" component="ph-oton-core">
+  <release date="2015-10-02" version="6.1.0" />
+  <entry date="2015-09-22" category="tech" action="update">
+    <change>
+      <text locale="en">Removed actions and therefore only having ajax functions left. They are more flexible now.</text>
+    </change>
+  </entry>
   <release date="2015-09-14" version="6.0.0" />
-  <entry date="2015-03-27" category="tech" action="update">
+  <entry date="2015-05-27" category="tech" action="update">
     <change>
       <text locale="en">Renamed from ph-webbasics to ph-oton-core</text>
     </change>
