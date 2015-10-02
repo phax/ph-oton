@@ -104,6 +104,9 @@
           <excludes>
             <exclude>src/main/resources/schemas/servlet/**</exclude>
             <exclude>src/test/resources/res/**</exclude>
+            <exclude>**/NOTICE</exclude>
+            <exclude>**/LICENSE</exclude>
+            <exclude>**/*.dat</exclude>
           </excludes>
         </configuration>
       </plugin>

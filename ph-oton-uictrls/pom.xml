@@ -94,6 +94,8 @@
           <excludes>
             <exclude>**/*.min.js</exclude>
             <exclude>**/*.min.css</exclude>
+            <exclude>**/NOTICE</exclude>
+            <exclude>**/LICENSE</exclude>
             <exclude>src/main/resources/animate/**</exclude>
             <exclude>src/main/resources/autonumeric/**</exclude>
             <exclude>src/main/resources/autosize/**</exclude>
@@ -108,6 +110,8 @@
             <exclude>src/main/resources/js/big.*</exclude>
             <exclude>src/main/resources/js/wow.*</exclude>
             <exclude>src/main/resources/jscolor/**</exclude>
+            <exclude>src/main/resources/jszip/**</exclude>
+            <exclude>src/main/resources/pdfmake/**</exclude>
             <exclude>src/main/resources/pdfobject/**</exclude>
             <exclude>src/main/resources/prismjs/**</exclude>
             <exclude>src/main/resources/select2/**</exclude>

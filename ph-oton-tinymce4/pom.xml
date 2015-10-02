@@ -92,6 +92,8 @@
             <exclude>src/main/resources/tinymce-min/**</exclude>
             <exclude>**/*.min.js</exclude>
             <exclude>**/*.min.css</exclude>
+            <exclude>**/NOTICE</exclude>
+            <exclude>**/LICENSE</exclude>
           </excludes>
         </configuration>
       </plugin>

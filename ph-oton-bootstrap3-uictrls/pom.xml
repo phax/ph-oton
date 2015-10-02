@@ -93,6 +93,8 @@
         <configuration>
           <excludes>
             <exclude>src/main/resources/bootstrap/**</exclude>
+            <exclude>**/NOTICE</exclude>
+            <exclude>**/LICENSE</exclude>
           </excludes>
         </configuration>
       </plugin>
