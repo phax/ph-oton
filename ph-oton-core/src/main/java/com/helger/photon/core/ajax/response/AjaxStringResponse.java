@@ -29,6 +29,8 @@ import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.xml.serialize.write.XMLWriterSettings;
+import com.helger.html.hc.config.HCSettings;
+import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
@@ -110,6 +112,12 @@ public class AjaxStringResponse extends AbstractAjaxResponse
                                    sValue,
                                    XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ,
                                    CMimeType.APPLICATION_XML);
+  }
+
+  @Nonnull
+  public static AjaxStringResponse createForHTML (final boolean bSuccess, @Nullable final String sValue)
+  {
+    return new AjaxStringResponse (bSuccess, sValue, HCSettings.getHTMLCharset (), PhotonHTMLHelper.getMimeType (null));
   }
 
   @Nonnull

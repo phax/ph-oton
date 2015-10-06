@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.mime.CMimeType;
@@ -60,11 +61,11 @@ public final class PhotonHTMLHelper
    * Get the HTML MIME type to use
    *
    * @param aRequestScope
-   *        The request scope
+   *        The request scope. May be <code>null</code>-
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static IMimeType getMimeType (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public static IMimeType getMimeType (@Nullable final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Add the charset to the MIME type
     return new MimeType (CMimeType.TEXT_HTML).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
@@ -145,16 +146,16 @@ public final class PhotonHTMLHelper
       // Nothing to do
       return;
     }
-  
+
     final WebSiteResourceBundleManager aWSRBMgr = PhotonCoreManager.getWebSiteResourceBundleMgr ();
     final boolean bRegular = HCSettings.isUseRegularResources ();
-  
+
     if (bMergeCSS)
     {
       // Extract all CSS nodes for merging
       final List <IHCNode> aCSSNodes = new ArrayList <> ();
       aHead.getAllAndRemoveAllCSSNodes (aCSSNodes);
-  
+
       final List <WebSiteResourceWithCondition> aCSSs = new ArrayList <> ();
       for (final IHCNode aNode : aCSSNodes)
       {
@@ -168,7 +169,7 @@ public final class PhotonHTMLHelper
             bStartMerge = false;
           }
         }
-  
+
         if (bStartMerge)
         {
           if (!aCSSs.isEmpty ())
@@ -177,24 +178,24 @@ public final class PhotonHTMLHelper
               aHead.addCSS (aBundle.createNode (aRequestScope));
             aCSSs.clear ();
           }
-  
+
           // Add the current (non-mergable) node again to head after merging
           aHead.addCSS (aNode);
         }
       }
-  
+
       // Add the remaining nodes (if any)
       if (!aCSSs.isEmpty ())
         for (final WebSiteResourceBundleSerialized aBundle : aWSRBMgr.getResourceBundles (aCSSs, bRegular))
           aHead.addCSS (aBundle.createNode (aRequestScope));
     }
-  
+
     if (bMergeJS)
     {
       // Extract all JS nodes for merging
       final List <IHCNode> aJSNodes = new ArrayList <> ();
       aHead.getAllAndRemoveAllJSNodes (aJSNodes);
-  
+
       final List <WebSiteResourceWithCondition> aJSs = new ArrayList <> ();
       for (final IHCNode aNode : aJSNodes)
       {
@@ -208,7 +209,7 @@ public final class PhotonHTMLHelper
             bStartMerge = false;
           }
         }
-  
+
         if (bStartMerge)
         {
           if (!aJSs.isEmpty ())
@@ -217,12 +218,12 @@ public final class PhotonHTMLHelper
               aHead.addJS (aBundle.createNode (aRequestScope));
             aJSs.clear ();
           }
-  
+
           // Add the current (non-mergable) node again to head after merging
           aHead.addJS (aNode);
         }
       }
-  
+
       // Add the remaining nodes (if any)
       if (!aJSs.isEmpty ())
         for (final WebSiteResourceBundleSerialized aBundle : aWSRBMgr.getResourceBundles (aJSs, bRegular))

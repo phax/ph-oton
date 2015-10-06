@@ -78,6 +78,15 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   }
 
   /**
+   * @return HTTP 200
+   */
+  @Nonnull
+  public static AjaxHttpStatusCodeResponse createOk ()
+  {
+    return new AjaxHttpStatusCodeResponse (HttpServletResponse.SC_OK);
+  }
+
+  /**
    * @return HTTP 204
    */
   @Nonnull
@@ -93,5 +102,14 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   public static AjaxHttpStatusCodeResponse createPreconditionFailed ()
   {
     return new AjaxHttpStatusCodeResponse (HttpServletResponse.SC_PRECONDITION_FAILED);
+  }
+
+  /**
+   * @return HTTP 500
+   */
+  @Nonnull
+  public static AjaxHttpStatusCodeResponse createInternalServerError ()
+  {
+    return new AjaxHttpStatusCodeResponse (HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
   }
 }
