@@ -36,8 +36,10 @@ import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.IHCNodeList;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
+import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
@@ -50,8 +52,10 @@ import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
 import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
@@ -103,27 +107,63 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
   private final String m_sErrorMessage;
 
   @Nonnull
-  public static String getHTMLString (@Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
+  public static String getHTMLString (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                      @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
                                       @Nonnull final HCSpecialNodes aSpecialNodes,
                                       @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
+    ValueEnforcer.notNull (aRequestScope, "RequestScope");
+    ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
     if (aNode == null)
       return "";
 
     final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettingsWithoutNamespaces ();
 
-    // customize, finalize and extract resources
-    HCRenderer.prepareForConversion (aNode, aNode, aConversionSettings);
+    IHCNode aTargetNode = aNode;
 
-    if (aConversionSettings.isExtractOutOfBandNodes ())
+    // Special handling for complete HCHtml objects needed
+    if (aNode instanceof IHCNodeList <?> &&
+        ((IHCNodeList <?>) aNode).getChildCount () == 1 &&
+        ((IHCNodeList <?>) aNode).getFirstChild () instanceof HCHtml)
     {
-      // no need to keep onDocumentReady stuff as the document is already
-      // loaded
-      HCSpecialNodeHandler.extractSpecialContent (aNode, aSpecialNodes, aOnDocumentReadyProvider);
+      final HCHtml aHtml = (HCHtml) ((IHCNodeList <?>) aNode).getFirstChild ();
+      aTargetNode = aHtml;
+
+      // customize, finalize and extract resources
+      // This must be done before the CSS and JS are included because
+      // per-request
+      // resource registration happens inside
+      HCRenderer.prepareForConversion (aHtml, aHtml.getBody (), aConversionSettings);
+
+      // Extract and merge all inline out-of-band nodes
+      if (aConversionSettings.isExtractOutOfBandNodes ())
+      {
+        final List <IHCNode> aOOBNodes = aHtml.getAllOutOfBandNodesWithMergedInlineNodes ();
+        aHtml.addAllOutOfBandNodesToHead (aOOBNodes);
+      }
+
+      final boolean bMergeCSS = ResourceBundleServlet.isActive ();
+      final boolean bMergeJS = ResourceBundleServlet.isActive ();
+      PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope, aHtml.getHead (), bMergeCSS, bMergeJS);
+
+      // Move scripts to body? If so, after aggregation!
+      if (HCSettings.isScriptsInBody ())
+        aHtml.moveScriptElementsToBody ();
+    }
+    else
+    {
+      // customize, finalize and extract resources
+      // Non-HTML node
+      HCRenderer.prepareForConversion (aNode, aNode, aConversionSettings);
+
+      if (aConversionSettings.isExtractOutOfBandNodes ())
+      {
+        HCSpecialNodeHandler.extractSpecialContent (aNode, aSpecialNodes, aOnDocumentReadyProvider);
+      }
     }
 
     // Serialize remaining node to HTML
-    final IMicroNode aMicroNode = aNode.convertToMicroNode (aConversionSettings);
+    final IMicroNode aMicroNode = aTargetNode.convertToMicroNode (aConversionSettings);
     final String sHTML = aMicroNode == null ? ""
                                             : MicroWriter.getNodeAsString (aMicroNode,
                                                                            aConversionSettings.getXMLWriterSettings ());
@@ -154,7 +194,8 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
    * @param bSuccess
    *        Success indicator
    * @param aRequestScope
-   *        The source request scope. May not be <code>null</code>.
+   *        The source request scope. May not be <code>null</code> in case of
+   *        success.
    * @param aNode
    *        The response HTML node. May be <code>null</code>.
    * @param aOnDocumentReadyProvider
@@ -181,7 +222,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
     if (bSuccess)
     {
       // First extract the HTML
-      aObj.add (PROPERTY_HTML, getHTMLString (aNode, m_aSpecialNodes, aOnDocumentReadyProvider));
+      aObj.add (PROPERTY_HTML, getHTMLString (aRequestScope, aNode, m_aSpecialNodes, aOnDocumentReadyProvider));
 
       // Do it after all nodes were finalized etc
       addCSSAndJS (aRequestScope, m_aSpecialNodes);
