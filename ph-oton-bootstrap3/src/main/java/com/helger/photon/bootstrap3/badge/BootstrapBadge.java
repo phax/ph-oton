@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap3.badge;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.hc.IHCNode;
@@ -24,7 +25,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Bootstrap3 badge.
- * 
+ *
  * @author Philip Helger
  */
 public class BootstrapBadge extends AbstractHCSpan <BootstrapBadge>
@@ -39,5 +40,17 @@ public class BootstrapBadge extends AbstractHCSpan <BootstrapBadge>
   public static BootstrapBadge createOnDemand (@Nullable final IHCNode aNode)
   {
     return aNode == null ? null : new BootstrapBadge ().addChild (aNode);
+  }
+
+  @Nonnull
+  public static BootstrapBadge createNumeric (final int nValue)
+  {
+    return new BootstrapBadge ().addChild (Integer.toString (nValue));
+  }
+
+  @Nonnull
+  public static BootstrapBadge createNumeric (final long nValue)
+  {
+    return new BootstrapBadge ().addChild (Long.toString (nValue));
   }
 }
