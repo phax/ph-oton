@@ -61,6 +61,7 @@ public final class AccountingAreaTest
                                           "Test street",
                                           "123",
                                           "PO1",
+                                          "co",
                                           Locale.GERMANY);
     final AccountingArea a = new AccountingArea (aClient,
                                                  "Accounting area 1",
