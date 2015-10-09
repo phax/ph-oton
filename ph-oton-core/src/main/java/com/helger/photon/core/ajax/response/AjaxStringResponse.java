@@ -22,12 +22,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.w3c.dom.Node;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.microdom.IMicroNode;
+import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.xml.serialize.write.IXMLWriterSettings;
+import com.helger.commons.xml.serialize.write.XMLWriter;
 import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
@@ -112,6 +118,34 @@ public class AjaxStringResponse extends AbstractAjaxResponse
                                    sValue,
                                    XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ,
                                    CMimeType.APPLICATION_XML);
+  }
+
+  @Nonnull
+  public static AjaxStringResponse createForXML (final boolean bSuccess, @Nullable final IMicroNode aNode)
+  {
+    return createForXML (bSuccess, aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+  }
+
+  @Nonnull
+  public static AjaxStringResponse createForXML (final boolean bSuccess,
+                                                 @Nullable final IMicroNode aNode,
+                                                 @Nonnull final IXMLWriterSettings aSettings)
+  {
+    return createForXML (bSuccess, MicroWriter.getNodeAsString (aNode, aSettings));
+  }
+
+  @Nonnull
+  public static AjaxStringResponse createForXML (final boolean bSuccess, @Nullable final Node aNode)
+  {
+    return createForXML (bSuccess, aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+  }
+
+  @Nonnull
+  public static AjaxStringResponse createForXML (final boolean bSuccess,
+                                                 @Nullable final Node aNode,
+                                                 @Nonnull final IXMLWriterSettings aSettings)
+  {
+    return createForXML (bSuccess, XMLWriter.getNodeAsString (aNode, aSettings));
   }
 
   @Nonnull
