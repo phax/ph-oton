@@ -131,7 +131,10 @@ public class AjaxStringResponse extends AbstractAjaxResponse
                                                  @Nullable final IMicroNode aNode,
                                                  @Nonnull final IXMLWriterSettings aSettings)
   {
-    return createForXML (bSuccess, MicroWriter.getNodeAsString (aNode, aSettings));
+    return new AjaxStringResponse (bSuccess,
+                                   MicroWriter.getNodeAsString (aNode, aSettings),
+                                   aSettings.getCharsetObj (),
+                                   CMimeType.APPLICATION_XML);
   }
 
   @Nonnull
@@ -145,7 +148,10 @@ public class AjaxStringResponse extends AbstractAjaxResponse
                                                  @Nullable final Node aNode,
                                                  @Nonnull final IXMLWriterSettings aSettings)
   {
-    return createForXML (bSuccess, XMLWriter.getNodeAsString (aNode, aSettings));
+    return new AjaxStringResponse (bSuccess,
+                                   XMLWriter.getNodeAsString (aNode, aSettings),
+                                   aSettings.getCharsetObj (),
+                                   CMimeType.APPLICATION_XML);
   }
 
   @Nonnull
