@@ -21,8 +21,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.basic.security.menu.MenuObjectFilterNoUserLoggedIn;
 import com.helger.photon.bootstrap.demo.page.pub.PagePublicLogin;
+import com.helger.photon.security.menu.MenuObjectFilterNoUserLoggedIn;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uicore.page.external.BasePageViewExternal;
 

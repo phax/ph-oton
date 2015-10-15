@@ -18,11 +18,11 @@ package com.helger.photon.bootstrap.demo.app.init;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.photon.basic.security.AccessManager;
-import com.helger.photon.basic.security.role.RoleManager;
-import com.helger.photon.basic.security.user.UserManager;
-import com.helger.photon.basic.security.usergroup.UserGroupManager;
 import com.helger.photon.bootstrap.demo.app.CApp;
+import com.helger.photon.security.AccessManager;
+import com.helger.photon.security.role.RoleManager;
+import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.usergroup.UserGroupManager;
 
 @Immutable
 public final class AppSecurity

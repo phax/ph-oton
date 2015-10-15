@@ -25,7 +25,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
-import com.helger.photon.basic.security.password.GlobalPasswordSettings;
+import com.helger.photon.security.password.GlobalPasswordSettings;
 
 /**
  * Common methods to render security UI with Bootstrap

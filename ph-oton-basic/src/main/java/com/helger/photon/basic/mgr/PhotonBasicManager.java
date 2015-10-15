@@ -27,11 +27,11 @@ import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.scope.IScope;
 import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.photon.basic.app.systemmsg.SystemMessageManager;
+import com.helger.photon.basic.audit.AuditManager;
 import com.helger.photon.basic.favorites.FavoriteManager;
 import com.helger.photon.basic.longrun.LongRunningJobManager;
 import com.helger.photon.basic.longrun.LongRunningJobResultManager;
 import com.helger.photon.basic.migration.SystemMigrationManager;
-import com.helger.photon.basic.security.audit.AuditManager;
 
 /**
  * The meta system manager encapsulates all managers that are located in this

@@ -32,7 +32,6 @@ import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.html.sections.HCBody;
 import com.helger.html.hc.html.sections.HCH2;
 import com.helger.html.hc.html.textlevel.HCSpan;
-import com.helger.photon.basic.security.login.ELoginResult;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.base.BootstrapContainer;
 import com.helger.photon.bootstrap3.button.BootstrapSubmitButton;
@@ -44,6 +43,7 @@ import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.login.CLogin;
 import com.helger.photon.core.login.LoginHTMLProvider;
+import com.helger.photon.security.login.ELoginResult;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

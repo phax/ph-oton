@@ -26,11 +26,11 @@ import com.helger.commons.exception.InitializationException;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.scope.IScope;
 import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
-import com.helger.photon.basic.security.lock.ObjectLockManager;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.smtp.FailedMailQueueWithDAO;
 import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
+import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.smtp.scope.ScopedMailAPI;
 
 /**

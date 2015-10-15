@@ -27,8 +27,6 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.JsonObject;
-import com.helger.photon.basic.security.login.ELoginResult;
-import com.helger.photon.basic.security.login.LoggedInUserManager;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.core.EPhotonCoreText;
@@ -36,6 +34,8 @@ import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxJsonResponse;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.login.CLogin;
+import com.helger.photon.security.login.ELoginResult;
+import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

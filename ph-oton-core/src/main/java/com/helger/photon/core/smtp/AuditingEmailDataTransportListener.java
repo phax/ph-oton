@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.mail.event.TransportEvent;
 
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.security.audit.AuditHelper;
+import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.smtp.data.IEmailData;
 import com.helger.smtp.listener.IEmailDataTransportListener;
 import com.helger.smtp.settings.ISMTPSettings;

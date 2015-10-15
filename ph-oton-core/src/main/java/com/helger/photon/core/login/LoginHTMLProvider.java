@@ -39,10 +39,10 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.photon.basic.security.login.ELoginResult;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.html.AbstractHTMLProvider;
+import com.helger.photon.security.login.ELoginResult;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

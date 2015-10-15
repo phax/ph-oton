@@ -24,9 +24,9 @@ import javax.annotation.Nullable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.name.ComparatorHasName;
 import com.helger.html.hc.html.forms.HCOption;
-import com.helger.photon.basic.security.AccessManager;
-import com.helger.photon.basic.security.usergroup.IUserGroup;
 import com.helger.photon.core.form.RequestField;
+import com.helger.photon.security.AccessManager;
+import com.helger.photon.security.usergroup.IUserGroup;
 
 /**
  * Select user groups a user should be assigned to
