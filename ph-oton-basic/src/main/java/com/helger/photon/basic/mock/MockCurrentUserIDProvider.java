@@ -19,7 +19,7 @@ package com.helger.photon.basic.mock;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.photon.basic.security.login.ICurrentUserIDProvider;
+import com.helger.photon.basic.security.ICurrentUserIDProvider;
 
 /**
  * Mock implementation of {@link ICurrentUserIDProvider}.

@@ -27,12 +27,6 @@ import com.helger.photon.basic.longrun.LongRunningJobData;
 import com.helger.photon.basic.longrun.LongRunningJobDataMicroTypeConverter;
 import com.helger.photon.basic.migration.SystemMigrationResult;
 import com.helger.photon.basic.migration.SystemMigrationResultMicroTypeConverter;
-import com.helger.photon.basic.security.role.Role;
-import com.helger.photon.basic.security.role.RoleMicroTypeConverter;
-import com.helger.photon.basic.security.user.User;
-import com.helger.photon.basic.security.user.UserMicroTypeConverter;
-import com.helger.photon.basic.security.usergroup.UserGroup;
-import com.helger.photon.basic.security.usergroup.UserGroupMicroTypeConverter;
 
 /**
  * Special micro type converter for this project.
@@ -46,10 +40,7 @@ public final class MicroTypeConverterRegistrar_ph_oton_basic implements IMicroTy
   {
     aRegistry.registerMicroElementTypeConverter (Favorite.class, new FavoriteMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (LongRunningJobData.class, new LongRunningJobDataMicroTypeConverter ());
-    aRegistry.registerMicroElementTypeConverter (Role.class, new RoleMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (SystemMigrationResult.class,
                                                  new SystemMigrationResultMicroTypeConverter ());
-    aRegistry.registerMicroElementTypeConverter (User.class, new UserMicroTypeConverter ());
-    aRegistry.registerMicroElementTypeConverter (UserGroup.class, new UserGroupMicroTypeConverter ());
   }
 }

@@ -30,6 +30,7 @@ import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.photon.basic.migration.SystemMigrationManager;
 import com.helger.photon.basic.security.audit.IAuditManager;
 import com.helger.photon.basic.security.lock.ILockManager;
+import com.helger.photon.basic.security.mgr.PhotonSecurityManager;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoAjaxFunctions;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoChangeLogs;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoConfigurationFiles;
@@ -157,7 +158,7 @@ public final class BootstrapPagesMenuConfigurator
     return BootstrapPagesMenuConfigurator.<WPECTYPE> addMonitoringItems (aMenuTree,
                                                                          aParent,
                                                                          aDisplayFilter,
-                                                                         PhotonBasicManager.getAuditMgr (),
+                                                                         PhotonSecurityManager.getAuditMgr (),
                                                                          PhotonCoreManager.getFailedMailQueue (),
                                                                          PhotonCoreManager.getLockMgr (),
                                                                          PhotonBasicManager.getSystemMigrationMgr ());

@@ -28,7 +28,7 @@ import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
-import com.helger.photon.basic.security.CSecurity;
+import com.helger.photon.basic.security.CBasicSecurity;
 
 /**
  * Represents a single change item
@@ -50,7 +50,7 @@ final class AuditItem implements IAuditItem
                     @Nonnull final String sAction)
   {
     this (PDTFactory.getCurrentLocalDateTime (),
-          StringHelper.hasText (sUserID) ? sUserID : CSecurity.USER_ID_NONE_LOGGED_IN,
+          StringHelper.hasText (sUserID) ? sUserID : CBasicSecurity.USER_ID_NONE_LOGGED_IN,
           eType,
           eSuccess,
           sAction);
@@ -83,7 +83,7 @@ final class AuditItem implements IAuditItem
 
   public boolean isAnonymousUser ()
   {
-    return CSecurity.USER_ID_NONE_LOGGED_IN.equals (m_sUserID);
+    return CBasicSecurity.USER_ID_NONE_LOGGED_IN.equals (m_sUserID);
   }
 
   @Nonnull

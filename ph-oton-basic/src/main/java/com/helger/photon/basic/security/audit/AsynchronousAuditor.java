@@ -36,7 +36,7 @@ import com.helger.commons.callback.IThrowingRunnableWithParameter;
 import com.helger.commons.concurrent.ExtendedDefaultThreadFactory;
 import com.helger.commons.concurrent.collector.ConcurrentCollectorMultiple;
 import com.helger.commons.state.EChange;
-import com.helger.photon.basic.security.login.ICurrentUserIDProvider;
+import com.helger.photon.basic.security.ICurrentUserIDProvider;
 
 /**
  * The class handles all audit items

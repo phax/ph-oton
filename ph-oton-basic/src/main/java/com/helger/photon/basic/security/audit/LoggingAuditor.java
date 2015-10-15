@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.photon.basic.security.login.ICurrentUserIDProvider;
+import com.helger.photon.basic.security.ICurrentUserIDProvider;
 
 /**
  * An implementation of {@link IAuditor} using SLF4J logging.

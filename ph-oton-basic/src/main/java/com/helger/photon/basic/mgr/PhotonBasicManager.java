@@ -32,9 +32,6 @@ import com.helger.photon.basic.longrun.LongRunningJobManager;
 import com.helger.photon.basic.longrun.LongRunningJobResultManager;
 import com.helger.photon.basic.migration.SystemMigrationManager;
 import com.helger.photon.basic.security.audit.AuditManager;
-import com.helger.photon.basic.security.audit.AuditHelper;
-import com.helger.photon.basic.security.lock.ObjectLockManager;
-import com.helger.photon.basic.security.login.LoggedInUserManager;
 
 /**
  * The meta system manager encapsulates all managers that are located in this
@@ -52,7 +49,6 @@ import com.helger.photon.basic.security.login.LoggedInUserManager;
  */
 public final class PhotonBasicManager extends AbstractGlobalSingleton
 {
-  public static final String DIRECTORY_AUDITS = "audits/";
   public static final String DIRECTORY_HTML = "html/";
   public static final String FAVORITES_XML = "favorites.xml";
   public static final String LONG_RUNNING_JOB_RESULTS_XML = "long-running-job-results.xml";
@@ -61,7 +57,6 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonBasicManager.class);
 
-  private AuditManager m_aAuditMgr;
   private FavoriteManager m_aFavoriteManager;
   private LongRunningJobManager m_aLongRunningJobMgr;
   private LongRunningJobResultManager m_aLongRunningJobResultMgr;
@@ -78,10 +73,6 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
   {
     try
     {
-      m_aAuditMgr = new AuditManager (DIRECTORY_AUDITS, LoggedInUserManager.getInstance ());
-      AuditHelper.setAuditor (m_aAuditMgr.getAuditor ());
-      AuditHelper.onAuditExecuteSuccess ("audit-initialized");
-
       m_aFavoriteManager = new FavoriteManager (FAVORITES_XML);
 
       m_aSystemMigrationMgr = new SystemMigrationManager (SYSTEM_MIGRATIONS_XML);
@@ -99,29 +90,6 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
     }
   }
 
-  @Override
-  protected void onBeforeDestroy (@Nonnull final IScope aScopeToBeDestroyed)
-  {
-    if (m_aAuditMgr != null)
-    {
-      /*
-       * Call here to ensure that the AuditManager is still present! Otherwise
-       * the destruction order of the singletons is relevant!
-       */
-      AuditHelper.onAuditExecuteSuccess ("audit-shutdown");
-    }
-  }
-
-  @Override
-  protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
-  {
-    if (m_aAuditMgr != null)
-    {
-      AuditHelper.setDefaultAuditor ();
-      m_aAuditMgr.stop ();
-    }
-  }
-
   @Nonnull
   public static PhotonBasicManager getInstance ()
   {
@@ -129,21 +97,9 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
   }
 
   @Nonnull
-  public static AuditManager getAuditMgr ()
-  {
-    return getInstance ().m_aAuditMgr;
-  }
-
-  @Nonnull
   public static FavoriteManager getFavoriteManager ()
   {
     return getInstance ().m_aFavoriteManager;
-  }
-
-  @Nonnull
-  public static ObjectLockManager getLockMgr ()
-  {
-    return ObjectLockManager.getInstance ();
   }
 
   @Nonnull

@@ -151,6 +151,11 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
+        <artifactId>ph-oton-security</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
         <artifactId>ph-oton-exchange</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -302,6 +307,7 @@
   
   <modules>
     <module>ph-oton-basic</module>
+    <module>ph-oton-security</module>
     <module>ph-oton-exchange</module>
     <module>ph-oton-connect</module>
     <module>ph-oton-core</module>

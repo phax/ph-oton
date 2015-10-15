@@ -56,7 +56,7 @@ import com.helger.photon.basic.app.io.IHasFilename;
 import com.helger.photon.basic.app.io.IMutablePathRelativeIO;
 import com.helger.photon.basic.app.io.IPathRelativeIO;
 import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.photon.basic.security.login.ICurrentUserIDProvider;
+import com.helger.photon.basic.security.ICurrentUserIDProvider;
 
 /**
  * The class handles all audit items

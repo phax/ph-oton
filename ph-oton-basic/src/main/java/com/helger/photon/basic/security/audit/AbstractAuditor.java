@@ -27,7 +27,7 @@ import com.helger.commons.state.ESuccess;
 import com.helger.commons.type.ObjectType;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
-import com.helger.photon.basic.security.login.ICurrentUserIDProvider;
+import com.helger.photon.basic.security.ICurrentUserIDProvider;
 
 /**
  * Abstract base class for interface {@link IAuditor}.

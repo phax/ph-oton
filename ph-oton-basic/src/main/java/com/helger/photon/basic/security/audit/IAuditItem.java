@@ -23,7 +23,6 @@ import org.joda.time.LocalDateTime;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.state.ISuccessIndicator;
-import com.helger.photon.basic.security.CSecurity;
 
 /**
  * Base interface for a single audit item
@@ -47,7 +46,7 @@ public interface IAuditItem extends ISuccessIndicator
 
   /**
    * @return <code>true</code> if the user ID equals
-   *         {@link CSecurity#USER_ID_NONE_LOGGED_IN}
+   *         {@link com.helger.photon.basic.security.CBasicSecurity#USER_ID_NONE_LOGGED_IN}
    */
   boolean isAnonymousUser ();
 
