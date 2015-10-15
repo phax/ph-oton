@@ -16,18 +16,29 @@
  */
 package com.helger.photon.security.util;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.security.AccessManager;
 import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
+import com.helger.photon.security.role.IRole;
+import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.usergroup.IUserGroup;
 
 /**
  * Security utility methods
@@ -37,6 +48,8 @@ import com.helger.photon.security.user.IUser;
 @Immutable
 public final class SecurityHelper
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (SecurityHelper.class);
+
   @PresentForCodeCoverage
   private static final SecurityHelper s_aInstance = new SecurityHelper ();
 
@@ -51,7 +64,7 @@ public final class SecurityHelper
       // No user logged in
       return false;
     }
-    return AccessManager.getInstance ().isUserAssignedToUserGroup (sUserGroupID, sUserID);
+    return PhotonSecurityManager.getUserGroupMgr ().isUserAssignedToUserGroup (sUserGroupID, sUserID);
   }
 
   public static boolean hasCurrentUserRole (@Nullable final String sRoleID)
@@ -62,7 +75,69 @@ public final class SecurityHelper
       // No user logged in
       return false;
     }
-    return AccessManager.getInstance ().hasUserRole (sUserID, sRoleID);
+    return hasUserRole (sUserID, sRoleID);
+  }
+
+  public static boolean hasUserRole (@Nullable final String sUserID, @Nullable final String sRoleID)
+  {
+    final Collection <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
+                                                                     .getAllUserGroupsWithAssignedUser (sUserID);
+    for (final IUserGroup aUserGroup : aUserGroups)
+      if (aUserGroup.containsRoleID (sRoleID))
+        return true;
+    return false;
+  }
+
+  public static boolean hasUserAllRoles (@Nullable final String sUserID, @Nullable final Collection <String> aRoleIDs)
+  {
+    if (CollectionHelper.isNotEmpty (aRoleIDs))
+    {
+      final Collection <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
+                                                                       .getAllUserGroupsWithAssignedUser (sUserID);
+      for (final String sRoleID : aRoleIDs)
+      {
+        boolean bFoundRole = false;
+        for (final IUserGroup aUserGroup : aUserGroups)
+          if (aUserGroup.containsRoleID (sRoleID))
+          {
+            bFoundRole = true;
+            break;
+          }
+        if (!bFoundRole)
+          return false;
+      }
+    }
+    return true;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <String> getAllUserRoleIDs (@Nullable final String sUserID)
+  {
+    final Set <String> ret = new HashSet <String> ();
+    final Collection <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
+                                                                     .getAllUserGroupsWithAssignedUser (sUserID);
+    for (final IUserGroup aUserGroup : aUserGroups)
+      ret.addAll (aUserGroup.getAllContainedRoleIDs ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <IRole> getAllUserRoles (@Nullable final String sUserID)
+  {
+    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+    final Set <String> aRoleIDs = getAllUserRoleIDs (sUserID);
+    final Set <IRole> ret = new HashSet <IRole> ();
+    for (final String sRoleID : aRoleIDs)
+    {
+      final IRole aRole = aRoleMgr.getRoleOfID (sRoleID);
+      if (aRole != null)
+        ret.add (aRole);
+      else
+        s_aLogger.warn ("Failed to resolve role with ID '" + sRoleID + "'");
+    }
+    return ret;
   }
 
   /**
@@ -97,7 +172,7 @@ public final class SecurityHelper
     if (StringHelper.hasNoText (sUserID))
       return getGuestUserDisplayName (aDisplayLocale);
 
-    final IUser aUser = AccessManager.getInstance ().getUserOfID (sUserID);
+    final IUser aUser = PhotonSecurityManager.getUserMgr ().getUserOfID (sUserID);
     return aUser == null ? sUserID : getUserDisplayName (aUser, aDisplayLocale);
   }
 

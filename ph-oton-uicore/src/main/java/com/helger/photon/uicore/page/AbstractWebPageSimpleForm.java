@@ -44,9 +44,9 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.mgr.PhotonCoreManager;
-import com.helger.photon.security.AccessManager;
 import com.helger.photon.security.lock.LockResult;
 import com.helger.photon.security.lock.ObjectLockManager;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -498,7 +498,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
           final HCNodeList aNodeList = aWPEC.getNodeList ();
 
           final String sLockUserID = aOLM.getLockUserID (sObjectID);
-          final IUser aLockUser = AccessManager.getInstance ().getUserOfID (sLockUserID);
+          final IUser aLockUser = PhotonSecurityManager.getUserMgr ().getUserOfID (sLockUserID);
           final String sObjectName = getObjectDisplayName (aWPEC, aObject);
           final String sDisplayObjectName = StringHelper.hasText (sObjectName) ? " '" + sObjectName + "'" : "";
           final String sDisplayUserName = aLockUser != null ? "'" + aLockUser.getDisplayName () + "'"

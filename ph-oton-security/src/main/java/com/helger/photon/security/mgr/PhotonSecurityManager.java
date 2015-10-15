@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.lang.ClassHelper;
@@ -29,7 +30,13 @@ import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.audit.AuditManager;
 import com.helger.photon.security.lock.ObjectLockManager;
+import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.login.LoginInfo;
+import com.helger.photon.security.login.callback.DefaultUserLoginCallback;
+import com.helger.photon.security.role.RoleManager;
+import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.usergroup.UserGroupManager;
 
 /**
  * The meta system manager encapsulates all managers that are located in this
@@ -43,10 +50,17 @@ import com.helger.photon.security.login.LoggedInUserManager;
 public final class PhotonSecurityManager extends AbstractGlobalSingleton
 {
   public static final String DIRECTORY_AUDITS = "audits/";
+  public static final String DIRECTORY_SECURITY = "security/";
+  public static final String FILENAME_USERS_XML = "users.xml";
+  public static final String FILENAME_ROLES_XML = "roles.xml";
+  public static final String FILENAME_USERGROUPS_XML = "usergroups.xml";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonSecurityManager.class);
 
   private AuditManager m_aAuditMgr;
+  private UserManager m_aUserMgr;
+  private RoleManager m_aRoleMgr;
+  private UserGroupManager m_aUserGroupMgr;
 
   @Deprecated
   @UsedViaReflection
@@ -61,6 +75,30 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       m_aAuditMgr = new AuditManager (DIRECTORY_AUDITS, LoggedInUserManager.getInstance ());
       AuditHelper.setAuditor (m_aAuditMgr.getAuditor ());
       AuditHelper.onAuditExecuteSuccess ("audit-initialized");
+
+      m_aUserMgr = new UserManager (DIRECTORY_SECURITY + FILENAME_USERS_XML);
+      m_aRoleMgr = new RoleManager (DIRECTORY_SECURITY + FILENAME_ROLES_XML);
+      m_aUserGroupMgr = new UserGroupManager (DIRECTORY_SECURITY + FILENAME_USERGROUPS_XML, m_aUserMgr, m_aRoleMgr);
+
+      // Remember the last login date of the user
+      LoggedInUserManager.getInstance ().getUserLoginCallbacks ().addCallback (new DefaultUserLoginCallback ()
+      {
+        @Override
+        public void onUserLogin (@Nonnull final LoginInfo aInfo)
+        {
+          m_aUserMgr.updateUserLastLogin (aInfo.getUserID ());
+        }
+
+        @Override
+        public void onUserLoginError (@Nonnull @Nonempty final String sUserID, @Nonnull final ELoginResult eLoginResult)
+        {
+          if (eLoginResult == ELoginResult.INVALID_PASSWORD)
+          {
+            // On invalid password, update consecutive failed login count
+            m_aUserMgr.updateUserLastFailedLogin (sUserID);
+          }
+        }
+      });
 
       s_aLogger.info (ClassHelper.getClassLocalName (this) + " was initialized");
     }
@@ -109,5 +147,23 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   public static ObjectLockManager getLockMgr ()
   {
     return ObjectLockManager.getInstance ();
+  }
+
+  @Nonnull
+  public static UserManager getUserMgr ()
+  {
+    return getInstance ().m_aUserMgr;
+  }
+
+  @Nonnull
+  public static UserGroupManager getUserGroupMgr ()
+  {
+    return getInstance ().m_aUserGroupMgr;
+  }
+
+  @Nonnull
+  public static RoleManager getRoleMgr ()
+  {
+    return getInstance ().m_aRoleMgr;
   }
 }

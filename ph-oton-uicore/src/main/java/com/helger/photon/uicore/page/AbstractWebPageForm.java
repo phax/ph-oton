@@ -56,9 +56,9 @@ import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.mgr.PhotonCoreManager;
-import com.helger.photon.security.AccessManager;
 import com.helger.photon.security.lock.LockResult;
 import com.helger.photon.security.lock.ObjectLockManager;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.css.CUICoreCSS;
@@ -821,7 +821,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           final HCNodeList aNodeList = aWPEC.getNodeList ();
 
           final String sLockUserID = aOLM.getLockUserID (sObjectID);
-          final IUser aLockUser = AccessManager.getInstance ().getUserOfID (sLockUserID);
+          final IUser aLockUser = PhotonSecurityManager.getUserMgr ().getUserOfID (sLockUserID);
           final String sObjectName = getObjectDisplayName (aWPEC, aSelectedObject);
           final String sDisplayObjectName = StringHelper.hasText (sObjectName) ? " '" + sObjectName + "'" : "";
           final String sDisplayUserName = aLockUser != null ? "'" + aLockUser.getDisplayName () + "'"

@@ -39,10 +39,11 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapSecurityUI;
-import com.helger.photon.security.AccessManager;
 import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
@@ -141,12 +142,12 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
         // Check if the CSRF nonce matches
         if (checkCSRFNonce (aWPEC).isContinue ())
         {
-          final AccessManager aAccessMgr = AccessManager.getInstance ();
+          final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
           final String sOldPlainTextPassword = aWPEC.getAttributeAsString (FIELD_OLD_PASSWORD);
           final String sNewPlainTextPassword = aWPEC.getAttributeAsString (FIELD_NEW_PASSWORD);
           final String sNewPlainTextPasswordConfirm = aWPEC.getAttributeAsString (FIELD_NEW_PASSWORD_CONFIRM);
 
-          if (!aAccessMgr.areUserIDAndPasswordValid (aCurrentUser.getID (), sOldPlainTextPassword))
+          if (!aUserMgr.areUserIDAndPasswordValid (aCurrentUser.getID (), sOldPlainTextPassword))
             aFormErrors.addFieldError (FIELD_OLD_PASSWORD,
                                        EText.ERROR_OLD_PASSWORD_INVALID.getDisplayText (aDisplayLocale));
 
@@ -161,7 +162,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
 
           if (aFormErrors.isEmpty ())
           {
-            aAccessMgr.setUserPassword (aCurrentUser.getID (), sNewPlainTextPassword);
+            aUserMgr.setUserPassword (aCurrentUser.getID (), sNewPlainTextPassword);
             aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CHANGE_PW.getDisplayText (aDisplayLocale)));
             // Always show form
           }
@@ -174,7 +175,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
         final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
         aForm.addChild (createActionHeader (EText.TITLE.getDisplayTextWithArgs (aDisplayLocale,
                                                                                 SecurityHelper.getUserDisplayName (aCurrentUser,
-                                                                                                                  aDisplayLocale))));
+                                                                                                                   aDisplayLocale))));
 
         final String sLabelOldPassword = EText.LABEL_OLD_PASSWORD.getDisplayText (aDisplayLocale);
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sLabelOldPassword, ELabelType.MANDATORY)

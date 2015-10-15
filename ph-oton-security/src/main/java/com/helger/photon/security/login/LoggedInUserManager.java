@@ -49,13 +49,15 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
-import com.helger.photon.security.AccessManager;
 import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.photon.security.login.callback.DefaultUserLogoutCallback;
 import com.helger.photon.security.login.callback.IUserLoginCallback;
 import com.helger.photon.security.login.callback.IUserLogoutCallback;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.util.SecurityHelper;
 import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.session.ISessionWebScopeActivationHandler;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
@@ -120,7 +122,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       // Resolve user ID
       if (m_sUserID != null)
       {
-        m_aUser = AccessManager.getInstance ().getUserOfID (m_sUserID);
+        m_aUser = PhotonSecurityManager.getUserMgr ().getUserOfID (m_sUserID);
         if (m_aUser == null)
           throw new IllegalStateException ("Failed to resolve user with ID '" + m_sUserID + "'");
       }
@@ -320,7 +322,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
                                  @Nullable final Collection <String> aRequiredRoleIDs)
   {
     // Try to resolve the user
-    final IUser aUser = AccessManager.getInstance ().getUserOfLoginName (sLoginName);
+    final IUser aUser = PhotonSecurityManager.getUserMgr ().getUserOfLoginName (sLoginName);
     if (aUser == null)
     {
       AuditHelper.onAuditExecuteFailure ("login", sLoginName, "no-such-loginname");
@@ -406,20 +408,19 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       return _onLoginError (sUserID, ELoginResult.USER_IS_DISABLED);
     }
 
-    final AccessManager aAccessMgr = AccessManager.getInstance ();
-
     // Are all roles present?
-    if (!aAccessMgr.hasUserAllRoles (sUserID, aRequiredRoleIDs))
+    if (!SecurityHelper.hasUserAllRoles (sUserID, aRequiredRoleIDs))
     {
       AuditHelper.onAuditExecuteFailure ("login",
-                                        sUserID,
-                                        "user-is-missing-required-roles",
-                                        StringHelper.getToString (aRequiredRoleIDs));
+                                         sUserID,
+                                         "user-is-missing-required-roles",
+                                         StringHelper.getToString (aRequiredRoleIDs));
       return _onLoginError (sUserID, ELoginResult.USER_IS_MISSING_ROLE);
     }
 
     // Check the password
-    if (!aAccessMgr.areUserIDAndPasswordValid (sUserID, sPlainTextPassword))
+    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    if (!aUserMgr.areUserIDAndPasswordValid (sUserID, sPlainTextPassword))
     {
       AuditHelper.onAuditExecuteFailure ("login", sUserID, "invalid-password");
       return _onLoginError (sUserID, ELoginResult.INVALID_PASSWORD);
@@ -433,7 +434,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     {
       // This implicitly implies using the default hash creator algorithm
       // This automatically saves the file
-      aAccessMgr.setUserPassword (sUserID, sPlainTextPassword);
+      aUserMgr.setUserPassword (sUserID, sPlainTextPassword);
       s_aLogger.info ("Updated password hash of user '" +
                       sUserID +
                       "' from algorithm '" +

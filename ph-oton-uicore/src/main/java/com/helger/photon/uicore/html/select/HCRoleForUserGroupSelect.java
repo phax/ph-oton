@@ -25,7 +25,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.name.ComparatorHasName;
 import com.helger.html.hc.html.forms.HCOption;
 import com.helger.photon.core.form.RequestField;
-import com.helger.photon.security.AccessManager;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
 
 /**
@@ -40,7 +40,7 @@ public class HCRoleForUserGroupSelect extends HCExtSelect
     super (aRF);
     setMultiple (true);
 
-    final Collection <? extends IRole> aAllRoles = AccessManager.getInstance ().getAllRoles ();
+    final Collection <? extends IRole> aAllRoles = PhotonSecurityManager.getRoleMgr ().getAllRoles ();
     setSize (Math.min (10, aAllRoles.size ()));
     for (final IRole aRole : CollectionHelper.getSorted (aAllRoles, new ComparatorHasName <IRole> ()))
     {

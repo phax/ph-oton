@@ -30,10 +30,10 @@ import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.core.app.html.IHTMLProvider;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
-import com.helger.photon.security.AccessManager;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
@@ -156,7 +156,7 @@ public class LoginManager
   @OverrideOnDemand
   protected IUser getUserOfLoginName (@Nullable final String sLoginName)
   {
-    return AccessManager.getInstance ().getUserOfLoginName (sLoginName);
+    return PhotonSecurityManager.getUserMgr ().getUserOfLoginName (sLoginName);
   }
 
   /**

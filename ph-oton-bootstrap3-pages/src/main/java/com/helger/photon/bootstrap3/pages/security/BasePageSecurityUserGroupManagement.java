@@ -61,11 +61,14 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
-import com.helger.photon.security.AccessManager;
 import com.helger.photon.security.CSecurity;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
+import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.IUserGroup;
+import com.helger.photon.security.usergroup.UserGroupManager;
 import com.helger.photon.uicore.html.select.HCRoleForUserGroupSelect;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -174,7 +177,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   @Nullable
   protected IUserGroup getSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nullable final String sID)
   {
-    return AccessManager.getInstance ().getUserGroupOfID (sID);
+    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+    return aUserGroupMgr.getUserGroupOfID (sID);
   }
 
   @Override
@@ -205,10 +209,10 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     else
     {
       // Convert IDs to objects
-      final AccessManager aMgr = AccessManager.getInstance ();
+      final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
       final List <IUser> aAssignedUsers = new ArrayList <IUser> (aAssignedUserIDs.size ());
       for (final String sUserID : aAssignedUserIDs)
-        aAssignedUsers.add (aMgr.getUserOfID (sUserID));
+        aAssignedUsers.add (aUserMgr.getUserOfID (sUserID));
 
       final HCNodeList aUserUI = new HCNodeList ();
       for (final IUser aUser : CollectionHelper.getSorted (aAssignedUsers,
@@ -229,10 +233,10 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     else
     {
       // Convert IDs to objects
-      final AccessManager aMgr = AccessManager.getInstance ();
+      final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
       final List <IRole> aAssignedRoles = new ArrayList <IRole> (aAssignedRoleIDs.size ());
       for (final String sRoleID : aAssignedRoleIDs)
-        aAssignedRoles.add (aMgr.getRoleOfID (sRoleID));
+        aAssignedRoles.add (aRoleMgr.getRoleOfID (sRoleID));
 
       final HCNodeList aRoleUI = new HCNodeList ();
       for (final IRole aRole : CollectionHelper.getSorted (aAssignedRoles,
@@ -284,10 +288,11 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final AccessManager aAccessMgr = AccessManager.getInstance ();
     final String sName = aWPEC.getAttributeAsString (FIELD_NAME);
     final String sDescription = aWPEC.getAttributeAsString (FIELD_DESCRIPTION);
     final Collection <String> aRoleIDs = aWPEC.getAttributeAsList (FIELD_ROLES);
+    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     if (StringHelper.hasNoText (sName))
       aFormErrors.addFieldError (FIELD_NAME, EText.ERROR_NAME_REQUIRED.getDisplayText (aDisplayLocale));
@@ -295,7 +300,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     if (CollectionHelper.isEmpty (aRoleIDs))
       aFormErrors.addFieldError (FIELD_ROLES, EText.ERROR_NO_ROLE.getDisplayText (aDisplayLocale));
     else
-      if (!aAccessMgr.containsAllRolesWithID (aRoleIDs))
+      if (!aRoleMgr.containsAllRolesWithID (aRoleIDs))
         aFormErrors.addFieldError (FIELD_ROLES, EText.ERROR_INVALID_ROLES.getDisplayText (aDisplayLocale));
 
     // Call custom method
@@ -316,7 +321,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
           aAttrMap.putAll (aCustomAttrMap);
 
         // We're editing an existing object
-        aAccessMgr.setUserGroupData (sUserGroupID, sName, sDescription, aAttrMap);
+        aUserGroupMgr.setUserGroupData (sUserGroupID, sName, sDescription, aAttrMap);
         aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
 
         // assign to the matching roles
@@ -324,22 +329,22 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         // Create all missing assignments
         final Set <String> aRolesToBeAssigned = CollectionHelper.getDifference (aRoleIDs, aPrevRoleIDs);
         for (final String sRoleID : aRolesToBeAssigned)
-          aAccessMgr.assignRoleToUserGroup (sUserGroupID, sRoleID);
+          aUserGroupMgr.assignRoleToUserGroup (sUserGroupID, sRoleID);
 
         // Delete all old assignments
         final Set <String> aRolesToBeUnassigned = CollectionHelper.getDifference (aPrevRoleIDs, aRoleIDs);
         for (final String sRoleID : aRolesToBeUnassigned)
-          aAccessMgr.unassignRoleFromUserGroup (sUserGroupID, sRoleID);
+          aUserGroupMgr.unassignRoleFromUserGroup (sUserGroupID, sRoleID);
       }
       else
       {
         // We're creating a new object
-        final IUserGroup aNewUserGroup = aAccessMgr.createNewUserGroup (sName, sDescription, aCustomAttrMap);
+        final IUserGroup aNewUserGroup = aUserGroupMgr.createNewUserGroup (sName, sDescription, aCustomAttrMap);
         aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
 
         // assign to the matching internal user groups
         for (final String sRoleID : aRoleIDs)
-          aAccessMgr.assignRoleToUserGroup (aNewUserGroup.getID (), sRoleID);
+          aUserGroupMgr.assignRoleToUserGroup (aNewUserGroup.getID (), sRoleID);
       }
     }
   }
@@ -410,15 +415,15 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   @Override
   protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
   {
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
-    if (AccessManager.getInstance ().deleteUserGroup (aSelectedObject.getID ()).isChanged ())
-      aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                            aSelectedObject.getName ())));
+    if (aUserGroupMgr.deleteUserGroup (aSelectedObject.getID ()).isChanged ())
+      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                               aSelectedObject.getName ())));
     else
-      aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                        aSelectedObject.getName ())));
+      aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                           aSelectedObject.getName ())));
   }
 
   @Override
@@ -426,6 +431,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();
+    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     // Toolbar on top
     final BootstrapButtonToolbar aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
@@ -434,7 +440,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final HCTable aTable = new HCTable (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_IN_USE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
-    final Collection <? extends IUserGroup> aUserGroups = AccessManager.getInstance ().getAllUserGroups ();
+    final Collection <? extends IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroups ();
     for (final IUserGroup aUserGroup : aUserGroups)
     {
       final ISimpleURL aViewLink = createViewURL (aWPEC, aUserGroup);

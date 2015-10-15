@@ -72,11 +72,13 @@ import com.helger.photon.bootstrap3.uictrls.ext.BootstrapSecurityUI;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldBoolean;
-import com.helger.photon.security.AccessManager;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.role.IRole;
 import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.IUserGroup;
+import com.helger.photon.security.usergroup.UserGroupManager;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
@@ -252,7 +254,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
   @Nullable
   protected IUser getSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nullable final String sID)
   {
-    return AccessManager.getInstance ().getUserOfID (sID);
+    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    return aUserMgr.getUserOfID (sID);
   }
 
   @Override
@@ -315,7 +318,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final AccessManager aMgr = AccessManager.getInstance ();
+    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                          SecurityHelper.getUserDisplayName (aSelectedObject,
@@ -355,7 +358,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                  .setCtrl (aSelectedObject.getPasswordHash ().getAlgorithmName ()));
 
     // user groups
-    final Collection <IUserGroup> aUserGroups = aMgr.getAllUserGroupsWithAssignedUser (aSelectedObject.getID ());
+    final Collection <IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aSelectedObject.getID ());
     if (aUserGroups.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
@@ -373,7 +376,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     }
 
     // roles
-    final Set <IRole> aUserRoles = aMgr.getAllUserRoles (aSelectedObject.getID ());
+    final Set <IRole> aUserRoles = SecurityHelper.getAllUserRoles (aSelectedObject.getID ());
     if (aUserRoles.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
@@ -431,7 +434,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final boolean bIsAdministrator = aSelectedObject != null && aSelectedObject.isAdministrator ();
-    final AccessManager aAccessMgr = AccessManager.getInstance ();
+    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
     final boolean bEdit = eFormAction.isEdit ();
 
     String sLoginName = aWPEC.getAttributeAsString (FIELD_LOGINNAME);
@@ -442,7 +446,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final String sPasswordConf = aWPEC.getAttributeAsString (FIELD_PASSWORD_CONFIRM);
     final boolean bEnabled = bIsAdministrator ? true : aWPEC.getCheckBoxAttr (FIELD_ENABLED, DEFAULT_USER_ENABLED);
     final String sDescription = aWPEC.getAttributeAsString (FIELD_DESCRIPTION);
-    final Collection <String> aUserGroupIDs = bIsAdministrator ? aAccessMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ())
+    final Collection <String> aUserGroupIDs = bIsAdministrator ? aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ())
                                                                : aWPEC.getAttributeAsList (FIELD_USERGROUPS);
 
     if (useEmailAddressAsLoginName ())
@@ -471,7 +475,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         aFormErrors.addFieldError (FIELD_EMAILADDRESS, EText.ERROR_EMAIL_INVALID.getDisplayText (aDisplayLocale));
       else
       {
-        final IUser aSameLoginUser = aAccessMgr.getUserOfLoginName (sEmailAddress);
+        final IUser aSameLoginUser = aUserMgr.getUserOfLoginName (sEmailAddress);
         if (aSameLoginUser != null)
           if (!bEdit || !aSameLoginUser.equals (aSelectedObject))
             aFormErrors.addFieldError (FIELD_EMAILADDRESS, EText.ERROR_EMAIL_IN_USE.getDisplayText (aDisplayLocale));
@@ -492,7 +496,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     if (CollectionHelper.isEmpty (aUserGroupIDs))
       aFormErrors.addFieldError (FIELD_USERGROUPS, EText.ERROR_NO_USERGROUP.getDisplayText (aDisplayLocale));
     else
-      if (!aAccessMgr.containsAllUserGroupsWithID (aUserGroupIDs))
+      if (!aUserGroupMgr.containsAllUserGroupsWithID (aUserGroupIDs))
         aFormErrors.addFieldError (FIELD_USERGROUPS, EText.ERROR_INVALID_USERGROUPS.getDisplayText (aDisplayLocale));
 
     // Call custom method
@@ -513,50 +517,50 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
           aAttrMap.putAll (aCustomAttrMap);
 
         // We're editing an existing object
-        aAccessMgr.setUserData (sUserID,
-                                sLoginName,
-                                sEmailAddress,
-                                sFirstName,
-                                sLastName,
-                                sDescription,
-                                m_aDefaultUserLocale,
-                                aAttrMap,
-                                !bEnabled);
+        aUserMgr.setUserData (sUserID,
+                              sLoginName,
+                              sEmailAddress,
+                              sFirstName,
+                              sLastName,
+                              sDescription,
+                              m_aDefaultUserLocale,
+                              aAttrMap,
+                              !bEnabled);
         aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
 
         // assign to the matching user groups
-        final Collection <String> aPrevUserGroupIDs = aAccessMgr.getAllUserGroupIDsWithAssignedUser (sUserID);
+        final Collection <String> aPrevUserGroupIDs = aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (sUserID);
         // Create all missing assignments
         final Set <String> aUserGroupsToBeAssigned = CollectionHelper.getDifference (aUserGroupIDs, aPrevUserGroupIDs);
         for (final String sUserGroupID : aUserGroupsToBeAssigned)
-          aAccessMgr.assignUserToUserGroup (sUserGroupID, sUserID);
+          aUserGroupMgr.assignUserToUserGroup (sUserGroupID, sUserID);
 
         // Delete all old assignments
         final Set <String> aUserGroupsToBeUnassigned = CollectionHelper.getDifference (aPrevUserGroupIDs,
                                                                                        aUserGroupIDs);
         for (final String sUserGroupID : aUserGroupsToBeUnassigned)
-          aAccessMgr.unassignUserFromUserGroup (sUserGroupID, sUserID);
+          aUserGroupMgr.unassignUserFromUserGroup (sUserGroupID, sUserID);
 
       }
       else
       {
         // We're creating a new object
-        final IUser aNewUser = aAccessMgr.createNewUser (sLoginName,
-                                                         sEmailAddress,
-                                                         sPassword,
-                                                         sFirstName,
-                                                         sLastName,
-                                                         sDescription,
-                                                         m_aDefaultUserLocale,
-                                                         aCustomAttrMap,
-                                                         !bEnabled);
+        final IUser aNewUser = aUserMgr.createNewUser (sLoginName,
+                                                       sEmailAddress,
+                                                       sPassword,
+                                                       sFirstName,
+                                                       sLastName,
+                                                       sDescription,
+                                                       m_aDefaultUserLocale,
+                                                       aCustomAttrMap,
+                                                       !bEnabled);
         if (aNewUser != null)
         {
           aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
 
           // assign to the matching internal user groups
           for (final String sUserGroupID : aUserGroupIDs)
-            aAccessMgr.assignUserToUserGroup (sUserGroupID, aNewUser.getID ());
+            aUserGroupMgr.assignUserToUserGroup (sUserGroupID, aNewUser.getID ());
         }
         else
           aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.FAILURE_CREATE.getDisplayText (aDisplayLocale)));
@@ -583,7 +587,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
   {
     final boolean bIsAdministrator = aSelectedObject != null && aSelectedObject.isAdministrator ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final AccessManager aMgr = AccessManager.getInstance ();
+    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     aForm.addChild (createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          SecurityHelper.getUserDisplayName (aSelectedObject,
@@ -681,7 +685,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
     {
       final Collection <String> aUserGroupIDs = aSelectedObject == null ? aWPEC.getAttributeAsList (FIELD_USERGROUPS)
-                                                                        : aMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ());
+                                                                        : aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ());
       final HCUserGroupForUserSelect aSelect = new HCUserGroupForUserSelect (new RequestField (FIELD_USERGROUPS),
                                                                              aUserGroupIDs);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
@@ -711,6 +715,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
       final boolean bShowForm = true;
       final FormErrors aFormErrors = new FormErrors ();
+      final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
 
       if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
       {
@@ -731,7 +736,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
           if (aFormErrors.isEmpty ())
           {
-            AccessManager.getInstance ().setUserPassword (aSelectedObject.getID (), sPlainTextPassword);
+            aUserMgr.setUserPassword (aSelectedObject.getID (), sPlainTextPassword);
             aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                           SecurityHelper.getUserDisplayName (aSelectedObject,
                                                                                                                                                              aDisplayLocale))));
@@ -793,7 +798,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final boolean bSeparateLoginName = !useEmailAddressAsLoginName ();
-    final AccessManager aMgr = AccessManager.getInstance ();
+    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+
     // List existing
     final HCTable aTable = new HCTable ().setID (sTableID);
     aTable.addColumn (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)));
@@ -814,7 +820,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       aRow.addCell (new HCA (aViewLink).addChild (aCurUser.getEmailAddress ()));
 
       // User groups
-      final Collection <IUserGroup> aUserGroups = aMgr.getAllUserGroupsWithAssignedUser (aCurUser.getID ());
+      final Collection <IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aCurUser.getID ());
       final StringBuilder aUserGroupsStr = new StringBuilder ();
       for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aUserGroups,
                                                                      new CollatingComparatorHasName <IUserGroup> (aDisplayLocale)))
@@ -892,7 +898,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
   protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    if (AccessManager.getInstance ().deleteUser (aSelectedObject.getID ()).isChanged ())
+    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+
+    if (aUserMgr.deleteUser (aSelectedObject.getID ()).isChanged ())
       aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                             aSelectedObject.getDisplayName ())));
     else
@@ -905,6 +913,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();
+    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
 
     // Toolbar on top
     final BootstrapButtonToolbar aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
@@ -912,18 +921,16 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
-    final AccessManager aMgr = AccessManager.getInstance ();
-
-    final Collection <? extends IUser> aActiveUsers = aMgr.getAllActiveUsers ();
+    final Collection <? extends IUser> aActiveUsers = aUserMgr.getAllActiveUsers ();
     aTabBox.addTab (EText.TAB_ACTIVE.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aActiveUsers.size ())),
                     getTabWithUsers (aWPEC, aActiveUsers, getID () + "1"));
 
-    final Collection <? extends IUser> aDisabledUsers = aMgr.getAllDisabledUsers ();
+    final Collection <? extends IUser> aDisabledUsers = aUserMgr.getAllDisabledUsers ();
     aTabBox.addTab (EText.TAB_DISABLED.getDisplayTextWithArgs (aDisplayLocale,
                                                                Integer.toString (aDisabledUsers.size ())),
                     getTabWithUsers (aWPEC, aDisabledUsers, getID () + "2"));
 
-    final Collection <? extends IUser> aDeletedUsers = aMgr.getAllDeletedUsers ();
+    final Collection <? extends IUser> aDeletedUsers = aUserMgr.getAllDeletedUsers ();
     aTabBox.addTab (EText.TAB_DELETED.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aDeletedUsers.size ())),
                     getTabWithUsers (aWPEC, aDeletedUsers, getID () + "3"));
     aNodeList.addChild (aTabBox);

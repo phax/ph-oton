@@ -56,10 +56,12 @@ import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.security.AccessManager;
 import com.helger.photon.security.CSecurity;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
+import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.usergroup.IUserGroup;
+import com.helger.photon.security.usergroup.UserGroupManager;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -141,7 +143,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   @Nullable
   protected IRole getSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nullable final String sID)
   {
-    return AccessManager.getInstance ().getRoleOfID (sID);
+    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+    return aRoleMgr.getRoleOfID (sID);
   }
 
   @Override
@@ -175,8 +178,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                                    .setCtrl (HCExtHelper.nl2divList (aSelectedObject.getDescription ())));
 
     // All user groups to which the role is assigned
-    final Collection <IUserGroup> aAssignedUserGroups = AccessManager.getInstance ()
-                                                                     .getAllUserGroupsWithAssignedRole (aSelectedObject.getID ());
+    final Collection <IUserGroup> aAssignedUserGroups = PhotonSecurityManager.getUserGroupMgr ()
+                                                                             .getAllUserGroupsWithAssignedRole (aSelectedObject.getID ());
     if (aAssignedUserGroups.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
@@ -247,9 +250,11 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
   protected static boolean canDeleteRole (@Nullable final IRole aRole)
   {
+    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+    // TODO add getCount method
     return aRole != null &&
            !aRole.getID ().equals (CSecurity.ROLE_ADMINISTRATOR_ID) &&
-           AccessManager.getInstance ().getAllUserGroupIDsWithAssignedRole (aRole.getID ()).isEmpty ();
+           aUserGroupMgr.getAllUserGroupIDsWithAssignedRole (aRole.getID ()).isEmpty ();
   }
 
   @Override
@@ -265,18 +270,18 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   @Override
   protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IRole aSelectedObject)
   {
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
 
-    if (AccessManager.getInstance ().deleteRole (aSelectedObject.getID ()).isChanged ())
+    if (aRoleMgr.deleteRole (aSelectedObject.getID ()).isChanged ())
     {
-      aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                            aSelectedObject.getName ())));
+      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                               aSelectedObject.getName ())));
     }
     else
     {
-      aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                        aSelectedObject.getName ())));
+      aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                           aSelectedObject.getName ())));
     }
   }
 
@@ -285,17 +290,18 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();
-    final AccessManager aAccessMgr = AccessManager.getInstance ();
+    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+    final UserGroupManager aUserGroupManager = PhotonSecurityManager.getUserGroupMgr ();
 
     final HCTable aTable = new HCTable (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_IN_USE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
-    final Collection <? extends IRole> aRoles = aAccessMgr.getAllRoles ();
+    final Collection <? extends IRole> aRoles = aRoleMgr.getAllRoles ();
     for (final IRole aRole : aRoles)
     {
       final ISimpleURL aViewLink = createViewURL (aWPEC, aRole);
 
-      final Collection <IUserGroup> aAssignedUserGroups = aAccessMgr.getAllUserGroupsWithAssignedRole (aRole.getID ());
+      final Collection <IUserGroup> aAssignedUserGroups = aUserGroupManager.getAllUserGroupsWithAssignedRole (aRole.getID ());
 
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (new HCA (aViewLink).addChild (aRole.getName ()));
