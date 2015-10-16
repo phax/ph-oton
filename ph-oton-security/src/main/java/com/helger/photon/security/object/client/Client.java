@@ -37,7 +37,7 @@ import com.helger.photon.security.object.StubObject;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class Client extends AbstractObject implements IClient
+public class Client extends AbstractObject implements IClient
 {
   public static final ObjectType OT = new ObjectType ("client");
 

@@ -42,7 +42,7 @@ import com.helger.photon.security.object.client.AbstractClientObject;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class AccountingArea extends AbstractClientObject implements IAccountingArea
+public class AccountingArea extends AbstractClientObject implements IAccountingArea
 {
   public static final ObjectType OT = new ObjectType ("accountingarea");
 
