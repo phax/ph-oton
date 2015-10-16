@@ -1,50 +1,62 @@
-package com.helger.photon.security.apptoken;
+package com.helger.photon.security.token.app;
+
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.basic.object.AbstractBaseObject;
 import com.helger.photon.security.object.StubObject;
+import com.helger.photon.security.token.accesstoken.AccessToken;
 
 /**
  * A single token for granting another application access to this application.
  *
  * @author Philip Helger
  */
-public class AppToken extends AbstractBaseObject
+public class AppToken extends AbstractBaseObject implements IAppToken
 {
   public static final ObjectType OT = new ObjectType ("apptoken");
 
-  private final String m_sToken;
+  private final List <AccessToken> m_aAccessTokens;
   private String m_sOwnerName;
   private String m_sOwnerURL;
   private String m_sOwnerContact;
+  private String m_sOwnerContactEmail;
 
-  public AppToken (@Nonnull @Nonempty final String sOwnerName, @Nullable final String sOwnerURL, @Nullable final String sOwnerContact)
+  public AppToken (@Nonnull @Nonempty final String sOwnerName,
+                   @Nullable final String sOwnerURL,
+                   @Nullable final String sOwnerContact,
+                   @Nullable final String sOwnerContactEmail)
   {
-    this (StubObject.createForCurrentUser (), createNewToken (), sOwnerName, sOwnerURL, sOwnerContact);
+    this (StubObject.createForCurrentUser (),
+          CollectionHelper.newList (AccessToken.createNewAccessTokenValidFromNow ()),
+          sOwnerName,
+          sOwnerURL,
+          sOwnerContact,
+          sOwnerContactEmail);
   }
 
   AppToken (@Nonnull final StubObject aStubObject,
-            @Nonnull @Nonempty final String sToken,
+            @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
             @Nonnull @Nonempty final String sOwnerName,
             @Nullable final String sOwnerURL,
-            @Nullable final String sOwnerContact)
+            @Nullable final String sOwnerContact,
+            @Nullable final String sOwnerContactEmail)
   {
     super (aStubObject);
-    // The token is read-only
-    m_sToken = ValueEnforcer.notEmpty (sToken, "Token");
+    m_aAccessTokens = ValueEnforcer.notEmpty (aAccessTokens, "AccessTokens");
     setOwnerName (sOwnerName);
     setOwnerURL (sOwnerURL);
     setOwnerContact (sOwnerContact);
+    setOwnerContactEmail (sOwnerContactEmail);
   }
 
   @Nonnull
@@ -54,12 +66,14 @@ public class AppToken extends AbstractBaseObject
   }
 
   @Nonnull
-  public String getToken ()
+  @Nonempty
+  public List <AccessToken> getAllAccessTokens ()
   {
-    return m_sToken;
+    return CollectionHelper.newList (m_aAccessTokens);
   }
 
   @Nonnull
+  @Nonempty
   public String getOwnerName ()
   {
     return m_sOwnerName;
@@ -105,24 +119,30 @@ public class AppToken extends AbstractBaseObject
     return EChange.CHANGED;
   }
 
+  @Nullable
+  public String getOwnerContactEmail ()
+  {
+    return m_sOwnerContactEmail;
+  }
+
+  @Nonnull
+  public EChange setOwnerContactEmail (@Nullable final String sOwnerContactEmail)
+  {
+    if (EqualsHelper.equals (sOwnerContactEmail, m_sOwnerContactEmail))
+      return EChange.UNCHANGED;
+    m_sOwnerContactEmail = sOwnerContactEmail;
+    return EChange.CHANGED;
+  }
+
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("token", m_sToken)
-                            .append ("ownerName", m_sOwnerName)
-                            .append ("ownerURL", m_sOwnerURL)
-                            .append ("ownerContact", m_sOwnerContact)
+                            .append ("AccessTokens", m_aAccessTokens)
+                            .append ("OwnerName", m_sOwnerName)
+                            .appendIfNotNull ("OwnerURL", m_sOwnerURL)
+                            .appendIfNotNull ("OwnerContact", m_sOwnerContact)
+                            .appendIfNotNull ("OwnerContactEmail", m_sOwnerContactEmail)
                             .toString ();
-  }
-
-  @Nonnull
-  @Nonempty
-  public static String createNewToken ()
-  {
-    final byte [] aBytes = new byte [64];
-    VerySecureRandom.getInstance ().nextBytes (aBytes);
-    // Returns a 128 byte string
-    return StringHelper.getHexEncoded (aBytes);
   }
 }

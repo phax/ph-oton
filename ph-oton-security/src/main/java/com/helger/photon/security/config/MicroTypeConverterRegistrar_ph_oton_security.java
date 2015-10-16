@@ -23,6 +23,8 @@ import com.helger.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistry;
 import com.helger.photon.security.role.Role;
 import com.helger.photon.security.role.RoleMicroTypeConverter;
+import com.helger.photon.security.token.revocation.RevocationStatus;
+import com.helger.photon.security.token.revocation.RevocationStatusMicroTypeConverter;
 import com.helger.photon.security.user.User;
 import com.helger.photon.security.user.UserMicroTypeConverter;
 import com.helger.photon.security.usergroup.UserGroup;
@@ -38,6 +40,7 @@ public final class MicroTypeConverterRegistrar_ph_oton_security implements IMicr
 {
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
+    aRegistry.registerMicroElementTypeConverter (RevocationStatus.class, new RevocationStatusMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (Role.class, new RoleMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (User.class, new UserMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (UserGroup.class, new UserGroupMicroTypeConverter ());
