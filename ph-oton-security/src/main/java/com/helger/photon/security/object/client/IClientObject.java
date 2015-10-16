@@ -19,7 +19,7 @@ package com.helger.photon.security.object.client;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.security.object.IObject;
+import com.helger.photon.basic.object.IObject;
 
 /**
  * Base interface for an object that is uniquely assigned to a client.

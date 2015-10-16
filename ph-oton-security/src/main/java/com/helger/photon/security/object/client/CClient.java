@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object;
+package com.helger.photon.security.object.client;
 
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.photon.basic.object.IObject;
 
 /**
  * Constants for {@link IObject} etc.
@@ -26,14 +27,14 @@ import com.helger.commons.annotation.PresentForCodeCoverage;
  * @author Philip Helger
  */
 @Immutable
-public final class CObject
+public final class CClient
 {
   public static final String GLOBAL_CLIENT = "$";
   public static final String GLOBAL_CLIENT_NAME = "$system client$";
 
   @PresentForCodeCoverage
-  private static final CObject s_aInstance = new CObject ();
+  private static final CClient s_aInstance = new CClient ();
 
-  private CObject ()
+  private CClient ()
   {}
 }

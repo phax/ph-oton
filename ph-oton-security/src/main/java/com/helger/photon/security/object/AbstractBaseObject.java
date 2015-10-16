@@ -30,6 +30,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.util.PDTHelper;
 import com.helger.photon.basic.auth.CBasicSecurity;
+import com.helger.photon.basic.object.IObject;
 import com.helger.photon.security.login.LoggedInUserManager;
 
 /**

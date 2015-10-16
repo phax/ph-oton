@@ -38,7 +38,6 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
-import com.helger.photon.security.object.CObject;
 
 /**
  * Manages all available clients.
@@ -62,7 +61,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
   @Nonnull
   protected EChange onInit ()
   {
-    createClient (CObject.GLOBAL_CLIENT, CObject.GLOBAL_CLIENT_NAME);
+    createClient (CClient.GLOBAL_CLIENT, CClient.GLOBAL_CLIENT_NAME);
     return EChange.CHANGED;
   }
 

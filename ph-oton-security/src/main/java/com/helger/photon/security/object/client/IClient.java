@@ -17,8 +17,8 @@
 package com.helger.photon.security.object.client;
 
 import com.helger.commons.name.IHasDisplayName;
+import com.helger.photon.basic.object.IObject;
 import com.helger.photon.basic.uitext.IHasUIText;
-import com.helger.photon.security.object.IObject;
 
 /**
  * Represents a single client (Mandant)

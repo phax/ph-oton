@@ -25,6 +25,7 @@ import org.joda.time.LocalDateTime;
 import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
+import com.helger.photon.basic.object.IObject;
 
 /**
  * Abstract base class for object related micro type conversion.

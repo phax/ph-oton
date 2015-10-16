@@ -23,6 +23,7 @@ import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.photon.basic.object.IObject;
 
 /**
  * Abstract base implementation of {@link IObject} that handles everything

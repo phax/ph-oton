@@ -27,7 +27,6 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.security.object.AbstractObject;
-import com.helger.photon.security.object.CObject;
 import com.helger.photon.security.object.StubObject;
 
 /**
@@ -69,7 +68,7 @@ public final class Client extends AbstractObject implements IClient
 
   public boolean isGlobalClient ()
   {
-    return CObject.GLOBAL_CLIENT.equals (getID ());
+    return CClient.GLOBAL_CLIENT.equals (getID ());
   }
 
   @Nonnull
