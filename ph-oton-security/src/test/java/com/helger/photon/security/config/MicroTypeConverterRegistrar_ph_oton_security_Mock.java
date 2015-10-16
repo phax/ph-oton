@@ -22,11 +22,11 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistry;
+import com.helger.photon.basic.object.client.IClient;
+import com.helger.photon.basic.object.client.IClientResolver;
 import com.helger.photon.security.object.accarea.AccountingArea;
 import com.helger.photon.security.object.accarea.AccountingAreaMicroTypeConverter;
 import com.helger.photon.security.object.client.Client;
-import com.helger.photon.security.object.client.IClient;
-import com.helger.photon.security.object.client.IClientResolver;
 
 /**
  * Special micro type converter for this project.

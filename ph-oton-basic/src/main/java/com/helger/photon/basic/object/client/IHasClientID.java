@@ -14,24 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.accarea;
+package com.helger.photon.basic.object.client;
 
 import javax.annotation.Nullable;
 
 /**
- * Resolver for {@link IAccountingArea} objects.
- * 
+ * Base interface for objects that have a client ID.
+ *
  * @author Philip Helger
  */
-public interface IAccountingAreaResolver
+public interface IHasClientID
 {
   /**
-   * Get the accounting area of the specified ID.
-   * 
-   * @param sID
-   *        The ID to be resolved. May be <code>null</code>.
-   * @return <code>null</code> if no such accounting area exists.
+   * @return The client ID or <code>null</code>.
    */
   @Nullable
-  IAccountingArea getAccountingAreaOfID (@Nullable String sID);
+  String getClientID ();
+
+  /**
+   * Check if the passed client ID has the same ID as this object
+   *
+   * @param sClientID
+   *        The client ID to check. May be <code>null</code>.
+   * @return <code>true</code> if this object and the passed object have the
+   *         same client ID
+   */
+  boolean hasSameClientID (@Nullable String sClientID);
 }

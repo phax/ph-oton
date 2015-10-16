@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
+import com.helger.photon.basic.object.client.IClient;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
 
 public final class ClientMicroTypeConverter extends AbstractObjectMicroTypeConverter

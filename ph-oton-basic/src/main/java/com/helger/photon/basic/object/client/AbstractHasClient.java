@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.client;
+package com.helger.photon.basic.object.client;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

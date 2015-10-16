@@ -14,20 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.accarea;
+package com.helger.photon.basic.object.client;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+import com.helger.commons.annotation.Nonempty;
+import com.helger.photon.basic.object.IObject;
 
 /**
- * Base interface for objects that have an accounting area ID.
- * 
+ * Base interface for an object that is uniquely assigned to a client.
+ *
  * @author Philip Helger
  */
-public interface IHasAccountingAreaID
+public interface IClientObject extends IObject, IHasClient
 {
   /**
-   * @return The accounting area ID or <code>null</code>.
+   * @return The client ID to which the object is assigned to. May neither be
+   *         <code>null</code> nor empty.
+   * @see #getClient()
    */
-  @Nullable
-  String getAccountingAreaID ();
+  @Nonnull
+  @Nonempty
+  String getClientID ();
+
+  /**
+   * @return The client to which the object is assigned to. May not be
+   *         <code>null</code>.
+   */
+  @Nonnull
+  IClient getClient ();
 }

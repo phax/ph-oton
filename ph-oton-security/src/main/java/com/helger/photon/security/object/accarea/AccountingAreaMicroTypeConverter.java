@@ -28,9 +28,10 @@ import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.system.SystemHelper;
 import com.helger.masterdata.address.Address;
 import com.helger.masterdata.currency.ECurrency;
+import com.helger.photon.basic.object.accarea.IAccountingArea;
+import com.helger.photon.basic.object.client.IClient;
+import com.helger.photon.basic.object.client.IClientResolver;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
-import com.helger.photon.security.object.client.IClient;
-import com.helger.photon.security.object.client.IClientResolver;
 
 public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroTypeConverter
 {

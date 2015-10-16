@@ -31,9 +31,10 @@ import com.helger.commons.type.ObjectType;
 import com.helger.masterdata.address.Address;
 import com.helger.masterdata.address.IAddress;
 import com.helger.masterdata.currency.ECurrency;
+import com.helger.photon.basic.object.accarea.IAccountingArea;
+import com.helger.photon.basic.object.client.IClient;
 import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.object.client.AbstractClientObject;
-import com.helger.photon.security.object.client.IClient;
 
 /**
  * Default implementation of {@link IAccountingArea}

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.accarea;
+package com.helger.photon.basic.object.accarea;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,8 +24,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.security.object.client.AbstractHasClient;
-import com.helger.photon.security.object.client.IClient;
+import com.helger.photon.basic.object.client.AbstractHasClient;
+import com.helger.photon.basic.object.client.IClient;
 
 @Immutable
 public abstract class AbstractHasAccountingAreaOptionalObject extends AbstractHasClient implements IHasAccountingArea

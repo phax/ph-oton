@@ -27,10 +27,12 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.photon.basic.object.accarea.IAccountingArea;
+import com.helger.photon.basic.object.accarea.IAccountingAreaObject;
+import com.helger.photon.basic.object.client.IClient;
+import com.helger.photon.basic.object.client.IClientObject;
 import com.helger.photon.security.object.AbstractBaseObject;
 import com.helger.photon.security.object.StubObject;
-import com.helger.photon.security.object.client.IClient;
-import com.helger.photon.security.object.client.IClientObject;
 
 /**
  * Like {@link AbstractAccountingAreaObject} but with an optional accounting

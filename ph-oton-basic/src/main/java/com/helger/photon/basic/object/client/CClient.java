@@ -14,33 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.client;
+package com.helger.photon.basic.object.client;
 
-import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.photon.basic.object.IObject;
 
 /**
- * Base interface for an object that is uniquely assigned to a client.
+ * Constants for {@link IObject} etc.
  *
  * @author Philip Helger
  */
-public interface IClientObject extends IObject, IHasClient
+@Immutable
+public final class CClient
 {
-  /**
-   * @return The client ID to which the object is assigned to. May neither be
-   *         <code>null</code> nor empty.
-   * @see #getClient()
-   */
-  @Nonnull
-  @Nonempty
-  String getClientID ();
+  public static final String GLOBAL_CLIENT = "$";
+  public static final String GLOBAL_CLIENT_NAME = "$system client$";
 
-  /**
-   * @return The client to which the object is assigned to. May not be
-   *         <code>null</code>.
-   */
-  @Nonnull
-  IClient getClient ();
+  @PresentForCodeCoverage
+  private static final CClient s_aInstance = new CClient ();
+
+  private CClient ()
+  {}
 }

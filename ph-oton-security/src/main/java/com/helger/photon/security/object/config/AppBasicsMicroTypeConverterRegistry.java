@@ -21,11 +21,11 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistry;
+import com.helger.photon.basic.object.client.IClientResolver;
 import com.helger.photon.security.object.accarea.AccountingArea;
 import com.helger.photon.security.object.accarea.AccountingAreaMicroTypeConverter;
 import com.helger.photon.security.object.client.Client;
 import com.helger.photon.security.object.client.ClientMicroTypeConverter;
-import com.helger.photon.security.object.client.IClientResolver;
 
 @Immutable
 public final class AppBasicsMicroTypeConverterRegistry

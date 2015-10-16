@@ -14,21 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.client;
+package com.helger.photon.basic.object.accarea;
 
-import com.helger.commons.name.IHasDisplayName;
-import com.helger.photon.basic.object.IObject;
-import com.helger.photon.basic.uitext.IHasUIText;
+import javax.annotation.Nullable;
 
 /**
- * Represents a single client (Mandant)
+ * Resolver for {@link IAccountingArea} objects.
  * 
  * @author Philip Helger
  */
-public interface IClient extends IObject, IHasDisplayName, IHasUIText
+public interface IAccountingAreaResolver
 {
   /**
-   * @return <code>true</code> if this is the system global client
+   * Get the accounting area of the specified ID.
+   * 
+   * @param sID
+   *        The ID to be resolved. May be <code>null</code>.
+   * @return <code>null</code> if no such accounting area exists.
    */
-  boolean isGlobalClient ();
+  @Nullable
+  IAccountingArea getAccountingAreaOfID (@Nullable String sID);
 }

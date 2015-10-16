@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.accarea;
+package com.helger.photon.basic.object.accarea;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,8 +22,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.masterdata.address.IAddress;
 import com.helger.masterdata.currency.ECurrency;
+import com.helger.photon.basic.object.client.IClientObject;
 import com.helger.photon.basic.uitext.IHasUIText;
-import com.helger.photon.security.object.client.IClientObject;
 
 /**
  * This interface represents a single accounting area.

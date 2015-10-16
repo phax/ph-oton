@@ -38,6 +38,9 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
+import com.helger.photon.basic.object.client.CClient;
+import com.helger.photon.basic.object.client.IClient;
+import com.helger.photon.basic.object.client.IClientResolver;
 
 /**
  * Manages all available clients.

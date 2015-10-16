@@ -14,11 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.accarea;
+package com.helger.photon.basic.object.accarea;
 
 import javax.annotation.Nullable;
 
-import com.helger.photon.security.object.client.IHasClient;
+import com.helger.photon.basic.object.client.IHasClient;
 
 /**
  * Base interface for objects that have an accounting area.

@@ -41,7 +41,9 @@ import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
-import com.helger.photon.security.object.client.IClient;
+import com.helger.photon.basic.object.accarea.IAccountingArea;
+import com.helger.photon.basic.object.accarea.IAccountingAreaResolver;
+import com.helger.photon.basic.object.client.IClient;
 
 /**
  * Manages all available accounting areas.
