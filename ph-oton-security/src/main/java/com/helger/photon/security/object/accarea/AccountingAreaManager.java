@@ -44,6 +44,7 @@ import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.object.accarea.IAccountingArea;
 import com.helger.photon.basic.object.accarea.IAccountingAreaResolver;
 import com.helger.photon.basic.object.client.IClient;
+import com.helger.photon.security.object.ObjectHelper;
 
 /**
  * Manages all available accounting areas.
@@ -137,19 +138,19 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditCreateSuccess (AccountingArea.OT,
-                                     aAccountingArea.getID (),
-                                     sDisplayName,
-                                     sCompanyType,
-                                     sCompanyVATIN,
-                                     sCompanyNumber,
-                                     aAddress,
-                                     sTelephone,
-                                     sFax,
-                                     sEmailAddress,
-                                     eDefaultCurrency,
-                                     sOfficeLocation,
-                                     sCommercialRegistrationNumber,
-                                     sCommercialCourt);
+                                      aAccountingArea.getID (),
+                                      sDisplayName,
+                                      sCompanyType,
+                                      sCompanyVATIN,
+                                      sCompanyNumber,
+                                      aAddress,
+                                      sTelephone,
+                                      sFax,
+                                      sEmailAddress,
+                                      eDefaultCurrency,
+                                      sOfficeLocation,
+                                      sCommercialRegistrationNumber,
+                                      sCommercialCourt);
     return aAccountingArea;
   }
 
@@ -197,7 +198,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      aAccountingArea.setLastModificationNow ();
+      ObjectHelper.setLastModificationNow (aAccountingArea);
       markAsChanged ();
     }
     finally
@@ -205,20 +206,20 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditModifySuccess (AccountingArea.OT,
-                                     "all",
-                                     sAccountingAreaID,
-                                     sDisplayName,
-                                     sCompanyType,
-                                     sCompanyVATIN,
-                                     sCompanyNumber,
-                                     aAddress,
-                                     sTelephone,
-                                     sFax,
-                                     sEmailAddress,
-                                     eDefaultCurrency,
-                                     sOfficeLocation,
-                                     sCommercialRegistrationNumber,
-                                     sCommercialCourt);
+                                      "all",
+                                      sAccountingAreaID,
+                                      sDisplayName,
+                                      sCompanyType,
+                                      sCompanyVATIN,
+                                      sCompanyNumber,
+                                      aAddress,
+                                      sTelephone,
+                                      sFax,
+                                      sEmailAddress,
+                                      eDefaultCurrency,
+                                      sOfficeLocation,
+                                      sCommercialRegistrationNumber,
+                                      sCommercialCourt);
     return EChange.CHANGED;
   }
 

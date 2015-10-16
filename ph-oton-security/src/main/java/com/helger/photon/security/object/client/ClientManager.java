@@ -41,6 +41,7 @@ import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.object.client.CClient;
 import com.helger.photon.basic.object.client.IClient;
 import com.helger.photon.basic.object.client.IClientResolver;
+import com.helger.photon.security.object.ObjectHelper;
 
 /**
  * Manages all available clients.
@@ -138,7 +139,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      aClient.setLastModificationNow ();
+      ObjectHelper.setLastModificationNow (aClient);
       markAsChanged ();
     }
     finally

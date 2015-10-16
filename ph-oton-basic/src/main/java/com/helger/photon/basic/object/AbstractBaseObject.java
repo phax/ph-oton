@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object;
+package com.helger.photon.basic.object;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,13 +25,8 @@ import org.joda.time.LocalDateTime;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTFactory;
 import com.helger.datetime.util.PDTHelper;
-import com.helger.photon.basic.auth.CBasicSecurity;
-import com.helger.photon.basic.object.IObject;
-import com.helger.photon.security.login.LoggedInUserManager;
 
 /**
  * Abstract base implementation of {@link IObject} that handles everything
@@ -110,19 +105,7 @@ public abstract class AbstractBaseObject implements IObject
     return m_sLastModificationUserID;
   }
 
-  public final void setLastModificationNow ()
-  {
-    String sCurrentUserID = LoggedInUserManager.getInstance ().getCurrentUserID ();
-    if (StringHelper.hasNoText (sCurrentUserID))
-    {
-      // No user is logged in- use the internal guest user ID
-      sCurrentUserID = CBasicSecurity.USER_ID_NONE_LOGGED_IN;
-    }
-    setLastModification (PDTFactory.getCurrentLocalDateTime (), sCurrentUserID);
-  }
-
-  public final void setLastModification (@Nonnull final LocalDateTime aLastModificationDT,
-                                         @Nonnull @Nonempty final String sLastModificationUserID)
+  public final void setLastModification (@Nonnull final LocalDateTime aLastModificationDT, @Nonnull @Nonempty final String sLastModificationUserID)
   {
     ValueEnforcer.notNull (aLastModificationDT, "LastModificationDT");
     ValueEnforcer.notEmpty (sLastModificationUserID, "LastModificationUserID");
@@ -147,14 +130,7 @@ public abstract class AbstractBaseObject implements IObject
   }
 
   @Nonnull
-  public final EChange setDeletionNow ()
-  {
-    return setDeletion (PDTFactory.getCurrentLocalDateTime (), LoggedInUserManager.getInstance ().getCurrentUserID ());
-  }
-
-  @Nonnull
-  public final EChange setDeletion (@Nonnull final LocalDateTime aDeletionDT,
-                                    @Nonnull @Nonempty final String sDeletionUserID)
+  public final EChange setDeletion (@Nonnull final LocalDateTime aDeletionDT, @Nonnull @Nonempty final String sDeletionUserID)
   {
     ValueEnforcer.notNull (aDeletionDT, "DeletionDT");
     ValueEnforcer.notEmpty (sDeletionUserID, "DeletionUserID");
@@ -171,15 +147,7 @@ public abstract class AbstractBaseObject implements IObject
   }
 
   @Nonnull
-  public final EChange setUndeletionNow ()
-  {
-    return setUndeletion (PDTFactory.getCurrentLocalDateTime (),
-                          LoggedInUserManager.getInstance ().getCurrentUserID ());
-  }
-
-  @Nonnull
-  public final EChange setUndeletion (@Nonnull final LocalDateTime aUndeletionDT,
-                                      @Nonnull @Nonempty final String sUndeletionUserID)
+  public final EChange setUndeletion (@Nonnull final LocalDateTime aUndeletionDT, @Nonnull @Nonempty final String sUndeletionUserID)
   {
     ValueEnforcer.notNull (aUndeletionDT, "UndeletionDT");
     ValueEnforcer.notEmpty (sUndeletionUserID, "UndeletionUserID");

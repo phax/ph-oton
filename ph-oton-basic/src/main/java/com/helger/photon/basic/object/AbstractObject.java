@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object;
+package com.helger.photon.basic.object;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,7 +23,6 @@ import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.photon.basic.object.IObject;
 
 /**
  * Abstract base implementation of {@link IObject} that handles everything
