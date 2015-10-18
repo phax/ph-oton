@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.joda.time.LocalDateTime;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.CollectionHelper;
@@ -12,9 +14,12 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
+import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.object.AbstractObject;
+import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.token.accesstoken.AccessToken;
+import com.helger.photon.security.token.accesstoken.IAccessToken;
 
 /**
  * A single token for granting another application access to this application.
@@ -31,6 +36,9 @@ public class AppToken extends AbstractObject implements IAppToken
   private String m_sOwnerContact;
   private String m_sOwnerContactEmail;
 
+  // Status vars
+  private AccessToken m_aActiveAccessToken;
+
   public AppToken (@Nonnull @Nonempty final String sOwnerName,
                    @Nullable final String sOwnerURL,
                    @Nullable final String sOwnerContact,
@@ -42,6 +50,12 @@ public class AppToken extends AbstractObject implements IAppToken
           sOwnerURL,
           sOwnerContact,
           sOwnerContactEmail);
+  }
+
+  @Nullable
+  private static AccessToken _getIfNotRevoked (@Nullable final AccessToken aAccessToken)
+  {
+    return aAccessToken != null && !aAccessToken.isRevoked () ? aAccessToken : null;
   }
 
   AppToken (@Nonnull final StubObject aStubObject,
@@ -57,12 +71,19 @@ public class AppToken extends AbstractObject implements IAppToken
     setOwnerURL (sOwnerURL);
     setOwnerContact (sOwnerContact);
     setOwnerContactEmail (sOwnerContactEmail);
+    m_aActiveAccessToken = _getIfNotRevoked (CollectionHelper.getLastElement (aAccessTokens));
   }
 
   @Nonnull
   public ObjectType getObjectType ()
   {
     return OT;
+  }
+
+  @Nullable
+  public IAccessToken getActiveAccessToken ()
+  {
+    return m_aActiveAccessToken;
   }
 
   @Nonnull
@@ -134,6 +155,32 @@ public class AppToken extends AbstractObject implements IAppToken
     return EChange.CHANGED;
   }
 
+  @Nonnull
+  public EChange revokeActiveAccessToken (@Nonnull @Nonempty final String sRevocationUserID,
+                                          @Nonnull final LocalDateTime aRevocationDT,
+                                          @Nonnull @Nonempty final String sRevocationReason)
+  {
+    if (m_aActiveAccessToken == null)
+    {
+      // No active token present
+      return EChange.UNCHANGED;
+    }
+    m_aActiveAccessToken.markRevoked (sRevocationUserID, aRevocationDT, sRevocationReason);
+    m_aActiveAccessToken = null;
+    return EChange.CHANGED;
+  }
+
+  public void createNewAccessToken ()
+  {
+    if (m_aActiveAccessToken != null)
+      m_aActiveAccessToken.markRevoked (LoggedInUserManager.getInstance ().getCurrentUserID (),
+                                        PDTFactory.getCurrentLocalDateTime (),
+                                        "A new access token was created");
+    final AccessToken aNewToken = AccessToken.createNewAccessTokenValidFromNow ();
+    m_aAccessTokens.add (aNewToken);
+    m_aActiveAccessToken = aNewToken;
+  }
+
   @Override
   public String toString ()
   {
@@ -143,6 +190,7 @@ public class AppToken extends AbstractObject implements IAppToken
                             .appendIfNotNull ("OwnerURL", m_sOwnerURL)
                             .appendIfNotNull ("OwnerContact", m_sOwnerContact)
                             .appendIfNotNull ("OwnerContactEmail", m_sOwnerContactEmail)
+                            .append ("ActiveAccessToken", m_aActiveAccessToken)
                             .toString ();
   }
 }

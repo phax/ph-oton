@@ -22,8 +22,8 @@ public interface IAppToken extends IObject, Serializable
    * @return The main token to access this application from the outside. May be
    *         <code>null</code> if all tokens are expired or revoked.
    */
-  // @Nullable
-  // IAccessToken getActiveAccessToken ();
+  @Nullable
+  IAccessToken getActiveAccessToken ();
 
   /**
    * @return A list of all tokens used by this application. The latest, active
