@@ -30,7 +30,6 @@ import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.smtp.FailedMailQueueWithDAO;
 import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
-import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.smtp.scope.ScopedMailAPI;
 
 /**
@@ -103,12 +102,6 @@ public final class PhotonCoreManager extends AbstractGlobalSingleton
   public static FailedMailQueueWithDAO getFailedMailQueue ()
   {
     return getInstance ().m_aFailedMailQueue;
-  }
-
-  @Nonnull
-  public static ObjectLockManager getLockMgr ()
-  {
-    return ObjectLockManager.getInstance ();
   }
 
   @Nonnull

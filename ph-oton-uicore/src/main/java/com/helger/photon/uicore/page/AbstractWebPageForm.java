@@ -55,9 +55,8 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.core.form.RequestField;
-import com.helger.photon.core.mgr.PhotonCoreManager;
+import com.helger.photon.security.lock.ILockManager;
 import com.helger.photon.security.lock.LockResult;
-import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.uicore.css.CPageParam;
@@ -807,7 +806,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   {
     if (isObjectLockingEnabled ())
     {
-      final ObjectLockManager aOLM = PhotonCoreManager.getLockMgr ();
+      final ILockManager <String> aOLM = PhotonSecurityManager.getLockMgr ();
       // Lock EDIT and DELETE if an object is present
       if (eFormAction != null && eFormAction.isModifying () && aSelectedObject != null)
       {

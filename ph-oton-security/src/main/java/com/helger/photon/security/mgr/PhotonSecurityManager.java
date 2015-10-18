@@ -29,6 +29,7 @@ import com.helger.commons.scope.IScope;
 import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.audit.AuditManager;
+import com.helger.photon.security.lock.ILockManager;
 import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.LoggedInUserManager;
@@ -154,9 +155,15 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   }
 
   @Nonnull
-  public static ObjectLockManager getLockMgr ()
+  public static ILockManager <String> getLockMgr ()
   {
-    return ObjectLockManager.getInstance ();
+    return ObjectLockManager.getInstance ().getDefaultLockMgr ();
+  }
+
+  @Nonnull
+  public static RoleManager getRoleMgr ()
+  {
+    return getInstance ().m_aRoleMgr;
   }
 
   @Nonnull
@@ -169,11 +176,5 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   public static UserGroupManager getUserGroupMgr ()
   {
     return getInstance ().m_aUserGroupMgr;
-  }
-
-  @Nonnull
-  public static RoleManager getRoleMgr ()
-  {
-    return getInstance ().m_aRoleMgr;
   }
 }

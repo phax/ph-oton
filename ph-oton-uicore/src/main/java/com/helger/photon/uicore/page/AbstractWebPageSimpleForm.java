@@ -43,9 +43,8 @@ import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.photon.core.mgr.PhotonCoreManager;
+import com.helger.photon.security.lock.ILockManager;
 import com.helger.photon.security.lock.LockResult;
-import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.uicore.css.CPageParam;
@@ -484,7 +483,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   {
     if (isObjectLockingEnabled ())
     {
-      final ObjectLockManager aOLM = PhotonCoreManager.getLockMgr ();
+      final ILockManager <String> aOLM = PhotonSecurityManager.getLockMgr ();
       // Lock EDIT if an object is present
       if (eSimpleFormAction.isModifying () && aObject != null)
       {

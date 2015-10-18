@@ -160,7 +160,7 @@ public final class BootstrapPagesMenuConfigurator
                                                                          aDisplayFilter,
                                                                          PhotonSecurityManager.getAuditMgr (),
                                                                          PhotonCoreManager.getFailedMailQueue (),
-                                                                         PhotonCoreManager.getLockMgr (),
+                                                                         PhotonSecurityManager.getLockMgr (),
                                                                          PhotonBasicManager.getSystemMigrationMgr ());
   }
 

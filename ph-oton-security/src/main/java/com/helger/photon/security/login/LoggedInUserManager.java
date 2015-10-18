@@ -205,7 +205,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     {
       final ObjectLockManager aOLMgr = ObjectLockManager.getInstanceIfInstantiated ();
       if (aOLMgr != null)
-        aOLMgr.unlockAllObjectsOfUser (aInfo.getUserID ());
+        aOLMgr.getDefaultLockMgr ().unlockAllObjectsOfUser (aInfo.getUserID ());
     }
   }
 
