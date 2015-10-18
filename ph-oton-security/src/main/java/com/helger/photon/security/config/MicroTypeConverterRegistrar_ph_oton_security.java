@@ -25,6 +25,8 @@ import com.helger.photon.security.role.Role;
 import com.helger.photon.security.role.RoleMicroTypeConverter;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.AccessTokenMicroTypeConverter;
+import com.helger.photon.security.token.app.AppToken;
+import com.helger.photon.security.token.app.AppTokenMicroTypeConverter;
 import com.helger.photon.security.token.revocation.RevocationStatus;
 import com.helger.photon.security.token.revocation.RevocationStatusMicroTypeConverter;
 import com.helger.photon.security.user.User;
@@ -43,6 +45,7 @@ public final class MicroTypeConverterRegistrar_ph_oton_security implements IMicr
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
     aRegistry.registerMicroElementTypeConverter (AccessToken.class, new AccessTokenMicroTypeConverter ());
+    aRegistry.registerMicroElementTypeConverter (AppToken.class, new AppTokenMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (RevocationStatus.class, new RevocationStatusMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (Role.class, new RoleMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (User.class, new UserMicroTypeConverter ());

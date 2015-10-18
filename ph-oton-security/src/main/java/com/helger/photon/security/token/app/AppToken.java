@@ -12,7 +12,7 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.object.AbstractBaseObject;
+import com.helger.photon.basic.object.AbstractObject;
 import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 
@@ -21,7 +21,7 @@ import com.helger.photon.security.token.accesstoken.AccessToken;
  *
  * @author Philip Helger
  */
-public class AppToken extends AbstractBaseObject implements IAppToken
+public class AppToken extends AbstractObject implements IAppToken
 {
   public static final ObjectType OT = new ObjectType ("apptoken");
 
@@ -52,7 +52,7 @@ public class AppToken extends AbstractBaseObject implements IAppToken
             @Nullable final String sOwnerContactEmail)
   {
     super (aStubObject);
-    m_aAccessTokens = ValueEnforcer.notEmpty (aAccessTokens, "AccessTokens");
+    m_aAccessTokens = ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");
     setOwnerName (sOwnerName);
     setOwnerURL (sOwnerURL);
     setOwnerContact (sOwnerContact);
