@@ -80,12 +80,6 @@ public class AppToken extends AbstractObject implements IAppToken
     return OT;
   }
 
-  @Nullable
-  public IAccessToken getActiveAccessToken ()
-  {
-    return m_aActiveAccessToken;
-  }
-
   @Nonnull
   @Nonempty
   public List <AccessToken> getAllAccessTokens ()
@@ -153,6 +147,18 @@ public class AppToken extends AbstractObject implements IAppToken
       return EChange.UNCHANGED;
     m_sOwnerContactEmail = sOwnerContactEmail;
     return EChange.CHANGED;
+  }
+
+  @Nullable
+  public IAccessToken getActiveAccessToken ()
+  {
+    return m_aActiveAccessToken;
+  }
+
+  @Nullable
+  public String getActiveTokenString ()
+  {
+    return m_aActiveAccessToken == null ? null : m_aActiveAccessToken.getTokenString ();
   }
 
   @Nonnull

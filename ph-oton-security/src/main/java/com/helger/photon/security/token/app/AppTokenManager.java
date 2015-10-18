@@ -182,7 +182,22 @@ public final class AppTokenManager extends AbstractSimpleDAO
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends AppToken> getAllActvieAppTokens ()
+  public Collection <? extends AppToken> getAllAppTokens ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return CollectionHelper.newList (m_aMap.values ());
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Collection <? extends AppToken> getAllActiveAppTokens ()
   {
     m_aRWLock.readLock ().lock ();
     try

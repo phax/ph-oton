@@ -19,13 +19,6 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
 public interface IAppToken extends IObject, Serializable
 {
   /**
-   * @return The main token to access this application from the outside. May be
-   *         <code>null</code> if all tokens are expired or revoked.
-   */
-  @Nullable
-  IAccessToken getActiveAccessToken ();
-
-  /**
    * @return A list of all tokens used by this application. The latest, active
    *         token is always the last one. Neither <code>null</code> nor empty.
    */
@@ -62,4 +55,18 @@ public interface IAppToken extends IObject, Serializable
    */
   @Nullable
   String getOwnerContactEmail ();
+
+  /**
+   * @return The main token to access this application from the outside. May be
+   *         <code>null</code> if all are revoked.
+   */
+  @Nullable
+  IAccessToken getActiveAccessToken ();
+
+  /**
+   * @return The token string of the active access token. May be
+   *         <code>null</code> if no active access token is present.
+   */
+  @Nullable
+  String getActiveTokenString ();
 }

@@ -49,6 +49,7 @@ import com.helger.photon.bootstrap3.pages.monitoring.BasePageMonitoringLoginInfo
 import com.helger.photon.bootstrap3.pages.monitoring.BasePageMonitoringSessions;
 import com.helger.photon.bootstrap3.pages.monitoring.BasePageMonitoringStatistics;
 import com.helger.photon.bootstrap3.pages.monitoring.BasePageMonitoringSystemMigrations;
+import com.helger.photon.bootstrap3.pages.security.BasePageSecurityAppTokenManagement;
 import com.helger.photon.bootstrap3.pages.security.BasePageSecurityRoleManagement;
 import com.helger.photon.bootstrap3.pages.security.BasePageSecurityUserGroupManagement;
 import com.helger.photon.bootstrap3.pages.security.BasePageSecurityUserManagement;
@@ -82,6 +83,7 @@ public final class BootstrapPagesMenuConfigurator
   public static final String MENU_ADMIN_SECURITY_USER = "admin_security_user";
   public static final String MENU_ADMIN_SECURITY_USER_GROUP = "admin_security_usergroup";
   public static final String MENU_ADMIN_SECURITY_ROLE = "admin_security_role";
+  public static final String MENU_ADMIN_SECURITY_APP_TOKEN = "admin_security_apptoken";
 
   public static final String MENU_ADMIN_MONITORING = "admin_monitoring";
   public static final String MENU_ADMIN_MONITORING_AUDIT = "admin_monitoring_audit";
@@ -146,6 +148,10 @@ public final class BootstrapPagesMenuConfigurator
                           new BasePageSecurityUserGroupManagement <WPECTYPE> (MENU_ADMIN_SECURITY_USER_GROUP))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSecurity, new BasePageSecurityRoleManagement <WPECTYPE> (MENU_ADMIN_SECURITY_ROLE))
+             .setDisplayFilter (aDisplayFilter);
+    aMenuTree.createSeparator (aAdminSecurity).setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminSecurity,
+                          new BasePageSecurityAppTokenManagement <WPECTYPE> (MENU_ADMIN_SECURITY_APP_TOKEN))
              .setDisplayFilter (aDisplayFilter);
     return aAdminSecurity;
   }
