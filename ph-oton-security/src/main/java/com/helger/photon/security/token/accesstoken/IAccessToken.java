@@ -43,7 +43,7 @@ public interface IAccessToken extends Serializable
   /**
    * Check if this token is valid now. This method does not consider the
    * revocation status!
-   * 
+   *
    * @return <code>true</code> if the token is valid now. This method does not
    *         consider the revocation status!
    */

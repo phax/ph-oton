@@ -168,6 +168,24 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                                                                          aSelectedObject == null ? null
                                                                                                                  : aSelectedObject.getOwnerName ())))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_NAME)));
+
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.FIELD_OWNER_URL.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_URL,
+                                                                                         aSelectedObject == null ? null
+                                                                                                                 : aSelectedObject.getOwnerURL ())))
+                                                 .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_URL)));
+
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.FIELD_OWNER_CONTACT.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_CONTACT,
+                                                                                         aSelectedObject == null ? null
+                                                                                                                 : aSelectedObject.getOwnerContact ())))
+                                                 .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_CONTACT)));
+
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.FIELD_OWNER_CONTACT_EMAIL.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_CONTACT_EMAIL,
+                                                                                         aSelectedObject == null ? null
+                                                                                                                 : aSelectedObject.getOwnerContactEmail ())))
+                                                 .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_CONTACT_EMAIL)));
   }
 
   @Override
