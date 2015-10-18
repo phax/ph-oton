@@ -1,0 +1,234 @@
+/**
+ * Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.helger.photon.security.token.app;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.microdom.IMicroDocument;
+import com.helger.commons.microdom.IMicroElement;
+import com.helger.commons.microdom.MicroDocument;
+import com.helger.commons.microdom.convert.MicroTypeConverter;
+import com.helger.commons.state.EChange;
+import com.helger.commons.string.StringHelper;
+import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
+import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.photon.basic.audit.AuditHelper;
+import com.helger.photon.security.object.ObjectHelper;
+
+public final class AppTokenManager extends AbstractSimpleDAO
+{
+  private static final String ELEMENT_ROOT = "apptokens";
+  private static final String ELEMENT_ITEM = "apptoken";
+
+  private final Map <String, AppToken> m_aMap = new HashMap <String, AppToken> ();
+
+  public AppTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
+  {
+    super (sFilename);
+    initialRead ();
+  }
+
+  @Override
+  @Nonnull
+  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
+  {
+    for (final IMicroElement eAppToken : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
+      _addAppToken (MicroTypeConverter.convertToNative (eAppToken, AppToken.class));
+    return EChange.UNCHANGED;
+  }
+
+  @Override
+  @Nonnull
+  protected IMicroDocument createWriteData ()
+  {
+    final IMicroDocument aDoc = new MicroDocument ();
+    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
+    for (final AppToken aAppToken : CollectionHelper.getSortedByKey (m_aMap).values ())
+      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aAppToken, ELEMENT_ITEM));
+    return aDoc;
+  }
+
+  private void _addAppToken (@Nonnull final AppToken aAppToken)
+  {
+    ValueEnforcer.notNull (aAppToken, "AppToken");
+
+    final String sAppTokenID = aAppToken.getID ();
+    if (m_aMap.containsKey (sAppTokenID))
+      throw new IllegalArgumentException ("AppToken ID '" + sAppTokenID + "' is already in use!");
+    m_aMap.put (sAppTokenID, aAppToken);
+  }
+
+  @Nonnull
+  public AppToken createAppToken (@Nonnull @Nonempty final String sOwnerName,
+                                  @Nullable final String sOwnerURL,
+                                  @Nullable final String sOwnerContact,
+                                  @Nullable final String sOwnerContactEmail)
+  {
+    final AppToken aAppToken = new AppToken (sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      _addAppToken (aAppToken);
+      markAsChanged ();
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+    AuditHelper.onAuditCreateSuccess (AppToken.OT,
+                                      aAppToken.getID (),
+                                      sOwnerName,
+                                      sOwnerURL,
+                                      sOwnerContact,
+                                      sOwnerContactEmail);
+    return aAppToken;
+  }
+
+  @Nonnull
+  public EChange updateAppToken (@Nullable final String sAppTokenID,
+                                 @Nonnull @Nonempty final String sOwnerName,
+                                 @Nullable final String sOwnerURL,
+                                 @Nullable final String sOwnerContact,
+                                 @Nullable final String sOwnerContactEmail)
+  {
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      final AppToken aAppToken = m_aMap.get (sAppTokenID);
+      if (aAppToken == null)
+      {
+        AuditHelper.onAuditModifyFailure (AppToken.OT, sAppTokenID, "no-such-id");
+        return EChange.UNCHANGED;
+      }
+
+      EChange eChange = EChange.UNCHANGED;
+      // client ID cannot be changed!
+      eChange = eChange.or (aAppToken.setOwnerName (sOwnerName));
+      eChange = eChange.or (aAppToken.setOwnerURL (sOwnerURL));
+      eChange = eChange.or (aAppToken.setOwnerContact (sOwnerContact));
+      eChange = eChange.or (aAppToken.setOwnerContactEmail (sOwnerContactEmail));
+      if (eChange.isUnchanged ())
+        return EChange.UNCHANGED;
+
+      ObjectHelper.setLastModificationNow (aAppToken);
+      markAsChanged ();
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+    AuditHelper.onAuditModifySuccess (AppToken.OT,
+                                      sAppTokenID,
+                                      sOwnerName,
+                                      sOwnerURL,
+                                      sOwnerContact,
+                                      sOwnerContactEmail);
+    return EChange.CHANGED;
+  }
+
+  @Nonnull
+  public EChange deleteAppToken (@Nullable final String sAppTokenID)
+  {
+    final AppToken aAppToken = getAppTokenOfID (sAppTokenID);
+    if (aAppToken == null)
+    {
+      AuditHelper.onAuditDeleteFailure (AppToken.OT, "no-such-id", sAppTokenID);
+      return EChange.UNCHANGED;
+    }
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (ObjectHelper.setDeletionNow (aAppToken).isUnchanged ())
+      {
+        AuditHelper.onAuditDeleteFailure (AppToken.OT, "already-deleted", aAppToken.getID ());
+        return EChange.UNCHANGED;
+      }
+      markAsChanged ();
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+    AuditHelper.onAuditDeleteSuccess (AppToken.OT, aAppToken.getID ());
+    return EChange.CHANGED;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Collection <? extends AppToken> getAllActvieAppTokens ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      final List <AppToken> ret = new ArrayList <> ();
+      for (final AppToken aItem : m_aMap.values ())
+        if (!aItem.isDeleted ())
+          ret.add (aItem);
+      return ret;
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  @Nullable
+  public AppToken getAppTokenOfID (@Nullable final String sID)
+  {
+    if (StringHelper.hasNoText (sID))
+      return null;
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aMap.get (sID);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public boolean containsAppTokenWithID (@Nullable final String sID)
+  {
+    if (StringHelper.hasNoText (sID))
+      return false;
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aMap.containsKey (sID);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+}
