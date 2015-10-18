@@ -29,6 +29,11 @@ import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 
+/**
+ * Micro type converter for class {@link RevocationStatus}.
+ *
+ * @author Philip Helger
+ */
 public final class RevocationStatusMicroTypeConverter implements IMicroTypeConverter
 {
   private static final String ATTR_IS_REVOKED = "isrevoked";

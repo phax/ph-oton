@@ -29,10 +29,10 @@ public final class AccessToken implements IAccessToken
   private LocalDateTime m_aNotAfter;
   private final RevocationStatus m_aRevocationStatus;
 
-  private AccessToken (@Nonnull @Nonempty final String sTokenString,
-                       @Nonnull final LocalDateTime aNotBefore,
-                       @Nullable final LocalDateTime aNotAfter,
-                       @Nonnull final RevocationStatus aRevocationStatus)
+  AccessToken (@Nonnull @Nonempty final String sTokenString,
+               @Nonnull final LocalDateTime aNotBefore,
+               @Nullable final LocalDateTime aNotAfter,
+               @Nonnull final RevocationStatus aRevocationStatus)
   {
     m_sTokenString = ValueEnforcer.notEmpty (sTokenString, "TokenString");
     m_aNotBefore = ValueEnforcer.notNull (aNotBefore, "NotBefore");
@@ -69,7 +69,11 @@ public final class AccessToken implements IAccessToken
   {
     ValueEnforcer.notNull (aNotAfter, "NotAfter");
     if (aNotAfter.isBefore (m_aNotBefore))
-      throw new IllegalArgumentException ("Not after date (" + aNotAfter + ") must be >= not before date (" + m_aNotBefore + ")");
+      throw new IllegalArgumentException ("Not after date (" +
+                                          aNotAfter +
+                                          ") must be >= not before date (" +
+                                          m_aNotBefore +
+                                          ")");
     m_aNotAfter = aNotAfter;
   }
 
@@ -132,6 +136,9 @@ public final class AccessToken implements IAccessToken
   @Nonnull
   public static AccessToken createNewAccessTokenValidFromNow ()
   {
-    return new AccessToken (createNewTokenString (64), PDTFactory.getCurrentLocalDateTime (), null, new RevocationStatus ());
+    return new AccessToken (createNewTokenString (64),
+                            PDTFactory.getCurrentLocalDateTime (),
+                            null,
+                            new RevocationStatus ());
   }
 }
