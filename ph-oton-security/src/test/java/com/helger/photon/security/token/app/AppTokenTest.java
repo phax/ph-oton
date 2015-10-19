@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 
 import com.helger.commons.mock.CommonsTestHelper;
-import com.helger.photon.basic.mock.PhotonBasicTestRule;
+import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 
 /**
  * Test class for class {@link AppToken}.
@@ -15,7 +15,7 @@ import com.helger.photon.basic.mock.PhotonBasicTestRule;
 public final class AppTokenTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicTestRule ();
+  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
 
   @Test
   public void testBasic ()
