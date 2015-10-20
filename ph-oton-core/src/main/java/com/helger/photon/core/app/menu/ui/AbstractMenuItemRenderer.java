@@ -21,7 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.html.hc.html.grouping.IHCLI;
+import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.IHCList;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 
@@ -32,7 +32,7 @@ import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
  * @param <T>
  *        Parent element type
  */
-public abstract class AbstractMenuItemRenderer <T extends IHCList <?>> implements IMenuItemRenderer <T>
+public abstract class AbstractMenuItemRenderer <T extends IHCList <?, HCLI>> implements IMenuItemRenderer <T>
 {
   private final Locale m_aContentLocale;
 
@@ -54,18 +54,18 @@ public abstract class AbstractMenuItemRenderer <T extends IHCList <?>> implement
   public void onLevelUp (@Nonnull final T aLastLevel)
   {}
 
-  public void onMenuSeparatorItem (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final IHCLI <?> aLI)
+  public void onMenuSeparatorItem (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCLI aLI)
   {}
 
   public void onMenuItemPageItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                  @Nonnull final IHCLI <?> aLI,
+                                  @Nonnull final HCLI aLI,
                                   final boolean bHasChildren,
                                   final boolean bIsSelected,
                                   final boolean bIsExpanded)
   {}
 
   public void onMenuItemExternalItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                      @Nonnull final IHCLI <?> aLI,
+                                      @Nonnull final HCLI aLI,
                                       final boolean bHasChildren,
                                       final boolean bIsSelected,
                                       final boolean bIsExpanded)

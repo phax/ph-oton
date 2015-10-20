@@ -42,7 +42,7 @@ public final class AjaxHtmlResponseTest
       aHtml.getHead ().addCSS (new HCStyle ("*{font-family:Helvetica;}"));
       aHtml.getHead ().addJS (new HCScriptInline (new UnparsedJSCodeProvider ("var x = 1;")));
       aHtml.getHead ().addCSS (HCLink.createCSSLink (new SimpleURL ("res/animate.css")));
-      aHtml.getHead ().addJS (new HCScriptFile ().setSrc ("res/stacktrace.js"));
+      aHtml.getHead ().addJS (new HCScriptFile ().setSrc (new SimpleURL ("res/stacktrace.js")));
       aHtml.getBody ().addChild (new HCH1 ().addChild ("Test H1"));
       aHtml.getBody ().addChild (new HCStyle ("h1{color:red;}"));
       aHtml.getBody ().addChild (new HCScriptInline (new UnparsedJSCodeProvider ("var y = x;")));

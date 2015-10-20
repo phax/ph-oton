@@ -33,8 +33,8 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.thirdparty.IThirdPartyModule;
 import com.helger.commons.thirdparty.ThirdPartyModuleRegistry;
+import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.grouping.HCUL;
 import com.helger.html.hc.html.sections.HCH4;
 import com.helger.html.hc.html.textlevel.HCA;
@@ -111,7 +111,7 @@ public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecut
     if (aModule.getWebSiteURL () == null)
       aNL.addChild (sModuleText);
     else
-      aNL.addChild (new HCA (aModule.getWebSiteURL ()).setTarget (HC_Target.BLANK).addChild (sModuleText));
+      aNL.addChild (new HCA (new SimpleURL (aModule.getWebSiteURL ())).setTargetBlank ().addChild (sModuleText));
     aNL.addChild (EText.MSG_LICENSED_UNDER.getDisplayText (aDisplayLocale));
 
     // License text
@@ -123,7 +123,8 @@ public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecut
     if (aModule.getLicense ().getURL () == null)
       aNL.addChild (sLicenseText);
     else
-      aNL.addChild (new HCA (aModule.getLicense ().getURL ()).setTarget (HC_Target.BLANK).addChild (sLicenseText));
+      aNL.addChild (new HCA (new SimpleURL (aModule.getLicense ().getURL ())).setTargetBlank ()
+                                                                             .addChild (sLicenseText));
     return aNL;
   }
 

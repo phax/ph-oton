@@ -24,6 +24,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.commons.url.SimpleURL;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.forms.AbstractHCForm;
@@ -64,20 +65,15 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
 
   public BootstrapForm (@Nullable final String sAction)
   {
-    this (sAction, EBootstrapFormType.DEFAULT);
+    this (new SimpleURL (sAction), EBootstrapFormType.DEFAULT);
   }
 
   public BootstrapForm (@Nullable final ISimpleURL aAction, @Nonnull final EBootstrapFormType eFormType)
   {
-    this (aAction == null ? null : aAction.getAsString (), eFormType);
-  }
-
-  public BootstrapForm (@Nullable final String sAction, @Nonnull final EBootstrapFormType eFormType)
-  {
     super ();
     setRole (EHTMLRole.FORM);
-    if (sAction != null)
-      setAction (sAction);
+    if (aAction != null)
+      setAction (aAction);
     setFormType (eFormType);
   }
 
@@ -144,7 +140,10 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
     ValueEnforcer.isBetweenInclusive (nLeftPartsMD, "LeftPartsMD", 1, CBootstrap.GRID_SYSTEM_MAX);
     ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 1, CBootstrap.GRID_SYSTEM_MAX);
 
-    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS, nLeftPartsSM, nLeftPartsMD, nLeftPartsLG);
+    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS,
+                                                                 nLeftPartsSM,
+                                                                 nLeftPartsMD,
+                                                                 nLeftPartsLG);
     final BootstrapGridSpec aNewRight = BootstrapGridSpec.create (_getRight (nLeftPartsXS),
                                                                   _getRight (nLeftPartsSM),
                                                                   _getRight (nLeftPartsMD),

@@ -23,7 +23,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.html.grouping.AbstractHCUL;
-import com.helger.html.hc.html.grouping.IHCLI;
+import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 public class BootstrapDropdownMenu extends AbstractHCUL <BootstrapDropdownMenu>
@@ -41,18 +41,18 @@ public class BootstrapDropdownMenu extends AbstractHCUL <BootstrapDropdownMenu>
   }
 
   @Override
-  protected void onAddItem (@Nonnull final IHCLI <?> aItem)
+  protected void onAddItem (@Nonnull final HCLI aItem)
   {
     if (aItem.getRole () == null)
       aItem.setRole (EHTMLRole.PRESENTATION);
   }
 
   @Nonnull
-  public IHCLI <?> addMenuItem (@Nonnull final BootstrapDropdownMenuItem aItem)
+  public HCLI addMenuItem (@Nonnull final BootstrapDropdownMenuItem aItem)
   {
     ValueEnforcer.notNull (aItem, "DropdownMenuItem");
 
-    final IHCLI <?> aLI = addAndReturnItem (aItem.createLink ());
+    final HCLI aLI = addAndReturnItem (aItem.createLink ());
     if (aItem.isActive ())
       aLI.addClass (CBootstrapCSS.ACTIVE);
     if (aItem.isDisabled ())
@@ -61,7 +61,7 @@ public class BootstrapDropdownMenu extends AbstractHCUL <BootstrapDropdownMenu>
   }
 
   @Nonnull
-  public IHCLI <?> addDivider ()
+  public HCLI addDivider ()
   {
     return addItem ().addClass (CBootstrapCSS.DIVIDER);
   }

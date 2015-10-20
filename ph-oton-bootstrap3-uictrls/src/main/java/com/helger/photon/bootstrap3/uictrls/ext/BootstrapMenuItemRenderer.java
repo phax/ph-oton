@@ -27,7 +27,6 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.HCUL;
-import com.helger.html.hc.html.grouping.IHCLI;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.basic.app.menu.IMenuItemDeterminatorCallback;
@@ -150,7 +149,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
 
   @Override
   public void onMenuItemPageItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                  @Nonnull final IHCLI <?> aLI,
+                                  @Nonnull final HCLI aLI,
                                   final boolean bHasChildren,
                                   final boolean bSelected,
                                   final boolean bExpanded)
@@ -161,7 +160,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
 
   @Override
   public void onMenuItemExternalItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                      @Nonnull final IHCLI <?> aLI,
+                                      @Nonnull final HCLI aLI,
                                       final boolean bHasChildren,
                                       final boolean bSelected,
                                       final boolean bExpanded)

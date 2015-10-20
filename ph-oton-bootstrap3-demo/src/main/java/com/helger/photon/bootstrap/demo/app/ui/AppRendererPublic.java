@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.callback.INonThrowingRunnableWithParameter;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.commons.url.SimpleURL;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -270,7 +271,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
       final BootstrapContainer aDiv = new BootstrapContainer ().setID (CLayout.LAYOUT_AREAID_FOOTER);
 
       aDiv.addChild (new HCP ().addChild ("Demo web application for the ")
-                               .addChild (new HCA ("https://github.com/phax/ph-oton").addChild ("ph-oton"))
+                               .addChild (new HCA (new SimpleURL ("https://github.com/phax/ph-oton")).addChild ("ph-oton"))
                                .addChild (" stack"));
       aDiv.addChild (new HCP ().addChild ("Created by Philip Helger - Twitter: @philiphelger"));
 

@@ -24,7 +24,7 @@ import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HC_Target;
-import com.helger.html.hc.html.grouping.IHCLI;
+import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.IHCList;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCEntityNode;
@@ -40,7 +40,7 @@ import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
  * @param <T>
  *        Parent element type
  */
-public class DefaultMenuItemRenderer <T extends IHCList <?>> extends AbstractMenuItemRenderer <T>
+public class DefaultMenuItemRenderer <T extends IHCList <?, HCLI>> extends AbstractMenuItemRenderer <T>
 {
   /** CSS class for a menu separator */
   public static final ICSSClassProvider CSS_CLASS_MENU_SEPARATOR = DefaultCSSClassProvider.create ("menu_separator");
@@ -99,14 +99,14 @@ public class DefaultMenuItemRenderer <T extends IHCList <?>> extends AbstractMen
   }
 
   @Override
-  public void onMenuSeparatorItem (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final IHCLI <?> aLI)
+  public void onMenuSeparatorItem (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCLI aLI)
   {
     aLI.addClass (CSS_CLASS_MENU_SEPARATOR);
   }
 
   @Override
   public void onMenuItemPageItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                  @Nonnull final IHCLI <?> aLI,
+                                  @Nonnull final HCLI aLI,
                                   final boolean bHasChildren,
                                   final boolean bIsSelected,
                                   final boolean bIsExpanded)
@@ -116,7 +116,7 @@ public class DefaultMenuItemRenderer <T extends IHCList <?>> extends AbstractMen
 
   @Override
   public void onMenuItemExternalItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                      @Nonnull final IHCLI <?> aLI,
+                                      @Nonnull final HCLI aLI,
                                       final boolean bHasChildren,
                                       final boolean bIsSelected,
                                       final boolean bIsExpanded)
