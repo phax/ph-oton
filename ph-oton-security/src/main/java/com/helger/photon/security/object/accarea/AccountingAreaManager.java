@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.GuardedBy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +66,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AccountingAreaManager.class);
 
+  @GuardedBy ("m_aRWLock")
   private final Map <String, AccountingArea> m_aMap = new HashMap <String, AccountingArea> ();
 
   private final CallbackList <IAccountingAreaModificationCallback> m_aCallbacks = new CallbackList <IAccountingAreaModificationCallback> ();
@@ -97,7 +99,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
 
   @Nonnull
   @ReturnsMutableObject ("design")
-  public CallbackList <IAccountingAreaModificationCallback> getUserModificationCallbacks ()
+  public CallbackList <IAccountingAreaModificationCallback> getAccountingAreaModificationCallbacks ()
   {
     return m_aCallbacks;
   }

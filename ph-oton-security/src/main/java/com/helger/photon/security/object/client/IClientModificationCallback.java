@@ -19,36 +19,36 @@ package com.helger.photon.security.object.client;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.callback.ICallback;
-import com.helger.photon.basic.object.accarea.IAccountingArea;
+import com.helger.photon.basic.object.client.IClient;
 
 /**
- * Callback interface when a accounting area is created, modified or deleted.
+ * Callback interface when a client is created, modified or deleted.
  *
  * @author Philip Helger
  */
 public interface IClientModificationCallback extends ICallback
 {
   /**
-   * Called after an accounting area was created.
+   * Called after a client was created.
    *
-   * @param aAccountingArea
-   *        The created accounting area. Never <code>null</code>.
+   * @param aClient
+   *        The created client. Never <code>null</code>.
    */
-  void onAccountingAreaCreated (@Nonnull IAccountingArea aAccountingArea);
+  void onClientCreated (@Nonnull IClient aClient);
 
   /**
-   * Called after an accounting area was edited fully.
+   * Called after a client was edited fully.
    *
-   * @param aAccountingArea
-   *        The modified accounting area. Never <code>null</code>.
+   * @param aClient
+   *        The modified client. Never <code>null</code>.
    */
-  void onAccountingAreaUpdated (@Nonnull IAccountingArea aAccountingArea);
+  void onClientUpdated (@Nonnull IClient aClient);
 
   /**
-   * Called after an accounting area was deleted.
+   * Called after a client was deleted.
    *
-   * @param aAccountingArea
-   *        The deleted accounting area. Never <code>null</code>.
+   * @param aClient
+   *        The deleted client. Never <code>null</code>.
    */
-  void onAccountingAreaDeleted (@Nonnull IAccountingArea aAccountingArea);
+  void onClientDeleted (@Nonnull IClient aClient);
 }

@@ -25,15 +25,21 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroDocument;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
@@ -50,10 +56,14 @@ import com.helger.photon.security.object.ObjectHelper;
  */
 public class ClientManager extends AbstractSimpleDAO implements IClientResolver
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ClientManager.class);
+
   private static final String ELEMENT_ROOT = "clients";
   private static final String ELEMENT_ITEM = "client";
 
   private final Map <String, Client> m_aMap = new HashMap <String, Client> ();
+
+  private final CallbackList <IClientModificationCallback> m_aCallbacks = new CallbackList <IClientModificationCallback> ();
 
   public ClientManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -76,6 +86,13 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
     for (final IMicroElement eClient : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
       _addClient (MicroTypeConverter.convertToNative (eClient, Client.class));
     return EChange.UNCHANGED;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public CallbackList <IClientModificationCallback> getClientModificationCallbacks ()
+  {
+    return m_aCallbacks;
   }
 
   @Override
@@ -118,22 +135,34 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditCreateSuccess (Client.OT, aClient.getID (), sDisplayName);
+
+    // Execute callback as the very last action
+    for (final IClientModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onClientCreated (aClient);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onClientCreated callback on " + aClient.toString (), t);
+      }
+
     return aClient;
   }
 
   @Nonnull
   public EChange updateClient (@Nonnull @Nonempty final String sClientID, @Nonnull @Nonempty final String sDisplayName)
   {
+    final Client aClient = _getClientOfID (sClientID);
+    if (aClient == null)
+    {
+      AuditHelper.onAuditModifyFailure (Client.OT, sClientID, "no-such-id");
+      return EChange.UNCHANGED;
+    }
+
     m_aRWLock.writeLock ().lock ();
     try
     {
-      final Client aClient = m_aMap.get (sClientID);
-      if (aClient == null)
-      {
-        AuditHelper.onAuditModifyFailure (Client.OT, sClientID, "no-such-id");
-        return EChange.UNCHANGED;
-      }
-
       EChange eChange = EChange.UNCHANGED;
       eChange = eChange.or (aClient.setDisplayName (sDisplayName));
       if (eChange.isUnchanged ())
@@ -147,6 +176,58 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditModifySuccess (Client.OT, "all", sClientID, sDisplayName);
+
+    // Execute callback as the very last action
+    for (final IClientModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onClientUpdated (aClient);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onClientUpdated callback on " + aClient.toString (), t);
+      }
+
+    return EChange.CHANGED;
+  }
+
+  @Nonnull
+  public EChange deleteClient (@Nullable final String sClientID)
+  {
+    final Client aDeletedClient = _getClientOfID (sClientID);
+    if (aDeletedClient == null)
+    {
+      AuditHelper.onAuditDeleteFailure (Client.OT, "no-such-accountingareaid-id", sClientID);
+      return EChange.UNCHANGED;
+    }
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (ObjectHelper.setDeletionNow (aDeletedClient).isUnchanged ())
+      {
+        AuditHelper.onAuditDeleteFailure (Client.OT, "already-deleted", sClientID);
+        return EChange.UNCHANGED;
+      }
+      markAsChanged ();
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+    AuditHelper.onAuditDeleteSuccess (Client.OT, sClientID);
+
+    // Execute callback as the very last action
+    for (final IClientModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onClientDeleted (aDeletedClient);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onClientDeleted callback on " + aDeletedClient.toString (), t);
+      }
+
     return EChange.CHANGED;
   }
 
@@ -224,8 +305,11 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
   }
 
   @Nullable
-  public IClient getClientOfID (@Nullable final String sID)
+  public Client _getClientOfID (@Nullable final String sID)
   {
+    if (StringHelper.hasNoText (sID))
+      return null;
+
     m_aRWLock.readLock ().lock ();
     try
     {
@@ -237,8 +321,18 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
     }
   }
 
+  @Nullable
+  public IClient getClientOfID (@Nullable final String sID)
+  {
+    // Change return type
+    return _getClientOfID (sID);
+  }
+
   public boolean containsClientWithID (@Nullable final String sID)
   {
+    if (StringHelper.hasNoText (sID))
+      return false;
+
     m_aRWLock.readLock ().lock ();
     try
     {
