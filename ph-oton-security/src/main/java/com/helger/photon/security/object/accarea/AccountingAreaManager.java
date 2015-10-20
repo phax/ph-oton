@@ -280,7 +280,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
     final AccountingArea aDeletedAccountingArea = _getAccountingAreaOfID (sAccountingAreaID);
     if (aDeletedAccountingArea == null)
     {
-      AuditHelper.onAuditDeleteFailure (AccountingArea.OT, "no-such-accountingareaid-id", sAccountingAreaID);
+      AuditHelper.onAuditDeleteFailure (AccountingArea.OT, "no-such-object-id", sAccountingAreaID);
       return EChange.UNCHANGED;
     }
 

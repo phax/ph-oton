@@ -197,7 +197,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
     final Client aDeletedClient = _getClientOfID (sClientID);
     if (aDeletedClient == null)
     {
-      AuditHelper.onAuditDeleteFailure (Client.OT, "no-such-accountingareaid-id", sClientID);
+      AuditHelper.onAuditDeleteFailure (Client.OT, "no-such-object-id", sClientID);
       return EChange.UNCHANGED;
     }
 
