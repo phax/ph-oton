@@ -31,7 +31,6 @@ import com.helger.masterdata.address.Address;
 import com.helger.masterdata.address.EAddressType;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.object.client.IClient;
-import com.helger.photon.security.object.accarea.AccountingArea;
 import com.helger.photon.security.object.client.Client;
 import com.helger.web.scope.mock.WebScopeTestRule;
 
@@ -69,6 +68,7 @@ public final class AccountingAreaTest
                                                  "GmbH",
                                                  "ATU00000000",
                                                  "company number",
+                                                 "debtor number",
                                                  aAddress,
                                                  "54321",
                                                  "12345",

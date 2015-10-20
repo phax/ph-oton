@@ -119,8 +119,9 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   public IAccountingArea createAccountingArea (@Nonnull final IClient aClient,
                                                @Nonnull @Nonempty final String sDisplayName,
                                                @Nullable final String sCompanyType,
-                                               @Nonnull @Nonempty final String sCompanyVATIN,
-                                               @Nonnull @Nonempty final String sCompanyNumber,
+                                               @Nullable final String sCompanyVATIN,
+                                               @Nullable final String sCompanyNumber,
+                                               @Nullable final String sCustomerNumber,
                                                @Nonnull final IAddress aAddress,
                                                @Nonnull final String sTelephone,
                                                @Nullable final String sFax,
@@ -137,6 +138,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                                                sCompanyType,
                                                                sCompanyVATIN,
                                                                sCompanyNumber,
+                                                               sCustomerNumber,
                                                                aAddress,
                                                                sTelephone,
                                                                sFax,
@@ -164,6 +166,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                       sCompanyType,
                                       sCompanyVATIN,
                                       sCompanyNumber,
+                                      sCustomerNumber,
                                       aAddress,
                                       sTelephone,
                                       sFax,
@@ -191,8 +194,9 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   public EChange updateAccountingArea (@Nonnull @Nonempty final String sAccountingAreaID,
                                        @Nonnull @Nonempty final String sDisplayName,
                                        @Nullable final String sCompanyType,
-                                       @Nonnull @Nonempty final String sCompanyVATIN,
-                                       @Nonnull @Nonempty final String sCompanyNumber,
+                                       @Nullable final String sCompanyVATIN,
+                                       @Nullable final String sCompanyNumber,
+                                       @Nullable final String sCustomerNumber,
                                        @Nonnull final IAddress aAddress,
                                        @Nonnull final String sTelephone,
                                        @Nullable final String sFax,
@@ -220,6 +224,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
       eChange = eChange.or (aAccountingArea.setCompanyType (sCompanyType));
       eChange = eChange.or (aAccountingArea.setCompanyVATIN (sCompanyVATIN));
       eChange = eChange.or (aAccountingArea.setCompanyNumber (sCompanyNumber));
+      eChange = eChange.or (aAccountingArea.setCustomerNumber (sCustomerNumber));
       eChange = eChange.or (aAccountingArea.setAddress (aAddress, aDisplayLocale));
       eChange = eChange.or (aAccountingArea.setTelephone (sTelephone));
       eChange = eChange.or (aAccountingArea.setFax (sFax));

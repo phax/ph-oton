@@ -50,6 +50,7 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
   private String m_sCompanyType;
   private String m_sCompanyVATIN;
   private String m_sCompanyNumber;
+  private String m_sCustomerNumber;
   private Address m_aAddress;
   private String m_sTelephone;
   private String m_sFax;
@@ -73,6 +74,8 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
    *        company VATIN
    * @param sCompanyNumber
    *        company number
+   * @param sCustomerNumber
+   *        Customer number
    * @param aAddress
    *        address
    * @param sTelephone
@@ -99,6 +102,7 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
                          @Nullable final String sCompanyType,
                          @Nullable final String sCompanyVATIN,
                          @Nullable final String sCompanyNumber,
+                         @Nullable final String sCustomerNumber,
                          @Nonnull final IAddress aAddress,
                          @Nullable final String sTelephone,
                          @Nullable final String sFax,
@@ -116,6 +120,7 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
           sCompanyType,
           sCompanyVATIN,
           sCompanyNumber,
+          sCustomerNumber,
           aAddress,
           sTelephone,
           sFax,
@@ -134,6 +139,7 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
                   @Nullable final String sCompanyType,
                   @Nullable final String sCompanyVATIN,
                   @Nullable final String sCompanyNumber,
+                  @Nullable final String sCustomerNumber,
                   @Nonnull final IAddress aAddress,
                   @Nullable final String sTelephone,
                   @Nullable final String sFax,
@@ -150,6 +156,7 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
     setCompanyType (sCompanyType);
     setCompanyVATIN (sCompanyVATIN);
     setCompanyNumber (sCompanyNumber);
+    setCustomerNumber (sCustomerNumber);
     setAddress (aAddress, aDisplayLocale);
     setTelephone (sTelephone);
     setFax (sFax);
@@ -227,6 +234,21 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
     if (EqualsHelper.equals (sCompanyNumber, m_sCompanyNumber))
       return EChange.UNCHANGED;
     m_sCompanyNumber = sCompanyNumber;
+    return EChange.CHANGED;
+  }
+
+  @Nullable
+  public String getCustomerNumber ()
+  {
+    return m_sCustomerNumber;
+  }
+
+  @Nonnull
+  public EChange setCustomerNumber (@Nullable final String sCustomerNumber)
+  {
+    if (EqualsHelper.equals (sCustomerNumber, m_sCustomerNumber))
+      return EChange.UNCHANGED;
+    m_sCustomerNumber = sCustomerNumber;
     return EChange.CHANGED;
   }
 
@@ -389,6 +411,7 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
                             .appendIfNotNull ("companyType", m_sCompanyType)
                             .appendIfNotNull ("companyVATIN", m_sCompanyVATIN)
                             .appendIfNotNull ("companyNumber", m_sCompanyNumber)
+                            .appendIfNotNull ("debtorNumber", m_sCustomerNumber)
                             .append ("address", m_aAddress)
                             .appendIfNotNull ("telephone", m_sTelephone)
                             .appendIfNotNull ("fax", m_sFax)

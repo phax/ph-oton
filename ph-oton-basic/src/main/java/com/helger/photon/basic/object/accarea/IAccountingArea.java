@@ -52,7 +52,13 @@ public interface IAccountingArea extends IClientObject, IHasDisplayName, IHasUIT
   String getCompanyNumber ();
 
   /**
-   * @return The address of the owner.
+   * @return Optional customer number. May be <code>null</code>.
+   */
+  @Nullable
+  String getCustomerNumber ();
+
+  /**
+   * @return The address of the owner. May not be <code>null</code>.
    */
   @Nonnull
   IAddress getAddress ();

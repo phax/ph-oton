@@ -37,9 +37,10 @@ public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroT
 {
   private static final String ATTR_CLIENTID = "clientid";
   private static final String ATTR_DISPLAYNAME = "displayname";
-  private static final String ATTR_COMPANYTYPE = "companytype";
-  private static final String ATTR_COMPANYVATIN = "companyvatin";
-  private static final String ATTR_COMPANYNUMBER = "companynumber";
+  private static final String ATTR_COMPANY_TYPE = "companytype";
+  private static final String ATTR_COMPANY_VATIN = "companyvatin";
+  private static final String ATTR_COMPANY_NUMBER = "companynumber";
+  private static final String ATTR_CUSTOMER_NUMBER = "customernumber";
   private static final String ELEMENT_ADDRESS = "address";
   private static final String ATTR_TELEPHONE = "telephone";
   private static final String ATTR_FAX = "fax";
@@ -67,9 +68,10 @@ public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroT
     aElement.setAttribute (ATTR_CLIENTID, aValue.getClientID ());
     setObjectFields (aValue, aElement);
     aElement.setAttribute (ATTR_DISPLAYNAME, aValue.getDisplayName ());
-    aElement.setAttribute (ATTR_COMPANYTYPE, aValue.getCompanyType ());
-    aElement.setAttribute (ATTR_COMPANYVATIN, aValue.getCompanyVATIN ());
-    aElement.setAttribute (ATTR_COMPANYNUMBER, aValue.getCompanyNumber ());
+    aElement.setAttribute (ATTR_COMPANY_TYPE, aValue.getCompanyType ());
+    aElement.setAttribute (ATTR_COMPANY_VATIN, aValue.getCompanyVATIN ());
+    aElement.setAttribute (ATTR_COMPANY_NUMBER, aValue.getCompanyNumber ());
+    aElement.setAttribute (ATTR_CUSTOMER_NUMBER, aValue.getCustomerNumber ());
     aElement.appendChild (MicroTypeConverter.convertToMicroElement (aValue.getAddress (),
                                                                     sNamespaceURI,
                                                                     ELEMENT_ADDRESS));
@@ -94,9 +96,10 @@ public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroT
       throw new IllegalStateException ("Failed to resolve client ID '" + sClientID + "'");
 
     final String sDisplayName = aElement.getAttributeValue (ATTR_DISPLAYNAME);
-    final String sCompanyType = aElement.getAttributeValue (ATTR_COMPANYTYPE);
-    final String sCompanyVATIN = aElement.getAttributeValue (ATTR_COMPANYVATIN);
-    final String sCompanyNumber = aElement.getAttributeValue (ATTR_COMPANYNUMBER);
+    final String sCompanyType = aElement.getAttributeValue (ATTR_COMPANY_TYPE);
+    final String sCompanyVATIN = aElement.getAttributeValue (ATTR_COMPANY_VATIN);
+    final String sCompanyNumber = aElement.getAttributeValue (ATTR_COMPANY_NUMBER);
+    final String sCustomerNumber = aElement.getAttributeValue (ATTR_CUSTOMER_NUMBER);
     final Address aAddress = MicroTypeConverter.convertToNative (aElement.getFirstChildElement (ELEMENT_ADDRESS),
                                                                  Address.class);
     final String sTelephone = aElement.getAttributeValue (ATTR_TELEPHONE);
@@ -116,6 +119,7 @@ public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroT
                                sCompanyType,
                                sCompanyVATIN,
                                sCompanyNumber,
+                               sCustomerNumber,
                                aAddress,
                                sTelephone,
                                sFax,
