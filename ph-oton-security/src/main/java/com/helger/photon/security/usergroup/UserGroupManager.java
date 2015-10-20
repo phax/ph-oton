@@ -49,8 +49,8 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
-import com.helger.photon.security.role.IRoleManager;
-import com.helger.photon.security.user.IUserManager;
+import com.helger.photon.security.role.RoleManager;
+import com.helger.photon.security.user.UserManager;
 
 /**
  * This class manages the available user groups.
@@ -68,8 +68,8 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
   @GuardedBy ("s_aRWLock")
   private static boolean s_bCreateDefaults = DEFAULT_CREATE_DEFAULTS;
 
-  private final IUserManager m_aUserMgr;
-  private final IRoleManager m_aRoleMgr;
+  private final UserManager m_aUserMgr;
+  private final RoleManager m_aRoleMgr;
   @GuardedBy ("m_aRWLock")
   private final Map <String, UserGroup> m_aUserGroups = new HashMap <String, UserGroup> ();
 
@@ -102,8 +102,8 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
   }
 
   public UserGroupManager (@Nonnull @Nonempty final String sFilename,
-                           @Nonnull final IUserManager aUserMgr,
-                           @Nonnull final IRoleManager aRoleMgr) throws DAOException
+                           @Nonnull final UserManager aUserMgr,
+                           @Nonnull final RoleManager aRoleMgr) throws DAOException
   {
     super (sFilename);
     m_aUserMgr = ValueEnforcer.notNull (aUserMgr, "UserManager");
@@ -112,13 +112,13 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
   }
 
   @Nonnull
-  public final IUserManager getUserManager ()
+  public final UserManager getUserManager ()
   {
     return m_aUserMgr;
   }
 
   @Nonnull
-  public final IRoleManager getRoleManager ()
+  public final RoleManager getRoleManager ()
   {
     return m_aRoleMgr;
   }
@@ -527,10 +527,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (UserGroup.OT,
-                                        sUserGroupID,
-                                        "no-such-usergroup-id",
-                                        "unassign-user");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "unassign-user");
       return EChange.UNCHANGED;
     }
 
@@ -702,10 +699,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (UserGroup.OT,
-                                        sUserGroupID,
-                                        "no-such-usergroup-id",
-                                        "unassign-role");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "unassign-role");
       return EChange.UNCHANGED;
     }
 

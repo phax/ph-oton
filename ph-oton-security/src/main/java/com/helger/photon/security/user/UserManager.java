@@ -60,7 +60,7 @@ import com.helger.photon.security.password.salt.PasswordSalt;
  * @author Philip Helger
  */
 @ThreadSafe
-public class UserManager extends AbstractSimpleDAO implements IUserManager, IReloadableDAO
+public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
 {
   public static final boolean DEFAULT_CREATE_DEFAULTS = true;
 
@@ -189,6 +189,9 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     return aDoc;
   }
 
+  /**
+   * @return The user callback list. Never <code>null</code>.
+   */
   @Nonnull
   @ReturnsMutableObject ("design")
   public CallbackList <IUserModificationCallback> getUserModificationCallbacks ()
@@ -204,6 +207,32 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     m_aUsers.put (sUserID, aUser);
   }
 
+  /**
+   * Create a new user.
+   *
+   * @param sLoginName
+   *        Login name of the user. May neither be <code>null</code> nor
+   *        empty.This login name must be unique over all existing users.
+   * @param sEmailAddress
+   *        The email address. May be <code>null</code>.
+   * @param sPlainTextPassword
+   *        The plain text password to be used. May neither be <code>null</code>
+   *        nor empty.
+   * @param sFirstName
+   *        The users first name. May be <code>null</code>.
+   * @param sLastName
+   *        The users last name. May be <code>null</code>.
+   * @param sDescription
+   *        Optional description for the user. May be <code>null</code>.
+   * @param aDesiredLocale
+   *        The users default locale. May be <code>null</code>.
+   * @param aCustomAttrs
+   *        Custom attributes. May be <code>null</code>.
+   * @return The created user or <code>null</code> if another user with the same
+   *         email address is already present.
+   * @param bDisabled
+   *        <code>true</code> if the user is disabled
+   */
   @Nullable
   public IUser createNewUser (@Nonnull @Nonempty final String sLoginName,
                               @Nullable final String sEmailAddress,
@@ -272,6 +301,34 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     return aUser;
   }
 
+  /**
+   * Create a predefined user.
+   *
+   * @param sID
+   *        The ID to use
+   * @param sLoginName
+   *        Login name of the user. May neither be <code>null</code> nor empty.
+   *        This login name must be unique over all existing users.
+   * @param sEmailAddress
+   *        The email address. May be <code>null</code>.
+   * @param sPlainTextPassword
+   *        The plain text password to be used. May neither be <code>null</code>
+   *        nor empty.
+   * @param sFirstName
+   *        The users first name. May be <code>null</code>.
+   * @param sLastName
+   *        The users last name. May be <code>null</code>.
+   * @param sDescription
+   *        Optional description for the user. May be <code>null</code>.
+   * @param aDesiredLocale
+   *        The users default locale. May be <code>null</code>.
+   * @param aCustomAttrs
+   *        Custom attributes. May be <code>null</code>.
+   * @return The created user or <code>null</code> if another user with the same
+   *         email address is already present.
+   * @param bDisabled
+   *        <code>true</code> if the user is disabled
+   */
   @Nullable
   public IUser createPredefinedUser (@Nonnull @Nonempty final String sID,
                                      @Nonnull @Nonempty final String sLoginName,
@@ -290,10 +347,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     if (getUserOfLoginName (sLoginName) != null)
     {
       // Another user with this login name already exists
-      AuditHelper.onAuditCreateFailure (User.OT,
-                                        "login-name-already-in-use",
-                                        sLoginName,
-                                        "predefined-user");
+      AuditHelper.onAuditCreateFailure (User.OT, "login-name-already-in-use", sLoginName, "predefined-user");
       return null;
     }
 
@@ -346,8 +400,19 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     return aUser;
   }
 
+  /**
+   * Check if a user with the specified ID is present.
+   *
+   * @param sUserID
+   *        The user ID to resolve. May be <code>null</code>.
+   * @return <code>true</code> if such user exists, <code>false</code>
+   *         otherwise.
+   */
   public boolean containsUserWithID (@Nullable final String sUserID)
   {
+    if (StringHelper.hasNoText (sUserID))
+      return false;
+
     m_aRWLock.readLock ().lock ();
     try
     {
@@ -360,7 +425,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
   }
 
   @Nullable
-  public User getUserOfID (@Nullable final String sUserID)
+  private User _getUserOfID (@Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
       return null;
@@ -376,6 +441,27 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     }
   }
 
+  /**
+   * Get the user with the specified ID.
+   *
+   * @param sUserID
+   *        The user ID to resolve. May be <code>null</code>.
+   * @return <code>null</code> if no such user exists
+   */
+  @Nullable
+  public IUser getUserOfID (@Nullable final String sUserID)
+  {
+    // Change return type
+    return _getUserOfID (sUserID);
+  }
+
+  /**
+   * Get the user with the specified login name
+   *
+   * @param sLoginName
+   *        The login name to be checked. May be <code>null</code>.
+   * @return <code>null</code> if no such user exists
+   */
   @Nullable
   public IUser getUserOfLoginName (@Nullable final String sLoginName)
   {
@@ -396,6 +482,13 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     }
   }
 
+  /**
+   * Get the user with the specified email address
+   *
+   * @param sEmailAddress
+   *        The email address to be checked. May be <code>null</code>.
+   * @return <code>null</code> if no such user exists
+   */
   @Nullable
   public IUser getUserOfEmailAddress (@Nullable final String sEmailAddress)
   {
@@ -416,6 +509,10 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     }
   }
 
+  /**
+   * @return A non-<code>null</code> collection of all contained users
+   *         (enabled+disabled and deleted+not-deleted)
+   */
   @Nonnull
   @ReturnsMutableCopy
   public List <User> getAllUsers ()
@@ -431,6 +528,10 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     }
   }
 
+  /**
+   * @return A non-<code>null</code> collection of all contained enabled and
+   *         not-deleted users
+   */
   @Nonnull
   @ReturnsMutableCopy
   public List <User> getAllActiveUsers ()
@@ -450,6 +551,10 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     }
   }
 
+  /**
+   * @return A non-<code>null</code> collection of all contained disabled and
+   *         not-deleted users
+   */
   @Nonnull
   @ReturnsMutableCopy
   public List <User> getAllDisabledUsers ()
@@ -469,6 +574,10 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     }
   }
 
+  /**
+   * @return A non-<code>null</code> collection of all contained not deleted
+   *         users
+   */
   @Nonnull
   @ReturnsMutableCopy
   public List <User> getAllNotDeletedUsers ()
@@ -488,6 +597,9 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     }
   }
 
+  /**
+   * @return A non-<code>null</code> collection of all contained deleted users
+   */
   @Nonnull
   @ReturnsMutableCopy
   public List <User> getAllDeletedUsers ()
@@ -507,6 +619,29 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     }
   }
 
+  /**
+   * Change the modifiable data of a user
+   *
+   * @param sUserID
+   *        The ID of the user to be modified. May be <code>null</code>.
+   * @param sNewLoginName
+   *        The new login name. May not be <code>null</code>.
+   * @param sNewEmailAddress
+   *        The new email address. May be <code>null</code>.
+   * @param sNewFirstName
+   *        The new first name. May be <code>null</code>.
+   * @param sNewLastName
+   *        The new last name. May be <code>null</code>.
+   * @param sNewDescription
+   *        Optional new description for the user. May be <code>null</code>.
+   * @param aNewDesiredLocale
+   *        The new desired locale. May be <code>null</code>.
+   * @param aNewCustomAttrs
+   *        Custom attributes. May be <code>null</code>.
+   * @param bNewDisabled
+   *        <code>true</code> if the user is disabled
+   * @return {@link EChange}
+   */
   @Nonnull
   public EChange setUserData (@Nullable final String sUserID,
                               @Nonnull @Nonempty final String sNewLoginName,
@@ -519,7 +654,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
                               final boolean bNewDisabled)
   {
     // Resolve user
-    final User aUser = getUserOfID (sUserID);
+    final User aUser = _getUserOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id");
@@ -573,11 +708,20 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     return EChange.CHANGED;
   }
 
+  /**
+   * Change the modifiable data of a user
+   *
+   * @param sUserID
+   *        The ID of the user to be modified. May be <code>null</code>.
+   * @param sNewPlainTextPassword
+   *        The new password in plain text. May not be <code>null</code>.
+   * @return {@link EChange}
+   */
   @Nonnull
   public EChange setUserPassword (@Nullable final String sUserID, @Nonnull final String sNewPlainTextPassword)
   {
     // Resolve user
-    final User aUser = getUserOfID (sUserID);
+    final User aUser = _getUserOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "password");
@@ -621,7 +765,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
   public EChange updateUserLastLogin (@Nullable final String sUserID)
   {
     // Resolve user
-    final User aUser = getUserOfID (sUserID);
+    final User aUser = _getUserOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "update-last-login");
@@ -646,7 +790,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
   public EChange updateUserLastFailedLogin (@Nullable final String sUserID)
   {
     // Resolve user
-    final User aUser = getUserOfID (sUserID);
+    final User aUser = _getUserOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "update-last-failed-login");
@@ -679,10 +823,18 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     return EChange.CHANGED;
   }
 
+  /**
+   * Delete the user with the specified ID.
+   *
+   * @param sUserID
+   *        The ID of the user to delete
+   * @return {@link EChange#CHANGED} if the user was deleted,
+   *         {@link EChange#UNCHANGED} otherwise.
+   */
   @Nonnull
   public EChange deleteUser (@Nullable final String sUserID)
   {
-    final User aUser = getUserOfID (sUserID);
+    final User aUser = _getUserOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditDeleteFailure (User.OT, sUserID, "no-such-user-id");
@@ -716,10 +868,18 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     return EChange.CHANGED;
   }
 
+  /**
+   * Undelete the user with the specified ID.
+   *
+   * @param sUserID
+   *        The ID of the user to undelete
+   * @return {@link EChange#CHANGED} if the user was undeleted,
+   *         {@link EChange#UNCHANGED} otherwise.
+   */
   @Nonnull
   public EChange undeleteUser (@Nullable final String sUserID)
   {
-    final User aUser = getUserOfID (sUserID);
+    final User aUser = _getUserOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditUndeleteFailure (User.OT, sUserID, "no-such-user-id");
@@ -753,10 +913,18 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     return EChange.CHANGED;
   }
 
+  /**
+   * disable the user with the specified ID.
+   *
+   * @param sUserID
+   *        The ID of the user to disable
+   * @return {@link EChange#CHANGED} if the user was disabled,
+   *         {@link EChange#UNCHANGED} otherwise.
+   */
   @Nonnull
   public EChange disableUser (@Nullable final String sUserID)
   {
-    final User aUser = getUserOfID (sUserID);
+    final User aUser = _getUserOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "disable");
@@ -790,10 +958,18 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     return EChange.CHANGED;
   }
 
+  /**
+   * Enable the user with the specified ID.
+   *
+   * @param sUserID
+   *        The ID of the user to enable
+   * @return {@link EChange#CHANGED} if the user was enabled,
+   *         {@link EChange#UNCHANGED} otherwise.
+   */
   @Nonnull
   public EChange enableUser (@Nullable final String sUserID)
   {
-    final User aUser = getUserOfID (sUserID);
+    final User aUser = _getUserOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "enable");
@@ -827,6 +1003,16 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     return EChange.CHANGED;
   }
 
+  /**
+   * Check if the passed combination of user ID and password matches.
+   *
+   * @param sUserID
+   *        The ID of the user
+   * @param sPlainTextPassword
+   *        The plan text password to validate.
+   * @return <code>true</code> if the password hash matches the stored hash for
+   *         the specified user, <code>false</code> otherwise.
+   */
   public boolean areUserIDAndPasswordValid (@Nullable final String sUserID, @Nullable final String sPlainTextPassword)
   {
     // No password is not allowed
