@@ -14,26 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.login.callback;
+package com.helger.photon.security.login;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.callback.ICallback;
-import com.helger.photon.security.login.LoginInfo;
-
 /**
- * Callback interface when a user logs out.
- *
+ * Default empty implementation of {@link IUserLogoutCallback}.
+ * 
  * @author Philip Helger
  */
-public interface IUserLogoutCallback extends ICallback
+public class DefaultUserLogoutCallback implements IUserLogoutCallback
 {
-  /**
-   * Called when a user is logged out.
-   *
-   * @param aInfo
-   *        The login info of the user that just logged out. Never
-   *        <code>null</code>.
-   */
-  void onUserLogout (@Nonnull LoginInfo aInfo);
+  public void onUserLogout (@Nonnull final LoginInfo aInfo)
+  {}
 }

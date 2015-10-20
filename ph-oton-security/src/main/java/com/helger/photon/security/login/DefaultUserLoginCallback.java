@@ -14,13 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.login.callback;
+package com.helger.photon.security.login;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.security.login.ELoginResult;
-import com.helger.photon.security.login.LoginInfo;
 
 /**
  * Default empty implementation of {@link IUserLoginCallback}.
