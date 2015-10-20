@@ -14,12 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.usergroup.callback;
+package com.helger.photon.security.usergroup;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.security.usergroup.IUserGroup;
 
 /**
  * Default empty implementation of {@link IUserGroupModificationCallback}. Use

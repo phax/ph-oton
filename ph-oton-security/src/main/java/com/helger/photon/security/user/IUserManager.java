@@ -28,7 +28,6 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.state.EChange;
-import com.helger.photon.security.user.callback.IUserModificationCallback;
 
 /**
  * Interface for a user manager

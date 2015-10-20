@@ -26,9 +26,16 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ELockType;
+import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -53,10 +60,14 @@ import com.helger.photon.security.object.ObjectHelper;
  */
 public final class AccountingAreaManager extends AbstractSimpleDAO implements IAccountingAreaResolver
 {
-  private static final String ELEMENT_ACCOUNTINGAREAS = "accountingareas";
-  private static final String ELEMENT_ACCOUNTINGAREA = "accountingarea";
+  private static final String ELEMENT_ROOT = "accountingareas";
+  private static final String ELEMENT_ITEM = "accountingarea";
+
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AccountingAreaManager.class);
 
   private final Map <String, AccountingArea> m_aMap = new HashMap <String, AccountingArea> ();
+
+  private final CallbackList <IAccountingAreaModificationCallback> m_aCallbacks = new CallbackList <IAccountingAreaModificationCallback> ();
 
   public AccountingAreaManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -68,7 +79,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   @Nonnull
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
-    for (final IMicroElement eAccountingArea : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ACCOUNTINGAREA))
+    for (final IMicroElement eAccountingArea : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
       _addAccountingArea (MicroTypeConverter.convertToNative (eAccountingArea, AccountingArea.class));
     return EChange.UNCHANGED;
   }
@@ -78,12 +89,20 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ACCOUNTINGAREAS);
+    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
     for (final AccountingArea aAccountingArea : CollectionHelper.getSortedByKey (m_aMap).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aAccountingArea, ELEMENT_ACCOUNTINGAREA));
+      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aAccountingArea, ELEMENT_ITEM));
     return aDoc;
   }
 
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public CallbackList <IAccountingAreaModificationCallback> getUserModificationCallbacks ()
+  {
+    return m_aCallbacks;
+  }
+
+  @MustBeLocked (ELockType.WRITE)
   private void _addAccountingArea (@Nonnull final AccountingArea aAccountingArea)
   {
     ValueEnforcer.notNull (aAccountingArea, "AccountingArea");
@@ -151,6 +170,18 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                       sOfficeLocation,
                                       sCommercialRegistrationNumber,
                                       sCommercialCourt);
+
+    // Execute callback as the very last action
+    for (final IAccountingAreaModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onAccountingAreaCreated (aAccountingArea);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onAccountingAreaCreated callback on " + aAccountingArea.toString (), t);
+      }
+
     return aAccountingArea;
   }
 
@@ -171,10 +202,11 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                        @Nullable final String sCommercialCourt,
                                        @Nonnull final Locale aDisplayLocale)
   {
+    AccountingArea aAccountingArea;
     m_aRWLock.writeLock ().lock ();
     try
     {
-      final AccountingArea aAccountingArea = m_aMap.get (sAccountingAreaID);
+      aAccountingArea = m_aMap.get (sAccountingAreaID);
       if (aAccountingArea == null)
       {
         AuditHelper.onAuditModifyFailure (AccountingArea.OT, sAccountingAreaID, "no-such-id");
@@ -220,6 +252,60 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                       sOfficeLocation,
                                       sCommercialRegistrationNumber,
                                       sCommercialCourt);
+
+    // Execute callback as the very last action
+    for (final IAccountingAreaModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onAccountingAreaUpdated (aAccountingArea);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onAccountingAreaUpdated callback on " + aAccountingArea.toString (), t);
+      }
+
+    return EChange.CHANGED;
+  }
+
+  @Nonnull
+  public EChange deleteAccountingArea (@Nullable final String sAccountingAreaID)
+  {
+    final AccountingArea aDeletedAccountingArea = _getAccountingAreaOfID (sAccountingAreaID);
+    if (aDeletedAccountingArea == null)
+    {
+      AuditHelper.onAuditDeleteFailure (AccountingArea.OT, "no-such-accountingareaid-id", sAccountingAreaID);
+      return EChange.UNCHANGED;
+    }
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (ObjectHelper.setDeletionNow (aDeletedAccountingArea).isUnchanged ())
+      {
+        AuditHelper.onAuditDeleteFailure (AccountingArea.OT, "already-deleted", sAccountingAreaID);
+        return EChange.UNCHANGED;
+      }
+      markAsChanged ();
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+    AuditHelper.onAuditDeleteSuccess (AccountingArea.OT, sAccountingAreaID);
+
+    // Execute callback as the very last action
+    for (final IAccountingAreaModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onAccountingAreaDeleted (aDeletedAccountingArea);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onAccountingAreaDeleted callback on " +
+                         aDeletedAccountingArea.toString (),
+                         t);
+      }
+
     return EChange.CHANGED;
   }
 
@@ -327,7 +413,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   }
 
   @Nullable
-  public IAccountingArea getAccountingAreaOfID (@Nullable final String sID)
+  private AccountingArea _getAccountingAreaOfID (@Nullable final String sID)
   {
     if (StringHelper.hasNoText (sID))
       return null;
@@ -343,6 +429,14 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
     }
   }
 
+  @Nullable
+  public IAccountingArea getAccountingAreaOfID (@Nullable final String sID)
+  {
+    // Return type
+    return _getAccountingAreaOfID (sID);
+  }
+
+  @Nullable
   public IAccountingArea getAccountingAreaOfID (@Nullable final String sID, @Nullable final IClient aClient)
   {
     final IAccountingArea aAccountingArea = getAccountingAreaOfID (sID);

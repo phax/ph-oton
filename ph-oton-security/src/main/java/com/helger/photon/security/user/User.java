@@ -48,6 +48,8 @@ import com.helger.photon.security.password.hash.PasswordHash;
 @NotThreadSafe
 public class User extends MapBasedAttributeContainerAny <String> implements IUser
 {
+  public static final ObjectType OT = new ObjectType ("user");
+
   private final String m_sID;
   private final LocalDateTime m_aCreationDT;
   private LocalDateTime m_aLastModificationDT;
@@ -229,7 +231,7 @@ public class User extends MapBasedAttributeContainerAny <String> implements IUse
   @Nonnull
   public ObjectType getObjectType ()
   {
-    return CSecurity.TYPE_USER;
+    return User.OT;
   }
 
   public boolean isAdministrator ()

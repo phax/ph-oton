@@ -14,12 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.role.callback;
+package com.helger.photon.security.role;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.callback.ICallback;
-import com.helger.photon.security.role.IRole;
 
 /**
  * Callback interface when a role is created, modified, deleted or renamed.

@@ -50,8 +50,8 @@ import com.helger.photon.security.object.ObjectHelper;
  */
 public class ClientManager extends AbstractSimpleDAO implements IClientResolver
 {
-  private static final String ELEMENT_CLIENTS = "clients";
-  private static final String ELEMENT_CLIENT = "client";
+  private static final String ELEMENT_ROOT = "clients";
+  private static final String ELEMENT_ITEM = "client";
 
   private final Map <String, Client> m_aMap = new HashMap <String, Client> ();
 
@@ -73,7 +73,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
   @Nonnull
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
-    for (final IMicroElement eClient : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_CLIENT))
+    for (final IMicroElement eClient : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
       _addClient (MicroTypeConverter.convertToNative (eClient, Client.class));
     return EChange.UNCHANGED;
   }
@@ -83,9 +83,9 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_CLIENTS);
+    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
     for (final Client aClient : CollectionHelper.getSortedByKey (m_aMap).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aClient, ELEMENT_CLIENT));
+      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aClient, ELEMENT_ITEM));
     return aDoc;
   }
 

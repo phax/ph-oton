@@ -14,28 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.role.callback;
+package com.helger.photon.security.user;
 
-import com.helger.photon.security.role.IRole;
+import javax.annotation.Nonnull;
 
 /**
- * Default empty implementation of {@link IRoleModificationCallback}. Use this
+ * Default empty implementation of {@link IUserModificationCallback}. Use this
  * class as the base class of custom implementations so that no change is
  * necessary when the interface gets extended.
- * 
+ *
  * @author Philip Helger
  */
-public class DefaultRoleModificationCallback implements IRoleModificationCallback
+public class DefaultUserModificationCallback implements IUserModificationCallback
 {
-  public void onRoleCreated (final IRole aRole, final boolean bPredefinedRole)
+  public void onUserCreated (@Nonnull final IUser aUser, final boolean bPredefinedUser)
   {}
 
-  public void onRoleUpdated (final IRole aRole)
+  public void onUserUpdated (@Nonnull final IUser aUser)
   {}
 
-  public void onRoleRenamed (final IRole aRole)
+  public void onUserLastFailedLoginUpdated (@Nonnull final IUser aUser)
   {}
 
-  public void onRoleDeleted (final IRole aRole)
+  public void onUserPasswordChanged (@Nonnull final IUser aUser)
+  {}
+
+  public void onUserDeleted (@Nonnull final IUser aUser)
+  {}
+
+  public void onUserUndeleted (@Nonnull final IUser aUser)
+  {}
+
+  public void onUserEnabled (@Nonnull final IUser aUser, final boolean bEnabled)
   {}
 }

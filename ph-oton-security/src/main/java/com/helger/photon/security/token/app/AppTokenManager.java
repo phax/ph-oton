@@ -155,7 +155,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
   @Nonnull
   public EChange deleteAppToken (@Nullable final String sAppTokenID)
   {
-    final AppToken aAppToken = getAppTokenOfID (sAppTokenID);
+    final AppToken aAppToken = _getAppTokenOfID (sAppTokenID);
     if (aAppToken == null)
     {
       AuditHelper.onAuditDeleteFailure (AppToken.OT, "no-such-id", sAppTokenID);
@@ -215,7 +215,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
   }
 
   @Nullable
-  public AppToken getAppTokenOfID (@Nullable final String sID)
+  private AppToken _getAppTokenOfID (@Nullable final String sID)
   {
     if (StringHelper.hasNoText (sID))
       return null;
@@ -229,6 +229,12 @@ public final class AppTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.readLock ().unlock ();
     }
+  }
+
+  @Nullable
+  public IAppToken getAppTokenOfID (@Nullable final String sID)
+  {
+    return _getAppTokenOfID (sID);
   }
 
   public boolean containsAppTokenWithID (@Nullable final String sID)

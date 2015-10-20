@@ -51,7 +51,6 @@ import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUserManager;
-import com.helger.photon.security.usergroup.callback.IUserGroupModificationCallback;
 
 /**
  * This class manages the available user groups.
@@ -74,7 +73,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
   @GuardedBy ("m_aRWLock")
   private final Map <String, UserGroup> m_aUserGroups = new HashMap <String, UserGroup> ();
 
-  private final CallbackList <IUserGroupModificationCallback> m_aUserGroupCallbacks = new CallbackList <IUserGroupModificationCallback> ();
+  private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList <IUserGroupModificationCallback> ();
 
   public static boolean isCreateDefaults ()
   {
@@ -201,7 +200,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
   @ReturnsMutableObject ("design")
   public CallbackList <IUserGroupModificationCallback> getUserGroupModificationCallbacks ()
   {
-    return m_aUserGroupCallbacks;
+    return m_aCallbacks;
   }
 
   @Nonnull
@@ -233,13 +232,13 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (CSecurity.TYPE_USERGROUP, aUserGroup.getID (), sName, sDescription, aCustomAttrs);
+    AuditHelper.onAuditCreateSuccess (UserGroup.OT, aUserGroup.getID (), sName, sDescription, aCustomAttrs);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aUserGroupCallback : m_aUserGroupCallbacks.getAllCallbacks ())
+    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserGroupCallback.onUserGroupCreated (aUserGroup, false);
+        aCallback.onUserGroupCreated (aUserGroup, false);
       }
       catch (final Throwable t)
       {
@@ -269,7 +268,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (CSecurity.TYPE_USERGROUP,
+    AuditHelper.onAuditCreateSuccess (UserGroup.OT,
                                       aUserGroup.getID (),
                                       "predefined-usergroup",
                                       sName,
@@ -277,10 +276,10 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
                                       aCustomAttrs);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aUserGroupCallback : m_aUserGroupCallbacks.getAllCallbacks ())
+    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserGroupCallback.onUserGroupCreated (aUserGroup, true);
+        aCallback.onUserGroupCreated (aUserGroup, true);
       }
       catch (final Throwable t)
       {
@@ -370,7 +369,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
       aDeletedUserGroup = m_aUserGroups.remove (sUserGroupID);
       if (aDeletedUserGroup == null)
       {
-        AuditHelper.onAuditDeleteFailure (CSecurity.TYPE_USERGROUP, "no-such-usergroup-id", sUserGroupID);
+        AuditHelper.onAuditDeleteFailure (UserGroup.OT, "no-such-usergroup-id", sUserGroupID);
         return EChange.UNCHANGED;
       }
       markAsChanged ();
@@ -379,13 +378,13 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditDeleteSuccess (CSecurity.TYPE_USERGROUP, sUserGroupID);
+    AuditHelper.onAuditDeleteSuccess (UserGroup.OT, sUserGroupID);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aUserGroupCallback : m_aUserGroupCallbacks.getAllCallbacks ())
+    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserGroupCallback.onUserGroupDeleted (aDeletedUserGroup);
+        aCallback.onUserGroupDeleted (aDeletedUserGroup);
       }
       catch (final Throwable t)
       {
@@ -402,7 +401,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USERGROUP, sUserGroupID, "no-such-usergroup-id", "name");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "name");
       return EChange.UNCHANGED;
     }
 
@@ -417,13 +416,13 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USERGROUP, "name", sUserGroupID, sNewName);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT, "name", sUserGroupID, sNewName);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aUserGroupCallback : m_aUserGroupCallbacks.getAllCallbacks ())
+    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserGroupCallback.onUserGroupRenamed (aUserGroup);
+        aCallback.onUserGroupRenamed (aUserGroup);
       }
       catch (final Throwable t)
       {
@@ -443,7 +442,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USERGROUP, sUserGroupID, "no-such-usergroup-id");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id");
       return EChange.UNCHANGED;
     }
 
@@ -462,7 +461,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USERGROUP,
+    AuditHelper.onAuditModifySuccess (UserGroup.OT,
                                       "all",
                                       aUserGroup.getID (),
                                       sNewName,
@@ -470,10 +469,10 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
                                       aNewCustomAttrs);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aUserGroupCallback : m_aUserGroupCallbacks.getAllCallbacks ())
+    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserGroupCallback.onUserGroupUpdated (aUserGroup);
+        aCallback.onUserGroupUpdated (aUserGroup);
       }
       catch (final Throwable t)
       {
@@ -490,7 +489,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USERGROUP, sUserGroupID, "no-such-usergroup-id", "assign-user");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "assign-user");
       return EChange.UNCHANGED;
     }
 
@@ -505,13 +504,13 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USERGROUP, "assign-user", sUserGroupID, sUserID);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT, "assign-user", sUserGroupID, sUserID);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aUserGroupCallback : m_aUserGroupCallbacks.getAllCallbacks ())
+    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserGroupCallback.onUserGroupUserAssignment (aUserGroup, sUserID, true);
+        aCallback.onUserGroupUserAssignment (aUserGroup, sUserID, true);
       }
       catch (final Throwable t)
       {
@@ -528,7 +527,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USERGROUP,
+      AuditHelper.onAuditModifyFailure (UserGroup.OT,
                                         sUserGroupID,
                                         "no-such-usergroup-id",
                                         "unassign-user");
@@ -546,13 +545,13 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USERGROUP, "unassign-user", sUserGroupID, sUserID);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT, "unassign-user", sUserGroupID, sUserID);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aUserGroupCallback : m_aUserGroupCallbacks.getAllCallbacks ())
+    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserGroupCallback.onUserGroupUserAssignment (aUserGroup, sUserID, false);
+        aCallback.onUserGroupUserAssignment (aUserGroup, sUserID, false);
       }
       catch (final Throwable t)
       {
@@ -588,14 +587,14 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USERGROUP, "unassign-user-from-all-usergroups", sUserID);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT, "unassign-user-from-all-usergroups", sUserID);
 
     // Execute callback as the very last action
     for (final IUserGroup aUserGroup : aAffectedUserGroups)
-      for (final IUserGroupModificationCallback aUserGroupCallback : m_aUserGroupCallbacks.getAllCallbacks ())
+      for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
         try
         {
-          aUserGroupCallback.onUserGroupUserAssignment (aUserGroup, sUserID, false);
+          aCallback.onUserGroupUserAssignment (aUserGroup, sUserID, false);
         }
         catch (final Throwable t)
         {
@@ -665,7 +664,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USERGROUP, sUserGroupID, "no-such-usergroup-id", "assign-role");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "assign-role");
       return EChange.UNCHANGED;
     }
 
@@ -680,13 +679,13 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USERGROUP, "assign-role", sUserGroupID, sRoleID);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT, "assign-role", sUserGroupID, sRoleID);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aUserGroupCallback : m_aUserGroupCallbacks.getAllCallbacks ())
+    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserGroupCallback.onUserGroupRoleAssignment (aUserGroup, sRoleID, true);
+        aCallback.onUserGroupRoleAssignment (aUserGroup, sRoleID, true);
       }
       catch (final Throwable t)
       {
@@ -703,7 +702,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USERGROUP,
+      AuditHelper.onAuditModifyFailure (UserGroup.OT,
                                         sUserGroupID,
                                         "no-such-usergroup-id",
                                         "unassign-role");
@@ -721,13 +720,13 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USERGROUP, "unassign-role", sUserGroupID, sRoleID);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT, "unassign-role", sUserGroupID, sRoleID);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aUserGroupCallback : m_aUserGroupCallbacks.getAllCallbacks ())
+    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserGroupCallback.onUserGroupRoleAssignment (aUserGroup, sRoleID, false);
+        aCallback.onUserGroupRoleAssignment (aUserGroup, sRoleID, false);
       }
       catch (final Throwable t)
       {
@@ -763,14 +762,14 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USERGROUP, "unassign-role-from-all-usergroups", sRoleID);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT, "unassign-role-from-all-usergroups", sRoleID);
 
     // Execute callback as the very last action
     for (final IUserGroup aUserGroup : aAffectedUserGroups)
-      for (final IUserGroupModificationCallback aUserGroupCallback : m_aUserGroupCallbacks.getAllCallbacks ())
+      for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
         try
         {
-          aUserGroupCallback.onUserGroupRoleAssignment (aUserGroup, sRoleID, false);
+          aCallback.onUserGroupRoleAssignment (aUserGroup, sRoleID, false);
         }
         catch (final Throwable t)
         {

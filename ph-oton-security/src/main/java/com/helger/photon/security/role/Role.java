@@ -31,7 +31,6 @@ import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.security.CSecurity;
 
 /**
  * Default implementation of the {@link IRole} interface.
@@ -41,6 +40,8 @@ import com.helger.photon.security.CSecurity;
 @NotThreadSafe
 public final class Role extends MapBasedAttributeContainerAny <String> implements IRole
 {
+  public static final ObjectType OT = new ObjectType ("role");
+
   private final String m_sID;
   private String m_sName;
   private String m_sDescription;
@@ -66,7 +67,7 @@ public final class Role extends MapBasedAttributeContainerAny <String> implement
   @Nonnull
   public ObjectType getObjectType ()
   {
-    return CSecurity.TYPE_ROLE;
+    return Role.OT;
   }
 
   @Nonnull

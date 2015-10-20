@@ -47,7 +47,6 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
-import com.helger.photon.security.role.callback.IRoleModificationCallback;
 
 /**
  * This class manages the available roles.
@@ -68,7 +67,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
   @GuardedBy ("m_aRWLock")
   private final Map <String, Role> m_aRoles = new HashMap <String, Role> ();
 
-  private final CallbackList <IRoleModificationCallback> m_aRoleCallbacks = new CallbackList <IRoleModificationCallback> ();
+  private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <IRoleModificationCallback> ();
 
   /**
    * @return <code>true</code> if the default built-in roles should be created
@@ -160,7 +159,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
   @ReturnsMutableObject ("design")
   public CallbackList <IRoleModificationCallback> getRoleModificationCallbacks ()
   {
-    return m_aRoleCallbacks;
+    return m_aCallbacks;
   }
 
   private void _addRole (@Nonnull final Role aRole)
@@ -192,13 +191,13 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (CSecurity.TYPE_ROLE, aRole.getID (), sName);
+    AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), sName);
 
     // Execute callback as the very last action
-    for (final IRoleModificationCallback aRoleCallback : m_aRoleCallbacks.getAllCallbacks ())
+    for (final IRoleModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aRoleCallback.onRoleCreated (aRole, false);
+        aCallback.onRoleCreated (aRole, false);
       }
       catch (final Throwable t)
       {
@@ -229,13 +228,13 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (CSecurity.TYPE_ROLE, aRole.getID (), "predefind-role", sName);
+    AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), "predefind-role", sName);
 
     // Execute callback as the very last action
-    for (final IRoleModificationCallback aRoleCallback : m_aRoleCallbacks.getAllCallbacks ())
+    for (final IRoleModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aRoleCallback.onRoleCreated (aRole, true);
+        aCallback.onRoleCreated (aRole, true);
       }
       catch (final Throwable t)
       {
@@ -322,7 +321,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
       aDeletedRole = m_aRoles.remove (sRoleID);
       if (aDeletedRole == null)
       {
-        AuditHelper.onAuditDeleteFailure (CSecurity.TYPE_ROLE, "no-such-role-id", sRoleID);
+        AuditHelper.onAuditDeleteFailure (Role.OT, "no-such-role-id", sRoleID);
         return EChange.UNCHANGED;
       }
       markAsChanged ();
@@ -331,13 +330,13 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditDeleteSuccess (CSecurity.TYPE_ROLE, sRoleID);
+    AuditHelper.onAuditDeleteSuccess (Role.OT, sRoleID);
 
     // Execute callback as the very last action
-    for (final IRoleModificationCallback aRoleCallback : m_aRoleCallbacks.getAllCallbacks ())
+    for (final IRoleModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aRoleCallback.onRoleDeleted (aDeletedRole);
+        aCallback.onRoleDeleted (aDeletedRole);
       }
       catch (final Throwable t)
       {
@@ -354,7 +353,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     final Role aRole = getRoleOfID (sRoleID);
     if (aRole == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_ROLE, sRoleID, "no-such-id");
+      AuditHelper.onAuditModifyFailure (Role.OT, sRoleID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -369,13 +368,13 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_ROLE, "name", sRoleID, sNewName);
+    AuditHelper.onAuditModifySuccess (Role.OT, "name", sRoleID, sNewName);
 
     // Execute callback as the very last action
-    for (final IRoleModificationCallback aRoleCallback : m_aRoleCallbacks.getAllCallbacks ())
+    for (final IRoleModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aRoleCallback.onRoleRenamed (aRole);
+        aCallback.onRoleRenamed (aRole);
       }
       catch (final Throwable t)
       {
@@ -395,7 +394,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     final Role aRole = getRoleOfID (sRoleID);
     if (aRole == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_ROLE, sRoleID, "no-such-role-id");
+      AuditHelper.onAuditModifyFailure (Role.OT, sRoleID, "no-such-role-id");
       return EChange.UNCHANGED;
     }
 
@@ -414,7 +413,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_ROLE,
+    AuditHelper.onAuditModifySuccess (Role.OT,
                                       "all",
                                       aRole.getID (),
                                       sNewName,
@@ -422,10 +421,10 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
                                       aNewCustomAttrs);
 
     // Execute callback as the very last action
-    for (final IRoleModificationCallback aRoleCallback : m_aRoleCallbacks.getAllCallbacks ())
+    for (final IRoleModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aRoleCallback.onRoleUpdated (aRole);
+        aCallback.onRoleUpdated (aRole);
       }
       catch (final Throwable t)
       {

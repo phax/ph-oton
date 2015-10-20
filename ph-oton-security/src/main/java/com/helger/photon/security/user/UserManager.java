@@ -53,7 +53,6 @@ import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.hash.PasswordHash;
 import com.helger.photon.security.password.salt.IPasswordSalt;
 import com.helger.photon.security.password.salt.PasswordSalt;
-import com.helger.photon.security.user.callback.IUserModificationCallback;
 
 /**
  * This class manages the available users.
@@ -74,7 +73,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
   @GuardedBy ("m_aRWLock")
   private final Map <String, User> m_aUsers = new HashMap <String, User> ();
 
-  private final CallbackList <IUserModificationCallback> m_aUserCallbacks = new CallbackList <IUserModificationCallback> ();
+  private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <IUserModificationCallback> ();
 
   public static boolean isCreateDefaults ()
   {
@@ -194,7 +193,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
   @ReturnsMutableObject ("design")
   public CallbackList <IUserModificationCallback> getUserModificationCallbacks ()
   {
-    return m_aUserCallbacks;
+    return m_aCallbacks;
   }
 
   private void _addUser (@Nonnull final User aUser)
@@ -222,7 +221,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     if (getUserOfLoginName (sLoginName) != null)
     {
       // Another user with this login name already exists
-      AuditHelper.onAuditCreateFailure (CSecurity.TYPE_USER, "login-name-already-in-use", sLoginName);
+      AuditHelper.onAuditCreateFailure (User.OT, "login-name-already-in-use", sLoginName);
       return null;
     }
 
@@ -248,7 +247,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (CSecurity.TYPE_USER,
+    AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
                                       sLoginName,
                                       sEmailAddress,
@@ -260,10 +259,10 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
                                       Boolean.valueOf (bDisabled));
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aUserCallback : m_aUserCallbacks.getAllCallbacks ())
+    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserCallback.onUserCreated (aUser, false);
+        aCallback.onUserCreated (aUser, false);
       }
       catch (final Throwable t)
       {
@@ -291,7 +290,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     if (getUserOfLoginName (sLoginName) != null)
     {
       // Another user with this login name already exists
-      AuditHelper.onAuditCreateFailure (CSecurity.TYPE_USER,
+      AuditHelper.onAuditCreateFailure (User.OT,
                                         "login-name-already-in-use",
                                         sLoginName,
                                         "predefined-user");
@@ -321,7 +320,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (CSecurity.TYPE_USER,
+    AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
                                       "predefined-user",
                                       sLoginName,
@@ -334,10 +333,10 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
                                       Boolean.valueOf (bDisabled));
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aUserCallback : m_aUserCallbacks.getAllCallbacks ())
+    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserCallback.onUserCreated (aUser, true);
+        aCallback.onUserCreated (aUser, true);
       }
       catch (final Throwable t)
       {
@@ -523,7 +522,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     final User aUser = getUserOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USER, sUserID, "no-such-user-id");
+      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id");
       return EChange.UNCHANGED;
     }
 
@@ -548,7 +547,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USER,
+    AuditHelper.onAuditModifySuccess (User.OT,
                                       "all",
                                       aUser.getID (),
                                       sNewLoginName,
@@ -561,10 +560,10 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
                                       Boolean.valueOf (bNewDisabled));
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aUserCallback : m_aUserCallbacks.getAllCallbacks ())
+    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserCallback.onUserUpdated (aUser);
+        aCallback.onUserUpdated (aUser);
       }
       catch (final Throwable t)
       {
@@ -581,7 +580,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     final User aUser = getUserOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USER, sUserID, "no-such-user-id", "password");
+      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "password");
       return EChange.UNCHANGED;
     }
 
@@ -602,13 +601,13 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USER, "password", sUserID);
+    AuditHelper.onAuditModifySuccess (User.OT, "password", sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aUserCallback : m_aUserCallbacks.getAllCallbacks ())
+    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserCallback.onUserPasswordChanged (aUser);
+        aCallback.onUserPasswordChanged (aUser);
       }
       catch (final Throwable t)
       {
@@ -625,7 +624,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     final User aUser = getUserOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USER, sUserID, "no-such-user-id", "update-last-login");
+      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "update-last-login");
       return EChange.UNCHANGED;
     }
 
@@ -639,7 +638,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USER, "update-last-login", sUserID);
+    AuditHelper.onAuditModifySuccess (User.OT, "update-last-login", sUserID);
     return EChange.CHANGED;
   }
 
@@ -650,7 +649,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     final User aUser = getUserOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USER, sUserID, "no-such-user-id", "update-last-failed-login");
+      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "update-last-failed-login");
       return EChange.UNCHANGED;
     }
 
@@ -664,13 +663,13 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USER, "update-last-failed-login", sUserID);
+    AuditHelper.onAuditModifySuccess (User.OT, "update-last-failed-login", sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aUserCallback : m_aUserCallbacks.getAllCallbacks ())
+    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserCallback.onUserLastFailedLoginUpdated (aUser);
+        aCallback.onUserLastFailedLoginUpdated (aUser);
       }
       catch (final Throwable t)
       {
@@ -686,7 +685,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     final User aUser = getUserOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditDeleteFailure (CSecurity.TYPE_USER, sUserID, "no-such-user-id");
+      AuditHelper.onAuditDeleteFailure (User.OT, sUserID, "no-such-user-id");
       return EChange.UNCHANGED;
     }
 
@@ -701,13 +700,13 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditDeleteSuccess (CSecurity.TYPE_USER, sUserID);
+    AuditHelper.onAuditDeleteSuccess (User.OT, sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aUserCallback : m_aUserCallbacks.getAllCallbacks ())
+    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserCallback.onUserDeleted (aUser);
+        aCallback.onUserDeleted (aUser);
       }
       catch (final Throwable t)
       {
@@ -723,7 +722,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     final User aUser = getUserOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditUndeleteFailure (CSecurity.TYPE_USER, sUserID, "no-such-user-id");
+      AuditHelper.onAuditUndeleteFailure (User.OT, sUserID, "no-such-user-id");
       return EChange.UNCHANGED;
     }
 
@@ -738,13 +737,13 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditUndeleteSuccess (CSecurity.TYPE_USER, sUserID);
+    AuditHelper.onAuditUndeleteSuccess (User.OT, sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aUserCallback : m_aUserCallbacks.getAllCallbacks ())
+    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserCallback.onUserUndeleted (aUser);
+        aCallback.onUserUndeleted (aUser);
       }
       catch (final Throwable t)
       {
@@ -760,7 +759,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     final User aUser = getUserOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USER, sUserID, "no-such-user-id", "disable");
+      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "disable");
       return EChange.UNCHANGED;
     }
 
@@ -775,13 +774,13 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USER, "disable", sUserID);
+    AuditHelper.onAuditModifySuccess (User.OT, "disable", sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aUserCallback : m_aUserCallbacks.getAllCallbacks ())
+    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserCallback.onUserEnabled (aUser, false);
+        aCallback.onUserEnabled (aUser, false);
       }
       catch (final Throwable t)
       {
@@ -797,7 +796,7 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     final User aUser = getUserOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (CSecurity.TYPE_USER, sUserID, "no-such-user-id", "enable");
+      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "enable");
       return EChange.UNCHANGED;
     }
 
@@ -812,13 +811,13 @@ public class UserManager extends AbstractSimpleDAO implements IUserManager, IRel
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (CSecurity.TYPE_USER, "enable", sUserID);
+    AuditHelper.onAuditModifySuccess (User.OT, "enable", sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aUserCallback : m_aUserCallbacks.getAllCallbacks ())
+    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
       try
       {
-        aUserCallback.onUserEnabled (aUser, true);
+        aCallback.onUserEnabled (aUser, true);
       }
       catch (final Throwable t)
       {

@@ -18,7 +18,6 @@ package com.helger.photon.security;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.type.ObjectType;
 import com.helger.photon.basic.auth.CBasicSecurity;
 
 /**
@@ -72,11 +71,6 @@ public final class CSecurity
   // Default right object facet names
   public static final String FACET_READ = "read";
   public static final String FACET_WRITE = "write";
-
-  // Object types
-  public static final ObjectType TYPE_USER = new ObjectType ("user");
-  public static final ObjectType TYPE_USERGROUP = new ObjectType ("usergroup");
-  public static final ObjectType TYPE_ROLE = new ObjectType ("role");
 
   // Default users
   public static final String USER_ADMINISTRATOR_ID = "admin";
