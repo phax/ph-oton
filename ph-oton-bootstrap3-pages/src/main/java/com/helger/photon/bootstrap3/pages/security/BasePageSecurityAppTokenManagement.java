@@ -58,10 +58,10 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
    BUTTON_CREATE_NEW ("Neues App Token anlegen", "Create new app token"),
-   FIELD_OWNER_NAME ("Eigentümer", "Owner"),
-   FIELD_OWNER_URL ("URL", "URL"),
-   FIELD_OWNER_CONTACT ("Kontaktperson", "Contact person"),
-   FIELD_OWNER_CONTACT_EMAIL ("E-Mail Adresse", "Email address"),
+   LABEL_OWNER_NAME ("Eigentümer", "Owner"),
+   LABEL_OWNER_URL ("URL", "URL"),
+   LABEL_OWNER_CONTACT ("Kontaktperson", "Contact person"),
+   LABEL_OWNER_CONTACT_EMAIL ("E-Mail Adresse", "Email address"),
    HEADER_OWNER_NAME ("Eigentümer", "Owner"),
    HEADER_OWNER_URL ("URL", "URL"),
    HEADER_OWNER_TOKEN ("Token", "Token"),
@@ -163,25 +163,25 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.FIELD_OWNER_NAME.getDisplayText (aDisplayLocale))
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_OWNER_NAME.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_NAME,
                                                                                          aSelectedObject == null ? null
                                                                                                                  : aSelectedObject.getOwnerName ())))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_NAME)));
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.FIELD_OWNER_URL.getDisplayText (aDisplayLocale))
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_URL.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_URL,
                                                                                          aSelectedObject == null ? null
                                                                                                                  : aSelectedObject.getOwnerURL ())))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_URL)));
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.FIELD_OWNER_CONTACT.getDisplayText (aDisplayLocale))
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_CONTACT.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_CONTACT,
                                                                                          aSelectedObject == null ? null
                                                                                                                  : aSelectedObject.getOwnerContact ())))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_CONTACT)));
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.FIELD_OWNER_CONTACT_EMAIL.getDisplayText (aDisplayLocale))
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_CONTACT_EMAIL.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_CONTACT_EMAIL,
                                                                                          aSelectedObject == null ? null
                                                                                                                  : aSelectedObject.getOwnerContactEmail ())))
