@@ -52,7 +52,13 @@ public final class StubObject extends AbstractObject
                      @Nullable final LocalDateTime aDeletionDT,
                      @Nullable final String sDeletionUserID)
   {
-    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID);
+    super (sID,
+           aCreationDT,
+           sCreationUserID,
+           aLastModificationDT,
+           sLastModificationUserID,
+           aDeletionDT,
+           sDeletionUserID);
   }
 
   @Nonnull
@@ -61,18 +67,38 @@ public final class StubObject extends AbstractObject
     return OT_STUB;
   }
 
+  /**
+   * Create a {@link StubObject} for the current user creating a new object ID
+   *
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public static StubObject createForCurrentUser ()
   {
     return createForUser (LoggedInUserManager.getInstance ().getCurrentUserID ());
   }
 
+  /**
+   * Create a {@link StubObject} using the provided user ID and a new object ID
+   *
+   * @param sUserID
+   *        User ID
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public static StubObject createForUser (@Nullable final String sUserID)
   {
     return new StubObject (GlobalIDFactory.getNewPersistentStringID (), sUserID);
   }
 
+  /**
+   * Create a {@link StubObject} using the current user ID and the provided
+   * object ID
+   *
+   * @param sID
+   *        Object ID
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public static StubObject createForCurrentUserAndID (@Nonnull @Nonempty final String sID)
   {
