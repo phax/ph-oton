@@ -28,7 +28,6 @@ import org.junit.rules.TestRule;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.login.ELoginResult;
-import com.helger.photon.security.login.LoggedInUserManager;
 
 /**
  * Test class for class {@link LoggedInUserManager}.

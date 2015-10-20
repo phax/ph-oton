@@ -39,7 +39,7 @@ import com.helger.photon.security.user.IUser;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class LoginInfo extends MapBasedAttributeContainerAny <String>implements IHasID <String>
+public final class LoginInfo extends MapBasedAttributeContainerAny <String> implements IHasID <String>
 {
   private final IUser m_aUser;
   private final ISessionScope m_aSessionScope;
@@ -47,7 +47,7 @@ public final class LoginInfo extends MapBasedAttributeContainerAny <String>imple
   private LocalDateTime m_aLastAccessDT;
   private LocalDateTime m_aLogoutDT;
 
-  LoginInfo (@Nonnull final IUser aUser, @Nonnull final ISessionScope aSessionScope)
+  public LoginInfo (@Nonnull final IUser aUser, @Nonnull final ISessionScope aSessionScope)
   {
     m_aUser = ValueEnforcer.notNull (aUser, "User");
     m_aSessionScope = ValueEnforcer.notNull (aSessionScope, "SessionScope");
@@ -131,7 +131,7 @@ public final class LoginInfo extends MapBasedAttributeContainerAny <String>imple
   /**
    * Update the logout date time to the current date and time.
    */
-  void setLogoutDTNow ()
+  public void setLogoutDTNow ()
   {
     m_aLogoutDT = PDTFactory.getCurrentLocalDateTime ();
   }
