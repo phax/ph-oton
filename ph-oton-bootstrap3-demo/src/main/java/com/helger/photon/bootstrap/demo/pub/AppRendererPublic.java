@@ -136,6 +136,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
     final ISimpleURL aLinkToStartPage = aLEC.getLinkToMenuItem (aLEC.getMenuTree ().getDefaultMenuItemID ());
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar (EBootstrapNavbarType.STATIC_TOP, true, aDisplayLocale);
+    aNavbar.getContainer ().setFluid (true);
     aNavbar.addBrand (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()), aLinkToStartPage);
 
     _addNavbarLoginLogout (aLEC, aNavbar);
@@ -260,7 +261,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
 
     // Footer
     {
-      final BootstrapContainer aDiv = new BootstrapContainer ().setID (CLayout.LAYOUT_AREAID_FOOTER);
+      final BootstrapContainer aDiv = new BootstrapContainer ().setFluid (true).setID (CLayout.LAYOUT_AREAID_FOOTER);
 
       aDiv.addChild (new HCP ().addChild ("Demo web application for the ").addChild (new HCA (new SimpleURL ("https://github.com/phax/ph-oton")).addChild ("ph-oton")).addChild (" stack"));
       aDiv.addChild (new HCP ().addChild ("Created by Philip Helger - Twitter: @philiphelger"));

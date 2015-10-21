@@ -70,6 +70,7 @@ public final class AppRendererSecure implements ILayoutAreaContentProvider <Layo
     final ISimpleURL aLinkToStartPage = aSWEC.getLinkToMenuItem (aSWEC.getMenuTree ().getDefaultMenuItemID ());
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar (EBootstrapNavbarType.STATIC_TOP, true, aDisplayLocale);
+    aNavbar.getContainer ().setFluid (true);
     aNavbar.addBrand (new HCNodeList ().addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()))
                                        .addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO2).addChild (" Administration")),
                       aLinkToStartPage);
