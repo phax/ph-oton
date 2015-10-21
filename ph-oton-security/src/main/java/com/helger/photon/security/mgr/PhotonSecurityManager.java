@@ -53,7 +53,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
 {
   public static final String DIRECTORY_AUDITS = "audits/";
   public static final String DIRECTORY_SECURITY = "security/";
-  public static final String FILENAME_APPTOKEM_XML = "users.xml";
+  public static final String FILENAME_APPTOKENS_XML = "apptokens.xml";
   public static final String FILENAME_USERS_XML = "users.xml";
   public static final String FILENAME_ROLES_XML = "roles.xml";
   public static final String FILENAME_USERGROUPS_XML = "usergroups.xml";
@@ -83,7 +83,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       m_aUserMgr = new UserManager (DIRECTORY_SECURITY + FILENAME_USERS_XML);
       m_aRoleMgr = new RoleManager (DIRECTORY_SECURITY + FILENAME_ROLES_XML);
       m_aUserGroupMgr = new UserGroupManager (DIRECTORY_SECURITY + FILENAME_USERGROUPS_XML, m_aUserMgr, m_aRoleMgr);
-      m_aAppTokenMgr = new AppTokenManager (DIRECTORY_SECURITY + FILENAME_APPTOKEM_XML);
+      m_aAppTokenMgr = new AppTokenManager (DIRECTORY_SECURITY + FILENAME_APPTOKENS_XML);
 
       // Remember the last login date of the user
       LoggedInUserManager.getInstance ().getUserLoginCallbacks ().addCallback (new DefaultUserLoginCallback ()

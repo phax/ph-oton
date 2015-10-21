@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
@@ -35,11 +36,13 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
+import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
+import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.form.RequestField;
@@ -62,6 +65,10 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
    LABEL_OWNER_URL ("URL", "URL"),
    LABEL_OWNER_CONTACT ("Kontaktperson", "Contact person"),
    LABEL_OWNER_CONTACT_EMAIL ("E-Mail Adresse", "Email address"),
+   NOTE_TOKEN_STRING_GENERATED ("Hinweis: das Zugriffstoken wird automatisch generiert.", "Note: the access token is generated automatically."),
+   ERR_OWNER_NAME_EMPTY ("Der Eigentümer muss angegeben werden.", "The owner must be specified."),
+   CREATE_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich erstellt.", "The app token for ''{0}'' was successfully created."),
+   EDIT_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich bearbeitet.", "The app token for ''{0}'' was successfully edited."),
    HEADER_OWNER_NAME ("Eigentümer", "Owner"),
    HEADER_OWNER_URL ("URL", "URL"),
    HEADER_OWNER_TOKEN ("Token", "Token"),
@@ -149,8 +156,19 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
 
+    final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_NAME.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (aSelectedObject.getOwnerName ()));
+
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_URL.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (aSelectedObject.getOwnerURL ()));
+
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_CONTACT.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (aSelectedObject.getOwnerContact ()));
+
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_CONTACT_EMAIL.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (aSelectedObject.getOwnerContactEmail ()));
   }
 
   @Override
@@ -161,7 +179,10 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                 @Nonnull final FormErrors aFormErrors)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
+    final boolean bEdit = eFormAction.isEdit ();
+
+    aForm.addChild (createActionHeader (bEdit ? "Edit app token of '" + aSelectedObject.getOwnerName () + "'"
+                                              : "Create a new app token"));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_OWNER_NAME.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_NAME,
@@ -186,6 +207,9 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                                                                          aSelectedObject == null ? null
                                                                                                                  : aSelectedObject.getOwnerContactEmail ())))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_CONTACT_EMAIL)));
+
+    if (!bEdit)
+      aForm.addChild (new BootstrapInfoBox ().addChild (EText.NOTE_TOKEN_STRING_GENERATED.getDisplayText (aDisplayLocale)));
   }
 
   @Override
@@ -194,7 +218,6 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                                  @Nonnull final FormErrors aFormErrors,
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
     final boolean bEdit = eFormAction.isEdit ();
@@ -204,8 +227,28 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     final String sOwnerContact = aWPEC.getAttributeAsString (FIELD_OWNER_CONTACT);
     final String sOwnerContactEmail = aWPEC.getAttributeAsString (FIELD_OWNER_CONTACT_EMAIL);
 
+    if (StringHelper.hasNoText (sOwnerName))
+      aFormErrors.addFieldError (FIELD_OWNER_NAME, EText.ERR_OWNER_NAME_EMPTY.getDisplayText (aDisplayLocale));
+
     if (aFormErrors.isEmpty ())
-    {}
+    {
+      if (bEdit)
+      {
+        aAppTokenMgr.updateAppToken (aSelectedObject.getID (),
+                                     sOwnerName,
+                                     sOwnerURL,
+                                     sOwnerContact,
+                                     sOwnerContactEmail);
+        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.EDIT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                               sOwnerName)));
+      }
+      else
+      {
+        aAppTokenMgr.createAppToken (sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                 sOwnerName)));
+      }
+    }
   }
 
   @Override
