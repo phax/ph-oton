@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.app.ajax.pub;
+package com.helger.photon.bootstrap.demo.pub.ajax;
 
 import javax.annotation.concurrent.Immutable;
 

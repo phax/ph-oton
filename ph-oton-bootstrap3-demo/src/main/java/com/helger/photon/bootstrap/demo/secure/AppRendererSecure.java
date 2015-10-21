@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.app.ui;
+package com.helger.photon.bootstrap.demo.secure;
 
 import java.util.Locale;
 
@@ -30,6 +30,8 @@ import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.html.textlevel.HCStrong;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap.demo.app.CApp;
+import com.helger.photon.bootstrap.demo.app.ui.CAppCSS;
+import com.helger.photon.bootstrap.demo.pub.AppRendererPublic;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.base.BootstrapContainer;
 import com.helger.photon.bootstrap3.breadcrumbs.BootstrapBreadcrumbs;
@@ -68,21 +70,15 @@ public final class AppRendererSecure implements ILayoutAreaContentProvider <Layo
     final ISimpleURL aLinkToStartPage = aSWEC.getLinkToMenuItem (aSWEC.getMenuTree ().getDefaultMenuItemID ());
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar (EBootstrapNavbarType.STATIC_TOP, true, aDisplayLocale);
-    aNavbar.addBrand (new HCNodeList ().addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO1)
-                                                               .addChild (CApp.getApplicationTitle ()))
-                                       .addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO2)
-                                                               .addChild (" Administration")),
+    aNavbar.addBrand (new HCNodeList ().addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()))
+                                       .addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO2).addChild (" Administration")),
                       aLinkToStartPage);
 
     final BootstrapNav aNav = new BootstrapNav ();
     final IUser aUser = LoggedInUserManager.getInstance ().getCurrentUser ();
-    aNav.addItem (new HCSpan ().addChild ("Logged in as ")
-                               .addClass (CBootstrapCSS.NAVBAR_TEXT)
-                               .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
-                                                                                                       aDisplayLocale))));
+    aNav.addItem (new HCSpan ().addChild ("Logged in as ").addClass (CBootstrapCSS.NAVBAR_TEXT).addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser, aDisplayLocale))));
 
-    aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope,
-                                                         LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
+    aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
     aNavbar.addNav (EBootstrapNavbarPosition.COLLAPSIBLE_RIGHT, aNav);
     return aNavbar;
   }
@@ -102,7 +98,7 @@ public final class AppRendererSecure implements ILayoutAreaContentProvider <Layo
     // Header
     ret.addChild (_getNavbar (aLEC));
 
-    final BootstrapContainer aOuterContainer = ret.addAndReturnChild (new BootstrapContainer ());
+    final BootstrapContainer aOuterContainer = ret.addAndReturnChild (new BootstrapContainer ().setFluid (true));
 
     // Breadcrumbs
     {
@@ -123,7 +119,7 @@ public final class AppRendererSecure implements ILayoutAreaContentProvider <Layo
       aCol1.addChild (new HCDiv ().setID (CLayout.LAYOUT_AREAID_SPECIAL));
 
       // content - determine is exactly same as for view
-      aCol2.addChild (AppRendererPublic._getMainContent (aLEC));
+      aCol2.addChild (AppRendererPublic.getPageContent (aLEC));
     }
 
     return ret;

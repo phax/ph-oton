@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.app.ajax.secure;
+package com.helger.photon.bootstrap.demo.secure.ajax;
 
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.IHCNode;
-import com.helger.photon.bootstrap.demo.app.ui.AppRendererSecure;
+import com.helger.photon.bootstrap.demo.secure.AppRendererSecure;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
 import com.helger.photon.core.app.context.LayoutExecutionContext;

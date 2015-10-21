@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.app.ui;
+package com.helger.photon.bootstrap.demo.pub;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,9 @@ import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.menu.MenuItemDeterminatorCallback;
 import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap.demo.app.menu.pub.CMenuPublic;
+import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
+import com.helger.photon.bootstrap.demo.app.ui.CAppCSS;
+import com.helger.photon.bootstrap.demo.pub.menu.CMenuPublic;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.base.BootstrapContainer;
@@ -100,8 +102,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
     });
   }
 
-  private static void _addNavbarLoginLogout (@Nonnull final LayoutExecutionContext aLEC,
-                                             @Nonnull final BootstrapNavbar aNavbar)
+  private static void _addNavbarLoginLogout (@Nonnull final LayoutExecutionContext aLEC, @Nonnull final BootstrapNavbar aNavbar)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
     final IUser aUser = LoggedInUserManager.getInstance ().getCurrentUser ();
@@ -109,13 +110,9 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
     {
       final Locale aDisplayLocale = aLEC.getDisplayLocale ();
       final BootstrapNav aNav = new BootstrapNav ();
-      aNav.addItem (new HCSpan ().addClass (CBootstrapCSS.NAVBAR_TEXT)
-                                 .addChild ("Logged in as ")
-                                 .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
-                                                                                                         aDisplayLocale))));
+      aNav.addItem (new HCSpan ().addClass (CBootstrapCSS.NAVBAR_TEXT).addChild ("Logged in as ").addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser, aDisplayLocale))));
 
-      aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope,
-                                                           LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
+      aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
       aNavbar.addNav (EBootstrapNavbarPosition.COLLAPSIBLE_RIGHT, aNav);
     }
     else
@@ -124,8 +121,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
       final BootstrapDropdownMenu aDropDown = aNav.addDropdownMenu ("Login");
       {
         // 300px would lead to a messy layout - so 250px is fine
-        final HCDiv aDiv = new HCDiv ().addStyle (CCSSProperties.PADDING.newValue ("10px"))
-                                       .addStyle (CCSSProperties.WIDTH.newValue ("250px"));
+        final HCDiv aDiv = new HCDiv ().addStyle (CCSSProperties.PADDING.newValue ("10px")).addStyle (CCSSProperties.WIDTH.newValue ("250px"));
         aDiv.addChild (AppCommonUI.createViewLoginForm (aLEC, null, false).addClass (CBootstrapCSS.NAVBAR_FORM));
         aDropDown.addItem (aDiv);
       }
@@ -140,8 +136,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
     final ISimpleURL aLinkToStartPage = aLEC.getLinkToMenuItem (aLEC.getMenuTree ().getDefaultMenuItemID ());
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar (EBootstrapNavbarType.STATIC_TOP, true, aDisplayLocale);
-    aNavbar.addBrand (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()),
-                      aLinkToStartPage);
+    aNavbar.addBrand (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()), aLinkToStartPage);
 
     _addNavbarLoginLogout (aLEC, aNavbar);
     return aNavbar;
@@ -152,8 +147,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
   {
     // Main menu
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
-    final MenuItemDeterminatorCallback aCallback = new MenuItemDeterminatorCallback (aMenuTree,
-                                                                                     aLEC.getSelectedMenuItemID ())
+    final MenuItemDeterminatorCallback aCallback = new MenuItemDeterminatorCallback (aMenuTree, aLEC.getSelectedMenuItemID ())
     {
       @Override
       protected boolean isMenuItemValidToBeDisplayed (@Nonnull final IMenuObject aMenuObj)
@@ -172,7 +166,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
 
   @SuppressWarnings ("unchecked")
   @Nonnull
-  static IHCNode _getMainContent (@Nonnull final LayoutExecutionContext aLEC)
+  public static IHCNode getPageContent (@Nonnull final LayoutExecutionContext aLEC)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
 
@@ -211,9 +205,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
                                                                   " (" +
                                                                   sHttpStatusMessage +
                                                                   ")" +
-                                                                  (StringHelper.hasText (sHttpRequestURI) ? " for request URI " +
-                                                                                                            sHttpRequestURI
-                                                                                                          : "")));
+                                                                  (StringHelper.hasText (sHttpRequestURI) ? " for request URI " + sHttpRequestURI : "")));
     }
     else
     {
@@ -242,7 +234,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
     // Header
     ret.addChild (_getNavbar (aLEC));
 
-    final BootstrapContainer aOuterContainer = ret.addAndReturnChild (new BootstrapContainer ());
+    final BootstrapContainer aOuterContainer = ret.addAndReturnChild (new BootstrapContainer ().setFluid (true));
 
     // Breadcrumbs
     {
@@ -263,16 +255,14 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
       aCol1.addChild (new HCDiv ().setID (CLayout.LAYOUT_AREAID_SPECIAL));
 
       // content
-      aCol2.addChild (_getMainContent (aLEC));
+      aCol2.addChild (getPageContent (aLEC));
     }
 
     // Footer
     {
       final BootstrapContainer aDiv = new BootstrapContainer ().setID (CLayout.LAYOUT_AREAID_FOOTER);
 
-      aDiv.addChild (new HCP ().addChild ("Demo web application for the ")
-                               .addChild (new HCA (new SimpleURL ("https://github.com/phax/ph-oton")).addChild ("ph-oton"))
-                               .addChild (" stack"));
+      aDiv.addChild (new HCP ().addChild ("Demo web application for the ").addChild (new HCA (new SimpleURL ("https://github.com/phax/ph-oton")).addChild ("ph-oton")).addChild (" stack"));
       aDiv.addChild (new HCP ().addChild ("Created by Philip Helger - Twitter: @philiphelger"));
 
       final BootstrapMenuItemRendererHorz aRenderer = new BootstrapMenuItemRendererHorz (aDisplayLocale);

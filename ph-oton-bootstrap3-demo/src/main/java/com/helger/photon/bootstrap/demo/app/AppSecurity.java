@@ -14,11 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.app.init;
+package com.helger.photon.bootstrap.demo.app;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.UserManager;

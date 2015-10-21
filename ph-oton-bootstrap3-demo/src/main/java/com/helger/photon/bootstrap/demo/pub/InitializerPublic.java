@@ -14,32 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.app.init;
+package com.helger.photon.bootstrap.demo.pub;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap.demo.app.ajax.secure.CAjaxSecure;
-import com.helger.photon.bootstrap.demo.app.menu.secure.MenuSecure;
-import com.helger.photon.bootstrap.demo.app.ui.AppRendererSecure;
-import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFile;
-import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFileManager;
+import com.helger.photon.bootstrap.demo.pub.ajax.CAjaxPublic;
+import com.helger.photon.bootstrap.demo.pub.menu.MenuPublic;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.init.DefaultApplicationInitializer;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.app.layout.ILayoutManager;
-import com.helger.photon.uictrls.prism.EPrismLanguage;
 
 /**
- * Initialize the config application stuff
+ * Initialize the view application stuff
  *
  * @author Philip Helger
  */
-public final class InitializerSecure extends DefaultApplicationInitializer <LayoutExecutionContext>
+public final class InitializerPublic extends DefaultApplicationInitializer <LayoutExecutionContext>
 {
   @Override
   public void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
@@ -51,29 +46,26 @@ public final class InitializerSecure extends DefaultApplicationInitializer <Layo
   @Override
   public void initLayout (@Nonnull final ILayoutManager <LayoutExecutionContext> aLayoutMgr)
   {
-    aLayoutMgr.registerAreaContentProvider (CLayout.LAYOUT_AREAID_VIEWPORT, new AppRendererSecure ());
+    // Register all layout area handler (order is important for SEO!)
+    aLayoutMgr.registerAreaContentProvider (CLayout.LAYOUT_AREAID_VIEWPORT, new AppRendererPublic ());
   }
 
   @Override
   public void initMenu (@Nonnull final IMenuTree aMenuTree)
   {
-    MenuSecure.init (aMenuTree);
+    MenuPublic.init (aMenuTree);
   }
 
   @Override
   public void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
   {
-    aAjaxInvoker.registerFunction (CAjaxSecure.SAVE_FORM_STATE);
-    aAjaxInvoker.registerFunction (CAjaxSecure.UPDATE_MENU_VIEW);
+    aAjaxInvoker.registerFunction (CAjaxPublic.DATATABLES);
+    aAjaxInvoker.registerFunction (CAjaxPublic.LOGIN);
+    aAjaxInvoker.registerFunction (CAjaxPublic.UPDATE_MENU_VIEW);
+    aAjaxInvoker.registerFunction (CAjaxPublic.DATATABLES_I18N);
   }
 
   @Override
   public void initRest ()
-  {
-    final ConfigurationFileManager aCfgMgr = ConfigurationFileManager.getInstance ();
-    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("log4j2.xml")).setDescription ("log4j configuration file")
-                                                                                                   .setSyntaxHighlightLanguage (EPrismLanguage.MARKUP));
-    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("webapp.properties")).setDescription ("Web application properties")
-                                                                                                          .setSyntaxHighlightLanguage (EPrismLanguage.APACHECONF));
-  }
+  {}
 }

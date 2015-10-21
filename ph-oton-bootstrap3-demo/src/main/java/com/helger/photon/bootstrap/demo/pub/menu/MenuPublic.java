@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.app.menu.pub;
+package com.helger.photon.bootstrap.demo.pub.menu;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.bootstrap.demo.page.pub.PagePublicLogin;
+import com.helger.photon.bootstrap.demo.pub.page.PagePublicLogin;
 import com.helger.photon.security.menu.MenuObjectFilterNoUserLoggedIn;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uicore.page.external.BasePageViewExternal;

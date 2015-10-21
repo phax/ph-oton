@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.page.pub;
+package com.helger.photon.bootstrap.demo.pub.page;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,8 +24,8 @@ import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.html.textlevel.HCCode;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap.demo.app.CApp;
+import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
 import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
-import com.helger.photon.bootstrap.demo.page.AbstractAppWebPage;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 

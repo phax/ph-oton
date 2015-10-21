@@ -25,11 +25,11 @@ import javax.servlet.ServletContext;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.photon.bootstrap.demo.app.AppSecurity;
 import com.helger.photon.bootstrap.demo.app.AppSettings;
-import com.helger.photon.bootstrap.demo.app.init.AppSecurity;
-import com.helger.photon.bootstrap.demo.app.init.InitializerPublic;
-import com.helger.photon.bootstrap.demo.app.init.InitializerSecure;
 import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
+import com.helger.photon.bootstrap.demo.pub.InitializerPublic;
+import com.helger.photon.bootstrap.demo.secure.InitializerSecure;
 import com.helger.photon.bootstrap3.servlet.AbstractWebAppListenerMultiAppBootstrap;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
