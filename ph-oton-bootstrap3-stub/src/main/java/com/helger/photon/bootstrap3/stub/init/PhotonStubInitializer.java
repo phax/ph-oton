@@ -126,8 +126,6 @@ public final class PhotonStubInitializer
     HCSettings.setDefaultHTMLVersion (EHTMLVersion.HTML5);
 
     // Special Bootstrap customizer
-    // Default customizer: disable CSS classes - should fix issue with
-    // checkbox in form in IE9
     HCSettings.getMutableConversionSettings ()
               .setCustomizer (new HCCustomizerList (new BootstrapCustomizer (), new HCCustomizerAutoFocusFirstCtrl ()));
 
@@ -142,10 +140,8 @@ public final class PhotonStubInitializer
     if (!PhotonPathMapper.containsMappings ())
     {
       // Add default mapping from Application ID to path
-      PhotonPathMapper.setPathMapping (CApplication.APP_ID_PUBLIC,
-                                       AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
-      PhotonPathMapper.setPathMapping (CApplication.APP_ID_SECURE,
-                                       AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
+      PhotonPathMapper.setPathMapping (CApplication.APP_ID_PUBLIC, AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
+      PhotonPathMapper.setPathMapping (CApplication.APP_ID_SECURE, AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
       PhotonPathMapper.setDefaultApplicationID (CApplication.APP_ID_PUBLIC);
     }
   }
