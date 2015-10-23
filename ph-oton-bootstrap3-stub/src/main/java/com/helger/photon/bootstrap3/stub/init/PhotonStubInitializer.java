@@ -23,6 +23,7 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.scope.ScopeHelper;
 import com.helger.commons.system.SystemProperties;
 import com.helger.html.EHTMLVersion;
+import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
 import com.helger.html.hc.impl.HCCustomizerList;
@@ -125,9 +126,13 @@ public final class PhotonStubInitializer
     // Always use HTML5 for Bootstrap3
     HCSettings.setDefaultHTMLVersion (EHTMLVersion.HTML5);
 
-    // Special Bootstrap customizer
-    HCSettings.getMutableConversionSettings ()
-              .setCustomizer (new HCCustomizerList (new BootstrapCustomizer (), new HCCustomizerAutoFocusFirstCtrl ()));
+    // Set new customizer only if the default customizer is present
+    if (HCConversionSettings.isDefaultCustomizer (HCSettings.getConversionSettings ().getCustomizer ()))
+    {
+      // Special Bootstrap customizer
+      HCSettings.getMutableConversionSettings ()
+                .setCustomizer (new HCCustomizerList (new BootstrapCustomizer (), new HCCustomizerAutoFocusFirstCtrl ()));
+    }
 
     // Set default icon set if none is defined
     if (!DefaultIcons.areDefined ())
