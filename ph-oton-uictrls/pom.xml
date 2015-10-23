@@ -115,6 +115,7 @@
             <exclude>src/main/resources/pdfobject/**</exclude>
             <exclude>src/main/resources/prismjs/**</exclude>
             <exclude>src/main/resources/select2/**</exclude>
+            <exclude>src/main/resources/tether/**</exclude>
             <exclude>src/main/resources/typeahead/**</exclude>
           </excludes>
         </configuration>

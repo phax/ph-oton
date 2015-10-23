@@ -63,6 +63,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
  PRISMJS ("prismjs/prism.js"),
  SELECT2 ("select2/4.0.0/js/select2.js"),
  SELECT2_LOCALE ("select2/4.0.0/js/i18n/{0}.js", false),
+ TETHER ("tether/1.1.1/js/tether.js"),
  /** https://github.com/twitter/typeahead.js/ */
   TYPEAHEAD_0_9 ("typeahead/0.9.3/typeahead.js"),
  /** https://github.com/twitter/typeahead.js/ */

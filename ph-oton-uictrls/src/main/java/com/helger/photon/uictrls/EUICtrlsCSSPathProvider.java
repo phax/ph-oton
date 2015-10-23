@@ -64,6 +64,10 @@ public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
  PRISMJS ("prismjs/prism.css"),
  PRISMJS_BOOTSTRAP ("prismjs/prism-bootstrap.css"),
  SELECT2 ("select2/4.0.0/css/select2.css"),
+ TETHER ("tether/1.1.1/css/tether.css"),
+ TETHER_THEME_ARROWS ("tether/1.1.1/css/tether-theme-arrows.css"),
+ TETHER_THEME_ARROWS_DARK ("tether/1.1.1/css/tether-theme-arrows-dark.css"),
+ TETHER_THEME_BASIC ("tether/1.1.1/css/tether-theme-basic.css"),
  TYPEAHEAD_BOOTSTRAP ("typeahead/typeahead.js-bootstrap.css");
 
   private final ConstantCSSPathProvider m_aPP;
