@@ -296,9 +296,23 @@ var _exportData = function ( dt, config )
 	var newLine = _newLine( config );
 	var data = dt.buttons.exportData( config.exportOptions );
 	var join = function ( a ) {
-		return config.fieldBoundary +
-			a.join( config.fieldBoundary + config.fieldSeparator + config.fieldBoundary ) +
-			config.fieldBoundary;
+		var s = '';
+		var boundary = config.fieldBoundary;
+		var separator = config.fieldSeparator;
+
+		// If there is a field boundary, then we might need to escape it in
+		// the source data
+		for ( var i=0, ien=a.length ; i<ien ; i++ ) {
+			if ( i > 0 ) {
+				s += separator;
+			}
+
+			s += boundary ?
+				boundary + a[i].replace( boundary, '\\'+boundary ) + boundary :
+				a[i];
+		}
+
+		return s;
 	};
 
 	var header = config.header ? join( data.header )+newLine : '';
@@ -313,6 +327,20 @@ var _exportData = function ( dt, config )
 		str: header + body.join( newLine ) + footer,
 		rows: body.length
 	};
+};
+
+/**
+ * Safari's data: support for creating and downloading files is really poor, so
+ * various options need to be disabled in it. See
+ * https://bugs.webkit.org/show_bug.cgi?id=102914
+ * 
+ * @return {Boolean} `true` if Safari
+ */
+var _isSafari = function ()
+{
+	return navigator.userAgent.indexOf('Safari') !== -1 &&
+		navigator.userAgent.indexOf('Chrome') === -1 &&
+		navigator.userAgent.indexOf('Opera') === -1;
 };
 
 
@@ -400,6 +428,7 @@ DataTable.ext.buttons.copyHtml5 = {
 
 		// Select the text so when the user activates their system clipboard
 		// it will copy that text
+		message.find('textarea')[0].focus();
 		message.find('textarea')[0].select();
 
 		// Event to hide the message when the user is done
@@ -466,7 +495,7 @@ DataTable.ext.buttons.csvHtml5 = {
 
 	fieldSeparator: ',',
 
-	fieldBoundary: '',
+	fieldBoundary: '"',
 
 	header: true,
 
@@ -480,15 +509,7 @@ DataTable.ext.buttons.excelHtml5 = {
 	className: 'buttons-excel buttons-html5',
 
 	available: function () {
-		// Safari will not download the zip file as it does not support the
-		// download option. Therefore this button has to be disabled in Safari.
-		// See https://bugs.webkit.org/show_bug.cgi?id=102914
-		var safari =
-			navigator.userAgent.indexOf('Safari') !== -1 &&
-			navigator.userAgent.indexOf('Chrome') === -1 &&
-			navigator.userAgent.indexOf('Opera') === -1;
-
-		return window.FileReader !== undefined && window.JSZip !== undefined && ! safari;
+		return window.FileReader !== undefined && window.JSZip !== undefined && ! _isSafari();
 	},
 
 	text: function ( dt ) {
@@ -505,7 +526,9 @@ DataTable.ext.buttons.excelHtml5 = {
 			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
 				cells.push( $.isNumeric( row[i] ) ?
 					'<c t="n"><v>'+row[i]+'</v></c>' :
-					'<c t="inlineStr"><is><t>'+row[i]+'</t></is></c>'
+					'<c t="inlineStr"><is><t>'+
+						row[i].replace(/&(?!amp;)/g, '&amp;')+
+					'</t></is></c>'
 				);
 			}
 
@@ -662,11 +685,16 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 		var pdf = window.pdfMake.createPdf( doc );
 
-		pdf.getBuffer( function (buffer) {
-			var blob = new Blob( [buffer], {type:'application/pdf'} );
+		if ( config.download === 'open' && ! _isSafari() ) {
+			pdf.open();
+		}
+		else {
+			pdf.getBuffer( function (buffer) {
+				var blob = new Blob( [buffer], {type:'application/pdf'} );
 
-			_saveAs( blob, _filename( config ) );
-		} );
+				_saveAs( blob, _filename( config ) );
+			} );
+		}
 	},
 
 	title: '*',
@@ -685,7 +713,9 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 	message: null,
 
-	customize: null
+	customize: null,
+
+	download: 'download'
 };
 
 

@@ -520,9 +520,23 @@ var _exportData = function ( dt, config )
 	var newLine = _newLine( config );
 	var data = dt.buttons.exportData( config.exportOptions );
 	var join = function ( a ) {
-		return config.fieldBoundary +
-			a.join( config.fieldBoundary + config.fieldSeparator + config.fieldBoundary ) +
-			config.fieldBoundary;
+		var s = '';
+		var boundary = config.fieldBoundary;
+		var separator = config.fieldSeparator;
+
+		// If there is a field boundary, then we might need to escape it in
+		// the source data
+		for ( var i=0, ien=a.length ; i<ien ; i++ ) {
+			if ( i > 0 ) {
+				s += separator;
+			}
+
+			s += boundary ?
+				boundary + a[i].replace( boundary, '\\'+boundary ) + boundary :
+				a[i];
+		}
+
+		return s;
 	};
 
 	var header = config.header ? join( data.header )+newLine : '';
@@ -678,7 +692,9 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
 				cells.push( $.isNumeric( row[i] ) ?
 					'<c t="n"><v>'+row[i]+'</v></c>' :
-					'<c t="inlineStr"><is><t>'+row[i]+'</t></is></c>'
+					'<c t="inlineStr"><is><t>'+
+						row[i].replace(/&(?!amp;)/g, '&amp;')+
+					'</t></is></c>'
 				);
 			}
 
