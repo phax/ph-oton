@@ -44,6 +44,7 @@ public enum ETinyMCE4Language
  BS ("bs"),
  CA ("ca"),
  CS ("cs"),
+ CS_CZ ("cs_CZ"),
  CY ("cy"),
  DA ("da"),
  DE ("de"),
@@ -52,6 +53,7 @@ public enum ETinyMCE4Language
  EL ("el"),
  EN_CA ("en_CA"),
  EN_GB ("en_GB"),
+ EO ("eo"),
  ES ("es"),
  ES_MX ("es_MX"),
  ET ("et"),
@@ -82,6 +84,7 @@ public enum ETinyMCE4Language
  KK ("kk"),
  /* Note: this is not a valid Java locale! */
  KM_KH ("km_KH"),
+ KO ("ko"),
  KO_KR ("ko_KR"),
  KU ("ku"),
  /* Note: this is not a valid Java locale! */
