@@ -150,7 +150,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // missing formatNumber
   private JSAnonymousFunction m_aFooterCallback;
   // missing infoCallback
-  // missing initComplete
   private JSAnonymousFunction m_aInitComplete;
   // missing preDrawCallback
   // missing rowCallback
