@@ -97,6 +97,8 @@ public enum ETinyMCE4Language
  ML_IN ("ml_IN"),
  /* Note: this is not a valid Java locale! */
  MN_MN ("mn_MN"),
+ /* Note: this is not a valid Java locale! */
+ NB_NO ("nb_NO"),
  NL ("nl"),
  PL ("pl"),
  PT_BR ("pt_BR"),
