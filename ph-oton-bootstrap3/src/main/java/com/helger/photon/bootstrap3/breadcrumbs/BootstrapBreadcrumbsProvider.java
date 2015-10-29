@@ -51,7 +51,7 @@ public final class BootstrapBreadcrumbsProvider
     }
 
     final int nItems = aItems.size ();
-    if (nItems >= 0)
+    if (nItems > 0)
     {
       for (int i = 0; i < nItems; ++i)
       {

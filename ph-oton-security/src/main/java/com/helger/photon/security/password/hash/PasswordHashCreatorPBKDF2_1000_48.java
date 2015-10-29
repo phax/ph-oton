@@ -17,7 +17,6 @@
 package com.helger.photon.security.password.hash;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.StringHelper;
@@ -42,7 +41,7 @@ public final class PasswordHashCreatorPBKDF2_1000_48 extends AbstractPasswordHas
   }
 
   @Nonnull
-  public String createPasswordHash (@Nullable final IPasswordSalt aSalt, @Nonnull final String sPlainTextPassword)
+  public String createPasswordHash (@Nonnull final IPasswordSalt aSalt, @Nonnull final String sPlainTextPassword)
   {
     ValueEnforcer.notNull (aSalt, "Salt");
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");

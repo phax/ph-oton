@@ -132,7 +132,7 @@ public class AjaxStringResponse extends AbstractAjaxResponse
                                                  @Nonnull final IXMLWriterSettings aSettings)
   {
     return new AjaxStringResponse (bSuccess,
-                                   MicroWriter.getNodeAsString (aNode, aSettings),
+                                   aNode == null ? null : MicroWriter.getNodeAsString (aNode, aSettings),
                                    aSettings.getCharsetObj (),
                                    CMimeType.APPLICATION_XML);
   }
@@ -149,7 +149,7 @@ public class AjaxStringResponse extends AbstractAjaxResponse
                                                  @Nonnull final IXMLWriterSettings aSettings)
   {
     return new AjaxStringResponse (bSuccess,
-                                   XMLWriter.getNodeAsString (aNode, aSettings),
+                                   aNode == null ? null : XMLWriter.getNodeAsString (aNode, aSettings),
                                    aSettings.getCharsetObj (),
                                    CMimeType.APPLICATION_XML);
   }

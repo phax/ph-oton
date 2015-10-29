@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -106,7 +105,7 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   }
 
   @Nonnull
-  public EChange remove (@Nonnegative final int nIndex)
+  public EChange remove (final int nIndex)
   {
     if (nIndex < 0 || nIndex >= m_aElements.size ())
       return EChange.UNCHANGED;

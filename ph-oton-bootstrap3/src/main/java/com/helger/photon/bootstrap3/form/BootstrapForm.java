@@ -65,7 +65,7 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
 
   public BootstrapForm (@Nullable final String sAction)
   {
-    this (new SimpleURL (sAction), EBootstrapFormType.DEFAULT);
+    this (sAction == null ? null : new SimpleURL (sAction), EBootstrapFormType.DEFAULT);
   }
 
   public BootstrapForm (@Nullable final ISimpleURL aAction, @Nonnull final EBootstrapFormType eFormType)

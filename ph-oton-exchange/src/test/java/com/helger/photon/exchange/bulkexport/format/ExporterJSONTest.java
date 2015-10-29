@@ -49,7 +49,7 @@ public final class ExporterJSONTest
                                                                 .addField (4711)
                                                                 .addField (-123456789012345L)
                                                                 .addField (new BigInteger ("1234512345123451234512345123451234512345123451234512345"))
-                                                                .addField (3.1415)
+                                                                .addField (3.1145)
                                                                 .addField (new BigDecimal ("12345123451234512345123451234512345123451234512345.12345"));
     final ExportRecord aEmptyRecord = new ExportRecord ();
     final ExporterJSON aExporter = new ExporterJSON ();

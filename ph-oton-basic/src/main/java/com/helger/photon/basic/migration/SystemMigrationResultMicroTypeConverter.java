@@ -31,6 +31,8 @@ import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 public final class SystemMigrationResultMicroTypeConverter implements IMicroTypeConverter
 {
   private static final String ATTR_MIGRATION_ID = "id";
@@ -55,6 +57,7 @@ public final class SystemMigrationResultMicroTypeConverter implements IMicroType
 
   @Nonnull
   @ContainsSoftMigration
+  @SuppressFBWarnings ("NP_NULL_PARAM_DEREF")
   public SystemMigrationResult convertToNative (@Nonnull final IMicroElement aElement)
   {
     final String sID = aElement.getAttributeValue (ATTR_MIGRATION_ID);

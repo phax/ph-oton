@@ -116,7 +116,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     this (aRF.getFieldName (), aRF.getRequestValue (), aDisplayLocale);
   }
 
-  public BootstrapDateTimePicker (@Nullable final String sName,
+  public BootstrapDateTimePicker (@Nonnull final String sName,
                                   @Nullable final String sValue,
                                   @Nonnull final Locale aDisplayLocale)
   {

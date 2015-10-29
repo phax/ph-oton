@@ -27,7 +27,7 @@ import com.helger.datetime.PDTFactory;
 
 /**
  * Test class for class {@link ExportRecord}.
- * 
+ *
  * @author Philip Helger
  */
 public final class ExportRecordTest
@@ -47,7 +47,7 @@ public final class ExportRecordTest
                                                                 .addField (-123456789012345L)
                                                                 .addField (Long.valueOf (Long.MIN_VALUE))
                                                                 .addField (new BigInteger ("1234512345123451234512345123451234512345123451234512345"))
-                                                                .addField (3.1415)
+                                                                .addField (3.1145)
                                                                 .addField (Double.valueOf (Double.MIN_VALUE))
                                                                 .addField (new BigDecimal ("12345123451234512345123451234512345123451234512345.12345"));
     assertEquals (15, aRecordWithAllTypes.getFieldCount ());

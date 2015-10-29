@@ -62,9 +62,7 @@ public class CheckResponseFilter implements Filter
    */
   protected void checkStatusCode (@Nonnull final String sRequestURL, final int nStatusCode)
   {
-    if (nStatusCode != HttpServletResponse.SC_OK &&
-        nStatusCode < HttpServletResponse.SC_MULTIPLE_CHOICES &&
-        nStatusCode >= HttpServletResponse.SC_BAD_REQUEST)
+    if (nStatusCode < HttpServletResponse.SC_MULTIPLE_CHOICES || nStatusCode >= HttpServletResponse.SC_BAD_REQUEST)
       s_aLogger.warn ("Status code " + nStatusCode + " in response to '" + sRequestURL + "'");
   }
 
