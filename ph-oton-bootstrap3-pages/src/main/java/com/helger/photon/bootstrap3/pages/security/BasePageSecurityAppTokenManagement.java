@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.filter.IFilter;
 import com.helger.commons.string.StringHelper;
@@ -118,7 +119,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
    REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_HEADER ("Das alte Zugriffstoken von ''{0}'' widerrufen und ein Neues erstellen", "Revoke the old access token of ''{0}'' and create a new access token"),
    CREATE_NEW_ACCESS_TOKEN_SUCCESS ("Das neue Zugriffstoken für ''{0}'' wurde erfolgreich erstellt.", "A new access token for ''{0}'' was successfully created."),
    CREATE_NEW_ACCESS_TOKEN_HEADER ("Ein neues Zugriffstoken für ''{0}'' erstellen", "Create a new access token for ''{0}''"),
-   REVOKE_ACCESS_TOKEN_SUCCESS ("Das alte Zugriffstoken von ''{0}''wurde erfolgreich widerrufen.", "The old access token of ''{0}'' was successfully revoked."),
+   REVOKE_ACCESS_TOKEN_SUCCESS ("Das alte Zugriffstoken von ''{0}'' wurde erfolgreich widerrufen.", "The old access token of ''{0}'' was successfully revoked."),
    REVOKE_ACCESS_TOKEN_HEADER ("Das alte Zugriffstoken von ''{0}'' widerrufen", "Revoke the old access token of ''{0}''"),
    TAB_LABEL_ACTIVE ("Aktiv", "Active"),
    TAB_LABEL_DELETED ("Gelöscht", "Deleted"),
@@ -240,7 +241,8 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
     {
       final HCUL aAT = new HCUL ();
-      for (final IAccessToken aToken : aSelectedObject.getAllAccessTokens ())
+      // Reverse so that the newest token is on top
+      for (final IAccessToken aToken : CollectionHelper.getReverseList (aSelectedObject.getAllAccessTokens ()))
       {
         final IRevocationStatus aRevocationStatus = aToken.getRevocationStatus ();
 
@@ -558,7 +560,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
     final HCTable aTable = new HCTable (new DTCol (EText.HEADER_OWNER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_OWNER_URL.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.HEADER_OWNER_TOKEN.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.HEADER_OWNER_TOKEN.getDisplayText (aDisplayLocale)).setVisible (false),
                                         new DTCol (EText.HEADER_USABLE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID () + sIDSuffix);
     for (final IAppToken aCurObject : aAppTokenMgr.getAllAppTokens ())
