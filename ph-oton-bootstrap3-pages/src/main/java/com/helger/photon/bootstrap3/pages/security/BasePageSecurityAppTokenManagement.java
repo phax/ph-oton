@@ -188,21 +188,8 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
   @Override
   protected boolean isObjectLockingEnabled ()
   {
+    // Enable object locking
     return true;
-  }
-
-  @Override
-  protected boolean performLocking (@Nonnull final WPECTYPE aWPEC,
-                                    @Nonnull final IAppToken aSelectedObject,
-                                    @Nonnull final EWebPageFormAction eFormAction)
-  {
-    if (super.performLocking (aWPEC, aSelectedObject, eFormAction))
-      return true;
-
-    if (eFormAction.isCustom ())
-      return aWPEC.hasAction (ACTION_CREATE_NEW_ACCESS_TOKEN) || aWPEC.hasAction (ACTION_REVOKE_ACCESS_TOKEN);
-
-    return false;
   }
 
   @Override

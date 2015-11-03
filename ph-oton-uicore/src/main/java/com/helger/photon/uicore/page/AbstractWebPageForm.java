@@ -796,7 +796,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                     @Nonnull final EWebPageFormAction eFormAction)
   {
     // Lock EDIT and DELETE if an object is present
-    return eFormAction.isModifying ();
+    // Also lock custom actions if an object is selected
+    return eFormAction.isModifying () || eFormAction.isCustom ();
   }
 
   /**
