@@ -58,9 +58,7 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
   private static final String ATTR_DISABLED = "disabled";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
-                                              @Nullable final String sNamespaceURI,
-                                              @Nonnull final String sTagName)
+  public IMicroElement convertToMicroElement (@Nonnull final Object aObject, @Nullable final String sNamespaceURI, @Nonnull final String sTagName)
   {
     final IUser aUser = (IUser) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
@@ -88,8 +86,7 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
       aElement.setAttributeWithConversion (ATTR_LASTLOGINLDT, aUser.getLastLoginDateTime ());
     aElement.setAttribute (ATTR_LOGINCOUNT, aUser.getLoginCount ());
     aElement.setAttribute (ATTR_CONSECUTIVEFAILEDLOGINCOUNT, aUser.getConsecutiveFailedLoginCount ());
-    for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aUser.getAllAttributes ())
-                                                                   .entrySet ())
+    for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aUser.getAllAttributes ()).entrySet ())
     {
       final IMicroElement eCustom = aElement.appendElement (ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
@@ -111,7 +108,7 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
     final String sLoginName = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_LOGINNAME);
     final String sEmailAddress = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_EMAILADDRESS);
     final IMicroElement ePasswordHash = aElement.getFirstChildElement (ELEMENT_PASSWORDHASH);
-    String sPasswordHashAlgorithm = ePasswordHash.getAttributeValue (ATTR_ALGORITHM);
+    String sPasswordHashAlgorithm = ePasswordHash == null ? null : ePasswordHash.getAttributeValue (ATTR_ALGORITHM);
     if (sPasswordHashAlgorithm == null)
     {
       // migration
@@ -128,8 +125,7 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
     final Locale aDesiredLocale = sDesiredLocale == null ? null : LocaleCache.getInstance ().getLocale (sDesiredLocale);
     final LocalDateTime aLastLoginLDT = readAsLocalDateTime (aElement, ATTR_LASTLOGINLDT, "lastlogindt");
     final int nLoginCount = StringParser.parseInt (aElement.getAttributeValue (ATTR_LOGINCOUNT), 0);
-    final int nConsecutiveFailedLoginCount = StringParser.parseInt (aElement.getAttributeValue (ATTR_CONSECUTIVEFAILEDLOGINCOUNT),
-                                                                    0);
+    final int nConsecutiveFailedLoginCount = StringParser.parseInt (aElement.getAttributeValue (ATTR_CONSECUTIVEFAILEDLOGINCOUNT), 0);
     final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
     for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
       aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
