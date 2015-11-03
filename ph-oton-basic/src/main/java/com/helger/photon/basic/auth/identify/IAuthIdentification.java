@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.auth.identify;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -29,7 +31,7 @@ import com.helger.photon.basic.auth.subject.IAuthSubject;
  *
  * @author Philip Helger
  */
-public interface IAuthIdentification
+public interface IAuthIdentification extends Serializable
 {
   /**
    * @return The identified subject. May be <code>null</code> if no subject

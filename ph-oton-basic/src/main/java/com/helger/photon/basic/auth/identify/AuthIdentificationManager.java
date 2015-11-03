@@ -64,8 +64,7 @@ public final class AuthIdentificationManager
     ValueEnforcer.notNull (aCredentials, "Credentials");
 
     // validate credentials
-    final CredentialValidationResult aValidationResult = AuthCredentialValidatorManager.validateCredentials (aDisplayLocale,
-                                                                                                             aCredentials);
+    final CredentialValidationResult aValidationResult = AuthCredentialValidatorManager.validateCredentials (aDisplayLocale, aCredentials);
     if (aValidationResult.isFailure ())
     {
       s_aLogger.warn ("Credentials have been rejected: " + aCredentials);
@@ -81,8 +80,8 @@ public final class AuthIdentificationManager
       s_aLogger.info ("Credentials " + aCredentials + " correspond to subject " + aSubject);
 
     // create the token (without expiration seconds)
-    final IAuthToken aNewAuthToken = AuthTokenRegistry.createToken (new AuthIdentification (aSubject),
-                                                                    AuthTokenRegistry.NEVER_EXPIRES);
+    final IAuthToken aNewAuthToken = AuthTokenRegistry.getInstance ().createToken (new AuthIdentification (aSubject),
+                                                                                   AuthTokenRegistry.NEVER_EXPIRES);
     return new AuthIdentificationResult (aNewAuthToken);
   }
 }

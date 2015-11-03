@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.auth.credentials;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -29,7 +31,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-public class CredentialValidationResult implements ISuccessIndicator
+public class CredentialValidationResult implements ISuccessIndicator, Serializable
 {
   public static final CredentialValidationResult SUCCESS = new CredentialValidationResult ();
 
@@ -38,7 +40,7 @@ public class CredentialValidationResult implements ISuccessIndicator
   /**
    * Success only constructor.
    */
-  private CredentialValidationResult ()
+  protected CredentialValidationResult ()
   {
     m_sErrorMsg = null;
   }
@@ -76,6 +78,6 @@ public class CredentialValidationResult implements ISuccessIndicator
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("errorMsg", m_sErrorMsg).toString ();
+    return new ToStringGenerator (this).append ("ErrorMsg", m_sErrorMsg).toString ();
   }
 }

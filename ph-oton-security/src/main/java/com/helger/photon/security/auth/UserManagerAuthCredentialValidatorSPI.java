@@ -27,7 +27,14 @@ import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 import com.helger.photon.basic.auth.credentials.userpw.UserNamePasswordCredentials;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.user.IUser;
 
+/**
+ * An implementation of the {@link IAuthCredentialValidatorSPI} using the
+ * {@link LoggedInUserManager} to login {@link IUser} objects.
+ * 
+ * @author Philip Helger
+ */
 @IsSPIImplementation
 public final class UserManagerAuthCredentialValidatorSPI implements IAuthCredentialValidatorSPI
 {
@@ -37,12 +44,10 @@ public final class UserManagerAuthCredentialValidatorSPI implements IAuthCredent
   }
 
   @Nonnull
-  public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale,
-                                                         @Nonnull final IAuthCredentials aCredentials)
+  public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale, @Nonnull final IAuthCredentials aCredentials)
   {
     final UserNamePasswordCredentials aUPC = (UserNamePasswordCredentials) aCredentials;
-    final ELoginResult eLoginResult = LoggedInUserManager.getInstance ().loginUser (aUPC.getUserName (),
-                                                                                    aUPC.getPassword ());
+    final ELoginResult eLoginResult = LoggedInUserManager.getInstance ().loginUser (aUPC.getUserName (), aUPC.getPassword ());
     if (eLoginResult.isSuccess ())
       return CredentialValidationResult.SUCCESS;
 

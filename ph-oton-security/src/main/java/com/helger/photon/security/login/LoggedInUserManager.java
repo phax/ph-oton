@@ -408,10 +408,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     // Are all roles present?
     if (!SecurityHelper.hasUserAllRoles (sUserID, aRequiredRoleIDs))
     {
-      AuditHelper.onAuditExecuteFailure ("login",
-                                         sUserID,
-                                         "user-is-missing-required-roles",
-                                         StringHelper.getToString (aRequiredRoleIDs));
+      AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-is-missing-required-roles", StringHelper.getToString (aRequiredRoleIDs));
       return _onLoginError (sUserID, ELoginResult.USER_IS_MISSING_ROLE);
     }
 
@@ -491,7 +488,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     }
 
     s_aLogger.info ("Logged in user '" + sUserID + "' with login name '" + aUser.getLoginName () + "'");
-    AuditHelper.onAuditExecuteSuccess ("login", sUserID, aUser.getLoginName ());
+    AuditHelper.onAuditExecuteSuccess ("login-user", sUserID, aUser.getLoginName ());
 
     // Execute callback as the very last action
     for (final IUserLoginCallback aUserLoginCallback : m_aUserLoginCallbacks.getAllCallbacks ())
@@ -501,12 +498,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       }
       catch (final Throwable t)
       {
-        s_aLogger.error ("Failed to invoke onUserLogin callback on " +
-                         aUserLoginCallback.toString () +
-                         "(" +
-                         aInfo.toString () +
-                         ")",
-                         t);
+        s_aLogger.error ("Failed to invoke onUserLogin callback on " + aUserLoginCallback.toString () + "(" + aInfo.toString () + ")", t);
       }
 
     return bLoggedOutUser ? ELoginResult.SUCCESS_WITH_LOGOUT : ELoginResult.SUCCESS;
@@ -548,10 +540,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       m_aRWLock.writeLock ().unlock ();
     }
 
-    s_aLogger.info ("Logged out user '" +
-                    sUserID +
-                    "' after " +
-                    new Period (aInfo.getLoginDT (), aInfo.getLogoutDT ()).toString ());
+    s_aLogger.info ("Logged out user '" + sUserID + "' after " + new Period (aInfo.getLoginDT (), aInfo.getLogoutDT ()).toString ());
     AuditHelper.onAuditExecuteSuccess ("logout", sUserID);
 
     // Execute callback as the very last action
@@ -562,12 +551,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       }
       catch (final Throwable t)
       {
-        s_aLogger.error ("Failed to invoke onUserLogout callback on " +
-                         aUserLogoutCallback.toString () +
-                         "(" +
-                         aInfo.toString () +
-                         ")",
-                         t);
+        s_aLogger.error ("Failed to invoke onUserLogout callback on " + aUserLogoutCallback.toString () + "(" + aInfo.toString () + ")", t);
       }
 
     return EChange.CHANGED;

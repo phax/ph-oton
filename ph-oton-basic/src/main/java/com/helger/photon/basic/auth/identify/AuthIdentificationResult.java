@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.auth.identify;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -25,7 +27,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.auth.credentials.CredentialValidationResult;
 import com.helger.photon.basic.auth.token.IAuthToken;
 
-public final class AuthIdentificationResult implements ISuccessIndicator
+public class AuthIdentificationResult implements ISuccessIndicator, Serializable
 {
   private final CredentialValidationResult m_aCredentialValidationResult;
   private final IAuthToken m_aAuthToken;
@@ -92,8 +94,8 @@ public final class AuthIdentificationResult implements ISuccessIndicator
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("credentialValidationResult", m_aCredentialValidationResult)
-                                       .append ("authToken", m_aAuthToken)
+    return new ToStringGenerator (this).append ("CredentialValidationResult", m_aCredentialValidationResult)
+                                       .append ("AuthToken", m_aAuthToken)
                                        .toString ();
   }
 }

@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -29,6 +27,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.commons.state.ESuccess;
 import com.helger.photon.basic.auth.identify.IAuthIdentification;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
@@ -39,46 +39,52 @@ import com.helger.photon.basic.auth.subject.IAuthSubject;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class AuthTokenRegistry
+public final class AuthTokenRegistry extends AbstractGlobalSingleton
 {
   /** The value indicating, that a token never expires */
   public static final int NEVER_EXPIRES = 0;
 
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
-  private static final Map <String, AuthToken> s_aRegistry = new HashMap <String, AuthToken> ();
+  private final Map <String, AuthToken> m_aMap = new HashMap <String, AuthToken> ();
 
-  private AuthTokenRegistry ()
+  @Deprecated
+  @UsedViaReflection
+  public AuthTokenRegistry ()
   {}
 
   @Nonnull
-  public static IAuthToken createToken (@Nonnull final IAuthIdentification aIdentification,
-                                        @Nonnegative final int nExpirationSeconds)
+  public static AuthTokenRegistry getInstance ()
+  {
+    return getGlobalSingleton (AuthTokenRegistry.class);
+  }
+
+  @Nonnull
+  public IAuthToken createToken (@Nonnull final IAuthIdentification aIdentification, @Nonnegative final int nExpirationSeconds)
   {
     final AuthToken aToken = new AuthToken (aIdentification, nExpirationSeconds);
     final String sTokenID = aToken.getID ();
 
-    s_aRWLock.writeLock ().lock ();
+    m_aRWLock.writeLock ().lock ();
     try
     {
-      if (s_aRegistry.containsKey (sTokenID))
+      if (m_aMap.containsKey (sTokenID))
         throw new IllegalArgumentException ("Token '" + sTokenID + "' already contained");
-      s_aRegistry.put (sTokenID, aToken);
+      m_aMap.put (sTokenID, aToken);
     }
     finally
     {
-      s_aRWLock.writeLock ().unlock ();
+      m_aRWLock.writeLock ().unlock ();
     }
 
     return aToken;
   }
 
   @Nonnull
-  public static ESuccess removeToken (@Nonnull final String sTokenID)
+  public ESuccess removeToken (@Nonnull final String sTokenID)
   {
-    s_aRWLock.writeLock ().lock ();
+    m_aRWLock.writeLock ().lock ();
     try
     {
-      final AuthToken aToken = s_aRegistry.remove (sTokenID);
+      final AuthToken aToken = m_aMap.remove (sTokenID);
       if (aToken == null)
         return ESuccess.FAILURE;
 
@@ -89,42 +95,42 @@ public final class AuthTokenRegistry
     }
     finally
     {
-      s_aRWLock.writeLock ().unlock ();
+      m_aRWLock.writeLock ().unlock ();
     }
   }
 
   @Nullable
-  private static AuthToken _getValidNotExpiredToken (@Nullable final String sTokenID)
+  private AuthToken _getValidNotExpiredToken (@Nullable final String sTokenID)
   {
     if (sTokenID == null)
       return null;
 
-    s_aRWLock.readLock ().lock ();
+    m_aRWLock.readLock ().lock ();
     try
     {
-      final AuthToken aToken = s_aRegistry.get (sTokenID);
+      final AuthToken aToken = m_aMap.get (sTokenID);
       return aToken != null && !aToken.isExpired () ? aToken : null;
     }
     finally
     {
-      s_aRWLock.readLock ().unlock ();
+      m_aRWLock.readLock ().unlock ();
     }
   }
 
   @Nullable
-  public static IAuthToken getValidToken (@Nullable final String sTokenID)
+  public IAuthToken getValidToken (@Nullable final String sTokenID)
   {
     return _getValidNotExpiredToken (sTokenID);
   }
 
   @Nullable
-  public static IAuthToken validateTokenAndUpdateLastAccess (@Nullable final String sTokenID)
+  public IAuthToken validateTokenAndUpdateLastAccess (@Nullable final String sTokenID)
   {
     final AuthToken aToken = _getValidNotExpiredToken (sTokenID);
     if (aToken == null)
       return null;
 
-    s_aRWLock.writeLock ().lock ();
+    m_aRWLock.writeLock ().lock ();
     try
     {
       aToken.updateLastAccess ();
@@ -132,7 +138,7 @@ public final class AuthTokenRegistry
     }
     finally
     {
-      s_aRWLock.writeLock ().unlock ();
+      m_aRWLock.writeLock ().unlock ();
     }
   }
 
@@ -145,21 +151,21 @@ public final class AuthTokenRegistry
    * @return The list and never <code>null</code>.
    */
   @Nonnull
-  public static List <IAuthToken> getAllTokensOfSubject (@Nonnull final IAuthSubject aSubject)
+  public List <IAuthToken> getAllTokensOfSubject (@Nonnull final IAuthSubject aSubject)
   {
     ValueEnforcer.notNull (aSubject, "Subject");
 
     final List <IAuthToken> ret = new ArrayList <IAuthToken> ();
-    s_aRWLock.readLock ().lock ();
+    m_aRWLock.readLock ().lock ();
     try
     {
-      for (final AuthToken aToken : s_aRegistry.values ())
+      for (final AuthToken aToken : m_aMap.values ())
         if (aToken.getIdentification ().getSubject ().equals (aSubject))
           ret.add (aToken);
     }
     finally
     {
-      s_aRWLock.readLock ().unlock ();
+      m_aRWLock.readLock ().unlock ();
     }
     return ret;
   }
@@ -172,23 +178,23 @@ public final class AuthTokenRegistry
    * @return The number of removed tokens. Always &ge; 0.
    */
   @Nonnegative
-  public static int removeAllTokensOfSubject (@Nonnull final IAuthSubject aSubject)
+  public int removeAllTokensOfSubject (@Nonnull final IAuthSubject aSubject)
   {
     ValueEnforcer.notNull (aSubject, "Subject");
 
     // get all token IDs matching a given subject
     // Note: required IAuthSubject to implement equals!
     final List <String> aDelTokenIDs = new ArrayList <String> ();
-    s_aRWLock.readLock ().lock ();
+    m_aRWLock.readLock ().lock ();
     try
     {
-      for (final Map.Entry <String, AuthToken> aEntry : s_aRegistry.entrySet ())
+      for (final Map.Entry <String, AuthToken> aEntry : m_aMap.entrySet ())
         if (aEntry.getValue ().getIdentification ().getSubject ().equals (aSubject))
           aDelTokenIDs.add (aEntry.getKey ());
     }
     finally
     {
-      s_aRWLock.readLock ().unlock ();
+      m_aRWLock.readLock ().unlock ();
     }
 
     for (final String sDelTokenID : aDelTokenIDs)

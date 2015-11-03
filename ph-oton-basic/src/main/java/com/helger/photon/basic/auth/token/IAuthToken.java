@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.auth.token;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 
 import org.joda.time.LocalDateTime;
@@ -28,7 +30,7 @@ import com.helger.photon.basic.auth.identify.IAuthIdentification;
  *
  * @author Philip Helger
  */
-public interface IAuthToken extends IHasID <String>
+public interface IAuthToken extends IHasID <String>, Serializable
 {
   /**
    * @return The secret key token representing a session of a subject. Never

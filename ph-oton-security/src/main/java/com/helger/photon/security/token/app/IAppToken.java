@@ -1,6 +1,5 @@
 package com.helger.photon.security.token.app;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -8,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.basic.object.IObject;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 
@@ -16,7 +16,7 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
  *
  * @author Philip Helger
  */
-public interface IAppToken extends IObject, Serializable
+public interface IAppToken extends IObject, IAuthSubject
 {
   /**
    * @return A list of all tokens used by this application. The latest, active
