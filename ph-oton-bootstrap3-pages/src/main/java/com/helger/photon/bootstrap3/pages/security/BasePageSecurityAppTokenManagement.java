@@ -37,6 +37,7 @@ import com.helger.commons.url.URLValidator;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.ext.HCA_MailTo;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCTextArea;
@@ -239,7 +240,8 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
     if (StringHelper.hasText (aSelectedObject.getOwnerURL ()))
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_URL.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (aSelectedObject.getOwnerURL ()));
+                                                   .setCtrl (HCA.createLinkedWebsite (aSelectedObject.getOwnerURL (),
+                                                                                      HC_Target.BLANK)));
 
     if (StringHelper.hasText (aSelectedObject.getOwnerContact ()))
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_CONTACT.getDisplayText (aDisplayLocale))
@@ -247,7 +249,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
     if (StringHelper.hasText (aSelectedObject.getOwnerContactEmail ()))
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_CONTACT_EMAIL.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (aSelectedObject.getOwnerContactEmail ()));
+                                                   .setCtrl (HCA_MailTo.createLinkedEmail (aSelectedObject.getOwnerContactEmail ())));
 
     {
       final HCUL aAT = new HCUL ();
