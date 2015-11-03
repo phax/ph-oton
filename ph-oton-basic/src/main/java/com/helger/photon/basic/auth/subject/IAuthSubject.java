@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.id.IHasID;
-import com.helger.commons.name.IHasName;
+import com.helger.commons.name.IHasDisplayName;
 
 /**
  * Represents a user or any other subject that uses an application. A subject
@@ -29,7 +29,7 @@ import com.helger.commons.name.IHasName;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IAuthSubject extends IHasID <String>, IHasName, Serializable
+public interface IAuthSubject extends IHasID <String>, IHasDisplayName, Serializable
 {
   /* empty */
 }

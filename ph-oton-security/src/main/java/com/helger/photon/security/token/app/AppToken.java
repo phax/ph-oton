@@ -89,7 +89,7 @@ public class AppToken extends AbstractObject implements IAppToken
 
   @Nonnull
   @Nonempty
-  public String getName ()
+  public String getDisplayName ()
   {
     return m_sOwnerName;
   }

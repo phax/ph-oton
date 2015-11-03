@@ -30,6 +30,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.name.CollatingComparatorHasDisplayName;
 import com.helger.commons.name.CollatingComparatorHasName;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
@@ -215,8 +216,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
       final HCNodeList aUserUI = new HCNodeList ();
       for (final IUser aUser : CollectionHelper.getSorted (aAssignedUsers,
-                                                           new CollatingComparatorHasName <IUser> (aDisplayLocale)))
-        aUserUI.addChild (new HCDiv ().addChild (aUser.getName ()));
+                                                           new CollatingComparatorHasDisplayName <IUser> (aDisplayLocale)))
+        aUserUI.addChild (new HCDiv ().addChild (aUser.getDisplayName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aAssignedUserIDs.size ())))
                                                    .setCtrl (aUserUI));

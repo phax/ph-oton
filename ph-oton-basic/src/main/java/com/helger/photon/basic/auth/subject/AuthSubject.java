@@ -33,12 +33,12 @@ import com.helger.commons.string.ToStringGenerator;
 public class AuthSubject implements IAuthSubject
 {
   private final String m_sID;
-  private final String m_sName;
+  private final String m_sDisplayName;
 
-  public AuthSubject (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
+  public AuthSubject (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sDisplayName)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
-    m_sName = ValueEnforcer.notEmpty (sName, "Name");
+    m_sDisplayName = ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
   }
 
   @Nonnull
@@ -50,9 +50,9 @@ public class AuthSubject implements IAuthSubject
 
   @Nonnull
   @Nonempty
-  public final String getName ()
+  public final String getDisplayName ()
   {
-    return m_sName;
+    return m_sDisplayName;
   }
 
   @Override
@@ -63,18 +63,18 @@ public class AuthSubject implements IAuthSubject
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final AuthSubject rhs = (AuthSubject) o;
-    return m_sID.equals (rhs.m_sID) && m_sName.equals (rhs.m_sName);
+    return m_sID.equals (rhs.m_sID) && m_sDisplayName.equals (rhs.m_sDisplayName);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sID).append (m_sName).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sID).append (m_sDisplayName).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_sID).append ("Name", m_sName).toString ();
+    return new ToStringGenerator (this).append ("ID", m_sID).append ("DisplayName", m_sDisplayName).toString ();
   }
 }

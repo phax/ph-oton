@@ -16,6 +16,7 @@
  */
 package com.helger.photon.security.auth;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.IsSPIImplementation;
@@ -26,16 +27,23 @@ import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.UserManager;
 
+/**
+ * Implementation of {@link IAuthCredentialToSubjectResolverSPI} supporting
+ * {@link UserNamePasswordCredentials} and the resolution via the global
+ * {@link UserManager}.
+ *
+ * @author Philip Helger
+ */
 @IsSPIImplementation
 public class UserManerAuthCredentialToSubjectResolverSPI implements IAuthCredentialToSubjectResolverSPI
 {
-  public boolean supportsCredentials (final IAuthCredentials aCredentials)
+  public boolean supportsCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
     return aCredentials instanceof UserNamePasswordCredentials;
   }
 
   @Nullable
-  public IAuthSubject getSubjectFromCredentials (final IAuthCredentials aCredentials)
+  public IAuthSubject getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
     final UserNamePasswordCredentials aUPC = (UserNamePasswordCredentials) aCredentials;
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();

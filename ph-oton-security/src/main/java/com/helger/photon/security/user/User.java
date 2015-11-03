@@ -271,13 +271,6 @@ public class User extends MapBasedAttributeContainerAny <String> implements IUse
 
   @Nonnull
   @Nonempty
-  public final String getName ()
-  {
-    return getLoginName ();
-  }
-
-  @Nonnull
-  @Nonempty
   public String getLoginName ()
   {
     return m_sLoginName;
