@@ -31,6 +31,7 @@ import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.email.IEmailAddress;
+import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
@@ -75,7 +76,6 @@ import com.helger.smtp.failed.FailedMailData;
 import com.helger.smtp.failed.FailedMailQueue;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.smtp.settings.ISMTPSettings;
-import com.helger.validation.error.FormErrors;
 
 /**
  * Show all failed mails.

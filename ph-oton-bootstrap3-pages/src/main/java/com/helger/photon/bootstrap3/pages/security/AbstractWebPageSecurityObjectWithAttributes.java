@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
@@ -31,7 +32,6 @@ import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
-import com.helger.validation.error.FormErrors;
 
 public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <DATATYPE, WPECTYPE>
 {

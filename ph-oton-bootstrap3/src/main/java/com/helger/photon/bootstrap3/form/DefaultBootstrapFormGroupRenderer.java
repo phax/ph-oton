@@ -24,6 +24,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.errorlist.IError;
+import com.helger.commons.errorlist.IErrorList;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -42,8 +44,6 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
-import com.helger.validation.error.IError;
-import com.helger.validation.error.IErrorList;
 
 /**
  * This is the default implementation of {@link IBootstrapFormGroupRenderer}

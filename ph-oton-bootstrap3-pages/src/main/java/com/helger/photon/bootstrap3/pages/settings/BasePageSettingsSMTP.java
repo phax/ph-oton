@@ -30,6 +30,7 @@ import com.helger.commons.annotation.Translatable;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.email.EmailAddressHelper;
+import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.text.IMultilingualText;
@@ -85,7 +86,6 @@ import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.smtp.settings.ISMTPSettings;
 import com.helger.smtp.settings.ReadOnlySMTPSettings;
-import com.helger.validation.error.FormErrors;
 import com.helger.web.port.CNetworkPort;
 
 public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <NamedSMTPSettings, WPECTYPE>

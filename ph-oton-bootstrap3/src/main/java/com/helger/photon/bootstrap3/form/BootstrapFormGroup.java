@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.errorlist.IErrorList;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCDiv;
@@ -29,7 +30,6 @@ import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.AbstractBootstrapObject;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
-import com.helger.validation.error.IErrorList;
 
 /**
  * Represents a single form group.

@@ -32,6 +32,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.email.EmailAddressHelper;
 import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.name.CollatingComparatorHasName;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
@@ -89,7 +90,6 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
-import com.helger.validation.error.FormErrors;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
