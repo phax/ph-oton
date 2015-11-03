@@ -73,7 +73,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *
    * @author Philip Helger
    */
-  public static final class SessionUserHolder extends AbstractSessionWebSingleton implements ISessionWebScopeActivationHandler
+  public static final class InternalSessionUserHolder extends AbstractSessionWebSingleton implements ISessionWebScopeActivationHandler
   {
     private static final long serialVersionUID = 2322897734799334L;
 
@@ -83,7 +83,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
     @Deprecated
     @UsedViaReflection
-    public SessionUserHolder ()
+    public InternalSessionUserHolder ()
     {}
 
     /**
@@ -91,9 +91,9 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
      *         is created. Never <code>null</code>.
      */
     @Nonnull
-    static SessionUserHolder getInstance ()
+    static InternalSessionUserHolder getInstance ()
     {
-      return getSessionSingleton (SessionUserHolder.class);
+      return getSessionSingleton (InternalSessionUserHolder.class);
     }
 
     /**
@@ -101,15 +101,15 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
      *         <code>null</code> is returned.
      */
     @Nullable
-    static SessionUserHolder getInstanceIfInstantiated ()
+    static InternalSessionUserHolder getInstanceIfInstantiated ()
     {
-      return getSessionSingletonIfInstantiated (SessionUserHolder.class);
+      return getSessionSingletonIfInstantiated (InternalSessionUserHolder.class);
     }
 
     @Nullable
-    static SessionUserHolder getInstanceIfInstantiatedInScope (@Nullable final ISessionScope aScope)
+    static InternalSessionUserHolder getInstanceIfInstantiatedInScope (@Nullable final ISessionScope aScope)
     {
-      return getSingletonIfInstantiated (aScope, SessionUserHolder.class);
+      return getSingletonIfInstantiated (aScope, InternalSessionUserHolder.class);
     }
 
     private void readObject (@Nonnull final ObjectInputStream aOIS) throws IOException, ClassNotFoundException
@@ -465,7 +465,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
         }
       }
 
-      final SessionUserHolder aSUH = SessionUserHolder.getInstance ();
+      final InternalSessionUserHolder aSUH = InternalSessionUserHolder.getInstance ();
       if (aSUH.hasUser ())
       {
         // This session already has a user
@@ -527,7 +527,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
       // Ensure that the SessionUser is empty. This is only relevant if user is
       // manually logged out without destructing the underlying session
-      final SessionUserHolder aSUH = SessionUserHolder.getInstanceIfInstantiatedInScope (aInfo.getSessionScope ());
+      final InternalSessionUserHolder aSUH = InternalSessionUserHolder.getInstanceIfInstantiatedInScope (aInfo.getSessionScope ());
       if (aSUH != null)
         aSUH._reset ();
 
@@ -672,7 +672,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nullable
   public String getCurrentUserID ()
   {
-    final SessionUserHolder aSUH = SessionUserHolder.getInstanceIfInstantiated ();
+    final InternalSessionUserHolder aSUH = InternalSessionUserHolder.getInstanceIfInstantiated ();
     return aSUH == null ? null : aSUH.m_sUserID;
   }
 
@@ -703,7 +703,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nullable
   public IUser getCurrentUser ()
   {
-    final SessionUserHolder aSUH = SessionUserHolder.getInstanceIfInstantiated ();
+    final InternalSessionUserHolder aSUH = InternalSessionUserHolder.getInstanceIfInstantiated ();
     return aSUH == null ? null : aSUH.m_aUser;
   }
 
