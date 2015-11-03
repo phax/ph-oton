@@ -19,7 +19,11 @@ package com.helger.photon.bootstrap3.pages.security;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.commons.string.StringHelper;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.textlevel.HCCode;
 import com.helger.photon.security.user.IUser;
+import com.helger.photon.uicore.css.CUICoreCSS;
 
 public final class SecurityUIHelper
 {
@@ -69,5 +73,13 @@ public final class SecurityUIHelper
   public static boolean canResetPassword (@Nullable final IUser aUser)
   {
     return aUser != null && !aUser.isDeleted ();
+  }
+
+  @Nullable
+  public static IHCNode createAppTokenNode (@Nullable final String sAppTokenString)
+  {
+    if (StringHelper.hasNoText (sAppTokenString))
+      return null;
+    return new HCCode ().addClass (CUICoreCSS.CSS_CLASS_NOWRAP).addChild (sAppTokenString);
   }
 }

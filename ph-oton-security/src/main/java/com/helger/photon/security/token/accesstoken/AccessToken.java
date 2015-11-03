@@ -9,8 +9,8 @@ import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.base64.Base64;
 import com.helger.commons.random.VerySecureRandom;
-import com.helger.commons.string.StringHelper;
 import com.helger.datetime.PDTFactory;
 import com.helger.photon.security.token.revocation.RevocationStatus;
 
@@ -29,10 +29,7 @@ public final class AccessToken implements IAccessToken
   private LocalDateTime m_aNotAfter;
   private final RevocationStatus m_aRevocationStatus;
 
-  AccessToken (@Nonnull @Nonempty final String sTokenString,
-               @Nonnull final LocalDateTime aNotBefore,
-               @Nullable final LocalDateTime aNotAfter,
-               @Nonnull final RevocationStatus aRevocationStatus)
+  AccessToken (@Nonnull @Nonempty final String sTokenString, @Nonnull final LocalDateTime aNotBefore, @Nullable final LocalDateTime aNotAfter, @Nonnull final RevocationStatus aRevocationStatus)
   {
     m_sTokenString = ValueEnforcer.notEmpty (sTokenString, "TokenString");
     m_aNotBefore = ValueEnforcer.notNull (aNotBefore, "NotBefore");
@@ -69,11 +66,7 @@ public final class AccessToken implements IAccessToken
   {
     ValueEnforcer.notNull (aNotAfter, "NotAfter");
     if (aNotAfter.isBefore (m_aNotBefore))
-      throw new IllegalArgumentException ("Not after date (" +
-                                          aNotAfter +
-                                          ") must be >= not before date (" +
-                                          m_aNotBefore +
-                                          ")");
+      throw new IllegalArgumentException ("Not after date (" + aNotAfter + ") must be >= not before date (" + m_aNotBefore + ")");
     m_aNotAfter = aNotAfter;
   }
 
@@ -103,9 +96,7 @@ public final class AccessToken implements IAccessToken
     return m_aRevocationStatus.isRevoked ();
   }
 
-  public void markRevoked (@Nonnull @Nonempty final String sRevocationUserID,
-                           @Nonnull final LocalDateTime aRevocationDT,
-                           @Nonnull @Nonempty final String sRevocationReason)
+  public void markRevoked (@Nonnull @Nonempty final String sRevocationUserID, @Nonnull final LocalDateTime aRevocationDT, @Nonnull @Nonempty final String sRevocationReason)
   {
     m_aRevocationStatus.markRevoked (sRevocationUserID, aRevocationDT, sRevocationReason);
   }
@@ -123,8 +114,8 @@ public final class AccessToken implements IAccessToken
   {
     final byte [] aBytes = new byte [nBytes];
     VerySecureRandom.getInstance ().nextBytes (aBytes);
-    // Returns a 128 byte string
-    return StringHelper.getHexEncoded (aBytes);
+    // Returns a +33% longer byte string
+    return Base64.encodeBytes (aBytes);
   }
 
   /**
@@ -136,9 +127,8 @@ public final class AccessToken implements IAccessToken
   @Nonnull
   public static AccessToken createNewAccessTokenValidFromNow ()
   {
-    return new AccessToken (createNewTokenString (64),
-                            PDTFactory.getCurrentLocalDateTime (),
-                            null,
-                            new RevocationStatus ());
+    // Length 66 so that the Base64 encoding does not add the "==" signs
+    // Length must be dividable by 3
+    return new AccessToken (createNewTokenString (66), PDTFactory.getCurrentLocalDateTime (), null, new RevocationStatus ());
   }
 }

@@ -65,7 +65,10 @@ public interface IAppToken extends IObject, Serializable
 
   /**
    * @return The token string of the active access token. May be
-   *         <code>null</code> if no active access token is present.
+   *         <code>null</code> if no active access token is present (which can
+   *         be the case if all access tokens were revoked or if no access token
+   *         is present).
+   * @see #getActiveAccessToken()
    */
   @Nullable
   String getActiveTokenString ();
