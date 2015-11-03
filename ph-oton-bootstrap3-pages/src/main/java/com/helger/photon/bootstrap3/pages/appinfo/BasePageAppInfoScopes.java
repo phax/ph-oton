@@ -44,8 +44,6 @@ import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.UITextFormatter;
-import com.helger.photon.uicore.html.tabbox.ITabBox;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -109,15 +107,15 @@ public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext> e
   }
 
   public BasePageAppInfoScopes (@Nonnull @Nonempty final String sID,
-                                   @Nonnull final String sName,
-                                   @Nullable final String sDescription)
+                                @Nonnull final String sName,
+                                @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
   public BasePageAppInfoScopes (@Nonnull @Nonempty final String sID,
-                                   @Nonnull final IMultilingualText aName,
-                                   @Nullable final IMultilingualText aDescription)
+                                @Nonnull final IMultilingualText aName,
+                                @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -211,13 +209,13 @@ public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext> e
     final IGlobalWebScope aGlobalScope = WebScopeManager.getGlobalScope ();
 
     // Refresh button
-    final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
+    final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
     aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final ITabBox <?> aTabBox = new BootstrapTabBox ();
+    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
     // Global scope
     aTabBox.addTab (EText.MSG_GLOBAL_SCOPE.getDisplayTextWithArgs (aDisplayLocale, aGlobalScope.getID ()),
                     _getGlobalScopeInfo (aWPEC, aGlobalScope));

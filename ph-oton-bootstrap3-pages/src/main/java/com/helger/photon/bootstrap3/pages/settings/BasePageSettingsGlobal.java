@@ -43,7 +43,6 @@ import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.css.CPageParam;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.smtp.EmailGlobalSettings;
@@ -203,7 +202,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
 
     aForm0.addChild (aTabBox);
 
-    final IButtonToolbar <?> aToolbar = aForm0.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+    final BootstrapButtonToolbar aToolbar = aForm0.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_SAVE);
     aToolbar.addSubmitButtonSave (aDisplayLocale);
   }

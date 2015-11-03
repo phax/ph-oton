@@ -44,7 +44,6 @@ import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.core.resource.WebSiteResourceCache;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -90,33 +89,33 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
   private final WebSiteResourceBundleManager m_aResBundleMgr;
 
   public BasePageAppInfoWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
-                                                   @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
+                                                @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
   {
     super (sID, EWebPageText.PAGE_NAME_APPINFO_WEBRESBUNDLE.getAsMLT ());
     m_aResBundleMgr = ValueEnforcer.notNull (aResBundleMgr, "ResBundleMgr");
   }
 
   public BasePageAppInfoWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
-                                                   @Nonnull final String sName,
-                                                   @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
+                                                @Nonnull final String sName,
+                                                @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
   {
     super (sID, sName);
     m_aResBundleMgr = ValueEnforcer.notNull (aResBundleMgr, "ResBundleMgr");
   }
 
   public BasePageAppInfoWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
-                                                   @Nonnull final String sName,
-                                                   @Nullable final String sDescription,
-                                                   @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
+                                                @Nonnull final String sName,
+                                                @Nullable final String sDescription,
+                                                @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
   {
     super (sID, sName, sDescription);
     m_aResBundleMgr = ValueEnforcer.notNull (aResBundleMgr, "ResBundleMgr");
   }
 
   public BasePageAppInfoWebSiteResourceBundles (@Nonnull @Nonempty final String sID,
-                                                   @Nonnull final IMultilingualText aName,
-                                                   @Nullable final IMultilingualText aDescription,
-                                                   @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
+                                                @Nonnull final IMultilingualText aName,
+                                                @Nullable final IMultilingualText aDescription,
+                                                @Nonnull final WebSiteResourceBundleManager aResBundleMgr)
   {
     super (sID, aName, aDescription);
     m_aResBundleMgr = ValueEnforcer.notNull (aResBundleMgr, "ResBundleMgr");
@@ -135,7 +134,7 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     // Refresh button
-    final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
+    final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
     aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);

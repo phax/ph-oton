@@ -42,7 +42,6 @@ import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.security.lock.ILockInfo;
 import com.helger.photon.security.lock.ILockManager;
 import com.helger.photon.security.util.SecurityHelper;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -128,7 +127,7 @@ public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecution
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     // Refresh button
-    final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
+    final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
     aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);

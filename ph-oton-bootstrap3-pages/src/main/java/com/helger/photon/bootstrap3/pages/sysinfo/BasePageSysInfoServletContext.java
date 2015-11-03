@@ -45,8 +45,6 @@ import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.uicore.html.tabbox.ITabBox;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -123,7 +121,7 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     // Refresh button
-    final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
+    final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
     aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
@@ -131,7 +129,7 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
 
     final ServletContext aSC = WebScopeManager.getGlobalScope ().getServletContext ();
 
-    final ITabBox <?> aTabBox = new BootstrapTabBox ();
+    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
     {
       // Add servlets

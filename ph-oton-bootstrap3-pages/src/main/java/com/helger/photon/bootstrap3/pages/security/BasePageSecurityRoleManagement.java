@@ -42,7 +42,6 @@ import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
-import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
@@ -205,7 +204,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     if (!aCustomAttrs.isEmpty ())
     {
       // Show remaining custom attributes
-      final IHCTable <?> aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
+      final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
       aAttrTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
                                            EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, Object> aEntry : aCustomAttrs.entrySet ())

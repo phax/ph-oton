@@ -47,7 +47,6 @@ import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.uicore.css.CPageParam;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -177,7 +176,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
 
       final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
       aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_ALL_QUERY.getDisplayText (aDisplayLocale)));
-      final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+      final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
       aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE_ALL);
       aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
       aToolbar.addSubmitButtonYes (aDisplayLocale);
@@ -202,7 +201,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
     }
     else
     {
-      final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
+      final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
       aToolbar.addButton (EText.BUTTON_DELETE.getDisplayText (aDisplayLocale),
                           aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE_ALL),
                           EDefaultIcon.DELETE);

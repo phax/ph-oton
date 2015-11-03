@@ -47,7 +47,6 @@ import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.validation.error.FormErrors;
@@ -198,7 +197,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
                                                      .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
                                                      .setErrorList (aFormErrors.getListOfField (FIELD_NEW_PASSWORD_CONFIRM)));
 
-        final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+        final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_PERFORM);
         // Add the nonce for CSRF check
         aToolbar.addChild (createCSRFNonceField ());

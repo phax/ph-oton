@@ -59,7 +59,6 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.UITextFormatter;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -204,8 +203,8 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                                          .setCtrl (PDTToString.getAsString (aCreationDT,
                                                                                             aDisplayLocale)));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_LASTACCESS_DT.getDisplayText (aDisplayLocale))
-                                .setCtrl (PDTToString.getAsString (aLastAccessDT,
-                                                                   aDisplayLocale)));
+                                                         .setCtrl (PDTToString.getAsString (aLastAccessDT,
+                                                                                            aDisplayLocale)));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_AGE.getDisplayText (aDisplayLocale))
                                                          .setCtrl (PeriodFormatMultilingual.getFormatterLong (aDisplayLocale)
                                                                                            .print (new Period (aCreationDT,
@@ -334,7 +333,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
     // Refresh button
-    final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
+    final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
     aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);

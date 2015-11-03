@@ -43,7 +43,6 @@ import com.helger.photon.core.ajax.IAjaxBeforeExecutionCallback;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxLongRunningExecutionCallback;
-import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -97,15 +96,15 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
   }
 
   public BasePageAppInfoAjaxFunctions (@Nonnull @Nonempty final String sID,
-                                          @Nonnull final String sName,
-                                          @Nullable final String sDescription)
+                                       @Nonnull final String sName,
+                                       @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
   public BasePageAppInfoAjaxFunctions (@Nonnull @Nonempty final String sID,
-                                          @Nonnull final IMultilingualText aName,
-                                          @Nullable final IMultilingualText aDescription)
+                                       @Nonnull final IMultilingualText aName,
+                                       @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -117,7 +116,7 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
 
-    final ITabBox <?> aTabBox = new BootstrapTabBox ();
+    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
     for (final IApplicationScope aAppScope : WebScopeManager.getGlobalScope ().getAllApplicationScopes ().values ())
     {

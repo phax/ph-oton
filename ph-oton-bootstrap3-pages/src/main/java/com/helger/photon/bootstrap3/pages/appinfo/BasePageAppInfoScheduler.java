@@ -43,8 +43,8 @@ import com.helger.commons.text.util.TextHelper;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.ext.HCExtHelper;
+import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.HCUL;
-import com.helger.html.hc.html.grouping.IHCLI;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
@@ -55,7 +55,6 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
-import com.helger.photon.uicore.html.tabbox.ITabBox;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.schedule.quartz.QuartzSchedulerHelper;
@@ -112,15 +111,15 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
   }
 
   public BasePageAppInfoScheduler (@Nonnull @Nonempty final String sID,
-                                      @Nonnull final String sName,
-                                      @Nullable final String sDescription)
+                                   @Nonnull final String sName,
+                                   @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
   public BasePageAppInfoScheduler (@Nonnull @Nonempty final String sID,
-                                      @Nonnull final IMultilingualText aName,
-                                      @Nullable final IMultilingualText aDescription)
+                                   @Nonnull final IMultilingualText aName,
+                                   @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -133,7 +132,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
 
     try
     {
-      final ITabBox <?> aTabBox = new BootstrapTabBox ();
+      final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
       // For all schedulers
       for (final Scheduler aScheduler : QuartzSchedulerHelper.getSchedulerFactory ().getAllSchedulers ())
@@ -175,7 +174,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
             final Trigger aTrigger = aScheduler.getTrigger (aTriggerKey);
             final JobKey aJobKey = aTrigger.getJobKey ();
             final JobDetail aDetail = aScheduler.getJobDetail (aJobKey);
-            final IHCLI <?> aLI = aDetailUL.addAndReturnItem (aJobKey.getName ());
+            final HCLI aLI = aDetailUL.addAndReturnItem (aJobKey.getName ());
             final HCUL aUL2 = aLI.addAndReturnChild (new HCUL ());
             aUL2.addItem (EText.MSG_JOB_CLASS.getDisplayText (aDisplayLocale) + aDetail.getJobClass ().getName ());
             aUL2.addItem (EText.MSG_TRIGGER_KEY.getDisplayText (aDisplayLocale) + aTrigger.getKey ().toString ());

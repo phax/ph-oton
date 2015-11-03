@@ -41,7 +41,6 @@ import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.go.GoMappingItem;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.go.GoServlet;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -128,7 +127,7 @@ public class BasePageAppInfoGo <WPECTYPE extends IWebPageExecutionContext> exten
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     // Refresh button
-    final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
+    final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
     aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);

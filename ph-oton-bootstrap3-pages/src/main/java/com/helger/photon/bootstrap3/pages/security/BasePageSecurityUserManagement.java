@@ -52,7 +52,6 @@ import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
-import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
@@ -83,7 +82,6 @@ import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.select.HCUserGroupForUserSelect;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -401,7 +399,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
     if (!aCustomAttrs.isEmpty ())
     {
-      final IHCTable <?> aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
+      final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
       aAttrTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
                                            EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, Object> aEntry : aCustomAttrs.entrySet ())
@@ -769,7 +767,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                      .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
                                                      .setErrorList (aFormErrors.getListOfField (FIELD_PASSWORD_CONFIRM)));
 
-        final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+        final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_RESET_PASSWORD);
         aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
         aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);

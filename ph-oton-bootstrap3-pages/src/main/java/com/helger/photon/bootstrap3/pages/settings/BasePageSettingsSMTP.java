@@ -69,7 +69,6 @@ import com.helger.photon.core.smtp.NamedSMTPSettings;
 import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.select.HCCharsetSelect;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -605,7 +604,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
                                                                                                        EText.TEST_BODY.getDisplayText (aDisplayLocale))).setRows (5))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_TEST_BODY)));
 
-      final IButtonToolbar <?> aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+      final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
       aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_TEST_MAIL);
       aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
       aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
@@ -623,7 +622,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
     // Toolbar on top
-    final IButtonToolbar <?> aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+    final BootstrapButtonToolbar aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addButtonNew (EText.BUTTON_CREATE_NEW.getDisplayText (aDisplayLocale), createCreateURL (aWPEC));
     aToolbar.addChild (new BootstrapButton ().addChild (EWebPageText.PAGE_NAME_MONITORING_FAILED_MAILS.getDisplayText (aDisplayLocale))
                                              .setOnClick (aWPEC.getLinkToMenuItem (BootstrapPagesMenuConfigurator.MENU_ADMIN_MONITORING_FAILEDMAILS))

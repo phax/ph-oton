@@ -62,7 +62,6 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.uicore.css.CPageParam;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -454,7 +453,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
 
     // Refresh button
     final boolean bDisabled = m_aFailedMailQueue.getAllFailedMails ().isEmpty ();
-    final IButtonToolbar <?> aToolbar = new BootstrapButtonToolbar (aWPEC);
+    final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
     aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
