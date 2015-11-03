@@ -32,11 +32,20 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public class AuthSubject implements IAuthSubject
 {
+  private final String m_sID;
   private final String m_sName;
 
-  public AuthSubject (@Nonnull @Nonempty final String sName)
+  public AuthSubject (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
+    m_sID = ValueEnforcer.notEmpty (sID, "ID");
     m_sName = ValueEnforcer.notEmpty (sName, "Name");
+  }
+
+  @Nonnull
+  @Nonempty
+  public final String getID ()
+  {
+    return m_sID;
   }
 
   @Nonnull
@@ -54,18 +63,18 @@ public class AuthSubject implements IAuthSubject
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final AuthSubject rhs = (AuthSubject) o;
-    return m_sName.equals (rhs.m_sName);
+    return m_sID.equals (rhs.m_sID) && m_sName.equals (rhs.m_sName);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sName).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sID).append (m_sName).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("name", m_sName).toString ();
+    return new ToStringGenerator (this).append ("ID", m_sID).append ("Name", m_sName).toString ();
   }
 }
