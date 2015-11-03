@@ -33,6 +33,7 @@ import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.commons.url.URLValidator;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
@@ -57,6 +58,7 @@ import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.label.BootstrapLabel;
 import com.helger.photon.bootstrap3.label.EBootstrapLabelType;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
@@ -74,9 +76,10 @@ import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.smtp.util.EmailAddressValidator;
 import com.helger.validation.error.FormErrors;
 
-public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageSecurityObjectWithAttributes <IAppToken, WPECTYPE>
+public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <IAppToken, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
@@ -100,6 +103,8 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
    NOTE_NO_ACCESS_TOKEN ("Diesem App Token ist kein Zugriffstoken zugeordnet", "This app token currently has no access token"),
    NOTE_ACCESS_TOKEN_GENERATED ("Hinweis: das Zugriffstoken wird automatisch generiert.", "Note: the access token is generated automatically."),
    ERR_OWNER_NAME_EMPTY ("Der Eigentümer muss angegeben werden!", "The owner must be specified!"),
+   ERR_OWNER_URL_INVALID ("Die URL ist ungültig!", "The URL is invalid!"),
+   ERR_OWNER_EMAIL_INVALID ("Die E-Mail-Adresse ist ungültig!", "The email address is invalid!"),
    CREATE_SUCCESS ("Das App Token für ''{0}'' wurde erfolgreich erstellt.", "The app token for ''{0}'' was successfully created."),
    EDIT_SUCCESS ("Das App Token für ''{0}'' wurde erfolgreich bearbeitet.", "The app token for ''{0}'' was successfully edited."),
    DELETE_QUERY ("Sind Sie sicher, dass Sie das App Token für ''{0}'' löschen wollen?", "Are you sure you want to delete the app token of ''{0}''?"),
@@ -176,6 +181,26 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                              @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
+  }
+
+  @Override
+  protected boolean isObjectLockingEnabled ()
+  {
+    return true;
+  }
+
+  @Override
+  protected boolean performLocking (@Nonnull final WPECTYPE aWPEC,
+                                    @Nonnull final IAppToken aSelectedObject,
+                                    @Nonnull final EWebPageFormAction eFormAction)
+  {
+    if (super.performLocking (aWPEC, aSelectedObject, eFormAction))
+      return true;
+
+    if (eFormAction.isCustom ())
+      return aWPEC.hasAction (ACTION_CREATE_NEW_ACCESS_TOKEN) || aWPEC.hasAction (ACTION_REVOKE_ACCESS_TOKEN);
+
+    return false;
   }
 
   @Override
@@ -333,6 +358,19 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
     if (StringHelper.hasNoText (sOwnerName))
       aFormErrors.addFieldError (FIELD_OWNER_NAME, EText.ERR_OWNER_NAME_EMPTY.getDisplayText (aDisplayLocale));
+
+    if (StringHelper.hasText (sOwnerURL))
+    {
+      if (!URLValidator.isValid (sOwnerURL))
+        aFormErrors.addFieldError (FIELD_OWNER_URL, EText.ERR_OWNER_URL_INVALID.getDisplayText (aDisplayLocale));
+    }
+
+    if (StringHelper.hasText (sOwnerContactEmail))
+    {
+      if (!EmailAddressValidator.isValid (sOwnerContactEmail))
+        aFormErrors.addFieldError (FIELD_OWNER_CONTACT_EMAIL,
+                                   EText.ERR_OWNER_EMAIL_INVALID.getDisplayText (aDisplayLocale));
+    }
 
     if (aFormErrors.isEmpty ())
     {
@@ -544,7 +582,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
         final HCRow aBodyRow = aTable.addBodyRow ();
         aBodyRow.addCell (new HCA (aViewURL).addChild (sDisplayName));
-        aBodyRow.addCell (aCurObject.getOwnerURL ());
+        aBodyRow.addCell (HCA.createLinkedWebsite (aCurObject.getOwnerURL ()));
         aBodyRow.addCell (SecurityUIHelper.createAccessTokenNode (aCurObject.getActiveTokenString ()));
         aBodyRow.addCell (EPhotonCoreText.getYesOrNo (bUsableNow, aDisplayLocale));
 

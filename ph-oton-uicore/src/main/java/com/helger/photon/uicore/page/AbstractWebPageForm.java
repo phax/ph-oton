@@ -777,6 +777,29 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   /**
+   * Check if locking should be performed on the current request or not.
+   * Override with care!
+   *
+   * @param aWPEC
+   *        The current web page execution context. Never <code>null</code>.
+   * @param aSelectedObject
+   *        The currently selected object. Never <code>null</code>.
+   * @param eFormAction
+   *        The current form action. Never <code>null</code>.
+   * @return <code>true</code> if locking for the current request should be
+   *         performed, <code>false</code> otherwise.
+   */
+  @OverrideOnDemand
+  @OverridingMethodsMustInvokeSuper
+  protected boolean performLocking (@Nonnull final WPECTYPE aWPEC,
+                                    @Nonnull final DATATYPE aSelectedObject,
+                                    @Nonnull final EWebPageFormAction eFormAction)
+  {
+    // Lock EDIT and DELETE if an object is present
+    return eFormAction.isModifying ();
+  }
+
+  /**
    * This method is called before the main processing starts. It can e.g. be
    * used to try to lock the specified object. When overriding the method make
    * sure to emit all error messages on your own, when e.g. an object is locked.
@@ -807,8 +830,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     if (isObjectLockingEnabled ())
     {
       final ILockManager <String> aOLM = PhotonSecurityManager.getLockMgr ();
-      // Lock EDIT and DELETE if an object is present
-      if (eFormAction != null && eFormAction.isModifying () && aSelectedObject != null)
+      if (aSelectedObject != null && performLocking (aWPEC, aSelectedObject, eFormAction))
       {
         // Try to lock object
         final String sObjectID = aSelectedObject.getID ();
