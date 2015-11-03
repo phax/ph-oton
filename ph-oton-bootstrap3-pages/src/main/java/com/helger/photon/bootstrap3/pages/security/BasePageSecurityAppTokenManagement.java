@@ -37,6 +37,7 @@ import com.helger.commons.url.URLValidator;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCTextArea;
 import com.helger.html.hc.html.grouping.HCDiv;
@@ -582,7 +583,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
         final HCRow aBodyRow = aTable.addBodyRow ();
         aBodyRow.addCell (new HCA (aViewURL).addChild (sDisplayName));
-        aBodyRow.addCell (HCA.createLinkedWebsite (aCurObject.getOwnerURL ()));
+        aBodyRow.addCell (HCA.createLinkedWebsite (aCurObject.getOwnerURL (), HC_Target.BLANK));
         aBodyRow.addCell (SecurityUIHelper.createAccessTokenNode (aCurObject.getActiveTokenString ()));
         aBodyRow.addCell (EPhotonCoreText.getYesOrNo (bUsableNow, aDisplayLocale));
 
