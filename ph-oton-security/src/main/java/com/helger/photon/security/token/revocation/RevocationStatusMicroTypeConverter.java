@@ -42,9 +42,7 @@ public final class RevocationStatusMicroTypeConverter implements IMicroTypeConve
   private static final String ELEMENT_REASON = "reason";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
-                                              @Nullable final String sNamespaceURI,
-                                              @Nonnull @Nonempty final String sTagName)
+  public IMicroElement convertToMicroElement (@Nonnull final Object aObject, @Nullable final String sNamespaceURI, @Nonnull @Nonempty final String sTagName)
   {
     final IRevocationStatus aValue = (IRevocationStatus) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
@@ -63,7 +61,7 @@ public final class RevocationStatusMicroTypeConverter implements IMicroTypeConve
     final boolean bIsRevoked = StringParser.parseBool (sIsRevoked);
 
     final String sRevocationUserID = aElement.getAttributeValue (ATTR_USER_ID);
-    final LocalDateTime aRevocationDT = aElement.getAttributeValueWithConversion (ATTR_USER_ID, LocalDateTime.class);
+    final LocalDateTime aRevocationDT = aElement.getAttributeValueWithConversion (ATTR_DT, LocalDateTime.class);
     final String sRevocationReason = MicroHelper.getChildTextContent (aElement, ELEMENT_REASON);
 
     return new RevocationStatus (bIsRevoked, sRevocationUserID, aRevocationDT, sRevocationReason);

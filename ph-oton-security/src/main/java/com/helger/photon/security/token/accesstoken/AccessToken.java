@@ -57,11 +57,6 @@ public final class AccessToken implements IAccessToken
     return m_aNotAfter;
   }
 
-  public void setNotAfterNow ()
-  {
-    setNotAfter (PDTFactory.getCurrentLocalDateTime ());
-  }
-
   public void setNotAfter (@Nonnull final LocalDateTime aNotAfter)
   {
     ValueEnforcer.notNull (aNotAfter, "NotAfter");

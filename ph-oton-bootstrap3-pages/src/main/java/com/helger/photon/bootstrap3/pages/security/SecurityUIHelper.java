@@ -76,10 +76,10 @@ public final class SecurityUIHelper
   }
 
   @Nullable
-  public static IHCNode createAppTokenNode (@Nullable final String sAppTokenString)
+  public static IHCNode createAccessTokenNode (@Nullable final String sTokenString)
   {
-    if (StringHelper.hasNoText (sAppTokenString))
+    if (StringHelper.hasNoText (sTokenString))
       return null;
-    return new HCCode ().addClass (CUICoreCSS.CSS_CLASS_NOWRAP).addChild (sAppTokenString);
+    return new HCCode ().addClass (CUICoreCSS.CSS_CLASS_NOWRAP).addChild (sTokenString);
   }
 }

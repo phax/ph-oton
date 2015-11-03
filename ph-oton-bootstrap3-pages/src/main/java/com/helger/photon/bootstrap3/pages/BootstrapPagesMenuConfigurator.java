@@ -149,7 +149,6 @@ public final class BootstrapPagesMenuConfigurator
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSecurity, new BasePageSecurityRoleManagement <WPECTYPE> (MENU_ADMIN_SECURITY_ROLE))
              .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createSeparator (aAdminSecurity).setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSecurity,
                           new BasePageSecurityAppTokenManagement <WPECTYPE> (MENU_ADMIN_SECURITY_APP_TOKEN))
              .setDisplayFilter (aDisplayFilter);
