@@ -16,6 +16,7 @@
  */
 package com.helger.photon.security.password.constraint;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,10 +29,10 @@ import com.helger.commons.lang.ICloneable;
 
 /**
  * This interface defines a list of password constraints.
- * 
+ *
  * @author Philip Helger
  */
-public interface IPasswordConstraintList extends ICloneable <IPasswordConstraintList>
+public interface IPasswordConstraintList extends ICloneable <IPasswordConstraintList>, Serializable
 {
   /**
    * @return <code>true</code> if at least one constraint is present
@@ -55,7 +56,7 @@ public interface IPasswordConstraintList extends ICloneable <IPasswordConstraint
   /**
    * Check if the passed plaintext password is valid. Breaks after the first
    * unfulfilled constrained
-   * 
+   *
    * @param sPlainTextPassword
    *        The password to check. May be <code>null</code>.
    * @return <code>true</code> if no constraint was unfulfilled (meaning that if
@@ -66,7 +67,7 @@ public interface IPasswordConstraintList extends ICloneable <IPasswordConstraint
   /**
    * Check if the passed password is valid. The descriptions of all failed
    * constraints are returned.
-   * 
+   *
    * @param sPlainTextPassword
    *        The password to check. May be <code>null</code>.
    * @param aContentLocale
@@ -83,7 +84,7 @@ public interface IPasswordConstraintList extends ICloneable <IPasswordConstraint
   /**
    * Get a list of all password constraint descriptions in the specified locale
    * (e.g. for hinting a user)
-   * 
+   *
    * @param aContentLocale
    *        The locale to be used for text resolving.
    * @return A non-<code>null</code> list with all constraint descriptions. If

@@ -16,6 +16,7 @@
  */
 package com.helger.photon.security.password.constraint;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -26,15 +27,15 @@ import com.helger.commons.microdom.IMicroElement;
 
 /**
  * Base interface for a single password constraint type.
- * 
+ *
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IPasswordConstraint
+public interface IPasswordConstraint extends Serializable
 {
   /**
    * Check if the supplied password matches this constraint
-   * 
+   *
    * @param sPlainTextPassword
    *        The plain text password to check. May be <code>null</code>.
    * @return <code>true</code> if it is valid, <code>false</code> if it is not
@@ -44,7 +45,7 @@ public interface IPasswordConstraint
   /**
    * Get a description of this constraint, so that it can be displayed to the
    * user
-   * 
+   *
    * @param aContentLocale
    *        The locale to get the description in. Never <code>null</code>.
    * @return <code>null</code> if no text is present in the provided locale
@@ -55,7 +56,7 @@ public interface IPasswordConstraint
   /**
    * This method is responsible for filling a micro element for serializing the
    * password constraints.
-   * 
+   *
    * @param aElement
    *        The element to be filled. Never <code>null</code>.
    */
