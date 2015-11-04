@@ -41,6 +41,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.object.ObjectHelper;
+import com.helger.photon.security.token.accesstoken.IAccessToken;
 
 public final class AppTokenManager extends AbstractSimpleDAO
 {
@@ -86,7 +87,10 @@ public final class AppTokenManager extends AbstractSimpleDAO
   }
 
   @Nonnull
-  public AppToken createAppToken (@Nonnull @Nonempty final String sOwnerName, @Nullable final String sOwnerURL, @Nullable final String sOwnerContact, @Nullable final String sOwnerContactEmail)
+  public AppToken createAppToken (@Nonnull @Nonempty final String sOwnerName,
+                                  @Nullable final String sOwnerURL,
+                                  @Nullable final String sOwnerContact,
+                                  @Nullable final String sOwnerContactEmail)
   {
     final AppToken aAppToken = new AppToken (sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
 
@@ -194,7 +198,12 @@ public final class AppTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (AppToken.OT, "create-new-access-token", aAppToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason);
+    AuditHelper.onAuditModifySuccess (AppToken.OT,
+                                      "create-new-access-token",
+                                      aAppToken.getID (),
+                                      sRevocationUserID,
+                                      aRevocationDT,
+                                      sRevocationReason);
     return EChange.CHANGED;
   }
 
@@ -296,6 +305,29 @@ public final class AppTokenManager extends AbstractSimpleDAO
     try
     {
       return m_aMap.containsKey (sID);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  @Nullable
+  public IAppToken getAppTokenOfTokenString (@Nullable final String sTokenString)
+  {
+    if (StringHelper.hasNoText (sTokenString))
+      return null;
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      for (final IAppToken aAppToken : m_aMap.values ())
+      {
+        final IAccessToken aAccessToken = aAppToken.getActiveAccessToken ();
+        if (aAccessToken != null && aAccessToken.getTokenString ().equals (sTokenString))
+          return aAppToken;
+      }
+      return null;
     }
     finally
     {

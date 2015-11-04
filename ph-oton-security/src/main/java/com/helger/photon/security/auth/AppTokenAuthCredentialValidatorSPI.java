@@ -24,34 +24,36 @@ import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.photon.basic.auth.credentials.CredentialValidationResult;
 import com.helger.photon.basic.auth.credentials.IAuthCredentialValidatorSPI;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
-import com.helger.photon.basic.auth.credentials.userpw.UserNamePasswordCredentials;
 import com.helger.photon.security.login.ELoginResult;
-import com.helger.photon.security.login.LoggedInUserManager;
-import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
+import com.helger.photon.security.token.app.AppTokenManager;
+import com.helger.photon.security.token.app.IAppToken;
+import com.helger.photon.security.token.credentials.IAppTokenCredentials;
 
 /**
- * An implementation of the {@link IAuthCredentialValidatorSPI} using the
- * {@link LoggedInUserManager} to login {@link IUser} objects.
- * 
+ * An implementation of the {@link IAuthCredentialValidatorSPI} for
+ * {@link IAppTokenCredentials} using the {@link AppTokenManager} to login
+ * {@link IAppToken} objects.
+ *
  * @author Philip Helger
  */
 @IsSPIImplementation
-public final class UserManagerAuthCredentialValidatorSPI implements IAuthCredentialValidatorSPI
+public final class AppTokenAuthCredentialValidatorSPI implements IAuthCredentialValidatorSPI
 {
   public boolean supportsCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
-    return aCredentials instanceof UserNamePasswordCredentials;
+    return aCredentials instanceof IAppTokenCredentials;
   }
 
   @Nonnull
   public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale, @Nonnull final IAuthCredentials aCredentials)
   {
-    final UserNamePasswordCredentials aUPC = (UserNamePasswordCredentials) aCredentials;
-    final ELoginResult eLoginResult = LoggedInUserManager.getInstance ().loginUser (aUPC.getUserName (), aUPC.getPassword ());
-    if (eLoginResult.isSuccess ())
+    final IAppTokenCredentials aATC = (IAppTokenCredentials) aCredentials;
+    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
+    if (aAppTokenMgr.getAppTokenOfTokenString (aATC.getTokenString ()) != null)
       return CredentialValidationResult.SUCCESS;
 
     // Credential validation failed
-    return new CredentialValidationResult (eLoginResult.getDisplayText (aDisplayLocale));
+    return new CredentialValidationResult (ELoginResult.TOKEN_NOT_EXISTING.getDisplayText (aDisplayLocale));
   }
 }
