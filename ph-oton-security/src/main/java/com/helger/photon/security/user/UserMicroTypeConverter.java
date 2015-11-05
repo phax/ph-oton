@@ -108,7 +108,7 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
     final String sLoginName = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_LOGINNAME);
     final String sEmailAddress = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_EMAILADDRESS);
     final IMicroElement ePasswordHash = aElement.getFirstChildElement (ELEMENT_PASSWORDHASH);
-    String sPasswordHashAlgorithm = ePasswordHash == null ? null : ePasswordHash.getAttributeValue (ATTR_ALGORITHM);
+    String sPasswordHashAlgorithm = ePasswordHash.getAttributeValue (ATTR_ALGORITHM);
     if (sPasswordHashAlgorithm == null)
     {
       // migration
