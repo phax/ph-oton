@@ -1,4 +1,8 @@
 # ph-oton
+
+[![Build Status](https://travis-ci.org/phax/ph-oton.svg?branch=master)](https://travis-ci.org/phax/ph-oton)
+﻿
+
 This set of Java libraries forms a package to build Java web applications.
 
 Release history:
