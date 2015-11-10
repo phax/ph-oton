@@ -22,6 +22,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.id.factory.GlobalIDFactory;
+import com.helger.commons.id.factory.MemoryIntIDFactory;
 import com.helger.commons.url.SMap;
 import com.helger.photon.core.servlet.WebAppListener;
 import com.helger.web.mock.MockHttpListener;
@@ -42,8 +44,7 @@ public class PhotonCoreTestRule extends WebScopeTestRule
   @ReturnsMutableCopy
   public static SMap createDefaultServletContextInitParameters ()
   {
-    return new SMap ().add (WebAppListener.INIT_PARAMETER_NO_STARTUP_INFO, "true")
-                      .add (WebAppListener.INIT_PARAMETER_NO_CHECK_FILE_ACCESS, "true");
+    return new SMap ().add (WebAppListener.INIT_PARAMETER_NO_STARTUP_INFO, "true").add (WebAppListener.INIT_PARAMETER_NO_CHECK_FILE_ACCESS, "true");
   }
 
   public PhotonCoreTestRule ()
@@ -60,7 +61,15 @@ public class PhotonCoreTestRule extends WebScopeTestRule
   protected void initListener ()
   {
     MockHttpListener.removeAllDefaultListeners ();
-    MockHttpListener.addDefaultListener (new WebAppListener ());
+    MockHttpListener.addDefaultListener (new WebAppListener ()
+    {
+      @Override
+      protected void initGlobalIDFactory ()
+      {
+        // Set persistent ID provider: in memory only
+        GlobalIDFactory.setPersistentIntIDFactory (new MemoryIntIDFactory ());
+      }
+    });
     MockHttpListener.addDefaultListener (new MockServletRequestListenerScopeAware ());
     MockHttpListener.setToDefault ();
   }
