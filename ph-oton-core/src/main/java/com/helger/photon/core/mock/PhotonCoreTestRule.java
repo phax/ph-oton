@@ -44,7 +44,7 @@ public class PhotonCoreTestRule extends WebScopeTestRule
   @ReturnsMutableCopy
   public static SMap createDefaultServletContextInitParameters ()
   {
-    return new SMap ().add (WebAppListener.INIT_PARAMETER_NO_STARTUP_INFO, "true").add (WebAppListener.INIT_PARAMETER_NO_CHECK_FILE_ACCESS, "true");
+    return new SMap ().add (WebAppListener.INIT_PARAMETER_NO_STARTUP_INFO, true).add (WebAppListener.INIT_PARAMETER_NO_CHECK_FILE_ACCESS, true);
   }
 
   public PhotonCoreTestRule ()
