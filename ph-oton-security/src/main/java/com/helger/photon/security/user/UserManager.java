@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -132,8 +133,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     _addUser (new User (CSecurity.USER_ADMINISTRATOR_ID,
                         CSecurity.USER_ADMINISTRATOR_LOGIN,
                         CSecurity.USER_ADMINISTRATOR_EMAIL,
-                        GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                              CSecurity.USER_ADMINISTRATOR_PASSWORD),
+                        GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), CSecurity.USER_ADMINISTRATOR_PASSWORD),
                         CSecurity.USER_ADMINISTRATOR_NAME,
                         (String) null,
                         (String) null,
@@ -145,8 +145,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     _addUser (new User (CSecurity.USER_USER_ID,
                         CSecurity.USER_USER_LOGIN,
                         CSecurity.USER_USER_EMAIL,
-                        GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                              CSecurity.USER_USER_PASSWORD),
+                        GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), CSecurity.USER_USER_PASSWORD),
                         CSecurity.USER_USER_NAME,
                         (String) null,
                         (String) null,
@@ -158,8 +157,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     _addUser (new User (CSecurity.USER_GUEST_ID,
                         CSecurity.USER_GUEST_LOGIN,
                         CSecurity.USER_GUEST_EMAIL,
-                        GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                              CSecurity.USER_GUEST_PASSWORD),
+                        GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), CSecurity.USER_GUEST_PASSWORD),
                         CSecurity.USER_GUEST_NAME,
                         (String) null,
                         (String) null,
@@ -257,8 +255,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     // Create user
     final User aUser = new User (sLoginName,
                                  sEmailAddress,
-                                 GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                       sPlainTextPassword),
+                                 GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), sPlainTextPassword),
                                  sFirstName,
                                  sLastName,
                                  sDescription,
@@ -355,8 +352,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     final User aUser = new User (sID,
                                  sLoginName,
                                  sEmailAddress,
-                                 GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                       sPlainTextPassword),
+                                 GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), sPlainTextPassword),
                                  sFirstName,
                                  sLastName,
                                  sDescription,
@@ -552,6 +548,27 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   }
 
   /**
+   * @return The number of all contained enabled and not-deleted users
+   */
+  @Nonnegative
+  public int getActiveUserCount ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      int ret = 0;
+      for (final User aUser : m_aUsers.values ())
+        if (!aUser.isDeleted () && aUser.isEnabled ())
+          ++ret;
+      return ret;
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
    * @return A non-<code>null</code> collection of all contained disabled and
    *         not-deleted users
    */
@@ -729,8 +746,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     }
 
     // Create a new password salt upon password change
-    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                             sNewPlainTextPassword);
+    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), sNewPlainTextPassword);
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -1027,9 +1043,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     // Now compare the hashes
     final String sPasswordHashAlgorithm = aUser.getPasswordHash ().getAlgorithmName ();
     final IPasswordSalt aSalt = aUser.getPasswordHash ().getSalt ();
-    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserPasswordHash (sPasswordHashAlgorithm,
-                                                                                      aSalt,
-                                                                                      sPlainTextPassword);
+    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserPasswordHash (sPasswordHashAlgorithm, aSalt, sPlainTextPassword);
     return aUser.getPasswordHash ().equals (aPasswordHash);
   }
 }
