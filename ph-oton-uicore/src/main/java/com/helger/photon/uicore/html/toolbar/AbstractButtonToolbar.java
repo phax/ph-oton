@@ -26,6 +26,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.forms.HCHiddenField;
+import com.helger.html.hc.html.forms.IHCButton;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.html.JSHtml;
@@ -79,6 +80,13 @@ public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonTool
   }
 
   @Nonnull
+  public final IHCButton <?> addAndReturnButton (@Nullable final String sCaption,
+                                                 @Nullable final ISimpleURL aURL,
+                                                 @Nullable final IIcon aIcon)
+  {
+    return addAndReturnButton (sCaption, aURL == null ? null : JSHtml.windowLocationHref (aURL), aIcon);
+  }
+
   public final IMPLTYPE addButton (@Nullable final String sCaption, @Nonnull final IHasJSCode aJSCode)
   {
     return addButton (sCaption, aJSCode, (IIcon) null);

@@ -53,6 +53,9 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   IMPLTYPE addButton (@Nullable String sCaption, @Nonnull IHasJSCode aJSCode, @Nullable IIcon aIcon);
 
   @Nonnull
+  IHCButton <?> addAndReturnButton (@Nullable String sCaption, @Nullable ISimpleURL aURL, @Nullable IIcon aIcon);
+
+  @Nonnull
   IHCButton <?> addAndReturnButton (@Nullable String sCaption, @Nullable IHasJSCode aOnClick, @Nullable IIcon aIcon);
 
   @Nonnull
