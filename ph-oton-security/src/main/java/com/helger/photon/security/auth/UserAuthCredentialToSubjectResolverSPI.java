@@ -23,8 +23,8 @@ import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 import com.helger.photon.basic.auth.credentials.userpw.IUserNamePasswordCredentials;
 import com.helger.photon.basic.auth.subject.IAuthCredentialToSubjectResolverSPI;
-import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
+import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.UserManager;
 
 /**
@@ -43,7 +43,7 @@ public class UserAuthCredentialToSubjectResolverSPI implements IAuthCredentialTo
   }
 
   @Nullable
-  public IAuthSubject getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
+  public IUser getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
     final IUserNamePasswordCredentials aUPC = (IUserNamePasswordCredentials) aCredentials;
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();

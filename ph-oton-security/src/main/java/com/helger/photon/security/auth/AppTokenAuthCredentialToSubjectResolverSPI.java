@@ -22,9 +22,9 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 import com.helger.photon.basic.auth.subject.IAuthCredentialToSubjectResolverSPI;
-import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.app.AppTokenManager;
+import com.helger.photon.security.token.app.IAppToken;
 import com.helger.photon.security.token.credentials.IAppTokenCredentials;
 
 /**
@@ -43,7 +43,7 @@ public class AppTokenAuthCredentialToSubjectResolverSPI implements IAuthCredenti
   }
 
   @Nullable
-  public IAuthSubject getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
+  public IAppToken getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
     final IAppTokenCredentials aATC = (IAppTokenCredentials) aCredentials;
     final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
