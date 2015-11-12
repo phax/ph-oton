@@ -43,7 +43,8 @@ public interface IAuthIdentification extends Serializable
   /**
    * Method to retrieve the time stamp of when this object was created.
    *
-   * @return The date time the identification occurred. Never <code>null</code>.
+   * @return The date and time the identification occurred. Never
+   *         <code>null</code>.
    */
   @Nonnull
   LocalDateTime getIdentificationDate ();

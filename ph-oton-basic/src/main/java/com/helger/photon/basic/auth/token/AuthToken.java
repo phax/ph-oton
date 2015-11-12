@@ -18,6 +18,7 @@ package com.helger.photon.basic.auth.token;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.joda.time.LocalDateTime;
@@ -40,10 +41,10 @@ public final class AuthToken implements IAuthToken
 {
   private final String m_sID;
   private final IAuthIdentification m_aIdentification;
-  private final LocalDateTime m_aCreationDT = PDTFactory.getCurrentLocalDateTime ();
-  private LocalDateTime m_aLastAccessDT = m_aCreationDT;
-  private boolean m_bExpired = false;
+  private final LocalDateTime m_aCreationDT;
+  private LocalDateTime m_aLastAccessDT;
   private final int m_nExpirationSeconds;
+  private boolean m_bExpired;
 
   public AuthToken (@Nonnull final IAuthIdentification aIdentification, @Nonnegative final int nExpirationSeconds)
   {
@@ -56,7 +57,10 @@ public final class AuthToken implements IAuthToken
       throw new IllegalStateException ("Failed to create token ID");
 
     m_aIdentification = aIdentification;
+    m_aCreationDT = PDTFactory.getCurrentLocalDateTime ();
+    m_aLastAccessDT = m_aCreationDT;
     m_nExpirationSeconds = nExpirationSeconds;
+    m_bExpired = false;
   }
 
   @Nonnull
@@ -83,22 +87,53 @@ public final class AuthToken implements IAuthToken
     return m_aLastAccessDT;
   }
 
+  @Nonnegative
+  public int getExpirationSeconds ()
+  {
+    return m_nExpirationSeconds;
+  }
+
+  public boolean isExpirationPossible ()
+  {
+    return m_nExpirationSeconds > EXPIRATION_SECONDS_INFINITE;
+  }
+
+  /**
+   * Get the date time when this token will expire. This date time changes every
+   * time the last access is updated.
+   *
+   * @return The expiration date and time or <code>null</code> if this token
+   *         cannot expire.
+   * @see #isExpirationPossible()
+   */
+  @Nullable
+  public LocalDateTime getExpirationDate ()
+  {
+    return isExpirationPossible () ? m_aLastAccessDT.plusSeconds (m_nExpirationSeconds) : null;
+  }
+
   public boolean isExpired ()
   {
-    if (m_nExpirationSeconds > 0 &&
-        Seconds.secondsBetween (m_aLastAccessDT, PDTFactory.getCurrentLocalDateTime ())
-               .getSeconds () > m_nExpirationSeconds)
-      m_bExpired = true;
+    if (!m_bExpired && isExpirationPossible ())
+    {
+      // Only if expiration is defined
+      if (Seconds.secondsBetween (m_aLastAccessDT, PDTFactory.getCurrentLocalDateTime ()).getSeconds () > m_nExpirationSeconds)
+        m_bExpired = true;
+    }
     return m_bExpired;
   }
 
+  /**
+   * Mark the token as expired independent of the time since the last access.
+   */
   void setExpired ()
   {
     m_bExpired = true;
   }
 
   /**
-   * Update the last access date and time of this token
+   * Update the last access date and time of this token. This means that the
+   * expiration time starts again (if any).
    */
   void updateLastAccess ()
   {
@@ -124,13 +159,7 @@ public final class AuthToken implements IAuthToken
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sID)
-                                       .append (m_aIdentification)
-                                       .append (m_aCreationDT)
-                                       .append (m_aLastAccessDT)
-                                       .append (m_bExpired)
-                                       .append (m_nExpirationSeconds)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_sID).append (m_aIdentification).append (m_aCreationDT).append (m_aLastAccessDT).append (m_bExpired).append (m_nExpirationSeconds).getHashCode ();
   }
 
   @Override

@@ -30,6 +30,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.commons.state.ESuccess;
+import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.auth.identify.IAuthIdentification;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 
@@ -41,9 +42,6 @@ import com.helger.photon.basic.auth.subject.IAuthSubject;
 @ThreadSafe
 public final class AuthTokenRegistry extends AbstractGlobalSingleton
 {
-  /** The value indicating, that a token never expires */
-  public static final int NEVER_EXPIRES = 0;
-
   private final Map <String, AuthToken> m_aMap = new HashMap <String, AuthToken> ();
 
   @Deprecated
@@ -102,7 +100,7 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
   @Nullable
   private AuthToken _getValidNotExpiredToken (@Nullable final String sTokenID)
   {
-    if (sTokenID == null)
+    if (StringHelper.hasNoText (sTokenID))
       return null;
 
     m_aRWLock.readLock ().lock ();

@@ -18,6 +18,7 @@ package com.helger.photon.basic.auth.subject;
 
 import java.util.List;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -48,11 +49,25 @@ public final class AuthCredentialToSubjectResolverManager
   private AuthCredentialToSubjectResolverManager ()
   {}
 
+  /**
+   * @return A list of all contained implementations of
+   *         {@link IAuthCredentialToSubjectResolverSPI}. Never
+   *         <code>null</code> but maybe empty.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public static List <IAuthCredentialToSubjectResolverSPI> getAllAuthCredentialToSubjectResolvers ()
   {
     return CollectionHelper.newList (s_aHdlList);
+  }
+
+  /**
+   * @return The number of registered handlers. Always &ge; 0.
+   */
+  @Nonnegative
+  public static int getAuthCredentialToSubjectResolverCount ()
+  {
+    return s_aHdlList.size ();
   }
 
   /**

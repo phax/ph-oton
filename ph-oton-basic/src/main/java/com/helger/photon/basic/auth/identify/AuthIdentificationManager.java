@@ -58,8 +58,7 @@ public final class AuthIdentificationManager
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static AuthIdentificationResult validateLoginCredentialsAndCreateToken (@Nonnull final Locale aDisplayLocale,
-                                                                                 @Nonnull final IAuthCredentials aCredentials)
+  public static AuthIdentificationResult validateLoginCredentialsAndCreateToken (@Nonnull final Locale aDisplayLocale, @Nonnull final IAuthCredentials aCredentials)
   {
     ValueEnforcer.notNull (aCredentials, "Credentials");
 
@@ -78,10 +77,14 @@ public final class AuthIdentificationManager
     final IAuthSubject aSubject = AuthCredentialToSubjectResolverManager.getSubjectFromCredentials (aCredentials);
     if (aSubject != null)
       s_aLogger.info ("Credentials " + aCredentials + " correspond to subject " + aSubject);
+    else
+      s_aLogger.error ("Failed to resolve credentials " + aCredentials + " to an auth subject!");
+
+    // Create the identification element
+    final AuthIdentification aIdentification = new AuthIdentification (aSubject);
 
     // create the token (without expiration seconds)
-    final IAuthToken aNewAuthToken = AuthTokenRegistry.getInstance ().createToken (new AuthIdentification (aSubject),
-                                                                                   AuthTokenRegistry.NEVER_EXPIRES);
+    final IAuthToken aNewAuthToken = AuthTokenRegistry.getInstance ().createToken (aIdentification, IAuthToken.EXPIRATION_SECONDS_INFINITE);
     return new AuthIdentificationResult (aNewAuthToken);
   }
 }

@@ -18,7 +18,9 @@ package com.helger.photon.basic.auth.token;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.joda.time.LocalDateTime;
 
@@ -32,6 +34,9 @@ import com.helger.photon.basic.auth.identify.IAuthIdentification;
  */
 public interface IAuthToken extends IHasID <String>, Serializable
 {
+  /** The value indicating, that a token never expires */
+  int EXPIRATION_SECONDS_INFINITE = 0;
+
   /**
    * @return The secret key token representing a session of a subject. Never
    *         <code>null</code>.
@@ -61,9 +66,39 @@ public interface IAuthToken extends IHasID <String>, Serializable
   LocalDateTime getLastAccessDate ();
 
   /**
+   * @return The expiration seconds. Always &ge; 0. A value of
+   *         {@value #EXPIRATION_SECONDS_INFINITE} means no expiration.
+   * @see #isExpirationPossible()
+   */
+  @Nonnegative
+  int getExpirationSeconds ();
+
+  /**
+   * Check if this token can expire (expiration seconds &gt; 0) or not
+   * (expiration seconds = {@value #EXPIRATION_SECONDS_INFINITE}).
+   *
+   * @return <code>true</code> if this token can expire, <code>false</code>
+   *         otherwise.
+   * @see #getExpirationSeconds()
+   */
+  boolean isExpirationPossible ();
+
+  /**
+   * Get the date time when this token will expire. This date time changes every
+   * time the last access is updated.
+   *
+   * @return The expiration date and time or <code>null</code> if this token
+   *         cannot expire.
+   * @see #isExpirationPossible()
+   */
+  @Nullable
+  LocalDateTime getExpirationDate ();
+
+  /**
    * Check if the token is expired. Expired tokens are considered invalid.
    *
-   * @return <code>true</code> if the token is already expired.
+   * @return <code>true</code> if the token is already expired,
+   *         <code>false</code> if the token is still valid.
    */
   boolean isExpired ();
 }

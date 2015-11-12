@@ -27,13 +27,18 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.auth.credentials.CredentialValidationResult;
 import com.helger.photon.basic.auth.token.IAuthToken;
 
+/**
+ * This class contains the overall authentication result.
+ * 
+ * @author Philip Helger
+ */
 public class AuthIdentificationResult implements ISuccessIndicator, Serializable
 {
   private final CredentialValidationResult m_aCredentialValidationResult;
   private final IAuthToken m_aAuthToken;
 
   /**
-   * Constructor for a failure.
+   * Constructor for a failure in authentication.
    *
    * @param aCredentialValidationResult
    *        The validation result. May not be <code>null</code> and must be a
@@ -49,7 +54,7 @@ public class AuthIdentificationResult implements ISuccessIndicator, Serializable
   }
 
   /**
-   * Constructor for success.
+   * Constructor for success authentication.
    *
    * @param aAuthToken
    *        The auth token. May not be <code>null</code>.
@@ -94,8 +99,6 @@ public class AuthIdentificationResult implements ISuccessIndicator, Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("CredentialValidationResult", m_aCredentialValidationResult)
-                                       .append ("AuthToken", m_aAuthToken)
-                                       .toString ();
+    return new ToStringGenerator (this).append ("CredentialValidationResult", m_aCredentialValidationResult).append ("AuthToken", m_aAuthToken).toString ();
   }
 }
