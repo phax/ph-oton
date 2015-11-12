@@ -1,4 +1,4 @@
-package com.helger.photon.security.token.app;
+package com.helger.photon.security.token.user;
 
 import java.util.List;
 
@@ -10,17 +10,26 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.basic.object.IObject;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
+import com.helger.photon.security.token.app.IAppToken;
 
 /**
- * Base interface for an application token.
+ * Base interface for a user token. A user token is always subordinated to an
+ * application token and can have roles and additional properties.
  *
  * @author Philip Helger
  */
-public interface IAppToken extends IObject, IAuthSubject
+public interface IUserToken extends IObject, IAuthSubject
 {
   /**
-   * @return A list of all tokens used by this application. The latest, active
-   *         token is always the last one. Neither <code>null</code> nor empty.
+   * @return The application token to which this user token belongs. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  IAppToken getAppToken ();
+
+  /**
+   * @return A list of all tokens used by this user. The latest, active token is
+   *         always the last one. Neither <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty
@@ -50,26 +59,5 @@ public interface IAppToken extends IObject, IAuthSubject
    */
   @Nonnull
   @Nonempty
-  String getOwnerName ();
-
-  /**
-   * @return The URL of the owning application. For informational purposes only.
-   *         May be <code>null</code>.
-   */
-  @Nullable
-  String getOwnerURL ();
-
-  /**
-   * @return The contact person or email of the owning application. For
-   *         informational purposes only. May be <code>null</code>.
-   */
-  @Nullable
-  String getOwnerContact ();
-
-  /**
-   * @return The contact email address of the owning application. For
-   *         informational purposes only. May be <code>null</code>.
-   */
-  @Nullable
-  String getOwnerContactEmail ();
+  String getUserName ();
 }
