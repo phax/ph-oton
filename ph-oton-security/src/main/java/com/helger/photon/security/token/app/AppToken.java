@@ -39,9 +39,18 @@ public class AppToken extends AbstractObject implements IAppToken
   // Status vars
   private AccessToken m_aActiveAccessToken;
 
-  public AppToken (@Nonnull @Nonempty final String sOwnerName, @Nullable final String sOwnerURL, @Nullable final String sOwnerContact, @Nullable final String sOwnerContactEmail)
+  public AppToken (@Nonnull @Nonempty final String sOwnerName,
+                   @Nullable final String sOwnerURL,
+                   @Nullable final String sOwnerContact,
+                   @Nullable final String sOwnerContactEmail,
+                   @Nullable final String sTokenString)
   {
-    this (StubObject.createForCurrentUser (), CollectionHelper.newList (AccessToken.createNewAccessTokenValidFromNow ()), sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+    this (StubObject.createForCurrentUser (),
+          CollectionHelper.newList (AccessToken.createAccessTokenValidFromNow (sTokenString)),
+          sOwnerName,
+          sOwnerURL,
+          sOwnerContact,
+          sOwnerContactEmail);
   }
 
   @Nullable
@@ -161,7 +170,9 @@ public class AppToken extends AbstractObject implements IAppToken
   }
 
   @Nonnull
-  public EChange revokeActiveAccessToken (@Nonnull @Nonempty final String sRevocationUserID, @Nonnull final LocalDateTime aRevocationDT, @Nonnull @Nonempty final String sRevocationReason)
+  public EChange revokeActiveAccessToken (@Nonnull @Nonempty final String sRevocationUserID,
+                                          @Nonnull final LocalDateTime aRevocationDT,
+                                          @Nonnull @Nonempty final String sRevocationReason)
   {
     if (m_aActiveAccessToken == null)
     {
@@ -174,11 +185,13 @@ public class AppToken extends AbstractObject implements IAppToken
     return EChange.CHANGED;
   }
 
-  public void createNewAccessToken ()
+  public void createNewAccessToken (@Nullable final String sTokenString)
   {
     if (m_aActiveAccessToken != null)
-      m_aActiveAccessToken.markRevoked (LoggedInUserManager.getInstance ().getCurrentUserID (), PDTFactory.getCurrentLocalDateTime (), "A new access token was created");
-    final AccessToken aNewToken = AccessToken.createNewAccessTokenValidFromNow ();
+      m_aActiveAccessToken.markRevoked (LoggedInUserManager.getInstance ().getCurrentUserID (),
+                                        PDTFactory.getCurrentLocalDateTime (),
+                                        "A new access token was created");
+    final AccessToken aNewToken = AccessToken.createAccessTokenValidFromNow (sTokenString);
     m_aAccessTokens.add (aNewToken);
     m_aActiveAccessToken = aNewToken;
   }

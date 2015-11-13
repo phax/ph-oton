@@ -51,10 +51,8 @@ import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
-import com.helger.photon.bootstrap3.alert.BootstrapWarnBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
@@ -84,6 +82,8 @@ import com.helger.smtp.util.EmailAddressValidator;
 
 public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <IAppToken, WPECTYPE>
 {
+  public static final int TOKEN_STRING_MIN_LENGTH = 16;
+
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
@@ -95,6 +95,12 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
    LABEL_OWNER_URL ("URL", "URL"),
    LABEL_OWNER_CONTACT ("Kontaktperson", "Contact person"),
    LABEL_OWNER_CONTACT_EMAIL ("E-Mail Adresse", "Email address"),
+   LABEL_TOKEN_STRING ("Zugriffstoken", "Access token"),
+   HELPTEXT_TOKEN_STRING ("Hier kann ein existierender Zugriffstoken (Mindestlänge von " +
+                          TOKEN_STRING_MIN_LENGTH +
+                          ") von einem anderen System eingegeben werden. Wenn das Feld leer gelassen wird, wird ein neuer Zugriffstoken erstellt.", "An existing access token (minimum length of " +
+                                                                                                                                                    TOKEN_STRING_MIN_LENGTH +
+                                                                                                                                                    ") from another system can be provided here. If the field stays empty, a new access token is created."),
    LABEL_ACCESS_TOKENS ("Zugriffstoken", "Access tokens"),
    SHOW_REVOKED ("Zurückgezogen von {0} um {1}; Begründung: {2}", "Revoked by {0} on {1}; reason: {2}"),
    SHOW_INVALID_NOW ("Jetzt nicht mehr gültig", "Not valid now"),
@@ -102,12 +108,15 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
    SHOW_ACCESS_TOKEN ("Zugriffstoken: ", "Access token: "),
    SHOW_NOT_BEFORE ("Gültig ab: {0}", "Not before: {0}"),
    SHOW_NOT_AFTER ("Gültig bis: {0}", "Not after: {0}"),
-   NOTE_CURRENT_ACCESS_TOKEN ("Aktuelles Zugriffstoken: ", "Current access token: "),
-   NOTE_NO_ACCESS_TOKEN ("Diesem App Token ist kein Zugriffstoken zugeordnet", "This app token currently has no access token"),
-   NOTE_ACCESS_TOKEN_GENERATED ("Hinweis: das Zugriffstoken wird automatisch generiert.", "Note: the access token is generated automatically."),
    ERR_OWNER_NAME_EMPTY ("Der Eigentümer muss angegeben werden!", "The owner must be specified!"),
    ERR_OWNER_URL_INVALID ("Die URL ist ungültig!", "The URL is invalid!"),
    ERR_OWNER_EMAIL_INVALID ("Die E-Mail-Adresse ist ungültig!", "The email address is invalid!"),
+   ERR_TOKEN_STRING_TOO_SHORT ("Das Zugriffstoken ist zu kurz. Es muss mindestens " +
+                               TOKEN_STRING_MIN_LENGTH +
+                               " Zeichen haben.", "The access token is too short. It must have at least " +
+                                                  TOKEN_STRING_MIN_LENGTH +
+                                                  " characters."),
+   ERR_TOKEN_STRING_IN_USE ("Das Zugriffstoken ist bereits vergeben und kann nicht nochmal vergeben werden.", "The access token is already in used and cannot be assigned again."),
    CREATE_SUCCESS ("Das App Token für ''{0}'' wurde erfolgreich erstellt.", "The app token for ''{0}'' was successfully created."),
    EDIT_SUCCESS ("Das App Token für ''{0}'' wurde erfolgreich bearbeitet.", "The app token for ''{0}'' was successfully edited."),
    DELETE_QUERY ("Sind Sie sicher, dass Sie das App Token für ''{0}'' löschen wollen?", "Are you sure you want to delete the app token of ''{0}''?"),
@@ -160,6 +169,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
   public static final String FIELD_OWNER_URL = "ownerurl";
   public static final String FIELD_OWNER_CONTACT = "ownercontact";
   public static final String FIELD_OWNER_CONTACT_EMAIL = "ownercontactemail";
+  public static final String FIELD_TOKEN_STRING = "tokenstring";
   public static final String FIELD_REVOCATION_REASON = "revocationreason";
 
   public BasePageSecurityAppTokenManagement (@Nonnull @Nonempty final String sID)
@@ -320,17 +330,12 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                                                                                                  : aSelectedObject.getOwnerContactEmail ())))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_CONTACT_EMAIL)));
 
-    if (bEdit)
-    {
-      final String sTokenString = aSelectedObject.getActiveTokenString ();
-      if (StringHelper.hasText (sTokenString))
-        aForm.addChild (new BootstrapInfoBox ().addChild (EText.NOTE_CURRENT_ACCESS_TOKEN.getDisplayText (aDisplayLocale))
-                                               .addChild (SecurityUIHelper.createAccessTokenNode (sTokenString)));
-      else
-        aForm.addChild (new BootstrapWarnBox ().addChild (EText.NOTE_NO_ACCESS_TOKEN.getDisplayText (aDisplayLocale)));
-    }
-    else
-      aForm.addChild (new BootstrapInfoBox ().addChild (EText.NOTE_ACCESS_TOKEN_GENERATED.getDisplayText (aDisplayLocale)));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_TOKEN_STRING.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (new HCEdit (new RequestField (FIELD_TOKEN_STRING,
+                                                                                         aSelectedObject == null ? null
+                                                                                                                 : aSelectedObject.getActiveTokenString ())).setReadOnly (bEdit))
+                                                 .setHelpText (EText.HELPTEXT_TOKEN_STRING.getDisplayText (aDisplayLocale))
+                                                 .setErrorList (aFormErrors.getListOfField (FIELD_TOKEN_STRING)));
   }
 
   @Override
@@ -347,6 +352,8 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     final String sOwnerURL = aWPEC.getAttributeAsString (FIELD_OWNER_URL);
     final String sOwnerContact = aWPEC.getAttributeAsString (FIELD_OWNER_CONTACT);
     final String sOwnerContactEmail = aWPEC.getAttributeAsString (FIELD_OWNER_CONTACT_EMAIL);
+    // Token string cannot be edited
+    final String sTokenString = bEdit ? null : aWPEC.getAttributeAsString (FIELD_TOKEN_STRING);
 
     if (StringHelper.hasNoText (sOwnerName))
       aFormErrors.addFieldError (FIELD_OWNER_NAME, EText.ERR_OWNER_NAME_EMPTY.getDisplayText (aDisplayLocale));
@@ -364,6 +371,17 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                    EText.ERR_OWNER_EMAIL_INVALID.getDisplayText (aDisplayLocale));
     }
 
+    if (StringHelper.hasText (sTokenString))
+    {
+      // Check uniqueness
+      if (sTokenString.length () < TOKEN_STRING_MIN_LENGTH)
+        aFormErrors.addFieldError (FIELD_TOKEN_STRING,
+                                   EText.ERR_TOKEN_STRING_TOO_SHORT.getDisplayText (aDisplayLocale));
+      else
+        if (aAppTokenMgr.isAccessTokenUsed (sTokenString))
+          aFormErrors.addFieldError (FIELD_TOKEN_STRING, EText.ERR_TOKEN_STRING_IN_USE.getDisplayText (aDisplayLocale));
+    }
+
     if (aFormErrors.isEmpty ())
     {
       if (bEdit)
@@ -378,7 +396,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
       }
       else
       {
-        aAppTokenMgr.createAppToken (sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+        aAppTokenMgr.createAppToken (sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail, sTokenString);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                  sOwnerName)));
       }
@@ -438,7 +456,10 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     final FormErrors aFormErrors = new FormErrors ();
     if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
     {
+      final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
       final String sRevocationReason = aWPEC.getAttributeAsString (FIELD_REVOCATION_REASON);
+      final String sTokenString = aWPEC.getAttributeAsString (FIELD_TOKEN_STRING);
+
       if (bRevokedOld)
       {
         // Check only if something can be revoked...
@@ -446,13 +467,25 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
           aFormErrors.addFieldError (FIELD_REVOCATION_REASON, EText.ERR_REASON_EMPTY.getDisplayText (aDisplayLocale));
       }
 
+      if (StringHelper.hasText (sTokenString))
+      {
+        // Check uniqueness
+        if (sTokenString.length () < TOKEN_STRING_MIN_LENGTH)
+          aFormErrors.addFieldError (FIELD_TOKEN_STRING,
+                                     EText.ERR_TOKEN_STRING_TOO_SHORT.getDisplayText (aDisplayLocale));
+        else
+          if (aAppTokenMgr.isAccessTokenUsed (sTokenString))
+            aFormErrors.addFieldError (FIELD_TOKEN_STRING,
+                                       EText.ERR_TOKEN_STRING_IN_USE.getDisplayText (aDisplayLocale));
+      }
+
       if (aFormErrors.isEmpty ())
       {
-        final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
         aAppTokenMgr.createNewAccessToken (aSelectedObject.getID (),
                                            LoggedInUserManager.getInstance ().getCurrentUserID (),
                                            PDTFactory.getCurrentLocalDateTime (),
-                                           sRevocationReason);
+                                           sRevocationReason,
+                                           sTokenString);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (bRevokedOld ? EText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                                            aSelectedObject.getOwnerName ())
                                                                                 : EText.CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
@@ -477,6 +510,11 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
       aForm.addChild (createActionHeader (EText.CREATE_NEW_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                        aSelectedObject.getOwnerName ())));
     }
+
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_TOKEN_STRING.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (new HCEdit (new RequestField (FIELD_TOKEN_STRING)))
+                                                 .setHelpText (EText.HELPTEXT_TOKEN_STRING.getDisplayText (aDisplayLocale))
+                                                 .setErrorList (aFormErrors.getListOfField (FIELD_TOKEN_STRING)));
 
     final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_CREATE_NEW_ACCESS_TOKEN);

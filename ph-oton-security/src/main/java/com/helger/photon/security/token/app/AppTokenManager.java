@@ -90,9 +90,10 @@ public final class AppTokenManager extends AbstractSimpleDAO
   public AppToken createAppToken (@Nonnull @Nonempty final String sOwnerName,
                                   @Nullable final String sOwnerURL,
                                   @Nullable final String sOwnerContact,
-                                  @Nullable final String sOwnerContactEmail)
+                                  @Nullable final String sOwnerContactEmail,
+                                  @Nullable final String sTokenString)
   {
-    final AppToken aAppToken = new AppToken (sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+    final AppToken aAppToken = new AppToken (sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail, sTokenString);
 
     m_aRWLock.writeLock ().lock ();
     try
@@ -177,7 +178,8 @@ public final class AppTokenManager extends AbstractSimpleDAO
   public EChange createNewAccessToken (@Nullable final String sAppTokenID,
                                        @Nonnull @Nonempty final String sRevocationUserID,
                                        @Nonnull final LocalDateTime aRevocationDT,
-                                       @Nonnull @Nonempty final String sRevocationReason)
+                                       @Nonnull @Nonempty final String sRevocationReason,
+                                       @Nullable final String sTokenString)
   {
     final AppToken aAppToken = _getAppTokenOfID (sAppTokenID);
     if (aAppToken == null)
@@ -190,7 +192,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
     try
     {
       aAppToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason);
-      aAppToken.createNewAccessToken ();
+      aAppToken.createNewAccessToken (sTokenString);
       ObjectHelper.setLastModificationNow (aAppToken);
       markAsChanged ();
     }
@@ -328,6 +330,34 @@ public final class AppTokenManager extends AbstractSimpleDAO
           return aAppToken;
       }
       return null;
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Check if the passed token string was already used in this application. This
+   * method considers all access token - revoked, expired or active.
+   *
+   * @param sTokenString
+   *        The token string to check. May be <code>null</code>.
+   * @return <code>true</code> if the token string is already used.
+   */
+  public boolean isAccessTokenUsed (@Nullable final String sTokenString)
+  {
+    if (StringHelper.hasNoText (sTokenString))
+      return false;
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      for (final IAppToken aAppToken : m_aMap.values ())
+        for (final IAccessToken aAccessToken : aAppToken.getAllAccessTokens ())
+          if (aAccessToken.getTokenString ().equals (sTokenString))
+            return true;
+      return false;
     }
     finally
     {

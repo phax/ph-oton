@@ -11,6 +11,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.base64.Base64;
 import com.helger.commons.random.VerySecureRandom;
+import com.helger.commons.string.StringHelper;
 import com.helger.datetime.PDTFactory;
 import com.helger.photon.security.token.revocation.RevocationStatus;
 
@@ -29,7 +30,10 @@ public final class AccessToken implements IAccessToken
   private LocalDateTime m_aNotAfter;
   private final RevocationStatus m_aRevocationStatus;
 
-  AccessToken (@Nonnull @Nonempty final String sTokenString, @Nonnull final LocalDateTime aNotBefore, @Nullable final LocalDateTime aNotAfter, @Nonnull final RevocationStatus aRevocationStatus)
+  AccessToken (@Nonnull @Nonempty final String sTokenString,
+               @Nonnull final LocalDateTime aNotBefore,
+               @Nullable final LocalDateTime aNotAfter,
+               @Nonnull final RevocationStatus aRevocationStatus)
   {
     m_sTokenString = ValueEnforcer.notEmpty (sTokenString, "TokenString");
     m_aNotBefore = ValueEnforcer.notNull (aNotBefore, "NotBefore");
@@ -91,7 +95,9 @@ public final class AccessToken implements IAccessToken
     return m_aRevocationStatus.isRevoked ();
   }
 
-  public void markRevoked (@Nonnull @Nonempty final String sRevocationUserID, @Nonnull final LocalDateTime aRevocationDT, @Nonnull @Nonempty final String sRevocationReason)
+  public void markRevoked (@Nonnull @Nonempty final String sRevocationUserID,
+                           @Nonnull final LocalDateTime aRevocationDT,
+                           @Nonnull @Nonempty final String sRevocationReason)
   {
     m_aRevocationStatus.markRevoked (sRevocationUserID, aRevocationDT, sRevocationReason);
   }
@@ -122,8 +128,24 @@ public final class AccessToken implements IAccessToken
   @Nonnull
   public static AccessToken createNewAccessTokenValidFromNow ()
   {
+    return createAccessTokenValidFromNow (null);
+  }
+
+  /**
+   * Create a new access token that is valid from now on for an infinite amount
+   * of time.
+   *
+   * @param sTokenString
+   *        The existing token string. May be <code>null</code> in which case a
+   *        new token string is created.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static AccessToken createAccessTokenValidFromNow (@Nullable final String sTokenString)
+  {
     // Length 66 so that the Base64 encoding does not add the "==" signs
     // Length must be dividable by 3
-    return new AccessToken (createNewTokenString (66), PDTFactory.getCurrentLocalDateTime (), null, new RevocationStatus ());
+    final String sRealTokenString = StringHelper.hasText (sTokenString) ? sTokenString : createNewTokenString (66);
+    return new AccessToken (sRealTokenString, PDTFactory.getCurrentLocalDateTime (), null, new RevocationStatus ());
   }
 }
