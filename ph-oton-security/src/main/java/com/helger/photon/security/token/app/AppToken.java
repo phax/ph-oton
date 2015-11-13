@@ -5,8 +5,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.LocalDateTime;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.CollectionHelper;
@@ -14,30 +12,23 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.datetime.PDTFactory;
-import com.helger.photon.basic.object.AbstractObject;
-import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.object.StubObject;
+import com.helger.photon.security.token.accesstoken.AbstractObjectWithAccessToken;
 import com.helger.photon.security.token.accesstoken.AccessToken;
-import com.helger.photon.security.token.accesstoken.IAccessToken;
 
 /**
  * A single token for granting another application access to this application.
  *
  * @author Philip Helger
  */
-public class AppToken extends AbstractObject implements IAppToken
+public class AppToken extends AbstractObjectWithAccessToken implements IAppToken
 {
   public static final ObjectType OT = new ObjectType ("apptoken");
 
-  private final List <AccessToken> m_aAccessTokens;
   private String m_sOwnerName;
   private String m_sOwnerURL;
   private String m_sOwnerContact;
   private String m_sOwnerContactEmail;
-
-  // Status vars
-  private AccessToken m_aActiveAccessToken;
 
   public AppToken (@Nonnull @Nonempty final String sOwnerName,
                    @Nullable final String sOwnerURL,
@@ -53,12 +44,6 @@ public class AppToken extends AbstractObject implements IAppToken
           sOwnerContactEmail);
   }
 
-  @Nullable
-  private static AccessToken _getIfNotRevoked (@Nullable final AccessToken aAccessToken)
-  {
-    return aAccessToken != null && !aAccessToken.isRevoked () ? aAccessToken : null;
-  }
-
   AppToken (@Nonnull final StubObject aStubObject,
             @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
             @Nonnull @Nonempty final String sOwnerName,
@@ -66,26 +51,17 @@ public class AppToken extends AbstractObject implements IAppToken
             @Nullable final String sOwnerContact,
             @Nullable final String sOwnerContactEmail)
   {
-    super (aStubObject);
-    m_aAccessTokens = ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");
+    super (aStubObject, aAccessTokens);
     setOwnerName (sOwnerName);
     setOwnerURL (sOwnerURL);
     setOwnerContact (sOwnerContact);
     setOwnerContactEmail (sOwnerContactEmail);
-    m_aActiveAccessToken = _getIfNotRevoked (CollectionHelper.getLastElement (aAccessTokens));
   }
 
   @Nonnull
   public ObjectType getObjectType ()
   {
     return OT;
-  }
-
-  @Nonnull
-  @Nonempty
-  public List <AccessToken> getAllAccessTokens ()
-  {
-    return CollectionHelper.newList (m_aAccessTokens);
   }
 
   @Nonnull
@@ -157,57 +133,16 @@ public class AppToken extends AbstractObject implements IAppToken
     return EChange.CHANGED;
   }
 
-  @Nullable
-  public IAccessToken getActiveAccessToken ()
-  {
-    return m_aActiveAccessToken;
-  }
-
-  @Nullable
-  public String getActiveTokenString ()
-  {
-    return m_aActiveAccessToken == null ? null : m_aActiveAccessToken.getTokenString ();
-  }
-
-  @Nonnull
-  public EChange revokeActiveAccessToken (@Nonnull @Nonempty final String sRevocationUserID,
-                                          @Nonnull final LocalDateTime aRevocationDT,
-                                          @Nonnull @Nonempty final String sRevocationReason)
-  {
-    if (m_aActiveAccessToken == null)
-    {
-      // No active token present
-      return EChange.UNCHANGED;
-    }
-    m_aActiveAccessToken.markRevoked (sRevocationUserID, aRevocationDT, sRevocationReason);
-    m_aActiveAccessToken.setNotAfter (aRevocationDT);
-    m_aActiveAccessToken = null;
-    return EChange.CHANGED;
-  }
-
-  public void createNewAccessToken (@Nullable final String sTokenString)
-  {
-    if (m_aActiveAccessToken != null)
-      m_aActiveAccessToken.markRevoked (LoggedInUserManager.getInstance ().getCurrentUserID (),
-                                        PDTFactory.getCurrentLocalDateTime (),
-                                        "A new access token was created");
-    final AccessToken aNewToken = AccessToken.createAccessTokenValidFromNow (sTokenString);
-    m_aAccessTokens.add (aNewToken);
-    m_aActiveAccessToken = aNewToken;
-  }
-
   // equals and hashCode are derived
 
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("AccessTokens", m_aAccessTokens)
                             .append ("OwnerName", m_sOwnerName)
                             .appendIfNotNull ("OwnerURL", m_sOwnerURL)
                             .appendIfNotNull ("OwnerContact", m_sOwnerContact)
                             .appendIfNotNull ("OwnerContactEmail", m_sOwnerContactEmail)
-                            .append ("ActiveAccessToken", m_aActiveAccessToken)
                             .toString ();
   }
 }
