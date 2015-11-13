@@ -43,6 +43,11 @@ import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.object.ObjectHelper;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 
+/**
+ * A manager for {@link AppToken} objects.
+ * 
+ * @author Philip Helger
+ */
 public final class AppTokenManager extends AbstractSimpleDAO
 {
   private static final String ELEMENT_ROOT = "apptokens";
@@ -87,13 +92,14 @@ public final class AppTokenManager extends AbstractSimpleDAO
   }
 
   @Nonnull
-  public AppToken createAppToken (@Nonnull @Nonempty final String sOwnerName,
+  public AppToken createAppToken (@Nullable final Map <String, String> aCustomAttrs,
+                                  @Nonnull @Nonempty final String sOwnerName,
                                   @Nullable final String sOwnerURL,
                                   @Nullable final String sOwnerContact,
                                   @Nullable final String sOwnerContactEmail,
                                   @Nullable final String sTokenString)
   {
-    final AppToken aAppToken = new AppToken (sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail, sTokenString);
+    final AppToken aAppToken = new AppToken (aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail, sTokenString);
 
     m_aRWLock.writeLock ().lock ();
     try
@@ -111,6 +117,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
 
   @Nonnull
   public EChange updateAppToken (@Nullable final String sAppTokenID,
+                                 @Nullable final Map <String, String> aCustomAttrs,
                                  @Nonnull @Nonempty final String sOwnerName,
                                  @Nullable final String sOwnerURL,
                                  @Nullable final String sOwnerContact,
@@ -128,6 +135,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
 
       EChange eChange = EChange.UNCHANGED;
       // client ID cannot be changed!
+      eChange = eChange.or (aAppToken.getMutableAttributes ().setAttributes (aCustomAttrs));
       eChange = eChange.or (aAppToken.setOwnerName (sOwnerName));
       eChange = eChange.or (aAppToken.setOwnerURL (sOwnerURL));
       eChange = eChange.or (aAppToken.setOwnerContact (sOwnerContact));

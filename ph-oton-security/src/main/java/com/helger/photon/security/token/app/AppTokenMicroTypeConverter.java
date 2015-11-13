@@ -17,12 +17,15 @@
 package com.helger.photon.security.token.app;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
@@ -42,6 +45,7 @@ public final class AppTokenMicroTypeConverter extends AbstractObjectMicroTypeCon
   private static final String ATTR_OWNER_URL = "ownerurl";
   private static final String ATTR_OWNER_CONTACT = "ownercontact";
   private static final String ATTR_OWNER_CONTACT_EMAIL = "ownercontactemail";
+  private static final String ELEMENT_CUSTOM = "custom";
 
   @Nonnull
   public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
@@ -52,9 +56,13 @@ public final class AppTokenMicroTypeConverter extends AbstractObjectMicroTypeCon
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aValue, aElement);
     for (final IAccessToken aAccessToken : aValue.getAllAccessTokens ())
-      aElement.appendChild (MicroTypeConverter.convertToMicroElement (aAccessToken,
-                                                                      sNamespaceURI,
-                                                                      ELEMENT_ACCESS_TOKEN));
+      aElement.appendChild (MicroTypeConverter.convertToMicroElement (aAccessToken, sNamespaceURI, ELEMENT_ACCESS_TOKEN));
+    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aValue.getAllAttributes ()).entrySet ())
+    {
+      final IMicroElement eCustom = aElement.appendElement (ELEMENT_CUSTOM);
+      eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
+      eCustom.appendText (aEntry.getValue ());
+    }
     aElement.setAttribute (ATTR_OWNER_NAME, aValue.getOwnerName ());
     aElement.setAttribute (ATTR_OWNER_URL, aValue.getOwnerURL ());
     aElement.setAttribute (ATTR_OWNER_CONTACT, aValue.getOwnerContact ());
@@ -68,16 +76,14 @@ public final class AppTokenMicroTypeConverter extends AbstractObjectMicroTypeCon
     final List <AccessToken> aAccessTokens = new ArrayList <> ();
     for (final IMicroElement e : aElement.getAllChildElements (ELEMENT_ACCESS_TOKEN))
       aAccessTokens.add (MicroTypeConverter.convertToNative (e, AccessToken.class));
+    final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
+    for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
+      aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
     final String sOwnerName = aElement.getAttributeValue (ATTR_OWNER_NAME);
     final String sOwnerURL = aElement.getAttributeValue (ATTR_OWNER_URL);
     final String sOwnerContact = aElement.getAttributeValue (ATTR_OWNER_CONTACT);
     final String sOwnerContactEmail = aElement.getAttributeValue (ATTR_OWNER_CONTACT_EMAIL);
 
-    return new AppToken (getStubObject (aElement),
-                         aAccessTokens,
-                         sOwnerName,
-                         sOwnerURL,
-                         sOwnerContact,
-                         sOwnerContactEmail);
+    return new AppToken (getStubObject (aElement), aAccessTokens, aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
   }
 }

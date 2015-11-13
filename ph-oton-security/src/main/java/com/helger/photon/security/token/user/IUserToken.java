@@ -3,8 +3,8 @@ package com.helger.photon.security.token.user;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.security.token.accesstoken.IObjectWithAccessToken;
 import com.helger.photon.security.token.app.IAppToken;
+import com.helger.photon.security.token.object.IObjectWithAccessToken;
 
 /**
  * Base interface for a user token. A user token is always subordinated to an

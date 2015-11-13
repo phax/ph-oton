@@ -1,6 +1,7 @@
 package com.helger.photon.security.token.app;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,8 +14,8 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.security.object.StubObject;
-import com.helger.photon.security.token.accesstoken.AbstractObjectWithAccessToken;
 import com.helger.photon.security.token.accesstoken.AccessToken;
+import com.helger.photon.security.token.object.AbstractObjectWithAccessToken;
 
 /**
  * A single token for granting another application access to this application.
@@ -30,7 +31,8 @@ public class AppToken extends AbstractObjectWithAccessToken implements IAppToken
   private String m_sOwnerContact;
   private String m_sOwnerContactEmail;
 
-  public AppToken (@Nonnull @Nonempty final String sOwnerName,
+  public AppToken (@Nullable final Map <String, String> aCustomAttrs,
+                   @Nonnull @Nonempty final String sOwnerName,
                    @Nullable final String sOwnerURL,
                    @Nullable final String sOwnerContact,
                    @Nullable final String sOwnerContactEmail,
@@ -38,6 +40,7 @@ public class AppToken extends AbstractObjectWithAccessToken implements IAppToken
   {
     this (StubObject.createForCurrentUser (),
           CollectionHelper.newList (AccessToken.createAccessTokenValidFromNow (sTokenString)),
+          aCustomAttrs,
           sOwnerName,
           sOwnerURL,
           sOwnerContact,
@@ -46,12 +49,13 @@ public class AppToken extends AbstractObjectWithAccessToken implements IAppToken
 
   AppToken (@Nonnull final StubObject aStubObject,
             @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
+            @Nullable final Map <String, String> aCustomAttrs,
             @Nonnull @Nonempty final String sOwnerName,
             @Nullable final String sOwnerURL,
             @Nullable final String sOwnerContact,
             @Nullable final String sOwnerContactEmail)
   {
-    super (aStubObject, aAccessTokens);
+    super (aStubObject, aAccessTokens, aCustomAttrs);
     setOwnerName (sOwnerName);
     setOwnerURL (sOwnerURL);
     setOwnerContact (sOwnerContact);

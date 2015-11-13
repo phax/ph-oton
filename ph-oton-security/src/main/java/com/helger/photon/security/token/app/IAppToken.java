@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.security.token.accesstoken.IObjectWithAccessToken;
+import com.helger.photon.security.token.object.IObjectWithAccessToken;
 
 /**
  * Base interface for an application token.

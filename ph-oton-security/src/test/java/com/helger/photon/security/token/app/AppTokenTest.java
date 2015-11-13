@@ -3,6 +3,8 @@ package com.helger.photon.security.token.app;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Map;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -24,7 +26,7 @@ public final class AppTokenTest
   @Test
   public void testNewTokenString ()
   {
-    final AppToken aAppToken = new AppToken ("Unit test", "http://junit.org", "Unit Tester", "ut@example.org", null);
+    final AppToken aAppToken = new AppToken ((Map <String, String>) null, "Unit test", "http://junit.org", "Unit Tester", "ut@example.org", null);
     CommonsTestHelper.testMicroTypeConversion (aAppToken);
     assertTrue (StringHelper.hasText (aAppToken.getActiveTokenString ()));
   }
@@ -32,7 +34,12 @@ public final class AppTokenTest
   @Test
   public void testExistingTokenString ()
   {
-    final AppToken aAppToken = new AppToken ("Unit test", "http://junit.org", "Unit Tester", "ut@example.org", "blafootoken");
+    final AppToken aAppToken = new AppToken ((Map <String, String>) null,
+                                             "Unit test",
+                                             "http://junit.org",
+                                             "Unit Tester",
+                                             "ut@example.org",
+                                             "blafootoken");
     CommonsTestHelper.testMicroTypeConversion (aAppToken);
     assertEquals ("blafootoken", aAppToken.getActiveTokenString ());
   }
