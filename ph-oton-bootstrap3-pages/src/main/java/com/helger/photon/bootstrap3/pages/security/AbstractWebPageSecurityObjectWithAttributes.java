@@ -70,14 +70,14 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
   /**
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
-   * @param aTable
+   * @param aForm
    *        Table to be filled. Never <code>null</code>.
    * @param aSelectedObject
    *        Current object. Never <code>null</code>.
    */
   @OverrideOnDemand
   protected void onShowSelectedObjectTableStart (@Nonnull final WPECTYPE aWPEC,
-                                                 @Nonnull final BootstrapViewForm aTable,
+                                                 @Nonnull final BootstrapViewForm aForm,
                                                  @Nonnull final DATATYPE aSelectedObject)
   {}
 
@@ -111,14 +111,14 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
   /**
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
-   * @param aTable
+   * @param aForm
    *        Table to be filled.
    * @param aSelectedObject
    *        Current object. Never <code>null</code>.
    */
   @OverrideOnDemand
   protected void onShowSelectedObjectTableEnd (@Nonnull final WPECTYPE aWPEC,
-                                               @Nonnull final BootstrapViewForm aTable,
+                                               @Nonnull final BootstrapViewForm aForm,
                                                @Nonnull final DATATYPE aSelectedObject)
   {}
 

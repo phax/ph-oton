@@ -250,10 +250,9 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   protected static boolean canDeleteRole (@Nullable final IRole aRole)
   {
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
-    // TODO add getCount method
     return aRole != null &&
            !aRole.getID ().equals (CSecurity.ROLE_ADMINISTRATOR_ID) &&
-           aUserGroupMgr.getAllUserGroupIDsWithAssignedRole (aRole.getID ()).isEmpty ();
+           !aUserGroupMgr.containsUserGroupWithAssignedRole (aRole.getID ());
   }
 
   @Override

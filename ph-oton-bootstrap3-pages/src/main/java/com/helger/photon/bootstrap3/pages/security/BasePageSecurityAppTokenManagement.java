@@ -17,6 +17,8 @@
 package com.helger.photon.bootstrap3.pages.security;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,6 +43,7 @@ import com.helger.html.hc.ext.HCA_MailTo;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCTextArea;
+import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
@@ -54,6 +57,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
@@ -79,6 +83,9 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
    HEADER_EDIT ("App-Token von ''{0}'' bearbeiten", "Edit app token of ''{0}''"),
    HEADER_CREATE ("Neues App-Token anlegen", "Create a new app token"),
    HEADER_SHOW ("Details von App-Token für {0}", "Details of app token for {0}"),
+   HEADER_NAME ("Name", "Name"),
+   HEADER_VALUE ("Wert", "Value"),
+   LABEL_ATTRIBUTES ("Attribute", "Attributes"),
    LABEL_OWNER_NAME ("Eigentümer", "Owner"),
    LABEL_OWNER_URL ("URL", "URL"),
    LABEL_OWNER_CONTACT ("Kontaktperson", "Contact person"),
@@ -208,6 +215,38 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_ACCESS_TOKENS.getDisplayText (aDisplayLocale))
                                                    .setCtrl (aAT));
     }
+
+    // custom attributes
+    final Map <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
+
+    // Callback for custom attributes
+    final Set <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aForm);
+
+    if (!aCustomAttrs.isEmpty ())
+    {
+      // Show remaining custom attributes
+      final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
+      aAttrTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
+                                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
+      for (final Map.Entry <String, String> aEntry : aCustomAttrs.entrySet ())
+      {
+        final String sName = aEntry.getKey ();
+        if (aHandledAttrs == null || !aHandledAttrs.contains (sName))
+        {
+          final String sValue = aEntry.getValue ();
+          aAttrTable.addBodyRow ().addCells (sName, sValue);
+        }
+      }
+
+      // Maybe all custom attributes where handled in
+      // showCustomAttrsOfSelectedObject
+      if (aAttrTable.hasBodyRows ())
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ATTRIBUTES.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aAttrTable));
+    }
+
+    // Callback
+    onShowSelectedObjectTableEnd (aWPEC, aForm, aSelectedObject);
   }
 
   @Override
@@ -254,6 +293,9 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                                                                                                  : aSelectedObject.getActiveTokenString ())).setReadOnly (bEdit))
                                                  .setHelpText (EBaseText.HELPTEXT_TOKEN_STRING.getDisplayText (aDisplayLocale))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_TOKEN_STRING)));
+
+    // Custom overridable
+    onShowInputFormEnd (aWPEC, aSelectedObject, aForm, eFormAction, aFormErrors);
   }
 
   @Override
@@ -301,12 +343,18 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                      EBaseText.ERR_TOKEN_STRING_IN_USE.getDisplayText (aDisplayLocale));
     }
 
+    // Call custom method
+    final Map <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC,
+                                                                               aSelectedObject,
+                                                                               aFormErrors,
+                                                                               eFormAction);
+
     if (aFormErrors.isEmpty ())
     {
       if (bEdit)
       {
         aAppTokenMgr.updateAppToken (aSelectedObject.getID (),
-                                     null,
+                                     aCustomAttrMap,
                                      sOwnerName,
                                      sOwnerURL,
                                      sOwnerContact,
@@ -316,7 +364,12 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
       }
       else
       {
-        aAppTokenMgr.createAppToken (sTokenString, null, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+        aAppTokenMgr.createAppToken (sTokenString,
+                                     aCustomAttrMap,
+                                     sOwnerName,
+                                     sOwnerURL,
+                                     sOwnerContact,
+                                     sOwnerContactEmail);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                  sOwnerName)));
       }

@@ -976,7 +976,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   @ReturnsMutableCopy
   public List <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
   {
-    final List <String> ret = new ArrayList <String> ();
+    final List <String> ret = new ArrayList <> ();
     if (StringHelper.hasText (sRoleID))
     {
       m_aRWLock.readLock ().lock ();
@@ -992,5 +992,24 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
       }
     }
     return ret;
+  }
+
+  public boolean containsUserGroupWithAssignedRole (@Nullable final String sRoleID)
+  {
+    if (StringHelper.hasText (sRoleID))
+    {
+      m_aRWLock.readLock ().lock ();
+      try
+      {
+        for (final IUserGroup aUserGroup : m_aUserGroups.values ())
+          if (aUserGroup.containsRoleID (sRoleID))
+            return true;
+      }
+      finally
+      {
+        m_aRWLock.readLock ().unlock ();
+      }
+    }
+    return false;
   }
 }

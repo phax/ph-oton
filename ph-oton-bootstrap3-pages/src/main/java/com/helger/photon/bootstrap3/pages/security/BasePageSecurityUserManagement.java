@@ -282,14 +282,6 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     return SecurityUIHelper.canResetPassword (aUser);
   }
 
-  /**
-   * @param aWPEC
-   *        Current web page execution context. Never <code>null</code>.
-   * @param aForm
-   *        Form to be filled. Never <code>null</code>.
-   * @param aSelectedObject
-   *        Current user. Never <code>null</code>.
-   */
   @Override
   @OverrideOnDemand
   protected void onShowSelectedObjectTableStart (@Nonnull final WPECTYPE aWPEC,
@@ -429,7 +421,6 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                  @Nonnull final FormErrors aFormErrors,
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final boolean bIsAdministrator = aSelectedObject != null && aSelectedObject.isAdministrator ();
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
@@ -524,7 +515,6 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                               m_aDefaultUserLocale,
                               aAttrMap,
                               !bEnabled);
-        aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
 
         // assign to the matching user groups
         final Collection <String> aPrevUserGroupIDs = aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (sUserID);
@@ -539,6 +529,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         for (final String sUserGroupID : aUserGroupsToBeUnassigned)
           aUserGroupMgr.unassignUserFromUserGroup (sUserGroupID, sUserID);
 
+        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
       }
       else
       {
@@ -554,14 +545,14 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                        !bEnabled);
         if (aNewUser != null)
         {
-          aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
-
           // assign to the matching internal user groups
           for (final String sUserGroupID : aUserGroupIDs)
             aUserGroupMgr.assignUserToUserGroup (sUserGroupID, aNewUser.getID ());
+
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
         }
         else
-          aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.FAILURE_CREATE.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.FAILURE_CREATE.getDisplayText (aDisplayLocale)));
       }
     }
   }

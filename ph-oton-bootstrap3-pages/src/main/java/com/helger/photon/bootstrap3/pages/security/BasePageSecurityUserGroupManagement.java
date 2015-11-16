@@ -286,7 +286,6 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                                  @Nonnull final FormErrors aFormErrors,
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final String sName = aWPEC.getAttributeAsString (FIELD_NAME);
     final String sDescription = aWPEC.getAttributeAsString (FIELD_DESCRIPTION);
@@ -322,7 +321,6 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
         // We're editing an existing object
         aUserGroupMgr.setUserGroupData (sUserGroupID, sName, sDescription, aAttrMap);
-        aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
 
         // assign to the matching roles
         final Collection <String> aPrevRoleIDs = aSelectedObject.getAllContainedRoleIDs ();
@@ -335,16 +333,19 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         final Set <String> aRolesToBeUnassigned = CollectionHelper.getDifference (aPrevRoleIDs, aRoleIDs);
         for (final String sRoleID : aRolesToBeUnassigned)
           aUserGroupMgr.unassignRoleFromUserGroup (sUserGroupID, sRoleID);
+
+        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
       }
       else
       {
         // We're creating a new object
         final IUserGroup aNewUserGroup = aUserGroupMgr.createNewUserGroup (sName, sDescription, aCustomAttrMap);
-        aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
 
         // assign to the matching internal user groups
         for (final String sRoleID : aRoleIDs)
           aUserGroupMgr.assignRoleToUserGroup (aNewUserGroup.getID (), sRoleID);
+
+        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
       }
     }
   }

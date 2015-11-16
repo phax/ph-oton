@@ -17,6 +17,8 @@
 package com.helger.photon.bootstrap3.pages.security;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,6 +42,7 @@ import com.helger.datetime.PDTFactory;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCTextArea;
+import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
@@ -56,6 +59,7 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
+import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
@@ -85,6 +89,9 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
    HEADER_EDIT ("Benutzer-Token von ''{0}'' bearbeiten", "Edit user token of ''{0}''"),
    HEADER_CREATE ("Neues Benutzer-Token anlegen", "Create a new user token"),
    HEADER_SHOW ("Details von Benutzer-Token für {0}", "Details of user token for {0}"),
+   HEADER_NAME ("Name", "Name"),
+   HEADER_VALUE ("Wert", "Value"),
+   LABEL_ATTRIBUTES ("Attribute", "Attributes"),
    LABEL_APP_TOKEN ("App Token", "App token"),
    LABEL_USER_NAME ("Benutzername", "User name"),
    ERR_APP_TOKEN_EMPTY ("Das App Token muss angegeben werden!", "The app token must be specified!"),
@@ -225,6 +232,38 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_ACCESS_TOKENS.getDisplayText (aDisplayLocale))
                                                    .setCtrl (aAT));
     }
+
+    // custom attributes
+    final Map <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
+
+    // Callback for custom attributes
+    final Set <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aForm);
+
+    if (!aCustomAttrs.isEmpty ())
+    {
+      // Show remaining custom attributes
+      final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
+      aAttrTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
+                                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
+      for (final Map.Entry <String, String> aEntry : aCustomAttrs.entrySet ())
+      {
+        final String sName = aEntry.getKey ();
+        if (aHandledAttrs == null || !aHandledAttrs.contains (sName))
+        {
+          final String sValue = aEntry.getValue ();
+          aAttrTable.addBodyRow ().addCells (sName, sValue);
+        }
+      }
+
+      // Maybe all custom attributes where handled in
+      // showCustomAttrsOfSelectedObject
+      if (aAttrTable.hasBodyRows ())
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ATTRIBUTES.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aAttrTable));
+    }
+
+    // Callback
+    onShowSelectedObjectTableEnd (aWPEC, aForm, aSelectedObject);
   }
 
   @Override
@@ -267,6 +306,9 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                                  : aSelectedObject.getActiveTokenString ())).setReadOnly (bEdit))
                                                  .setHelpText (EBaseText.HELPTEXT_TOKEN_STRING.getDisplayText (aDisplayLocale))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_TOKEN_STRING)));
+
+    // Custom overridable
+    onShowInputFormEnd (aWPEC, aSelectedObject, aForm, eFormAction, aFormErrors);
   }
 
   @Override
@@ -305,17 +347,23 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                      EBaseText.ERR_TOKEN_STRING_IN_USE.getDisplayText (aDisplayLocale));
     }
 
+    // Call custom method
+    final Map <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC,
+                                                                               aSelectedObject,
+                                                                               aFormErrors,
+                                                                               eFormAction);
+
     if (aFormErrors.isEmpty ())
     {
       if (bEdit)
       {
-        aUserTokenMgr.updateUserToken (aSelectedObject.getID (), null, sUserName);
+        aUserTokenMgr.updateUserToken (aSelectedObject.getID (), aCustomAttrMap, sUserName);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.EDIT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                sUserName)));
       }
       else
       {
-        aUserTokenMgr.createUserToken (sTokenString, null, aAppToken, sUserName);
+        aUserTokenMgr.createUserToken (sTokenString, aCustomAttrMap, aAppToken, sUserName);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                  sUserName)));
       }
