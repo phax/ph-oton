@@ -34,7 +34,7 @@ public enum EBootstrapUICtrlsCSSPathProvider implements ICSSPathProvider
 {
  BOOTSTRAP_DATATABLES_PH ("bootstrap/datatables/bootstrap3-datatables-ph.css"),
  DATETIMEPICKER ("bootstrap/datetimepicker/bootstrap-datetimepicker.css"),
- TREE_VIEW ("bootstrap/treeview/bootstrap-treeview.css");
+ TREE_VIEW ("bootstrap/treeview/1.2.0/bootstrap-treeview.css");
 
   private final ConstantCSSPathProvider m_aPP;
 

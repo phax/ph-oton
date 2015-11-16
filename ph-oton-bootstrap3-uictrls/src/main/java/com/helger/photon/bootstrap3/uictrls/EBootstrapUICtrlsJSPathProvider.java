@@ -27,7 +27,7 @@ public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
 {
  DATETIMEPICKER ("bootstrap/datetimepicker/bootstrap-datetimepicker.js"),
  DATETIMEPICKER_LOCALE ("bootstrap/datetimepicker/locales/bootstrap-datetimepicker.{0}.js", false),
- TREE_VIEW ("bootstrap/treeview/bootstrap-treeview.js");
+ TREE_VIEW ("bootstrap/treeview/1.2.0/bootstrap-treeview.js");
 
   private final ConstantJSPathProvider m_aPP;
 
@@ -62,8 +62,7 @@ public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
   @Nonnull
   public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
   {
-    return ConstantJSPathProvider.createWithConditionalComment (m_aPP.getJSItemPathRegular ().replace ("{0}",
-                                                                                                       sLanguage),
+    return ConstantJSPathProvider.createWithConditionalComment (m_aPP.getJSItemPathRegular ().replace ("{0}", sLanguage),
                                                                 m_aPP.getConditionalComment ());
   }
 }
