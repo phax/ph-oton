@@ -26,19 +26,19 @@ import com.helger.photon.basic.auth.credentials.IAuthCredentialValidatorSPI;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
-import com.helger.photon.security.token.app.AppTokenManager;
-import com.helger.photon.security.token.app.IAppToken;
 import com.helger.photon.security.token.credentials.ITokenCredentials;
+import com.helger.photon.security.token.user.IUserToken;
+import com.helger.photon.security.token.user.UserTokenManager;
 
 /**
  * An implementation of the {@link IAuthCredentialValidatorSPI} for
- * {@link ITokenCredentials} using the {@link AppTokenManager} to login
- * {@link IAppToken} objects.
+ * {@link ITokenCredentials} using the {@link UserTokenManager} to login
+ * {@link IUserToken} objects.
  *
  * @author Philip Helger
  */
 @IsSPIImplementation
-public final class AppTokenAuthCredentialValidatorSPI implements IAuthCredentialValidatorSPI
+public final class UserTokenAuthCredentialValidatorSPI implements IAuthCredentialValidatorSPI
 {
   public boolean supportsCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
@@ -49,8 +49,8 @@ public final class AppTokenAuthCredentialValidatorSPI implements IAuthCredential
   public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale, @Nonnull final IAuthCredentials aCredentials)
   {
     final ITokenCredentials aATC = (ITokenCredentials) aCredentials;
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
-    if (aAppTokenMgr.getAppTokenOfTokenString (aATC.getTokenString ()) != null)
+    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+    if (aUserTokenMgr.getUserTokenOfTokenString (aATC.getTokenString ()) != null)
       return CredentialValidationResult.SUCCESS;
 
     // Credential validation failed

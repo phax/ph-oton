@@ -14,17 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.auth.credentials;
+package com.helger.photon.security.token.credentials;
 
-import java.io.Serializable;
+import javax.annotation.Nullable;
+
+import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 
 /**
- * This interface is the base interface for credentials to check against a
- * principal. This is the stuff passed from a login-action.
+ * This interface represents app token credentials passed via an API.
  *
  * @author Philip Helger
  */
-public interface IAuthCredentials extends Serializable
+public interface ITokenCredentials extends IAuthCredentials
 {
-  /* empty */
+  /**
+   * @return The token string to check. May be <code>null</code>.
+   */
+  @Nullable
+  String getTokenString ();
 }

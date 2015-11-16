@@ -23,19 +23,19 @@ import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 import com.helger.photon.basic.auth.subject.IAuthCredentialToSubjectResolverSPI;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
-import com.helger.photon.security.token.app.AppTokenManager;
-import com.helger.photon.security.token.app.IAppToken;
 import com.helger.photon.security.token.credentials.ITokenCredentials;
+import com.helger.photon.security.token.user.IUserToken;
+import com.helger.photon.security.token.user.UserTokenManager;
 
 /**
  * Implementation of {@link IAuthCredentialToSubjectResolverSPI} supporting
  * {@link ITokenCredentials} and the resolution via the global
- * {@link AppTokenManager}.
+ * {@link UserTokenManager}.
  *
  * @author Philip Helger
  */
 @IsSPIImplementation
-public class AppTokenAuthCredentialToSubjectResolverSPI implements IAuthCredentialToSubjectResolverSPI
+public class UserTokenAuthCredentialToSubjectResolverSPI implements IAuthCredentialToSubjectResolverSPI
 {
   public boolean supportsCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
@@ -43,10 +43,10 @@ public class AppTokenAuthCredentialToSubjectResolverSPI implements IAuthCredenti
   }
 
   @Nullable
-  public IAppToken getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
+  public IUserToken getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
     final ITokenCredentials aATC = (ITokenCredentials) aCredentials;
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
-    return aAppTokenMgr.getAppTokenOfTokenString (aATC.getTokenString ());
+    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+    return aUserTokenMgr.getUserTokenOfTokenString (aATC.getTokenString ());
   }
 }
