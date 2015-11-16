@@ -154,6 +154,42 @@ public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
     return invoke ().arg ("remove");
   }
 
+  @Nonnull
+  public JSInvocation getJSExpandAllInvocation ()
+  {
+    return invoke ().arg ("expandAll");
+  }
+
+  @Nonnull
+  public JSInvocation getJSExpandAllInvocation (final int nLevels)
+  {
+    return getJSExpandAllInvocation ().arg (new JSAssocArray ().add ("levels", nLevels));
+  }
+
+  @Nonnull
+  public JSInvocation getJSExpandAllInvocation (final int nLevels, final boolean bSilent)
+  {
+    return getJSExpandAllInvocation ().arg (new JSAssocArray ().add ("levels", nLevels).add ("silent", bSilent));
+  }
+
+  @Nonnull
+  public JSInvocation getJSCollapseAllInvocation ()
+  {
+    return invoke ().arg ("expandAll");
+  }
+
+  @Nonnull
+  public JSInvocation getJSCollapseAllInvocation (final int nLevels)
+  {
+    return getJSCollapseAllInvocation ().arg (new JSAssocArray ().add ("levels", nLevels));
+  }
+
+  @Nonnull
+  public JSInvocation getJSCollapseAllInvocation (final int nLevels, final boolean bSilent)
+  {
+    return getJSCollapseAllInvocation ().arg (new JSAssocArray ().add ("levels", nLevels).add ("silent", bSilent));
+  }
+
   private static void _recursiveFillJSTree (@Nullable final List <DefaultTreeItem <BootstrapTreeViewItem>> aTreeItems,
                                             @Nonnull final JSArray aTargetArray)
   {
