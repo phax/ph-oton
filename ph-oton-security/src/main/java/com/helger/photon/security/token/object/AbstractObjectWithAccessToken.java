@@ -16,9 +16,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.attr.MapBasedAttributeContainer;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.object.AbstractObject;
-import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
@@ -42,13 +40,11 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObject imple
     return aAccessToken != null && !aAccessToken.isRevoked () ? aAccessToken : null;
   }
 
-  public AbstractObjectWithAccessToken (@Nonnull final StubObject aStubObject,
-                                        @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
-                                        @Nullable final Map <String, String> aCustomAttrs)
+  public AbstractObjectWithAccessToken (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final List <AccessToken> aAccessTokens, @Nullable final Map <String, String> aCustomAttrs)
   {
     super (aStubObject);
     m_aAccessTokens = ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");
-    m_aAttributes = new MapBasedAttributeContainer <> (aCustomAttrs);
+    m_aAttributes = aCustomAttrs == null ? new MapBasedAttributeContainer <String, String> () : new MapBasedAttributeContainer <> (aCustomAttrs);
     m_aActiveAccessToken = _getIfNotRevoked (CollectionHelper.getLastElement (aAccessTokens));
   }
 
@@ -72,9 +68,7 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObject imple
   }
 
   @Nonnull
-  public EChange revokeActiveAccessToken (@Nonnull @Nonempty final String sRevocationUserID,
-                                          @Nonnull final LocalDateTime aRevocationDT,
-                                          @Nonnull @Nonempty final String sRevocationReason)
+  public EChange revokeActiveAccessToken (@Nonnull @Nonempty final String sRevocationUserID, @Nonnull final LocalDateTime aRevocationDT, @Nonnull @Nonempty final String sRevocationReason)
   {
     if (m_aActiveAccessToken == null)
     {
@@ -90,9 +84,8 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObject imple
   public void createNewAccessToken (@Nullable final String sTokenString)
   {
     if (m_aActiveAccessToken != null)
-      m_aActiveAccessToken.markRevoked (LoggedInUserManager.getInstance ().getCurrentUserID (),
-                                        PDTFactory.getCurrentLocalDateTime (),
-                                        "A new access token was created");
+      throw new IllegalStateException ("You need to revoke the previous access token before creating a new one!");
+
     final AccessToken aNewToken = AccessToken.createAccessTokenValidFromNow (sTokenString);
     m_aAccessTokens.add (aNewToken);
     m_aActiveAccessToken = aNewToken;

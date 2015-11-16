@@ -45,7 +45,7 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
 
 /**
  * A manager for {@link AppToken} objects.
- * 
+ *
  * @author Philip Helger
  */
 public final class AppTokenManager extends AbstractSimpleDAO
@@ -92,14 +92,14 @@ public final class AppTokenManager extends AbstractSimpleDAO
   }
 
   @Nonnull
-  public AppToken createAppToken (@Nullable final Map <String, String> aCustomAttrs,
+  public AppToken createAppToken (@Nullable final String sTokenString,
+                                  @Nullable final Map <String, String> aCustomAttrs,
                                   @Nonnull @Nonempty final String sOwnerName,
                                   @Nullable final String sOwnerURL,
                                   @Nullable final String sOwnerContact,
-                                  @Nullable final String sOwnerContactEmail,
-                                  @Nullable final String sTokenString)
+                                  @Nullable final String sOwnerContactEmail)
   {
-    final AppToken aAppToken = new AppToken (aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail, sTokenString);
+    final AppToken aAppToken = new AppToken (sTokenString, aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
 
     m_aRWLock.writeLock ().lock ();
     try
@@ -135,6 +135,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
 
       EChange eChange = EChange.UNCHANGED;
       // client ID cannot be changed!
+      eChange = eChange.or (aAppToken.getMutableAttributes ().clear ());
       eChange = eChange.or (aAppToken.getMutableAttributes ().setAttributes (aCustomAttrs));
       eChange = eChange.or (aAppToken.setOwnerName (sOwnerName));
       eChange = eChange.or (aAppToken.setOwnerURL (sOwnerURL));
@@ -208,12 +209,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (AppToken.OT,
-                                      "create-new-access-token",
-                                      aAppToken.getID (),
-                                      sRevocationUserID,
-                                      aRevocationDT,
-                                      sRevocationReason);
+    AuditHelper.onAuditModifySuccess (AppToken.OT, "create-new-access-token", aAppToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason);
     return EChange.CHANGED;
   }
 

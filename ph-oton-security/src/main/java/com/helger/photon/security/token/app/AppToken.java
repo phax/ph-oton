@@ -31,12 +31,12 @@ public class AppToken extends AbstractObjectWithAccessToken implements IAppToken
   private String m_sOwnerContact;
   private String m_sOwnerContactEmail;
 
-  public AppToken (@Nullable final Map <String, String> aCustomAttrs,
+  public AppToken (@Nullable final String sTokenString,
+                   @Nullable final Map <String, String> aCustomAttrs,
                    @Nonnull @Nonempty final String sOwnerName,
                    @Nullable final String sOwnerURL,
                    @Nullable final String sOwnerContact,
-                   @Nullable final String sOwnerContactEmail,
-                   @Nullable final String sTokenString)
+                   @Nullable final String sOwnerContactEmail)
   {
     this (StubObject.createForCurrentUser (),
           CollectionHelper.newList (AccessToken.createAccessTokenValidFromNow (sTokenString)),

@@ -397,7 +397,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
       }
       else
       {
-        aAppTokenMgr.createAppToken (null, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail, sTokenString);
+        aAppTokenMgr.createAppToken (sTokenString, null, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                  sOwnerName)));
       }
