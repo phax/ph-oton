@@ -175,7 +175,7 @@ public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
   @Nonnull
   public JSInvocation getJSCollapseAllInvocation ()
   {
-    return invoke ().arg ("expandAll");
+    return invoke ().arg ("collapseAll");
   }
 
   @Nonnull
