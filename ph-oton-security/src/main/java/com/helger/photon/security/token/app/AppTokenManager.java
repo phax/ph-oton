@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -292,6 +293,40 @@ public final class AppTokenManager extends AbstractSimpleDAO
     }
   }
 
+  @Nonnegative
+  public int getActiveAppTokenCount ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      int ret = 0;
+      for (final AppToken aItem : m_aMap.values ())
+        if (!aItem.isDeleted ())
+          ret++;
+      return ret;
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public boolean containsActiveAppToken ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      for (final AppToken aItem : m_aMap.values ())
+        if (!aItem.isDeleted ())
+          return true;
+      return false;
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
   @Nullable
   private AppToken _getAppTokenOfID (@Nullable final String sID)
   {
@@ -313,6 +348,13 @@ public final class AppTokenManager extends AbstractSimpleDAO
   public IAppToken getAppTokenOfID (@Nullable final String sID)
   {
     return _getAppTokenOfID (sID);
+  }
+
+  @Nullable
+  public IAppToken getActiveAppTokenOfID (@Nullable final String sID)
+  {
+    final IAppToken aAppToken = _getAppTokenOfID (sID);
+    return aAppToken != null && !aAppToken.isDeleted () ? aAppToken : null;
   }
 
   public boolean containsAppTokenWithID (@Nullable final String sID)

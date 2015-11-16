@@ -27,6 +27,8 @@ import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.filter.IFilter;
+import com.helger.commons.state.EValidity;
+import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
@@ -34,11 +36,8 @@ import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.URLValidator;
 import com.helger.datetime.PDTFactory;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.ext.HCA_MailTo;
-import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCTextArea;
 import com.helger.html.hc.html.tabular.HCRow;
@@ -49,11 +48,14 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
+import com.helger.photon.bootstrap3.alert.BootstrapWarnBox;
+import com.helger.photon.bootstrap3.button.BootstrapButton;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
@@ -62,44 +64,44 @@ import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.app.AppTokenManager;
 import com.helger.photon.security.token.app.IAppToken;
+import com.helger.photon.security.token.user.IUserToken;
+import com.helger.photon.security.token.user.UserTokenManager;
 import com.helger.photon.uicore.css.CPageParam;
+import com.helger.photon.uicore.html.select.HCAppTokenSelect;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.column.DTCol;
-import com.helger.smtp.util.EmailAddressValidator;
 
-public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageSecurityToken <IAppToken, WPECTYPE>
+public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageSecurityToken <IUserToken, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-   BUTTON_CREATE_NEW ("Neues App-Token anlegen", "Create new app token"),
-   HEADER_EDIT ("App-Token von ''{0}'' bearbeiten", "Edit app token of ''{0}''"),
-   HEADER_CREATE ("Neues App-Token anlegen", "Create a new app token"),
-   HEADER_SHOW ("Details von App-Token für {0}", "Details of app token for {0}"),
-   LABEL_OWNER_NAME ("Eigentümer", "Owner"),
-   LABEL_OWNER_URL ("URL", "URL"),
-   LABEL_OWNER_CONTACT ("Kontaktperson", "Contact person"),
-   LABEL_OWNER_CONTACT_EMAIL ("E-Mail Adresse", "Email address"),
-   ERR_OWNER_NAME_EMPTY ("Der Eigentümer muss angegeben werden!", "The owner must be specified!"),
-   ERR_OWNER_URL_INVALID ("Die URL ist ungültig!", "The URL is invalid!"),
-   ERR_OWNER_EMAIL_INVALID ("Die E-Mail-Adresse ist ungültig!", "The email address is invalid!"),
-   CREATE_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich erstellt.", "The app token for ''{0}'' was successfully created."),
-   EDIT_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich bearbeitet.", "The app token for ''{0}'' was successfully edited."),
-   DELETE_QUERY ("Sind Sie sicher, dass Sie das App-Token für ''{0}'' löschen wollen?", "Are you sure you want to delete the app token of ''{0}''?"),
-   DELETE_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich gelöscht!", "App token of ''{0}'' was successfully deleted!"),
-   DELETE_ERROR ("Beim Löschen des App-Token für ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while deleting app token of ''{0}''!"),
+   VALIDITY_APP_TOKEN_MSG ("Es ist noch kein App-Token vorhanden. Es muss mindestens ein App-Token vorhanden sein um ein Benutzer-Token anlegen zu können.", "No app token is present! At least one app token must be present to create a user token for it."),
+   VALIDITY_APP_TOKEN_BUTTON ("Neues App-Token anlegen", "Create new app token"),
+   BUTTON_CREATE_NEW ("Neues Benutzer-Token anlegen", "Create new user token"),
+   HEADER_EDIT ("Benutzer-Token von ''{0}'' bearbeiten", "Edit user token of ''{0}''"),
+   HEADER_CREATE ("Neues Benutzer-Token anlegen", "Create a new user token"),
+   HEADER_SHOW ("Details von Benutzer-Token für {0}", "Details of user token for {0}"),
+   LABEL_APP_TOKEN ("App Token", "App token"),
+   LABEL_USER_NAME ("Benutzername", "User name"),
+   ERR_APP_TOKEN_EMPTY ("Das App Token muss angegeben werden!", "The app token must be specified!"),
+   ERR_USER_NAME_EMPTY ("Der Benutzername darf nicht leer sein!", "The user name may not be empty!"),
+   CREATE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich erstellt.", "The user token for ''{0}'' was successfully created."),
+   EDIT_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich bearbeitet.", "The user token for ''{0}'' was successfully edited."),
+   DELETE_QUERY ("Sind Sie sicher, dass Sie das Benutzer-Token für ''{0}'' löschen wollen?", "Are you sure you want to delete the user token of ''{0}''?"),
+   DELETE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich gelöscht!", "User token of ''{0}'' was successfully deleted!"),
+   DELETE_ERROR ("Beim Löschen des Benutzer-Token für ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while deleting user token of ''{0}''!"),
    TAB_LABEL_ACTIVE ("Aktiv", "Active"),
    TAB_LABEL_DELETED ("Gelöscht", "Deleted"),
-   HEADER_OWNER_NAME ("Eigentümer", "Owner"),
-   HEADER_OWNER_URL ("URL", "URL"),
-   HEADER_OWNER_TOKEN ("Token", "Token"),
+   HEADER_APP_TOKEN ("App-Token", "App token"),
+   HEADER_USER_NAME ("Eigentümer", "Owner"),
    HEADER_USABLE ("Verwendbar?", "Usable?"),
-   ACTION_EDIT ("App-Token für ''{0}'' bearbeiten", "Edit app token of ''{0}''"),
-   ACTION_COPY ("App-Token für ''{0}'' kopieren", "Copy app token of ''{0}''"),
-   ACTION_DELETE ("App-Token für ''{0}'' löschen", "Delete app token of ''{0}''");
+   ACTION_EDIT ("Benutzer-Token für ''{0}'' bearbeiten", "Edit user token of ''{0}''"),
+   ACTION_COPY ("Benutzer-Token für ''{0}'' kopieren", "Copy user token of ''{0}''"),
+   ACTION_DELETE ("Benutzer-Token für ''{0}'' löschen", "Delete user token of ''{0}''");
 
     private final IMultilingualText m_aTP;
 
@@ -124,49 +126,67 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
   public static final String ACTION_REVOKE_ACCESS_TOKEN = "revokeaccesstoken";
   public static final String ACTION_CREATE_NEW_ACCESS_TOKEN = "createnewaccesstoken";
 
-  public static final String FIELD_OWNER_NAME = "ownername";
-  public static final String FIELD_OWNER_URL = "ownerurl";
-  public static final String FIELD_OWNER_CONTACT = "ownercontact";
-  public static final String FIELD_OWNER_CONTACT_EMAIL = "ownercontactemail";
+  public static final String FIELD_APP_TOKEN = "apptoken";
+  public static final String FIELD_USER_NAME = "username";
   public static final String FIELD_TOKEN_STRING = "tokenstring";
   public static final String FIELD_REVOCATION_REASON = "revocationreason";
 
-  public BasePageSecurityAppTokenManagement (@Nonnull @Nonempty final String sID)
+  public BasePageSecurityUserTokenManagement (@Nonnull @Nonempty final String sID)
   {
-    super (sID, EWebPageText.PAGE_NAME_SECURITY_APP_TOKENS.getAsMLT ());
+    super (sID, EWebPageText.PAGE_NAME_SECURITY_USER_TOKENS.getAsMLT ());
   }
 
-  public BasePageSecurityAppTokenManagement (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
+  public BasePageSecurityUserTokenManagement (@Nonnull @Nonempty final String sID,
+                                              @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
   }
 
-  public BasePageSecurityAppTokenManagement (@Nonnull @Nonempty final String sID,
-                                             @Nonnull final String sName,
-                                             @Nullable final String sDescription)
+  public BasePageSecurityUserTokenManagement (@Nonnull @Nonempty final String sID,
+                                              @Nonnull final String sName,
+                                              @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
-  public BasePageSecurityAppTokenManagement (@Nonnull @Nonempty final String sID,
-                                             @Nonnull final IMultilingualText aName,
-                                             @Nullable final IMultilingualText aDescription)
+  public BasePageSecurityUserTokenManagement (@Nonnull @Nonempty final String sID,
+                                              @Nonnull final IMultilingualText aName,
+                                              @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
 
   @Override
-  @Nullable
-  protected IAppToken getSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nullable final String sID)
+  protected IValidityIndicator isValidToDisplayPage (@Nonnull final WPECTYPE aWPEC)
   {
+    final HCNodeList aNodeList = aWPEC.getNodeList ();
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
-    return aAppTokenMgr.getAppTokenOfID (sID);
+    if (!aAppTokenMgr.containsActiveAppToken ())
+    {
+      aNodeList.addChild (new BootstrapWarnBox ().addChild (EText.VALIDITY_APP_TOKEN_MSG.getDisplayText (aDisplayLocale)));
+      aNodeList.addChild (new BootstrapButton ().addChild (EText.VALIDITY_APP_TOKEN_BUTTON.getDisplayText (aDisplayLocale))
+                                                .setOnClick (createCreateURL (aWPEC,
+                                                                              BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_APP_TOKEN))
+                                                .setIcon (EDefaultIcon.YES));
+      return EValidity.INVALID;
+    }
+
+    return super.isValidToDisplayPage (aWPEC);
+  }
+
+  @Override
+  @Nullable
+  protected IUserToken getSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nullable final String sID)
+  {
+    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+    return aUserTokenMgr.getUserTokenOfID (sID);
   }
 
   @Override
   protected boolean isActionAllowed (@Nonnull final WPECTYPE aWPEC,
                                      @Nonnull final EWebPageFormAction eFormAction,
-                                     @Nullable final IAppToken aSelectedObject)
+                                     @Nullable final IUserToken aSelectedObject)
   {
     if (eFormAction.isEdit ())
       return !aSelectedObject.isDeleted ();
@@ -175,31 +195,28 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     return true;
   }
 
+  @Nonnull
+  public static HCA createLink (@Nonnull final IWebPageExecutionContext aWPEC, @Nonnull final IAppToken aAppToken)
+  {
+    return new HCA (createViewURL (aWPEC,
+                                   BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_APP_TOKEN,
+                                   aAppToken)).addChild (aAppToken.getDisplayName ());
+  }
+
   @Override
-  protected void showSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nonnull final IAppToken aSelectedObject)
+  protected void showSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     aNodeList.addChild (createActionHeader (EText.HEADER_SHOW.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                      aSelectedObject.getDisplayName ())));
+                                                                                      aSelectedObject.getUserName ())));
 
     final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_NAME.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (aSelectedObject.getOwnerName ()));
-
-    if (StringHelper.hasText (aSelectedObject.getOwnerURL ()))
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_URL.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCA.createLinkedWebsite (aSelectedObject.getOwnerURL (),
-                                                                                      HC_Target.BLANK)));
-
-    if (StringHelper.hasText (aSelectedObject.getOwnerContact ()))
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_CONTACT.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (aSelectedObject.getOwnerContact ()));
-
-    if (StringHelper.hasText (aSelectedObject.getOwnerContactEmail ()))
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_CONTACT_EMAIL.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCA_MailTo.createLinkedEmail (aSelectedObject.getOwnerContactEmail ())));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_APP_TOKEN.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (createLink (aWPEC, aSelectedObject.getAppToken ())));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USER_NAME.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (aSelectedObject.getUserName ()));
 
     {
       final IHCNode aAT = createAccessTokenListUI (aSelectedObject.getAllAccessTokens (), aDisplayLocale);
@@ -210,7 +227,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
   @Override
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
-                                @Nullable final IAppToken aSelectedObject,
+                                @Nullable final IUserToken aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
                                 @Nonnull final EWebPageFormAction eFormAction,
                                 @Nonnull final FormErrors aFormErrors)
@@ -222,29 +239,25 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                                                                           aSelectedObject.getDisplayName ())
                                               : EText.HEADER_CREATE.getDisplayText (aDisplayLocale)));
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_OWNER_NAME.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_NAME,
-                                                                                         aSelectedObject == null ? null
-                                                                                                                 : aSelectedObject.getOwnerName ())))
-                                                 .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_NAME)));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_APP_TOKEN.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (new HCAppTokenSelect (new RequestField (FIELD_APP_TOKEN,
+                                                                                                   aSelectedObject == null ? null
+                                                                                                                           : aSelectedObject.getAppToken ()),
+                                                                                 aDisplayLocale,
+                                                                                 new IFilter <IAppToken> ()
+                                                                                 {
+                                                                                   public boolean matchesFilter (final IAppToken aValue)
+                                                                                   {
+                                                                                     return !aValue.isDeleted ();
+                                                                                   }
+                                                                                 }).setReadOnly (bEdit))
+                                                 .setErrorList (aFormErrors.getListOfField (FIELD_APP_TOKEN)));
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_URL.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_URL,
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_USER_NAME.getDisplayText (aDisplayLocale))
+                                                 .setCtrl (new HCEdit (new RequestField (FIELD_USER_NAME,
                                                                                          aSelectedObject == null ? null
-                                                                                                                 : aSelectedObject.getOwnerURL ())))
-                                                 .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_URL)));
-
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_CONTACT.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_CONTACT,
-                                                                                         aSelectedObject == null ? null
-                                                                                                                 : aSelectedObject.getOwnerContact ())))
-                                                 .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_CONTACT)));
-
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_CONTACT_EMAIL.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (new HCEdit (new RequestField (FIELD_OWNER_CONTACT_EMAIL,
-                                                                                         aSelectedObject == null ? null
-                                                                                                                 : aSelectedObject.getOwnerContactEmail ())))
-                                                 .setErrorList (aFormErrors.getListOfField (FIELD_OWNER_CONTACT_EMAIL)));
+                                                                                                                 : aSelectedObject.getUserName ())))
+                                                 .setErrorList (aFormErrors.getListOfField (FIELD_USER_NAME)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_TOKEN_STRING.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (FIELD_TOKEN_STRING,
@@ -256,36 +269,27 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
   @Override
   protected void validateAndSaveInputParameters (@Nonnull final WPECTYPE aWPEC,
-                                                 @Nullable final IAppToken aSelectedObject,
+                                                 @Nullable final IUserToken aSelectedObject,
                                                  @Nonnull final FormErrors aFormErrors,
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
+    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     final boolean bEdit = eFormAction.isEdit ();
 
-    final String sOwnerName = aWPEC.getAttributeAsString (FIELD_OWNER_NAME);
-    final String sOwnerURL = aWPEC.getAttributeAsString (FIELD_OWNER_URL);
-    final String sOwnerContact = aWPEC.getAttributeAsString (FIELD_OWNER_CONTACT);
-    final String sOwnerContactEmail = aWPEC.getAttributeAsString (FIELD_OWNER_CONTACT_EMAIL);
+    final String sAppTokenID = aWPEC.getAttributeAsString (FIELD_APP_TOKEN);
+    final IAppToken aAppToken = bEdit ? aSelectedObject.getAppToken ()
+                                      : aAppTokenMgr.getActiveAppTokenOfID (sAppTokenID);
+    final String sUserName = aWPEC.getAttributeAsString (FIELD_USER_NAME);
     // Token string cannot be edited
     final String sTokenString = bEdit ? null : aWPEC.getAttributeAsString (FIELD_TOKEN_STRING);
 
-    if (StringHelper.hasNoText (sOwnerName))
-      aFormErrors.addFieldError (FIELD_OWNER_NAME, EText.ERR_OWNER_NAME_EMPTY.getDisplayText (aDisplayLocale));
+    if (aAppToken == null)
+      aFormErrors.addFieldError (FIELD_APP_TOKEN, EText.ERR_APP_TOKEN_EMPTY.getDisplayText (aDisplayLocale));
 
-    if (StringHelper.hasText (sOwnerURL))
-    {
-      if (!URLValidator.isValid (sOwnerURL))
-        aFormErrors.addFieldError (FIELD_OWNER_URL, EText.ERR_OWNER_URL_INVALID.getDisplayText (aDisplayLocale));
-    }
-
-    if (StringHelper.hasText (sOwnerContactEmail))
-    {
-      if (!EmailAddressValidator.isValid (sOwnerContactEmail))
-        aFormErrors.addFieldError (FIELD_OWNER_CONTACT_EMAIL,
-                                   EText.ERR_OWNER_EMAIL_INVALID.getDisplayText (aDisplayLocale));
-    }
+    if (StringHelper.hasNoText (sUserName))
+      aFormErrors.addFieldError (FIELD_USER_NAME, EText.ERR_USER_NAME_EMPTY.getDisplayText (aDisplayLocale));
 
     if (StringHelper.hasText (sTokenString))
     {
@@ -294,7 +298,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
         aFormErrors.addFieldError (FIELD_TOKEN_STRING,
                                    EBaseText.ERR_TOKEN_STRING_TOO_SHORT.getDisplayText (aDisplayLocale));
       else
-        if (aAppTokenMgr.isAccessTokenUsed (sTokenString))
+        if (aUserTokenMgr.isAccessTokenUsed (sTokenString))
           aFormErrors.addFieldError (FIELD_TOKEN_STRING,
                                      EBaseText.ERR_TOKEN_STRING_IN_USE.getDisplayText (aDisplayLocale));
     }
@@ -303,20 +307,15 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     {
       if (bEdit)
       {
-        aAppTokenMgr.updateAppToken (aSelectedObject.getID (),
-                                     null,
-                                     sOwnerName,
-                                     sOwnerURL,
-                                     sOwnerContact,
-                                     sOwnerContactEmail);
+        aUserTokenMgr.updateUserToken (aSelectedObject.getID (), null, sUserName);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.EDIT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               sOwnerName)));
+                                                                                                               sUserName)));
       }
       else
       {
-        aAppTokenMgr.createAppToken (sTokenString, null, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+        aUserTokenMgr.createUserToken (sTokenString, null, aAppToken, sUserName);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                 sOwnerName)));
+                                                                                                                 sUserName)));
       }
     }
   }
@@ -325,7 +324,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
   @OverrideOnDemand
   protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
                                   @Nonnull final BootstrapForm aForm,
-                                  @Nonnull final IAppToken aSelectedObject)
+                                  @Nonnull final IUserToken aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
@@ -342,12 +341,12 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
    */
   @Override
   @OverrideOnDemand
-  protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IAppToken aSelectedObject)
+  protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
+    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
 
-    if (aAppTokenMgr.deleteAppToken (aSelectedObject.getID ()).isChanged ())
+    if (aUserTokenMgr.deleteUserToken (aSelectedObject.getID ()).isChanged ())
       aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                aSelectedObject.getDisplayName ())));
     else
@@ -355,17 +354,17 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                                                                                            aSelectedObject.getDisplayName ())));
   }
 
-  public static boolean canRevokeAccessToken (@Nullable final IAppToken aAppToken)
+  public static boolean canRevokeAccessToken (@Nullable final IUserToken aUserToken)
   {
-    return aAppToken != null && !aAppToken.isDeleted () && aAppToken.getActiveAccessToken () != null;
+    return aUserToken != null && !aUserToken.isDeleted () && aUserToken.getActiveAccessToken () != null;
   }
 
-  public static boolean canCreateNewAccessToken (@Nullable final IAppToken aAppToken)
+  public static boolean canCreateNewAccessToken (@Nullable final IUserToken aUserToken)
   {
-    return aAppToken != null && !aAppToken.isDeleted ();
+    return aUserToken != null && !aUserToken.isDeleted ();
   }
 
-  private boolean _customCreateNewAccessToken (@Nonnull final WPECTYPE aWPEC, @Nonnull final IAppToken aSelectedObject)
+  private boolean _customCreateNewAccessToken (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();
@@ -374,7 +373,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     final FormErrors aFormErrors = new FormErrors ();
     if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
     {
-      final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
+      final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
       final String sRevocationReason = aWPEC.getAttributeAsString (FIELD_REVOCATION_REASON);
       final String sTokenString = aWPEC.getAttributeAsString (FIELD_TOKEN_STRING);
 
@@ -393,18 +392,18 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
           aFormErrors.addFieldError (FIELD_TOKEN_STRING,
                                      EBaseText.ERR_TOKEN_STRING_TOO_SHORT.getDisplayText (aDisplayLocale));
         else
-          if (aAppTokenMgr.isAccessTokenUsed (sTokenString))
+          if (aUserTokenMgr.isAccessTokenUsed (sTokenString))
             aFormErrors.addFieldError (FIELD_TOKEN_STRING,
                                        EBaseText.ERR_TOKEN_STRING_IN_USE.getDisplayText (aDisplayLocale));
       }
 
       if (aFormErrors.isEmpty ())
       {
-        aAppTokenMgr.createNewAccessToken (aSelectedObject.getID (),
-                                           LoggedInUserManager.getInstance ().getCurrentUserID (),
-                                           PDTFactory.getCurrentLocalDateTime (),
-                                           sRevocationReason,
-                                           sTokenString);
+        aUserTokenMgr.createNewAccessToken (aSelectedObject.getID (),
+                                            LoggedInUserManager.getInstance ().getCurrentUserID (),
+                                            PDTFactory.getCurrentLocalDateTime (),
+                                            sRevocationReason,
+                                            sTokenString);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (bRevokedOld ? EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                                                aSelectedObject.getDisplayName ())
                                                                                 : EBaseText.CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
@@ -453,7 +452,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     return false;
   }
 
-  private boolean _customRevokeAccessToken (@Nonnull final WPECTYPE aWPEC, @Nonnull final IAppToken aSelectedObject)
+  private boolean _customRevokeAccessToken (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();
@@ -467,11 +466,11 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
       if (aFormErrors.isEmpty ())
       {
-        final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
-        aAppTokenMgr.revokeAccessToken (aSelectedObject.getID (),
-                                        LoggedInUserManager.getInstance ().getCurrentUserID (),
-                                        PDTFactory.getCurrentLocalDateTime (),
-                                        sRevocationReason);
+        final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+        aUserTokenMgr.revokeAccessToken (aSelectedObject.getID (),
+                                         LoggedInUserManager.getInstance ().getCurrentUserID (),
+                                         PDTFactory.getCurrentLocalDateTime (),
+                                         sRevocationReason);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EBaseText.REVOKE_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                   aSelectedObject.getDisplayName ())));
         return false;
@@ -497,7 +496,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
   }
 
   @Override
-  protected boolean handleCustomActions (@Nonnull final WPECTYPE aWPEC, @Nullable final IAppToken aSelectedObject)
+  protected boolean handleCustomActions (@Nonnull final WPECTYPE aWPEC, @Nullable final IUserToken aSelectedObject)
   {
     if (aWPEC.hasAction (ACTION_CREATE_NEW_ACCESS_TOKEN) && canCreateNewAccessToken (aSelectedObject))
       return _customCreateNewAccessToken (aWPEC, aSelectedObject);
@@ -510,17 +509,16 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
   @Nonnull
   private IHCNode _createList (@Nonnull final WPECTYPE aWPEC,
                                @Nonnull final String sIDSuffix,
-                               @Nullable final IFilter <IAppToken> aFilter)
+                               @Nullable final IFilter <IUserToken> aFilter)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
+    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
 
-    final HCTable aTable = new HCTable (new DTCol (EText.HEADER_OWNER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                        new DTCol (EText.HEADER_OWNER_URL.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.HEADER_OWNER_TOKEN.getDisplayText (aDisplayLocale)).setVisible (false),
+    final HCTable aTable = new HCTable (new DTCol (EText.HEADER_APP_TOKEN.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.HEADER_USER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_USABLE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID () + sIDSuffix);
-    for (final IAppToken aCurObject : aAppTokenMgr.getAllAppTokens ())
+    for (final IUserToken aCurObject : aUserTokenMgr.getAllUserTokens ())
       if (aFilter == null || aFilter.matchesFilter (aCurObject))
       {
         final ISimpleURL aViewURL = createViewURL (aWPEC, aCurObject);
@@ -530,9 +528,8 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                    aCurObject.getActiveAccessToken ().isValidNow ();
 
         final HCRow aBodyRow = aTable.addBodyRow ();
+        aBodyRow.addCell (createLink (aWPEC, aCurObject.getAppToken ()));
         aBodyRow.addCell (new HCA (aViewURL).addChild (sDisplayName));
-        aBodyRow.addCell (HCA.createLinkedWebsite (aCurObject.getOwnerURL (), HC_Target.BLANK));
-        aBodyRow.addCell (SecurityUIHelper.createAccessTokenNode (aCurObject.getActiveTokenString ()));
         aBodyRow.addCell (EPhotonCoreText.getYesOrNo (bUsableNow, aDisplayLocale));
 
         final IHCCell <?> aActionCell = aBodyRow.addCell ();
@@ -592,17 +589,17 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
     aTabBox.addTab (EText.TAB_LABEL_ACTIVE.getDisplayText (aDisplayLocale),
-                    _createList (aWPEC, "active", new IFilter <IAppToken> ()
+                    _createList (aWPEC, "active", new IFilter <IUserToken> ()
                     {
-                      public boolean matchesFilter (@Nonnull final IAppToken aValue)
+                      public boolean matchesFilter (@Nonnull final IUserToken aValue)
                       {
                         return !aValue.isDeleted ();
                       }
                     }));
     aTabBox.addTab (EText.TAB_LABEL_DELETED.getDisplayText (aDisplayLocale),
-                    _createList (aWPEC, "deleted", new IFilter <IAppToken> ()
+                    _createList (aWPEC, "deleted", new IFilter <IUserToken> ()
                     {
-                      public boolean matchesFilter (@Nonnull final IAppToken aValue)
+                      public boolean matchesFilter (@Nonnull final IUserToken aValue)
                       {
                         return aValue.isDeleted ();
                       }
