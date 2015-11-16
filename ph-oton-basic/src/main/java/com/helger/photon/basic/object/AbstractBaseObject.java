@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.object;
 
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -24,6 +26,7 @@ import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.attr.MapBasedAttributeContainer;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.util.PDTHelper;
@@ -36,7 +39,7 @@ import com.helger.datetime.util.PDTHelper;
  * @author Philip Helger
  */
 @Immutable
-public abstract class AbstractBaseObject implements IObject
+public abstract class AbstractBaseObject extends MapBasedAttributeContainer <String, String> implements IObject
 {
   private final String m_sID;
   private final LocalDateTime m_aCreationDT;
@@ -54,7 +57,8 @@ public abstract class AbstractBaseObject implements IObject
           aObject.getLastModificationDateTime (),
           aObject.getLastModificationUserID (),
           aObject.getDeletionDateTime (),
-          aObject.getDeletionUserID ());
+          aObject.getDeletionUserID (),
+          aObject.getAllAttributes ());
   }
 
   public AbstractBaseObject (@Nonnull @Nonempty final String sID,
@@ -65,6 +69,18 @@ public abstract class AbstractBaseObject implements IObject
                              @Nullable final LocalDateTime aDeletionDT,
                              @Nullable final String sDeletionUserID)
   {
+    this (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID, null);
+  }
+
+  public AbstractBaseObject (@Nonnull @Nonempty final String sID,
+                             @Nullable final LocalDateTime aCreationDT,
+                             @Nullable final String sCreationUserID,
+                             @Nullable final LocalDateTime aLastModificationDT,
+                             @Nullable final String sLastModificationUserID,
+                             @Nullable final LocalDateTime aDeletionDT,
+                             @Nullable final String sDeletionUserID,
+                             @Nullable final Map <String, String> aCustomAttrs)
+  {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
     m_aCreationDT = aCreationDT;
     m_sCreationUserID = sCreationUserID;
@@ -72,6 +88,7 @@ public abstract class AbstractBaseObject implements IObject
     m_sLastModificationUserID = sLastModificationUserID;
     m_aDeletionDT = aDeletionDT;
     m_sDeletionUserID = sDeletionUserID;
+    setAttributes (aCustomAttrs);
   }
 
   @Nonnull
@@ -178,13 +195,14 @@ public abstract class AbstractBaseObject implements IObject
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_sID)
-                                       .appendIfNotNull ("creationDT", m_aCreationDT)
-                                       .appendIfNotNull ("creationUserID", m_sCreationUserID)
-                                       .appendIfNotNull ("lastModificationDT", m_aLastModificationDT)
-                                       .appendIfNotNull ("lastModificationUserID", m_sLastModificationUserID)
-                                       .appendIfNotNull ("deletionDT", m_aDeletionDT)
-                                       .appendIfNotNull ("deletionUserID", m_sDeletionUserID)
-                                       .toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("ID", m_sID)
+                            .appendIfNotNull ("creationDT", m_aCreationDT)
+                            .appendIfNotNull ("creationUserID", m_sCreationUserID)
+                            .appendIfNotNull ("lastModificationDT", m_aLastModificationDT)
+                            .appendIfNotNull ("lastModificationUserID", m_sLastModificationUserID)
+                            .appendIfNotNull ("deletionDT", m_aDeletionDT)
+                            .appendIfNotNull ("deletionUserID", m_sDeletionUserID)
+                            .toString ();
   }
 }

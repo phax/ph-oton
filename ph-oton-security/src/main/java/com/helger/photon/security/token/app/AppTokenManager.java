@@ -143,12 +143,12 @@ public final class AppTokenManager extends AbstractSimpleDAO
 
       EChange eChange = EChange.UNCHANGED;
       // client ID cannot be changed!
-      eChange = eChange.or (aAppToken.getMutableAttributes ().clear ());
-      eChange = eChange.or (aAppToken.getMutableAttributes ().setAttributes (aCustomAttrs));
       eChange = eChange.or (aAppToken.setOwnerName (sOwnerName));
       eChange = eChange.or (aAppToken.setOwnerURL (sOwnerURL));
       eChange = eChange.or (aAppToken.setOwnerContact (sOwnerContact));
       eChange = eChange.or (aAppToken.setOwnerContactEmail (sOwnerContactEmail));
+      eChange = eChange.or (aAppToken.clear ());
+      eChange = eChange.or (aAppToken.setAttributes (aCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

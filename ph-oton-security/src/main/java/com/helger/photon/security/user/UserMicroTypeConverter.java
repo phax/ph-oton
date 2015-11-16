@@ -16,9 +16,7 @@
  */
 package com.helger.photon.security.user;
 
-import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,7 +24,6 @@ import javax.annotation.Nullable;
 import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.ContainsSoftMigration;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
@@ -53,8 +50,6 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
   private static final String ELEMENT_FIRSTNAME = "firstname";
   private static final String ELEMENT_LASTNAME = "lastname";
   private static final String ELEMENT_DESCRIPTION = "description";
-  private static final String ELEMENT_CUSTOM = "custom";
-  private static final String ATTR_DELETED = "deleted";
   private static final String ATTR_DISABLED = "disabled";
 
   @Nonnull
@@ -62,10 +57,7 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
   {
     final IUser aUser = (IUser) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
-    aElement.setAttribute (ATTR_ID, aUser.getID ());
-    aElement.setAttributeWithConversion (ATTR_CREATIONLDT, aUser.getCreationDateTime ());
-    aElement.setAttributeWithConversion (ATTR_LASTMODLDT, aUser.getLastModificationDateTime ());
-    aElement.setAttributeWithConversion (ATTR_DELETIONLDT, aUser.getDeletionDateTime ());
+    setObjectFields (aUser, aElement);
     aElement.appendElement (ELEMENT_LOGINNAME).appendText (aUser.getLoginName ());
     if (aUser.getEmailAddress () != null)
       aElement.appendElement (ELEMENT_EMAILADDRESS).appendText (aUser.getEmailAddress ());
@@ -86,13 +78,6 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
       aElement.setAttributeWithConversion (ATTR_LASTLOGINLDT, aUser.getLastLoginDateTime ());
     aElement.setAttribute (ATTR_LOGINCOUNT, aUser.getLoginCount ());
     aElement.setAttribute (ATTR_CONSECUTIVEFAILEDLOGINCOUNT, aUser.getConsecutiveFailedLoginCount ());
-    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aUser.getAllAttributes ()).entrySet ())
-    {
-      final IMicroElement eCustom = aElement.appendElement (ELEMENT_CUSTOM);
-      eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
-      eCustom.appendText (aEntry.getValue ());
-    }
-    aElement.setAttribute (ATTR_DELETED, Boolean.toString (aUser.isDeleted ()));
     aElement.setAttribute (ATTR_DISABLED, Boolean.toString (aUser.isDisabled ()));
     return aElement;
   }
@@ -101,10 +86,6 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
   @Nonnull
   public User convertToNative (@Nonnull final IMicroElement aElement)
   {
-    final String sID = aElement.getAttributeValue (ATTR_ID);
-    final LocalDateTime aCreationLDT = readAsLocalDateTime (aElement, ATTR_CREATIONLDT, "creationdt");
-    final LocalDateTime aLastModificationLDT = readAsLocalDateTime (aElement, ATTR_LASTMODLDT, "lastmodldt");
-    final LocalDateTime aDeletionLDT = readAsLocalDateTime (aElement, ATTR_DELETIONLDT, "deletiondt");
     final String sLoginName = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_LOGINNAME);
     final String sEmailAddress = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_EMAILADDRESS);
     final IMicroElement ePasswordHash = aElement.getFirstChildElement (ELEMENT_PASSWORDHASH);
@@ -126,18 +107,10 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
     final LocalDateTime aLastLoginLDT = readAsLocalDateTime (aElement, ATTR_LASTLOGINLDT, "lastlogindt");
     final int nLoginCount = StringParser.parseInt (aElement.getAttributeValue (ATTR_LOGINCOUNT), 0);
     final int nConsecutiveFailedLoginCount = StringParser.parseInt (aElement.getAttributeValue (ATTR_CONSECUTIVEFAILEDLOGINCOUNT), 0);
-    final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
-    for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
-      aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
-    final String sDeleted = aElement.getAttributeValue (ATTR_DELETED);
-    final boolean bDeleted = StringParser.parseBool (sDeleted);
     final String sDisabled = aElement.getAttributeValue (ATTR_DISABLED);
     final boolean bDisabled = StringParser.parseBool (sDisabled);
 
-    return new User (sID,
-                     aCreationLDT,
-                     aLastModificationLDT,
-                     aDeletionLDT,
+    return new User (getStubObject (aElement),
                      sLoginName,
                      sEmailAddress,
                      aPasswordHash,
@@ -148,8 +121,6 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
                      aLastLoginLDT,
                      nLoginCount,
                      nConsecutiveFailedLoginCount,
-                     aCustomAttrs,
-                     bDeleted,
                      bDisabled);
   }
 }

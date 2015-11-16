@@ -131,9 +131,9 @@ public final class UserTokenManager extends AbstractSimpleDAO
 
       EChange eChange = EChange.UNCHANGED;
       // client ID cannot be changed!
-      eChange = eChange.or (aUserToken.getMutableAttributes ().clear ());
-      eChange = eChange.or (aUserToken.getMutableAttributes ().setAttributes (aCustomAttrs));
       eChange = eChange.or (aUserToken.setUserName (sUserName));
+      eChange = eChange.or (aUserToken.clear ());
+      eChange = eChange.or (aUserToken.setAttributes (aCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

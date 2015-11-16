@@ -1,15 +1,12 @@
 package com.helger.photon.security.token.object;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.MapBasedAttributeContainer;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.basic.object.IObject;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
@@ -46,23 +43,4 @@ public interface IObjectWithAccessToken extends IObject, IAuthSubject
    */
   @Nullable
   String getActiveTokenString ();
-
-  /**
-   * @return A non-<code>null</code> container with all custom attributes.
-   *         Modifications to the returned container have no effect on this
-   *         object.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  Map <String, String> getAllAttributes ();
-
-  /**
-   * A mutable version of the custom attribute container to change values.
-   *
-   * @return A non-<code>null</code> writable container with all custom
-   *         attributes.
-   */
-  @Nonnull
-  @ReturnsMutableObject ("design")
-  MapBasedAttributeContainer <String, String> getMutableAttributes ();
 }

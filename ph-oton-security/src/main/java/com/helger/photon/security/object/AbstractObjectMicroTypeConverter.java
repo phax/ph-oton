@@ -16,6 +16,9 @@
  */
 package com.helger.photon.security.object;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -23,6 +26,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.ContainsSoftMigration;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
 import com.helger.photon.basic.object.IObject;
@@ -41,6 +45,7 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
   protected static final String ATTR_LASTMODUSERID = "lastmoduserid";
   protected static final String ATTR_DELETIONLDT = "deletionldt";
   protected static final String ATTR_DELETIONUSERID = "deletionuserid";
+  protected static final String ELEMENT_CUSTOM = "custom";
 
   public static final void setObjectFields (@Nonnull final IObject aValue, @Nonnull final IMicroElement aElement)
   {
@@ -51,6 +56,12 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
     aElement.setAttribute (ATTR_LASTMODUSERID, aValue.getLastModificationUserID ());
     aElement.setAttributeWithConversion (ATTR_DELETIONLDT, aValue.getDeletionDateTime ());
     aElement.setAttribute (ATTR_DELETIONUSERID, aValue.getDeletionUserID ());
+    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aValue.getAllAttributes ()).entrySet ())
+    {
+      final IMicroElement eCustom = aElement.appendElement (ELEMENT_CUSTOM);
+      eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
+      eCustom.appendText (aEntry.getValue ());
+    }
   }
 
   /**
@@ -99,12 +110,17 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
     final LocalDateTime aDeletionLDT = readAsLocalDateTime (aElement, ATTR_DELETIONLDT, "deletiondt");
     final String sDeletionUserID = aElement.getAttributeValue (ATTR_DELETIONUSERID);
 
+    final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
+    for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
+      aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
+
     return new StubObject (sID,
                            aCreationLDT,
                            sCreationUserID,
                            aLastModificationLDT,
                            sLastModificationUserID,
                            aDeletionLDT,
-                           sDeletionUserID);
+                           sDeletionUserID,
+                           aCustomAttrs);
   }
 }

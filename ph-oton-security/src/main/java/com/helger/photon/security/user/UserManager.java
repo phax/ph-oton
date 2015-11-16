@@ -50,6 +50,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
+import com.helger.photon.security.object.ObjectHelper;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.hash.PasswordHash;
 import com.helger.photon.security.password.salt.IPasswordSalt;
@@ -687,12 +688,13 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
       eChange = eChange.or (aUser.setLastName (sNewLastName));
       eChange = eChange.or (aUser.setDescription (sNewDescription));
       eChange = eChange.or (aUser.setDesiredLocale (aNewDesiredLocale));
-      eChange = eChange.or (aUser.setAttributes (aNewCustomAttrs));
       eChange = eChange.or (aUser.setDisabled (bNewDisabled));
+      eChange = eChange.or (aUser.clear ());
+      eChange = eChange.or (aUser.setAttributes (aNewCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      aUser.updateLastModified ();
+      ObjectHelper.setLastModificationNow (aUser);
       markAsChanged ();
     }
     finally
@@ -754,7 +756,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      aUser.updateLastModified ();
+      ObjectHelper.setLastModificationNow (aUser);
       markAsChanged ();
     }
     finally
@@ -860,7 +862,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (aUser.setDeleted (true).isUnchanged ())
+      if (ObjectHelper.setDeletionNow (aUser).isUnchanged ())
         return EChange.UNCHANGED;
       markAsChanged ();
     }
@@ -905,7 +907,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (aUser.setDeleted (false).isUnchanged ())
+      if (ObjectHelper.setDeletionNow (aUser).isUnchanged ())
         return EChange.UNCHANGED;
       markAsChanged ();
     }

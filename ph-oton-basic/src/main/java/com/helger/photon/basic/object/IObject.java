@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 
 import org.joda.time.LocalDateTime;
 
+import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.type.ITypedObject;
 import com.helger.photon.basic.datetime.IHasCreationInfo;
 import com.helger.photon.basic.datetime.IHasDeletionInfo;
@@ -31,10 +32,10 @@ import com.helger.photon.basic.datetime.IHasLastModificationInfo;
  *
  * @author Philip Helger
  */
-public interface IObject extends ITypedObject <String>, IHasCreationInfo, IHasLastModificationInfo, IHasDeletionInfo
+public interface IObject extends ITypedObject <String>, IHasCreationInfo, IHasLastModificationInfo, IHasDeletionInfo, IAttributeContainer <String, String>
 {
   /**
-   * @return The <code>null</code>-able creation date time of the object
+   * @return The <code>null</code>-able creation date time of the object.
    */
   @Nullable
   LocalDateTime getCreationDateTime ();

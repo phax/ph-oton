@@ -38,9 +38,8 @@ public class AppToken extends AbstractObjectWithAccessToken implements IAppToken
                    @Nullable final String sOwnerContact,
                    @Nullable final String sOwnerContactEmail)
   {
-    this (StubObject.createForCurrentUser (),
+    this (StubObject.createForCurrentUser (aCustomAttrs),
           CollectionHelper.newList (AccessToken.createAccessTokenValidFromNow (sTokenString)),
-          aCustomAttrs,
           sOwnerName,
           sOwnerURL,
           sOwnerContact,
@@ -49,13 +48,12 @@ public class AppToken extends AbstractObjectWithAccessToken implements IAppToken
 
   AppToken (@Nonnull final StubObject aStubObject,
             @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
-            @Nullable final Map <String, String> aCustomAttrs,
             @Nonnull @Nonempty final String sOwnerName,
             @Nullable final String sOwnerURL,
             @Nullable final String sOwnerContact,
             @Nullable final String sOwnerContactEmail)
   {
-    super (aStubObject, aAccessTokens, aCustomAttrs);
+    super (aStubObject, aAccessTokens);
     setOwnerName (sOwnerName);
     setOwnerURL (sOwnerURL);
     setOwnerContact (sOwnerContact);

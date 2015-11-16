@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.object;
 
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -46,15 +48,10 @@ public abstract class AbstractObject extends AbstractBaseObject
                          @Nullable final LocalDateTime aLastModificationDT,
                          @Nullable final String sLastModificationUserID,
                          @Nullable final LocalDateTime aDeletionDT,
-                         @Nullable final String sDeletionUserID)
+                         @Nullable final String sDeletionUserID,
+                         @Nullable final Map <String, String> aCustomAttrs)
   {
-    super (sID,
-           aCreationDT,
-           sCreationUserID,
-           aLastModificationDT,
-           sLastModificationUserID,
-           aDeletionDT,
-           sDeletionUserID);
+    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID, aCustomAttrs);
   }
 
   @Override

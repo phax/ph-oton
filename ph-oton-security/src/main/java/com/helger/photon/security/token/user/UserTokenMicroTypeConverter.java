@@ -17,15 +17,12 @@
 package com.helger.photon.security.token.user;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
@@ -46,7 +43,6 @@ public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeCo
   private static final String ELEMENT_ACCESS_TOKEN = "accesstoken";
   private static final String ATTR_APP_TOKEN_ID = "apptoken";
   private static final String ATTR_USER_NAME = "username";
-  private static final String ELEMENT_CUSTOM = "custom";
 
   @Nonnull
   public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
@@ -58,12 +54,6 @@ public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeCo
     setObjectFields (aValue, aElement);
     for (final IAccessToken aAccessToken : aValue.getAllAccessTokens ())
       aElement.appendChild (MicroTypeConverter.convertToMicroElement (aAccessToken, sNamespaceURI, ELEMENT_ACCESS_TOKEN));
-    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aValue.getAllAttributes ()).entrySet ())
-    {
-      final IMicroElement eCustom = aElement.appendElement (ELEMENT_CUSTOM);
-      eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
-      eCustom.appendText (aEntry.getValue ());
-    }
     aElement.setAttribute (ATTR_APP_TOKEN_ID, aValue.getAppToken ().getID ());
     aElement.setAttribute (ATTR_USER_NAME, aValue.getUserName ());
     return aElement;
@@ -77,9 +67,6 @@ public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeCo
     final List <AccessToken> aAccessTokens = new ArrayList <> ();
     for (final IMicroElement e : aElement.getAllChildElements (ELEMENT_ACCESS_TOKEN))
       aAccessTokens.add (MicroTypeConverter.convertToNative (e, AccessToken.class));
-    final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
-    for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
-      aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
 
     final String sAppTokenID = aElement.getAttributeValue (ATTR_APP_TOKEN_ID);
     final IAppToken aAppToken = aAppTokenMgr.getAppTokenOfID (sAppTokenID);
@@ -88,6 +75,6 @@ public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeCo
 
     final String sUserName = aElement.getAttributeValue (ATTR_USER_NAME);
 
-    return new UserToken (getStubObject (aElement), aAccessTokens, aCustomAttrs, aAppToken, sUserName);
+    return new UserToken (getStubObject (aElement), aAccessTokens, aAppToken, sUserName);
   }
 }

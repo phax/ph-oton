@@ -24,15 +24,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.datetime.PDTFactory;
+import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
+import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.salt.PasswordSalt;
-import com.helger.photon.security.user.User;
 
 /**
  * Test class for class {@link User}.
@@ -41,13 +44,13 @@ import com.helger.photon.security.user.User;
  */
 public final class UserTest
 {
+  @Rule
+  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
+
   @Test
   public void testBasic ()
   {
-    final User aUser = new User ("id1",
-                                 PDTFactory.getCurrentLocalDateTime (),
-                                 null,
-                                 null,
+    final User aUser = new User (StubObject.createForCurrentUserAndID ("id1"),
                                  "MyName",
                                  "me@example.org",
                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), "ABCDEF"),
@@ -58,8 +61,6 @@ public final class UserTest
                                  PDTFactory.getCurrentLocalDateTime (),
                                  0,
                                  0,
-                                 null,
-                                 false,
                                  false);
     assertEquals ("id1", aUser.getID ());
     assertEquals ("me@example.org", aUser.getEmailAddress ());
@@ -81,10 +82,7 @@ public final class UserTest
   @Test
   public void testBasic2 ()
   {
-    final User aUser = new User ("id1",
-                                 PDTFactory.getCurrentLocalDateTime (),
-                                 null,
-                                 null,
+    final User aUser = new User (StubObject.createForCurrentUserAndID ("id1"),
                                  "MyName",
                                  null,
                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), "ABCDEF"),
@@ -95,8 +93,6 @@ public final class UserTest
                                  PDTFactory.getCurrentLocalDateTime (),
                                  0,
                                  0,
-                                 null,
-                                 false,
                                  false);
     assertEquals ("id1", aUser.getID ());
     assertNull (aUser.getEmailAddress ());
@@ -127,10 +123,7 @@ public final class UserTest
   @Test
   public void testMicroConversion ()
   {
-    final User aUser = new User ("id1",
-                                 PDTFactory.getCurrentLocalDateTime (),
-                                 null,
-                                 null,
+    final User aUser = new User (StubObject.createForCurrentUserAndID ("id1", CollectionHelper.newMap ("locale", "de_DE")),
                                  "MyName",
                                  "me@example.org",
                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), "ABCDEF"),
@@ -141,8 +134,6 @@ public final class UserTest
                                  PDTFactory.getCurrentLocalDateTime (),
                                  0,
                                  0,
-                                 CollectionHelper.newMap ("locale", "de_DE"),
-                                 false,
                                  false);
 
     // To XML

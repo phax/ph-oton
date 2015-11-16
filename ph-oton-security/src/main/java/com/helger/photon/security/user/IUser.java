@@ -26,13 +26,9 @@ import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.text.IHasDescription;
-import com.helger.commons.type.ITypedObject;
-import com.helger.datetime.domain.IHasCreationDateTime;
-import com.helger.datetime.domain.IHasDeletionDateTime;
-import com.helger.datetime.domain.IHasLastModificationDateTime;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
+import com.helger.photon.basic.object.IObject;
 import com.helger.photon.security.password.hash.PasswordHash;
 
 /**
@@ -41,7 +37,7 @@ import com.helger.photon.security.password.hash.PasswordHash;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IUser extends ITypedObject <String>, IHasDescription, IHasCreationDateTime, IHasLastModificationDateTime, IHasDeletionDateTime, IAuthSubject, IAttributeContainer <String, String>
+public interface IUser extends IObject, IHasDescription, IAuthSubject
 {
   /**
    * @return <code>true</code> if the user has the ID

@@ -34,20 +34,18 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
                     @Nonnull final IAppToken aAppToken,
                     @Nonnull @Nonempty final String sUserName)
   {
-    this (StubObject.createForCurrentUser (),
+    this (StubObject.createForCurrentUser (aCustomAttrs),
           CollectionHelper.newList (AccessToken.createAccessTokenValidFromNow (sTokenString)),
-          aCustomAttrs,
           aAppToken,
           sUserName);
   }
 
   UserToken (@Nonnull final StubObject aStubObject,
              @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
-             @Nullable final Map <String, String> aCustomAttrs,
              @Nonnull final IAppToken aAppToken,
              @Nonnull @Nonempty final String sUserName)
   {
-    super (aStubObject, aAccessTokens, aCustomAttrs);
+    super (aStubObject, aAccessTokens);
     m_aAppToken = ValueEnforcer.notNull (aAppToken, "AppToken");
     setUserName (sUserName);
   }
