@@ -23,16 +23,15 @@ import java.util.Locale;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.id.factory.MemoryIntIDFactory;
 import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.masterdata.address.Address;
 import com.helger.masterdata.address.EAddressType;
 import com.helger.masterdata.currency.ECurrency;
+import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.basic.object.client.IClient;
 import com.helger.photon.security.object.client.Client;
-import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
  * Test class for class {@link AccountingArea}
@@ -42,27 +41,13 @@ import com.helger.web.scope.mock.WebScopeTestRule;
 public final class AccountingAreaTest
 {
   @Rule
-  public final WebScopeTestRule m_aRule = new WebScopeTestRule ();
-
-  static
-  {
-    GlobalIDFactory.setPersistentIntIDFactory (new MemoryIntIDFactory ());
-  }
+  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
 
   @Test
   public void testBasic ()
   {
     final IClient aClient = new Client ("anyid", "Mock client");
-    final Address aAddress = new Address (EAddressType.PERSONAL,
-                                          "AT",
-                                          "Wien",
-                                          "1234",
-                                          "Vienna",
-                                          "Test street",
-                                          "123",
-                                          "PO1",
-                                          "co",
-                                          Locale.GERMANY);
+    final Address aAddress = new Address (EAddressType.PERSONAL, "AT", "Wien", "1234", "Vienna", "Test street", "123", "PO1", "co", Locale.GERMANY);
     final AccountingArea a = new AccountingArea (aClient,
                                                  "Accounting area 1",
                                                  "GmbH",

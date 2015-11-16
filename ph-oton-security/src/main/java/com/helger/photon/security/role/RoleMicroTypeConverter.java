@@ -42,9 +42,7 @@ public final class RoleMicroTypeConverter implements IMicroTypeConverter
   private static final String ELEMENT_CUSTOM = "custom";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
-                                              @Nullable final String sNamespaceURI,
-                                              @Nonnull final String sTagName)
+  public IMicroElement convertToMicroElement (@Nonnull final Object aObject, @Nullable final String sNamespaceURI, @Nonnull final String sTagName)
   {
     final IRole aRole = (IRole) aObject;
     final IMicroElement eRole = new MicroElement (sNamespaceURI, sTagName);
@@ -52,12 +50,11 @@ public final class RoleMicroTypeConverter implements IMicroTypeConverter
     eRole.setAttribute (ATTR_NAME, aRole.getName ());
     if (StringHelper.hasText (aRole.getDescription ()))
       eRole.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aRole.getDescription ());
-    for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aRole.getAllAttributes ())
-                                                                   .entrySet ())
+    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aRole.getAllAttributes ()).entrySet ())
     {
       final IMicroElement eCustom = eRole.appendElement (ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
-      eCustom.appendText (String.valueOf (aEntry.getValue ()));
+      eCustom.appendText (aEntry.getValue ());
     }
     return eRole;
   }

@@ -86,11 +86,11 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
       aElement.setAttributeWithConversion (ATTR_LASTLOGINLDT, aUser.getLastLoginDateTime ());
     aElement.setAttribute (ATTR_LOGINCOUNT, aUser.getLoginCount ());
     aElement.setAttribute (ATTR_CONSECUTIVEFAILEDLOGINCOUNT, aUser.getConsecutiveFailedLoginCount ());
-    for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aUser.getAllAttributes ()).entrySet ())
+    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aUser.getAllAttributes ()).entrySet ())
     {
       final IMicroElement eCustom = aElement.appendElement (ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
-      eCustom.appendText (String.valueOf (aEntry.getValue ()));
+      eCustom.appendText (aEntry.getValue ());
     }
     aElement.setAttribute (ATTR_DELETED, Boolean.toString (aUser.isDeleted ()));
     aElement.setAttribute (ATTR_DISABLED, Boolean.toString (aUser.isDisabled ()));

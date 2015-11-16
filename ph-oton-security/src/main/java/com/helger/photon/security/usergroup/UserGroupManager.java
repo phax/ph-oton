@@ -58,7 +58,7 @@ import com.helger.photon.security.user.UserManager;
  * @author Philip Helger
  */
 @ThreadSafe
-public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupManager, IReloadableDAO
+public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDAO
 {
   public static final boolean DEFAULT_CREATE_DEFAULTS = true;
 
@@ -148,27 +148,21 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     UserGroup aUG = _addUserGroup (new UserGroup (CSecurity.USERGROUP_ADMINISTRATORS_ID,
                                                   CSecurity.USERGROUP_ADMINISTRATORS_NAME,
                                                   (String) null,
-                                                  (Map <String, ?>) null));
+                                                  (Map <String, String>) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_ADMINISTRATOR_ID))
       aUG.assignUser (CSecurity.USER_ADMINISTRATOR_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       aUG.assignRole (CSecurity.ROLE_ADMINISTRATOR_ID);
 
     // Users user group
-    aUG = _addUserGroup (new UserGroup (CSecurity.USERGROUP_USERS_ID,
-                                        CSecurity.USERGROUP_USERS_NAME,
-                                        (String) null,
-                                        (Map <String, ?>) null));
+    aUG = _addUserGroup (new UserGroup (CSecurity.USERGROUP_USERS_ID, CSecurity.USERGROUP_USERS_NAME, (String) null, (Map <String, String>) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_USER_ID))
       aUG.assignUser (CSecurity.USER_USER_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_USER_ID))
       aUG.assignRole (CSecurity.ROLE_USER_ID);
 
     // Guests user group
-    aUG = _addUserGroup (new UserGroup (CSecurity.USERGROUP_GUESTS_ID,
-                                        CSecurity.USERGROUP_GUESTS_NAME,
-                                        (String) null,
-                                        (Map <String, ?>) null));
+    aUG = _addUserGroup (new UserGroup (CSecurity.USERGROUP_GUESTS_ID, CSecurity.USERGROUP_GUESTS_NAME, (String) null, (Map <String, String>) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_GUEST_ID))
       aUG.assignUser (CSecurity.USER_GUEST_ID);
     // no role for this user group
@@ -196,6 +190,9 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return aDoc;
   }
 
+  /**
+   * @return The user group callback list. Never <code>null</code>.
+   */
   @Nonnull
   @ReturnsMutableObject ("design")
   public CallbackList <IUserGroupModificationCallback> getUserGroupModificationCallbacks ()
@@ -213,10 +210,23 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return aUserGroup;
   }
 
+  /**
+   * Create a new user group.
+   *
+   * @param sName
+   *        The name of the user group to create. May neither be
+   *        <code>null</code> nor empty.
+   * @param sDescription
+   *        The optional description of the user group. May be <code>null</code>
+   *        .
+   * @param aCustomAttrs
+   *        A set of custom attributes. May be <code>null</code>.
+   * @return The created user group.
+   */
   @Nonnull
   public IUserGroup createNewUserGroup (@Nonnull @Nonempty final String sName,
                                         @Nullable final String sDescription,
-                                        @Nullable final Map <String, ?> aCustomAttrs)
+                                        @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create user group
     final UserGroup aUserGroup = new UserGroup (sName, sDescription, aCustomAttrs);
@@ -248,11 +258,26 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return aUserGroup;
   }
 
+  /**
+   * Create a predefined user group.
+   *
+   * @param sID
+   *        The ID to use
+   * @param sName
+   *        The name of the user group to create. May neither be
+   *        <code>null</code> nor empty.
+   * @param sDescription
+   *        The optional description of the user group. May be <code>null</code>
+   *        .
+   * @param aCustomAttrs
+   *        A set of custom attributes. May be <code>null</code>.
+   * @return The created user group.
+   */
   @Nonnull
   public IUserGroup createPredefinedUserGroup (@Nonnull @Nonempty final String sID,
                                                @Nonnull @Nonempty final String sName,
                                                @Nullable final String sDescription,
-                                               @Nullable final Map <String, ?> aCustomAttrs)
+                                               @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create user group
     final UserGroup aUserGroup = new UserGroup (sID, sName, sDescription, aCustomAttrs);
@@ -268,12 +293,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (UserGroup.OT,
-                                      aUserGroup.getID (),
-                                      "predefined-usergroup",
-                                      sName,
-                                      sDescription,
-                                      aCustomAttrs);
+    AuditHelper.onAuditCreateSuccess (UserGroup.OT, aUserGroup.getID (), "predefined-usergroup", sName, sDescription, aCustomAttrs);
 
     // Execute callback as the very last action
     for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
@@ -289,73 +309,14 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return aUserGroup;
   }
 
-  public boolean containsUserGroupWithID (@Nullable final String sUserGroupID)
-  {
-    if (StringHelper.hasNoText (sUserGroupID))
-      return false;
-
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aUserGroups.containsKey (sUserGroupID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  public boolean containsAllUserGroupsWithID (@Nullable final Collection <String> aUserGroupIDs)
-  {
-    if (CollectionHelper.isEmpty (aUserGroupIDs))
-      return true;
-
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      for (final String sUserGroupID : aUserGroupIDs)
-        if (!m_aUserGroups.containsKey (sUserGroupID))
-          return false;
-      return true;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  @Nullable
-  public UserGroup getUserGroupOfID (@Nullable final String sUserGroupID)
-  {
-    if (StringHelper.hasNoText (sUserGroupID))
-      return null;
-
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aUserGroups.get (sUserGroupID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public List <? extends IUserGroup> getAllUserGroups ()
-  {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aUserGroups.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
+  /**
+   * Delete the user group with the specified ID
+   *
+   * @param sUserGroupID
+   *        The ID of the user group to be deleted. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if the user group was deleted,
+   *         {@link EChange#UNCHANGED} otherwise
+   */
   @Nonnull
   public EChange deleteUserGroup (@Nullable final String sUserGroupID)
   {
@@ -394,6 +355,110 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return EChange.CHANGED;
   }
 
+  /**
+   * Check if a user group with the specified ID is contained
+   *
+   * @param sUserGroupID
+   *        The ID of the user group to check
+   * @return <code>true</code> if no user group exists, <code>false</code>
+   *         otherwise.
+   */
+  public boolean containsUserGroupWithID (@Nullable final String sUserGroupID)
+  {
+    if (StringHelper.hasNoText (sUserGroupID))
+      return false;
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aUserGroups.containsKey (sUserGroupID);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Check if all passed user group IDs are contained
+   *
+   * @param aUserGroupIDs
+   *        The user group IDs to be checked. May be <code>null</code>.
+   * @return <code>true</code> if the collection is empty or if all contained
+   *         user group IDs are contained
+   */
+  public boolean containsAllUserGroupsWithID (@Nullable final Collection <String> aUserGroupIDs)
+  {
+    if (CollectionHelper.isEmpty (aUserGroupIDs))
+      return true;
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      for (final String sUserGroupID : aUserGroupIDs)
+        if (!m_aUserGroups.containsKey (sUserGroupID))
+          return false;
+      return true;
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Get the user group with the specified ID
+   *
+   * @param sUserGroupID
+   *        The ID of the user group to search
+   * @return <code>null</code> if no such user group exists
+   */
+  @Nullable
+  public UserGroup getUserGroupOfID (@Nullable final String sUserGroupID)
+  {
+    if (StringHelper.hasNoText (sUserGroupID))
+      return null;
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aUserGroups.get (sUserGroupID);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * @return A non-<code>null</code> list of all user groups
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <? extends IUserGroup> getAllUserGroups ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return CollectionHelper.newList (m_aUserGroups.values ());
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Rename the user group with the specified ID
+   *
+   * @param sUserGroupID
+   *        The ID of the user group. May be <code>null</code>.
+   * @param sNewName
+   *        The new name of the user group. May neither be <code>null</code> nor
+   *        empty.
+   * @return {@link EChange#CHANGED} if the user group ID was valid, and the new
+   *         name was different from the old name
+   */
   @Nonnull
   public EChange renameUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sNewName)
   {
@@ -432,11 +497,26 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return EChange.CHANGED;
   }
 
+  /**
+   * Change the modifiable data of a user group
+   *
+   * @param sUserGroupID
+   *        The ID of the user group. May be <code>null</code>.
+   * @param sNewName
+   *        The new name of the user group. May neither be <code>null</code> nor
+   *        empty.
+   * @param sNewDescription
+   *        The optional new description of the user group. May be
+   *        <code>null</code> .
+   * @param aNewCustomAttrs
+   *        Custom attributes. May be <code>null</code>.
+   * @return {@link EChange}
+   */
   @Nonnull
   public EChange setUserGroupData (@Nullable final String sUserGroupID,
                                    @Nonnull @Nonempty final String sNewName,
                                    @Nullable final String sNewDescription,
-                                   @Nullable final Map <String, ?> aNewCustomAttrs)
+                                   @Nullable final Map <String, String> aNewCustomAttrs)
   {
     // Resolve user group
     final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
@@ -461,12 +541,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (UserGroup.OT,
-                                      "all",
-                                      aUserGroup.getID (),
-                                      sNewName,
-                                      sNewDescription,
-                                      aNewCustomAttrs);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT, "all", aUserGroup.getID (), sNewName, sNewDescription, aNewCustomAttrs);
 
     // Execute callback as the very last action
     for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
@@ -482,6 +557,17 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return EChange.CHANGED;
   }
 
+  /**
+   * Assign the passed user ID to the passed user group.<br>
+   * Note: no validity check must be performed for the user ID
+   *
+   * @param sUserGroupID
+   *        ID of the user group to assign to
+   * @param sUserID
+   *        ID of the user to be assigned.
+   * @return {@link EChange#CHANGED} if the user group ID was valid, and the
+   *         specified user ID was not already contained.
+   */
   @Nonnull
   public EChange assignUserToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sUserID)
   {
@@ -520,6 +606,16 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return EChange.CHANGED;
   }
 
+  /**
+   * Unassign the specified user ID from the passed user group ID.
+   *
+   * @param sUserGroupID
+   *        The ID of the user group to unassign the user ID from
+   * @param sUserID
+   *        The user ID to be unassigned
+   * @return {@link EChange#CHANGED} if the user group ID was resolved, and the
+   *         passed user ID was assigned to the user group
+   */
   @Nonnull
   public EChange unassignUserFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
   {
@@ -558,13 +654,21 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return EChange.CHANGED;
   }
 
+  /**
+   * Unassign the passed user ID from all user groups.
+   *
+   * @param sUserID
+   *        ID of the user to be unassigned.
+   * @return {@link EChange#CHANGED} if the passed user ID was at least assigned
+   *         to one user group.
+   */
   @Nonnull
   public EChange unassignUserFromAllUserGroups (@Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
       return EChange.UNCHANGED;
 
-    final List <IUserGroup> aAffectedUserGroups = new ArrayList <IUserGroup> ();
+    final List <IUserGroup> aAffectedUserGroups = new ArrayList <> ();
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -601,6 +705,16 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return EChange.CHANGED;
   }
 
+  /**
+   * Check if the passed user is assigned to the specified user group
+   *
+   * @param sUserGroupID
+   *        ID of the user group to check
+   * @param sUserID
+   *        ID of the user to be checked.
+   * @return <code>true</code> if the specified user is assigned to the
+   *         specified user group.
+   */
   public boolean isUserAssignedToUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
@@ -610,11 +724,19 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return aUserGroup == null ? false : aUserGroup.containsUserID (sUserID);
   }
 
+  /**
+   * Get a collection of all user groups to which a certain user is assigned to.
+   *
+   * @param sUserID
+   *        The user ID to search
+   * @return A non-<code>null</code>but may be empty collection with all
+   *         matching user groups.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public List <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
   {
-    final List <IUserGroup> ret = new ArrayList <IUserGroup> ();
+    final List <IUserGroup> ret = new ArrayList <> ();
     if (StringHelper.hasText (sUserID))
     {
       m_aRWLock.readLock ().lock ();
@@ -632,6 +754,15 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return ret;
   }
 
+  /**
+   * Get a collection of all user group IDs to which a certain user is assigned
+   * to.
+   *
+   * @param sUserID
+   *        The user ID to search
+   * @return A non-<code>null</code>but may be empty collection with all
+   *         matching user group IDs.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public List <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
@@ -654,6 +785,17 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return ret;
   }
 
+  /**
+   * Assign the passed role ID to the user group with the passed ID.<br>
+   * Note: the role ID must not be checked for consistency
+   *
+   * @param sUserGroupID
+   *        The ID of the user group to assign the role to.
+   * @param sRoleID
+   *        The ID of the role to be assigned
+   * @return {@link EChange#CHANGED} if the passed user group ID was resolved,
+   *         and the role ID was not already previously contained
+   */
   @Nonnull
   public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sRoleID)
   {
@@ -692,6 +834,16 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return EChange.CHANGED;
   }
 
+  /**
+   * Unassign the passed role ID from the passed user group ID
+   *
+   * @param sUserGroupID
+   *        The ID of the user group to unassign the role ID from
+   * @param sRoleID
+   *        The role ID to be unassigned.
+   * @return {@link EChange#CHANGED} if the user group ID was resolved and the
+   *         passed role ID was contained
+   */
   @Nonnull
   public EChange unassignRoleFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sRoleID)
   {
@@ -730,6 +882,14 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return EChange.CHANGED;
   }
 
+  /**
+   * Unassign the passed role ID from existing user groups.
+   *
+   * @param sRoleID
+   *        The role ID to be unassigned
+   * @return {@link EChange#CHANGED} if the passed role ID was contained in at
+   *         least one user group
+   */
   @Nonnull
   public EChange unassignRoleFromAllUserGroups (@Nullable final String sRoleID)
   {
@@ -773,6 +933,14 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return EChange.CHANGED;
   }
 
+  /**
+   * Get a collection of all user groups to which a certain role is assigned to.
+   *
+   * @param sRoleID
+   *        The role ID to search
+   * @return A non-<code>null</code>but may be empty collection with all
+   *         matching user groups.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public List <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
@@ -795,6 +963,15 @@ public class UserGroupManager extends AbstractSimpleDAO implements IUserGroupMan
     return ret;
   }
 
+  /**
+   * Get a collection of all user group IDs to which a certain role is assigned
+   * to.
+   *
+   * @param sRoleID
+   *        The role ID to search
+   * @return A non-<code>null</code>but may be empty collection with all
+   *         matching user group IDs.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public List <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)

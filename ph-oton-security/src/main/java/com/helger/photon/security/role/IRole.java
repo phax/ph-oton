@@ -28,7 +28,7 @@ import com.helger.commons.type.ITypedObject;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IRole extends ITypedObject <String>, IHasName, IHasDescription, IAttributeContainer <String, Object>
+public interface IRole extends ITypedObject <String>, IHasName, IHasDescription, IAttributeContainer <String, String>
 {
   /* empty */
 }

@@ -39,9 +39,7 @@ public final class UserGroupMicroTypeConverter implements IMicroTypeConverter
   private static final String ELEMENT_CUSTOM = "custom";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
-                                              @Nullable final String sNamespaceURI,
-                                              @Nonnull final String sTagName)
+  public IMicroElement convertToMicroElement (@Nonnull final Object aObject, @Nullable final String sNamespaceURI, @Nonnull final String sTagName)
   {
     final IUserGroup aUserGroup = (IUserGroup) aObject;
     final IMicroElement eUserGroup = new MicroElement (sNamespaceURI, sTagName);
@@ -49,12 +47,11 @@ public final class UserGroupMicroTypeConverter implements IMicroTypeConverter
     eUserGroup.setAttribute (ATTR_NAME, aUserGroup.getName ());
     if (StringHelper.hasText (aUserGroup.getDescription ()))
       eUserGroup.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aUserGroup.getDescription ());
-    for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aUserGroup.getAllAttributes ())
-                                                                   .entrySet ())
+    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aUserGroup.getAllAttributes ()).entrySet ())
     {
       final IMicroElement eCustom = eUserGroup.appendElement (ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
-      eCustom.appendText (String.valueOf (aEntry.getValue ()));
+      eCustom.appendText (aEntry.getValue ());
     }
     for (final String sUserID : CollectionHelper.getSorted (aUserGroup.getAllContainedUserIDs ()))
       eUserGroup.appendElement (ELEMENT_USER).setAttribute (ATTR_ID, sUserID);

@@ -248,7 +248,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     }
 
     // custom attributes
-    final Map <String, Object> aCustomAttrs = aSelectedObject.getAllAttributes ();
+    final Map <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
 
     // Callback for custom attributes
     final Set <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aForm);
@@ -259,12 +259,12 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
       aAttrTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
                                            EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
-      for (final Map.Entry <String, Object> aEntry : aCustomAttrs.entrySet ())
+      for (final Map.Entry <String, String> aEntry : aCustomAttrs.entrySet ())
       {
         final String sName = aEntry.getKey ();
         if (aHandledAttrs == null || !aHandledAttrs.contains (sName))
         {
-          final String sValue = String.valueOf (aEntry.getValue ());
+          final String sValue = aEntry.getValue ();
           aAttrTable.addBodyRow ().addCells (sName, sValue);
         }
       }
@@ -316,7 +316,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       {
         final String sUserGroupID = aSelectedObject.getID ();
 
-        final Map <String, Object> aAttrMap = aSelectedObject.getAllAttributes ();
+        final Map <String, String> aAttrMap = aSelectedObject.getAllAttributes ();
         if (aCustomAttrMap != null)
           aAttrMap.putAll (aCustomAttrMap);
 

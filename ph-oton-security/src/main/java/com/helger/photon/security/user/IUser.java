@@ -41,7 +41,7 @@ import com.helger.photon.security.password.hash.PasswordHash;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IUser extends ITypedObject <String>, IHasDescription, IHasCreationDateTime, IHasLastModificationDateTime, IHasDeletionDateTime, IAuthSubject, IAttributeContainer <String, Object>
+public interface IUser extends ITypedObject <String>, IHasDescription, IHasCreationDateTime, IHasLastModificationDateTime, IHasDeletionDateTime, IAuthSubject, IAttributeContainer <String, String>
 {
   /**
    * @return <code>true</code> if the user has the ID

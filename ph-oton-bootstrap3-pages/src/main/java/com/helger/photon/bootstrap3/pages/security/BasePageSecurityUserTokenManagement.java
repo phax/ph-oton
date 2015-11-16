@@ -213,6 +213,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                       aSelectedObject.getUserName ())));
 
     final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
+    onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
+
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_APP_TOKEN.getDisplayText (aDisplayLocale))
                                                  .setCtrl (createLink (aWPEC, aSelectedObject.getAppToken ())));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USER_NAME.getDisplayText (aDisplayLocale))

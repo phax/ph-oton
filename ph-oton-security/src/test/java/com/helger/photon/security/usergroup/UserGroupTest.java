@@ -27,7 +27,6 @@ import org.junit.Test;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.url.SMap;
-import com.helger.photon.security.usergroup.UserGroup;
 
 /**
  * Test class for class {@link UserGroup}.
@@ -39,7 +38,7 @@ public final class UserGroupTest
   @Test
   public void testBasic ()
   {
-    final UserGroup aUserGroup = new UserGroup ("id1", "User group 5", "bla", (Map <String, ?>) null);
+    final UserGroup aUserGroup = new UserGroup ("id1", "User group 5", "bla", (Map <String, String>) null);
     assertEquals ("id1", aUserGroup.getID ());
     assertEquals ("User group 5", aUserGroup.getName ());
   }

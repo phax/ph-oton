@@ -102,7 +102,7 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
   @OverrideOnDemand
   protected Set <String> onShowSelectedObjectCustomAttrs (@Nonnull final WPECTYPE aWPEC,
                                                           @Nonnull final DATATYPE aSelectedObject,
-                                                          @Nonnull final Map <String, ?> aCustomAttrs,
+                                                          @Nonnull final Map <String, String> aCustomAttrs,
                                                           @Nonnull final BootstrapViewForm aTable)
   {
     return null;

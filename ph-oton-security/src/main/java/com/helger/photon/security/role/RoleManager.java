@@ -54,7 +54,7 @@ import com.helger.photon.security.CSecurity;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class RoleManager extends AbstractSimpleDAO implements IRoleManager, IReloadableDAO
+public final class RoleManager extends AbstractSimpleDAO implements IReloadableDAO
 {
   public static final boolean DEFAULT_CREATE_DEFAULTS = true;
 
@@ -127,11 +127,8 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
       return EChange.UNCHANGED;
 
     // Default should be created
-    _addRole (new Role (CSecurity.ROLE_ADMINISTRATOR_ID,
-                        CSecurity.ROLE_ADMINISTRATOR_NAME,
-                        (String) null,
-                        (Map <String, ?>) null));
-    _addRole (new Role (CSecurity.ROLE_USER_ID, CSecurity.ROLE_USER_NAME, (String) null, (Map <String, ?>) null));
+    _addRole (new Role (CSecurity.ROLE_ADMINISTRATOR_ID, CSecurity.ROLE_ADMINISTRATOR_NAME, (String) null, (Map <String, String>) null));
+    _addRole (new Role (CSecurity.ROLE_USER_ID, CSecurity.ROLE_USER_NAME, (String) null, (Map <String, String>) null));
     return EChange.CHANGED;
   }
 
@@ -155,6 +152,9 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     return aDoc;
   }
 
+  /**
+   * @return The role callback list. Never <code>null</code>.
+   */
   @Nonnull
   @ReturnsMutableObject ("design")
   public CallbackList <IRoleModificationCallback> getRoleModificationCallbacks ()
@@ -172,10 +172,22 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     m_aRoles.put (sRoleID, aRole);
   }
 
+  /**
+   * Create a new role.
+   *
+   * @param sName
+   *        The name of the new role. May neither be <code>null</code> nor
+   *        empty.
+   * @param sDescription
+   *        Optional description text. May be <code>null</code>.
+   * @param aCustomAttrs
+   *        A set of custom attributes. May be <code>null</code>.
+   * @return The created role and never <code>null</code>.
+   */
   @Nonnull
   public IRole createNewRole (@Nonnull @Nonempty final String sName,
                               @Nullable final String sDescription,
-                              @Nullable final Map <String, ?> aCustomAttrs)
+                              @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create role
     final Role aRole = new Role (sName, sDescription, aCustomAttrs);
@@ -207,11 +219,24 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     return aRole;
   }
 
+  /**
+   * Create a predefined role.
+   *
+   * @param sID
+   *        The ID of the new role
+   * @param sName
+   *        The name of the new role
+   * @param sDescription
+   *        Optional description text. May be <code>null</code>.
+   * @param aCustomAttrs
+   *        A set of custom attributes. May be <code>null</code>.
+   * @return The created role and never <code>null</code>.
+   */
   @Nonnull
   public IRole createPredefinedRole (@Nonnull @Nonempty final String sID,
                                      @Nonnull @Nonempty final String sName,
                                      @Nullable final String sDescription,
-                                     @Nullable final Map <String, ?> aCustomAttrs)
+                                     @Nullable final Map <String, String> aCustomAttrs)
   {
 
     // Create role
@@ -244,73 +269,13 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     return aRole;
   }
 
-  public boolean containsRoleWithID (@Nullable final String sRoleID)
-  {
-    if (StringHelper.hasNoText (sRoleID))
-      return false;
-
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aRoles.containsKey (sRoleID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  public boolean containsAllRolesWithID (@Nullable final Collection <String> aRoleIDs)
-  {
-    if (CollectionHelper.isEmpty (aRoleIDs))
-      return true;
-
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      for (final String sRoleID : aRoleIDs)
-        if (!m_aRoles.containsKey (sRoleID))
-          return false;
-      return true;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  @Nullable
-  public Role getRoleOfID (@Nullable final String sRoleID)
-  {
-    if (StringHelper.hasNoText (sRoleID))
-      return null;
-
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aRoles.get (sRoleID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public Collection <? extends IRole> getAllRoles ()
-  {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aRoles.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
+  /**
+   * Delete the role with the passed ID
+   *
+   * @param sRoleID
+   *        The role ID to be deleted
+   * @return {@link EChange#CHANGED} if the passed role ID was found and deleted
+   */
   @Nonnull
   public EChange deleteRole (@Nullable final String sRoleID)
   {
@@ -346,6 +311,109 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     return EChange.CHANGED;
   }
 
+  /**
+   * Check if the role with the specified ID is contained
+   *
+   * @param sRoleID
+   *        The role ID to be check
+   * @return <code>true</code> if such role exists, <code>false</code> otherwise
+   */
+  public boolean containsRoleWithID (@Nullable final String sRoleID)
+  {
+    if (StringHelper.hasNoText (sRoleID))
+      return false;
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aRoles.containsKey (sRoleID);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Check if all passed role IDs are contained
+   *
+   * @param aRoleIDs
+   *        The role IDs to be checked. May be <code>null</code>.
+   * @return <code>true</code> if the collection is empty or if all contained
+   *         role IDs are contained
+   */
+  public boolean containsAllRolesWithID (@Nullable final Collection <String> aRoleIDs)
+  {
+    if (CollectionHelper.isEmpty (aRoleIDs))
+      return true;
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      for (final String sRoleID : aRoleIDs)
+        if (!m_aRoles.containsKey (sRoleID))
+          return false;
+      return true;
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Get the role with the specified ID
+   *
+   * @param sRoleID
+   *        The role ID to be resolved
+   * @return <code>null</code> if no such role exists.
+   */
+  @Nullable
+  public Role getRoleOfID (@Nullable final String sRoleID)
+  {
+    if (StringHelper.hasNoText (sRoleID))
+      return null;
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aRoles.get (sRoleID);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * @return A non-<code>null</code> collection of all available roles
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public Collection <? extends IRole> getAllRoles ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return CollectionHelper.newList (m_aRoles.values ());
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Rename the role with the passed ID
+   *
+   * @param sRoleID
+   *        The ID of the role to be renamed. May be <code>null</code>.
+   * @param sNewName
+   *        The new name of the role. May neither be <code>null</code> nor
+   *        empty.
+   * @return {@link EChange#CHANGED} if the passed role ID was found, and the
+   *         new name is different from the old name of he role
+   */
   @Nonnull
   public EChange renameRole (@Nullable final String sRoleID, @Nonnull @Nonempty final String sNewName)
   {
@@ -384,11 +452,25 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     return EChange.CHANGED;
   }
 
+  /**
+   * Change the modifiable data of a user group
+   *
+   * @param sRoleID
+   *        The ID of the role to be renamed. May be <code>null</code>.
+   * @param sNewName
+   *        The new name of the role. May neither be <code>null</code> nor
+   *        empty.
+   * @param sNewDescription
+   *        The new description text. May be <code>null</code>.
+   * @param aNewCustomAttrs
+   *        Custom attributes. May be <code>null</code>.
+   * @return {@link EChange}
+   */
   @Nonnull
   public EChange setRoleData (@Nullable final String sRoleID,
                               @Nonnull @Nonempty final String sNewName,
                               @Nullable final String sNewDescription,
-                              @Nullable final Map <String, ?> aNewCustomAttrs)
+                              @Nullable final Map <String, String> aNewCustomAttrs)
   {
     // Resolve role
     final Role aRole = getRoleOfID (sRoleID);
@@ -413,12 +495,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IRoleManager
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (Role.OT,
-                                      "all",
-                                      aRole.getID (),
-                                      sNewName,
-                                      sNewDescription,
-                                      aNewCustomAttrs);
+    AuditHelper.onAuditModifySuccess (Role.OT, "all", aRole.getID (), sNewName, sNewDescription, aNewCustomAttrs);
 
     // Execute callback as the very last action
     for (final IRoleModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())

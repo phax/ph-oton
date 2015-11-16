@@ -22,13 +22,12 @@ import com.helger.html.hc.html.grouping.HCUL;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.label.BootstrapLabel;
 import com.helger.photon.bootstrap3.label.EBootstrapLabelType;
-import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 import com.helger.photon.security.token.revocation.IRevocationStatus;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
-public abstract class AbstractWebPageSecurityToken <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <DATATYPE, WPECTYPE>
+public abstract class AbstractWebPageSecurityToken <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageSecurityObjectWithAttributes <DATATYPE, WPECTYPE>
 {
   public static final int TOKEN_STRING_MIN_LENGTH = 16;
 
@@ -107,12 +106,6 @@ public abstract class AbstractWebPageSecurityToken <DATATYPE extends IHasID <Str
                                        @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
-  }
-
-  @Override
-  protected final boolean isObjectLockingEnabled ()
-  {
-    return true;
   }
 
   @Nonnull

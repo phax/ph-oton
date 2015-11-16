@@ -185,6 +185,8 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                                                                       aSelectedObject.getDisplayName ())));
 
     final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
+    onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
+
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_OWNER_NAME.getDisplayText (aDisplayLocale))
                                                  .setCtrl (aSelectedObject.getOwnerName ()));
 

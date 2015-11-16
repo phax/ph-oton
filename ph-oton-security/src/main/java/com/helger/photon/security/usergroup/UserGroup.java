@@ -29,7 +29,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
+import com.helger.commons.collection.attr.MapBasedAttributeContainer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.factory.GlobalIDFactory;
@@ -43,19 +43,17 @@ import com.helger.commons.type.ObjectType;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class UserGroup extends MapBasedAttributeContainerAny <String> implements IUserGroup
+public final class UserGroup extends MapBasedAttributeContainer <String, String> implements IUserGroup
 {
   public static final ObjectType OT = new ObjectType ("usergroup");
 
   private final String m_sID;
   private String m_sName;
   private String m_sDescription;
-  private final Set <String> m_aUserIDs = new HashSet <String> ();
-  private final Set <String> m_aRoleIDs = new HashSet <String> ();
+  private final Set <String> m_aUserIDs = new HashSet <> ();
+  private final Set <String> m_aRoleIDs = new HashSet <> ();
 
-  public UserGroup (@Nonnull @Nonempty final String sName,
-                    @Nullable final String sDescription,
-                    @Nullable final Map <String, ?> aCustomAttrs)
+  public UserGroup (@Nonnull @Nonempty final String sName, @Nullable final String sDescription, @Nullable final Map <String, String> aCustomAttrs)
   {
     this (GlobalIDFactory.getNewPersistentStringID (), sName, sDescription, aCustomAttrs);
   }
@@ -63,7 +61,7 @@ public final class UserGroup extends MapBasedAttributeContainerAny <String> impl
   UserGroup (@Nonnull @Nonempty final String sID,
              @Nonnull @Nonempty final String sName,
              @Nullable final String sDescription,
-             @Nullable final Map <String, ?> aCustomAttrs)
+             @Nullable final Map <String, String> aCustomAttrs)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
     setName (sName);

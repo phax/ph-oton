@@ -24,7 +24,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
+import com.helger.commons.collection.attr.MapBasedAttributeContainer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.factory.GlobalIDFactory;
@@ -38,7 +38,7 @@ import com.helger.commons.type.ObjectType;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class Role extends MapBasedAttributeContainerAny <String> implements IRole
+public final class Role extends MapBasedAttributeContainer <String, String> implements IRole
 {
   public static final ObjectType OT = new ObjectType ("role");
 
@@ -46,9 +46,7 @@ public final class Role extends MapBasedAttributeContainerAny <String> implement
   private String m_sName;
   private String m_sDescription;
 
-  public Role (@Nonnull @Nonempty final String sName,
-               @Nullable final String sDescription,
-               @Nullable final Map <String, ?> aCustomAttrs)
+  public Role (@Nonnull @Nonempty final String sName, @Nullable final String sDescription, @Nullable final Map <String, String> aCustomAttrs)
   {
     this (GlobalIDFactory.getNewPersistentStringID (), sName, sDescription, aCustomAttrs);
   }
@@ -56,7 +54,7 @@ public final class Role extends MapBasedAttributeContainerAny <String> implement
   Role (@Nonnull @Nonempty final String sID,
         @Nonnull @Nonempty final String sName,
         @Nullable final String sDescription,
-        @Nullable final Map <String, ?> aCustomAttrs)
+        @Nullable final Map <String, String> aCustomAttrs)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
     setName (sName);

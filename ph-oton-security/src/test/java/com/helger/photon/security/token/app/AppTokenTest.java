@@ -35,7 +35,12 @@ public final class AppTokenTest
   @Test
   public void testExistingTokenString ()
   {
-    final AppToken aAppToken = new AppToken ("blafootoken", new SMap ().add ("a", "b").add ("c", "def"), "Unit test", "http://junit.org", "Unit Tester", "ut@example.org");
+    final AppToken aAppToken = new AppToken ("blafootoken",
+                                             new SMap ().add ("a", "b").add ("c", "def"),
+                                             "Unit test",
+                                             "http://junit.org",
+                                             "Unit Tester",
+                                             "ut@example.org");
     CommonsTestHelper.testMicroTypeConversion (aAppToken);
     assertEquals ("blafootoken", aAppToken.getActiveTokenString ());
   }

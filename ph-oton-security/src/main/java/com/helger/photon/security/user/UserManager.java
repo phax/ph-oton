@@ -239,7 +239,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                               @Nullable final String sLastName,
                               @Nullable final String sDescription,
                               @Nullable final Locale aDesiredLocale,
-                              @Nullable final Map <String, ?> aCustomAttrs,
+                              @Nullable final Map <String, String> aCustomAttrs,
                               final boolean bDisabled)
   {
     ValueEnforcer.notEmpty (sLoginName, "LoginName");
@@ -335,7 +335,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                                      @Nullable final String sLastName,
                                      @Nullable final String sDescription,
                                      @Nullable final Locale aDesiredLocale,
-                                     @Nullable final Map <String, ?> aCustomAttrs,
+                                     @Nullable final Map <String, String> aCustomAttrs,
                                      final boolean bDisabled)
   {
     ValueEnforcer.notEmpty (sLoginName, "LoginName");
@@ -667,7 +667,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                               @Nullable final String sNewLastName,
                               @Nullable final String sNewDescription,
                               @Nullable final Locale aNewDesiredLocale,
-                              @Nullable final Map <String, ?> aNewCustomAttrs,
+                              @Nullable final Map <String, String> aNewCustomAttrs,
                               final boolean bNewDisabled)
   {
     // Resolve user

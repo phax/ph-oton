@@ -23,8 +23,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.cleanup.CommonsCleanup;
 import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.id.factory.MemoryIntIDFactory;
 import com.helger.photon.basic.app.io.WebFileIO;
+import com.helger.photon.basic.app.io.WebIOIntIDFactory;
 
 /**
  * Static test init and shutdown code for this project
@@ -45,7 +45,7 @@ public final class PhotonBasicTestInit
 
     // Init the IDs
     if (!GlobalIDFactory.hasPersistentIntIDFactory ())
-      GlobalIDFactory.setPersistentIntIDFactory (new MemoryIntIDFactory ());
+      GlobalIDFactory.setPersistentIntIDFactory (new WebIOIntIDFactory ("ph-oton-basic.id"));
   }
 
   public static void shutdown ()

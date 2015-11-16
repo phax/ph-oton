@@ -28,7 +28,7 @@ import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
+import com.helger.commons.collection.attr.MapBasedAttributeContainer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.factory.GlobalIDFactory;
@@ -46,7 +46,7 @@ import com.helger.photon.security.password.hash.PasswordHash;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class User extends MapBasedAttributeContainerAny <String> implements IUser
+public class User extends MapBasedAttributeContainer <String, String> implements IUser
 {
   public static final ObjectType OT = new ObjectType ("user");
 
@@ -96,7 +96,7 @@ public class User extends MapBasedAttributeContainerAny <String> implements IUse
                @Nullable final String sLastName,
                @Nullable final String sDescription,
                @Nullable final Locale aDesiredLocale,
-               @Nullable final Map <String, ?> aCustomAttrs,
+               @Nullable final Map <String, String> aCustomAttrs,
                final boolean bDisabled)
   {
     this (GlobalIDFactory.getNewPersistentStringID (),
@@ -127,7 +127,7 @@ public class User extends MapBasedAttributeContainerAny <String> implements IUse
         @Nullable final String sLastName,
         @Nullable final String sDescription,
         @Nullable final Locale aDesiredLocale,
-        @Nullable final Map <String, ?> aCustomAttrs,
+        @Nullable final Map <String, String> aCustomAttrs,
         final boolean bDisabled)
   {
     this (sID,
@@ -201,7 +201,7 @@ public class User extends MapBasedAttributeContainerAny <String> implements IUse
         @Nullable final LocalDateTime aLastLoginDT,
         @Nonnegative final int nLoginCount,
         @Nonnegative final int nConsecutiveFailedLoginCount,
-        @Nullable final Map <String, ?> aCustomAttrs,
+        @Nullable final Map <String, String> aCustomAttrs,
         final boolean bDeleted,
         final boolean bDisabled)
   {

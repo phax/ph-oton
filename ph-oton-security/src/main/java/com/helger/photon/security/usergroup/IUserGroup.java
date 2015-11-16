@@ -30,7 +30,7 @@ import com.helger.photon.security.user.IUserContainer;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IUserGroup extends ITypedObject <String>, IHasName, IHasDescription, IUserContainer, IRoleContainer, IAttributeContainer <String, Object>
+public interface IUserGroup extends ITypedObject <String>, IHasName, IHasDescription, IUserContainer, IRoleContainer, IAttributeContainer <String, String>
 {
   /* empty */
 }

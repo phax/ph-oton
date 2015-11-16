@@ -22,10 +22,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.photon.basic.mock.PhotonBasicTestRule;
+import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.role.Role;
 import com.helger.photon.security.role.RoleManager;
+import com.helger.photon.security.token.app.AppTokenManager;
+import com.helger.photon.security.token.user.UserTokenManager;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.UserGroupManager;
 
@@ -37,7 +39,7 @@ import com.helger.photon.security.usergroup.UserGroupManager;
 public final class PhotonSecurityManagerTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicTestRule ();
+  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
 
   @Test
   public void testStartup ()
@@ -48,6 +50,10 @@ public final class PhotonSecurityManagerTest
     assertNotNull (aUserMgr);
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
     assertNotNull (aUserGroupMgr);
+    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
+    assertNotNull (aAppTokenMgr);
+    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+    assertNotNull (aUserTokenMgr);
 
     // Check default stuff
     assertNotNull (aRoleMgr.getRoleOfID (CSecurity.ROLE_ADMINISTRATOR_ID));

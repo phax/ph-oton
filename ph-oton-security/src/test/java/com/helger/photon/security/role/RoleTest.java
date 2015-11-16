@@ -26,7 +26,6 @@ import org.junit.Test;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.url.SMap;
-import com.helger.photon.security.role.Role;
 
 /**
  * Test class for class {@link Role}.
@@ -38,7 +37,7 @@ public final class RoleTest
   @Test
   public void testBasic ()
   {
-    final Role aRole = new Role ("id1", "Role 1", "Test role", (Map <String, ?>) null);
+    final Role aRole = new Role ("id1", "Role 1", "Test role", (Map <String, String>) null);
     assertEquals ("id1", aRole.getID ());
     assertEquals ("Role 1", aRole.getName ());
   }
