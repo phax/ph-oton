@@ -12,8 +12,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.object.AbstractObject;
-import com.helger.photon.security.object.StubObject;
+import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
+import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 
@@ -22,7 +22,7 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
  *
  * @author Philip Helger
  */
-public abstract class AbstractObjectWithAccessToken extends AbstractObject implements IObjectWithAccessToken
+public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCustomAttrs implements IObjectWithAccessToken
 {
   private final List <AccessToken> m_aAccessTokens;
 
@@ -35,7 +35,8 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObject imple
     return aAccessToken != null && !aAccessToken.isRevoked () ? aAccessToken : null;
   }
 
-  public AbstractObjectWithAccessToken (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final List <AccessToken> aAccessTokens)
+  public AbstractObjectWithAccessToken (@Nonnull final StubObjectWithCustomAttrs aStubObject,
+                                        @Nonnull @Nonempty final List <AccessToken> aAccessTokens)
   {
     super (aStubObject);
     m_aAccessTokens = ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");

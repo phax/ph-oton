@@ -16,64 +16,49 @@
  */
 package com.helger.photon.security.usergroup;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
-import com.helger.commons.microdom.convert.IMicroTypeConverter;
 import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.string.StringHelper;
+import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
 
-public final class UserGroupMicroTypeConverter implements IMicroTypeConverter
+public final class UserGroupMicroTypeConverter extends AbstractObjectMicroTypeConverter
 {
-  private static final String ATTR_ID = "id";
   private static final String ATTR_NAME = "name";
   private static final String ELEMENT_DESCRIPTION = "description";
   private static final String ELEMENT_USER = "user";
   private static final String ELEMENT_ROLE = "role";
-  private static final String ELEMENT_CUSTOM = "custom";
 
   @Nonnull
   public IMicroElement convertToMicroElement (@Nonnull final Object aObject, @Nullable final String sNamespaceURI, @Nonnull final String sTagName)
   {
     final IUserGroup aUserGroup = (IUserGroup) aObject;
-    final IMicroElement eUserGroup = new MicroElement (sNamespaceURI, sTagName);
-    eUserGroup.setAttribute (ATTR_ID, aUserGroup.getID ());
-    eUserGroup.setAttribute (ATTR_NAME, aUserGroup.getName ());
+    final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
+    setObjectFields (aUserGroup, aElement);
+    aElement.setAttribute (ATTR_NAME, aUserGroup.getName ());
     if (StringHelper.hasText (aUserGroup.getDescription ()))
-      eUserGroup.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aUserGroup.getDescription ());
-    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aUserGroup.getAllAttributes ()).entrySet ())
-    {
-      final IMicroElement eCustom = eUserGroup.appendElement (ELEMENT_CUSTOM);
-      eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
-      eCustom.appendText (aEntry.getValue ());
-    }
+      aElement.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aUserGroup.getDescription ());
     for (final String sUserID : CollectionHelper.getSorted (aUserGroup.getAllContainedUserIDs ()))
-      eUserGroup.appendElement (ELEMENT_USER).setAttribute (ATTR_ID, sUserID);
+      aElement.appendElement (ELEMENT_USER).setAttribute (ATTR_ID, sUserID);
     for (final String sRoleID : CollectionHelper.getSorted (aUserGroup.getAllContainedRoleIDs ()))
-      eUserGroup.appendElement (ELEMENT_ROLE).setAttribute (ATTR_ID, sRoleID);
-    return eUserGroup;
+      aElement.appendElement (ELEMENT_ROLE).setAttribute (ATTR_ID, sRoleID);
+    return aElement;
   }
 
   @Nonnull
-  public UserGroup convertToNative (@Nonnull final IMicroElement eUserGroup)
+  public UserGroup convertToNative (@Nonnull final IMicroElement aElement)
   {
-    final String sID = eUserGroup.getAttributeValue (ATTR_ID);
-    final String sName = eUserGroup.getAttributeValue (ATTR_NAME);
-    final String sDescription = MicroHelper.getChildTextContentTrimmed (eUserGroup, ELEMENT_DESCRIPTION);
-    final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
-    for (final IMicroElement eCustom : eUserGroup.getAllChildElements (ELEMENT_CUSTOM))
-      aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
+    final String sName = aElement.getAttributeValue (ATTR_NAME);
+    final String sDescription = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_DESCRIPTION);
 
-    final UserGroup aUserGroup = new UserGroup (sID, sName, sDescription, aCustomAttrs);
-    for (final IMicroElement eUser : eUserGroup.getAllChildElements (ELEMENT_USER))
+    final UserGroup aUserGroup = new UserGroup (getStubObjectWithCustomAttrs (aElement), sName, sDescription);
+    for (final IMicroElement eUser : aElement.getAllChildElements (ELEMENT_USER))
       aUserGroup.assignUser (eUser.getAttributeValue (ATTR_ID));
-    for (final IMicroElement eRole : eUserGroup.getAllChildElements (ELEMENT_ROLE))
+    for (final IMicroElement eRole : aElement.getAllChildElements (ELEMENT_ROLE))
       aUserGroup.assignRole (eRole.getAttributeValue (ATTR_ID));
     return aUserGroup;
   }

@@ -75,6 +75,6 @@ public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeCo
 
     final String sUserName = aElement.getAttributeValue (ATTR_USER_NAME);
 
-    return new UserToken (getStubObject (aElement), aAccessTokens, aAppToken, sUserName);
+    return new UserToken (getStubObjectWithCustomAttrs (aElement), aAccessTokens, aAppToken, sUserName);
   }
 }

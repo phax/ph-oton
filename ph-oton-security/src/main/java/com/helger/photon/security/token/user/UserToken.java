@@ -12,7 +12,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.security.object.StubObject;
+import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.app.IAppToken;
 import com.helger.photon.security.token.object.AbstractObjectWithAccessToken;
@@ -34,13 +34,13 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
                     @Nonnull final IAppToken aAppToken,
                     @Nonnull @Nonempty final String sUserName)
   {
-    this (StubObject.createForCurrentUser (aCustomAttrs),
+    this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs),
           CollectionHelper.newList (AccessToken.createAccessTokenValidFromNow (sTokenString)),
           aAppToken,
           sUserName);
   }
 
-  UserToken (@Nonnull final StubObject aStubObject,
+  UserToken (@Nonnull final StubObjectWithCustomAttrs aStubObject,
              @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
              @Nonnull final IAppToken aAppToken,
              @Nonnull @Nonempty final String sUserName)

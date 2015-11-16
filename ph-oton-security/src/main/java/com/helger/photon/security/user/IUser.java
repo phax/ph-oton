@@ -28,7 +28,7 @@ import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.text.IHasDescription;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
-import com.helger.photon.basic.object.IObject;
+import com.helger.photon.basic.object.IObjectWithCustomAttrs;
 import com.helger.photon.security.password.hash.PasswordHash;
 
 /**
@@ -37,7 +37,7 @@ import com.helger.photon.security.password.hash.PasswordHash;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IUser extends IObject, IHasDescription, IAuthSubject
+public interface IUser extends IObjectWithCustomAttrs, IHasDescription, IAuthSubject
 {
   /**
    * @return <code>true</code> if the user has the ID

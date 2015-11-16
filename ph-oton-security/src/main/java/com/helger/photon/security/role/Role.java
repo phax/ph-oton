@@ -24,13 +24,12 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.attr.MapBasedAttributeContainer;
 import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
+import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
+import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 
 /**
  * Default implementation of the {@link IRole} interface.
@@ -38,41 +37,29 @@ import com.helger.commons.type.ObjectType;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class Role extends MapBasedAttributeContainer <String, String> implements IRole
+public final class Role extends AbstractObjectWithCustomAttrs implements IRole
 {
   public static final ObjectType OT = new ObjectType ("role");
 
-  private final String m_sID;
   private String m_sName;
   private String m_sDescription;
 
   public Role (@Nonnull @Nonempty final String sName, @Nullable final String sDescription, @Nullable final Map <String, String> aCustomAttrs)
   {
-    this (GlobalIDFactory.getNewPersistentStringID (), sName, sDescription, aCustomAttrs);
+    this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs), sName, sDescription);
   }
 
-  Role (@Nonnull @Nonempty final String sID,
-        @Nonnull @Nonempty final String sName,
-        @Nullable final String sDescription,
-        @Nullable final Map <String, String> aCustomAttrs)
+  Role (@Nonnull final StubObjectWithCustomAttrs aStubObject, @Nonnull @Nonempty final String sName, @Nullable final String sDescription)
   {
-    m_sID = ValueEnforcer.notEmpty (sID, "ID");
+    super (aStubObject);
     setName (sName);
     setDescription (sDescription);
-    setAttributes (aCustomAttrs);
   }
 
   @Nonnull
   public ObjectType getObjectType ()
   {
     return Role.OT;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getID ()
-  {
-    return m_sID;
   }
 
   @Nonnull
@@ -109,29 +96,8 @@ public final class Role extends MapBasedAttributeContainer <String, String> impl
   }
 
   @Override
-  public boolean equals (final Object o)
-  {
-    if (o == this)
-      return true;
-    if (o == null || !getClass ().equals (o.getClass ()))
-      return false;
-    final Role rhs = (Role) o;
-    return m_sID.equals (rhs.m_sID);
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    return new HashCodeGenerator (this).append (m_sID).getHashCode ();
-  }
-
-  @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("ID", m_sID)
-                            .append ("name", m_sName)
-                            .appendIfNotNull ("description", m_sDescription)
-                            .toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("name", m_sName).appendIfNotNull ("description", m_sDescription).toString ();
   }
 }

@@ -47,6 +47,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
+import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 
 /**
  * This class manages the available roles.
@@ -127,8 +128,10 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
       return EChange.UNCHANGED;
 
     // Default should be created
-    _addRole (new Role (CSecurity.ROLE_ADMINISTRATOR_ID, CSecurity.ROLE_ADMINISTRATOR_NAME, (String) null, (Map <String, String>) null));
-    _addRole (new Role (CSecurity.ROLE_USER_ID, CSecurity.ROLE_USER_NAME, (String) null, (Map <String, String>) null));
+    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
+                        CSecurity.ROLE_ADMINISTRATOR_NAME,
+                        (String) null));
+    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID), CSecurity.ROLE_USER_NAME, (String) null));
     return EChange.CHANGED;
   }
 
@@ -240,7 +243,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
   {
 
     // Create role
-    final Role aRole = new Role (sID, sName, sDescription, aCustomAttrs);
+    final Role aRole = new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
 
     m_aRWLock.writeLock ().lock ();
     try

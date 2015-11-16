@@ -17,10 +17,9 @@
 package com.helger.photon.security.usergroup;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.text.IHasDescription;
-import com.helger.commons.type.ITypedObject;
+import com.helger.photon.basic.object.IObjectWithCustomAttrs;
 import com.helger.photon.security.role.IRoleContainer;
 import com.helger.photon.security.user.IUserContainer;
 
@@ -30,7 +29,7 @@ import com.helger.photon.security.user.IUserContainer;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IUserGroup extends ITypedObject <String>, IHasName, IHasDescription, IUserContainer, IRoleContainer, IAttributeContainer <String, String>
+public interface IUserGroup extends IObjectWithCustomAttrs, IHasName, IHasDescription, IUserContainer, IRoleContainer
 {
   /* empty */
 }

@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
-import com.helger.photon.basic.object.IObject;
+import com.helger.photon.basic.object.IObjectWithCustomAttrs;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 
 /**
@@ -16,7 +16,7 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
  *
  * @author Philip Helger
  */
-public interface IObjectWithAccessToken extends IObject, IAuthSubject
+public interface IObjectWithAccessToken extends IObjectWithCustomAttrs, IAuthSubject
 {
   /**
    * @return A list of all tokens used by this user. The latest, active token is

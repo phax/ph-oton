@@ -20,13 +20,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Map;
-
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.url.SMap;
+import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
+import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 
 /**
  * Test class for class {@link UserGroup}.
@@ -35,10 +37,13 @@ import com.helger.commons.url.SMap;
  */
 public final class UserGroupTest
 {
+  @Rule
+  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
+
   @Test
   public void testBasic ()
   {
-    final UserGroup aUserGroup = new UserGroup ("id1", "User group 5", "bla", (Map <String, String>) null);
+    final UserGroup aUserGroup = new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1"), "User group 5", "bla");
     assertEquals ("id1", aUserGroup.getID ());
     assertEquals ("User group 5", aUserGroup.getName ());
   }
@@ -46,7 +51,9 @@ public final class UserGroupTest
   @Test
   public void testMicroConversion ()
   {
-    final UserGroup aUserGroup = new UserGroup ("id1", "User group 5", "bla", new SMap ("key", "value"));
+    final UserGroup aUserGroup = new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1", new SMap ("key", "value")),
+                                                "User group 5",
+                                                "bla");
     aUserGroup.assignUser ("user1");
     aUserGroup.assignUser ("user2");
     aUserGroup.assignRole ("role1");

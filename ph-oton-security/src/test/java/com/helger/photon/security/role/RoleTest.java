@@ -19,13 +19,15 @@ package com.helger.photon.security.role;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.Map;
-
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.url.SMap;
+import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
+import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 
 /**
  * Test class for class {@link Role}.
@@ -34,10 +36,13 @@ import com.helger.commons.url.SMap;
  */
 public final class RoleTest
 {
+  @Rule
+  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
+
   @Test
   public void testBasic ()
   {
-    final Role aRole = new Role ("id1", "Role 1", "Test role", (Map <String, String>) null);
+    final Role aRole = new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1"), "Role 1", "Test role");
     assertEquals ("id1", aRole.getID ());
     assertEquals ("Role 1", aRole.getName ());
   }
@@ -45,7 +50,7 @@ public final class RoleTest
   @Test
   public void testMicroConversion ()
   {
-    final Role aRole = new Role ("id1", "Role 1", "bla", new SMap ("key", "value"));
+    final Role aRole = new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1", new SMap ("key", "value")), "Role 1", "bla");
 
     // To XML
     final IMicroElement aElement = MicroTypeConverter.convertToMicroElement (aRole, "role");

@@ -16,8 +16,6 @@
  */
 package com.helger.photon.security.object;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -41,16 +39,9 @@ public final class StubObject extends AbstractObject
 {
   public static final ObjectType OT_STUB = new ObjectType ("stub-object");
 
-  private StubObject (@Nonnull @Nonempty final String sID, @Nullable final String sCreationUserID, @Nullable final Map <String, String> aCustomAttrs)
+  private StubObject (@Nonnull @Nonempty final String sID, @Nullable final String sCreationUserID)
   {
-    this (sID,
-          PDTFactory.getCurrentLocalDateTime (),
-          sCreationUserID,
-          (LocalDateTime) null,
-          (String) null,
-          (LocalDateTime) null,
-          (String) null,
-          aCustomAttrs);
+    this (sID, PDTFactory.getCurrentLocalDateTime (), sCreationUserID, (LocalDateTime) null, (String) null, (LocalDateTime) null, (String) null);
   }
 
   public StubObject (@Nonnull @Nonempty final String sID,
@@ -59,10 +50,9 @@ public final class StubObject extends AbstractObject
                      @Nullable final LocalDateTime aLastModificationDT,
                      @Nullable final String sLastModificationUserID,
                      @Nullable final LocalDateTime aDeletionDT,
-                     @Nullable final String sDeletionUserID,
-                     @Nullable final Map <String, String> aCustomAttrs)
+                     @Nullable final String sDeletionUserID)
   {
-    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID, aCustomAttrs);
+    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID);
   }
 
   @Nonnull
@@ -83,19 +73,6 @@ public final class StubObject extends AbstractObject
   }
 
   /**
-   * Create a {@link StubObject} for the current user creating a new object ID
-   *
-   * @param aCustomAttrs
-   *        Custom attributes. May be <code>null</code>.
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  public static StubObject createForCurrentUser (@Nullable final Map <String, String> aCustomAttrs)
-  {
-    return createForUser (LoggedInUserManager.getInstance ().getCurrentUserID (), aCustomAttrs);
-  }
-
-  /**
    * Create a {@link StubObject} using the provided user ID and a new object ID
    *
    * @param sUserID
@@ -105,22 +82,7 @@ public final class StubObject extends AbstractObject
   @Nonnull
   public static StubObject createForUser (@Nullable final String sUserID)
   {
-    return new StubObject (GlobalIDFactory.getNewPersistentStringID (), sUserID, null);
-  }
-
-  /**
-   * Create a {@link StubObject} using the provided user ID and a new object ID
-   *
-   * @param sUserID
-   *        User ID
-   * @param aCustomAttrs
-   *        Custom attributes. May be <code>null</code>.
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  public static StubObject createForUser (@Nullable final String sUserID, @Nullable final Map <String, String> aCustomAttrs)
-  {
-    return new StubObject (GlobalIDFactory.getNewPersistentStringID (), sUserID, aCustomAttrs);
+    return new StubObject (GlobalIDFactory.getNewPersistentStringID (), sUserID);
   }
 
   /**
@@ -134,22 +96,6 @@ public final class StubObject extends AbstractObject
   @Nonnull
   public static StubObject createForCurrentUserAndID (@Nonnull @Nonempty final String sID)
   {
-    return new StubObject (sID, LoggedInUserManager.getInstance ().getCurrentUserID (), null);
-  }
-
-  /**
-   * Create a {@link StubObject} using the current user ID and the provided
-   * object ID
-   *
-   * @param sID
-   *        Object ID
-   * @param aCustomAttrs
-   *        Custom attributes. May be <code>null</code>.
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  public static StubObject createForCurrentUserAndID (@Nonnull @Nonempty final String sID, @Nullable final Map <String, String> aCustomAttrs)
-  {
-    return new StubObject (sID, LoggedInUserManager.getInstance ().getCurrentUserID (), aCustomAttrs);
+    return new StubObject (sID, LoggedInUserManager.getInstance ().getCurrentUserID ());
   }
 }

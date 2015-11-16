@@ -30,6 +30,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
 import com.helger.photon.basic.object.IObject;
+import com.helger.photon.basic.object.IObjectWithCustomAttrs;
 
 /**
  * Abstract base class for object related micro type conversion.
@@ -56,6 +57,11 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
     aElement.setAttribute (ATTR_LASTMODUSERID, aValue.getLastModificationUserID ());
     aElement.setAttributeWithConversion (ATTR_DELETIONLDT, aValue.getDeletionDateTime ());
     aElement.setAttribute (ATTR_DELETIONUSERID, aValue.getDeletionUserID ());
+  }
+
+  public static final void setObjectFields (@Nonnull final IObjectWithCustomAttrs aValue, @Nonnull final IMicroElement aElement)
+  {
+    setObjectFields ((IObject) aValue, aElement);
     for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aValue.getAllAttributes ()).entrySet ())
     {
       final IMicroElement eCustom = aElement.appendElement (ELEMENT_CUSTOM);
@@ -110,17 +116,38 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
     final LocalDateTime aDeletionLDT = readAsLocalDateTime (aElement, ATTR_DELETIONLDT, "deletiondt");
     final String sDeletionUserID = aElement.getAttributeValue (ATTR_DELETIONUSERID);
 
+    return new StubObject (sID, aCreationLDT, sCreationUserID, aLastModificationLDT, sLastModificationUserID, aDeletionLDT, sDeletionUserID);
+  }
+
+  @Nonnull
+  public static final StubObjectWithCustomAttrs getStubObjectWithCustomAttrs (@Nonnull final IMicroElement aElement)
+  {
+    // ID
+    final String sID = aElement.getAttributeValue (ATTR_ID);
+
+    // Creation
+    final LocalDateTime aCreationLDT = readAsLocalDateTime (aElement, ATTR_CREATIONLDT, "creationdt");
+    final String sCreationUserID = aElement.getAttributeValue (ATTR_CREATIONUSERID);
+
+    // Last modification
+    final LocalDateTime aLastModificationLDT = readAsLocalDateTime (aElement, ATTR_LASTMODLDT, "lastmodldt");
+    final String sLastModificationUserID = aElement.getAttributeValue (ATTR_LASTMODUSERID);
+
+    // Deletion
+    final LocalDateTime aDeletionLDT = readAsLocalDateTime (aElement, ATTR_DELETIONLDT, "deletiondt");
+    final String sDeletionUserID = aElement.getAttributeValue (ATTR_DELETIONUSERID);
+
     final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
     for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
       aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
 
-    return new StubObject (sID,
-                           aCreationLDT,
-                           sCreationUserID,
-                           aLastModificationLDT,
-                           sLastModificationUserID,
-                           aDeletionLDT,
-                           sDeletionUserID,
-                           aCustomAttrs);
+    return new StubObjectWithCustomAttrs (sID,
+                                          aCreationLDT,
+                                          sCreationUserID,
+                                          aLastModificationLDT,
+                                          sLastModificationUserID,
+                                          aDeletionLDT,
+                                          sDeletionUserID,
+                                          aCustomAttrs);
   }
 }

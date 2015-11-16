@@ -34,9 +34,9 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.datetime.PDTFactory;
-import com.helger.photon.basic.object.AbstractObject;
+import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
 import com.helger.photon.security.CSecurity;
-import com.helger.photon.security.object.StubObject;
+import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 import com.helger.photon.security.password.hash.PasswordHash;
 
 /**
@@ -45,7 +45,7 @@ import com.helger.photon.security.password.hash.PasswordHash;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class User extends AbstractObject implements IUser
+public class User extends AbstractObjectWithCustomAttrs implements IUser
 {
   public static final ObjectType OT = new ObjectType ("user");
 
@@ -93,7 +93,7 @@ public class User extends AbstractObject implements IUser
                @Nullable final Map <String, String> aCustomAttrs,
                final boolean bDisabled)
   {
-    this (StubObject.createForCurrentUser (aCustomAttrs),
+    this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs),
           sLoginName,
           sEmailAddress,
           aPasswordHash,
@@ -119,7 +119,7 @@ public class User extends AbstractObject implements IUser
         @Nullable final Map <String, String> aCustomAttrs,
         final boolean bDisabled)
   {
-    this (StubObject.createForCurrentUserAndID (sID, aCustomAttrs),
+    this (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs),
           sLoginName,
           sEmailAddress,
           aPasswordHash,
@@ -171,7 +171,7 @@ public class User extends AbstractObject implements IUser
    * @param bDisabled
    *        <code>true</code> if the user is disabled
    */
-  User (@Nonnull final StubObject aStubObject,
+  User (@Nonnull final StubObjectWithCustomAttrs aStubObject,
         @Nonnull @Nonempty final String sLoginName,
         @Nullable final String sEmailAddress,
         @Nonnull final PasswordHash aPasswordHash,

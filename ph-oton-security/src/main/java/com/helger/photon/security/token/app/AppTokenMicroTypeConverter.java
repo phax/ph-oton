@@ -71,6 +71,6 @@ public final class AppTokenMicroTypeConverter extends AbstractObjectMicroTypeCon
     final String sOwnerContact = aElement.getAttributeValue (ATTR_OWNER_CONTACT);
     final String sOwnerContactEmail = aElement.getAttributeValue (ATTR_OWNER_CONTACT_EMAIL);
 
-    return new AppToken (getStubObject (aElement), aAccessTokens, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+    return new AppToken (getStubObjectWithCustomAttrs (aElement), aAccessTokens, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
   }
 }

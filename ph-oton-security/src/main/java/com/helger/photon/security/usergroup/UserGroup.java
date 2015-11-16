@@ -29,13 +29,12 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.attr.MapBasedAttributeContainer;
 import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
+import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
+import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 
 /**
  * Default implementation of the {@link IUserGroup} interface.
@@ -43,11 +42,10 @@ import com.helger.commons.type.ObjectType;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class UserGroup extends MapBasedAttributeContainer <String, String> implements IUserGroup
+public final class UserGroup extends AbstractObjectWithCustomAttrs implements IUserGroup
 {
   public static final ObjectType OT = new ObjectType ("usergroup");
 
-  private final String m_sID;
   private String m_sName;
   private String m_sDescription;
   private final Set <String> m_aUserIDs = new HashSet <> ();
@@ -55,31 +53,20 @@ public final class UserGroup extends MapBasedAttributeContainer <String, String>
 
   public UserGroup (@Nonnull @Nonempty final String sName, @Nullable final String sDescription, @Nullable final Map <String, String> aCustomAttrs)
   {
-    this (GlobalIDFactory.getNewPersistentStringID (), sName, sDescription, aCustomAttrs);
+    this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs), sName, sDescription);
   }
 
-  UserGroup (@Nonnull @Nonempty final String sID,
-             @Nonnull @Nonempty final String sName,
-             @Nullable final String sDescription,
-             @Nullable final Map <String, String> aCustomAttrs)
+  UserGroup (@Nonnull final StubObjectWithCustomAttrs aStubObject, @Nonnull @Nonempty final String sName, @Nullable final String sDescription)
   {
-    m_sID = ValueEnforcer.notEmpty (sID, "ID");
+    super (aStubObject);
     setName (sName);
     setDescription (sDescription);
-    setAttributes (aCustomAttrs);
   }
 
   @Nonnull
   public ObjectType getObjectType ()
   {
     return UserGroup.OT;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getID ()
-  {
-    return m_sID;
   }
 
   @Nonnull
@@ -190,27 +177,9 @@ public final class UserGroup extends MapBasedAttributeContainer <String, String>
   }
 
   @Override
-  public boolean equals (final Object o)
-  {
-    if (o == this)
-      return true;
-    if (o == null || !getClass ().equals (o.getClass ()))
-      return false;
-    final UserGroup rhs = (UserGroup) o;
-    return m_sID.equals (rhs.m_sID);
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    return new HashCodeGenerator (this).append (m_sID).getHashCode ();
-  }
-
-  @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("ID", m_sID)
                             .append ("name", m_sName)
                             .appendIfNotNull ("description", m_sDescription)
                             .append ("assignedUsers", m_aUserIDs)

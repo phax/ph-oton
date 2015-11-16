@@ -16,58 +16,43 @@
  */
 package com.helger.photon.security.role;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
-import com.helger.commons.microdom.convert.IMicroTypeConverter;
 import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.string.StringHelper;
+import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
 
 /**
  * Convert {@link Role} objects to {@link IMicroElement} and vice versa.
  *
  * @author Philip Helger
  */
-public final class RoleMicroTypeConverter implements IMicroTypeConverter
+public final class RoleMicroTypeConverter extends AbstractObjectMicroTypeConverter
 {
-  private static final String ATTR_ID = "id";
   private static final String ATTR_NAME = "name";
   private static final String ELEMENT_DESCRIPTION = "description";
-  private static final String ELEMENT_CUSTOM = "custom";
 
   @Nonnull
   public IMicroElement convertToMicroElement (@Nonnull final Object aObject, @Nullable final String sNamespaceURI, @Nonnull final String sTagName)
   {
     final IRole aRole = (IRole) aObject;
-    final IMicroElement eRole = new MicroElement (sNamespaceURI, sTagName);
-    eRole.setAttribute (ATTR_ID, aRole.getID ());
-    eRole.setAttribute (ATTR_NAME, aRole.getName ());
+    final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
+    setObjectFields (aRole, aElement);
+    aElement.setAttribute (ATTR_NAME, aRole.getName ());
     if (StringHelper.hasText (aRole.getDescription ()))
-      eRole.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aRole.getDescription ());
-    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aRole.getAllAttributes ()).entrySet ())
-    {
-      final IMicroElement eCustom = eRole.appendElement (ELEMENT_CUSTOM);
-      eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
-      eCustom.appendText (aEntry.getValue ());
-    }
-    return eRole;
+      aElement.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aRole.getDescription ());
+    return aElement;
   }
 
   @Nonnull
-  public Role convertToNative (@Nonnull final IMicroElement eRole)
+  public Role convertToNative (@Nonnull final IMicroElement aElement)
   {
-    final String sID = eRole.getAttributeValue (ATTR_ID);
-    final String sName = eRole.getAttributeValue (ATTR_NAME);
-    final String sDescription = MicroHelper.getChildTextContentTrimmed (eRole, ELEMENT_DESCRIPTION);
-    final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
-    for (final IMicroElement eCustom : eRole.getAllChildElements (ELEMENT_CUSTOM))
-      aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
-    return new Role (sID, sName, sDescription, aCustomAttrs);
+    final String sName = aElement.getAttributeValue (ATTR_NAME);
+    final String sDescription = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_DESCRIPTION);
+
+    return new Role (getStubObjectWithCustomAttrs (aElement), sName, sDescription);
   }
 }

@@ -13,7 +13,7 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.security.object.StubObject;
+import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.object.AbstractObjectWithAccessToken;
 
@@ -38,7 +38,7 @@ public class AppToken extends AbstractObjectWithAccessToken implements IAppToken
                    @Nullable final String sOwnerContact,
                    @Nullable final String sOwnerContactEmail)
   {
-    this (StubObject.createForCurrentUser (aCustomAttrs),
+    this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs),
           CollectionHelper.newList (AccessToken.createAccessTokenValidFromNow (sTokenString)),
           sOwnerName,
           sOwnerURL,
@@ -46,7 +46,7 @@ public class AppToken extends AbstractObjectWithAccessToken implements IAppToken
           sOwnerContactEmail);
   }
 
-  AppToken (@Nonnull final StubObject aStubObject,
+  AppToken (@Nonnull final StubObjectWithCustomAttrs aStubObject,
             @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
             @Nonnull @Nonempty final String sOwnerName,
             @Nullable final String sOwnerURL,

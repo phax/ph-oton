@@ -110,7 +110,7 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
     final String sDisabled = aElement.getAttributeValue (ATTR_DISABLED);
     final boolean bDisabled = StringParser.parseBool (sDisabled);
 
-    return new User (getStubObject (aElement),
+    return new User (getStubObjectWithCustomAttrs (aElement),
                      sLoginName,
                      sEmailAddress,
                      aPasswordHash,

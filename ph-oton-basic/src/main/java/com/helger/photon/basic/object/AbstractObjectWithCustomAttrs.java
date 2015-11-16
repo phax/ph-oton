@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.object;
 
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -25,30 +27,31 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 
 /**
- * Abstract base implementation of {@link IObject} that handles everything
- * except {@link #getObjectType()}.
+ * Abstract base implementation of {@link IObjectWithCustomAttrs} that handles
+ * everything except {@link #getObjectType()}.
  *
  * @author Philip Helger
  */
-public abstract class AbstractObject extends AbstractBaseObject
+public abstract class AbstractObjectWithCustomAttrs extends AbstractBaseObjectWithCustomAttrs
 {
   // Status member
   private Integer m_aHashCode;
 
-  public AbstractObject (@Nonnull final IObject aObject)
+  public AbstractObjectWithCustomAttrs (@Nonnull final IObjectWithCustomAttrs aObject)
   {
     super (aObject);
   }
 
-  public AbstractObject (@Nonnull @Nonempty final String sID,
-                         @Nullable final LocalDateTime aCreationDT,
-                         @Nullable final String sCreationUserID,
-                         @Nullable final LocalDateTime aLastModificationDT,
-                         @Nullable final String sLastModificationUserID,
-                         @Nullable final LocalDateTime aDeletionDT,
-                         @Nullable final String sDeletionUserID)
+  public AbstractObjectWithCustomAttrs (@Nonnull @Nonempty final String sID,
+                                        @Nullable final LocalDateTime aCreationDT,
+                                        @Nullable final String sCreationUserID,
+                                        @Nullable final LocalDateTime aLastModificationDT,
+                                        @Nullable final String sLastModificationUserID,
+                                        @Nullable final LocalDateTime aDeletionDT,
+                                        @Nullable final String sDeletionUserID,
+                                        @Nullable final Map <String, String> aCustomAttrs)
   {
-    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID);
+    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID, aCustomAttrs);
   }
 
   @Override
@@ -58,7 +61,7 @@ public abstract class AbstractObject extends AbstractBaseObject
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final AbstractObject rhs = (AbstractObject) o;
+    final AbstractObjectWithCustomAttrs rhs = (AbstractObjectWithCustomAttrs) o;
     return getID ().equals (rhs.getID ());
   }
 

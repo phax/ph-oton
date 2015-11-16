@@ -49,6 +49,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
+import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.UserManager;
 
@@ -145,24 +146,27 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
       return EChange.UNCHANGED;
 
     // Administrators user group
-    UserGroup aUG = _addUserGroup (new UserGroup (CSecurity.USERGROUP_ADMINISTRATORS_ID,
+    UserGroup aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
                                                   CSecurity.USERGROUP_ADMINISTRATORS_NAME,
-                                                  (String) null,
-                                                  (Map <String, String>) null));
+                                                  (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_ADMINISTRATOR_ID))
       aUG.assignUser (CSecurity.USER_ADMINISTRATOR_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       aUG.assignRole (CSecurity.ROLE_ADMINISTRATOR_ID);
 
     // Users user group
-    aUG = _addUserGroup (new UserGroup (CSecurity.USERGROUP_USERS_ID, CSecurity.USERGROUP_USERS_NAME, (String) null, (Map <String, String>) null));
+    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
+                                        CSecurity.USERGROUP_USERS_NAME,
+                                        (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_USER_ID))
       aUG.assignUser (CSecurity.USER_USER_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_USER_ID))
       aUG.assignRole (CSecurity.ROLE_USER_ID);
 
     // Guests user group
-    aUG = _addUserGroup (new UserGroup (CSecurity.USERGROUP_GUESTS_ID, CSecurity.USERGROUP_GUESTS_NAME, (String) null, (Map <String, String>) null));
+    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
+                                        CSecurity.USERGROUP_GUESTS_NAME,
+                                        (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_GUEST_ID))
       aUG.assignUser (CSecurity.USER_GUEST_ID);
     // no role for this user group
@@ -280,7 +284,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
                                                @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create user group
-    final UserGroup aUserGroup = new UserGroup (sID, sName, sDescription, aCustomAttrs);
+    final UserGroup aUserGroup = new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
 
     m_aRWLock.writeLock ().lock ();
     try
