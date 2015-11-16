@@ -8,7 +8,8 @@ import com.helger.photon.security.token.object.IObjectWithAccessToken;
 
 /**
  * Base interface for a user token. A user token is always subordinated to an
- * application token and can have roles and additional properties.
+ * application token and can have roles and additional properties with the
+ * derived custom attributes.
  *
  * @author Philip Helger
  */

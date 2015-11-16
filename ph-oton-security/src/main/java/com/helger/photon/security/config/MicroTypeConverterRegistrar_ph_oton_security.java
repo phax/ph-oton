@@ -29,6 +29,8 @@ import com.helger.photon.security.token.app.AppToken;
 import com.helger.photon.security.token.app.AppTokenMicroTypeConverter;
 import com.helger.photon.security.token.revocation.RevocationStatus;
 import com.helger.photon.security.token.revocation.RevocationStatusMicroTypeConverter;
+import com.helger.photon.security.token.user.UserToken;
+import com.helger.photon.security.token.user.UserTokenMicroTypeConverter;
 import com.helger.photon.security.user.User;
 import com.helger.photon.security.user.UserMicroTypeConverter;
 import com.helger.photon.security.usergroup.UserGroup;
@@ -50,5 +52,6 @@ public final class MicroTypeConverterRegistrar_ph_oton_security implements IMicr
     aRegistry.registerMicroElementTypeConverter (Role.class, new RoleMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (User.class, new UserMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (UserGroup.class, new UserGroupMicroTypeConverter ());
+    aRegistry.registerMicroElementTypeConverter (UserToken.class, new UserTokenMicroTypeConverter ());
   }
 }

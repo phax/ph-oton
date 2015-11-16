@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.token.app;
+package com.helger.photon.security.token.user;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,20 +42,21 @@ import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.object.ObjectHelper;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
+import com.helger.photon.security.token.app.IAppToken;
 
 /**
- * A manager for {@link AppToken} objects.
+ * A manager for {@link UserToken} objects.
  *
  * @author Philip Helger
  */
-public final class AppTokenManager extends AbstractSimpleDAO
+public final class UserTokenManager extends AbstractSimpleDAO
 {
-  private static final String ELEMENT_ROOT = "apptokens";
-  private static final String ELEMENT_ITEM = "apptoken";
+  private static final String ELEMENT_ROOT = "usertokens";
+  private static final String ELEMENT_ITEM = "usertoken";
 
-  private final Map <String, AppToken> m_aMap = new HashMap <String, AppToken> ();
+  private final Map <String, UserToken> m_aMap = new HashMap <String, UserToken> ();
 
-  public AppTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
+  public UserTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
     super (sFilename);
     initialRead ();
@@ -65,8 +66,8 @@ public final class AppTokenManager extends AbstractSimpleDAO
   @Nonnull
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
-    for (final IMicroElement eAppToken : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
-      _addAppToken (MicroTypeConverter.convertToNative (eAppToken, AppToken.class));
+    for (final IMicroElement eUserToken : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
+      _addUserToken (MicroTypeConverter.convertToNative (eUserToken, UserToken.class));
     return EChange.UNCHANGED;
   }
 
@@ -76,108 +77,93 @@ public final class AppTokenManager extends AbstractSimpleDAO
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
-    for (final AppToken aAppToken : CollectionHelper.getSortedByKey (m_aMap).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aAppToken, ELEMENT_ITEM));
+    for (final UserToken aUserToken : CollectionHelper.getSortedByKey (m_aMap).values ())
+      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aUserToken, ELEMENT_ITEM));
     return aDoc;
   }
 
-  private void _addAppToken (@Nonnull final AppToken aAppToken)
+  private void _addUserToken (@Nonnull final UserToken aUserToken)
   {
-    ValueEnforcer.notNull (aAppToken, "AppToken");
+    ValueEnforcer.notNull (aUserToken, "UserToken");
 
-    final String sAppTokenID = aAppToken.getID ();
-    if (m_aMap.containsKey (sAppTokenID))
-      throw new IllegalArgumentException ("AppToken ID '" + sAppTokenID + "' is already in use!");
-    m_aMap.put (sAppTokenID, aAppToken);
+    final String sUserTokenID = aUserToken.getID ();
+    if (m_aMap.containsKey (sUserTokenID))
+      throw new IllegalArgumentException ("UserToken ID '" + sUserTokenID + "' is already in use!");
+    m_aMap.put (sUserTokenID, aUserToken);
   }
 
   @Nonnull
-  public AppToken createAppToken (@Nullable final String sTokenString,
-                                  @Nullable final Map <String, String> aCustomAttrs,
-                                  @Nonnull @Nonempty final String sOwnerName,
-                                  @Nullable final String sOwnerURL,
-                                  @Nullable final String sOwnerContact,
-                                  @Nullable final String sOwnerContactEmail)
+  public UserToken createUserToken (@Nullable final String sTokenString,
+                                    @Nullable final Map <String, String> aCustomAttrs,
+                                    @Nonnull final IAppToken aAppToken,
+                                    @Nonnull @Nonempty final String sUserName)
   {
-    final AppToken aAppToken = new AppToken (sTokenString, aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+    final UserToken aUserToken = new UserToken (sTokenString, aCustomAttrs, aAppToken, sUserName);
 
     m_aRWLock.writeLock ().lock ();
     try
     {
-      _addAppToken (aAppToken);
+      _addUserToken (aUserToken);
       markAsChanged ();
     }
     finally
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (AppToken.OT,
-                                      aAppToken.getID (),
-                                      sTokenString,
-                                      aCustomAttrs,
-                                      sOwnerName,
-                                      sOwnerURL,
-                                      sOwnerContact,
-                                      sOwnerContactEmail);
-    return aAppToken;
+    AuditHelper.onAuditCreateSuccess (UserToken.OT, aUserToken.getID (), aCustomAttrs, aAppToken.getID (), sUserName);
+    return aUserToken;
   }
 
   @Nonnull
-  public EChange updateAppToken (@Nullable final String sAppTokenID,
-                                 @Nullable final Map <String, String> aCustomAttrs,
-                                 @Nonnull @Nonempty final String sOwnerName,
-                                 @Nullable final String sOwnerURL,
-                                 @Nullable final String sOwnerContact,
-                                 @Nullable final String sOwnerContactEmail)
+  public EChange updateUserToken (@Nullable final String sUserTokenID,
+                                  @Nullable final Map <String, String> aCustomAttrs,
+                                  @Nonnull @Nonempty final String sUserName)
   {
     m_aRWLock.writeLock ().lock ();
     try
     {
-      final AppToken aAppToken = m_aMap.get (sAppTokenID);
-      if (aAppToken == null)
+      final UserToken aUserToken = m_aMap.get (sUserTokenID);
+      if (aUserToken == null)
       {
-        AuditHelper.onAuditModifyFailure (AppToken.OT, sAppTokenID, "no-such-id");
+        AuditHelper.onAuditModifyFailure (UserToken.OT, sUserTokenID, "no-such-id");
         return EChange.UNCHANGED;
       }
 
       EChange eChange = EChange.UNCHANGED;
       // client ID cannot be changed!
-      eChange = eChange.or (aAppToken.getMutableAttributes ().clear ());
-      eChange = eChange.or (aAppToken.getMutableAttributes ().setAttributes (aCustomAttrs));
-      eChange = eChange.or (aAppToken.setOwnerName (sOwnerName));
-      eChange = eChange.or (aAppToken.setOwnerURL (sOwnerURL));
-      eChange = eChange.or (aAppToken.setOwnerContact (sOwnerContact));
-      eChange = eChange.or (aAppToken.setOwnerContactEmail (sOwnerContactEmail));
+      eChange = eChange.or (aUserToken.getMutableAttributes ().clear ());
+      eChange = eChange.or (aUserToken.getMutableAttributes ().setAttributes (aCustomAttrs));
+      eChange = eChange.or (aUserToken.setUserName (sUserName));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aAppToken);
+      ObjectHelper.setLastModificationNow (aUserToken);
       markAsChanged ();
     }
     finally
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (AppToken.OT, sAppTokenID, aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+    AuditHelper.onAuditModifySuccess (UserToken.OT, sUserTokenID, aCustomAttrs, sUserName);
     return EChange.CHANGED;
   }
 
   @Nonnull
-  public EChange deleteAppToken (@Nullable final String sAppTokenID)
+  public EChange deleteUserToken (@Nullable final String sUserTokenID)
   {
-    final AppToken aAppToken = _getAppTokenOfID (sAppTokenID);
-    if (aAppToken == null)
+    final UserToken aUserToken = _getUserTokenOfID (sUserTokenID);
+    if (aUserToken == null)
     {
-      AuditHelper.onAuditDeleteFailure (AppToken.OT, "no-such-id", sAppTokenID);
+      AuditHelper.onAuditDeleteFailure (UserToken.OT, "no-such-id", sUserTokenID);
       return EChange.UNCHANGED;
     }
 
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (ObjectHelper.setDeletionNow (aAppToken).isUnchanged ())
+      if (ObjectHelper.setDeletionNow (aUserToken).isUnchanged ())
       {
-        AuditHelper.onAuditDeleteFailure (AppToken.OT, "already-deleted", aAppToken.getID ());
+        AuditHelper.onAuditDeleteFailure (UserToken.OT, "already-deleted", aUserToken.getID ());
         return EChange.UNCHANGED;
       }
       markAsChanged ();
@@ -186,39 +172,39 @@ public final class AppTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditDeleteSuccess (AppToken.OT, aAppToken.getID ());
+    AuditHelper.onAuditDeleteSuccess (UserToken.OT, aUserToken.getID ());
     return EChange.CHANGED;
   }
 
   @Nonnull
-  public EChange createNewAccessToken (@Nullable final String sAppTokenID,
+  public EChange createNewAccessToken (@Nullable final String sUserTokenID,
                                        @Nonnull @Nonempty final String sRevocationUserID,
                                        @Nonnull final LocalDateTime aRevocationDT,
                                        @Nonnull @Nonempty final String sRevocationReason,
                                        @Nullable final String sTokenString)
   {
-    final AppToken aAppToken = _getAppTokenOfID (sAppTokenID);
-    if (aAppToken == null)
+    final UserToken aUserToken = _getUserTokenOfID (sUserTokenID);
+    if (aUserToken == null)
     {
-      AuditHelper.onAuditModifyFailure (AppToken.OT, "no-such-id", sAppTokenID);
+      AuditHelper.onAuditModifyFailure (UserToken.OT, "no-such-id", sUserTokenID);
       return EChange.UNCHANGED;
     }
 
     m_aRWLock.writeLock ().lock ();
     try
     {
-      aAppToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason);
-      aAppToken.createNewAccessToken (sTokenString);
-      ObjectHelper.setLastModificationNow (aAppToken);
+      aUserToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason);
+      aUserToken.createNewAccessToken (sTokenString);
+      ObjectHelper.setLastModificationNow (aUserToken);
       markAsChanged ();
     }
     finally
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (AppToken.OT,
+    AuditHelper.onAuditModifySuccess (UserToken.OT,
                                       "create-new-access-token",
-                                      aAppToken.getID (),
+                                      aUserToken.getID (),
                                       sRevocationUserID,
                                       aRevocationDT,
                                       sRevocationReason,
@@ -227,40 +213,40 @@ public final class AppTokenManager extends AbstractSimpleDAO
   }
 
   @Nonnull
-  public EChange revokeAccessToken (@Nullable final String sAppTokenID,
+  public EChange revokeAccessToken (@Nullable final String sUserTokenID,
                                     @Nonnull @Nonempty final String sRevocationUserID,
                                     @Nonnull final LocalDateTime aRevocationDT,
                                     @Nonnull @Nonempty final String sRevocationReason)
   {
-    final AppToken aAppToken = _getAppTokenOfID (sAppTokenID);
-    if (aAppToken == null)
+    final UserToken aUserToken = _getUserTokenOfID (sUserTokenID);
+    if (aUserToken == null)
     {
-      AuditHelper.onAuditModifyFailure (AppToken.OT, "no-such-id", sAppTokenID);
+      AuditHelper.onAuditModifyFailure (UserToken.OT, "no-such-id", sUserTokenID);
       return EChange.UNCHANGED;
     }
 
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (aAppToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason).isUnchanged ())
+      if (aUserToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason).isUnchanged ())
       {
-        AuditHelper.onAuditModifyFailure (AppToken.OT, "already-revoked", sAppTokenID);
+        AuditHelper.onAuditModifyFailure (UserToken.OT, "already-revoked", sUserTokenID);
         return EChange.UNCHANGED;
       }
-      ObjectHelper.setLastModificationNow (aAppToken);
+      ObjectHelper.setLastModificationNow (aUserToken);
       markAsChanged ();
     }
     finally
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (AppToken.OT, "revoke-access-token", aAppToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason);
+    AuditHelper.onAuditModifySuccess (UserToken.OT, "revoke-access-token", aUserToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason);
     return EChange.CHANGED;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends AppToken> getAllAppTokens ()
+  public Collection <? extends UserToken> getAllUserTokens ()
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -275,13 +261,13 @@ public final class AppTokenManager extends AbstractSimpleDAO
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends AppToken> getAllActiveAppTokens ()
+  public Collection <? extends UserToken> getAllActiveUserTokens ()
   {
     m_aRWLock.readLock ().lock ();
     try
     {
-      final List <AppToken> ret = new ArrayList <> ();
-      for (final AppToken aItem : m_aMap.values ())
+      final List <UserToken> ret = new ArrayList <> ();
+      for (final UserToken aItem : m_aMap.values ())
         if (!aItem.isDeleted ())
           ret.add (aItem);
       return ret;
@@ -293,7 +279,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
   }
 
   @Nullable
-  private AppToken _getAppTokenOfID (@Nullable final String sID)
+  private UserToken _getUserTokenOfID (@Nullable final String sID)
   {
     if (StringHelper.hasNoText (sID))
       return null;
@@ -310,12 +296,12 @@ public final class AppTokenManager extends AbstractSimpleDAO
   }
 
   @Nullable
-  public IAppToken getAppTokenOfID (@Nullable final String sID)
+  public IUserToken getUserTokenOfID (@Nullable final String sID)
   {
-    return _getAppTokenOfID (sID);
+    return _getUserTokenOfID (sID);
   }
 
-  public boolean containsAppTokenWithID (@Nullable final String sID)
+  public boolean containsUserTokenWithID (@Nullable final String sID)
   {
     if (StringHelper.hasNoText (sID))
       return false;
@@ -332,7 +318,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
   }
 
   @Nullable
-  public IAppToken getAppTokenOfTokenString (@Nullable final String sTokenString)
+  public IUserToken getUserTokenOfTokenString (@Nullable final String sTokenString)
   {
     if (StringHelper.hasNoText (sTokenString))
       return null;
@@ -340,11 +326,11 @@ public final class AppTokenManager extends AbstractSimpleDAO
     m_aRWLock.readLock ().lock ();
     try
     {
-      for (final IAppToken aAppToken : m_aMap.values ())
+      for (final IUserToken aUserToken : m_aMap.values ())
       {
-        final IAccessToken aAccessToken = aAppToken.getActiveAccessToken ();
+        final IAccessToken aAccessToken = aUserToken.getActiveAccessToken ();
         if (aAccessToken != null && aAccessToken.getTokenString ().equals (sTokenString))
-          return aAppToken;
+          return aUserToken;
       }
       return null;
     }
@@ -370,8 +356,8 @@ public final class AppTokenManager extends AbstractSimpleDAO
     m_aRWLock.readLock ().lock ();
     try
     {
-      for (final IAppToken aAppToken : m_aMap.values ())
-        for (final IAccessToken aAccessToken : aAppToken.getAllAccessTokens ())
+      for (final IUserToken aUserToken : m_aMap.values ())
+        for (final IAccessToken aAccessToken : aUserToken.getAllAccessTokens ())
           if (aAccessToken.getTokenString ().equals (sTokenString))
             return true;
       return false;
