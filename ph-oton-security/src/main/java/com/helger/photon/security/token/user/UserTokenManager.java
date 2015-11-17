@@ -24,12 +24,17 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.GuardedBy;
 
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -41,6 +46,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.object.ObjectHelper;
+import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 import com.helger.photon.security.token.app.IAppToken;
 
@@ -51,10 +57,15 @@ import com.helger.photon.security.token.app.IAppToken;
  */
 public final class UserTokenManager extends AbstractSimpleDAO
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (UserTokenManager.class);
+
   private static final String ELEMENT_ROOT = "usertokens";
   private static final String ELEMENT_ITEM = "usertoken";
 
-  private final Map <String, UserToken> m_aMap = new HashMap <String, UserToken> ();
+  @GuardedBy ("m_aRWLock")
+  private final Map <String, UserToken> m_aMap = new HashMap <> ();
+
+  private final CallbackList <IUserTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -80,6 +91,16 @@ public final class UserTokenManager extends AbstractSimpleDAO
     for (final UserToken aUserToken : CollectionHelper.getSortedByKey (m_aMap).values ())
       eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aUserToken, ELEMENT_ITEM));
     return aDoc;
+  }
+
+  /**
+   * @return The user token callback list. Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public CallbackList <IUserTokenModificationCallback> getUserTokenModificationCallbacks ()
+  {
+    return m_aCallbacks;
   }
 
   private void _addUserToken (@Nonnull final UserToken aUserToken)
@@ -111,22 +132,36 @@ public final class UserTokenManager extends AbstractSimpleDAO
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditCreateSuccess (UserToken.OT, aUserToken.getID (), aCustomAttrs, aAppToken.getID (), sUserName);
+
+    // Execute callback as the very last action
+    for (final IUserTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onUserTokenCreated (aUserToken);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onUserTokenCreated callback on " + aUserToken.toString (), t);
+      }
+
     return aUserToken;
   }
 
   @Nonnull
-  public EChange updateUserToken (@Nullable final String sUserTokenID, @Nullable final Map <String, String> aCustomAttrs, @Nonnull @Nonempty final String sUserName)
+  public EChange updateUserToken (@Nullable final String sUserTokenID,
+                                  @Nullable final Map <String, String> aCustomAttrs,
+                                  @Nonnull @Nonempty final String sUserName)
   {
+    final UserToken aUserToken = _getUserTokenOfID (sUserTokenID);
+    if (aUserToken == null)
+    {
+      AuditHelper.onAuditModifyFailure (UserToken.OT, sUserTokenID, "no-such-id");
+      return EChange.UNCHANGED;
+    }
+
     m_aRWLock.writeLock ().lock ();
     try
     {
-      final UserToken aUserToken = m_aMap.get (sUserTokenID);
-      if (aUserToken == null)
-      {
-        AuditHelper.onAuditModifyFailure (UserToken.OT, sUserTokenID, "no-such-id");
-        return EChange.UNCHANGED;
-      }
-
       EChange eChange = EChange.UNCHANGED;
       // client ID cannot be changed!
       eChange = eChange.or (aUserToken.setUserName (sUserName));
@@ -143,6 +178,18 @@ public final class UserTokenManager extends AbstractSimpleDAO
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditModifySuccess (UserToken.OT, sUserTokenID, aCustomAttrs, sUserName);
+
+    // Execute callback as the very last action
+    for (final IUserTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onUserTokenUpdated (aUserToken);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onUserTokenUpdated callback on " + aUserToken.toString (), t);
+      }
+
     return EChange.CHANGED;
   }
 
@@ -171,6 +218,18 @@ public final class UserTokenManager extends AbstractSimpleDAO
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditDeleteSuccess (UserToken.OT, aUserToken.getID ());
+
+    // Execute callback as the very last action
+    for (final IUserTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onUserTokenDeleted (aUserToken);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onUserTokenDeleted callback on " + aUserToken.toString (), t);
+      }
+
     return EChange.CHANGED;
   }
 
@@ -188,11 +247,12 @@ public final class UserTokenManager extends AbstractSimpleDAO
       return EChange.UNCHANGED;
     }
 
+    AccessToken aAccessToken;
     m_aRWLock.writeLock ().lock ();
     try
     {
       aUserToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason);
-      aUserToken.createNewAccessToken (sTokenString);
+      aAccessToken = aUserToken.createNewAccessToken (sTokenString);
       ObjectHelper.setLastModificationNow (aUserToken);
       markAsChanged ();
     }
@@ -200,7 +260,29 @@ public final class UserTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (UserToken.OT, "create-new-access-token", aUserToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason, sTokenString);
+    AuditHelper.onAuditModifySuccess (UserToken.OT,
+                                      "create-new-access-token",
+                                      aUserToken.getID (),
+                                      sRevocationUserID,
+                                      aRevocationDT,
+                                      sRevocationReason,
+                                      sTokenString);
+
+    // Execute callback as the very last action
+    for (final IUserTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onUserTokenCreateAccessToken (aUserToken, aAccessToken);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onUserTokenCreateAccessToken callback on " +
+                         aUserToken.toString () +
+                         " and " +
+                         aAccessToken.toString (),
+                         t);
+      }
+
     return EChange.CHANGED;
   }
 
@@ -233,6 +315,18 @@ public final class UserTokenManager extends AbstractSimpleDAO
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditModifySuccess (UserToken.OT, "revoke-access-token", aUserToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason);
+
+    // Execute callback as the very last action
+    for (final IUserTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onUserTokenRevokeAccessToken (aUserToken);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onUserTokenRevokeAccessToken callback on " + aUserToken.toString (), t);
+      }
+
     return EChange.CHANGED;
   }
 

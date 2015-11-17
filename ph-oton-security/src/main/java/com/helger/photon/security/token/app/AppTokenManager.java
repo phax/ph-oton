@@ -94,7 +94,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
   }
 
   /**
-   * @return The user callback list. Never <code>null</code>.
+   * @return The app token callback list. Never <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableObject ("design")
@@ -133,7 +133,14 @@ public final class AppTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (AppToken.OT, aAppToken.getID (), sTokenString, aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+    AuditHelper.onAuditCreateSuccess (AppToken.OT,
+                                      aAppToken.getID (),
+                                      sTokenString,
+                                      aCustomAttrs,
+                                      sOwnerName,
+                                      sOwnerURL,
+                                      sOwnerContact,
+                                      sOwnerContactEmail);
 
     // Execute callback as the very last action
     for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
@@ -268,7 +275,13 @@ public final class AppTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (AppToken.OT, "create-new-access-token", aAppToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason, sTokenString);
+    AuditHelper.onAuditModifySuccess (AppToken.OT,
+                                      "create-new-access-token",
+                                      aAppToken.getID (),
+                                      sRevocationUserID,
+                                      aRevocationDT,
+                                      sRevocationReason,
+                                      sTokenString);
 
     // Execute callback as the very last action
     for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
