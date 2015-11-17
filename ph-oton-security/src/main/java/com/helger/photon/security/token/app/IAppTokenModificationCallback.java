@@ -19,6 +19,7 @@ package com.helger.photon.security.token.app;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.callback.ICallback;
+import com.helger.photon.security.token.accesstoken.AccessToken;
 
 /**
  * Callback interface when an app token is created, modified, deleted.
@@ -44,7 +45,7 @@ public interface IAppTokenModificationCallback extends ICallback
   void onAppTokenUpdated (@Nonnull IAppToken aAppToken);
 
   /**
-   * Called after a app token was deleted.
+   * Called after an app token was deleted.
    *
    * @param aAppToken
    *        The deleted app token. Never <code>null</code>.
@@ -52,13 +53,23 @@ public interface IAppTokenModificationCallback extends ICallback
   void onAppTokenDeleted (@Nonnull IAppToken aAppToken);
 
   /**
-   * Called after a app token was enabled or disabled.
+   * Called after a new access token was created for an app token.
    *
    * @param aAppToken
-   *        The enabled or disabled app token. Never <code>null</code>.
-   * @param bEnabled
-   *        <code>true</code> if the app token was enabled, <code>false</code>
-   *        if it was disabled
+   *        The changed app token. Never <code>null</code>.
+   * @param aAccessToken
+   *        The created new access token. Never <code>null</code>.
    */
-  void onAppTokenEnabled (@Nonnull IAppToken aAppToken, boolean bEnabled);
+  void onAppTokenCreateAccessToken (@Nonnull IAppToken aAppToken, @Nonnull AccessToken aAccessToken);
+
+  /**
+   * Called after the current access token of an app token got revoked and no
+   * new access token was created. In case a new access token is directly
+   * created only {@link #onAppTokenCreateAccessToken(IAppToken, AccessToken)}
+   * is called.
+   *
+   * @param aAppToken
+   *        The changed app token. Never <code>null</code>.
+   */
+  void onAppTokenRevokeAccessToken (@Nonnull IAppToken aAppToken);
 }

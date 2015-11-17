@@ -73,9 +73,9 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   private static boolean s_bCreateDefaults = DEFAULT_CREATE_DEFAULTS;
 
   @GuardedBy ("m_aRWLock")
-  private final Map <String, User> m_aUsers = new HashMap <String, User> ();
+  private final Map <String, User> m_aUsers = new HashMap <> ();
 
-  private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <IUserModificationCallback> ();
+  private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public static boolean isCreateDefaults ()
   {

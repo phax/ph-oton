@@ -25,12 +25,17 @@ import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.GuardedBy;
 
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -42,6 +47,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.object.ObjectHelper;
+import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 
 /**
@@ -51,10 +57,15 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
  */
 public final class AppTokenManager extends AbstractSimpleDAO
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AppTokenManager.class);
+
   private static final String ELEMENT_ROOT = "apptokens";
   private static final String ELEMENT_ITEM = "apptoken";
 
-  private final Map <String, AppToken> m_aMap = new HashMap <String, AppToken> ();
+  @GuardedBy ("m_aRWLock")
+  private final Map <String, AppToken> m_aMap = new HashMap <> ();
+
+  private final CallbackList <IAppTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public AppTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -80,6 +91,16 @@ public final class AppTokenManager extends AbstractSimpleDAO
     for (final AppToken aAppToken : CollectionHelper.getSortedByKey (m_aMap).values ())
       eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aAppToken, ELEMENT_ITEM));
     return aDoc;
+  }
+
+  /**
+   * @return The user callback list. Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public CallbackList <IAppTokenModificationCallback> getAppTokenModificationCallbacks ()
+  {
+    return m_aCallbacks;
   }
 
   private void _addAppToken (@Nonnull final AppToken aAppToken)
@@ -113,6 +134,18 @@ public final class AppTokenManager extends AbstractSimpleDAO
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditCreateSuccess (AppToken.OT, aAppToken.getID (), sTokenString, aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+
+    // Execute callback as the very last action
+    for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onAppTokenCreated (aAppToken);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onAppTokenCreated callback on " + aAppToken.toString (), t);
+      }
+
     return aAppToken;
   }
 
@@ -124,16 +157,16 @@ public final class AppTokenManager extends AbstractSimpleDAO
                                  @Nullable final String sOwnerContact,
                                  @Nullable final String sOwnerContactEmail)
   {
+    final AppToken aAppToken = _getAppTokenOfID (sAppTokenID);
+    if (aAppToken == null)
+    {
+      AuditHelper.onAuditModifyFailure (AppToken.OT, sAppTokenID, "no-such-id");
+      return EChange.UNCHANGED;
+    }
+
     m_aRWLock.writeLock ().lock ();
     try
     {
-      final AppToken aAppToken = m_aMap.get (sAppTokenID);
-      if (aAppToken == null)
-      {
-        AuditHelper.onAuditModifyFailure (AppToken.OT, sAppTokenID, "no-such-id");
-        return EChange.UNCHANGED;
-      }
-
       EChange eChange = EChange.UNCHANGED;
       // client ID cannot be changed!
       eChange = eChange.or (aAppToken.setOwnerName (sOwnerName));
@@ -153,6 +186,18 @@ public final class AppTokenManager extends AbstractSimpleDAO
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditModifySuccess (AppToken.OT, sAppTokenID, aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+
+    // Execute callback as the very last action
+    for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onAppTokenUpdated (aAppToken);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onAppTokenUpdated callback on " + aAppToken.toString (), t);
+      }
+
     return EChange.CHANGED;
   }
 
@@ -181,6 +226,18 @@ public final class AppTokenManager extends AbstractSimpleDAO
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditDeleteSuccess (AppToken.OT, aAppToken.getID ());
+
+    // Execute callback as the very last action
+    for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onAppTokenDeleted (aAppToken);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onAppTokenDeleted callback on " + aAppToken.toString (), t);
+      }
+
     return EChange.CHANGED;
   }
 
@@ -198,11 +255,12 @@ public final class AppTokenManager extends AbstractSimpleDAO
       return EChange.UNCHANGED;
     }
 
+    AccessToken aAccessToken;
     m_aRWLock.writeLock ().lock ();
     try
     {
       aAppToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason);
-      aAppToken.createNewAccessToken (sTokenString);
+      aAccessToken = aAppToken.createNewAccessToken (sTokenString);
       ObjectHelper.setLastModificationNow (aAppToken);
       markAsChanged ();
     }
@@ -211,6 +269,18 @@ public final class AppTokenManager extends AbstractSimpleDAO
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditModifySuccess (AppToken.OT, "create-new-access-token", aAppToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason, sTokenString);
+
+    // Execute callback as the very last action
+    for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onAppTokenCreateAccessToken (aAppToken, aAccessToken);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onAppTokenCreateAccessToken callback on " + aAppToken.toString () + " and " + aAccessToken.toString (), t);
+      }
+
     return EChange.CHANGED;
   }
 
@@ -243,6 +313,18 @@ public final class AppTokenManager extends AbstractSimpleDAO
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditModifySuccess (AppToken.OT, "revoke-access-token", aAppToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason);
+
+    // Execute callback as the very last action
+    for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
+      try
+      {
+        aCallback.onAppTokenRevokeAccessToken (aAppToken);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to invoke onAppTokenRevokeAccessToken callback on " + aAppToken.toString (), t);
+      }
+
     return EChange.CHANGED;
   }
 
