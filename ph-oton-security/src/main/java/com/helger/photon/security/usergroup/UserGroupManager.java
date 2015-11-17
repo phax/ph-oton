@@ -49,6 +49,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
+import com.helger.photon.security.object.ObjectHelper;
 import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.UserManager;
@@ -102,7 +103,9 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     }
   }
 
-  public UserGroupManager (@Nonnull @Nonempty final String sFilename, @Nonnull final UserManager aUserMgr, @Nonnull final RoleManager aRoleMgr) throws DAOException
+  public UserGroupManager (@Nonnull @Nonempty final String sFilename,
+                           @Nonnull final UserManager aUserMgr,
+                           @Nonnull final RoleManager aRoleMgr) throws DAOException
   {
     super (sFilename);
     m_aUserMgr = ValueEnforcer.notNull (aUserMgr, "UserManager");
@@ -144,21 +147,27 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
       return EChange.UNCHANGED;
 
     // Administrators user group
-    UserGroup aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID), CSecurity.USERGROUP_ADMINISTRATORS_NAME, (String) null));
+    UserGroup aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
+                                                  CSecurity.USERGROUP_ADMINISTRATORS_NAME,
+                                                  (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_ADMINISTRATOR_ID))
       aUG.assignUser (CSecurity.USER_ADMINISTRATOR_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       aUG.assignRole (CSecurity.ROLE_ADMINISTRATOR_ID);
 
     // Users user group
-    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID), CSecurity.USERGROUP_USERS_NAME, (String) null));
+    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
+                                        CSecurity.USERGROUP_USERS_NAME,
+                                        (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_USER_ID))
       aUG.assignUser (CSecurity.USER_USER_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_USER_ID))
       aUG.assignRole (CSecurity.ROLE_USER_ID);
 
     // Guests user group
-    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID), CSecurity.USERGROUP_GUESTS_NAME, (String) null));
+    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
+                                        CSecurity.USERGROUP_GUESTS_NAME,
+                                        (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_GUEST_ID))
       aUG.assignUser (CSecurity.USER_GUEST_ID);
     // no role for this user group
@@ -220,7 +229,9 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
    * @return The created user group.
    */
   @Nonnull
-  public IUserGroup createNewUserGroup (@Nonnull @Nonempty final String sName, @Nullable final String sDescription, @Nullable final Map <String, String> aCustomAttrs)
+  public IUserGroup createNewUserGroup (@Nonnull @Nonempty final String sName,
+                                        @Nullable final String sDescription,
+                                        @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create user group
     final UserGroup aUserGroup = new UserGroup (sName, sDescription, aCustomAttrs);
@@ -317,7 +328,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sUserGroupID))
       return EChange.UNCHANGED;
 
-    IUserGroup aDeletedUserGroup;
+    UserGroup aDeletedUserGroup;
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -327,6 +338,8 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
         AuditHelper.onAuditDeleteFailure (UserGroup.OT, "no-such-usergroup-id", sUserGroupID);
         return EChange.UNCHANGED;
       }
+
+      ObjectHelper.setDeletionNow (aDeletedUserGroup);
       markAsChanged ();
     }
     finally
@@ -469,6 +482,8 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     {
       if (aUserGroup.setName (sNewName).isUnchanged ())
         return EChange.UNCHANGED;
+
+      ObjectHelper.setLastModificationNow (aUserGroup);
       markAsChanged ();
     }
     finally
@@ -530,6 +545,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
+      ObjectHelper.setLastModificationNow (aUserGroup);
       markAsChanged ();
     }
     finally
@@ -579,6 +595,8 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     {
       if (aUserGroup.assignUser (sUserID).isUnchanged ())
         return EChange.UNCHANGED;
+
+      ObjectHelper.setLastModificationNow (aUserGroup);
       markAsChanged ();
     }
     finally
@@ -627,6 +645,8 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     {
       if (aUserGroup.unassignUser (sUserID).isUnchanged ())
         return EChange.UNCHANGED;
+
+      ObjectHelper.setLastModificationNow (aUserGroup);
       markAsChanged ();
     }
     finally
@@ -672,6 +692,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
         if (aUserGroup.unassignUser (sUserID).isChanged ())
         {
           aAffectedUserGroups.add (aUserGroup);
+          ObjectHelper.setLastModificationNow (aUserGroup);
           eChange = EChange.CHANGED;
         }
       if (eChange.isUnchanged ())
@@ -807,6 +828,8 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     {
       if (aUserGroup.assignRole (sRoleID).isUnchanged ())
         return EChange.UNCHANGED;
+
+      ObjectHelper.setLastModificationNow (aUserGroup);
       markAsChanged ();
     }
     finally
@@ -855,6 +878,8 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     {
       if (aUserGroup.unassignRole (sRoleID).isUnchanged ())
         return EChange.UNCHANGED;
+
+      ObjectHelper.setLastModificationNow (aUserGroup);
       markAsChanged ();
     }
     finally
@@ -900,6 +925,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
         if (aUserGroup.unassignRole (sRoleID).isChanged ())
         {
           aAffectedUserGroups.add (aUserGroup);
+          ObjectHelper.setLastModificationNow (aUserGroup);
           eChange = EChange.CHANGED;
         }
       if (eChange.isUnchanged ())

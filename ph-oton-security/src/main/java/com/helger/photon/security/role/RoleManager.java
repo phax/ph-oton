@@ -47,6 +47,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
+import com.helger.photon.security.object.ObjectHelper;
 import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 
 /**
@@ -128,7 +129,9 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
       return EChange.UNCHANGED;
 
     // Default should be created
-    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID), CSecurity.ROLE_ADMINISTRATOR_NAME, (String) null));
+    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
+                        CSecurity.ROLE_ADMINISTRATOR_NAME,
+                        (String) null));
     _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID), CSecurity.ROLE_USER_NAME, (String) null));
     return EChange.CHANGED;
   }
@@ -186,7 +189,9 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
    * @return The created role and never <code>null</code>.
    */
   @Nonnull
-  public IRole createNewRole (@Nonnull @Nonempty final String sName, @Nullable final String sDescription, @Nullable final Map <String, String> aCustomAttrs)
+  public IRole createNewRole (@Nonnull @Nonempty final String sName,
+                              @Nullable final String sDescription,
+                              @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create role
     final Role aRole = new Role (sName, sDescription, aCustomAttrs);
@@ -232,9 +237,11 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
    * @return The created role and never <code>null</code>.
    */
   @Nonnull
-  public IRole createPredefinedRole (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName, @Nullable final String sDescription, @Nullable final Map <String, String> aCustomAttrs)
+  public IRole createPredefinedRole (@Nonnull @Nonempty final String sID,
+                                     @Nonnull @Nonempty final String sName,
+                                     @Nullable final String sDescription,
+                                     @Nullable final Map <String, String> aCustomAttrs)
   {
-
     // Create role
     final Role aRole = new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
 
@@ -275,7 +282,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
   @Nonnull
   public EChange deleteRole (@Nullable final String sRoleID)
   {
-    IRole aDeletedRole;
+    Role aDeletedRole;
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -285,6 +292,8 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
         AuditHelper.onAuditDeleteFailure (Role.OT, "no-such-role-id", sRoleID);
         return EChange.UNCHANGED;
       }
+
+      ObjectHelper.setDeletionNow (aDeletedRole);
       markAsChanged ();
     }
     finally
@@ -426,6 +435,8 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
     {
       if (aRole.setName (sNewName).isUnchanged ())
         return EChange.UNCHANGED;
+
+      ObjectHelper.setLastModificationNow (aUserGroup);
       markAsChanged ();
     }
     finally
@@ -463,7 +474,10 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
    * @return {@link EChange}
    */
   @Nonnull
-  public EChange setRoleData (@Nullable final String sRoleID, @Nonnull @Nonempty final String sNewName, @Nullable final String sNewDescription, @Nullable final Map <String, String> aNewCustomAttrs)
+  public EChange setRoleData (@Nullable final String sRoleID,
+                              @Nonnull @Nonempty final String sNewName,
+                              @Nullable final String sNewDescription,
+                              @Nullable final Map <String, String> aNewCustomAttrs)
   {
     // Resolve role
     final Role aRole = getRoleOfID (sRoleID);
@@ -483,6 +497,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
+      ObjectHelper.setLastModificationNow (aUserGroup);
       markAsChanged ();
     }
     finally

@@ -34,6 +34,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ELockType;
+import com.helger.commons.annotation.IsLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
@@ -274,7 +276,16 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (User.OT, aUser.getID (), sLoginName, sEmailAddress, sFirstName, sLastName, sDescription, aDesiredLocale, aCustomAttrs, Boolean.valueOf (bDisabled));
+    AuditHelper.onAuditCreateSuccess (User.OT,
+                                      aUser.getID (),
+                                      sLoginName,
+                                      sEmailAddress,
+                                      sFirstName,
+                                      sLastName,
+                                      sDescription,
+                                      aDesiredLocale,
+                                      aCustomAttrs,
+                                      Boolean.valueOf (bDisabled));
 
     // Execute callback as the very last action
     for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
@@ -413,6 +424,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   }
 
   @Nullable
+  @IsLocked (ELockType.READ)
   private User _getUserOfID (@Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
