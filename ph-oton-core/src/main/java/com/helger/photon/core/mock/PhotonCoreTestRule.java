@@ -22,8 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.id.factory.MemoryIntIDFactory;
 import com.helger.commons.url.SMap;
 import com.helger.photon.core.servlet.WebAppListener;
 import com.helger.web.mock.MockHttpListener;
@@ -64,10 +62,9 @@ public class PhotonCoreTestRule extends WebScopeTestRule
     MockHttpListener.addDefaultListener (new WebAppListener ()
     {
       @Override
-      protected void initGlobalIDFactory ()
+      public boolean isHandleStatisticsOnEnd ()
       {
-        // Set persistent ID provider: in memory only
-        GlobalIDFactory.setPersistentIntIDFactory (new MemoryIntIDFactory ());
+        return false;
       }
     });
     MockHttpListener.addDefaultListener (new MockServletRequestListenerScopeAware ());
