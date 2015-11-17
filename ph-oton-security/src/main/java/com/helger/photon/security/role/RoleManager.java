@@ -436,7 +436,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
       if (aRole.setName (sNewName).isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aUserGroup);
+      ObjectHelper.setLastModificationNow (aRole);
       markAsChanged ();
     }
     finally
@@ -497,7 +497,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aUserGroup);
+      ObjectHelper.setLastModificationNow (aRole);
       markAsChanged ();
     }
     finally
