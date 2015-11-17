@@ -112,14 +112,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (AppToken.OT,
-                                      aAppToken.getID (),
-                                      sTokenString,
-                                      aCustomAttrs,
-                                      sOwnerName,
-                                      sOwnerURL,
-                                      sOwnerContact,
-                                      sOwnerContactEmail);
+    AuditHelper.onAuditCreateSuccess (AppToken.OT, aAppToken.getID (), sTokenString, aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
     return aAppToken;
   }
 
@@ -147,8 +140,8 @@ public final class AppTokenManager extends AbstractSimpleDAO
       eChange = eChange.or (aAppToken.setOwnerURL (sOwnerURL));
       eChange = eChange.or (aAppToken.setOwnerContact (sOwnerContact));
       eChange = eChange.or (aAppToken.setOwnerContactEmail (sOwnerContactEmail));
-      eChange = eChange.or (aAppToken.clear ());
-      eChange = eChange.or (aAppToken.setAttributes (aCustomAttrs));
+      eChange = eChange.or (aAppToken.getMutableAttributes ().clear ());
+      eChange = eChange.or (aAppToken.getMutableAttributes ().setAttributes (aCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
@@ -217,13 +210,7 @@ public final class AppTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (AppToken.OT,
-                                      "create-new-access-token",
-                                      aAppToken.getID (),
-                                      sRevocationUserID,
-                                      aRevocationDT,
-                                      sRevocationReason,
-                                      sTokenString);
+    AuditHelper.onAuditModifySuccess (AppToken.OT, "create-new-access-token", aAppToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason, sTokenString);
     return EChange.CHANGED;
   }
 

@@ -102,9 +102,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     }
   }
 
-  public UserGroupManager (@Nonnull @Nonempty final String sFilename,
-                           @Nonnull final UserManager aUserMgr,
-                           @Nonnull final RoleManager aRoleMgr) throws DAOException
+  public UserGroupManager (@Nonnull @Nonempty final String sFilename, @Nonnull final UserManager aUserMgr, @Nonnull final RoleManager aRoleMgr) throws DAOException
   {
     super (sFilename);
     m_aUserMgr = ValueEnforcer.notNull (aUserMgr, "UserManager");
@@ -146,27 +144,21 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
       return EChange.UNCHANGED;
 
     // Administrators user group
-    UserGroup aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
-                                                  CSecurity.USERGROUP_ADMINISTRATORS_NAME,
-                                                  (String) null));
+    UserGroup aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID), CSecurity.USERGROUP_ADMINISTRATORS_NAME, (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_ADMINISTRATOR_ID))
       aUG.assignUser (CSecurity.USER_ADMINISTRATOR_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       aUG.assignRole (CSecurity.ROLE_ADMINISTRATOR_ID);
 
     // Users user group
-    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
-                                        CSecurity.USERGROUP_USERS_NAME,
-                                        (String) null));
+    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID), CSecurity.USERGROUP_USERS_NAME, (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_USER_ID))
       aUG.assignUser (CSecurity.USER_USER_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_USER_ID))
       aUG.assignRole (CSecurity.ROLE_USER_ID);
 
     // Guests user group
-    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
-                                        CSecurity.USERGROUP_GUESTS_NAME,
-                                        (String) null));
+    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID), CSecurity.USERGROUP_GUESTS_NAME, (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_GUEST_ID))
       aUG.assignUser (CSecurity.USER_GUEST_ID);
     // no role for this user group
@@ -228,9 +220,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
    * @return The created user group.
    */
   @Nonnull
-  public IUserGroup createNewUserGroup (@Nonnull @Nonempty final String sName,
-                                        @Nullable final String sDescription,
-                                        @Nullable final Map <String, String> aCustomAttrs)
+  public IUserGroup createNewUserGroup (@Nonnull @Nonempty final String sName, @Nullable final String sDescription, @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create user group
     final UserGroup aUserGroup = new UserGroup (sName, sDescription, aCustomAttrs);
@@ -535,7 +525,8 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     {
       EChange eChange = aUserGroup.setName (sNewName);
       eChange = eChange.or (aUserGroup.setDescription (sNewDescription));
-      eChange = eChange.or (aUserGroup.setAttributes (aNewCustomAttrs));
+      eChange = eChange.or (aUserGroup.getMutableAttributes ().clear ());
+      eChange = eChange.or (aUserGroup.getMutableAttributes ().setAttributes (aNewCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

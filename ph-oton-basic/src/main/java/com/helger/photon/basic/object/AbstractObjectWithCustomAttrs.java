@@ -42,6 +42,11 @@ public abstract class AbstractObjectWithCustomAttrs extends AbstractBaseObjectWi
     super (aObject);
   }
 
+  public AbstractObjectWithCustomAttrs (@Nonnull final IObject aObject, @Nullable final Map <String, String> aCustomAttrs)
+  {
+    super (aObject, aCustomAttrs);
+  }
+
   public AbstractObjectWithCustomAttrs (@Nonnull @Nonempty final String sID,
                                         @Nullable final LocalDateTime aCreationDT,
                                         @Nullable final String sCreationUserID,

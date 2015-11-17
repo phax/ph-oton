@@ -274,16 +274,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (User.OT,
-                                      aUser.getID (),
-                                      sLoginName,
-                                      sEmailAddress,
-                                      sFirstName,
-                                      sLastName,
-                                      sDescription,
-                                      aDesiredLocale,
-                                      aCustomAttrs,
-                                      Boolean.valueOf (bDisabled));
+    AuditHelper.onAuditCreateSuccess (User.OT, aUser.getID (), sLoginName, sEmailAddress, sFirstName, sLastName, sDescription, aDesiredLocale, aCustomAttrs, Boolean.valueOf (bDisabled));
 
     // Execute callback as the very last action
     for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
@@ -689,8 +680,8 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
       eChange = eChange.or (aUser.setDescription (sNewDescription));
       eChange = eChange.or (aUser.setDesiredLocale (aNewDesiredLocale));
       eChange = eChange.or (aUser.setDisabled (bNewDisabled));
-      eChange = eChange.or (aUser.clear ());
-      eChange = eChange.or (aUser.setAttributes (aNewCustomAttrs));
+      eChange = eChange.or (aUser.getMutableAttributes ().clear ());
+      eChange = eChange.or (aUser.getMutableAttributes ().setAttributes (aNewCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

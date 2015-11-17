@@ -61,7 +61,7 @@ public final class RoleTest
     assertNotNull (aRole2);
     assertEquals ("id1", aRole2.getID ());
     assertEquals ("Role 1", aRole2.getName ());
-    assertEquals (1, aRole2.getAttributeCount ());
-    assertEquals ("value", aRole2.getAttributeAsString ("key"));
+    assertEquals (1, aRole2.getAttributes ().getAttributeCount ());
+    assertEquals ("value", aRole2.getAttributes ().getAttributeAsString ("key"));
   }
 }

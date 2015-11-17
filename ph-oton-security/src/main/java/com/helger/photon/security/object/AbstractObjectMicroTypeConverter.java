@@ -84,9 +84,7 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
    */
   @Nullable
   @ContainsSoftMigration
-  protected static LocalDateTime readAsLocalDateTime (@Nonnull final IMicroElement aElement,
-                                                      @Nonnull final String sLDTName,
-                                                      @Nonnull final String sDTName)
+  public static LocalDateTime readAsLocalDateTime (@Nonnull final IMicroElement aElement, @Nonnull final String sLDTName, @Nonnull final String sDTName)
   {
     LocalDateTime aLDT = aElement.getAttributeValueWithConversion (sLDTName, LocalDateTime.class);
     if (aLDT == null)
@@ -122,32 +120,10 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
   @Nonnull
   public static final StubObjectWithCustomAttrs getStubObjectWithCustomAttrs (@Nonnull final IMicroElement aElement)
   {
-    // ID
-    final String sID = aElement.getAttributeValue (ATTR_ID);
-
-    // Creation
-    final LocalDateTime aCreationLDT = readAsLocalDateTime (aElement, ATTR_CREATIONLDT, "creationdt");
-    final String sCreationUserID = aElement.getAttributeValue (ATTR_CREATIONUSERID);
-
-    // Last modification
-    final LocalDateTime aLastModificationLDT = readAsLocalDateTime (aElement, ATTR_LASTMODLDT, "lastmodldt");
-    final String sLastModificationUserID = aElement.getAttributeValue (ATTR_LASTMODUSERID);
-
-    // Deletion
-    final LocalDateTime aDeletionLDT = readAsLocalDateTime (aElement, ATTR_DELETIONLDT, "deletiondt");
-    final String sDeletionUserID = aElement.getAttributeValue (ATTR_DELETIONUSERID);
-
     final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
     for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
       aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
 
-    return new StubObjectWithCustomAttrs (sID,
-                                          aCreationLDT,
-                                          sCreationUserID,
-                                          aLastModificationLDT,
-                                          sLastModificationUserID,
-                                          aDeletionLDT,
-                                          sDeletionUserID,
-                                          aCustomAttrs);
+    return new StubObjectWithCustomAttrs (getStubObject (aElement), aCustomAttrs);
   }
 }

@@ -115,9 +115,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
   }
 
   @Nonnull
-  public EChange updateUserToken (@Nullable final String sUserTokenID,
-                                  @Nullable final Map <String, String> aCustomAttrs,
-                                  @Nonnull @Nonempty final String sUserName)
+  public EChange updateUserToken (@Nullable final String sUserTokenID, @Nullable final Map <String, String> aCustomAttrs, @Nonnull @Nonempty final String sUserName)
   {
     m_aRWLock.writeLock ().lock ();
     try
@@ -132,8 +130,8 @@ public final class UserTokenManager extends AbstractSimpleDAO
       EChange eChange = EChange.UNCHANGED;
       // client ID cannot be changed!
       eChange = eChange.or (aUserToken.setUserName (sUserName));
-      eChange = eChange.or (aUserToken.clear ());
-      eChange = eChange.or (aUserToken.setAttributes (aCustomAttrs));
+      eChange = eChange.or (aUserToken.getMutableAttributes ().clear ());
+      eChange = eChange.or (aUserToken.getMutableAttributes ().setAttributes (aCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
@@ -202,13 +200,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (UserToken.OT,
-                                      "create-new-access-token",
-                                      aUserToken.getID (),
-                                      sRevocationUserID,
-                                      aRevocationDT,
-                                      sRevocationReason,
-                                      sTokenString);
+    AuditHelper.onAuditModifySuccess (UserToken.OT, "create-new-access-token", aUserToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason, sTokenString);
     return EChange.CHANGED;
   }
 

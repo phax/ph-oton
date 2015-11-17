@@ -24,12 +24,13 @@ import javax.annotation.concurrent.Immutable;
 
 import org.joda.time.LocalDateTime;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsImmutableObject;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.collection.attr.MapBasedAttributeContainer;
-import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.util.PDTHelper;
 
 /**
  * Abstract base implementation of {@link IObjectWithCustomAttrs} that handles
@@ -39,26 +40,20 @@ import com.helger.datetime.util.PDTHelper;
  * @author Philip Helger
  */
 @Immutable
-public abstract class AbstractBaseObjectWithCustomAttrs extends MapBasedAttributeContainer <String, String> implements IObjectWithCustomAttrs
+public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObject implements IObjectWithCustomAttrs
 {
-  private final String m_sID;
-  private final LocalDateTime m_aCreationDT;
-  private final String m_sCreationUserID;
-  private LocalDateTime m_aLastModificationDT;
-  private String m_sLastModificationUserID;
-  private LocalDateTime m_aDeletionDT;
-  private String m_sDeletionUserID;
+
+  private final MapBasedAttributeContainer <String, String> m_aAttrs = new MapBasedAttributeContainer <> ();
 
   public AbstractBaseObjectWithCustomAttrs (@Nonnull final IObjectWithCustomAttrs aObject)
   {
-    this (aObject.getID (),
-          aObject.getCreationDateTime (),
-          aObject.getCreationUserID (),
-          aObject.getLastModificationDateTime (),
-          aObject.getLastModificationUserID (),
-          aObject.getDeletionDateTime (),
-          aObject.getDeletionUserID (),
-          aObject.getAllAttributes ());
+    this (aObject, aObject.getAllAttributes ());
+  }
+
+  public AbstractBaseObjectWithCustomAttrs (@Nonnull final IObject aObject, @Nullable final Map <String, String> aCustomAttrs)
+  {
+    super (aObject);
+    m_aAttrs.setAttributes (aCustomAttrs);
   }
 
   public AbstractBaseObjectWithCustomAttrs (@Nonnull @Nonempty final String sID,
@@ -70,128 +65,34 @@ public abstract class AbstractBaseObjectWithCustomAttrs extends MapBasedAttribut
                                             @Nullable final String sDeletionUserID,
                                             @Nullable final Map <String, String> aCustomAttrs)
   {
-    m_sID = ValueEnforcer.notEmpty (sID, "ID");
-    m_aCreationDT = aCreationDT;
-    m_sCreationUserID = sCreationUserID;
-    m_aLastModificationDT = aLastModificationDT;
-    m_sLastModificationUserID = sLastModificationUserID;
-    m_aDeletionDT = aDeletionDT;
-    m_sDeletionUserID = sDeletionUserID;
-    setAttributes (aCustomAttrs);
+    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID);
+    m_aAttrs.setAttributes (aCustomAttrs);
   }
 
   @Nonnull
-  @Nonempty
-  public final String getID ()
+  @ReturnsImmutableObject
+  public IAttributeContainer <String, String> getAttributes ()
   {
-    return m_sID;
-  }
-
-  @Nullable
-  public final LocalDateTime getCreationDateTime ()
-  {
-    return m_aCreationDT;
-  }
-
-  @Nullable
-  public final String getCreationUserID ()
-  {
-    return m_sCreationUserID;
-  }
-
-  @Nullable
-  public final LocalDateTime getLastModificationDateTime ()
-  {
-    return m_aLastModificationDT;
-  }
-
-  @Nullable
-  public final String getLastModificationUserID ()
-  {
-    return m_sLastModificationUserID;
-  }
-
-  public final void setLastModification (@Nonnull final LocalDateTime aLastModificationDT, @Nonnull @Nonempty final String sLastModificationUserID)
-  {
-    ValueEnforcer.notNull (aLastModificationDT, "LastModificationDT");
-    ValueEnforcer.notEmpty (sLastModificationUserID, "LastModificationUserID");
-
-    if (isDeleted ())
-      throw new IllegalStateException ("Object is deleted and can therefore not be modified!");
-
-    m_aLastModificationDT = aLastModificationDT;
-    m_sLastModificationUserID = sLastModificationUserID;
-  }
-
-  @Nullable
-  public final LocalDateTime getDeletionDateTime ()
-  {
-    return m_aDeletionDT;
-  }
-
-  @Nullable
-  public final String getDeletionUserID ()
-  {
-    return m_sDeletionUserID;
+    return m_aAttrs;
   }
 
   @Nonnull
-  public final EChange setDeletion (@Nonnull final LocalDateTime aDeletionDT, @Nonnull @Nonempty final String sDeletionUserID)
+  @ReturnsMutableObject ("design")
+  public MapBasedAttributeContainer <String, String> getMutableAttributes ()
   {
-    ValueEnforcer.notNull (aDeletionDT, "DeletionDT");
-    ValueEnforcer.notEmpty (sDeletionUserID, "DeletionUserID");
-
-    if (m_aDeletionDT != null)
-    {
-      // Object is already deleted...
-      return EChange.UNCHANGED;
-    }
-
-    m_aDeletionDT = aDeletionDT;
-    m_sDeletionUserID = sDeletionUserID;
-    return EChange.CHANGED;
+    return m_aAttrs;
   }
 
   @Nonnull
-  public final EChange setUndeletion (@Nonnull final LocalDateTime aUndeletionDT, @Nonnull @Nonempty final String sUndeletionUserID)
+  @ReturnsMutableCopy
+  public Map <String, String> getAllAttributes ()
   {
-    ValueEnforcer.notNull (aUndeletionDT, "UndeletionDT");
-    ValueEnforcer.notEmpty (sUndeletionUserID, "UndeletionUserID");
-
-    if (m_aDeletionDT == null)
-    {
-      // Object is not deleted and can therefore not be undeleted
-      return EChange.UNCHANGED;
-    }
-
-    setLastModification (aUndeletionDT, sUndeletionUserID);
-    m_aDeletionDT = null;
-    m_sDeletionUserID = null;
-    return EChange.CHANGED;
-  }
-
-  public final boolean isDeleted ()
-  {
-    return m_aDeletionDT != null;
-  }
-
-  public final boolean isDeleted (@Nonnull final LocalDateTime aDT)
-  {
-    ValueEnforcer.notNull (aDT, "LocalDateTime");
-    return m_aDeletionDT != null && PDTHelper.isLessOrEqual (m_aDeletionDT, aDT);
+    return m_aAttrs.getAllAttributes ();
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("ID", m_sID)
-                            .appendIfNotNull ("creationDT", m_aCreationDT)
-                            .appendIfNotNull ("creationUserID", m_sCreationUserID)
-                            .appendIfNotNull ("lastModificationDT", m_aLastModificationDT)
-                            .appendIfNotNull ("lastModificationUserID", m_sLastModificationUserID)
-                            .appendIfNotNull ("deletionDT", m_aDeletionDT)
-                            .appendIfNotNull ("deletionUserID", m_sDeletionUserID)
-                            .toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("Attrs", m_aAttrs).toString ();
   }
 }
