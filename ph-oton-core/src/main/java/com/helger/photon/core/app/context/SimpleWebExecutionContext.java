@@ -19,6 +19,7 @@ package com.helger.photon.core.app.context;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -265,12 +266,16 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
     return EqualsHelper.equals (getAttributeAsString (sName), sDesiredValue);
   }
 
-  public boolean hasAttributeValue (@Nullable final String sName,
-                                    @Nullable final String sDesiredValue,
-                                    final boolean bDefault)
+  public boolean hasAttributeValue (@Nullable final String sName, @Nullable final String sDesiredValue, final boolean bDefault)
   {
     final String sValue = getAttributeAsString (sName);
     return sValue == null ? bDefault : EqualsHelper.equals (sValue, sDesiredValue);
+  }
+
+  @Nonnull
+  public Iterator <Map.Entry <String, Object>> getIterator ()
+  {
+    return m_aRequestScope.getIterator ();
   }
 
   public boolean getCheckBoxAttr (@Nullable final String sName, final boolean bDefaultValue)

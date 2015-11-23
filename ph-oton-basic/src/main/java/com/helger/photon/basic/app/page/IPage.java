@@ -21,7 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collection.attr.IAttributeContainer;
+import com.helger.commons.collection.attr.IHasAttributesAny;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.display.IHasDisplayText;
 
@@ -30,7 +30,7 @@ import com.helger.commons.text.display.IHasDisplayText;
  *
  * @author Philip Helger
  */
-public interface IPage extends IHasID <String>, IHasDisplayText, IAttributeContainer <String, Object>
+public interface IPage extends IHasID <String>, IHasDisplayText, IHasAttributesAny <String>
 {
   /**
    * Get the description of the page in the passed locale.

@@ -17,6 +17,7 @@
 package com.helger.photon.basic.app.page;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,6 +25,11 @@ import javax.annotation.Nullable;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsImmutableObject;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.attr.IAttributeContainer;
+import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
 import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IMultilingualText;
@@ -34,11 +40,12 @@ import com.helger.commons.text.ReadOnlyMultilingualText;
  *
  * @author Philip Helger
  */
-public abstract class AbstractPage extends MapBasedAttributeContainerAny <String>implements IPage
+public abstract class AbstractPage implements IPage
 {
   private final String m_sID;
   private IMultilingualText m_aName;
   private IMultilingualText m_aDescription;
+  private final MapBasedAttributeContainerAny <String> m_aAttrs = new MapBasedAttributeContainerAny <> ();
 
   @Nonnull
   private static ReadOnlyMultilingualText _getAsMLT (@Nonnull final String sText)
@@ -83,9 +90,7 @@ public abstract class AbstractPage extends MapBasedAttributeContainerAny <String
    *        The constant (non-translatable) description of the page. May be
    *        <code>null</code>.
    */
-  public AbstractPage (@Nonnull @Nonempty final String sID,
-                       @Nonnull final String sName,
-                       @Nullable final String sDescription)
+  public AbstractPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     this (sID, _getAsMLT (sName), sDescription == null ? null : _getAsMLT (sDescription));
   }
@@ -113,9 +118,7 @@ public abstract class AbstractPage extends MapBasedAttributeContainerAny <String
    * @param aDescription
    *        Optional description of the page. May be <code>null</code>.
    */
-  public AbstractPage (@Nonnull @Nonempty final String sID,
-                       @Nonnull final IMultilingualText aName,
-                       @Nullable final IMultilingualText aDescription)
+  public AbstractPage (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName, @Nullable final IMultilingualText aDescription)
   {
     this (sID);
     setName (aName);
@@ -189,12 +192,30 @@ public abstract class AbstractPage extends MapBasedAttributeContainerAny <String
     return m_aDescription == null ? null : m_aDescription.getText (aContentLocale);
   }
 
+  @Nonnull
+  @ReturnsImmutableObject
+  public IAttributeContainer <String, Object> getAttributes ()
+  {
+    return m_aAttrs;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public IMutableAttributeContainerAny <String> getMutableAttributes ()
+  {
+    return m_aAttrs;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Map <String, Object> getAllAttributes ()
+  {
+    return m_aAttrs.getAllAttributes ();
+  }
+
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_sID)
-                                       .append ("name", m_aName)
-                                       .appendIfNotNull ("description", m_aDescription)
-                                       .toString ();
+    return new ToStringGenerator (this).append ("ID", m_sID).append ("name", m_aName).appendIfNotNull ("description", m_aDescription).toString ();
   }
 }

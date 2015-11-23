@@ -159,8 +159,6 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     }
   }
 
-  private static final long serialVersionUID = -1l;
-
   private static final String FIELD_NAME = "name";
   private static final String FIELD_HOSTNAME = "hostname";
   private static final String FIELD_PORT = "port";

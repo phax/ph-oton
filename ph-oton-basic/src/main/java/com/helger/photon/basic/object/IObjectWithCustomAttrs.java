@@ -16,32 +16,14 @@
  */
 package com.helger.photon.basic.object;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.ReturnsImmutableObject;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.IAttributeContainer;
-import com.helger.commons.collection.attr.MapBasedAttributeContainer;
+import com.helger.commons.collection.attr.IHasAttributes;
 
 /**
  * Base interface for objects with custom attributes
  *
  * @author Philip Helger
  */
-public interface IObjectWithCustomAttrs extends IObject
+public interface IObjectWithCustomAttrs extends IObject, IHasAttributes <String, String>
 {
-  @Nonnull
-  @ReturnsImmutableObject
-  IAttributeContainer <String, String> getAttributes ();
-
-  @Nonnull
-  @ReturnsMutableObject ("design")
-  MapBasedAttributeContainer <String, String> getMutableAttributes ();
-
-  @Nonnull
-  @ReturnsMutableCopy
-  Map <String, String> getAllAttributes ();
+  /* empty */
 }
