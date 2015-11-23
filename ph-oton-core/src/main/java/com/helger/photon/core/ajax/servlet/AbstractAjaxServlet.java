@@ -41,6 +41,7 @@ import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.ajax.response.AjaxHttpStatusCodeResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -90,8 +91,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull final UnifiedResponse aUnifiedResponse)
+  protected EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final UnifiedResponse aUnifiedResponse)
   {
     // cut the leading "/"
     String sFunctionName = aRequestScope.getPathWithinServlet ();
@@ -143,8 +143,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
   {
     // Action is present
     final String sAjaxFunctionName = aRequestScope.getAttributeAsString (SCOPE_ATTR_NAME);
-    final IAjaxInvoker aAjaxInvoker = (IAjaxInvoker) aRequestScope.getTypedAttribute (SCOPE_ATTR_INVOKER, Wrapper.class)
-                                                                  .get ();
+    final IAjaxInvoker aAjaxInvoker = (IAjaxInvoker) aRequestScope.getTypedAttribute (SCOPE_ATTR_INVOKER, Wrapper.class).get ();
     final IAjaxExecutor aAjaxExecutor = aRequestScope.getTypedAttribute (SCOPE_ATTR_EXECUTOR, IAjaxExecutor.class);
 
     // Never cache the result but the executor may overwrite it
@@ -159,6 +158,12 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
       final IAjaxResponse aResult = aAjaxInvoker.invokeFunction (sAjaxFunctionName, aAjaxExecutor, aRequestScope);
       if (s_aLogger.isTraceEnabled ())
         s_aLogger.trace ("  AJAX Result: " + aResult);
+
+      if (aResult instanceof AjaxHttpStatusCodeResponse)
+      {
+        // Status codes are not meant to be cached
+        aUnifiedResponse.removeCacheControl ();
+      }
 
       // Write result to the passed response
       aResult.applyToResponse (aUnifiedResponse);
@@ -175,11 +180,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
       for (final IAjaxExceptionCallback aExceptionCallback : getExceptionCallbacks ().getAllCallbacks ())
         try
         {
-          aExceptionCallback.onAjaxExecutionException (aAjaxInvoker,
-                                                       sAjaxFunctionName,
-                                                       aAjaxExecutor,
-                                                       aRequestScope,
-                                                       t);
+          aExceptionCallback.onAjaxExecutionException (aAjaxInvoker, sAjaxFunctionName, aAjaxExecutor, aRequestScope, t);
         }
         catch (final Throwable t2)
         {

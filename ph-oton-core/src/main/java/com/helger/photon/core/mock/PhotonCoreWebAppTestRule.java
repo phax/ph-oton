@@ -39,14 +39,10 @@ public class PhotonCoreWebAppTestRule extends PhotonCoreTestRule
 
   @Override
   @Nonnull
-  protected MockServletContext createMockServletContext (@Nullable final String sContextPath,
-                                                         @Nullable final Map <String, String> aInitParams)
+  protected MockServletContext createMockServletContext (@Nullable final String sContextPath, @Nullable final Map <String, String> aInitParams)
   {
     // Use the special resource base path
     // Use default resource provider
-    return new MockServletContext (sContextPath,
-                                   RESOURCE_BASE_FILE.getAbsolutePath (),
-                                   (IReadableResourceProvider) null,
-                                   aInitParams);
+    return MockServletContext.create (sContextPath, RESOURCE_BASE_FILE.getAbsolutePath (), (IReadableResourceProvider) null, aInitParams);
   }
 }
