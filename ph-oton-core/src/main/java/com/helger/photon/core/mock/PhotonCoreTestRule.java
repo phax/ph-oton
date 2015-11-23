@@ -16,15 +16,18 @@
  */
 package com.helger.photon.core.mock;
 
+import java.io.File;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.io.resourceprovider.IReadableResourceProvider;
 import com.helger.commons.url.SMap;
 import com.helger.photon.core.servlet.WebAppListener;
 import com.helger.web.mock.MockHttpListener;
+import com.helger.web.mock.MockServletContext;
 import com.helger.web.scope.mock.MockServletRequestListenerScopeAware;
 import com.helger.web.scope.mock.WebScopeTestRule;
 
@@ -38,6 +41,8 @@ import com.helger.web.scope.mock.WebScopeTestRule;
  */
 public class PhotonCoreTestRule extends WebScopeTestRule
 {
+  public static final File RESOURCE_BASE_FILE = new File ("target/test-classes").getAbsoluteFile ();
+
   @Nonnull
   @ReturnsMutableCopy
   public static SMap createDefaultServletContextInitParameters ()
@@ -69,5 +74,14 @@ public class PhotonCoreTestRule extends WebScopeTestRule
     });
     MockHttpListener.addDefaultListener (new MockServletRequestListenerScopeAware ());
     MockHttpListener.setToDefault ();
+  }
+
+  @Override
+  @Nonnull
+  protected MockServletContext createMockServletContext (@Nullable final String sContextPath, @Nullable final Map <String, String> aInitParams)
+  {
+    // Use the special resource base path
+    // Use default resource provider
+    return MockServletContext.create (sContextPath, RESOURCE_BASE_FILE.getAbsolutePath (), (IReadableResourceProvider) null, aInitParams);
   }
 }

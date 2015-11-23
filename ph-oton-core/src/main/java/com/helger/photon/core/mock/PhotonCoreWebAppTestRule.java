@@ -35,6 +35,7 @@ import com.helger.web.mock.MockServletContext;
  */
 public class PhotonCoreWebAppTestRule extends PhotonCoreTestRule
 {
+  @SuppressWarnings ("hiding")
   public static final File RESOURCE_BASE_FILE = new File ("target/webapp-classes").getAbsoluteFile ();
 
   @Override
