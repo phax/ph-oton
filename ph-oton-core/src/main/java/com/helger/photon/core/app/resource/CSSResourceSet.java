@@ -16,9 +16,11 @@
  */
 package com.helger.photon.core.app.resource;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -52,7 +54,9 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
 
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final Set <ICSSPathProvider> m_aItems = new LinkedHashSet <ICSSPathProvider> ();
+  private final List <ICSSPathProvider> m_aList = new ArrayList <> ();
+  @GuardedBy ("m_aRWLock")
+  private final Set <ICSSPathProvider> m_aItems = new HashSet <> ();
   @GuardedBy ("m_aRWLock")
   private boolean m_bIsCollected = false;
 
@@ -62,20 +66,22 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   public CSSResourceSet (@Nonnull final CSSResourceSet aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
-    m_aItems.addAll (aOther.m_aItems);
+    for (final ICSSPathProvider aItem : aOther)
+      addItem (aItem);
   }
 
   public CSSResourceSet (@Nonnull final Collection <? extends ICSSPathProvider> aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
-    m_aItems.addAll (aOther);
+    for (final ICSSPathProvider aItem : aOther)
+      addItem (aItem);
   }
 
   public CSSResourceSet (@Nonnull final ICSSPathProvider... aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
     for (final ICSSPathProvider aItem : aOther)
-      m_aItems.add (aItem);
+      addItem (aItem);
   }
 
   private static void _collectWarn (@Nonnull final String sMsg)
@@ -86,13 +92,27 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   @Nonnull
   public EChange addItem (@Nonnull final ICSSPathProvider aCSSPathProvider)
   {
+    return addItem (-1, aCSSPathProvider);
+  }
+
+  @Nonnull
+  public EChange addItem (final int nIndex, @Nonnull final ICSSPathProvider aCSSPathProvider)
+  {
     ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
 
     m_aRWLock.writeLock ().lock ();
     try
     {
+      // Check uniqueness
       if (!m_aItems.add (aCSSPathProvider))
         return EChange.UNCHANGED;
+
+      // Honour index
+      if (nIndex >= 0)
+        m_aList.add (nIndex, aCSSPathProvider);
+      else
+        m_aList.add (aCSSPathProvider);
+
       if (m_bIsCollected)
         _collectWarn ("Adding item " + aCSSPathProvider + " after collection!");
       return EChange.CHANGED;
@@ -115,6 +135,25 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   }
 
   @Nonnull
+  public EChange addItems (final int nIndex, @Nonnull final IWebResourceSet <? extends ICSSPathProvider> aItems)
+  {
+    ValueEnforcer.notNull (aItems, "Items");
+
+    if (nIndex < 0)
+      return addItems (aItems);
+
+    EChange ret = EChange.UNCHANGED;
+    int nCurIndex = nIndex;
+    for (final ICSSPathProvider aItem : aItems)
+      if (addItem (nCurIndex, aItem).isChanged ())
+      {
+        ret = EChange.CHANGED;
+        nCurIndex++;
+      }
+    return ret;
+  }
+
+  @Nonnull
   public EChange removeItem (@Nonnull final ICSSPathProvider aCSSPathProvider)
   {
     ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
@@ -124,6 +163,8 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     {
       if (!m_aItems.remove (aCSSPathProvider))
         return EChange.UNCHANGED;
+      m_aList.remove (aCSSPathProvider);
+
       if (m_bIsCollected)
         _collectWarn ("Removed item " + aCSSPathProvider + " after collection!");
       return EChange.CHANGED;
@@ -143,6 +184,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
       if (m_aItems.isEmpty ())
         return EChange.UNCHANGED;
       m_aItems.clear ();
+      m_aList.clear ();
       if (m_bIsCollected)
         _collectWarn ("Removed all items after collection!");
       return EChange.CHANGED;
@@ -160,7 +202,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     m_aRWLock.readLock ().lock ();
     try
     {
-      return CollectionHelper.newOrderedSet (m_aItems);
+      return CollectionHelper.newOrderedSet (m_aList);
     }
     finally
     {
@@ -175,7 +217,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     m_aRWLock.readLock ().lock ();
     try
     {
-      aTarget.addAll (m_aItems);
+      aTarget.addAll (m_aList);
     }
     finally
     {
@@ -188,7 +230,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     m_aRWLock.readLock ().lock ();
     try
     {
-      return m_aItems.isEmpty ();
+      return m_aList.isEmpty ();
     }
     finally
     {
@@ -207,7 +249,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     m_aRWLock.readLock ().lock ();
     try
     {
-      return m_aItems.size ();
+      return m_aList.size ();
     }
     finally
     {
@@ -221,7 +263,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     m_aRWLock.readLock ().lock ();
     try
     {
-      return m_aItems.iterator ();
+      return m_aList.iterator ();
     }
     finally
     {
@@ -252,18 +294,18 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final CSSResourceSet rhs = (CSSResourceSet) o;
-    return m_aItems.equals (rhs.m_aItems);
+    return m_aList.equals (rhs.m_aList);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aItems).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aList).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("items", m_aItems).toString ();
+    return new ToStringGenerator (this).append ("list", m_aList).toString ();
   }
 }

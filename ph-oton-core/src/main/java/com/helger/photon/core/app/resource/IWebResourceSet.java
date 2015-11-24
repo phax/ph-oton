@@ -45,6 +45,19 @@ public interface IWebResourceSet <T> extends Serializable, Iterable <T>
   EChange addItem (@Nonnull T aItem);
 
   /**
+   * Add an item at the specified index
+   *
+   * @param nIndex
+   *        The index to be used. If the value is &lt; 0 the value is ignored
+   *        and item is appended.
+   * @param aItem
+   *        The item to add. May not be <code>null</code>.
+   * @return {@link EChange}
+   */
+  @Nonnull
+  EChange addItem (int nIndex, @Nonnull T aItem);
+
+  /**
    * Add all items from another list.
    *
    * @param aItems
@@ -53,6 +66,19 @@ public interface IWebResourceSet <T> extends Serializable, Iterable <T>
    */
   @Nonnull
   EChange addItems (@Nonnull IWebResourceSet <? extends T> aItems);
+
+  /**
+   * Add all items from another list at the specified index.
+   *
+   * @param nIndex
+   *        The index to be used. If the value is &lt; 0 the value is ignored
+   *        and item is appended.
+   * @param aItems
+   *        The items to be added. May not be <code>null</code>.
+   * @return {@link EChange}
+   */
+  @Nonnull
+  EChange addItems (int nIndex, @Nonnull IWebResourceSet <? extends T> aItems);
 
   /**
    * Unregister an existing item

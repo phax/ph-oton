@@ -16,9 +16,11 @@
  */
 package com.helger.photon.core.app.resource;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -52,7 +54,9 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
 
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final Set <IJSPathProvider> m_aItems = new LinkedHashSet <IJSPathProvider> ();
+  private final List <IJSPathProvider> m_aList = new ArrayList <> ();
+  @GuardedBy ("m_aRWLock")
+  private final Set <IJSPathProvider> m_aItems = new LinkedHashSet <> ();
   @GuardedBy ("m_aRWLock")
   private boolean m_bIsCollected = false;
 
@@ -62,20 +66,22 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   public JSResourceSet (@Nonnull final JSResourceSet aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
-    m_aItems.addAll (aOther.m_aItems);
+    for (final IJSPathProvider aItem : aOther)
+      addItem (aItem);
   }
 
   public JSResourceSet (@Nonnull final Collection <? extends IJSPathProvider> aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
-    m_aItems.addAll (aOther);
+    for (final IJSPathProvider aItem : aOther)
+      addItem (aItem);
   }
 
   public JSResourceSet (@Nonnull final IJSPathProvider... aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
     for (final IJSPathProvider aItem : aOther)
-      m_aItems.add (aItem);
+      addItem (aItem);
   }
 
   private static void _collectWarn (@Nonnull final String sMsg)
@@ -86,13 +92,27 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   @Nonnull
   public EChange addItem (@Nonnull final IJSPathProvider aJSPathProvider)
   {
+    return addItem (-1, aJSPathProvider);
+  }
+
+  @Nonnull
+  public EChange addItem (final int nIndex, @Nonnull final IJSPathProvider aJSPathProvider)
+  {
     ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
 
     m_aRWLock.writeLock ().lock ();
     try
     {
+      // Check uniqueness
       if (!m_aItems.add (aJSPathProvider))
         return EChange.UNCHANGED;
+
+      // Honour index
+      if (nIndex >= 0)
+        m_aList.add (nIndex, aJSPathProvider);
+      else
+        m_aList.add (aJSPathProvider);
+
       if (m_bIsCollected)
         _collectWarn ("Adding item " + aJSPathProvider + " after collection!");
       return EChange.CHANGED;
@@ -115,6 +135,25 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   }
 
   @Nonnull
+  public EChange addItems (final int nIndex, @Nonnull final IWebResourceSet <? extends IJSPathProvider> aItems)
+  {
+    ValueEnforcer.notNull (aItems, "Items");
+
+    if (nIndex < 0)
+      return addItems (aItems);
+
+    EChange ret = EChange.UNCHANGED;
+    int nCurIndex = nIndex;
+    for (final IJSPathProvider aItem : aItems)
+      if (addItem (nCurIndex, aItem).isChanged ())
+      {
+        ret = EChange.CHANGED;
+        nCurIndex++;
+      }
+    return ret;
+  }
+
+  @Nonnull
   public EChange removeItem (@Nonnull final IJSPathProvider aJSPathProvider)
   {
     ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
@@ -124,6 +163,8 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     {
       if (!m_aItems.remove (aJSPathProvider))
         return EChange.UNCHANGED;
+      m_aList.remove (aJSPathProvider);
+
       if (m_bIsCollected)
         _collectWarn ("Removed item " + aJSPathProvider + " after collection!");
       return EChange.CHANGED;
@@ -143,6 +184,8 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
       if (m_aItems.isEmpty ())
         return EChange.UNCHANGED;
       m_aItems.clear ();
+      m_aList.clear ();
+
       if (m_bIsCollected)
         _collectWarn ("Removed all items after collection!");
       return EChange.CHANGED;
@@ -160,7 +203,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     m_aRWLock.readLock ().lock ();
     try
     {
-      return CollectionHelper.newOrderedSet (m_aItems);
+      return CollectionHelper.newOrderedSet (m_aList);
     }
     finally
     {
@@ -175,7 +218,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     m_aRWLock.readLock ().lock ();
     try
     {
-      aTarget.addAll (m_aItems);
+      aTarget.addAll (m_aList);
     }
     finally
     {
@@ -188,7 +231,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     m_aRWLock.readLock ().lock ();
     try
     {
-      return m_aItems.isEmpty ();
+      return m_aList.isEmpty ();
     }
     finally
     {
@@ -207,7 +250,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     m_aRWLock.readLock ().lock ();
     try
     {
-      return m_aItems.size ();
+      return m_aList.size ();
     }
     finally
     {
@@ -221,7 +264,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     m_aRWLock.readLock ().lock ();
     try
     {
-      return m_aItems.iterator ();
+      return m_aList.iterator ();
     }
     finally
     {
@@ -252,18 +295,18 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final JSResourceSet rhs = (JSResourceSet) o;
-    return m_aItems.equals (rhs.m_aItems);
+    return m_aList.equals (rhs.m_aList);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aItems).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aList).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("items", m_aItems).toString ();
+    return new ToStringGenerator (this).append ("list", m_aList).toString ();
   }
 }

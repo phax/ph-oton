@@ -100,13 +100,7 @@ public final class PhotonCSS
             final ECSSMedium eMedium = ECSSMedium.getFromNameOrNull (sMedium);
             if (eMedium == null)
             {
-              s_aLogger.warn ("CSS item '" +
-                              sPath +
-                              "' in " +
-                              aRes.getPath () +
-                              " has an invalid medium '" +
-                              sMedium +
-                              "' - ignoring");
+              s_aLogger.warn ("CSS item '" + sPath + "' in " + aRes.getPath () + " has an invalid medium '" + sMedium + "' - ignoring");
               continue;
             }
             aMediaList.addMedium (eMedium);
@@ -135,6 +129,20 @@ public final class PhotonCSS
   public static void registerCSSIncludeForGlobal (@Nonnull final ICSSPathProvider aCSSPathProvider)
   {
     s_aGlobal.addItem (aCSSPathProvider);
+  }
+
+  /**
+   * Register a new CSS item for global scope.
+   *
+   * @param nIndex
+   *        The index to be used. If the value is &lt; 0 the value is ignored
+   *        and item is appended.
+   * @param aCSSPathProvider
+   *        The CSS path provider to use. May not be <code>null</code>.
+   */
+  public static void registerCSSIncludeForGlobal (final int nIndex, @Nonnull final ICSSPathProvider aCSSPathProvider)
+  {
+    s_aGlobal.addItem (nIndex, aCSSPathProvider);
   }
 
   /**

@@ -114,6 +114,20 @@ public final class PhotonJS
   }
 
   /**
+   * Register a new JS item for global scope.
+   *
+   * @param nIndex
+   *        The index to be used. If the value is &lt; 0 the value is ignored
+   *        and item is appended.
+   * @param aJSPathProvider
+   *        The JS path provider to use. May not be <code>null</code>.
+   */
+  public static void registerJSIncludeForGlobal (final int nIndex, @Nonnull final IJSPathProvider aJSPathProvider)
+  {
+    s_aGlobal.addItem (nIndex, aJSPathProvider);
+  }
+
+  /**
    * Unregister an existing JS item for global scope.
    *
    * @param aJSPathProvider
