@@ -739,7 +739,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aWPEC
    *        The web page execution context. Never <code>null</code>.
    * @param eFormAction
-   *        The form action that is to be checked. Never <code>null</code>.
+   *        The form action that is to be checked. Never <code>null</code> and
+   *        never {@link EWebPageFormAction#SHOW_LIST}.
    * @param aSelectedObject
    *        The currently selected object. May be <code>null</code>.
    * @return <code>true</code> if the action is allowed, <code>false</code> if
@@ -1222,7 +1223,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                 }
     }
 
-    if (!eFormAction.isCustom ())
+    if (!eFormAction.isShowList ())
     {
       // An action was specified - check if it is allowed at all
       if (!isActionAllowed (aWPEC, eFormAction, aSelectedObject))
