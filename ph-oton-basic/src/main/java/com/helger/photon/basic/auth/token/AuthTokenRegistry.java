@@ -153,7 +153,7 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
   {
     ValueEnforcer.notNull (aSubject, "Subject");
 
-    final List <IAuthToken> ret = new ArrayList <IAuthToken> ();
+    final List <IAuthToken> ret = new ArrayList <> ();
     m_aRWLock.readLock ().lock ();
     try
     {
@@ -182,7 +182,7 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
 
     // get all token IDs matching a given subject
     // Note: required IAuthSubject to implement equals!
-    final List <String> aDelTokenIDs = new ArrayList <String> ();
+    final List <String> aDelTokenIDs = new ArrayList <> ();
     m_aRWLock.readLock ().lock ();
     try
     {
