@@ -62,6 +62,18 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
   }
 
   /**
+   * Customize the empty form
+   *
+   * @param aSWEC
+   *        Web execution context.
+   * @param aForm
+   *        The empty form.
+   */
+  @OverrideOnDemand
+  protected void onBeforeForm (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final BootstrapForm aForm)
+  {}
+
+  /**
    * Customize the created form
    *
    * @param aSWEC
@@ -71,6 +83,18 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
    */
   @OverrideOnDemand
   protected void onAfterForm (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final BootstrapForm aForm)
+  {}
+
+  /**
+   * Customize the created container, where the form resides in
+   *
+   * @param aSWEC
+   *        Web execution context.
+   * @param aContainer
+   *        The empty container.
+   */
+  @OverrideOnDemand
+  protected void onBeforeContainer (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final BootstrapContainer aContainer)
   {}
 
   /**
@@ -125,6 +149,9 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
 
     final BootstrapForm aForm = new BootstrapForm (aRequestScope.getURL ());
 
+    // Customize
+    onBeforeForm (aSWEC, aForm);
+
     // The hidden field that triggers the validation
     aForm.addChild (new HCHiddenField (CLogin.REQUEST_PARAM_ACTION, CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS));
 
@@ -148,6 +175,10 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
 
     // Layout the form
     final BootstrapContainer aContentLayout = new BootstrapContainer ();
+
+    // Customize
+    onBeforeContainer (aSWEC, aContentLayout);
+
     final BootstrapRow aRow = aContentLayout.addAndReturnChild (new BootstrapRow ());
     aRow.createColumn (0, 2, 3, 3);
     final HCDiv aCol2 = aRow.createColumn (12, 8, 6, 6);
@@ -156,11 +187,14 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
     aCol2.addChild (aForm);
     aRow.createColumn (0, 2, 3, 3);
 
+    // Customize
     onAfterContainer (aSWEC, aContentLayout, aRow, aCol2);
 
     final HCSpan aSpan = new HCSpan ().setID (CLogin.LAYOUT_AREAID_LOGIN);
     onBeforeLoginContainer (aSWEC, aSpan);
     aSpan.addChild (aContentLayout);
+
+    // Customize
     onAfterLoginContainer (aSWEC, aSpan);
 
     // Build body
