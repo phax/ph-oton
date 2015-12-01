@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.string.StringHelper;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCEditPassword;
 import com.helger.html.hc.html.forms.HCHiddenField;
@@ -32,6 +32,7 @@ import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.html.sections.HCBody;
 import com.helger.html.hc.html.sections.HCH2;
 import com.helger.html.hc.html.textlevel.HCSpan;
+import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.base.BootstrapContainer;
 import com.helger.photon.bootstrap3.button.BootstrapSubmitButton;
@@ -53,12 +54,17 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
 {
-  private final String m_sPageTitle;
+  private final IHCNode m_aPageTitle;
 
   public BootstrapLoginHTMLProvider (final boolean bLoginError, @Nonnull final ELoginResult eLoginResult, @Nullable final String sPageTitle)
   {
+    this (bLoginError, eLoginResult, HCTextNode.createOnDemand (sPageTitle));
+  }
+
+  public BootstrapLoginHTMLProvider (final boolean bLoginError, @Nonnull final ELoginResult eLoginResult, @Nullable final IHCNode aPageTitle)
+  {
     super (bLoginError, eLoginResult);
-    m_sPageTitle = sPageTitle;
+    m_aPageTitle = aPageTitle;
   }
 
   /**
@@ -115,6 +121,13 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
                                    @Nonnull final BootstrapRow aRow,
                                    @Nonnull final HCDiv aContentCol)
   {}
+
+  @Nonnull
+  @OverrideOnDemand
+  protected IHCNode createPageHeader (@Nonnull final IHCNode aPageTitle)
+  {
+    return new BootstrapPageHeader ().addChild (new HCH2 ().addChild (aPageTitle));
+  }
 
   /**
    * Customize the created span, where the container resides in
@@ -182,8 +195,8 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
     final BootstrapRow aRow = aContentLayout.addAndReturnChild (new BootstrapRow ());
     aRow.createColumn (0, 2, 3, 3);
     final HCDiv aCol2 = aRow.createColumn (12, 8, 6, 6);
-    if (StringHelper.hasText (m_sPageTitle))
-      aCol2.addChild (new BootstrapPageHeader ().addChild (new HCH2 ().addChild (m_sPageTitle)));
+    if (m_aPageTitle != null)
+      aCol2.addChild (createPageHeader (m_aPageTitle));
     aCol2.addChild (aForm);
     aRow.createColumn (0, 2, 3, 3);
 
@@ -207,6 +220,7 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
   protected void fillHead (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCHtml aHtml)
   {
     super.fillHead (aSWEC, aHtml);
-    aHtml.getHead ().setPageTitle (m_sPageTitle);
+    if (m_aPageTitle != null)
+      aHtml.getHead ().setPageTitle (m_aPageTitle.getPlainText ());
   }
 }
