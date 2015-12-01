@@ -122,10 +122,13 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
                                    @Nonnull final HCDiv aContentCol)
   {}
 
-  @Nonnull
+  @Nullable
   @OverrideOnDemand
-  protected IHCNode createPageHeader (@Nonnull final IHCNode aPageTitle)
+  protected IHCNode createPageHeader (@Nullable final IHCNode aPageTitle)
   {
+    if (aPageTitle == null)
+      return null;
+
     return new BootstrapPageHeader ().addChild (new HCH2 ().addChild (aPageTitle));
   }
 
@@ -195,8 +198,7 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
     final BootstrapRow aRow = aContentLayout.addAndReturnChild (new BootstrapRow ());
     aRow.createColumn (0, 2, 3, 3);
     final HCDiv aCol2 = aRow.createColumn (12, 8, 6, 6);
-    if (m_aPageTitle != null)
-      aCol2.addChild (createPageHeader (m_aPageTitle));
+    aCol2.addChild (createPageHeader (m_aPageTitle));
     aCol2.addChild (aForm);
     aRow.createColumn (0, 2, 3, 3);
 
