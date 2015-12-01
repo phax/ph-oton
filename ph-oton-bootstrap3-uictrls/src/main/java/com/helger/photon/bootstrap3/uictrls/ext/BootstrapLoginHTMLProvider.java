@@ -55,9 +55,7 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
 {
   private final String m_sPageTitle;
 
-  public BootstrapLoginHTMLProvider (final boolean bLoginError,
-                                     @Nonnull final ELoginResult eLoginResult,
-                                     @Nullable final String sPageTitle)
+  public BootstrapLoginHTMLProvider (final boolean bLoginError, @Nonnull final ELoginResult eLoginResult, @Nullable final String sPageTitle)
   {
     super (bLoginError, eLoginResult);
     m_sPageTitle = sPageTitle;
@@ -103,6 +101,18 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
    *        The span where the container resides in
    */
   @OverrideOnDemand
+  protected void onBeforeLoginContainer (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCSpan aSpan)
+  {}
+
+  /**
+   * Customize the created span, where the container resides in
+   *
+   * @param aSWEC
+   *        Web execution context.
+   * @param aSpan
+   *        The span where the container resides in
+   */
+  @OverrideOnDemand
   protected void onAfterLoginContainer (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCSpan aSpan)
   {}
 
@@ -124,8 +134,7 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
     // User name and password table
     final String sUserName = EPhotonCoreText.EMAIL_ADDRESS.getDisplayText (aDisplayLocale);
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sUserName)
-                                                 .setCtrl (new HCEdit (CLogin.REQUEST_ATTR_USERID).setPlaceholder (sUserName)
-                                                                                                  .setAutoFocus (true)));
+                                                 .setCtrl (new HCEdit (CLogin.REQUEST_ATTR_USERID).setPlaceholder (sUserName).setAutoFocus (true)));
 
     final String sPassword = EPhotonCoreText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale);
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPassword)
@@ -149,7 +158,9 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
 
     onAfterContainer (aSWEC, aContentLayout, aRow, aCol2);
 
-    final HCSpan aSpan = new HCSpan ().setID (CLogin.LAYOUT_AREAID_LOGIN).addChild (aContentLayout);
+    final HCSpan aSpan = new HCSpan ().setID (CLogin.LAYOUT_AREAID_LOGIN);
+    onBeforeLoginContainer (aSWEC, aSpan);
+    aSpan.addChild (aContentLayout);
     onAfterLoginContainer (aSWEC, aSpan);
 
     // Build body
