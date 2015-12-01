@@ -28,9 +28,10 @@ import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
 import com.helger.html.hc.impl.HCCustomizerList;
 import com.helger.html.meta.EStandardMetaElement;
+import com.helger.html.resource.css.ICSSPathProvider;
+import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.basic.app.PhotonPathMapper;
-import com.helger.photon.bootstrap3.EBootstrapCSSPathProvider;
-import com.helger.photon.bootstrap3.EBootstrapJSPathProvider;
+import com.helger.photon.bootstrap3.BootstrapCustomConfig;
 import com.helger.photon.bootstrap3.servlet.BootstrapCustomizer;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.app.html.PhotonCSS;
@@ -60,23 +61,21 @@ public final class PhotonStubInitializer
   public static void registerDefaultResources ()
   {
     // CSS
-    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP);
-    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_THEME);
-    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_PH);
+    for (final ICSSPathProvider aPP : BootstrapCustomConfig.getAllBootstrapCSS ())
+      PhotonCSS.registerCSSIncludeForGlobal (aPP);
     PhotonCSS.registerCSSIncludeForGlobal (EUICtrlsCSSPathProvider.FAMFAM_ICONS);
     PhotonCSS.registerCSSIncludeForGlobal (EUICtrlsCSSPathProvider.FAMFAM_FLAGS);
     PhotonCSS.registerCSSIncludeForGlobal (EUICoreCSSPathProvider.UICORE);
 
     // With conditional comments
-    PhotonCSS.registerCSSIncludeForGlobal (EBootstrapCSSPathProvider.BOOTSTRAP_IE9);
     PhotonCSS.registerCSSIncludeForGlobal (EUICoreCSSPathProvider.JQUERY_PLACEHOLDER);
 
     // JS
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_1);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.UICORE_JQUERY);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.UICORE_FORM);
-    PhotonJS.registerJSIncludeForGlobal (EBootstrapJSPathProvider.BOOTSTRAP);
-    PhotonJS.registerJSIncludeForGlobal (EBootstrapJSPathProvider.BOOTSTRAP_PH);
+    for (final IJSPathProvider aPP : BootstrapCustomConfig.getAllBootstrapJS ())
+      PhotonJS.registerJSIncludeForGlobal (aPP);
 
     // With conditional comments
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.HTML5SHIV_3_7_2);
