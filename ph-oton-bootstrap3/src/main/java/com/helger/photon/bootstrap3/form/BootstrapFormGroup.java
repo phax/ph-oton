@@ -41,7 +41,7 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
 {
   private HCFormLabel m_aLabel;
   private IHCNode m_aCtrl;
-  private IHCNode m_aHelpText;
+  private HCNodeList m_aHelpText;
   private IErrorList m_aErrorList;
   private EBootstrapFormGroupState m_eState = EBootstrapFormGroupState.NONE;
 
@@ -168,7 +168,7 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
    * Called after the help text was altered.
    *
    * @param aNote
-   *        The new note
+   *        The new help text node. May be <code>null</code>.
    */
   @OverrideOnDemand
   protected void onHelpTextModified (@Nullable final IHCNode aNote)
@@ -177,15 +177,22 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
   @Nonnull
   public final BootstrapFormGroup setHelpText (@Nullable final String sHelpText)
   {
-    return setHelpText (HCTextNode.createOnDemand (sHelpText));
+    return setHelpText (new HCNodeList ().addChild (sHelpText));
+  }
+
+  @Nonnull
+  public final BootstrapFormGroup setHelpText (@Nullable final HCNodeList aHelpText)
+  {
+    m_aHelpText = aHelpText;
+    onHelpTextModified (aHelpText);
+    return this;
   }
 
   @Nonnull
   public final BootstrapFormGroup setHelpText (@Nullable final IHCNode aHelpText)
   {
-    m_aHelpText = aHelpText;
-    onHelpTextModified (aHelpText);
-    return this;
+    return setHelpText (aHelpText instanceof HCNodeList ? (HCNodeList) aHelpText
+                                                        : new HCNodeList ().addChild (aHelpText));
   }
 
   @Nonnull
@@ -204,6 +211,43 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
   public final BootstrapFormGroup setHelpText (@Nullable final Iterable <? extends IHCNode> aHelpTexts)
   {
     return setHelpText (new HCNodeList ().addChildren (aHelpTexts));
+  }
+
+  @Nonnull
+  public final BootstrapFormGroup addHelpText (@Nullable final String sHelpText)
+  {
+    return addHelpText (HCTextNode.createOnDemand (sHelpText));
+  }
+
+  @Nonnull
+  public final BootstrapFormGroup addHelpText (@Nullable final IHCNode aHelpText)
+  {
+    if (aHelpText != null)
+    {
+      if (m_aHelpText == null)
+        m_aHelpText = new HCNodeList ();
+      m_aHelpText.addChild (aHelpText);
+      onHelpTextModified (m_aHelpText);
+    }
+    return this;
+  }
+
+  @Nonnull
+  public final BootstrapFormGroup addHelpText (@Nullable final String... aHelpTexts)
+  {
+    return addHelpText (new HCNodeList ().addChildren (aHelpTexts));
+  }
+
+  @Nonnull
+  public final BootstrapFormGroup addHelpText (@Nullable final IHCNode... aHelpTexts)
+  {
+    return addHelpText (new HCNodeList ().addChildren (aHelpTexts));
+  }
+
+  @Nonnull
+  public final BootstrapFormGroup addHelpText (@Nullable final Iterable <? extends IHCNode> aHelpTexts)
+  {
+    return addHelpText (new HCNodeList ().addChildren (aHelpTexts));
   }
 
   @Nullable
