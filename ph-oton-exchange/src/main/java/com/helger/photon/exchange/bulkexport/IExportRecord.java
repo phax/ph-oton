@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Represents a single record to be exported.
- * 
+ *
  * @author Philip Helger
  */
 public interface IExportRecord

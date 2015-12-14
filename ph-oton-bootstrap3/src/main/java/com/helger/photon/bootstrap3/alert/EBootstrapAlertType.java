@@ -24,7 +24,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Type of alert
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapAlertType implements ICSSClassProvider

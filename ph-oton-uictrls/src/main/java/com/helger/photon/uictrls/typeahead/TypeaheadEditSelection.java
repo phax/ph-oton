@@ -27,7 +27,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 /**
  * Domain object to easily handle the selected elements of a
  * {@link TypeaheadEdit}.
- * 
+ *
  * @author Philip Helger
  */
 public class TypeaheadEditSelection
@@ -37,7 +37,7 @@ public class TypeaheadEditSelection
 
   /**
    * Constructor
-   * 
+   *
    * @param sEditValue
    *        The value of the edit field. May be <code>null</code>.
    * @param sHiddenFieldValue
@@ -80,7 +80,7 @@ public class TypeaheadEditSelection
   /**
    * Get the current selection in the case that it is mandatory to select an
    * available object.
-   * 
+   *
    * @param aWPEC
    *        The current web page execution context. May not be <code>null</code>
    *        .

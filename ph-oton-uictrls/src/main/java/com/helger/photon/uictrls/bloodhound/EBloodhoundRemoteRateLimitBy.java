@@ -25,13 +25,13 @@ import com.helger.commons.string.StringHelper;
 /**
  * All possible values for the rateLimitBy parameter used in Bloodhound options
  * remote object.
- * 
+ *
  * @author Philip Helger
  */
 public enum EBloodhoundRemoteRateLimitBy
 {
-  DEBOUNCE ("debounce"),
-  THROTTLE ("throttle");
+ DEBOUNCE ("debounce"),
+ THROTTLE ("throttle");
 
   private final String m_sValue;
 

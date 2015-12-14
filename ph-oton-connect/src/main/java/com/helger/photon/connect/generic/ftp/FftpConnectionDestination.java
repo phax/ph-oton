@@ -124,7 +124,12 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
     }
     catch (final IOException ex)
     {
-      s_aLogger.error ("Connection exception to " + m_sHostname + ":" + m_nPort + ": " + aFtpClient.getReplyString (),
+      s_aLogger.error ("Connection exception to " +
+                       m_sHostname +
+                       ":" +
+                       m_nPort +
+                       ": " +
+                       aFtpClient.getReplyString (),
                        ex);
     }
 
@@ -136,7 +141,9 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
       }
       catch (final IOException ex2)
       {
-        s_aLogger.error ("Error disconnecting from FTP while in connection phase: " + aFtpClient.getReplyString (), ex2);
+        s_aLogger.error ("Error disconnecting from FTP while in connection phase: " +
+                         aFtpClient.getReplyString (),
+                         ex2);
       }
     return null;
   }

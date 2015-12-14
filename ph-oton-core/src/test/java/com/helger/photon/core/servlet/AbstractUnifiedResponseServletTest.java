@@ -48,9 +48,10 @@ public final class AbstractUnifiedResponseServletTest
   @Test
   public void testBasic ()
   {
-    m_aRule.getRequest ().setAllPaths ("http://localhost:1234" +
-                                       WebScopeAwareTestSetup.MOCK_CONTEXT_PATH +
-                                       "/mock/testrequest;JSESSIONID=1234?name=value&name2=value2");
+    m_aRule.getRequest ()
+           .setAllPaths ("http://localhost:1234" +
+                         WebScopeAwareTestSetup.MOCK_CONTEXT_PATH +
+                         "/mock/testrequest;JSESSIONID=1234?name=value&name2=value2");
     final MockHttpServletResponse aResponse = m_aRule.getServletContext ().invoke (m_aRule.getRequest ());
     assertNotNull (aResponse);
     final String sResponseContent = aResponse.getContentAsString (CCharset.CHARSET_UTF_8_OBJ);

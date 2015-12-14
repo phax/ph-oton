@@ -23,13 +23,13 @@ import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
 
 /**
  * Defines the basic color picker modes.
- * 
+ *
  * @author Philip Helger
  */
 public enum EColorPickerMode implements IHCHasHTMLAttributeValue
 {
-  HSV ("HSV"),
-  HVS ("HVS");
+ HSV ("HSV"),
+ HVS ("HVS");
 
   private final String m_sID;
 

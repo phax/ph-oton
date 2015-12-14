@@ -71,7 +71,9 @@ public final class RunInJettyPHOTONDEMO
     aWebAppCtx.setDescriptor (RESOURCE_PREFIX + "/WEB-INF/web.xml");
     aWebAppCtx.setResourceBase (RESOURCE_PREFIX);
     aWebAppCtx.setContextPath ("/");
-    aWebAppCtx.setTempDirectory (new File (SystemProperties.getTmpDir () + '/' + RunInJettyPHOTONDEMO.class.getName ()));
+    aWebAppCtx.setTempDirectory (new File (SystemProperties.getTmpDir () +
+                                           '/' +
+                                           RunInJettyPHOTONDEMO.class.getName ()));
     aWebAppCtx.setParentLoaderPriority (true);
     aWebAppCtx.setThrowUnavailableOnStartupException (true);
     if (false)
@@ -81,11 +83,11 @@ public final class RunInJettyPHOTONDEMO
     }
     // Important to add the AnnotationConfiguration!
     aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
-                                                        new WebXmlConfiguration (),
-                                                        new MetaInfConfiguration (),
-                                                        new FragmentConfiguration (),
-                                                        new JettyWebXmlConfiguration (),
-                                                        new AnnotationConfiguration () });
+                                                         new WebXmlConfiguration (),
+                                                         new MetaInfConfiguration (),
+                                                         new FragmentConfiguration (),
+                                                         new JettyWebXmlConfiguration (),
+                                                         new AnnotationConfiguration () });
     aServer.setHandler (aWebAppCtx);
     final ServletContextHandler aCtx = aWebAppCtx;
 

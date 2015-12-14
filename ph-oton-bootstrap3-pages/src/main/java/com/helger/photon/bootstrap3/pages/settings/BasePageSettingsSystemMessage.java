@@ -57,12 +57,12 @@ import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-    SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert", "The new system message was saved successfully."),
-    LAST_UPDATE ("Letzte Aktualisierung: {0}", "Last update: {0}"),
-    CURRENT_MESSAGE_TYPE ("Aktuelle Systemnachricht vom Typ ''{0}''", "Current system message of type ''{0}''"),
-    NO_SYSTEM_MESSAGE ("Keine Systemnachricht gesetzt.", "No system message present.");
+   SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert", "The new system message was saved successfully."),
+   LAST_UPDATE ("Letzte Aktualisierung: {0}", "Last update: {0}"),
+   CURRENT_MESSAGE_TYPE ("Aktuelle Systemnachricht vom Typ ''{0}''", "Current system message of type ''{0}''"),
+   NO_SYSTEM_MESSAGE ("Keine Systemnachricht gesetzt.", "No system message present.");
 
     private final IMultilingualText m_aTP;
 

@@ -25,7 +25,7 @@ import org.joda.time.DateTimeConstants;
 
 /**
  * Defines the day of week constants used by DTP
- * 
+ *
  * @author Philip Helger
  */
 public enum EDateTimePickerDayOfWeek

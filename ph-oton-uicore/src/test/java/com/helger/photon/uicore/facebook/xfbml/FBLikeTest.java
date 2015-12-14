@@ -21,7 +21,7 @@ import org.junit.Test;
 
 /**
  * Test class for class {@link FBLike}.
- * 
+ *
  * @author Philip Helger
  */
 public final class FBLikeTest

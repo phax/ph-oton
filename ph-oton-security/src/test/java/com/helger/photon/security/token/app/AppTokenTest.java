@@ -43,7 +43,12 @@ public final class AppTokenTest
   @Test
   public void testNewTokenString ()
   {
-    final AppToken aAppToken = new AppToken (null, (Map <String, String>) null, "Unit test", "http://junit.org", "Unit Tester", "ut@example.org");
+    final AppToken aAppToken = new AppToken (null,
+                                             (Map <String, String>) null,
+                                             "Unit test",
+                                             "http://junit.org",
+                                             "Unit Tester",
+                                             "ut@example.org");
     CommonsTestHelper.testMicroTypeConversion (aAppToken);
     assertTrue (StringHelper.hasText (aAppToken.getActiveTokenString ()));
   }

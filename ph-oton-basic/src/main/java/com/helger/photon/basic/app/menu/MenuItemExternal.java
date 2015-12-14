@@ -38,7 +38,7 @@ import com.helger.html.hc.html.HC_Target;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal>implements IMenuItemExternal
+public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal> implements IMenuItemExternal
 {
   private final IHasSimpleURL m_aURLProvider;
   private final IHasDisplayText m_aDisplayText;

@@ -75,7 +75,8 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    *        The object who's ID is to be used. May be <code>null</code> in which
    *        case no default value is used
    */
-  public RequestField (@Nonnull @Nonempty final String sFieldName, @Nullable final IHasID <String> aDefaultValueProvider)
+  public RequestField (@Nonnull @Nonempty final String sFieldName,
+                       @Nullable final IHasID <String> aDefaultValueProvider)
   {
     super (sFieldName, aDefaultValueProvider);
   }

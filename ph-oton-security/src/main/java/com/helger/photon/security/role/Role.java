@@ -44,12 +44,16 @@ public final class Role extends AbstractObjectWithCustomAttrs implements IRole
   private String m_sName;
   private String m_sDescription;
 
-  public Role (@Nonnull @Nonempty final String sName, @Nullable final String sDescription, @Nullable final Map <String, String> aCustomAttrs)
+  public Role (@Nonnull @Nonempty final String sName,
+               @Nullable final String sDescription,
+               @Nullable final Map <String, String> aCustomAttrs)
   {
     this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs), sName, sDescription);
   }
 
-  Role (@Nonnull final StubObjectWithCustomAttrs aStubObject, @Nonnull @Nonempty final String sName, @Nullable final String sDescription)
+  Role (@Nonnull final StubObjectWithCustomAttrs aStubObject,
+        @Nonnull @Nonempty final String sName,
+        @Nullable final String sDescription)
   {
     super (aStubObject);
     setName (sName);
@@ -98,6 +102,9 @@ public final class Role extends AbstractObjectWithCustomAttrs implements IRole
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("name", m_sName).appendIfNotNull ("description", m_sDescription).toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("name", m_sName)
+                            .appendIfNotNull ("description", m_sDescription)
+                            .toString ();
   }
 }

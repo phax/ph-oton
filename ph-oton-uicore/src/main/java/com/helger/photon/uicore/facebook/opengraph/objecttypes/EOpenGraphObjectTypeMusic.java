@@ -25,17 +25,17 @@ import com.helger.commons.lang.EnumHelper;
 
 /**
  * The various open graph object types taken from <a href=
- * "https://developers.facebook.com/docs/reference/opengraph/object-type"
- * >developers.facebook.com</a>
- * 
+ * "https://developers.facebook.com/docs/reference/opengraph/object-type" >
+ * developers.facebook.com</a>
+ *
  * @author Boris Gregorcic
  */
 public enum EOpenGraphObjectTypeMusic implements IHasID <String>
 {
-  SONG ("music.song"),
-  RADIO_STATION ("music.radio_station"),
-  PLAYLIST ("music.playlist"),
-  ALBUM ("music.album");
+ SONG ("music.song"),
+ RADIO_STATION ("music.radio_station"),
+ PLAYLIST ("music.playlist"),
+ ALBUM ("music.album");
 
   private final String m_sID;
 

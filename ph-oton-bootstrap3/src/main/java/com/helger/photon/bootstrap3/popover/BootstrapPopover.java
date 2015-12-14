@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.popover;
 
 /**
  * Bootstrap Popover
- * 
+ *
  * @author Philip Helger
  */
 public class BootstrapPopover

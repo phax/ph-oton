@@ -98,7 +98,8 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     // Add the "PRG active" parameter
     throw new ForcedRedirectException (m_aSelectedMenuItem.getID (),
                                        getSelfHref ().add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE)
-                                                     .addAll (aAdditionalParameters), aContent);
+                                                     .addAll (aAdditionalParameters),
+                                       aContent);
   }
 
   @Override

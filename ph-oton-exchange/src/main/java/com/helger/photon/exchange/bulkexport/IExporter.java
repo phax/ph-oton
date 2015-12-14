@@ -25,14 +25,14 @@ import com.helger.commons.state.ESuccess;
 
 /**
  * Generic interface for exporting records to an OutputStream.
- * 
+ *
  * @author Philip Helger
  */
 public interface IExporter
 {
   /**
    * Export all provided records to an output stream.
-   * 
+   *
    * @param aProvider
    *        The provider for all records. May not be <code>null</code>.
    * @param aOS

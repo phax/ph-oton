@@ -71,15 +71,21 @@ public final class AppRendererSecure implements ILayoutAreaContentProvider <Layo
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar (EBootstrapNavbarType.STATIC_TOP, true, aDisplayLocale);
     aNavbar.getContainer ().setFluid (true);
-    aNavbar.addBrand (new HCNodeList ().addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()))
-                                       .addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO2).addChild (" Administration")),
+    aNavbar.addBrand (new HCNodeList ().addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO1)
+                                                               .addChild (CApp.getApplicationTitle ()))
+                                       .addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO2)
+                                                               .addChild (" Administration")),
                       aLinkToStartPage);
 
     final BootstrapNav aNav = new BootstrapNav ();
     final IUser aUser = LoggedInUserManager.getInstance ().getCurrentUser ();
-    aNav.addItem (new HCSpan ().addChild ("Logged in as ").addClass (CBootstrapCSS.NAVBAR_TEXT).addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser, aDisplayLocale))));
+    aNav.addItem (new HCSpan ().addChild ("Logged in as ")
+                               .addClass (CBootstrapCSS.NAVBAR_TEXT)
+                               .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
+                                                                                                       aDisplayLocale))));
 
-    aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
+    aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope,
+                                                         LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
     aNavbar.addNav (EBootstrapNavbarPosition.COLLAPSIBLE_RIGHT, aNav);
     return aNavbar;
   }

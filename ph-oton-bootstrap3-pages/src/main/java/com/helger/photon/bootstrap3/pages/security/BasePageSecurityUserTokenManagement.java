@@ -285,13 +285,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                    aSelectedObject == null ? null
                                                                                                                            : aSelectedObject.getAppToken ()),
                                                                                  aDisplayLocale,
-                                                                                 new IFilter <IAppToken> ()
-                                                                                 {
-                                                                                   public boolean matchesFilter (final IAppToken aValue)
-                                                                                   {
-                                                                                     return !aValue.isDeleted ();
-                                                                                   }
-                                                                                 }).setReadOnly (bEdit))
+                                                                                 aValue -> !aValue.isDeleted ()).setReadOnly (bEdit))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_APP_TOKEN)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_USER_NAME.getDisplayText (aDisplayLocale))
@@ -639,21 +633,9 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
     aTabBox.addTab (EText.TAB_LABEL_ACTIVE.getDisplayText (aDisplayLocale),
-                    _createList (aWPEC, "active", new IFilter <IUserToken> ()
-                    {
-                      public boolean matchesFilter (@Nonnull final IUserToken aValue)
-                      {
-                        return !aValue.isDeleted ();
-                      }
-                    }));
+                    _createList (aWPEC, "active", aValue -> !aValue.isDeleted ()));
     aTabBox.addTab (EText.TAB_LABEL_DELETED.getDisplayText (aDisplayLocale),
-                    _createList (aWPEC, "deleted", new IFilter <IUserToken> ()
-                    {
-                      public boolean matchesFilter (@Nonnull final IUserToken aValue)
-                      {
-                        return aValue.isDeleted ();
-                      }
-                    }));
+                    _createList (aWPEC, "deleted", aValue -> aValue.isDeleted ()));
     aNodeList.addChild (aTabBox);
   }
 }

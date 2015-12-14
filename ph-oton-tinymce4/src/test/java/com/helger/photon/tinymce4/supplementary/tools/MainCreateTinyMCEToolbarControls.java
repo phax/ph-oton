@@ -28,31 +28,31 @@ public class MainCreateTinyMCEToolbarControls
     // Paste table from http://www.tinymce.com/wiki.php/Controls into this
     // string
     // Last update: 2013-11-22
-    final String s = "core  newdocument bold italic underline strikethrough alignleft aligncenter alignright alignjustify styleselect formatselect fontselect fontsizeselect cut copy paste bullist numlist outdent indent blockquote undo redo removeformat subscript superscript\r\n"
-                     + "hr  hr\r\n"
-                     + "link  link unlink\r\n"
-                     + "image   image\r\n"
-                     + "charmap   charmap\r\n"
-                     + "paste   pastetext\r\n"
-                     + "print   print\r\n"
-                     + "preview   preview\r\n"
-                     + "anchor  anchor\r\n"
-                     + "pagebreak   pagebreak\r\n"
-                     + "spellchecker  spellchecker\r\n"
-                     + "searchreplace   searchreplace\r\n"
-                     + "visualblocks  visualblocks\r\n"
-                     + "visualchars   visualchars\r\n"
-                     + "code  code\r\n"
-                     + "fullscreen  fullscreen\r\n"
-                     + "insertdatetime  inserttime\r\n"
-                     + "media   media\r\n"
-                     + "nonbreaking   nonbreaking\r\n"
-                     + "save  save cancel\r\n"
-                     + "table   table\r\n"
-                     + "directionality  ltr rtl\r\n"
-                     + "emoticons   emoticons\r\n"
-                     + "template  template\r\n"
-                     + "textcolor   forecolor backcolor";
+    final String s = "core  newdocument bold italic underline strikethrough alignleft aligncenter alignright alignjustify styleselect formatselect fontselect fontsizeselect cut copy paste bullist numlist outdent indent blockquote undo redo removeformat subscript superscript\r\n" +
+                     "hr  hr\r\n" +
+                     "link  link unlink\r\n" +
+                     "image   image\r\n" +
+                     "charmap   charmap\r\n" +
+                     "paste   pastetext\r\n" +
+                     "print   print\r\n" +
+                     "preview   preview\r\n" +
+                     "anchor  anchor\r\n" +
+                     "pagebreak   pagebreak\r\n" +
+                     "spellchecker  spellchecker\r\n" +
+                     "searchreplace   searchreplace\r\n" +
+                     "visualblocks  visualblocks\r\n" +
+                     "visualchars   visualchars\r\n" +
+                     "code  code\r\n" +
+                     "fullscreen  fullscreen\r\n" +
+                     "insertdatetime  inserttime\r\n" +
+                     "media   media\r\n" +
+                     "nonbreaking   nonbreaking\r\n" +
+                     "save  save cancel\r\n" +
+                     "table   table\r\n" +
+                     "directionality  ltr rtl\r\n" +
+                     "emoticons   emoticons\r\n" +
+                     "template  template\r\n" +
+                     "textcolor   forecolor backcolor";
     for (final String sLine : StringHelper.getExploded ("\r\n", s))
     {
       final String [] aParts = RegExHelper.getSplitToArray (sLine, "\\s+");

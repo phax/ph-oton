@@ -31,7 +31,7 @@ import com.helger.commons.state.ESuccess;
 /**
  * The mutable version of the {@link IPathRelativeIO} interface. It extends the
  * base interface with writable methods relative to a certain directory.
- * 
+ *
  * @author Philip Helger
  */
 public interface IMutablePathRelativeIO extends IPathRelativeIO

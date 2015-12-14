@@ -23,7 +23,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Size of a Bootstrap input group
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapInputGroupSize implements ICSSClassProvider

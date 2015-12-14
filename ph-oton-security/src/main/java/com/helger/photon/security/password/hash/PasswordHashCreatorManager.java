@@ -267,7 +267,9 @@ public class PasswordHashCreatorManager
 
     final IPasswordHashCreator aPHC = getPasswordHashCreatorOfAlgorithm (sAlgorithmName);
     if (aPHC == null)
-      throw new IllegalArgumentException ("No password hash creator for algorithm '" + sAlgorithmName + "' registered!");
+      throw new IllegalArgumentException ("No password hash creator for algorithm '" +
+                                          sAlgorithmName +
+                                          "' registered!");
     final String sPasswordHash = aPHC.createPasswordHash (aSalt, sPlainTextPassword);
     return new PasswordHash (sAlgorithmName, aSalt, sPasswordHash);
   }

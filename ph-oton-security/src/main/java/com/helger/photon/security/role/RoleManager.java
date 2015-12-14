@@ -132,7 +132,9 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
     _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
                         CSecurity.ROLE_ADMINISTRATOR_NAME,
                         (String) null));
-    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID), CSecurity.ROLE_USER_NAME, (String) null));
+    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
+                        CSecurity.ROLE_USER_NAME,
+                        (String) null));
     return EChange.CHANGED;
   }
 
@@ -243,7 +245,9 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
                                      @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create role
-    final Role aRole = new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
+    final Role aRole = new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs),
+                                 sName,
+                                 sDescription);
 
     m_aRWLock.writeLock ().lock ();
     try

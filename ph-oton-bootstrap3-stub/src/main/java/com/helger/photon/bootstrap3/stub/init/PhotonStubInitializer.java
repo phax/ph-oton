@@ -130,7 +130,8 @@ public final class PhotonStubInitializer
     {
       // Special Bootstrap customizer
       HCSettings.getMutableConversionSettings ()
-                .setCustomizer (new HCCustomizerList (new BootstrapCustomizer (), new HCCustomizerAutoFocusFirstCtrl ()));
+                .setCustomizer (new HCCustomizerList (new BootstrapCustomizer (),
+                                                      new HCCustomizerAutoFocusFirstCtrl ()));
     }
 
     // Set default icon set if none is defined
@@ -144,8 +145,10 @@ public final class PhotonStubInitializer
     if (!PhotonPathMapper.containsMappings ())
     {
       // Add default mapping from Application ID to path
-      PhotonPathMapper.setPathMapping (CApplication.APP_ID_PUBLIC, AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
-      PhotonPathMapper.setPathMapping (CApplication.APP_ID_SECURE, AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
+      PhotonPathMapper.setPathMapping (CApplication.APP_ID_PUBLIC,
+                                       AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
+      PhotonPathMapper.setPathMapping (CApplication.APP_ID_SECURE,
+                                       AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
       PhotonPathMapper.setDefaultApplicationID (CApplication.APP_ID_PUBLIC);
     }
   }

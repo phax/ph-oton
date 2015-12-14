@@ -22,7 +22,7 @@ import com.helger.commons.annotation.Nonempty;
 
 /**
  * Text identification type
- * 
+ *
  * @author Philip Helger
  */
 public enum EFeedTextType

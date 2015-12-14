@@ -23,7 +23,7 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 /**
  * Interface for bootstrap datatables configurator.
- * 
+ *
  * @author Philip Helger
  */
 public interface IBootstrapDataTablesConfigurator

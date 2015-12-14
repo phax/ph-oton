@@ -327,15 +327,15 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
     }
 
     AuditHelper.onAuditCreateSuccess (NamedSMTPSettings.OT,
-                                     aNamedSettings.getID (),
-                                     aNamedSettings.getName (),
-                                     aSettings.getHostName (),
-                                     Integer.toString (aSettings.getPort ()),
-                                     aSettings.getCharset (),
-                                     Boolean.toString (aSettings.isSSLEnabled ()),
-                                     Boolean.toString (aSettings.isSTARTTLSEnabled ()),
-                                     Long.toString (aSettings.getConnectionTimeoutMilliSecs ()),
-                                     Long.toString (aSettings.getTimeoutMilliSecs ()));
+                                      aNamedSettings.getID (),
+                                      aNamedSettings.getName (),
+                                      aSettings.getHostName (),
+                                      Integer.toString (aSettings.getPort ()),
+                                      aSettings.getCharset (),
+                                      Boolean.toString (aSettings.isSSLEnabled ()),
+                                      Boolean.toString (aSettings.isSTARTTLSEnabled ()),
+                                      Long.toString (aSettings.getConnectionTimeoutMilliSecs ()),
+                                      Long.toString (aSettings.getTimeoutMilliSecs ()));
     return aNamedSettings;
   }
 
@@ -379,15 +379,15 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditModifySuccess (NamedSMTPSettings.OT,
-                                     aNamedSettings.getID (),
-                                     aNamedSettings.getName (),
-                                     aSettings.getHostName (),
-                                     Integer.toString (aSettings.getPort ()),
-                                     aSettings.getCharset (),
-                                     Boolean.toString (aSettings.isSSLEnabled ()),
-                                     Boolean.toString (aSettings.isSTARTTLSEnabled ()),
-                                     Long.toString (aSettings.getConnectionTimeoutMilliSecs ()),
-                                     Long.toString (aSettings.getTimeoutMilliSecs ()));
+                                      aNamedSettings.getID (),
+                                      aNamedSettings.getName (),
+                                      aSettings.getHostName (),
+                                      Integer.toString (aSettings.getPort ()),
+                                      aSettings.getCharset (),
+                                      Boolean.toString (aSettings.isSSLEnabled ()),
+                                      Boolean.toString (aSettings.isSTARTTLSEnabled ()),
+                                      Long.toString (aSettings.getConnectionTimeoutMilliSecs ()),
+                                      Long.toString (aSettings.getTimeoutMilliSecs ()));
     return EChange.CHANGED;
   }
 

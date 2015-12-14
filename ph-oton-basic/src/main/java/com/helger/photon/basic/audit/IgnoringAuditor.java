@@ -22,7 +22,7 @@ import com.helger.photon.basic.auth.ICurrentUserIDProvider;
 
 /**
  * An implementation of {@link IAuditor} that does nothing
- * 
+ *
  * @author Philip Helger
  */
 public class IgnoringAuditor extends AbstractAuditor

@@ -30,7 +30,7 @@ import com.helger.commons.string.ToStringGenerator;
 
 /**
  * Password constraint defining the maximum length (incl.)
- * 
+ *
  * @author Philip Helger
  */
 public class PasswordConstraintMaxLength implements IPasswordConstraint

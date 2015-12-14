@@ -40,7 +40,7 @@ import com.helger.poi.excel.EExcelVersion;
  *
  * @author Philip Helger
  */
-public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
+public enum EExchangeFileType implements IHasID <String>,IHasDisplayText
 {
   CSV ("csv", ".csv", CMimeType.TEXT_CSV, true, EExchangeFileTypeName.CSV)
   {

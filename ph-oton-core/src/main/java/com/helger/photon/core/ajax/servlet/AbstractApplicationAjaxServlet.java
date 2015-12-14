@@ -25,7 +25,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Abstract implementation of a servlet that invokes AJAX functions.
- * 
+ *
  * @author Philip Helger
  */
 public abstract class AbstractApplicationAjaxServlet extends AbstractAjaxServlet

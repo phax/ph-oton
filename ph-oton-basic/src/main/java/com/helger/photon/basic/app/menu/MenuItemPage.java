@@ -37,7 +37,7 @@ import com.helger.photon.basic.app.page.IPage;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class MenuItemPage extends AbstractMenuObject <MenuItemPage>implements IMenuItemPage
+public class MenuItemPage extends AbstractMenuObject <MenuItemPage> implements IMenuItemPage
 {
   private final IPage m_aPage;
   private final IHasDisplayText m_aDisplayText;

@@ -23,7 +23,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Button size
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapButtonSize implements ICSSClassProvider

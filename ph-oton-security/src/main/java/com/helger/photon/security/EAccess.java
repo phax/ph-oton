@@ -30,9 +30,9 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum EAccess implements IHasID <String>
 {
- GRANTED ("grant", true),
- DENIED ("deny", false),
- INHERITED ("inherit", CSecurity.NO_RIGHT_SPECIFIED_MEANS_HAS_ACCESS);
+  GRANTED ("grant", true),
+  DENIED ("deny", false),
+  INHERITED ("inherit", CSecurity.NO_RIGHT_SPECIFIED_MEANS_HAS_ACCESS);
 
   private final String m_sID;
   private final boolean m_bHasAccess;

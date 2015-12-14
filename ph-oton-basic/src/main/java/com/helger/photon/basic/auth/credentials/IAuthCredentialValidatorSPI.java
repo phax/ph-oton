@@ -56,5 +56,6 @@ public interface IAuthCredentialValidatorSPI
    * @return The credential validation result. May not be <code>null</code>.
    */
   @Nonnull
-  CredentialValidationResult validateCredentials (@Nonnull Locale aDisplayLocale, @Nonnull IAuthCredentials aCredentials);
+  CredentialValidationResult validateCredentials (@Nonnull Locale aDisplayLocale,
+                                                  @Nonnull IAuthCredentials aCredentials);
 }

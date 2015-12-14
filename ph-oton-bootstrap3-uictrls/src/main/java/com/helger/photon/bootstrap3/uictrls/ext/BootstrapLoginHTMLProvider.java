@@ -56,12 +56,16 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
 {
   private final IHCNode m_aPageTitle;
 
-  public BootstrapLoginHTMLProvider (final boolean bLoginError, @Nonnull final ELoginResult eLoginResult, @Nullable final String sPageTitle)
+  public BootstrapLoginHTMLProvider (final boolean bLoginError,
+                                     @Nonnull final ELoginResult eLoginResult,
+                                     @Nullable final String sPageTitle)
   {
     this (bLoginError, eLoginResult, HCTextNode.createOnDemand (sPageTitle));
   }
 
-  public BootstrapLoginHTMLProvider (final boolean bLoginError, @Nonnull final ELoginResult eLoginResult, @Nullable final IHCNode aPageTitle)
+  public BootstrapLoginHTMLProvider (final boolean bLoginError,
+                                     @Nonnull final ELoginResult eLoginResult,
+                                     @Nullable final IHCNode aPageTitle)
   {
     super (bLoginError, eLoginResult);
     m_aPageTitle = aPageTitle;
@@ -100,7 +104,8 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
    *        The empty container.
    */
   @OverrideOnDemand
-  protected void onBeforeContainer (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final BootstrapContainer aContainer)
+  protected void onBeforeContainer (@Nonnull final ISimpleWebExecutionContext aSWEC,
+                                    @Nonnull final BootstrapContainer aContainer)
   {}
 
   /**
@@ -177,7 +182,8 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
     // User name and password table
     final String sUserName = EPhotonCoreText.EMAIL_ADDRESS.getDisplayText (aDisplayLocale);
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sUserName)
-                                                 .setCtrl (new HCEdit (CLogin.REQUEST_ATTR_USERID).setPlaceholder (sUserName).setAutoFocus (true)));
+                                                 .setCtrl (new HCEdit (CLogin.REQUEST_ATTR_USERID).setPlaceholder (sUserName)
+                                                                                                  .setAutoFocus (true)));
 
     final String sPassword = EPhotonCoreText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale);
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPassword)

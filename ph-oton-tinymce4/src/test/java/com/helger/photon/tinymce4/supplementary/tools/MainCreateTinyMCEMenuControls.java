@@ -28,26 +28,26 @@ public class MainCreateTinyMCEMenuControls
     // Paste table from http://www.tinymce.com/wiki.php/Controls into this
     // string
     // Last update: 2013-11-22
-    final String s = "core  newdocument undo redo visualaid cut copy paste selectall bold italic underline strikethrough subscript superscript removeformat formats\r\n"
-                     + "link  link\r\n"
-                     + "image   image\r\n"
-                     + "charmap   charmap\r\n"
-                     + "paste   pastetext\r\n"
-                     + "print   print\r\n"
-                     + "preview   preview\r\n"
-                     + "hr  hr\r\n"
-                     + "anchor  anchor\r\n"
-                     + "pagebreak   pagebreak\r\n"
-                     + "spellchecker  spellchecker\r\n"
-                     + "searchreplace   searchreplace\r\n"
-                     + "visualblocks  visualblocks\r\n"
-                     + "visualchars   visualchars\r\n"
-                     + "code  code\r\n"
-                     + "fullscreen  fullscreen\r\n"
-                     + "insertdatetime  insertdatetime\r\n"
-                     + "media   media\r\n"
-                     + "nonbreaking   nonbreaking\r\n"
-                     + "table   inserttable tableprops deletetable cell row column";
+    final String s = "core  newdocument undo redo visualaid cut copy paste selectall bold italic underline strikethrough subscript superscript removeformat formats\r\n" +
+                     "link  link\r\n" +
+                     "image   image\r\n" +
+                     "charmap   charmap\r\n" +
+                     "paste   pastetext\r\n" +
+                     "print   print\r\n" +
+                     "preview   preview\r\n" +
+                     "hr  hr\r\n" +
+                     "anchor  anchor\r\n" +
+                     "pagebreak   pagebreak\r\n" +
+                     "spellchecker  spellchecker\r\n" +
+                     "searchreplace   searchreplace\r\n" +
+                     "visualblocks  visualblocks\r\n" +
+                     "visualchars   visualchars\r\n" +
+                     "code  code\r\n" +
+                     "fullscreen  fullscreen\r\n" +
+                     "insertdatetime  insertdatetime\r\n" +
+                     "media   media\r\n" +
+                     "nonbreaking   nonbreaking\r\n" +
+                     "table   inserttable tableprops deletetable cell row column";
     for (final String sLine : StringHelper.getExploded ("\r\n", s))
     {
       final String [] aParts = RegExHelper.getSplitToArray (sLine, "\\s+");

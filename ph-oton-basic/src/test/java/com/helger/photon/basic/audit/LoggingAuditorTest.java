@@ -19,8 +19,6 @@ package com.helger.photon.basic.audit;
 import org.junit.Test;
 
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.audit.AuditHelper;
-import com.helger.photon.basic.audit.LoggingAuditor;
 import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
 
 /**

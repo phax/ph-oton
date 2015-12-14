@@ -23,7 +23,7 @@ import com.helger.html.jscode.JSExpr;
 
 /**
  * All TinyMCE4 resize options
- * 
+ *
  * @author Philip Helger
  */
 public enum ETinyMCE4Resize

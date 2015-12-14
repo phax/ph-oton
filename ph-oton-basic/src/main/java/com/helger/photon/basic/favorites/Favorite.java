@@ -136,7 +136,7 @@ public class Favorite implements IFavorite
                                  @Nullable final Map <String, String> aAdditionalParams)
   {
     final Map <String, String> aRealAdditionalParams = aAdditionalParams == null ? new HashMap <String, String> ()
-                                                                                : aAdditionalParams;
+                                                                                 : aAdditionalParams;
     return m_sApplicationID.equals (sAppID) &&
            m_sMenuItemID.equals (sMenuItemID) &&
            m_aAdditionalParams.equals (aRealAdditionalParams);

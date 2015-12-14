@@ -90,7 +90,9 @@ public abstract class AbstractPage implements IPage
    *        The constant (non-translatable) description of the page. May be
    *        <code>null</code>.
    */
-  public AbstractPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public AbstractPage (@Nonnull @Nonempty final String sID,
+                       @Nonnull final String sName,
+                       @Nullable final String sDescription)
   {
     this (sID, _getAsMLT (sName), sDescription == null ? null : _getAsMLT (sDescription));
   }
@@ -118,7 +120,9 @@ public abstract class AbstractPage implements IPage
    * @param aDescription
    *        Optional description of the page. May be <code>null</code>.
    */
-  public AbstractPage (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName, @Nullable final IMultilingualText aDescription)
+  public AbstractPage (@Nonnull @Nonempty final String sID,
+                       @Nonnull final IMultilingualText aName,
+                       @Nullable final IMultilingualText aDescription)
   {
     this (sID);
     setName (aName);
@@ -216,6 +220,9 @@ public abstract class AbstractPage implements IPage
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_sID).append ("name", m_aName).appendIfNotNull ("description", m_aDescription).toString ();
+    return new ToStringGenerator (this).append ("ID", m_sID)
+                                       .append ("name", m_aName)
+                                       .appendIfNotNull ("description", m_aDescription)
+                                       .toString ();
   }
 }

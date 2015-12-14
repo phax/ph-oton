@@ -92,5 +92,6 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
    */
-  void postRedirectGet (@Nullable IHCNode aContent, @Nullable Map <String, String> aAdditionalParameters) throws ForcedRedirectException;
+  void postRedirectGet (@Nullable IHCNode aContent,
+                        @Nullable Map <String, String> aAdditionalParameters) throws ForcedRedirectException;
 }

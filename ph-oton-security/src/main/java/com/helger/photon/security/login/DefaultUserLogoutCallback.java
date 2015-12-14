@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Default empty implementation of {@link IUserLogoutCallback}.
- * 
+ *
  * @author Philip Helger
  */
 public class DefaultUserLogoutCallback implements IUserLogoutCallback

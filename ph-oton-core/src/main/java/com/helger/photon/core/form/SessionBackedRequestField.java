@@ -27,7 +27,7 @@ public class SessionBackedRequestField extends SessionBackedRequestFieldData imp
 {
   /**
    * Create a new request field that has no default value
-   * 
+   *
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    */
@@ -38,7 +38,7 @@ public class SessionBackedRequestField extends SessionBackedRequestFieldData imp
 
   /**
    * Default constructor.
-   * 
+   *
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    * @param sDefaultValue
@@ -52,7 +52,7 @@ public class SessionBackedRequestField extends SessionBackedRequestFieldData imp
 
   /**
    * Helper constructor using an int instead of a String.
-   * 
+   *
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    * @param nDefaultValue

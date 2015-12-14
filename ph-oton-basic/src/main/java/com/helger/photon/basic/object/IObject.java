@@ -33,7 +33,12 @@ import com.helger.photon.basic.datetime.IHasLastModificationInfo;
  *
  * @author Philip Helger
  */
-public interface IObject extends ITypedObject <String>, IHasCreationInfo, IHasLastModificationInfo, IHasDeletionInfo, Serializable
+public interface IObject extends
+                         ITypedObject <String>,
+                         IHasCreationInfo,
+                         IHasLastModificationInfo,
+                         IHasDeletionInfo,
+                         Serializable
 {
   /**
    * @return The <code>null</code>-able creation date time of the object.

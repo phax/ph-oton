@@ -22,7 +22,7 @@ import com.helger.commons.annotation.Nonempty;
 
 /**
  * Default empty implementation of {@link IUserLoginCallback}.
- * 
+ *
  * @author Philip Helger
  */
 public class DefaultUserLoginCallback implements IUserLoginCallback

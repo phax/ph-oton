@@ -36,7 +36,10 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public abstract class AbstractErrorCallback implements IAjaxExceptionCallback, IDAOReadExceptionCallback, IDAOWriteExceptionCallback
+public abstract class AbstractErrorCallback implements
+                                            IAjaxExceptionCallback,
+                                            IDAOReadExceptionCallback,
+                                            IDAOWriteExceptionCallback
 {
   /**
    * Implement this method to handle all errors in a similar way.

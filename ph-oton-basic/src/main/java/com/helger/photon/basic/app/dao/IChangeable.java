@@ -18,9 +18,10 @@ package com.helger.photon.basic.app.dao;
 
 /**
  * Interface for object that can collect changes
- * 
+ *
  * @author Philip Helger
  */
+@FunctionalInterface
 public interface IChangeable
 {
   /**

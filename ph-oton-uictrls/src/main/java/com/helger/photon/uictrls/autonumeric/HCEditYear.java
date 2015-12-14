@@ -25,7 +25,7 @@ import com.helger.photon.core.form.RequestField;
 /**
  * Special numeric edit for years from {@value #DEFAULT_MIN} to
  * {@value #DEFAULT_MAX}.
- * 
+ *
  * @author Philip Helger
  */
 public class HCEditYear extends HCAutoNumericInt

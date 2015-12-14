@@ -29,7 +29,8 @@ import com.helger.commons.tree.withid.DefaultTreeItemWithID;
  *
  * @author Philip Helger
  */
-public interface IMenuItemDeterminatorCallback extends IHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
+public interface IMenuItemDeterminatorCallback extends
+                                               IHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
 {
   /**
    * @return The menu tree on which this item determinator works. Never

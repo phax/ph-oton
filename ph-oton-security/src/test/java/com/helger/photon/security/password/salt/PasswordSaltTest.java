@@ -24,8 +24,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import com.helger.photon.security.password.salt.PasswordSalt;
-
 /**
  * Test class for class {@link PasswordSalt}.
  *

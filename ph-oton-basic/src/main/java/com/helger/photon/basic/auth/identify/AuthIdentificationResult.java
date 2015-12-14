@@ -29,7 +29,7 @@ import com.helger.photon.basic.auth.token.IAuthToken;
 
 /**
  * This class contains the overall authentication result.
- * 
+ *
  * @author Philip Helger
  */
 public class AuthIdentificationResult implements ISuccessIndicator, Serializable
@@ -99,6 +99,8 @@ public class AuthIdentificationResult implements ISuccessIndicator, Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("CredentialValidationResult", m_aCredentialValidationResult).append ("AuthToken", m_aAuthToken).toString ();
+    return new ToStringGenerator (this).append ("CredentialValidationResult", m_aCredentialValidationResult)
+                                       .append ("AuthToken", m_aAuthToken)
+                                       .toString ();
   }
 }

@@ -58,12 +58,14 @@ public final class AuthIdentificationManager
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static AuthIdentificationResult validateLoginCredentialsAndCreateToken (@Nonnull final Locale aDisplayLocale, @Nonnull final IAuthCredentials aCredentials)
+  public static AuthIdentificationResult validateLoginCredentialsAndCreateToken (@Nonnull final Locale aDisplayLocale,
+                                                                                 @Nonnull final IAuthCredentials aCredentials)
   {
     ValueEnforcer.notNull (aCredentials, "Credentials");
 
     // validate credentials
-    final CredentialValidationResult aValidationResult = AuthCredentialValidatorManager.validateCredentials (aDisplayLocale, aCredentials);
+    final CredentialValidationResult aValidationResult = AuthCredentialValidatorManager.validateCredentials (aDisplayLocale,
+                                                                                                             aCredentials);
     if (aValidationResult.isFailure ())
     {
       s_aLogger.warn ("Credentials have been rejected: " + aCredentials);
@@ -84,7 +86,9 @@ public final class AuthIdentificationManager
     final AuthIdentification aIdentification = new AuthIdentification (aSubject);
 
     // create the token (without expiration seconds)
-    final IAuthToken aNewAuthToken = AuthTokenRegistry.getInstance ().createToken (aIdentification, IAuthToken.EXPIRATION_SECONDS_INFINITE);
+    final IAuthToken aNewAuthToken = AuthTokenRegistry.getInstance ()
+                                                      .createToken (aIdentification,
+                                                                    IAuthToken.EXPIRATION_SECONDS_INFINITE);
     return new AuthIdentificationResult (aNewAuthToken);
   }
 }

@@ -91,7 +91,8 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final UnifiedResponse aUnifiedResponse)
+  protected EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                        @Nonnull final UnifiedResponse aUnifiedResponse)
   {
     // cut the leading "/"
     String sFunctionName = aRequestScope.getPathWithinServlet ();
@@ -143,7 +144,8 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
   {
     // Action is present
     final String sAjaxFunctionName = aRequestScope.getAttributeAsString (SCOPE_ATTR_NAME);
-    final IAjaxInvoker aAjaxInvoker = (IAjaxInvoker) aRequestScope.getTypedAttribute (SCOPE_ATTR_INVOKER, Wrapper.class).get ();
+    final IAjaxInvoker aAjaxInvoker = (IAjaxInvoker) aRequestScope.getTypedAttribute (SCOPE_ATTR_INVOKER, Wrapper.class)
+                                                                  .get ();
     final IAjaxExecutor aAjaxExecutor = aRequestScope.getTypedAttribute (SCOPE_ATTR_EXECUTOR, IAjaxExecutor.class);
 
     // Never cache the result but the executor may overwrite it
@@ -180,7 +182,11 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
       for (final IAjaxExceptionCallback aExceptionCallback : getExceptionCallbacks ().getAllCallbacks ())
         try
         {
-          aExceptionCallback.onAjaxExecutionException (aAjaxInvoker, sAjaxFunctionName, aAjaxExecutor, aRequestScope, t);
+          aExceptionCallback.onAjaxExecutionException (aAjaxInvoker,
+                                                       sAjaxFunctionName,
+                                                       aAjaxExecutor,
+                                                       aRequestScope,
+                                                       t);
         }
         catch (final Throwable t2)
         {

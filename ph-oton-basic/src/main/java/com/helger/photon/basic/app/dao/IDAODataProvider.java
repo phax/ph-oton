@@ -27,7 +27,7 @@ import com.helger.commons.state.EChange;
 
 /**
  * The external data provider for a DAO
- * 
+ *
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
@@ -42,7 +42,7 @@ public interface IDAODataProvider
   /**
    * Prepare the data structure for an initial save. This is only called if no
    * file was found to be read from.
-   * 
+   *
    * @return {@link EChange#CHANGED} if reading the document changed the content
    *         and so a call to the save action should be performed. Never
    *         <code>null</code>.
@@ -55,7 +55,7 @@ public interface IDAODataProvider
   /**
    * Initially fill the DAO from an input stream. This is only called if the
    * underlying data is resolvable.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. Is never <code>null</code>.
    * @return {@link EChange#CHANGED} if reading the document changed the content
@@ -70,7 +70,7 @@ public interface IDAODataProvider
   /**
    * Is called to fill the data to be written to the file. Just add your text to
    * the passed StringBuilder.
-   * 
+   *
    * @param aSB
    *        The string builder to be filled. Is never <code>null</code>.
    * @throws Exception
@@ -82,7 +82,7 @@ public interface IDAODataProvider
    * Perform an additional check to ensure that only valid data is saved. It is
    * called with the data previously created via
    * {@link #fillStringBuilderForSaving(StringBuilder)}.
-   * 
+   *
    * @param sContent
    *        The content that would be written to the file.
    * @return <code>true</code> if the content is valid, <code>false</code> if

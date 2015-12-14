@@ -25,7 +25,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 
 /**
  * Base read-only interface for objects containing users.
- * 
+ *
  * @author Philip Helger
  */
 public interface IUserContainer
@@ -52,7 +52,7 @@ public interface IUserContainer
 
   /**
    * Check if the passed user is contained in this container.
-   * 
+   *
    * @param sUserID
    *        The user ID to check. May be <code>null</code>.
    * @return <code>true</code> if the user is contained in this container,

@@ -41,7 +41,13 @@ public final class StubObject extends AbstractObject
 
   private StubObject (@Nonnull @Nonempty final String sID, @Nullable final String sCreationUserID)
   {
-    this (sID, PDTFactory.getCurrentLocalDateTime (), sCreationUserID, (LocalDateTime) null, (String) null, (LocalDateTime) null, (String) null);
+    this (sID,
+          PDTFactory.getCurrentLocalDateTime (),
+          sCreationUserID,
+          (LocalDateTime) null,
+          (String) null,
+          (LocalDateTime) null,
+          (String) null);
   }
 
   public StubObject (@Nonnull @Nonempty final String sID,
@@ -52,7 +58,13 @@ public final class StubObject extends AbstractObject
                      @Nullable final LocalDateTime aDeletionDT,
                      @Nullable final String sDeletionUserID)
   {
-    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID);
+    super (sID,
+           aCreationDT,
+           sCreationUserID,
+           aLastModificationDT,
+           sLastModificationUserID,
+           aDeletionDT,
+           sDeletionUserID);
   }
 
   @Nonnull

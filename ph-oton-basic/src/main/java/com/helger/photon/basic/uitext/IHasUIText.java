@@ -24,7 +24,7 @@ import com.helger.commons.annotation.Nonempty;
 
 /**
  * Interface for objects that have a UI display text
- * 
+ *
  * @author Philip Helger
  */
 public interface IHasUIText

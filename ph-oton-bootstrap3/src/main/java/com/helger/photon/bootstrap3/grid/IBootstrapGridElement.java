@@ -22,7 +22,7 @@ import com.helger.html.css.ICSSClassProvider;
 
 /**
  * Bootstrap3 grid element
- * 
+ *
  * @author Philip Helger
  */
 public interface IBootstrapGridElement extends ICSSClassProvider

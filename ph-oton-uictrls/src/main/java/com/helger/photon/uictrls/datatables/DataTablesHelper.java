@@ -316,7 +316,7 @@ public final class DataTablesHelper
 
   /**
    * Remove all filters and redraw the data table
-   * 
+   *
    * @param aDTSelect
    *        JS expression that selects 1-n datatables
    * @return The invocation to clear the filter. Never <code>null</code>.

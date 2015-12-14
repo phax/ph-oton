@@ -60,14 +60,18 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
   private final WebSiteResourceBundle m_aBundle;
   private final LocalDateTime m_aCreationDT;
 
-  public WebSiteResourceBundleSerialized (@Nonnull @Nonempty final String sBundleID, @Nonnull final WebSiteResourceBundle aBundle, final boolean bRegular)
+  public WebSiteResourceBundleSerialized (@Nonnull @Nonempty final String sBundleID,
+                                          @Nonnull final WebSiteResourceBundle aBundle,
+                                          final boolean bRegular)
   {
     this (sBundleID, aBundle, PDTFactory.getCurrentLocalDateTime ());
     // Always serialize new bundles
     _ensureSerialized (bRegular);
   }
 
-  WebSiteResourceBundleSerialized (@Nonnull @Nonempty final String sBundleID, @Nonnull final WebSiteResourceBundle aBundle, @Nonnull final LocalDateTime aCreationDT)
+  WebSiteResourceBundleSerialized (@Nonnull @Nonempty final String sBundleID,
+                                   @Nonnull final WebSiteResourceBundle aBundle,
+                                   @Nonnull final LocalDateTime aCreationDT)
   {
     m_sBundleID = ValueEnforcer.notEmpty (sBundleID, "BundleID");
     m_aBundle = ValueEnforcer.notNull (aBundle, "Bundle");
@@ -76,11 +80,14 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
 
   private void _ensureSerialized (final boolean bRegular)
   {
-    final FileSystemResource aTargetRes = WebFileIO.getDataIO ().getResource (WebSiteResourceBundleManager.RESOURCE_BUNDLE_PATH + m_sBundleID);
+    final FileSystemResource aTargetRes = WebFileIO.getDataIO ().getResource (
+                                                                              WebSiteResourceBundleManager.RESOURCE_BUNDLE_PATH +
+                                                                              m_sBundleID);
     if (!aTargetRes.exists ())
     {
       // persist file by merging all items
-      try (final Writer aWriter = StreamHelper.getBuffered (aTargetRes.getWriter (CCharset.CHARSET_UTF_8_OBJ, EAppend.TRUNCATE)))
+      try (final Writer aWriter = StreamHelper.getBuffered (aTargetRes.getWriter (CCharset.CHARSET_UTF_8_OBJ,
+                                                                                  EAppend.TRUNCATE)))
       {
         if (aWriter == null)
         {
@@ -91,7 +98,10 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
                            m_sBundleID +
                            "' with " +
                            m_aBundle.getAllResourcePaths () +
-                           (m_aBundle.hasConditionalComment () ? " and conditional comment '" + m_aBundle.getConditionalComment () + "'" : "") +
+                           (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
+                                                                 m_aBundle.getConditionalComment () +
+                                                                 "'"
+                                                               : "") +
                            " to path " +
                            aTargetRes.getAsFile ().getAbsolutePath ());
         }
@@ -112,7 +122,11 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
             if (sContent != null)
               aWriter.write (sContent);
             else
-              s_aLogger.error ("Web site resource '" + aRes.getPath () + "' at '" + aRes.getAsURLString () + "' has no content/does not exist!");
+              s_aLogger.error ("Web site resource '" +
+                               aRes.getPath () +
+                               "' at '" +
+                               aRes.getAsURLString () +
+                               "' has no content/does not exist!");
           }
 
           s_aLogger.info ("Serialized " +
@@ -121,7 +135,10 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
                           m_sBundleID +
                           "' with " +
                           m_aBundle.getAllResourcePaths () +
-                          (m_aBundle.hasConditionalComment () ? " and conditional comment '" + m_aBundle.getConditionalComment () + "'" : ""));
+                          (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
+                                                                m_aBundle.getConditionalComment () +
+                                                                "'"
+                                                              : ""));
         }
       }
       catch (final Throwable t)
@@ -185,7 +202,11 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
     if (aURL == null)
     {
       // Use the ResourceBundleServlet path by default
-      aURL = LinkHelper.getURLWithContext (aRequestScope, ResourceBundleServlet.SERVLET_DEFAULT_PATH + "/" + m_sBundleID + m_aBundle.getResourceType ().getFileExtension ());
+      aURL = LinkHelper.getURLWithContext (aRequestScope,
+                                           ResourceBundleServlet.SERVLET_DEFAULT_PATH +
+                                                          "/" +
+                                                          m_sBundleID +
+                                                          m_aBundle.getResourceType ().getFileExtension ());
     }
 
     // Create the main node
@@ -198,6 +219,9 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("bundleID", m_sBundleID).append ("bundle", m_aBundle).append ("creationDT", m_aCreationDT).toString ();
+    return new ToStringGenerator (this).append ("bundleID", m_sBundleID)
+                                       .append ("bundle", m_aBundle)
+                                       .append ("creationDT", m_aCreationDT)
+                                       .toString ();
   }
 }

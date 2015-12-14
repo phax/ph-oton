@@ -16,27 +16,25 @@
  */
 package com.helger.photon.basic.audit;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.UnsupportedOperation;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
 
 /**
  * Simplify auditing calls.
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
 public final class AuditHelper
 {
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor (new MockCurrentUserIDProvider (null))
   {
@@ -57,20 +55,12 @@ public final class AuditHelper
   @Nonnull
   public static IAuditor getAuditor ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aAuditor;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_aAuditor);
   }
 
   /**
    * Set the global auditor to use.
-   * 
+   *
    * @param aAuditor
    *        The auditor to be set. May not be <code>null</code>.
    */
@@ -78,15 +68,10 @@ public final class AuditHelper
   {
     ValueEnforcer.notNull (aAuditor, "Auditor");
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aAuditor = aAuditor;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
+
   }
 
   /**

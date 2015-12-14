@@ -23,7 +23,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Type of panel
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapPanelType implements ICSSClassProvider

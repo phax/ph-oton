@@ -23,14 +23,14 @@ import com.helger.commons.id.IHasID;
 
 public enum EAutoNumericLeadingZero implements IHasID <String>
 {
-  /**
-   * allows leading zero to be entered. They are removed on focusout event
-   * (default)
-   */
+ /**
+  * allows leading zero to be entered. They are removed on focusout event
+  * (default)
+  */
   ALLOW ("allow"),
-  /** leading zeros not allowed. */
+ /** leading zeros not allowed. */
   DENY ("deny"),
-  /** leading zeros allowed and will be retained on the focusout event */
+ /** leading zeros allowed and will be retained on the focusout event */
   KEEP ("keep");
 
   private final String m_sID;

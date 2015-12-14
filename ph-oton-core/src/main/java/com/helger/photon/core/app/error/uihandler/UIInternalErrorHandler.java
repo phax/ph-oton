@@ -60,7 +60,7 @@ public class UIInternalErrorHandler implements IUIInternalErrorHandler
   {
     m_aParentNode.addChild (new HCH1 ().addChild (EPhotonCoreText.INTERNAL_ERROR_TITLE.getDisplayText (aDisplayLocale)));
     m_aParentNode.addChild (new HCDiv ().addChildren (HCExtHelper.nl2brList (EPhotonCoreText.INTERNAL_ERROR_DESCRIPTION.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                           sErrorID))));
+                                                                                                                                                sErrorID))));
 
     // Show stack trace details
     if (GlobalDebug.isDebugMode () && t != null)

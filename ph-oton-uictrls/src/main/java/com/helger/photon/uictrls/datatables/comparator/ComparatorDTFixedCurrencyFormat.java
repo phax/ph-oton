@@ -28,7 +28,7 @@ import com.helger.masterdata.currency.ECurrency;
 /**
  * A cell comparator that handles currency formatted cells that all use the same
  * currency.
- * 
+ *
  * @author Philip Helger
  */
 public class ComparatorDTFixedCurrencyFormat extends ComparatorDTBigDecimal

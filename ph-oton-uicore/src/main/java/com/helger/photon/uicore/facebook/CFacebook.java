@@ -20,7 +20,7 @@ import javax.annotation.concurrent.Immutable;
 
 /**
  * Facebook SDK constants
- * 
+ *
  * @author Philip Helger
  */
 @Immutable

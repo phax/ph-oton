@@ -50,7 +50,7 @@ import com.helger.photon.basic.app.page.IPage;
  *
  * @author Philip Helger
  */
-public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject>implements IMenuTree
+public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject> implements IMenuTree
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (MenuTree.class);
 

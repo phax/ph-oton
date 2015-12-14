@@ -34,7 +34,7 @@ import com.helger.html.jscode.JSAssocArray;
 
 /**
  * Represent a remote object used in Bloodhound options
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -62,7 +62,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
 
   /**
    * Constructor
-   * 
+   *
    * @param aURL
    *        A URL to make requests to when when the data provided by local and
    *        prefetch is insufficient. Required.
@@ -111,7 +111,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   /**
    * The pattern in <code>url</code> that will be replaced with the user's query
    * when a request is made. Defaults to <code>%QUERY</code>.
-   * 
+   *
    * @param sWildcard
    *        The wild card to use. May be <code>null</code>.
    * @return this
@@ -139,7 +139,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    * A function with the signature <code>replace(url, query)</code> that can be
    * used to override the request URL. Expected to return a valid URL. If set,
    * no wildcard substitution will be performed on <code>url</code> .
-   * 
+   *
    * @param aReplace
    *        The function to use. May be <code>null</code>.
    * @return this
@@ -166,7 +166,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    * The method used to rate-limit network requests. Can be either
    * <code>debounce</code> or <code>throttle</code>. Defaults to
    * <code>debounce</code>.
-   * 
+   *
    * @param eRateLimitBy
    *        function to use. May not be <code>null</code>.
    * @return this
@@ -191,7 +191,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   /**
    * The time interval in milliseconds that will be used by
    * <code>rateLimitBy</code>. Defaults to <code>300</code>.
-   * 
+   *
    * @param nRateLimitWait
    *        Milliseconds to use. Must be &ge; 1.
    * @return this
@@ -218,7 +218,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    * A function with the signature <code>filter(parsedResponse)</code> that
    * transforms the response body into an array of datums. Expected to return an
    * array of datums.
-   * 
+   *
    * @param aFilter
    *        Function to use. May be <code>null</code>.
    * @return this

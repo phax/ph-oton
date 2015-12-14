@@ -35,17 +35,17 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum EExchangeFileTypeName implements IHasDisplayText
 {
- /** CSV - comma separated values */
+  /** CSV - comma separated values */
   CSV ("CSV", "CSV"),
- /** Old Excel */
+  /** Old Excel */
   XLS ("Excel 2003 (XLS)", "Excel 2003 (XLS)"),
- /** New Excel */
+  /** New Excel */
   XLSX ("Excel 2007 (XLSX)", "Excel 2007 (XLSX)"),
- /** XML structured text */
+  /** XML structured text */
   XML ("XML", "XML"),
- /** Pure text file */
+  /** Pure text file */
   TXT ("Text", "Text"),
- /** JSON file */
+  /** JSON file */
   JSON ("JSON", "JSON");
 
   private final IMultilingualText m_aTP;

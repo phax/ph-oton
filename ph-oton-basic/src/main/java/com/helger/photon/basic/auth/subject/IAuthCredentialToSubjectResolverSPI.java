@@ -25,7 +25,7 @@ import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 /**
  * This interface needs to be implemented by all classes that are used for
  * resolving credentials to a certain subject.
- * 
+ *
  * @author Philip Helger
  */
 @IsSPIInterface
@@ -33,7 +33,7 @@ public interface IAuthCredentialToSubjectResolverSPI
 {
   /**
    * Check if this class can handle the passed credential implementation.
-   * 
+   *
    * @param aCredentials
    *        The credentials to be validated. Never <code>null</code>.
    * @return <code>true</code> if this class can handle the given credentials,
@@ -47,7 +47,7 @@ public interface IAuthCredentialToSubjectResolverSPI
    * It should try to resolve the credentials to an {@link IAuthSubject}. If
    * resolving fails, no exception should be thrown, but <code>null</code>
    * should be returned.
-   * 
+   *
    * @param aCredentials
    *        The credentials to be resolved to a subject. Never <code>null</code>
    *        .

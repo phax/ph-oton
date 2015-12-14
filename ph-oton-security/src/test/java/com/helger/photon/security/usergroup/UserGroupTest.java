@@ -43,7 +43,9 @@ public final class UserGroupTest
   @Test
   public void testBasic ()
   {
-    final UserGroup aUserGroup = new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1"), "User group 5", "bla");
+    final UserGroup aUserGroup = new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1"),
+                                                "User group 5",
+                                                "bla");
     assertEquals ("id1", aUserGroup.getID ());
     assertEquals ("User group 5", aUserGroup.getName ());
   }
@@ -51,7 +53,11 @@ public final class UserGroupTest
   @Test
   public void testMicroConversion ()
   {
-    final UserGroup aUserGroup = new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1", new SMap ("key", "value")), "User group 5", "bla");
+    final UserGroup aUserGroup = new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1",
+                                                                                                     new SMap ("key",
+                                                                                                               "value")),
+                                                "User group 5",
+                                                "bla");
     aUserGroup.assignUser ("user1");
     aUserGroup.assignUser ("user2");
     aUserGroup.assignRole ("role1");

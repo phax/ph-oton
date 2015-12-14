@@ -25,8 +25,8 @@ import com.helger.commons.lang.EnumHelper;
 
 public enum EFBColorScheme implements IHasID <String>
 {
-  LIGHT ("light"),
-  DARK ("dark");
+ LIGHT ("light"),
+ DARK ("dark");
 
   /** The default color scheme is the light one */
   public static final EFBColorScheme DEFAULT = LIGHT;

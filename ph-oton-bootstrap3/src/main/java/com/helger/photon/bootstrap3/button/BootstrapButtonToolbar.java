@@ -48,7 +48,9 @@ public class BootstrapButtonToolbar extends AbstractButtonToolbar <BootstrapButt
   }
 
   @Nonnull
-  public final BootstrapButton addAndReturnButton (@Nullable final String sCaption, @Nullable final IHasJSCode aJSCode, @Nullable final IIcon aIcon)
+  public final BootstrapButton addAndReturnButton (@Nullable final String sCaption,
+                                                   @Nullable final IHasJSCode aJSCode,
+                                                   @Nullable final IIcon aIcon)
   {
     return addAndReturnChild (new BootstrapButton ().setIcon (aIcon).addChild (sCaption).setOnClick (aJSCode));
   }

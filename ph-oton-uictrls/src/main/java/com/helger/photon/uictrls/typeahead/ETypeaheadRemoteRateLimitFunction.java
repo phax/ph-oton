@@ -25,13 +25,13 @@ import com.helger.commons.string.StringHelper;
 /**
  * All possible values for the rateLimitFn parameter used in typeahead dataset
  * remote object.
- * 
+ *
  * @author Philip Helger
  */
 public enum ETypeaheadRemoteRateLimitFunction
 {
-  DEBOUNCE ("debounce"),
-  THROTTLE ("throttle");
+ DEBOUNCE ("debounce"),
+ THROTTLE ("throttle");
 
   private final String m_sValue;
 

@@ -81,7 +81,11 @@ public final class AccessToken implements IAccessToken
   {
     ValueEnforcer.notNull (aNotAfter, "NotAfter");
     if (aNotAfter.isBefore (m_aNotBefore))
-      throw new IllegalArgumentException ("Not after date (" + aNotAfter + ") must be >= not before date (" + m_aNotBefore + ")");
+      throw new IllegalArgumentException ("Not after date (" +
+                                          aNotAfter +
+                                          ") must be >= not before date (" +
+                                          m_aNotBefore +
+                                          ")");
     m_aNotAfter = aNotAfter;
   }
 

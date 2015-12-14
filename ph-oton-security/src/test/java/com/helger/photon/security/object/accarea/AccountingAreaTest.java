@@ -47,7 +47,16 @@ public final class AccountingAreaTest
   public void testBasic ()
   {
     final IClient aClient = new Client ("anyid", "Mock client");
-    final Address aAddress = new Address (EAddressType.PERSONAL, "AT", "Wien", "1234", "Vienna", "Test street", "123", "PO1", "co", Locale.GERMANY);
+    final Address aAddress = new Address (EAddressType.PERSONAL,
+                                          "AT",
+                                          "Wien",
+                                          "1234",
+                                          "Vienna",
+                                          "Test street",
+                                          "123",
+                                          "PO1",
+                                          "co",
+                                          Locale.GERMANY);
     final AccountingArea a = new AccountingArea (aClient,
                                                  "Accounting area 1",
                                                  "GmbH",

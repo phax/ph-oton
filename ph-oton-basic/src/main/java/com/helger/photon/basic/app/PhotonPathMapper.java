@@ -115,7 +115,7 @@ public final class PhotonPathMapper
 
   /**
    * Remove all contained path mappings (clearing).
-   * 
+   *
    * @return {@link EChange#CHANGED} if at least one path was removed,
    *         {@link EChange#UNCHANGED} otherwise.
    */

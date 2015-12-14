@@ -34,7 +34,8 @@ import com.helger.commons.string.ToStringGenerator;
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <IMPLTYPE>> extends MapBasedAttributeContainerAny <String>implements IMenuObject
+public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <IMPLTYPE>>
+                                         extends MapBasedAttributeContainerAny <String> implements IMenuObject
 {
   private final String m_sID;
   private IMenuObjectFilter m_aDisplayFilter;

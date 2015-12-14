@@ -25,8 +25,8 @@ import com.helger.commons.lang.EnumHelper;
 
 public enum EFBLikeAction implements IHasID <String>
 {
-  LIKE ("like"),
-  RECOMMEND ("recommend");
+ LIKE ("like"),
+ RECOMMEND ("recommend");
 
   private final String m_sID;
 

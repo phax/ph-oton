@@ -647,21 +647,9 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
     aTabBox.addTab (EText.TAB_LABEL_ACTIVE.getDisplayText (aDisplayLocale),
-                    _createList (aWPEC, "active", new IFilter <IAppToken> ()
-                    {
-                      public boolean matchesFilter (@Nonnull final IAppToken aValue)
-                      {
-                        return !aValue.isDeleted ();
-                      }
-                    }));
+                    _createList (aWPEC, "active", aValue -> !aValue.isDeleted ()));
     aTabBox.addTab (EText.TAB_LABEL_DELETED.getDisplayText (aDisplayLocale),
-                    _createList (aWPEC, "deleted", new IFilter <IAppToken> ()
-                    {
-                      public boolean matchesFilter (@Nonnull final IAppToken aValue)
-                      {
-                        return aValue.isDeleted ();
-                      }
-                    }));
+                    _createList (aWPEC, "deleted", aValue -> aValue.isDeleted ()));
     aNodeList.addChild (aTabBox);
   }
 }

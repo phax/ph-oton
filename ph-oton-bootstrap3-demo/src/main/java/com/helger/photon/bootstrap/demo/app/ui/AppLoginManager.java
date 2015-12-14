@@ -32,8 +32,9 @@ public final class AppLoginManager extends LoginManager
   @Override
   protected IHTMLProvider createLoginScreen (final boolean bLoginError, @Nonnull final ELoginResult eLoginResult)
   {
-    return new BootstrapLoginHTMLProvider (bLoginError, eLoginResult, CApp.getApplicationTitle () +
-                                                                      " Administration - Login");
+    return new BootstrapLoginHTMLProvider (bLoginError,
+                                           eLoginResult,
+                                           CApp.getApplicationTitle () + " Administration - Login");
   }
 
   @Override

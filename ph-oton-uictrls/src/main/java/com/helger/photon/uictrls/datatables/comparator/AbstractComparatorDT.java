@@ -26,7 +26,7 @@ import com.helger.commons.string.ToStringGenerator;
 
 /**
  * Base class for all table comparators
- * 
+ *
  * @author Philip Helger
  */
 public abstract class AbstractComparatorDT extends AbstractComparator <String>
@@ -52,7 +52,7 @@ public abstract class AbstractComparatorDT extends AbstractComparator <String>
 
   /**
    * Get the formatted text of the passed text
-   * 
+   *
    * @param sCell
    *        Original cell text
    * @return Never <code>null</code>.

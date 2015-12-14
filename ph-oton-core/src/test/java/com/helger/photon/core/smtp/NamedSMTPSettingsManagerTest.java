@@ -27,7 +27,7 @@ import com.helger.photon.core.mock.PhotonCoreTestRule;
 
 /**
  * Test class for class {@link NamedSMTPSettingsManager}.
- * 
+ *
  * @author Philip Helger
  */
 public final class NamedSMTPSettingsManagerTest

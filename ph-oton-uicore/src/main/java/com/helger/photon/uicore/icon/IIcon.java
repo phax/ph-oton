@@ -23,7 +23,7 @@ import com.helger.html.hc.IHCNode;
 
 /**
  * A base interface for icons
- * 
+ *
  * @author Philip Helger
  */
 public interface IIcon extends ICSSClassProvider

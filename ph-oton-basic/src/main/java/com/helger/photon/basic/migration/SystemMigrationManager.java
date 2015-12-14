@@ -109,9 +109,9 @@ public class SystemMigrationManager extends AbstractSimpleDAO
     }
 
     AuditHelper.onAuditCreateSuccess (OT_SYSTEM_MIGRATION_RESULT,
-                                     aMigrationResult.getID (),
-                                     Boolean.valueOf (aMigrationResult.isSuccess ()),
-                                     aMigrationResult.getErrorMessage ());
+                                      aMigrationResult.getID (),
+                                      Boolean.valueOf (aMigrationResult.isSuccess ()),
+                                      aMigrationResult.getErrorMessage ());
   }
 
   /**

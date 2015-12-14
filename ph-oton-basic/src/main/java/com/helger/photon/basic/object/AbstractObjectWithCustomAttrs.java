@@ -42,7 +42,8 @@ public abstract class AbstractObjectWithCustomAttrs extends AbstractBaseObjectWi
     super (aObject);
   }
 
-  public AbstractObjectWithCustomAttrs (@Nonnull final IObject aObject, @Nullable final Map <String, String> aCustomAttrs)
+  public AbstractObjectWithCustomAttrs (@Nonnull final IObject aObject,
+                                        @Nullable final Map <String, String> aCustomAttrs)
   {
     super (aObject, aCustomAttrs);
   }
@@ -56,7 +57,14 @@ public abstract class AbstractObjectWithCustomAttrs extends AbstractBaseObjectWi
                                         @Nullable final String sDeletionUserID,
                                         @Nullable final Map <String, String> aCustomAttrs)
   {
-    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID, aCustomAttrs);
+    super (sID,
+           aCreationDT,
+           sCreationUserID,
+           aLastModificationDT,
+           sLastModificationUserID,
+           aDeletionDT,
+           sDeletionUserID,
+           aCustomAttrs);
   }
 
   @Override

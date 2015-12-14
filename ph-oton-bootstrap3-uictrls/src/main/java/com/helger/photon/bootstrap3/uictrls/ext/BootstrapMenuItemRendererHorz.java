@@ -28,7 +28,7 @@ import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 /**
  * A special menu item renderer for the footer area, where the items are
  * displayed horizontally
- * 
+ *
  * @author Philip Helger
  */
 public class BootstrapMenuItemRendererHorz extends BootstrapMenuItemRenderer

@@ -35,7 +35,7 @@ import com.helger.html.jscode.JSAssocArray;
 
 /**
  * Represent a prefetch object used in Bloodhound init options
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -59,7 +59,7 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
 
   /**
    * Constructor
-   * 
+   *
    * @param aURL
    *        A URL to a JSON file containing an array of datums.
    */
@@ -119,7 +119,7 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
   /**
    * The time (in milliseconds) the prefetched data should be cached in
    * localStorage. Defaults to <code>86400000</code> (1 day).
-   * 
+   *
    * @param nTTL
    *        Time to live in milliseconds. Must be &ge; 1.
    * @return this
@@ -164,7 +164,7 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
    * A function with the signature <code>filter(parsedResponse)</code> that
    * transforms the response body into an array of datums. Expected to return an
    * array of datums.
-   * 
+   *
    * @param aFilter
    *        Function to use. May be <code>null</code>.
    * @return this

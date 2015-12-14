@@ -38,7 +38,8 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
  *
  * @author Philip Helger
  */
-public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCustomAttrs implements IObjectWithAccessToken
+public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCustomAttrs
+                                                    implements IObjectWithAccessToken
 {
   private final List <AccessToken> m_aAccessTokens;
 
@@ -51,7 +52,8 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCu
     return aAccessToken != null && !aAccessToken.isRevoked () ? aAccessToken : null;
   }
 
-  public AbstractObjectWithAccessToken (@Nonnull final StubObjectWithCustomAttrs aStubObject, @Nonnull @Nonempty final List <AccessToken> aAccessTokens)
+  public AbstractObjectWithAccessToken (@Nonnull final StubObjectWithCustomAttrs aStubObject,
+                                        @Nonnull @Nonempty final List <AccessToken> aAccessTokens)
   {
     super (aStubObject);
     m_aAccessTokens = ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");
@@ -78,7 +80,9 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCu
   }
 
   @Nonnull
-  public EChange revokeActiveAccessToken (@Nonnull @Nonempty final String sRevocationUserID, @Nonnull final LocalDateTime aRevocationDT, @Nonnull @Nonempty final String sRevocationReason)
+  public EChange revokeActiveAccessToken (@Nonnull @Nonempty final String sRevocationUserID,
+                                          @Nonnull final LocalDateTime aRevocationDT,
+                                          @Nonnull @Nonempty final String sRevocationReason)
   {
     if (m_aActiveAccessToken == null)
     {
@@ -108,6 +112,9 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCu
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("AccessTokens", m_aAccessTokens).append ("ActiveAccessToken", m_aActiveAccessToken).toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("AccessTokens", m_aAccessTokens)
+                            .append ("ActiveAccessToken", m_aActiveAccessToken)
+                            .toString ();
   }
 }

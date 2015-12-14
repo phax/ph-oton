@@ -23,17 +23,12 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.junit.Test;
 
 import com.helger.commons.callback.IThrowingRunnableWithParameter;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.thread.ThreadHelper;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.audit.AsynchronousAuditor;
-import com.helger.photon.basic.audit.AuditHelper;
-import com.helger.photon.basic.audit.IAuditItem;
 import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
 
 /**
@@ -48,14 +43,7 @@ public final class AsynchronousAuditorTest
   {
     final ObjectType aOT = new ObjectType ("mock");
     final MutableInt aPerformCount = new MutableInt (0);
-    final IThrowingRunnableWithParameter <List <IAuditItem>, Exception> aPerformer = new IThrowingRunnableWithParameter <List <IAuditItem>, Exception> ()
-    {
-      public void run (@Nonnull final List <IAuditItem> aItems)
-      {
-        // Count number of items to be handled
-        aPerformCount.inc (aItems.size ());
-      }
-    };
+    final IThrowingRunnableWithParameter <List <IAuditItem>, Exception> aPerformer = aItems -> aPerformCount.inc (aItems.size ());
     final AsynchronousAuditor aAuditor = new AsynchronousAuditor (new MockCurrentUserIDProvider ("userid"), aPerformer);
     AuditHelper.setAuditor (aAuditor);
     try

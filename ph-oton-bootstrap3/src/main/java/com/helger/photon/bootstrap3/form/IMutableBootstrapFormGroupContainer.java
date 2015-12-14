@@ -69,7 +69,8 @@ public interface IMutableBootstrapFormGroupContainer extends IBootstrapFormGroup
    * @return this
    */
   @Nonnull
-  IMutableBootstrapFormGroupContainer setSplitting (@Nonnull BootstrapGridSpec aLeft, @Nonnull BootstrapGridSpec aRight);
+  IMutableBootstrapFormGroupContainer setSplitting (@Nonnull BootstrapGridSpec aLeft,
+                                                    @Nonnull BootstrapGridSpec aRight);
 
   /**
    * Set the form group renderer to be used.

@@ -57,8 +57,8 @@ public class HCVATItemSelect extends HCExtSelect
       aVATItems.put (VATManager.VATTYPE_NONE.getID (), VATManager.VATTYPE_NONE);
 
     for (final Map.Entry <String, IVATItem> aEntry : CollectionHelper.getSortedByValue (aVATItems,
-                                                                                       new ComparatorVATItemPercentage ())
-                                                                    .entrySet ())
+                                                                                        new ComparatorVATItemPercentage ())
+                                                                     .entrySet ())
     {
       final IVATItem aVATItem = aEntry.getValue ();
       if (!aVATItem.isDeprecated ())

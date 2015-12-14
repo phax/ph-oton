@@ -28,7 +28,7 @@ import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
  * Test class for class {@link LinkHelper}.
- * 
+ *
  * @author Philip Helger
  */
 public final class LinkHelperTest
@@ -45,7 +45,9 @@ public final class LinkHelperTest
     assertEquals ("/abc/x", LinkHelper.getStreamURL (aRequestScope, "x").getAsString ());
     LinkHelper.setStreamServletName (LinkHelper.DEFAULT_STREAM_SERVLET_NAME);
     assertEquals (LinkHelper.DEFAULT_STREAM_SERVLET_NAME, LinkHelper.getStreamServletName ());
-    assertEquals ("/" + LinkHelper.DEFAULT_STREAM_SERVLET_NAME + "/x", LinkHelper.getStreamURL (aRequestScope, "x")
-                                                                               .getAsString ());
+    assertEquals ("/" +
+                  LinkHelper.DEFAULT_STREAM_SERVLET_NAME +
+                  "/x",
+                  LinkHelper.getStreamURL (aRequestScope, "x").getAsString ());
   }
 }

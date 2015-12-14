@@ -20,7 +20,7 @@ import javax.annotation.concurrent.Immutable;
 
 /**
  * Constants for ATOM feeds
- * 
+ *
  * @author Philip Helger
  */
 @Immutable

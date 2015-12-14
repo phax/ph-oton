@@ -27,7 +27,7 @@ import com.helger.photon.basic.auth.ICurrentUserIDProvider;
 
 /**
  * An implementation of {@link IAuditor} using SLF4J logging.
- * 
+ *
  * @author Philip Helger
  */
 public class LoggingAuditor extends AbstractAuditor

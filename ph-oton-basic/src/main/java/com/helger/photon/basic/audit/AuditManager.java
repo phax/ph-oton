@@ -194,27 +194,17 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
       }
     }
 
-    final IThrowingRunnableWithParameter <List <IAuditItem>, Exception> aPerformer = new IThrowingRunnableWithParameter <List <IAuditItem>, Exception> ()
-    {
-      public void run (@Nonnull final List <IAuditItem> aAuditItems)
+    final IThrowingRunnableWithParameter <List <IAuditItem>, Exception> aPerformer = aAuditItems -> {
+      if (!aAuditItems.isEmpty ())
       {
-        if (!aAuditItems.isEmpty ())
-        {
-          m_aRWLock.writeLock ().lock ();
-          try
-          {
-            for (final IAuditItem aItem : aAuditItems)
-              m_aItems.internalAddItem (aItem);
+        m_aRWLock.writeLocked ( () -> {
+          for (final IAuditItem aItem : aAuditItems)
+            m_aItems.internalAddItem (aItem);
 
-            // In write-lock - it should be safe anyway since the caller
-            // serializes the calls to this method
-            markAsChanged ();
-          }
-          finally
-          {
-            m_aRWLock.writeLock ().unlock ();
-          }
-        }
+          // In write-lock - it should be safe anyway since the caller
+          // serializes the calls to this method
+          markAsChanged ();
+        });
       }
     };
 
@@ -286,13 +276,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
   @Nonnull
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
-    readFromXML (aDoc, new IReadHandler ()
-    {
-      public void onReadAuditItem (@Nonnull final IAuditItem aItem)
-      {
-        m_aItems.internalAddItem (aItem);
-      }
-    });
+    readFromXML (aDoc, aItem -> m_aItems.internalAddItem (aItem));
     // read-only :)
     return EChange.UNCHANGED;
   }
@@ -345,15 +329,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
   @ReturnsMutableCopy
   public List <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aItems.getLastItems (nMaxItems);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aItems.getLastItems (nMaxItems));
   }
 
   public void stop ()
@@ -376,13 +352,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
 
     final List <IAuditItem> ret = new ArrayList <IAuditItem> ();
     final IMicroDocument aDoc = MicroReader.readMicroXML (aFile);
-    readFromXML (aDoc, new IReadHandler ()
-    {
-      public void onReadAuditItem (@Nonnull final IAuditItem aItem)
-      {
-        ret.add (aItem);
-      }
-    });
+    readFromXML (aDoc, aItem -> ret.add (aItem));
     return ret;
   }
 

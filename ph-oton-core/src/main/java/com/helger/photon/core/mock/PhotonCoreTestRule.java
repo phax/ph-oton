@@ -47,7 +47,8 @@ public class PhotonCoreTestRule extends WebScopeTestRule
   @ReturnsMutableCopy
   public static SMap createDefaultServletContextInitParameters ()
   {
-    return new SMap ().add (WebAppListener.INIT_PARAMETER_NO_STARTUP_INFO, true).add (WebAppListener.INIT_PARAMETER_NO_CHECK_FILE_ACCESS, true);
+    return new SMap ().add (WebAppListener.INIT_PARAMETER_NO_STARTUP_INFO, true)
+                      .add (WebAppListener.INIT_PARAMETER_NO_CHECK_FILE_ACCESS, true);
   }
 
   public PhotonCoreTestRule ()
@@ -78,10 +79,14 @@ public class PhotonCoreTestRule extends WebScopeTestRule
 
   @Override
   @Nonnull
-  protected MockServletContext createMockServletContext (@Nullable final String sContextPath, @Nullable final Map <String, String> aInitParams)
+  protected MockServletContext createMockServletContext (@Nullable final String sContextPath,
+                                                         @Nullable final Map <String, String> aInitParams)
   {
     // Use the special resource base path
     // Use default resource provider
-    return MockServletContext.create (sContextPath, RESOURCE_BASE_FILE.getAbsolutePath (), (IReadableResourceProvider) null, aInitParams);
+    return MockServletContext.create (sContextPath,
+                                      RESOURCE_BASE_FILE.getAbsolutePath (),
+                                      (IReadableResourceProvider) null,
+                                      aInitParams);
   }
 }

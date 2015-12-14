@@ -266,7 +266,9 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
     return EqualsHelper.equals (getAttributeAsString (sName), sDesiredValue);
   }
 
-  public boolean hasAttributeValue (@Nullable final String sName, @Nullable final String sDesiredValue, final boolean bDefault)
+  public boolean hasAttributeValue (@Nullable final String sName,
+                                    @Nullable final String sDesiredValue,
+                                    final boolean bDefault)
   {
     final String sValue = getAttributeAsString (sName);
     return sValue == null ? bDefault : EqualsHelper.equals (sValue, sDesiredValue);

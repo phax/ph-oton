@@ -27,7 +27,6 @@ import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCEditPassword;
 import com.helger.html.hc.html.grouping.HCDiv;
-import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -42,9 +41,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.EBootstrapFormType;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.bootstrap3.uictrls.datatables.IBootstrapDataTablesConfigurator;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.login.CLogin;
@@ -68,23 +65,17 @@ public final class AppCommonUI
 
   public static void init ()
   {
-    BootstrapDataTables.setConfigurator (new IBootstrapDataTablesConfigurator ()
-    {
-      public void configure (@Nonnull final ILayoutExecutionContext aLEC,
-                             @Nonnull final IHCTable <?> aTable,
-                             @Nonnull final BootstrapDataTables aDataTables)
-      {
-        final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
-        aDataTables.setAutoWidth (false)
-                   .setLengthMenu (LENGTH_MENU)
-                   .setAjaxBuilder (new JQueryAjaxBuilder ().url (CAjaxPublic.DATATABLES.getInvocationURL (aRequestScope))
-                                                            .data (new JSAssocArray ().add (AjaxExecutorDataTables.OBJECT_ID,
-                                                                                            aTable.getID ())))
-                   .setServerFilterType (EDataTablesFilterType.ALL_TERMS_PER_ROW)
-                   .setTextLoadingURL (CAjaxPublic.DATATABLES_I18N.getInvocationURL (aRequestScope),
-                                       AjaxExecutorDataTablesI18N.LANGUAGE_ID)
-                   .addPlugin (new DataTablesPluginSearchHighlight ());
-      }
+    BootstrapDataTables.setConfigurator ( (aLEC, aTable, aDataTables) -> {
+      final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
+      aDataTables.setAutoWidth (false)
+                 .setLengthMenu (LENGTH_MENU)
+                 .setAjaxBuilder (new JQueryAjaxBuilder ().url (CAjaxPublic.DATATABLES.getInvocationURL (aRequestScope))
+                                                          .data (new JSAssocArray ().add (AjaxExecutorDataTables.OBJECT_ID,
+                                                                                          aTable.getID ())))
+                 .setServerFilterType (EDataTablesFilterType.ALL_TERMS_PER_ROW)
+                 .setTextLoadingURL (CAjaxPublic.DATATABLES_I18N.getInvocationURL (aRequestScope),
+                                     AjaxExecutorDataTablesI18N.LANGUAGE_ID)
+                 .addPlugin (new DataTablesPluginSearchHighlight ());
     });
   }
 

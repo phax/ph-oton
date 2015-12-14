@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.scrollspy;
 
 /**
  * Bootstrap Scrollspy
- * 
+ *
  * @author Philip Helger
  */
 public class BootstrapScrollspy

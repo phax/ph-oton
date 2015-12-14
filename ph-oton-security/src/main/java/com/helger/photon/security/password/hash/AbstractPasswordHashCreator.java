@@ -24,7 +24,7 @@ import com.helger.commons.string.ToStringGenerator;
 
 /**
  * Abstract base class of {@link IPasswordHashCreator}.
- * 
+ *
  * @author Philip Helger
  */
 public abstract class AbstractPasswordHashCreator implements IPasswordHashCreator

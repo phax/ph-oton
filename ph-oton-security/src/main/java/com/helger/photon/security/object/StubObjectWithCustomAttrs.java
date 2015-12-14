@@ -41,12 +41,22 @@ public final class StubObjectWithCustomAttrs extends AbstractObjectWithCustomAtt
 {
   public static final ObjectType OT_STUB = new ObjectType ("stub-object-wca");
 
-  private StubObjectWithCustomAttrs (@Nonnull @Nonempty final String sID, @Nullable final String sCreationUserID, @Nullable final Map <String, String> aCustomAttrs)
+  private StubObjectWithCustomAttrs (@Nonnull @Nonempty final String sID,
+                                     @Nullable final String sCreationUserID,
+                                     @Nullable final Map <String, String> aCustomAttrs)
   {
-    this (sID, PDTFactory.getCurrentLocalDateTime (), sCreationUserID, (LocalDateTime) null, (String) null, (LocalDateTime) null, (String) null, aCustomAttrs);
+    this (sID,
+          PDTFactory.getCurrentLocalDateTime (),
+          sCreationUserID,
+          (LocalDateTime) null,
+          (String) null,
+          (LocalDateTime) null,
+          (String) null,
+          aCustomAttrs);
   }
 
-  public StubObjectWithCustomAttrs (@Nonnull final StubObject aStubObject, @Nullable final Map <String, String> aCustomAttrs)
+  public StubObjectWithCustomAttrs (@Nonnull final StubObject aStubObject,
+                                    @Nullable final Map <String, String> aCustomAttrs)
   {
     super (aStubObject, aCustomAttrs);
   }
@@ -60,7 +70,14 @@ public final class StubObjectWithCustomAttrs extends AbstractObjectWithCustomAtt
                                     @Nullable final String sDeletionUserID,
                                     @Nullable final Map <String, String> aCustomAttrs)
   {
-    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID, aCustomAttrs);
+    super (sID,
+           aCreationDT,
+           sCreationUserID,
+           aLastModificationDT,
+           sLastModificationUserID,
+           aDeletionDT,
+           sDeletionUserID,
+           aCustomAttrs);
   }
 
   @Nonnull
@@ -120,7 +137,8 @@ public final class StubObjectWithCustomAttrs extends AbstractObjectWithCustomAtt
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static StubObjectWithCustomAttrs createForUser (@Nullable final String sUserID, @Nullable final Map <String, String> aCustomAttrs)
+  public static StubObjectWithCustomAttrs createForUser (@Nullable final String sUserID,
+                                                         @Nullable final Map <String, String> aCustomAttrs)
   {
     return new StubObjectWithCustomAttrs (GlobalIDFactory.getNewPersistentStringID (), sUserID, aCustomAttrs);
   }
@@ -150,7 +168,8 @@ public final class StubObjectWithCustomAttrs extends AbstractObjectWithCustomAtt
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static StubObjectWithCustomAttrs createForCurrentUserAndID (@Nonnull @Nonempty final String sID, @Nullable final Map <String, String> aCustomAttrs)
+  public static StubObjectWithCustomAttrs createForCurrentUserAndID (@Nonnull @Nonempty final String sID,
+                                                                     @Nullable final Map <String, String> aCustomAttrs)
   {
     return new StubObjectWithCustomAttrs (sID, LoggedInUserManager.getInstance ().getCurrentUserID (), aCustomAttrs);
   }

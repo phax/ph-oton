@@ -20,8 +20,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.helger.photon.security.password.hash.PasswordHashCreatorDefault;
-
 /**
  * Test class for class {@link PasswordHashCreatorDefault}.
  *

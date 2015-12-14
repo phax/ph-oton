@@ -30,7 +30,7 @@ import com.helger.commons.string.ToStringGenerator;
 /**
  * Password constraint defining that at least a certain amount of letters must
  * be contained
- * 
+ *
  * @author Philip Helger
  * @since 2.7.4
  */
@@ -42,7 +42,7 @@ public class PasswordConstraintMustContainLetter implements IPasswordConstraint
 
   /**
    * Ctor
-   * 
+   *
    * @param nMinLetters
    *        The minimum number of letters that must occur in a password. Must be
    *        &gt; 0.

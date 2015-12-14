@@ -26,7 +26,9 @@ import com.helger.commons.tree.withid.unique.ITreeWithGlobalUniqueID;
  *
  * @author philip
  */
-public interface IMenuTree extends ITreeWithGlobalUniqueID <String, IMenuObject, DefaultTreeItemWithID <String, IMenuObject>>, IMenuOperations
+public interface IMenuTree extends
+                           ITreeWithGlobalUniqueID <String, IMenuObject, DefaultTreeItemWithID <String, IMenuObject>>,
+                           IMenuOperations
 {
   @Nullable
   DefaultTreeItemWithID <String, IMenuObject> getRootItemOfItemWithID (@Nullable String sMenuItemID);

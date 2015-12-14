@@ -36,7 +36,9 @@ public final class RoleMicroTypeConverter extends AbstractObjectMicroTypeConvert
   private static final String ELEMENT_DESCRIPTION = "description";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject, @Nullable final String sNamespaceURI, @Nonnull final String sTagName)
+  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+                                              @Nullable final String sNamespaceURI,
+                                              @Nonnull final String sTagName)
   {
     final IRole aRole = (IRole) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);

@@ -27,12 +27,13 @@ import com.helger.photon.bootstrap3.stub.init.PhotonStubServletInitializer;
 
 /**
  * ph-oton SCI
- * 
+ *
  * @author Philip Helger
  */
 public final class PhotonStubServletContainerInitializer implements ServletContainerInitializer
 {
-  public void onStartup (@Nonnull final Set <Class <?>> aClasses, @Nonnull final ServletContext aSC) throws ServletException
+  public void onStartup (@Nonnull final Set <Class <?>> aClasses,
+                         @Nonnull final ServletContext aSC) throws ServletException
   {
     PhotonStubServletInitializer.registerServlets (aSC);
   }

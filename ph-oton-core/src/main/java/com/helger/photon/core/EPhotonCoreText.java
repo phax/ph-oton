@@ -36,88 +36,88 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum EPhotonCoreText implements IHasDisplayText,IHasDisplayTextWithArgs
 {
- // Misc texts
- PAGE_HELP_TITLE ("Hilfe zu ''{0}'' anzeigen", "Show help for ''{0}''"),
- DOWNLOAD ("Download", "Download"),
- EMAIL_ADDRESS ("E-Mail-Adresse", "Email address"),
- LOGIN_HEADER ("Login", "Login"),
- LOGIN_ERROR_MSG ("Die Anmeldung ist fehlgeschlagen!", "User login failed!"),
- LOGIN_FIELD_USERNAME ("Benutzername", "User name"),
- LOGIN_FIELD_PASSWORD ("Passwort", "Password"),
- LOGIN_BUTTON_SUBMIT ("Anmelden", "Login"),
- LOGIN_LOGOUT ("Abmelden", "Logout"),
- IMAGE_NONE ("keines", "none"),
- SAVE_CHANGES_SUCCESS ("Die Änderungen wurden erfolgreich gespeichert!", "The changes were saved successfully!"),
- ERR_INCORRECT_INPUT ("Auf Grund fehlender oder falscher Eingaben konnte nicht gespeichert werden! Überprüfen Sie Ihre Eingaben und folgen Sie den Aufforderungen zur Fehlerbehebung.", "Due to missing or incorrect input saving was not possible. Check your input and follow the suggestions for error correction."),
- PLEASE_SELECT ("(Wählen Sie einen Eintrag)", "(Select an item)"),
- SELECT_NONE ("(Kein)", "(None)"),
- CALENDAR_OPEN ("Kalender...", "Calendar..."),
- LOADING_MSG ("Daten werden geladen...", "Loading..."),
- PAGING_PAGE (" Seite ", " Page "),
- PAGING_OF (" von {0}", " of {0}"),
- PAGING_TOOLTIP_PAGE_START ("Erste Seite", "First page"),
- PAGING_TOOLTIP_PAGE_PREV ("Vorherige Seite", "Previous page"),
- PAGING_TOOLTIP_PAGE_NEXT ("Nächste Seite", "Next page"),
- PAGING_TOOLTIP_PAGE_END ("Letzte Seite", "Last page"),
- PAGING_LABEL_PAGE_SIZE ("Einträge pro Seite: ", "Entries per page: "),
- PAGING_TOOLTIP_ACCEPT ("Anwenden", "Apply"),
- PAGING_SHOW_RANGE ("Einträge {0} - {1} von insgesamt {2}", "Entries {0} - {1} of total {2}"),
- TREE_FILTER ("Einträge werden gefiltert...", "Filtering entries..."),
- TREE_EXPAND_ALL ("Daten werden geladen...", "Loading..."),
- TREE_COLLAPSE_ALL ("Daten werden geladen...", "Loading..."),
- TREE_EXPAND ("Daten werden geladen...", "Loading..."),
- TREE_COLLAPSE ("Daten werden geladen...", "Loading..."),
- TREE_LABEL_FILTER ("Einträge filtern", "Filter entries"),
- TREE_TREEITEM_COLLAPSE ("Eintrag zuklappen", "Collapse item"),
- TREE_TREEITEM_EXPAND ("Eintrag aufklappen", "Expand item"),
- TREE_TREEITEMS_COLLAPSE ("Alle Einträge zuklappen", "Collapse all items"),
- TREE_TREEITEMS_EXPAND ("Alle Einträge aufklappen", "Expand all items"),
- SELECT_SHOW_ALL ("Alle anzeigen...", "Show all..."),
- FILE_SELECT ("Dateiauswahl", "File Selection"),
- ACTIONS ("Aktionen", "Actions"),
- INTERNAL_ERROR_TITLE ("Interner Fehler", "Internal error"),
- INTERNAL_ERROR_DESCRIPTION ("Entschuldigung!\n" +
-                             "Es ist ein interner Fehler aufgetreten.\n" +
-                             "\n" +
-                             "Diese Fehlermeldung wurde automatisch and die zuständigen Personen weitergeleitet.\n" +
-                             "Notieren Sie sich bitte ihre persönliche Fehlernummer ''{0}'' für eine mögliche spätere Analyse.\n" +
-                             "\n" +
-                             "Sie können mit Ihrer Arbeit fortfahren.\n" +
-                             "Falls dieser Fehler wieder auftritt, vermeiden Sie bitte die Schritte die zu diesem Fehler geführt haben, und warten bis er behoben ist.", "Sorry!\n" +
-                                                                                                                                                                         "An internal error was encountered.\n" +
-                                                                                                                                                                         "\n" +
-                                                                                                                                                                         "An automated error report was already sent to the technical responsible.\n" +
-                                                                                                                                                                         "Write down your personal error number ''{0}'' for possible investigation.\n" +
-                                                                                                                                                                         "\n" +
-                                                                                                                                                                         "You can continue your work.\n" +
-                                                                                                                                                                         "In case this error occurs again avoid the actions leading to it until the problem is solved."),
+  // Misc texts
+  PAGE_HELP_TITLE ("Hilfe zu ''{0}'' anzeigen", "Show help for ''{0}''"),
+  DOWNLOAD ("Download", "Download"),
+  EMAIL_ADDRESS ("E-Mail-Adresse", "Email address"),
+  LOGIN_HEADER ("Login", "Login"),
+  LOGIN_ERROR_MSG ("Die Anmeldung ist fehlgeschlagen!", "User login failed!"),
+  LOGIN_FIELD_USERNAME ("Benutzername", "User name"),
+  LOGIN_FIELD_PASSWORD ("Passwort", "Password"),
+  LOGIN_BUTTON_SUBMIT ("Anmelden", "Login"),
+  LOGIN_LOGOUT ("Abmelden", "Logout"),
+  IMAGE_NONE ("keines", "none"),
+  SAVE_CHANGES_SUCCESS ("Die Änderungen wurden erfolgreich gespeichert!", "The changes were saved successfully!"),
+  ERR_INCORRECT_INPUT ("Auf Grund fehlender oder falscher Eingaben konnte nicht gespeichert werden! Überprüfen Sie Ihre Eingaben und folgen Sie den Aufforderungen zur Fehlerbehebung.", "Due to missing or incorrect input saving was not possible. Check your input and follow the suggestions for error correction."),
+  PLEASE_SELECT ("(Wählen Sie einen Eintrag)", "(Select an item)"),
+  SELECT_NONE ("(Kein)", "(None)"),
+  CALENDAR_OPEN ("Kalender...", "Calendar..."),
+  LOADING_MSG ("Daten werden geladen...", "Loading..."),
+  PAGING_PAGE (" Seite ", " Page "),
+  PAGING_OF (" von {0}", " of {0}"),
+  PAGING_TOOLTIP_PAGE_START ("Erste Seite", "First page"),
+  PAGING_TOOLTIP_PAGE_PREV ("Vorherige Seite", "Previous page"),
+  PAGING_TOOLTIP_PAGE_NEXT ("Nächste Seite", "Next page"),
+  PAGING_TOOLTIP_PAGE_END ("Letzte Seite", "Last page"),
+  PAGING_LABEL_PAGE_SIZE ("Einträge pro Seite: ", "Entries per page: "),
+  PAGING_TOOLTIP_ACCEPT ("Anwenden", "Apply"),
+  PAGING_SHOW_RANGE ("Einträge {0} - {1} von insgesamt {2}", "Entries {0} - {1} of total {2}"),
+  TREE_FILTER ("Einträge werden gefiltert...", "Filtering entries..."),
+  TREE_EXPAND_ALL ("Daten werden geladen...", "Loading..."),
+  TREE_COLLAPSE_ALL ("Daten werden geladen...", "Loading..."),
+  TREE_EXPAND ("Daten werden geladen...", "Loading..."),
+  TREE_COLLAPSE ("Daten werden geladen...", "Loading..."),
+  TREE_LABEL_FILTER ("Einträge filtern", "Filter entries"),
+  TREE_TREEITEM_COLLAPSE ("Eintrag zuklappen", "Collapse item"),
+  TREE_TREEITEM_EXPAND ("Eintrag aufklappen", "Expand item"),
+  TREE_TREEITEMS_COLLAPSE ("Alle Einträge zuklappen", "Collapse all items"),
+  TREE_TREEITEMS_EXPAND ("Alle Einträge aufklappen", "Expand all items"),
+  SELECT_SHOW_ALL ("Alle anzeigen...", "Show all..."),
+  FILE_SELECT ("Dateiauswahl", "File Selection"),
+  ACTIONS ("Aktionen", "Actions"),
+  INTERNAL_ERROR_TITLE ("Interner Fehler", "Internal error"),
+  INTERNAL_ERROR_DESCRIPTION ("Entschuldigung!\n" +
+                              "Es ist ein interner Fehler aufgetreten.\n" +
+                              "\n" +
+                              "Diese Fehlermeldung wurde automatisch and die zuständigen Personen weitergeleitet.\n" +
+                              "Notieren Sie sich bitte ihre persönliche Fehlernummer ''{0}'' für eine mögliche spätere Analyse.\n" +
+                              "\n" +
+                              "Sie können mit Ihrer Arbeit fortfahren.\n" +
+                              "Falls dieser Fehler wieder auftritt, vermeiden Sie bitte die Schritte die zu diesem Fehler geführt haben, und warten bis er behoben ist.", "Sorry!\n" +
+                                                                                                                                                                          "An internal error was encountered.\n" +
+                                                                                                                                                                          "\n" +
+                                                                                                                                                                          "An automated error report was already sent to the technical responsible.\n" +
+                                                                                                                                                                          "Write down your personal error number ''{0}'' for possible investigation.\n" +
+                                                                                                                                                                          "\n" +
+                                                                                                                                                                          "You can continue your work.\n" +
+                                                                                                                                                                          "In case this error occurs again avoid the actions leading to it until the problem is solved."),
 
- BACK_TO_OVERVIEW ("Zurück zur Übersicht", "Back to the list"),
- BUTTON_YES ("Ja", "Yes"),
- BUTTON_NO ("Nein", "No"),
- BUTTON_BACK ("Zurück", "Back"),
- BUTTON_NEXT ("Weiter", "Next"),
- BUTTON_SAVE ("Speichern", "Save"),
- BUTTON_SAVE_ALL ("Alles Speichern", "Save all"),
- BUTTON_SAVE_AS ("Speichern unter...", "Save as..."),
- BUTTON_SAVE_CLOSE ("Speichern und schließen", "Save and close"),
- BUTTON_RESET ("Zurücksetzen", "Reset"),
- BUTTON_CANCEL ("Abbrechen", "Cancel"),
- BUTTON_CLOSE ("Schließen", "Close"),
- BUTTON_SELECT ("Auswählen...", "Select..."),
- BUTTON_DELETE ("Löschen", "Delete"),
- BUTTON_DELETE_ALL ("Alle löschen", "Delete all"),
- BUTTON_UPLOAD ("Hochladen", "Upload"),
- @Deprecated ON_REFRESH ("Aktualisieren", "Refresh"),
- BUTTON_REFRESH ("Aktualisieren", "Refresh"),
- BUTTON_REGISTER ("Registrieren", "Register"),
- BUTTON_SIGN_UP ("Registrieren", "Sign up"),
- BUTTON_EDIT ("Bearbeiten", "Edit"),
- BUTTON_SEND ("Absenden", "Send"),
- BUTTON_RESEND ("Erneut versenden", "Resend"),
- BUTTON_RESEND_ALL ("Alle erneut versenden", "Resend all"),
- TRUE ("Wahr", "True"),
- FALSE ("Falsch", "False");
+  BACK_TO_OVERVIEW ("Zurück zur Übersicht", "Back to the list"),
+  BUTTON_YES ("Ja", "Yes"),
+  BUTTON_NO ("Nein", "No"),
+  BUTTON_BACK ("Zurück", "Back"),
+  BUTTON_NEXT ("Weiter", "Next"),
+  BUTTON_SAVE ("Speichern", "Save"),
+  BUTTON_SAVE_ALL ("Alles Speichern", "Save all"),
+  BUTTON_SAVE_AS ("Speichern unter...", "Save as..."),
+  BUTTON_SAVE_CLOSE ("Speichern und schließen", "Save and close"),
+  BUTTON_RESET ("Zurücksetzen", "Reset"),
+  BUTTON_CANCEL ("Abbrechen", "Cancel"),
+  BUTTON_CLOSE ("Schließen", "Close"),
+  BUTTON_SELECT ("Auswählen...", "Select..."),
+  BUTTON_DELETE ("Löschen", "Delete"),
+  BUTTON_DELETE_ALL ("Alle löschen", "Delete all"),
+  BUTTON_UPLOAD ("Hochladen", "Upload"),
+  @Deprecated ON_REFRESH ("Aktualisieren", "Refresh"),
+  BUTTON_REFRESH ("Aktualisieren", "Refresh"),
+  BUTTON_REGISTER ("Registrieren", "Register"),
+  BUTTON_SIGN_UP ("Registrieren", "Sign up"),
+  BUTTON_EDIT ("Bearbeiten", "Edit"),
+  BUTTON_SEND ("Absenden", "Send"),
+  BUTTON_RESEND ("Erneut versenden", "Resend"),
+  BUTTON_RESEND_ALL ("Alle erneut versenden", "Resend all"),
+  TRUE ("Wahr", "True"),
+  FALSE ("Falsch", "False");
 
   private final IMultilingualText m_aTP;
 

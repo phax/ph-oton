@@ -29,7 +29,8 @@ import com.helger.commons.compare.AbstractPartComparatorComparable;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class ComparatorLongRunningJobDataStartDate extends AbstractPartComparatorComparable <LongRunningJobData, LocalDateTime>
+public final class ComparatorLongRunningJobDataStartDate extends
+                                                         AbstractPartComparatorComparable <LongRunningJobData, LocalDateTime>
 {
   @Override
   protected LocalDateTime getPart (@Nonnull final LongRunningJobData aData)

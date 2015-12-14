@@ -22,7 +22,7 @@ import com.helger.photon.basic.uitext.IHasUIText;
 
 /**
  * Represents a single client (Mandant)
- * 
+ *
  * @author Philip Helger
  */
 public interface IClient extends IObject, IHasDisplayName, IHasUIText

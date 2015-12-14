@@ -28,7 +28,7 @@ import org.joda.time.LocalTime;
 
 /**
  * Abstract date format builder interface
- * 
+ *
  * @author Philip Helger
  */
 public interface IDateFormatBuilder

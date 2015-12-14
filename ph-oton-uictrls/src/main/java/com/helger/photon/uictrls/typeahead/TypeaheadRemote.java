@@ -34,7 +34,7 @@ import com.helger.html.jscode.JSAssocArray;
 
 /**
  * Represent a remote object used in a dataset
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -72,7 +72,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
 
   /**
    * Constructor
-   * 
+   *
    * @param aURL
    *        A URL to make requests to when when the data provided by local and
    *        prefetch is insufficient.
@@ -113,7 +113,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   /**
    * The type of data you're expecting from the server. See the jQuery.ajax docs
    * for more info. Defaults to <code>json</code>.
-   * 
+   *
    * @param sDataType
    *        The data type to use. May neither be <code>null</code> nor empty.
    * @return this
@@ -139,7 +139,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   /**
    * Determines whether or not the browser will cache responses. See the
    * jQuery.ajax docs for more info.
-   * 
+   *
    * @param bCache
    *        Use cache?
    * @return this
@@ -153,7 +153,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   /**
    * Determines whether or not the browser will cache responses. See the
    * jQuery.ajax docs for more info.
-   * 
+   *
    * @param eCache
    *        Use cache? May not be <code>null</code>.
    * @return this
@@ -177,7 +177,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
 
   /**
    * Sets a timeout for requests. See the jQuery.ajax docs for more info.
-   * 
+   *
    * @param nTimeout
    *        Timeout to use.
    * @return this
@@ -201,7 +201,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   /**
    * The pattern in <code>url</code> that will be replaced with the user's query
    * when a request is made. Defaults to <code>%QUERY</code>.
-   * 
+   *
    * @param sWildcard
    *        The wild card to use. May be <code>null</code>.
    * @return this
@@ -229,7 +229,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    * that can be used to override the request URL. Expected to return a valid
    * URL. If set, no wildcard substitution will be performed on <code>url</code>
    * .
-   * 
+   *
    * @param aReplace
    *        The function to use. May be <code>null</code>.
    * @return this
@@ -257,7 +257,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    * The function used for rate-limiting network requests. Can be either
    * <code>debounce</code> or <code>throttle</code>. Defaults to
    * <code>debounce</code>.
-   * 
+   *
    * @param eRateLimitFn
    *        function to use. May not be <code>null</code>.
    * @return this
@@ -283,7 +283,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   /**
    * The time interval in milliseconds that will be used by
    * <code>rateLimitFn</code>. Defaults to <code>300</code>.
-   * 
+   *
    * @param nRateLimitWait
    *        Milliseconds to use. Must be &ge; 1.
    * @return this
@@ -308,7 +308,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   /**
    * The max number of parallel requests typeahead.js can have pending. Defaults
    * to <code>6</code>.
-   * 
+   *
    * @param nMaxParallelRequests
    *        Maximum parallel requests. Must be &ge; 1.
    * @return this
@@ -334,7 +334,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    * A pre-request callback with the signature
    * <code>beforeSend(jqXhr,settings)</code>. Can be used to set custom headers.
    * See the jQuery.ajax docs for more info.
-   * 
+   *
    * @param aBeforeSend
    *        Function to use. May be <code>null</code>.
    * @return this
@@ -361,7 +361,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    * A function with the signature <code>filter(parsedResponse)</code> that
    * transforms the response body into an array of datums. Expected to return an
    * array of datums.
-   * 
+   *
    * @param aFilter
    *        Function to use. May be <code>null</code>.
    * @return this

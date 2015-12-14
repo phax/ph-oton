@@ -43,8 +43,8 @@ public enum ETinyMCE4ExternalPlugin
   @Nonnull
   public TinyMCE4ExternalPlugin getAsExternalPlugin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return new TinyMCE4ExternalPlugin (m_sValue, LinkHelper.getStreamURL (aRequestScope, "/tinymce-plugins/" +
-                                                                                        m_sValue +
-                                                                                        "/plugin.js"));
+    return new TinyMCE4ExternalPlugin (m_sValue,
+                                       LinkHelper.getStreamURL (aRequestScope,
+                                                                "/tinymce-plugins/" + m_sValue + "/plugin.js"));
   }
 }

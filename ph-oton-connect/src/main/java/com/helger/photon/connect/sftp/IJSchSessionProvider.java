@@ -23,7 +23,7 @@ import com.jcraft.jsch.Session;
 
 /**
  * Provider interface for JSch {@link Session} objects.
- * 
+ *
  * @author Philip Helger
  */
 public interface IJSchSessionProvider

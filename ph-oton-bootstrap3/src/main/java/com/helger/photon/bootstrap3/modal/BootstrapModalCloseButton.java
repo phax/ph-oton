@@ -25,7 +25,7 @@ import com.helger.photon.bootstrap3.button.EBootstrapButtonType;
 /**
  * A special button that closes the current modal. This button may only be used
  * within a modal dialog!
- * 
+ *
  * @author Philip Helger
  */
 public class BootstrapModalCloseButton extends BootstrapButton

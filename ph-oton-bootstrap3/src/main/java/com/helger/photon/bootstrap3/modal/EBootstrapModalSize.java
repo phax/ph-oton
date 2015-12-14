@@ -23,7 +23,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Modal dialog size
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapModalSize implements ICSSClassProvider

@@ -25,7 +25,7 @@ import com.helger.commons.string.StringHelper;
 /**
  * Abstract implementation of {@link IFeedElement} with a common language
  * handling.
- * 
+ *
  * @author Philip Helger
  */
 public abstract class AbstractFeedElement implements IFeedElement

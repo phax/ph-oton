@@ -105,7 +105,8 @@ public abstract class AbstractBaseObject implements IObject
     return m_sLastModificationUserID;
   }
 
-  public final void setLastModification (@Nonnull final LocalDateTime aLastModificationDT, @Nonnull @Nonempty final String sLastModificationUserID)
+  public final void setLastModification (@Nonnull final LocalDateTime aLastModificationDT,
+                                         @Nonnull @Nonempty final String sLastModificationUserID)
   {
     ValueEnforcer.notNull (aLastModificationDT, "LastModificationDT");
     ValueEnforcer.notEmpty (sLastModificationUserID, "LastModificationUserID");
@@ -130,7 +131,8 @@ public abstract class AbstractBaseObject implements IObject
   }
 
   @Nonnull
-  public final EChange setDeletion (@Nonnull final LocalDateTime aDeletionDT, @Nonnull @Nonempty final String sDeletionUserID)
+  public final EChange setDeletion (@Nonnull final LocalDateTime aDeletionDT,
+                                    @Nonnull @Nonempty final String sDeletionUserID)
   {
     ValueEnforcer.notNull (aDeletionDT, "DeletionDT");
     ValueEnforcer.notEmpty (sDeletionUserID, "DeletionUserID");
@@ -147,7 +149,8 @@ public abstract class AbstractBaseObject implements IObject
   }
 
   @Nonnull
-  public final EChange setUndeletion (@Nonnull final LocalDateTime aUndeletionDT, @Nonnull @Nonempty final String sUndeletionUserID)
+  public final EChange setUndeletion (@Nonnull final LocalDateTime aUndeletionDT,
+                                      @Nonnull @Nonempty final String sUndeletionUserID)
   {
     ValueEnforcer.notNull (aUndeletionDT, "UndeletionDT");
     ValueEnforcer.notEmpty (sUndeletionUserID, "UndeletionUserID");

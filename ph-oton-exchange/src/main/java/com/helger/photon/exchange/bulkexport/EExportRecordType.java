@@ -25,7 +25,7 @@ import com.helger.commons.lang.EnumHelper;
 
 /**
  * Defines the possible export record types.
- * 
+ *
  * @author Philip Helger
  */
 public enum EExportRecordType implements IHasID <String>

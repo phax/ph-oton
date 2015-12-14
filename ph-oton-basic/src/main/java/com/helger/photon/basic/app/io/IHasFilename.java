@@ -22,7 +22,7 @@ import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 
 /**
  * Interface for objects providing a filename
- * 
+ *
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode

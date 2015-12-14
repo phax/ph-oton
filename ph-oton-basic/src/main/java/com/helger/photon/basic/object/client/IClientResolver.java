@@ -20,14 +20,14 @@ import javax.annotation.Nullable;
 
 /**
  * Resolver for {@link IClient} objects.
- * 
+ *
  * @author Philip Helger
  */
 public interface IClientResolver
 {
   /**
    * Get the client of the specified ID.
-   * 
+   *
    * @param sID
    *        The ID to be resolved. May be <code>null</code>.
    * @return <code>null</code> if no such client exists.

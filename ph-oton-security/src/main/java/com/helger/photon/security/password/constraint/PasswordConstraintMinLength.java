@@ -30,7 +30,7 @@ import com.helger.commons.string.ToStringGenerator;
 
 /**
  * Password constraint defining the minimum length (incl.)
- * 
+ *
  * @author Philip Helger
  */
 public class PasswordConstraintMinLength implements IPasswordConstraint
@@ -41,7 +41,7 @@ public class PasswordConstraintMinLength implements IPasswordConstraint
 
   /**
    * Ctor
-   * 
+   *
    * @param nMinLength
    *        The minimum length to use. Must be &gt; 0. If 0 should be allowed,
    *        simply don't use the constraint!

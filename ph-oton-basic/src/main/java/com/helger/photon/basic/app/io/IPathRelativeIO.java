@@ -31,7 +31,7 @@ import com.helger.commons.io.resource.FileSystemResource;
 /**
  * A read-only version of a path-relative IO component. For a version with
  * explicitly modifying methods see {@link IMutablePathRelativeIO}.
- * 
+ *
  * @author Philip Helger
  */
 public interface IPathRelativeIO extends Serializable

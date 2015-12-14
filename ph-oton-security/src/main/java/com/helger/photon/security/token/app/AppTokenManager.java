@@ -121,7 +121,12 @@ public final class AppTokenManager extends AbstractSimpleDAO
                                   @Nullable final String sOwnerContact,
                                   @Nullable final String sOwnerContactEmail)
   {
-    final AppToken aAppToken = new AppToken (sTokenString, aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+    final AppToken aAppToken = new AppToken (sTokenString,
+                                             aCustomAttrs,
+                                             sOwnerName,
+                                             sOwnerURL,
+                                             sOwnerContact,
+                                             sOwnerContactEmail);
 
     m_aRWLock.writeLock ().lock ();
     try
@@ -192,7 +197,13 @@ public final class AppTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (AppToken.OT, sAppTokenID, aCustomAttrs, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+    AuditHelper.onAuditModifySuccess (AppToken.OT,
+                                      sAppTokenID,
+                                      aCustomAttrs,
+                                      sOwnerName,
+                                      sOwnerURL,
+                                      sOwnerContact,
+                                      sOwnerContactEmail);
 
     // Execute callback as the very last action
     for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
@@ -291,7 +302,11 @@ public final class AppTokenManager extends AbstractSimpleDAO
       }
       catch (final Throwable t)
       {
-        s_aLogger.error ("Failed to invoke onAppTokenCreateAccessToken callback on " + aAppToken.toString () + " and " + aAccessToken.toString (), t);
+        s_aLogger.error ("Failed to invoke onAppTokenCreateAccessToken callback on " +
+                         aAppToken.toString () +
+                         " and " +
+                         aAccessToken.toString (),
+                         t);
       }
 
     return EChange.CHANGED;
@@ -325,7 +340,12 @@ public final class AppTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (AppToken.OT, "revoke-access-token", aAppToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason);
+    AuditHelper.onAuditModifySuccess (AppToken.OT,
+                                      "revoke-access-token",
+                                      aAppToken.getID (),
+                                      sRevocationUserID,
+                                      aRevocationDT,
+                                      sRevocationReason);
 
     // Execute callback as the very last action
     for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())

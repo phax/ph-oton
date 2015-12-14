@@ -40,7 +40,8 @@ import com.helger.html.hc.html.IHCElement;
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstrapObject <THISTYPE>> implements IHCHasID <THISTYPE>
+public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstrapObject <THISTYPE>>
+                                              implements IHCHasID <THISTYPE>
 {
   private String m_sID;
   private HCHasCSSClasses m_aCSSClasses;

@@ -53,8 +53,8 @@ public final class GoMappingManagerTest
     assertNull (aMgr.getItemOfKey ("external4"));
     assertEquals ("/MockContext/app?p=internal1", aMgr.getItemOfKey ("internal1").getTargetURLAsString ());
     assertEquals ("/MockContext/app?p=internal2", aMgr.getItemOfKey ("internal2").getTargetURLAsString ());
-    assertEquals ("https://joinup.ec.europa.eu/software/cipaedelivery/description", aMgr.getItemOfKey ("external1")
-                                                                                        .getTargetURLAsString ());
+    assertEquals ("https://joinup.ec.europa.eu/software/cipaedelivery/description",
+                  aMgr.getItemOfKey ("external1").getTargetURLAsString ());
     assertEquals ("https://www.google.at", aMgr.getItemOfKey ("external2").getTargetURLAsString ());
     assertEquals ("http://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32010L0045",
                   aMgr.getItemOfKey ("external3").getTargetURLAsString ());

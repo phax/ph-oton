@@ -51,12 +51,16 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
   private final Set <String> m_aUserIDs = new HashSet <> ();
   private final Set <String> m_aRoleIDs = new HashSet <> ();
 
-  public UserGroup (@Nonnull @Nonempty final String sName, @Nullable final String sDescription, @Nullable final Map <String, String> aCustomAttrs)
+  public UserGroup (@Nonnull @Nonempty final String sName,
+                    @Nullable final String sDescription,
+                    @Nullable final Map <String, String> aCustomAttrs)
   {
     this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs), sName, sDescription);
   }
 
-  UserGroup (@Nonnull final StubObjectWithCustomAttrs aStubObject, @Nonnull @Nonempty final String sName, @Nullable final String sDescription)
+  UserGroup (@Nonnull final StubObjectWithCustomAttrs aStubObject,
+             @Nonnull @Nonempty final String sName,
+             @Nullable final String sDescription)
   {
     super (aStubObject);
     setName (sName);

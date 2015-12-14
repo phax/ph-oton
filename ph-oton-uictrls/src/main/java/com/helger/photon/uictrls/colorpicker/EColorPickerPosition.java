@@ -28,10 +28,10 @@ import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
  */
 public enum EColorPickerPosition implements IHCHasHTMLAttributeValue
 {
-  LEFT ("left"),
-  RIGHT ("right"),
-  TOP ("top"),
-  BOTTOM ("bottom");
+ LEFT ("left"),
+ RIGHT ("right"),
+ TOP ("top"),
+ BOTTOM ("bottom");
 
   private final String m_sAttrValue;
 

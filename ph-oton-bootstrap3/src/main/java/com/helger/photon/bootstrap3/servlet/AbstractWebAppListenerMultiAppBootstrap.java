@@ -29,7 +29,8 @@ import com.helger.photon.core.servlet.AbstractWebAppListenerMultiApp;
  * @param <LECTYPE>
  *        Layout execution context class
  */
-public abstract class AbstractWebAppListenerMultiAppBootstrap <LECTYPE extends ILayoutExecutionContext> extends AbstractWebAppListenerMultiApp <LECTYPE>
+public abstract class AbstractWebAppListenerMultiAppBootstrap <LECTYPE extends ILayoutExecutionContext>
+                                                              extends AbstractWebAppListenerMultiApp <LECTYPE>
 {
   @Override
   @OverridingMethodsMustInvokeSuper

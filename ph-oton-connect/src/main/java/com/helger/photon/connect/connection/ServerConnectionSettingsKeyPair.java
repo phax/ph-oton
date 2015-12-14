@@ -33,7 +33,8 @@ import com.helger.commons.string.ToStringGenerator;
  * @author philip
  */
 @Immutable
-public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSettings implements IServerConnectionSettingsKeyPair
+public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSettings
+                                             implements IServerConnectionSettingsKeyPair
 {
   private final byte [] m_aPrivateKeyBytes;
   private final byte [] m_aPublicKeyBytes;

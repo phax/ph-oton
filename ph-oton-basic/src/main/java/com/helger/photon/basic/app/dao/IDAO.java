@@ -37,8 +37,8 @@ public interface IDAO extends IChangeable, IAutoSaveAware
 {
   public enum EMode
   {
-   READ,
-   WRITE;
+    READ,
+    WRITE;
   }
 
   /**

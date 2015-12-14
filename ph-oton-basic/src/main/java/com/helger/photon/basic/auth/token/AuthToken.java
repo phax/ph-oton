@@ -117,7 +117,8 @@ public final class AuthToken implements IAuthToken
     if (!m_bExpired && isExpirationPossible ())
     {
       // Only if expiration is defined
-      if (Seconds.secondsBetween (m_aLastAccessDT, PDTFactory.getCurrentLocalDateTime ()).getSeconds () > m_nExpirationSeconds)
+      if (Seconds.secondsBetween (m_aLastAccessDT, PDTFactory.getCurrentLocalDateTime ())
+                 .getSeconds () > m_nExpirationSeconds)
         m_bExpired = true;
     }
     return m_bExpired;
@@ -159,7 +160,13 @@ public final class AuthToken implements IAuthToken
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sID).append (m_aIdentification).append (m_aCreationDT).append (m_aLastAccessDT).append (m_bExpired).append (m_nExpirationSeconds).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sID)
+                                       .append (m_aIdentification)
+                                       .append (m_aCreationDT)
+                                       .append (m_aLastAccessDT)
+                                       .append (m_bExpired)
+                                       .append (m_nExpirationSeconds)
+                                       .getHashCode ();
   }
 
   @Override

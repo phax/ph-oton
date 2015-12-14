@@ -24,7 +24,7 @@ import com.helger.commons.annotation.Nonempty;
 
 /**
  * Defines the possible tokens for the dtp format.
- * 
+ *
  * @author Philip Helger
  * @see SimpleDateFormat
  */

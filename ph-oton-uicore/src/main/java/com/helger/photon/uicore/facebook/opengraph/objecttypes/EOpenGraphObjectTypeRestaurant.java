@@ -25,17 +25,17 @@ import com.helger.commons.lang.EnumHelper;
 
 /**
  * The various open graph object types taken from <a href=
- * "https://developers.facebook.com/docs/reference/opengraph/object-type"
- * >developers.facebook.com</a>
- * 
+ * "https://developers.facebook.com/docs/reference/opengraph/object-type" >
+ * developers.facebook.com</a>
+ *
  * @author Boris Gregorcic
  */
 public enum EOpenGraphObjectTypeRestaurant implements IHasID <String>
 {
-  RESTAURANT ("restaurant.restaurant"),
-  MENU_ITEM ("restaurant.menu_item"),
-  MENU_SECTION ("restaurant.menu_section"),
-  MENU ("restaurant.menu");
+ RESTAURANT ("restaurant.restaurant"),
+ MENU_ITEM ("restaurant.menu_item"),
+ MENU_SECTION ("restaurant.menu_section"),
+ MENU ("restaurant.menu");
 
   private final String m_sID;
 

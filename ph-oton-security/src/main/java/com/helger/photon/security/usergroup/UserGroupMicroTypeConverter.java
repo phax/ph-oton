@@ -34,7 +34,9 @@ public final class UserGroupMicroTypeConverter extends AbstractObjectMicroTypeCo
   private static final String ELEMENT_ROLE = "role";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject, @Nullable final String sNamespaceURI, @Nonnull final String sTagName)
+  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+                                              @Nullable final String sNamespaceURI,
+                                              @Nonnull final String sTagName)
   {
     final IUserGroup aUserGroup = (IUserGroup) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);

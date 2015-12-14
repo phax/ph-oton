@@ -17,13 +17,10 @@
 package com.helger.photon.security.config;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.commons.microdom.convert.IMicroTypeConverterRegistry;
-import com.helger.photon.basic.object.client.IClient;
-import com.helger.photon.basic.object.client.IClientResolver;
 import com.helger.photon.security.object.accarea.AccountingArea;
 import com.helger.photon.security.object.accarea.AccountingAreaMicroTypeConverter;
 import com.helger.photon.security.object.client.Client;
@@ -41,14 +38,9 @@ public final class MicroTypeConverterRegistrar_ph_oton_security_Mock implements 
     try
     {
       aRegistry.registerMicroElementTypeConverter (AccountingArea.class,
-                                                   new AccountingAreaMicroTypeConverter (new IClientResolver ()
-                                                   {
-                                                     @Nullable
-                                                     public IClient getClientOfID (@Nullable final String sID)
-                                                     {
-                                                       return new Client (sID, "Dummy-" + sID);
-                                                     }
-                                                   }));
+                                                   new AccountingAreaMicroTypeConverter (sID -> new Client (sID,
+                                                                                                            "Dummy-" +
+                                                                                                                 sID)));
     }
     catch (final IllegalArgumentException ex)
     {

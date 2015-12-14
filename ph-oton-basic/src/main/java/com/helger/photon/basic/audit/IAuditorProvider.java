@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 
 /**
  * Main interface for an provider for auditor.
- * 
+ *
  * @author Philip Helger
  */
 public interface IAuditorProvider

@@ -23,13 +23,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.helger.commons.mock.CommonsTestHelper;
-import com.helger.photon.security.password.constraint.PasswordConstraintList;
-import com.helger.photon.security.password.constraint.PasswordConstraintMaxLength;
-import com.helger.photon.security.password.constraint.PasswordConstraintMinLength;
-import com.helger.photon.security.password.constraint.PasswordConstraintMustContainDigit;
-import com.helger.photon.security.password.constraint.PasswordConstraintMustContainLetter;
-import com.helger.photon.security.password.constraint.PasswordConstraintMustContainLetterLowerCase;
-import com.helger.photon.security.password.constraint.PasswordConstraintMustContainLetterUpperCase;
 
 /**
  * Test class for class {@link PasswordConstraintList}.

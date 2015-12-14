@@ -56,7 +56,8 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
   }
 
   @Nonnull
-  public IAuthToken createToken (@Nonnull final IAuthIdentification aIdentification, @Nonnegative final int nExpirationSeconds)
+  public IAuthToken createToken (@Nonnull final IAuthIdentification aIdentification,
+                                 @Nonnegative final int nExpirationSeconds)
   {
     final AuthToken aToken = new AuthToken (aIdentification, nExpirationSeconds);
     final String sTokenID = aToken.getID ();

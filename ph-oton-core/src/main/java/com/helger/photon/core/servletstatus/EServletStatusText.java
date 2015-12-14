@@ -35,9 +35,9 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum EServletStatusText implements IHasDisplayText
 {
- CONSTRUCTED ("Instanziert", "Constructed"),
- INITED ("Initialisiert", "Initialized"),
- DESTROYED ("Zerstört", "Destroyed");
+  CONSTRUCTED ("Instanziert", "Constructed"),
+  INITED ("Initialisiert", "Initialized"),
+  DESTROYED ("Zerstört", "Destroyed");
 
   private final IMultilingualText m_aTP;
 

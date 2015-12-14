@@ -35,8 +35,8 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum EBootstrapText implements IHasDisplayText
 {
- TOOGLE_NAVIGATION ("Navigation ein/ausblenden", "Toggle navigation"),
- ENTER_SEARCH_STRING ("Geben Sie einen Suchtext ein", "Enter a search phrase");
+  TOOGLE_NAVIGATION ("Navigation ein/ausblenden", "Toggle navigation"),
+  ENTER_SEARCH_STRING ("Geben Sie einen Suchtext ein", "Enter a search phrase");
 
   private final IMultilingualText m_aTP;
 

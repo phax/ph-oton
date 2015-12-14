@@ -285,7 +285,9 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
                                                @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create user group
-    final UserGroup aUserGroup = new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
+    final UserGroup aUserGroup = new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs),
+                                                sName,
+                                                sDescription);
 
     m_aRWLock.writeLock ().lock ();
     try
@@ -298,7 +300,12 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditCreateSuccess (UserGroup.OT, aUserGroup.getID (), "predefined-usergroup", sName, sDescription, aCustomAttrs);
+    AuditHelper.onAuditCreateSuccess (UserGroup.OT,
+                                      aUserGroup.getID (),
+                                      "predefined-usergroup",
+                                      sName,
+                                      sDescription,
+                                      aCustomAttrs);
 
     // Execute callback as the very last action
     for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
@@ -552,7 +559,12 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (UserGroup.OT, "all", aUserGroup.getID (), sNewName, sNewDescription, aNewCustomAttrs);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT,
+                                      "all",
+                                      aUserGroup.getID (),
+                                      sNewName,
+                                      sNewDescription,
+                                      aNewCustomAttrs);
 
     // Execute callback as the very last action
     for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())

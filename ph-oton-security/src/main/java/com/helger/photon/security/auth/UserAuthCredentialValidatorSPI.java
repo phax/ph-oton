@@ -45,10 +45,12 @@ public final class UserAuthCredentialValidatorSPI implements IAuthCredentialVali
   }
 
   @Nonnull
-  public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale, @Nonnull final IAuthCredentials aCredentials)
+  public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale,
+                                                         @Nonnull final IAuthCredentials aCredentials)
   {
     final IUserNamePasswordCredentials aUPC = (IUserNamePasswordCredentials) aCredentials;
-    final ELoginResult eLoginResult = LoggedInUserManager.getInstance ().loginUser (aUPC.getUserName (), aUPC.getPassword ());
+    final ELoginResult eLoginResult = LoggedInUserManager.getInstance ().loginUser (aUPC.getUserName (),
+                                                                                    aUPC.getPassword ());
     if (eLoginResult.isSuccess ())
       return CredentialValidationResult.SUCCESS;
 

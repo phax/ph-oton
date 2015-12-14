@@ -31,7 +31,7 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
 {
   /**
    * Receive data from somewhere.
-   * 
+   *
    * @param sID
    *        ID of the data to be retrieved. E.g. a file name. May not be
    *        <code>null</code>.
@@ -44,7 +44,7 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
 
   /**
    * Write data to somewhere.
-   * 
+   *
    * @param sID
    *        The ID of the artifact to write to. This may e.g. be a file name.
    *        May not be <code>null</code>.
@@ -57,7 +57,7 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
 
   /**
    * Change the working directory to the specified directory.
-   * 
+   *
    * @param sDirectory
    *        The directory to use.
    * @return {@link ESuccess}
@@ -67,7 +67,7 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
 
   /**
    * Go one directory level up
-   * 
+   *
    * @return {@link ESuccess}.
    * @see #changeWorkingDirectory(String)
    */
@@ -76,7 +76,7 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
 
   /**
    * Delete a file in the current directory
-   * 
+   *
    * @param sFilename
    *        The filename to be deleted.
    * @return {@link ESuccess}.
@@ -86,7 +86,7 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
 
   /**
    * List all files in the current directory
-   * 
+   *
    * @param aFilter
    *        The filter to be used. Maybe <code>null</code>.
    * @param aTargetList

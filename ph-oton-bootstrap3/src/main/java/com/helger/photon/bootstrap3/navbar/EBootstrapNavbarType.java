@@ -23,7 +23,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Type of navbar position
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapNavbarType implements ICSSClassProvider

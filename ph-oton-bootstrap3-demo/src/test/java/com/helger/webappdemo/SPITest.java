@@ -23,7 +23,7 @@ import com.helger.photon.core.mock.PhotonCoreValidator;
 
 /**
  * Test SPI definitions and web.xml
- * 
+ *
  * @author Philip Helger
  */
 public final class SPITest

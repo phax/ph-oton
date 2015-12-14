@@ -72,7 +72,7 @@ public interface IAjaxInvoker
 
   /**
    * Get the registered AJAX function with the specified name
-   * 
+   *
    * @param sFunctionName
    *        The AJAX function name to search. May be <code>null</code>.
    * @return <code>null</code> if no such AJAX function is registered.

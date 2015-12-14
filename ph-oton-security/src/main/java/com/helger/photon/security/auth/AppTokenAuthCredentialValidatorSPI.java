@@ -46,7 +46,8 @@ public final class AppTokenAuthCredentialValidatorSPI implements IAuthCredential
   }
 
   @Nonnull
-  public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale, @Nonnull final IAuthCredentials aCredentials)
+  public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale,
+                                                         @Nonnull final IAuthCredentials aCredentials)
   {
     final ITokenCredentials aATC = (ITokenCredentials) aCredentials;
     final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();

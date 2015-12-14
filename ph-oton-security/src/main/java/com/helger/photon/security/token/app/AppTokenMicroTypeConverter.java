@@ -52,7 +52,9 @@ public final class AppTokenMicroTypeConverter extends AbstractObjectMicroTypeCon
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aValue, aElement);
     for (final IAccessToken aAccessToken : aValue.getAllAccessTokens ())
-      aElement.appendChild (MicroTypeConverter.convertToMicroElement (aAccessToken, sNamespaceURI, ELEMENT_ACCESS_TOKEN));
+      aElement.appendChild (MicroTypeConverter.convertToMicroElement (aAccessToken,
+                                                                      sNamespaceURI,
+                                                                      ELEMENT_ACCESS_TOKEN));
     aElement.setAttribute (ATTR_OWNER_NAME, aValue.getOwnerName ());
     aElement.setAttribute (ATTR_OWNER_URL, aValue.getOwnerURL ());
     aElement.setAttribute (ATTR_OWNER_CONTACT, aValue.getOwnerContact ());
@@ -71,6 +73,11 @@ public final class AppTokenMicroTypeConverter extends AbstractObjectMicroTypeCon
     final String sOwnerContact = aElement.getAttributeValue (ATTR_OWNER_CONTACT);
     final String sOwnerContactEmail = aElement.getAttributeValue (ATTR_OWNER_CONTACT_EMAIL);
 
-    return new AppToken (getStubObjectWithCustomAttrs (aElement), aAccessTokens, sOwnerName, sOwnerURL, sOwnerContact, sOwnerContactEmail);
+    return new AppToken (getStubObjectWithCustomAttrs (aElement),
+                         aAccessTokens,
+                         sOwnerName,
+                         sOwnerURL,
+                         sOwnerContact,
+                         sOwnerContactEmail);
   }
 }

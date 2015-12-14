@@ -40,7 +40,8 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
  *        Layout execution context type
  */
 @ThreadSafe
-public final class ApplicationLayoutManager <LECTYPE extends ILayoutExecutionContext> extends AbstractApplicationSingleton implements ILayoutManager <LECTYPE>
+public final class ApplicationLayoutManager <LECTYPE extends ILayoutExecutionContext>
+                                            extends AbstractApplicationSingleton implements ILayoutManager <LECTYPE>
 {
   private final LayoutManagerProxy <LECTYPE> m_aProxy = new LayoutManagerProxy <LECTYPE> ();
 

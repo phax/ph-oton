@@ -24,7 +24,8 @@ public class MainCreateButtonInDifferentColor
                                             @Nonnull final String sLightColor,
                                             @Nonnull final String sDarkColor)
   {
-    return "/* default */\n" + ".btn-" +
+    return "/* default */\n" +
+           ".btn-" +
            sClassName +
            " {\n" +
            "  color: #fff;\n" +

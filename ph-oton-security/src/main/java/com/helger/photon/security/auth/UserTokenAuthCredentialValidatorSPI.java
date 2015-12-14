@@ -46,7 +46,8 @@ public final class UserTokenAuthCredentialValidatorSPI implements IAuthCredentia
   }
 
   @Nonnull
-  public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale, @Nonnull final IAuthCredentials aCredentials)
+  public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale,
+                                                         @Nonnull final IAuthCredentials aCredentials)
   {
     final ITokenCredentials aATC = (ITokenCredentials) aCredentials;
     final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();

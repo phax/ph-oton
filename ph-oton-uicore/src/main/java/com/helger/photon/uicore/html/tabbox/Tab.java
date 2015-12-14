@@ -32,7 +32,7 @@ import com.helger.html.hc.IHCNode;
 
 /**
  * Represents a single tab within a tab box
- * 
+ *
  * @author Philip Helger
  */
 public class Tab implements IHasID <String>, Serializable

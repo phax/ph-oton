@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Locked enumeration
- * 
+ *
  * @author Philip Helger
  */
 public enum ELocked implements ILockedIndicator

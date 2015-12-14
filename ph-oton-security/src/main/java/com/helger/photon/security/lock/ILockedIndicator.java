@@ -18,7 +18,7 @@ package com.helger.photon.security.lock;
 
 /**
  * Very simple interface for an object that has locked/not locked indication.
- * 
+ *
  * @author Philip Helger
  */
 public interface ILockedIndicator

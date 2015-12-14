@@ -25,15 +25,15 @@ import com.helger.commons.lang.EnumHelper;
 
 /**
  * The various open graph object types taken from <a href=
- * "https://developers.facebook.com/docs/reference/opengraph/object-type"
- * >developers.facebook.com</a>
- * 
+ * "https://developers.facebook.com/docs/reference/opengraph/object-type" >
+ * developers.facebook.com</a>
+ *
  * @author Boris Gregorcic
  */
 public enum EOpenGraphObjectTypeFitness implements IHasID <String>
 {
-  UNIT ("fitness.unit"),
-  COURSE ("fitness.course");
+ UNIT ("fitness.unit"),
+ COURSE ("fitness.course");
 
   private final String m_sID;
 

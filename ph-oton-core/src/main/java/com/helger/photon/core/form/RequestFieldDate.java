@@ -53,7 +53,7 @@ public class RequestFieldDate extends RequestField
 
   /**
    * Constructor without a default value
-   * 
+   *
    * @param sFieldName
    *        Field name
    * @param aDisplayLocale

@@ -30,7 +30,7 @@ import com.helger.html.hc.impl.AbstractHCNode;
 
 /**
  * Abstract base class for FB nodes
- * 
+ *
  * @author Philip Helger
  */
 public abstract class AbstractFBNode extends AbstractHCNode
@@ -57,7 +57,7 @@ public abstract class AbstractFBNode extends AbstractHCNode
 
   /**
    * Apply custom properties to the passed {@link IMicroElement}
-   * 
+   *
    * @param aElement
    *        Micro element. Never <code>null</code>.
    * @param aConversionSettings
@@ -72,7 +72,7 @@ public abstract class AbstractFBNode extends AbstractHCNode
    * This method is called after the element itself was created and filled.
    * Overwrite this method to perform actions that can only be done after the
    * element was build finally.
-   * 
+   *
    * @param eElement
    *        The created micro element
    * @param aConversionSettings

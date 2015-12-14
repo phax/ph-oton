@@ -157,8 +157,9 @@ public final class ExporterCSV implements IExporterFile
           s_aLogger.error ("Failed to write BOM on stream", ex);
         }
 
-      try (final CSVWriter aWriter = new CSVWriter (new OutputStreamWriter (aOS,
-                                                                            m_aCharset)).setSeparatorChar (m_cSeparator))
+      try (
+          final CSVWriter aWriter = new CSVWriter (new OutputStreamWriter (aOS,
+                                                                           m_aCharset)).setSeparatorChar (m_cSeparator))
       {
         aWriter.writeAll (aRecords);
         return ESuccess.SUCCESS;

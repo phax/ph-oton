@@ -23,7 +23,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Bootstrap3 form type
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapFormType implements ICSSClassProvider

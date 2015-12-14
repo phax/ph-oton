@@ -30,7 +30,7 @@ import com.helger.photon.basic.mock.PhotonBasicTestRule;
 
 /**
  * Test class for class {@link WebIOIntIDFactory}.
- * 
+ *
  * @author Philip Helger
  */
 public final class WebIOIntIDFactoryTest

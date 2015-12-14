@@ -20,7 +20,7 @@ import javax.annotation.concurrent.Immutable;
 
 /**
  * Contains some predefined layout area IDs
- * 
+ *
  * @author Philip Helger
  */
 @Immutable

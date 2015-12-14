@@ -224,9 +224,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 
     final IHCControl <?> aFirstControl = CollectionHelper.getFirstElement (aAllCtrls);
     HCDiv aFinalNode;
-    final boolean bFirstControlIsCheckBox = m_bForceNoCheckBoxHandling ? false
-                                                                       : aAllCtrls.size () == 1 &&
-                                                                         aFirstControl instanceof HCCheckBox;
+    final boolean bFirstControlIsCheckBox = m_bForceNoCheckBoxHandling ? false : aAllCtrls.size () == 1 &&
+                                                                                 aFirstControl instanceof HCCheckBox;
     final boolean bFirstControlIsRadioButton = m_bForceNoCheckBoxHandling ? false
                                                                           : aAllCtrls.size () == 1 &&
                                                                             aFirstControl instanceof HCRadioButton;

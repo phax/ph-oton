@@ -163,39 +163,35 @@ public final class WALListener extends AbstractGlobalSingleton
         s_aLogger.debug ("Now scheduling writing for DAO " + sKey);
 
       // What should be executed upon writing
-      final Runnable r = new Runnable ()
-      {
-        public void run ()
+      final Runnable r = () -> {
+        // Use DAO lock!
+        aDAO.m_aRWLock.writeLock ().lock ();
+        try
         {
-          // Use DAO lock!
-          aDAO.m_aRWLock.writeLock ().lock ();
-          try
-          {
-            // Main DAO writing
-            aDAO._writeToFileAndResetPendingChanges ("ScheduledWriter.run");
-            // Delete the WAL file
-            aDAO._deleteWALFile (sWALFilename);
-            s_aLogger.info ("Finished scheduled writing for DAO " + sKey);
-          }
-          finally
-          {
-            aDAO.m_aRWLock.writeLock ().unlock ();
-          }
+          // Main DAO writing
+          aDAO._writeToFileAndResetPendingChanges ("ScheduledWriter.run");
+          // Delete the WAL file
+          aDAO._deleteWALFile (sWALFilename);
+          s_aLogger.info ("Finished scheduled writing for DAO " + sKey);
+        }
+        finally
+        {
+          aDAO.m_aRWLock.writeLock ().unlock ();
+        }
 
-          // Remove from the internal set so that another job will be
-          // scheduled for the same DAO
-          // Do this after the writing to the file
-          m_aRWLock.writeLock ().lock ();
-          try
-          {
-            // Remove from the overall set as well as from the scheduled items
-            m_aWaitingDAOs.remove (sKey);
-            m_aScheduledItems.remove (sKey);
-          }
-          finally
-          {
-            m_aRWLock.writeLock ().unlock ();
-          }
+        // Remove from the internal set so that another job will be
+        // scheduled for the same DAO
+        // Do this after the writing to the file
+        m_aRWLock.writeLock ().lock ();
+        try
+        {
+          // Remove from the overall set as well as from the scheduled items
+          m_aWaitingDAOs.remove (sKey);
+          m_aScheduledItems.remove (sKey);
+        }
+        finally
+        {
+          m_aRWLock.writeLock ().unlock ();
         }
       };
 

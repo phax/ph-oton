@@ -28,7 +28,7 @@ import com.helger.commons.xml.schema.XMLSchemaCache;
 
 /**
  * Test class for class {@link CWebSpecs}.
- * 
+ *
  * @author Philip Helger
  */
 public final class CWebSpecsTest

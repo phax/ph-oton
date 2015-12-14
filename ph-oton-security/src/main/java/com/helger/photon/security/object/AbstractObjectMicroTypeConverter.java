@@ -59,10 +59,12 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
     aElement.setAttribute (ATTR_DELETIONUSERID, aValue.getDeletionUserID ());
   }
 
-  public static final void setObjectFields (@Nonnull final IObjectWithCustomAttrs aValue, @Nonnull final IMicroElement aElement)
+  public static final void setObjectFields (@Nonnull final IObjectWithCustomAttrs aValue,
+                                            @Nonnull final IMicroElement aElement)
   {
     setObjectFields ((IObject) aValue, aElement);
-    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aValue.getAllAttributes ()).entrySet ())
+    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aValue.getAllAttributes ())
+                                                                   .entrySet ())
     {
       final IMicroElement eCustom = aElement.appendElement (ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
@@ -84,7 +86,9 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
    */
   @Nullable
   @ContainsSoftMigration
-  public static LocalDateTime readAsLocalDateTime (@Nonnull final IMicroElement aElement, @Nonnull final String sLDTName, @Nonnull final String sDTName)
+  public static LocalDateTime readAsLocalDateTime (@Nonnull final IMicroElement aElement,
+                                                   @Nonnull final String sLDTName,
+                                                   @Nonnull final String sDTName)
   {
     LocalDateTime aLDT = aElement.getAttributeValueWithConversion (sLDTName, LocalDateTime.class);
     if (aLDT == null)
@@ -114,7 +118,13 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
     final LocalDateTime aDeletionLDT = readAsLocalDateTime (aElement, ATTR_DELETIONLDT, "deletiondt");
     final String sDeletionUserID = aElement.getAttributeValue (ATTR_DELETIONUSERID);
 
-    return new StubObject (sID, aCreationLDT, sCreationUserID, aLastModificationLDT, sLastModificationUserID, aDeletionLDT, sDeletionUserID);
+    return new StubObject (sID,
+                           aCreationLDT,
+                           sCreationUserID,
+                           aLastModificationLDT,
+                           sLastModificationUserID,
+                           aDeletionLDT,
+                           sDeletionUserID);
   }
 
   @Nonnull

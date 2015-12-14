@@ -27,7 +27,7 @@ import com.helger.html.hc.IHCNode;
 
 /**
  * A wrapper around the FamFam flags icon set
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -40,7 +40,7 @@ public final class FamFamFlags
 
   /**
    * Get the flag from the passed locale
-   * 
+   *
    * @param aFlagLocale
    *        The locale to resolve. May be <code>null</code>.
    * @return <code>null</code> if the passed locale is <code>null</code>, if the
@@ -61,7 +61,7 @@ public final class FamFamFlags
 
   /**
    * Get the flag icon from the passed locale or <code>null</code>.
-   * 
+   *
    * @param aFlagLocale
    *        The locale to resolve. May be <code>null</code>.
    * @return <code>null</code> if the passed locale is <code>null</code>, if the

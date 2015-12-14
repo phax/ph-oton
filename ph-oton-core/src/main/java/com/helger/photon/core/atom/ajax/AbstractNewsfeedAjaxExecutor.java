@@ -48,7 +48,8 @@ import com.helger.web.servlet.response.UnifiedResponse;
  *
  * @author Philip Helger
  */
-public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor implements IHasID <String>, IHasDisplayText
+public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor
+                                                   implements IHasID <String>, IHasDisplayText
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractNewsfeedAjaxExecutor.class);
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlExecute = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +

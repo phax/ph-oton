@@ -40,11 +40,11 @@ public class AuditingEmailDataTransportListener implements IEmailDataTransportLi
                                 @Nonnull final TransportEvent aEvent)
   {
     AuditHelper.onAuditExecuteSuccess ("email-message-delivered",
-                                      aEmailData.getSubject (),
-                                      aEvent.getValidSentAddresses (),
-                                      aEvent.getValidUnsentAddresses (),
-                                      aEvent.getInvalidAddresses (),
-                                      LoggingTransportListener.getMessageString (aEvent.getMessage ()));
+                                       aEmailData.getSubject (),
+                                       aEvent.getValidSentAddresses (),
+                                       aEvent.getValidUnsentAddresses (),
+                                       aEvent.getInvalidAddresses (),
+                                       LoggingTransportListener.getMessageString (aEvent.getMessage ()));
   }
 
   public void messageNotDelivered (@Nonnull final ISMTPSettings aSMTPSettings,
@@ -52,12 +52,12 @@ public class AuditingEmailDataTransportListener implements IEmailDataTransportLi
                                    @Nonnull final TransportEvent aEvent)
   {
     AuditHelper.onAuditExecuteFailure ("email-message-delivered",
-                                      "not-delivered",
-                                      aEmailData.getSubject (),
-                                      aEvent.getValidSentAddresses (),
-                                      aEvent.getValidUnsentAddresses (),
-                                      aEvent.getInvalidAddresses (),
-                                      LoggingTransportListener.getMessageString (aEvent.getMessage ()));
+                                       "not-delivered",
+                                       aEmailData.getSubject (),
+                                       aEvent.getValidSentAddresses (),
+                                       aEvent.getValidUnsentAddresses (),
+                                       aEvent.getInvalidAddresses (),
+                                       LoggingTransportListener.getMessageString (aEvent.getMessage ()));
   }
 
   public void messagePartiallyDelivered (@Nonnull final ISMTPSettings aSMTPSettings,
@@ -65,12 +65,12 @@ public class AuditingEmailDataTransportListener implements IEmailDataTransportLi
                                          @Nonnull final TransportEvent aEvent)
   {
     AuditHelper.onAuditExecuteFailure ("email-message-delivered",
-                                      "partially-delivered",
-                                      aEmailData.getSubject (),
-                                      aEvent.getValidSentAddresses (),
-                                      aEvent.getValidUnsentAddresses (),
-                                      aEvent.getInvalidAddresses (),
-                                      LoggingTransportListener.getMessageString (aEvent.getMessage ()));
+                                       "partially-delivered",
+                                       aEmailData.getSubject (),
+                                       aEvent.getValidSentAddresses (),
+                                       aEvent.getValidUnsentAddresses (),
+                                       aEvent.getInvalidAddresses (),
+                                       LoggingTransportListener.getMessageString (aEvent.getMessage ()));
   }
 
   @Override

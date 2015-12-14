@@ -43,7 +43,8 @@ public abstract class AbstractHasAccountingAreaObject extends AbstractHasClient 
     this (aAccountingArea.getClient (), aAccountingArea);
   }
 
-  public AbstractHasAccountingAreaObject (@Nonnull final IClient aClient, @Nonnull final IAccountingArea aAccountingArea)
+  public AbstractHasAccountingAreaObject (@Nonnull final IClient aClient,
+                                          @Nonnull final IAccountingArea aAccountingArea)
   {
     super (aClient);
     ValueEnforcer.notNull (aAccountingArea, "AccountingArea");

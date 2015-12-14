@@ -27,7 +27,9 @@ import com.helger.commons.tree.withid.DefaultTreeItemWithID;
  *
  * @author Philip Helger
  */
-public abstract class AbstractMenuItemDeterminatorCallback extends DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>implements IMenuItemDeterminatorCallback
+public abstract class AbstractMenuItemDeterminatorCallback extends
+                                                           DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
+                                                           implements IMenuItemDeterminatorCallback
 {
   private final IMenuTree m_aMenuTree;
 

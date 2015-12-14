@@ -443,7 +443,9 @@ public final class InternalErrorHandler
         nOccurranceCount = aMI.intValue ();
         if ((nOccurranceCount % 100) != 0)
         {
-          s_aLogger.warn ("Not sending internal error mail, because this error occurred " + nOccurranceCount + " times");
+          s_aLogger.warn ("Not sending internal error mail, because this error occurred " +
+                          nOccurranceCount +
+                          " times");
           return;
         }
       }
@@ -547,9 +549,12 @@ public final class InternalErrorHandler
     }
 
     // Start saving
-    final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getCurrentDateTimeForFilename (), "-", aMetadata.getErrorID ()) +
+    final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getCurrentDateTimeForFilename (),
+                                                                   "-",
+                                                                   aMetadata.getErrorID ()) +
                              ".xml";
-    SimpleFileIO.writeFile (WebFileIO.getDataIO ().getFile ("internal-errors/" + PDTFactory.getCurrentYear () + "/" + sFilename),
+    SimpleFileIO.writeFile (WebFileIO.getDataIO ()
+                                     .getFile ("internal-errors/" + PDTFactory.getCurrentYear () + "/" + sFilename),
                             MicroWriter.getXMLString (aDoc),
                             XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
   }
@@ -621,7 +626,8 @@ public final class InternalErrorHandler
         aMetadata.addField ("UAProfile", aProfile.toString ());
 
       // Add all request attributes
-      for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aRequestScope.getAllAttributes ()).entrySet ())
+      for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aRequestScope.getAllAttributes ())
+                                                                     .entrySet ())
         aMetadata.addField ("[Request] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
     }
     else
@@ -636,7 +642,8 @@ public final class InternalErrorHandler
         try
         {
           // Try to get from request scope (if one is provided)
-          aSessionScope = (ISessionWebScope) ScopeSessionManager.getInstance ().getSessionScopeOfID (aRequestScope.getSessionID ());
+          aSessionScope = (ISessionWebScope) ScopeSessionManager.getInstance ()
+                                                                .getSessionScopeOfID (aRequestScope.getSessionID ());
         }
         catch (final Throwable t2)
         {
@@ -657,7 +664,8 @@ public final class InternalErrorHandler
         aMetadata.addField ("SessionID", aSessionScope.getID ());
 
         // Add all session attributes
-        for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aSessionScope.getAllAttributes ()).entrySet ())
+        for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aSessionScope.getAllAttributes ())
+                                                                       .entrySet ())
           aMetadata.addField ("[Session] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
       }
     }
@@ -716,7 +724,8 @@ public final class InternalErrorHandler
         }
         try
         {
-          for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestParameterMap (aHttpRequest).entrySet ())
+          for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestParameterMap (aHttpRequest)
+                                                                      .entrySet ())
             aMetadata.addRequestParameter (aEntry.getKey (), aEntry.getValue ());
         }
         catch (final Throwable t2)
@@ -821,7 +830,11 @@ public final class InternalErrorHandler
     else
     {
       // GlobalDebug is disabled -> send mail with attachments
-      sendInternalErrorMailToVendor (t, aRequestScope, sErrorID, aCustomData, s_aEmailSettings.getClone ().setAttachmentList (aEmailAttachments));
+      sendInternalErrorMailToVendor (t,
+                                     aRequestScope,
+                                     sErrorID,
+                                     aCustomData,
+                                     s_aEmailSettings.getClone ().setAttachmentList (aEmailAttachments));
     }
 
     if (bInvokeCustomExceptionHandler)

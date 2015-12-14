@@ -23,14 +23,14 @@ import com.helger.commons.type.ObjectType;
 
 /**
  * Main interface for an auditing service.
- * 
+ *
  * @author Philip Helger
  */
 public interface IAuditor
 {
   /**
    * The creation of an object succeeded.
-   * 
+   *
    * @param aObjectType
    *        The object type
    * @param aArgs
@@ -40,7 +40,7 @@ public interface IAuditor
 
   /**
    * The creation of an object failed.
-   * 
+   *
    * @param aObjectType
    *        The object type
    * @param aArgs
@@ -50,7 +50,7 @@ public interface IAuditor
 
   /**
    * The modification of an object succeeded.
-   * 
+   *
    * @param aObjectType
    *        The object type
    * @param sWhat
@@ -62,7 +62,7 @@ public interface IAuditor
 
   /**
    * The modification of an object failed.
-   * 
+   *
    * @param aObjectType
    *        The object type
    * @param sWhat
@@ -74,7 +74,7 @@ public interface IAuditor
 
   /**
    * The deletion of an object succeeded.
-   * 
+   *
    * @param aObjectType
    *        The object type
    * @param aArgs
@@ -84,7 +84,7 @@ public interface IAuditor
 
   /**
    * The deletion of an object failed.
-   * 
+   *
    * @param aObjectType
    *        The object type
    * @param aArgs
@@ -94,7 +94,7 @@ public interface IAuditor
 
   /**
    * The undeletion of an object succeeded.
-   * 
+   *
    * @param aObjectType
    *        The object type
    * @param aArgs
@@ -104,7 +104,7 @@ public interface IAuditor
 
   /**
    * The undeletion of an object failed.
-   * 
+   *
    * @param aObjectType
    *        The object type
    * @param aArgs
@@ -114,7 +114,7 @@ public interface IAuditor
 
   /**
    * The execution of something succeeded.
-   * 
+   *
    * @param sWhat
    *        What has been executed?
    * @param aArgs
@@ -124,7 +124,7 @@ public interface IAuditor
 
   /**
    * The execution of something failed.
-   * 
+   *
    * @param sWhat
    *        What has been executed?
    * @param aArgs
@@ -134,7 +134,7 @@ public interface IAuditor
 
   /**
    * The execution of something on an object succeeded.
-   * 
+   *
    * @param aObjectType
    *        The object type
    * @param sWhat
@@ -146,7 +146,7 @@ public interface IAuditor
 
   /**
    * The execution of something on an object failed.
-   * 
+   *
    * @param aObjectType
    *        The object type
    * @param sWhat

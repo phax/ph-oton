@@ -27,7 +27,8 @@ import com.helger.commons.compare.AbstractPartComparatorComparable;
  *
  * @author Philip Helger
  */
-public class ComparatorSystemMigrationResultExecutionDate extends AbstractPartComparatorComparable <SystemMigrationResult, LocalDateTime>
+public class ComparatorSystemMigrationResultExecutionDate extends
+                                                          AbstractPartComparatorComparable <SystemMigrationResult, LocalDateTime>
 {
   @Override
   protected LocalDateTime getPart (@Nonnull final SystemMigrationResult aObject)

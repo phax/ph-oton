@@ -23,7 +23,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Button group size
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapButtonGroupSize implements ICSSClassProvider

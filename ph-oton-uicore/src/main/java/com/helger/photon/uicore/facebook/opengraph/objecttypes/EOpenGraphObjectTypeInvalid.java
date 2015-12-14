@@ -25,14 +25,14 @@ import com.helger.commons.lang.EnumHelper;
 
 /**
  * The various open graph object types taken from <a href=
- * "https://developers.facebook.com/docs/reference/opengraph/object-type"
- * >developers.facebook.com</a>
- * 
+ * "https://developers.facebook.com/docs/reference/opengraph/object-type" >
+ * developers.facebook.com</a>
+ *
  * @author Boris Gregorcic
  */
 public enum EOpenGraphObjectTypeInvalid implements IHasID <String>
 {
-  PLACE ("invalid.place");
+ PLACE ("invalid.place");
 
   private final String m_sID;
 

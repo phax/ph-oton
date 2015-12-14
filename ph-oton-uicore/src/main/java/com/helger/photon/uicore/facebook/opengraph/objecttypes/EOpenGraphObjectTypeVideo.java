@@ -25,17 +25,17 @@ import com.helger.commons.lang.EnumHelper;
 
 /**
  * The various open graph object types taken from <a href=
- * "https://developers.facebook.com/docs/reference/opengraph/object-type"
- * >developers.facebook.com</a>
- * 
+ * "https://developers.facebook.com/docs/reference/opengraph/object-type" >
+ * developers.facebook.com</a>
+ *
  * @author Boris Gregorcic
  */
 public enum EOpenGraphObjectTypeVideo implements IHasID <String>
 {
-  OTHER ("video.other"),
-  TV_SHOW ("video.tv_show"),
-  MOVIE ("video.movie"),
-  EPISODE ("video.episode");
+ OTHER ("video.other"),
+ TV_SHOW ("video.tv_show"),
+ MOVIE ("video.movie"),
+ EPISODE ("video.episode");
 
   private final String m_sID;
 

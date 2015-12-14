@@ -23,7 +23,7 @@ import com.helger.commons.annotation.IsSPIInterface;
 /**
  * SPI interface to be implemented by other modules wishing to register their
  * own micro-type converters.
- * 
+ *
  * @author Philip Helger
  */
 @IsSPIInterface
@@ -31,7 +31,7 @@ public interface IPasswordHashCreatorRegistrarSPI
 {
   /**
    * Register all {@link IPasswordHashCreator} implementations.
-   * 
+   *
    * @param aRegistry
    *        The registry to register your creators. Never <code>null</code>.
    */

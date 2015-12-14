@@ -22,7 +22,7 @@ import com.helger.datetime.domain.IHasCreationDateTime;
 
 /**
  * Base interface for an object that has a date time and a user ID.
- * 
+ *
  * @author Philip Helger
  */
 public interface IHasCreationInfo extends IHasCreationDateTime

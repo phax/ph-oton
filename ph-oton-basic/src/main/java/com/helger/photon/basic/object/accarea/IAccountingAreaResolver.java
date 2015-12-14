@@ -20,14 +20,14 @@ import javax.annotation.Nullable;
 
 /**
  * Resolver for {@link IAccountingArea} objects.
- * 
+ *
  * @author Philip Helger
  */
 public interface IAccountingAreaResolver
 {
   /**
    * Get the accounting area of the specified ID.
-   * 
+   *
    * @param sID
    *        The ID to be resolved. May be <code>null</code>.
    * @return <code>null</code> if no such accounting area exists.

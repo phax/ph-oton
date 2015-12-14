@@ -12,7 +12,7 @@ Kda356zKNHhu/x04SR7PjmbSN8LUmiPZ2yh2F/ZCekDdUygdgsXWcsxf8LJ/9DgTRoXA5e3ZgNbthM5i
 51Arcl+fDNPOxN84o18L0JVawc83mgLNrk3TBZxofom0zQyp4KUrWiQT7Rb0o2Jvumo0t6YjAUCCEMrvp7fobzjUcbL9OA="
     
 jdk:
-  - oraclejdk7
+  - oraclejdk8
   
 cache:
   directories:

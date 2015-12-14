@@ -25,14 +25,14 @@ import com.jcraft.jsch.SftpException;
 /**
  * Callback interface for executing SFTP actions. The {@link IHasDisplayName}
  * interface is only used for better messages in case of an error.
- * 
+ *
  * @author philip
  */
 public interface IChannelSftpRunnable extends IHasDisplayName
 {
   /**
    * Execute your stuff within a safe SFTP channel.
-   * 
+   *
    * @param aChannel
    *        The channel to use. Never <code>null</code>.
    * @throws SftpException

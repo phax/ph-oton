@@ -42,7 +42,9 @@ public final class RevocationStatusMicroTypeConverter implements IMicroTypeConve
   private static final String ELEMENT_REASON = "reason";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject, @Nullable final String sNamespaceURI, @Nonnull @Nonempty final String sTagName)
+  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+                                              @Nullable final String sNamespaceURI,
+                                              @Nonnull @Nonempty final String sTagName)
   {
     final IRevocationStatus aValue = (IRevocationStatus) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);

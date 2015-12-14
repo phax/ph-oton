@@ -48,7 +48,13 @@ public abstract class AbstractObject extends AbstractBaseObject
                          @Nullable final LocalDateTime aDeletionDT,
                          @Nullable final String sDeletionUserID)
   {
-    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID);
+    super (sID,
+           aCreationDT,
+           sCreationUserID,
+           aLastModificationDT,
+           sLastModificationUserID,
+           aDeletionDT,
+           sDeletionUserID);
   }
 
   @Override

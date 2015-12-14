@@ -47,7 +47,8 @@ import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
  * @param <T>
  *        Parent element type
  */
-public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
+public class MenuRendererCallback <T extends IHCList <?, HCLI>>
+                                  extends DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
 {
   private final ISimpleWebExecutionContext m_aSWEC;
   private final IFactory <T> m_aFactory;

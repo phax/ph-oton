@@ -22,7 +22,7 @@ import com.helger.commons.mock.CommonsTestHelper;
 
 /**
  * SPI definition test
- * 
+ *
  * @author Philip Helger
  */
 public final class SPITest

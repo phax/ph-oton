@@ -26,7 +26,7 @@ import com.helger.photon.basic.auth.credentials.userpw.UserNamePasswordCredentia
 
 /**
  * Unit test for class {@link SftpConnector}.
- * 
+ *
  * @author Philip Helger
  */
 public final class SftpConnectorTest

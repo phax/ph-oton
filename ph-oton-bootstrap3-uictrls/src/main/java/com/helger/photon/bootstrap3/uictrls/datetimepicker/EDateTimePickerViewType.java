@@ -23,7 +23,7 @@ import com.helger.commons.annotation.Nonempty;
 
 /**
  * Defines the different views of DTP.
- * 
+ *
  * @author Philip Helger
  */
 public enum EDateTimePickerViewType

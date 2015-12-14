@@ -24,7 +24,7 @@ import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 
 /**
  * Abstract connection destination.
- * 
+ *
  * @author philip
  * @param <HANDLETYPE>
  *        The handle type to be used.
@@ -33,7 +33,7 @@ public interface IConnectionDestination <HANDLETYPE>
 {
   /**
    * Connect to the destination.
-   * 
+   *
    * @param aCredentials
    *        The credentials to use.
    * @return <code>null</code> if connection could not be established, the
@@ -44,7 +44,7 @@ public interface IConnectionDestination <HANDLETYPE>
 
   /**
    * Close the connection.
-   * 
+   *
    * @param aHandle
    *        The handle returned from {@link #openConnection(IAuthCredentials)} .
    * @return {@link EChange}

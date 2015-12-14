@@ -23,7 +23,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Type of well size
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapWellType implements ICSSClassProvider

@@ -29,7 +29,7 @@ import com.helger.photon.security.login.LoggedInUserManager;
 
 /**
  * Helper class to work with {@link IObject} implementations.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -52,12 +52,14 @@ public final class ObjectHelper
   @Nonnull
   public static EChange setDeletionNow (@Nonnull final AbstractBaseObject aObj)
   {
-    return aObj.setDeletion (PDTFactory.getCurrentLocalDateTime (), LoggedInUserManager.getInstance ().getCurrentUserID ());
+    return aObj.setDeletion (PDTFactory.getCurrentLocalDateTime (),
+                             LoggedInUserManager.getInstance ().getCurrentUserID ());
   }
 
   @Nonnull
   public static EChange setUndeletionNow (@Nonnull final AbstractBaseObject aObj)
   {
-    return aObj.setUndeletion (PDTFactory.getCurrentLocalDateTime (), LoggedInUserManager.getInstance ().getCurrentUserID ());
+    return aObj.setUndeletion (PDTFactory.getCurrentLocalDateTime (),
+                               LoggedInUserManager.getInstance ().getCurrentUserID ());
   }
 }

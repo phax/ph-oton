@@ -22,7 +22,7 @@ import com.helger.html.hc.html.forms.EHCButtonType;
 
 /**
  * Bootstrap3 submit button.
- * 
+ *
  * @author Philip Helger
  */
 public class BootstrapSubmitButton extends BootstrapButton

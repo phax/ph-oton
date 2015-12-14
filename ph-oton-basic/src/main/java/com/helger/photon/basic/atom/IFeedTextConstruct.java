@@ -18,7 +18,7 @@ package com.helger.photon.basic.atom;
 
 /**
  * Base interface for the text construct.
- * 
+ *
  * @author Philip Helger
  */
 public interface IFeedTextConstruct extends IFeedElement

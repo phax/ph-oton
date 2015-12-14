@@ -26,12 +26,10 @@ import java.util.List;
 import org.junit.Test;
 
 import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
-import com.helger.photon.security.lock.DefaultLockManager;
-import com.helger.photon.security.lock.LockResult;
 
 /**
  * Test class for class {@link DefaultLockManager}.
- * 
+ *
  * @author Philip Helger
  */
 public final class DefaultLockManagerTest

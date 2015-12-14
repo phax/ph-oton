@@ -136,13 +136,7 @@ public class GoMappingManager extends AbstractSimpleDAO
   @Override
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
-    readFromXML (aDoc, new INonThrowingRunnableWithParameter <GoMappingItem> ()
-    {
-      public void run (final GoMappingItem aCurrentObject)
-      {
-        _addItem (aCurrentObject, false);
-      }
-    });
+    readFromXML (aDoc, aCurrentObject -> _addItem (aCurrentObject, false));
     return EChange.UNCHANGED;
   }
 

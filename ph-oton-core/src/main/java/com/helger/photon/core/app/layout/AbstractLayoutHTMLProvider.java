@@ -146,7 +146,8 @@ public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecuti
   {}
 
   @Override
-  protected void fillBody (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCHtml aHtml) throws ForcedRedirectException
+  protected void fillBody (@Nonnull final ISimpleWebExecutionContext aSWEC,
+                           @Nonnull final HCHtml aHtml) throws ForcedRedirectException
   {
     final LECTYPE aLEC = createLayoutExecutionContext (aSWEC, ApplicationRequestManager.getRequestMgr ());
 

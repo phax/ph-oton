@@ -43,7 +43,7 @@ public class BootstrapPanel extends AbstractHCDiv <BootstrapPanel>
 
   /**
    * Create a new Panel element
-   * 
+   *
    * @param eType
    *        Panel type. May not be <code>null</code>.
    */

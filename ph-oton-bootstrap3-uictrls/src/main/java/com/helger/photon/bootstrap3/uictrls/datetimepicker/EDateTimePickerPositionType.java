@@ -22,7 +22,7 @@ import com.helger.commons.annotation.Nonempty;
 
 /**
  * Defines the different position types of DTP.
- * 
+ *
  * @author Philip Helger
  */
 public enum EDateTimePickerPositionType

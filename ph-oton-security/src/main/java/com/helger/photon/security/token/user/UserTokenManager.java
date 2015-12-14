@@ -314,7 +314,12 @@ public final class UserTokenManager extends AbstractSimpleDAO
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (UserToken.OT, "revoke-access-token", aUserToken.getID (), sRevocationUserID, aRevocationDT, sRevocationReason);
+    AuditHelper.onAuditModifySuccess (UserToken.OT,
+                                      "revoke-access-token",
+                                      aUserToken.getID (),
+                                      sRevocationUserID,
+                                      aRevocationDT,
+                                      sRevocationReason);
 
     // Execute callback as the very last action
     for (final IUserTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())

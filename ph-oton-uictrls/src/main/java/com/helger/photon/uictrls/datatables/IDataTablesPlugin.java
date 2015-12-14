@@ -41,7 +41,7 @@ public interface IDataTablesPlugin
 
   /**
    * Check if this plugin can be applied to the passed datatables.
-   * 
+   *
    * @param aDT
    *        DataTables to use. Never <code>null</code>.
    * @return <code>true</code> if it is applicable, <code>false</code> if not.

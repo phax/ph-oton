@@ -24,7 +24,8 @@ import com.helger.html.hc.html.tabular.AbstractHCTable;
 import com.helger.html.hc.html.tabular.IHCCol;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
-public abstract class AbstractBootstrapTable <THISTYPE extends AbstractHCTable <THISTYPE>> extends AbstractHCTable <THISTYPE>
+public abstract class AbstractBootstrapTable <THISTYPE extends AbstractHCTable <THISTYPE>>
+                                             extends AbstractHCTable <THISTYPE>
 {
   private void _init ()
   {

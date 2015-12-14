@@ -40,24 +40,24 @@ import com.helger.html.js.CJS;
  */
 public enum EWebSiteResourceType implements IHasID <String>,IHasDisplayName
 {
- JS ("js", CMimeType.TEXT_JAVASCRIPT, CJS.FILE_EXTENSION_JS, "JavaScript")
- {
-   @Override
-   @Nonnull
-   public IHCNode createNode (@Nonnull final ISimpleURL aURL, @Nullable final ICSSMediaList aMediaList)
-   {
-     return new HCScriptFile ().setSrc (aURL);
-   }
- },
- CSS ("css", CMimeType.TEXT_CSS, CCSS.FILE_EXTENSION_CSS, "CSS")
- {
-   @Override
-   @Nonnull
-   public IHCNode createNode (@Nonnull final ISimpleURL aURL, @Nullable final ICSSMediaList aMediaList)
-   {
-     return HCLink.createCSSLink (aURL).setMedia (aMediaList);
-   }
- };
+  JS ("js", CMimeType.TEXT_JAVASCRIPT, CJS.FILE_EXTENSION_JS, "JavaScript")
+  {
+    @Override
+    @Nonnull
+    public IHCNode createNode (@Nonnull final ISimpleURL aURL, @Nullable final ICSSMediaList aMediaList)
+    {
+      return new HCScriptFile ().setSrc (aURL);
+    }
+  },
+  CSS ("css", CMimeType.TEXT_CSS, CCSS.FILE_EXTENSION_CSS, "CSS")
+  {
+    @Override
+    @Nonnull
+    public IHCNode createNode (@Nonnull final ISimpleURL aURL, @Nullable final ICSSMediaList aMediaList)
+    {
+      return HCLink.createCSSLink (aURL).setMedia (aMediaList);
+    }
+  };
 
   private final String m_sID;
   private final IMimeType m_aMimeType;

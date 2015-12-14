@@ -52,7 +52,7 @@ import com.helger.photon.basic.audit.AuditHelper;
  * @author Philip Helger
  */
 @ThreadSafe
-public class FavoriteManager extends AbstractWALDAO <Favorite>implements IHasSize
+public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSize
 {
   private static final String ELEMENT_FAVORITES = "favorites";
   private static final String ELEMENT_FAVORITE = "favorite";
@@ -301,12 +301,12 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>implements IHasSiz
     }
 
     AuditHelper.onAuditCreateSuccess (Favorite.OT_FAVOURITE,
-                                     aFavorite.getID (),
-                                     sUserID,
-                                     sApplicationID,
-                                     sMenuItemID,
-                                     sDisplayName,
-                                     aAdditionalParams);
+                                      aFavorite.getID (),
+                                      sUserID,
+                                      sApplicationID,
+                                      sMenuItemID,
+                                      sDisplayName,
+                                      aAdditionalParams);
     return aFavorite;
   }
 

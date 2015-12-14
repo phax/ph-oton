@@ -26,7 +26,7 @@ import com.helger.commons.format.IFormatter;
 
 /**
  * This comparator is responsible for sorting cells by BigInteger
- * 
+ *
  * @author Philip Helger
  */
 public class ComparatorDTBigInteger extends ComparatorDTBigDecimal

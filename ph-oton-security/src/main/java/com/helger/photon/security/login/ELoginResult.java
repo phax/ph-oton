@@ -31,25 +31,25 @@ import com.helger.commons.text.display.IHasDisplayText;
  */
 public enum ELoginResult implements ISuccessIndicator,IHasDisplayText
 {
- /** Login was successfully */
+  /** Login was successfully */
   SUCCESS (ELoginResultText.SUCCESS),
- /** Login was successfully but logged out previous session */
+  /** Login was successfully but logged out previous session */
   SUCCESS_WITH_LOGOUT (ELoginResultText.SUCCESS_WITH_LOGOUT),
- /** No such user */
+  /** No such user */
   USER_NOT_EXISTING (ELoginResultText.USER_NOT_EXISTING),
- /** User is marked as deleted */
+  /** User is marked as deleted */
   USER_IS_DELETED (ELoginResultText.USER_IS_DELETED),
- /** User is disabled */
+  /** User is disabled */
   USER_IS_DISABLED (ELoginResultText.USER_IS_DISABLED),
- /** User does not have the correct role */
+  /** User does not have the correct role */
   USER_IS_MISSING_ROLE (ELoginResultText.USER_IS_MISSING_ROLE),
- /** The provided password is invalid */
+  /** The provided password is invalid */
   INVALID_PASSWORD (ELoginResultText.INVALID_PASSWORD),
- /** The user was already logged in */
+  /** The user was already logged in */
   USER_ALREADY_LOGGED_IN (ELoginResultText.USER_ALREADY_LOGGED_IN),
- /** Another user is already logged in this session */
+  /** Another user is already logged in this session */
   SESSION_ALREADY_HAS_USER (ELoginResultText.SESSION_ALREADY_HAS_USER),
- /** No such token */
+  /** No such token */
   TOKEN_NOT_EXISTING (ELoginResultText.TOKEN_NOT_EXISTING);
 
   private final IHasDisplayText m_aErrorMsg;

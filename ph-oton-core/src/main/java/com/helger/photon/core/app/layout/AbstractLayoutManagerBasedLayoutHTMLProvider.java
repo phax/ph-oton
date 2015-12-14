@@ -32,7 +32,8 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
  * @param <LECTYPE>
  *        Layout execution context type
  */
-public abstract class AbstractLayoutManagerBasedLayoutHTMLProvider <LECTYPE extends ILayoutExecutionContext> extends AbstractLayoutHTMLProvider <LECTYPE>
+public abstract class AbstractLayoutManagerBasedLayoutHTMLProvider <LECTYPE extends ILayoutExecutionContext>
+                                                                   extends AbstractLayoutHTMLProvider <LECTYPE>
 {
   private final ILayoutManager <LECTYPE> m_aLayoutMgr;
 

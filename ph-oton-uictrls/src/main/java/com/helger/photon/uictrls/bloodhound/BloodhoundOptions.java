@@ -104,8 +104,8 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   {
     ValueEnforcer.notEmpty (sDatumValueFieldName, "DatumValueFieldName");
     final JSVar aVarDatum = new JSVar ("d");
-    return setDatumTokenizer (new JSAnonymousFunction (aVarDatum, aFieldRef.invoke ()
-                                                                           .arg (aVarDatum.ref (sDatumValueFieldName))));
+    return setDatumTokenizer (new JSAnonymousFunction (aVarDatum,
+                                                       aFieldRef.invoke ().arg (aVarDatum.ref (sDatumValueFieldName))));
   }
 
   @Nonnull

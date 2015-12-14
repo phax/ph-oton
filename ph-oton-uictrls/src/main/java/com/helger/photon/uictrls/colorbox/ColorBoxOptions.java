@@ -27,11 +27,11 @@ import com.helger.html.jscode.JSAssocArray;
 
 /**
  * jQuery colorbox plugin from
- * 
+ *
  * <pre>
  * http://www.jacklmoore.com/colorbox
  * </pre>
- * 
+ *
  * @author Philip Helger
  */
 public class ColorBoxOptions

@@ -24,7 +24,7 @@ import com.helger.html.jscode.JSExpr;
 
 /**
  * Modal dialog backdrop option
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapModalOptionBackdrop

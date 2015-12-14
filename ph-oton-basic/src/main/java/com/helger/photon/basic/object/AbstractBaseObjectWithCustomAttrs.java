@@ -50,7 +50,8 @@ public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObje
     this (aObject, aObject.getAllAttributes ());
   }
 
-  public AbstractBaseObjectWithCustomAttrs (@Nonnull final IObject aObject, @Nullable final Map <String, String> aCustomAttrs)
+  public AbstractBaseObjectWithCustomAttrs (@Nonnull final IObject aObject,
+                                            @Nullable final Map <String, String> aCustomAttrs)
   {
     super (aObject);
     m_aAttrs.setAttributes (aCustomAttrs);
@@ -65,7 +66,13 @@ public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObje
                                             @Nullable final String sDeletionUserID,
                                             @Nullable final Map <String, String> aCustomAttrs)
   {
-    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID);
+    super (sID,
+           aCreationDT,
+           sCreationUserID,
+           aLastModificationDT,
+           sLastModificationUserID,
+           aDeletionDT,
+           sDeletionUserID);
     m_aAttrs.setAttributes (aCustomAttrs);
   }
 

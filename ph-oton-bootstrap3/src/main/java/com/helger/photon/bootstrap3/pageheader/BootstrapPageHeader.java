@@ -24,7 +24,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 
 /**
  * Bootstrap3 page header.
- * 
+ *
  * @author Philip Helger
  */
 public class BootstrapPageHeader extends AbstractHCDiv <BootstrapPageHeader>

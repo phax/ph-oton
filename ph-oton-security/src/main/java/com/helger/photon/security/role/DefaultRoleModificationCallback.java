@@ -20,7 +20,7 @@ package com.helger.photon.security.role;
  * Default empty implementation of {@link IRoleModificationCallback}. Use this
  * class as the base class of custom implementations so that no change is
  * necessary when the interface gets extended.
- * 
+ *
  * @author Philip Helger
  */
 public class DefaultRoleModificationCallback implements IRoleModificationCallback

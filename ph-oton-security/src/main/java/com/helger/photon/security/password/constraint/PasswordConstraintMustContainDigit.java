@@ -30,7 +30,7 @@ import com.helger.commons.string.ToStringGenerator;
 /**
  * Password constraint defining that at least a certain amount of digits must be
  * contained
- * 
+ *
  * @author Philip Helger
  * @since 2.7.4
  */
@@ -42,7 +42,7 @@ public class PasswordConstraintMustContainDigit implements IPasswordConstraint
 
   /**
    * Ctor
-   * 
+   *
    * @param nMinDigits
    *        The minimum number of digits that must occur in a password. Must be
    *        &gt; 0.

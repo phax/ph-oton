@@ -20,14 +20,14 @@ import com.helger.photon.basic.app.dao.impl.DAOException;
 
 /**
  * Special interface for reloadable DAOs
- * 
+ *
  * @author Philip Helger
  */
 public interface IReloadableDAO extends IDAO
 {
   /**
    * Call this method to reload the content from the original source.
-   * 
+   *
    * @throws DAOException
    *         in case reloading fails
    */

@@ -25,7 +25,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 
 /**
  * Base read-only interface for objects containing roles.
- * 
+ *
  * @author Philip Helger
  */
 public interface IRoleContainer
@@ -52,7 +52,7 @@ public interface IRoleContainer
 
   /**
    * Check if the passed role is contained in this container.
-   * 
+   *
    * @param sRoleID
    *        The role ID to check. May be <code>null</code>.
    * @return <code>true</code> if the role is contained in this container,

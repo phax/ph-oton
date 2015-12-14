@@ -22,7 +22,6 @@ import org.junit.Test;
 
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.photon.bootstrap4.EBootstrapJSPathProvider;
 
 /**
  * Test class for class {@link EBootstrapJSPathProvider}.

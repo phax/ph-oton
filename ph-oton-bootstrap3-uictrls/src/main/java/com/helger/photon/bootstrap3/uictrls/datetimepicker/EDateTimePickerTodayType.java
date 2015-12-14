@@ -23,7 +23,7 @@ import com.helger.html.jscode.JSExpr;
 
 /**
  * Defines the different today types of DTP.
- * 
+ *
  * @author Philip Helger
  */
 public enum EDateTimePickerTodayType

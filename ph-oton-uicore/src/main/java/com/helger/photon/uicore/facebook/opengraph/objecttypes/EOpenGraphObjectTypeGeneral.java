@@ -25,21 +25,21 @@ import com.helger.commons.lang.EnumHelper;
 
 /**
  * The various open graph object types taken from <a href=
- * "https://developers.facebook.com/docs/reference/opengraph/object-type"
- * >developers.facebook.com</a>
- * 
+ * "https://developers.facebook.com/docs/reference/opengraph/object-type" >
+ * developers.facebook.com</a>
+ *
  * @author Boris Gregorcic
  */
 public enum EOpenGraphObjectTypeGeneral implements IHasID <String>
 {
-  PLACE ("place"),
-  WEBSITE ("website"),
-  BOOK ("book"),
-  PROFILE ("profile"),
-  OBJECT ("object"),
-  ARTICLE ("article"),
-  PRODUCT ("product"),
-  EVENT ("event");
+ PLACE ("place"),
+ WEBSITE ("website"),
+ BOOK ("book"),
+ PROFILE ("profile"),
+ OBJECT ("object"),
+ ARTICLE ("article"),
+ PRODUCT ("product"),
+ EVENT ("event");
 
   private final String m_sID;
 

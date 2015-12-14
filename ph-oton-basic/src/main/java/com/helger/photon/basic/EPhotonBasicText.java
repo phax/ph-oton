@@ -37,19 +37,19 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum EPhotonBasicText implements IHasDisplayText,IHasDisplayTextWithArgs
 {
- // Menu object filters
- MENU_OBJECT_FILTER_ALL ("Alle der folgenden", "All of the following"),
- MENU_OBJECT_FILTER_ANY ("Einer der folgenden", "Any of the following"),
- MENU_OBJECT_FILTER_USER_LOGGED_IN ("ein Benutzer ist angemeldet", "a user is logged in"),
- MENU_OBJECT_FILTER_NO_USER_LOGGED_IN ("es ist kein Benutzer angemeldet", "no user is logged in"),
- MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP ("ein Benutzer ist der Benutzergruppe {0} zugeordnet", "a user is assigned to user group {0}"),
- MENU_OBJECT_FILTER_USER_HAS_ROLE ("ein Benutzer hat die Rolle {0}", "a user has role {0}"),
+  // Menu object filters
+  MENU_OBJECT_FILTER_ALL ("Alle der folgenden", "All of the following"),
+  MENU_OBJECT_FILTER_ANY ("Einer der folgenden", "Any of the following"),
+  MENU_OBJECT_FILTER_USER_LOGGED_IN ("ein Benutzer ist angemeldet", "a user is logged in"),
+  MENU_OBJECT_FILTER_NO_USER_LOGGED_IN ("es ist kein Benutzer angemeldet", "no user is logged in"),
+  MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP ("ein Benutzer ist der Benutzergruppe {0} zugeordnet", "a user is assigned to user group {0}"),
+  MENU_OBJECT_FILTER_USER_HAS_ROLE ("ein Benutzer hat die Rolle {0}", "a user has role {0}"),
 
- // System messages
- SYSTEM_MESSAGE_TYPE_INFO ("Information", "Information"),
- SYSTEM_MESSAGE_TYPE_WARNING ("Warnung", "Warning"),
- SYSTEM_MESSAGE_TYPE_ERROR ("Fehler", "Error"),
- SYSTEM_MESSAGE_TYPE_SUCCESS ("Erfolg", "Success");
+  // System messages
+  SYSTEM_MESSAGE_TYPE_INFO ("Information", "Information"),
+  SYSTEM_MESSAGE_TYPE_WARNING ("Warnung", "Warning"),
+  SYSTEM_MESSAGE_TYPE_ERROR ("Fehler", "Error"),
+  SYSTEM_MESSAGE_TYPE_SUCCESS ("Erfolg", "Success");
 
   private final IMultilingualText m_aTP;
 

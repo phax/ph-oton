@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 
 /**
  * Base interface for objects that have an accounting area ID.
- * 
+ *
  * @author Philip Helger
  */
 public interface IHasAccountingAreaID

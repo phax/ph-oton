@@ -22,7 +22,7 @@ import com.helger.commons.annotation.Nonempty;
 
 /**
  * Base interface for the content element.
- * 
+ *
  * @author Philip Helger
  */
 public interface IFeedContent extends IFeedElement
