@@ -22,14 +22,16 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.microdom.IMicroElement;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.css.UncheckedCSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.AbstractHCInput;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.core.form.RequestField;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
 /**
@@ -47,6 +49,13 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
   public HCColorPicker ()
   {
     // No input type needed
+  }
+
+  public HCColorPicker (@Nonnull final RequestField aRF)
+  {
+    this ();
+    setName (aRF.getFieldName ());
+    setValue (aRF.getRequestValue ());
   }
 
   @Nonnull
@@ -67,11 +76,10 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
-                                  @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    super.fillMicroElement (aElement, aConversionSettings);
-    registerExternalResources ();
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
     final JSAssocArray aJSOptions = m_aOptions.getJSOptions ();
     if (aJSOptions.isEmpty ())
@@ -87,8 +95,11 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
     }
   }
 
-  public static void registerExternalResources ()
+  @Override
+  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                              final boolean bForceRegistration)
   {
+    super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.JSCOLOR);
   }
 }
