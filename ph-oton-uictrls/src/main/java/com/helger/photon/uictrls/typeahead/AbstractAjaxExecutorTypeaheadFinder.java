@@ -44,7 +44,8 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
  * @param <LECTYPE>
  *        Layout execution context
  */
-public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayoutExecutionContext> extends AbstractAjaxExecutorWithContext <LECTYPE>
+public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayoutExecutionContext>
+                                                          extends AbstractAjaxExecutorWithContext <LECTYPE>
 {
   public static final String PARAM_QUERY = "query";
 

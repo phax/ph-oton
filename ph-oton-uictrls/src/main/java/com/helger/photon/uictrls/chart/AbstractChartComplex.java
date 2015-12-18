@@ -43,7 +43,8 @@ import com.helger.html.jscode.JSAssocArray;
  *        Real implementation type
  */
 @NotThreadSafe
-public abstract class AbstractChartComplex <IMPLTYPE extends AbstractChartComplex <IMPLTYPE>> extends AbstractChartWithLabels <IMPLTYPE>
+public abstract class AbstractChartComplex <IMPLTYPE extends AbstractChartComplex <IMPLTYPE>>
+                                           extends AbstractChartWithLabels <IMPLTYPE>
 {
   /**
    * Single data set for a complex chart.

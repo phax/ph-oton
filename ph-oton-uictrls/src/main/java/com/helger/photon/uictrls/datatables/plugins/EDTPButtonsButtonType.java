@@ -35,51 +35,51 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
  */
 public enum EDTPButtonsButtonType implements IHasName
 {
- /**
-  * Copy to clipboard (uses Flash in preference to HTML5 if Flash is available)
-  */
+  /**
+   * Copy to clipboard (uses Flash in preference to HTML5 if Flash is available)
+   */
   COPY ("copy"),
- /** Save to CSV file */
+  /** Save to CSV file */
   CSV ("csv"),
- /** Save to Excel XSLX file */
+  /** Save to Excel XSLX file */
   EXCEL ("excel"),
- /** Save to a PDF document */
+  /** Save to a PDF document */
   PDF ("pdf"),
- /**
-  * Displays a dialogue asking the user to use their browser's copy command
-  * (HTML5 does not have a copy to clipboard API)
-  */
+  /**
+   * Displays a dialogue asking the user to use their browser's copy command
+   * (HTML5 does not have a copy to clipboard API)
+   */
   COPY_HTML5 ("copyHtml5"),
- /** Create and save an CSV file */
+  /** Create and save an CSV file */
   CSV_HTML5 ("csvHtml5"),
- /**
-  * Create and save an Excel XLSX file - this requires JSZip. Note - this will
-  * not work in Safari.
-  */
+  /**
+   * Create and save an Excel XLSX file - this requires JSZip. Note - this will
+   * not work in Safari.
+   */
   EXCEL_HTML5 ("excelHtml5"),
- /**
-  * Create and save a PDF document - this required PDFMake and a suitable font
-  * file.
-  */
+  /**
+   * Create and save a PDF document - this required PDFMake and a suitable font
+   * file.
+   */
   PDF_HTML5 ("pdfHtml5"),
- /**
-  * Immediately copies the data to clipboard
-  */
+  /**
+   * Immediately copies the data to clipboard
+   */
   COPY_FLASH ("copyFlash"),
- /** Create and save an CSV file */
+  /** Create and save an CSV file */
   CSV_FLASH ("csvFlash"),
- /** Create and save an Excel XLSX file */
+  /** Create and save an Excel XLSX file */
   EXCEL_FLASH ("excelFlash"),
- /**
-  * Create and save a PDF document. Note - this does not support UTF8
-  * characters.
-  */
+  /**
+   * Create and save a PDF document. Note - this does not support UTF8
+   * characters.
+   */
   PDF_FLASH ("pdfFlash"),
- PRINT ("print"),
- COLLECTION ("collection"),
- COL_VIS ("colvis", EUICtrlsJSPathProvider.DATATABLES_BUTTONS_COLVIS),
- COL_VIS_GROUP ("colvisGroup", EUICtrlsJSPathProvider.DATATABLES_BUTTONS_COLVIS),
- COLUMNS_TOGGLE ("columnsToggle", EUICtrlsJSPathProvider.DATATABLES_BUTTONS_COLVIS);
+  PRINT ("print"),
+  COLLECTION ("collection"),
+  COL_VIS ("colvis", EUICtrlsJSPathProvider.DATATABLES_BUTTONS_COLVIS),
+  COL_VIS_GROUP ("colvisGroup", EUICtrlsJSPathProvider.DATATABLES_BUTTONS_COLVIS),
+  COLUMNS_TOGGLE ("columnsToggle", EUICtrlsJSPathProvider.DATATABLES_BUTTONS_COLVIS);
 
   private final String m_sName;
   private final List <IJSPathProvider> m_aJSIncludes;

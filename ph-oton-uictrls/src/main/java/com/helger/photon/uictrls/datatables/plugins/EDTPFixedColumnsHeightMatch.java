@@ -28,9 +28,9 @@ import com.helger.commons.name.IHasName;
  */
 public enum EDTPFixedColumnsHeightMatch implements IHasName
 {
- NONE ("none"),
- SEMI_AUTO ("semiauto"),
- AUTO ("auto");
+  NONE ("none"),
+  SEMI_AUTO ("semiauto"),
+  AUTO ("auto");
 
   private final String m_sName;
 

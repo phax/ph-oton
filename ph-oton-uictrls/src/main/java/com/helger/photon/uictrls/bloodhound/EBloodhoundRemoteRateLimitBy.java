@@ -30,8 +30,8 @@ import com.helger.commons.string.StringHelper;
  */
 public enum EBloodhoundRemoteRateLimitBy
 {
- DEBOUNCE ("debounce"),
- THROTTLE ("throttle");
+  DEBOUNCE ("debounce"),
+  THROTTLE ("throttle");
 
   private final String m_sValue;
 

@@ -28,8 +28,8 @@ import com.helger.commons.name.IHasName;
  */
 public enum EDTPResponsiveType implements IHasName
 {
- INLINE ("inline"),
- COLUMN ("column");
+  INLINE ("inline"),
+  COLUMN ("column");
 
   private final String m_sName;
 

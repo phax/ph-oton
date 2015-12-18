@@ -35,7 +35,7 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum ETypeaheadText implements IHasDisplayText
 {
- ENTER_SEARCH_STRING ("Geben Sie einen Suchtext ein", "Enter a search phrase");
+  ENTER_SEARCH_STRING ("Geben Sie einen Suchtext ein", "Enter a search phrase");
 
   private final IMultilingualText m_aTP;
 

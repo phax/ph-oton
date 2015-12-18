@@ -31,8 +31,8 @@ import com.helger.commons.string.StringHelper;
  */
 public enum EDataTablesOrderDirectionType implements IHasName
 {
- ASC ("asc", ESortOrder.ASCENDING),
- DESC ("desc", ESortOrder.DESCENDING);
+  ASC ("asc", ESortOrder.ASCENDING),
+  DESC ("desc", ESortOrder.DESCENDING);
 
   private final String m_sName;
   private final ESortOrder m_eSortOrder;

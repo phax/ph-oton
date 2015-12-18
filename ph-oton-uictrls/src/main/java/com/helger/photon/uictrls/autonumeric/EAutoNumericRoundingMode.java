@@ -28,25 +28,25 @@ import com.helger.commons.id.IHasID;
  */
 public enum EAutoNumericRoundingMode implements IHasID <String>
 {
- /** Round-Half-Up Symmetric */
+  /** Round-Half-Up Symmetric */
   ROUND_HALF_UP_SYMMETRIC ("S"),
- /** Round-Half-Up Asymmetric */
+  /** Round-Half-Up Asymmetric */
   ROUND_HALF_UP_ASYMMETRIC ("A"),
- /** Round-Half-Down Symmetric */
+  /** Round-Half-Down Symmetric */
   ROUND_HALF_DOWN_SYMMETRIC ("s"),
- /** Round-Half-Down Asymmetric */
+  /** Round-Half-Down Asymmetric */
   ROUND_HALF_DOWN_ASYMMETRIC ("a"),
- /** Round-Half-Even "Bankers Rounding" */
+  /** Round-Half-Even "Bankers Rounding" */
   ROUND_HALF_EVEN ("B"),
- /** Round Up "Round-Away-From-Zero" */
+  /** Round Up "Round-Away-From-Zero" */
   ROUND_UP ("U"),
- /** Round Down "Round-Toward-Zero" - same as truncate */
+  /** Round Down "Round-Toward-Zero" - same as truncate */
   ROUND_DOWN ("D"),
- /** Round to Ceiling "Toward Positive Infinity" */
+  /** Round to Ceiling "Toward Positive Infinity" */
   ROUND_CEILING ("C"),
- /** Round to Floor "Toward Negative Infinity" */
+  /** Round to Floor "Toward Negative Infinity" */
   ROUND_FLOOR ("F"),
- /** Rounding for Swiss currency "to the nearest .00 or .05" */
+  /** Rounding for Swiss currency "to the nearest .00 or .05" */
   ROUND_CHF ("CHF");
 
   public static final EAutoNumericRoundingMode DEFAULT = ROUND_HALF_UP_SYMMETRIC;
