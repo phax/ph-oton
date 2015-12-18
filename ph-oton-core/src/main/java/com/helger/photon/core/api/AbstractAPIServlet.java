@@ -38,6 +38,12 @@ import com.helger.web.http.EHTTPMethod;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
+/**
+ * Abstract API servlet. Use {@link ApplicationAPIManager} to register API
+ * functions dynamically.
+ *
+ * @author Philip Helger
+ */
 public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAPIServlet.class);
@@ -73,12 +79,12 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
   {
     // ensure leading "/"
     final String sAPIPath = FilenameHelper.ensurePathStartingWithSeparator (aRequestScope.getPathWithinServlet ());
-    final InvokableAPIDescriptor aInvokableDescriptor = ApplicationAPIManager.getInstance ()
-                                                                             .getAPIByPath (sAPIPath,
-                                                                                            aRequestScope.getHttpMethod ());
+    final EHTTPMethod eHTTPMethod = aRequestScope.getHttpMethod ();
+    final InvokableAPIDescriptor aInvokableDescriptor = ApplicationAPIManager.getInstance ().getAPIByPath (sAPIPath,
+                                                                                                           eHTTPMethod);
     if (aInvokableDescriptor == null)
     {
-      s_aLogger.warn ("Unknown API '" + sAPIPath + "' requested!");
+      s_aLogger.warn ("Unknown API " + eHTTPMethod + " '" + sAPIPath + "' requested!");
 
       // No such action
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
@@ -89,7 +95,7 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
       // Check for required headers and parameters
       if (!aInvokableDescriptor.canExecute (aRequestScope))
       {
-        s_aLogger.warn ("API '" + sAPIPath + "' cannot be executed for the current request.");
+        s_aLogger.warn ("API " + eHTTPMethod + " '" + sAPIPath + "' cannot be executed for the current request.");
         aUnifiedResponse.setStatus (HttpServletResponse.SC_UNAUTHORIZED);
       }
       else
@@ -121,7 +127,12 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
             }
             catch (final Throwable t2)
             {
-              s_aLogger.error ("Exception in custom API exception handler of path '" + sAPIPath + "'", t2);
+              s_aLogger.error ("Exception in custom API exception handler of API " +
+                               eHTTPMethod +
+                               " '" +
+                               sAPIPath +
+                               "'",
+                               t2);
             }
 
           // Re-throw
@@ -129,7 +140,7 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
             throw (IOException) t;
           if (t instanceof ServletException)
             throw (ServletException) t;
-          throw new ServletException ("Error invoking API '" + sAPIPath + "'", t);
+          throw new ServletException ("Error invoking API " + eHTTPMethod + " '" + sAPIPath + "'", t);
         }
       }
     }

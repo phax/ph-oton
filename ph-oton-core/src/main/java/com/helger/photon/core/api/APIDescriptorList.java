@@ -54,7 +54,8 @@ public class APIDescriptorList
   public InvokableAPIDescriptor getMatching (@Nonnull final String sPath, @Nonnull final EHTTPMethod eHTTPMethod)
   {
     return getMatching (sPath, eHTTPMethod, aDescriptors -> {
-      s_aLogger.warn ("Found more than one API descriptor matching path '" + sPath + "': " + aDescriptors);
+      if (!aDescriptors.isEmpty ())
+        s_aLogger.warn ("Found more than one API descriptor matching path '" + sPath + "': " + aDescriptors);
       return null;
     });
   }
