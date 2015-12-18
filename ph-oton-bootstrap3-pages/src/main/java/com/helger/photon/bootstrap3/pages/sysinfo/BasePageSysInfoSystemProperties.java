@@ -66,37 +66,38 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecutionContext>
+                                             extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-   MSG_HEADER_SPECIAL_SYSPROPS ("Spezielle System-Eigenschaften:", "Special system properties:"),
-   MSG_HEADER_SYSPROPS ("Alle System-Eigenschaften:", "All system properties:"),
-   MSG_HEADER_NAME ("Name", "Name"),
-   MSG_HEADER_VALUE ("Wert", "Value"),
-   MSG_SYSTEM_OS ("Betriebssystem", "Operating system"),
-   MSG_SYSTEM_NUM_PROCESSORS ("Anzahl Prozessoren", "Number of processors"),
-   MSG_SYSTEM_CHARSET ("System-Zeichensatz", "System charset"),
-   MSG_SYSTEM_LOCALE ("System-Sprache", "System locale"),
-   MSG_SYSTEM_MEM_FREE ("Freier Speicher", "Free memory"),
-   MSG_SYSTEM_MEM_MAX ("Max Speicher", "Max memory"),
-   MSG_SYSTEM_MEM_TOTAL ("Totaler Speicher", "Total memory"),
-   MSG_CONTEXT_CLASSLOADER ("Context Classloader", "Context classloader"),
-   MSG_SYSTEM_CLASSLOADER ("System Classloader", "System classloader"),
-   MSG_SYSTEM_BASEDIR ("Datenverzeichnis", "Data directory"),
-   MSG_SYSTEM_BASEDIR_TOTAL ("Speicherplatz im Datenverzeichnis", "Total space in the data directory"),
-   MSG_SYSTEM_BASEDIR_FREE ("Freier Speicherplatz im Datenverzeichnis", "Free space in the data directory"),
-   MSG_SYSTEM_BASEDIR_USABLE ("Verwendbarer Speicherplatz im Datenverzeichnis", "Usable space in the data directory"),
-   MSG_SYSTEM_SC_DIR ("WebApp-Verzeichnis", "WebApp directory"),
-   MSG_SYSTEM_SC_DIR_TOTAL ("Speicherplatz im WebApp-Verzeichnis", "Total space in the WebApp directory"),
-   MSG_SYSTEM_SC_DIR_FREE ("Freier Speicherplatz im WebApp-Verzeichnis", "Free space in the WebApp directory"),
-   MSG_SYSTEM_SC_DIR_USABLE ("Verwendbarer Speicherplatz im WebApp-Verzeichnis", "Usable space in the WebApp directory"),
-   MSG_ENDORSED_DIR ("Endorsed Verzeichnis", "Endorsed directory"),
-   MSG_EXT_DIR ("Extension Verzeichnis", "Extension directory"),
-   MSG_DIR_NOT_EXISTING ("Das Verzeichnis existiert nicht", "The directory does not exist"),
-   MSG_DIR_EMPTY ("Das Verzeichnis ist leer", "The directory is empty"),
-   MSG_DIR_FILE_ENTRY ("{0} ({1} Bytes - {2})", "{0} ({1} bytes - {2})");
+    MSG_HEADER_SPECIAL_SYSPROPS ("Spezielle System-Eigenschaften:", "Special system properties:"),
+    MSG_HEADER_SYSPROPS ("Alle System-Eigenschaften:", "All system properties:"),
+    MSG_HEADER_NAME ("Name", "Name"),
+    MSG_HEADER_VALUE ("Wert", "Value"),
+    MSG_SYSTEM_OS ("Betriebssystem", "Operating system"),
+    MSG_SYSTEM_NUM_PROCESSORS ("Anzahl Prozessoren", "Number of processors"),
+    MSG_SYSTEM_CHARSET ("System-Zeichensatz", "System charset"),
+    MSG_SYSTEM_LOCALE ("System-Sprache", "System locale"),
+    MSG_SYSTEM_MEM_FREE ("Freier Speicher", "Free memory"),
+    MSG_SYSTEM_MEM_MAX ("Max Speicher", "Max memory"),
+    MSG_SYSTEM_MEM_TOTAL ("Totaler Speicher", "Total memory"),
+    MSG_CONTEXT_CLASSLOADER ("Context Classloader", "Context classloader"),
+    MSG_SYSTEM_CLASSLOADER ("System Classloader", "System classloader"),
+    MSG_SYSTEM_BASEDIR ("Datenverzeichnis", "Data directory"),
+    MSG_SYSTEM_BASEDIR_TOTAL ("Speicherplatz im Datenverzeichnis", "Total space in the data directory"),
+    MSG_SYSTEM_BASEDIR_FREE ("Freier Speicherplatz im Datenverzeichnis", "Free space in the data directory"),
+    MSG_SYSTEM_BASEDIR_USABLE ("Verwendbarer Speicherplatz im Datenverzeichnis", "Usable space in the data directory"),
+    MSG_SYSTEM_SC_DIR ("WebApp-Verzeichnis", "WebApp directory"),
+    MSG_SYSTEM_SC_DIR_TOTAL ("Speicherplatz im WebApp-Verzeichnis", "Total space in the WebApp directory"),
+    MSG_SYSTEM_SC_DIR_FREE ("Freier Speicherplatz im WebApp-Verzeichnis", "Free space in the WebApp directory"),
+    MSG_SYSTEM_SC_DIR_USABLE ("Verwendbarer Speicherplatz im WebApp-Verzeichnis", "Usable space in the WebApp directory"),
+    MSG_ENDORSED_DIR ("Endorsed Verzeichnis", "Endorsed directory"),
+    MSG_EXT_DIR ("Extension Verzeichnis", "Extension directory"),
+    MSG_DIR_NOT_EXISTING ("Das Verzeichnis existiert nicht", "The directory does not exist"),
+    MSG_DIR_EMPTY ("Das Verzeichnis ist leer", "The directory is empty"),
+    MSG_DIR_FILE_ENTRY ("{0} ({1} Bytes - {2})", "{0} ({1} bytes - {2})");
 
     private final IMultilingualText m_aTP;
 

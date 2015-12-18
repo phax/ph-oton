@@ -54,15 +54,16 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionContext>
+                                          extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_SERVLET ("Servlet Klasse", "Servlet class"),
-   MSG_STATUS ("Status", "Status"),
-   MSG_INVOCATION_COUNT ("Aufrufe", "Invocations"),
-   MSG_INIT_DT ("Initialisiert", "Initialized");
+    MSG_SERVLET ("Servlet Klasse", "Servlet class"),
+    MSG_STATUS ("Status", "Status"),
+    MSG_INVOCATION_COUNT ("Aufrufe", "Invocations"),
+    MSG_INIT_DT ("Initialisiert", "Initialized");
 
     @Nonnull
     private final IMultilingualText m_aTP;

@@ -53,18 +53,19 @@ import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext>
+                                   extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_CURRENT_TIMEZONE ("Eingestellte Zeitzone: ", "Time zone set: "),
-   MSG_ID ("ID", "ID"),
-   MSG_NAME ("Name", "Name"),
-   MSG_SHORTNAME ("Kurzer Name", "Short name"),
-   MSG_OFFSET ("Abweichung", "Offset"),
-   MSG_STANDARD_OFFSET ("Ist Std.?", "Is std?"),
-   MSG_FIXED ("Konstant?", "Fixed?");
+    MSG_CURRENT_TIMEZONE ("Eingestellte Zeitzone: ", "Time zone set: "),
+    MSG_ID ("ID", "ID"),
+    MSG_NAME ("Name", "Name"),
+    MSG_SHORTNAME ("Kurzer Name", "Short name"),
+    MSG_OFFSET ("Abweichung", "Offset"),
+    MSG_STANDARD_OFFSET ("Ist Std.?", "Is std?"),
+    MSG_FIXED ("Konstant?", "Fixed?");
 
     private final IMultilingualText m_aTP;
 

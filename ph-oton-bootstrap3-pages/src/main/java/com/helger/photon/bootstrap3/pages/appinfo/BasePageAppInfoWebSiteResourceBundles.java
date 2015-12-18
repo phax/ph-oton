@@ -57,19 +57,20 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExecutionContext>
+                                                   extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_CACHE_ACTIVE ("Cache aktiv: ", "Cache enabled: "),
-   MSG_RESBUNDLE_SERVLET ("ResourceBundleServlet registriert: ", "ResourceBundleServlet registered: "),
-   MSG_RESBUNDLE_ACTIVE ("ResourceBundleServlet aktiviert: ", "ResourceBundleServlet active: "),
-   MSG_ID ("ID", "ID"),
-   MSG_DATE ("Datum", "Date"),
-   MSG_RESOURCES ("Resourcen", "Resources"),
-   MSG_COND_COMMENT ("Cond Comment", "Cond comment"),
-   MSG_CSS_MEDIA ("CSS Medien", "CSS media");
+    MSG_CACHE_ACTIVE ("Cache aktiv: ", "Cache enabled: "),
+    MSG_RESBUNDLE_SERVLET ("ResourceBundleServlet registriert: ", "ResourceBundleServlet registered: "),
+    MSG_RESBUNDLE_ACTIVE ("ResourceBundleServlet aktiviert: ", "ResourceBundleServlet active: "),
+    MSG_ID ("ID", "ID"),
+    MSG_DATE ("Datum", "Date"),
+    MSG_RESOURCES ("Resourcen", "Resources"),
+    MSG_COND_COMMENT ("Cond Comment", "Cond comment"),
+    MSG_CSS_MEDIA ("CSS Medien", "CSS media");
 
     @Nonnull
     private final IMultilingualText m_aTP;

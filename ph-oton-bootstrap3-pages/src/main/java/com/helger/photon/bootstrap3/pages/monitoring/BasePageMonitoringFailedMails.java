@@ -84,34 +84,35 @@ import com.helger.smtp.settings.ISMTPSettings;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <FailedMailData, WPECTYPE>
+public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionContext>
+                                           extends AbstractBootstrapWebPageForm <FailedMailData, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-   MSG_ID ("ID", "ID"),
-   MSG_ERROR_DT ("Fehler-Datum", "Error date"),
-   MSG_SMTP_SETTINGS ("SMTP-Einstellungen", "SMTP settings"),
-   MSG_SENDING_DT ("Sendedatum", "Sending date"),
-   MSG_EMAIL_TYPE ("E-Mail Typ", "Email type"),
-   MSG_FROM ("Von", "From"),
-   MSG_REPLY_TO ("Antwort an", "Reply to"),
-   MSG_TO ("An", "To"),
-   MSG_CC ("Cc", "Cc"),
-   MSG_BCC ("Bcc", "Bcc"),
-   MSG_SUBJECT ("Betreff", "Subject"),
-   MSG_BODY ("Inhalt", "Body"),
-   MSG_ATTACHMENTS ("Beilagen", "Attachments"),
-   MSG_ERROR ("Fehlermeldung", "Error message"),
-   RESENT_SUCCESS ("Das E-Mail wurde erneut versendet.", "The email was scheduled for resending."),
-   RESENT_ALL_SUCCESS_1 ("Es wurde 1 E-Mail erneut versendet.", "1 email was scheduled for resending."),
-   RESENT_ALL_SUCCESS_N ("Es wurden {0} E-Mails erneut versendet.", "{0} emails were scheduled for resending."),
-   DELETE_QUERY ("Soll das E-Mail wirklich gelöscht werden?", "Should the email really be deleted?"),
-   DELETE_SUCCESS ("Das E-Mail wurde erfolgreich gelöscht.", "The email was successfully deleted."),
-   DELETE_ALL_SUCCESS_1 ("Es wurde 1 E-Mail erfolgreich gelöscht.", "1 email was successfully deleted."),
-   DELETE_ALL_SUCCESS_N ("Es wurden {0} E-Mails erfolgreich gelöscht.", "{0} emails were successfully deleted."),
-   MSG_BUTTON_RESEND_DEFAULT_SETTINGS ("Erneut versenden (mit aktuellen SMTP-Einstellungen)", "Resend (with current SMTP settings)"),
-   MSG_BUTTON_RESEND_ALL_DEFAULT_SETTINGS ("Alle erneut versenden (mit aktuellen SMTP-Einstellungen)", "Resend all (with current SMTP settings)");
+    MSG_ID ("ID", "ID"),
+    MSG_ERROR_DT ("Fehler-Datum", "Error date"),
+    MSG_SMTP_SETTINGS ("SMTP-Einstellungen", "SMTP settings"),
+    MSG_SENDING_DT ("Sendedatum", "Sending date"),
+    MSG_EMAIL_TYPE ("E-Mail Typ", "Email type"),
+    MSG_FROM ("Von", "From"),
+    MSG_REPLY_TO ("Antwort an", "Reply to"),
+    MSG_TO ("An", "To"),
+    MSG_CC ("Cc", "Cc"),
+    MSG_BCC ("Bcc", "Bcc"),
+    MSG_SUBJECT ("Betreff", "Subject"),
+    MSG_BODY ("Inhalt", "Body"),
+    MSG_ATTACHMENTS ("Beilagen", "Attachments"),
+    MSG_ERROR ("Fehlermeldung", "Error message"),
+    RESENT_SUCCESS ("Das E-Mail wurde erneut versendet.", "The email was scheduled for resending."),
+    RESENT_ALL_SUCCESS_1 ("Es wurde 1 E-Mail erneut versendet.", "1 email was scheduled for resending."),
+    RESENT_ALL_SUCCESS_N ("Es wurden {0} E-Mails erneut versendet.", "{0} emails were scheduled for resending."),
+    DELETE_QUERY ("Soll das E-Mail wirklich gelöscht werden?", "Should the email really be deleted?"),
+    DELETE_SUCCESS ("Das E-Mail wurde erfolgreich gelöscht.", "The email was successfully deleted."),
+    DELETE_ALL_SUCCESS_1 ("Es wurde 1 E-Mail erfolgreich gelöscht.", "1 email was successfully deleted."),
+    DELETE_ALL_SUCCESS_N ("Es wurden {0} E-Mails erfolgreich gelöscht.", "{0} emails were successfully deleted."),
+    MSG_BUTTON_RESEND_DEFAULT_SETTINGS ("Erneut versenden (mit aktuellen SMTP-Einstellungen)", "Resend (with current SMTP settings)"),
+    MSG_BUTTON_RESEND_ALL_DEFAULT_SETTINGS ("Alle erneut versenden (mit aktuellen SMTP-Einstellungen)", "Resend all (with current SMTP settings)");
 
     @Nonnull
     private final IMultilingualText m_aTP;

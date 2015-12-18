@@ -47,26 +47,27 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext>
+                                  extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_HTML_VERSION ("HTML-Version", "HTML version"),
-   MSG_FORMAT_HTML ("HTML formatieren?", "Format HTML?"),
-   MSG_FORMAT_CSS ("CSS formatieren?", "Format CSS?"),
-   MSG_FORMAT_JS ("JS formatieren?", "Format JS?"),
-   MSG_CONSISTENCY_CHECKS_ENABLED ("Konsistenzprüfungen aktiv?", "Consistency checks enabled?"),
-   MSG_EXTRACT_OUT_OF_BAND_NODES ("Out-of-band Knoten extrahieren?", "Extract out-of-band nodes?"),
-   MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS ("Auto-Vervollständigung für Passwort-Felder?", "Auto complete for password fields?"),
-   MSG_ON_DOCUMENT_READY_PROVIDER ("JavaScript document.ready Ersteller", "JavaScript document.ready provider"),
-   MSG_SCRIPT_INLINE_MODE ("<script> Modus", "<script> mode"),
-   MSG_STYLE_INLINE_MODE ("<style> Modus", "<style> mode"),
-   MSG_NEW_LINE_MODE ("Zeilenumbruch", "New line"),
-   MSG_OUT_OF_BAND_DEBUGGING ("Out-of-band Knoten debuggen?", "Debug out-of-band nodes?"),
-   MSG_SCRIPTS_IN_BODY ("<script>-Element in <body>?", "Put <script> elements in <body>?"),
-   MSG_USE_REGULAR_RESOURCES ("Nicht-optimierte JS/CSS inkludieren?", "Include non-minified JS/CSS?"),
-   MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
+    MSG_HTML_VERSION ("HTML-Version", "HTML version"),
+    MSG_FORMAT_HTML ("HTML formatieren?", "Format HTML?"),
+    MSG_FORMAT_CSS ("CSS formatieren?", "Format CSS?"),
+    MSG_FORMAT_JS ("JS formatieren?", "Format JS?"),
+    MSG_CONSISTENCY_CHECKS_ENABLED ("Konsistenzprüfungen aktiv?", "Consistency checks enabled?"),
+    MSG_EXTRACT_OUT_OF_BAND_NODES ("Out-of-band Knoten extrahieren?", "Extract out-of-band nodes?"),
+    MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS ("Auto-Vervollständigung für Passwort-Felder?", "Auto complete for password fields?"),
+    MSG_ON_DOCUMENT_READY_PROVIDER ("JavaScript document.ready Ersteller", "JavaScript document.ready provider"),
+    MSG_SCRIPT_INLINE_MODE ("<script> Modus", "<script> mode"),
+    MSG_STYLE_INLINE_MODE ("<style> Modus", "<style> mode"),
+    MSG_NEW_LINE_MODE ("Zeilenumbruch", "New line"),
+    MSG_OUT_OF_BAND_DEBUGGING ("Out-of-band Knoten debuggen?", "Debug out-of-band nodes?"),
+    MSG_SCRIPTS_IN_BODY ("<script>-Element in <body>?", "Put <script> elements in <body>?"),
+    MSG_USE_REGULAR_RESOURCES ("Nicht-optimierte JS/CSS inkludieren?", "Include non-minified JS/CSS?"),
+    MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
 
     private final IMultilingualText m_aTP;
 

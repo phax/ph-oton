@@ -59,23 +59,24 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <FormState, WPECTYPE>
+public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
+                                     extends AbstractBootstrapWebPageForm <FormState, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   DELETE_QUERY ("Sollen diese gemerkten Daten wirklich gelöscht werden?", "Are you sure to delete this saved data?"),
-   DELETE_SUCCESS ("Die gemerkten Daten wurden erfolgreich gelöscht!", "The saved data was successfully deleted!"),
-   DELETE_ERROR ("Fehler beim Löschen der gemerkten Daten!", "Error deleting the saved data!"),
-   DELETE_ALL_QUERY ("Sollen alle gemerkten Daten wirklich gelöscht werden?", "Are you sure to delete all saved data?"),
-   DELETE_ALL_SUCCESS ("Alle gemerkten Daten wurden erfolgreich gelöscht!", "All saved data was successfully deleted!"),
-   DELETE_ALL_ERROR ("Fehler beim Löschen der gemerkten Daten!", "Error deleting the saved data!"),
-   NONE_PRESENT ("Es sind keine gemerkten Daten vorhanden!", "No saved data is available"),
-   BUTTON_DELETE ("Alle löschen", "Delete all"),
-   SAVED_STATE_EDIT ("Daten weiter bearbeiten", "Continue editing this data"),
-   SAVED_STATE_DELETE ("Lösche diese gemerkten Daten", "Delete this saved state"),
-   HEADER_PAGE ("Seite", "Page"),
-   HEADER_REMEMBERED_AT ("Gemerkt am", "Remebered at");
+    DELETE_QUERY ("Sollen diese gemerkten Daten wirklich gelöscht werden?", "Are you sure to delete this saved data?"),
+    DELETE_SUCCESS ("Die gemerkten Daten wurden erfolgreich gelöscht!", "The saved data was successfully deleted!"),
+    DELETE_ERROR ("Fehler beim Löschen der gemerkten Daten!", "Error deleting the saved data!"),
+    DELETE_ALL_QUERY ("Sollen alle gemerkten Daten wirklich gelöscht werden?", "Are you sure to delete all saved data?"),
+    DELETE_ALL_SUCCESS ("Alle gemerkten Daten wurden erfolgreich gelöscht!", "All saved data was successfully deleted!"),
+    DELETE_ALL_ERROR ("Fehler beim Löschen der gemerkten Daten!", "Error deleting the saved data!"),
+    NONE_PRESENT ("Es sind keine gemerkten Daten vorhanden!", "No saved data is available"),
+    BUTTON_DELETE ("Alle löschen", "Delete all"),
+    SAVED_STATE_EDIT ("Daten weiter bearbeiten", "Continue editing this data"),
+    SAVED_STATE_DELETE ("Lösche diese gemerkten Daten", "Delete this saved state"),
+    HEADER_PAGE ("Seite", "Page"),
+    HEADER_REMEMBERED_AT ("Gemerkt am", "Remebered at");
 
     private final IMultilingualText m_aTP;
 

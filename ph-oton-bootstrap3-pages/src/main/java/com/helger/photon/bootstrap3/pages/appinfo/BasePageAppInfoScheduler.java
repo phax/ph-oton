@@ -66,24 +66,25 @@ import com.helger.schedule.quartz.QuartzSchedulerHelper;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext>
+                                      extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_CONTEXT ("Kontext", "Context"),
-   MSG_SUMMARY ("Zusammenfassung", "Summary"),
-   MSG_EXECUTING_JOBS ("Laufende Jobs", "Currently executing jobs"),
-   MSG_LISTENERS ("Job Listener", "Job listeners"),
-   MSG_JOB_CLASS ("Job: ", "Job: "),
-   MSG_TRIGGER_KEY ("Key: ", "Key: "),
-   MSG_START_TIME ("Startzeit: ", "Start time: "),
-   MSG_END_TIME ("Endzeit: ", "End time: "),
-   MSG_PREVIOUS_FIRE_TIME ("Letzter Aufruf: ", "Previous fire time: "),
-   MSG_NEXT_FIRE_TIME ("Nächster Aufruf: ", "Next fire time: "),
-   MSG_JOB_DATA ("JobData: ", "JobData: "),
-   MSG_NONE ("keine", "none"),
-   MSG_NOTHING_SCHEDULED ("Es sind keine Tasks geplant", "No actions are scheduled");
+    MSG_CONTEXT ("Kontext", "Context"),
+    MSG_SUMMARY ("Zusammenfassung", "Summary"),
+    MSG_EXECUTING_JOBS ("Laufende Jobs", "Currently executing jobs"),
+    MSG_LISTENERS ("Job Listener", "Job listeners"),
+    MSG_JOB_CLASS ("Job: ", "Job: "),
+    MSG_TRIGGER_KEY ("Key: ", "Key: "),
+    MSG_START_TIME ("Startzeit: ", "Start time: "),
+    MSG_END_TIME ("Endzeit: ", "End time: "),
+    MSG_PREVIOUS_FIRE_TIME ("Letzter Aufruf: ", "Previous fire time: "),
+    MSG_NEXT_FIRE_TIME ("Nächster Aufruf: ", "Next fire time: "),
+    MSG_JOB_DATA ("JobData: ", "JobData: "),
+    MSG_NONE ("keine", "none"),
+    MSG_NOTHING_SCHEDULED ("Es sind keine Tasks geplant", "No actions are scheduled");
 
     @Nonnull
     private final IMultilingualText m_aTP;

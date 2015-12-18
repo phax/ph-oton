@@ -47,14 +47,15 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContext>
+                                       extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_APPID ("Application ID", "Application ID"),
-   MSG_IS_DEFAULT (" [Standard]", " [default]"),
-   MSG_PATH ("Pfad", "Path");
+    MSG_APPID ("Application ID", "Application ID"),
+    MSG_IS_DEFAULT (" [Standard]", " [default]"),
+    MSG_PATH ("Pfad", "Path");
 
     @Nonnull
     private final IMultilingualText m_aTP;

@@ -59,22 +59,23 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext>
+                                   extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-   MSG_GLOBAL_SCOPE ("Globaler Kontext ''{0}''", "Global scope ''{0}''"),
-   MSG_APPLICATION_SCOPE ("Application Kontext ''{0}''", "Application scope ''{0}''"),
-   MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
-   MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
-   MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
-   MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
-   MSG_APPLICATION_SCOPES ("Application Kontexte", "Application scopes"),
-   MSG_SCOPE_ATTRS ("Attribute", "Attributes"),
-   MSG_NAME ("Name", "Wert"),
-   MSG_TYPE ("Typ", "Type"),
-   MSG_VALUE ("Wert", "Value");
+    MSG_GLOBAL_SCOPE ("Globaler Kontext ''{0}''", "Global scope ''{0}''"),
+    MSG_APPLICATION_SCOPE ("Application Kontext ''{0}''", "Application scope ''{0}''"),
+    MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
+    MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
+    MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
+    MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
+    MSG_APPLICATION_SCOPES ("Application Kontexte", "Application scopes"),
+    MSG_SCOPE_ATTRS ("Attribute", "Attributes"),
+    MSG_NAME ("Name", "Wert"),
+    MSG_TYPE ("Typ", "Type"),
+    MSG_VALUE ("Wert", "Value");
 
     private final IMultilingualText m_aTP;
 

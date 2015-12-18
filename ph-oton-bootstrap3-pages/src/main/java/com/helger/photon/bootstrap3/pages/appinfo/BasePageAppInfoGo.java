@@ -59,11 +59,11 @@ public class BasePageAppInfoGo <WPECTYPE extends IWebPageExecutionContext> exten
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_GO_SERVLET ("GoServlet registriert: ", "GoServlet registered: "),
-   MSG_KEY ("ID", "ID"),
-   MSG_INTERNAL ("Intern?", "Internal?"),
-   MSG_URL ("Ziel-URL", "Target URL"),
-   MSG_EDITABLE ("Editierbar?", "Editable?");
+    MSG_GO_SERVLET ("GoServlet registriert: ", "GoServlet registered: "),
+    MSG_KEY ("ID", "ID"),
+    MSG_INTERNAL ("Intern?", "Internal?"),
+    MSG_URL ("Ziel-URL", "Target URL"),
+    MSG_EDITABLE ("Editierbar?", "Editable?");
 
     @Nonnull
     private final IMultilingualText m_aTP;

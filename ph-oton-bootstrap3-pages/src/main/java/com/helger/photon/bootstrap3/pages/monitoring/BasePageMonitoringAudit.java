@@ -56,17 +56,18 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
+                                     extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_EARLIEST_DATA ("Älteste verfügbare Daten: ", "Earliest available data: "),
-   MSG_DATE ("Datum", "Date"),
-   MSG_USER ("Benutzer", "User"),
-   MSG_TYPE ("Typ", "Type"),
-   MSG_SUCCESS ("Erfolg?", "Success?"),
-   MSG_ACTION ("Aktion", "Action");
+    MSG_EARLIEST_DATA ("Älteste verfügbare Daten: ", "Earliest available data: "),
+    MSG_DATE ("Datum", "Date"),
+    MSG_USER ("Benutzer", "User"),
+    MSG_TYPE ("Typ", "Type"),
+    MSG_SUCCESS ("Erfolg?", "Success?"),
+    MSG_ACTION ("Aktion", "Action");
 
     @Nonnull
     private final IMultilingualText m_aTP;

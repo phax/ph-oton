@@ -76,34 +76,35 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <ISessionScope, WPECTYPE>
+public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionContext>
+                                        extends AbstractBootstrapWebPageForm <ISessionScope, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-   MSG_SESSION ("Session Kontext", "Session scope"),
-   MSG_SESSION_APPLICATION_SCOPE ("Session Application Kontext ''{0}''", "Session app scope ''{0}''"),
-   MSG_ID ("ID", "ID"),
-   MSG_ATTRCOUNT ("Attribute", "Attributes"),
-   MSG_LAST_ACCESS ("Letzter Zugriff", "Last access"),
-   MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
-   MSG_SCOPE_MY_SESSION ("Meine Session?", "My session?"),
-   MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
-   MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
-   MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
-   MSG_SESSION_APPLICATION_SCOPES ("Session Application Kontexte", "Session application scopes"),
-   MSG_SCOPE_ATTRS ("Attribute", "Attributes"),
-   MSG_SCOPE_CREATION_DT ("Erstellungszeit", "Creation date time"),
-   MSG_SCOPE_LASTACCESS_DT ("Letzter Zugriff", "Last access date time"),
-   MSG_SCOPE_SESSION_AGE ("Session-Alter", "Session age"),
-   MSG_SCOPE_SESSION_TIMEOUT ("Session Timeout", "Session timeout"),
-   MSG_SCOPE_SESSION_TIMEOUT_TEXT ("{0} Sekunden (={1} Minuten)", "{0} seconds (={1} minutes)"),
-   MSG_SCOPE_EXPIRATION_DT ("Geplanter Ablauf", "Planned expiration date time"),
-   MSG_SCOPE_IS_NEW ("Neue Session?", "Is new session?"),
-   MSG_NAME ("Name", "Wert"),
-   MSG_TYPE ("Typ", "Type"),
-   MSG_VALUE ("Wert", "Value"),
-   MSG_MY_SESSION (" [ich]", " [me]");
+    MSG_SESSION ("Session Kontext", "Session scope"),
+    MSG_SESSION_APPLICATION_SCOPE ("Session Application Kontext ''{0}''", "Session app scope ''{0}''"),
+    MSG_ID ("ID", "ID"),
+    MSG_ATTRCOUNT ("Attribute", "Attributes"),
+    MSG_LAST_ACCESS ("Letzter Zugriff", "Last access"),
+    MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
+    MSG_SCOPE_MY_SESSION ("Meine Session?", "My session?"),
+    MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
+    MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
+    MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
+    MSG_SESSION_APPLICATION_SCOPES ("Session Application Kontexte", "Session application scopes"),
+    MSG_SCOPE_ATTRS ("Attribute", "Attributes"),
+    MSG_SCOPE_CREATION_DT ("Erstellungszeit", "Creation date time"),
+    MSG_SCOPE_LASTACCESS_DT ("Letzter Zugriff", "Last access date time"),
+    MSG_SCOPE_SESSION_AGE ("Session-Alter", "Session age"),
+    MSG_SCOPE_SESSION_TIMEOUT ("Session Timeout", "Session timeout"),
+    MSG_SCOPE_SESSION_TIMEOUT_TEXT ("{0} Sekunden (={1} Minuten)", "{0} seconds (={1} minutes)"),
+    MSG_SCOPE_EXPIRATION_DT ("Geplanter Ablauf", "Planned expiration date time"),
+    MSG_SCOPE_IS_NEW ("Neue Session?", "Is new session?"),
+    MSG_NAME ("Name", "Wert"),
+    MSG_TYPE ("Typ", "Type"),
+    MSG_VALUE ("Wert", "Value"),
+    MSG_MY_SESSION (" [ich]", " [me]");
 
     private final IMultilingualText m_aTP;
 

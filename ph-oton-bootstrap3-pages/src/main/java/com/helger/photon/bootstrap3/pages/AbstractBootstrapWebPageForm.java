@@ -43,7 +43,9 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web page execution context type
  */
 @NotThreadSafe
-public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageForm <DATATYPE, WPECTYPE, BootstrapForm, BootstrapButtonToolbar>
+public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
+                                                   extends
+                                                   AbstractWebPageForm <DATATYPE, WPECTYPE, BootstrapForm, BootstrapButtonToolbar>
 {
   public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {

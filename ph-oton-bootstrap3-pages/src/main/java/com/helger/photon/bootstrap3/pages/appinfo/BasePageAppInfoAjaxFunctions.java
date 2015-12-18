@@ -57,18 +57,19 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionContext>
+                                          extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_KEY ("ID", "ID"),
-   MSG_FACTORY ("Factory", "Factory"),
-   MSG_URL ("Ziel-URL", "Target URL"),
-   MSG_CALLBACKS ("Callbacks", "Callbacks"),
-   MSG_TYPE ("Typ", "Type"),
-   MSG_CALLBACK ("Callback", "Callback"),
-   MSG_NONE_FOUND ("Keine Daten gefunden.", "No data found.");
+    MSG_KEY ("ID", "ID"),
+    MSG_FACTORY ("Factory", "Factory"),
+    MSG_URL ("Ziel-URL", "Target URL"),
+    MSG_CALLBACKS ("Callbacks", "Callbacks"),
+    MSG_TYPE ("Typ", "Type"),
+    MSG_CALLBACK ("Callback", "Callback"),
+    MSG_NONE_FOUND ("Keine Daten gefunden.", "No data found.");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -133,7 +134,7 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
                                               new DTCol (EText.MSG_FACTORY.getDisplayText (aDisplayLocale)),
                                               new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale))).setID (getID () +
                                                                                                                 sAppScopeID +
-                                                                                                                "-func");
+                                                                                                                "-ajax");
           for (final Map.Entry <String, IAjaxFunctionDeclaration> aEntry : aMgr.getAllRegisteredFunctions ()
                                                                                .entrySet ())
           {
@@ -156,7 +157,7 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
                                                                                                         .setInitialSorting (ESortOrder.ASCENDING),
                                               new DTCol (EText.MSG_CALLBACK.getDisplayText (aDisplayLocale))).setID (getID () +
                                                                                                                      sAppScopeID +
-                                                                                                                     "-cb");
+                                                                                                                     "-ajax-cb");
           for (final IAjaxExceptionCallback aCB : aMgr.getExceptionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("Exception", aCB.toString ());
           for (final IAjaxBeforeExecutionCallback aCB : aMgr.getBeforeExecutionCallbacks ().getAllCallbacks ())

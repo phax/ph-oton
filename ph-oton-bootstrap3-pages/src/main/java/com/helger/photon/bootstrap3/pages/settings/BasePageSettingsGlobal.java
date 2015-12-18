@@ -55,26 +55,27 @@ import com.helger.smtp.listener.IEmailDataTransportListener;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext>
+                                    extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_HEADER_GLOBAL ("Globale Einstellungen", "Global settings"),
-   MSG_GLOBAL_DEBUG ("Debug-Modus", "Debug mode"),
-   MSG_GLOBAL_PRODUCTION ("Produktions-Modus", "Production mode"),
-   MSG_HEADER_EMAIL ("E-Mail Standard Einstellungen", "Email default settings"),
-   MSG_EMAIL_MAILQUEUE_LENGTH ("E-Mail Queue Länge", "Email queue length"),
-   MSG_EMAIL_MAX_SEND_COUNT ("Maximal versendete Mails", "Maximum send count"),
-   MSG_EMAIL_USE_SSL ("SSL", "SSL"),
-   MSG_EMAIL_USE_STARTTLS ("STARTTLS", "STARTTLS"),
-   MSG_EMAIL_CONNECTION_TIMEOUT ("Verbindungs-Timeout", "Connection timeout"),
-   MSG_EMAIL_SOCKET_TIMEOUT ("Socket-Timeout", "Socket timeout"),
-   MSG_EMAIL_CONNECTION_LISTENER ("ConnectionListener", "ConnectionListener"),
-   MSG_EMAIL_TRANSPORT_LISTENER ("TransportListener", "TransportListener"),
-   MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER ("EmailDataTransportListener", "EmailDataTransportListener"),
-   MSG_NONE ("keiner", "none"),
-   MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
+    MSG_HEADER_GLOBAL ("Globale Einstellungen", "Global settings"),
+    MSG_GLOBAL_DEBUG ("Debug-Modus", "Debug mode"),
+    MSG_GLOBAL_PRODUCTION ("Produktions-Modus", "Production mode"),
+    MSG_HEADER_EMAIL ("E-Mail Standard Einstellungen", "Email default settings"),
+    MSG_EMAIL_MAILQUEUE_LENGTH ("E-Mail Queue Länge", "Email queue length"),
+    MSG_EMAIL_MAX_SEND_COUNT ("Maximal versendete Mails", "Maximum send count"),
+    MSG_EMAIL_USE_SSL ("SSL", "SSL"),
+    MSG_EMAIL_USE_STARTTLS ("STARTTLS", "STARTTLS"),
+    MSG_EMAIL_CONNECTION_TIMEOUT ("Verbindungs-Timeout", "Connection timeout"),
+    MSG_EMAIL_SOCKET_TIMEOUT ("Socket-Timeout", "Socket timeout"),
+    MSG_EMAIL_CONNECTION_LISTENER ("ConnectionListener", "ConnectionListener"),
+    MSG_EMAIL_TRANSPORT_LISTENER ("TransportListener", "TransportListener"),
+    MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER ("EmailDataTransportListener", "EmailDataTransportListener"),
+    MSG_NONE ("keiner", "none"),
+    MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
 
     private final IMultilingualText m_aTP;
 

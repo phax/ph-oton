@@ -54,30 +54,31 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext>
+                                    extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-   MSG_HEADER ("Anzahl={0}; Prios (min/norm/max): " +
-               Thread.MIN_PRIORITY +
-               "/" +
-               Thread.NORM_PRIORITY +
-               "/" +
-               Thread.MAX_PRIORITY +
-               "; Zeitpunkt: {1}", "Total count={0}; Prios (min/norm/max): " +
-                                   Thread.MIN_PRIORITY +
-                                   "/" +
-                                   Thread.NORM_PRIORITY +
-                                   "/" +
-                                   Thread.MAX_PRIORITY +
-                                   "; Datetime: {1}"),
-   MSG_ID ("ID", "ID"),
-   MSG_GROUP ("Gruppe", "Group"),
-   MSG_NAME ("Name", "Name"),
-   MSG_PRIORITY ("Prio", "Prio"),
-   MSG_STATE ("Status", "State"),
-   MSG_STACKTRACE ("Stacktrace", "Stacktrace");
+    MSG_HEADER ("Anzahl={0}; Prios (min/norm/max): " +
+                Thread.MIN_PRIORITY +
+                "/" +
+                Thread.NORM_PRIORITY +
+                "/" +
+                Thread.MAX_PRIORITY +
+                "; Zeitpunkt: {1}", "Total count={0}; Prios (min/norm/max): " +
+                                    Thread.MIN_PRIORITY +
+                                    "/" +
+                                    Thread.NORM_PRIORITY +
+                                    "/" +
+                                    Thread.MAX_PRIORITY +
+                                    "; Datetime: {1}"),
+    MSG_ID ("ID", "ID"),
+    MSG_GROUP ("Gruppe", "Group"),
+    MSG_NAME ("Name", "Name"),
+    MSG_PRIORITY ("Prio", "Prio"),
+    MSG_STATE ("Status", "State"),
+    MSG_STACKTRACE ("Stacktrace", "Stacktrace");
 
     private final IMultilingualText m_aTP;
 

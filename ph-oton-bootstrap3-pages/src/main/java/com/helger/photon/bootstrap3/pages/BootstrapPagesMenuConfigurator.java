@@ -29,6 +29,7 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.audit.IAuditManager;
 import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.photon.basic.migration.SystemMigrationManager;
+import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoAPI;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoAjaxFunctions;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoChangeLogs;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoConfigurationFiles;
@@ -108,6 +109,7 @@ public final class BootstrapPagesMenuConfigurator
 
   public static final String MENU_ADMIN_APPINFO = "admin_appinfo";
   public static final String MENU_ADMIN_APPINFO_AJAX_FUNCTIONS = "admin_appinfo_ajax_functions";
+  public static final String MENU_ADMIN_APPINFO_API = "admin_appinfo_api";
   public static final String MENU_ADMIN_APPINFO_CHANGELOGS = "admin_appinfo_changelog";
   public static final String MENU_ADMIN_APPINFO_CONFIGFILES = "admin_appinfo_configfiles";
   public static final String MENU_ADMIN_APPINFO_GO = "admin_appinfo_go";
@@ -284,6 +286,8 @@ public final class BootstrapPagesMenuConfigurator
                                                  .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminAppInfo,
                           new BasePageAppInfoAjaxFunctions <WPECTYPE> (MENU_ADMIN_APPINFO_AJAX_FUNCTIONS))
+             .setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoAPI <WPECTYPE> (MENU_ADMIN_APPINFO_API))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoChangeLogs <WPECTYPE> (MENU_ADMIN_APPINFO_CHANGELOGS))
              .setDisplayFilter (aDisplayFilter);

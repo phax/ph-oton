@@ -55,20 +55,21 @@ import com.helger.web.servlet.request.RequestLogger;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
+                                    extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_HTTP_HEADERS ("HTTP Header", "HTTP header"),
-   MSG_COOKIES ("Cookies", "Cookies"),
-   MSG_PARAMETERS ("Request-Parameter", "Request parameters"),
-   MSG_PROPERTIES ("Request-Eigenschaften", "Request properties"),
-   MSG_ATTRIBUTES ("Request-Attribute", "Request attributes"),
-   MSG_NAME ("Name", "Name"),
-   MSG_TYPE ("Typ", "Type"),
-   MSG_VALUE ("Wert", "Value"),
-   MSG_DETAILS ("Details", "Details");
+    MSG_HTTP_HEADERS ("HTTP Header", "HTTP header"),
+    MSG_COOKIES ("Cookies", "Cookies"),
+    MSG_PARAMETERS ("Request-Parameter", "Request parameters"),
+    MSG_PROPERTIES ("Request-Eigenschaften", "Request properties"),
+    MSG_ATTRIBUTES ("Request-Attribute", "Request attributes"),
+    MSG_NAME ("Name", "Name"),
+    MSG_TYPE ("Typ", "Type"),
+    MSG_VALUE ("Wert", "Value"),
+    MSG_DETAILS ("Details", "Details");
 
     private final IMultilingualText m_aTP;
 

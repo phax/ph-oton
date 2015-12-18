@@ -55,14 +55,15 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecutionContext>
+                                             extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_DATE ("Datum", "Date"),
-   MSG_USER ("Benutzer", "User"),
-   MSG_OBJECTID ("ID", "ID");
+    MSG_DATE ("Datum", "Date"),
+    MSG_USER ("Benutzer", "User"),
+    MSG_OBJECTID ("ID", "ID");
 
     @Nonnull
     private final IMultilingualText m_aTP;

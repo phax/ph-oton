@@ -78,37 +78,38 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 
-public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageSecurityToken <IUserToken, WPECTYPE>
+public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecutionContext>
+                                                 extends AbstractWebPageSecurityToken <IUserToken, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-   VALIDITY_APP_TOKEN_MSG ("Es ist noch kein App-Token vorhanden. Es muss mindestens ein App-Token vorhanden sein um ein Benutzer-Token anlegen zu können.", "No app token is present! At least one app token must be present to create a user token for it."),
-   VALIDITY_APP_TOKEN_BUTTON ("Neues App-Token anlegen", "Create new app token"),
-   BUTTON_CREATE_NEW ("Neues Benutzer-Token anlegen", "Create new user token"),
-   HEADER_EDIT ("Benutzer-Token von ''{0}'' bearbeiten", "Edit user token of ''{0}''"),
-   HEADER_CREATE ("Neues Benutzer-Token anlegen", "Create a new user token"),
-   HEADER_SHOW ("Details von Benutzer-Token für {0}", "Details of user token for {0}"),
-   HEADER_NAME ("Name", "Name"),
-   HEADER_VALUE ("Wert", "Value"),
-   LABEL_ATTRIBUTES ("Attribute", "Attributes"),
-   LABEL_APP_TOKEN ("App Token", "App token"),
-   LABEL_USER_NAME ("Benutzername", "User name"),
-   ERR_APP_TOKEN_EMPTY ("Das App Token muss angegeben werden!", "The app token must be specified!"),
-   ERR_USER_NAME_EMPTY ("Der Benutzername darf nicht leer sein!", "The user name may not be empty!"),
-   CREATE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich erstellt.", "The user token for ''{0}'' was successfully created."),
-   EDIT_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich bearbeitet.", "The user token for ''{0}'' was successfully edited."),
-   DELETE_QUERY ("Sind Sie sicher, dass Sie das Benutzer-Token für ''{0}'' löschen wollen?", "Are you sure you want to delete the user token of ''{0}''?"),
-   DELETE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich gelöscht!", "User token of ''{0}'' was successfully deleted!"),
-   DELETE_ERROR ("Beim Löschen des Benutzer-Token für ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while deleting user token of ''{0}''!"),
-   TAB_LABEL_ACTIVE ("Aktiv", "Active"),
-   TAB_LABEL_DELETED ("Gelöscht", "Deleted"),
-   HEADER_APP_TOKEN ("App-Token", "App token"),
-   HEADER_USER_NAME ("Eigentümer", "Owner"),
-   HEADER_USABLE ("Verwendbar?", "Usable?"),
-   ACTION_EDIT ("Benutzer-Token für ''{0}'' bearbeiten", "Edit user token of ''{0}''"),
-   ACTION_COPY ("Benutzer-Token für ''{0}'' kopieren", "Copy user token of ''{0}''"),
-   ACTION_DELETE ("Benutzer-Token für ''{0}'' löschen", "Delete user token of ''{0}''");
+    VALIDITY_APP_TOKEN_MSG ("Es ist noch kein App-Token vorhanden. Es muss mindestens ein App-Token vorhanden sein um ein Benutzer-Token anlegen zu können.", "No app token is present! At least one app token must be present to create a user token for it."),
+    VALIDITY_APP_TOKEN_BUTTON ("Neues App-Token anlegen", "Create new app token"),
+    BUTTON_CREATE_NEW ("Neues Benutzer-Token anlegen", "Create new user token"),
+    HEADER_EDIT ("Benutzer-Token von ''{0}'' bearbeiten", "Edit user token of ''{0}''"),
+    HEADER_CREATE ("Neues Benutzer-Token anlegen", "Create a new user token"),
+    HEADER_SHOW ("Details von Benutzer-Token für {0}", "Details of user token for {0}"),
+    HEADER_NAME ("Name", "Name"),
+    HEADER_VALUE ("Wert", "Value"),
+    LABEL_ATTRIBUTES ("Attribute", "Attributes"),
+    LABEL_APP_TOKEN ("App Token", "App token"),
+    LABEL_USER_NAME ("Benutzername", "User name"),
+    ERR_APP_TOKEN_EMPTY ("Das App Token muss angegeben werden!", "The app token must be specified!"),
+    ERR_USER_NAME_EMPTY ("Der Benutzername darf nicht leer sein!", "The user name may not be empty!"),
+    CREATE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich erstellt.", "The user token for ''{0}'' was successfully created."),
+    EDIT_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich bearbeitet.", "The user token for ''{0}'' was successfully edited."),
+    DELETE_QUERY ("Sind Sie sicher, dass Sie das Benutzer-Token für ''{0}'' löschen wollen?", "Are you sure you want to delete the user token of ''{0}''?"),
+    DELETE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich gelöscht!", "User token of ''{0}'' was successfully deleted!"),
+    DELETE_ERROR ("Beim Löschen des Benutzer-Token für ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while deleting user token of ''{0}''!"),
+    TAB_LABEL_ACTIVE ("Aktiv", "Active"),
+    TAB_LABEL_DELETED ("Gelöscht", "Deleted"),
+    HEADER_APP_TOKEN ("App-Token", "App token"),
+    HEADER_USER_NAME ("Eigentümer", "Owner"),
+    HEADER_USABLE ("Verwendbar?", "Usable?"),
+    ACTION_EDIT ("Benutzer-Token für ''{0}'' bearbeiten", "Edit user token of ''{0}''"),
+    ACTION_COPY ("Benutzer-Token für ''{0}'' kopieren", "Copy user token of ''{0}''"),
+    ACTION_DELETE ("Benutzer-Token für ''{0}'' löschen", "Delete user token of ''{0}''");
 
     private final IMultilingualText m_aTP;
 

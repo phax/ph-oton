@@ -64,23 +64,24 @@ import com.helger.web.networkinterface.NetworkInterfaceHelper;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
+                                    extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_NETWORK_INTERFACES ("Netzwerkkarten", "Network interfaces"),
-   MSG_ERROR_FINDING ("Fehler beim Ermitteln der Netzwerkkarten", "Error determining network interfaces"),
-   MSG_ID ("ID", "id"),
-   MSG_NAME ("Name", "Name"),
-   MSG_MAC ("MAC Adresse", "MAC address"),
-   MSG_IS_UP ("Up?", "Up?"),
-   MSG_IS_LOOPBACK ("Lb?", "Lb?"),
-   MSG_IS_POINT_TO_POINT ("P2P?", "P2P?"),
-   MSG_IS_MULTICAST ("MC?", "MC?"),
-   MSG_MTU ("MTU", "MTU"),
-   MSG_IS_VIRTUAL ("Virt?", "Virt?"),
-   MSG_ERROR ("Fehler!", "Error!");
+    MSG_NETWORK_INTERFACES ("Netzwerkkarten", "Network interfaces"),
+    MSG_ERROR_FINDING ("Fehler beim Ermitteln der Netzwerkkarten", "Error determining network interfaces"),
+    MSG_ID ("ID", "id"),
+    MSG_NAME ("Name", "Name"),
+    MSG_MAC ("MAC Adresse", "MAC address"),
+    MSG_IS_UP ("Up?", "Up?"),
+    MSG_IS_LOOPBACK ("Lb?", "Lb?"),
+    MSG_IS_POINT_TO_POINT ("P2P?", "P2P?"),
+    MSG_IS_MULTICAST ("MC?", "MC?"),
+    MSG_MTU ("MTU", "MTU"),
+    MSG_IS_VIRTUAL ("Virt?", "Virt?"),
+    MSG_ERROR ("Fehler!", "Error!");
 
     private final IMultilingualText m_aTP;
 

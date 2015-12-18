@@ -58,18 +58,19 @@ import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext>
+                                    extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_CODE ("Code", "Code"),
-   MSG_NAME ("Name", "Name"),
-   MSG_SYMBOL ("Symbol", "Symbol"),
-   MSG_DEFAULT_FRACTION_DIGITS ("Nachkommastellen", "Fraction digits"),
-   MSG_EXAMPLE ("Beispiel", "Example"),
-   MSG_CONTINENTS ("Kontinente", "Continents"),
-   MSG_LOCALE ("Locale", "Locale");
+    MSG_CODE ("Code", "Code"),
+    MSG_NAME ("Name", "Name"),
+    MSG_SYMBOL ("Symbol", "Symbol"),
+    MSG_DEFAULT_FRACTION_DIGITS ("Nachkommastellen", "Fraction digits"),
+    MSG_EXAMPLE ("Beispiel", "Example"),
+    MSG_CONTINENTS ("Kontinente", "Continents"),
+    MSG_LOCALE ("Locale", "Locale");
 
     private final IMultilingualText m_aTP;
 

@@ -64,7 +64,8 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
+                                     extends AbstractBootstrapWebPage <WPECTYPE>
 {
   public static final class ComparatorProviderNameAndVersion extends AbstractComparator <Provider>
   {
@@ -81,23 +82,23 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   TAB_PROVIDERS ("Provider", "Providers"),
-   TAB_ALGORITHMS ("Algorithmen", "Algorithms"),
-   TAB_SSLCONTEXT ("SSLContext", "SSLContext"),
-   MSG_KEY ("Name", "Name"),
-   MSG_VALUE ("Wert", "Value"),
-   MSG_NAME ("Name", "Name"),
-   MSG_VERSION ("Version", "Version"),
-   MSG_INFO ("Info", "Info"),
-   MSG_PROPS ("Eigenschaften", "Properties"),
-   MSG_PROVIDER ("Provider", "Provider"),
-   MSG_TYPE ("Typ", "Type"),
-   MSG_ALGORITHM ("Algorithmus", "Algorithm"),
-   MSG_CLASSNAME ("Klassenname", "Class name"),
-   MSG_DEFAULT_PROTOCOLS ("Standard Protokolle", "Default protocols"),
-   MSG_DEFAULT_CIPHER_SUITES ("Standard Cipher Suites", "Default cipher suites"),
-   MSG_SUPPORTED_PROTOCOLS ("Unterstützte Protokolle", "Supported protocols"),
-   MSG_SUPPORTED_CIPHER_SUITES ("Unterstützte Cipher Suites", "Supported cipher suites");
+    TAB_PROVIDERS ("Provider", "Providers"),
+    TAB_ALGORITHMS ("Algorithmen", "Algorithms"),
+    TAB_SSLCONTEXT ("SSLContext", "SSLContext"),
+    MSG_KEY ("Name", "Name"),
+    MSG_VALUE ("Wert", "Value"),
+    MSG_NAME ("Name", "Name"),
+    MSG_VERSION ("Version", "Version"),
+    MSG_INFO ("Info", "Info"),
+    MSG_PROPS ("Eigenschaften", "Properties"),
+    MSG_PROVIDER ("Provider", "Provider"),
+    MSG_TYPE ("Typ", "Type"),
+    MSG_ALGORITHM ("Algorithmus", "Algorithm"),
+    MSG_CLASSNAME ("Klassenname", "Class name"),
+    MSG_DEFAULT_PROTOCOLS ("Standard Protokolle", "Default protocols"),
+    MSG_DEFAULT_CIPHER_SUITES ("Standard Cipher Suites", "Default cipher suites"),
+    MSG_SUPPORTED_PROTOCOLS ("Unterstützte Protokolle", "Supported protocols"),
+    MSG_SUPPORTED_CIPHER_SUITES ("Unterstützte Cipher Suites", "Supported cipher suites");
 
     private final IMultilingualText m_aTP;
 

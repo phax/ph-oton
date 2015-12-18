@@ -68,24 +68,25 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 
-public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageSecurityObjectWithAttributes <IRole, WPECTYPE>
+public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionContext>
+                                            extends AbstractWebPageSecurityObjectWithAttributes <IRole, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-   HEADER_NAME ("Name", "Name"),
-   HEADER_IN_USE ("Verwendet?", "In use?"),
-   HEADER_VALUE ("Wert", "Value"),
-   HEADER_DETAILS ("Details von Rolle {0}", "Details of role {0}"),
-   LABEL_NAME ("Name", "Name"),
-   LABEL_DESCRIPTION ("Beschreibung", "Description"),
-   LABEL_USERGROUPS_0 ("Benutzergruppen", "User groups"),
-   LABEL_USERGROUPS_N ("Benutzergruppen ({0})", "User groups ({0})"),
-   LABEL_ATTRIBUTES ("Attribute", "Attributes"),
-   NONE_ASSIGNED ("keine zugeordnet", "none assigned"),
-   DELETE_QUERY ("Soll die Rolle ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the role ''{0}''?"),
-   DELETE_SUCCESS ("Die Rolle ''{0}'' wurden erfolgreich gelöscht!", "The role ''{0}'' was successfully deleted!"),
-   DELETE_ERROR ("Fehler beim Löschen der Rolle ''{0}''!", "Error deleting the role ''{0}''!");
+    HEADER_NAME ("Name", "Name"),
+    HEADER_IN_USE ("Verwendet?", "In use?"),
+    HEADER_VALUE ("Wert", "Value"),
+    HEADER_DETAILS ("Details von Rolle {0}", "Details of role {0}"),
+    LABEL_NAME ("Name", "Name"),
+    LABEL_DESCRIPTION ("Beschreibung", "Description"),
+    LABEL_USERGROUPS_0 ("Benutzergruppen", "User groups"),
+    LABEL_USERGROUPS_N ("Benutzergruppen ({0})", "User groups ({0})"),
+    LABEL_ATTRIBUTES ("Attribute", "Attributes"),
+    NONE_ASSIGNED ("keine zugeordnet", "none assigned"),
+    DELETE_QUERY ("Soll die Rolle ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the role ''{0}''?"),
+    DELETE_SUCCESS ("Die Rolle ''{0}'' wurden erfolgreich gelöscht!", "The role ''{0}'' was successfully deleted!"),
+    DELETE_ERROR ("Fehler beim Löschen der Rolle ''{0}''!", "Error deleting the role ''{0}''!");
 
     private final IMultilingualText m_aTP;
 

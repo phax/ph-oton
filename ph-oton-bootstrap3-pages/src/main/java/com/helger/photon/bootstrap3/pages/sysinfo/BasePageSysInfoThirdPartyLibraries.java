@@ -50,13 +50,14 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecutionContext>
+                                                extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_TPM_HEADER ("Folgende externen Module werden verwendet", "The following external libraries are used"),
-   MSG_LICENSED_UNDER (" lizensiert unter ", " licensed under ");
+    MSG_TPM_HEADER ("Folgende externen Module werden verwendet", "The following external libraries are used"),
+    MSG_LICENSED_UNDER (" lizensiert unter ", " licensed under ");
 
     private final IMultilingualText m_aTP;
 

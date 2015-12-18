@@ -28,7 +28,8 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
-public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
+public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecutionContext>
+                                               extends AbstractWebPage <WPECTYPE>
 {
   public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {

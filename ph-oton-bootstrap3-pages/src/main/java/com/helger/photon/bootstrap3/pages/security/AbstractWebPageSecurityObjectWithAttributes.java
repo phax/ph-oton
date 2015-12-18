@@ -33,7 +33,9 @@ import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
-public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPageForm <DATATYPE, WPECTYPE>
+public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
+                                                                  extends
+                                                                  AbstractBootstrapWebPageForm <DATATYPE, WPECTYPE>
 {
   public AbstractWebPageSecurityObjectWithAttributes (@Nonnull @Nonempty final String sID,
                                                       @Nonnull @Nonempty final String sName)

@@ -74,39 +74,40 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.smtp.util.EmailAddressValidator;
 
-public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageSecurityToken <IAppToken, WPECTYPE>
+public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecutionContext>
+                                                extends AbstractWebPageSecurityToken <IAppToken, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-   BUTTON_CREATE_NEW ("Neues App-Token anlegen", "Create new app token"),
-   HEADER_EDIT ("App-Token von ''{0}'' bearbeiten", "Edit app token of ''{0}''"),
-   HEADER_CREATE ("Neues App-Token anlegen", "Create a new app token"),
-   HEADER_SHOW ("Details von App-Token für {0}", "Details of app token for {0}"),
-   HEADER_NAME ("Name", "Name"),
-   HEADER_VALUE ("Wert", "Value"),
-   LABEL_ATTRIBUTES ("Attribute", "Attributes"),
-   LABEL_OWNER_NAME ("Eigentümer", "Owner"),
-   LABEL_OWNER_URL ("URL", "URL"),
-   LABEL_OWNER_CONTACT ("Kontaktperson", "Contact person"),
-   LABEL_OWNER_CONTACT_EMAIL ("E-Mail Adresse", "Email address"),
-   ERR_OWNER_NAME_EMPTY ("Der Eigentümer muss angegeben werden!", "The owner must be specified!"),
-   ERR_OWNER_URL_INVALID ("Die URL ist ungültig!", "The URL is invalid!"),
-   ERR_OWNER_EMAIL_INVALID ("Die E-Mail-Adresse ist ungültig!", "The email address is invalid!"),
-   CREATE_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich erstellt.", "The app token for ''{0}'' was successfully created."),
-   EDIT_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich bearbeitet.", "The app token for ''{0}'' was successfully edited."),
-   DELETE_QUERY ("Sind Sie sicher, dass Sie das App-Token für ''{0}'' löschen wollen?", "Are you sure you want to delete the app token of ''{0}''?"),
-   DELETE_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich gelöscht!", "App token of ''{0}'' was successfully deleted!"),
-   DELETE_ERROR ("Beim Löschen des App-Token für ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while deleting app token of ''{0}''!"),
-   TAB_LABEL_ACTIVE ("Aktiv", "Active"),
-   TAB_LABEL_DELETED ("Gelöscht", "Deleted"),
-   HEADER_OWNER_NAME ("Eigentümer", "Owner"),
-   HEADER_OWNER_URL ("URL", "URL"),
-   HEADER_OWNER_TOKEN ("Token", "Token"),
-   HEADER_USABLE ("Verwendbar?", "Usable?"),
-   ACTION_EDIT ("App-Token für ''{0}'' bearbeiten", "Edit app token of ''{0}''"),
-   ACTION_COPY ("App-Token für ''{0}'' kopieren", "Copy app token of ''{0}''"),
-   ACTION_DELETE ("App-Token für ''{0}'' löschen", "Delete app token of ''{0}''");
+    BUTTON_CREATE_NEW ("Neues App-Token anlegen", "Create new app token"),
+    HEADER_EDIT ("App-Token von ''{0}'' bearbeiten", "Edit app token of ''{0}''"),
+    HEADER_CREATE ("Neues App-Token anlegen", "Create a new app token"),
+    HEADER_SHOW ("Details von App-Token für {0}", "Details of app token for {0}"),
+    HEADER_NAME ("Name", "Name"),
+    HEADER_VALUE ("Wert", "Value"),
+    LABEL_ATTRIBUTES ("Attribute", "Attributes"),
+    LABEL_OWNER_NAME ("Eigentümer", "Owner"),
+    LABEL_OWNER_URL ("URL", "URL"),
+    LABEL_OWNER_CONTACT ("Kontaktperson", "Contact person"),
+    LABEL_OWNER_CONTACT_EMAIL ("E-Mail Adresse", "Email address"),
+    ERR_OWNER_NAME_EMPTY ("Der Eigentümer muss angegeben werden!", "The owner must be specified!"),
+    ERR_OWNER_URL_INVALID ("Die URL ist ungültig!", "The URL is invalid!"),
+    ERR_OWNER_EMAIL_INVALID ("Die E-Mail-Adresse ist ungültig!", "The email address is invalid!"),
+    CREATE_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich erstellt.", "The app token for ''{0}'' was successfully created."),
+    EDIT_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich bearbeitet.", "The app token for ''{0}'' was successfully edited."),
+    DELETE_QUERY ("Sind Sie sicher, dass Sie das App-Token für ''{0}'' löschen wollen?", "Are you sure you want to delete the app token of ''{0}''?"),
+    DELETE_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich gelöscht!", "App token of ''{0}'' was successfully deleted!"),
+    DELETE_ERROR ("Beim Löschen des App-Token für ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while deleting app token of ''{0}''!"),
+    TAB_LABEL_ACTIVE ("Aktiv", "Active"),
+    TAB_LABEL_DELETED ("Gelöscht", "Deleted"),
+    HEADER_OWNER_NAME ("Eigentümer", "Owner"),
+    HEADER_OWNER_URL ("URL", "URL"),
+    HEADER_OWNER_TOKEN ("Token", "Token"),
+    HEADER_USABLE ("Verwendbar?", "Usable?"),
+    ACTION_EDIT ("App-Token für ''{0}'' bearbeiten", "Edit app token of ''{0}''"),
+    ACTION_COPY ("App-Token für ''{0}'' kopieren", "Copy app token of ''{0}''"),
+    ACTION_DELETE ("App-Token für ''{0}'' löschen", "Delete app token of ''{0}''");
 
     private final IMultilingualText m_aTP;
 

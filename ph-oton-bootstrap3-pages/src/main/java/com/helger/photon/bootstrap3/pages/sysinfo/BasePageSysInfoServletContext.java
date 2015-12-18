@@ -59,21 +59,22 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionContext>
+                                           extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_SERVLETS ("Servlets", "Servlets"),
-   MSG_LISTENERS ("Listener", "Listeners"),
-   MSG_FILTERS ("Filter", "Filters"),
-   MSG_NAME ("Name", "Name"),
-   MSG_CLASS_NAME ("Klasse", "Class name"),
-   MSG_INIT_PARAMS ("Init Params", "Init params"),
-   MSG_MAPPINGS ("Mappings", "Mappings"),
-   MSG_SERVLET_MAPPINGS ("Servlet Mappings", "Servlet mappings"),
-   MSG_URL_MAPPINGS ("URL Mappings", "URL mappings"),
-   MSG_ROOT_MAPPING ("ROOT Mapping", "ROOT mapping");
+    MSG_SERVLETS ("Servlets", "Servlets"),
+    MSG_LISTENERS ("Listener", "Listeners"),
+    MSG_FILTERS ("Filter", "Filters"),
+    MSG_NAME ("Name", "Name"),
+    MSG_CLASS_NAME ("Klasse", "Class name"),
+    MSG_INIT_PARAMS ("Init Params", "Init params"),
+    MSG_MAPPINGS ("Mappings", "Mappings"),
+    MSG_SERVLET_MAPPINGS ("Servlet Mappings", "Servlet mappings"),
+    MSG_URL_MAPPINGS ("URL Mappings", "URL mappings"),
+    MSG_ROOT_MAPPING ("ROOT Mapping", "ROOT mapping");
 
     @Nonnull
     private final IMultilingualText m_aTP;

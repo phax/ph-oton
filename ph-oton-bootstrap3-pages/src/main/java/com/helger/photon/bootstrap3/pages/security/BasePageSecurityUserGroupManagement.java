@@ -78,34 +78,35 @@ import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 
-public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageSecurityObjectWithAttributes <IUserGroup, WPECTYPE>
+public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecutionContext> extends
+                                                 AbstractWebPageSecurityObjectWithAttributes <IUserGroup, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-   BUTTON_CREATE_NEW_USERGROUP ("Neue Benutzergruppe anlegen", "Create new user group"),
-   HEADER_NAME ("Name", "Name"),
-   HEADER_IN_USE ("Verwendet?", "In use?"),
-   HEADER_VALUE ("Wert", "Value"),
-   HEADER_DETAILS ("Details von Benutzergruppe {0}", "Details of user group {0}"),
-   LABEL_NAME ("Name", "Name"),
-   LABEL_DESCRIPTION ("Beschreibung", "Description"),
-   LABEL_USERS_0 ("Benutzer", "Users"),
-   LABEL_USERS_N ("Benutzer ({0})", "Users ({0})"),
-   LABEL_ROLES_0 ("Rollen", "Roles"),
-   LABEL_ROLES_N ("Rollen ({0})", "Roles ({0})"),
-   LABEL_ATTRIBUTES ("Attribute", "Attributes"),
-   NONE_ASSIGNED ("keine zugeordnet", "none assigned"),
-   TITLE_CREATE ("Neue Benutzergruppe anlegen", "Create new user group"),
-   TITLE_EDIT ("Benutzergruppe ''{0}'' bearbeiten", "Edit user group ''{0}''"),
-   ERROR_NAME_REQUIRED ("Es muss ein Name angegeben werden!", "A name must be specified!"),
-   ERROR_NO_ROLE ("Es muss mindestens eine Rolle ausgewählt werden!", "At least one role must be selected!"),
-   ERROR_INVALID_ROLES ("Mindestens eine der angegebenen Rolle ist ungültig!", "At least one selected role is invalid!"),
-   DELETE_QUERY ("Soll die Benutzergruppe ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the user group ''{0}''?"),
-   DELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurden erfolgreich gelöscht!", "The user group ''{0}'' was successfully deleted!"),
-   DELETE_ERROR ("Fehler beim Löschen der Benutzergruppe ''{0}''!", "Error deleting the user group ''{0}''!"),
-   SUCCESS_CREATE ("Die neue BenutzerGruppe wurde erfolgreich angelegt!", "Successfully created the new user group!"),
-   SUCCESS_EDIT ("Die Benutzergruppe wurde erfolgreich bearbeitet!", "Sucessfully edited the user group!");
+    BUTTON_CREATE_NEW_USERGROUP ("Neue Benutzergruppe anlegen", "Create new user group"),
+    HEADER_NAME ("Name", "Name"),
+    HEADER_IN_USE ("Verwendet?", "In use?"),
+    HEADER_VALUE ("Wert", "Value"),
+    HEADER_DETAILS ("Details von Benutzergruppe {0}", "Details of user group {0}"),
+    LABEL_NAME ("Name", "Name"),
+    LABEL_DESCRIPTION ("Beschreibung", "Description"),
+    LABEL_USERS_0 ("Benutzer", "Users"),
+    LABEL_USERS_N ("Benutzer ({0})", "Users ({0})"),
+    LABEL_ROLES_0 ("Rollen", "Roles"),
+    LABEL_ROLES_N ("Rollen ({0})", "Roles ({0})"),
+    LABEL_ATTRIBUTES ("Attribute", "Attributes"),
+    NONE_ASSIGNED ("keine zugeordnet", "none assigned"),
+    TITLE_CREATE ("Neue Benutzergruppe anlegen", "Create new user group"),
+    TITLE_EDIT ("Benutzergruppe ''{0}'' bearbeiten", "Edit user group ''{0}''"),
+    ERROR_NAME_REQUIRED ("Es muss ein Name angegeben werden!", "A name must be specified!"),
+    ERROR_NO_ROLE ("Es muss mindestens eine Rolle ausgewählt werden!", "At least one role must be selected!"),
+    ERROR_INVALID_ROLES ("Mindestens eine der angegebenen Rolle ist ungültig!", "At least one selected role is invalid!"),
+    DELETE_QUERY ("Soll die Benutzergruppe ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the user group ''{0}''?"),
+    DELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurden erfolgreich gelöscht!", "The user group ''{0}'' was successfully deleted!"),
+    DELETE_ERROR ("Fehler beim Löschen der Benutzergruppe ''{0}''!", "Error deleting the user group ''{0}''!"),
+    SUCCESS_CREATE ("Die neue BenutzerGruppe wurde erfolgreich angelegt!", "Successfully created the new user group!"),
+    SUCCESS_EDIT ("Die Benutzergruppe wurde erfolgreich bearbeitet!", "Sucessfully edited the user group!");
 
     private final IMultilingualText m_aTP;
 

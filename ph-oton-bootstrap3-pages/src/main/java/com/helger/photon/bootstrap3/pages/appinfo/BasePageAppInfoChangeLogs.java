@@ -56,15 +56,16 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContext>
+                                       extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_HEADER_DATE ("Datum", "Date"),
-   MSG_HEADER_COMPONENT ("Komponente", "Component"),
-   MSG_HEADER_CATEGORY ("Kategorie", "Category"),
-   MSG_HEADER_CHANGE ("Änderung", "Change");
+    MSG_HEADER_DATE ("Datum", "Date"),
+    MSG_HEADER_COMPONENT ("Komponente", "Component"),
+    MSG_HEADER_CATEGORY ("Kategorie", "Category"),
+    MSG_HEADER_CHANGE ("Änderung", "Change");
 
     private final IMultilingualText m_aTP;
 

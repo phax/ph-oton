@@ -50,13 +50,14 @@ import com.helger.photon.uictrls.prism.HCPrismJS;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecutionContext>
+                                               extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_DOES_NOT_EXIST ("Die Konfigurationsdatei existiert nicht!", "The configuration file does not exist!"),
-   MSG_NO_CONFIG_FILES ("Es sind keine Konfigurationsdateien registriert.", "No configuration files are registered.");
+    MSG_DOES_NOT_EXIST ("Die Konfigurationsdatei existiert nicht!", "The configuration file does not exist!"),
+    MSG_NO_CONFIG_FILES ("Es sind keine Konfigurationsdateien registriert.", "No configuration files are registered.");
 
     private final IMultilingualText m_aTP;
 

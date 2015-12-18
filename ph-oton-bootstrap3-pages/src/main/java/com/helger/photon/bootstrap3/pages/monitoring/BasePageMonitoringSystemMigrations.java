@@ -53,15 +53,16 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecutionContext>
+                                                extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_ID ("ID", "ID"),
-   MSG_DATE ("Datum", "Date"),
-   MSG_SUCCESS ("Erfolg?", "Success?"),
-   MSG_ERRORMESSAGE ("Fehlermeldung", "Error message");
+    MSG_ID ("ID", "ID"),
+    MSG_DATE ("Datum", "Date"),
+    MSG_SUCCESS ("Erfolg?", "Success?"),
+    MSG_ERRORMESSAGE ("Fehlermeldung", "Error message");
 
     @Nonnull
     private final IMultilingualText m_aTP;

@@ -58,29 +58,30 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionContext>
+                                          extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-   MSG_TAB_TIMER ("Zeiten", "Timer"),
-   MSG_TAB_SIZE ("Größe", "Size"),
-   MSG_TAB_COUNTER ("Zähler", "Counter"),
-   MSG_TAB_CACHE ("Cache", "Cache"),
-   MSG_NAME ("Name", "Name"),
-   MSG_KEY ("Schlüssel", "Key"),
-   MSG_INVOCATION ("Aufrufe", "Invocations"),
-   MSG_TIMER_MIN ("Minimum (ms)", "Minimum (ms)"),
-   MSG_TIMER_MAX ("Maximum (ms)", "Maximum (ms)"),
-   MSG_TIMER_AVG ("Durchschnitt (ms)", "Average (ms)"),
-   MSG_TIMER_SUM ("Summe (ms)", "Sum (ms)"),
-   MSG_MIN ("Minimum", "Minimum"),
-   MSG_MAX ("Maximum", "Maximum"),
-   MSG_AVG ("Durchschnitt", "Average"),
-   MSG_SUM ("Summe", "Sum"),
-   MSG_COUNT ("Anzahl", "Count"),
-   MSG_CACHE_HIT ("Cache hit", "Cache hit"),
-   MSG_CACHE_MISS ("Cache miss", "Cache miss");
+    MSG_TAB_TIMER ("Zeiten", "Timer"),
+    MSG_TAB_SIZE ("Größe", "Size"),
+    MSG_TAB_COUNTER ("Zähler", "Counter"),
+    MSG_TAB_CACHE ("Cache", "Cache"),
+    MSG_NAME ("Name", "Name"),
+    MSG_KEY ("Schlüssel", "Key"),
+    MSG_INVOCATION ("Aufrufe", "Invocations"),
+    MSG_TIMER_MIN ("Minimum (ms)", "Minimum (ms)"),
+    MSG_TIMER_MAX ("Maximum (ms)", "Maximum (ms)"),
+    MSG_TIMER_AVG ("Durchschnitt (ms)", "Average (ms)"),
+    MSG_TIMER_SUM ("Summe (ms)", "Sum (ms)"),
+    MSG_MIN ("Minimum", "Minimum"),
+    MSG_MAX ("Maximum", "Maximum"),
+    MSG_AVG ("Durchschnitt", "Average"),
+    MSG_SUM ("Summe", "Sum"),
+    MSG_COUNT ("Anzahl", "Count"),
+    MSG_CACHE_HIT ("Cache hit", "Cache hit"),
+    MSG_CACHE_MISS ("Cache miss", "Cache miss");
 
     private final IMultilingualText m_aTP;
 
