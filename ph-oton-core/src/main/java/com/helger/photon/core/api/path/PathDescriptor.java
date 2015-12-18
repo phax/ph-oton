@@ -88,6 +88,24 @@ public final class PathDescriptor
     return PathMatchingResult.createSuccess (aVariableValues);
   }
 
+  @Nonnull
+  @Nonempty
+  public String getAsURLString ()
+  {
+    final StringBuilder aSB = new StringBuilder ();
+    for (final PathDescriptorPart aPart : m_aPathParts)
+      aSB.append ('/').append (aPart.getAsURLString ());
+    return aSB.toString ();
+  }
+
+  public boolean containsVariables ()
+  {
+    for (final PathDescriptorPart aPart : m_aPathParts)
+      if (aPart.isVariable ())
+        return true;
+    return false;
+  }
+
   @Override
   public String toString ()
   {

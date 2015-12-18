@@ -41,6 +41,11 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public final class PathDescriptorPart
 {
+  public static final String VARIABLE_START = "{";
+  public static final String VARIABLE_END = "}";
+  public static final char CONSTRAINT_SEPARATOR = ':';
+  private static final int MIN_VARIABLE_LENGTH = VARIABLE_START.length () + VARIABLE_END.length ();
+
   private final boolean m_bIsVariable;
   private final String m_sName;
   private final List <PathDescriptorVariableConstraint> m_aVariableConstraints;
@@ -114,6 +119,25 @@ public final class PathDescriptorPart
     return m_sName.equals (sPathPart);
   }
 
+  @Nonnull
+  @Nonempty
+  public String getAsURLString ()
+  {
+    if (m_bIsVariable)
+    {
+      final StringBuilder aSB = new StringBuilder ();
+      aSB.append (VARIABLE_START).append (m_sName);
+      if (m_aVariableConstraints != null)
+        for (final PathDescriptorVariableConstraint aVariableConstraint : m_aVariableConstraints)
+          aSB.append (CONSTRAINT_SEPARATOR).append (aVariableConstraint.getAsURLString ());
+      aSB.append (VARIABLE_END);
+      return aSB.toString ();
+    }
+
+    // Static :)
+    return m_sName;
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -149,16 +173,19 @@ public final class PathDescriptorPart
   public static PathDescriptorPart create (@Nonnull @Nonempty final String sPathPart)
   {
     ValueEnforcer.notEmpty (sPathPart, "PathPart");
-    if (sPathPart.length () > 2 && sPathPart.startsWith ("{") && sPathPart.endsWith ("}"))
+    if (sPathPart.length () > MIN_VARIABLE_LENGTH &&
+        sPathPart.startsWith (VARIABLE_START) &&
+        sPathPart.endsWith (VARIABLE_END))
     {
       // It's a variable
 
       // Remove "{" and "}"
-      final String sVariablePart = sPathPart.substring (1, sPathPart.length () - 1);
+      final String sVariablePart = sPathPart.substring (VARIABLE_START.length (),
+                                                        sPathPart.length () - VARIABLE_END.length ());
 
       // Check for additional variable constraints
       // Example: {path:regex=^[0-9]+$}
-      final List <String> aVarPartParts = StringHelper.getExploded (':', sVariablePart);
+      final List <String> aVarPartParts = StringHelper.getExploded (CONSTRAINT_SEPARATOR, sVariablePart);
 
       // Variable name is always first
       final String sVariableName = aVarPartParts.get (0);

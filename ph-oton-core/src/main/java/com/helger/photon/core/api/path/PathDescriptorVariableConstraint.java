@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -73,6 +74,16 @@ public final class PathDescriptorVariableConstraint
       default:
         throw new IllegalStateException ("Constraint type " + m_eConstraintType + " is not implemented yet!");
     }
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getAsURLString ()
+  {
+    if (m_eConstraintType.isRequiresValue ())
+      return m_eConstraintType.getID () + '=' + m_sConstraintValue;
+
+    return m_eConstraintType.getID ();
   }
 
   @Override

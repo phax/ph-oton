@@ -16,10 +16,14 @@
  */
 package com.helger.photon.core.api;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.http.EHTTPMethod;
 import com.helger.web.scope.singleton.AbstractApplicationWebSingleton;
 
@@ -48,9 +52,22 @@ public final class ApplicationAPIManager extends AbstractApplicationWebSingleton
     m_aList.addDescriptor (aDescriptor);
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <? extends IAPIDescriptor> getAllDescriptors ()
+  {
+    return m_aList.getAllDescriptors ();
+  }
+
   @Nullable
   public InvokableAPIDescriptor getAPIByPath (@Nullable final String sPath, @Nonnull final EHTTPMethod eHTTPMethod)
   {
     return m_aList.getMatching (sPath, eHTTPMethod);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ()).append ("List", m_aList).toString ();
   }
 }

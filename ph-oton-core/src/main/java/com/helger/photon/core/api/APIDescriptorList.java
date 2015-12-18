@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.api.path.PathDescriptorHelper;
 import com.helger.photon.core.api.path.PathMatchingResult;
@@ -44,10 +46,20 @@ public class APIDescriptorList
 
   private final List <APIDescriptor> m_aList = new ArrayList <> ();
 
+  public APIDescriptorList ()
+  {}
+
   public void addDescriptor (@Nonnull final APIDescriptor aDescriptor)
   {
     ValueEnforcer.notNull (aDescriptor, "Descriptor");
     m_aList.add (aDescriptor);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <? extends IAPIDescriptor> getAllDescriptors ()
+  {
+    return CollectionHelper.newList (m_aList);
   }
 
   @Nullable
