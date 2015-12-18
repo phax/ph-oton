@@ -1,0 +1,106 @@
+/**
+ * Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.helger.photon.core.api.path;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.string.ToStringGenerator;
+
+public final class PathDescriptor
+{
+  private final List <PathDescriptorPart> m_aPathParts = new ArrayList <> ();
+
+  private PathDescriptor (@Nonnull @Nonempty final List <String> aPathParts)
+  {
+    ValueEnforcer.notEmpty (aPathParts, "PathParts");
+    for (final String sPathPart : aPathParts)
+      m_aPathParts.add (PathDescriptorPart.create (sPathPart));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <PathDescriptorPart> getAllParts ()
+  {
+    return CollectionHelper.newList (m_aPathParts);
+  }
+
+  /**
+   * Check if this path descriptor matches the provided path parts. This
+   * requires that this path descriptor and the provided collection have the
+   * same number of elements and that all static and variable parts match.
+   *
+   * @param aPathParts
+   *        The parts to
+   * @return A non-<code>null</code> {@link PathMatchingResult} object with all
+   *         matching variable names.
+   */
+  @Nonnull
+  public PathMatchingResult matchesParts (@Nonnull final List <String> aPathParts)
+  {
+    ValueEnforcer.notNull (aPathParts, "PathParts");
+    final int nPartCount = m_aPathParts.size ();
+    if (aPathParts.size () != nPartCount)
+    {
+      // Size must match
+      return PathMatchingResult.NO_MATCH;
+    }
+
+    final Map <String, String> aVariableValues = new LinkedHashMap <String, String> ();
+    for (int i = 0; i < nPartCount; ++i)
+    {
+      final PathDescriptorPart aPart = m_aPathParts.get (i);
+      final String sPathPart = aPathParts.get (i);
+      if (!aPart.matches (sPathPart))
+      {
+        // Current part does not match - full error
+        return PathMatchingResult.NO_MATCH;
+      }
+
+      // Matching variable part?
+      if (aPart.isVariable ())
+        aVariableValues.put (aPart.getName (), sPathPart);
+    }
+
+    // We've got it!
+    return PathMatchingResult.createSuccess (aVariableValues);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (null).append ("PathParts", m_aPathParts).toString ();
+  }
+
+  @Nonnull
+  public static PathDescriptor create (@Nonnull @Nonempty final String sPath)
+  {
+    ValueEnforcer.notEmpty (sPath, "Path");
+
+    // Split into pieces
+    final List <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sPath);
+    return new PathDescriptor (aPathParts);
+  }
+}
