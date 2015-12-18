@@ -32,9 +32,9 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum EOpenGraphObjectTypeBooks implements IHasID <String>
 {
- AUTHOR ("books.author"),
- BOOK ("books.book"),
- GENRE ("books.genre");
+  AUTHOR ("books.author"),
+  BOOK ("books.book"),
+  GENRE ("books.genre");
 
   private final String m_sID;
 

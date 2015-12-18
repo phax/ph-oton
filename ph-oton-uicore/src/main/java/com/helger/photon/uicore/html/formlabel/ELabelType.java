@@ -23,9 +23,9 @@ package com.helger.photon.uicore.html.formlabel;
  */
 public enum ELabelType
 {
- OPTIONAL,
- MANDATORY,
- ALTERNATIVE;
+  OPTIONAL,
+  MANDATORY,
+  ALTERNATIVE;
 
   public static final ELabelType DEFAULT = OPTIONAL;
 }

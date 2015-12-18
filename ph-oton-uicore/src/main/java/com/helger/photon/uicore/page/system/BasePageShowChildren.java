@@ -42,7 +42,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
 {
-  private static final class ShowChildrenCallback <WPECTYPE extends IWebPageExecutionContext> extends DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
+  private static final class ShowChildrenCallback <WPECTYPE extends IWebPageExecutionContext> extends
+                                                  DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
   {
     private final WPECTYPE m_aWPEC;
     private final NonBlockingStack <HCUL> m_aStack;

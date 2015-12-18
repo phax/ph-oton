@@ -32,9 +32,9 @@ import com.helger.photon.uicore.css.CPageParam;
  */
 public enum EWebPageSimpleFormAction implements IHasID <String>
 {
- VIEW (CPageParam.ACTION_VIEW),
- EDIT (CPageParam.ACTION_EDIT),
- CUSTOM ("$custom$");
+  VIEW (CPageParam.ACTION_VIEW),
+  EDIT (CPageParam.ACTION_EDIT),
+  CUSTOM ("$custom$");
 
   public static final EWebPageSimpleFormAction DEFAULT = VIEW;
 

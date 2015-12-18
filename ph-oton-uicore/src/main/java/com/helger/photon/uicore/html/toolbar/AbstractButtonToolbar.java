@@ -41,7 +41,8 @@ import com.helger.photon.uicore.icon.IIcon;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonToolbar <IMPLTYPE>> extends AbstractHCDiv <IMPLTYPE> implements IButtonToolbar <IMPLTYPE>
+public abstract class AbstractButtonToolbar <IMPLTYPE extends AbstractButtonToolbar <IMPLTYPE>>
+                                            extends AbstractHCDiv <IMPLTYPE> implements IButtonToolbar <IMPLTYPE>
 {
   private final SimpleURL m_aSelfHref;
 

@@ -32,14 +32,14 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum EOpenGraphObjectTypeGeneral implements IHasID <String>
 {
- PLACE ("place"),
- WEBSITE ("website"),
- BOOK ("book"),
- PROFILE ("profile"),
- OBJECT ("object"),
- ARTICLE ("article"),
- PRODUCT ("product"),
- EVENT ("event");
+  PLACE ("place"),
+  WEBSITE ("website"),
+  BOOK ("book"),
+  PROFILE ("profile"),
+  OBJECT ("object"),
+  ARTICLE ("article"),
+  PRODUCT ("product"),
+  EVENT ("event");
 
   private final String m_sID;
 

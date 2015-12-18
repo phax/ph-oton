@@ -32,7 +32,7 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum EOpenGraphObjectTypeBusiness implements IHasID <String>
 {
- BUSINESS ("business.business");
+  BUSINESS ("business.business");
 
   private final String m_sID;
 

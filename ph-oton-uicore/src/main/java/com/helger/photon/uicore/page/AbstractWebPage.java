@@ -49,7 +49,8 @@ import com.helger.photon.uicore.css.CUICoreCSS;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext> extends AbstractPage implements IWebPage <WPECTYPE>
+public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext> extends AbstractPage
+                                      implements IWebPage <WPECTYPE>
 {
   public static final boolean DEFAULT_CSRF_PREVENTION_ENABLED = true;
 

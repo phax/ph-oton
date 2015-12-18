@@ -69,7 +69,8 @@ import com.helger.photon.uicore.icon.IIcon;
  *        The form implementation type.
  */
 @NotThreadSafe
-public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>> extends AbstractWebPage <WPECTYPE>
+public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
+                                                extends AbstractWebPage <WPECTYPE>
 {
   public static final String FORM_ID_INPUT = "inputform";
 

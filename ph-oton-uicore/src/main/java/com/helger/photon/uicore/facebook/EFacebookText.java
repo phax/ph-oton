@@ -30,7 +30,7 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum EFacebookText implements IHasDisplayText
 {
- SHARE ("Share", "Share");
+  SHARE ("Share", "Share");
 
   private final IMultilingualText m_aTP;
 

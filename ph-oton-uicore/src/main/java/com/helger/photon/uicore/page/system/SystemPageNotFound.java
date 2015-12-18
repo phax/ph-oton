@@ -46,8 +46,8 @@ public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> exte
   @Translatable
   protected static enum ETextBase implements IHasDisplayText
   {
-   PAGENAME ("Seite nicht gefunden", "Page not found"),
-   MESSAGE ("Die von Ihnen gesuchte Seite existiert leider nicht!", "The page you are looking for does not exist!");
+    PAGENAME ("Seite nicht gefunden", "Page not found"),
+    MESSAGE ("Die von Ihnen gesuchte Seite existiert leider nicht!", "The page you are looking for does not exist!");
 
     private final IMultilingualText m_aTP;
 

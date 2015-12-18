@@ -22,34 +22,34 @@ import com.helger.commons.annotation.Nonempty;
 
 public enum EDateTimeFormatToken
 {
- ABBR_WEEKDAY_NAME ("%a", "EE"),
- FULL_WEEKDAY_NAME ("%A", "EEEE"),
- ABBR_MONTH_NAME ("%b", "MMM"),
- FULL_MONTH_NAME ("%B", "MMMM"),
- // _CENTURY ("%C", null), // Java: none
- DAY_OF_MONTH_LZ ("%d", "dd"),
- DAY_OF_MONTH ("%e", "d"),
- HOUR23_LZ ("%H", "HH"),
- HOUR12_LZ ("%I", "hh"),
- DAY_OF_YEAR_LZ ("%j", "DDD"),
- HOUR23 ("%k", "H"),
- HOUR12 ("%l", "h"),
- MONTH ("%m", "M"), // HACK alert: mapping not present in JS but in some Java
-                    // standard date time pattern
- MONTH_LZ ("%m", "MM"),
- MINUTE_LZ ("%M", "mm"),
- CHAR_NEWLINE ("%n", "\n"),
- AMPM_UPPER ("%p", "a"),
- AMPM_LOWER ("%P", "a"),
- // _SECONDS_SINCE_01011970 ("%s", null), // Java: none
- SECONDS_LZ ("%S", "ss"),
- CHAR_TAB ("%t", "\t"),
- WEEKNUM_LZ ("%U", "ww"), // synonyms: %V %W
- // _DAY_OF_WEEK_FROM_MONDAY ("%u", null), // Java: only text version
- // _DAY_OF_WEEK_FROM_SUNDAY ("%w", null), // Java: only text version
- YEAR_WITHOUT_CENTURY ("%y", "yy"),
- YEAR_WITH_CENTURY ("%Y", "yyyy"),
- CHAR_PERC ("%%", "%");
+  ABBR_WEEKDAY_NAME ("%a", "EE"),
+  FULL_WEEKDAY_NAME ("%A", "EEEE"),
+  ABBR_MONTH_NAME ("%b", "MMM"),
+  FULL_MONTH_NAME ("%B", "MMMM"),
+  // _CENTURY ("%C", null), // Java: none
+  DAY_OF_MONTH_LZ ("%d", "dd"),
+  DAY_OF_MONTH ("%e", "d"),
+  HOUR23_LZ ("%H", "HH"),
+  HOUR12_LZ ("%I", "hh"),
+  DAY_OF_YEAR_LZ ("%j", "DDD"),
+  HOUR23 ("%k", "H"),
+  HOUR12 ("%l", "h"),
+  MONTH ("%m", "M"), // HACK alert: mapping not present in JS but in some Java
+                     // standard date time pattern
+  MONTH_LZ ("%m", "MM"),
+  MINUTE_LZ ("%M", "mm"),
+  CHAR_NEWLINE ("%n", "\n"),
+  AMPM_UPPER ("%p", "a"),
+  AMPM_LOWER ("%P", "a"),
+  // _SECONDS_SINCE_01011970 ("%s", null), // Java: none
+  SECONDS_LZ ("%S", "ss"),
+  CHAR_TAB ("%t", "\t"),
+  WEEKNUM_LZ ("%U", "ww"), // synonyms: %V %W
+  // _DAY_OF_WEEK_FROM_MONDAY ("%u", null), // Java: only text version
+  // _DAY_OF_WEEK_FROM_SUNDAY ("%w", null), // Java: only text version
+  YEAR_WITHOUT_CENTURY ("%y", "yy"),
+  YEAR_WITH_CENTURY ("%Y", "yyyy"),
+  CHAR_PERC ("%%", "%");
 
   private final String m_sJSCalendarToken;
   private final String m_sJavaToken;

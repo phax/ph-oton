@@ -25,12 +25,12 @@ import com.helger.commons.lang.EnumHelper;
 
 public enum EFBFont implements IHasID <String>
 {
- ARIAL ("arial"),
- LUCIDA ("lucida grande"),
- SEGOE ("segoe ui"),
- TAHOMA ("tahoma"),
- TREBUCHET ("trebuchet ms"),
- VERDANA ("verdana");
+  ARIAL ("arial"),
+  LUCIDA ("lucida grande"),
+  SEGOE ("segoe ui"),
+  TAHOMA ("tahoma"),
+  TREBUCHET ("trebuchet ms"),
+  VERDANA ("verdana");
 
   private final String m_sID;
 

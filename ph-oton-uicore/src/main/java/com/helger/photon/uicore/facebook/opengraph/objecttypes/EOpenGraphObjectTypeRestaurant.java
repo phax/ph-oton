@@ -32,10 +32,10 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum EOpenGraphObjectTypeRestaurant implements IHasID <String>
 {
- RESTAURANT ("restaurant.restaurant"),
- MENU_ITEM ("restaurant.menu_item"),
- MENU_SECTION ("restaurant.menu_section"),
- MENU ("restaurant.menu");
+  RESTAURANT ("restaurant.restaurant"),
+  MENU_ITEM ("restaurant.menu_item"),
+  MENU_SECTION ("restaurant.menu_section"),
+  MENU ("restaurant.menu");
 
   private final String m_sID;
 

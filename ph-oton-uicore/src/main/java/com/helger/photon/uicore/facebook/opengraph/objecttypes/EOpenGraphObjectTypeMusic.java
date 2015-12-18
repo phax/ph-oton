@@ -32,10 +32,10 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum EOpenGraphObjectTypeMusic implements IHasID <String>
 {
- SONG ("music.song"),
- RADIO_STATION ("music.radio_station"),
- PLAYLIST ("music.playlist"),
- ALBUM ("music.album");
+  SONG ("music.song"),
+  RADIO_STATION ("music.radio_station"),
+  PLAYLIST ("music.playlist"),
+  ALBUM ("music.album");
 
   private final String m_sID;
 

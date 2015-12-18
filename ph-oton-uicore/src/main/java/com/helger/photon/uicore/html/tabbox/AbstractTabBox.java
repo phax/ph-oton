@@ -43,7 +43,8 @@ import com.helger.html.hc.impl.HCTextNode;
  * @param <THISTYPE>
  *        Implementation type
  */
-public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>> extends AbstractHCNodeList <THISTYPE> implements ITabBox <THISTYPE>
+public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>> extends AbstractHCNodeList <THISTYPE>
+                                     implements ITabBox <THISTYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractTabBox.class);
 

@@ -32,7 +32,7 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum EOpenGraphObjectTypeInvalid implements IHasID <String>
 {
- PLACE ("invalid.place");
+  PLACE ("invalid.place");
 
   private final String m_sID;
 

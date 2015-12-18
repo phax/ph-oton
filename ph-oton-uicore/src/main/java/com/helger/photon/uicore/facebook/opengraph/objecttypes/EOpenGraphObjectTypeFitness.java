@@ -32,8 +32,8 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum EOpenGraphObjectTypeFitness implements IHasID <String>
 {
- UNIT ("fitness.unit"),
- COURSE ("fitness.course");
+  UNIT ("fitness.unit"),
+  COURSE ("fitness.course");
 
   private final String m_sID;
 

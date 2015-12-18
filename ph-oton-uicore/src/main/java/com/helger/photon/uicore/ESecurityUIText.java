@@ -30,7 +30,7 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum ESecurityUIText implements IHasDisplayText
 {
- GUEST ("Gast", "Guest");
+  GUEST ("Gast", "Guest");
 
   private final IMultilingualText m_aTP;
 

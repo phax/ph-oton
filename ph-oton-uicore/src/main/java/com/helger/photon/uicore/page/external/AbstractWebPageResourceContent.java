@@ -49,7 +49,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web page execution context type
  */
 @ThreadSafe
-public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
+public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext>
+                                                     extends AbstractWebPage <WPECTYPE>
 {
   public static final Charset DEFAULT_CHARSET = CCharset.CHARSET_UTF_8_OBJ;
 

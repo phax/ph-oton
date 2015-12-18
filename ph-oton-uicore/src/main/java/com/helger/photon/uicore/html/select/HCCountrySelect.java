@@ -38,8 +38,8 @@ public class HCCountrySelect extends HCExtSelect
 {
   public static enum EWithDeprecated implements IHasBooleanRepresentation
   {
-   TRUE,
-   FALSE;
+    TRUE,
+    FALSE;
 
     public static final EWithDeprecated DEFAULT = FALSE;
 

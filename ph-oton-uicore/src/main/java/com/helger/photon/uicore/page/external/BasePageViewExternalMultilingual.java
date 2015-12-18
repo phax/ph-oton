@@ -50,7 +50,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web page execution context type
  */
 @ThreadSafe
-public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageResourceContent <WPECTYPE>
+public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutionContext>
+                                              extends AbstractWebPageResourceContent <WPECTYPE>
 {
   @NotThreadSafe
   private static final class ContentPerLocale implements Serializable

@@ -32,10 +32,10 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum EOpenGraphObjectTypeVideo implements IHasID <String>
 {
- OTHER ("video.other"),
- TV_SHOW ("video.tv_show"),
- MOVIE ("video.movie"),
- EPISODE ("video.episode");
+  OTHER ("video.other"),
+  TV_SHOW ("video.tv_show"),
+  MOVIE ("video.movie"),
+  EPISODE ("video.episode");
 
   private final String m_sID;
 
