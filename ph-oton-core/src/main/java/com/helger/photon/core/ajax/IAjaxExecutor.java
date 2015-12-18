@@ -36,7 +36,10 @@ public interface IAjaxExecutor
    *        The request scope to be used, to extract parameters. Never
    *        <code>null</code>.
    */
-  void initExecution (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  default void initExecution (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    // empty default implementation
+  }
 
   /**
    * Registers all external resources (CSS or JS files) needed by controls
@@ -44,7 +47,10 @@ public interface IAjaxExecutor
    * called BEFORE {@link #handleRequest(IRequestWebScopeWithoutResponse)} is
    * invoked!
    */
-  void registerExternalResources ();
+  default void registerExternalResources ()
+  {
+    // empty default implementation
+  }
 
   /**
    * Called to handle a specific request.

@@ -48,18 +48,6 @@ public abstract class AbstractAjaxExecutor implements IAjaxExecutor
   {}
 
   @OverrideOnDemand
-  public void initExecution (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
-  {
-    // By default do nothing
-  }
-
-  @OverrideOnDemand
-  public void registerExternalResources ()
-  {
-    // empty default implementation
-  }
-
-  @OverrideOnDemand
   protected void modifyRequestParamMap (@Nonnull final IMutableAttributeContainerAny <String> aParams)
   {
     // Remove the jQuery time stamp parameter
