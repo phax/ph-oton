@@ -27,15 +27,19 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
 import com.helger.photon.basic.app.dao.IDAOWriteExceptionCallback;
+import com.helger.photon.basic.app.dao.impl.AbstractDAO;
+import com.helger.photon.core.ajax.ApplicationAjaxManager;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.api.ApplicationAPIManager;
 import com.helger.photon.core.api.IAPIExceptionCallback;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
 import com.helger.photon.core.app.error.InternalErrorHandler;
 import com.helger.photon.core.requesttrack.ILongRunningRequestCallback;
 import com.helger.photon.core.requesttrack.IParallelRunningRequestCallback;
+import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.core.requesttrack.TrackedRequest;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -138,4 +142,14 @@ public abstract class AbstractErrorCallback implements
 
   public void onParallelRunningRequestsBelowLimit ()
   {}
+
+  public static void install (@Nonnull final AbstractErrorCallback aCallback)
+  {
+    ApplicationAjaxManager.getInstance ().getExceptionCallbacks ().addCallback (aCallback);
+    ApplicationAPIManager.getInstance ().getExceptionCallbacks ().addCallback (aCallback);
+    AbstractDAO.getExceptionHandlersRead ().addCallback (aCallback);
+    AbstractDAO.getExceptionHandlersWrite ().addCallback (aCallback);
+    RequestTracker.getLongRunningRequestCallbacks ().addCallback (aCallback);
+    RequestTracker.getParallelRunningRequestCallbacks ().addCallback (aCallback);
+  }
 }
