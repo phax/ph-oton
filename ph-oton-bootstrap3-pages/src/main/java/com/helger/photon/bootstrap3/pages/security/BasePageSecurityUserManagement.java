@@ -40,6 +40,7 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
+import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
@@ -798,7 +799,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       aTable.addColumn (new DTCol (EText.HEADER_LOGINNAME.getDisplayText (aDisplayLocale)));
     aTable.addColumn (new DTCol (EText.HEADER_EMAIL.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING));
     aTable.addColumn (new DTCol (EText.HEADER_USERGROUPS.getDisplayText (aDisplayLocale)));
-    aTable.addColumn (new DTCol (EText.HEADER_LAST_LOGIN.getDisplayText (aDisplayLocale)));
+    aTable.addColumn (new DTCol (EText.HEADER_LAST_LOGIN.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                                                                                          aDisplayLocale));
     aTable.addColumn (new BootstrapDTColAction (aDisplayLocale));
 
     for (final IUser aCurUser : aUsers)
