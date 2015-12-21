@@ -34,7 +34,8 @@ public interface IAccountingAreaModificationCallback extends ICallback
    * @param aAccountingArea
    *        The created accounting area. Never <code>null</code>.
    */
-  void onAccountingAreaCreated (@Nonnull IAccountingArea aAccountingArea);
+  default void onAccountingAreaCreated (@Nonnull final IAccountingArea aAccountingArea)
+  {}
 
   /**
    * Called after an accounting area was edited fully.
@@ -42,7 +43,8 @@ public interface IAccountingAreaModificationCallback extends ICallback
    * @param aAccountingArea
    *        The modified accounting area. Never <code>null</code>.
    */
-  void onAccountingAreaUpdated (@Nonnull IAccountingArea aAccountingArea);
+  default void onAccountingAreaUpdated (@Nonnull final IAccountingArea aAccountingArea)
+  {}
 
   /**
    * Called after an accounting area was deleted.
@@ -50,5 +52,6 @@ public interface IAccountingAreaModificationCallback extends ICallback
    * @param aAccountingArea
    *        The deleted accounting area. Never <code>null</code>.
    */
-  void onAccountingAreaDeleted (@Nonnull IAccountingArea aAccountingArea);
+  default void onAccountingAreaDeleted (@Nonnull final IAccountingArea aAccountingArea)
+  {}
 }

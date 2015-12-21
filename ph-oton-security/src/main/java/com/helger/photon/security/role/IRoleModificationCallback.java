@@ -36,7 +36,8 @@ public interface IRoleModificationCallback extends ICallback
    *        <code>true</code> if it is a predefined role, <code>false</code> if
    *        it is a regular role
    */
-  void onRoleCreated (@Nonnull IRole aRole, boolean bPredefinedRole);
+  default void onRoleCreated (@Nonnull final IRole aRole, final boolean bPredefinedRole)
+  {}
 
   /**
    * Called after a role was edited fully.
@@ -44,7 +45,8 @@ public interface IRoleModificationCallback extends ICallback
    * @param aRole
    *        The modified role. Never <code>null</code>.
    */
-  void onRoleUpdated (@Nonnull IRole aRole);
+  default void onRoleUpdated (@Nonnull final IRole aRole)
+  {}
 
   /**
    * Called after a role was renamed.
@@ -52,7 +54,8 @@ public interface IRoleModificationCallback extends ICallback
    * @param aRole
    *        The modified role. Never <code>null</code>.
    */
-  void onRoleRenamed (@Nonnull IRole aRole);
+  default void onRoleRenamed (@Nonnull final IRole aRole)
+  {}
 
   /**
    * Called after a role was deleted.
@@ -60,5 +63,6 @@ public interface IRoleModificationCallback extends ICallback
    * @param aRole
    *        The deleted role. Never <code>null</code>.
    */
-  void onRoleDeleted (@Nonnull IRole aRole);
+  default void onRoleDeleted (@Nonnull final IRole aRole)
+  {}
 }

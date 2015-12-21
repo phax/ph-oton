@@ -37,7 +37,8 @@ public interface IUserModificationCallback extends ICallback
    *        <code>true</code> if it is a predefined user, <code>false</code> if
    *        it is a regular user
    */
-  void onUserCreated (@Nonnull IUser aUser, boolean bPredefinedUser);
+  default void onUserCreated (@Nonnull final IUser aUser, final boolean bPredefinedUser)
+  {}
 
   /**
    * Called after a user was edited fully.
@@ -45,7 +46,8 @@ public interface IUserModificationCallback extends ICallback
    * @param aUser
    *        The modified user. Never <code>null</code>.
    */
-  void onUserUpdated (@Nonnull IUser aUser);
+  default void onUserUpdated (@Nonnull final IUser aUser)
+  {}
 
   /**
    * Called after a user's last failed login was updated.
@@ -53,7 +55,8 @@ public interface IUserModificationCallback extends ICallback
    * @param aUser
    *        The modified user. Never <code>null</code>.
    */
-  void onUserLastFailedLoginUpdated (@Nonnull IUser aUser);
+  default void onUserLastFailedLoginUpdated (@Nonnull final IUser aUser)
+  {}
 
   /**
    * Called after a user's password was changed.
@@ -61,7 +64,8 @@ public interface IUserModificationCallback extends ICallback
    * @param aUser
    *        The modified user. Never <code>null</code>.
    */
-  void onUserPasswordChanged (@Nonnull IUser aUser);
+  default void onUserPasswordChanged (@Nonnull final IUser aUser)
+  {}
 
   /**
    * Called after a user was deleted.
@@ -69,7 +73,8 @@ public interface IUserModificationCallback extends ICallback
    * @param aUser
    *        The deleted user. Never <code>null</code>.
    */
-  void onUserDeleted (@Nonnull IUser aUser);
+  default void onUserDeleted (@Nonnull final IUser aUser)
+  {}
 
   /**
    * Called after a user was undeleted.
@@ -77,7 +82,8 @@ public interface IUserModificationCallback extends ICallback
    * @param aUser
    *        The undeleted user. Never <code>null</code>.
    */
-  void onUserUndeleted (@Nonnull IUser aUser);
+  default void onUserUndeleted (@Nonnull final IUser aUser)
+  {}
 
   /**
    * Called after a user was enabled or disabled.
@@ -88,5 +94,6 @@ public interface IUserModificationCallback extends ICallback
    *        <code>true</code> if the user was enabled, <code>false</code> if it
    *        was disabled
    */
-  void onUserEnabled (@Nonnull IUser aUser, boolean bEnabled);
+  default void onUserEnabled (@Nonnull final IUser aUser, final boolean bEnabled)
+  {}
 }

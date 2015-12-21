@@ -34,7 +34,8 @@ public interface IClientModificationCallback extends ICallback
    * @param aClient
    *        The created client. Never <code>null</code>.
    */
-  void onClientCreated (@Nonnull IClient aClient);
+  default void onClientCreated (@Nonnull final IClient aClient)
+  {}
 
   /**
    * Called after a client was edited fully.
@@ -42,7 +43,8 @@ public interface IClientModificationCallback extends ICallback
    * @param aClient
    *        The modified client. Never <code>null</code>.
    */
-  void onClientUpdated (@Nonnull IClient aClient);
+  default void onClientUpdated (@Nonnull final IClient aClient)
+  {}
 
   /**
    * Called after a client was deleted.
@@ -50,5 +52,6 @@ public interface IClientModificationCallback extends ICallback
    * @param aClient
    *        The deleted client. Never <code>null</code>.
    */
-  void onClientDeleted (@Nonnull IClient aClient);
+  default void onClientDeleted (@Nonnull final IClient aClient)
+  {}
 }

@@ -38,7 +38,8 @@ public interface IUserGroupModificationCallback extends ICallback
    *        <code>true</code> if it is a predefined user group,
    *        <code>false</code> if it is a regular user group
    */
-  void onUserGroupCreated (@Nonnull IUserGroup aUserGroup, boolean bPredefinedUserGroup);
+  default void onUserGroupCreated (@Nonnull final IUserGroup aUserGroup, final boolean bPredefinedUserGroup)
+  {}
 
   /**
    * Called after a user group was edited fully.
@@ -46,7 +47,8 @@ public interface IUserGroupModificationCallback extends ICallback
    * @param aUserGroup
    *        The modified user group. Never <code>null</code>.
    */
-  void onUserGroupUpdated (@Nonnull IUserGroup aUserGroup);
+  default void onUserGroupUpdated (@Nonnull final IUserGroup aUserGroup)
+  {}
 
   /**
    * Called after a user group was renamed.
@@ -54,7 +56,8 @@ public interface IUserGroupModificationCallback extends ICallback
    * @param aUserGroup
    *        The modified user group. Never <code>null</code>.
    */
-  void onUserGroupRenamed (@Nonnull IUserGroup aUserGroup);
+  default void onUserGroupRenamed (@Nonnull final IUserGroup aUserGroup)
+  {}
 
   /**
    * Called after a user group was deleted.
@@ -62,7 +65,8 @@ public interface IUserGroupModificationCallback extends ICallback
    * @param aUserGroup
    *        The deleted user group. Never <code>null</code>.
    */
-  void onUserGroupDeleted (@Nonnull IUserGroup aUserGroup);
+  default void onUserGroupDeleted (@Nonnull final IUserGroup aUserGroup)
+  {}
 
   /**
    * Called after a user was assigned/unassigned to/from a user group.
@@ -75,7 +79,10 @@ public interface IUserGroupModificationCallback extends ICallback
    *        <code>true</code> if the user was assigned, <code>false</code> if it
    *        was unassigned
    */
-  void onUserGroupUserAssignment (@Nonnull IUserGroup aUserGroup, @Nonnull @Nonempty String sUserID, boolean bAssign);
+  default void onUserGroupUserAssignment (@Nonnull final IUserGroup aUserGroup,
+                                          @Nonnull @Nonempty final String sUserID,
+                                          final boolean bAssign)
+  {}
 
   /**
    * Called after a role was assigned/unassigned to/from a user group.
@@ -88,5 +95,8 @@ public interface IUserGroupModificationCallback extends ICallback
    *        <code>true</code> if the role was assigned, <code>false</code> if it
    *        was unassigned
    */
-  void onUserGroupRoleAssignment (@Nonnull IUserGroup aUserGroup, @Nonnull @Nonempty String sRoleID, boolean bAssign);
+  default void onUserGroupRoleAssignment (@Nonnull final IUserGroup aUserGroup,
+                                          @Nonnull @Nonempty final String sRoleID,
+                                          final boolean bAssign)
+  {}
 }
