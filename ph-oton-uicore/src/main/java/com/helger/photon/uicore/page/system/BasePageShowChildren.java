@@ -128,15 +128,6 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
 
   private final IMenuTree m_aMenuTree;
   private final BasePageShowChildrenRenderer m_aRenderer;
-  private DefaultTreeItemWithID <String, IMenuObject> m_aMenuTreeItem;
-
-  private void _validate ()
-  {
-    if (m_aMenuTreeItem == null)
-      throw new IllegalArgumentException ("Non-existing menu item provided!");
-    if (m_aMenuTreeItem.getData ().getMenuObjectType ().isSeparator ())
-      throw new IllegalArgumentException ("Provided menu item is a separator and can therefore not be used!");
-  }
 
   public BasePageShowChildren (@Nonnull @Nonempty final String sID,
                                @Nonnull final IMultilingualText aName,
@@ -153,8 +144,8 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     super (sID, aName);
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
     m_aRenderer = ValueEnforcer.notNull (aRenderer, "Renderer");
-    m_aMenuTreeItem = m_aMenuTree.getItemWithID (getID ());
-    _validate ();
+    // Menu item cannot be resolved here, because the menu tree is not yet
+    // ready!
   }
 
   public BasePageShowChildren (@Nonnull @Nonempty final String sID,
@@ -172,8 +163,8 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     super (sID, sName);
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
     m_aRenderer = ValueEnforcer.notNull (aRenderer, "Renderer");
-    m_aMenuTreeItem = m_aMenuTree.getItemWithID (getID ());
-    _validate ();
+    // Menu item cannot be resolved here, because the menu tree is not yet
+    // ready!
   }
 
   @Nonnull
