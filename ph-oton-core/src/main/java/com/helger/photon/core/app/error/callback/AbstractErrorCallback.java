@@ -27,6 +27,9 @@ import com.helger.photon.basic.app.dao.IDAOWriteExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.api.IAPIExceptionCallback;
+import com.helger.photon.core.api.IAPIInvoker;
+import com.helger.photon.core.api.InvokableAPIDescriptor;
 import com.helger.photon.core.app.error.InternalErrorHandler;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -38,6 +41,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public abstract class AbstractErrorCallback implements
                                             IAjaxExceptionCallback,
+                                            IAPIExceptionCallback,
                                             IDAOReadExceptionCallback,
                                             IDAOWriteExceptionCallback
 {
@@ -69,17 +73,31 @@ public abstract class AbstractErrorCallback implements
     onError (t, aRequestScope, sErrorCode);
   }
 
+  public void onAPIExecutionException (@Nullable final IAPIInvoker aAPIInvoker,
+                                       @Nonnull final InvokableAPIDescriptor aDescriptor,
+                                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                       @Nonnull final Throwable t)
+  {
+    final String sErrorCode = "api-error-" + InternalErrorHandler.createNewErrorID () + "-" + aDescriptor.getPath ();
+    onError (t, aRequestScope, sErrorCode);
+  }
+
   public void onDAOReadException (@Nonnull final Throwable t,
                                   final boolean bInit,
                                   @Nullable final IReadableResource aRes)
   {
-    onError (t, null, "DAO " + (bInit ? "init" : "read") + " error" + (aRes == null ? "" : " for " + aRes.getPath ()));
+    final String sErrorCode = "DAO " +
+                              (bInit ? "init" : "read") +
+                              " error" +
+                              (aRes == null ? "" : " for " + aRes.getPath ());
+    onError (t, null, sErrorCode);
   }
 
   public void onDAOWriteException (@Nonnull final Throwable t,
                                    @Nonnull final IReadableResource aRes,
                                    @Nonnull final CharSequence aFileContent)
   {
-    onError (t, null, "DAO write error for " + aRes.getPath () + " with " + aFileContent.length () + " chars");
+    final String sErrorCode = "DAO write error for " + aRes.getPath () + " with " + aFileContent.length () + " chars";
+    onError (t, null, sErrorCode);
   }
 }
