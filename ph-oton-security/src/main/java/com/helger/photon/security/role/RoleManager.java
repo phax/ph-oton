@@ -19,8 +19,6 @@ package com.helger.photon.security.role;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -58,48 +56,12 @@ import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 @ThreadSafe
 public final class RoleManager extends AbstractSimpleDAO implements IReloadableDAO
 {
-  public static final boolean DEFAULT_CREATE_DEFAULTS = true;
-
   private static final Logger s_aLogger = LoggerFactory.getLogger (RoleManager.class);
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
-
-  @GuardedBy ("s_aRWLock")
-  private static boolean s_bCreateDefaults = DEFAULT_CREATE_DEFAULTS;
 
   @GuardedBy ("m_aRWLock")
   private final Map <String, Role> m_aRoles = new HashMap <String, Role> ();
 
   private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <IRoleModificationCallback> ();
-
-  /**
-   * @return <code>true</code> if the default built-in roles should be created
-   *         if no roles are present, <code>false</code> if not.
-   */
-  public static boolean isCreateDefaults ()
-  {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_bCreateDefaults;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  public static void setCreateDefaults (final boolean bCreateDefaults)
-  {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
-      s_bCreateDefaults = bCreateDefaults;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
-  }
 
   public RoleManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -125,17 +87,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
   @Nonnull
   protected EChange onInit ()
   {
-    if (!isCreateDefaults ())
-      return EChange.UNCHANGED;
-
-    // Default should be created
-    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
-                        CSecurity.ROLE_ADMINISTRATOR_NAME,
-                        (String) null));
-    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
-                        CSecurity.ROLE_USER_NAME,
-                        (String) null));
-    return EChange.CHANGED;
+    return EChange.UNCHANGED;
   }
 
   @Override
@@ -156,6 +108,17 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
     for (final Role aRole : CollectionHelper.getSortedByKey (m_aRoles).values ())
       eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aRole, "role"));
     return aDoc;
+  }
+
+  public void createDefaults ()
+  {
+    // Default should be created
+    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
+                        CSecurity.ROLE_ADMINISTRATOR_NAME,
+                        (String) null));
+    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
+                        CSecurity.ROLE_USER_NAME,
+                        (String) null));
   }
 
   /**

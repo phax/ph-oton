@@ -21,8 +21,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -62,13 +60,7 @@ import com.helger.photon.security.user.UserManager;
 @ThreadSafe
 public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDAO
 {
-  public static final boolean DEFAULT_CREATE_DEFAULTS = true;
-
   private static final Logger s_aLogger = LoggerFactory.getLogger (UserGroupManager.class);
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
-
-  @GuardedBy ("s_aRWLock")
-  private static boolean s_bCreateDefaults = DEFAULT_CREATE_DEFAULTS;
 
   private final UserManager m_aUserMgr;
   private final RoleManager m_aRoleMgr;
@@ -76,32 +68,6 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   private final Map <String, UserGroup> m_aUserGroups = new HashMap <String, UserGroup> ();
 
   private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList <IUserGroupModificationCallback> ();
-
-  public static boolean isCreateDefaults ()
-  {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_bCreateDefaults;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  public static void setCreateDefaults (final boolean bCreateDefaults)
-  {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
-      s_bCreateDefaults = bCreateDefaults;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
-  }
 
   public UserGroupManager (@Nonnull @Nonempty final String sFilename,
                            @Nonnull final UserManager aUserMgr,
@@ -143,9 +109,31 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   @Nonnull
   protected EChange onInit ()
   {
-    if (!isCreateDefaults ())
-      return EChange.UNCHANGED;
+    return EChange.UNCHANGED;
+  }
 
+  @Override
+  @Nonnull
+  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
+  {
+    for (final IMicroElement eUserGroup : aDoc.getDocumentElement ().getAllChildElements ())
+      _addUserGroup (MicroTypeConverter.convertToNative (eUserGroup, UserGroup.class));
+    return EChange.UNCHANGED;
+  }
+
+  @Override
+  @Nonnull
+  protected IMicroDocument createWriteData ()
+  {
+    final IMicroDocument aDoc = new MicroDocument ();
+    final IMicroElement eRoot = aDoc.appendElement ("usergroups");
+    for (final UserGroup aUserGroup : CollectionHelper.getSortedByKey (m_aUserGroups).values ())
+      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aUserGroup, "usergroup"));
+    return aDoc;
+  }
+
+  public void createDefaults ()
+  {
     // Administrators user group
     UserGroup aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
                                                   CSecurity.USERGROUP_ADMINISTRATORS_NAME,
@@ -171,28 +159,6 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_GUEST_ID))
       aUG.assignUser (CSecurity.USER_GUEST_ID);
     // no role for this user group
-
-    return EChange.CHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
-  {
-    for (final IMicroElement eUserGroup : aDoc.getDocumentElement ().getAllChildElements ())
-      _addUserGroup (MicroTypeConverter.convertToNative (eUserGroup, UserGroup.class));
-    return EChange.UNCHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected IMicroDocument createWriteData ()
-  {
-    final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement ("usergroups");
-    for (final UserGroup aUserGroup : CollectionHelper.getSortedByKey (m_aUserGroups).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aUserGroup, "usergroup"));
-    return aDoc;
   }
 
   /**

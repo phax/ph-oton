@@ -21,8 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -66,44 +64,12 @@ import com.helger.photon.security.password.salt.PasswordSalt;
 @ThreadSafe
 public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
 {
-  public static final boolean DEFAULT_CREATE_DEFAULTS = true;
-
   private static final Logger s_aLogger = LoggerFactory.getLogger (UserManager.class);
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
-
-  @GuardedBy ("s_aRWLock")
-  private static boolean s_bCreateDefaults = DEFAULT_CREATE_DEFAULTS;
 
   @GuardedBy ("m_aRWLock")
   private final Map <String, User> m_aUsers = new HashMap <> ();
 
   private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
-
-  public static boolean isCreateDefaults ()
-  {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_bCreateDefaults;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  public static void setCreateDefaults (final boolean bCreateDefaults)
-  {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
-      s_bCreateDefaults = bCreateDefaults;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
-  }
 
   public UserManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -129,9 +95,31 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @Nonnull
   protected EChange onInit ()
   {
-    if (!isCreateDefaults ())
-      return EChange.UNCHANGED;
+    return EChange.UNCHANGED;
+  }
 
+  @Override
+  @Nonnull
+  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
+  {
+    for (final IMicroElement eUser : aDoc.getDocumentElement ().getAllChildElements ())
+      _addUser (MicroTypeConverter.convertToNative (eUser, User.class));
+    return EChange.UNCHANGED;
+  }
+
+  @Override
+  @Nonnull
+  protected IMicroDocument createWriteData ()
+  {
+    final IMicroDocument aDoc = new MicroDocument ();
+    final IMicroElement eRoot = aDoc.appendElement ("users");
+    for (final User aUser : CollectionHelper.getSortedByKey (m_aUsers).values ())
+      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aUser, "user"));
+    return aDoc;
+  }
+
+  public void createDefaults ()
+  {
     // Create Administrator
     _addUser (new User (CSecurity.USER_ADMINISTRATOR_ID,
                         CSecurity.USER_ADMINISTRATOR_LOGIN,
@@ -170,27 +158,6 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                         (Locale) null,
                         (Map <String, String>) null,
                         false));
-    return EChange.CHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
-  {
-    for (final IMicroElement eUser : aDoc.getDocumentElement ().getAllChildElements ())
-      _addUser (MicroTypeConverter.convertToNative (eUser, User.class));
-    return EChange.UNCHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected IMicroDocument createWriteData ()
-  {
-    final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement ("users");
-    for (final User aUser : CollectionHelper.getSortedByKey (m_aUsers).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aUser, "user"));
-    return aDoc;
   }
 
   /**

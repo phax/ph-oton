@@ -31,11 +31,6 @@ public final class AppSecurity
 
   public static void init ()
   {
-    // Call before accessing AccessManager!
-    RoleManager.setCreateDefaults (false);
-    UserManager.setCreateDefaults (false);
-    UserGroupManager.setCreateDefaults (false);
-
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
     final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
