@@ -107,6 +107,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     HEADER_LOGINNAME ("Benutzername", "User name"),
     HEADER_EMAIL ("E-Mail", "Email"),
     HEADER_USERGROUPS ("Benutzergruppen", "User groups"),
+    HEADER_LAST_LOGIN ("Letzter Login", "Last login"),
     HEADER_VALUE ("Wert", "Value"),
     TITLE_CREATE ("Neuen Benutzer anlegen", "Create new user"),
     TITLE_EDIT ("Benutzer ''{0}'' bearbeiten", "Edit user ''{0}''"),
@@ -797,6 +798,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       aTable.addColumn (new DTCol (EText.HEADER_LOGINNAME.getDisplayText (aDisplayLocale)));
     aTable.addColumn (new DTCol (EText.HEADER_EMAIL.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING));
     aTable.addColumn (new DTCol (EText.HEADER_USERGROUPS.getDisplayText (aDisplayLocale)));
+    aTable.addColumn (new DTCol (EText.HEADER_LAST_LOGIN.getDisplayText (aDisplayLocale)));
     aTable.addColumn (new BootstrapDTColAction (aDisplayLocale));
 
     for (final IUser aCurUser : aUsers)
@@ -813,13 +815,16 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       final Collection <IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aCurUser.getID ());
       final StringBuilder aUserGroupsStr = new StringBuilder ();
       for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aUserGroups,
-                                                                     new CollatingComparatorHasName <IUserGroup> (aDisplayLocale)))
+                                                                     new CollatingComparatorHasName <> (aDisplayLocale)))
       {
         if (aUserGroupsStr.length () > 0)
           aUserGroupsStr.append (", ");
         aUserGroupsStr.append (aUserGroup.getName ());
       }
       aRow.addCell (new HCA (aViewLink).addChild (aUserGroupsStr.toString ()));
+
+      // Last login
+      aRow.addCell (PDTToString.getAsString (aCurUser.getLastLoginDateTime (), aDisplayLocale));
 
       final IHCCell <?> aActionCell = aRow.addCell ();
 
