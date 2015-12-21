@@ -31,7 +31,6 @@ import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCUL;
 import com.helger.html.hc.html.grouping.IHCLI;
-import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
@@ -42,20 +41,20 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
 {
-  private static final class ShowChildrenCallback <WPECTYPE extends IWebPageExecutionContext> extends
-                                                  DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
+  public static final class ShowChildrenCallback <WPECTYPE extends IWebPageExecutionContext> extends DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
   {
     private final WPECTYPE m_aWPEC;
     private final NonBlockingStack <HCUL> m_aStack;
     private final BasePageShowChildrenRenderer m_aRenderer;
 
-    ShowChildrenCallback (@Nonnull final HCUL aUL,
-                          @Nonnull final WPECTYPE aWPEC,
+    ShowChildrenCallback (@Nonnull final WPECTYPE aWPEC,
+                          @Nonnull final HCUL aUL,
                           @Nonnull final BasePageShowChildrenRenderer aRenderer)
     {
-      ValueEnforcer.notNull (aUL, "UL");
       ValueEnforcer.notNull (aWPEC, "WPEC");
+      ValueEnforcer.notNull (aUL, "UL");
       ValueEnforcer.notNull (aRenderer, "Renderer");
+
       m_aWPEC = aWPEC;
       m_aStack = new NonBlockingStack <HCUL> (aUL);
       m_aRenderer = aRenderer;
@@ -129,6 +128,15 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
 
   private final IMenuTree m_aMenuTree;
   private final BasePageShowChildrenRenderer m_aRenderer;
+  private DefaultTreeItemWithID <String, IMenuObject> m_aMenuTreeItem;
+
+  private void _validate ()
+  {
+    if (m_aMenuTreeItem == null)
+      throw new IllegalArgumentException ("Non-existing menu item provided!");
+    if (m_aMenuTreeItem.getData ().getMenuObjectType ().isSeparator ())
+      throw new IllegalArgumentException ("Provided menu item is a separator and can therefore not be used!");
+  }
 
   public BasePageShowChildren (@Nonnull @Nonempty final String sID,
                                @Nonnull final IMultilingualText aName,
@@ -145,6 +153,8 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     super (sID, aName);
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
     m_aRenderer = ValueEnforcer.notNull (aRenderer, "Renderer");
+    m_aMenuTreeItem = m_aMenuTree.getItemWithID (getID ());
+    _validate ();
   }
 
   public BasePageShowChildren (@Nonnull @Nonempty final String sID,
@@ -162,6 +172,8 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     super (sID, sName);
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
     m_aRenderer = ValueEnforcer.notNull (aRenderer, "Renderer");
+    m_aMenuTreeItem = m_aMenuTree.getItemWithID (getID ());
+    _validate ();
   }
 
   @Nonnull
@@ -171,17 +183,21 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     return new HCUL ();
   }
 
+  @Nullable
+  protected HCUL createChildItemTree (@Nonnull final WPECTYPE aWPEC)
+  {
+    final DefaultTreeItemWithID <String, IMenuObject> aMenuTreeItem = m_aMenuTree.getItemWithID (getID ());
+    if (aMenuTreeItem == null || aMenuTreeItem.getData ().getMenuObjectType ().isSeparator ())
+      return null;
+
+    final HCUL aUL = createRootUL ();
+    TreeVisitor.visitTreeItem (aMenuTreeItem, new ShowChildrenCallback <WPECTYPE> (aWPEC, aUL, m_aRenderer));
+    return aUL;
+  }
+
   @Override
   protected void fillContent (@Nonnull final WPECTYPE aWPEC)
   {
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
-
-    final DefaultTreeItemWithID <String, IMenuObject> aMenuTreeItem = m_aMenuTree.getItemWithID (getID ());
-    if (aMenuTreeItem != null && aMenuTreeItem.getData ().getMenuObjectType ().isNotSeparator ())
-    {
-      final HCUL aUL = createRootUL ();
-      TreeVisitor.visitTreeItem (aMenuTreeItem, new ShowChildrenCallback <WPECTYPE> (aUL, aWPEC, m_aRenderer));
-      aNodeList.addChild (aUL);
-    }
+    aWPEC.getNodeList ().addChild (createChildItemTree (aWPEC));
   }
 }
