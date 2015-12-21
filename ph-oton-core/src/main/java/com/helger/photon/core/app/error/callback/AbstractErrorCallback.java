@@ -16,6 +16,9 @@
  */
 package com.helger.photon.core.app.error.callback;
 
+import java.util.List;
+
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -31,7 +34,12 @@ import com.helger.photon.core.api.IAPIExceptionCallback;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
 import com.helger.photon.core.app.error.InternalErrorHandler;
+import com.helger.photon.core.requesttrack.ILongRunningRequestCallback;
+import com.helger.photon.core.requesttrack.IParallelRunningRequestCallback;
+import com.helger.photon.core.requesttrack.TrackedRequest;
+import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.web.servlet.request.RequestHelper;
 
 /**
  * A base class for a central error callback that handles all kind of errors and
@@ -43,7 +51,9 @@ public abstract class AbstractErrorCallback implements
                                             IAjaxExceptionCallback,
                                             IAPIExceptionCallback,
                                             IDAOReadExceptionCallback,
-                                            IDAOWriteExceptionCallback
+                                            IDAOWriteExceptionCallback,
+                                            ILongRunningRequestCallback,
+                                            IParallelRunningRequestCallback
 {
   /**
    * Implement this method to handle all errors in a similar way.
@@ -100,4 +110,32 @@ public abstract class AbstractErrorCallback implements
     final String sErrorCode = "DAO write error for " + aRes.getPath () + " with " + aFileContent.length () + " chars";
     onError (t, null, sErrorCode);
   }
+
+  public void onLongRunningRequest (@Nonnull @Nonempty final String sUniqueRequestID,
+                                    @Nonnull final IRequestWebScope aRequestScope,
+                                    @Nonnegative final long nRunningMilliseconds)
+  {
+    onError ((Throwable) null,
+             aRequestScope,
+             "Long running request. ID=" +
+                            sUniqueRequestID +
+                            "; millisecs=" +
+                            nRunningMilliseconds +
+                            "; URL=" +
+                            RequestHelper.getURL (aRequestScope.getRequest ()));
+  }
+
+  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests,
+                                         @Nonnull @Nonempty final List <TrackedRequest> aRequests)
+  {
+    final StringBuilder aURLs = new StringBuilder ();
+    for (final TrackedRequest aRequest : aRequests)
+      aURLs.append ('\n').append (aRequest.getRequestScope ().getURL ());
+    onError ((Throwable) null,
+             (IRequestWebScopeWithoutResponse) null,
+             "Currently " + nParallelRequests + " parallel requests are active: " + aURLs.toString ());
+  }
+
+  public void onParallelRunningRequestsBelowLimit ()
+  {}
 }
