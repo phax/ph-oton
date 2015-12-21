@@ -33,6 +33,8 @@ import com.helger.commons.charset.CCharset;
 import com.helger.photon.bootstrap3.stub.PhotonStubServletContextListener;
 import com.helger.photon.core.ajax.servlet.PublicApplicationAjaxServlet;
 import com.helger.photon.core.ajax.servlet.SecureApplicationAjaxServlet;
+import com.helger.photon.core.api.servlet.PublicApplicationAPIServlet;
+import com.helger.photon.core.api.servlet.SecureApplicationAPIServlet;
 import com.helger.photon.core.go.GoServlet;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryServlet;
@@ -114,6 +116,20 @@ public final class PhotonStubServletInitializer
                                                                      PublicApplicationAjaxServlet.class);
         if (aServlet != null)
           aServlet.addMapping (PublicApplicationAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
+      }
+
+      {
+        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationAPIServlet",
+                                                                     SecureApplicationAPIServlet.class);
+        if (aServlet != null)
+          aServlet.addMapping (SecureApplicationAPIServlet.SERVLET_DEFAULT_PATH + "/*");
+      }
+
+      {
+        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PublicApplicationAPIServlet",
+                                                                     PublicApplicationAPIServlet.class);
+        if (aServlet != null)
+          aServlet.addMapping (PublicApplicationAPIServlet.SERVLET_DEFAULT_PATH + "/*");
       }
 
       {

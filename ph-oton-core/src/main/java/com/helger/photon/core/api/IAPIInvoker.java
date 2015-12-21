@@ -1,0 +1,82 @@
+/**
+ * Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.helger.photon.core.api;
+
+import java.util.List;
+
+import javax.annotation.CheckForSigned;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.callback.CallbackList;
+import com.helger.web.http.EHTTPMethod;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.web.servlet.response.UnifiedResponse;
+
+/**
+ * Base interface for an API invoker. It has a set of {@link IAPIExecutor}
+ * instances that it can invoke.
+ *
+ * @author Philip Helger
+ */
+public interface IAPIInvoker
+{
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  CallbackList <IAPIExceptionCallback> getExceptionCallbacks ();
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  CallbackList <IAPIBeforeExecutionCallback> getBeforeExecutionCallbacks ();
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  CallbackList <IAPIAfterExecutionCallback> getAfterExecutionCallbacks ();
+
+  /**
+   * @return The milliseconds after which an execution is considered long
+   *         running.
+   */
+  @CheckForSigned
+  long getLongRunningExecutionLimitTime ();
+
+  /**
+   * Set the milliseconds after which an execution is considered long running.
+   *
+   * @param nLongRunningExecutionLimitTime
+   *        The milliseconds to use. Value &le; 0 are considered "no limit"
+   */
+  void setLongRunningExecutionLimitTime (long nLongRunningExecutionLimitTime);
+
+  @Nonnull
+  CallbackList <IAPILongRunningExecutionCallback> getLongRunningExecutionCallbacks ();
+
+  void registerAPI (@Nonnull APIDescriptor aDescriptor);
+
+  @Nonnull
+  @ReturnsMutableCopy
+  List <? extends IAPIDescriptor> getAllDescriptors ();
+
+  @Nullable
+  InvokableAPIDescriptor getAPIByPath (@Nullable String sPath, @Nonnull EHTTPMethod eHTTPMethod);
+
+  void invoke (@Nonnull InvokableAPIDescriptor aInvokableDescriptor,
+               @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+               @Nonnull UnifiedResponse aUnifiedResponse) throws Exception;
+}

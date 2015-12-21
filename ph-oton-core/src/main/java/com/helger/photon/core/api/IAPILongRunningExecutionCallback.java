@@ -16,34 +16,34 @@
  */
 package com.helger.photon.core.api;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.callback.ICallback;
-import com.helger.photon.core.ajax.servlet.AbstractAjaxServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Callback interface to handle thrown exception objects from the
- * {@link AbstractAjaxServlet}.
+ * Callback interface to be used with the {@link IAPIInvoker} to get notified on
+ * long running executions.
  *
  * @author Philip Helger
  */
-public interface IAPIExceptionCallback extends ICallback
+public interface IAPILongRunningExecutionCallback extends ICallback
 {
   /**
-   * Called when an exception of the specified type occurred
+   * Callback method
    *
    * @param aInvoker
-   *        The {@link IAPIInvoker} object that invoked the API function
+   *        The {@link IAPIInvoker} object that invoked the API
    * @param aInvokableDescriptor
-   *        API invoker. Never <code>null</code>.
+   *        The descriptor to be invoked.
    * @param aRequestScope
-   *        The request scope. Never <code>null</code>.
-   * @param t
-   *        The exception. Never <code>null</code>.
+   *        The request scope of the current invocation
+   * @param nExecutionMillis
+   *        The execution time in milliseconds
    */
-  void onAPIExecutionException (@Nonnull IAPIInvoker aInvoker,
-                                @Nonnull InvokableAPIDescriptor aInvokableDescriptor,
-                                @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull Throwable t);
+  void onLongRunningExecution (@Nonnull IAPIInvoker aInvoker,
+                               @Nonnull InvokableAPIDescriptor aInvokableDescriptor,
+                               @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+                               @Nonnegative long nExecutionMillis);
 }

@@ -19,31 +19,27 @@ package com.helger.photon.core.api;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.callback.ICallback;
-import com.helger.photon.core.ajax.servlet.AbstractAjaxServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Callback interface to handle thrown exception objects from the
- * {@link AbstractAjaxServlet}.
+ * Callback interface to be used with the {@link IAPIInvoker} to get notified
+ * after an {@link InvokableAPIDescriptor} was invoked.
  *
  * @author Philip Helger
  */
-public interface IAPIExceptionCallback extends ICallback
+public interface IAPIAfterExecutionCallback extends ICallback
 {
   /**
-   * Called when an exception of the specified type occurred
+   * Callback method
    *
    * @param aInvoker
-   *        The {@link IAPIInvoker} object that invoked the API function
+   *        The {@link IAPIInvoker} object that invoked the AJAX function
    * @param aInvokableDescriptor
-   *        API invoker. Never <code>null</code>.
+   *        The descriptor to be invoked.
    * @param aRequestScope
-   *        The request scope. Never <code>null</code>.
-   * @param t
-   *        The exception. Never <code>null</code>.
+   *        The request scope of the current invocation
    */
-  void onAPIExecutionException (@Nonnull IAPIInvoker aInvoker,
-                                @Nonnull InvokableAPIDescriptor aInvokableDescriptor,
-                                @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull Throwable t);
+  void onAfterExecution (@Nonnull IAPIInvoker aInvoker,
+                         @Nonnull InvokableAPIDescriptor aInvokableDescriptor,
+                         @Nonnull IRequestWebScopeWithoutResponse aRequestScope);
 }

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.api;
+package com.helger.photon.core.api.servlet;
 
 import java.io.IOException;
 import java.util.EnumSet;
@@ -26,13 +26,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
-import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
-import com.helger.commons.statistics.StatisticsManager;
-import com.helger.commons.timing.StopWatch;
+import com.helger.photon.core.api.ApplicationAPIManager;
+import com.helger.photon.core.api.IAPIInvoker;
+import com.helger.photon.core.api.InvokableAPIDescriptor;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.web.http.EHTTPMethod;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -48,23 +45,6 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAPIServlet.class);
   private static final EnumSet <EHTTPMethod> ALL = EnumSet.allOf (EHTTPMethod.class);
-  private static final IMutableStatisticsHandlerKeyedTimer s_aStatsTimer = StatisticsManager.getKeyedTimerHandler (AbstractAPIServlet.class);
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsCounterSuccess = StatisticsManager.getKeyedCounterHandler (AbstractAPIServlet.class +
-                                                                                                                                "$success");
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsCounterError = StatisticsManager.getKeyedCounterHandler (AbstractAPIServlet.class +
-                                                                                                                              "$error");
-
-  private static final CallbackList <IAPIExceptionCallback> s_aExceptionCallbacks = new CallbackList <> ();
-
-  /**
-   * @return The callback list with the exception handlers
-   */
-  @Nonnull
-  @ReturnsMutableObject ("design")
-  public static CallbackList <IAPIExceptionCallback> getExceptionCallbacks ()
-  {
-    return s_aExceptionCallbacks;
-  }
 
   @Override
   @Nonnull
@@ -73,6 +53,16 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
     return ALL;
   }
 
+  /**
+   * Get the API invoker matching the passed request
+   *
+   * @param aRequestScope
+   *        The request scope to use. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  protected abstract IAPIInvoker getAPIInvoker (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope);
+
   @Override
   protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                 @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
@@ -80,8 +70,8 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
     // ensure leading "/"
     final String sAPIPath = FilenameHelper.ensurePathStartingWithSeparator (aRequestScope.getPathWithinServlet ());
     final EHTTPMethod eHTTPMethod = aRequestScope.getHttpMethod ();
-    final InvokableAPIDescriptor aInvokableDescriptor = ApplicationAPIManager.getInstance ().getAPIByPath (sAPIPath,
-                                                                                                           eHTTPMethod);
+    final IAPIInvoker aAPIMgr = getAPIInvoker (aRequestScope);
+    final InvokableAPIDescriptor aInvokableDescriptor = aAPIMgr.getAPIByPath (sAPIPath, eHTTPMethod);
     if (aInvokableDescriptor == null)
     {
       s_aLogger.warn ("Unknown API " + eHTTPMethod + " '" + sAPIPath + "' requested!");
@@ -105,36 +95,11 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
 
         try
         {
-          // Start the timing
-          final StopWatch aSW = StopWatch.createdStarted ();
-
           // Main API invocation
-          aInvokableDescriptor.invokeAPI (aRequestScope, aUnifiedResponse);
-
-          // Remember the time
-          s_aStatsTimer.addTime (sAPIPath, aSW.stopAndGetMillis ());
-          s_aStatsCounterSuccess.increment (sAPIPath);
+          aAPIMgr.invoke (aInvokableDescriptor, aRequestScope, aUnifiedResponse);
         }
         catch (final Throwable t)
         {
-          s_aStatsCounterError.increment (sAPIPath);
-
-          // Notify custom exception handler
-          for (final IAPIExceptionCallback aExceptionCallback : getExceptionCallbacks ().getAllCallbacks ())
-            try
-            {
-              aExceptionCallback.onAPIExecutionException (aInvokableDescriptor, aRequestScope, t);
-            }
-            catch (final Throwable t2)
-            {
-              s_aLogger.error ("Exception in custom API exception handler of API " +
-                               eHTTPMethod +
-                               " '" +
-                               sAPIPath +
-                               "'",
-                               t2);
-            }
-
           // Re-throw
           if (t instanceof IOException)
             throw (IOException) t;
