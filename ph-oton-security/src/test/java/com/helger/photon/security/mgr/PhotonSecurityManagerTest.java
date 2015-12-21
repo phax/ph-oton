@@ -55,6 +55,10 @@ public final class PhotonSecurityManagerTest
     final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     assertNotNull (aUserTokenMgr);
 
+    aRoleMgr.createDefaults ();
+    aUserMgr.createDefaults ();
+    aUserGroupMgr.createDefaults ();
+
     // Check default stuff
     assertNotNull (aRoleMgr.getRoleOfID (CSecurity.ROLE_ADMINISTRATOR_ID));
     assertNotNull (aRoleMgr.getRoleOfID (CSecurity.ROLE_USER_ID));

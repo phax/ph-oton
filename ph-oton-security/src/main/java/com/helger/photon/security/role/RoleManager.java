@@ -112,13 +112,14 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
 
   public void createDefaults ()
   {
-    // Default should be created
-    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
-                        CSecurity.ROLE_ADMINISTRATOR_NAME,
-                        (String) null));
-    _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
-                        CSecurity.ROLE_USER_NAME,
-                        (String) null));
+    if (!containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
+      _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
+                          CSecurity.ROLE_ADMINISTRATOR_NAME,
+                          (String) null));
+    if (!containsRoleWithID (CSecurity.ROLE_USER_ID))
+      _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
+                          CSecurity.ROLE_USER_NAME,
+                          (String) null));
   }
 
   /**

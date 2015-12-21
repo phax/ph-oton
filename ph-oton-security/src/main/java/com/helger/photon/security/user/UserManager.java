@@ -121,43 +121,46 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   public void createDefaults ()
   {
     // Create Administrator
-    _addUser (new User (CSecurity.USER_ADMINISTRATOR_ID,
-                        CSecurity.USER_ADMINISTRATOR_LOGIN,
-                        CSecurity.USER_ADMINISTRATOR_EMAIL,
-                        GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                              CSecurity.USER_ADMINISTRATOR_PASSWORD),
-                        CSecurity.USER_ADMINISTRATOR_NAME,
-                        (String) null,
-                        (String) null,
-                        (Locale) null,
-                        (Map <String, String>) null,
-                        false));
+    if (!containsUserWithID (CSecurity.USER_ADMINISTRATOR_ID))
+      _addUser (new User (CSecurity.USER_ADMINISTRATOR_ID,
+                          CSecurity.USER_ADMINISTRATOR_LOGIN,
+                          CSecurity.USER_ADMINISTRATOR_EMAIL,
+                          GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                CSecurity.USER_ADMINISTRATOR_PASSWORD),
+                          CSecurity.USER_ADMINISTRATOR_NAME,
+                          (String) null,
+                          (String) null,
+                          (Locale) null,
+                          (Map <String, String>) null,
+                          false));
 
     // Create regular user
-    _addUser (new User (CSecurity.USER_USER_ID,
-                        CSecurity.USER_USER_LOGIN,
-                        CSecurity.USER_USER_EMAIL,
-                        GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                              CSecurity.USER_USER_PASSWORD),
-                        CSecurity.USER_USER_NAME,
-                        (String) null,
-                        (String) null,
-                        (Locale) null,
-                        (Map <String, String>) null,
-                        false));
+    if (!containsUserWithID (CSecurity.USER_USER_ID))
+      _addUser (new User (CSecurity.USER_USER_ID,
+                          CSecurity.USER_USER_LOGIN,
+                          CSecurity.USER_USER_EMAIL,
+                          GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                CSecurity.USER_USER_PASSWORD),
+                          CSecurity.USER_USER_NAME,
+                          (String) null,
+                          (String) null,
+                          (Locale) null,
+                          (Map <String, String>) null,
+                          false));
 
     // Create guest user
-    _addUser (new User (CSecurity.USER_GUEST_ID,
-                        CSecurity.USER_GUEST_LOGIN,
-                        CSecurity.USER_GUEST_EMAIL,
-                        GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                              CSecurity.USER_GUEST_PASSWORD),
-                        CSecurity.USER_GUEST_NAME,
-                        (String) null,
-                        (String) null,
-                        (Locale) null,
-                        (Map <String, String>) null,
-                        false));
+    if (!containsUserWithID (CSecurity.USER_GUEST_ID))
+      _addUser (new User (CSecurity.USER_GUEST_ID,
+                          CSecurity.USER_GUEST_LOGIN,
+                          CSecurity.USER_GUEST_EMAIL,
+                          GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                CSecurity.USER_GUEST_PASSWORD),
+                          CSecurity.USER_GUEST_NAME,
+                          (String) null,
+                          (String) null,
+                          (Locale) null,
+                          (Map <String, String>) null,
+                          false));
   }
 
   /**

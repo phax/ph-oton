@@ -27,6 +27,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.CSecurity;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 
 /**
  * Test class for class {@link LoggedInUserManager}.
@@ -47,6 +48,8 @@ public final class LoggedInUserManagerTest
   @Test
   public void testLoginLogout ()
   {
+    PhotonSecurityManager.getUserMgr ().createDefaults ();
+
     final LoggedInUserManager aUM = LoggedInUserManager.getInstance ();
     // Check any non-present user
     assertFalse (aUM.isUserLoggedIn ("any"));

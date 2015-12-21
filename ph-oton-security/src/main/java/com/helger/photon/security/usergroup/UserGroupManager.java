@@ -135,27 +135,33 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public void createDefaults ()
   {
     // Administrators user group
-    UserGroup aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
-                                                  CSecurity.USERGROUP_ADMINISTRATORS_NAME,
-                                                  (String) null));
+    UserGroup aUG = getUserGroupOfID (CSecurity.USERGROUP_ADMINISTRATORS_ID);
+    if (aUG == null)
+      aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
+                                          CSecurity.USERGROUP_ADMINISTRATORS_NAME,
+                                          (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_ADMINISTRATOR_ID))
       aUG.assignUser (CSecurity.USER_ADMINISTRATOR_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       aUG.assignRole (CSecurity.ROLE_ADMINISTRATOR_ID);
 
     // Users user group
-    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
-                                        CSecurity.USERGROUP_USERS_NAME,
-                                        (String) null));
+    aUG = getUserGroupOfID (CSecurity.USERGROUP_USERS_ID);
+    if (aUG == null)
+      aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
+                                          CSecurity.USERGROUP_USERS_NAME,
+                                          (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_USER_ID))
       aUG.assignUser (CSecurity.USER_USER_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_USER_ID))
       aUG.assignRole (CSecurity.ROLE_USER_ID);
 
     // Guests user group
-    aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
-                                        CSecurity.USERGROUP_GUESTS_NAME,
-                                        (String) null));
+    aUG = getUserGroupOfID (CSecurity.USERGROUP_GUESTS_ID);
+    if (aUG == null)
+      aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
+                                          CSecurity.USERGROUP_GUESTS_NAME,
+                                          (String) null));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_GUEST_ID))
       aUG.assignUser (CSecurity.USER_GUEST_ID);
     // no role for this user group
