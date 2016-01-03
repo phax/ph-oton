@@ -63,15 +63,16 @@ public abstract class AbstractErrorCallback implements
    * Implement this method to handle all errors in a similar way.
    *
    * @param t
-   *        The exception that occurred.
+   *        The exception that occurred. Maybe <code>null</code> if no exception
+   *        occurred.
    * @param aRequestScope
    *        The request scope in which the error occurred. May be
    *        <code>null</code>.
    * @param sErrorCode
-   *        The unique error code for this error. Neither <code>null</code> not
+   *        The unique error code for this error. Neither <code>null</code> nor
    *        empty.
    */
-  protected abstract void onError (@Nonnull Throwable t,
+  protected abstract void onError (@Nullable Throwable t,
                                    @Nullable IRequestWebScopeWithoutResponse aRequestScope,
                                    @Nonnull @Nonempty String sErrorCode);
 
