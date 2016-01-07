@@ -86,7 +86,7 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
       if (!aInvokableDescriptor.canExecute (aRequestScope))
       {
         s_aLogger.warn ("API " + eHTTPMethod + " '" + sAPIPath + "' cannot be executed for the current request.");
-        aUnifiedResponse.setStatus (HttpServletResponse.SC_UNAUTHORIZED);
+        aUnifiedResponse.setStatus (HttpServletResponse.SC_PRECONDITION_FAILED);
       }
       else
       {
