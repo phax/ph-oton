@@ -507,8 +507,9 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     addClass (CSS_CLASS_DATE);
 
-    // Assemble
-    addChild (new BootstrapDateTimePickerJS (this));
+    // Add JS if necessary
+    if (!m_aEdit.isReadOnly ())
+      addChild (new BootstrapDateTimePickerJS (this));
   }
 
   @Override
