@@ -127,7 +127,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     m_aEdit = (HCEdit) getInput ();
     m_aDisplayLocale = aDisplayLocale;
     m_eLanguage = EDateTimePickerLanguage.getFromLocaleOrNull (aDisplayLocale);
-    if (m_eLanguage == null && !"en".equals (aDisplayLocale.getLanguage ()))
+    if (m_eLanguage == null && !EDateTimePickerLanguage.PREDEFINED_LANGUAGE.equals (aDisplayLocale.getLanguage ()))
       s_aLogger.warn ("Unsupported EDateTimePickerLanguage provided: " + aDisplayLocale);
     m_eWeekStart = EDateTimePickerDayOfWeek.getFromJavaValueOrNull (Calendar.getInstance (aDisplayLocale)
                                                                             .getFirstDayOfWeek ());
@@ -144,6 +144,13 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   public HCEdit getEdit ()
   {
     return m_aEdit;
+  }
+
+  @Nonnull
+  public BootstrapDateTimePicker setReadOnly (final boolean bReadOnly)
+  {
+    m_aEdit.setReadOnly (bReadOnly);
+    return this;
   }
 
   /**

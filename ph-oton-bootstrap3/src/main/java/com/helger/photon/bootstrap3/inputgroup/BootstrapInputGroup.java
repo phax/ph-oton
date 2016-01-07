@@ -39,9 +39,9 @@ import com.helger.photon.bootstrap3.button.BootstrapButton;
 public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
 {
   private final EBootstrapInputGroupSize m_eSize;
-  private final List <IHCNode> m_aPrefixes = new ArrayList <IHCNode> ();
+  private final List <IHCNode> m_aPrefixes = new ArrayList <> ();
   private final IHCNode m_aInput;
-  private final List <IHCNode> m_aSuffixes = new ArrayList <IHCNode> ();
+  private final List <IHCNode> m_aSuffixes = new ArrayList <> ();
 
   public BootstrapInputGroup (@Nonnull final IHCNode aInput)
   {

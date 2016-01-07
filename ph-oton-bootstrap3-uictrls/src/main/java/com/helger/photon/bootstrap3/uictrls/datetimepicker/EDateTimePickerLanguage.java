@@ -82,6 +82,8 @@ public enum EDateTimePickerLanguage
   ZH_CN ("zh_CN", "zh-CN"),
   ZH_TW ("zh_TW", "zh-TW");
 
+  public static final String PREDEFINED_LANGUAGE = "en";
+
   private final Locale m_aLocale;
   private final String m_sLanguageID;
 
@@ -124,7 +126,7 @@ public enum EDateTimePickerLanguage
     {
       // Shortcut for English, because no locale files are present as English is
       // the default
-      if ("en".equals (aLocale.getLanguage ()))
+      if (PREDEFINED_LANGUAGE.equals (aLocale.getLanguage ()))
         return eDefault;
 
       // Check for direct match
