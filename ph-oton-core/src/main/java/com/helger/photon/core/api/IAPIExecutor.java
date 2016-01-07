@@ -35,6 +35,9 @@ public interface IAPIExecutor
   /**
    * @param sPath
    *        The invoked path by the user. Neither <code>null</code> nor empty.
+   *        All potential variable elements were already resolved. The mapping
+   *        of the source path variables is contained in the path variable
+   *        parameter.
    * @param aPathVariables
    *        The resolved variable path parts according to the underlying
    *        {@link IAPIDescriptor}. Never <code>null</code>.
