@@ -34,6 +34,11 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.api.path.PathDescriptor;
 import com.helger.web.http.EHTTPMethod;
 
+/**
+ * Default implementation of {@link IAPIDescriptor}.
+ *
+ * @author Philip Helger
+ */
 public class APIDescriptor implements IAPIDescriptor
 {
   private final EHTTPMethod m_eMethod;
@@ -70,7 +75,8 @@ public class APIDescriptor implements IAPIDescriptor
   }
 
   /**
-   * Add a required HTTP header.
+   * Add a required HTTP header. If this HTTP header is not present, invocation
+   * will not be possible.
    *
    * @param sHeaderName
    *        The name of the required HTTP header. May be <code>null</code> or
@@ -87,7 +93,8 @@ public class APIDescriptor implements IAPIDescriptor
   }
 
   /**
-   * Add one or more required HTTP headers.
+   * Add one or more required HTTP headers. If one of these HTTP headers are not
+   * present, invocation will not be possible.
    *
    * @param aHeaderNames
    *        The names of the required HTTP headers. May be <code>null</code> or
@@ -117,11 +124,12 @@ public class APIDescriptor implements IAPIDescriptor
   }
 
   /**
-   * Add a required HTTP parameter.
+   * Add a required request parameter. If this request parameter is not present,
+   * invocation will not be possible.
    *
    * @param sParamName
-   *        The name of the required HTTP parameter. May be <code>null</code> or
-   *        empty in which case the parameter is ignored.
+   *        The name of the required request parameter. May be <code>null</code>
+   *        or empty in which case the parameter is ignored.
    * @return this for chaining
    * @see #addRequiredParams(String...)
    */
@@ -134,7 +142,8 @@ public class APIDescriptor implements IAPIDescriptor
   }
 
   /**
-   * Add one or more required HTTP parameters.
+   * Add one or more required request parameters. If one of these request
+   * parameters are not present, invocation will not be possible.
    *
    * @param aParamNames
    *        The names of the required HTTP parameters. May be <code>null</code>
@@ -173,12 +182,34 @@ public class APIDescriptor implements IAPIDescriptor
                                        .toString ();
   }
 
+  /**
+   * Create an API descriptor using HTTP GET
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutor
+   *        The executor to be invoked for that API. May not be
+   *        <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor get (@Nonnull @Nonempty final String sPath, @Nonnull final IAPIExecutor aExecutor)
   {
     return get (sPath, FactoryConstantValue.create (aExecutor));
   }
 
+  /**
+   * Create an API descriptor using HTTP GET
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutorClass
+   *        The executor class to be instantiated for every API invocation. May
+   *        not be <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor get (@Nonnull @Nonempty final String sPath,
                                    @Nonnull final Class <? extends IAPIExecutor> aExecutorClass)
@@ -186,6 +217,17 @@ public class APIDescriptor implements IAPIDescriptor
     return get (sPath, FactoryNewInstance.create (aExecutorClass));
   }
 
+  /**
+   * Create an API descriptor using HTTP GET
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutorFactory
+   *        The executor factory to be invoked for every API invocation. May not
+   *        be <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor get (@Nonnull @Nonempty final String sPath,
                                    @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
@@ -193,12 +235,34 @@ public class APIDescriptor implements IAPIDescriptor
     return new APIDescriptor (EHTTPMethod.GET, sPath, aExecutorFactory);
   }
 
+  /**
+   * Create an API descriptor using HTTP POST
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutor
+   *        The executor to be invoked for that API. May not be
+   *        <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor post (@Nonnull @Nonempty final String sPath, @Nonnull final IAPIExecutor aExecutor)
   {
     return post (sPath, FactoryConstantValue.create (aExecutor));
   }
 
+  /**
+   * Create an API descriptor using HTTP POST
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutorClass
+   *        The executor class to be instantiated for every API invocation. May
+   *        not be <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor post (@Nonnull @Nonempty final String sPath,
                                     @Nonnull final Class <? extends IAPIExecutor> aExecutorClass)
@@ -206,6 +270,17 @@ public class APIDescriptor implements IAPIDescriptor
     return post (sPath, FactoryNewInstance.create (aExecutorClass));
   }
 
+  /**
+   * Create an API descriptor using HTTP POST
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutorFactory
+   *        The executor factory to be invoked for every API invocation. May not
+   *        be <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor post (@Nonnull @Nonempty final String sPath,
                                     @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
@@ -213,12 +288,34 @@ public class APIDescriptor implements IAPIDescriptor
     return new APIDescriptor (EHTTPMethod.POST, sPath, aExecutorFactory);
   }
 
+  /**
+   * Create an API descriptor using HTTP PUT
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutor
+   *        The executor to be invoked for that API. May not be
+   *        <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor put (@Nonnull @Nonempty final String sPath, @Nonnull final IAPIExecutor aExecutor)
   {
     return put (sPath, FactoryConstantValue.create (aExecutor));
   }
 
+  /**
+   * Create an API descriptor using HTTP PUT
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutorClass
+   *        The executor class to be instantiated for every API invocation. May
+   *        not be <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor put (@Nonnull @Nonempty final String sPath,
                                    @Nonnull final Class <? extends IAPIExecutor> aExecutorClass)
@@ -226,6 +323,17 @@ public class APIDescriptor implements IAPIDescriptor
     return put (sPath, FactoryNewInstance.create (aExecutorClass));
   }
 
+  /**
+   * Create an API descriptor using HTTP PUT
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutorFactory
+   *        The executor factory to be invoked for every API invocation. May not
+   *        be <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor put (@Nonnull @Nonempty final String sPath,
                                    @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
@@ -233,12 +341,34 @@ public class APIDescriptor implements IAPIDescriptor
     return new APIDescriptor (EHTTPMethod.PUT, sPath, aExecutorFactory);
   }
 
+  /**
+   * Create an API descriptor using HTTP DELETE
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutor
+   *        The executor to be invoked for that API. May not be
+   *        <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor delete (@Nonnull @Nonempty final String sPath, @Nonnull final IAPIExecutor aExecutor)
   {
     return delete (sPath, FactoryConstantValue.create (aExecutor));
   }
 
+  /**
+   * Create an API descriptor using HTTP DELETE
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutorClass
+   *        The executor class to be instantiated for every API invocation. May
+   *        not be <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor delete (@Nonnull @Nonempty final String sPath,
                                       @Nonnull final Class <? extends IAPIExecutor> aExecutorClass)
@@ -246,6 +376,17 @@ public class APIDescriptor implements IAPIDescriptor
     return delete (sPath, FactoryNewInstance.create (aExecutorClass));
   }
 
+  /**
+   * Create an API descriptor using HTTP DELETE
+   *
+   * @param sPath
+   *        Path, relative to the owning servlet. May neither be
+   *        <code>null</code> nor empty.
+   * @param aExecutorFactory
+   *        The executor factory to be invoked for every API invocation. May not
+   *        be <code>null</code>.
+   * @return A non-<code>null</code> {@link APIDescriptor}.
+   */
   @Nonnull
   public static APIDescriptor delete (@Nonnull @Nonempty final String sPath,
                                       @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
