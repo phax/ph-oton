@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.api.path;
+package com.helger.photon.core.api.pathdescriptor;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -22,13 +22,23 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
+/**
+ * This class keeps a list of {@link PathDescriptorPart} objects that are
+ * created when initially parsing an API path. It consists of plain string parts
+ * as well as of dynamic (variable) parts.
+ *
+ * @author Philip Helger
+ */
+@Immutable
 public final class PathDescriptor
 {
   private final List <PathDescriptorPart> m_aPathParts = new ArrayList <> ();
@@ -104,6 +114,23 @@ public final class PathDescriptor
       if (aPart.isVariable ())
         return true;
     return false;
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+    final PathDescriptor rhs = (PathDescriptor) o;
+    return m_aPathParts.equals (rhs.m_aPathParts);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_aPathParts).getHashCode ();
   }
 
   @Override

@@ -31,7 +31,7 @@ import com.helger.commons.factory.FactoryNewInstance;
 import com.helger.commons.factory.IFactory;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.core.api.path.PathDescriptor;
+import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
 import com.helger.web.http.EHTTPMethod;
 
 /**

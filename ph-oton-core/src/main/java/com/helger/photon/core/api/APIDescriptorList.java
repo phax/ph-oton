@@ -31,8 +31,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.core.api.path.PathDescriptorHelper;
-import com.helger.photon.core.api.path.PathMatchingResult;
+import com.helger.photon.core.api.pathdescriptor.PathDescriptorHelper;
+import com.helger.photon.core.api.pathdescriptor.PathMatchingResult;
 import com.helger.web.http.EHTTPMethod;
 
 /**

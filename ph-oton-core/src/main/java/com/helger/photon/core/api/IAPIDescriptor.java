@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.factory.IFactory;
-import com.helger.photon.core.api.path.PathDescriptor;
+import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
 import com.helger.web.http.EHTTPMethod;
 
 /**
