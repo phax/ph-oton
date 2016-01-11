@@ -16,7 +16,7 @@
  */
 package com.helger.photon.core.api;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
@@ -145,7 +145,7 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <? extends IAPIDescriptor> getAllDescriptors ()
+  public Collection <? extends IAPIDescriptor> getAllAPIDescriptors ()
   {
     return m_aRWLock.readLocked (m_aList::getAllDescriptors);
   }

@@ -17,7 +17,10 @@
 package com.helger.photon.core.api;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import javax.annotation.Nonnull;
@@ -28,7 +31,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptorHelper;
 import com.helger.photon.core.api.pathdescriptor.PathMatchingResult;
@@ -43,22 +45,32 @@ public class APIDescriptorList
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (APIDescriptorList.class);
 
-  private final List <APIDescriptor> m_aList = new ArrayList <> ();
+  /** Store APIDescriptor per HTTP method for quick access. */
+  private final Map <EHTTPMethod, List <APIDescriptor>> m_aMap = new EnumMap <> (EHTTPMethod.class);
 
   public APIDescriptorList ()
-  {}
+  {
+    // Init map
+    for (final EHTTPMethod e : EHTTPMethod.values ())
+      m_aMap.put (e, new ArrayList <> ());
+  }
 
   public void addDescriptor (@Nonnull final APIDescriptor aDescriptor)
   {
     ValueEnforcer.notNull (aDescriptor, "Descriptor");
-    m_aList.add (aDescriptor);
+
+    // Save for correct HTTP method
+    m_aMap.get (aDescriptor.getHTTPMethod ()).add (aDescriptor);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <? extends IAPIDescriptor> getAllDescriptors ()
+  public Collection <IAPIDescriptor> getAllDescriptors ()
   {
-    return CollectionHelper.newList (m_aList);
+    final List <IAPIDescriptor> ret = new ArrayList <> ();
+    for (final List <APIDescriptor> aList : m_aMap.values ())
+      ret.addAll (aList);
+    return ret;
   }
 
   @Nullable
@@ -78,18 +90,18 @@ public class APIDescriptorList
     ValueEnforcer.notNull (aPath, "Path");
 
     // Split only once for performance reasons
-    final EHTTPMethod eHTTPMethod = aPath.getHTTPMethod ();
     final String sSourcePath = aPath.getPath ();
     final List <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sSourcePath);
 
     final List <InvokableAPIDescriptor> aMatching = new ArrayList <> ();
-    for (final APIDescriptor aDescriptor : m_aList)
-      if (aDescriptor.getHTTPMethod ().equals (eHTTPMethod))
-      {
-        final PathMatchingResult aMatchResult = aDescriptor.getPathDescriptor ().matchesParts (aPathParts);
-        if (aMatchResult.isMatch ())
-          aMatching.add (new InvokableAPIDescriptor (sSourcePath, aDescriptor, aMatchResult.getAllVariableValues ()));
-      }
+
+    // HTTP Method must match
+    for (final APIDescriptor aDescriptor : m_aMap.get (aPath.getHTTPMethod ()))
+    {
+      final PathMatchingResult aMatchResult = aDescriptor.getPathDescriptor ().matchesParts (aPathParts);
+      if (aMatchResult.isMatch ())
+        aMatching.add (new InvokableAPIDescriptor (sSourcePath, aDescriptor, aMatchResult.getAllVariableValues ()));
+    }
 
     // Now get the result
     final int nMatching = aMatching.size ();
@@ -106,6 +118,6 @@ public class APIDescriptorList
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("List", m_aList).toString ();
+    return new ToStringGenerator (this).append ("Map", m_aMap).toString ();
   }
 }

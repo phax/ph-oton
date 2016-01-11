@@ -130,7 +130,7 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
                                               new DTCol (EText.MSG_FACTORY.getDisplayText (aDisplayLocale))).setID (getID () +
                                                                                                                     sAppScopeID +
                                                                                                                     "-api");
-          for (final IAPIDescriptor aDescriptor : aMgr.getAllDescriptors ())
+          for (final IAPIDescriptor aDescriptor : aMgr.getAllAPIDescriptors ())
           {
             aTable.addBodyRow ().addCells (aDescriptor.getPathDescriptor ().getAsURLString (),
                                            aDescriptor.getExecutorFactory ().toString ());

@@ -39,7 +39,7 @@ public interface IAPIDescriptor
   APIPath getAPIPath ();
 
   /**
-   * @return The HTTP method to be used to call this API.
+   * @return The HTTP method required to call this API.
    */
   @Nonnull
   default EHTTPMethod getHTTPMethod ()
@@ -48,7 +48,7 @@ public interface IAPIDescriptor
   }
 
   /**
-   * @return The path descriptor required to call this method.
+   * @return The path descriptor required to call this API.
    */
   @Nonnull
   PathDescriptor getPathDescriptor ();

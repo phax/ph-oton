@@ -16,7 +16,7 @@
  */
 package com.helger.photon.core.api;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
@@ -80,7 +80,7 @@ public interface IAPIInvoker
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <? extends IAPIDescriptor> getAllDescriptors ();
+  Collection <? extends IAPIDescriptor> getAllAPIDescriptors ();
 
   @Nullable
   InvokableAPIDescriptor getAPIByPath (@Nonnull APIPath aPath);

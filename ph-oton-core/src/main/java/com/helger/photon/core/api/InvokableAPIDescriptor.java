@@ -31,6 +31,13 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
+/**
+ * An {@link InvokableAPIDescriptor} contains an {@link IAPIDescriptor} as well
+ * the original path by which it was called as well as any resolved path
+ * variables.
+ *
+ * @author Philip Helger
+ */
 public final class InvokableAPIDescriptor
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (InvokableAPIDescriptor.class);
@@ -130,6 +137,21 @@ public final class InvokableAPIDescriptor
     return true;
   }
 
+  /**
+   * Invoke the Java callback underlying this API descriptor. Note: this method
+   * may only be invoked after
+   * {@link #canExecute(IRequestWebScopeWithoutResponse)} returned
+   * <code>true</code>!
+   *
+   * @param aRequestScope
+   *        Current request scope. Never <code>null</code>.
+   * @param aUnifiedResponse
+   *        Current response. Never <code>null</code>.
+   * @throws Exception
+   *         In case the Java callback throws one
+   * @throws IllegalStateException
+   *         In case the executor factory creates a <code>null</code> executor.
+   */
   public void invokeAPI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                          @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
