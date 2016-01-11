@@ -33,16 +33,25 @@ import com.helger.web.http.EHTTPMethod;
 public interface IAPIDescriptor
 {
   /**
+   * @return The API path used. Never <code>null</code>.
+   */
+  @Nonnull
+  APIPath getAPIPath ();
+
+  /**
    * @return The HTTP method to be used to call this API.
    */
   @Nonnull
-  EHTTPMethod getHTTPMethod ();
+  default EHTTPMethod getHTTPMethod ()
+  {
+    return getAPIPath ().getHTTPMethod ();
+  }
 
   /**
    * @return The path descriptor required to call this method.
    */
   @Nonnull
-  PathDescriptor getPath ();
+  PathDescriptor getPathDescriptor ();
 
   /**
    * @return The non-<code>null</code> factory used to create the main invoker.

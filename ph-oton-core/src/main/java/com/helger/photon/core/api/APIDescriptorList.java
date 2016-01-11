@@ -27,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -63,32 +62,33 @@ public class APIDescriptorList
   }
 
   @Nullable
-  public InvokableAPIDescriptor getMatching (@Nonnull final String sPath, @Nonnull final EHTTPMethod eHTTPMethod)
+  public InvokableAPIDescriptor getMatching (@Nonnull final APIPath aPath)
   {
-    return getMatching (sPath, eHTTPMethod, aDescriptors -> {
+    return getMatching (aPath, aDescriptors -> {
       if (!aDescriptors.isEmpty ())
-        s_aLogger.warn ("Found more than one API descriptor matching path '" + sPath + "': " + aDescriptors);
+        s_aLogger.warn ("Found more than one API descriptor matching path '" + aPath.getPath () + "': " + aDescriptors);
       return null;
     });
   }
 
   @Nullable
-  public InvokableAPIDescriptor getMatching (@Nonnull @Nonempty final String sPath,
-                                             @Nonnull final EHTTPMethod eHTTPMethod,
+  public InvokableAPIDescriptor getMatching (@Nonnull final APIPath aPath,
                                              @Nonnull final Function <List <InvokableAPIDescriptor>, InvokableAPIDescriptor> aAmbiguityResolver)
   {
-    ValueEnforcer.notEmpty (sPath, "Path");
+    ValueEnforcer.notNull (aPath, "Path");
 
     // Split only once for performance reasons
-    final List <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sPath);
+    final EHTTPMethod eHTTPMethod = aPath.getHTTPMethod ();
+    final String sSourcePath = aPath.getPath ();
+    final List <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sSourcePath);
 
     final List <InvokableAPIDescriptor> aMatching = new ArrayList <> ();
     for (final APIDescriptor aDescriptor : m_aList)
       if (aDescriptor.getHTTPMethod ().equals (eHTTPMethod))
       {
-        final PathMatchingResult aMatchResult = aDescriptor.getPath ().matchesParts (aPathParts);
+        final PathMatchingResult aMatchResult = aDescriptor.getPathDescriptor ().matchesParts (aPathParts);
         if (aMatchResult.isMatch ())
-          aMatching.add (new InvokableAPIDescriptor (sPath, aDescriptor, aMatchResult.getAllVariableValues ()));
+          aMatching.add (new InvokableAPIDescriptor (sSourcePath, aDescriptor, aMatchResult.getAllVariableValues ()));
       }
 
     // Now get the result

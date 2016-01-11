@@ -22,11 +22,10 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 import com.helger.web.http.CHTTPHeader;
-import com.helger.web.http.EHTTPMethod;
 
 /**
  * Test class for class {@link APIDescriptor}.
- * 
+ *
  * @author Philip Helger
  */
 public final class APIDescriptorTest
@@ -44,18 +43,18 @@ public final class APIDescriptorTest
     aList.addDescriptor (APIDescriptor.put ("/r2o/v1/invoice", aExec).addRequiredHeaders (CHTTPHeader.AUTHORIZATION));
     aList.addDescriptor (APIDescriptor.put ("/r2o/{version:regex=v[0-9]+}/invoice", aExec));
 
-    assertNotNull (aList.getMatching ("/r2o/v1/accessToken", EHTTPMethod.GET));
-    assertNull (aList.getMatching ("/r2o/v1/accessToken", EHTTPMethod.POST));
-    assertNotNull (aList.getMatching ("/service/12345/get", EHTTPMethod.DELETE));
-    assertNull (aList.getMatching ("/service/12345/list", EHTTPMethod.GET));
+    assertNotNull (aList.getMatching (APIPath.get ("/r2o/v1/accessToken")));
+    assertNull (aList.getMatching (APIPath.post ("/r2o/v1/accessToken")));
+    assertNotNull (aList.getMatching (APIPath.delete ("/service/12345/get")));
+    assertNull (aList.getMatching (APIPath.get ("/service/12345/list")));
 
     // Does not match regex
-    assertNull (aList.getMatching ("/r2o/dummy/invoice", EHTTPMethod.PUT));
+    assertNull (aList.getMatching (APIPath.put ("/r2o/dummy/invoice")));
     // matches static and regex
-    assertNull (aList.getMatching ("/r2o/v1/invoice", EHTTPMethod.PUT));
+    assertNull (aList.getMatching (APIPath.put ("/r2o/v1/invoice")));
     // Matches only the regex
-    assertNotNull (aList.getMatching ("/r2o/v24/invoice", EHTTPMethod.PUT));
+    assertNotNull (aList.getMatching (APIPath.put ("/r2o/v24/invoice")));
     // Matches the regex but invalid HTTP method
-    assertNull (aList.getMatching ("/r2o/v24/invoice", EHTTPMethod.GET));
+    assertNull (aList.getMatching (APIPath.get ("/r2o/v24/invoice")));
   }
 }

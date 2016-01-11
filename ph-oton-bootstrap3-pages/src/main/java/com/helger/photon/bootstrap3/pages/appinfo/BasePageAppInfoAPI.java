@@ -132,7 +132,7 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
                                                                                                                     "-api");
           for (final IAPIDescriptor aDescriptor : aMgr.getAllDescriptors ())
           {
-            aTable.addBodyRow ().addCells (aDescriptor.getPath ().getAsURLString (),
+            aTable.addBodyRow ().addCells (aDescriptor.getPathDescriptor ().getAsURLString (),
                                            aDescriptor.getExecutorFactory ().toString ());
           }
           aTab.addChild (aTable);

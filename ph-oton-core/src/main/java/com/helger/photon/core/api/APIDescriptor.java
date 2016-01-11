@@ -32,7 +32,6 @@ import com.helger.commons.factory.IFactory;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
-import com.helger.web.http.EHTTPMethod;
 
 /**
  * Default implementation of {@link IAPIDescriptor}.
@@ -41,31 +40,29 @@ import com.helger.web.http.EHTTPMethod;
  */
 public class APIDescriptor implements IAPIDescriptor
 {
-  private final EHTTPMethod m_eMethod;
-  private final PathDescriptor m_aPath;
+  private final APIPath m_aAPIPath;
+  private final PathDescriptor m_aPathDescriptor;
   private final Set <String> m_aRequiredHeaders = new LinkedHashSet <String> ();
   private final Set <String> m_aRequiredParams = new LinkedHashSet <String> ();
   private final IFactory <? extends IAPIExecutor> m_aExecutorFactory;
 
-  public APIDescriptor (@Nonnull final EHTTPMethod eMethod,
-                        @Nonnull @Nonempty final String sPath,
-                        @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
+  public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
   {
-    m_eMethod = ValueEnforcer.notNull (eMethod, "Method");
-    m_aPath = PathDescriptor.create (sPath);
+    m_aAPIPath = ValueEnforcer.notNull (aPath, "Path");
+    m_aPathDescriptor = PathDescriptor.create (aPath.getPath ());
     m_aExecutorFactory = ValueEnforcer.notNull (aExecutorFactory, "ExecutorFactory");
   }
 
   @Nonnull
-  public EHTTPMethod getHTTPMethod ()
+  public APIPath getAPIPath ()
   {
-    return m_eMethod;
+    return m_aAPIPath;
   }
 
   @Nonnull
-  public PathDescriptor getPath ()
+  public PathDescriptor getPathDescriptor ()
   {
-    return m_aPath;
+    return m_aPathDescriptor;
   }
 
   @Nonnull
@@ -175,8 +172,8 @@ public class APIDescriptor implements IAPIDescriptor
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("HTTPMethod", m_eMethod)
-                                       .append ("Path", m_aPath)
+    return new ToStringGenerator (null).append ("APIPath", m_aAPIPath)
+                                       .append ("PathDescriptor", m_aPathDescriptor)
                                        .appendIfNotEmpty ("RequiredHeaders", m_aRequiredHeaders)
                                        .appendIfNotEmpty ("RequiredParams", m_aRequiredParams)
                                        .toString ();
@@ -232,7 +229,7 @@ public class APIDescriptor implements IAPIDescriptor
   public static APIDescriptor get (@Nonnull @Nonempty final String sPath,
                                    @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
   {
-    return new APIDescriptor (EHTTPMethod.GET, sPath, aExecutorFactory);
+    return new APIDescriptor (APIPath.get (sPath), aExecutorFactory);
   }
 
   /**
@@ -285,7 +282,7 @@ public class APIDescriptor implements IAPIDescriptor
   public static APIDescriptor post (@Nonnull @Nonempty final String sPath,
                                     @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
   {
-    return new APIDescriptor (EHTTPMethod.POST, sPath, aExecutorFactory);
+    return new APIDescriptor (APIPath.post (sPath), aExecutorFactory);
   }
 
   /**
@@ -338,7 +335,7 @@ public class APIDescriptor implements IAPIDescriptor
   public static APIDescriptor put (@Nonnull @Nonempty final String sPath,
                                    @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
   {
-    return new APIDescriptor (EHTTPMethod.PUT, sPath, aExecutorFactory);
+    return new APIDescriptor (APIPath.put (sPath), aExecutorFactory);
   }
 
   /**
@@ -391,6 +388,6 @@ public class APIDescriptor implements IAPIDescriptor
   public static APIDescriptor delete (@Nonnull @Nonempty final String sPath,
                                       @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
   {
-    return new APIDescriptor (EHTTPMethod.DELETE, sPath, aExecutorFactory);
+    return new APIDescriptor (APIPath.delete (sPath), aExecutorFactory);
   }
 }

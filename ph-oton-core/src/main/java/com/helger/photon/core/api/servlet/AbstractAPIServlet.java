@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.io.file.FilenameHelper;
+import com.helger.photon.core.api.APIPath;
 import com.helger.photon.core.api.ApplicationAPIManager;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
@@ -71,7 +72,7 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
     final String sAPIPath = FilenameHelper.ensurePathStartingWithSeparator (aRequestScope.getPathWithinServlet ());
     final EHTTPMethod eHTTPMethod = aRequestScope.getHttpMethod ();
     final IAPIInvoker aAPIMgr = getAPIInvoker (aRequestScope);
-    final InvokableAPIDescriptor aInvokableDescriptor = aAPIMgr.getAPIByPath (sAPIPath, eHTTPMethod);
+    final InvokableAPIDescriptor aInvokableDescriptor = aAPIMgr.getAPIByPath (new APIPath (eHTTPMethod, sAPIPath));
     if (aInvokableDescriptor == null)
     {
       s_aLogger.warn ("Unknown API " + eHTTPMethod + " '" + sAPIPath + "' requested!");

@@ -25,7 +25,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.web.http.EHTTPMethod;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
@@ -69,7 +68,7 @@ public interface IAPIInvoker
 
   /**
    * Register a new API.
-   * 
+   *
    * @param aDescriptor
    *        The API to be registered. May not be <code>null</code>.
    */
@@ -84,7 +83,7 @@ public interface IAPIInvoker
   List <? extends IAPIDescriptor> getAllDescriptors ();
 
   @Nullable
-  InvokableAPIDescriptor getAPIByPath (@Nullable String sPath, @Nonnull EHTTPMethod eHTTPMethod);
+  InvokableAPIDescriptor getAPIByPath (@Nonnull APIPath aPath);
 
   void invoke (@Nonnull InvokableAPIDescriptor aInvokableDescriptor,
                @Nonnull IRequestWebScopeWithoutResponse aRequestScope,

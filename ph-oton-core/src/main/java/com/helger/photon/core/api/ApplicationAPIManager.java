@@ -39,7 +39,6 @@ import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
-import com.helger.web.http.EHTTPMethod;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.singleton.AbstractApplicationWebSingleton;
 import com.helger.web.servlet.response.UnifiedResponse;
@@ -152,9 +151,9 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
   }
 
   @Nullable
-  public InvokableAPIDescriptor getAPIByPath (@Nullable final String sPath, @Nonnull final EHTTPMethod eHTTPMethod)
+  public InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath)
   {
-    return m_aRWLock.readLocked ( () -> m_aList.getMatching (sPath, eHTTPMethod));
+    return m_aRWLock.readLocked ( () -> m_aList.getMatching (aPath));
   }
 
   public void invoke (@Nonnull final InvokableAPIDescriptor aInvokableDescriptor,

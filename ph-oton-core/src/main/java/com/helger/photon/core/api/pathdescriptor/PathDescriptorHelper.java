@@ -27,7 +27,7 @@ import com.helger.commons.string.StringHelper;
 
 /**
  * Utility class for API path handling.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -36,6 +36,13 @@ public final class PathDescriptorHelper
   private PathDescriptorHelper ()
   {}
 
+  /**
+   * Clean the provided path and split it into parts.
+   * 
+   * @param sPath
+   *        Source path
+   * @return The list with all path parts. Never <code>null</code>.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public static List <String> getCleanPathParts (@Nonnull final String sPath)
