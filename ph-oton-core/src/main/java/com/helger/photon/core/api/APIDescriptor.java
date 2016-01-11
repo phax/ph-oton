@@ -23,7 +23,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.factory.FactoryConstantValue;
@@ -46,6 +45,43 @@ public class APIDescriptor implements IAPIDescriptor
   private final Set <String> m_aRequiredParams = new LinkedHashSet <String> ();
   private final IFactory <? extends IAPIExecutor> m_aExecutorFactory;
 
+  /**
+   * Constructor
+   *
+   * @param aPath
+   *        API Path to be used. May not be <code>null</code>.
+   * @param aExecutor
+   *        The executor to be invoked for that API. May not be
+   *        <code>null</code>.
+   */
+  public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final IAPIExecutor aExecutor)
+  {
+    this (aPath, FactoryConstantValue.create (aExecutor));
+  }
+
+  /**
+   * Constructor
+   *
+   * @param aPath
+   *        API Path to be used. May not be <code>null</code>.
+   * @param aExecutorClass
+   *        The executor class to be instantiated for every API invocation. May
+   *        not be <code>null</code>.
+   */
+  public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final Class <? extends IAPIExecutor> aExecutorClass)
+  {
+    this (aPath, FactoryNewInstance.create (aExecutorClass));
+  }
+
+  /**
+   * Constructor
+   *
+   * @param aPath
+   *        API Path to be used. May not be <code>null</code>.
+   * @param aExecutorFactory
+   *        The factory to be used to create executor instances for every API
+   *        invocation. May not be <code>null</code>.
+   */
   public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
   {
     m_aAPIPath = ValueEnforcer.notNull (aPath, "Path");
@@ -177,217 +213,5 @@ public class APIDescriptor implements IAPIDescriptor
                                        .appendIfNotEmpty ("RequiredHeaders", m_aRequiredHeaders)
                                        .appendIfNotEmpty ("RequiredParams", m_aRequiredParams)
                                        .toString ();
-  }
-
-  /**
-   * Create an API descriptor using HTTP GET
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutor
-   *        The executor to be invoked for that API. May not be
-   *        <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor get (@Nonnull @Nonempty final String sPath, @Nonnull final IAPIExecutor aExecutor)
-  {
-    return get (sPath, FactoryConstantValue.create (aExecutor));
-  }
-
-  /**
-   * Create an API descriptor using HTTP GET
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutorClass
-   *        The executor class to be instantiated for every API invocation. May
-   *        not be <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor get (@Nonnull @Nonempty final String sPath,
-                                   @Nonnull final Class <? extends IAPIExecutor> aExecutorClass)
-  {
-    return get (sPath, FactoryNewInstance.create (aExecutorClass));
-  }
-
-  /**
-   * Create an API descriptor using HTTP GET
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutorFactory
-   *        The executor factory to be invoked for every API invocation. May not
-   *        be <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor get (@Nonnull @Nonempty final String sPath,
-                                   @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
-  {
-    return new APIDescriptor (APIPath.get (sPath), aExecutorFactory);
-  }
-
-  /**
-   * Create an API descriptor using HTTP POST
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutor
-   *        The executor to be invoked for that API. May not be
-   *        <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor post (@Nonnull @Nonempty final String sPath, @Nonnull final IAPIExecutor aExecutor)
-  {
-    return post (sPath, FactoryConstantValue.create (aExecutor));
-  }
-
-  /**
-   * Create an API descriptor using HTTP POST
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutorClass
-   *        The executor class to be instantiated for every API invocation. May
-   *        not be <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor post (@Nonnull @Nonempty final String sPath,
-                                    @Nonnull final Class <? extends IAPIExecutor> aExecutorClass)
-  {
-    return post (sPath, FactoryNewInstance.create (aExecutorClass));
-  }
-
-  /**
-   * Create an API descriptor using HTTP POST
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutorFactory
-   *        The executor factory to be invoked for every API invocation. May not
-   *        be <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor post (@Nonnull @Nonempty final String sPath,
-                                    @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
-  {
-    return new APIDescriptor (APIPath.post (sPath), aExecutorFactory);
-  }
-
-  /**
-   * Create an API descriptor using HTTP PUT
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutor
-   *        The executor to be invoked for that API. May not be
-   *        <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor put (@Nonnull @Nonempty final String sPath, @Nonnull final IAPIExecutor aExecutor)
-  {
-    return put (sPath, FactoryConstantValue.create (aExecutor));
-  }
-
-  /**
-   * Create an API descriptor using HTTP PUT
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutorClass
-   *        The executor class to be instantiated for every API invocation. May
-   *        not be <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor put (@Nonnull @Nonempty final String sPath,
-                                   @Nonnull final Class <? extends IAPIExecutor> aExecutorClass)
-  {
-    return put (sPath, FactoryNewInstance.create (aExecutorClass));
-  }
-
-  /**
-   * Create an API descriptor using HTTP PUT
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutorFactory
-   *        The executor factory to be invoked for every API invocation. May not
-   *        be <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor put (@Nonnull @Nonempty final String sPath,
-                                   @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
-  {
-    return new APIDescriptor (APIPath.put (sPath), aExecutorFactory);
-  }
-
-  /**
-   * Create an API descriptor using HTTP DELETE
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutor
-   *        The executor to be invoked for that API. May not be
-   *        <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor delete (@Nonnull @Nonempty final String sPath, @Nonnull final IAPIExecutor aExecutor)
-  {
-    return delete (sPath, FactoryConstantValue.create (aExecutor));
-  }
-
-  /**
-   * Create an API descriptor using HTTP DELETE
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutorClass
-   *        The executor class to be instantiated for every API invocation. May
-   *        not be <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor delete (@Nonnull @Nonempty final String sPath,
-                                      @Nonnull final Class <? extends IAPIExecutor> aExecutorClass)
-  {
-    return delete (sPath, FactoryNewInstance.create (aExecutorClass));
-  }
-
-  /**
-   * Create an API descriptor using HTTP DELETE
-   *
-   * @param sPath
-   *        Path, relative to the owning servlet. May neither be
-   *        <code>null</code> nor empty.
-   * @param aExecutorFactory
-   *        The executor factory to be invoked for every API invocation. May not
-   *        be <code>null</code>.
-   * @return A non-<code>null</code> {@link APIDescriptor}.
-   */
-  @Nonnull
-  public static APIDescriptor delete (@Nonnull @Nonempty final String sPath,
-                                      @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
-  {
-    return new APIDescriptor (APIPath.delete (sPath), aExecutorFactory);
   }
 }
