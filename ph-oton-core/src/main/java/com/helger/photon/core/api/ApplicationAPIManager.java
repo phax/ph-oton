@@ -50,7 +50,7 @@ import com.helger.web.servlet.response.UnifiedResponse;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class ApplicationAPIManager extends AbstractApplicationWebSingleton implements IAPIInvoker
+public class ApplicationAPIManager extends AbstractApplicationWebSingleton implements IAPIInvoker
 {
   /**
    * Default milliseconds until an implementation is considered long running.

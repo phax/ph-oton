@@ -67,8 +67,18 @@ public interface IAPIInvoker
   @Nonnull
   CallbackList <IAPILongRunningExecutionCallback> getLongRunningExecutionCallbacks ();
 
+  /**
+   * Register a new API.
+   * 
+   * @param aDescriptor
+   *        The API to be registered. May not be <code>null</code>.
+   */
   void registerAPI (@Nonnull APIDescriptor aDescriptor);
 
+  /**
+   * @return A list of all registered API descriptors. Never <code>null</code>
+   *         but maybe empty.
+   */
   @Nonnull
   @ReturnsMutableCopy
   List <? extends IAPIDescriptor> getAllDescriptors ();
