@@ -78,7 +78,7 @@ public final class PhotonStubInitializer
       PhotonJS.registerJSIncludeForGlobal (aPP);
 
     // With conditional comments
-    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.HTML5SHIV_3_7_2);
+    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.HTML5SHIV);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.RESPOND);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_PLACEHOLDER);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_PLACEHOLDER_ALL);
