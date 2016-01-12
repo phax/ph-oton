@@ -18,8 +18,6 @@ package com.helger.photon.core.ajax;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
@@ -36,6 +34,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
@@ -69,7 +68,7 @@ public class AjaxInvoker implements IAjaxInvoker
   private static final IMutableStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (AjaxInvoker.class.getName () +
                                                                                                                            "$timer");
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final CallbackList <IAjaxExceptionCallback> m_aExceptionCallbacks = new CallbackList <IAjaxExceptionCallback> ();
   private final CallbackList <IAjaxBeforeExecutionCallback> m_aBeforeExecutionCallbacks = new CallbackList <IAjaxBeforeExecutionCallback> ();
   private final CallbackList <IAjaxAfterExecutionCallback> m_aAfterExecutionCallbacks = new CallbackList <IAjaxAfterExecutionCallback> ();
@@ -129,15 +128,9 @@ public class AjaxInvoker implements IAjaxInvoker
 
   public void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
@@ -151,15 +144,7 @@ public class AjaxInvoker implements IAjaxInvoker
   @ReturnsMutableCopy
   public Map <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newMap (m_aMap);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newMap (m_aMap));
   }
 
   @Nullable
@@ -168,15 +153,7 @@ public class AjaxInvoker implements IAjaxInvoker
     if (StringHelper.hasNoText (sFunctionName))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.get (sFunctionName);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sFunctionName));
   }
 
   public boolean isRegisteredFunction (@Nullable final String sFunctionName)
@@ -201,19 +178,13 @@ public class AjaxInvoker implements IAjaxInvoker
 
     final String sFunctionName = aFunctionDeclaration.getName ();
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       if (m_aMap.containsKey (sFunctionName))
         throw new IllegalArgumentException ("An Ajax function with the name '" +
                                             sFunctionName +
                                             "' is already registered");
       m_aMap.put (sFunctionName, aFunctionDeclaration);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
 
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Registered AJAX function '" +

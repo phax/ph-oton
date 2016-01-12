@@ -22,8 +22,6 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.MonitorInfo;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.lang.IHasStringRepresentation;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.microdom.IHasMicroNodeRepresentation;
@@ -52,7 +51,7 @@ public class ThreadDescriptor implements IHasStringRepresentation, IHasMicroNode
   public static final boolean DEFAULT_ENABLE_THREAD_INFO = false;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (ThreadDescriptor.class);
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   private static final ThreadMXBean THREAD_MX = ManagementFactory.getThreadMXBean ();
 
   private static boolean s_bEnableThreadInfo = DEFAULT_ENABLE_THREAD_INFO;
@@ -75,15 +74,9 @@ public class ThreadDescriptor implements IHasStringRepresentation, IHasMicroNode
    */
   public static void setEnableThreadInfo (final boolean bEnableThreadInfo)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_bEnableThreadInfo = bEnableThreadInfo;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public static boolean isEnableThreadInfo ()

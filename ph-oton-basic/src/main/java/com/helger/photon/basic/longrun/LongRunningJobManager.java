@@ -19,8 +19,6 @@ package com.helger.photon.basic.longrun;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -35,6 +33,7 @@ import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.ESuccess;
 
@@ -43,9 +42,9 @@ public final class LongRunningJobManager
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (LongRunningJobManager.class);
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final Map <String, LongRunningJobData> m_aRunningJobs = new HashMap <String, LongRunningJobData> ();
+  private final Map <String, LongRunningJobData> m_aRunningJobs = new HashMap <> ();
   private final LongRunningJobResultManager m_aResultMgr;
 
   public LongRunningJobManager (@Nonnull final LongRunningJobResultManager aResultMgr)
@@ -70,15 +69,9 @@ public final class LongRunningJobManager
 
     // Create a new unique in-memory ID
     final String sJobID = GlobalIDFactory.getNewStringID ();
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_aRunningJobs.put (sJobID, new LongRunningJobData (sJobID, aJob.getJobDescription (), sStartingUserID));
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     return sJobID;
   }
 
@@ -103,21 +96,15 @@ public final class LongRunningJobManager
     ValueEnforcer.notNull (aResult, "Result");
 
     // Remove from running job list
-    LongRunningJobData aJobData;
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      aJobData = m_aRunningJobs.remove (sJobID);
-      if (aJobData == null)
+    final LongRunningJobData aJobData = m_aRWLock.writeLocked ( () -> {
+      final LongRunningJobData ret = m_aRunningJobs.remove (sJobID);
+      if (ret == null)
         throw new IllegalArgumentException ("Illegal job ID '" + sJobID + "' passed!");
 
       // End the job - inside the writeLock
-      aJobData.onJobEnd (eExecSucess, aResult);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+      ret.onJobEnd (eExecSucess, aResult);
+      return ret;
+    });
 
     // Remember it
     m_aResultMgr.addResult (aJobData);
@@ -141,15 +128,7 @@ public final class LongRunningJobManager
   @Nonempty
   public Collection <LongRunningJobData> getAllRunningJobs ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aRunningJobs.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aRunningJobs.values ()));
   }
 
   public void waitUntilAllJobsAreFinished () throws InterruptedException

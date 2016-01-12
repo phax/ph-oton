@@ -21,8 +21,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -34,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.callback.IThrowingRunnableWithParameter;
 import com.helger.commons.concurrent.ExtendedDefaultThreadFactory;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.concurrent.collector.ConcurrentCollectorMultiple;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
@@ -48,7 +47,7 @@ public class AsynchronousAuditor extends AbstractAuditor
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AsynchronousAuditor.class);
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final ConcurrentCollectorMultiple <IAuditItem> m_aCollector;
   // Just to have custom named threads....
   private static final ThreadFactory s_aThreadFactory = new ExtendedDefaultThreadFactory ("AsyncAuditor");
@@ -78,15 +77,9 @@ public class AsynchronousAuditor extends AbstractAuditor
   {
     ValueEnforcer.notNull (aAuditItem, "AuditItem");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_aCollector.queueObject (aAuditItem);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnegative

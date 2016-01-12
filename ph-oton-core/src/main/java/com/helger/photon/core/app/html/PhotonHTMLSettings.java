@@ -16,14 +16,12 @@
  */
 package com.helger.photon.core.app.html;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
@@ -42,7 +40,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 @ThreadSafe
 public final class PhotonHTMLSettings
 {
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
   private static IWebURIToURLConverter s_aURIToURLConverter = new StreamOrLocalURIToURLConverter ();
 
@@ -52,30 +50,16 @@ public final class PhotonHTMLSettings
   @Nonnull
   public static IWebURIToURLConverter getURIToURLConverter ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aURIToURLConverter;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_aURIToURLConverter);
   }
 
   public static void setURIToURLConverter (@Nonnull final IWebURIToURLConverter aURIToURLConverter)
   {
     ValueEnforcer.notNull (aURIToURLConverter, "URIToURLConverter");
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aURIToURLConverter = aURIToURLConverter;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull

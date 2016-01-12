@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,6 +40,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.base64.Base64;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.email.IEmailAddress;
 import com.helger.commons.id.factory.GlobalIDFactory;
@@ -193,7 +192,7 @@ public final class InternalErrorHandler
   public static final boolean DEFAULT_ENABLE_FULL_THREAD_DUMPS = false;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (InternalErrorHandler.class);
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   private static final EmailSettings s_aEmailSettings = new EmailSettings ();
   private static IInternalErrorCallback s_aCustomExceptionHandler;
   private static boolean s_bEnableFullThreadDumps = DEFAULT_ENABLE_FULL_THREAD_DUMPS;
@@ -205,110 +204,56 @@ public final class InternalErrorHandler
 
   public static void setSMTPSettings (@Nullable final ISMTPSettings aSMTPSettings)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aEmailSettings.setSMTPSettings (aSMTPSettings);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nullable
   public static ISMTPSettings getSMTPSettings ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aEmailSettings.getSMTPSettings ();
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_aEmailSettings.getSMTPSettings ());
   }
 
   public static void setSMTPSenderAddress (@Nullable final IEmailAddress aSenderAddress)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aEmailSettings.setSenderAddress (aSenderAddress);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nullable
   public static IEmailAddress getSMTPSenderAddress ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aEmailSettings.getSenderAddress ();
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked (s_aEmailSettings::getSenderAddress);
   }
 
   public static void setSMTPReceiverAddress (@Nullable final IEmailAddress aReceiverAddress)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aEmailSettings.setReceiverAddress (aReceiverAddress);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public static void setSMTPReceiverAddresses (@Nullable final List <? extends IEmailAddress> aReceiverAddresses)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aEmailSettings.setReceiverAddresses (aReceiverAddresses);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public static void setSMTPReceiverAddresses (@Nullable final IEmailAddress... aReceiverAddresses)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aEmailSettings.setReceiverAddresses (aReceiverAddresses);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public static List <IEmailAddress> getSMTPReceiverAddresses ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aEmailSettings.getReceiverAddresses ();
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked (s_aEmailSettings::getReceiverAddresses);
   }
 
   /**
@@ -321,15 +266,9 @@ public final class InternalErrorHandler
    */
   public static void setEnableFullThreadDumps (final boolean bEnableFullThreadDumps)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_bEnableFullThreadDumps = bEnableFullThreadDumps;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public static boolean isEnableFullThreadDumps ()
@@ -352,15 +291,7 @@ public final class InternalErrorHandler
   @Nullable
   public static IInternalErrorCallback getCustomExceptionHandler ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aCustomExceptionHandler;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_aCustomExceptionHandler);
   }
 
   /**
@@ -372,15 +303,9 @@ public final class InternalErrorHandler
    */
   public static void setCustomExceptionHandler (@Nullable final IInternalErrorCallback aCustomExceptionHandler)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aCustomExceptionHandler = aCustomExceptionHandler;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
