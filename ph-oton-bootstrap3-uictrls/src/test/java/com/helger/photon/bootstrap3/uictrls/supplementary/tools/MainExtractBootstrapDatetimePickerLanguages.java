@@ -38,7 +38,7 @@ public class MainExtractBootstrapDatetimePickerLanguages
       }
     for (final String s : aAll)
     {
-      final String sLocale = s.replace ("-", "_");
+      final String sLocale = StringHelper.replaceAll (s, "-", "_");
       if (!LocaleCache.getInstance ().containsLocale (sLocale))
       {
         System.out.println ("/* Note: this is not a valid Java locale! */");

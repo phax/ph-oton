@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.string.StringHelper;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 
@@ -62,8 +63,9 @@ public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
   @Nonnull
   public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
   {
-    return ConstantJSPathProvider.createWithConditionalComment (m_aPP.getJSItemPathRegular ().replace ("{0}",
-                                                                                                       sLanguage),
+    return ConstantJSPathProvider.createWithConditionalComment (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (),
+                                                                                         "{0}",
+                                                                                         sLanguage),
                                                                 m_aPP.getConditionalComment ());
   }
 }

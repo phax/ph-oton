@@ -128,8 +128,9 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
     {
       // Perform some default replacements to avoid updating all references at
       // once before splitting
-      final String sRealItemList = sItemList.replace (EXTENSION_MACRO_WEB_DEFAULT,
-                                                      "js,css,png,jpg,jpeg,gif,eot,svg,ttf,woff,woff2,map");
+      final String sRealItemList = StringHelper.replaceAll (sItemList,
+                                                            EXTENSION_MACRO_WEB_DEFAULT,
+                                                            "js,css,png,jpg,jpeg,gif,eot,svg,ttf,woff,woff2,map");
 
       for (final String sItem : StringHelper.getExploded (',', sRealItemList))
       {
