@@ -20,8 +20,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -36,6 +34,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
 import com.helger.web.scope.IRequestWebScope;
 
@@ -55,7 +54,7 @@ public final class RequestTrackingManager
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (RequestTrackingManager.class);
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private boolean m_bLongRunningCheckEnabled = DEFAULT_LONG_RUNNING_CHECK_ENABLED;
   @GuardedBy ("m_aRWLock")
@@ -76,15 +75,9 @@ public final class RequestTrackingManager
   @Nonnull
   public RequestTrackingManager setLongRunningCheckEnabled (final boolean bLongRunningCheckEnabled)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_bLongRunningCheckEnabled = bLongRunningCheckEnabled;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     return this;
   }
 
@@ -106,15 +99,9 @@ public final class RequestTrackingManager
   {
     ValueEnforcer.isGT0 (nLongRunningMilliSeconds, "LongRunningMilliSeconds");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_nLongRunningMilliSeconds = nLongRunningMilliSeconds;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     return this;
   }
 
@@ -135,15 +122,9 @@ public final class RequestTrackingManager
   @Nonnull
   public RequestTrackingManager setParallelRunningRequestCheckEnabled (final boolean bParallelRunningRequestCheckEnabled)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_bParallelRunningRequestCheckEnabled = bParallelRunningRequestCheckEnabled;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     return this;
   }
 
@@ -165,15 +146,9 @@ public final class RequestTrackingManager
   {
     ValueEnforcer.isGT0 (nParallelRunningRequestBarrier, "ParallelRunningRequestBarrier");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_nParallelRunningRequestBarrier = nParallelRunningRequestBarrier;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     return this;
   }
 
@@ -284,9 +259,7 @@ public final class RequestTrackingManager
 
     if (!aCallbacks.isEmpty ())
     {
-      m_aRWLock.readLock ().lock ();
-      try
-      {
+      m_aRWLock.readLocked ( () -> {
         // Check only if they are enabled!
         if (m_bLongRunningCheckEnabled)
         {
@@ -316,11 +289,7 @@ public final class RequestTrackingManager
             }
           }
         }
-      }
-      finally
-      {
-        m_aRWLock.readLock ().unlock ();
-      }
+      });
     }
   }
 }

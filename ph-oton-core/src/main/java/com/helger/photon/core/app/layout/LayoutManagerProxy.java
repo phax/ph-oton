@@ -19,8 +19,6 @@ package com.helger.photon.core.app.layout;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,6 +29,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.metadata.HCHead;
@@ -46,7 +45,7 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 @ThreadSafe
 public class LayoutManagerProxy <LECTYPE extends ILayoutExecutionContext> implements ILayoutManager <LECTYPE>
 {
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private final Map <String, ILayoutAreaContentProvider <LECTYPE>> m_aContentProviders = new LinkedHashMap <String, ILayoutAreaContentProvider <LECTYPE>> ();
 
@@ -59,34 +58,20 @@ public class LayoutManagerProxy <LECTYPE extends ILayoutExecutionContext> implem
     ValueEnforcer.notEmpty (sAreaID, "AreaID");
     ValueEnforcer.notNull (aContentProvider, "ContentProvider");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       if (m_aContentProviders.containsKey (sAreaID))
         throw new IllegalArgumentException ("A content provider for the area ID '" +
                                             sAreaID +
                                             "' is already registered!");
       m_aContentProviders.put (sAreaID, aContentProvider);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public List <String> getAllAreaIDs ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aContentProviders.keySet ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aContentProviders.keySet ()));
   }
 
   @Nullable
@@ -96,16 +81,10 @@ public class LayoutManagerProxy <LECTYPE extends ILayoutExecutionContext> implem
   {
     ValueEnforcer.notNull (sAreaID, "AreaID");
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    return m_aRWLock.readLocked ( () -> {
       final ILayoutAreaContentProvider <LECTYPE> aContentProvider = m_aContentProviders.get (sAreaID);
       return aContentProvider == null ? null : aContentProvider.getContent (aLEC, aHead);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   @Override

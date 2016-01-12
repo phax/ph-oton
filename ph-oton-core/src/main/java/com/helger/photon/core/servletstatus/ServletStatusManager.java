@@ -19,8 +19,6 @@ package com.helger.photon.core.servletstatus;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,6 +37,7 @@ import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.web.scope.IGlobalWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
 
@@ -52,9 +51,9 @@ public final class ServletStatusManager
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ServletStatusManager.class);
 
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
-  private static final Map <String, ServletStatus> s_aMap = new HashMap <String, ServletStatus> ();
+  private static final Map <String, ServletStatus> s_aMap = new HashMap <> ();
 
   private ServletStatusManager ()
   {}
@@ -89,15 +88,9 @@ public final class ServletStatusManager
   {
     ValueEnforcer.notNull (eNewStatus, "NewStatus");
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       _getOrCreateServletStatus (aServletClass).setCurrentStatus (eNewStatus);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
 
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Servlet status of " + aServletClass + " changed to " + eNewStatus);
@@ -115,15 +108,9 @@ public final class ServletStatusManager
 
   public static void onServletInvocation (@Nonnull final Class <? extends HttpServlet> aServletClass)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       _getOrCreateServletStatus (aServletClass).incrementInvocationCount ();
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public static void onServletDestroy (@Nonnull final Class <? extends HttpServlet> aServletClass)
@@ -137,30 +124,15 @@ public final class ServletStatusManager
     if (aServletClass == null)
       return null;
 
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aMap.get (_getKey (aServletClass));
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    final String sKey = _getKey (aServletClass);
+    return s_aRWLock.readLocked ( () -> s_aMap.get (sKey));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public static Map <String, ServletStatus> getAllStatus ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newMap (s_aMap);
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> CollectionHelper.newMap (s_aMap));
   }
 
   /**

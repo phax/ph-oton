@@ -22,8 +22,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -36,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
@@ -52,7 +51,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CSSResourceSet.class);
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private final List <ICSSPathProvider> m_aList = new ArrayList <> ();
   @GuardedBy ("m_aRWLock")
@@ -100,9 +99,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   {
     ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       // Check uniqueness
       if (!m_aItems.add (aCSSPathProvider))
         return EChange.UNCHANGED;
@@ -116,11 +113,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
       if (m_bIsCollected)
         _collectWarn ("Adding item " + aCSSPathProvider + " after collection!");
       return EChange.CHANGED;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
@@ -158,9 +151,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   {
     ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       if (!m_aItems.remove (aCSSPathProvider))
         return EChange.UNCHANGED;
       m_aList.remove (aCSSPathProvider);
@@ -168,19 +159,13 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
       if (m_bIsCollected)
         _collectWarn ("Removed item " + aCSSPathProvider + " after collection!");
       return EChange.CHANGED;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
   public EChange removeAll ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       if (m_aItems.isEmpty ())
         return EChange.UNCHANGED;
       m_aItems.clear ();
@@ -188,41 +173,23 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
       if (m_bIsCollected)
         _collectWarn ("Removed all items after collection!");
       return EChange.CHANGED;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Set <ICSSPathProvider> getAllItems ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newOrderedSet (m_aList);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newOrderedSet (m_aList));
   }
 
   public void getAllItems (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    m_aRWLock.readLocked ( () -> {
       aTarget.addAll (m_aList);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   public boolean isEmpty ()
@@ -260,30 +227,16 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   @Nonnull
   public Iterator <ICSSPathProvider> iterator ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aList.iterator ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked (m_aList::iterator);
   }
 
   public void markAsCollected ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       if (m_bIsCollected)
         _collectWarn ("Resource set was already collected before!");
       m_bIsCollected = true;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Override

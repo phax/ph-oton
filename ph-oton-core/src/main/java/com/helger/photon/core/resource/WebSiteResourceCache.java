@@ -19,8 +19,6 @@ package com.helger.photon.core.resource;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
@@ -32,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EChange;
 
@@ -45,11 +44,11 @@ import com.helger.commons.state.EChange;
 public final class WebSiteResourceCache
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResourceCache.class);
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
   private static boolean s_bCacheEnabled = !GlobalDebug.isDebugMode ();
   @GuardedBy ("s_aRWLock")
-  private static final Map <String, WebSiteResource> s_aMap = new HashMap <String, WebSiteResource> ();
+  private static final Map <String, WebSiteResource> s_aMap = new HashMap <> ();
 
   @PresentForCodeCoverage
   private static final WebSiteResourceCache s_aInstance = new WebSiteResourceCache ();
@@ -82,15 +81,9 @@ public final class WebSiteResourceCache
    */
   public static void setCacheEnabled (final boolean bCacheEnabled)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_bCacheEnabled = bCacheEnabled;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
     s_aLogger.info ("WebSiteResourceCache is now: " + (bCacheEnabled ? "enabled" : "disabled"));
   }
 
@@ -119,37 +112,21 @@ public final class WebSiteResourceCache
     final String sCacheKey = eResourceType.getID () + "-" + sPath;
 
     // Entry already existing?
-    WebSiteResource ret;
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      ret = s_aMap.get (sCacheKey);
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    final WebSiteResource ret = s_aRWLock.readLocked ( () -> s_aMap.get (sCacheKey));
+    if (ret != null)
+      return ret;
 
-    if (ret == null)
-    {
-      s_aRWLock.writeLock ().lock ();
-      try
+    return s_aRWLock.writeLocked ( () -> {
+      // Try again in write lock
+      WebSiteResource ret2 = s_aMap.get (sCacheKey);
+      if (ret2 == null)
       {
-        // Try again in write lock
-        ret = s_aMap.get (sCacheKey);
-        if (ret == null)
-        {
-          // Init and put in map
-          ret = new WebSiteResource (eResourceType, sPath, aCharset);
-          s_aMap.put (sCacheKey, ret);
-        }
+        // Init and put in map
+        ret2 = new WebSiteResource (eResourceType, sPath, aCharset);
+        s_aMap.put (sCacheKey, ret2);
       }
-      finally
-      {
-        s_aRWLock.writeLock ().unlock ();
-      }
-    }
-    return ret;
+      return ret2;
+    });
   }
 
   @Nonnull
@@ -161,15 +138,7 @@ public final class WebSiteResourceCache
 
     final String sCacheKey = eType.getID () + "-" + sPath;
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
-      return EChange.valueOf (s_aMap.remove (sCacheKey) != null);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    return s_aRWLock.writeLocked ( () -> EChange.valueOf (s_aMap.remove (sCacheKey) != null));
   }
 
   /**
@@ -180,17 +149,11 @@ public final class WebSiteResourceCache
   @Nonnull
   public static EChange clearCache ()
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    return s_aRWLock.writeLocked ( () -> {
       if (s_aMap.isEmpty ())
         return EChange.UNCHANGED;
       s_aMap.clear ();
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
-    return EChange.CHANGED;
+      return EChange.CHANGED;
+    });
   }
 }
