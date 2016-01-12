@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,7 +28,6 @@ import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.filter.IFilter;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.microdom.IMicroDocument;
@@ -91,6 +91,13 @@ public abstract class AbstractMapBasedSimpleDAO <INTERFACETYPE extends IHasID <S
 
   @Nonnull
   @ReturnsMutableCopy
+  public final Collection <? extends INTERFACETYPE> getNone ()
+  {
+    return new ArrayList <> ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
   public final Collection <? extends INTERFACETYPE> getAll ()
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
@@ -98,7 +105,7 @@ public abstract class AbstractMapBasedSimpleDAO <INTERFACETYPE extends IHasID <S
 
   @Nonnull
   @ReturnsMutableCopy
-  public final Collection <? extends INTERFACETYPE> getAll (@Nullable final IFilter <INTERFACETYPE> aFilter)
+  public final Collection <? extends INTERFACETYPE> getAll (@Nullable final Predicate <INTERFACETYPE> aFilter)
   {
     if (aFilter == null)
       return getAll ();
@@ -106,27 +113,27 @@ public abstract class AbstractMapBasedSimpleDAO <INTERFACETYPE extends IHasID <S
     final List <INTERFACETYPE> ret = new ArrayList <> ();
     m_aRWLock.readLocked ( () -> {
       for (final INTERFACETYPE aItem : m_aMap.values ())
-        if (aFilter.matchesFilter (aItem))
+        if (aFilter.test (aItem))
           ret.add (aItem);
     });
     return ret;
   }
 
   @Nullable
-  public final INTERFACETYPE getFirst (@Nullable final IFilter <INTERFACETYPE> aFilter)
+  public final INTERFACETYPE getFirst (@Nullable final Predicate <INTERFACETYPE> aFilter)
   {
     if (aFilter == null)
       return CollectionHelper.getFirstElement (m_aMap.values ());
 
     return m_aRWLock.readLocked ( () -> {
       for (final INTERFACETYPE aItem : m_aMap.values ())
-        if (aFilter.matchesFilter (aItem))
+        if (aFilter.test (aItem))
           return aItem;
       return null;
     });
   }
 
-  public final boolean containsAny (@Nullable final IFilter <INTERFACETYPE> aFilter)
+  public final boolean containsAny (@Nullable final Predicate <INTERFACETYPE> aFilter)
   {
     if (aFilter == null)
       return !m_aMap.isEmpty ();
@@ -135,7 +142,7 @@ public abstract class AbstractMapBasedSimpleDAO <INTERFACETYPE extends IHasID <S
     try
     {
       for (final INTERFACETYPE aItem : m_aMap.values ())
-        if (aFilter.matchesFilter (aItem))
+        if (aFilter.test (aItem))
           return true;
       return false;
     }
