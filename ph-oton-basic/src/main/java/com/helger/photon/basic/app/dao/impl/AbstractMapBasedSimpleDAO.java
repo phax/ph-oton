@@ -11,7 +11,6 @@
  */
 package com.helger.photon.basic.app.dao.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -39,37 +38,21 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 
 @ThreadSafe
-public abstract class AbstractWALMapBasedDAO <INTERFACETYPE extends IHasID <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
-                                             extends AbstractWALDAO <IMPLTYPE> implements IMapBasedDAO <INTERFACETYPE>
+public abstract class AbstractMapBasedSimpleDAO <INTERFACETYPE extends IHasID <String>, IMPLTYPE extends INTERFACETYPE>
+                                                extends AbstractSimpleDAO implements IMapBasedDAO <INTERFACETYPE>
 {
+  private final Class <IMPLTYPE> m_aImplClass;
   private final String m_sXMLItemElementName;
   private final Map <String, IMPLTYPE> m_aMap = new HashMap <> ();
 
-  public AbstractWALMapBasedDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
-                                 @Nonnull @Nonempty final String sFilename,
-                                 @Nonnull @Nonempty final String sXMLItemElementName) throws DAOException
+  public AbstractMapBasedSimpleDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
+                                    @Nonnull @Nonempty final String sFilename,
+                                    @Nonnull @Nonempty final String sXMLItemElementName) throws DAOException
   {
-    super (aImplClass, sFilename);
+    super (sFilename);
+    m_aImplClass = ValueEnforcer.notNull (aImplClass, "Class");
     m_sXMLItemElementName = ValueEnforcer.notEmpty (sXMLItemElementName, "XMLItemElementName");
     initialRead ();
-  }
-
-  @Override
-  protected void onRecoveryCreate (@Nonnull final IMPLTYPE aItem)
-  {
-    internalAddItem (aItem);
-  }
-
-  @Override
-  protected void onRecoveryUpdate (@Nonnull final IMPLTYPE aItem)
-  {
-    internalAddItem (aItem);
-  }
-
-  @Override
-  protected void onRecoveryDelete (@Nonnull final IMPLTYPE aItem)
-  {
-    m_aMap.remove (aItem.getID (), aItem);
   }
 
   @Override
@@ -77,7 +60,7 @@ public abstract class AbstractWALMapBasedDAO <INTERFACETYPE extends IHasID <Stri
   protected final EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
     for (final IMicroElement eItem : aDoc.getDocumentElement ().getAllChildElements (m_sXMLItemElementName))
-      internalAddItem (MicroTypeConverter.convertToNative (eItem, getDataTypeClass ()));
+      internalAddItem (MicroTypeConverter.convertToNative (eItem, m_aImplClass));
     return EChange.UNCHANGED;
   }
 
@@ -99,7 +82,7 @@ public abstract class AbstractWALMapBasedDAO <INTERFACETYPE extends IHasID <Stri
 
     final String sID = aItem.getID ();
     if (m_aMap.containsKey (sID))
-      throw new IllegalArgumentException (ClassHelper.getClassLocalName (getDataTypeClass ()) +
+      throw new IllegalArgumentException (ClassHelper.getClassLocalName (m_aImplClass) +
                                           " with ID '" +
                                           sID +
                                           "' is already in use!");
