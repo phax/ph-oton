@@ -17,8 +17,6 @@
 package com.helger.photon.basic.app.io;
 
 import java.io.File;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
@@ -28,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.LoggingFileOperationCallback;
 
@@ -43,7 +42,7 @@ import com.helger.commons.io.file.LoggingFileOperationCallback;
 public final class WebFileIO
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebFileIO.class);
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
   private static FileOperationManager s_aFileOpMgr = new FileOperationManager (new LoggingFileOperationCallback ());
@@ -65,15 +64,9 @@ public final class WebFileIO
   {
     ValueEnforcer.notNull (aFileOpMgr, "FileOpMgr");
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aFileOpMgr = aFileOpMgr;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -82,15 +75,7 @@ public final class WebFileIO
   @Nonnull
   public static FileOperationManager getFileOpMgr ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aFileOpMgr;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_aFileOpMgr);
   }
 
   public static void initPaths (@Nonnull final File aDataPath,
@@ -100,9 +85,7 @@ public final class WebFileIO
     ValueEnforcer.notNull (aDataPath, "DataPath");
     ValueEnforcer.notNull (aServletContextPath, "ServletContextPath");
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       if (s_aDataPath != null)
         throw new IllegalStateException ("Another data path is already present: " + s_aDataPath);
       if (s_aServletContextPath != null)
@@ -115,11 +98,7 @@ public final class WebFileIO
       // Don't check access rights again, if it equals the data path
       s_aServletContextPath = new PathRelativeFileIO (aServletContextPath,
                                                       bCheckFileAccess && !aServletContextPath.equals (aDataPath));
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -127,16 +106,10 @@ public final class WebFileIO
    */
   public static void resetPaths ()
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aDataPath = null;
       s_aServletContextPath = null;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -165,17 +138,11 @@ public final class WebFileIO
   @Nonnull
   public static IMutablePathRelativeIO getDataIO ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
+    return s_aRWLock.readLocked ( () -> {
       if (s_aDataPath == null)
         throw new IllegalStateException ("Data path was not initialized!");
       return s_aDataPath;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -188,16 +155,10 @@ public final class WebFileIO
   @Nonnull
   public static IPathRelativeIO getServletContextIO ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
+    return s_aRWLock.readLocked ( () -> {
       if (s_aServletContextPath == null)
         throw new IllegalStateException ("Servlet context path was not initialized!");
       return s_aServletContextPath;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 }

@@ -18,8 +18,6 @@ package com.helger.photon.basic.app;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,6 +28,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 
@@ -41,7 +40,7 @@ import com.helger.commons.string.StringHelper;
 @ThreadSafe
 public final class PhotonPathMapper
 {
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
   private static Map <String, String> s_aMap = new HashMap <> ();
@@ -69,15 +68,9 @@ public final class PhotonPathMapper
     ValueEnforcer.isTrue (sPath.startsWith ("/"), "Path must be empty or start with a slash");
     ValueEnforcer.isTrue (!sPath.endsWith ("/"), "Path must not end with a slash");
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aMap.put (sApplicationID, sPath);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -92,25 +85,18 @@ public final class PhotonPathMapper
   @Nonnull
   public static EChange removePathMapping (@Nullable final String sApplicationID)
   {
-    if (StringHelper.hasText (sApplicationID))
-    {
-      s_aRWLock.writeLock ().lock ();
-      try
-      {
-        if (s_aMap.remove (sApplicationID) != null)
-        {
-          // Check if we deleted the default
-          if (sApplicationID.equals (s_sDefaultAppID))
-            s_sDefaultAppID = null;
-          return EChange.CHANGED;
-        }
-      }
-      finally
-      {
-        s_aRWLock.writeLock ().unlock ();
-      }
-    }
-    return EChange.UNCHANGED;
+    if (StringHelper.hasNoText (sApplicationID))
+      return EChange.UNCHANGED;
+
+    return s_aRWLock.writeLocked ( () -> {
+      if (s_aMap.remove (sApplicationID) == null)
+        return EChange.UNCHANGED;
+
+      // Check if we deleted the default
+      if (sApplicationID.equals (s_sDefaultAppID))
+        s_sDefaultAppID = null;
+      return EChange.CHANGED;
+    });
   }
 
   /**
@@ -122,20 +108,14 @@ public final class PhotonPathMapper
   @Nonnull
   public static EChange removeAllPathMappings ()
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    return s_aRWLock.writeLocked ( () -> {
       if (s_aMap.isEmpty ())
         return EChange.UNCHANGED;
 
       s_aMap.clear ();
       s_sDefaultAppID = null;
       return EChange.CHANGED;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -152,15 +132,7 @@ public final class PhotonPathMapper
     if (StringHelper.hasNoText (sApplicationID))
       return null;
 
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aMap.get (sApplicationID);
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_aMap.get (sApplicationID));
   }
 
   /**
@@ -170,15 +142,7 @@ public final class PhotonPathMapper
   @ReturnsMutableCopy
   public static Map <String, String> getApplicationIDToPathMap ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newMap (s_aMap);
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> CollectionHelper.newMap (s_aMap));
   }
 
   /**
@@ -212,17 +176,11 @@ public final class PhotonPathMapper
   {
     ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       if (!s_aMap.containsKey (sApplicationID))
         throw new IllegalArgumentException ("The passed application ID '" + sApplicationID + "' is unknown!");
       s_sDefaultAppID = sApplicationID;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -232,15 +190,7 @@ public final class PhotonPathMapper
   @Nullable
   public static String getDefaultApplicationID ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_sDefaultAppID;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_sDefaultAppID);
   }
 
   /**
@@ -253,15 +203,7 @@ public final class PhotonPathMapper
   @Nullable
   public static String getPathOfDefaultApplicationID ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aMap.get (s_sDefaultAppID);
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_aMap.get (s_sDefaultAppID));
   }
 
   /**
