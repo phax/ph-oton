@@ -297,6 +297,10 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     }
   }
 
+  /**
+   * @return The implementation class as specified in the constructor. Never
+   *         <code>null</code>.
+   */
   @Nonnull
   protected final Class <DATATYPE> getDataTypeClass ()
   {
