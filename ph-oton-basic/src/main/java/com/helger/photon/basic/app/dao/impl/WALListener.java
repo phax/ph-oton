@@ -97,9 +97,7 @@ public final class WALListener extends AbstractGlobalSingleton
   @Override
   protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       // Reschedule all existing scheduled items to run now
       for (final Map.Entry <String, WALListener.WALItem> aEntry : m_aScheduledItems.entrySet ())
       {
@@ -115,11 +113,7 @@ public final class WALListener extends AbstractGlobalSingleton
       }
       // ensure all are cleared
       m_aScheduledItems.clear ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
 
     // Wait until all tasks finished
     ManagedExecutorService.shutdownAndWaitUntilAllTasksAreFinished (m_aES);
@@ -145,16 +139,7 @@ public final class WALListener extends AbstractGlobalSingleton
     final String sKey = aDAO.getClass ().getName () + "::" + sWALFilename;
 
     // Check if the passed DAO is already scheduled for writing
-    boolean bDoScheduleForWriting;
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      bDoScheduleForWriting = m_aWaitingDAOs.add (sKey);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    final boolean bDoScheduleForWriting = m_aRWLock.writeLocked ( () -> m_aWaitingDAOs.add (sKey));
 
     if (bDoScheduleForWriting)
     {
@@ -165,50 +150,32 @@ public final class WALListener extends AbstractGlobalSingleton
       // What should be executed upon writing
       final Runnable r = () -> {
         // Use DAO lock!
-        aDAO.m_aRWLock.writeLock ().lock ();
-        try
-        {
+        aDAO.m_aRWLock.writeLocked ( () -> {
           // Main DAO writing
           aDAO._writeToFileAndResetPendingChanges ("ScheduledWriter.run");
           // Delete the WAL file
           aDAO._deleteWALFile (sWALFilename);
           s_aLogger.info ("Finished scheduled writing for DAO " + sKey);
-        }
-        finally
-        {
-          aDAO.m_aRWLock.writeLock ().unlock ();
-        }
+        });
 
         // Remove from the internal set so that another job will be
         // scheduled for the same DAO
         // Do this after the writing to the file
-        m_aRWLock.writeLock ().lock ();
-        try
-        {
+        m_aRWLock.writeLocked ( () -> {
           // Remove from the overall set as well as from the scheduled items
           m_aWaitingDAOs.remove (sKey);
           m_aScheduledItems.remove (sKey);
-        }
-        finally
-        {
-          m_aRWLock.writeLock ().unlock ();
-        }
+        });
       };
 
       // Schedule exactly once in the specified waiting time
       final ScheduledFuture <?> aFuture = m_aES.schedule (r, aWaitingWime.getDuration (), aWaitingWime.getTimeUnit ());
 
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
+      m_aRWLock.writeLocked ( () -> {
         // Remember the scheduled item and the runnable so that the task can
         // be rescheduled upon shutdown.
         m_aScheduledItems.put (sKey, new WALItem (aFuture, r));
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
+      });
     }
     // else the writing of the passed DAO is already scheduled and no further
     // action is necessary

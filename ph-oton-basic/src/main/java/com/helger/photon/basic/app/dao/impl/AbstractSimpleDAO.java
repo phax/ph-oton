@@ -33,7 +33,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.io.resource.FileSystemResource;
@@ -275,8 +274,6 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
   @MustBeLocked (ELockType.WRITE)
   protected final void initialRead () throws DAOException
   {
-    boolean bIsInitialization = false;
-
     File aFile = null;
     final String sFilename = m_aFilenameProvider.getFilename ();
     if (sFilename == null)
@@ -292,98 +289,96 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
       aFile = getSafeFile (sFilename, EMode.READ);
     }
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      ESuccess eWriteSuccess = ESuccess.SUCCESS;
-      bIsInitialization = aFile == null || !aFile.exists ();
-      if (bIsInitialization)
+    final File aFinalFile = aFile;
+    m_aRWLock.writeLockedThrowing ( () -> {
+      final boolean bIsInitialization = aFinalFile == null || !aFinalFile.exists ();
+      try
       {
-        // initial setup for non-existing file
-        if (GlobalDebug.isDebugMode ())
-          s_aLogger.info ("Trying to initialize DAO XML file '" + aFile + "'");
-
-        beginWithoutAutoSave ();
-        try
+        ESuccess eWriteSuccess = ESuccess.SUCCESS;
+        if (bIsInitialization)
         {
-          m_aStatsCounterInitTotal.increment ();
-          final StopWatch aSW = StopWatch.createdStarted ();
+          // initial setup for non-existing file
+          if (isDebugLogging ())
+            s_aLogger.info ("Trying to initialize DAO XML file '" + aFinalFile + "'");
 
-          if (onInit ().isChanged ())
-            if (aFile != null)
-              eWriteSuccess = _writeToFile ();
-
-          m_aStatsCounterInitTimer.addTime (aSW.stopAndGetMillis ());
-          m_aStatsCounterInitSuccess.increment ();
-          m_nInitCount++;
-          m_aLastInitDT = PDTFactory.getCurrentLocalDateTime ();
-        }
-        finally
-        {
-          endWithoutAutoSave ();
-          // reset any pending changes, because the initialization should
-          // be read-only. If the implementing class changed something,
-          // the return value of onInit() is what counts
-          internalSetPendingChanges (false);
-        }
-      }
-      else
-      {
-        // Read existing file
-        if (GlobalDebug.isDebugMode ())
-          s_aLogger.info ("Trying to read DAO XML file '" + aFile + "'");
-
-        m_aStatsCounterReadTotal.increment ();
-        final IMicroDocument aDoc = MicroReader.readMicroXML (aFile);
-        if (aDoc == null)
-          s_aLogger.error ("Failed to read XML document from file '" + aFile + "'");
-        else
-        {
-          // Valid XML - start interpreting
           beginWithoutAutoSave ();
           try
           {
+            m_aStatsCounterInitTotal.increment ();
             final StopWatch aSW = StopWatch.createdStarted ();
 
-            if (onRead (aDoc).isChanged ())
-              eWriteSuccess = _writeToFile ();
+            if (onInit ().isChanged ())
+              if (aFinalFile != null)
+                eWriteSuccess = _writeToFile ();
 
-            m_aStatsCounterReadTimer.addTime (aSW.stopAndGetMillis ());
-            m_aStatsCounterReadSuccess.increment ();
-            m_nReadCount++;
-            m_aLastReadDT = PDTFactory.getCurrentLocalDateTime ();
+            m_aStatsCounterInitTimer.addTime (aSW.stopAndGetMillis ());
+            m_aStatsCounterInitSuccess.increment ();
+            m_nInitCount++;
+            m_aLastInitDT = PDTFactory.getCurrentLocalDateTime ();
           }
           finally
           {
             endWithoutAutoSave ();
             // reset any pending changes, because the initialization should
             // be read-only. If the implementing class changed something,
-            // the return value of onRead() is what counts
+            // the return value of onInit() is what counts
             internalSetPendingChanges (false);
           }
         }
-      }
+        else
+        {
+          // Read existing file
+          if (isDebugLogging ())
+            s_aLogger.info ("Trying to read DAO XML file '" + aFinalFile + "'");
 
-      // Check if writing was successful on any of the 2 branches
-      if (eWriteSuccess.isSuccess ())
-        internalSetPendingChanges (false);
-      else
-        s_aLogger.warn ("File '" + aFile + "' has pending changes after initialRead!");
-    }
-    catch (final Throwable t)
-    {
-      triggerExceptionHandlersRead (t, bIsInitialization, aFile);
-      throw new DAOException ("Error " +
-                              (bIsInitialization ? "initializing" : "reading") +
-                              " the file '" +
-                              aFile +
-                              "'",
-                              t);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+          m_aStatsCounterReadTotal.increment ();
+          final IMicroDocument aDoc = MicroReader.readMicroXML (aFinalFile);
+          if (aDoc == null)
+            s_aLogger.error ("Failed to read XML document from file '" + aFinalFile + "'");
+          else
+          {
+            // Valid XML - start interpreting
+            beginWithoutAutoSave ();
+            try
+            {
+              final StopWatch aSW = StopWatch.createdStarted ();
+
+              if (onRead (aDoc).isChanged ())
+                eWriteSuccess = _writeToFile ();
+
+              m_aStatsCounterReadTimer.addTime (aSW.stopAndGetMillis ());
+              m_aStatsCounterReadSuccess.increment ();
+              m_nReadCount++;
+              m_aLastReadDT = PDTFactory.getCurrentLocalDateTime ();
+            }
+            finally
+            {
+              endWithoutAutoSave ();
+              // reset any pending changes, because the initialization should
+              // be read-only. If the implementing class changed something,
+              // the return value of onRead() is what counts
+              internalSetPendingChanges (false);
+            }
+          }
+        }
+
+        // Check if writing was successful on any of the 2 branches
+        if (eWriteSuccess.isSuccess ())
+          internalSetPendingChanges (false);
+        else
+          s_aLogger.warn ("File '" + aFinalFile + "' has pending changes after initialRead!");
+      }
+      catch (final Throwable t)
+      {
+        triggerExceptionHandlersRead (t, bIsInitialization, aFinalFile);
+        throw new DAOException ("Error " +
+                                (bIsInitialization ? "initializing" : "reading") +
+                                " the file '" +
+                                aFinalFile +
+                                "'",
+                                t);
+      }
+    });
   }
 
   /**
@@ -466,15 +461,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
   @Nullable
   public final String getLastFilename ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_sPreviousFilename;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_sPreviousFilename);
   }
 
   /**
@@ -538,7 +525,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
       m_sPreviousFilename = sFilename;
     }
 
-    if (GlobalDebug.isDebugMode ())
+    if (isDebugLogging ())
       s_aLogger.info ("Trying to write DAO file '" + sFilename + "'");
 
     File aFile = null;
@@ -632,9 +619,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
   {
     if (hasPendingChanges ())
     {
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
+      m_aRWLock.writeLocked ( () -> {
         // Write to file
         if (_writeToFile ().isSuccess ())
           internalSetPendingChanges (false);
@@ -642,11 +627,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
           s_aLogger.error ("The DAO of class " +
                            getClass ().getName () +
                            " still has pending changes after writeToFileOnPendingChanges!");
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
+      });
     }
   }
 

@@ -34,6 +34,7 @@ import com.helger.commons.callback.adapter.AdapterRunnableToCallable;
 import com.helger.commons.callback.adapter.AdapterThrowingRunnableToCallable;
 import com.helger.commons.collection.impl.NonBlockingStack;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.IDAO;
 import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
@@ -50,8 +51,8 @@ public abstract class AbstractDAO implements IDAO
   /** By default auto-save is enabled */
   public static final boolean DEFAULT_AUTO_SAVE_ENABLED = true;
 
-  private static CallbackList <IDAOReadExceptionCallback> s_aExceptionHandlersRead = new CallbackList <IDAOReadExceptionCallback> ();
-  private static CallbackList <IDAOWriteExceptionCallback> s_aExceptionHandlersWrite = new CallbackList <IDAOWriteExceptionCallback> ();
+  private static CallbackList <IDAOReadExceptionCallback> s_aExceptionHandlersRead = new CallbackList <> ();
+  private static CallbackList <IDAOWriteExceptionCallback> s_aExceptionHandlersWrite = new CallbackList <> ();
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
 
@@ -64,6 +65,11 @@ public abstract class AbstractDAO implements IDAO
 
   protected AbstractDAO ()
   {}
+
+  protected static final boolean isDebugLogging ()
+  {
+    return GlobalDebug.isDebugMode ();
+  }
 
   @Nonnull
   @ReturnsMutableObject ("design")
@@ -95,15 +101,7 @@ public abstract class AbstractDAO implements IDAO
    */
   public final boolean isAutoSaveEnabled ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_bAutoSaveEnabled;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_bAutoSaveEnabled);
   }
 
   @MustBeLocked (ELockType.WRITE)
@@ -126,46 +124,26 @@ public abstract class AbstractDAO implements IDAO
    */
   public final boolean hasPendingChanges ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_bPendingChanges;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_bPendingChanges);
   }
 
   public final void beginWithoutAutoSave ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       // Save old auto save state
       m_aAutoSaveStack.push (Boolean.valueOf (m_bAutoSaveEnabled));
       m_bAutoSaveEnabled = false;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public final void endWithoutAutoSave ()
   {
     // Restore previous auto save state
-    boolean bPreviouslyAutoSaveEnabled;
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      bPreviouslyAutoSaveEnabled = m_aAutoSaveStack.pop ().booleanValue ();
-      m_bAutoSaveEnabled = bPreviouslyAutoSaveEnabled;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    final boolean bPreviouslyAutoSaveEnabled = m_aRWLock.writeLocked ( () -> {
+      final boolean bPreviously = m_aAutoSaveStack.pop ().booleanValue ();
+      m_bAutoSaveEnabled = bPreviously;
+      return bPreviously;
+    });
 
     if (bPreviouslyAutoSaveEnabled)
     {
