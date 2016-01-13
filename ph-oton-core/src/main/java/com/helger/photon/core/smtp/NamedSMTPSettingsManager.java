@@ -19,8 +19,6 @@ package com.helger.photon.core.smtp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -31,6 +29,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.lang.IHasSize;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -56,7 +55,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
   private static final String ELEMENT_NAMEDSMTPSETTINGSLIST = "namedsmtpsettingslist";
   private static final String ELEMENT_NAMEDSMTPSETTINGS = "namedsmtpsettings";
 
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   private static boolean s_bCreateDefaults = true;
 
@@ -77,15 +76,9 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
 
   public static void setCreateDefaults (final boolean bCreateDefaults)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_bCreateDefaults = bCreateDefaults;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public NamedSMTPSettingsManager (@Nonnull @Nonempty final String sFilename) throws DAOException
@@ -96,16 +89,10 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
 
   public void reload () throws DAOException
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLockedThrowing ( () -> {
       m_aMap.clear ();
       initialRead ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Override
@@ -191,15 +178,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
   @ReturnsMutableCopy
   public Map <String, NamedSMTPSettings> getAllSettings ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newMap (m_aMap);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newMap (m_aMap));
   }
 
   /**
@@ -238,15 +217,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
     if (StringHelper.hasNoText (sID))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.get (sID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sID));
   }
 
   /**
@@ -285,18 +256,12 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
     if (StringHelper.hasNoText (sName))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    return m_aRWLock.readLocked ( () -> {
       for (final NamedSMTPSettings aSettings : m_aMap.values ())
         if (aSettings.getName ().equals (sName))
           return aSettings;
       return null;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -315,27 +280,21 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
   {
     final NamedSMTPSettings aNamedSettings = new NamedSMTPSettings (sName, aSettings);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       _addItem (aNamedSettings);
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
 
     AuditHelper.onAuditCreateSuccess (NamedSMTPSettings.OT,
                                       aNamedSettings.getID (),
                                       aNamedSettings.getName (),
                                       aSettings.getHostName (),
-                                      Integer.toString (aSettings.getPort ()),
+                                      Integer.valueOf (aSettings.getPort ()),
                                       aSettings.getCharset (),
-                                      Boolean.toString (aSettings.isSSLEnabled ()),
-                                      Boolean.toString (aSettings.isSTARTTLSEnabled ()),
-                                      Long.toString (aSettings.getConnectionTimeoutMilliSecs ()),
-                                      Long.toString (aSettings.getTimeoutMilliSecs ()));
+                                      Boolean.valueOf (aSettings.isSSLEnabled ()),
+                                      Boolean.valueOf (aSettings.isSTARTTLSEnabled ()),
+                                      Long.valueOf (aSettings.getConnectionTimeoutMilliSecs ()),
+                                      Long.valueOf (aSettings.getTimeoutMilliSecs ()));
     return aNamedSettings;
   }
 
@@ -364,31 +323,25 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
       return EChange.UNCHANGED;
     }
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       EChange eChange = EChange.UNCHANGED;
       eChange = eChange.or (aNamedSettings.setName (sName));
       eChange = eChange.or (aNamedSettings.setSMTPSettings (aSettings));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    AuditHelper.onAuditModifySuccess (NamedSMTPSettings.OT,
-                                      aNamedSettings.getID (),
-                                      aNamedSettings.getName (),
-                                      aSettings.getHostName (),
-                                      Integer.toString (aSettings.getPort ()),
-                                      aSettings.getCharset (),
-                                      Boolean.toString (aSettings.isSSLEnabled ()),
-                                      Boolean.toString (aSettings.isSTARTTLSEnabled ()),
-                                      Long.toString (aSettings.getConnectionTimeoutMilliSecs ()),
-                                      Long.toString (aSettings.getTimeoutMilliSecs ()));
-    return EChange.CHANGED;
+      AuditHelper.onAuditModifySuccess (NamedSMTPSettings.OT,
+                                        aNamedSettings.getID (),
+                                        aNamedSettings.getName (),
+                                        aSettings.getHostName (),
+                                        Integer.toString (aSettings.getPort ()),
+                                        aSettings.getCharset (),
+                                        Boolean.toString (aSettings.isSSLEnabled ()),
+                                        Boolean.toString (aSettings.isSTARTTLSEnabled ()),
+                                        Long.toString (aSettings.getConnectionTimeoutMilliSecs ()),
+                                        Long.toString (aSettings.getTimeoutMilliSecs ()));
+      return EChange.CHANGED;
+    });
   }
 
   /**
@@ -401,23 +354,17 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
   @Nullable
   public EChange removeSettings (@Nullable final String sID)
   {
-    EChange eChange;
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      eChange = EChange.valueOf (m_aMap.remove (sID) != null);
+    return m_aRWLock.writeLocked ( () -> {
+      final EChange eChange = EChange.valueOf (m_aMap.remove (sID) != null);
       if (eChange.isChanged ())
+      {
         markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    if (eChange.isChanged ())
-      AuditHelper.onAuditDeleteSuccess (NamedSMTPSettings.OT, sID);
-    else
-      AuditHelper.onAuditDeleteFailure (NamedSMTPSettings.OT, sID, "no-such-id");
-    return eChange;
+        AuditHelper.onAuditDeleteSuccess (NamedSMTPSettings.OT, sID);
+      }
+      else
+        AuditHelper.onAuditDeleteFailure (NamedSMTPSettings.OT, sID, "no-such-id");
+      return eChange;
+    });
   }
 
   /**
@@ -429,16 +376,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
   public EChange removeAllSettings ()
   {
     // Get all available settings IDs
-    Set <String> aAllIDs;
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      aAllIDs = CollectionHelper.newSet (m_aMap.keySet ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    final Set <String> aAllIDs = m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aMap.keySet ()));
 
     // Batch remove all settings
     EChange eChange = EChange.UNCHANGED;

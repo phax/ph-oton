@@ -19,8 +19,6 @@ package com.helger.photon.uictrls.autonumeric;
 import java.math.BigDecimal;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,6 +27,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -68,7 +67,7 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
 
   public static final int DEFAULT_MIN_VALUE = -999999999;
 
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
   private static String s_sDefaultThousandSeparator = null;
 
@@ -111,28 +110,14 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   @Nullable
   public static String getDefaultThousandSeparator ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_sDefaultThousandSeparator;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_sDefaultThousandSeparator);
   }
 
   public static void setDefaultThousandSeparator (@Nullable final String sDefaultThousandSeparator)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_sDefaultThousandSeparator = sDefaultThousandSeparator;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nullable

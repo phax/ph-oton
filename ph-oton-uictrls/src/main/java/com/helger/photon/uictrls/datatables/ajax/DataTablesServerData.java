@@ -22,8 +22,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -33,6 +31,7 @@ import javax.annotation.concurrent.GuardedBy;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
@@ -84,7 +83,7 @@ public final class DataTablesServerData implements IHasUIState
 
   public static final ObjectType OT_DATATABLES = new ObjectType ("datatables");
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final ColumnData [] m_aColumns;
   private final List <DataTablesServerDataRow> m_aRows;
   private final Locale m_aDisplayLocale;
@@ -183,16 +182,10 @@ public final class DataTablesServerData implements IHasUIState
 
     final Comparator <DataTablesServerDataRow> aComp = new ComparatorDataTablesServerDataRow (aNewServerSortState);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_aServerSortState = aNewServerSortState;
       Collections.sort (m_aRows, aComp);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnegative

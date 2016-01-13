@@ -20,8 +20,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,6 +33,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.security.password.salt.IPasswordSalt;
@@ -49,9 +48,9 @@ public class PasswordHashCreatorManager
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (PasswordHashCreatorManager.class);
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final Map <String, IPasswordHashCreator> m_aPasswordHashCreators = new HashMap <String, IPasswordHashCreator> ();
+  private final Map <String, IPasswordHashCreator> m_aPasswordHashCreators = new HashMap <> ();
   @GuardedBy ("m_aRWLock")
   private IPasswordHashCreator m_aDefaultPasswordHashCreator;
 
@@ -74,19 +73,13 @@ public class PasswordHashCreatorManager
     if (StringHelper.hasNoText (sAlgorithmName))
       throw new IllegalArgumentException ("PasswordHashCreator algorithm '" + aPasswordHashCreator + "' is empty!");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       if (m_aPasswordHashCreators.containsKey (sAlgorithmName))
         throw new IllegalArgumentException ("Another PasswordHashCreator for algorithm '" +
                                             sAlgorithmName +
                                             "' is already registered!");
       m_aPasswordHashCreators.put (sAlgorithmName, aPasswordHashCreator);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     s_aLogger.info ("Registered password hash creator algorithm '" + sAlgorithmName + "' to " + aPasswordHashCreator);
   }
 
@@ -97,16 +90,10 @@ public class PasswordHashCreatorManager
       final String sAlgorithmName = aPasswordHashCreator.getAlgorithmName ();
       if (StringHelper.hasText (sAlgorithmName))
       {
-        m_aRWLock.writeLock ().lock ();
-        try
-        {
+        m_aRWLock.writeLocked ( () -> {
           if (m_aPasswordHashCreators.remove (sAlgorithmName) != null)
             s_aLogger.info ("Unregistered password hash creator algorithm '" + sAlgorithmName + "'");
-        }
-        finally
-        {
-          m_aRWLock.writeLock ().unlock ();
-        }
+        });
       }
     }
   }
@@ -121,45 +108,21 @@ public class PasswordHashCreatorManager
   @Nullable
   public IPasswordHashCreator getPasswordHashCreatorOfAlgorithm (@Nullable final String sAlgorithmName)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aPasswordHashCreators.get (sAlgorithmName);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aPasswordHashCreators.get (sAlgorithmName));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Set <String> getAllPasswordHashCreatorAlgorithms ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newSet (m_aPasswordHashCreators.keySet ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aPasswordHashCreators.keySet ()));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Collection <IPasswordHashCreator> getAllPasswordHashCreators ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aPasswordHashCreators.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aPasswordHashCreators.values ()));
   }
 
   /**
@@ -175,18 +138,12 @@ public class PasswordHashCreatorManager
   {
     ValueEnforcer.notEmpty (sAlgorithm, "Algorithm");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       final IPasswordHashCreator aPHC = m_aPasswordHashCreators.get (sAlgorithm);
       if (aPHC == null)
         throw new IllegalArgumentException ("No PasswordHashCreator registered for algorithm '" + sAlgorithm + "'");
       m_aDefaultPasswordHashCreator = aPHC;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     s_aLogger.info ("Default PasswordHashCreator algorithm set to '" + sAlgorithm + "'");
   }
 
@@ -197,18 +154,12 @@ public class PasswordHashCreatorManager
   @Nonnull
   public IPasswordHashCreator getDefaultPasswordHashCreator ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    return m_aRWLock.readLocked ( () -> {
       final IPasswordHashCreator ret = m_aDefaultPasswordHashCreator;
       if (ret == null)
         throw new IllegalStateException ("No default PasswordHashCreator present!");
       return ret;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   /**

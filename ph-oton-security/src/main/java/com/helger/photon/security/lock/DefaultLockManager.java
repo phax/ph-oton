@@ -22,8 +22,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,6 +38,7 @@ import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -58,7 +57,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (DefaultLockManager.class);
 
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private ICurrentUserIDProvider m_aCurrentUserIDProvider;
 
@@ -72,43 +71,22 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
 
   public final void setCurrentUserIDProvider (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      m_aCurrentUserIDProvider = ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
+    m_aRWLock.writeLocked ( () -> {
+      m_aCurrentUserIDProvider = aCurrentUserIDProvider;
+    });
   }
 
   @Nullable
   private String _getCurrentUserID ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aCurrentUserIDProvider.getCurrentUserID ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aCurrentUserIDProvider.getCurrentUserID ());
   }
 
   @Nullable
   public final ILockInfo getLockInfo (@Nullable final IDTYPE aObjID)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aLockedObjs.get (aObjID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aLockedObjs.get (aObjID));
   }
 
   @Nullable
@@ -142,17 +120,15 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     if (StringHelper.hasNoText (sUserID))
       return LockResult.createFailure (aObjID);
 
-    ELocked eLocked;
-    boolean bIsNewLock = false;
-    List <IDTYPE> aUnlockedObjects = null;
+    return m_aRWLock.writeLocked ( () -> {
+      ELocked eLocked;
+      boolean bIsNewLock = false;
+      List <IDTYPE> aUnlockedObjects = null;
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
       if (bUnlockOtherObjects)
       {
         // Unlock other objects first
-        aUnlockedObjects = new ArrayList <IDTYPE> ();
+        aUnlockedObjects = new ArrayList <> ();
         // Unlock all except the object to be locked
         _unlockAllObjects (sUserID, CollectionHelper.newSet (aObjID), aUnlockedObjects);
       }
@@ -171,27 +147,23 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
         eLocked = ELocked.LOCKED;
         bIsNewLock = true;
       }
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
 
-    if (s_aLogger.isInfoEnabled ())
-    {
-      if (CollectionHelper.isNotEmpty (aUnlockedObjects))
-        s_aLogger.info ("Before locking, unlocked all objects of user '" +
-                        sUserID +
-                        "': " +
-                        aUnlockedObjects +
-                        " except '" +
-                        aObjID +
-                        "'");
-      if (bIsNewLock)
-        s_aLogger.info ("User '" + sUserID + "' locked object '" + aObjID + "'");
-    }
+      if (s_aLogger.isInfoEnabled ())
+      {
+        if (CollectionHelper.isNotEmpty (aUnlockedObjects))
+          s_aLogger.info ("Before locking, unlocked all objects of user '" +
+                          sUserID +
+                          "': " +
+                          aUnlockedObjects +
+                          " except '" +
+                          aObjID +
+                          "'");
+        if (bIsNewLock)
+          s_aLogger.info ("User '" + sUserID + "' locked object '" + aObjID + "'");
+      }
 
-    return new LockResult <IDTYPE> (aObjID, eLocked, bIsNewLock, aUnlockedObjects);
+      return new LockResult <IDTYPE> (aObjID, eLocked, bIsNewLock, aUnlockedObjects);
+    });
   }
 
   @Nonnull
@@ -262,17 +234,11 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
       return EChange.UNCHANGED;
     }
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       // this user locked the object -> unlock it
       if (m_aLockedObjs.remove (aObjID) == null)
         throw new IllegalStateException ("Internal inconsistency: removing '" + aObjID + "' from lock list failed!");
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
 
     if (s_aLogger.isInfoEnabled ())
       s_aLogger.info ("User '" + sUserID + "' unlocked object '" + aObjID + "'");
@@ -338,15 +304,9 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     final List <IDTYPE> aUnlockedObjects = new ArrayList <IDTYPE> ();
     if (StringHelper.hasText (sUserID))
     {
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
+      m_aRWLock.writeLocked ( () -> {
         _unlockAllObjects (sUserID, aObjectsToKeepLocked, aUnlockedObjects);
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
+      });
 
       if (!aUnlockedObjects.isEmpty ())
         if (s_aLogger.isInfoEnabled ())
@@ -392,30 +352,14 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   @ReturnsMutableCopy
   public final Set <IDTYPE> getAllLockedObjects ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newSet (m_aLockedObjs.keySet ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aLockedObjs.keySet ()));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public final Map <IDTYPE, ILockInfo> getAllLockInfos ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newMap (m_aLockedObjs);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newMap (m_aLockedObjs));
   }
 
   @Nonnull
@@ -430,20 +374,14 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   @ReturnsMutableCopy
   public Set <IDTYPE> getAllLockedObjectsOfUser (@Nullable final String sUserID)
   {
-    final Set <IDTYPE> ret = new HashSet <IDTYPE> ();
+    final Set <IDTYPE> ret = new HashSet <> ();
     if (StringHelper.hasText (sUserID))
     {
-      m_aRWLock.readLock ().lock ();
-      try
-      {
+      m_aRWLock.readLocked ( () -> {
         for (final Map.Entry <IDTYPE, ILockInfo> aEntry : m_aLockedObjs.entrySet ())
           if (aEntry.getValue ().getLockUserID ().equals (sUserID))
             ret.add (aEntry.getKey ());
-      }
-      finally
-      {
-        m_aRWLock.readLock ().unlock ();
-      }
+      });
     }
     return ret;
   }

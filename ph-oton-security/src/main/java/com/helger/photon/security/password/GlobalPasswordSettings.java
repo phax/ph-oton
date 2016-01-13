@@ -16,9 +16,6 @@
  */
 package com.helger.photon.security.password;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -31,6 +28,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.lang.ServiceLoaderHelper;
 import com.helger.photon.security.password.constraint.IPasswordConstraintList;
 import com.helger.photon.security.password.constraint.PasswordConstraintList;
@@ -50,7 +48,7 @@ import com.helger.photon.security.password.salt.IPasswordSalt;
 public final class GlobalPasswordSettings
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (GlobalPasswordSettings.class);
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
   private static IPasswordConstraintList s_aPasswordConstraintList = new PasswordConstraintList ();
@@ -85,15 +83,7 @@ public final class GlobalPasswordSettings
   @ReturnsMutableCopy
   public static IPasswordConstraintList getPasswordConstraintList ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aPasswordConstraintList.getClone ();
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked (s_aPasswordConstraintList::getClone);
   }
 
   /**
@@ -108,15 +98,9 @@ public final class GlobalPasswordSettings
 
     // Create a copy
     final IPasswordConstraintList aRealPasswordConstraints = aPasswordConstraintList.getClone ();
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aPasswordConstraintList = aRealPasswordConstraints;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
     s_aLogger.info ("Set global password constraints to " + aRealPasswordConstraints);
   }
 

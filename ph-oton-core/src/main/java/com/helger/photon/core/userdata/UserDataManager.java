@@ -17,13 +17,12 @@
 package com.helger.photon.core.userdata;
 
 import java.io.File;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
@@ -47,7 +46,7 @@ public final class UserDataManager
   /** By default the user data is accessed via the servletContext IO */
   public static final boolean DEFAULT_SERVLET_CONTEXT_IO = true;
 
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   private static String s_sUserDataPath = DEFAULT_USER_DATA_PATH;
   private static boolean s_bServletContextIO = DEFAULT_SERVLET_CONTEXT_IO;
 
@@ -69,15 +68,9 @@ public final class UserDataManager
     if (!sUserDataPath.startsWith ("/"))
       throw new IllegalArgumentException ("userDataPath must start with a slash");
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_sUserDataPath = sUserDataPath;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -92,15 +85,7 @@ public final class UserDataManager
   @Nonempty
   public static String getUserDataPath ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_sUserDataPath;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_sUserDataPath);
   }
 
   /**
@@ -115,15 +100,9 @@ public final class UserDataManager
    */
   public static void setServletContextIO (final boolean bServletContextIO)
   {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_bServletContextIO = bServletContextIO;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public static boolean isServletContextIO ()

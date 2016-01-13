@@ -17,8 +17,6 @@
 package com.helger.photon.core.url;
 
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
@@ -54,7 +53,7 @@ public final class LinkHelper
   public static final String DEFAULT_STREAM_SERVLET_NAME = "stream";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (LinkHelper.class);
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
   private static String s_sStreamServletName = DEFAULT_STREAM_SERVLET_NAME;
@@ -71,15 +70,9 @@ public final class LinkHelper
                                           "' passed. It must match the following rexg: " +
                                           STREAM_SERVLET_NAME_REGEX);
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_sStreamServletName = sStreamServletName;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -90,15 +83,7 @@ public final class LinkHelper
   @Nonempty
   public static String getStreamServletName ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_sStreamServletName;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_sStreamServletName);
   }
 
   /**
@@ -110,15 +95,7 @@ public final class LinkHelper
   @Nonempty
   public static String getStreamServletPath ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return "/" + s_sStreamServletName;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> "/" + s_sStreamServletName);
   }
 
   @Nonnull
