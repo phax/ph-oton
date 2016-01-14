@@ -17,6 +17,9 @@
 package com.helger.photon.exchange.bulkexport.format;
 
 import java.io.OutputStream;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -26,10 +29,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
@@ -37,7 +36,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.type.EBaseType;
-import com.helger.datetime.CPDT;
+import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.photon.exchange.EExchangeFileType;
 import com.helger.photon.exchange.bulkexport.EExportRecordType;
 import com.helger.photon.exchange.bulkexport.IExportRecord;
@@ -264,23 +263,23 @@ public class ExporterExcel implements IExporterFile
               aWBCH.addCellStyle (m_aStyleText);
             break;
           case DATE:
-            aCell = aWBCH.addCell (((LocalDate) aFieldValue).toDateTime (CPDT.NULL_LOCAL_TIME).toDate ());
+            aCell = aWBCH.addCell (TypeConverter.convertIfNecessary (aFieldValue, Date.class));
             aWBCH.addCellStyle (m_aStyleDate);
             break;
           case TIME:
-            aCell = aWBCH.addCell (((LocalTime) aFieldValue).toDateTime (CPDT.NULL_DATETIME).toDate ());
+            aCell = aWBCH.addCell (TypeConverter.convertIfNecessary (aFieldValue, Date.class));
             aWBCH.addCellStyle (m_aStyleTime);
             break;
           case DATETIME:
             if (aFieldValue instanceof LocalDateTime)
             {
               // No timezone
-              aCell = aWBCH.addCell (((LocalDateTime) aFieldValue).toDateTime ().toDate ());
+              aCell = aWBCH.addCell (TypeConverter.convertIfNecessary (aFieldValue, Date.class));
             }
             else
             {
               // Here we have a timezone -> use calendar
-              aCell = aWBCH.addCell (((DateTime) aFieldValue).toGregorianCalendar ());
+              aCell = aWBCH.addCell (TypeConverter.convertIfNecessary (aFieldValue, GregorianCalendar.class));
             }
             aWBCH.addCellStyle (m_aStyleDateTime);
             break;

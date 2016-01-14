@@ -18,15 +18,15 @@ package com.helger.photon.exchange.bulkexport;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.equals.EqualsHelper;
@@ -95,7 +95,7 @@ public class ExportRecordField implements IExportRecordField
         return EBaseType.DATE;
       if (aValue instanceof LocalTime)
         return EBaseType.TIME;
-      if (aValue instanceof LocalDateTime || aValue instanceof DateTime)
+      if (aValue instanceof LocalDateTime || aValue instanceof ZonedDateTime || aValue instanceof OffsetDateTime)
         return EBaseType.DATETIME;
       if (aValue instanceof Boolean)
         return EBaseType.BOOLEAN;
@@ -144,7 +144,13 @@ public class ExportRecordField implements IExportRecordField
   }
 
   @Nonnull
-  public static ExportRecordField create (@Nullable final DateTime aValue)
+  public static ExportRecordField create (@Nullable final ZonedDateTime aValue)
+  {
+    return new ExportRecordField (EBaseType.DATETIME, aValue);
+  }
+
+  @Nonnull
+  public static ExportRecordField create (@Nullable final OffsetDateTime aValue)
   {
     return new ExportRecordField (EBaseType.DATETIME, aValue);
   }

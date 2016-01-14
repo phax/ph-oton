@@ -20,10 +20,13 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 
 import org.junit.Test;
-
-import com.helger.datetime.PDTFactory;
 
 /**
  * Test class for class {@link ExportRecord}.
@@ -36,10 +39,11 @@ public final class ExportRecordTest
   public void testAddFieldTyped ()
   {
     final ExportRecord aRecordWithAllTypes = new ExportRecord ().addField ("Hallo")
-                                                                .addField (PDTFactory.getCurrentLocalTime ())
-                                                                .addField (PDTFactory.getCurrentLocalDate ())
-                                                                .addField (PDTFactory.getCurrentLocalDateTime ())
-                                                                .addField (PDTFactory.getCurrentDateTime ())
+                                                                .addField (LocalTime.now ())
+                                                                .addField (LocalDate.now ())
+                                                                .addField (LocalDateTime.now ())
+                                                                .addField (ZonedDateTime.now ())
+                                                                .addField (OffsetDateTime.now ())
                                                                 .addField (true)
                                                                 .addField (Boolean.FALSE)
                                                                 .addField (4711)
@@ -50,23 +54,24 @@ public final class ExportRecordTest
                                                                 .addField (3.1145)
                                                                 .addField (Double.valueOf (Double.MIN_VALUE))
                                                                 .addField (new BigDecimal ("12345123451234512345123451234512345123451234512345.12345"));
-    assertEquals (15, aRecordWithAllTypes.getFieldCount ());
+    assertEquals (16, aRecordWithAllTypes.getFieldCount ());
   }
 
   @Test
   public void testAddFieldUntyped ()
   {
     final ExportRecord aRecordWithAllTypes = new ExportRecord ().addField ((Object) "Hallo")
-                                                                .addField ((Object) PDTFactory.getCurrentLocalTime ())
-                                                                .addField ((Object) PDTFactory.getCurrentLocalDate ())
-                                                                .addField ((Object) PDTFactory.getCurrentLocalDateTime ())
-                                                                .addField ((Object) PDTFactory.getCurrentDateTime ())
+                                                                .addField ((Object) LocalTime.now ())
+                                                                .addField ((Object) LocalDate.now ())
+                                                                .addField ((Object) LocalDateTime.now ())
+                                                                .addField ((Object) ZonedDateTime.now ())
+                                                                .addField ((Object) OffsetDateTime.now ())
                                                                 .addField ((Object) Boolean.FALSE)
                                                                 .addField ((Object) Integer.valueOf (-34))
                                                                 .addField ((Object) Long.valueOf (Long.MIN_VALUE))
                                                                 .addField ((Object) new BigInteger ("1234512345123451234512345123451234512345123451234512345"))
                                                                 .addField ((Object) Double.valueOf (Double.MIN_VALUE))
                                                                 .addField ((Object) new BigDecimal ("12345123451234512345123451234512345123451234512345.12345"));
-    assertEquals (11, aRecordWithAllTypes.getFieldCount ());
+    assertEquals (12, aRecordWithAllTypes.getFieldCount ());
   }
 }

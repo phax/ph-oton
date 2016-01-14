@@ -20,12 +20,16 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 
 import org.junit.Test;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
-import com.helger.datetime.PDTFactory;
 import com.helger.photon.exchange.bulkexport.ConstantExportRecordProvider;
 import com.helger.photon.exchange.bulkexport.EmptyExportRecordProvider;
 import com.helger.photon.exchange.bulkexport.ExportRecord;
@@ -43,10 +47,11 @@ public final class ExporterExcelTest
   public void testBasicExport ()
   {
     final ExportRecord aRecordWithAllTypes = new ExportRecord ().addField ("Hallo")
-                                                                .addField (PDTFactory.getCurrentLocalTime ())
-                                                                .addField (PDTFactory.getCurrentLocalDate ())
-                                                                .addField (PDTFactory.getCurrentLocalDateTime ())
-                                                                .addField (PDTFactory.getCurrentDateTime ())
+                                                                .addField (LocalTime.now ())
+                                                                .addField (LocalDate.now ())
+                                                                .addField (LocalDateTime.now ())
+                                                                .addField (ZonedDateTime.now ())
+                                                                .addField (OffsetDateTime.now ())
                                                                 .addField (true)
                                                                 .addField (4711)
                                                                 .addField (-123456789012345L)

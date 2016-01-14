@@ -18,6 +18,11 @@ package com.helger.photon.exchange.bulkexport;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +30,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -113,7 +113,13 @@ public class ExportRecord implements IExportRecord
   }
 
   @Nonnull
-  public ExportRecord addField (@Nullable final DateTime aValue)
+  public ExportRecord addField (@Nullable final ZonedDateTime aValue)
+  {
+    return addField (ExportRecordField.create (aValue));
+  }
+
+  @Nonnull
+  public ExportRecord addField (@Nullable final OffsetDateTime aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
