@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,7 +33,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.filter.IFilter;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
@@ -240,7 +240,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
   }
 
   @Nonnull
-  public ESuccess listFiles (@Nullable final IFilter <FTPFile> aFilter, @Nonnull final List <FTPFile> aTargetList)
+  public ESuccess listFiles (@Nullable final Predicate <FTPFile> aFilter, @Nonnull final List <FTPFile> aTargetList)
   {
     ValueEnforcer.notNull (aTargetList, "TargetList");
 

@@ -20,15 +20,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Vector;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.WillClose;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.filter.IFilter;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
@@ -101,7 +102,7 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
   }
 
   @Nonnull
-  public ESuccess getData (@Nonnull final String sFilename, @Nonnull final OutputStream aOS)
+  public ESuccess getData (@Nonnull final String sFilename, @Nonnull @WillClose final OutputStream aOS)
   {
     try
     {
@@ -125,7 +126,7 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
   }
 
   @Nonnull
-  public ESuccess putData (@Nonnull final String sFilename, @Nonnull final InputStream aIS)
+  public ESuccess putData (@Nonnull final String sFilename, @Nonnull @WillClose final InputStream aIS)
   {
     try
     {
@@ -189,7 +190,7 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
   }
 
   @Nonnull
-  public ESuccess listFiles (@Nullable final IFilter <ChannelSftp.LsEntry> aFilter,
+  public ESuccess listFiles (@Nullable final Predicate <ChannelSftp.LsEntry> aFilter,
                              @Nonnull final List <ChannelSftp.LsEntry> aTargetList)
   {
     ValueEnforcer.notNull (aTargetList, "TargetList");
@@ -202,7 +203,7 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
         for (final Object aFile : aFiles)
         {
           final ChannelSftp.LsEntry aEntry = (ChannelSftp.LsEntry) aFile;
-          if (aFilter == null || aFilter.matchesFilter (aEntry))
+          if (aFilter == null || aFilter.test (aEntry))
             aTargetList.add (aEntry);
         }
         s_aLogger.info ("Successfully listed " + aTargetList.size () + " files");

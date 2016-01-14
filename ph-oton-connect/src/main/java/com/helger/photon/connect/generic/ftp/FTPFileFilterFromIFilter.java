@@ -16,6 +16,8 @@
  */
 package com.helger.photon.connect.generic.ftp;
 
+import java.util.function.Predicate;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -24,31 +26,30 @@ import org.apache.commons.net.ftp.FTPFileFilter;
 import org.apache.commons.net.ftp.FTPFileFilters;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.filter.IFilter;
 
 public final class FTPFileFilterFromIFilter implements FTPFileFilter
 {
-  private final IFilter <FTPFile> m_aFilter;
+  private final Predicate <FTPFile> m_aFilter;
 
-  public FTPFileFilterFromIFilter (@Nonnull final IFilter <FTPFile> aFilter)
+  public FTPFileFilterFromIFilter (@Nonnull final Predicate <FTPFile> aFilter)
   {
     ValueEnforcer.notNull (aFilter, "Filter");
     m_aFilter = aFilter;
   }
 
   @Nonnull
-  public IFilter <FTPFile> getFilter ()
+  public Predicate <FTPFile> getFilter ()
   {
     return m_aFilter;
   }
 
   public boolean accept (final FTPFile aFile)
   {
-    return m_aFilter.matchesFilter (aFile);
+    return m_aFilter.test (aFile);
   }
 
   @Nonnull
-  public static FTPFileFilter create (@Nullable final IFilter <FTPFile> aFilter)
+  public static FTPFileFilter create (@Nullable final Predicate <FTPFile> aFilter)
   {
     return aFilter == null ? FTPFileFilters.NON_NULL : new FTPFileFilterFromIFilter (aFilter);
   }

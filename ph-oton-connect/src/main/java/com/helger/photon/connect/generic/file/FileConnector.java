@@ -20,12 +20,13 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.WillClose;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.filter.IFilter;
 import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
@@ -88,7 +89,7 @@ public class FileConnector implements IConnectorFileBased <File, File>
   }
 
   @Nonnull
-  public ESuccess getData (@Nonnull final String sFilename, @Nonnull final OutputStream aOS)
+  public ESuccess getData (@Nonnull final String sFilename, @Nonnull @WillClose final OutputStream aOS)
   {
     try
     {
@@ -106,7 +107,7 @@ public class FileConnector implements IConnectorFileBased <File, File>
   }
 
   @Nonnull
-  public ESuccess putData (@Nonnull final String sFilename, @Nonnull final InputStream aIS)
+  public ESuccess putData (@Nonnull final String sFilename, @Nonnull @WillClose final InputStream aIS)
   {
     try
     {
@@ -152,12 +153,12 @@ public class FileConnector implements IConnectorFileBased <File, File>
   }
 
   @Nonnull
-  public ESuccess listFiles (@Nullable final IFilter <File> aFilter, @Nonnull final List <File> aTargetList)
+  public ESuccess listFiles (@Nullable final Predicate <File> aFilter, @Nonnull final List <File> aTargetList)
   {
     if (m_aChannel != null)
     {
       for (final File aFile : new FileSystemIterator (m_aChannel))
-        if (aFilter == null || aFilter.matchesFilter (aFile))
+        if (aFilter == null || aFilter.test (aFile))
           aTargetList.add (aFile);
       return ESuccess.SUCCESS;
     }

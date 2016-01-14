@@ -19,12 +19,12 @@ package com.helger.photon.connect.generic;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 
-import com.helger.commons.filter.IFilter;
 import com.helger.commons.state.ESuccess;
 
 public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConnector <HANDLETYPE>
@@ -95,5 +95,5 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
    * @return {@link ESuccess}
    */
   @Nonnull
-  ESuccess listFiles (@Nullable IFilter <REMOTEITEMTYPE> aFilter, @Nonnull List <REMOTEITEMTYPE> aTargetList);
+  ESuccess listFiles (@Nullable Predicate <REMOTEITEMTYPE> aFilter, @Nonnull List <REMOTEITEMTYPE> aTargetList);
 }
