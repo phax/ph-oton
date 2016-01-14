@@ -16,19 +16,18 @@
  */
 package com.helger.photon.security.token.accesstoken;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.base64.Base64;
 import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.string.StringHelper;
-import com.helger.datetime.PDTFactory;
 import com.helger.photon.security.token.revocation.RevocationStatus;
 
 /**
@@ -91,7 +90,7 @@ public final class AccessToken implements IAccessToken
 
   public boolean isValidNow ()
   {
-    return isValidAt (PDTFactory.getCurrentLocalDateTime ());
+    return isValidAt (LocalDateTime.now ());
   }
 
   public boolean isValidAt (@Nonnull final LocalDateTime aDT)
@@ -166,6 +165,6 @@ public final class AccessToken implements IAccessToken
     // Length 66 so that the Base64 encoding does not add the "==" signs
     // Length must be dividable by 3
     final String sRealTokenString = StringHelper.hasText (sTokenString) ? sTokenString : createNewTokenString (66);
-    return new AccessToken (sRealTokenString, PDTFactory.getCurrentLocalDateTime (), null, new RevocationStatus ());
+    return new AccessToken (sRealTokenString, LocalDateTime.now (), null, new RevocationStatus ());
   }
 }

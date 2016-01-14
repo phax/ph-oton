@@ -17,11 +17,10 @@
 package com.helger.photon.security.token.accesstoken;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.photon.security.token.revocation.IRevocationStatus;

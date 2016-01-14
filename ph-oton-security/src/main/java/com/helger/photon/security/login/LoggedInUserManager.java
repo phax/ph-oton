@@ -18,6 +18,7 @@ package com.helger.photon.security.login;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.joda.time.Period;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -552,7 +552,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     s_aLogger.info ("Logged out user '" +
                     sUserID +
                     "' after " +
-                    new Period (aInfo.getLoginDT (), aInfo.getLogoutDT ()).toString ());
+                    Duration.between (aInfo.getLoginDT (), aInfo.getLogoutDT ()).toString ());
     AuditHelper.onAuditExecuteSuccess ("logout", sUserID);
 
     // Execute callback as the very last action

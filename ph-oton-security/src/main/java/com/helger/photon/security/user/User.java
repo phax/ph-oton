@@ -16,6 +16,7 @@
  */
 package com.helger.photon.security.user;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 
@@ -24,8 +25,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.joda.time.LocalDateTime;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.equals.EqualsHelper;
@@ -33,7 +32,6 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.StubObjectWithCustomAttrs;
@@ -342,7 +340,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
 
   void onSuccessfulLogin ()
   {
-    m_aLastLoginDT = PDTFactory.getCurrentLocalDateTime ();
+    m_aLastLoginDT = LocalDateTime.now ();
     m_nLoginCount++;
     m_nConsecutiveFailedLoginCount = 0;
   }

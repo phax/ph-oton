@@ -16,11 +16,11 @@
  */
 package com.helger.photon.security.login;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -30,7 +30,6 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.scope.ISessionScope;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTFactory;
 import com.helger.photon.security.user.IUser;
 
 /**
@@ -51,7 +50,7 @@ public final class LoginInfo extends MapBasedAttributeContainerAny <String> impl
   {
     m_aUser = ValueEnforcer.notNull (aUser, "User");
     m_aSessionScope = ValueEnforcer.notNull (aSessionScope, "SessionScope");
-    m_aLoginDT = PDTFactory.getCurrentLocalDateTime ();
+    m_aLoginDT = LocalDateTime.now ();
     m_aLastAccessDT = m_aLoginDT;
   }
 
@@ -115,7 +114,7 @@ public final class LoginInfo extends MapBasedAttributeContainerAny <String> impl
    */
   public void setLastAccessDTNow ()
   {
-    m_aLastAccessDT = PDTFactory.getCurrentLocalDateTime ();
+    m_aLastAccessDT = LocalDateTime.now ();
   }
 
   /**
@@ -133,7 +132,7 @@ public final class LoginInfo extends MapBasedAttributeContainerAny <String> impl
    */
   public void setLogoutDTNow ()
   {
-    m_aLogoutDT = PDTFactory.getCurrentLocalDateTime ();
+    m_aLogoutDT = LocalDateTime.now ();
   }
 
   /**

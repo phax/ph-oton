@@ -16,11 +16,11 @@
  */
 package com.helger.photon.security.object.accarea;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;

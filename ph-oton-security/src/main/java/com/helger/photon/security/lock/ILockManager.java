@@ -16,14 +16,13 @@
  */
 package com.helger.photon.security.lock;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.state.EChange;

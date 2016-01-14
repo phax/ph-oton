@@ -16,14 +16,13 @@
  */
 package com.helger.photon.security.object;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.collection.CollectionHelper;
@@ -93,7 +92,7 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
     LocalDateTime aLDT = aElement.getAttributeValueWithConversion (sLDTName, LocalDateTime.class);
     if (aLDT == null)
     {
-      final DateTime aDT = aElement.getAttributeValueWithConversion (sDTName, DateTime.class);
+      final ZonedDateTime aDT = aElement.getAttributeValueWithConversion (sDTName, ZonedDateTime.class);
       if (aDT != null)
         aLDT = aDT.toLocalDateTime ();
     }

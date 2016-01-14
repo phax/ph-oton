@@ -61,7 +61,7 @@ public class MenuObjectFilterUserAssignedToUserGroup extends AbstractMenuObjectF
                                                                                               m_sUserGroupID);
   }
 
-  public boolean matchesFilter (@Nullable final IMenuObject aValue)
+  public boolean test (@Nullable final IMenuObject aValue)
   {
     return SecurityHelper.isCurrentUserAssignedToUserGroup (m_sUserGroupID);
   }

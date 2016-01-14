@@ -16,15 +16,14 @@
  */
 package com.helger.photon.security.object;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.type.ObjectType;
-import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.object.AbstractObject;
 import com.helger.photon.basic.object.IObject;
 import com.helger.photon.security.login.LoggedInUserManager;
@@ -42,7 +41,7 @@ public final class StubObject extends AbstractObject
   private StubObject (@Nonnull @Nonempty final String sID, @Nullable final String sCreationUserID)
   {
     this (sID,
-          PDTFactory.getCurrentLocalDateTime (),
+          LocalDateTime.now (),
           sCreationUserID,
           (LocalDateTime) null,
           (String) null,

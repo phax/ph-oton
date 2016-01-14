@@ -37,7 +37,7 @@ public class MenuObjectFilterUserLoggedIn extends AbstractMenuObjectFilter
     setDescription (EPhotonBasicText.MENU_OBJECT_FILTER_USER_LOGGED_IN.getMultilingualText ());
   }
 
-  public boolean matchesFilter (@Nullable final IMenuObject aValue)
+  public boolean test (@Nullable final IMenuObject aValue)
   {
     return LoggedInUserManager.getInstance ().isUserLoggedInInCurrentSession ();
   }

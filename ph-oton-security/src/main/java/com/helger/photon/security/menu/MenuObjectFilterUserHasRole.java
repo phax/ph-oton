@@ -60,7 +60,7 @@ public class MenuObjectFilterUserHasRole extends AbstractMenuObjectFilter
     return EPhotonBasicText.MENU_OBJECT_FILTER_USER_HAS_ROLE.getDisplayTextWithArgs (aContentLocale, m_sRoleID);
   }
 
-  public boolean matchesFilter (@Nullable final IMenuObject aValue)
+  public boolean test (@Nullable final IMenuObject aValue)
   {
     return SecurityHelper.hasCurrentUserRole (m_sRoleID);
   }

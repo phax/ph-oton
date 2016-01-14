@@ -17,10 +17,9 @@
 package com.helger.photon.security.lock;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
-
-import org.joda.time.LocalDateTime;
 
 /**
  * A single lock information object.
