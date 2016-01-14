@@ -19,14 +19,13 @@ package com.helger.photon.basic.buildinfo;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.DateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -292,9 +291,9 @@ public final class BuildInfo
   // TODO add exclusions
 
   @Nonnull
-  public DateTime getBuildDateTime ()
+  public LocalDateTime getBuildDateTime ()
   {
-    return PDTFactory.createDateTimeFromMillis (getLong ("build.datetime.millis"));
+    return PDTFactory.createLocalDateTime (getLong ("build.datetime.millis"));
   }
 
   @Nonnull

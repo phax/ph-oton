@@ -16,18 +16,17 @@
  */
 package com.helger.photon.basic.audit;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.auth.CBasicSecurity;
 
 /**
@@ -49,7 +48,7 @@ final class AuditItem implements IAuditItem
                     @Nonnull final ESuccess eSuccess,
                     @Nonnull final String sAction)
   {
-    this (PDTFactory.getCurrentLocalDateTime (),
+    this (LocalDateTime.now (),
           StringHelper.hasText (sUserID) ? sUserID : CBasicSecurity.USER_ID_NONE_LOGGED_IN,
           eType,
           eSuccess,

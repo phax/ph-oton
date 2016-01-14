@@ -16,12 +16,12 @@
  */
 package com.helger.photon.basic.longrun;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-
-import org.joda.time.Duration;
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -29,7 +29,6 @@ import com.helger.commons.id.IHasID;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.datetime.PDTFactory;
 
 /**
  * This class contains the data for a single long running job.
@@ -57,7 +56,7 @@ public final class LongRunningJobData implements IHasID <String>
   {
     m_sID = ValueEnforcer.notEmpty (sJobID, "JobID");
     m_aJobDescription = ValueEnforcer.notNull (aJobDescription, "JobDescription");
-    m_aStartDateTime = PDTFactory.getCurrentLocalDateTime ();
+    m_aStartDateTime = LocalDateTime.now ();
     m_sStartingUserID = sStartingUserID;
   }
 
@@ -120,7 +119,7 @@ public final class LongRunningJobData implements IHasID <String>
       throw new IllegalStateException ("Job was already ended");
 
     // Save the date
-    m_aEndDateTime = PDTFactory.getCurrentLocalDateTime ();
+    m_aEndDateTime = LocalDateTime.now ();
     m_eExecSuccess = eExecSucess;
     // Build the main results
     m_aResult = aResult;
@@ -153,7 +152,7 @@ public final class LongRunningJobData implements IHasID <String>
   {
     if (!isEnded ())
       throw new IllegalStateException ("Job is still running!");
-    return PDTFactory.createDuration (m_aStartDateTime, getEndDateTime ());
+    return Duration.between (m_aStartDateTime, getEndDateTime ());
   }
 
   /**

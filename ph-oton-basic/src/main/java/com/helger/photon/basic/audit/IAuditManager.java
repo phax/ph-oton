@@ -16,13 +16,12 @@
  */
 package com.helger.photon.basic.audit;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.LocalDate;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 

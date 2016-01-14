@@ -16,12 +16,11 @@
  */
 package com.helger.photon.basic.object;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;

@@ -32,6 +32,7 @@ import com.helger.photon.basic.app.menu.IMenuObjectFilter;
  * @author Philip Helger
  */
 @NotThreadSafe
+@Deprecated
 public class MenuObjectFilterListAll extends AbstractMenuObjectFilterCollection
 {
   private void _init ()
@@ -51,10 +52,10 @@ public class MenuObjectFilterListAll extends AbstractMenuObjectFilterCollection
     _init ();
   }
 
-  public boolean matchesFilter (@Nullable final IMenuObject aValue)
+  public boolean test (@Nullable final IMenuObject aValue)
   {
     for (final IMenuObjectFilter aFilter : this)
-      if (!aFilter.matchesFilter (aValue))
+      if (!aFilter.test (aValue))
         return false;
     return true;
   }

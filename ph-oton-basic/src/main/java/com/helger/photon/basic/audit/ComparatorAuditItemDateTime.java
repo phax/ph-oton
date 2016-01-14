@@ -16,17 +16,14 @@
  */
 package com.helger.photon.basic.audit;
 
-import javax.annotation.Nonnull;
+import java.time.LocalDateTime;
 
-import org.joda.time.LocalDateTime;
+import com.helger.commons.compare.PartComparatorComparable;
 
-import com.helger.commons.compare.AbstractPartComparatorComparable;
-
-public class ComparatorAuditItemDateTime extends AbstractPartComparatorComparable <IAuditItem, LocalDateTime>
+public class ComparatorAuditItemDateTime extends PartComparatorComparable <IAuditItem, LocalDateTime>
 {
-  @Override
-  protected LocalDateTime getPart (@Nonnull final IAuditItem aElement)
+  public ComparatorAuditItemDateTime ()
   {
-    return aElement.getDateTime ();
+    super (IAuditItem::getDateTime);
   }
 }

@@ -16,10 +16,10 @@
  */
 package com.helger.photon.basic.app.dao;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nullable;
-
-import org.joda.time.LocalDateTime;
 
 /**
  * Base DAO interface. DAO = Data Access Object. A DAO implementation usually

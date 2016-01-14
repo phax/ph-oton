@@ -16,9 +16,9 @@
  */
 package com.helger.photon.basic.audit;
 
-import javax.annotation.Nonnull;
+import java.time.LocalDateTime;
 
-import org.joda.time.LocalDateTime;
+import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.state.ESuccess;

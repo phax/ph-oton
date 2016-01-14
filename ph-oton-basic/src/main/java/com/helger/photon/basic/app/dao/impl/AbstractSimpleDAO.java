@@ -18,6 +18,9 @@ package com.helger.photon.basic.app.dao.impl;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 
 import javax.annotation.Nonnegative;
@@ -25,7 +28,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +54,6 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.commons.xml.serialize.write.IXMLWriterSettings;
 import com.helger.commons.xml.serialize.write.XMLWriterSettings;
-import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.photon.basic.app.dao.IDAOIO;
 import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
@@ -314,7 +315,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
             m_aStatsCounterInitTimer.addTime (aSW.stopAndGetMillis ());
             m_aStatsCounterInitSuccess.increment ();
             m_nInitCount++;
-            m_aLastInitDT = PDTFactory.getCurrentLocalDateTime ();
+            m_aLastInitDT = LocalDateTime.now ();
           }
           finally
           {
@@ -349,7 +350,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
               m_aStatsCounterReadTimer.addTime (aSW.stopAndGetMillis ());
               m_aStatsCounterReadSuccess.increment ();
               m_nReadCount++;
-              m_aLastReadDT = PDTFactory.getCurrentLocalDateTime ();
+              m_aLastReadDT = LocalDateTime.now ();
             }
             finally
             {
@@ -418,7 +419,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
   {
     final IMicroComment aComment = new MicroComment ("This file was generated automatically - do NOT modify!\n" +
                                                      "Written at " +
-                                                     PDTToString.getAsString (PDTFactory.getCurrentDateTimeUTC (),
+                                                     PDTToString.getAsString (ZonedDateTime.now (Clock.systemUTC ()),
                                                                               Locale.US));
     final IMicroElement eRoot = aDoc.getDocumentElement ();
     // Add a small comment
@@ -567,7 +568,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
       m_aStatsCounterWriteTimer.addTime (aSW.stopAndGetMillis ());
       m_aStatsCounterWriteSuccess.increment ();
       m_nWriteCount++;
-      m_aLastWriteDT = PDTFactory.getCurrentLocalDateTime ();
+      m_aLastWriteDT = LocalDateTime.now ();
       return ESuccess.SUCCESS;
     }
     catch (final Throwable t)

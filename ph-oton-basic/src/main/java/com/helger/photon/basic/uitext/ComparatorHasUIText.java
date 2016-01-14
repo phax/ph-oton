@@ -21,7 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.compare.AbstractCollatingComparator;
+import com.helger.commons.compare.CollatingPartComparator;
 
 /**
  * Special comparator that compares based on a UI text
@@ -30,13 +30,13 @@ import com.helger.commons.compare.AbstractCollatingComparator;
  * @param <DATATYPE>
  *        Data type to compare
  */
-public class ComparatorHasUIText <DATATYPE extends IHasUIText> extends AbstractCollatingComparator <DATATYPE>
+public class ComparatorHasUIText <DATATYPE extends IHasUIText> extends CollatingPartComparator <DATATYPE>
 {
   private final Locale m_aDisplayLocale;
 
   public ComparatorHasUIText (@Nonnull final Locale aSortLocale, @Nonnull final Locale aDisplayLocale)
   {
-    super (aSortLocale);
+    super (aSortLocale, aObject -> aObject.getAsUIText (aDisplayLocale));
     m_aDisplayLocale = ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
   }
 
@@ -44,11 +44,5 @@ public class ComparatorHasUIText <DATATYPE extends IHasUIText> extends AbstractC
   public Locale getDisplayLocale ()
   {
     return m_aDisplayLocale;
-  }
-
-  @Override
-  protected String getPart (@Nonnull final DATATYPE aObject)
-  {
-    return aObject.getAsUIText (m_aDisplayLocale);
   }
 }

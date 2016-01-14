@@ -17,11 +17,10 @@
 package com.helger.photon.basic.object;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.type.ITypedObject;
 import com.helger.photon.basic.datetime.IHasCreationInfo;

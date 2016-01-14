@@ -17,6 +17,9 @@
 package com.helger.photon.basic.audit;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +28,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.joda.time.DateTimeConstants;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +84,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
       // No base dir -> in memory only
       if (StringHelper.hasNoText (m_sBaseDir))
         return null;
-      return m_sBaseDir + getRelativeAuditFilename (PDTFactory.getCurrentLocalDate ());
+      return m_sBaseDir + getRelativeAuditFilename (LocalDate.now ());
     }
 
     @Override
@@ -140,7 +140,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
   public static String getRelativeAuditDirectory (@Nonnull final LocalDate aDate)
   {
     return getRelativeAuditDirectoryYear (aDate.getYear ()) +
-           StringHelper.getLeadingZero (aDate.getMonthOfYear (), 2) +
+           StringHelper.getLeadingZero (aDate.getMonthValue (), 2) +
            "/";
   }
 
@@ -242,7 +242,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
     for (final IMicroElement eItem : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
     {
       final String sDT = eItem.getAttributeValue (ATTR_DT_STRING);
-      final LocalDateTime aDT = PDTFactory.createLocalDateTime (sDT);
+      final LocalDateTime aDT = LocalDateTime.parse (sDT);
       if (aDT == null)
       {
         s_aLogger.warn ("Failed to parse date time '" + sDT + "'");
@@ -314,15 +314,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
   @Nonnegative
   public int getAuditItemCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aItems.getItemCount ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked (m_aItems::getItemCount);
   }
 
   @Nonnull
@@ -361,7 +353,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
   {
     if (m_aEarliestAuditDate == null)
     {
-      final LocalDate aNow = PDTFactory.getCurrentLocalDate ();
+      final LocalDate aNow = LocalDate.now ();
       LocalDate aEarliest = aNow;
       // In in memory only the current data is available
       if (!isInMemory ())
@@ -377,10 +369,10 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
         ++nYear;
 
         // Find first month
-        aEarliest = PDTFactory.createLocalDate (nYear, DateTimeConstants.JANUARY, 1);
-        for (int nMonth = DateTimeConstants.JANUARY; nMonth <= DateTimeConstants.DECEMBER; ++nMonth)
+        aEarliest = LocalDate.of (nYear, Month.JANUARY, 1);
+        for (final Month eMonth : Month.values ())
         {
-          aEarliest = aEarliest.withMonthOfYear (nMonth);
+          aEarliest = aEarliest.withMonth (eMonth.getValue ());
           if (aDataIO.getFile (m_sBaseDir + getRelativeAuditDirectory (aEarliest)).isDirectory ())
             break;
         }

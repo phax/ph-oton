@@ -16,17 +16,15 @@
  */
 package com.helger.photon.basic.atom;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 
-import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
-
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
-import com.helger.datetime.PDTFactory;
 import com.helger.web.datetime.PDTWebDateHelper;
 
 /**
@@ -37,11 +35,6 @@ import com.helger.web.datetime.PDTWebDateHelper;
 public class FeedDate extends AbstractFeedElement
 {
   private LocalDateTime m_aDT;
-
-  public FeedDate (@Nonnull final DateTime aDT)
-  {
-    this (aDT.toLocalDateTime ());
-  }
 
   public FeedDate (@Nullable final LocalDateTime aDT)
   {
@@ -77,6 +70,6 @@ public class FeedDate extends AbstractFeedElement
   @Nonnull
   public static FeedDate createNow ()
   {
-    return new FeedDate (PDTFactory.getCurrentLocalDateTime ());
+    return new FeedDate (LocalDateTime.now ());
   }
 }

@@ -16,19 +16,18 @@
  */
 package com.helger.photon.basic.auth.token;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.joda.time.LocalDateTime;
-import org.joda.time.Seconds;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.auth.identify.IAuthIdentification;
 
 /**
@@ -57,7 +56,7 @@ public final class AuthToken implements IAuthToken
       throw new IllegalStateException ("Failed to create token ID");
 
     m_aIdentification = aIdentification;
-    m_aCreationDT = PDTFactory.getCurrentLocalDateTime ();
+    m_aCreationDT = LocalDateTime.now ();
     m_aLastAccessDT = m_aCreationDT;
     m_nExpirationSeconds = nExpirationSeconds;
     m_bExpired = false;
@@ -117,8 +116,7 @@ public final class AuthToken implements IAuthToken
     if (!m_bExpired && isExpirationPossible ())
     {
       // Only if expiration is defined
-      if (Seconds.secondsBetween (m_aLastAccessDT, PDTFactory.getCurrentLocalDateTime ())
-                 .getSeconds () > m_nExpirationSeconds)
+      if (Duration.between (m_aLastAccessDT, LocalDateTime.now ()).getSeconds () > m_nExpirationSeconds)
         m_bExpired = true;
     }
     return m_bExpired;
@@ -138,7 +136,7 @@ public final class AuthToken implements IAuthToken
    */
   void updateLastAccess ()
   {
-    m_aLastAccessDT = PDTFactory.getCurrentLocalDateTime ();
+    m_aLastAccessDT = LocalDateTime.now ();
   }
 
   @Override

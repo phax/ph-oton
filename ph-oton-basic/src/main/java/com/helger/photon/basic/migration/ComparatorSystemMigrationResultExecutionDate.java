@@ -16,11 +16,9 @@
  */
 package com.helger.photon.basic.migration;
 
-import javax.annotation.Nonnull;
+import java.time.LocalDateTime;
 
-import org.joda.time.LocalDateTime;
-
-import com.helger.commons.compare.AbstractPartComparatorComparable;
+import com.helger.commons.compare.PartComparatorComparable;
 
 /**
  * Comparator for {@link SystemMigrationResult} objects by execution time.
@@ -28,11 +26,10 @@ import com.helger.commons.compare.AbstractPartComparatorComparable;
  * @author Philip Helger
  */
 public class ComparatorSystemMigrationResultExecutionDate extends
-                                                          AbstractPartComparatorComparable <SystemMigrationResult, LocalDateTime>
+                                                          PartComparatorComparable <SystemMigrationResult, LocalDateTime>
 {
-  @Override
-  protected LocalDateTime getPart (@Nonnull final SystemMigrationResult aObject)
+  public ComparatorSystemMigrationResultExecutionDate ()
   {
-    return aObject.getExecutionDateTime ();
+    super (SystemMigrationResult::getExecutionDateTime);
   }
 }

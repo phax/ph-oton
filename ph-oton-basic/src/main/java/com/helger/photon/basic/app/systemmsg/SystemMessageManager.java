@@ -16,10 +16,11 @@
  */
 package com.helger.photon.basic.app.systemmsg;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,6 @@ import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
@@ -152,9 +152,7 @@ public final class SystemMessageManager extends AbstractSimpleDAO
   {
     ValueEnforcer.notNull (eMessageType, "MessageType");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       if (m_eMessageType.equals (eMessageType) && EqualsHelper.equals (m_sMessage, sMessage))
         return EChange.UNCHANGED;
 
@@ -162,15 +160,11 @@ public final class SystemMessageManager extends AbstractSimpleDAO
       m_sMessage = sMessage;
 
       // Update last update
-      m_aLastUpdate = PDTFactory.getCurrentLocalDateTime ();
+      m_aLastUpdate = LocalDateTime.now ();
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    AuditHelper.onAuditExecuteSuccess ("update-system-message", eMessageType, sMessage);
-    return EChange.CHANGED;
+      AuditHelper.onAuditExecuteSuccess ("update-system-message", eMessageType, sMessage);
+      return EChange.CHANGED;
+    });
   }
 
   @Override

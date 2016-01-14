@@ -16,11 +16,11 @@
  */
 package com.helger.photon.basic.migration;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.annotation.Nonempty;
@@ -65,7 +65,7 @@ public final class SystemMigrationResultMicroTypeConverter implements IMicroType
     if (aExecLDT == null)
     {
       // Soft migration
-      final DateTime aExecDT = aElement.getAttributeValueWithConversion ("executiondt", DateTime.class);
+      final ZonedDateTime aExecDT = aElement.getAttributeValueWithConversion ("executiondt", ZonedDateTime.class);
       if (aExecDT != null)
         aExecLDT = aExecDT.toLocalDateTime ();
     }

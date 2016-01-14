@@ -17,11 +17,10 @@
 package com.helger.photon.basic.auth.identify;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 

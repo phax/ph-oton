@@ -16,9 +16,10 @@
  */
 package com.helger.photon.basic.audit;
 
+import java.time.format.DateTimeFormatter;
+
 import javax.annotation.Nonnull;
 
-import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,7 @@ public class LoggingAuditor extends AbstractAuditor
   @OverrideOnDemand
   public static String getDefaultAuditItemString (@Nonnull final IAuditItem aAuditItem)
   {
-    return ISODateTimeFormat.basicDateTime ().print (aAuditItem.getDateTime ()) +
+    return DateTimeFormatter.ISO_DATE_TIME.format (aAuditItem.getDateTime ()) +
            " " +
            aAuditItem.getUserID () +
            " " +

@@ -16,12 +16,11 @@
  */
 package com.helger.photon.basic.longrun;
 
-import javax.annotation.Nonnull;
+import java.time.LocalDateTime;
+
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.joda.time.LocalDateTime;
-
-import com.helger.commons.compare.AbstractPartComparatorComparable;
+import com.helger.commons.compare.PartComparatorComparable;
 
 /**
  * Compare {@link LongRunningJobData} objects by their end date
@@ -29,12 +28,10 @@ import com.helger.commons.compare.AbstractPartComparatorComparable;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class ComparatorLongRunningJobDataEndDate extends
-                                                 AbstractPartComparatorComparable <LongRunningJobData, LocalDateTime>
+public class ComparatorLongRunningJobDataEndDate extends PartComparatorComparable <LongRunningJobData, LocalDateTime>
 {
-  @Override
-  protected LocalDateTime getPart (@Nonnull final LongRunningJobData aData)
+  public ComparatorLongRunningJobDataEndDate ()
   {
-    return aData.getEndDateTime ();
+    super (LongRunningJobData::getEndDateTime);
   }
 }

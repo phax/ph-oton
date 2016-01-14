@@ -16,16 +16,15 @@
  */
 package com.helger.photon.basic.auth.identify;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import org.joda.time.LocalDateTime;
-
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 
 /**
@@ -47,7 +46,7 @@ public final class AuthIdentification implements IAuthIdentification
   public AuthIdentification (@Nullable final IAuthSubject aSubject)
   {
     m_aSubject = aSubject;
-    m_aIdentificationDT = PDTFactory.getCurrentLocalDateTime ();
+    m_aIdentificationDT = LocalDateTime.now ();
   }
 
   @Nullable

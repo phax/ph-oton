@@ -16,11 +16,11 @@
  */
 package com.helger.photon.basic.migration;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -29,7 +29,6 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTFactory;
 
 /**
  * Represents the result of a single system migration.
@@ -120,13 +119,13 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
   @Nonnull
   public static SystemMigrationResult createSuccess (@Nonnull @Nonempty final String sMigrationID)
   {
-    return new SystemMigrationResult (sMigrationID, PDTFactory.getCurrentLocalDateTime (), true, null);
+    return new SystemMigrationResult (sMigrationID, LocalDateTime.now (), true, null);
   }
 
   @Nonnull
   public static SystemMigrationResult createFailure (@Nonnull @Nonempty final String sMigrationID,
                                                      @Nonnull final String sErrorMsg)
   {
-    return new SystemMigrationResult (sMigrationID, PDTFactory.getCurrentLocalDateTime (), false, sErrorMsg);
+    return new SystemMigrationResult (sMigrationID, LocalDateTime.now (), false, sErrorMsg);
   }
 }
