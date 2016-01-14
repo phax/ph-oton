@@ -41,7 +41,7 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   JQUERY_COOKIE ("uicore/jqueryplugins/jquery.cookie.js"),
   JQUERY_HIGHLIGHT ("uicore/jqueryplugins/jquery.highlight.js"),
   JQUERY_HOTKEYS ("uicore/jqueryplugins/jquery.hotkeys.js"),
-  JQUERY_MIGRATE ("uicore/jqueryplugins/jquery-migrate-1.2.1.js"),
+  JQUERY_MIGRATE ("uicore/jqueryplugins/jquery-migrate-1.3.0.js"),
   JQUERY_MOUSEWHEEL ("uicore/jqueryplugins/jquery.mousewheel.js"),
   JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/2.1.2/jquery.placeholder.js", "if lt IE 10"),
   JQUERY_PLACEHOLDER_ALL ("uicore/jqueryplaceholder/jquery.placeholder-all.js", "if lt IE 10"),
