@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.servletstatus;
 
+import java.time.LocalDateTime;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -25,7 +26,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTFactory;
 
 @NotThreadSafe
 public final class ServletStatus
@@ -74,7 +73,7 @@ public final class ServletStatus
                        " for " +
                        m_sClassName);
     m_eCurrentStatus = ValueEnforcer.notNull (eNewStatus, "NewStatus");
-    m_aStatusChangeDates.put (eNewStatus, PDTFactory.getCurrentLocalDateTime ());
+    m_aStatusChangeDates.put (eNewStatus, LocalDateTime.now ());
   }
 
   @Nonnull

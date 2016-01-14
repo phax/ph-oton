@@ -26,7 +26,7 @@ import com.helger.commons.lang.EnumHelper;
 /**
  * This enum contains all the variable constraint types that can be used in API
  * paths.
- * 
+ *
  * @author Philip Helger
  */
 public enum EPathDescriptorVariableConstraintType implements IHasID <String>

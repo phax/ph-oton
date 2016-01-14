@@ -25,7 +25,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.factory.FactoryConstantValue;
 import com.helger.commons.factory.FactoryNewInstance;
 import com.helger.commons.factory.IFactory;
 import com.helger.commons.string.StringHelper;
@@ -56,7 +55,7 @@ public class APIDescriptor implements IAPIDescriptor
    */
   public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final IAPIExecutor aExecutor)
   {
-    this (aPath, FactoryConstantValue.create (aExecutor));
+    this (aPath, () -> aExecutor);
   }
 
   /**

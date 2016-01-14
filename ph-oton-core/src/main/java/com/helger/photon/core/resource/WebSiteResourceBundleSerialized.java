@@ -19,11 +19,11 @@ package com.helger.photon.core.resource;
 import java.io.InputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,6 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.datetime.PDTFactory;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.url.LinkHelper;
@@ -64,7 +63,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
                                           @Nonnull final WebSiteResourceBundle aBundle,
                                           final boolean bRegular)
   {
-    this (sBundleID, aBundle, PDTFactory.getCurrentLocalDateTime ());
+    this (sBundleID, aBundle, LocalDateTime.now ());
     // Always serialize new bundles
     _ensureSerialized (bRegular);
   }

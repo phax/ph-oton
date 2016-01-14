@@ -23,7 +23,6 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTFactory;
 import com.helger.web.scope.IRequestWebScope;
 
 /**
@@ -42,7 +41,7 @@ public final class TrackedRequest
   {
     m_sRequestID = ValueEnforcer.notEmpty (sRequestID, "RequestID");
     m_aRequestScope = ValueEnforcer.notNull (aRequestScope, "RequestScope");
-    m_nStartMillis = PDTFactory.getCurrentMillis ();
+    m_nStartMillis = System.currentTimeMillis ();
   }
 
   @Nonnull
@@ -67,7 +66,7 @@ public final class TrackedRequest
   @Nonnegative
   public long getRunningMilliseconds ()
   {
-    return PDTFactory.getCurrentMillis () - m_nStartMillis;
+    return System.currentTimeMillis () - m_nStartMillis;
   }
 
   @Override

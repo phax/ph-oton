@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>1.4.2</version>
+    <version>1.8.0-SNAPSHOT</version>
     <relativePath />
   </parent>
   <artifactId>ph-oton-parent-pom</artifactId>
@@ -75,63 +75,63 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-commons-parent-pom</artifactId>
-        <version>6.2.3</version>
+        <version>8.0.0-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-datetime-parent-pom</artifactId>
-        <version>4.2.1</version>
+        <version>5.0.0-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-web</artifactId>
-        <version>7.1.0</version>
+        <version>8.0.0-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-masterdata-parent-pom</artifactId>
-        <version>4.1.0</version>
+        <version>5.0.0-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-json</artifactId>
-        <version>2.0.1</version>
+        <version>3.0.0-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-css</artifactId>
-        <version>4.0.1</version>
+        <version>5.0.0-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-smtp</artifactId>
-        <version>2.0.2</version>
+        <version>3.0.0-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-schedule</artifactId>
-        <version>2.1.0</version>
+        <version>3.0.0-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-poi</artifactId>
-        <version>3.0.1</version>
+        <version>4.0.0-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-settings</artifactId>
-        <version>2.0.0</version>
+        <version>3.0.0-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-html-parent-pom</artifactId>
-        <version>5.1.1</version>
+        <version>6.0.0-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -197,11 +197,6 @@
         <version>${project.version}</version>
       </dependency>
 
-      <dependency>
-        <groupId>joda-time</groupId>
-        <artifactId>joda-time</artifactId>
-        <version>2.9.1</version>
-      </dependency>
       <dependency>
         <groupId>xerces</groupId>
         <artifactId>xercesImpl</artifactId>
@@ -298,17 +293,6 @@
         </plugin>
       </plugins>
     </pluginManagement>
-    
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
   
   <modules>

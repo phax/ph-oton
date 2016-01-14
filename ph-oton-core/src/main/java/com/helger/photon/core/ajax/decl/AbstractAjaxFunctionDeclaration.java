@@ -25,7 +25,6 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.factory.FactoryConstantValue;
 import com.helger.commons.factory.FactoryNewInstance;
 import com.helger.commons.factory.IFactory;
 import com.helger.commons.filter.IFilter;
@@ -52,7 +51,7 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
   public AbstractAjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
                                           @Nonnull final IAjaxExecutor aExecutor)
   {
-    this (sFunctionName, FactoryConstantValue.create (aExecutor), (IFilter <IRequestWebScopeWithoutResponse>) null);
+    this (sFunctionName, () -> aExecutor, (IFilter <IRequestWebScopeWithoutResponse>) null);
   }
 
   public AbstractAjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
@@ -135,7 +134,7 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
     if (m_aExecutionFilter == null)
       return true;
 
-    return m_aExecutionFilter.matchesFilter (aRequestScope);
+    return m_aExecutionFilter.test (aRequestScope);
   }
 
   @Override

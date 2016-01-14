@@ -102,9 +102,9 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
     return m_aRequestScope.getAttributeCount ();
   }
 
-  public boolean containsNoAttribute ()
+  public boolean isEmpty ()
   {
-    return m_aRequestScope.containsNoAttribute ();
+    return m_aRequestScope.isEmpty ();
   }
 
   public boolean containsAttribute (@Nullable final String sName)

@@ -16,21 +16,19 @@
  */
 package com.helger.photon.core.form;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.datetime.util.PDTXMLConverter;
 
@@ -79,7 +77,7 @@ public class RequestFieldDate extends RequestField
   }
 
   public RequestFieldDate (@Nonnull @Nonempty final String sFieldName,
-                           @Nullable final DateTime aDefaultValue,
+                           @Nullable final ZonedDateTime aDefaultValue,
                            @Nonnull final Locale aDisplayLocale)
   {
     this (sFieldName, PDTToString.getAsString (aDefaultValue, aDisplayLocale), aDisplayLocale);
@@ -125,20 +123,20 @@ public class RequestFieldDate extends RequestField
   public static RequestFieldDate createLocalDateNow (@Nonnull @Nonempty final String sFieldName,
                                                      @Nonnull final Locale aDisplayLocale)
   {
-    return new RequestFieldDate (sFieldName, PDTFactory.getCurrentLocalDate (), aDisplayLocale);
+    return new RequestFieldDate (sFieldName, LocalDate.now (), aDisplayLocale);
   }
 
   @Nonnull
   public static RequestFieldDate createLocalDateTimeNow (@Nonnull @Nonempty final String sFieldName,
                                                          @Nonnull final Locale aDisplayLocale)
   {
-    return new RequestFieldDate (sFieldName, PDTFactory.getCurrentLocalDateTime (), aDisplayLocale);
+    return new RequestFieldDate (sFieldName, LocalDateTime.now (), aDisplayLocale);
   }
 
   @Nonnull
   public static RequestFieldDate createDateTimeNow (@Nonnull @Nonempty final String sFieldName,
                                                     @Nonnull final Locale aDisplayLocale)
   {
-    return new RequestFieldDate (sFieldName, PDTFactory.getCurrentDateTime (), aDisplayLocale);
+    return new RequestFieldDate (sFieldName, ZonedDateTime.now (), aDisplayLocale);
   }
 }

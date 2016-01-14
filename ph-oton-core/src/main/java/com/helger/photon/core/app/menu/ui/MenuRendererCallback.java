@@ -55,9 +55,9 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
   private final NonBlockingStack <T> m_aMenuListStack;
   private final IMenuItemRenderer <T> m_aRenderer;
   private final Map <String, Boolean> m_aDisplayMenuItemIDs;
-  private final NonBlockingStack <HCLI> m_aMenuItemStack = new NonBlockingStack <HCLI> ();
-  private final NonBlockingStack <AtomicInteger> m_aChildCountStack = new NonBlockingStack <AtomicInteger> ();
-  private final NonBlockingStack <DefaultTreeItemWithID <String, IMenuObject>> m_aTreeItemStack = new NonBlockingStack <DefaultTreeItemWithID <String, IMenuObject>> ();
+  private final NonBlockingStack <HCLI> m_aMenuItemStack = new NonBlockingStack <> ();
+  private final NonBlockingStack <AtomicInteger> m_aChildCountStack = new NonBlockingStack <> ();
+  private final NonBlockingStack <DefaultTreeItemWithID <String, IMenuObject>> m_aTreeItemStack = new NonBlockingStack <> ();
   private final String m_sSelectedItem;
 
   protected MenuRendererCallback (@Nonnull final ILayoutExecutionContext aLEC,
@@ -93,7 +93,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
       if (m_aDisplayMenuItemIDs.containsKey (aChildItem.getID ()))
       {
         // add sub menu structure at the right place
-        final T aNewLevel = m_aFactory.create ();
+        final T aNewLevel = m_aFactory.get ();
         m_aRenderer.onLevelDown (aNewLevel);
         m_aMenuListStack.push (m_aMenuItemStack.peek ().addAndReturnChild (aNewLevel));
         break;
@@ -325,8 +325,8 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
   {
     ValueEnforcer.notNull (aFactory, "Factory");
 
-    final NonBlockingStack <T> aNodeStack = new NonBlockingStack <T> ();
-    aNodeStack.push (aFactory.create ());
+    final NonBlockingStack <T> aNodeStack = new NonBlockingStack <> ();
+    aNodeStack.push (aFactory.get ());
     TreeVisitor.visitTreeItem (aStartTreeItem,
                                new MenuRendererCallback <T> (aLEC,
                                                              aFactory,

@@ -95,7 +95,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
     }
 
     // Create the executor itself
-    final IAjaxExecutor aAjaxExecutor = aAjaxDeclaration.getExecutorFactory ().create ();
+    final IAjaxExecutor aAjaxExecutor = aAjaxDeclaration.getExecutorFactory ().get ();
     if (aAjaxExecutor == null)
     {
       s_aLogger.warn ("No AjaxExecutor created for action " + aAjaxDeclaration);

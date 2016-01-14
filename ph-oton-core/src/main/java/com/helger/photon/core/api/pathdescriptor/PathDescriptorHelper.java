@@ -38,7 +38,7 @@ public final class PathDescriptorHelper
 
   /**
    * Clean the provided path and split it into parts.
-   * 
+   *
    * @param sPath
    *        Source path
    * @return The list with all path parts. Never <code>null</code>.

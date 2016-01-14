@@ -18,13 +18,13 @@ package com.helger.photon.core.servlet;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.servlet.http.HttpServletResponse;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,7 +123,7 @@ public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServle
       final long nLastModified = aFile.lastModified ();
       if (nLastModified > 0)
       {
-        return PDTFactory.createLocalDateTimeFromMillis (getUnifiedMillis (nLastModified));
+        return PDTFactory.createLocalDateTime (getUnifiedMillis (nLastModified));
       }
     }
     return null;

@@ -17,12 +17,11 @@
 package com.helger.photon.core.form;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
-
-import org.joda.time.LocalDateTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -31,7 +30,6 @@ import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ITypedObject;
 import com.helger.commons.type.ObjectType;
-import com.helger.datetime.PDTFactory;
 import com.helger.json.JsonObject;
 
 @Immutable
@@ -53,7 +51,7 @@ public class FormState implements ITypedObject <String>, Serializable
     ValueEnforcer.notNull (aAttrs, "Attrs");
 
     m_sPageID = sPageID;
-    m_aDT = PDTFactory.getCurrentLocalDateTime ();
+    m_aDT = LocalDateTime.now ();
     m_sFlowID = sFlowID;
     m_aAttrs = aAttrs;
   }

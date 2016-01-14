@@ -17,6 +17,7 @@
 package com.helger.photon.core.servlet;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +31,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -143,7 +143,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   protected static final LocalDateTime convertMillisToDateTimeGMT (final long nMillis)
   {
     // Round down to the nearest second for a proper compare
-    return PDTFactory.createLocalDateTimeFromMillis (getUnifiedMillis (nMillis));
+    return PDTFactory.createLocalDateTime (getUnifiedMillis (nMillis));
   }
 
   @Override

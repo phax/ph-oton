@@ -18,6 +18,8 @@ package com.helger.photon.core.app.error;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.time.Clock;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -494,7 +496,7 @@ public final class InternalErrorHandler
     // Date and time
     try
     {
-      aMetadata.addField ("Time", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentDateTime ()));
+      aMetadata.addField ("Time", PDTWebDateHelper.getAsStringXSD (ZonedDateTime.now (Clock.systemUTC ())));
     }
     catch (final Throwable t2)
     {

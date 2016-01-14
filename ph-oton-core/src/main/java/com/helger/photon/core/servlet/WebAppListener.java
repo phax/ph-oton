@@ -18,6 +18,7 @@ package com.helger.photon.core.servlet;
 
 import java.io.File;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -455,7 +455,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       throw new IllegalStateException ("WebAppListener was already instantiated!");
 
     final StopWatch aSW = StopWatch.createdStarted ();
-    m_aInitializationStartDT = PDTFactory.getCurrentLocalDateTime ();
+    m_aInitializationStartDT = LocalDateTime.now ();
 
     // set global debug/trace mode
     final boolean bDebugMode = StringParser.parseBool (getInitParameterDebug (aSC));
@@ -505,7 +505,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     afterContextInitialized (aSC);
 
     // Remember end time
-    m_aInitializationEndDT = PDTFactory.getCurrentLocalDateTime ();
+    m_aInitializationEndDT = LocalDateTime.now ();
 
     // Finally
     if (s_aLogger.isInfoEnabled ())
@@ -596,8 +596,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
       final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
       aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
-      aDoc.getDocumentElement ().setAttribute ("datetime",
-                                               PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentDateTime ()));
+      aDoc.getDocumentElement ().setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (LocalDateTime.now ()));
       SimpleFileIO.writeFile (aDestPath, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
     }
     catch (final Throwable t)

@@ -155,7 +155,7 @@ public final class InvokableAPIDescriptor
   public void invokeAPI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                          @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
-    final IAPIExecutor aExecutor = m_aDescriptor.getExecutorFactory ().create ();
+    final IAPIExecutor aExecutor = m_aDescriptor.getExecutorFactory ().get ();
     if (aExecutor == null)
       throw new IllegalStateException ("Failed to created API executor for: " + toString ());
 
