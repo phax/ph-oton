@@ -17,59 +17,46 @@
 package com.helger.photon.uictrls.datatables.comparator;
 
 import java.util.Locale;
+import java.util.function.Function;
+import java.util.function.ToIntFunction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.compare.CompareHelper;
-import com.helger.commons.format.IFormatter;
+import com.helger.commons.compare.IntComparator;
 import com.helger.commons.locale.LocaleParser;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.string.StringHelper;
 
-public class ComparatorDTInteger extends AbstractComparatorDT
+public class ComparatorDTInteger extends IntComparator <String> implements IComparatorDT
 {
-  protected final Locale m_aParseLocale;
+  @Nonnull
+  protected static ToIntFunction <String> createPartExtractor (@Nullable final Function <? super String, String> aFormatter,
+                                                               @Nonnull final ToIntFunction <String> aExtractor)
+  {
+    if (aFormatter == null)
+      return sCell -> aExtractor.applyAsInt (StringHelper.getNotNull (sCell));
+
+    return sCell -> aExtractor.applyAsInt (sCell == null ? "" : aFormatter.apply (sCell));
+  }
 
   public ComparatorDTInteger (@Nonnull final Locale aParseLocale)
   {
     this (null, aParseLocale);
   }
 
-  public ComparatorDTInteger (@Nullable final IFormatter aFormatter, @Nonnull final Locale aParseLocale)
+  public ComparatorDTInteger (@Nullable final Function <? super String, String> aFormatter,
+                              @Nonnull final Locale aParseLocale)
   {
-    super (aFormatter);
-    m_aParseLocale = ValueEnforcer.notNull (aParseLocale, "ParseLocale");
-  }
-
-  @Nonnull
-  public final Locale getParseLocale ()
-  {
-    return m_aParseLocale;
-  }
-
-  @OverrideOnDemand
-  protected int getAsInt (@Nonnull final String sCellText)
-  {
-    // Ensure that columns without text are sorted consistently compared to the
-    // ones with non-numeric content
-    if (sCellText.isEmpty ())
-      return Integer.MIN_VALUE;
-    return LocaleParser.parseInt (sCellText, m_aParseLocale, 0);
-  }
-
-  @Override
-  protected final int internalCompare (@Nonnull final String sText1, @Nonnull final String sText2)
-  {
-    final int n1 = getAsInt (sText1);
-    final int n2 = getAsInt (sText2);
-    return CompareHelper.compare (n1, n2);
-  }
-
-  @Override
-  public String toString ()
-  {
-    return ToStringGenerator.getDerived (super.toString ()).append ("parseLocale", m_aParseLocale).toString ();
+    super (createPartExtractor (aFormatter, sCellText -> {
+      /*
+       * Ensure that columns without text are sorted consistently compared to
+       * the ones with non-numeric content
+       */
+      if (sCellText.isEmpty ())
+        return Integer.MIN_VALUE;
+      return LocaleParser.parseInt (sCellText, aParseLocale, 0);
+    }));
+    ValueEnforcer.notNull (aParseLocale, "ParseLocale");
   }
 }

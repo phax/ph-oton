@@ -18,66 +18,40 @@ package com.helger.photon.uictrls.datatables.comparator;
 
 import java.math.BigDecimal;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.format.IFormatter;
 import com.helger.commons.locale.LocaleParser;
-import com.helger.commons.string.ToStringGenerator;
 
 /**
- * This comparator is responsible for sorting cells by BigDecimal
+ * This comparator is responsible for sorting cells by {@link BigDecimal}
  *
  * @author Philip Helger
  */
-public class ComparatorDTBigDecimal extends AbstractComparatorDT
+public class ComparatorDTBigDecimal extends AbstractComparatorDT <BigDecimal>
 {
   protected static final BigDecimal DEFAULT_VALUE = BigDecimal.ZERO;
-
-  private final Locale m_aParseLocale;
 
   public ComparatorDTBigDecimal (@Nonnull final Locale aParseLocale)
   {
     this (null, aParseLocale);
   }
 
-  public ComparatorDTBigDecimal (@Nullable final IFormatter aFormatter, @Nonnull final Locale aParseLocale)
+  public ComparatorDTBigDecimal (@Nullable final Function <? super String, String> aFormatter,
+                                 @Nonnull final Locale aParseLocale)
   {
-    super (aFormatter);
-    m_aParseLocale = ValueEnforcer.notNull (aParseLocale, "ParseLocale");
-  }
-
-  @Nonnull
-  public final Locale getParseLocale ()
-  {
-    return m_aParseLocale;
-  }
-
-  @OverrideOnDemand
-  @Nonnull
-  protected BigDecimal getAsBigDecimal (@Nonnull final String sCellText)
-  {
-    // Ensure that columns without text are sorted consistently compared to the
-    // ones with non-numeric content
-    if (sCellText.isEmpty ())
-      return DEFAULT_VALUE;
-    return LocaleParser.parseBigDecimal (sCellText, m_aParseLocale, DEFAULT_VALUE);
-  }
-
-  @Override
-  protected int internalCompare (@Nonnull final String sText1, @Nonnull final String sText2)
-  {
-    final BigDecimal aBD1 = getAsBigDecimal (sText1);
-    final BigDecimal aBD2 = getAsBigDecimal (sText2);
-    return aBD1.compareTo (aBD2);
-  }
-
-  @Override
-  public String toString ()
-  {
-    return ToStringGenerator.getDerived (super.toString ()).append ("parseLocale", m_aParseLocale).toString ();
+    super (aFormatter, sCellText -> {
+      /*
+       * Ensure that columns without text are sorted consistently compared to
+       * the ones with non-numeric content
+       */
+      if (sCellText.isEmpty ())
+        return DEFAULT_VALUE;
+      return LocaleParser.parseBigDecimal (sCellText, aParseLocale, DEFAULT_VALUE);
+    });
+    ValueEnforcer.notNull (aParseLocale, "ParseLocale");
   }
 }

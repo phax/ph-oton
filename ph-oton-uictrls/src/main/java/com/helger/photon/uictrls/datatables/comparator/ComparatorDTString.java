@@ -16,46 +16,27 @@
  */
 package com.helger.photon.uictrls.datatables.comparator;
 
-import java.text.Collator;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.compare.CollatorHelper;
-import com.helger.commons.format.IFormatter;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.compare.CollatingPartComparator;
+import com.helger.commons.string.StringHelper;
 
-public class ComparatorDTString extends AbstractComparatorDT
+public class ComparatorDTString extends CollatingPartComparator <String> implements IComparatorDT
 {
-  private final Collator m_aCollator;
-
   public ComparatorDTString (@Nonnull final Locale aDisplayLocale)
   {
     this (null, aDisplayLocale);
   }
 
-  public ComparatorDTString (@Nullable final IFormatter aFormatter, @Nonnull final Locale aDisplayLocale)
+  public ComparatorDTString (@Nullable final Function <? super String, String> aFormatter,
+                             @Nonnull final Locale aDisplayLocale)
   {
-    super (aFormatter);
-    m_aCollator = CollatorHelper.getCollatorSpaceBeforeDot (aDisplayLocale);
-  }
-
-  @Nonnull
-  public final Collator getCollator ()
-  {
-    return m_aCollator;
-  }
-
-  @Override
-  protected final int internalCompare (@Nonnull final String sText1, @Nonnull final String sText2)
-  {
-    return m_aCollator.compare (sText1, sText2);
-  }
-
-  @Override
-  public String toString ()
-  {
-    return ToStringGenerator.getDerived (super.toString ()).append ("collator", m_aCollator).toString ();
+    super (aDisplayLocale,
+           aFormatter == null ? sCell -> StringHelper.getNotNull (sCell)
+                              : sCell -> sCell == null ? "" : aFormatter.apply (sCell));
   }
 }

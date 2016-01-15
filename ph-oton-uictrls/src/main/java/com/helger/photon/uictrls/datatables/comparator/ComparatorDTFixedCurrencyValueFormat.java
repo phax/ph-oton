@@ -17,12 +17,10 @@
 package com.helger.photon.uictrls.datatables.comparator;
 
 import java.math.BigDecimal;
-import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.string.ToStringGenerator;
 import com.helger.masterdata.currency.ECurrency;
 
 /**
@@ -31,32 +29,21 @@ import com.helger.masterdata.currency.ECurrency;
  *
  * @author Philip Helger
  */
-public class ComparatorDTFixedCurrencyValueFormat extends ComparatorDTBigDecimal
+public class ComparatorDTFixedCurrencyValueFormat extends AbstractComparatorDT <BigDecimal>
 {
-  private final ECurrency m_eCurrency;
+  protected static final BigDecimal DEFAULT_VALUE = BigDecimal.ZERO;
 
-  public ComparatorDTFixedCurrencyValueFormat (@Nonnull final Locale aLocale, @Nonnull final ECurrency eCurrency)
+  public ComparatorDTFixedCurrencyValueFormat (@Nonnull final ECurrency eCurrency)
   {
-    super (aLocale);
-    m_eCurrency = ValueEnforcer.notNull (eCurrency, "Currency");
-  }
-
-  @Nonnull
-  public final ECurrency getCurrency ()
-  {
-    return m_eCurrency;
-  }
-
-  @Override
-  @Nonnull
-  protected BigDecimal getAsBigDecimal (@Nonnull final String sCellText)
-  {
-    return m_eCurrency.parseValueFormat (sCellText, DEFAULT_VALUE);
-  }
-
-  @Override
-  public String toString ()
-  {
-    return ToStringGenerator.getDerived (super.toString ()).append ("currency", m_eCurrency).toString ();
+    super (null, sCellText -> {
+      /*
+       * Ensure that columns without text are sorted consistently compared to
+       * the ones with non-numeric content
+       */
+      if (sCellText.isEmpty ())
+        return DEFAULT_VALUE;
+      return eCurrency.parseValueFormat (sCellText, DEFAULT_VALUE);
+    });
+    ValueEnforcer.notNull (eCurrency, "Currency");
   }
 }

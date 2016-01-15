@@ -16,15 +16,10 @@
  */
 package com.helger.photon.uictrls.datatables.comparator;
 
-import java.util.Locale;
+import java.util.function.Function;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.format.IFormatter;
-import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.version.Version;
 
 /**
@@ -32,45 +27,15 @@ import com.helger.commons.version.Version;
  *
  * @author Philip Helger
  */
-public class ComparatorDTVersion extends AbstractComparatorDT
+public class ComparatorDTVersion extends AbstractComparatorDT <Version>
 {
-  protected final Locale m_aParseLocale;
-
-  public ComparatorDTVersion (@Nonnull final Locale aParseLocale)
+  public ComparatorDTVersion ()
   {
-    this (null, aParseLocale);
+    this (null);
   }
 
-  public ComparatorDTVersion (@Nullable final IFormatter aFormatter, @Nonnull final Locale aParseLocale)
+  public ComparatorDTVersion (@Nullable final Function <? super String, String> aFormatter)
   {
-    super (aFormatter);
-    m_aParseLocale = ValueEnforcer.notNull (aParseLocale, "ParseLocale");
-  }
-
-  @Nonnull
-  public final Locale getParseLocale ()
-  {
-    return m_aParseLocale;
-  }
-
-  @OverrideOnDemand
-  @Nonnull
-  protected Version getAsVersion (@Nonnull final String sCellText)
-  {
-    return new Version (sCellText);
-  }
-
-  @Override
-  protected final int internalCompare (@Nonnull final String sText1, @Nonnull final String sText2)
-  {
-    final Version aVer1 = getAsVersion (sText1);
-    final Version aVer2 = getAsVersion (sText2);
-    return aVer1.compareTo (aVer2);
-  }
-
-  @Override
-  public String toString ()
-  {
-    return ToStringGenerator.getDerived (super.toString ()).append ("parseLocale", m_aParseLocale).toString ();
+    super (aFormatter, sCellText -> new Version (sCellText));
   }
 }

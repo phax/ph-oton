@@ -16,68 +16,37 @@
  */
 package com.helger.photon.uictrls.datatables.comparator;
 
+import java.util.function.Function;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.compare.AbstractComparator;
-import com.helger.commons.format.IFormatter;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.compare.PartComparatorComparable;
+import com.helger.commons.string.StringHelper;
 
 /**
  * Base class for all table comparators
  *
  * @author Philip Helger
+ * @param <PARTTYPE>
+ *        The part type that is extracted from the cell text and compared
  */
-public abstract class AbstractComparatorDT extends AbstractComparator <String>
+public abstract class AbstractComparatorDT <PARTTYPE extends Comparable <? super PARTTYPE>>
+                                           extends PartComparatorComparable <String, PARTTYPE> implements IComparatorDT
 {
-  private final IFormatter m_aFormatter;
-
-  public AbstractComparatorDT ()
-  {
-    this (null);
-  }
-
-  public AbstractComparatorDT (@Nullable final IFormatter aFormatter)
-  {
-    super ();
-    m_aFormatter = aFormatter;
-  }
-
-  @Nullable
-  public final IFormatter getFormatter ()
-  {
-    return m_aFormatter;
-  }
-
-  /**
-   * Get the formatted text of the passed text
-   *
-   * @param sCell
-   *        Original cell text
-   * @return Never <code>null</code>.
-   */
-  @OverrideOnDemand
   @Nonnull
-  protected String getFormattedText (@Nullable final String sCell)
+  protected static <PARTTYPE extends Comparable <? super PARTTYPE>> Function <String, PARTTYPE> createPartExtractor (@Nullable final Function <? super String, String> aFormatter,
+                                                                                                                     @Nonnull final Function <String, PARTTYPE> aExtractor)
   {
-    return sCell == null ? "" : m_aFormatter == null ? sCell : m_aFormatter.getFormattedValue (sCell);
+    if (aFormatter == null)
+      return sCell -> aExtractor.apply (StringHelper.getNotNull (sCell));
+
+    return sCell -> aExtractor.apply (sCell == null ? "" : aFormatter.apply (sCell));
   }
 
-  protected abstract int internalCompare (@Nonnull final String sText1, @Nonnull final String sText2);
-
-  @Override
-  protected final int mainCompare (@Nullable final String sCellText1, @Nullable final String sCellText2)
+  public AbstractComparatorDT (@Nullable final Function <? super String, String> aFormatter,
+                               @Nonnull final Function <String, PARTTYPE> aExtractor)
   {
-    final String sText1 = getFormattedText (sCellText1);
-    final String sText2 = getFormattedText (sCellText2);
-
-    return internalCompare (sText1, sText2);
-  }
-
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).appendIfNotNull ("formatter", m_aFormatter).toString ();
+    super (createPartExtractor (aFormatter, aExtractor));
   }
 }

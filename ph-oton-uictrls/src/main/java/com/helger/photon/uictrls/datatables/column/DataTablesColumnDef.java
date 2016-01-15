@@ -38,7 +38,7 @@ import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.photon.uictrls.datatables.EDataTablesOrderDirectionType;
-import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
+import com.helger.photon.uictrls.datatables.comparator.IComparatorDT;
 
 /**
  * Contains all data for a single DataTables column
@@ -95,7 +95,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   private String m_sWidth;
 
   /** Server side comparator */
-  private AbstractComparatorDT m_aServerComparator;
+  private IComparatorDT m_aServerComparator;
 
   public DataTablesColumnDef (@Nonnegative final int nTarget)
   {
@@ -459,13 +459,13 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   }
 
   @Nullable
-  public AbstractComparatorDT getServerComparator ()
+  public IComparatorDT getServerComparator ()
   {
     return m_aServerComparator;
   }
 
   @Nonnull
-  public DataTablesColumnDef setServerComparator (@Nullable final AbstractComparatorDT aServerComparator)
+  public DataTablesColumnDef setServerComparator (@Nullable final IComparatorDT aServerComparator)
   {
     m_aServerComparator = aServerComparator;
     return this;

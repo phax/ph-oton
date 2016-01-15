@@ -33,14 +33,14 @@ import com.helger.html.hc.impl.HCTextNode;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.AbstractComparatorDT;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigDecimal;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigInteger;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDate;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDateTime;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTFixedCurrencyFormat;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTLocalDateTime;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTString;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTTime;
+import com.helger.photon.uictrls.datatables.comparator.IComparatorDT;
 
 /**
  * Specialized column for DataTables to be used in IHCTable implementation
@@ -58,7 +58,7 @@ public class DTCol extends AbstractHCCol <DTCol>
   private boolean m_bVisible = DataTablesColumnDef.DEFAULT_VISIBLE;
   private String m_sName;
   private int [] m_aDataSort;
-  private AbstractComparatorDT m_aComparator;
+  private IComparatorDT m_aComparator;
 
   public DTCol ()
   {
@@ -94,7 +94,7 @@ public class DTCol extends AbstractHCCol <DTCol>
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         break;
       case DATETIME:
-        setComparator (new ComparatorDTDateTime (aDisplayLocale));
+        setComparator (new ComparatorDTLocalDateTime (aDisplayLocale));
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         break;
       case DOUBLE:
@@ -130,7 +130,7 @@ public class DTCol extends AbstractHCCol <DTCol>
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     ValueEnforcer.notNull (eCurrency, "Currency");
 
-    setComparator (new ComparatorDTFixedCurrencyFormat (aDisplayLocale, eCurrency));
+    setComparator (new ComparatorDTFixedCurrencyFormat (eCurrency));
     addClass (CUICoreCSS.CSS_CLASS_RIGHT);
     return this;
   }
@@ -237,13 +237,13 @@ public class DTCol extends AbstractHCCol <DTCol>
   }
 
   @Nullable
-  public AbstractComparatorDT getComparator ()
+  public IComparatorDT getComparator ()
   {
     return m_aComparator;
   }
 
   @Nonnull
-  public DTCol setComparator (@Nullable final AbstractComparatorDT aComparator)
+  public DTCol setComparator (@Nullable final IComparatorDT aComparator)
   {
     m_aComparator = aComparator;
     return this;

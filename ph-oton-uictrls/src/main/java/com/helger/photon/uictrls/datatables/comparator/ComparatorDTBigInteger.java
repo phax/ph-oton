@@ -16,36 +16,44 @@
  */
 package com.helger.photon.uictrls.datatables.comparator;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.format.IFormatter;
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.locale.LocaleParser;
 
 /**
- * This comparator is responsible for sorting cells by BigInteger
+ * This comparator is responsible for sorting cells by {@link BigInteger}
  *
  * @author Philip Helger
  */
-public class ComparatorDTBigInteger extends ComparatorDTBigDecimal
+public class ComparatorDTBigInteger extends AbstractComparatorDT <BigInteger>
 {
+  protected static final BigInteger DEFAULT_VALUE = BigInteger.ZERO;
+  protected static final BigDecimal DEFAULT_VALUE_DECIMAL = BigDecimal.ZERO;
+
   public ComparatorDTBigInteger (@Nonnull final Locale aParseLocale)
   {
     this (null, aParseLocale);
   }
 
-  public ComparatorDTBigInteger (@Nullable final IFormatter aFormatter, @Nonnull final Locale aParseLocale)
+  public ComparatorDTBigInteger (@Nullable final Function <? super String, String> aFormatter,
+                                 @Nonnull final Locale aParseLocale)
   {
-    super (aFormatter, aParseLocale);
-  }
-
-  @Override
-  protected final int internalCompare (@Nonnull final String sText1, @Nonnull final String sText2)
-  {
-    final BigInteger aBI1 = getAsBigDecimal (sText1).toBigIntegerExact ();
-    final BigInteger aBI2 = getAsBigDecimal (sText2).toBigIntegerExact ();
-    return aBI1.compareTo (aBI2);
+    super (aFormatter, sCellText -> {
+      /*
+       * Ensure that columns without text are sorted consistently compared to
+       * the ones with non-numeric content
+       */
+      if (sCellText.isEmpty ())
+        return DEFAULT_VALUE;
+      return LocaleParser.parseBigDecimal (sCellText, aParseLocale, DEFAULT_VALUE_DECIMAL).toBigIntegerExact ();
+    });
+    ValueEnforcer.notNull (aParseLocale, "ParseLocale");
   }
 }

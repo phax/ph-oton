@@ -34,6 +34,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.json.IHasJson;
+import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 
@@ -123,7 +124,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   @ReturnsMutableCopy
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  public JsonObject getAsJson ()
+  public IJsonObject getAsJson ()
   {
     return new JsonObject ().add (JSON_VALUE, m_sValue).add (JSON_TOKENS, new JsonArray ().addAll (m_aTokens));
   }

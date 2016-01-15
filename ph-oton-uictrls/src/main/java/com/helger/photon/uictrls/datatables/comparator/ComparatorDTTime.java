@@ -17,22 +17,22 @@
 package com.helger.photon.uictrls.datatables.comparator;
 
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
-import com.helger.commons.format.IFormatter;
-import com.helger.datetime.format.SerializableDateTimeFormatter;
-import com.helger.datetime.format.SerializableDateTimeFormatter.EFormatStyle;
+import com.helger.datetime.format.PDTFormatter;
 
-public class ComparatorDTTime extends ComparatorDTDateTime
+public class ComparatorDTTime extends ComparatorDTLocalDateTime
 {
   public ComparatorDTTime (@Nullable final Locale aParseLocale)
   {
     this (null, aParseLocale);
   }
 
-  public ComparatorDTTime (@Nullable final IFormatter aFormatter, @Nullable final Locale aParseLocale)
+  public ComparatorDTTime (@Nullable final Function <? super String, String> aFormatter,
+                           @Nullable final Locale aParseLocale)
   {
-    super (aFormatter, SerializableDateTimeFormatter.createForTime (EFormatStyle.DEFAULT, aParseLocale));
+    super (aFormatter, PDTFormatter.getDefaultFormatterDate (aParseLocale));
   }
 }
