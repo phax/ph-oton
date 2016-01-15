@@ -424,11 +424,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                  @Nonnull final FormErrors aFormErrors,
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
+    final boolean bEdit = eFormAction.isEdit ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final boolean bIsAdministrator = aSelectedObject != null && aSelectedObject.isAdministrator ();
+    final boolean bIsAdministrator = bEdit && aSelectedObject != null && aSelectedObject.isAdministrator ();
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
-    final boolean bEdit = eFormAction.isEdit ();
 
     String sLoginName = aWPEC.getAttributeAsString (FIELD_LOGINNAME);
     final String sFirstName = aWPEC.getAttributeAsString (FIELD_FIRSTNAME);
@@ -577,14 +577,15 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                 @Nonnull final EWebPageFormAction eFormAction,
                                 @Nonnull final FormErrors aFormErrors)
   {
-    final boolean bIsAdministrator = aSelectedObject != null && aSelectedObject.isAdministrator ();
+    final boolean bEdit = eFormAction.isEdit ();
+    final boolean bIsAdministrator = bEdit && aSelectedObject != null && aSelectedObject.isAdministrator ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
-    aForm.addChild (createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                         SecurityHelper.getUserDisplayName (aSelectedObject,
-                                                                                                                                            aDisplayLocale))
-                                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
+    aForm.addChild (createActionHeader (bEdit ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                         SecurityHelper.getUserDisplayName (aSelectedObject,
+                                                                                                                            aDisplayLocale))
+                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
     if (!useEmailAddressAsLoginName ())
     {
       final String sLoginName = EText.LABEL_LOGINNAME.getDisplayText (aDisplayLocale);
@@ -627,7 +628,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_EMAILADDRESS)));
     }
 
-    if (!eFormAction.isEdit ())
+    if (!bEdit)
     {
       // Password is only shown on creation of a new user
       final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
@@ -686,7 +687,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       if (bIsAdministrator)
       {
         // Cannot edit user groups of administrator
-        aSelect.setReadOnly (true);
+        aSelect.setDisabled (true);
       }
       showInputFormModifyUserGroupSelect (aSelect);
     }

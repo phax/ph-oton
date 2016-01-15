@@ -64,7 +64,7 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext>
     MSG_ID ("ID", "ID"),
     MSG_NAME ("Name", "Name"),
     MSG_SHORTNAME ("Kurzer Name", "Short name"),
-    MSG_OFFSET ("Abweichung", "Offset"),
+    MSG_OFFSET ("Aktuelle Abweichung", "Current offset"),
     MSG_FIXED ("Konstant?", "Fixed?");
 
     private final IMultilingualText m_aTP;

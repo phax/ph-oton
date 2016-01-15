@@ -77,7 +77,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     HEADER_NAME ("Name", "Name"),
     HEADER_IN_USE ("Verwendet?", "In use?"),
     HEADER_VALUE ("Wert", "Value"),
-    HEADER_DETAILS ("Details von Rolle {0}", "Details of role {0}"),
+    HEADER_DETAILS ("Details von Rolle ''{0}''", "Details of role ''{0}''"),
     LABEL_NAME ("Name", "Name"),
     LABEL_DESCRIPTION ("Beschreibung", "Description"),
     LABEL_USERGROUPS_0 ("Benutzergruppen", "User groups"),
