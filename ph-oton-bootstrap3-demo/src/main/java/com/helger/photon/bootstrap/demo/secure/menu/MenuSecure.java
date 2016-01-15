@@ -56,7 +56,7 @@ public final class MenuSecure
     // Saved states
     final AbstractMenuObjectFilter aFilterSavedStates = new AbstractMenuObjectFilter ()
     {
-      public boolean matchesFilter (final IMenuObject aValue)
+      public boolean test (final IMenuObject aValue)
       {
         // Show always after a form state was once stored
         return FormStateManager.getInstance ().containedOnceAFormState ();
