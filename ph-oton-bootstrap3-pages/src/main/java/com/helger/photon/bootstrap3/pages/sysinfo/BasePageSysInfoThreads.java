@@ -34,7 +34,6 @@ import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.thread.ComparatorThreadID;
-import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.tabular.HCRow;
@@ -46,6 +45,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.photon.uictrls.datatables.column.EDTColType;
 
 /**
  * Page with all threads
@@ -155,12 +155,12 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext>
                                                                                      Integer.valueOf (aThreads.size ()),
                                                                                      PDTToString.getAsString (LocalDateTime.now (),
                                                                                                               aDisplayLocale))));
-    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                  aDisplayLocale)
                                                                                                 .setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_GROUP.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_PRIORITY.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                        new DTCol (EText.MSG_PRIORITY.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                        aDisplayLocale),
                                         new DTCol (EText.MSG_STATE.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_STACKTRACE.getDisplayText (aDisplayLocale)).setOrderable (false)).setID (getID ());

@@ -38,7 +38,6 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
@@ -69,6 +68,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.photon.uictrls.datatables.column.EDTColType;
 import com.helger.smtp.data.IEmailAttachment;
 import com.helger.smtp.data.IEmailAttachmentList;
 import com.helger.smtp.data.IEmailData;
@@ -480,7 +480,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     aNodeList.addChild (aToolbar);
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.DESCENDING),
-                                        new DTCol (EText.MSG_ERROR_DT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                        new DTCol (EText.MSG_ERROR_DT.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,
                                                                                                                        aDisplayLocale),
                                         new DTCol (EText.MSG_SMTP_SETTINGS.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_SUBJECT.getDisplayText (aDisplayLocale)),

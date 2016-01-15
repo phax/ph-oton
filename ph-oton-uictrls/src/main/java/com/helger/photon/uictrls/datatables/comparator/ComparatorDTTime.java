@@ -16,14 +16,19 @@
  */
 package com.helger.photon.uictrls.datatables.comparator;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.function.Function;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.datetime.format.PDTFormatter;
+import com.helger.datetime.format.PDTFromString;
 
-public class ComparatorDTTime extends ComparatorDTLocalDateTime
+public class ComparatorDTTime extends AbstractComparatorDT <LocalTime>
 {
   public ComparatorDTTime (@Nullable final Locale aParseLocale)
   {
@@ -33,6 +38,18 @@ public class ComparatorDTTime extends ComparatorDTLocalDateTime
   public ComparatorDTTime (@Nullable final Function <? super String, String> aFormatter,
                            @Nullable final Locale aParseLocale)
   {
-    super (aFormatter, PDTFormatter.getDefaultFormatterTime (aParseLocale));
+    this (aFormatter, PDTFormatter.getDefaultFormatterTime (aParseLocale));
+  }
+
+  public ComparatorDTTime (@Nonnull final DateTimeFormatter aDTFormatter)
+  {
+    this (null, aDTFormatter);
+  }
+
+  public ComparatorDTTime (@Nullable final Function <? super String, String> aFormatter,
+                           @Nonnull final DateTimeFormatter aDTFormatter)
+  {
+    super (aFormatter, sCellText -> PDTFromString.getLocalTimeFromString (sCellText, aDTFormatter));
+    ValueEnforcer.notNull (aDTFormatter, "DTFormatter");
   }
 }

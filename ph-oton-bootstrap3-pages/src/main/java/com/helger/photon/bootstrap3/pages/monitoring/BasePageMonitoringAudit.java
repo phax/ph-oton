@@ -30,7 +30,6 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCRow;
@@ -48,6 +47,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.photon.uictrls.datatables.column.EDTColType;
 
 /**
  * Show audit items.
@@ -157,7 +157,7 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
     if (nMaxItems <= 0)
       nMaxItems = DEFAULT_MAX_ITEMS;
 
-    final HCTable aTable = new HCTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,
                                                                                                                    aDisplayLocale)
                                                                                                   .setInitialSorting (ESortOrder.DESCENDING),
                                         new DTCol (EText.MSG_USER.getDisplayText (aDisplayLocale)),

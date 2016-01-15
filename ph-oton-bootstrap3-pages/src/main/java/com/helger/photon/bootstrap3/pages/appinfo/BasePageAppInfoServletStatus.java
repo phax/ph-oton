@@ -29,7 +29,6 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -46,6 +45,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.photon.uictrls.datatables.column.EDTColType;
 
 /**
  * Show servlet status.
@@ -119,9 +119,9 @@ public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionCon
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_SERVLET.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_STATUS.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_INVOCATION_COUNT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                        new DTCol (EText.MSG_INVOCATION_COUNT.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                                aDisplayLocale),
-                                        new DTCol (EText.MSG_INIT_DT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATETIME,
+                                        new DTCol (EText.MSG_INIT_DT.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,
                                                                                                                       aDisplayLocale)).setID (getID ());
 
     for (final Map.Entry <String, ServletStatus> aItem : ServletStatusManager.getAllStatus ().entrySet ())

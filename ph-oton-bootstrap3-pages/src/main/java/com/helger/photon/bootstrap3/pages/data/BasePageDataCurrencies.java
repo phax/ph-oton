@@ -32,7 +32,6 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.type.EBaseType;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -49,6 +48,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.photon.uictrls.datatables.column.EDTColType;
 import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
 
 /**
@@ -120,7 +120,7 @@ public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext>
                                                                                                   .setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (1, 6),
                                         new DTCol (EText.MSG_SYMBOL.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_DEFAULT_FRACTION_DIGITS.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                        new DTCol (EText.MSG_DEFAULT_FRACTION_DIGITS.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                                       aDisplayLocale),
                                         new DTCol (EText.MSG_EXAMPLE.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_CONTINENTS.getDisplayText (aDisplayLocale)),

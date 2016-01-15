@@ -14,27 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.exchange.bulkexport;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+package com.helger.photon.uictrls.datatables.column;
 
 /**
- * Represents a single field of an {@link IExportRecord} to be exported.
+ * Base type for data tables columns
  *
  * @author Philip Helger
  */
-public interface IExportRecordField
+public enum EDTColType
 {
-  /**
-   * @return The type of this field. Never <code>null</code>.
-   */
-  @Nonnull
-  EExportDataType getFieldType ();
-
-  /**
-   * @return The value of this field. May be <code>null</code>.
-   */
-  @Nullable
-  Object getFieldValue ();
+  BOOLEAN,
+  DATE,
+  DATETIME,
+  DOUBLE,
+  DURATION,
+  INT,
+  TEXT,
+  TIME,
+  VERSION,
+  XML;
 }

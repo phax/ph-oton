@@ -36,7 +36,6 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.type.EBaseType;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -47,6 +46,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.photon.uictrls.datatables.column.EDTColType;
 
 /**
  * Page with all linked third party libraries
@@ -136,7 +136,7 @@ public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     }
 
     // Create table
-    final HCTable aTable = new HCTable (new DTCol (EText.MSG_HEADER_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DATE,
+    final HCTable aTable = new HCTable (new DTCol (EText.MSG_HEADER_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATE,
                                                                                                                           aDisplayLocale)
                                                                                                          .setInitialSorting (ESortOrder.DESCENDING),
                                         new DTCol (EText.MSG_HEADER_COMPONENT.getDisplayText (aDisplayLocale)),

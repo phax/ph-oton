@@ -37,7 +37,6 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.EBaseType;
 
 /**
  * Default implementation of {@link IExportRecord}.
@@ -187,7 +186,7 @@ public class ExportRecord implements IExportRecord
   @Nonnull
   public ExportRecord addNullField ()
   {
-    return addField (new ExportRecordField (EBaseType.TEXT, null));
+    return addField (new ExportRecordField (EExportDataType.TEXT, null));
   }
 
   @Nonnull

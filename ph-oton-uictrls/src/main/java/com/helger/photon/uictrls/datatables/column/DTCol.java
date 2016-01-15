@@ -25,7 +25,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.type.EBaseType;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.tabular.AbstractHCCol;
@@ -36,10 +35,12 @@ import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigDecimal;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigInteger;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDate;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDuration;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTFixedCurrencyFormat;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTLocalDateTime;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTString;
 import com.helger.photon.uictrls.datatables.comparator.ComparatorDTTime;
+import com.helger.photon.uictrls.datatables.comparator.ComparatorDTVersion;
 import com.helger.photon.uictrls.datatables.comparator.IComparatorDT;
 
 /**
@@ -77,7 +78,7 @@ public class DTCol extends AbstractHCCol <DTCol>
   }
 
   @Nonnull
-  public DTCol setDisplayType (@Nonnull final EBaseType eBaseType, @Nonnull final Locale aDisplayLocale)
+  public DTCol setDisplayType (@Nonnull final EDTColType eBaseType, @Nonnull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (eBaseType, "BaseType");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
@@ -85,9 +86,6 @@ public class DTCol extends AbstractHCCol <DTCol>
     {
       case BOOLEAN:
         // Nothing special
-        break;
-      case BYTE_ARRAY:
-        setOrderable (false);
         break;
       case DATE:
         setComparator (new ComparatorDTDate (aDisplayLocale));
@@ -101,12 +99,12 @@ public class DTCol extends AbstractHCCol <DTCol>
         setComparator (new ComparatorDTBigDecimal (aDisplayLocale));
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         break;
+      case DURATION:
+        setComparator (new ComparatorDTDuration ());
+        break;
       case INT:
         setComparator (new ComparatorDTBigInteger (aDisplayLocale));
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
-        break;
-      case MTEXT:
-        setOrderable (false);
         break;
       case TEXT:
         setComparator (new ComparatorDTString (aDisplayLocale));
@@ -114,6 +112,9 @@ public class DTCol extends AbstractHCCol <DTCol>
       case TIME:
         setComparator (new ComparatorDTTime (aDisplayLocale));
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
+        break;
+      case VERSION:
+        setComparator (new ComparatorDTVersion ());
         break;
       case XML:
         setOrderable (false);

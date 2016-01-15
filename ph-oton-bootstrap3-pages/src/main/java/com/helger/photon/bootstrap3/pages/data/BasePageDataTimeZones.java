@@ -30,7 +30,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.format.FormatterStringSkipPrefixAndSuffix;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
@@ -46,7 +45,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTInteger;
+import com.helger.photon.uictrls.datatables.column.EDTColType;
 
 /**
  * Page with all time zones
@@ -66,7 +65,6 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext>
     MSG_NAME ("Name", "Name"),
     MSG_SHORTNAME ("Kurzer Name", "Short name"),
     MSG_OFFSET ("Abweichung", "Offset"),
-    MSG_STANDARD_OFFSET ("Ist Std.?", "Is std?"),
     MSG_FIXED ("Konstant?", "Fixed?");
 
     private final IMultilingualText m_aTP;
@@ -125,10 +123,8 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext>
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_SHORTNAME.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_OFFSET.getDisplayText (aDisplayLocale)).setComparator (new ComparatorDTInteger (new FormatterStringSkipPrefixAndSuffix ("PT",
-                                                                                                                                                                                     "S"),
-                                                                                                                                             aDisplayLocale)),
-                                        new DTCol (EText.MSG_STANDARD_OFFSET.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.MSG_OFFSET.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DURATION,
+                                                                                                                     aDisplayLocale),
                                         new DTCol (EText.MSG_FIXED.getDisplayText (aDisplayLocale))).setID (getID ());
     for (final String sID : ZoneId.getAvailableZoneIds ())
     {
@@ -141,7 +137,6 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext>
       aRow.addCell (aDTZ.getDisplayName (TextStyle.FULL, aDisplayLocale));
       aRow.addCell (aDTZ.getDisplayName (TextStyle.SHORT, aDisplayLocale));
       aRow.addCell (Duration.ofSeconds (aZO.getTotalSeconds ()).toString ());
-      aRow.addCell (EPhotonCoreText.getYesOrNo (aZR.isValidOffset (aNow, aZO), aDisplayLocale));
       aRow.addCell (EPhotonCoreText.getYesOrNo (aZR.isFixedOffset (), aDisplayLocale));
     }
     aNodeList.addChild (aTable);

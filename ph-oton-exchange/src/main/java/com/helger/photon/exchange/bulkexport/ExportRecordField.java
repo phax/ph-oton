@@ -32,7 +32,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.EBaseType;
 
 /**
  * A single field for exporting.
@@ -42,17 +41,17 @@ import com.helger.commons.type.EBaseType;
 @Immutable
 public class ExportRecordField implements IExportRecordField
 {
-  private final EBaseType m_eFieldType;
+  private final EExportDataType m_eFieldType;
   private final Object m_aValue;
 
-  protected ExportRecordField (@Nonnull final EBaseType eFieldType, @Nullable final Object aValue)
+  protected ExportRecordField (@Nonnull final EExportDataType eFieldType, @Nullable final Object aValue)
   {
     m_eFieldType = ValueEnforcer.notNull (eFieldType, "FieldType");
     m_aValue = aValue;
   }
 
   @Nonnull
-  public EBaseType getFieldType ()
+  public EExportDataType getFieldType ()
   {
     return m_eFieldType;
   }
@@ -87,30 +86,30 @@ public class ExportRecordField implements IExportRecordField
   }
 
   @Nonnull
-  public static EBaseType autoDetermineType (@Nullable final Object aValue)
+  public static EExportDataType autoDetermineType (@Nullable final Object aValue)
   {
     if (aValue != null)
     {
       if (aValue instanceof LocalDate)
-        return EBaseType.DATE;
+        return EExportDataType.DATE;
       if (aValue instanceof LocalTime)
-        return EBaseType.TIME;
+        return EExportDataType.TIME;
       if (aValue instanceof LocalDateTime || aValue instanceof ZonedDateTime || aValue instanceof OffsetDateTime)
-        return EBaseType.DATETIME;
+        return EExportDataType.DATETIME;
       if (aValue instanceof Boolean)
-        return EBaseType.BOOLEAN;
+        return EExportDataType.BOOLEAN;
       if (aValue instanceof Byte ||
           aValue instanceof Short ||
           aValue instanceof Integer ||
           aValue instanceof Long ||
           aValue instanceof BigInteger)
-        return EBaseType.INT;
+        return EExportDataType.INT;
       if (aValue instanceof Float || aValue instanceof Double || aValue instanceof BigDecimal)
-        return EBaseType.DOUBLE;
+        return EExportDataType.DOUBLE;
     }
 
     // Default to text
-    return EBaseType.TEXT;
+    return EExportDataType.TEXT;
   }
 
   @Nonnull
@@ -122,37 +121,37 @@ public class ExportRecordField implements IExportRecordField
   @Nonnull
   public static ExportRecordField create (@Nullable final String sValue)
   {
-    return new ExportRecordField (EBaseType.TEXT, sValue);
+    return new ExportRecordField (EExportDataType.TEXT, sValue);
   }
 
   @Nonnull
   public static ExportRecordField create (@Nullable final LocalDate aValue)
   {
-    return new ExportRecordField (EBaseType.DATE, aValue);
+    return new ExportRecordField (EExportDataType.DATE, aValue);
   }
 
   @Nonnull
   public static ExportRecordField create (@Nullable final LocalTime aValue)
   {
-    return new ExportRecordField (EBaseType.TIME, aValue);
+    return new ExportRecordField (EExportDataType.TIME, aValue);
   }
 
   @Nonnull
   public static ExportRecordField create (@Nullable final LocalDateTime aValue)
   {
-    return new ExportRecordField (EBaseType.DATETIME, aValue);
+    return new ExportRecordField (EExportDataType.DATETIME, aValue);
   }
 
   @Nonnull
   public static ExportRecordField create (@Nullable final ZonedDateTime aValue)
   {
-    return new ExportRecordField (EBaseType.DATETIME, aValue);
+    return new ExportRecordField (EExportDataType.DATETIME, aValue);
   }
 
   @Nonnull
   public static ExportRecordField create (@Nullable final OffsetDateTime aValue)
   {
-    return new ExportRecordField (EBaseType.DATETIME, aValue);
+    return new ExportRecordField (EExportDataType.DATETIME, aValue);
   }
 
   @Nonnull
@@ -164,7 +163,7 @@ public class ExportRecordField implements IExportRecordField
   @Nonnull
   public static ExportRecordField create (@Nullable final Boolean aValue)
   {
-    return new ExportRecordField (EBaseType.BOOLEAN, aValue);
+    return new ExportRecordField (EExportDataType.BOOLEAN, aValue);
   }
 
   @Nonnull
@@ -176,7 +175,7 @@ public class ExportRecordField implements IExportRecordField
   @Nonnull
   public static ExportRecordField create (@Nullable final Integer aValue)
   {
-    return new ExportRecordField (EBaseType.INT, aValue);
+    return new ExportRecordField (EExportDataType.INT, aValue);
   }
 
   @Nonnull
@@ -188,13 +187,13 @@ public class ExportRecordField implements IExportRecordField
   @Nonnull
   public static ExportRecordField create (@Nonnull final Long aValue)
   {
-    return new ExportRecordField (EBaseType.INT, aValue);
+    return new ExportRecordField (EExportDataType.INT, aValue);
   }
 
   @Nonnull
   public static ExportRecordField create (@Nullable final BigInteger aValue)
   {
-    return new ExportRecordField (EBaseType.INT, aValue);
+    return new ExportRecordField (EExportDataType.INT, aValue);
   }
 
   @Nonnull
@@ -206,12 +205,12 @@ public class ExportRecordField implements IExportRecordField
   @Nonnull
   public static ExportRecordField create (@Nonnull final Double aValue)
   {
-    return new ExportRecordField (EBaseType.DOUBLE, aValue);
+    return new ExportRecordField (EExportDataType.DOUBLE, aValue);
   }
 
   @Nonnull
   public static ExportRecordField create (@Nullable final BigDecimal aValue)
   {
-    return new ExportRecordField (EBaseType.DOUBLE, aValue);
+    return new ExportRecordField (EExportDataType.DOUBLE, aValue);
   }
 }

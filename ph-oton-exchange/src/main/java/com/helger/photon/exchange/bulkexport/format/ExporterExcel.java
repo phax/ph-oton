@@ -35,9 +35,9 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
-import com.helger.commons.type.EBaseType;
 import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.photon.exchange.EExchangeFileType;
+import com.helger.photon.exchange.bulkexport.EExportDataType;
 import com.helger.photon.exchange.bulkexport.EExportRecordType;
 import com.helger.photon.exchange.bulkexport.IExportRecord;
 import com.helger.photon.exchange.bulkexport.IExportRecordField;
@@ -215,7 +215,7 @@ public class ExporterExcel implements IExporterFile
                             @Nonnull final EExportRecordType eRecordType,
                             @Nonnull final Cell aCell,
                             @Nonnegative final int nCellIndex,
-                            @Nonnull final EBaseType eBaseType)
+                            @Nonnull final EExportDataType eBaseType)
   {}
 
   private void _emitRecord (@Nonnull final WorkbookCreationHelper aWBCH,
@@ -247,15 +247,15 @@ public class ExporterExcel implements IExporterFile
             if (m_aStyleBoolean != null)
               aWBCH.addCellStyle (m_aStyleBoolean);
             break;
-          case INT:
-            aCell = aWBCH.addCell (((Number) aFieldValue).intValue ());
-            if (m_aStyleInt != null)
-              aWBCH.addCellStyle (m_aStyleInt);
-            break;
           case DOUBLE:
             aCell = aWBCH.addCell (((Number) aFieldValue).doubleValue ());
             if (m_aStyleDouble != null)
               aWBCH.addCellStyle (m_aStyleDouble);
+            break;
+          case INT:
+            aCell = aWBCH.addCell (((Number) aFieldValue).intValue ());
+            if (m_aStyleInt != null)
+              aWBCH.addCellStyle (m_aStyleInt);
             break;
           case TEXT:
             aCell = aWBCH.addCell ((String) aFieldValue);

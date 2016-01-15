@@ -19,22 +19,42 @@ package com.helger.photon.exchange.bulkexport;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.id.IHasID;
+import com.helger.commons.lang.EnumHelper;
+
 /**
- * Represents a single field of an {@link IExportRecord} to be exported.
+ * Base type for export records
  *
  * @author Philip Helger
  */
-public interface IExportRecordField
+public enum EExportDataType implements IHasID <String>
 {
-  /**
-   * @return The type of this field. Never <code>null</code>.
-   */
-  @Nonnull
-  EExportDataType getFieldType ();
+  BOOLEAN ("boolean"),
+  DATE ("date"),
+  DATETIME ("datetime"),
+  DOUBLE ("double"),
+  INT ("int"),
+  TEXT ("text"),
+  TIME ("time");
 
-  /**
-   * @return The value of this field. May be <code>null</code>.
-   */
+  private final String m_sID;
+
+  private EExportDataType (@Nonnull @Nonempty final String sID)
+  {
+    m_sID = sID;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getID ()
+  {
+    return m_sID;
+  }
+
   @Nullable
-  Object getFieldValue ();
+  public static EExportDataType getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (EExportDataType.class, sID);
+  }
 }

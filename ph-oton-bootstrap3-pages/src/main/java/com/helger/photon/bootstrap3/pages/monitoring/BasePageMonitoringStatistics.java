@@ -37,7 +37,6 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.type.EBaseType;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
@@ -50,6 +49,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.photon.uictrls.datatables.column.EDTColType;
 
 /**
  * Page with all currently available in memory statistics.
@@ -138,15 +138,15 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     final HCTable aTableTimer = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
                                                                                                                      1),
                                              new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
-                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                               aDisplayLocale),
-                                             new DTCol (EText.MSG_TIMER_MIN.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                             new DTCol (EText.MSG_TIMER_MIN.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                              aDisplayLocale),
-                                             new DTCol (EText.MSG_TIMER_MAX.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                             new DTCol (EText.MSG_TIMER_MAX.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                              aDisplayLocale),
-                                             new DTCol (EText.MSG_TIMER_AVG.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                             new DTCol (EText.MSG_TIMER_AVG.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                              aDisplayLocale),
-                                             new DTCol (EText.MSG_TIMER_SUM.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                             new DTCol (EText.MSG_TIMER_SUM.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                              aDisplayLocale)
                                                                                                             .setInitialSorting (ESortOrder.DESCENDING)).setID (getID () +
                                                                                                                                                                "timer");
@@ -155,16 +155,16 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     final HCTable aTableSize = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
                                                                                                                     1),
                                             new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
-                                            new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                            new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                              aDisplayLocale)
                                                                                                             .setInitialSorting (ESortOrder.ASCENDING),
-                                            new DTCol (EText.MSG_MIN.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                            new DTCol (EText.MSG_MIN.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                       aDisplayLocale),
-                                            new DTCol (EText.MSG_MAX.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                            new DTCol (EText.MSG_MAX.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                       aDisplayLocale),
-                                            new DTCol (EText.MSG_AVG.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                            new DTCol (EText.MSG_AVG.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                       aDisplayLocale),
-                                            new DTCol (EText.MSG_SUM.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                            new DTCol (EText.MSG_SUM.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                       aDisplayLocale)).setID (getID () +
                                                                                                                                               "size");
 
@@ -172,20 +172,20 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     final HCTable aTableCounter = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
                                                                                                                        1),
                                                new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
-                                               new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                               new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                                 aDisplayLocale)
                                                                                                                .setInitialSorting (ESortOrder.ASCENDING),
-                                               new DTCol (EText.MSG_COUNT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                               new DTCol (EText.MSG_COUNT.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                            aDisplayLocale)).setID (getID () +
                                                                                                                                                    "counter");
 
     // Table for cache
     final HCTable aTableCache = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
-                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                               aDisplayLocale),
-                                             new DTCol (EText.MSG_CACHE_HIT.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                             new DTCol (EText.MSG_CACHE_HIT.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                              aDisplayLocale),
-                                             new DTCol (EText.MSG_CACHE_MISS.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                             new DTCol (EText.MSG_CACHE_MISS.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                               aDisplayLocale)
                                                                                                              .setInitialSorting (ESortOrder.DESCENDING)).setID (getID () +
                                                                                                                                                                 "cache");

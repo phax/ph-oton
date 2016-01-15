@@ -41,7 +41,6 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.type.EBaseType;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -56,6 +55,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.photon.uictrls.datatables.column.EDTColType;
 
 /**
  * Page with information on the current security settings
@@ -152,7 +152,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
     // show all providers
     {
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                          new DTCol (EText.MSG_VERSION.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.DOUBLE,
+                                          new DTCol (EText.MSG_VERSION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DOUBLE,
                                                                                                                         aDisplayLocale),
                                           new DTCol (EText.MSG_INFO.getDisplayText (aDisplayLocale))).setID (getID () +
                                                                                                              "-providers");

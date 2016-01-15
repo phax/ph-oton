@@ -14,27 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.exchange.bulkexport;
+package com.helger.photon.uictrls.datatables.comparator;
 
-import javax.annotation.Nonnull;
+import java.time.Duration;
+import java.util.function.Function;
+
 import javax.annotation.Nullable;
 
-/**
- * Represents a single field of an {@link IExportRecord} to be exported.
- *
- * @author Philip Helger
- */
-public interface IExportRecordField
+public class ComparatorDTDuration extends AbstractComparatorDT <Duration>
 {
-  /**
-   * @return The type of this field. Never <code>null</code>.
-   */
-  @Nonnull
-  EExportDataType getFieldType ();
+  public ComparatorDTDuration ()
+  {
+    this (null);
+  }
 
-  /**
-   * @return The value of this field. May be <code>null</code>.
-   */
-  @Nullable
-  Object getFieldValue ();
+  public ComparatorDTDuration (@Nullable final Function <? super String, String> aFormatter)
+  {
+    super (aFormatter, sCellText -> Duration.parse (sCellText));
+  }
 }

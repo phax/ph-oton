@@ -38,7 +38,6 @@ import com.helger.commons.tree.sort.TreeWithIDSorter;
 import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
-import com.helger.commons.type.EBaseType;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.html.tabular.HCRow;
@@ -54,6 +53,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.photon.uictrls.datatables.column.EDTColType;
 import com.helger.web.networkinterface.ComparatorNetworkInterfaceName;
 import com.helger.web.networkinterface.NetworkInterfaceHelper;
 
@@ -138,7 +138,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                           new DTCol (EText.MSG_IS_LOOPBACK.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_IS_POINT_TO_POINT.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_IS_MULTICAST.getDisplayText (aDisplayLocale)),
-                                          new DTCol (EText.MSG_MTU.getDisplayText (aDisplayLocale)).setDisplayType (EBaseType.INT,
+                                          new DTCol (EText.MSG_MTU.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                     aDisplayLocale),
                                           new DTCol (EText.MSG_IS_VIRTUAL.getDisplayText (aDisplayLocale))).setID (getID () +
                                                                                                                    "-ni");
