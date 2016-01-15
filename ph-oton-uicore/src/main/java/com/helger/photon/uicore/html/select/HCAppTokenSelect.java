@@ -17,12 +17,12 @@
 package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.filter.IFilter;
 import com.helger.commons.name.CollatingComparatorHasDisplayName;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
@@ -32,7 +32,7 @@ public class HCAppTokenSelect extends HCExtSelect
 {
   public HCAppTokenSelect (@Nonnull final IHCRequestField aRF,
                            @Nonnull final Locale aDisplayLocale,
-                           @Nullable final IFilter <IAppToken> aFilter)
+                           @Nullable final Predicate <IAppToken> aFilter)
   {
     super (aRF);
 
@@ -40,7 +40,7 @@ public class HCAppTokenSelect extends HCExtSelect
     for (final IAppToken aAppToken : CollectionHelper.getSorted (PhotonSecurityManager.getAppTokenMgr ()
                                                                                       .getAllAppTokens (),
                                                                  new CollatingComparatorHasDisplayName <> (aDisplayLocale)))
-      if (aFilter == null || aFilter.matchesFilter (aAppToken))
+      if (aFilter == null || aFilter.test (aAppToken))
       {
         final String sDisplayText = aAppToken.getDisplayName ();
         addOption (aAppToken.getID (), sDisplayText);

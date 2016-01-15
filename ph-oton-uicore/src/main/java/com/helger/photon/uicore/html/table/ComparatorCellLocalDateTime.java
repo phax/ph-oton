@@ -16,33 +16,24 @@
  */
 package com.helger.photon.uicore.html.table;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.LocalDateTime;
-
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.compare.AbstractPartComparatorComparable;
-import com.helger.commons.string.StringHelper;
+import com.helger.datetime.format.PDTFormatter;
 import com.helger.datetime.format.PDTFromString;
-import com.helger.datetime.format.SerializableDateTimeFormatter;
-import com.helger.datetime.format.SerializableDateTimeFormatter.EFormatStyle;
-import com.helger.html.hc.html.tabular.IHCCell;
 
 /**
  * This comparator is responsible for sorting cells by date and/or time.
  *
  * @author Philip Helger
  */
-public class ComparatorCellLocalDateTime extends AbstractPartComparatorComparable <IHCCell <?>, LocalDateTime>
+public class ComparatorCellLocalDateTime extends AbstractComparatorCell <LocalDateTime>
 {
-  private final SerializableDateTimeFormatter m_aFormatter;
-  private final String m_sCommonPrefix;
-  private final String m_sCommonSuffix;
-
   public ComparatorCellLocalDateTime (@Nullable final Locale aParseLocale)
   {
     this (aParseLocale, null, null);
@@ -52,47 +43,20 @@ public class ComparatorCellLocalDateTime extends AbstractPartComparatorComparabl
                                       @Nullable final String sCommonPrefix,
                                       @Nullable final String sCommonSuffix)
   {
-    this (SerializableDateTimeFormatter.create (EFormatStyle.DEFAULT, EFormatStyle.DEFAULT, aParseLocale),
-          sCommonPrefix,
-          sCommonSuffix);
+    this (PDTFormatter.getDefaultFormatterDateTime (aParseLocale), sCommonPrefix, sCommonSuffix);
   }
 
-  public ComparatorCellLocalDateTime (@Nonnull final SerializableDateTimeFormatter aFormatter)
+  public ComparatorCellLocalDateTime (@Nonnull final DateTimeFormatter aFormatter)
   {
     this (aFormatter, null, null);
   }
 
-  public ComparatorCellLocalDateTime (@Nonnull final SerializableDateTimeFormatter aFormatter,
+  public ComparatorCellLocalDateTime (@Nonnull final DateTimeFormatter aFormatter,
                                       @Nullable final String sCommonPrefix,
                                       @Nullable final String sCommonSuffix)
   {
+    super (aCell -> PDTFromString.getLocalDateTimeFromString (getCellText (aCell, sCommonPrefix, sCommonSuffix),
+                                                              aFormatter));
     ValueEnforcer.notNull (aFormatter, "Formatter");
-    m_aFormatter = aFormatter;
-    m_sCommonPrefix = sCommonPrefix;
-    m_sCommonSuffix = sCommonSuffix;
-  }
-
-  @OverrideOnDemand
-  protected String getCellText (@Nullable final IHCCell <?> aCell)
-  {
-    if (aCell == null)
-      return "";
-
-    String sText = aCell.getPlainText ();
-
-    // strip common prefix and suffix
-    if (StringHelper.hasText (m_sCommonPrefix))
-      sText = StringHelper.trimStart (sText, m_sCommonPrefix);
-    if (StringHelper.hasText (m_sCommonSuffix))
-      sText = StringHelper.trimEnd (sText, m_sCommonSuffix);
-
-    return sText;
-  }
-
-  @Override
-  protected LocalDateTime getPart (@Nonnull final IHCCell <?> aCell)
-  {
-    final String sText = getCellText (aCell);
-    return PDTFromString.getLocalDateTimeFromString (sText, m_aFormatter.getFormatter ());
   }
 }

@@ -24,25 +24,17 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.compare.AbstractPartComparatorComparable;
 import com.helger.commons.locale.LocaleParser;
-import com.helger.commons.string.StringHelper;
-import com.helger.html.hc.html.tabular.IHCCell;
 
 /**
  * This comparator is responsible for sorting cells by BigInteger
  *
  * @author Philip Helger
  */
-public class ComparatorCellBigInteger extends AbstractPartComparatorComparable <IHCCell <?>, BigInteger>
+public class ComparatorCellBigInteger extends AbstractComparatorCell <BigInteger>
 {
   private static final BigInteger DEFAULT_VALUE = BigInteger.ZERO;
   private static final BigDecimal DEFAULT_VALUE_DECIMAL = new BigDecimal (DEFAULT_VALUE);
-
-  private final Locale m_aLocale;
-  private final String m_sCommonPrefix;
-  private final String m_sCommonSuffix;
 
   public ComparatorCellBigInteger (@Nonnull final Locale aParseLocale)
   {
@@ -53,47 +45,20 @@ public class ComparatorCellBigInteger extends AbstractPartComparatorComparable <
                                    @Nullable final String sCommonPrefix,
                                    @Nullable final String sCommonSuffix)
   {
+    super (aCell -> {
+      try
+      {
+        return LocaleParser.parseBigDecimal (getCellText (aCell, sCommonPrefix, sCommonSuffix),
+                                             aParseLocale,
+                                             DEFAULT_VALUE_DECIMAL)
+                           .toBigInteger ();
+      }
+      catch (final ArithmeticException ex)
+      {
+        // Not a BigInteger
+        return DEFAULT_VALUE;
+      }
+    });
     ValueEnforcer.notNull (aParseLocale, "ParseLocale");
-    m_aLocale = aParseLocale;
-    m_sCommonPrefix = sCommonPrefix;
-    m_sCommonSuffix = sCommonSuffix;
-  }
-
-  @OverrideOnDemand
-  protected String getCellText (@Nullable final IHCCell <?> aCell)
-  {
-    if (aCell == null)
-      return "";
-
-    String sText = aCell.getPlainText ();
-
-    // strip common prefix and suffix
-    if (StringHelper.hasText (m_sCommonPrefix))
-      sText = StringHelper.trimStart (sText, m_sCommonPrefix);
-    if (StringHelper.hasText (m_sCommonSuffix))
-      sText = StringHelper.trimEnd (sText, m_sCommonSuffix);
-
-    return sText;
-  }
-
-  @Nonnull
-  protected BigInteger getAsBigInteger (@Nonnull final String sCellText)
-  {
-    try
-    {
-      return LocaleParser.parseBigDecimal (sCellText, m_aLocale, DEFAULT_VALUE_DECIMAL).toBigIntegerExact ();
-    }
-    catch (final ArithmeticException ex)
-    {
-      // Not a BigInteger
-      return DEFAULT_VALUE;
-    }
-  }
-
-  @Override
-  protected BigInteger getPart (@Nonnull final IHCCell <?> aCell)
-  {
-    final String sText = getCellText (aCell);
-    return getAsBigInteger (sText);
   }
 }

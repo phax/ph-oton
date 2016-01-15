@@ -16,6 +16,12 @@
  */
 package com.helger.photon.uicore.datetime;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -25,16 +31,12 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.cache.AbstractNotifyingCache;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ComparatorStringLongestFirst;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.format.PDTFromString;
 
@@ -42,7 +44,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public final class DateFormatBuilder implements IDateFormatBuilder
 {
-  private final List <Object> m_aList = new ArrayList <Object> ();
+  private final List <Object> m_aList = new ArrayList <> ();
 
   public DateFormatBuilder ()
   {}
@@ -60,11 +62,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
   {
     ValueEnforcer.notEmpty (sText, "Text");
 
-    final int nLen = sText.length ();
-    for (int i = 0; i < nLen; ++i)
-    {
-      final char c = sText.charAt (0);
-
+    StringHelper.iterateChars (sText, c -> {
       // Handle JS Calendar stuff separately
       if (c == '\n')
         append (EDateTimeFormatToken.CHAR_NEWLINE);
@@ -76,7 +74,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
             append (EDateTimeFormatToken.CHAR_PERC);
           else
             m_aList.add (Character.valueOf (c));
-    }
+    });
     return this;
   }
 
@@ -111,26 +109,52 @@ public final class DateFormatBuilder implements IDateFormatBuilder
   }
 
   @Nonnull
+  public DateTimeFormatter getJavaFormatter ()
+  {
+    final DateTimeFormatterBuilder aBuilder = new DateTimeFormatterBuilder ();
+    for (final Object o : m_aList)
+      if (o instanceof EDateTimeFormatToken)
+        ((EDateTimeFormatToken) o).addToFormatterBuilder (aBuilder);
+      else
+        aBuilder.appendLiteral (((Character) o).charValue ());
+    return aBuilder.toFormatter ();
+  }
+
+  private static final boolean USE_FORMATTER = true;
+
+  @Nonnull
   public LocalDate getDateFormatted (@Nullable final String sDate)
   {
+    if (USE_FORMATTER)
+      return PDTFromString.getLocalDateFromString (sDate, getJavaFormatter ());
+
     return PDTFromString.getLocalDateFromString (sDate, getJavaFormatString ());
   }
 
   @Nonnull
   public LocalTime getTimeFormatted (@Nullable final String sTime)
   {
+    if (USE_FORMATTER)
+      return PDTFromString.getLocalTimeFromString (sTime, getJavaFormatter ());
+
     return PDTFromString.getLocalTimeFromString (sTime, getJavaFormatString ());
   }
 
   @Nonnull
   public LocalDateTime getLocalDateTimeFormatted (@Nullable final String sDateTime)
   {
+    if (USE_FORMATTER)
+      return PDTFromString.getLocalDateTimeFromString (sDateTime, getJavaFormatter ());
+
     return PDTFromString.getLocalDateTimeFromString (sDateTime, getJavaFormatString ());
   }
 
   @Nonnull
-  public DateTime getDateTimeFormatted (@Nullable final String sDateTime)
+  public ZonedDateTime getDateTimeFormatted (@Nullable final String sDateTime)
   {
+    if (USE_FORMATTER)
+      return PDTFromString.getDateTimeFromString (sDateTime, getJavaFormatter ());
+
     return PDTFromString.getDateTimeFromString (sDateTime, getJavaFormatString ());
   }
 

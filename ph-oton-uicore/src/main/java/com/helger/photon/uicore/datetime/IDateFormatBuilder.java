@@ -16,15 +16,14 @@
  */
 package com.helger.photon.uicore.datetime;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 
 /**
  * Abstract date format builder interface
@@ -56,5 +55,5 @@ public interface IDateFormatBuilder
   LocalDateTime getLocalDateTimeFormatted (@Nullable String sDateTime);
 
   @Nonnull
-  DateTime getDateTimeFormatted (@Nullable String sDateTime);
+  ZonedDateTime getDateTimeFormatted (@Nullable String sDateTime);
 }

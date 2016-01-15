@@ -17,7 +17,6 @@
 package com.helger.photon.uicore.html.table;
 
 import java.math.BigDecimal;
-import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
@@ -30,25 +29,13 @@ import com.helger.masterdata.currency.ECurrency;
  *
  * @author Philip Helger
  */
-public final class ComparatorCellFixedCurrencyValueFormat extends ComparatorCellBigDecimal
+public final class ComparatorCellFixedCurrencyValueFormat extends AbstractComparatorCell <BigDecimal>
 {
-  private final ECurrency m_eCurrency;
+  private static final BigDecimal DEFAULT_VALUE = BigDecimal.ZERO;
 
-  public ComparatorCellFixedCurrencyValueFormat (@Nonnull final Locale aLocale, @Nonnull final ECurrency eCurrency)
+  public ComparatorCellFixedCurrencyValueFormat (@Nonnull final ECurrency eCurrency)
   {
-    super (aLocale);
-    m_eCurrency = ValueEnforcer.notNull (eCurrency, "Currency");
-  }
-
-  @Nonnull
-  public ECurrency getCurrency ()
-  {
-    return m_eCurrency;
-  }
-
-  @Override
-  protected BigDecimal getAsBigDecimal (@Nonnull final String sCellText)
-  {
-    return m_eCurrency.parseValueFormat (sCellText, BigDecimal.ZERO);
+    super (aCell -> eCurrency.parseValueFormat (getCellText (aCell, null, null), DEFAULT_VALUE));
+    ValueEnforcer.notNull (eCurrency, "Currency");
   }
 }

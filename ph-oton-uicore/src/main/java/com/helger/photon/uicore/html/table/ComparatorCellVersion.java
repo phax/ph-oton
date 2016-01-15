@@ -18,22 +18,15 @@ package com.helger.photon.uicore.html.table;
 
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.compare.AbstractPartComparatorComparable;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.version.Version;
-import com.helger.html.hc.html.tabular.IHCCell;
 
 /**
  * This comparator is responsible for sorting cells by {@link Version}
  *
  * @author Philip Helger
  */
-public class ComparatorCellVersion extends AbstractPartComparatorComparable <IHCCell <?>, Version>
+public class ComparatorCellVersion extends AbstractComparatorCell <Version>
 {
-  private final String m_sCommonPrefix;
-  private final String m_sCommonSuffix;
-
   public ComparatorCellVersion ()
   {
     this (null, null);
@@ -41,31 +34,6 @@ public class ComparatorCellVersion extends AbstractPartComparatorComparable <IHC
 
   public ComparatorCellVersion (@Nullable final String sCommonPrefix, @Nullable final String sCommonSuffix)
   {
-    m_sCommonPrefix = sCommonPrefix;
-    m_sCommonSuffix = sCommonSuffix;
-  }
-
-  @OverrideOnDemand
-  protected String getCellText (@Nullable final IHCCell <?> aCell)
-  {
-    if (aCell == null)
-      return "";
-
-    String sText = aCell.getPlainText ();
-
-    // strip common prefix and suffix
-    if (StringHelper.hasText (m_sCommonPrefix))
-      sText = StringHelper.trimStart (sText, m_sCommonPrefix);
-    if (StringHelper.hasText (m_sCommonSuffix))
-      sText = StringHelper.trimEnd (sText, m_sCommonSuffix);
-
-    return sText;
-  }
-
-  @Override
-  protected Version getPart (final IHCCell <?> aCell)
-  {
-    final String sText = getCellText (aCell);
-    return new Version (sText);
+    super (aCell -> new Version (getCellText (aCell, sCommonPrefix, sCommonSuffix)));
   }
 }

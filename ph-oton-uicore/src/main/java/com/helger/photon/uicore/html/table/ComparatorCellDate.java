@@ -20,8 +20,7 @@ import java.util.Locale;
 
 import javax.annotation.Nullable;
 
-import com.helger.datetime.format.SerializableDateTimeFormatter;
-import com.helger.datetime.format.SerializableDateTimeFormatter.EFormatStyle;
+import com.helger.datetime.format.PDTFormatter;
 
 public class ComparatorCellDate extends ComparatorCellDateTime
 {
@@ -34,8 +33,6 @@ public class ComparatorCellDate extends ComparatorCellDateTime
                              @Nullable final String sCommonPrefix,
                              @Nullable final String sCommonSuffix)
   {
-    super (SerializableDateTimeFormatter.createForDate (EFormatStyle.DEFAULT, aParseLocale),
-           sCommonPrefix,
-           sCommonSuffix);
+    super (PDTFormatter.getDefaultFormatterDate (aParseLocale), sCommonPrefix, sCommonSuffix);
   }
 }

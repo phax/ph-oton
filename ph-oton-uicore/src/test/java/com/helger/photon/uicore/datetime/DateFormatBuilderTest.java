@@ -19,12 +19,12 @@ package com.helger.photon.uicore.datetime;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.util.Locale;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
 import org.junit.Test;
 
 import com.helger.commons.locale.LocaleCache;
@@ -54,28 +54,28 @@ public final class DateFormatBuilderTest extends AbstractCommonsTestCase
         .append (":")
         .append (EDateTimeFormatToken.SECONDS_LZ);
     assertEquals ("%Y/%m/%d %H:%M:%S", aDFB.getJSCalendarFormatString ());
-    assertEquals ("yyyy/MM/dd HH:mm:ss", aDFB.getJavaFormatString ());
+    assertEquals ("uuuu/MM/dd HH:mm:ss", aDFB.getJavaFormatString ());
 
-    final DateTime aDT = aDFB.getDateTimeFormatted ("2010/08/08 12:45:13");
+    final LocalDateTime aDT = aDFB.getLocalDateTimeFormatted ("2010/08/08 12:45:13");
     assertNotNull (aDT);
     assertEquals (2010, aDT.getYear ());
-    assertEquals (DateTimeConstants.AUGUST, aDT.getMonthOfYear ());
+    assertEquals (Month.AUGUST, aDT.getMonth ());
     assertEquals (8, aDT.getDayOfMonth ());
-    assertEquals (12, aDT.getHourOfDay ());
-    assertEquals (45, aDT.getMinuteOfHour ());
-    assertEquals (13, aDT.getSecondOfMinute ());
+    assertEquals (12, aDT.getHour ());
+    assertEquals (45, aDT.getMinute ());
+    assertEquals (13, aDT.getSecond ());
 
     final LocalDate aLD = aDFB.getDateFormatted ("2010/08/08 12:45:13");
     assertNotNull (aLD);
     assertEquals (2010, aLD.getYear ());
-    assertEquals (DateTimeConstants.AUGUST, aLD.getMonthOfYear ());
+    assertEquals (Month.AUGUST, aLD.getMonth ());
     assertEquals (8, aLD.getDayOfMonth ());
 
     final LocalTime aLT = aDFB.getTimeFormatted ("2010/08/08 12:45:13");
     assertNotNull (aLT);
-    assertEquals (12, aLT.getHourOfDay ());
-    assertEquals (45, aLT.getMinuteOfHour ());
-    assertEquals (13, aLT.getSecondOfMinute ());
+    assertEquals (12, aLT.getHour ());
+    assertEquals (45, aLT.getMinute ());
+    assertEquals (13, aLT.getSecond ());
   }
 
   @Test

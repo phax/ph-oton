@@ -23,23 +23,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.compare.AbstractPartComparatorComparable;
 import com.helger.commons.locale.LocaleParser;
-import com.helger.commons.string.StringHelper;
-import com.helger.html.hc.html.tabular.IHCCell;
 
 /**
  * This comparator is responsible for sorting cells by BigDecimal
  *
  * @author Philip Helger
  */
-public class ComparatorCellBigDecimal extends AbstractPartComparatorComparable <IHCCell <?>, BigDecimal>
+public class ComparatorCellBigDecimal extends AbstractComparatorCell <BigDecimal>
 {
   private static final BigDecimal DEFAULT_VALUE = BigDecimal.ZERO;
-  private final Locale m_aLocale;
-  private final String m_sCommonPrefix;
-  private final String m_sCommonSuffix;
 
   public ComparatorCellBigDecimal (@Nonnull final Locale aParseLocale)
   {
@@ -50,39 +43,9 @@ public class ComparatorCellBigDecimal extends AbstractPartComparatorComparable <
                                    @Nullable final String sCommonPrefix,
                                    @Nullable final String sCommonSuffix)
   {
+    super (aCell -> LocaleParser.parseBigDecimal (getCellText (aCell, sCommonPrefix, sCommonSuffix),
+                                                  aParseLocale,
+                                                  DEFAULT_VALUE));
     ValueEnforcer.notNull (aParseLocale, "ParseLocale");
-    m_aLocale = aParseLocale;
-    m_sCommonPrefix = sCommonPrefix;
-    m_sCommonSuffix = sCommonSuffix;
-  }
-
-  @OverrideOnDemand
-  protected String getCellText (@Nullable final IHCCell <?> aCell)
-  {
-    if (aCell == null)
-      return "";
-
-    String sText = aCell.getPlainText ();
-
-    // strip common prefix and suffix
-    if (StringHelper.hasText (m_sCommonPrefix))
-      sText = StringHelper.trimStart (sText, m_sCommonPrefix);
-    if (StringHelper.hasText (m_sCommonSuffix))
-      sText = StringHelper.trimEnd (sText, m_sCommonSuffix);
-
-    return sText;
-  }
-
-  @Nonnull
-  protected BigDecimal getAsBigDecimal (@Nonnull final String sCellText)
-  {
-    return LocaleParser.parseBigDecimal (sCellText, m_aLocale, DEFAULT_VALUE);
-  }
-
-  @Override
-  protected BigDecimal getPart (@Nonnull final IHCCell <?> aCell)
-  {
-    final String sText = getCellText (aCell);
-    return getAsBigDecimal (sText);
   }
 }

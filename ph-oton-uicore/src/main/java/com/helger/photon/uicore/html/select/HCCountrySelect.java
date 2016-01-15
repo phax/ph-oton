@@ -26,7 +26,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.lang.IHasBooleanRepresentation;
 import com.helger.commons.locale.country.CollatingComparatorLocaleDisplayCountryInLocale;
 import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.text.display.CollatingComparatorDisplayTextProvider;
@@ -36,7 +35,7 @@ import com.helger.masterdata.locale.DeprecatedLocaleHandler;
 
 public class HCCountrySelect extends HCExtSelect
 {
-  public static enum EWithDeprecated implements IHasBooleanRepresentation
+  public static enum EWithDeprecated
   {
     TRUE,
     FALSE;

@@ -18,19 +18,13 @@ package com.helger.photon.uicore.html.table;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.compare.AbstractCollatingComparator;
-import com.helger.commons.string.StringHelper;
+import com.helger.commons.compare.CollatingPartComparator;
 import com.helger.html.hc.html.tabular.IHCCell;
 
-public class ComparatorCellString extends AbstractCollatingComparator <IHCCell <?>>
+public class ComparatorCellString extends CollatingPartComparator <IHCCell <?>>
 {
-  private final String m_sCommonPrefix;
-  private final String m_sCommonSuffix;
-
   public ComparatorCellString (@Nullable final Locale aParseLocale)
   {
     this (aParseLocale, null, null);
@@ -40,32 +34,6 @@ public class ComparatorCellString extends AbstractCollatingComparator <IHCCell <
                                @Nullable final String sCommonPrefix,
                                @Nullable final String sCommonSuffix)
   {
-    super (aParseLocale);
-    m_sCommonPrefix = StringHelper.hasText (sCommonPrefix) ? sCommonPrefix : null;
-    m_sCommonSuffix = StringHelper.hasText (sCommonSuffix) ? sCommonSuffix : null;
-  }
-
-  @OverrideOnDemand
-  protected String getCellText (@Nullable final IHCCell <?> aCell)
-  {
-    if (aCell == null)
-      return "";
-
-    String sText = aCell.getPlainText ();
-
-    // strip common prefix and suffix
-    if (m_sCommonPrefix != null)
-      sText = StringHelper.trimStart (sText, m_sCommonPrefix);
-    if (m_sCommonSuffix != null)
-      sText = StringHelper.trimEnd (sText, m_sCommonSuffix);
-
-    return sText;
-  }
-
-  @Override
-  @Nullable
-  protected String getPart (@Nonnull final IHCCell <?> aCell)
-  {
-    return getCellText (aCell);
+    super (aParseLocale, aCell -> AbstractComparatorCell.getCellText (aCell, sCommonPrefix, sCommonSuffix));
   }
 }
