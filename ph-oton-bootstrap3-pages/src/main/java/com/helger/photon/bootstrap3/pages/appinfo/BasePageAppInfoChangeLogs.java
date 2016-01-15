@@ -37,7 +37,6 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.type.EBaseType;
-import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -146,7 +145,7 @@ public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     for (final ChangeLogEntry aEntry : s_aCache)
     {
       final HCRow aRow = aTable.addBodyRow ();
-      aRow.addCell (PDTToString.getAsString (PDTFactory.createLocalDate (aEntry.getDate ()), aDisplayLocale));
+      aRow.addCell (PDTToString.getAsString (aEntry.getDate (), aDisplayLocale));
       aRow.addCell (aEntry.getChangeLog ().getComponent ());
       aRow.addCell (aEntry.getCategory ().getID () + " " + aEntry.getAction ().getID ());
       aRow.addCell (_getText (aEntry, aDisplayLocale));

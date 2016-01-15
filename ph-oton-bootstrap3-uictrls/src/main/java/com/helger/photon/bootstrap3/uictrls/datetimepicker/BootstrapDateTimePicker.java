@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap3.uictrls.datetimepicker;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Set;
@@ -24,7 +25,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +32,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTFormatPatterns;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -134,7 +133,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     // Use the calendar icon as default prefix
     addPrefix (EBootstrapIcon.CALENDAR.getAsNode ());
     // Default to end date + 1 year
-    setEndDate (PDTFactory.getCurrentLocalDate ().plusYears (1));
+    setEndDate (LocalDate.now ().plusYears (1));
   }
 
   /**

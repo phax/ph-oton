@@ -19,7 +19,6 @@ package com.helger.photon.uicore.datetime;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -53,7 +52,4 @@ public interface IDateFormatBuilder
 
   @Nonnull
   LocalDateTime getLocalDateTimeFormatted (@Nullable String sDateTime);
-
-  @Nonnull
-  ZonedDateTime getDateTimeFormatted (@Nullable String sDateTime);
 }

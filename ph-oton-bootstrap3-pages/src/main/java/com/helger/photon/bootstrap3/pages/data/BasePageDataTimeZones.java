@@ -16,13 +16,16 @@
  */
 package com.helger.photon.bootstrap3.pages.data;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.TextStyle;
+import java.time.zone.ZoneRules;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.DateTimeZone;
-import org.joda.time.Duration;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
@@ -32,7 +35,6 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.datetime.PDTFactory;
 import com.helger.datetime.config.PDTConfig;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -111,15 +113,15 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext>
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final long nNow = PDTFactory.getCurrentMillis ();
+    final LocalDateTime aNow = LocalDateTime.now ();
 
     // Get default time zone
-    final DateTimeZone aCurrentDTZ = PDTConfig.getDefaultDateTimeZone ();
+    final ZoneId aCurrentDTZ = PDTConfig.getDefaultZoneId ();
 
     aNodeList.addChild (createActionHeader (EText.MSG_CURRENT_TIMEZONE.getDisplayText (aDisplayLocale) +
-                                            aCurrentDTZ.getID () +
+                                            aCurrentDTZ.getId () +
                                             " - " +
-                                            aCurrentDTZ.getName (nNow)));
+                                            aCurrentDTZ.getDisplayName (TextStyle.FULL, aDisplayLocale)));
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_SHORTNAME.getDisplayText (aDisplayLocale)),
@@ -128,16 +130,19 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext>
                                                                                                                                              aDisplayLocale)),
                                         new DTCol (EText.MSG_STANDARD_OFFSET.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_FIXED.getDisplayText (aDisplayLocale))).setID (getID ());
-    for (final String sID : DateTimeZone.getAvailableIDs ())
+    for (final String sID : ZoneId.getAvailableZoneIds ())
     {
-      final DateTimeZone aDTZ = DateTimeZone.forID (sID);
+      final ZoneId aDTZ = ZoneId.of (sID);
+      final ZoneRules aZR = aDTZ.getRules ();
+      final ZoneOffset aZO = aZR.getOffset (aNow);
+
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (sID);
-      aRow.addCell (aDTZ.getName (nNow, aDisplayLocale));
-      aRow.addCell (aDTZ.getShortName (nNow, aDisplayLocale));
-      aRow.addCell (new Duration (aDTZ.getOffset (nNow)).toString ());
-      aRow.addCell (EPhotonCoreText.getYesOrNo (aDTZ.isStandardOffset (nNow), aDisplayLocale));
-      aRow.addCell (EPhotonCoreText.getYesOrNo (aDTZ.isFixed (), aDisplayLocale));
+      aRow.addCell (aDTZ.getDisplayName (TextStyle.FULL, aDisplayLocale));
+      aRow.addCell (aDTZ.getDisplayName (TextStyle.SHORT, aDisplayLocale));
+      aRow.addCell (Duration.ofSeconds (aZO.getTotalSeconds ()).toString ());
+      aRow.addCell (EPhotonCoreText.getYesOrNo (aZR.isValidOffset (aNow, aZO), aDisplayLocale));
+      aRow.addCell (EPhotonCoreText.getYesOrNo (aZR.isFixedOffset (), aDisplayLocale));
     }
     aNodeList.addChild (aTable);
 

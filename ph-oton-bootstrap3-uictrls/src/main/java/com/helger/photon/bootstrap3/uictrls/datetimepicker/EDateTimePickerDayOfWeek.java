@@ -16,12 +16,11 @@
  */
 package com.helger.photon.bootstrap3.uictrls.datetimepicker;
 
+import java.time.DayOfWeek;
 import java.util.Calendar;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nullable;
-
-import org.joda.time.DateTimeConstants;
 
 /**
  * Defines the day of week constants used by DTP
@@ -52,25 +51,22 @@ public enum EDateTimePickerDayOfWeek
   }
 
   @Nullable
-  public static EDateTimePickerDayOfWeek getFromJodaValueOrNull (final int nJodaValue)
+  public static EDateTimePickerDayOfWeek getFromJodaValueOrNull (final int nJDKValue)
   {
-    switch (nJodaValue)
-    {
-      case DateTimeConstants.MONDAY:
-        return MONDAY;
-      case DateTimeConstants.TUESDAY:
-        return TUESDAY;
-      case DateTimeConstants.WEDNESDAY:
-        return WEDNESDAY;
-      case DateTimeConstants.THURSDAY:
-        return THURSDAY;
-      case DateTimeConstants.FRIDAY:
-        return FRIDAY;
-      case DateTimeConstants.SATURDAY:
-        return SATURDAY;
-      case DateTimeConstants.SUNDAY:
-        return SUNDAY;
-    }
+    if (nJDKValue == DayOfWeek.MONDAY.getValue ())
+      return MONDAY;
+    if (nJDKValue == DayOfWeek.TUESDAY.getValue ())
+      return TUESDAY;
+    if (nJDKValue == DayOfWeek.WEDNESDAY.getValue ())
+      return WEDNESDAY;
+    if (nJDKValue == DayOfWeek.THURSDAY.getValue ())
+      return THURSDAY;
+    if (nJDKValue == DayOfWeek.FRIDAY.getValue ())
+      return FRIDAY;
+    if (nJDKValue == DayOfWeek.SATURDAY.getValue ())
+      return SATURDAY;
+    if (nJDKValue == DayOfWeek.SUNDAY.getValue ())
+      return SUNDAY;
     return null;
   }
 

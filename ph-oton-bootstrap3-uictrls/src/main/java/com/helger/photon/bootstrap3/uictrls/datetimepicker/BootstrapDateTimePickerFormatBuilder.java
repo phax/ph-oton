@@ -16,6 +16,9 @@
  */
 package com.helger.photon.bootstrap3.uictrls.datetimepicker;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -24,11 +27,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -43,7 +41,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
 {
-  private final List <Object> m_aList = new ArrayList <Object> ();
+  private final List <Object> m_aList = new ArrayList <> ();
 
   public BootstrapDateTimePickerFormatBuilder ()
   {}
@@ -110,12 +108,6 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
   public LocalDateTime getLocalDateTimeFormatted (@Nullable final String sDateTime)
   {
     return PDTFromString.getLocalDateTimeFromString (sDateTime, getJavaFormatString ());
-  }
-
-  @Nonnull
-  public DateTime getDateTimeFormatted (@Nullable final String sDateTime)
-  {
-    return PDTFromString.getDateTimeFromString (sDateTime, getJavaFormatString ());
   }
 
   @Override

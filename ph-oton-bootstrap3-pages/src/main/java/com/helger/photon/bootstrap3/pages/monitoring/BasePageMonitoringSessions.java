@@ -16,14 +16,13 @@
  */
 package com.helger.photon.bootstrap3.pages.monitoring;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.joda.time.LocalDateTime;
-import org.joda.time.Period;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.Nonempty;
@@ -44,7 +43,6 @@ import com.helger.commons.type.EBaseType;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
-import com.helger.datetime.format.PeriodFormatMultilingual;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -197,8 +195,8 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     if (aScope instanceof ISessionWebScope)
     {
       final ISessionWebScope aWebScope = (ISessionWebScope) aScope;
-      final LocalDateTime aCreationDT = PDTFactory.createLocalDateTimeFromMillis (aWebScope.getCreationTime ());
-      final LocalDateTime aLastAccessDT = PDTFactory.createLocalDateTimeFromMillis (aWebScope.getLastAccessedTime ());
+      final LocalDateTime aCreationDT = PDTFactory.createLocalDateTime (aWebScope.getCreationTime ());
+      final LocalDateTime aLastAccessDT = PDTFactory.createLocalDateTime (aWebScope.getLastAccessedTime ());
 
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_CREATION_DT.getDisplayText (aDisplayLocale))
                                                          .setCtrl (PDTToString.getAsString (aCreationDT,
@@ -207,9 +205,8 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                                          .setCtrl (PDTToString.getAsString (aLastAccessDT,
                                                                                             aDisplayLocale)));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_AGE.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (PeriodFormatMultilingual.getFormatterLong (aDisplayLocale)
-                                                                                           .print (new Period (aCreationDT,
-                                                                                                               PDTFactory.getCurrentLocalDateTime ()))));
+                                                         .setCtrl (Duration.between (aCreationDT, LocalDateTime.now ())
+                                                                           .toString ()));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_TIMEOUT.getDisplayText (aDisplayLocale))
                                                          .setCtrl (EText.MSG_SCOPE_SESSION_TIMEOUT_TEXT.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                 Long.toString (aWebScope.getMaxInactiveInterval ()),
@@ -363,7 +360,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                                                 : "")));
       aRow.addCell (Integer.toString (aSessionScope.getAttributeCount ()));
       if (aWebScope != null)
-        aRow.addCell (PDTToString.getAsString (PDTFactory.createLocalDateTimeFromMillis (aWebScope.getLastAccessedTime ()),
+        aRow.addCell (PDTToString.getAsString (PDTFactory.createLocalDateTime (aWebScope.getLastAccessedTime ()),
                                                aDisplayLocale));
       else
         aRow.addCell ();

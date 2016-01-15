@@ -17,6 +17,7 @@
 package com.helger.photon.bootstrap3.uictrls.treeview;
 
 import java.util.List;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,7 +26,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.NonBlockingStack;
-import com.helger.commons.convert.IConverter;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.state.ETriState;
@@ -271,7 +271,7 @@ public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
 
   @Nonnull
   public static <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> BootstrapTreeView create (@Nonnull final BasicTree <DATATYPE, ITEMTYPE> aTree,
-                                                                                                      @Nonnull final IConverter <DATATYPE, BootstrapTreeViewItem> aConverter)
+                                                                                                      @Nonnull final Function <DATATYPE, BootstrapTreeViewItem> aConverter)
   {
     final DefaultTree <BootstrapTreeViewItem> aNewTree = new DefaultTree <BootstrapTreeViewItem> ();
     final NonBlockingStack <DefaultTreeItem <BootstrapTreeViewItem>> aParents = new NonBlockingStack <DefaultTreeItem <BootstrapTreeViewItem>> ();
@@ -282,7 +282,7 @@ public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
       public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final ITEMTYPE aItem)
       {
         final DefaultTreeItem <BootstrapTreeViewItem> aChildItem = aParents.peek ()
-                                                                           .createChildItem (aConverter.convert (aItem.getData ()));
+                                                                           .createChildItem (aConverter.apply (aItem.getData ()));
         aParents.push (aChildItem);
         return EHierarchyVisitorReturn.CONTINUE;
       }

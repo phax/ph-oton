@@ -16,9 +16,11 @@
  */
 package com.helger.photon.bootstrap3.pages.security;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,7 +30,6 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.errorlist.FormErrors;
-import com.helger.commons.filter.IFilter;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
@@ -37,7 +38,6 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.URLValidator;
-import com.helger.datetime.PDTFactory;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCA_MailTo;
 import com.helger.html.hc.html.HC_Target;
@@ -458,7 +458,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
       {
         aAppTokenMgr.createNewAccessToken (aSelectedObject.getID (),
                                            LoggedInUserManager.getInstance ().getCurrentUserID (),
-                                           PDTFactory.getCurrentLocalDateTime (),
+                                           LocalDateTime.now (),
                                            sRevocationReason,
                                            sTokenString);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (bRevokedOld ? EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
@@ -526,7 +526,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
         final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
         aAppTokenMgr.revokeAccessToken (aSelectedObject.getID (),
                                         LoggedInUserManager.getInstance ().getCurrentUserID (),
-                                        PDTFactory.getCurrentLocalDateTime (),
+                                        LocalDateTime.now (),
                                         sRevocationReason);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EBaseText.REVOKE_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                   aSelectedObject.getDisplayName ())));
@@ -566,7 +566,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
   @Nonnull
   private IHCNode _createList (@Nonnull final WPECTYPE aWPEC,
                                @Nonnull final String sIDSuffix,
-                               @Nullable final IFilter <IAppToken> aFilter)
+                               @Nullable final Predicate <IAppToken> aFilter)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
@@ -577,7 +577,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                         new DTCol (EText.HEADER_USABLE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID () + sIDSuffix);
     for (final IAppToken aCurObject : aAppTokenMgr.getAllAppTokens ())
-      if (aFilter == null || aFilter.matchesFilter (aCurObject))
+      if (aFilter == null || aFilter.test (aCurObject))
       {
         final ISimpleURL aViewURL = createViewURL (aWPEC, aCurObject);
         final String sDisplayName = aCurObject.getDisplayName ();

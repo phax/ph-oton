@@ -44,7 +44,7 @@ public enum EDateTimePickerFormatToken
   MONTH ("m", "M"),
   ABBR_MONTH_NAME ("M", "MMM"),
   FULL_MONTH_NAME ("MM", "MMMM"),
-  YEAR ("y", "y");
+  YEAR ("y", "u");
 
   private final String m_sJSToken;
   private final String m_sJavaToken;
