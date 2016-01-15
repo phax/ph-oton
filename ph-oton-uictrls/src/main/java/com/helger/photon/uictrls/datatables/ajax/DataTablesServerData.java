@@ -162,18 +162,9 @@ public final class DataTablesServerData implements IHasUIState
     return OT_DATATABLES;
   }
 
-  @Nonnull
-  public boolean areServerSortStateEqual (@Nonnull final DataTablesServerSortState aOtherserverSortState)
+  public boolean isServerSortStateEqual (@Nonnull final DataTablesServerSortState aOtherserverSortState)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aServerSortState.equals (aOtherserverSortState);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aServerSortState.equals (aOtherserverSortState));
   }
 
   public void setServerSortStateAndSort (@Nonnull final DataTablesServerSortState aNewServerSortState)
@@ -236,7 +227,8 @@ public final class DataTablesServerData implements IHasUIState
     return new ToStringGenerator (this).append ("columnCount", m_aColumns.length)
                                        .append ("rowCount", m_aRows.size ())
                                        .append ("displayLocale", m_aDisplayLocale)
-                                       .append ("serverSortState", m_aServerSortState)
+                                       // .append ("serverSortState",
+                                       // m_aServerSortState)
                                        .append ("filterType", m_eFilterType)
                                        .toString ();
   }

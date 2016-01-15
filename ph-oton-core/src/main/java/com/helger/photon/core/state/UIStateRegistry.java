@@ -89,9 +89,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
     if (StringHelper.hasNoText (sStateID))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    return m_aRWLock.readLocked ( () -> {
       IHasUIState ret = null;
 
       // Get mapping for requested ObjectType
@@ -112,11 +110,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
         }
       }
       return ret;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -169,13 +163,11 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
     if (aOT == null)
       throw new IllegalStateException ("Object has no typeID: " + aNewState);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       Map <String, IHasUIState> aMap = m_aMap.get (aOT);
       if (aMap == null)
       {
-        aMap = new HashMap <String, IHasUIState> ();
+        aMap = new HashMap <> ();
         m_aMap.put (aOT, aMap);
       }
 
@@ -184,11 +176,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
 
       aMap.put (sStateID, aNewState);
       return EChange.CHANGED;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -221,18 +209,12 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
   {
     ValueEnforcer.notEmpty (sStateID, "StateID");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       final Map <String, IHasUIState> aMap = m_aMap.get (aObjectType);
       if (aMap == null)
         return EChange.UNCHANGED;
       return EChange.valueOf (aMap.remove (sStateID) != null);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Override

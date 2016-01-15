@@ -89,7 +89,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
                                                                                            aRequestData.directGetAllOrderColumns (),
                                                                                            aDisplayLocale);
       // Must we change the sorting?
-      if (!aServerData.areServerSortStateEqual (aNewServerSortState))
+      if (!aServerData.isServerSortStateEqual (aNewServerSortState))
       {
         // Remember the new server state and sort
         aServerData.setServerSortStateAndSort (aNewServerSortState);
