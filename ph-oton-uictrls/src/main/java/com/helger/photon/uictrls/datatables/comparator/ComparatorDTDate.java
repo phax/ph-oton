@@ -33,6 +33,6 @@ public class ComparatorDTDate extends ComparatorDTLocalDateTime
   public ComparatorDTDate (@Nullable final Function <? super String, String> aFormatter,
                            @Nullable final Locale aParseLocale)
   {
-    super (aFormatter, PDTFormatter.getDefaultFormatterTime (aParseLocale));
+    super (aFormatter, PDTFormatter.getDefaultFormatterDate (aParseLocale));
   }
 }
