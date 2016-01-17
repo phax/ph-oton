@@ -111,15 +111,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
   @ReturnsMutableCopy
   public IMicroContainer getParsedContent ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aParsedContent.getClone ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aParsedContent.getClone ());
   }
 
   /**
@@ -132,15 +124,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
   @Override
   public void updateFromResource ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      m_aParsedContent = _readFromResource (m_aResource);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    m_aRWLock.writeLocked ( () -> m_aParsedContent = _readFromResource (m_aResource));
   }
 
   @Override
@@ -150,16 +134,8 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final boolean bReadFromResource = isReadEveryTime ();
 
-    final IMicroNode aNode;
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      aNode = bReadFromResource ? _readFromResource (m_aResource) : m_aParsedContent;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    final IMicroNode aNode = m_aRWLock.readLocked ( () -> bReadFromResource ? _readFromResource (m_aResource)
+                                                                            : m_aParsedContent);
 
     aNodeList.addChild (new HCDOMWrapper (aNode));
   }

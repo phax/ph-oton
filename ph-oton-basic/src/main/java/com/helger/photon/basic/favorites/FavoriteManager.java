@@ -106,16 +106,10 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
 
   public void reload () throws DAOException
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLockedThrowing ( () -> {
       m_aMap.clear ();
       initialRead ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @MustBeLocked (ELockType.WRITE)
@@ -128,28 +122,12 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
   @Nonnegative
   public int getSize ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.size ());
   }
 
   public boolean isEmpty ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.isEmpty ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.isEmpty ());
   }
 
   /**
@@ -162,15 +140,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
   @ReturnsMutableCopy
   public List <? extends IFavorite> getAllFavoritesOfUser (@Nullable final String sUserID)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aMap.get (sUserID));
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.get (sUserID)));
   }
 
   /**
@@ -185,16 +155,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
     if (StringHelper.hasNoText (sUserID))
       return false;
 
-    List <Favorite> aFavorites = null;
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      aFavorites = m_aMap.get (sUserID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    final List <Favorite> aFavorites = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
 
     if (CollectionHelper.isNotEmpty (aFavorites))
       return CollectionHelper.isNotEmpty (aFavorites);
@@ -289,16 +250,10 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
   {
     final Favorite aFavorite = new Favorite (sUserID, sApplicationID, sMenuItemID, sDisplayName, aAdditionalParams);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       _addItem (aFavorite);
       markAsChanged (aFavorite, EDAOActionType.CREATE);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
 
     AuditHelper.onAuditCreateSuccess (Favorite.OT_FAVOURITE,
                                       aFavorite.getID (),
@@ -327,48 +282,25 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
                                  @Nullable final String sDisplayName)
   {
 
-    List <Favorite> aFavorites = null;
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      aFavorites = CollectionHelper.newList (m_aMap.get (sUserID));
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    final List <Favorite> aFavorites = m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.get (sUserID)));
 
-    Favorite aFavorite = null;
-    if (CollectionHelper.isNotEmpty (aFavorites))
-      for (final Favorite aOther : aFavorites)
-        if (sID.equals (aOther.getID ()))
-        {
-          aFavorite = aOther;
-          break;
-        }
-
+    final Favorite aFavorite = CollectionHelper.findFirst (aFavorites, f -> sID.equals (f.getID ()));
     if (aFavorite == null)
     {
       AuditHelper.onAuditModifyFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       final EChange eChange = aFavorite.setDisplayName (sDisplayName);
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
+
       markAsChanged (aFavorite, EDAOActionType.UPDATE);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+      AuditHelper.onAuditModifySuccess (Favorite.OT_FAVOURITE, aFavorite.getID (), sUserID, sDisplayName);
 
-    AuditHelper.onAuditModifySuccess (Favorite.OT_FAVOURITE, aFavorite.getID (), sUserID, sDisplayName);
-
-    return EChange.CHANGED;
+      return EChange.CHANGED;
+    });
   }
 
   /**
@@ -383,49 +315,28 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
   @Nullable
   public EChange removeFavorite (@Nullable final String sUserID, @Nullable final String sID)
   {
-    List <Favorite> aFavorites = null;
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      aFavorites = m_aMap.get (sUserID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    final List <Favorite> aFavorites = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
 
-    Favorite aFavorite = null;
-    if (CollectionHelper.isNotEmpty (aFavorites))
-      for (final Favorite aOther : aFavorites)
-        if (sID.equals (aOther.getID ()))
-        {
-          aFavorite = aOther;
-          break;
-        }
-
+    final Favorite aFavorite = CollectionHelper.findFirst (aFavorites, aOther -> sID.equals (aOther.getID ()));
     if (aFavorite == null)
     {
       AuditHelper.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
-    EChange eChange;
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      eChange = EChange.valueOf (aFavorites.remove (aFavorite));
+    return m_aRWLock.writeLocked ( () -> {
+      final EChange eChange = EChange.valueOf (aFavorites.remove (aFavorite));
       if (eChange.isChanged ())
+      {
         markAsChanged (aFavorite, EDAOActionType.DELETE);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    if (eChange.isChanged ())
-      AuditHelper.onAuditDeleteSuccess (Favorite.OT_FAVOURITE, sID);
-    else
-      AuditHelper.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
-    return eChange;
+        AuditHelper.onAuditDeleteSuccess (Favorite.OT_FAVOURITE, sID);
+      }
+      else
+      {
+        AuditHelper.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
+      }
+      return eChange;
+    });
   }
 
   /**
@@ -438,24 +349,20 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
   @Nullable
   public EChange removeAllFavoritesOfUser (@Nullable final String sUserID)
   {
-    EChange eChange;
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       final List <Favorite> aFavoritesOfUser = m_aMap.remove (sUserID);
-      eChange = EChange.valueOf (aFavoritesOfUser != null);
+      final EChange eChange = EChange.valueOf (aFavoritesOfUser != null);
       if (eChange.isChanged ())
+      {
         markAsChanged (aFavoritesOfUser, EDAOActionType.DELETE);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    if (eChange.isChanged ())
-      AuditHelper.onAuditDeleteSuccess (Favorite.OT_FAVOURITE, sUserID);
-    else
-      AuditHelper.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sUserID, "no-such-user-id");
-    return eChange;
+        AuditHelper.onAuditDeleteSuccess (Favorite.OT_FAVOURITE, sUserID);
+      }
+      else
+      {
+        AuditHelper.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sUserID, "no-such-user-id");
+      }
+      return eChange;
+    });
   }
 
   @Override

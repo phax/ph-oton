@@ -213,9 +213,9 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
   // Set of logged in user IDs
   @GuardedBy ("m_aRWLock")
-  private final Map <String, LoginInfo> m_aLoggedInUsers = new HashMap <String, LoginInfo> ();
-  private final CallbackList <IUserLoginCallback> m_aUserLoginCallbacks = new CallbackList <IUserLoginCallback> ();
-  private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList <IUserLogoutCallback> ();
+  private final Map <String, LoginInfo> m_aLoggedInUsers = new HashMap <> ();
+  private final CallbackList <IUserLoginCallback> m_aUserLoginCallbacks = new CallbackList <> ();
+  private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList <> ();
   private boolean m_bLogoutAlreadyLoggedInUser = DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER;
 
   @Deprecated
@@ -262,28 +262,12 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    */
   public boolean isLogoutAlreadyLoggedInUser ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_bLogoutAlreadyLoggedInUser;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_bLogoutAlreadyLoggedInUser);
   }
 
   public void setLogoutAlreadyLoggedInUser (final boolean bLogoutAlreadyLoggedInUser)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      m_bLogoutAlreadyLoggedInUser = bLogoutAlreadyLoggedInUser;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    m_aRWLock.writeLocked ( () -> m_bLogoutAlreadyLoggedInUser = bLogoutAlreadyLoggedInUser);
   }
 
   /**
@@ -356,16 +340,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     ValueEnforcer.notNull (aUser, "User");
     ValueEnforcer.notNull (aSessionScope, "SessionScope");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      final LoginInfo aInfo = new LoginInfo (aUser, aSessionScope);
-      m_aLoggedInUsers.put (aUser.getID (), aInfo);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    final LoginInfo aInfo = new LoginInfo (aUser, aSessionScope);
+    m_aRWLock.writeLocked ( () -> m_aLoggedInUsers.put (aUser.getID (), aInfo));
   }
 
   /**
@@ -523,8 +499,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nonnull
   public EChange logoutUser (@Nullable final String sUserID)
   {
-    m_aRWLock.writeLock ().lock ();
     LoginInfo aInfo;
+    m_aRWLock.writeLock ().lock ();
     try
     {
       aInfo = m_aLoggedInUsers.remove (sUserID);
@@ -595,15 +571,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    */
   public boolean isUserLoggedIn (@Nullable final String sUserID)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aLoggedInUsers.containsKey (sUserID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aLoggedInUsers.containsKey (sUserID));
   }
 
   /**
@@ -614,15 +582,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @ReturnsMutableCopy
   public Set <String> getAllLoggedInUserIDs ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newSet (m_aLoggedInUsers.keySet ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aLoggedInUsers.keySet ()));
   }
 
   /**
@@ -635,15 +595,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nullable
   public LoginInfo getLoginInfo (@Nullable final String sUserID)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aLoggedInUsers.get (sUserID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aLoggedInUsers.get (sUserID));
   }
 
   /**
@@ -654,15 +606,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @ReturnsMutableCopy
   public Collection <LoginInfo> getAllLoginInfos ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aLoggedInUsers.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aLoggedInUsers.values ()));
   }
 
   /**
@@ -671,15 +615,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nonnegative
   public int getLoggedInUserCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aLoggedInUsers.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aLoggedInUsers.size ());
   }
 
   /**

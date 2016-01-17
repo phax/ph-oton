@@ -84,44 +84,22 @@ public class LongRunningJobResultManager extends AbstractSimpleDAO
     if (!aJobData.isEnded ())
       throw new IllegalArgumentException ("Passed jobData is not yet finished");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       _internalAdd (aJobData);
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public List <LongRunningJobData> getAllJobResults ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aMap.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
   }
 
   @Nullable
   public LongRunningJobData getJobResultOfID (@Nullable final String sJobResultID)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.get (sJobResultID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sJobResultID));
   }
 }

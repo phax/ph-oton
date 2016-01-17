@@ -146,16 +146,10 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
 
   private void _markAsChanged ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       // Must be called in a lock
       m_aDAO.myMarkChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Override

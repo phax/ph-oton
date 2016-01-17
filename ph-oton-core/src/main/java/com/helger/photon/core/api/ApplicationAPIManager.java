@@ -107,28 +107,14 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
   @CheckForSigned
   public long getLongRunningExecutionLimitTime ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_nLongRunningExecutionLimitTime;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_nLongRunningExecutionLimitTime);
   }
 
   public void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull

@@ -74,127 +74,61 @@ public class BulkImportResult implements ISuccessIndicator
 
   public final void registerAdded (@Nonnull final ITypedObject <String> aObj)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_aAdded.put (aObj.getID (), aObj);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public final List <ITypedObject <String>> getAllAdded ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aAdded.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aAdded.values ()));
   }
 
   @Nonnegative
   public final int getAddedCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aAdded.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aAdded.size ());
   }
 
   public final boolean containsAdded (@Nonnull final ITypedObject <String> aObj)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      // linear scanning :(
-      return m_aAdded.containsKey (aObj.getID ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    // linear scanning :(
+    return m_aRWLock.readLocked ( () -> m_aAdded.containsKey (aObj.getID ()));
   }
 
   public final void registerChanged (@Nonnull final ITypedObject <String> aObj)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_aChanged.put (aObj.getID (), aObj);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public final List <ITypedObject <String>> getAllChanged ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aChanged.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aChanged.values ()));
   }
 
   @Nonnegative
   public final int getChangedCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aChanged.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aChanged.size ());
   }
 
   public final boolean containsChanged (@Nonnull final ITypedObject <String> aObj)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      // linear scanning :(
-      return m_aChanged.containsKey (aObj.getID ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    // linear scanning :(
+    return m_aRWLock.readLocked ( () -> m_aChanged.containsKey (aObj.getID ()));
   }
 
   public final void registerFailed (final String sID)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_aFailed.add (sID);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -204,50 +138,24 @@ public class BulkImportResult implements ISuccessIndicator
   @ReturnsMutableCopy
   public final List <String> getAllFailed ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aFailed);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aFailed));
   }
 
   @Nonnegative
   public final int getFailedCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aFailed.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aFailed.size ());
   }
 
   public final boolean containsFailed (@Nullable final String sID)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      // linear scanning :(
-      return m_aFailed.contains (sID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    // linear scanning :(
+    return m_aRWLock.readLocked ( () -> m_aFailed.contains (sID));
   }
 
   public final void addWarning (final String sWarningMsg)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       if (m_aWarnings.size () < m_nMaxWarnings)
       {
         if (false)
@@ -256,26 +164,14 @@ public class BulkImportResult implements ISuccessIndicator
       }
       else
         m_nAdditionalWarnings++;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public final List <String> getAllWarnings ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aWarnings);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aWarnings));
   }
 
   /**
@@ -284,28 +180,14 @@ public class BulkImportResult implements ISuccessIndicator
   @Nonnegative
   public final int getWarningsCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aWarnings.size () + m_nAdditionalWarnings;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aWarnings.size () + m_nAdditionalWarnings);
   }
 
   public final void setSuccess (final boolean bSuccess)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_bSuccess = bSuccess;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -317,25 +199,6 @@ public class BulkImportResult implements ISuccessIndicator
   @Override
   public final boolean isSuccess ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_bSuccess;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  /**
-   * Indicates, that the overall import failed.
-   *
-   * @return Inverse of {@link #isSuccess()}
-   */
-  @Override
-  public final boolean isFailure ()
-  {
-    return !isSuccess ();
+    return m_aRWLock.readLocked ( () -> m_bSuccess);
   }
 }

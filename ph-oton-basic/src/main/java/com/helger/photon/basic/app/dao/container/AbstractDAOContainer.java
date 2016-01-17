@@ -58,32 +58,20 @@ public abstract class AbstractDAOContainer implements IDAOContainer
 
   public final void beginWithoutAutoSave ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       for (final IDAO aDAO : getAllContainedDAOs ())
         if (aDAO != null)
           aDAO.beginWithoutAutoSave ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public final void endWithoutAutoSave ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       for (final IDAO aDAO : getAllContainedDAOs ())
         if (aDAO != null)
           aDAO.endWithoutAutoSave ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public final void performWithoutAutoSave (@Nonnull final INonThrowingRunnable aRunnable)

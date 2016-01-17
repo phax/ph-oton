@@ -73,7 +73,7 @@ public class GoMappingManager extends AbstractSimpleDAO
   private static final Logger s_aLogger = LoggerFactory.getLogger (GoMappingManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final Map <String, GoMappingItem> m_aMap = new HashMap <String, GoMappingItem> ();
+  private final Map <String, GoMappingItem> m_aMap = new HashMap <> ();
 
   public GoMappingManager (@Nullable final String sFilename) throws DAOException
   {
@@ -167,20 +167,17 @@ public class GoMappingManager extends AbstractSimpleDAO
 
   public void reload ()
   {
-    m_aRWLock.writeLock ().lock ();
     try
     {
-      m_aMap.clear ();
-      initialRead ();
-      s_aLogger.info ("Reloaded " + m_aMap.size () + " go-mappings!");
+      m_aRWLock.writeLockedThrowing ( () -> {
+        m_aMap.clear ();
+        initialRead ();
+        s_aLogger.info ("Reloaded " + m_aMap.size () + " go-mappings!");
+      });
     }
     catch (final DAOException ex)
     {
       throw new IllegalStateException ("Failed to reload go-mappings", ex);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
     }
   }
 
@@ -200,20 +197,14 @@ public class GoMappingManager extends AbstractSimpleDAO
 
     final String sRealKey = _unifyKey (aItem.getKey ());
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       if (m_aMap.containsKey (sRealKey))
         return EChange.UNCHANGED;
 
       _addItem (aItem, false);
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return EChange.CHANGED;
+      return EChange.CHANGED;
+    });
   }
 
   @Nonnull
@@ -230,19 +221,13 @@ public class GoMappingManager extends AbstractSimpleDAO
   {
     ValueEnforcer.notNull (aItem, "Item");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       // Allow overwrite
       if (_addItem (aItem, true).isUnchanged ())
         return EChange.UNCHANGED;
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return EChange.CHANGED;
+      return EChange.CHANGED;
+    });
   }
 
   @Nonnull
@@ -253,36 +238,24 @@ public class GoMappingManager extends AbstractSimpleDAO
 
     final String sRealKey = _unifyKey (sKey);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       if (m_aMap.remove (sRealKey) == null)
         return EChange.UNCHANGED;
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return EChange.CHANGED;
+      return EChange.CHANGED;
+    });
   }
 
   @Nonnull
   public EChange removeAllItems ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       if (m_aMap.isEmpty ())
         return EChange.UNCHANGED;
       m_aMap.clear ();
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return EChange.CHANGED;
+      return EChange.CHANGED;
+    });
   }
 
   public boolean containsItemWithKey (@Nullable final String sKey)
@@ -292,15 +265,7 @@ public class GoMappingManager extends AbstractSimpleDAO
 
     final String sRealKey = _unifyKey (sKey);
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.containsKey (sRealKey);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sRealKey));
   }
 
   @Nullable
@@ -311,44 +276,20 @@ public class GoMappingManager extends AbstractSimpleDAO
 
     final String sRealKey = _unifyKey (sKey);
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.get (sRealKey);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sRealKey));
   }
 
   @Nonnegative
   public int getItemCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.size ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Map <String, GoMappingItem> getAllItems ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newMap (m_aMap);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newMap (m_aMap));
   }
 
   /**
@@ -363,9 +304,7 @@ public class GoMappingManager extends AbstractSimpleDAO
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
     final IRequestManager aARM = ApplicationRequestManager.getRequestMgr ();
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    m_aRWLock.readLocked ( () -> {
       int nCount = 0;
       for (final GoMappingItem aItem : m_aMap.values ())
         if (aItem.isInternal ())
@@ -380,11 +319,7 @@ public class GoMappingManager extends AbstractSimpleDAO
           }
         }
       s_aLogger.info ("Successfully checked " + nCount + " internal go-mappings for consistency");
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   @Override

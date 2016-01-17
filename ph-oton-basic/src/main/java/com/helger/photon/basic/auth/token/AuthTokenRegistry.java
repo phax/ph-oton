@@ -62,17 +62,11 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
     final AuthToken aToken = new AuthToken (aIdentification, nExpirationSeconds);
     final String sTokenID = aToken.getID ();
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       if (m_aMap.containsKey (sTokenID))
         throw new IllegalArgumentException ("Token '" + sTokenID + "' already contained");
       m_aMap.put (sTokenID, aToken);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
 
     return aToken;
   }
@@ -80,9 +74,7 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
   @Nonnull
   public ESuccess removeToken (@Nonnull final String sTokenID)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       final AuthToken aToken = m_aMap.remove (sTokenID);
       if (aToken == null)
         return ESuccess.FAILURE;
@@ -91,11 +83,7 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
       // has a reference to the token
       aToken.setExpired ();
       return ESuccess.SUCCESS;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nullable
@@ -104,16 +92,10 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
     if (StringHelper.hasNoText (sTokenID))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    return m_aRWLock.readLocked ( () -> {
       final AuthToken aToken = m_aMap.get (sTokenID);
       return aToken != null && !aToken.isExpired () ? aToken : null;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   @Nullable
@@ -129,16 +111,10 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
     if (aToken == null)
       return null;
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       aToken.updateLastAccess ();
       return aToken;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -155,17 +131,11 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
     ValueEnforcer.notNull (aSubject, "Subject");
 
     final List <IAuthToken> ret = new ArrayList <> ();
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    m_aRWLock.readLocked ( () -> {
       for (final AuthToken aToken : m_aMap.values ())
         if (aToken.getIdentification ().getSubject ().equals (aSubject))
           ret.add (aToken);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
     return ret;
   }
 
@@ -184,17 +154,11 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
     // get all token IDs matching a given subject
     // Note: required IAuthSubject to implement equals!
     final List <String> aDelTokenIDs = new ArrayList <> ();
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    m_aRWLock.readLocked ( () -> {
       for (final Map.Entry <String, AuthToken> aEntry : m_aMap.entrySet ())
         if (aEntry.getValue ().getIdentification ().getSubject ().equals (aSubject))
           aDelTokenIDs.add (aEntry.getKey ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
 
     for (final String sDelTokenID : aDelTokenIDs)
       removeToken (sDelTokenID);

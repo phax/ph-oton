@@ -116,15 +116,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
   @SuppressWarnings ("javadoc")
   public final boolean isReadEveryTime ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_bReadEveryTime;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_bReadEveryTime);
   }
 
   /**
@@ -139,15 +131,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
   @Nonnull
   public final AbstractWebPageResourceContent <WPECTYPE> setReadEveryTime (final boolean bReadEveryTime)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      m_bReadEveryTime = bReadEveryTime;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    m_aRWLock.writeLocked ( () -> m_bReadEveryTime = bReadEveryTime);
     return this;
   }
 

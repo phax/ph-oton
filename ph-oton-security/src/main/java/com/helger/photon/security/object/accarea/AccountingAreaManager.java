@@ -150,16 +150,10 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                                                sCommercialCourt,
                                                                aDisplayLocale);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       _addAccountingArea (aAccountingArea);
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     AuditHelper.onAuditCreateSuccess (AccountingArea.OT,
                                       aAccountingArea.getID (),
                                       sDisplayName,
@@ -320,35 +314,21 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   @ReturnsMutableCopy
   public Collection <? extends IAccountingArea> getAllAccountingAreas ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aMap.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Collection <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final String sClientID)
   {
-    final List <IAccountingArea> ret = new ArrayList <IAccountingArea> ();
+    final List <IAccountingArea> ret = new ArrayList <> ();
     if (StringHelper.hasText (sClientID))
     {
-      m_aRWLock.readLock ().lock ();
-      try
-      {
+      m_aRWLock.readLocked ( () -> {
         for (final IAccountingArea aAccountingArea : m_aMap.values ())
           if (aAccountingArea.getClientID ().equals (sClientID))
             ret.add (aAccountingArea);
-      }
-      finally
-      {
-        m_aRWLock.readLock ().unlock ();
-      }
+      });
     }
     return ret;
   }
@@ -357,20 +337,14 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   @ReturnsMutableCopy
   public Collection <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final IClient aClient)
   {
-    final List <IAccountingArea> ret = new ArrayList <IAccountingArea> ();
+    final List <IAccountingArea> ret = new ArrayList <> ();
     if (aClient != null)
     {
-      m_aRWLock.readLock ().lock ();
-      try
-      {
+      m_aRWLock.readLocked ( () -> {
         for (final IAccountingArea aAccountingArea : m_aMap.values ())
           if (aAccountingArea.hasSameClient (aClient))
             ret.add (aAccountingArea);
-      }
-      finally
-      {
-        m_aRWLock.readLock ().unlock ();
-      }
+      });
     }
     return ret;
   }
@@ -379,20 +353,14 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   @ReturnsMutableCopy
   public Collection <String> getAllAccountingAreaIDsOfClient (@Nullable final String sClientID)
   {
-    final List <String> ret = new ArrayList <String> ();
+    final List <String> ret = new ArrayList <> ();
     if (StringHelper.hasText (sClientID))
     {
-      m_aRWLock.readLock ().lock ();
-      try
-      {
+      m_aRWLock.readLocked ( () -> {
         for (final IAccountingArea aAccountingArea : m_aMap.values ())
           if (aAccountingArea.getClientID ().equals (sClientID))
             ret.add (aAccountingArea.getID ());
-      }
-      finally
-      {
-        m_aRWLock.readLock ().unlock ();
-      }
+      });
     }
     return ret;
   }
@@ -401,20 +369,14 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   @ReturnsMutableCopy
   public Collection <String> getAllAccountingAreaIDsOfClient (@Nullable final IClient aClient)
   {
-    final List <String> ret = new ArrayList <String> ();
+    final List <String> ret = new ArrayList <> ();
     if (aClient != null)
     {
-      m_aRWLock.readLock ().lock ();
-      try
-      {
+      m_aRWLock.readLocked ( () -> {
         for (final IAccountingArea aAccountingArea : m_aMap.values ())
           if (aAccountingArea.hasSameClient (aClient))
             ret.add (aAccountingArea.getID ());
-      }
-      finally
-      {
-        m_aRWLock.readLock ().unlock ();
-      }
+      });
     }
     return ret;
   }
@@ -425,15 +387,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
     if (StringHelper.hasNoText (sID))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.get (sID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sID));
   }
 
   @Nullable
@@ -455,15 +409,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
     if (StringHelper.hasNoText (sID))
       return false;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.containsKey (sID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sID));
   }
 
   public boolean containsAccountingAreaWithID (@Nullable final String sID, @Nullable final IClient aClient)
@@ -474,20 +420,14 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   @Nullable
   public IAccountingArea getAccountingAreaOfName (@Nullable final String sName, @Nullable final IClient aClient)
   {
-    if (StringHelper.hasText (sName) && aClient != null)
-    {
-      m_aRWLock.readLock ().lock ();
-      try
+    return m_aRWLock.readLocked ( () -> {
+      if (StringHelper.hasText (sName) && aClient != null)
       {
         for (final IAccountingArea aAccountingArea : m_aMap.values ())
           if (aAccountingArea.hasSameClient (aClient) && aAccountingArea.getDisplayName ().equals (sName))
             return aAccountingArea;
       }
-      finally
-      {
-        m_aRWLock.readLock ().unlock ();
-      }
-    }
-    return null;
+      return null;
+    });
   }
 }

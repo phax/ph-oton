@@ -50,7 +50,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
   private static final Logger s_aLogger = LoggerFactory.getLogger (CSRFManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final Set <String> m_aNonces = new HashSet <String> ();
+  private final Set <String> m_aNonces = new HashSet <> ();
 
   @Deprecated
   @UsedViaReflection
@@ -73,9 +73,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
   @Nonempty
   public String createNewNonce ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       String sNonce;
       int nCount = 0;
       do
@@ -90,27 +88,17 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
           throw new IllegalStateException ("Failed to create a unique nonce after " + nCount + " tries!");
       } while (!m_aNonces.add (sNonce));
       return sNonce;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public void removeNonce (@Nonnull @Nonempty final String sNonce)
   {
     ValueEnforcer.notEmpty (sNonce, "Nonce");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       if (!m_aNonces.remove (sNonce))
         s_aLogger.error ("Failed to remove nonce '" + sNonce + "'");
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   public boolean isValidNonce (@Nullable final String sNonce)
@@ -118,43 +106,19 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
     if (StringHelper.hasNoText (sNonce))
       return false;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aNonces.contains (sNonce);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aNonces.contains (sNonce));
   }
 
   @Nonnegative
   public int getNonceCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aNonces.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aNonces.size ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Set <String> getAllNonces ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newSet (m_aNonces);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aNonces));
   }
 }

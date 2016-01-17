@@ -71,15 +71,9 @@ public final class ForcedRedirectManager extends AbstractSessionWebSingleton
   public void createForcedRedirect (@Nonnull final ForcedRedirectException ex)
   {
     ValueEnforcer.notNull (ex, "Exception");
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_aMap.put (ex.getSourceMenuItemID (), ex.getContent ());
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
 
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Creating forced redirect from '" +
@@ -143,24 +137,13 @@ public final class ForcedRedirectManager extends AbstractSessionWebSingleton
     if (StringHelper.hasNoText (sMenuItemID))
       return null;
 
-    IHCNode ret;
-
-    // Get only
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      // Get again in write lock
-      ret = m_aMap.remove (sMenuItemID);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-
+    // Get in write lock
+    final IHCNode ret = m_aRWLock.writeLocked ( () -> m_aMap.remove (sMenuItemID));
     if (ret != null)
       if (s_aLogger.isDebugEnabled ())
         s_aLogger.debug ("Removed content of last forced redirect from '" + sMenuItemID + "'");
     return ret;
+
   }
 
   @Nullable

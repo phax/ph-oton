@@ -107,12 +107,10 @@ public class AsynchronousAuditor extends AbstractAuditor
   @Nonnull
   public EChange stop ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    if (m_aRWLock.writeLocked ( () -> {
       // Check if the thread pool is already shut down
       if (m_aSenderThreadPool.isShutdown ())
-        return EChange.UNCHANGED;
+        return true;
 
       // don't take any more actions
       m_aSenderThreadPool.shutdown ();
@@ -123,10 +121,10 @@ public class AsynchronousAuditor extends AbstractAuditor
       final int nQueueLength = m_aCollector.getQueueLength ();
       if (nQueueLength > 0)
         s_aLogger.info ("Stopping auditor queues with " + nQueueLength + " items");
-    }
-    finally
+      return false;
+    }))
     {
-      m_aRWLock.writeLock ().unlock ();
+      return EChange.UNCHANGED;
     }
 
     // Don't wait in a writeLock!

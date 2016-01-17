@@ -40,7 +40,6 @@ import com.helger.photon.basic.app.menu.IMenuObjectFilter;
  * @author Philip Helger
  */
 @NotThreadSafe
-@Deprecated
 public abstract class AbstractMenuObjectFilterCollection extends AbstractMenuObjectFilter
                                                          implements Iterable <IMenuObjectFilter>
 {

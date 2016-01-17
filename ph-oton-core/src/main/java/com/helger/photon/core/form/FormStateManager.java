@@ -62,16 +62,10 @@ public final class FormStateManager extends AbstractSessionWebSingleton
   {
     ValueEnforcer.notNull (aFormState, "FormState");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       m_aMap.put (aFormState.getFlowID (), aFormState);
       m_bAtLeastOnceAFormState = true;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
 
     if (GlobalDebug.isDebugMode ())
       s_aLogger.info ("Saved form state: " + aFormState.toString ());
@@ -81,88 +75,42 @@ public final class FormStateManager extends AbstractSessionWebSingleton
 
   public boolean containedOnceAFormState ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_bAtLeastOnceAFormState;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_bAtLeastOnceAFormState);
   }
 
   public boolean containsAnySavedFormState ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return !m_aMap.isEmpty ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> !m_aMap.isEmpty ());
   }
 
   @Nullable
   public FormState getFormStateOfID (@Nullable final String sFlowID)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.get (sFlowID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sFlowID));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Collection <FormState> getAllFormStates ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aMap.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
   }
 
   @Nonnull
   public EChange deleteFormState (@Nonnull final String sFlowID)
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      return EChange.valueOf (m_aMap.remove (sFlowID) != null);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    return m_aRWLock.writeLocked ( () -> EChange.valueOf (m_aMap.remove (sFlowID) != null));
   }
 
   @Nonnull
   public EChange deleteAllFormStates ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    return m_aRWLock.writeLocked ( () -> {
       if (m_aMap.isEmpty ())
         return EChange.UNCHANGED;
       m_aMap.clear ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    return EChange.CHANGED;
+      return EChange.CHANGED;
+    });
   }
 
   @Override

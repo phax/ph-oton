@@ -233,75 +233,32 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
 
   public boolean hasAnyClient ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return !m_aMap.isEmpty ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> !m_aMap.isEmpty ());
   }
 
   public boolean hasAnyClientExceptGlobal ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      for (final IClient aClient : m_aMap.values ())
-        if (!aClient.isGlobalClient ())
-          return true;
-      return false;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.containsAny (m_aMap.values (), c -> !c.isGlobalClient ()));
   }
 
   @Nonnegative
   public int getClientCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.size ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Collection <? extends IClient> getAllClients ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aMap.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Set <String> getAllClientIDs ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newSet (m_aMap.keySet ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aMap.keySet ()));
   }
 
   @Nullable
@@ -310,15 +267,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
     if (StringHelper.hasNoText (sID))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.get (sID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sID));
   }
 
   @Nullable
@@ -333,15 +282,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
     if (StringHelper.hasNoText (sID))
       return false;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.containsKey (sID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sID));
   }
 
   /**
@@ -354,19 +295,13 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
    */
   public boolean containsAllClientsWithID (@Nullable final Collection <String> aIDs)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    return m_aRWLock.readLocked ( () -> {
       if (aIDs != null)
         for (final String sClientID : aIDs)
           if (!m_aMap.containsKey (sClientID))
             return false;
       return true;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   @Override

@@ -60,63 +60,35 @@ public final class BootstrapCustomConfig
   {
     ValueEnforcer.notEmptyNoNullValue (aCSSPathProvider, "CSSPathProvider");
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aCSS.clear ();
       for (final ICSSPathProvider aPP : aCSSPathProvider)
         s_aCSS.add (aPP);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
   @Nonempty
   public static List <ICSSPathProvider> getAllBootstrapCSS ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (s_aCSS);
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> CollectionHelper.newList (s_aCSS));
   }
 
   public static void setBootstrapJS (@Nonnull @Nonempty final IJSPathProvider... aJSPathProvider)
   {
     ValueEnforcer.notEmptyNoNullValue (aJSPathProvider, "JSPathProvider");
 
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
+    s_aRWLock.writeLocked ( () -> {
       s_aJS.clear ();
       for (final IJSPathProvider aPP : aJSPathProvider)
         s_aJS.add (aPP);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Nonnull
   @Nonempty
   public static List <IJSPathProvider> getAllBootstrapJS ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (s_aJS);
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> CollectionHelper.newList (s_aJS));
   }
 }

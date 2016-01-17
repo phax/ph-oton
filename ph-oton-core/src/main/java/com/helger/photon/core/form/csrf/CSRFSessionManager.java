@@ -57,19 +57,13 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
   {
     // Remove the nonce to avoid it is reused
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       // May be null on global shutdown
       final CSRFManager aMgr = CSRFManager.getInstanceIfInstantiated ();
       if (aMgr != null)
         aMgr.removeNonce (m_sNonce);
       m_sNonce = null;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -79,15 +73,7 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   @Nonempty
   public String getNonce ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_sNonce;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_sNonce);
   }
 
   /**
@@ -112,16 +98,10 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   public void generateNewNonce ()
   {
     final CSRFManager aCSRFMgr = CSRFManager.getInstance ();
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       aCSRFMgr.removeNonce (m_sNonce);
       m_sNonce = aCSRFMgr.createNewNonce ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Override

@@ -32,7 +32,6 @@ import com.helger.photon.basic.app.menu.IMenuObjectFilter;
  * @author Philip Helger
  */
 @NotThreadSafe
-@Deprecated
 public class MenuObjectFilterListAll extends AbstractMenuObjectFilterCollection
 {
   private void _init ()

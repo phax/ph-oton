@@ -105,9 +105,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
     ValueEnforcer.notEmpty (sFieldName, "FieldName");
     ValueEnforcer.notNull (aUDO, "UDO");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       // Remove an eventually existing old UDO with the same filename - avoid
       // bloating the list
       final TemporaryUserDataObject aOldUDO = m_aMap.remove (sFieldName);
@@ -116,11 +114,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
 
       // Add the new one
       m_aMap.put (sFieldName, aUDO);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -138,12 +132,10 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   @ReturnsMutableCopy
   public Map <String, UserDataObject> confirmUploadedFiles (@Nullable final String... aFieldNames)
   {
-    final Map <String, UserDataObject> ret = new LinkedHashMap <String, UserDataObject> ();
+    final Map <String, UserDataObject> ret = new LinkedHashMap <> ();
     if (aFieldNames != null)
     {
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
+      m_aRWLock.writeLocked ( () -> {
         for (final String sFieldName : aFieldNames)
         {
           // Remove an eventually existing old UDO
@@ -155,11 +147,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
             ret.put (sFieldName, new UserDataObject (aUDO.getPath ()));
           }
         }
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
+      });
     }
     return ret;
   }
@@ -176,10 +164,8 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   @Nullable
   public UserDataObject confirmUploadedFile (@Nullable final String sFieldName)
   {
-    if (StringHelper.hasText (sFieldName))
-    {
-      m_aRWLock.writeLock ().lock ();
-      try
+    return m_aRWLock.writeLocked ( () -> {
+      if (StringHelper.hasNoText (sFieldName))
       {
         // Remove an eventually existing old UDO
         final TemporaryUserDataObject aUDO = m_aMap.remove (sFieldName);
@@ -190,12 +176,8 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
           return new UserDataObject (aUDO.getPath ());
         }
       }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
-    }
-    return null;
+      return null;
+    });
   }
 
   /**
@@ -212,12 +194,10 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   @ReturnsMutableCopy
   public List <String> cancelUploadedFiles (@Nullable final String... aFieldNames)
   {
-    final List <String> ret = new ArrayList <String> ();
+    final List <String> ret = new ArrayList <> ();
     if (ArrayHelper.isNotEmpty (aFieldNames))
     {
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
+      m_aRWLock.writeLocked ( () -> {
         for (final String sFieldName : aFieldNames)
         {
           final TemporaryUserDataObject aUDO = m_aMap.remove (sFieldName);
@@ -227,11 +207,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
             ret.add (sFieldName);
           }
         }
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
+      });
     }
     return ret;
   }
@@ -249,15 +225,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
     if (StringHelper.hasNoText (sFieldName))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.get (sFieldName);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sFieldName));
   }
 
   /**
@@ -266,15 +234,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   @Nonnegative
   public int getUploadedFileCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.size ());
   }
 
   @Override

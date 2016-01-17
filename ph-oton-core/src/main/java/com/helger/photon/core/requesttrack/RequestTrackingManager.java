@@ -83,15 +83,7 @@ public final class RequestTrackingManager
 
   public boolean isLongRunningCheckEnabled ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_bLongRunningCheckEnabled;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_bLongRunningCheckEnabled);
   }
 
   @Nonnull
@@ -108,15 +100,7 @@ public final class RequestTrackingManager
   @Nonnegative
   public long getNotificationMilliseconds ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_nLongRunningMilliSeconds;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_nLongRunningMilliSeconds);
   }
 
   @Nonnull
@@ -130,15 +114,7 @@ public final class RequestTrackingManager
 
   public boolean isParallelRunningRequestCheckEnabled ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_bParallelRunningRequestCheckEnabled;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_bParallelRunningRequestCheckEnabled);
   }
 
   @Nonnull
@@ -155,15 +131,7 @@ public final class RequestTrackingManager
   @Nonnegative
   public int getParallelRunningRequestBarrier ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_nParallelRunningRequestBarrier;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_nParallelRunningRequestBarrier);
   }
 
   public void addRequest (@Nonnull @Nonempty final String sRequestID,
@@ -212,10 +180,7 @@ public final class RequestTrackingManager
   public void removeRequest (@Nonnull @Nonempty final String sRequestID,
                              @Nonnull final CallbackList <IParallelRunningRequestCallback> aCallbacks)
   {
-    boolean bNotifyOnParallelRequestsBelowLimit = false;
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    if (m_aRWLock.writeLocked ( () -> {
       if (m_aOpenRequests.remove (sRequestID) == null)
       {
         // Should never happen
@@ -227,15 +192,10 @@ public final class RequestTrackingManager
       {
         // Back to normal!
         m_bParallelRunningRequestsAboveLimit = false;
-        bNotifyOnParallelRequestsBelowLimit = true;
+        return true;
       }
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-
-    if (bNotifyOnParallelRequestsBelowLimit)
+      return false;
+    }))
     {
       // Invoke callbacks "below limit again"
       try

@@ -92,7 +92,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
 
   private final Locale m_aDefaultLocale;
   @GuardedBy ("m_aRWLock")
-  private final Map <Locale, ContentPerLocale> m_aContent = new HashMap <Locale, ContentPerLocale> ();
+  private final Map <Locale, ContentPerLocale> m_aContent = new HashMap <> ();
 
   /**
    * This callback is called after the HTML content was successfully read
@@ -178,9 +178,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     if (aLocale == null)
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    return m_aRWLock.readLocked ( () -> {
       // Determine locale to use
       final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrNull (aLocale, m_aContent.keySet ());
       if (aLocaleToUse == null)
@@ -193,11 +191,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
         return null;
       }
       return aContent.getContainerClone ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -210,9 +204,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
   @Override
   public void updateFromResource ()
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       for (final Map.Entry <Locale, ContentPerLocale> aEntry : m_aContent.entrySet ())
       {
         final Locale aLocale = aEntry.getKey ();
@@ -222,11 +214,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
         // And update object on the fly
         aContent.setContainer (aCont);
       }
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Override
@@ -236,10 +224,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final boolean bReadFromResource = isReadEveryTime ();
 
-    final IMicroNode aNode;
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    final IMicroNode aNode = m_aRWLock.readLocked ( () -> {
       // Use the default locale as fallback, since we ensured that the default
       // locale is contained!
       final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrFallback (aDisplayLocale,
@@ -253,13 +238,9 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
                                          aDisplayLocale +
                                          " in page " +
                                          getID ());
-      aNode = bReadFromResource ? _readFromResource (aLocaleToUse, aContent.getResource ())
-                                : aContent.getContainerClone ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+      return bReadFromResource ? _readFromResource (aLocaleToUse, aContent.getResource ())
+                               : aContent.getContainerClone ();
+    });
 
     aNodeList.addChild (new HCDOMWrapper (aNode));
   }

@@ -384,15 +384,9 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
     // Write once at the end
     if (bCreatedAnyBundle)
     {
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
+      m_aRWLock.writeLocked ( () -> {
         markAsChanged ();
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
+      });
     }
 
     return ret;

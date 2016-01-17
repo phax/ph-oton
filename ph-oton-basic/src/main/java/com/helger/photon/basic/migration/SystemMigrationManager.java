@@ -97,16 +97,10 @@ public class SystemMigrationManager extends AbstractSimpleDAO
   {
     ValueEnforcer.notNull (aMigrationResult, "MigrationResult");
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       internalAdd (aMigrationResult);
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
 
     AuditHelper.onAuditCreateSuccess (OT_SYSTEM_MIGRATION_RESULT,
                                       aMigrationResult.getID (),
