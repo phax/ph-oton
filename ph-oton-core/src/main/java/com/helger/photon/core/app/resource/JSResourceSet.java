@@ -188,22 +188,12 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   {
     ValueEnforcer.notNull (aTarget, "Target");
 
-    m_aRWLock.readLocked ( () -> {
-      aTarget.addAll (m_aList);
-    });
+    m_aRWLock.readLocked ( () -> aTarget.addAll (m_aList));
   }
 
   public boolean isEmpty ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aList.isEmpty ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aList.isEmpty ());
   }
 
   public boolean isNotEmpty ()
@@ -214,15 +204,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   @Nonnegative
   public int getCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aList.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aList.size ());
   }
 
   @Nonnull

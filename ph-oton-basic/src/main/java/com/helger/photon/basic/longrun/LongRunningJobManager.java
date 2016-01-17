@@ -113,15 +113,7 @@ public final class LongRunningJobManager
   @Nonnegative
   public int getRunningJobCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aRunningJobs.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aRunningJobs.size ());
   }
 
   @Nonnull

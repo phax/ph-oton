@@ -81,15 +81,7 @@ public class ThreadDescriptor implements IHasStringRepresentation, IHasMicroNode
 
   public static boolean isEnableThreadInfo ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_bEnableThreadInfo;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_bEnableThreadInfo);
   }
 
   public ThreadDescriptor (@Nonnull final Thread aThread, @Nullable final String sStackTrace)

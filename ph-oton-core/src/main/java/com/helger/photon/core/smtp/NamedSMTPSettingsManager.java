@@ -63,22 +63,12 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
 
   public static boolean isCreateDefaults ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_bCreateDefaults;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_bCreateDefaults);
   }
 
   public static void setCreateDefaults (final boolean bCreateDefaults)
   {
-    s_aRWLock.writeLocked ( () -> {
-      s_bCreateDefaults = bCreateDefaults;
-    });
+    s_aRWLock.writeLocked ( () -> s_bCreateDefaults = bCreateDefaults);
   }
 
   public NamedSMTPSettingsManager (@Nonnull @Nonempty final String sFilename) throws DAOException
@@ -146,28 +136,12 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
   @Nonnegative
   public int getSize ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.size ());
   }
 
   public boolean isEmpty ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.isEmpty ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.isEmpty ());
   }
 
   /**
@@ -193,15 +167,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
     if (StringHelper.hasNoText (sID))
       return false;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.containsKey (sID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sID));
   }
 
   /**

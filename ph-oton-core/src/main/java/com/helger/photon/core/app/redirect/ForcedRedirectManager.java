@@ -89,15 +89,7 @@ public final class ForcedRedirectManager extends AbstractSessionWebSingleton
       return null;
 
     // Get only
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.get (sMenuItemID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sMenuItemID));
   }
 
   public boolean hasContent (@Nullable final String sMenuItemID)
@@ -106,15 +98,7 @@ public final class ForcedRedirectManager extends AbstractSessionWebSingleton
       return false;
 
     // Get only
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.get (sMenuItemID) != null;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sMenuItemID) != null);
   }
 
   @Nullable

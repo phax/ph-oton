@@ -151,15 +151,7 @@ public final class PhotonPathMapper
    */
   public static boolean containsMappings ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return !s_aMap.isEmpty ();
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> !s_aMap.isEmpty ());
   }
 
   /**

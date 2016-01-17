@@ -100,43 +100,19 @@ public final class SystemMessageManager extends AbstractSimpleDAO
   @Nullable
   public LocalDateTime getLastUpdateDT ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aLastUpdate;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aLastUpdate);
   }
 
   @Nonnull
   public ESystemMessageType getMessageType ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_eMessageType;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_eMessageType);
   }
 
   @Nullable
   public String getSystemMessage ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_sMessage;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_sMessage);
   }
 
   public boolean hasSystemMessage ()

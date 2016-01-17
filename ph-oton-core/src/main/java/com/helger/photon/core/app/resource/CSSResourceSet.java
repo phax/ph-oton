@@ -194,15 +194,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
 
   public boolean isEmpty ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aList.isEmpty ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aList.isEmpty ());
   }
 
   public boolean isNotEmpty ()
@@ -213,15 +205,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   @Nonnegative
   public int getCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aList.size ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aList.size ());
   }
 
   @Nonnull

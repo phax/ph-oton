@@ -100,22 +100,12 @@ public final class UserDataManager
    */
   public static void setServletContextIO (final boolean bServletContextIO)
   {
-    s_aRWLock.writeLocked ( () -> {
-      s_bServletContextIO = bServletContextIO;
-    });
+    s_aRWLock.writeLocked ( () -> s_bServletContextIO = bServletContextIO);
   }
 
   public static boolean isServletContextIO ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_bServletContextIO;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_bServletContextIO);
   }
 
   /**

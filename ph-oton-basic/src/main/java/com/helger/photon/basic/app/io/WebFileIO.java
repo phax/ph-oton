@@ -118,15 +118,7 @@ public final class WebFileIO
    */
   public static boolean isInited ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aDataPath != null;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_aDataPath != null);
   }
 
   /**

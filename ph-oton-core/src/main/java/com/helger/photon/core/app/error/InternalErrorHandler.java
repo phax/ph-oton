@@ -268,22 +268,12 @@ public final class InternalErrorHandler
    */
   public static void setEnableFullThreadDumps (final boolean bEnableFullThreadDumps)
   {
-    s_aRWLock.writeLocked ( () -> {
-      s_bEnableFullThreadDumps = bEnableFullThreadDumps;
-    });
+    s_aRWLock.writeLocked ( () -> s_bEnableFullThreadDumps = bEnableFullThreadDumps);
   }
 
   public static boolean isEnableFullThreadDumps ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_bEnableFullThreadDumps;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_bEnableFullThreadDumps);
   }
 
   /**

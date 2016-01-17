@@ -230,15 +230,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
   @ReturnsMutableCopy
   public Map <String, WebSiteResourceBundleSerialized> getAllResourceBundles ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newMap (m_aMapToBundle);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newMap (m_aMapToBundle));
   }
 
   /**
@@ -254,15 +246,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
     if (StringHelper.hasNoText (sBundleID))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMapToBundle.get (sBundleID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMapToBundle.get (sBundleID));
   }
 
   /**
@@ -278,15 +262,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
     if (StringHelper.hasNoText (sBundleID))
       return false;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMapToBundle.containsKey (sBundleID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMapToBundle.containsKey (sBundleID));
   }
 
   @Nonnull
@@ -296,7 +272,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
   {
     ValueEnforcer.notEmptyNoNullValue (aList, "List");
 
-    final List <WebSiteResourceBundleSerialized> ret = new ArrayList <WebSiteResourceBundleSerialized> ();
+    final List <WebSiteResourceBundleSerialized> ret = new ArrayList <> ();
 
     // Create a copy for modification
     boolean bCreatedAnyBundle = false;

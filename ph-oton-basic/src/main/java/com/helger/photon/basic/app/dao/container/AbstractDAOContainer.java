@@ -41,19 +41,13 @@ public abstract class AbstractDAOContainer implements IDAOContainer
   @OverridingMethodsMustInvokeSuper
   public boolean isAutoSaveEnabled ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    return m_aRWLock.readLocked ( () -> {
       for (final IDAO aDAO : getAllContainedDAOs ())
         if (aDAO != null)
           if (aDAO.isAutoSaveEnabled ())
             return true;
       return false;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   public final void beginWithoutAutoSave ()

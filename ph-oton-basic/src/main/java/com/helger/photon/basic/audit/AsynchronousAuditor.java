@@ -85,15 +85,7 @@ public class AsynchronousAuditor extends AbstractAuditor
   @Nonnegative
   public int getQueueLength ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aCollector.getQueueLength ();
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aCollector.getQueueLength ());
   }
 
   /**

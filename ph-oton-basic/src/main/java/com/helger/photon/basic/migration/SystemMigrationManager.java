@@ -138,32 +138,18 @@ public class SystemMigrationManager extends AbstractSimpleDAO
   @ReturnsMutableCopy
   public List <SystemMigrationResult> getAllMigrationResults (@Nullable final String sMigrationID)
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aMap.get (sMigrationID));
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.get (sMigrationID)));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public List <SystemMigrationResult> getAllMigrationResultsFlattened ()
   {
-    final List <SystemMigrationResult> ret = new ArrayList <SystemMigrationResult> ();
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    final List <SystemMigrationResult> ret = new ArrayList <> ();
+    m_aRWLock.readLocked ( () -> {
       for (final List <SystemMigrationResult> aResults : m_aMap.values ())
         ret.addAll (aResults);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
     return ret;
   }
 
@@ -171,7 +157,7 @@ public class SystemMigrationManager extends AbstractSimpleDAO
   @ReturnsMutableCopy
   public List <SystemMigrationResult> getAllFailedMigrationResults (@Nullable final String sMigrationID)
   {
-    final List <SystemMigrationResult> ret = new ArrayList <SystemMigrationResult> ();
+    final List <SystemMigrationResult> ret = new ArrayList <> ();
     for (final SystemMigrationResult aMigrationResult : getAllMigrationResults (sMigrationID))
       if (aMigrationResult.isFailure ())
         ret.add (aMigrationResult);
@@ -191,15 +177,7 @@ public class SystemMigrationManager extends AbstractSimpleDAO
   @ReturnsMutableCopy
   public Set <String> getAllMigrationIDs ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newSet (m_aMap.keySet ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aMap.keySet ()));
   }
 
   /**

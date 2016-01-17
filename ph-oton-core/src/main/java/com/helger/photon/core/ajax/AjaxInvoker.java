@@ -115,15 +115,7 @@ public class AjaxInvoker implements IAjaxInvoker
   @CheckForSigned
   public long getLongRunningExecutionLimitTime ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_nLongRunningExecutionLimitTime;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_nLongRunningExecutionLimitTime);
   }
 
   public void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
@@ -161,15 +153,7 @@ public class AjaxInvoker implements IAjaxInvoker
     if (StringHelper.hasNoText (sFunctionName))
       return false;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.containsKey (sFunctionName);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sFunctionName));
   }
 
   public void registerFunction (@Nonnull final IAjaxFunctionDeclaration aFunctionDeclaration)

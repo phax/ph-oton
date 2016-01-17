@@ -62,15 +62,7 @@ public final class WebSiteResourceCache
    */
   public static boolean isCacheEnabled ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_bCacheEnabled;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return s_aRWLock.readLocked ( () -> s_bCacheEnabled);
   }
 
   /**
