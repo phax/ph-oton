@@ -19,7 +19,6 @@ package com.helger.photon.basic.app.dao.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -112,43 +111,18 @@ public abstract class AbstractMapBasedSimpleDAO <INTERFACETYPE extends IHasID <S
   @ReturnsMutableCopy
   public final Collection <? extends INTERFACETYPE> getAll (@Nullable final Predicate <INTERFACETYPE> aFilter)
   {
-    if (aFilter == null)
-      return getAll ();
-
-    final List <INTERFACETYPE> ret = new ArrayList <> ();
-    m_aRWLock.readLocked ( () -> {
-      for (final INTERFACETYPE aItem : m_aMap.values ())
-        if (aFilter.test (aItem))
-          ret.add (aItem);
-    });
-    return ret;
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (), aFilter));
   }
 
   @Nullable
   public final INTERFACETYPE getFirst (@Nullable final Predicate <INTERFACETYPE> aFilter)
   {
-    if (aFilter == null)
-      return CollectionHelper.getFirstElement (m_aMap.values ());
-
-    return m_aRWLock.readLocked ( () -> {
-      for (final INTERFACETYPE aItem : m_aMap.values ())
-        if (aFilter.test (aItem))
-          return aItem;
-      return null;
-    });
+    return m_aRWLock.readLocked ( () -> CollectionHelper.findFirst (m_aMap.values (), aFilter));
   }
 
   public final boolean containsAny (@Nullable final Predicate <INTERFACETYPE> aFilter)
   {
-    if (aFilter == null)
-      return !m_aMap.isEmpty ();
-
-    return m_aRWLock.readLocked ( () -> {
-      for (final INTERFACETYPE aItem : m_aMap.values ())
-        if (aFilter.test (aItem))
-          return true;
-      return false;
-    });
+    return m_aRWLock.readLocked ( () -> CollectionHelper.containsAny (m_aMap.values (), aFilter));
   }
 
   @Nullable
