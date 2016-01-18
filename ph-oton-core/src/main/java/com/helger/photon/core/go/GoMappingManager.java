@@ -19,6 +19,7 @@ package com.helger.photon.core.go;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -34,7 +35,6 @@ import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.callback.INonThrowingRunnableWithParameter;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -109,8 +109,7 @@ public class GoMappingManager extends AbstractSimpleDAO
     return EChange.CHANGED;
   }
 
-  public static void readFromXML (@Nonnull final IMicroDocument aDoc,
-                                  @Nonnull final INonThrowingRunnableWithParameter <GoMappingItem> aCallback)
+  public static void readFromXML (@Nonnull final IMicroDocument aDoc, @Nonnull final Consumer <GoMappingItem> aCallback)
   {
     ValueEnforcer.notNull (aDoc, "Doc");
     ValueEnforcer.notNull (aCallback, "Callback");
@@ -124,10 +123,10 @@ public class GoMappingManager extends AbstractSimpleDAO
       final boolean bIsEditable = StringParser.parseBool (sIsEditable, DEFAULT_EDITABLE);
 
       if (ELEMENT_EXTERNAL.equals (sTagName))
-        aCallback.run (new GoMappingItem (sKey, false, sHref, bIsEditable));
+        aCallback.accept (new GoMappingItem (sKey, false, sHref, bIsEditable));
       else
         if (ELEMENT_INTERNAL.equals (sTagName))
-          aCallback.run (new GoMappingItem (sKey, true, sHref, bIsEditable));
+          aCallback.accept (new GoMappingItem (sKey, true, sHref, bIsEditable));
         else
           s_aLogger.error ("Unsupported go-mapping tag '" + sTagName + "'");
     }
@@ -172,8 +171,8 @@ public class GoMappingManager extends AbstractSimpleDAO
       m_aRWLock.writeLockedThrowing ( () -> {
         m_aMap.clear ();
         initialRead ();
-        s_aLogger.info ("Reloaded " + m_aMap.size () + " go-mappings!");
       });
+      s_aLogger.info ("Reloaded " + m_aMap.size () + " go-mappings!");
     }
     catch (final DAOException ex)
     {
@@ -264,7 +263,6 @@ public class GoMappingManager extends AbstractSimpleDAO
       return false;
 
     final String sRealKey = _unifyKey (sKey);
-
     return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sRealKey));
   }
 
@@ -275,7 +273,6 @@ public class GoMappingManager extends AbstractSimpleDAO
       return null;
 
     final String sRealKey = _unifyKey (sKey);
-
     return m_aRWLock.readLocked ( () -> m_aMap.get (sRealKey));
   }
 
@@ -298,6 +295,8 @@ public class GoMappingManager extends AbstractSimpleDAO
    *
    * @param aMenuTree
    *        The menu tree to search. May not be <code>null</code>.
+   * @throws IllegalStateException
+   *         If at least one menu item is not present
    */
   public void checkInternalMappings (@Nonnull final IMenuTree aMenuTree)
   {
@@ -310,7 +309,7 @@ public class GoMappingManager extends AbstractSimpleDAO
         if (aItem.isInternal ())
         {
           // Get value of "menu item" parameter and check for existence
-          final String sParamValue = aARM.getMenuItemFromURL (aItem.getTargetURL ());
+          final String sParamValue = aARM.getMenuItemFromURL (aItem.getTargetURLReadonly ());
           if (sParamValue != null)
           {
             ++nCount;
