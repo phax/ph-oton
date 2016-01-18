@@ -34,7 +34,6 @@ import com.helger.commons.wrapper.Wrapper;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
-import com.helger.photon.core.ajax.response.AjaxHttpStatusCodeResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -134,7 +133,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
       if (s_aLogger.isTraceEnabled ())
         s_aLogger.trace ("  AJAX Result: " + aResult);
 
-      if (aResult instanceof AjaxHttpStatusCodeResponse)
+      if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
       {
         // Status codes are not meant to be cached
         aUnifiedResponse.removeCacheControl ();

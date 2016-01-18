@@ -99,7 +99,7 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
           // Main API invocation
           aAPIMgr.invoke (aInvokableDescriptor, aRequestScope, aUnifiedResponse);
 
-          if (aUnifiedResponse.hasStatusCode ())
+          if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
           {
             // Status codes are not meant to be cached
             aUnifiedResponse.removeCacheControl ();
