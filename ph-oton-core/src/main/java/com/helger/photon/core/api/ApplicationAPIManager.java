@@ -63,9 +63,9 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
   private static final IMutableStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (ApplicationAPIManager.class.getName () +
                                                                                                                            "$timer");
 
-  private final CallbackList <IAPIExceptionCallback> m_aExceptionCallbacks = new CallbackList <IAPIExceptionCallback> ();
-  private final CallbackList <IAPIBeforeExecutionCallback> m_aBeforeExecutionCallbacks = new CallbackList <IAPIBeforeExecutionCallback> ();
-  private final CallbackList <IAPIAfterExecutionCallback> m_aAfterExecutionCallbacks = new CallbackList <IAPIAfterExecutionCallback> ();
+  private final CallbackList <IAPIExceptionCallback> m_aExceptionCallbacks = new CallbackList <> ();
+  private final CallbackList <IAPIBeforeExecutionCallback> m_aBeforeExecutionCallbacks = new CallbackList <> ();
+  private final CallbackList <IAPIAfterExecutionCallback> m_aAfterExecutionCallbacks = new CallbackList <> ();
   @GuardedBy ("m_aRWLock")
   private long m_nLongRunningExecutionLimitTime = DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS;
   private final CallbackList <IAPILongRunningExecutionCallback> m_aLongRunningExecutionCallbacks = new CallbackList <IAPILongRunningExecutionCallback> ();
@@ -112,9 +112,7 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
 
   public void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
   {
-    m_aRWLock.writeLocked ( () -> {
-      m_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime;
-    });
+    m_aRWLock.writeLocked ( () -> m_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
   }
 
   @Nonnull

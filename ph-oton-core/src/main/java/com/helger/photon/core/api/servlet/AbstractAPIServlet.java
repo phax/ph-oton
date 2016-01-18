@@ -98,6 +98,12 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
         {
           // Main API invocation
           aAPIMgr.invoke (aInvokableDescriptor, aRequestScope, aUnifiedResponse);
+
+          if (aUnifiedResponse.hasStatusCode ())
+          {
+            // Status codes are not meant to be cached
+            aUnifiedResponse.removeCacheControl ();
+          }
         }
         catch (final Throwable t)
         {
