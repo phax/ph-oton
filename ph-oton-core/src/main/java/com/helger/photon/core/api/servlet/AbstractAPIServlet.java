@@ -102,7 +102,7 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
           if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
           {
             // Status codes are not meant to be cached
-            aUnifiedResponse.removeCacheControl ();
+            aUnifiedResponse.removeCaching ();
           }
         }
         catch (final Throwable t)
