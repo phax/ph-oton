@@ -33,6 +33,7 @@ import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.core.ajax.ApplicationAjaxManager;
+import com.helger.photon.core.api.ApplicationAPIManager;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
 import com.helger.photon.core.app.layout.ApplicationLayoutManager;
@@ -130,6 +131,9 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
 
         // Register all Ajax functions here
         aInitializer.initAjax (ApplicationAjaxManager.getInstance ());
+
+        // Register all API functions here
+        aInitializer.initAPI (ApplicationAPIManager.getInstance ());
 
         // All other things come last
         aInitializer.initRest ();

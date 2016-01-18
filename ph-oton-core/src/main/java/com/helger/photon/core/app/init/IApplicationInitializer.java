@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.layout.ILayoutManager;
 
@@ -38,7 +39,8 @@ public interface IApplicationInitializer <LECTYPE extends ILayoutExecutionContex
    * Init all application specific settings. This method is called before all
    * named methods afterwards.
    */
-  void initApplicationSettings ();
+  default void initApplicationSettings ()
+  {}
 
   /**
    * Init all application locales
@@ -46,7 +48,8 @@ public interface IApplicationInitializer <LECTYPE extends ILayoutExecutionContex
    * @param aLocaleMgr
    *        Locale manager to use
    */
-  void initLocales (@Nonnull ILocaleManager aLocaleMgr);
+  default void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
+  {}
 
   /**
    * Register all layout handler
@@ -54,7 +57,8 @@ public interface IApplicationInitializer <LECTYPE extends ILayoutExecutionContex
    * @param aLayoutMgr
    *        The layout manager to use
    */
-  void initLayout (@Nonnull ILayoutManager <LECTYPE> aLayoutMgr);
+  default void initLayout (@Nonnull final ILayoutManager <LECTYPE> aLayoutMgr)
+  {}
 
   /**
    * Create all menu items
@@ -62,7 +66,8 @@ public interface IApplicationInitializer <LECTYPE extends ILayoutExecutionContex
    * @param aMenuTree
    *        The menu tree to init
    */
-  void initMenu (@Nonnull IMenuTree aMenuTree);
+  default void initMenu (@Nonnull final IMenuTree aMenuTree)
+  {}
 
   /**
    * Register all ajax functions
@@ -70,11 +75,22 @@ public interface IApplicationInitializer <LECTYPE extends ILayoutExecutionContex
    * @param aAjaxInvoker
    *        The ajax invoker to use
    */
-  void initAjax (@Nonnull IAjaxInvoker aAjaxInvoker);
+  default void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
+  {}
+
+  /**
+   * Register all API functions
+   *
+   * @param aAPIInvoker
+   *        The API invoker to use
+   */
+  default void initAPI (@Nonnull final IAPIInvoker aAPIInvoker)
+  {}
 
   /**
    * Init all things for which no special method is present after the predefined
    * methods.
    */
-  void initRest ();
+  default void initRest ()
+  {}
 }

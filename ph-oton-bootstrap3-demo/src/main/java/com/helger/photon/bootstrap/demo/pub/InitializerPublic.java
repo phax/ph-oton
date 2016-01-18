@@ -25,7 +25,7 @@ import com.helger.photon.bootstrap.demo.pub.ajax.CAjaxPublic;
 import com.helger.photon.bootstrap.demo.pub.menu.MenuPublic;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
-import com.helger.photon.core.app.init.DefaultApplicationInitializer;
+import com.helger.photon.core.app.init.IApplicationInitializer;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.app.layout.ILayoutManager;
 
@@ -34,7 +34,7 @@ import com.helger.photon.core.app.layout.ILayoutManager;
  *
  * @author Philip Helger
  */
-public final class InitializerPublic extends DefaultApplicationInitializer <LayoutExecutionContext>
+public final class InitializerPublic implements IApplicationInitializer <LayoutExecutionContext>
 {
   @Override
   public void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
@@ -64,8 +64,4 @@ public final class InitializerPublic extends DefaultApplicationInitializer <Layo
     aAjaxInvoker.registerFunction (CAjaxPublic.UPDATE_MENU_VIEW);
     aAjaxInvoker.registerFunction (CAjaxPublic.DATATABLES_I18N);
   }
-
-  @Override
-  public void initRest ()
-  {}
 }
