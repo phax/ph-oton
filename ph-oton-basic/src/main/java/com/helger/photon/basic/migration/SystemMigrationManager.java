@@ -31,7 +31,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.callback.INonThrowingCallable;
-import com.helger.commons.callback.INonThrowingRunnable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.multimap.IMultiMapListBased;
 import com.helger.commons.collection.multimap.MultiHashMapArrayListBased;
@@ -192,7 +191,7 @@ public class SystemMigrationManager extends AbstractSimpleDAO
    *        The action to be performed. May not be <code>null</code>.
    */
   public void performMigrationIfNecessary (@Nonnull @Nonempty final String sMigrationID,
-                                           @Nonnull final INonThrowingRunnable aMigrationAction)
+                                           @Nonnull final Runnable aMigrationAction)
   {
     ValueEnforcer.notEmpty (sMigrationID, "MigrationID");
     ValueEnforcer.notNull (aMigrationAction, "MigrationAction");

@@ -18,6 +18,7 @@ package com.helger.photon.basic.app.menu;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,7 +28,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.callback.INonThrowingRunnableWithParameter;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.equals.EqualsHelper;
@@ -271,7 +271,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     return getItemDataWithID (sID);
   }
 
-  public void iterateAllMenuObjects (@Nonnull final INonThrowingRunnableWithParameter <IMenuObject> aCallback)
+  public void iterateAllMenuObjects (@Nonnull final Consumer <IMenuObject> aCallback)
   {
     ValueEnforcer.notNull (aCallback, "Callback");
 
@@ -280,7 +280,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
       @Override
       public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
       {
-        aCallback.run (aItem.getData ());
+        aCallback.accept (aItem.getData ());
         return EHierarchyVisitorReturn.CONTINUE;
       }
     });

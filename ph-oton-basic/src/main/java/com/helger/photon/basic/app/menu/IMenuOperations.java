@@ -17,12 +17,12 @@
 package com.helger.photon.basic.app.menu;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.callback.INonThrowingRunnableWithParameter;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.url.IHasSimpleURL;
 import com.helger.commons.url.ISimpleURL;
@@ -345,7 +345,7 @@ public interface IMenuOperations
    *        The callback to be supplied for each menu object. May not be
    *        <code>null</code>.
    */
-  void iterateAllMenuObjects (@Nonnull INonThrowingRunnableWithParameter <IMenuObject> aCallback);
+  void iterateAllMenuObjects (@Nonnull Consumer <IMenuObject> aCallback);
 
   /**
    * Replace an eventually existing menu item with the new one. The ID of the
