@@ -35,7 +35,7 @@ public final class APIDescriptorTest
   {
     final APIDescriptorList aList = new APIDescriptorList ();
     // Dummy executor
-    final IAPIExecutor aExec = (a, b, c, d) -> {};
+    final IAPIExecutor aExec = (a, b, c, d, e) -> {};
     aList.addDescriptor (new APIDescriptor (APIPath.get ("/r2o/v1/accessToken"), aExec).addRequiredParams ("token",
                                                                                                            "systemid",
                                                                                                            "client"));

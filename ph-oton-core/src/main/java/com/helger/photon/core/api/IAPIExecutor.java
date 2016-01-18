@@ -30,9 +30,12 @@ import com.helger.web.servlet.response.UnifiedResponse;
  *
  * @author Philip Helger
  */
+@FunctionalInterface
 public interface IAPIExecutor
 {
   /**
+   * @param aAPIDescriptor
+   *        The base API descriptor which is invoked. Never <code>null</code>.
    * @param sPath
    *        The invoked path by the user. Neither <code>null</code> nor empty.
    *        All potential variable elements were already resolved. The mapping
@@ -46,8 +49,10 @@ public interface IAPIExecutor
    * @param aUnifiedResponse
    *        The unified response to be filled. Never <code>null</code>.
    * @throws Exception
+   *         In case of an error
    */
-  void invokeAPI (@Nonnull @Nonempty String sPath,
+  void invokeAPI (@Nonnull IAPIDescriptor aAPIDescriptor,
+                  @Nonnull @Nonempty String sPath,
                   @Nonnull Map <String, String> aPathVariables,
                   @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
                   @Nonnull UnifiedResponse aUnifiedResponse) throws Exception;

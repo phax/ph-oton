@@ -100,7 +100,7 @@ public class APIDescriptorList
     {
       final PathMatchingResult aMatchResult = aDescriptor.getPathDescriptor ().matchesParts (aPathParts);
       if (aMatchResult.isMatch ())
-        aMatching.add (new InvokableAPIDescriptor (sSourcePath, aDescriptor, aMatchResult.getAllVariableValues ()));
+        aMatching.add (new InvokableAPIDescriptor (aDescriptor, sSourcePath, aMatchResult.getAllVariableValues ()));
     }
 
     // Now get the result

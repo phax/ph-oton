@@ -42,32 +42,41 @@ public final class InvokableAPIDescriptor
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (InvokableAPIDescriptor.class);
 
-  private final String m_sPath;
   private final IAPIDescriptor m_aDescriptor;
+  private final String m_sPath;
   private final Map <String, String> m_aPathVariables;
 
   /**
    * Constructor
    *
-   * @param sPath
-   *        The URL path requested by the user, relative to the servlet.
    * @param aDescriptor
    *        The matching {@link IAPIDescriptor}. Never <code>null</code>.
+   * @param sPath
+   *        The URL path requested by the user, relative to the servlet.
    * @param aPathVariables
    *        All resolved path variables, if the path descriptor contains
    *        variable elements.
    */
-  public InvokableAPIDescriptor (@Nonnull @Nonempty final String sPath,
-                                 @Nonnull final IAPIDescriptor aDescriptor,
+  public InvokableAPIDescriptor (@Nonnull final IAPIDescriptor aDescriptor,
+                                 @Nonnull @Nonempty final String sPath,
                                  @Nonnull final Map <String, String> aPathVariables)
   {
-    ValueEnforcer.notEmpty (sPath, "Path");
     ValueEnforcer.notNull (aDescriptor, "Descriptor");
+    ValueEnforcer.notEmpty (sPath, "Path");
     ValueEnforcer.notNull (aPathVariables, "PathVariables");
 
-    m_sPath = sPath;
     m_aDescriptor = aDescriptor;
+    m_sPath = sPath;
     m_aPathVariables = CollectionHelper.newOrderedMap (aPathVariables);
+  }
+
+  /**
+   * @return The original API descriptor. Never <code>null</code>.
+   */
+  @Nonnull
+  public IAPIDescriptor getAPIDescriptor ()
+  {
+    return m_aDescriptor;
   }
 
   /**
@@ -79,15 +88,6 @@ public final class InvokableAPIDescriptor
   public String getPath ()
   {
     return m_sPath;
-  }
-
-  /**
-   * @return The original API descriptor. Never <code>null</code>.
-   */
-  @Nonnull
-  public IAPIDescriptor getAPIDescriptor ()
-  {
-    return m_aDescriptor;
   }
 
   /**
@@ -160,14 +160,14 @@ public final class InvokableAPIDescriptor
       throw new IllegalStateException ("Failed to created API executor for: " + toString ());
 
     // Go go go
-    aExecutor.invokeAPI (m_sPath, m_aPathVariables, aRequestScope, aUnifiedResponse);
+    aExecutor.invokeAPI (m_aDescriptor, m_sPath, m_aPathVariables, aRequestScope, aUnifiedResponse);
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Path", m_sPath)
-                                       .append ("APIDescriptor", m_aDescriptor)
+    return new ToStringGenerator (this).append ("APIDescriptor", m_aDescriptor)
+                                       .append ("Path", m_sPath)
                                        .append ("PathVariables", m_aPathVariables)
                                        .toString ();
   }
