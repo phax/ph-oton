@@ -30,10 +30,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.callback.IThrowingRunnableWithParameter;
 import com.helger.commons.concurrent.ExtendedDefaultThreadFactory;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.concurrent.collector.ConcurrentCollectorMultiple;
+import com.helger.commons.concurrent.collector.IConcurrentPerformer;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
 
@@ -55,14 +55,14 @@ public class AsynchronousAuditor extends AbstractAuditor
 
   private static final class MyCollector extends ConcurrentCollectorMultiple <IAuditItem>
   {
-    public MyCollector (@Nonnull final IThrowingRunnableWithParameter <List <IAuditItem>, ? extends Throwable> aPerformer)
+    public MyCollector (@Nonnull final IConcurrentPerformer <List <IAuditItem>> aPerformer)
     {
       setPerformer (aPerformer);
     }
   }
 
   public AsynchronousAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider,
-                              @Nonnull final IThrowingRunnableWithParameter <List <IAuditItem>, ? extends Throwable> aPerformer)
+                              @Nonnull final IConcurrentPerformer <List <IAuditItem>> aPerformer)
   {
     super (aUserIDProvider);
     ValueEnforcer.notNull (aPerformer, "Performer");

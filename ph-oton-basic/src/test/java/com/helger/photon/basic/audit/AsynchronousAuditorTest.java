@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.helger.commons.callback.IThrowingRunnableWithParameter;
+import com.helger.commons.concurrent.collector.IConcurrentPerformer;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.thread.ThreadHelper;
 import com.helger.commons.type.ObjectType;
@@ -43,7 +43,7 @@ public final class AsynchronousAuditorTest
   {
     final ObjectType aOT = new ObjectType ("mock");
     final MutableInt aPerformCount = new MutableInt (0);
-    final IThrowingRunnableWithParameter <List <IAuditItem>, Exception> aPerformer = aItems -> aPerformCount.inc (aItems.size ());
+    final IConcurrentPerformer <List <IAuditItem>> aPerformer = aItems -> aPerformCount.inc (aItems.size ());
     final AsynchronousAuditor aAuditor = new AsynchronousAuditor (new MockCurrentUserIDProvider ("userid"), aPerformer);
     AuditHelper.setAuditor (aAuditor);
     try

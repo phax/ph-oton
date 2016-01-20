@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.callback.IThrowingRunnableWithParameter;
+import com.helger.commons.concurrent.collector.IConcurrentPerformer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.file.FilenameHelper;
@@ -194,7 +194,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
       }
     }
 
-    final IThrowingRunnableWithParameter <List <IAuditItem>, Exception> aPerformer = aAuditItems -> {
+    final IConcurrentPerformer <List <IAuditItem>> aPerformer = aAuditItems -> {
       if (!aAuditItems.isEmpty ())
       {
         m_aRWLock.writeLocked ( () -> {
