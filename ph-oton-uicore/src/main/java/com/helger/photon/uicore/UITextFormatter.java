@@ -104,6 +104,7 @@ public final class UITextFormatter
     }
     catch (final Exception ex)
     {
+      s_aLogger.warn ("Failed to markdown '" + s + "': " + ex.getMessage ());
       return new HCTextNode (s);
     }
   }
