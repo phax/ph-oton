@@ -59,6 +59,21 @@ public abstract class AbstractMapBasedSimpleDAO <INTERFACETYPE extends IHasID <S
     initialRead ();
   }
 
+  /**
+   * Just for API compatibility with AbstractMapBasedWALDAO
+   * 
+   * @param aModifiedElement
+   *        element
+   * @param eActionType
+   *        type
+   */
+  @MustBeLocked (ELockType.WRITE)
+  protected final void markAsChanged (@Nonnull final IMPLTYPE aModifiedElement,
+                                      @Nonnull final EDAOActionType eActionType)
+  {
+    markAsChanged ();
+  }
+
   @Override
   @Nonnull
   protected final EChange onRead (@Nonnull final IMicroDocument aDoc)
