@@ -26,6 +26,7 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
  *
  * @author Philip Helger
  */
+@FunctionalInterface
 public interface IBootstrapDataTablesConfigurator
 {
   /**
