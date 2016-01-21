@@ -30,8 +30,10 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.AbstractHCInput;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.form.RequestField;
+import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
 /**
@@ -101,5 +103,6 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.JSCOLOR);
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.JSCOLOR);
   }
 }
