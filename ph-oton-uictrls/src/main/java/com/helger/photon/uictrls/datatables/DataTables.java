@@ -1196,6 +1196,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
     if (m_aDisplayLocale != null)
     {
+      // Must be an IJson because the language information is also retrieved via
+      // AJAX!
       IJsonObject aLanguage;
       if (m_aTextLoadingURL != null)
       {

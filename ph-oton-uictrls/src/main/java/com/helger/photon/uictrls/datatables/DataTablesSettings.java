@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
+@NotThreadSafe
 public final class DataTablesSettings
 {
   public static final boolean DEFAULT_GENERATE_ON_DOCUMENT_READY = false;
