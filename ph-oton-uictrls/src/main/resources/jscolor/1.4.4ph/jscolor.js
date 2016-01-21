@@ -17,8 +17,6 @@ var jscolor = {
 	dir : '', // location of jscolor directory (leave empty to autodetect)
 	bindClass : 'color', // class name
 	binding : true, // automatic binding via <input class="...">
-	preloading : true, // use image preloading?
-
 
 	install : function() {
 		jscolor.addEvent(window, 'load', jscolor.init);
@@ -29,41 +27,6 @@ var jscolor = {
 		if(jscolor.binding) {
 			jscolor.bind();
 		}
-		if(jscolor.preloading) {
-			jscolor.preload();
-		}
-	},
-
-
-	getDir : function() {
-		if(!jscolor.dir) {
-			var detected = jscolor.detectDir();
-			jscolor.dir = detected!==false ? detected : 'jscolor/';
-		}
-		return jscolor.dir;
-	},
-
-
-	detectDir : function() {
-		var base = location.href;
-
-		var e = document.getElementsByTagName('base');
-		for(var i=0; i<e.length; i+=1) {
-			if(e[i].href) { base = e[i].href; }
-		}
-
-		var e = document.getElementsByTagName('script');
-		for(var i=0; i<e.length; i+=1) {
-			if(e[i].src && /(^|\/)jscolor\.js([?#].*)?$/i.test(e[i].src)) {
-				var src = new jscolor.URI(e[i].src);
-				var srcAbs = src.toAbsolute(base);
-				srcAbs.path = srcAbs.path.replace(/[^\/]+$/, ''); // remove filename
-				srcAbs.query = null;
-				srcAbs.fragment = null;
-				return srcAbs.toString();
-			}
-		}
-		return false;
 	},
 
 
@@ -88,38 +51,12 @@ var jscolor = {
 		}
 	},
 
-
-	preload : function() {
-		for(var fn in jscolor.imgRequire) {
-			if(jscolor.imgRequire.hasOwnProperty(fn)) {
-				jscolor.loadImage(fn);
-			}
-		}
-	},
-
-
+	
 	images : {
 		pad : [ 181, 101 ],
 		sld : [ 16, 101 ],
 		cross : [ 15, 15 ],
 		arrow : [ 7, 11 ]
-	},
-
-
-	imgRequire : {},
-	imgLoaded : {},
-
-
-	requireImage : function(filename) {
-		jscolor.imgRequire[filename] = true;
-	},
-
-
-	loadImage : function(filename) {
-		if(!jscolor.imgLoaded[filename]) {
-			jscolor.imgLoaded[filename] = new Image();
-			jscolor.imgLoaded[filename].src = jscolor.getDir()+filename;
-		}
 	},
 
 
@@ -783,7 +720,7 @@ var jscolor = {
 			p.btnS.style.lineHeight = p.btn.style.height;
 
 			// load images in optimal order
-			// [ph] changes to CSS classes
+			// [ph] changed to CSS classes
 			var padClass = ' jscolor-pad';
 			switch(modeID) {
 				case 0: padClass += ' jscolor-pad-hs'; break;
@@ -991,14 +928,6 @@ var jscolor = {
 				color : styleElement.style.color
 			};
 		}
-
-		// require images
-		switch(modeID) {
-			case 0: jscolor.requireImage('hs.png'); break;
-			case 1: jscolor.requireImage('hv.png'); break;
-		}
-		jscolor.requireImage('cross.gif');
-		jscolor.requireImage('arrow.gif');
 
 		this.importColor();
 	}
