@@ -791,7 +791,7 @@ var jscolor = {
 			}
 			p.padM.className += " jscolor-padm";
 			p.sldM.className += " jscolor-sldm";
-			p.pad.className += paddClass;
+			p.pad.className += padClass;
 
 			// place pointers
 			redrawPad();
