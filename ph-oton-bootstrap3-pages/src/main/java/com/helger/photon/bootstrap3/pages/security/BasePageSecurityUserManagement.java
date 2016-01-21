@@ -687,7 +687,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       if (bIsAdministrator)
       {
         // Cannot edit user groups of administrator
-        aSelect.setDisabled (true);
+        // Don't "disable" because than no param would be send
+        aSelect.setReadOnly (true);
       }
       showInputFormModifyUserGroupSelect (aSelect);
     }
