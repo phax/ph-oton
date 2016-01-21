@@ -119,7 +119,14 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
           {
             final String sContent = aRes.getContent (bRegular);
             if (sContent != null)
+            {
               aWriter.write (sContent);
+              if (bRegular)
+              {
+                // For the sake of clarity if a script does not end with a "\n"
+                aWriter.write ('\n');
+              }
+            }
             else
               s_aLogger.error ("Web site resource '" +
                                aRes.getPath () +
