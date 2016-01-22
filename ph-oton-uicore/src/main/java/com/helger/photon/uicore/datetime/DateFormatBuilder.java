@@ -153,9 +153,9 @@ public final class DateFormatBuilder implements IDateFormatBuilder
   public ZonedDateTime getDateTimeFormatted (@Nullable final String sDateTime)
   {
     if (USE_FORMATTER)
-      return PDTFromString.getDateTimeFromString (sDateTime, getJavaFormatter ());
+      return PDTFromString.getZonedDateTimeFromString (sDateTime, getJavaFormatter ());
 
-    return PDTFromString.getDateTimeFromString (sDateTime, getJavaFormatString ());
+    return PDTFromString.getZonedDateTimeFromString (sDateTime, getJavaFormatString ());
   }
 
   @Override

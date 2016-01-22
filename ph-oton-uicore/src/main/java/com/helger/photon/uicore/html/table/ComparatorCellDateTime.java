@@ -55,7 +55,7 @@ public class ComparatorCellDateTime extends AbstractComparatorCell <ZonedDateTim
                                  @Nullable final String sCommonPrefix,
                                  @Nullable final String sCommonSuffix)
   {
-    super (aCell -> PDTFromString.getDateTimeFromString (getCellText (aCell, sCommonPrefix, sCommonSuffix),
+    super (aCell -> PDTFromString.getZonedDateTimeFromString (getCellText (aCell, sCommonPrefix, sCommonSuffix),
                                                          aFormatter));
     ValueEnforcer.notNull (aFormatter, "Formatter");
   }
