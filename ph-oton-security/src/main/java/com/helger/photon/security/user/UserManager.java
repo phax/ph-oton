@@ -454,6 +454,15 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aUsers.values (), aFilter));
   }
 
+  @Nonnegative
+  public int getUserCount (@Nullable final Predicate <IUser> aFilter)
+  {
+    if (aFilter == null)
+      return m_aRWLock.readLocked ( () -> m_aUsers.size ());
+
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getCount (m_aUsers.values (), aFilter));
+  }
+
   /**
    * @return A non-<code>null</code> collection of all contained enabled and
    *         not-deleted users
@@ -462,8 +471,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @ReturnsMutableCopy
   public List <User> getAllActiveUsers ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aUsers.values (),
-                                                                 aUser -> !aUser.isDeleted () && aUser.isEnabled ()));
+    return getAllUsers (aUser -> !aUser.isDeleted () && aUser.isEnabled ());
   }
 
   /**
@@ -472,8 +480,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @Nonnegative
   public int getActiveUserCount ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getCount (m_aUsers.values (),
-                                                                   aUser -> !aUser.isDeleted () && aUser.isEnabled ()));
+    return getUserCount (aUser -> !aUser.isDeleted () && aUser.isEnabled ());
   }
 
   /**
@@ -484,8 +491,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @ReturnsMutableCopy
   public List <User> getAllDisabledUsers ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aUsers.values (),
-                                                                 aUser -> !aUser.isDeleted () && aUser.isDisabled ()));
+    return getAllUsers (aUser -> !aUser.isDeleted () && aUser.isDisabled ());
   }
 
   /**
@@ -496,7 +502,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @ReturnsMutableCopy
   public List <User> getAllNotDeletedUsers ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aUsers.values (), aUser -> !aUser.isDeleted ()));
+    return getAllUsers (aUser -> !aUser.isDeleted ());
   }
 
   /**
@@ -506,7 +512,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @ReturnsMutableCopy
   public List <User> getAllDeletedUsers ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aUsers.values (), aUser -> aUser.isDeleted ()));
+    return getAllUsers (aUser -> aUser.isDeleted ());
   }
 
   /**
