@@ -38,6 +38,7 @@ public enum EWebPageText implements IHasDisplayText,IHasDisplayTextWithArgs
 {
   OBJECT_COPY ("Kopiere ''{0}''", "Copy ''{0}''"),
   OBJECT_DELETE ("Lösche ''{0}''", "Delete ''{0}''"),
+  OBJECT_UNDELETE ("''{0}'' wiederherstellen", "Undelete ''{0}''"),
   OBJECT_EDIT ("Bearbeite ''{0}''", "Edit ''{0}''"),
   IMAGE_NONE ("keines", "none"),
   LOCKING_FAILED ("Das Objekt{0} konnte nicht gesperrt werden, da es derzeit von {1} gesperrt ist.", "Failed to lock object{0} because it is currently locked by {1}!"),

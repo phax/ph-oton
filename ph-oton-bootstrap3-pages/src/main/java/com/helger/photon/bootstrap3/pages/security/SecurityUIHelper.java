@@ -49,7 +49,7 @@ public final class SecurityUIHelper
 
   /**
    * Check if a user can be deleted or not. Currently all not deleted users can
-   * be deleted.
+   * be deleted except for the administrator special user.
    *
    * @param aUser
    *        The user to check. May be <code>null</code>.
@@ -58,7 +58,21 @@ public final class SecurityUIHelper
    */
   public static boolean canBeDeleted (@Nullable final IUser aUser)
   {
-    return aUser != null && !aUser.isDeleted ();
+    return aUser != null && !aUser.isDeleted () && !aUser.isAdministrator ();
+  }
+
+  /**
+   * Check if a user can be undeleted or not. Currently all deleted users can be
+   * undeleted.
+   *
+   * @param aUser
+   *        The user to check. May be <code>null</code>.
+   * @return <code>true</code> if the user can be deleted, <code>false</code> if
+   *         not.
+   */
+  public static boolean canBeUndeleted (@Nullable final IUser aUser)
+  {
+    return aUser != null && aUser.isDeleted ();
   }
 
   /**

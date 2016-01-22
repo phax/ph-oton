@@ -151,7 +151,10 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     SUCCESS_RESET_PASSWORD ("Das neue Passwort vom Benutzer ''{0}'' wurde gespeichert!", "Successfully saved the new password of user ''{0}''!"),
     DEL_QUERY ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' löschen wollen?", "Are you sure you want to delete user ''{0}''?"),
     DEL_SUCCESS ("Der Benutzer ''{0}'' wurde erfolgreich gelöscht!", "User ''{0}'' was successfully deleted!"),
-    DEL_ERROR ("Beim Löschen des Benutzers ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while deleting user ''{0}''!");
+    DEL_ERROR ("Beim Löschen des Benutzers ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while deleting user ''{0}''!"),
+    UNDEL_QUERY ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' wiederherstellen wollen?", "Are you sure you want to undelete user ''{0}''?"),
+    UNDEL_SUCCESS ("Der Benutzer ''{0}'' wurde erfolgreich wiederhergestellt!", "User ''{0}'' was successfully undeleted!"),
+    UNDEL_ERROR ("Beim Wiederherstellen des Benutzers ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while undeleting user ''{0}''!");
 
     private final IMultilingualText m_aTP;
 
@@ -268,6 +271,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       return SecurityUIHelper.canBeEdited (aSelectedObject);
     if (eFormAction.isDelete ())
       return SecurityUIHelper.canBeDeleted (aSelectedObject);
+    if (eFormAction.isUndelete ())
+      return SecurityUIHelper.canBeUndeleted (aSelectedObject);
     return true;
   }
 
@@ -862,6 +867,12 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         aActionCell.addChild (createDeleteLink (aWPEC, aCurUser));
       else
         aActionCell.addChild (createEmptyAction ());
+
+      // Undelete user
+      if (isActionAllowed (aWPEC, EWebPageFormAction.UNDELETE, aCurUser))
+        aActionCell.addChild (createUndeleteLink (aWPEC, aCurUser));
+      else
+        aActionCell.addChild (createEmptyAction ());
     }
 
     final HCNodeList aNodeList = new HCNodeList ();
@@ -905,6 +916,40 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     else
       aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                         aSelectedObject.getDisplayName ())));
+  }
+
+  @Override
+  @OverrideOnDemand
+  protected void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                    @Nonnull final BootstrapForm aForm,
+                                    @Nonnull final IUser aSelectedObject)
+  {
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.UNDEL_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                    aSelectedObject.getDisplayName ())));
+  }
+
+  /**
+   * Perform object undelete
+   *
+   * @param aWPEC
+   *        The web page execution context
+   * @param aSelectedObject
+   *        The object to be deleted. Never <code>null</code>.
+   */
+  @Override
+  @OverrideOnDemand
+  protected void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
+  {
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+
+    if (aUserMgr.undeleteUser (aSelectedObject.getID ()).isChanged ())
+      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.UNDEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                              aSelectedObject.getDisplayName ())));
+    else
+      aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.UNDEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                          aSelectedObject.getDisplayName ())));
   }
 
   @Override

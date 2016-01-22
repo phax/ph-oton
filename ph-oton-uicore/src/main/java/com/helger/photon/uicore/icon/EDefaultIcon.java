@@ -49,6 +49,7 @@ public enum EDefaultIcon implements IIcon
   SAVE_ALL,
   SAVE_AS,
   SAVE_CLOSE,
+  UNDELETE,
   UP,
   YES;
 

@@ -349,6 +349,7 @@ public enum EBootstrapIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.SAVE_ALL, HDD);
     DefaultIcons.set (EDefaultIcon.SAVE_AS, HDD);
     DefaultIcons.set (EDefaultIcon.SAVE_CLOSE, HDD);
+    DefaultIcons.set (EDefaultIcon.UNDELETE, ARROW_LEFT);
     DefaultIcons.set (EDefaultIcon.UP, ARROW_UP);
     DefaultIcons.set (EDefaultIcon.YES, OK);
   }

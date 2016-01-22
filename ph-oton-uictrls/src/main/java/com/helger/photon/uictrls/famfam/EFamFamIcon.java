@@ -1094,6 +1094,7 @@ public enum EFamFamIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.SAVE_ALL, DISK_MULTIPLE);
     DefaultIcons.set (EDefaultIcon.SAVE_AS, DISK);
     DefaultIcons.set (EDefaultIcon.SAVE_CLOSE, DISK);
+    DefaultIcons.set (EDefaultIcon.UNDELETE, ARROW_LEFT);
     DefaultIcons.set (EDefaultIcon.UP, ARROW_UP);
     DefaultIcons.set (EDefaultIcon.YES, ACCEPT);
   }

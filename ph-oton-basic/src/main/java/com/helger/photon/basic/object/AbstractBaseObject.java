@@ -161,9 +161,11 @@ public abstract class AbstractBaseObject implements IObject
       return EChange.UNCHANGED;
     }
 
-    setLastModification (aUndeletionDT, sUndeletionUserID);
     m_aDeletionDT = null;
     m_sDeletionUserID = null;
+
+    // Last modification AFTER deletion was reverted
+    setLastModification (aUndeletionDT, sUndeletionUserID);
     return EChange.CHANGED;
   }
 
