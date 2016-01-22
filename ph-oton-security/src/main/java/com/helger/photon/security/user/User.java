@@ -375,12 +375,6 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
     return !m_bDisabled;
   }
 
-  @Nonnull
-  EChange setEnabled (final boolean bEnabled)
-  {
-    return setDisabled (!bEnabled);
-  }
-
   @Override
   public String toString ()
   {

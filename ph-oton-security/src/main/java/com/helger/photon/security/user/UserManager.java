@@ -16,11 +16,11 @@
  */
 package com.helger.photon.security.user;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.IsLocked;
+import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
@@ -79,16 +80,10 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
 
   public void reload () throws DAOException
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLockedThrowing ( () -> {
       m_aUsers.clear ();
       initialRead ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Override
@@ -173,6 +168,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     return m_aCallbacks;
   }
 
+  @MustBeLocked (ELockType.WRITE)
   private void _addUser (@Nonnull final User aUser)
   {
     final String sUserID = aUser.getID ();
@@ -240,16 +236,10 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                                  aCustomAttrs,
                                  bDisabled);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       _addUser (aUser);
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
                                       sLoginName,
@@ -338,16 +328,10 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                                  aCustomAttrs,
                                  bDisabled);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       _addUser (aUser);
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
                                       "predefined-user",
@@ -387,15 +371,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     if (StringHelper.hasNoText (sUserID))
       return false;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aUsers.containsKey (sUserID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aUsers.containsKey (sUserID));
   }
 
   @Nullable
@@ -405,15 +381,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     if (StringHelper.hasNoText (sUserID))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aUsers.get (sUserID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aUsers.get (sUserID));
   }
 
   /**
@@ -443,18 +411,9 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     if (StringHelper.hasNoText (sLoginName))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      for (final User aUser : m_aUsers.values ())
-        if (aUser.getLoginName ().equals (sLoginName))
-          return aUser;
-      return null;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.findFirst (m_aUsers.values (),
+                                                                    aUser -> aUser.getLoginName ()
+                                                                                  .equals (sLoginName)));
   }
 
   /**
@@ -470,18 +429,8 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     if (StringHelper.hasNoText (sEmailAddress))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      for (final User aUser : m_aUsers.values ())
-        if (sEmailAddress.equals (aUser.getEmailAddress ()))
-          return aUser;
-      return null;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.findFirst (m_aUsers.values (),
+                                                                    aUser -> sEmailAddress.equals (aUser.getEmailAddress ())));
   }
 
   /**
@@ -492,15 +441,17 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @ReturnsMutableCopy
   public List <User> getAllUsers ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aUsers.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aUsers.values ()));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <User> getAllUsers (@Nullable final Predicate <IUser> aFilter)
+  {
+    if (aFilter == null)
+      return getAllUsers ();
+
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aUsers.values (), aFilter));
   }
 
   /**
@@ -511,19 +462,8 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @ReturnsMutableCopy
   public List <User> getAllActiveUsers ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      final List <User> ret = new ArrayList <User> ();
-      for (final User aUser : m_aUsers.values ())
-        if (!aUser.isDeleted () && aUser.isEnabled ())
-          ret.add (aUser);
-      return ret;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aUsers.values (),
+                                                                 aUser -> !aUser.isDeleted () && aUser.isEnabled ()));
   }
 
   /**
@@ -532,19 +472,8 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @Nonnegative
   public int getActiveUserCount ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      int ret = 0;
-      for (final User aUser : m_aUsers.values ())
-        if (!aUser.isDeleted () && aUser.isEnabled ())
-          ++ret;
-      return ret;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getCount (m_aUsers.values (),
+                                                                   aUser -> !aUser.isDeleted () && aUser.isEnabled ()));
   }
 
   /**
@@ -555,19 +484,8 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @ReturnsMutableCopy
   public List <User> getAllDisabledUsers ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      final List <User> ret = new ArrayList <User> ();
-      for (final User aUser : m_aUsers.values ())
-        if (!aUser.isDeleted () && aUser.isDisabled ())
-          ret.add (aUser);
-      return ret;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aUsers.values (),
+                                                                 aUser -> !aUser.isDeleted () && aUser.isDisabled ()));
   }
 
   /**
@@ -578,19 +496,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @ReturnsMutableCopy
   public List <User> getAllNotDeletedUsers ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      final List <User> ret = new ArrayList <User> ();
-      for (final User aUser : m_aUsers.values ())
-        if (!aUser.isDeleted ())
-          ret.add (aUser);
-      return ret;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aUsers.values (), aUser -> !aUser.isDeleted ()));
   }
 
   /**
@@ -600,19 +506,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @ReturnsMutableCopy
   public List <User> getAllDeletedUsers ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      final List <User> ret = new ArrayList <User> ();
-      for (final User aUser : m_aUsers.values ())
-        if (aUser.isDeleted ())
-          ret.add (aUser);
-      return ret;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aUsers.values (), aUser -> aUser.isDeleted ()));
   }
 
   /**
@@ -886,7 +780,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (ObjectHelper.setDeletionNow (aUser).isUnchanged ())
+      if (ObjectHelper.setUndeletionNow (aUser).isUnchanged ())
         return EChange.UNCHANGED;
       markAsChanged ();
     }
