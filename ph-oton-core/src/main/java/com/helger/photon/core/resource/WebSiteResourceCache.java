@@ -73,9 +73,7 @@ public final class WebSiteResourceCache
    */
   public static void setCacheEnabled (final boolean bCacheEnabled)
   {
-    s_aRWLock.writeLocked ( () -> {
-      s_bCacheEnabled = bCacheEnabled;
-    });
+    s_aRWLock.writeLocked ( () -> s_bCacheEnabled = bCacheEnabled);
     s_aLogger.info ("WebSiteResourceCache is now: " + (bCacheEnabled ? "enabled" : "disabled"));
   }
 

@@ -31,18 +31,23 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.ext.HCExtHelper;
-import com.helger.html.hc.html.grouping.HCDiv;
+import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
+import com.helger.html.hc.html.textlevel.HCBR;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
+import com.helger.photon.bootstrap3.button.BootstrapButton;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
+import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.core.resource.WebSiteResourceCache;
+import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -63,9 +68,13 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_CACHE_ACTIVE ("Cache aktiv: ", "Cache enabled: "),
-    MSG_RESBUNDLE_SERVLET ("ResourceBundleServlet registriert: ", "ResourceBundleServlet registered: "),
-    MSG_RESBUNDLE_ACTIVE ("ResourceBundleServlet aktiviert: ", "ResourceBundleServlet active: "),
+    MSG_CACHE_NOW_ENABLED ("Der Cache ist jetzt aktiviert", "Cache is now enabled"),
+    MSG_CACHE_NOW_DISABLED ("Der Cache ist jetzt deaktiviert", "Cache is now disabled"),
+    MSG_RESBUNDLE_NOW_ENABLED ("Das ResourceBundleServlet ist jetzt aktiviert", "ResourceBundleServlet is now enabled"),
+    MSG_RESBUNDLE_NOW_DISABLED ("Das ResourceBundleServlet ist jetzt deaktiviert", "ResourceBundleServlet is now disabled"),
+    MSG_RESBUNDLE_SERVLET ("ResourceBundleServlet registriert", "ResourceBundleServlet registered"),
+    MSG_CACHE_ENABLED ("Cache aktiv", "Cache enabled"),
+    MSG_RESBUNDLE_ENABLED ("ResourceBundleServlet aktiviert", "ResourceBundleServlet enabled"),
     MSG_ID ("ID", "ID"),
     MSG_DATE ("Datum", "Date"),
     MSG_RESOURCES ("Resourcen", "Resources"),
@@ -86,6 +95,9 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
+
+  private static final String ACTION_CHANGE_CACHE_STATE = "changecachestate";
+  private static final String ACTION_CHANGE_RESBUNDLE_STATE = "changeresbundlestate";
 
   private final WebSiteResourceBundleManager m_aResBundleMgr;
 
@@ -134,6 +146,24 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
+    if (aWPEC.hasAction (ACTION_CHANGE_CACHE_STATE))
+    {
+      WebSiteResourceCache.setCacheEnabled (!WebSiteResourceCache.isCacheEnabled ());
+      final boolean bCacheEnabled = WebSiteResourceCache.isCacheEnabled ();
+      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (bCacheEnabled ? EText.MSG_CACHE_NOW_ENABLED.getDisplayText (aDisplayLocale)
+                                                                                : EText.MSG_CACHE_NOW_DISABLED.getDisplayText (aDisplayLocale)));
+      return;
+    }
+
+    if (aWPEC.hasAction (ACTION_CHANGE_RESBUNDLE_STATE))
+    {
+      ResourceBundleServlet.setEnabled (!ResourceBundleServlet.isEnabled ());
+      final boolean bResBundleActive = ResourceBundleServlet.isEnabled ();
+      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (bResBundleActive ? EText.MSG_RESBUNDLE_NOW_ENABLED.getDisplayText (aDisplayLocale)
+                                                                                   : EText.MSG_RESBUNDLE_NOW_DISABLED.getDisplayText (aDisplayLocale)));
+      return;
+    }
+
     // Refresh button
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
     aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
@@ -141,15 +171,40 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    aNodeList.addChild (new HCDiv ().addChild (EText.MSG_CACHE_ACTIVE.getDisplayText (aDisplayLocale) +
-                                               EPhotonCoreText.getYesOrNo (WebSiteResourceCache.isCacheEnabled (),
-                                                                           aDisplayLocale)));
-    aNodeList.addChild (new HCDiv ().addChild (EText.MSG_RESBUNDLE_SERVLET.getDisplayText (aDisplayLocale) +
-                                               EPhotonCoreText.getYesOrNo (ResourceBundleServlet.isServletRegisteredInServletContext (),
-                                                                           aDisplayLocale)));
-    aNodeList.addChild (new HCDiv ().addChild (EText.MSG_RESBUNDLE_ACTIVE.getDisplayText (aDisplayLocale) +
-                                               EPhotonCoreText.getYesOrNo (ResourceBundleServlet.isActive (),
-                                                                           aDisplayLocale)));
+    {
+      final boolean bCacheEnabled = WebSiteResourceCache.isCacheEnabled ();
+      final boolean bServletRegistered = ResourceBundleServlet.isServletRegisteredInServletContext ();
+      final boolean bResBundleActive = ResourceBundleServlet.isEnabled ();
+
+      final BootstrapTable aTable = new BootstrapTable (HCCol.star (),
+                                                        HCCol.star (),
+                                                        bServletRegistered ? HCCol.star () : null).setStriped (true);
+      final HCRow aRegisteredRow = aTable.addBodyRow ()
+                                         .addCell (EText.MSG_RESBUNDLE_SERVLET.getDisplayText (aDisplayLocale))
+                                         .addCell (EPhotonCoreText.getYesOrNo (bServletRegistered, aDisplayLocale));
+      final HCRow aCacheRow = aTable.addBodyRow ()
+                                    .addCell (EText.MSG_CACHE_ENABLED.getDisplayText (aDisplayLocale))
+                                    .addCell (EPhotonCoreText.getYesOrNo (bCacheEnabled, aDisplayLocale));
+      final HCRow aResBundleActiveRow = aTable.addBodyRow ()
+                                              .addCell (EText.MSG_RESBUNDLE_ENABLED.getDisplayText (aDisplayLocale))
+                                              .addCell (EPhotonCoreText.getYesOrNo (bResBundleActive, aDisplayLocale));
+      if (bServletRegistered)
+      {
+        aRegisteredRow.addCell ();
+        aCacheRow.addCell (new BootstrapButton ().addChild (bCacheEnabled ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
+                                                                          : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
+                                                 .setOnClick (aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION,
+                                                                                        ACTION_CHANGE_CACHE_STATE)));
+        aResBundleActiveRow.addCell (new BootstrapButton ().addChild (bResBundleActive ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
+                                                                                       : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
+                                                           .setOnClick (aWPEC.getSelfHref ()
+                                                                             .add (CPageParam.PARAM_ACTION,
+                                                                                   ACTION_CHANGE_RESBUNDLE_STATE)));
+      }
+      aNodeList.addChild (aTable);
+
+      aNodeList.addChild (new HCBR ());
+    }
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,

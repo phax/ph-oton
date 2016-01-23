@@ -142,8 +142,8 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
         aHtml.addAllOutOfBandNodesToHead (aOOBNodes);
       }
 
-      final boolean bMergeCSS = ResourceBundleServlet.isActive ();
-      final boolean bMergeJS = ResourceBundleServlet.isActive ();
+      final boolean bMergeCSS = ResourceBundleServlet.isEnabled ();
+      final boolean bMergeJS = ResourceBundleServlet.isEnabled ();
       PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope, aHtml.getHead (), bMergeCSS, bMergeJS);
 
       // Move scripts to body? If so, after aggregation!

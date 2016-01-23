@@ -62,13 +62,13 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   @OverrideOnDemand
   protected boolean isMergeExternalCSSNodes ()
   {
-    return ResourceBundleServlet.isActive ();
+    return ResourceBundleServlet.isEnabled ();
   }
 
   @OverrideOnDemand
   protected boolean isMergeExternalJSNodes ()
   {
-    return ResourceBundleServlet.isActive ();
+    return ResourceBundleServlet.isEnabled ();
   }
 
   @Nonnull

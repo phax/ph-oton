@@ -42,7 +42,10 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    */
   @Nonnull
   @Nonempty
-  String getSelectedMenuItemID ();
+  default String getSelectedMenuItemID ()
+  {
+    return getSelectedMenuItem ().getID ();
+  }
 
   /**
    * Get the URL to the current page.
@@ -76,7 +79,10 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
    */
-  void postRedirectGet (@Nullable IHCNode aContent) throws ForcedRedirectException;
+  default void postRedirectGet (@Nullable final IHCNode aContent) throws ForcedRedirectException
+  {
+    postRedirectGet (aContent, (Map <String, String>) null);
+  }
 
   /**
    * Throw a {@link ForcedRedirectException} with the self href of the current

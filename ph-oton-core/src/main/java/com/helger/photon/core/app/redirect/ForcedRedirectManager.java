@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
@@ -71,15 +72,13 @@ public final class ForcedRedirectManager extends AbstractSessionWebSingleton
   public void createForcedRedirect (@Nonnull final ForcedRedirectException ex)
   {
     ValueEnforcer.notNull (ex, "Exception");
-    m_aRWLock.writeLocked ( () -> {
-      m_aMap.put (ex.getSourceMenuItemID (), ex.getContent ());
-    });
+    m_aRWLock.writeLocked ( () -> m_aMap.put (ex.getSourceMenuItemID (), ex.getContent ()));
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Creating forced redirect from '" +
-                       ex.getSourceMenuItemID () +
-                       "' to URL " +
-                       ex.getRedirectTargetURL ());
+    if (GlobalDebug.isDebugMode ())
+      s_aLogger.info ("Creating forced redirect from '" +
+                      ex.getSourceMenuItemID () +
+                      "' to URL " +
+                      ex.getRedirectTargetURL ());
   }
 
   @Nullable

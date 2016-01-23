@@ -70,8 +70,8 @@ public class ResourceBundleServlet extends AbstractObjectDeliveryServlet
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleServlet.class);
   private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (ResourceBundleServlet.class);
-  private static final AtomicBoolean s_bIsActive = new AtomicBoolean (s_bIsRegistered &&
-                                                                      GlobalDebug.isProductionMode ());
+  private static final AtomicBoolean s_bIsEnabled = new AtomicBoolean (s_bIsRegistered &&
+                                                                       GlobalDebug.isProductionMode ());
 
   public ResourceBundleServlet ()
   {}
@@ -81,16 +81,17 @@ public class ResourceBundleServlet extends AbstractObjectDeliveryServlet
     return s_bIsRegistered;
   }
 
-  public static void setActive (final boolean bActive)
+  public static void setEnabled (final boolean bEnable)
   {
-    if (bActive && !isServletRegisteredInServletContext ())
-      throw new IllegalStateException ("Cannot active the servlet, since it is not registered!");
-    s_bIsActive.set (bActive);
+    if (bEnable && !isServletRegisteredInServletContext ())
+      throw new IllegalStateException ("Cannot enable the servlet, since it is not registered!");
+    s_bIsEnabled.set (bEnable);
+    s_aLogger.info ("ResourceBundleServlet is now: " + (bEnable ? "enabled" : "disabled"));
   }
 
-  public static boolean isActive ()
+  public static boolean isEnabled ()
   {
-    return s_bIsActive.get ();
+    return s_bIsEnabled.get ();
   }
 
   @Override
