@@ -35,9 +35,9 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   HTML5SHIV ("uicore/html5shiv/3.7.3/html5shiv.js", "if lt IE 9"),
   HTML5SHIV_PRINTSHIV ("uicore/html5shiv/3.7.3/html5shiv-printshiv.js", "if lt IE 9"),
   /** JQuery 1.x */
-  JQUERY_1 ("uicore/jquery/jquery-1.11.3.js"),
+  JQUERY_1 ("uicore/jquery/jquery-1.12.0.js"),
   /** JQuery 2.x */
-  JQUERY_2 ("uicore/jquery/jquery-2.1.4.js"),
+  JQUERY_2 ("uicore/jquery/jquery-2.2.0.js"),
   JQUERY_COOKIE ("uicore/jqueryplugins/jquery.cookie.js"),
   JQUERY_HIGHLIGHT ("uicore/jqueryplugins/jquery.highlight.js"),
   JQUERY_HOTKEYS ("uicore/jqueryplugins/jquery.hotkeys.js"),
