@@ -688,7 +688,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   @ReturnsMutableCopy
   public List <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
   {
-    if (StringHelper.hasText (sUserID))
+    if (StringHelper.hasNoText (sUserID))
       return new ArrayList <> ();
 
     return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (),
@@ -708,7 +708,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   @ReturnsMutableCopy
   public List <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
   {
-    if (StringHelper.hasText (sUserID))
+    if (StringHelper.hasNoText (sUserID))
       return new ArrayList <> ();
 
     return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (),
@@ -881,7 +881,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   @ReturnsMutableCopy
   public List <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasText (sRoleID))
+    if (StringHelper.hasNoText (sRoleID))
       return new ArrayList <> ();
 
     return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (),
@@ -901,7 +901,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   @ReturnsMutableCopy
   public List <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasText (sRoleID))
+    if (StringHelper.hasNoText (sRoleID))
       return new ArrayList <> ();
 
     return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (),
