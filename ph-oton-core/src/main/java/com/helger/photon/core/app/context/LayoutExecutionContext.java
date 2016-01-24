@@ -25,6 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
@@ -87,6 +88,12 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
                                        getSelfHref ().add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE)
                                                      .addAll (aAdditionalParameters),
                                        aContent);
+  }
+
+  public void postRedirectGet (@Nonnull final ISimpleURL aTargetURL) throws ForcedRedirectException
+  {
+    // Add the "PRG active" parameter
+    throw new ForcedRedirectException (m_aSelectedMenuItem.getID (), aTargetURL, null);
   }
 
   @Override

@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
@@ -100,4 +101,15 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    */
   void postRedirectGet (@Nullable IHCNode aContent,
                         @Nullable Map <String, String> aAdditionalParameters) throws ForcedRedirectException;
+
+  /**
+   * Throw a {@link ForcedRedirectException} with the passed URL. This
+   * immediately stops the request and sends a HTTP redirect to the client.
+   *
+   * @param aTargetURL
+   *        The target URL to redirect to via GET. May be <code>null</code>.
+   * @throws ForcedRedirectException
+   *         Every time, since this is the P-R-G indicator.
+   */
+  void postRedirectGet (@Nonnull ISimpleURL aTargetURL) throws ForcedRedirectException;
 }
