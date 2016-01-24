@@ -91,7 +91,10 @@ public interface IAjaxFunctionDeclaration extends IHasName
    *         <code>null</code>.
    */
   @Nonnull
-  ISimpleURL getInvocationURL (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  default ISimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    return getInvocationURL (aRequestScope, (Map <String, String>) null);
+  }
 
   /**
    * @param aRequestScope

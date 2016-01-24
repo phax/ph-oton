@@ -117,12 +117,6 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
   }
 
   @Nonnull
-  public ISimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
-  {
-    return getInvocationURL (aRequestScope, (Map <String, String>) null);
-  }
-
-  @Nonnull
   public ISimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                       @Nullable final Map <String, String> aParams)
   {
