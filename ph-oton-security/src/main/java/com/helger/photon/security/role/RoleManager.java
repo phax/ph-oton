@@ -59,9 +59,9 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
   private static final Logger s_aLogger = LoggerFactory.getLogger (RoleManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final Map <String, Role> m_aRoles = new HashMap <String, Role> ();
+  private final Map <String, Role> m_aMap = new HashMap <> ();
 
-  private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <IRoleModificationCallback> ();
+  private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public RoleManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -71,16 +71,10 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
 
   public void reload () throws DAOException
   {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      m_aRoles.clear ();
+    m_aRWLock.writeLockedThrowing ( () -> {
+      m_aMap.clear ();
       initialRead ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
   }
 
   @Override
@@ -105,7 +99,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("roles");
-    for (final Role aRole : CollectionHelper.getSortedByKey (m_aRoles).values ())
+    for (final Role aRole : CollectionHelper.getSortedByKey (m_aMap).values ())
       eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aRole, "role"));
     return aDoc;
   }
@@ -137,9 +131,9 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
     ValueEnforcer.notNull (aRole, "Role");
 
     final String sRoleID = aRole.getID ();
-    if (m_aRoles.containsKey (sRoleID))
+    if (m_aMap.containsKey (sRoleID))
       throw new IllegalArgumentException ("Role ID " + sRoleID + " is already in use!");
-    m_aRoles.put (sRoleID, aRole);
+    m_aMap.put (sRoleID, aRole);
   }
 
   /**
@@ -162,17 +156,11 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
     // Create role
     final Role aRole = new Role (sName, sDescription, aCustomAttrs);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       // Store
       _addRole (aRole);
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), sName);
 
     // Execute callback as the very last action
@@ -213,17 +201,11 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
                                  sName,
                                  sDescription);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       // Store
       _addRole (aRole);
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), "predefind-role", sName);
 
     // Execute callback as the very last action
@@ -254,7 +236,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
     m_aRWLock.writeLock ().lock ();
     try
     {
-      aDeletedRole = m_aRoles.remove (sRoleID);
+      aDeletedRole = m_aMap.remove (sRoleID);
       if (aDeletedRole == null)
       {
         AuditHelper.onAuditDeleteFailure (Role.OT, "no-such-role-id", sRoleID);
@@ -296,15 +278,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
     if (StringHelper.hasNoText (sRoleID))
       return false;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aRoles.containsKey (sRoleID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sRoleID));
   }
 
   /**
@@ -320,18 +294,12 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
     if (CollectionHelper.isEmpty (aRoleIDs))
       return true;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    return m_aRWLock.readLocked ( () -> {
       for (final String sRoleID : aRoleIDs)
-        if (!m_aRoles.containsKey (sRoleID))
+        if (!m_aMap.containsKey (sRoleID))
           return false;
       return true;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -347,15 +315,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
     if (StringHelper.hasNoText (sRoleID))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aRoles.get (sRoleID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sRoleID));
   }
 
   /**
@@ -365,15 +325,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
   @ReturnsMutableCopy
   public Collection <? extends IRole> getAllRoles ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aRoles.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
   }
 
   /**

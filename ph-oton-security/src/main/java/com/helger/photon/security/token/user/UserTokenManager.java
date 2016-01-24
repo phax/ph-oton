@@ -17,10 +17,8 @@
 package com.helger.photon.security.token.user;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -121,16 +119,10 @@ public final class UserTokenManager extends AbstractSimpleDAO
   {
     final UserToken aUserToken = new UserToken (sTokenString, aCustomAttrs, aAppToken, sUserName);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
+    m_aRWLock.writeLocked ( () -> {
       _addUserToken (aUserToken);
       markAsChanged ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     AuditHelper.onAuditCreateSuccess (UserToken.OT, aUserToken.getID (), aCustomAttrs, aAppToken.getID (), sUserName);
 
     // Execute callback as the very last action
@@ -339,34 +331,14 @@ public final class UserTokenManager extends AbstractSimpleDAO
   @ReturnsMutableCopy
   public Collection <? extends UserToken> getAllUserTokens ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return CollectionHelper.newList (m_aMap.values ());
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Collection <? extends UserToken> getAllActiveUserTokens ()
   {
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      final List <UserToken> ret = new ArrayList <> ();
-      for (final UserToken aItem : m_aMap.values ())
-        if (!aItem.isDeleted ())
-          ret.add (aItem);
-      return ret;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (), aItem -> !aItem.isDeleted ()));
   }
 
   @Nullable
@@ -375,15 +347,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
     if (StringHelper.hasNoText (sID))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.get (sID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sID));
   }
 
   @Nullable
@@ -397,15 +361,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
     if (StringHelper.hasNoText (sID))
       return false;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      return m_aMap.containsKey (sID);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sID));
   }
 
   @Nullable
@@ -414,9 +370,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
     if (StringHelper.hasNoText (sTokenString))
       return null;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    return m_aRWLock.readLocked ( () -> {
       for (final IUserToken aUserToken : m_aMap.values ())
       {
         final IAccessToken aAccessToken = aUserToken.getActiveAccessToken ();
@@ -424,11 +378,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
           return aUserToken;
       }
       return null;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 
   /**
@@ -444,18 +394,12 @@ public final class UserTokenManager extends AbstractSimpleDAO
     if (StringHelper.hasNoText (sTokenString))
       return false;
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
+    return m_aRWLock.readLocked ( () -> {
       for (final IUserToken aUserToken : m_aMap.values ())
         for (final IAccessToken aAccessToken : aUserToken.getAllAccessTokens ())
           if (aAccessToken.getTokenString ().equals (sTokenString))
             return true;
       return false;
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    });
   }
 }
