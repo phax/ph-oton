@@ -86,6 +86,17 @@
     // Keep chainability
     return this;
   };
+  
+  // Undo changes from #preventDoubleSubmission
+  $.fn.resetSubmitted = function() {
+    var $form = $(this);
+    // Mark it so that the next submit can occur
+    $form.data('submitted', false);
+    // Re-enable all reset and submit buttons within the form
+    $(':reset,:submit', $form).enable();
+    // Keep chainability
+    return this;
+  };
 })(jQuery);
 
 // Set a default AJAX error handler
