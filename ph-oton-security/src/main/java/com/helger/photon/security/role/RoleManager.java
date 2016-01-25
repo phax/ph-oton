@@ -17,32 +17,25 @@
 package com.helger.photon.security.role;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroDocument;
-import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.IReloadableDAO;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
+import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.photon.basic.app.dao.impl.EDAOActionType;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.ObjectHelper;
@@ -54,66 +47,35 @@ import com.helger.photon.security.object.StubObjectWithCustomAttrs;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class RoleManager extends AbstractSimpleDAO implements IReloadableDAO
+public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> implements IReloadableDAO
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (RoleManager.class);
-
-  @GuardedBy ("m_aRWLock")
-  private final Map <String, Role> m_aMap = new HashMap <> ();
 
   private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public RoleManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (sFilename);
-    initialRead ();
+    super (Role.class, sFilename, "role");
   }
 
   public void reload () throws DAOException
   {
     m_aRWLock.writeLockedThrowing ( () -> {
-      m_aMap.clear ();
+      internalRemoveAllItems ();
       initialRead ();
     });
-  }
-
-  @Override
-  @Nonnull
-  protected EChange onInit ()
-  {
-    return EChange.UNCHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
-  {
-    for (final IMicroElement eRole : aDoc.getDocumentElement ().getAllChildElements ())
-      _addRole (MicroTypeConverter.convertToNative (eRole, Role.class));
-    return EChange.UNCHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected IMicroDocument createWriteData ()
-  {
-    final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement ("roles");
-    for (final Role aRole : CollectionHelper.getSortedByKey (m_aMap).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aRole, "role"));
-    return aDoc;
   }
 
   public void createDefaults ()
   {
     if (!containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
-      _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
-                          CSecurity.ROLE_ADMINISTRATOR_NAME,
-                          (String) null));
+      internalAddItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
+                                 CSecurity.ROLE_ADMINISTRATOR_NAME,
+                                 (String) null));
     if (!containsRoleWithID (CSecurity.ROLE_USER_ID))
-      _addRole (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
-                          CSecurity.ROLE_USER_NAME,
-                          (String) null));
+      internalAddItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
+                                 CSecurity.ROLE_USER_NAME,
+                                 (String) null));
   }
 
   /**
@@ -124,16 +86,6 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
   public CallbackList <IRoleModificationCallback> getRoleModificationCallbacks ()
   {
     return m_aCallbacks;
-  }
-
-  private void _addRole (@Nonnull final Role aRole)
-  {
-    ValueEnforcer.notNull (aRole, "Role");
-
-    final String sRoleID = aRole.getID ();
-    if (m_aMap.containsKey (sRoleID))
-      throw new IllegalArgumentException ("Role ID " + sRoleID + " is already in use!");
-    m_aMap.put (sRoleID, aRole);
   }
 
   /**
@@ -158,8 +110,8 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
 
     m_aRWLock.writeLocked ( () -> {
       // Store
-      _addRole (aRole);
-      markAsChanged ();
+      internalAddItem (aRole);
+      markAsChanged (aRole, EDAOActionType.CREATE);
     });
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), sName);
 
@@ -203,8 +155,8 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
 
     m_aRWLock.writeLocked ( () -> {
       // Store
-      _addRole (aRole);
-      markAsChanged ();
+      internalAddItem (aRole);
+      markAsChanged (aRole, EDAOActionType.CREATE);
     });
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), "predefind-role", sName);
 
@@ -236,7 +188,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
     m_aRWLock.writeLock ().lock ();
     try
     {
-      aDeletedRole = m_aMap.remove (sRoleID);
+      aDeletedRole = internalRemoveItem (sRoleID);
       if (aDeletedRole == null)
       {
         AuditHelper.onAuditDeleteFailure (Role.OT, "no-such-role-id", sRoleID);
@@ -244,7 +196,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
       }
 
       ObjectHelper.setDeletionNow (aDeletedRole);
-      markAsChanged ();
+      markAsChanged (aDeletedRole, EDAOActionType.DELETE);
     }
     finally
     {
@@ -275,10 +227,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
    */
   public boolean containsRoleWithID (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sRoleID))
-      return false;
-
-    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sRoleID));
+    return containsWithID (sRoleID);
   }
 
   /**
@@ -294,12 +243,10 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
     if (CollectionHelper.isEmpty (aRoleIDs))
       return true;
 
-    return m_aRWLock.readLocked ( () -> {
-      for (final String sRoleID : aRoleIDs)
-        if (!m_aMap.containsKey (sRoleID))
-          return false;
-      return true;
-    });
+    for (final String sRoleID : aRoleIDs)
+      if (!containsWithID (sRoleID))
+        return false;
+    return true;
   }
 
   /**
@@ -310,12 +257,9 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
    * @return <code>null</code> if no such role exists.
    */
   @Nullable
-  public Role getRoleOfID (@Nullable final String sRoleID)
+  public IRole getRoleOfID (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sRoleID))
-      return null;
-
-    return m_aRWLock.readLocked ( () -> m_aMap.get (sRoleID));
+    return getOfID (sRoleID);
   }
 
   /**
@@ -325,7 +269,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
   @ReturnsMutableCopy
   public Collection <? extends IRole> getAllRoles ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
+    return getAll ();
   }
 
   /**
@@ -343,7 +287,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
   public EChange renameRole (@Nullable final String sRoleID, @Nonnull @Nonempty final String sNewName)
   {
     // Resolve user group
-    final Role aRole = getRoleOfID (sRoleID);
+    final Role aRole = getOfID (sRoleID);
     if (aRole == null)
     {
       AuditHelper.onAuditModifyFailure (Role.OT, sRoleID, "no-such-id");
@@ -357,7 +301,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aRole);
-      markAsChanged ();
+      markAsChanged (aRole, EDAOActionType.UPDATE);
     }
     finally
     {
@@ -400,7 +344,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
                               @Nullable final Map <String, String> aNewCustomAttrs)
   {
     // Resolve role
-    final Role aRole = getRoleOfID (sRoleID);
+    final Role aRole = getOfID (sRoleID);
     if (aRole == null)
     {
       AuditHelper.onAuditModifyFailure (Role.OT, sRoleID, "no-such-role-id");
@@ -418,7 +362,7 @@ public final class RoleManager extends AbstractSimpleDAO implements IReloadableD
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aRole);
-      markAsChanged ();
+      markAsChanged (aRole, EDAOActionType.UPDATE);
     }
     finally
     {

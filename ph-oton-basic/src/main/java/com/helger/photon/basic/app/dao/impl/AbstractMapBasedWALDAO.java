@@ -111,6 +111,21 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     m_aMap.put (sID, aItem);
   }
 
+  @MustBeLocked (ELockType.WRITE)
+  protected final IMPLTYPE internalRemoveItem (@Nullable final String sID)
+  {
+    if (StringHelper.hasNoText (sID))
+      return null;
+
+    return m_aMap.remove (sID);
+  }
+
+  @MustBeLocked (ELockType.WRITE)
+  protected final void internalRemoveAllItems ()
+  {
+    m_aMap.clear ();
+  }
+
   @Nonnull
   @ReturnsMutableCopy
   public final Collection <? extends INTERFACETYPE> getNone ()
