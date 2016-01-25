@@ -517,6 +517,10 @@
       } else {
         offset = this.element.offset();
         left = offset.left;
+        //[ph] https://github.com/ppazos/bootstrap-datetimepicker/commit/8a22da8b023a745718de5df02354f4c5d2aa9c1f
+        if (this.pickerPosition == 'bottom-left' || this.pickerPosition == 'top-left') {
+          left += this.element.outerWidth() - this.picker.outerWidth();
+        }
       }
 
       var bodyWidth = document.body.clientWidth || window.innerWidth;
@@ -524,6 +528,18 @@
         left = bodyWidth - 220;
       }
 
+      //[ph] https://github.com/ppazos/bootstrap-datetimepicker/commit/8a22da8b023a745718de5df02354f4c5d2aa9c1f
+      if (this.component) {
+          top = top - containerOffset.top + 169;
+          left = left - containerOffset.left + 210;
+      } else {
+          if (this.pickerPosition == 'top-left' || this.pickerPosition == 'top-right') {
+              top = offset.top - this.picker.outerHeight();
+          } else {
+              top = offset.top + this.height;
+          }
+      }
+      
       if (this.pickerPosition == 'top-left' || this.pickerPosition == 'top-right') {
         top = offset.top - this.picker.outerHeight();
       } else {
@@ -674,7 +690,7 @@
       var txt = '', meridian = '', meridianOld = '';
       var hoursDisabled = this.hoursDisabled || [];
       for (var i = 0; i < 24; i++) {
-		// See https://github.com/smalot/bootstrap-datetimepicker/issues/330
+		// [ph] See https://github.com/smalot/bootstrap-datetimepicker/issues/330
 		if ($.inArray(i,hoursDisabled) !== -1) continue;
         var actual = UTCDate(year, month, dayMonth, i);
         clsName = '';
@@ -709,7 +725,7 @@
       txt = '', meridian = '', meridianOld = '';
       var minutesDisabled = this.minutesDisabled || [];
       for (var i = 0; i < 60; i += this.minuteStep) {
-        // See https://github.com/smalot/bootstrap-datetimepicker/issues/330
+        // [ph] See https://github.com/smalot/bootstrap-datetimepicker/issues/330
 		if ($.inArray(i, minutesDisabled) !== -1) continue;
         var actual = UTCDate(year, month, dayMonth, hours, i, 0);
         clsName = '';

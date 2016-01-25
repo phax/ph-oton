@@ -48,6 +48,7 @@ public enum EDateTimePickerLanguage
   HE ("he", "he"),
   HR ("hr", "hr"),
   HU ("hu", "hu"),
+  HY ("hy", "hy"),
   /* Note: this is not a valid Java locale! */
   ID ("id", "id"),
   IS ("is", "is"),
