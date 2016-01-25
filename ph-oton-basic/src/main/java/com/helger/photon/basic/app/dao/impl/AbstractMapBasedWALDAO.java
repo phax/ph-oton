@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
@@ -131,10 +132,25 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (), aFilter));
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
+  public final <RETTYPE> Collection <RETTYPE> getAll (@Nullable final Predicate <INTERFACETYPE> aFilter,
+                                                      @Nonnull final Function <INTERFACETYPE, RETTYPE> aMapper)
+  {
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (), aFilter, aMapper));
+  }
+
   @Nullable
   public final INTERFACETYPE getFirst (@Nullable final Predicate <INTERFACETYPE> aFilter)
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.findFirst (m_aMap.values (), aFilter));
+  }
+
+  @Nullable
+  public final <RETTYPE> RETTYPE getFirst (@Nullable final Predicate <INTERFACETYPE> aFilter,
+                                           @Nonnull final Function <INTERFACETYPE, RETTYPE> aMapper)
+  {
+    return m_aRWLock.readLocked ( () -> CollectionHelper.findFirst (m_aMap.values (), aFilter, aMapper));
   }
 
   public final boolean containsAny (@Nullable final Predicate <INTERFACETYPE> aFilter)

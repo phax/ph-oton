@@ -17,6 +17,7 @@
 package com.helger.photon.basic.app.dao.impl;
 
 import java.util.Collection;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
@@ -37,8 +38,17 @@ public interface IMapBasedDAO <INTERFACETYPE extends IHasID <String>>
   @ReturnsMutableCopy
   Collection <? extends INTERFACETYPE> getAll (@Nullable Predicate <INTERFACETYPE> aFilter);
 
+  @Nonnull
+  @ReturnsMutableCopy
+  <RETTYPE> Collection <RETTYPE> getAll (@Nullable Predicate <INTERFACETYPE> aFilter,
+                                         @Nonnull Function <INTERFACETYPE, RETTYPE> aMapper);
+
   @Nullable
   INTERFACETYPE getFirst (@Nullable Predicate <INTERFACETYPE> aFilter);
+
+  @Nullable
+  <RETTYPE> RETTYPE getFirst (@Nullable Predicate <INTERFACETYPE> aFilter,
+                              @Nonnull Function <INTERFACETYPE, RETTYPE> aMapper);
 
   boolean containsAny (@Nullable Predicate <INTERFACETYPE> aFilter);
 
