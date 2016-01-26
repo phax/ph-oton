@@ -16,7 +16,6 @@
  */
 package com.helger.photon.basic.app.menu.filter;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -76,12 +75,13 @@ public abstract class AbstractMenuObjectFilterCollection extends AbstractMenuObj
   {
     // Get this display text
     final String sThisText = super.getDisplayText (aContentLocale);
-    final List <String> aNested = new ArrayList <> ();
-    // Get the display texts of all contained filters
-    for (final IMenuObjectFilter aFilter : m_aFilters)
-      aNested.add (aFilter.getDisplayText (aContentLocale));
+
     // Combine all non-empty, separated by a semicolon
-    return StringHelper.getConcatenatedOnDemand (sThisText, ": ", StringHelper.getImplodedNonEmpty ("; ", aNested));
+    return StringHelper.getConcatenatedOnDemand (sThisText,
+                                                 ": ",
+                                                 StringHelper.getImplodedNonEmpty ("; ",
+                                                                                   m_aFilters,
+                                                                                   f -> f.getDisplayText (aContentLocale)));
   }
 
   @Override
