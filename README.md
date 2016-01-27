@@ -22,5 +22,5 @@ Versions >= 6.0.0 are compatible with ph-commons >= 6.0
 
 ---
 
-On Twitter: <a href="https://twitter.com/philiphelger">Follow @philiphelger</a>
- 
+My personal [Coding Styleguide](https://github.com/phax/meta/blob/master/CodeingStyleguide.md) |
+On Twitter: <a href="https://twitter.com/philiphelger">@philiphelger</a>
