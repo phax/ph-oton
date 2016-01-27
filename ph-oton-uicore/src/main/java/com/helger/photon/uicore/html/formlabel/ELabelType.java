@@ -28,4 +28,19 @@ public enum ELabelType
   ALTERNATIVE;
 
   public static final ELabelType DEFAULT = OPTIONAL;
+
+  public boolean isOptional ()
+  {
+    return this == ELabelType.OPTIONAL;
+  }
+
+  public boolean isMandatory ()
+  {
+    return this == ELabelType.MANDATORY;
+  }
+
+  public boolean isAlternative ()
+  {
+    return this == ELabelType.ALTERNATIVE;
+  }
 }
