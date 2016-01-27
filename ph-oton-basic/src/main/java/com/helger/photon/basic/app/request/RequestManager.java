@@ -284,7 +284,9 @@ public class RequestManager implements IRequestManager
       final String sAppID = PhotonSessionState.getInstance ().getLastApplicationID ();
       final String sServletPath = PhotonPathMapper.getPathOfApplicationIDOrDefault (sAppID);
       if (sServletPath == null)
-        throw new IllegalStateException ("Failed to determine the current servlet path. Please make sure you initialized PhotonPathMapper correctly!");
+        throw new IllegalStateException ("Failed to determine the servlet path for app ID '" +
+                                         sAppID +
+                                         "'. Please make sure you initialized PhotonPathMapper correctly!");
       sPath = aRequestScope.getContextPath () + sServletPath + "/";
     }
     else
