@@ -16,6 +16,7 @@
  */
 package com.helger.photon.uicore.html.select;
 
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -23,7 +24,6 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.html.request.IHCRequestField;
-import com.helger.masterdata.vat.ComparatorVATItemPercentage;
 import com.helger.masterdata.vat.IVATItem;
 import com.helger.masterdata.vat.VATManager;
 
@@ -57,7 +57,7 @@ public class HCVATItemSelect extends HCExtSelect
       aVATItems.put (VATManager.VATTYPE_NONE.getID (), VATManager.VATTYPE_NONE);
 
     for (final Map.Entry <String, IVATItem> aEntry : CollectionHelper.getSortedByValue (aVATItems,
-                                                                                        new ComparatorVATItemPercentage ())
+                                                                                        Comparator.comparing (IVATItem::getPercentage))
                                                                      .entrySet ())
     {
       final IVATItem aVATItem = aEntry.getValue ();

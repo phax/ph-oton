@@ -27,7 +27,6 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.compare.ReverseComparator;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -70,7 +69,7 @@ final class DataTablesServerSortState implements Serializable
       if (aSortColumn.getSortDirectionOrDefault ().isDescending ())
       {
         // Reverse the comparator
-        aStringComp = ReverseComparator.create (aStringComp);
+        aStringComp = aStringComp.reversed ();
       }
       aSortColumn.setServerSideComparator (aStringComp);
     }

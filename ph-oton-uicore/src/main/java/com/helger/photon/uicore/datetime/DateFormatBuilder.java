@@ -35,7 +35,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.cache.AbstractNotifyingCache;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.compare.ComparatorStringLongestFirst;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.format.PDTFromString;
@@ -167,8 +166,8 @@ public final class DateFormatBuilder implements IDateFormatBuilder
   private static final class Searcher
   {
     private String m_sRest;
-    private final Map <String, EDateTimeFormatToken> m_aAllMatching = new HashMap <String, EDateTimeFormatToken> ();
-    private final Comparator <String> m_aComp = new ComparatorStringLongestFirst ();
+    private final Map <String, EDateTimeFormatToken> m_aAllMatching = new HashMap <> ();
+    private final Comparator <String> m_aComp = Comparator.comparingInt (String::length).reversed ();
 
     public Searcher (@Nonnull final String sRest)
     {
