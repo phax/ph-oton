@@ -17,6 +17,7 @@
 package com.helger.photon.basic.audit;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
@@ -27,7 +28,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -76,8 +76,7 @@ final class AuditItemList
   public List <IAuditItem> getLastItems (@Nonnegative final int nMaxItems)
   {
     final int nEndIndex = Math.min (nMaxItems, m_aItems.size ());
-    return CollectionHelper.getSorted (m_aItems,
-                                       new ComparatorAuditItemDateTime ().setSortOrder (ESortOrder.DESCENDING))
+    return CollectionHelper.getSorted (m_aItems, Comparator.comparing (IAuditItem::getDateTime).reversed ())
                            .subList (0, nEndIndex);
   }
 

@@ -18,6 +18,7 @@ package com.helger.photon.bootstrap3.pages.sysinfo;
 
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.Comparator;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -54,7 +55,6 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
-import com.helger.web.networkinterface.ComparatorNetworkInterfaceName;
 import com.helger.web.networkinterface.NetworkInterfaceHelper;
 
 /**
@@ -146,7 +146,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
       {
         final DefaultTreeWithGlobalUniqueID <String, NetworkInterface> aNITree = NetworkInterfaceHelper.createNetworkInterfaceTree ();
         // Sort on each level
-        TreeWithIDSorter.sortByValue (aNITree, new ComparatorNetworkInterfaceName ());
+        TreeWithIDSorter.sortByValue (aNITree, Comparator.comparing (NetworkInterface::getDisplayName));
         TreeVisitor.visitTree (aNITree,
                                new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, NetworkInterface>> ()
                                {

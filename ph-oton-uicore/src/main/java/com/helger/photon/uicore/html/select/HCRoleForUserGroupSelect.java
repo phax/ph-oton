@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.name.ComparatorHasName;
+import com.helger.commons.name.IHasName;
 import com.helger.html.hc.html.forms.HCOption;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
@@ -42,7 +42,7 @@ public class HCRoleForUserGroupSelect extends HCExtSelect
 
     final Collection <? extends IRole> aAllRoles = PhotonSecurityManager.getRoleMgr ().getAllRoles ();
     setSize (Math.min (10, aAllRoles.size ()));
-    for (final IRole aRole : CollectionHelper.getSorted (aAllRoles, new ComparatorHasName <IRole> ()))
+    for (final IRole aRole : CollectionHelper.getSorted (aAllRoles, IHasName.getComparatorName ()))
     {
       final HCOption aOption = addOption (aRole.getID (), aRole.getName ());
       if (aSelectedRoles != null && aSelectedRoles.contains (aRole.getID ()))

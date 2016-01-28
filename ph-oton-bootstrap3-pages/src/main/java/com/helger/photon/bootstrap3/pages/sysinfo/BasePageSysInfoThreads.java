@@ -17,6 +17,7 @@
 package com.helger.photon.bootstrap3.pages.sysinfo;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -33,7 +34,6 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.thread.ComparatorThreadID;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.tabular.HCRow;
@@ -149,7 +149,7 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext>
 
     // get all threads and sort them by thread ID
     final Map <Thread, StackTraceElement []> aThreads = CollectionHelper.getSortedByKey (Thread.getAllStackTraces (),
-                                                                                         new ComparatorThreadID ());
+                                                                                         Comparator.comparing (Thread::getId));
 
     aNodeList.addChild (createActionHeader (EText.MSG_HEADER.getDisplayTextWithArgs (aDisplayLocale,
                                                                                      Integer.valueOf (aThreads.size ()),

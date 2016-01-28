@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap3.pages.data;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -29,7 +30,6 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.multimap.IMultiMapListBased;
 import com.helger.commons.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.locale.ComparatorLocale;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
@@ -131,7 +131,8 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext>
       aRow.addCell (CollectionHelper.getFirstElement (aEntry.getValue ()).getDisplayLanguage (aDisplayLocale));
 
       final IHCCell <?> aCell = aRow.addCell ();
-      for (final Locale aLocale : CollectionHelper.getSorted (aEntry.getValue (), new ComparatorLocale ()))
+      for (final Locale aLocale : CollectionHelper.getSorted (aEntry.getValue (),
+                                                              Comparator.comparing (Locale::toString)))
       {
         final HCDiv aDiv = new HCDiv ();
         final EFamFamFlagIcon eIcon = EFamFamFlagIcon.getFromIDOrNull (aLocale.getCountry ());

@@ -18,6 +18,7 @@ package com.helger.photon.basic.thread;
 
 import java.lang.Thread.State;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,6 @@ import com.helger.commons.microdom.IHasMicroNodeRepresentation;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.thread.ComparatorThreadID;
 import com.helger.commons.timing.StopWatch;
 
 /**
@@ -187,7 +187,7 @@ public class ThreadDescriptorList implements IHasStringRepresentation, IHasMicro
     {
       // Get all stack traces, sorted by thread ID
       for (final Map.Entry <Thread, StackTraceElement []> aEntry : CollectionHelper.getSortedByKey (Thread.getAllStackTraces (),
-                                                                                                    new ComparatorThreadID ())
+                                                                                                    Comparator.comparing (Thread::getId))
                                                                                    .entrySet ())
       {
         final StackTraceElement [] aStackTrace = aEntry.getValue ();

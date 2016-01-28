@@ -17,6 +17,7 @@
 package com.helger.photon.bootstrap3.pages.appinfo;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,7 +29,6 @@ import com.helger.commons.annotation.Translatable;
 import com.helger.commons.changelog.ChangeLog;
 import com.helger.commons.changelog.ChangeLogEntry;
 import com.helger.commons.changelog.ChangeLogSerializer;
-import com.helger.commons.changelog.ComparatorChangeLogEntryDateAndComponent;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.string.StringHelper;
@@ -125,13 +125,15 @@ public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     if (s_aCache == null)
     {
       // Get all change logs
-      List <ChangeLogEntry> aChangeLogEntries = new ArrayList <ChangeLogEntry> ();
+      List <ChangeLogEntry> aChangeLogEntries = new ArrayList <> ();
       for (final ChangeLog aChangeLog : CollectionHelper.newList (ChangeLogSerializer.readAllChangeLogs ().values ()))
         aChangeLogEntries.addAll (aChangeLog.getAllEntries ());
 
       // Show at last the 500 newest entries
       aChangeLogEntries = CollectionHelper.getSortedInline (aChangeLogEntries,
-                                                            new ComparatorChangeLogEntryDateAndComponent ().setSortOrder (ESortOrder.DESCENDING));
+                                                            Comparator.comparing (ChangeLogEntry::getDate)
+                                                                      .thenComparing (Comparator.comparing (ChangeLogEntry::getChangeLogComponent))
+                                                                      .reversed ());
       s_aCache = aChangeLogEntries.subList (0, Math.min (500, aChangeLogEntries.size ()));
     }
 
