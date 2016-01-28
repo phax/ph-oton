@@ -32,6 +32,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.cache.AbstractNotifyingCache;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.compare.CompareHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.format.PDTFromString;
 import com.helger.photon.uicore.datetime.IDateFormatBuilder;
@@ -119,7 +120,7 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
   {
     private String m_sRest;
     private final Map <String, EDateTimePickerFormatToken> m_aAllMatching = new HashMap <String, EDateTimePickerFormatToken> ();
-    private final Comparator <String> m_aComp = Comparator.comparingInt (String::length).reversed ();
+    private final Comparator <String> m_aComp = CompareHelper.getComparatorStringLongestFirst ();
 
     public Searcher (@Nonnull final String sRest)
     {
