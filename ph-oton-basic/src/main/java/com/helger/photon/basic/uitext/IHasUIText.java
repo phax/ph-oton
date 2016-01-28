@@ -16,11 +16,14 @@
  */
 package com.helger.photon.basic.uitext;
 
+import java.util.Comparator;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.compare.ISerializableComparator;
 
 /**
  * Interface for objects that have a UI display text
@@ -37,4 +40,12 @@ public interface IHasUIText
   @Nonnull
   @Nonempty
   String getAsUIText (@Nonnull Locale aDisplayLocale);
+
+  @Nonnull
+  static Comparator <IHasUIText> getComparatorCollating (@Nonnull final Locale aContentLocale,
+                                                         @Nullable final Locale aSortLocale)
+  {
+    return ISerializableComparator.getComparatorCollating (aObject -> aObject.getAsUIText (aContentLocale),
+                                                           aSortLocale);
+  }
 }

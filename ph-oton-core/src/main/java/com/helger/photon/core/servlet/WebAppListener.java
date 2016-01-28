@@ -51,7 +51,6 @@ import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.lang.ClassPathHelper;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.serialize.MicroWriter;
-import com.helger.commons.name.CollatingComparatorHasDisplayName;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.statistics.util.StatisticsExporter;
 import com.helger.commons.string.StringHelper;
@@ -210,7 +209,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     {
       s_aLogger.info ("Using the following third party modules:");
       for (final IThirdPartyModule aModule : CollectionHelper.getSorted (aModules,
-                                                                         new CollatingComparatorHasDisplayName <IHasDisplayName> (SystemHelper.getSystemLocale ())))
+                                                                         IHasDisplayName.getComparatorCollating (SystemHelper.getSystemLocale ())))
         if (!aModule.isOptional ())
         {
           String sMsg = "  " + aModule.getDisplayName ();

@@ -29,7 +29,7 @@ import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.errorlist.FormErrors;
-import com.helger.commons.name.CollatingComparatorHasName;
+import com.helger.commons.name.IHasName;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
@@ -189,7 +189,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
       for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aAssignedUserGroups,
-                                                                     new CollatingComparatorHasName <IUserGroup> (aDisplayLocale)))
+                                                                     IHasName.getComparatorCollating (aDisplayLocale)))
         aUserGroupUI.addChild (new HCDiv ().addChild (aUserGroup.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                Integer.toString (aAssignedUserGroups.size ())))

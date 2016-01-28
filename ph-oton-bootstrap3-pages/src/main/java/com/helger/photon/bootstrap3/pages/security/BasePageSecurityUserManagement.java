@@ -33,7 +33,7 @@ import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.email.EmailAddressHelper;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.errorlist.FormErrors;
-import com.helger.commons.name.CollatingComparatorHasName;
+import com.helger.commons.name.IHasName;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
@@ -366,7 +366,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
       for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aUserGroups,
-                                                                     new CollatingComparatorHasName <IUserGroup> (aDisplayLocale)))
+                                                                     IHasName.getComparatorCollating (aDisplayLocale)))
         aUserGroupUI.addChild (new HCDiv ().addChild (aUserGroup.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                Integer.toString (aUserGroups.size ())))
@@ -384,7 +384,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     {
       final HCNodeList aRoleUI = new HCNodeList ();
       for (final IRole aRole : CollectionHelper.getSorted (aUserRoles,
-                                                           new CollatingComparatorHasName <IRole> (aDisplayLocale)))
+                                                           IHasName.getComparatorCollating (aDisplayLocale)))
         aRoleUI.addChild (new HCDiv ().addChild (aRole.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aUserRoles.size ())))
@@ -800,37 +800,41 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     // List existing
-    final HCTable aTable = new HCTable ().setID (sTableID);
-    aTable.addColumn (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)));
-    if (bSeparateLoginName)
-      aTable.addColumn (new DTCol (EText.HEADER_LOGINNAME.getDisplayText (aDisplayLocale)));
-    aTable.addColumn (new DTCol (EText.HEADER_EMAIL.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING));
-    aTable.addColumn (new DTCol (EText.HEADER_USERGROUPS.getDisplayText (aDisplayLocale)));
-    aTable.addColumn (new DTCol (EText.HEADER_LAST_LOGIN.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,
-                                                                                                          aDisplayLocale));
-    aTable.addColumn (new BootstrapDTColAction (aDisplayLocale));
+    final HCTable aTable = new HCTable (new DTCol ().setVisible (false),
+                                        new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)),
+                                        bSeparateLoginName ? new DTCol (EText.HEADER_LOGINNAME.getDisplayText (aDisplayLocale))
+                                                           : null,
+                                        new DTCol (EText.HEADER_EMAIL.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                        new DTCol (EText.HEADER_USERGROUPS.getDisplayText (aDisplayLocale)),
+                                        new DTCol (EText.HEADER_LAST_LOGIN.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,
+                                                                                                                            aDisplayLocale),
+                                        new BootstrapDTColAction (aDisplayLocale)).setID (sTableID);
 
     for (final IUser aCurUser : aUsers)
     {
       final ISimpleURL aViewLink = createViewURL (aWPEC, aCurUser);
 
       final HCRow aRow = aTable.addBodyRow ();
+
+      // Hidden ID
+      aRow.addCell (aCurUser.getID ());
+
+      // Name
       aRow.addCell (new HCA (aViewLink).addChild (SecurityHelper.getUserDisplayName (aCurUser, aDisplayLocale)));
+
+      // Login name
       if (bSeparateLoginName)
         aRow.addCell (new HCA (aViewLink).addChild (aCurUser.getLoginName ()));
+
+      // Email address
       aRow.addCell (new HCA (aViewLink).addChild (aCurUser.getEmailAddress ()));
 
       // User groups
       final Collection <IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aCurUser.getID ());
-      final StringBuilder aUserGroupsStr = new StringBuilder ();
-      for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aUserGroups,
-                                                                     new CollatingComparatorHasName <> (aDisplayLocale)))
-      {
-        if (aUserGroupsStr.length () > 0)
-          aUserGroupsStr.append (", ");
-        aUserGroupsStr.append (aUserGroup.getName ());
-      }
-      aRow.addCell (new HCA (aViewLink).addChild (aUserGroupsStr.toString ()));
+      aRow.addCell (new HCA (aViewLink).addChild (StringHelper.getImploded (", ",
+                                                                            CollectionHelper.getSorted (aUserGroups,
+                                                                                                        IHasName.getComparatorCollating (aDisplayLocale)),
+                                                                            IUserGroup::getName)));
 
       // Last login
       aRow.addCell (PDTToString.getAsString (aCurUser.getLastLoginDateTime (), aDisplayLocale));

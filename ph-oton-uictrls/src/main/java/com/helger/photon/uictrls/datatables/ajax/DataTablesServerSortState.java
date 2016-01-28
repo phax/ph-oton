@@ -30,7 +30,7 @@ import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTString;
+import com.helger.photon.uictrls.datatables.column.ComparatorDT;
 
 /**
  * The current sort state of a {@link DataTables} object.
@@ -64,7 +64,7 @@ final class DataTablesServerSortState implements Serializable
       if (aStringComp == null)
       {
         // Default to String comparator
-        aStringComp = new ComparatorDTString (aDisplayLocale);
+        aStringComp = ComparatorDT.getComparatorString (null, aDisplayLocale);
       }
       if (aSortColumn.getSortDirectionOrDefault ().isDescending ())
       {

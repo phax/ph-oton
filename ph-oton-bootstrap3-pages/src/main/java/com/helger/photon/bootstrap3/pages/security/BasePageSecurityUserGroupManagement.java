@@ -31,8 +31,8 @@ import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.errorlist.FormErrors;
-import com.helger.commons.name.CollatingComparatorHasDisplayName;
-import com.helger.commons.name.CollatingComparatorHasName;
+import com.helger.commons.name.IHasDisplayName;
+import com.helger.commons.name.IHasName;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
@@ -217,7 +217,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
       final HCNodeList aUserUI = new HCNodeList ();
       for (final IUser aUser : CollectionHelper.getSorted (aAssignedUsers,
-                                                           new CollatingComparatorHasDisplayName <IUser> (aDisplayLocale)))
+                                                           IHasDisplayName.getComparatorCollating (aDisplayLocale)))
         aUserUI.addChild (new HCDiv ().addChild (aUser.getDisplayName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aAssignedUserIDs.size ())))
@@ -241,7 +241,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
       final HCNodeList aRoleUI = new HCNodeList ();
       for (final IRole aRole : CollectionHelper.getSorted (aAssignedRoles,
-                                                           new CollatingComparatorHasName <IRole> (aDisplayLocale)))
+                                                           IHasName.getComparatorCollating (aDisplayLocale)))
         aRoleUI.addChild (new HCDiv ().addChild (aRole.getName ()));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aAssignedRoleIDs.size ())))

@@ -21,10 +21,10 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.compare.AbstractComparator;
+import com.helger.commons.compare.ISerializableComparator;
 import com.helger.commons.string.ToStringGenerator;
 
-final class ComparatorDataTablesServerDataRow extends AbstractComparator <DataTablesServerDataRow>
+final class ComparatorDataTablesServerDataRow implements ISerializableComparator <DataTablesServerDataRow>
 {
   private final List <DTSSRequestDataOrderColumn> m_aOrderColumns;
 
@@ -36,7 +36,7 @@ final class ComparatorDataTablesServerDataRow extends AbstractComparator <DataTa
   }
 
   @Override
-  protected int mainCompare (@Nonnull final DataTablesServerDataRow aRow1, @Nonnull final DataTablesServerDataRow aRow2)
+  public int compare (@Nonnull final DataTablesServerDataRow aRow1, @Nonnull final DataTablesServerDataRow aRow2)
   {
     int ret = 0;
     for (final DTSSRequestDataOrderColumn aOrderColumn : m_aOrderColumns)

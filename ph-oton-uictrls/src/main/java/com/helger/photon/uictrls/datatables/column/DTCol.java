@@ -16,7 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables.column;
 
+import java.util.Comparator;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,6 +27,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.version.Version;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.tabular.AbstractHCCol;
@@ -32,16 +35,6 @@ import com.helger.html.hc.impl.HCTextNode;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigDecimal;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTBigInteger;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDate;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTDuration;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTFixedCurrencyFormat;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTLocalDateTime;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTString;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTTime;
-import com.helger.photon.uictrls.datatables.comparator.ComparatorDTVersion;
-import com.helger.photon.uictrls.datatables.comparator.IComparatorDT;
 
 /**
  * Specialized column for DataTables to be used in IHCTable implementation
@@ -59,7 +52,7 @@ public class DTCol extends AbstractHCCol <DTCol>
   private boolean m_bVisible = DataTablesColumnDef.DEFAULT_VISIBLE;
   private String m_sName;
   private int [] m_aDataSort;
-  private IComparatorDT m_aComparator;
+  private Comparator <String> m_aComparator;
 
   public DTCol ()
   {
@@ -80,6 +73,14 @@ public class DTCol extends AbstractHCCol <DTCol>
   @Nonnull
   public DTCol setDisplayType (@Nonnull final EDTColType eBaseType, @Nonnull final Locale aDisplayLocale)
   {
+    return setDisplayType (eBaseType, aDisplayLocale, null);
+  }
+
+  @Nonnull
+  public DTCol setDisplayType (@Nonnull final EDTColType eBaseType,
+                               @Nonnull final Locale aDisplayLocale,
+                               @Nullable final Function <? super String, String> aFormatter)
+  {
     ValueEnforcer.notNull (eBaseType, "BaseType");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     switch (eBaseType)
@@ -88,33 +89,41 @@ public class DTCol extends AbstractHCCol <DTCol>
         // Nothing special
         break;
       case DATE:
-        setComparator (new ComparatorDTDate (aDisplayLocale));
+        setComparator (ComparatorDT.getComparatorDate (aFormatter, aDisplayLocale));
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         break;
       case DATETIME:
-        setComparator (new ComparatorDTLocalDateTime (aDisplayLocale));
+        setComparator (ComparatorDT.getComparatorDateTime (aFormatter, aDisplayLocale));
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         break;
       case DOUBLE:
-        setComparator (new ComparatorDTBigDecimal (aDisplayLocale));
+        /*
+         * Ensure that columns without text are sorted consistently compared to
+         * the ones with non-numeric content
+         */
+        setComparator (ComparatorDT.getComparatorBigDecimal (aFormatter, aDisplayLocale));
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         break;
       case DURATION:
-        setComparator (new ComparatorDTDuration ());
+        setComparator (ComparatorDT.getComparatorDuration (aFormatter));
         break;
       case INT:
-        setComparator (new ComparatorDTBigInteger (aDisplayLocale));
+        /*
+         * Ensure that columns without text are sorted consistently compared to
+         * the ones with non-numeric content
+         */
+        setComparator (ComparatorDT.getComparatorBigInteger (aFormatter, aDisplayLocale));
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         break;
       case TEXT:
-        setComparator (new ComparatorDTString (aDisplayLocale));
+        setComparator (ComparatorDT.getComparatorString (aFormatter, aDisplayLocale));
         break;
       case TIME:
-        setComparator (new ComparatorDTTime (aDisplayLocale));
+        setComparator (ComparatorDT.getComparatorTime (aFormatter, aDisplayLocale));
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         break;
       case VERSION:
-        setComparator (new ComparatorDTVersion ());
+        setComparator (ComparatorDT.getComparator (aFormatter, s -> new Version (s)));
         break;
       case XML:
         setOrderable (false);
@@ -126,12 +135,11 @@ public class DTCol extends AbstractHCCol <DTCol>
   }
 
   @Nonnull
-  public DTCol setDisplayTypeCurrency (@Nonnull final Locale aDisplayLocale, @Nonnull final ECurrency eCurrency)
+  public DTCol setDisplayTypeCurrency (@Nonnull final ECurrency eCurrency)
   {
-    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     ValueEnforcer.notNull (eCurrency, "Currency");
 
-    setComparator (new ComparatorDTFixedCurrencyFormat (eCurrency));
+    setComparator (ComparatorDT.getComparatorCurrencyFormat (eCurrency));
     addClass (CUICoreCSS.CSS_CLASS_RIGHT);
     return this;
   }
@@ -238,13 +246,13 @@ public class DTCol extends AbstractHCCol <DTCol>
   }
 
   @Nullable
-  public IComparatorDT getComparator ()
+  public Comparator <String> getComparator ()
   {
     return m_aComparator;
   }
 
   @Nonnull
-  public DTCol setComparator (@Nullable final IComparatorDT aComparator)
+  public DTCol setComparator (@Nullable final Comparator <String> aComparator)
   {
     m_aComparator = aComparator;
     return this;

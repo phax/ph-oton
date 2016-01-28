@@ -25,7 +25,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.name.CollatingComparatorHasDisplayName;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
@@ -144,7 +143,7 @@ public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecut
 
     // Show all required modules, sorted by name
     for (final IThirdPartyModule aModule : CollectionHelper.getSorted (aModules,
-                                                                       new CollatingComparatorHasDisplayName <IHasDisplayName> (aDisplayLocale)))
+                                                                       IHasDisplayName.getComparatorCollating (aDisplayLocale)))
       if (!aModule.isOptional ())
         aUL.addItem (_getModuleHCNode (aModule, aDisplayLocale));
   }

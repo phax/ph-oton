@@ -26,9 +26,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.locale.country.CollatingComparatorLocaleDisplayCountryInLocale;
+import com.helger.commons.compare.ISerializableComparator;
 import com.helger.commons.locale.country.CountryCache;
-import com.helger.commons.text.display.CollatingComparatorDisplayTextProvider;
 import com.helger.commons.text.display.IDisplayTextProvider;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.locale.DeprecatedLocaleHandler;
@@ -112,13 +111,12 @@ public class HCCountrySelect extends HCExtSelect
 
     Comparator <Locale> aComp;
     if (aDisplayTextProvider == null)
-      aComp = new CollatingComparatorLocaleDisplayCountryInLocale (aDisplayLocale, aDisplayLocale);
+      aComp = ISerializableComparator.getComparatorCollating (aLocale -> aLocale.getDisplayCountry (aDisplayLocale),
+                                                              aDisplayLocale);
     else
-      aComp = new CollatingComparatorDisplayTextProvider <Locale> (aDisplayLocale,
-                                                                   aDisplayTextProvider,
-                                                                   aDisplayLocale);
-    for (final Locale aCountry : CollectionHelper.getSorted (aLocales, aComp))
+      aComp = aDisplayTextProvider.getComparatorCollating (aDisplayLocale, aDisplayLocale);
 
+    for (final Locale aCountry : CollectionHelper.getSorted (aLocales, aComp))
     {
       final String sDisplayCountry = aDisplayTextProvider != null ? aDisplayTextProvider.getDisplayText (aCountry,
                                                                                                          aDisplayLocale)

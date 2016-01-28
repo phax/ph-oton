@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.name.CollatingComparatorHasDisplayName;
+import com.helger.commons.name.IHasDisplayName;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.app.IAppToken;
@@ -39,7 +39,7 @@ public class HCAppTokenSelect extends HCExtSelect
     // for all items
     for (final IAppToken aAppToken : CollectionHelper.getSorted (PhotonSecurityManager.getAppTokenMgr ()
                                                                                       .getAllAppTokens (),
-                                                                 new CollatingComparatorHasDisplayName <> (aDisplayLocale)))
+                                                                 IHasDisplayName.getComparatorCollating (aDisplayLocale)))
       if (aFilter == null || aFilter.test (aAppToken))
       {
         final String sDisplayText = aAppToken.getDisplayName ();

@@ -19,6 +19,7 @@ package com.helger.photon.bootstrap3.pages.sysinfo;
 import java.security.Provider;
 import java.security.Provider.Service;
 import java.security.Security;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -32,8 +33,6 @@ import javax.net.ssl.SSLParameters;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.compare.AbstractComparator;
-import com.helger.commons.compare.CompareHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
@@ -67,18 +66,6 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
                                      extends AbstractBootstrapWebPage <WPECTYPE>
 {
-  public static final class ComparatorProviderNameAndVersion extends AbstractComparator <Provider>
-  {
-    @Override
-    protected int mainCompare (@Nonnull final Provider aElement1, @Nonnull final Provider aElement2)
-    {
-      int ret = aElement1.getName ().compareTo (aElement2.getName ());
-      if (ret == 0)
-        ret = CompareHelper.compare (aElement1.getVersion (), aElement2.getVersion ());
-      return ret;
-    }
-  }
-
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
@@ -147,7 +134,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
     final List <Provider> aSortedProviders = CollectionHelper.getSorted (Security.getProviders (),
-                                                                         new ComparatorProviderNameAndVersion ());
+                                                                         Comparator.comparing (Provider::getName)
+                                                                                   .thenComparing (Comparator.comparingDouble (Provider::getVersion)));
 
     // show all providers
     {
