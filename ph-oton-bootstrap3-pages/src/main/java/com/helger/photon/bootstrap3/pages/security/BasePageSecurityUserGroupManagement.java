@@ -439,7 +439,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final BootstrapButtonToolbar aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addButtonNew (EText.BUTTON_CREATE_NEW_USERGROUP.getDisplayText (aDisplayLocale), createCreateURL (aWPEC));
 
-    final HCTable aTable = new HCTable (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+    final HCTable aTable = new HCTable (new DTCol ().setVisible (false),
+                                        new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_IN_USE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
     final Collection <? extends IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroups ();
@@ -448,6 +449,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       final ISimpleURL aViewLink = createViewURL (aWPEC, aUserGroup);
 
       final HCRow aRow = aTable.addBodyRow ();
+      aRow.addCell (aUserGroup.getID ());
       aRow.addCell (new HCA (aViewLink).addChild (aUserGroup.getName ()));
       aRow.addCell (EPhotonCoreText.getYesOrNo (aUserGroup.hasContainedUsers (), aDisplayLocale));
 

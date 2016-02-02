@@ -292,7 +292,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
     final UserGroupManager aUserGroupManager = PhotonSecurityManager.getUserGroupMgr ();
 
-    final HCTable aTable = new HCTable (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+    final HCTable aTable = new HCTable (new DTCol ().setVisible (false),
+                                        new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_IN_USE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
     final Collection <? extends IRole> aRoles = aRoleMgr.getAllRoles ();
@@ -303,6 +304,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
       final Collection <IUserGroup> aAssignedUserGroups = aUserGroupManager.getAllUserGroupsWithAssignedRole (aRole.getID ());
 
       final HCRow aRow = aTable.addBodyRow ();
+      aRow.addCell (aRole.getID ());
       aRow.addCell (new HCA (aViewLink).addChild (aRole.getName ()));
       aRow.addCell (EPhotonCoreText.getYesOrNo (!aAssignedUserGroups.isEmpty (), aDisplayLocale));
 
