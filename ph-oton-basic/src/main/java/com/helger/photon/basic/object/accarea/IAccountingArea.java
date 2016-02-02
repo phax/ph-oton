@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.name.IHasDisplayName;
+import com.helger.commons.string.StringHelper;
 import com.helger.masterdata.address.IAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.object.client.IClientObject;
@@ -38,11 +39,21 @@ public interface IAccountingArea extends IClientObject, IHasDisplayName, IHasUIT
   @Nullable
   String getCompanyType ();
 
+  default boolean hasCompanyType ()
+  {
+    return StringHelper.hasText (getCompanyType ());
+  }
+
   /**
    * @return The company UID.
    */
   @Nullable
   String getCompanyVATIN ();
+
+  default boolean hasCompanyVATIN ()
+  {
+    return StringHelper.hasText (getCompanyVATIN ());
+  }
 
   /**
    * @return The company number (Interne Betriebsnummer). May not be
@@ -51,11 +62,21 @@ public interface IAccountingArea extends IClientObject, IHasDisplayName, IHasUIT
   @Nullable
   String getCompanyNumber ();
 
+  default boolean hasCompanyNumber ()
+  {
+    return StringHelper.hasText (getCompanyNumber ());
+  }
+
   /**
    * @return Optional customer number. May be <code>null</code>.
    */
   @Nullable
   String getCustomerNumber ();
+
+  default boolean hasCustomeNumber ()
+  {
+    return StringHelper.hasText (getCustomerNumber ());
+  }
 
   /**
    * @return The address of the owner. May not be <code>null</code>.
@@ -69,11 +90,21 @@ public interface IAccountingArea extends IClientObject, IHasDisplayName, IHasUIT
   @Nullable
   String getTelephone ();
 
+  default boolean hasTelephone ()
+  {
+    return StringHelper.hasText (getTelephone ());
+  }
+
   /**
    * @return The telefax number. May be <code>null</code>.
    */
   @Nullable
   String getFax ();
+
+  default boolean hasFax ()
+  {
+    return StringHelper.hasText (getFax ());
+  }
 
   /**
    * @return The email address. May be <code>null</code>.
@@ -81,11 +112,21 @@ public interface IAccountingArea extends IClientObject, IHasDisplayName, IHasUIT
   @Nullable
   String getEmailAddress ();
 
+  default boolean hasEmailAddress ()
+  {
+    return StringHelper.hasText (getEmailAddress ());
+  }
+
   /**
    * @return The web site. May be <code>null</code>.
    */
   @Nullable
   String getWebSite ();
+
+  default boolean hasWebSite ()
+  {
+    return StringHelper.hasText (getWebSite ());
+  }
 
   /**
    * @return The default currency in this client. May be <code>null</code>.
@@ -105,15 +146,30 @@ public interface IAccountingArea extends IClientObject, IHasDisplayName, IHasUIT
   @Nullable
   String getOfficeLocation ();
 
+  default boolean hasOfficeLocation ()
+  {
+    return StringHelper.hasText (getOfficeLocation ());
+  }
+
   /**
    * @return Commercial registration number (e.g. Firmenbuchnummer)
    */
   @Nullable
   String getCommercialRegistrationNumber ();
 
+  default boolean hasCommercialRegistrationNumber ()
+  {
+    return StringHelper.hasText (getCommercialRegistrationNumber ());
+  }
+
   /**
    * @return Commercial court(e.g. Firmenbuchgericht)
    */
   @Nullable
   String getCommercialCourt ();
+
+  default boolean hasCommercialCourt ()
+  {
+    return StringHelper.hasText (getCommercialCourt ());
+  }
 }

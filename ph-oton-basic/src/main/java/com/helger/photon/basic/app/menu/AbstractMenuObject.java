@@ -25,6 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.traits.IGenericImplTrait;
 
 /**
  * Implementation base class for menu items.
@@ -35,7 +36,8 @@ import com.helger.commons.string.ToStringGenerator;
  */
 @NotThreadSafe
 public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <IMPLTYPE>>
-                                         extends MapBasedAttributeContainerAny <String> implements IMenuObject
+                                         extends MapBasedAttributeContainerAny <String>
+                                         implements IMenuObject, IGenericImplTrait <IMPLTYPE>
 {
   private final String m_sID;
   private IMenuObjectFilter m_aDisplayFilter;
@@ -50,13 +52,6 @@ public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <I
   public final String getID ()
   {
     return m_sID;
-  }
-
-  @SuppressWarnings ("unchecked")
-  @Nonnull
-  protected final IMPLTYPE thisAsT ()
-  {
-    return (IMPLTYPE) this;
   }
 
   @Nonnull

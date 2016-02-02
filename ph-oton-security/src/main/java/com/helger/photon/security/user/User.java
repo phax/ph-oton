@@ -134,14 +134,8 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
   /**
    * For deserialization only.
    *
-   * @param sID
-   *        user ID
-   * @param aCreationDT
-   *        The creation date and time
-   * @param aLastModificationDT
-   *        The last modification date and time
-   * @param aDeletionDT
-   *        The deletion date and time
+   * @param aStubObject
+   *        Stub init object
    * @param sLoginName
    *        Login name of the user. May neither be <code>null</code> nor empty.
    * @param sEmailAddress
