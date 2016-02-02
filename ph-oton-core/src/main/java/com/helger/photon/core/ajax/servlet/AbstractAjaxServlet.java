@@ -108,7 +108,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
     // Remember in scope
     // Important: use a wrapper to avoid scope destruction
     aRequestScope.setAttribute (SCOPE_ATTR_NAME, sFunctionName);
-    aRequestScope.setAttribute (SCOPE_ATTR_INVOKER, Wrapper.create (aAjaxInvoker));
+    aRequestScope.setAttribute (SCOPE_ATTR_INVOKER, new Wrapper <> (aAjaxInvoker));
     aRequestScope.setAttribute (SCOPE_ATTR_EXECUTOR, aAjaxExecutor);
     return EContinue.CONTINUE;
   }
