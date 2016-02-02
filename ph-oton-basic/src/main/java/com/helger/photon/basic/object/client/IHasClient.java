@@ -45,9 +45,9 @@ public interface IHasClient extends IHasClientID
    * Check if the passed client has the same ID as this object
    *
    * @param aClient
-   *        The client ID to check. May be <code>null</code>.
+   *        The client to check. May be <code>null</code>.
    * @return <code>true</code> if this object and the passed object have the
-   *         same client ID
+   *         same client ID.
    */
   boolean hasSameClient (@Nullable IClient aClient);
 }
