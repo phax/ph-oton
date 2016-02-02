@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.compare.ISerializableComparator;
+import com.helger.commons.compare.IComparator;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
@@ -129,7 +129,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, List <String>> aEntry : CollectionHelper.getSortedByKey (RequestHelper.getRequestHeaderMap (aHttpRequest)
                                                                                                           .getAllHeaders (),
-                                                                                             ISerializableComparator.getComparatorCollating (aDisplayLocale))
+                                                                                             IComparator.getComparatorCollating (aDisplayLocale))
                                                                             .entrySet ())
       {
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (HCExtHelper.list2divList (aEntry.getValue ()));
@@ -145,7 +145,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale),
                                        EText.MSG_DETAILS.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, Cookie> aEntry : CollectionHelper.getSortedByKey (CookieHelper.getAllCookies (aHttpRequest),
-                                                                                      ISerializableComparator.getComparatorCollating (aDisplayLocale))
+                                                                                      IComparator.getComparatorCollating (aDisplayLocale))
                                                                      .entrySet ())
       {
         final Cookie aCookie = aEntry.getValue ();
@@ -197,7 +197,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
                                        EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aRequestScope.getAllAttributes (),
-                                                                                      ISerializableComparator.getComparatorCollating (aDisplayLocale))
+                                                                                      IComparator.getComparatorCollating (aDisplayLocale))
                                                                      .entrySet ())
       {
         aTable.addBodyRow ()

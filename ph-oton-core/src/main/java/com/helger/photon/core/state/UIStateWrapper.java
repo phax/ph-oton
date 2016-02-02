@@ -70,7 +70,7 @@ public class UIStateWrapper <T extends Serializable> implements IHasUIState
   public <U> U getCastedObject ()
   {
     // Regular cast
-    return GenericReflection.<T, U> uncheckedCast (m_aObject);
+    return GenericReflection.uncheckedCast (m_aObject);
   }
 
   @Override

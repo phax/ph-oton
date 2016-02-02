@@ -21,10 +21,10 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.compare.ISerializableComparator;
+import com.helger.commons.compare.IComparator;
 import com.helger.commons.string.ToStringGenerator;
 
-final class ComparatorDataTablesServerDataRow implements ISerializableComparator <DataTablesServerDataRow>
+final class ComparatorDataTablesServerDataRow implements IComparator <DataTablesServerDataRow>
 {
   private final List <DTSSRequestDataOrderColumn> m_aOrderColumns;
 

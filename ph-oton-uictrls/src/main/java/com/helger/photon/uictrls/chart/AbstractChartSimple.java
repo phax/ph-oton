@@ -29,9 +29,9 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.mutable.MutableBigDecimal;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.traits.IGenericImplTrait;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
@@ -45,7 +45,8 @@ import com.helger.html.jscode.JSExpr;
  *        Real implementation type
  */
 @NotThreadSafe
-public abstract class AbstractChartSimple <IMPLTYPE extends AbstractChartSimple <IMPLTYPE>> implements IChart
+public abstract class AbstractChartSimple <IMPLTYPE extends AbstractChartSimple <IMPLTYPE>>
+                                          implements IChart, IGenericImplTrait <IMPLTYPE>
 {
   /**
    * Single data set for a simple chart.
@@ -141,13 +142,6 @@ public abstract class AbstractChartSimple <IMPLTYPE extends AbstractChartSimple 
 
   public AbstractChartSimple ()
   {}
-
-  @Nonnull
-  protected final IMPLTYPE thisAsT ()
-  {
-    // Avoid the unchecked cast warning in all places
-    return GenericReflection.<AbstractChartSimple <IMPLTYPE>, IMPLTYPE> uncheckedCast (this);
-  }
 
   public boolean hasDataSet ()
   {

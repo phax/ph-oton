@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.compare.ISerializableComparator;
+import com.helger.commons.compare.IComparator;
 import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.text.display.IDisplayTextProvider;
 import com.helger.html.request.IHCRequestField;
@@ -51,7 +51,7 @@ public class HCCountrySelect extends HCExtSelect
   public static List <Locale> getAllCountries (@Nonnull final EWithDeprecated eWithDeprecated)
   {
     final boolean bWithDeprecated = eWithDeprecated.getAsBoolean ();
-    final List <Locale> aLocales = new ArrayList <Locale> ();
+    final List <Locale> aLocales = new ArrayList <> ();
     for (final Locale aCountry : CountryCache.getInstance ().getAllCountryLocales ())
       if (bWithDeprecated || !DeprecatedLocaleHandler.getDefaultInstance ().isDeprecatedLocaleWithFallback (aCountry))
         aLocales.add (aCountry);
@@ -111,7 +111,7 @@ public class HCCountrySelect extends HCExtSelect
 
     Comparator <Locale> aComp;
     if (aDisplayTextProvider == null)
-      aComp = ISerializableComparator.getComparatorCollating (aLocale -> aLocale.getDisplayCountry (aDisplayLocale),
+      aComp = IComparator.getComparatorCollating (aLocale -> aLocale.getDisplayCountry (aDisplayLocale),
                                                               aDisplayLocale);
     else
       aComp = aDisplayTextProvider.getComparatorCollating (aDisplayLocale, aDisplayLocale);

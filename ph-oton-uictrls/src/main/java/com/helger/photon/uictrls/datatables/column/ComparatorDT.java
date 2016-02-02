@@ -30,7 +30,7 @@ import java.util.function.ToLongFunction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.compare.ISerializableComparator;
+import com.helger.commons.compare.IComparator;
 import com.helger.commons.format.FormatterStringSkipSuffix;
 import com.helger.commons.locale.LocaleParser;
 import com.helger.commons.string.StringHelper;
@@ -152,7 +152,7 @@ public final class ComparatorDT
   public static Comparator <String> getComparatorString (@Nullable final Function <? super String, String> aFormatter,
                                                          @Nonnull final Locale aDisplayLocale)
   {
-    return ISerializableComparator.getComparatorCollating (aFormatter == null ? sCell -> StringHelper.getNotNull (sCell)
+    return IComparator.getComparatorCollating (aFormatter == null ? sCell -> StringHelper.getNotNull (sCell)
                                                                               : sCell -> sCell == null ? ""
                                                                                                        : aFormatter.apply (sCell),
                                                            aDisplayLocale);

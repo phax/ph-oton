@@ -25,7 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.lang.GenericReflection;
+import com.helger.commons.traits.IGenericImplTrait;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 
@@ -37,19 +37,13 @@ import com.helger.html.jscode.JSAssocArray;
  *        Real implementation type
  */
 @NotThreadSafe
-public abstract class AbstractChartWithLabels <IMPLTYPE extends AbstractChartWithLabels <IMPLTYPE>> implements IChart
+public abstract class AbstractChartWithLabels <IMPLTYPE extends AbstractChartWithLabels <IMPLTYPE>>
+                                              implements IChart, IGenericImplTrait <IMPLTYPE>
 {
   private List <String> m_aLabels;
 
   public AbstractChartWithLabels ()
   {}
-
-  @Nonnull
-  protected final IMPLTYPE thisAsT ()
-  {
-    // Avoid the unchecked cast warning in all places
-    return GenericReflection.<AbstractChartWithLabels <IMPLTYPE>, IMPLTYPE> uncheckedCast (this);
-  }
 
   public boolean hasLabels ()
   {

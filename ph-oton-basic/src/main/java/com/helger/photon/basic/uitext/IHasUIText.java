@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.compare.ISerializableComparator;
+import com.helger.commons.compare.IComparator;
 
 /**
  * Interface for objects that have a UI display text
@@ -45,7 +45,7 @@ public interface IHasUIText
   static Comparator <IHasUIText> getComparatorCollating (@Nonnull final Locale aContentLocale,
                                                          @Nullable final Locale aSortLocale)
   {
-    return ISerializableComparator.getComparatorCollating (aObject -> aObject.getAsUIText (aContentLocale),
+    return IComparator.getComparatorCollating (aObject -> aObject.getAsUIText (aContentLocale),
                                                            aSortLocale);
   }
 }

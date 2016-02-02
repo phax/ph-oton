@@ -137,7 +137,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
       return ((UIStateWrapper <?>) aObject).<T> getCastedObject ();
 
     // Regular cast
-    return GenericReflection.<IHasUIState, T> uncheckedCast (aObject);
+    return GenericReflection.uncheckedCast (aObject);
   }
 
   /**

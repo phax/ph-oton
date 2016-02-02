@@ -22,7 +22,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.string.StringHelper;
 import com.helger.css.property.CCSSProperties;
 import com.helger.css.property.ECSSProperty;
@@ -49,13 +48,6 @@ public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstra
 
   public AbstractBootstrapObject ()
   {}
-
-  @Nonnull
-  protected final THISTYPE thisAsT ()
-  {
-    // Avoid the unchecked cast warning in all places
-    return GenericReflection.<AbstractBootstrapObject <THISTYPE>, THISTYPE> uncheckedCast (this);
-  }
 
   public final boolean hasID ()
   {

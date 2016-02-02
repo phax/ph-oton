@@ -24,10 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsImmutableObject;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.collection.attr.MapBasedAttributeContainer;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -76,24 +73,10 @@ public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObje
   }
 
   @Nonnull
-  @ReturnsImmutableObject
-  public IAttributeContainer <String, String> getAttributes ()
-  {
-    return m_aAttrs;
-  }
-
-  @Nonnull
   @ReturnsMutableObject ("design")
   public MapBasedAttributeContainer <String, String> getMutableAttributes ()
   {
     return m_aAttrs;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public Map <String, String> getAllAttributes ()
-  {
-    return m_aAttrs.getAllAttributes ();
   }
 
   @Override

@@ -17,7 +17,6 @@
 package com.helger.photon.basic.app.page;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,10 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsImmutableObject;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
 import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.string.ToStringGenerator;
@@ -197,24 +193,10 @@ public abstract class AbstractPage implements IPage
   }
 
   @Nonnull
-  @ReturnsImmutableObject
-  public IAttributeContainer <String, Object> getAttributes ()
-  {
-    return m_aAttrs;
-  }
-
-  @Nonnull
   @ReturnsMutableObject ("design")
   public IMutableAttributeContainerAny <String> getMutableAttributes ()
   {
     return m_aAttrs;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public Map <String, Object> getAllAttributes ()
-  {
-    return m_aAttrs.getAllAttributes ();
   }
 
   @Override
