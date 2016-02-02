@@ -49,8 +49,8 @@ public final class CApp
   public static final String ROLE_VIEW_DESCRIPTION = null;
   public static final Map <String, String> ROLE_VIEW_CUSTOMATTRS = null;
 
-  public static final List <String> REQUIRED_ROLE_IDS_CONFIG = CollectionHelper.newUnmodifiableList (ROLE_CONFIG_ID);
-  public static final List <String> REQUIRED_ROLE_IDS_VIEW = CollectionHelper.newUnmodifiableList (ROLE_VIEW_ID);
+  public static final List <String> REQUIRED_ROLE_IDS_CONFIG = CollectionHelper.makeUnmodifiable (ROLE_CONFIG_ID);
+  public static final List <String> REQUIRED_ROLE_IDS_VIEW = CollectionHelper.makeUnmodifiable (ROLE_VIEW_ID);
 
   // User groups
   public static final String USERGROUP_ADMINISTRATORS_ID = CSecurity.USERGROUP_ADMINISTRATORS_ID;

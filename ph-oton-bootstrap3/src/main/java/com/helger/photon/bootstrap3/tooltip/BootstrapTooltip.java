@@ -82,8 +82,8 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
   public static final boolean DEFAULT_HTML = false;
   public static final EBootstrapTooltipPosition DEFAULT_PLACEMENT = EBootstrapTooltipPosition.TOP;
   public static final boolean DEFAULT_PLACEMENT_AUTO = false;
-  public static final Set <EBootstrapTooltipTrigger> DEFAULT_TRIGGER = CollectionHelper.newUnmodifiableSortedSet (EBootstrapTooltipTrigger.HOVER,
-                                                                                                                  EBootstrapTooltipTrigger.FOCUS);
+  public static final Set <EBootstrapTooltipTrigger> DEFAULT_TRIGGER = CollectionHelper.makeUnmodifiable (CollectionHelper.newSortedSet (EBootstrapTooltipTrigger.HOVER,
+                                                                                                                                         EBootstrapTooltipTrigger.FOCUS));
 
   private final IJQuerySelector m_aSelector;
   private boolean m_bAnimation = DEFAULT_ANIMATION;

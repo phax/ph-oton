@@ -42,7 +42,7 @@ public enum EBootstrapButtonGroupType
 
   private EBootstrapButtonGroupType (@Nullable final ICSSClassProvider... aCSSClasses)
   {
-    m_aCSSClasses = CollectionHelper.newUnmodifiableList (aCSSClasses);
+    m_aCSSClasses = CollectionHelper.makeUnmodifiable (aCSSClasses);
   }
 
   @Nonnull
