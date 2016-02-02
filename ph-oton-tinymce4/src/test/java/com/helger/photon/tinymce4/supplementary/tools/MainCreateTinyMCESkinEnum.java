@@ -20,7 +20,7 @@ import java.io.File;
 import java.util.Locale;
 
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.file.filter.FileFilterDirectoryPublic;
+import com.helger.commons.io.file.filter.IFileFilter;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 
 public class MainCreateTinyMCESkinEnum
@@ -28,8 +28,7 @@ public class MainCreateTinyMCESkinEnum
   public static void main (final String [] args)
   {
     // Last update: 2013-11-22
-    for (final File aFile : FileSystemIterator.create ("src/main/resources/tinymce-dev/skins",
-                                                       new FileFilterDirectoryPublic ()))
+    for (final File aFile : new FileSystemIterator ("src/main/resources/tinymce-dev/skins").withFilter (IFileFilter.directoryPublic ()))
     {
       final String sID = FilenameHelper.getBaseName (aFile);
       System.out.println (sID.toUpperCase (Locale.US) + " (\"" + sID + "\"),");

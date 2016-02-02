@@ -20,7 +20,7 @@ import java.io.File;
 import java.util.Locale;
 
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.file.filter.FileFilterFilenameEndsWith;
+import com.helger.commons.io.file.filter.IFileFilter;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.locale.LocaleCache;
 
@@ -29,8 +29,7 @@ public class MainCreateTinyMCELanguageEnum
   public static void main (final String [] args)
   {
     // Last update: 2013-11-22
-    for (final File aFile : FileSystemIterator.create ("src/main/resources/tinymce-dev/langs",
-                                                       new FileFilterFilenameEndsWith (".js")))
+    for (final File aFile : new FileSystemIterator ("src/main/resources/tinymce-dev/langs").withFilter (IFileFilter.filenameEndsWith (".js")))
     {
       final String sID = FilenameHelper.getBaseName (aFile);
       if (!LocaleCache.getInstance ().containsLocale (sID))
