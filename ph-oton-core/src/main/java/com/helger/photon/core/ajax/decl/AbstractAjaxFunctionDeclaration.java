@@ -16,24 +16,19 @@
  */
 package com.helger.photon.core.ajax.decl;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.factory.FactoryNewInstance;
 import com.helger.commons.factory.IFactory;
 import com.helger.commons.filter.IFilter;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.url.ISimpleURL;
 import com.helger.photon.core.ajax.AjaxInvoker;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
-import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -87,40 +82,6 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
   public final IFilter <IRequestWebScopeWithoutResponse> getExecutionFilter ()
   {
     return m_aExecutionFilter;
-  }
-
-  @Nonnull
-  @Nonempty
-  public final String getPathWithoutContext ()
-  {
-    return getAjaxServletPath () + getName ();
-  }
-
-  @Nonnull
-  public String getInvocationURI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
-  {
-    return LinkHelper.getURIWithContext (aRequestScope, getPathWithoutContext ());
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getInvocationURI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                  @Nullable final Map <String, String> aParams)
-  {
-    if (CollectionHelper.isEmpty (aParams))
-    {
-      // No need to convert to SimpleURL and back
-      return getInvocationURI (aRequestScope);
-    }
-
-    return getInvocationURL (aRequestScope, aParams).getAsString ();
-  }
-
-  @Nonnull
-  public ISimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                      @Nullable final Map <String, String> aParams)
-  {
-    return LinkHelper.getURLWithContext (aRequestScope, getPathWithoutContext (), aParams);
   }
 
   public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)

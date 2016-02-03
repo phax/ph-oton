@@ -30,11 +30,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.attr.AttributeValueConverter;
-import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
@@ -42,12 +40,9 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestManager;
 import com.helger.photon.core.form.RequestFieldBoolean;
-import com.helger.web.fileupload.IFileItem;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.request.IRequestParamMap;
 import com.helger.web.useragent.IUserAgent;
 import com.helger.web.useragent.UserAgentDatabase;
-import com.helger.web.useragent.browser.BrowserInfo;
 
 /**
  * This object is instantiated per page view and contains the current request
@@ -126,48 +121,11 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   }
 
   @Nullable
-  public <DATATYPE> DATATYPE getCastedAttribute (@Nullable final String sName)
-  {
-    return m_aRequestScope.getCastedAttribute (sName);
-  }
-
-  @Nullable
-  public <DATATYPE> DATATYPE getCastedAttribute (@Nullable final String sName, @Nullable final DATATYPE aDefault)
-  {
-    return m_aRequestScope.getCastedAttribute (sName, aDefault);
-  }
-
-  @Nullable
-  public <DATATYPE> DATATYPE getTypedAttribute (@Nullable final String sName, @Nonnull final Class <DATATYPE> aDstClass)
-  {
-    return m_aRequestScope.getTypedAttribute (sName, aDstClass);
-  }
-
-  @Nullable
-  public <DATATYPE> DATATYPE getTypedAttribute (@Nullable final String sName,
-                                                @Nonnull final Class <DATATYPE> aDstClass,
-                                                @Nullable final DATATYPE aDefault)
-  {
-    return m_aRequestScope.getTypedAttribute (sName, aDstClass, aDefault);
-  }
-
-  @Nullable
-  public String getAttributeAsString (@Nullable final String sName)
-  {
-    return getAttributeAsString (sName, (String) null);
-  }
-
-  @Nullable
   public String getAttributeAsString (@Nullable final String sName, @Nullable final String sDefault)
   {
     final String ret = m_aRequestScope.getAttributeAsString (sName, sDefault);
     // Automatically and always remove leading and trailing whitespaces
     return StringHelper.trim (ret);
-  }
-
-  public int getAttributeAsInt (@Nullable final String sName)
-  {
-    return getAttributeAsInt (sName, CGlobal.ILLEGAL_UINT);
   }
 
   public int getAttributeAsInt (@Nullable final String sName, final int nDefault)
@@ -176,31 +134,16 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
     return AttributeValueConverter.getAsInt (sName, getAttributeAsString (sName), nDefault);
   }
 
-  public long getAttributeAsLong (@Nullable final String sName)
-  {
-    return getAttributeAsLong (sName, CGlobal.ILLEGAL_ULONG);
-  }
-
   public long getAttributeAsLong (@Nullable final String sName, final long nDefault)
   {
     // Always use String because we're handling request parameters
     return AttributeValueConverter.getAsLong (sName, getAttributeAsString (sName), nDefault);
   }
 
-  public double getAttributeAsDouble (@Nullable final String sName)
-  {
-    return getAttributeAsDouble (sName, CGlobal.ILLEGAL_UINT);
-  }
-
   public double getAttributeAsDouble (@Nullable final String sName, final double dDefault)
   {
     // Always use String because we're handling request parameters
     return AttributeValueConverter.getAsDouble (sName, getAttributeAsString (sName), dDefault);
-  }
-
-  public boolean getAttributeAsBoolean (@Nullable final String sName)
-  {
-    return getAttributeAsBoolean (sName, false);
   }
 
   public boolean getAttributeAsBoolean (@Nullable final String sName, final boolean bDefault)
@@ -210,22 +153,10 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   }
 
   @Nullable
-  public BigInteger getAttributeAsBigInteger (@Nullable final String sName)
-  {
-    return getAttributeAsBigInteger (sName, null);
-  }
-
-  @Nullable
   public BigInteger getAttributeAsBigInteger (@Nullable final String sName, @Nullable final BigInteger aDefault)
   {
     // Always use String because we're handling request parameters
     return AttributeValueConverter.getAsBigInteger (sName, getAttributeAsString (sName), aDefault);
-  }
-
-  @Nullable
-  public BigDecimal getAttributeAsBigDecimal (@Nullable final String sName)
-  {
-    return getAttributeAsBigDecimal (sName, null);
   }
 
   @Nullable
@@ -250,28 +181,9 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   }
 
   @Nullable
-  public List <String> getAttributeAsList (@Nullable final String sName)
-  {
-    return m_aRequestScope.getAttributeAsList (sName);
-  }
-
-  @Nullable
   public List <String> getAttributeAsList (@Nullable final String sName, @Nullable final List <String> aDefault)
   {
     return m_aRequestScope.getAttributeAsList (sName, aDefault);
-  }
-
-  public boolean hasAttributeValue (@Nullable final String sName, @Nullable final String sDesiredValue)
-  {
-    return EqualsHelper.equals (getAttributeAsString (sName), sDesiredValue);
-  }
-
-  public boolean hasAttributeValue (@Nullable final String sName,
-                                    @Nullable final String sDesiredValue,
-                                    final boolean bDefault)
-  {
-    final String sValue = getAttributeAsString (sName);
-    return sValue == null ? bDefault : EqualsHelper.equals (sValue, sDesiredValue);
   }
 
   @Nonnull
@@ -290,28 +202,10 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
     return StringHelper.hasNoText (sName) ? bDefaultValue : RequestFieldBoolean.getCheckBoxValue (sName, bDefaultValue);
   }
 
-  @Nullable
-  public IFileItem getFileItem (@Nullable final String sName)
-  {
-    return m_aRequestScope.getAttributeAsFileItem (sName);
-  }
-
-  @Nonnull
-  public IRequestParamMap getRequestParamMap ()
-  {
-    return m_aRequestScope.getRequestParamMap ();
-  }
-
   @Nonnull
   public IUserAgent getUserAgent ()
   {
     return UserAgentDatabase.getUserAgent (m_aRequestScope.getRequest ());
-  }
-
-  @Nullable
-  public BrowserInfo getBrowserInfo ()
-  {
-    return getUserAgent ().getBrowserInfo ();
   }
 
   @Nonnull
@@ -321,12 +215,6 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
     if (m_aARM == null)
       m_aARM = ApplicationRequestManager.getRequestMgr ();
     return m_aARM.getLinkToMenuItem (m_aRequestScope, sMenuItemID);
-  }
-
-  @Nonnull
-  public SimpleURL getLinkToMenuItem (@Nonnull final String sMenuItemID, @Nullable final Map <String, String> aParams)
-  {
-    return getLinkToMenuItem (sMenuItemID).addAll (aParams);
   }
 
   @Override

@@ -22,9 +22,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.factory.IFactory;
+import com.helger.commons.filter.IFilter;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -41,6 +44,13 @@ public interface IAjaxFunctionDeclaration extends IHasName
   IFactory <? extends IAjaxExecutor> getExecutorFactory ();
 
   /**
+   * @return The optional filter to be invoked before the main AJAX invocation.
+   *         May be <code>null</code>.
+   */
+  @Nullable
+  IFilter <IRequestWebScopeWithoutResponse> getExecutionFilter ();
+
+  /**
    * @return The path to the AJAX servlet. Must start with a slash and end with
    *         a slash!
    */
@@ -55,7 +65,10 @@ public interface IAjaxFunctionDeclaration extends IHasName
    */
   @Nonnull
   @Nonempty
-  String getPathWithoutContext ();
+  default String getPathWithoutContext ()
+  {
+    return getAjaxServletPath () + getName ();
+  }
 
   /**
    * @param aRequestScope
@@ -66,7 +79,10 @@ public interface IAjaxFunctionDeclaration extends IHasName
    */
   @Nonnull
   @Nonempty
-  String getInvocationURI (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  default String getInvocationURI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    return LinkHelper.getURIWithContext (aRequestScope, getPathWithoutContext ());
+  }
 
   /**
    * @param aRequestScope
@@ -80,8 +96,17 @@ public interface IAjaxFunctionDeclaration extends IHasName
    */
   @Nonnull
   @Nonempty
-  String getInvocationURI (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                           @Nullable Map <String, String> aParams);
+  default String getInvocationURI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                   @Nullable final Map <String, String> aParams)
+  {
+    if (CollectionHelper.isEmpty (aParams))
+    {
+      // No need to convert to SimpleURL and back
+      return getInvocationURI (aRequestScope);
+    }
+
+    return getInvocationURL (aRequestScope, aParams).getAsString ();
+  }
 
   /**
    * @param aRequestScope
@@ -107,8 +132,11 @@ public interface IAjaxFunctionDeclaration extends IHasName
    *         <code>null</code>.
    */
   @Nonnull
-  ISimpleURL getInvocationURL (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                               @Nullable Map <String, String> aParams);
+  default ISimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                       @Nullable final Map <String, String> aParams)
+  {
+    return LinkHelper.getURLWithContext (aRequestScope, getPathWithoutContext (), aParams);
+  }
 
   /**
    * Check if this AJAX function can be executed for the passed request.

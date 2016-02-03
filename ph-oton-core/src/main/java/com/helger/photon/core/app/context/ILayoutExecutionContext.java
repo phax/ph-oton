@@ -55,7 +55,10 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    *         item) with the passed parameters.
    */
   @Nonnull
-  SimpleURL getSelfHref ();
+  default SimpleURL getSelfHref ()
+  {
+    return getLinkToMenuItem (getSelectedMenuItemID ());
+  }
 
   /**
    * Get the URL to the current page with the provided set of parameters.
@@ -67,7 +70,10 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    *         item) with the passed parameters.
    */
   @Nonnull
-  SimpleURL getSelfHref (@Nullable Map <String, String> aParams);
+  default SimpleURL getSelfHref (@Nullable final Map <String, String> aParams)
+  {
+    return getLinkToMenuItem (getSelectedMenuItemID (), aParams);
+  }
 
   /**
    * Throw a {@link ForcedRedirectException} with the self href of the current

@@ -23,7 +23,9 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.attr.IAttributeContainer;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.web.fileupload.IFileItem;
@@ -64,7 +66,10 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
    * @return <code>null</code> if no such attribute value exists
    */
   @Nullable
-  List <String> getAttributeAsList (@Nullable String sName);
+  default List <String> getAttributeAsList (@Nullable final String sName)
+  {
+    return getAttributeAsList (sName, null);
+  }
 
   /**
    * Get a list of all attribute values with the same name.
@@ -89,7 +94,10 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
    * @return <code>true</code> if an attribute with the given name is present
    *         and has the desired value
    */
-  boolean hasAttributeValue (@Nullable String sName, @Nullable String sDesiredValue);
+  default boolean hasAttributeValue (@Nullable final String sName, @Nullable final String sDesiredValue)
+  {
+    return EqualsHelper.equals (getAttributeAsString (sName), sDesiredValue);
+  }
 
   /**
    * Check if a attribute with the given name is present in the request and has
@@ -108,7 +116,13 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
    *         present but has a different value. If the attribute is not present,
    *         the default value is returned.
    */
-  boolean hasAttributeValue (@Nullable String sName, @Nullable String sDesiredValue, boolean bDefault);
+  default boolean hasAttributeValue (@Nullable final String sName,
+                                     @Nullable final String sDesiredValue,
+                                     final boolean bDefault)
+  {
+    final String sValue = getAttributeAsString (sName);
+    return sValue == null ? bDefault : EqualsHelper.equals (sValue, sDesiredValue);
+  }
 
   /**
    * Get the value of the checkbox of the request parameter with the given name.
@@ -131,13 +145,19 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
    *         if the passed request parameter is not a file
    */
   @Nullable
-  IFileItem getFileItem (@Nullable String sName);
+  default IFileItem getFileItem (@Nullable final String sName)
+  {
+    return getRequestScope ().getAttributeAsFileItem (sName);
+  }
 
   /**
    * @return A cached request param map for this request.
    */
   @Nonnull
-  IRequestParamMap getRequestParamMap ();
+  default IRequestParamMap getRequestParamMap ()
+  {
+    return getRequestScope ().getRequestParamMap ();
+  }
 
   /**
    * Get the user agent object of this HTTP request.
@@ -152,7 +172,10 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
    *         no known browser was detected.
    */
   @Nullable
-  BrowserInfo getBrowserInfo ();
+  default BrowserInfo getBrowserInfo ()
+  {
+    return getUserAgent ().getBrowserInfo ();
+  }
 
   /**
    * Get the URL of the specified menu it.
@@ -176,5 +199,22 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
    *         passed parameters.
    */
   @Nonnull
-  SimpleURL getLinkToMenuItem (@Nonnull String sMenuItemID, @Nullable Map <String, String> aParams);
+  default SimpleURL getLinkToMenuItem (@Nonnull final String sMenuItemID, @Nullable final Map <String, String> aParams)
+  {
+    return getLinkToMenuItem (sMenuItemID).addAll (aParams);
+  }
+
+  /**
+   * Get the full URL (incl. protocol) and parameters of the current request.
+   * <br>
+   * <code>http://hostname.com:81/context/servlet/path/a/b?c=123&amp;d=789</code>
+   *
+   * @return The full URL of the current request.
+   */
+  @Nonnull
+  @Nonempty
+  default String getURL ()
+  {
+    return getRequestScope ().getURL ();
+  }
 }

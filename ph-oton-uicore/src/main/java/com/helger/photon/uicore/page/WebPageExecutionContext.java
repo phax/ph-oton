@@ -17,16 +17,13 @@
 package com.helger.photon.uicore.page;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
-import com.helger.photon.uicore.css.CPageParam;
 
 /**
  * This page is instantiated per page view, so that the thread safety of the
@@ -52,44 +49,16 @@ public class WebPageExecutionContext extends LayoutExecutionContext implements I
     m_aWebPage = ValueEnforcer.notNull (aWebPage, "WebPage");
   }
 
-  /**
-   * @return The invoked web page. Never <code>null</code>.
-   */
   @Nonnull
   public IWebPage <? extends IWebPageExecutionContext> getWebPage ()
   {
     return m_aWebPage;
   }
 
-  /**
-   * @return The node list to be filled with content. Never <code>null</code>.
-   */
   @Nonnull
   public HCNodeList getNodeList ()
   {
     return m_aNodeList;
-  }
-
-  @Nullable
-  public String getAction ()
-  {
-    return getAttributeAsString (CPageParam.PARAM_ACTION);
-  }
-
-  public boolean hasAction (@Nullable final String sAction)
-  {
-    return EqualsHelper.equals (getAction (), sAction);
-  }
-
-  @Nullable
-  public String getSubAction ()
-  {
-    return getAttributeAsString (CPageParam.PARAM_SUBACTION);
-  }
-
-  public boolean hasSubAction (@Nullable final String sSubAction)
-  {
-    return EqualsHelper.equals (getSubAction (), sSubAction);
   }
 
   @Override

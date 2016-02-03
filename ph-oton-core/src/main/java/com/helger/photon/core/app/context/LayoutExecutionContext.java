@@ -26,7 +26,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
@@ -66,18 +65,6 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
   public IMenuItemPage getSelectedMenuItem ()
   {
     return m_aSelectedMenuItem;
-  }
-
-  @Nonnull
-  public SimpleURL getSelfHref ()
-  {
-    return getLinkToMenuItem (m_aSelectedMenuItem.getID ());
-  }
-
-  @Nonnull
-  public SimpleURL getSelfHref (@Nullable final Map <String, String> aParams)
-  {
-    return getLinkToMenuItem (m_aSelectedMenuItem.getID (), aParams);
   }
 
   public void postRedirectGet (@Nullable final IHCNode aContent,

@@ -19,6 +19,7 @@ package com.helger.photon.uicore.page;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.css.CPageParam;
@@ -42,7 +43,10 @@ public interface IWebPageExecutionContext extends ILayoutExecutionContext
    *         {@link CPageParam#PARAM_ACTION}. May be <code>null</code>.
    */
   @Nullable
-  String getAction ();
+  default String getAction ()
+  {
+    return getAttributeAsString (CPageParam.PARAM_ACTION);
+  }
 
   /**
    * Check if the specified action is present in the request scope.
@@ -51,14 +55,20 @@ public interface IWebPageExecutionContext extends ILayoutExecutionContext
    *        Action to check.
    * @return <code>true</code> if <code>getAction().equals (sAction)</code>
    */
-  boolean hasAction (@Nullable String sAction);
+  default boolean hasAction (@Nullable final String sAction)
+  {
+    return EqualsHelper.equals (getAction (), sAction);
+  }
 
   /**
    * @return The special request parameter value of
    *         {@link CPageParam#PARAM_SUBACTION}. May be <code>null</code>.
    */
   @Nullable
-  String getSubAction ();
+  default String getSubAction ()
+  {
+    return getAttributeAsString (CPageParam.PARAM_SUBACTION);
+  }
 
   /**
    * Check if the specified sub action is present in the request scope.
@@ -68,5 +78,9 @@ public interface IWebPageExecutionContext extends ILayoutExecutionContext
    * @return <code>true</code> if
    *         <code>getSubAction().equals (sSubAction)</code>
    */
-  boolean hasSubAction (@Nullable String sSubAction);
+  default boolean hasSubAction (@Nullable final String sSubAction)
+  {
+    return EqualsHelper.equals (getSubAction (), sSubAction);
+  }
+
 }
