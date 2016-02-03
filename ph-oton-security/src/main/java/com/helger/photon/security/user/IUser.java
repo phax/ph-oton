@@ -114,12 +114,6 @@ public interface IUser extends IObjectWithCustomAttrs, IHasDescription, IAuthSub
   int getConsecutiveFailedLoginCount ();
 
   /**
-   * @return <code>true</code> if this user is deleted, <code>false</code> if it
-   *         is active
-   */
-  boolean isDeleted ();
-
-  /**
    * @return <code>true</code> if this user is enabled, <code>false</code> if it
    *         is disabled
    * @see #isDisabled()
