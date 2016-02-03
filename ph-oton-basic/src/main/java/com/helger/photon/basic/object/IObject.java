@@ -22,7 +22,9 @@ import java.time.LocalDateTime;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.type.ITypedObject;
+import com.helger.datetime.util.PDTHelper;
 import com.helger.photon.basic.datetime.IHasCreationInfo;
 import com.helger.photon.basic.datetime.IHasDeletionInfo;
 import com.helger.photon.basic.datetime.IHasLastModificationInfo;
@@ -56,7 +58,10 @@ public interface IObject extends
    * @return <code>true</code> if this object is deleted, <code>false</code> if
    *         not.
    */
-  boolean isDeleted ();
+  default boolean isDeleted ()
+  {
+    return getDeletionDateTime () != null;
+  }
 
   /**
    * Check if the object was deleted at the specified local date time. This is
@@ -67,5 +72,9 @@ public interface IObject extends
    * @return <code>true</code> if this object was deleted, <code>false</code> if
    *         not.
    */
-  boolean isDeleted (@Nonnull LocalDateTime aDT);
+  default boolean isDeleted (@Nonnull final LocalDateTime aDT)
+  {
+    ValueEnforcer.notNull (aDT, "LocalDateTime");
+    return isDeleted () && PDTHelper.isLessOrEqual (getDeletionDateTime (), aDT);
+  }
 }

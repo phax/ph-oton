@@ -26,7 +26,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.util.PDTHelper;
 
 /**
  * Abstract base implementation of {@link IObject} that handles everything
@@ -167,17 +166,6 @@ public abstract class AbstractBaseObject implements IObject
     // Last modification AFTER deletion was reverted
     setLastModification (aUndeletionDT, sUndeletionUserID);
     return EChange.CHANGED;
-  }
-
-  public final boolean isDeleted ()
-  {
-    return m_aDeletionDT != null;
-  }
-
-  public final boolean isDeleted (@Nonnull final LocalDateTime aDT)
-  {
-    ValueEnforcer.notNull (aDT, "LocalDateTime");
-    return m_aDeletionDT != null && PDTHelper.isLessOrEqual (m_aDeletionDT, aDT);
   }
 
   @Override

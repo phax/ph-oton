@@ -16,7 +16,6 @@
  */
 package com.helger.photon.basic.favorites;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -134,8 +133,7 @@ public class Favorite implements IFavorite
                                  @Nullable final String sMenuItemID,
                                  @Nullable final Map <String, String> aAdditionalParams)
   {
-    final Map <String, String> aRealAdditionalParams = aAdditionalParams == null ? new HashMap <String, String> ()
-                                                                                 : aAdditionalParams;
+    final Map <String, String> aRealAdditionalParams = CollectionHelper.getNotNull (aAdditionalParams);
     return m_sApplicationID.equals (sAppID) &&
            m_sMenuItemID.equals (sMenuItemID) &&
            m_aAdditionalParams.equals (aRealAdditionalParams);
