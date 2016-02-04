@@ -17,8 +17,6 @@
 package com.helger.photon.security.object.client;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnegative;
@@ -28,20 +26,12 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroDocument;
-import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
+import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.object.client.CClient;
@@ -54,38 +44,25 @@ import com.helger.photon.security.object.ObjectHelper;
  *
  * @author Philip Helger
  */
-public class ClientManager extends AbstractSimpleDAO implements IClientResolver
+public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> implements IClientResolver
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ClientManager.class);
 
-  private static final String ELEMENT_ROOT = "clients";
   private static final String ELEMENT_ITEM = "client";
 
-  private final Map <String, Client> m_aMap = new HashMap <String, Client> ();
-
-  private final CallbackList <IClientModificationCallback> m_aCallbacks = new CallbackList <IClientModificationCallback> ();
+  private final CallbackList <IClientModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public ClientManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (sFilename);
-    initialRead ();
+    super (Client.class, sFilename, ELEMENT_ITEM);
   }
 
   @Override
   @Nonnull
   protected EChange onInit ()
   {
-    createClient (CClient.GLOBAL_CLIENT, CClient.GLOBAL_CLIENT_NAME);
+    internalAddItem (new Client (CClient.GLOBAL_CLIENT, CClient.GLOBAL_CLIENT_NAME));
     return EChange.CHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
-  {
-    for (final IMicroElement eClient : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
-      _addClient (MicroTypeConverter.convertToNative (eClient, Client.class));
-    return EChange.UNCHANGED;
   }
 
   @Nonnull
@@ -93,27 +70,6 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
   public CallbackList <IClientModificationCallback> getClientModificationCallbacks ()
   {
     return m_aCallbacks;
-  }
-
-  @Override
-  @Nonnull
-  protected IMicroDocument createWriteData ()
-  {
-    final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
-    for (final Client aClient : CollectionHelper.getSortedByKey (m_aMap).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aClient, ELEMENT_ITEM));
-    return aDoc;
-  }
-
-  private void _addClient (@Nonnull final Client aClient)
-  {
-    ValueEnforcer.notNull (aClient, "Client");
-
-    final String sClientID = aClient.getID ();
-    if (m_aMap.containsKey (sClientID))
-      throw new IllegalArgumentException ("Client ID '" + sClientID + "' is already in use!");
-    m_aMap.put (aClient.getID (), aClient);
   }
 
   @Nullable
@@ -124,11 +80,11 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (m_aMap.containsKey (sClientID))
+      if (containsWithID (sClientID))
         return null;
 
-      _addClient (aClient);
-      markAsChanged ();
+      internalAddItem (aClient);
+      markAsCreated (aClient);
     }
     finally
     {
@@ -153,7 +109,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
   @Nonnull
   public EChange updateClient (@Nonnull @Nonempty final String sClientID, @Nonnull @Nonempty final String sDisplayName)
   {
-    final Client aClient = _getClientOfID (sClientID);
+    final Client aClient = getOfID (sClientID);
     if (aClient == null)
     {
       AuditHelper.onAuditModifyFailure (Client.OT, sClientID, "no-such-id");
@@ -169,7 +125,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aClient);
-      markAsChanged ();
+      markAsUpdated (aClient);
     }
     finally
     {
@@ -194,7 +150,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
   @Nonnull
   public EChange deleteClient (@Nullable final String sClientID)
   {
-    final Client aDeletedClient = _getClientOfID (sClientID);
+    final Client aDeletedClient = getOfID (sClientID);
     if (aDeletedClient == null)
     {
       AuditHelper.onAuditDeleteFailure (Client.OT, "no-such-object-id", sClientID);
@@ -209,7 +165,7 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
         AuditHelper.onAuditDeleteFailure (Client.OT, "already-deleted", sClientID);
         return EChange.UNCHANGED;
       }
-      markAsChanged ();
+      markAsDeleted (aDeletedClient);
     }
     finally
     {
@@ -233,56 +189,44 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
 
   public boolean hasAnyClient ()
   {
-    return m_aRWLock.readLocked ( () -> !m_aMap.isEmpty ());
+    return containsAny ();
   }
 
   public boolean hasAnyClientExceptGlobal ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.containsAny (m_aMap.values (), c -> !c.isGlobalClient ()));
+    return containsAny (c -> !c.isGlobalClient ());
   }
 
   @Nonnegative
   public int getClientCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.size ());
+    return getCount ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Collection <? extends IClient> getAllClients ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
+    return getAll ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Set <String> getAllClientIDs ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aMap.keySet ()));
-  }
-
-  @Nullable
-  public Client _getClientOfID (@Nullable final String sID)
-  {
-    if (StringHelper.hasNoText (sID))
-      return null;
-
-    return m_aRWLock.readLocked ( () -> m_aMap.get (sID));
+    return getAllIDs ();
   }
 
   @Nullable
   public IClient getClientOfID (@Nullable final String sID)
   {
     // Change return type
-    return _getClientOfID (sID);
+    return getOfID (sID);
   }
 
   public boolean containsClientWithID (@Nullable final String sID)
   {
-    if (StringHelper.hasNoText (sID))
-      return false;
-
-    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sID));
+    return containsWithID (sID);
   }
 
   /**
@@ -295,18 +239,10 @@ public class ClientManager extends AbstractSimpleDAO implements IClientResolver
    */
   public boolean containsAllClientsWithID (@Nullable final Collection <String> aIDs)
   {
-    return m_aRWLock.readLocked ( () -> {
-      if (aIDs != null)
-        for (final String sClientID : aIDs)
-          if (!m_aMap.containsKey (sClientID))
-            return false;
-      return true;
-    });
-  }
-
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).append ("map", m_aMap).toString ();
+    if (aIDs != null)
+      for (final String sClientID : aIDs)
+        if (!containsWithID (sClientID))
+          return false;
+    return true;
   }
 }

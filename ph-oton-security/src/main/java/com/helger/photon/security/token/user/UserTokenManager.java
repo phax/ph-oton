@@ -18,30 +18,23 @@ package com.helger.photon.security.token.user;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroDocument;
-import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
+import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.photon.basic.app.dao.impl.EDAOActionType;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.object.ObjectHelper;
 import com.helger.photon.security.token.accesstoken.AccessToken;
@@ -53,42 +46,17 @@ import com.helger.photon.security.token.app.IAppToken;
  *
  * @author Philip Helger
  */
-public final class UserTokenManager extends AbstractSimpleDAO
+public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, UserToken>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (UserTokenManager.class);
 
-  private static final String ELEMENT_ROOT = "usertokens";
   private static final String ELEMENT_ITEM = "usertoken";
-
-  @GuardedBy ("m_aRWLock")
-  private final Map <String, UserToken> m_aMap = new HashMap <> ();
 
   private final CallbackList <IUserTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (sFilename);
-    initialRead ();
-  }
-
-  @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
-  {
-    for (final IMicroElement eUserToken : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
-      _addUserToken (MicroTypeConverter.convertToNative (eUserToken, UserToken.class));
-    return EChange.UNCHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected IMicroDocument createWriteData ()
-  {
-    final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
-    for (final UserToken aUserToken : CollectionHelper.getSortedByKey (m_aMap).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aUserToken, ELEMENT_ITEM));
-    return aDoc;
+    super (UserToken.class, sFilename, ELEMENT_ITEM);
   }
 
   /**
@@ -101,16 +69,6 @@ public final class UserTokenManager extends AbstractSimpleDAO
     return m_aCallbacks;
   }
 
-  private void _addUserToken (@Nonnull final UserToken aUserToken)
-  {
-    ValueEnforcer.notNull (aUserToken, "UserToken");
-
-    final String sUserTokenID = aUserToken.getID ();
-    if (m_aMap.containsKey (sUserTokenID))
-      throw new IllegalArgumentException ("UserToken ID '" + sUserTokenID + "' is already in use!");
-    m_aMap.put (sUserTokenID, aUserToken);
-  }
-
   @Nonnull
   public UserToken createUserToken (@Nullable final String sTokenString,
                                     @Nullable final Map <String, String> aCustomAttrs,
@@ -120,8 +78,8 @@ public final class UserTokenManager extends AbstractSimpleDAO
     final UserToken aUserToken = new UserToken (sTokenString, aCustomAttrs, aAppToken, sUserName);
 
     m_aRWLock.writeLocked ( () -> {
-      _addUserToken (aUserToken);
-      markAsChanged ();
+      internalAddItem (aUserToken);
+      markAsChanged (aUserToken, EDAOActionType.CREATE);
     });
     AuditHelper.onAuditCreateSuccess (UserToken.OT, aUserToken.getID (), aCustomAttrs, aAppToken.getID (), sUserName);
 
@@ -144,7 +102,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
                                   @Nullable final Map <String, String> aCustomAttrs,
                                   @Nonnull @Nonempty final String sUserName)
   {
-    final UserToken aUserToken = _getUserTokenOfID (sUserTokenID);
+    final UserToken aUserToken = getOfID (sUserTokenID);
     if (aUserToken == null)
     {
       AuditHelper.onAuditModifyFailure (UserToken.OT, sUserTokenID, "no-such-id");
@@ -163,7 +121,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aUserToken);
-      markAsChanged ();
+      markAsChanged (aUserToken, EDAOActionType.UPDATE);
     }
     finally
     {
@@ -188,7 +146,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
   @Nonnull
   public EChange deleteUserToken (@Nullable final String sUserTokenID)
   {
-    final UserToken aUserToken = _getUserTokenOfID (sUserTokenID);
+    final UserToken aUserToken = getOfID (sUserTokenID);
     if (aUserToken == null)
     {
       AuditHelper.onAuditDeleteFailure (UserToken.OT, "no-such-id", sUserTokenID);
@@ -203,7 +161,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
         AuditHelper.onAuditDeleteFailure (UserToken.OT, "already-deleted", aUserToken.getID ());
         return EChange.UNCHANGED;
       }
-      markAsChanged ();
+      markAsChanged (aUserToken, EDAOActionType.DELETE);
     }
     finally
     {
@@ -232,7 +190,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
                                        @Nonnull @Nonempty final String sRevocationReason,
                                        @Nullable final String sTokenString)
   {
-    final UserToken aUserToken = _getUserTokenOfID (sUserTokenID);
+    final UserToken aUserToken = getOfID (sUserTokenID);
     if (aUserToken == null)
     {
       AuditHelper.onAuditModifyFailure (UserToken.OT, "no-such-id", sUserTokenID);
@@ -246,7 +204,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
       aUserToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason);
       aAccessToken = aUserToken.createNewAccessToken (sTokenString);
       ObjectHelper.setLastModificationNow (aUserToken);
-      markAsChanged ();
+      markAsChanged (aUserToken, EDAOActionType.UPDATE);
     }
     finally
     {
@@ -284,7 +242,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
                                     @Nonnull final LocalDateTime aRevocationDT,
                                     @Nonnull @Nonempty final String sRevocationReason)
   {
-    final UserToken aUserToken = _getUserTokenOfID (sUserTokenID);
+    final UserToken aUserToken = getOfID (sUserTokenID);
     if (aUserToken == null)
     {
       AuditHelper.onAuditModifyFailure (UserToken.OT, "no-such-id", sUserTokenID);
@@ -300,7 +258,7 @@ public final class UserTokenManager extends AbstractSimpleDAO
         return EChange.UNCHANGED;
       }
       ObjectHelper.setLastModificationNow (aUserToken);
-      markAsChanged ();
+      markAsChanged (aUserToken, EDAOActionType.UPDATE);
     }
     finally
     {
@@ -329,39 +287,27 @@ public final class UserTokenManager extends AbstractSimpleDAO
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends UserToken> getAllUserTokens ()
+  public Collection <? extends IUserToken> getAllUserTokens ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
+    return getAll ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends UserToken> getAllActiveUserTokens ()
+  public Collection <? extends IUserToken> getAllActiveUserTokens ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (), aItem -> !aItem.isDeleted ()));
-  }
-
-  @Nullable
-  private UserToken _getUserTokenOfID (@Nullable final String sID)
-  {
-    if (StringHelper.hasNoText (sID))
-      return null;
-
-    return m_aRWLock.readLocked ( () -> m_aMap.get (sID));
+    return getAll (aItem -> !aItem.isDeleted ());
   }
 
   @Nullable
   public IUserToken getUserTokenOfID (@Nullable final String sID)
   {
-    return _getUserTokenOfID (sID);
+    return getOfID (sID);
   }
 
   public boolean containsUserTokenWithID (@Nullable final String sID)
   {
-    if (StringHelper.hasNoText (sID))
-      return false;
-
-    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sID));
+    return containsWithID (sID);
   }
 
   @Nullable
@@ -370,14 +316,9 @@ public final class UserTokenManager extends AbstractSimpleDAO
     if (StringHelper.hasNoText (sTokenString))
       return null;
 
-    return m_aRWLock.readLocked ( () -> {
-      for (final IUserToken aUserToken : m_aMap.values ())
-      {
-        final IAccessToken aAccessToken = aUserToken.getActiveAccessToken ();
-        if (aAccessToken != null && aAccessToken.getTokenString ().equals (sTokenString))
-          return aUserToken;
-      }
-      return null;
+    return getFirst (aUserToken -> {
+      final IAccessToken aAccessToken = aUserToken.getActiveAccessToken ();
+      return aAccessToken != null && aAccessToken.getTokenString ().equals (sTokenString);
     });
   }
 
@@ -394,11 +335,10 @@ public final class UserTokenManager extends AbstractSimpleDAO
     if (StringHelper.hasNoText (sTokenString))
       return false;
 
-    return m_aRWLock.readLocked ( () -> {
-      for (final IUserToken aUserToken : m_aMap.values ())
-        for (final IAccessToken aAccessToken : aUserToken.getAllAccessTokens ())
-          if (aAccessToken.getTokenString ().equals (sTokenString))
-            return true;
+    return containsAny (aUserToken -> {
+      for (final IAccessToken aAccessToken : aUserToken.getAllAccessTokens ())
+        if (aAccessToken.getTokenString ().equals (sTokenString))
+          return true;
       return false;
     });
   }

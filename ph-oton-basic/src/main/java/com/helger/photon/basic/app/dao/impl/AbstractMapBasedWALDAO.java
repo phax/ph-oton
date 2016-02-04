@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -43,6 +44,7 @@ import com.helger.commons.microdom.MicroDocument;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.string.ToStringGenerator;
 
 @ThreadSafe
 public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
@@ -169,6 +171,11 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     return m_aRWLock.readLocked ( () -> CollectionHelper.findFirst (m_aMap.values (), aFilter, aMapper));
   }
 
+  public final boolean containsAny ()
+  {
+    return m_aRWLock.readLocked ( () -> !m_aMap.isEmpty ());
+  }
+
   public final boolean containsAny (@Nullable final Predicate <INTERFACETYPE> aFilter)
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.containsAny (m_aMap.values (), aFilter));
@@ -191,6 +198,13 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sID));
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
+  public final Set <String> getAllIDs ()
+  {
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aMap.keySet ()));
+  }
+
   @Nonnegative
   public final int getCount ()
   {
@@ -201,5 +215,14 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   public final int getCount (@Nullable final Predicate <INTERFACETYPE> aFilter)
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.getCount (m_aMap.values (), aFilter));
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("XMLItemElementName", m_sXMLItemElementName)
+                            .append ("Map", m_aMap)
+                            .toString ();
   }
 }

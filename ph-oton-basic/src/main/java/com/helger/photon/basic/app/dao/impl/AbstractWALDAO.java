@@ -899,6 +899,21 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     return ESuccess.FAILURE;
   }
 
+  protected final void markAsCreated (@Nonnull final DATATYPE aModifiedElement)
+  {
+    markAsChanged (aModifiedElement, EDAOActionType.CREATE);
+  }
+
+  protected final void markAsUpdated (@Nonnull final DATATYPE aModifiedElement)
+  {
+    markAsChanged (aModifiedElement, EDAOActionType.UPDATE);
+  }
+
+  protected final void markAsDeleted (@Nonnull final DATATYPE aModifiedElement)
+  {
+    markAsChanged (aModifiedElement, EDAOActionType.DELETE);
+  }
+
   /**
    * This method must be called every time something changed in the DAO. It
    * triggers the writing to a file if auto-save is active. This method must be
