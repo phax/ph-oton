@@ -466,7 +466,7 @@ public final class InternalErrorHandler
     }
 
     // Start saving
-    final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getCurrentDateTimeForFilename (),
+    final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getCurrentLocalDateTimeForFilename (),
                                                                    "-",
                                                                    aMetadata.getErrorID ()) +
                              ".xml";

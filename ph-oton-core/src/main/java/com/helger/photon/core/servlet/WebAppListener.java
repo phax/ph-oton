@@ -578,7 +578,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     return "statistics/" +
            PDTFactory.getCurrentYear () +
            "/statistics_" +
-           PDTIOHelper.getCurrentDateTimeForFilename () +
+           PDTIOHelper.getCurrentLocalDateTimeForFilename () +
            ".xml";
   }
 
