@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
@@ -188,5 +189,17 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
       return false;
 
     return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sID));
+  }
+
+  @Nonnegative
+  public final int getCount ()
+  {
+    return m_aRWLock.readLocked ( () -> m_aMap.size ());
+  }
+
+  @Nonnegative
+  public final int getCount (@Nullable final Predicate <INTERFACETYPE> aFilter)
+  {
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getCount (m_aMap.values (), aFilter));
   }
 }
