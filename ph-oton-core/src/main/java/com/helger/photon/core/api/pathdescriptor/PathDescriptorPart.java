@@ -165,7 +165,9 @@ public final class PathDescriptorPart
   {
     return new ToStringGenerator (null).append ("IsVariable", m_bIsVariable)
                                        .append ("Name", m_sName)
-                                       .appendIfNotEmpty ("VariableConstraints", m_aVariableConstraints)
+                                       .appendIf ("VariableConstraints",
+                                                  m_aVariableConstraints,
+                                                  CollectionHelper::isNotEmpty)
                                        .toString ();
   }
 

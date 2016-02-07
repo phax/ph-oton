@@ -123,7 +123,7 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
     return new ToStringGenerator (this).append ("objID", m_aObjID)
                                        .append ("locked", m_eLocked)
                                        .append ("isNewLock", m_bIsNewLock)
-                                       .appendIfNotEmpty ("unlockedObjects", m_aUnlockedObjects)
+                                       .appendIf ("unlockedObjects", m_aUnlockedObjects, CollectionHelper::isNotEmpty)
                                        .toString ();
   }
 

@@ -209,8 +209,8 @@ public class APIDescriptor implements IAPIDescriptor
   {
     return new ToStringGenerator (null).append ("APIPath", m_aAPIPath)
                                        .append ("PathDescriptor", m_aPathDescriptor)
-                                       .appendIfNotEmpty ("RequiredHeaders", m_aRequiredHeaders)
-                                       .appendIfNotEmpty ("RequiredParams", m_aRequiredParams)
+                                       .appendIf ("RequiredHeaders", m_aRequiredHeaders, CollectionHelper::isNotEmpty)
+                                       .appendIf ("RequiredParams", m_aRequiredParams, CollectionHelper::isNotEmpty)
                                        .toString ();
   }
 }
