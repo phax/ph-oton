@@ -18,6 +18,7 @@ package com.helger.photon.uicore.js;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.html.script.AbstractHCScriptInline;
@@ -32,6 +33,7 @@ import com.helger.html.js.UnparsedJSCodeProvider;
 public class JSLocalStorageDeterminator extends AbstractHCScriptInline <JSLocalStorageDeterminator>
 {
   public static final String VARNAME = "g_aLocalStorage";
+  private final String m_sVarName;
 
   public JSLocalStorageDeterminator ()
   {
@@ -49,5 +51,13 @@ public class JSLocalStorageDeterminator extends AbstractHCScriptInline <JSLocalS
                                        "return result && storage;" +
                                        "} catch(e) {}" +
                                        "}());"));
+    m_sVarName = ValueEnforcer.notEmpty (sVarName, "VarName");
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getJSVarName ()
+  {
+    return m_sVarName;
   }
 }
