@@ -4,9 +4,10 @@ import java.util.function.BiConsumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.GuardedBy;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.photon.basic.app.systemmsg.ESystemMessageType;
@@ -16,12 +17,20 @@ import com.helger.photon.bootstrap3.alert.AbstractBootstrapAlert;
 import com.helger.photon.bootstrap3.alert.EBootstrapAlertType;
 import com.helger.photon.uicore.UITextFormatter;
 
-@NotThreadSafe
 public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSystemMessage>
 {
   private static final BiConsumer <String, BootstrapSystemMessage> DEFAULT_FORMATTER = (s,
                                                                                         t) -> t.addChildren (HCExtHelper.nl2divList (s));
+
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
+  @GuardedBy ("s_aRWLock")
   private static BiConsumer <String, BootstrapSystemMessage> s_aFormatter = DEFAULT_FORMATTER;
+
+  @Nonnull
+  public static BiConsumer <String, BootstrapSystemMessage> getDefaultFormatter ()
+  {
+    return s_aRWLock.readLocked ( () -> s_aFormatter);
+  }
 
   /**
    * Set the default text formatter to be used. This can e.g. be used to easily
@@ -32,12 +41,12 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
    */
   public static void setDefaultFormatter (@Nonnull final BiConsumer <String, BootstrapSystemMessage> aFormatter)
   {
-    s_aFormatter = ValueEnforcer.notNull (aFormatter, "Formatter");
+    s_aRWLock.writeLocked ( () -> s_aFormatter = ValueEnforcer.notNull (aFormatter, "Formatter"));
   }
 
   /**
    * Set a default formatter that interprets the system message as Markdown.
-   * 
+   *
    * @param bUseMarkdown
    *        <code>true</code> to use MD <code>false</code> to use the default
    *        formatter.
@@ -76,7 +85,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
   {
     removeAllChildren ();
     if (StringHelper.hasText (sContent))
-      s_aFormatter.accept (sContent, this);
+      getDefaultFormatter ().accept (sContent, this);
     return this;
   }
 
