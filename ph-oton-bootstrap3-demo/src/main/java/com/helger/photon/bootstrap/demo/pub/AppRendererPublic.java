@@ -169,7 +169,6 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
     return aMenu;
   }
 
-  @SuppressWarnings ("unchecked")
   @Nonnull
   public static IHCNode getPageContent (@Nonnull final LayoutExecutionContext aLEC)
   {
