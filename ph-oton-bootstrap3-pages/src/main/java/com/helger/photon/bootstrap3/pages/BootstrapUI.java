@@ -22,9 +22,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.html.sections.HCH1;
+import com.helger.photon.basic.app.systemmsg.ESystemMessageType;
+import com.helger.photon.bootstrap3.alert.AbstractBootstrapAlert;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
+import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
+import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
+import com.helger.photon.bootstrap3.alert.BootstrapWarnBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.EBootstrapFormType;
@@ -96,4 +102,26 @@ public final class BootstrapUI
     final Locale aDisplayLocale = aSWEC.getDisplayLocale ();
     return new BootstrapErrorBox ().addChild (EPhotonCoreText.ERR_INCORRECT_INPUT.getDisplayText (aDisplayLocale));
   }
+
+  @Nonnull
+  public static AbstractBootstrapAlert <?> createEmptySystemMessageBox (@Nonnull final ESystemMessageType eSystemMessageType)
+  {
+    ValueEnforcer.notNull (eSystemMessageType, "SystemMessageType");
+
+    // Create empty boxes
+    switch (eSystemMessageType)
+    {
+      case INFO:
+        return new BootstrapInfoBox ();
+      case WARNING:
+        return new BootstrapWarnBox ();
+      case ERROR:
+        return new BootstrapErrorBox ();
+      case SUCCESS:
+        return new BootstrapSuccessBox ();
+      default:
+        throw new IllegalArgumentException ("Illegal message type: " + eSystemMessageType);
+    }
+  }
+
 }

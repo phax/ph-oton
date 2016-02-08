@@ -21,7 +21,6 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
@@ -32,10 +31,7 @@ import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.photon.basic.app.systemmsg.ESystemMessageType;
 import com.helger.photon.basic.app.systemmsg.SystemMessageManager;
 import com.helger.photon.basic.mgr.PhotonBasicManager;
-import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
-import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
-import com.helger.photon.bootstrap3.alert.BootstrapWarnBox;
+import com.helger.photon.bootstrap3.pages.BootstrapUI;
 
 public final class SystemMessageUIHelper
 {
@@ -44,27 +40,6 @@ public final class SystemMessageUIHelper
 
   private SystemMessageUIHelper ()
   {}
-
-  @Nonnull
-  public static IHCElementWithChildren <?> createEmptyBox (@Nonnull final ESystemMessageType eSystemMessageType)
-  {
-    ValueEnforcer.notNull (eSystemMessageType, "SystemMessageType");
-
-    // Create empty boxes
-    switch (eSystemMessageType)
-    {
-      case INFO:
-        return new BootstrapInfoBox ();
-      case WARNING:
-        return new BootstrapWarnBox ();
-      case ERROR:
-        return new BootstrapErrorBox ();
-      case SUCCESS:
-        return new BootstrapSuccessBox ();
-      default:
-        throw new IllegalArgumentException ("Illegal message type: " + eSystemMessageType);
-    }
-  }
 
   @Nonnull
   public static IHCElementWithChildren <?> createDefaultBox ()
@@ -80,7 +55,7 @@ public final class SystemMessageUIHelper
     if (StringHelper.hasNoText (sMessage))
       return null;
 
-    return createEmptyBox (eSystemMessageType).addChild (sMessage);
+    return BootstrapUI.createEmptySystemMessageBox (eSystemMessageType).addChild (sMessage);
   }
 
   @Nullable
@@ -90,7 +65,7 @@ public final class SystemMessageUIHelper
     if (aMessage == null)
       return null;
 
-    return createEmptyBox (eSystemMessageType).addChild (aMessage);
+    return BootstrapUI.createEmptySystemMessageBox (eSystemMessageType).addChild (aMessage);
   }
 
   @Nullable
@@ -100,7 +75,7 @@ public final class SystemMessageUIHelper
     if (CollectionHelper.isEmpty (aMessage))
       return null;
 
-    return createEmptyBox (eSystemMessageType).addChildren (aMessage);
+    return BootstrapUI.createEmptySystemMessageBox (eSystemMessageType).addChildren (aMessage);
   }
 
   @Nullable
@@ -110,6 +85,6 @@ public final class SystemMessageUIHelper
     if (ArrayHelper.isEmpty (aMessage))
       return null;
 
-    return createEmptyBox (eSystemMessageType).addChildren (aMessage);
+    return BootstrapUI.createEmptySystemMessageBox (eSystemMessageType).addChildren (aMessage);
   }
 }

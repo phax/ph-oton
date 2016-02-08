@@ -62,18 +62,20 @@ public final class SystemMessageManager extends AbstractSimpleDAO
 
   public void reload ()
   {
-    try
-    {
-      m_aRWLock.writeLockedThrowing ( () -> {
-        m_sMessage = null;
+    m_aRWLock.writeLocked ( () -> {
+      m_aLastUpdate = null;
+      m_eMessageType = ESystemMessageType.DEFAULT;
+      m_sMessage = null;
+      try
+      {
         initialRead ();
-        s_aLogger.info ("Reloaded system message!");
-      });
-    }
-    catch (final DAOException ex)
-    {
-      throw new IllegalStateException ("Failed to reload system message", ex);
-    }
+      }
+      catch (final DAOException ex)
+      {
+        throw new IllegalStateException ("Failed to reload system message", ex);
+      }
+      s_aLogger.info ("Reloaded system message!");
+    });
   }
 
   @Override
