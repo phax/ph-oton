@@ -22,6 +22,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
@@ -55,12 +56,12 @@ import com.helger.photon.bootstrap3.base.BootstrapContainer;
 import com.helger.photon.bootstrap3.breadcrumbs.BootstrapBreadcrumbs;
 import com.helger.photon.bootstrap3.breadcrumbs.BootstrapBreadcrumbsProvider;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdownMenu;
+import com.helger.photon.bootstrap3.ext.BootstrapSystemMessage;
 import com.helger.photon.bootstrap3.grid.BootstrapRow;
 import com.helger.photon.bootstrap3.nav.BootstrapNav;
 import com.helger.photon.bootstrap3.navbar.BootstrapNavbar;
 import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarPosition;
 import com.helger.photon.bootstrap3.navbar.EBootstrapNavbarType;
-import com.helger.photon.bootstrap3.pages.settings.SystemMessageUIHelper;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRenderer;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRendererHorz;
 import com.helger.photon.core.EPhotonCoreText;
@@ -174,29 +175,14 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
 
-    // Get the requested menu item
-    final IMenuItemPage aSelectedMenuItem = aLEC.getSelectedMenuItem ();
-
-    // Resolve the page of the selected menu item (if found)
-    IWebPage <WebPageExecutionContext> aDisplayPage;
-    if (aSelectedMenuItem.matchesDisplayFilter ())
-    {
-      // Only if we have display rights!
-      aDisplayPage = (IWebPage <WebPageExecutionContext>) aSelectedMenuItem.getPage ();
-    }
-    else
-    {
-      // No rights -> goto start page
-      aDisplayPage = (IWebPage <WebPageExecutionContext>) aLEC.getMenuTree ().getDefaultMenuItem ().getPage ();
-    }
-
-    final WebPageExecutionContext aWPEC = new WebPageExecutionContext (aLEC, aDisplayPage);
-
     // Build page content: header + content
     final HCNodeList aPageContainer = new HCNodeList ();
 
+    final IWebPage <WebPageExecutionContext> aDisplayPage = GenericReflection.uncheckedCast (aLEC.getSelectedPage ());
+    final WebPageExecutionContext aWPEC = new WebPageExecutionContext (aLEC, aDisplayPage);
+
     // First add the system message
-    aPageContainer.addChild (SystemMessageUIHelper.createDefaultBox ());
+    aPageContainer.addChild (BootstrapSystemMessage.createDefault ());
 
     // Handle 404 case here (see error404.jsp)
     if ("true".equals (aRequestScope.getAttributeAsString ("httpError")))
@@ -228,6 +214,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
 
     // Add page content to result
     aPageContainer.addChild (aWPEC.getNodeList ());
+
     return aPageContainer;
   }
 

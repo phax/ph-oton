@@ -26,6 +26,7 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
+import com.helger.photon.basic.app.page.IPage;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
 
 public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
@@ -46,6 +47,22 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
   default String getSelectedMenuItemID ()
   {
     return getSelectedMenuItem ().getID ();
+  }
+
+  @Nonnull
+  default IPage getSelectedPage ()
+  {
+    final IMenuItemPage aSelectedMenuItem = getSelectedMenuItem ();
+
+    // Resolve the page of the selected menu item (if found)
+    if (aSelectedMenuItem.matchesDisplayFilter ())
+    {
+      // Only if we have display rights!
+      return aSelectedMenuItem.getPage ();
+    }
+
+    // No rights -> goto start page
+    return getMenuTree ().getDefaultMenuItem ().getPage ();
   }
 
   /**

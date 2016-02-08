@@ -42,6 +42,7 @@ import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
+import com.helger.photon.bootstrap3.ext.BootstrapSystemMessage;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.core.EPhotonCoreText;
@@ -120,7 +121,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
   @OverrideOnDemand
   protected IHCElementWithChildren <?> renderCurrentSystemMessage (@Nonnull final WPECTYPE aWPEC)
   {
-    return SystemMessageUIHelper.createDefaultBox ();
+    return BootstrapSystemMessage.createDefault ();
   }
 
   @Override
@@ -143,7 +144,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
           final EChange eChange = aSystemMsgMgr.setSystemMessage (eNewMessageType, sNewMessage);
           if (eChange.isChanged ())
           {
-            aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SAVE_SUCCESS.getDisplayText (aDisplayLocale)));
+            aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SAVE_SUCCESS.getDisplayText (aDisplayLocale)));
           }
         }
       }

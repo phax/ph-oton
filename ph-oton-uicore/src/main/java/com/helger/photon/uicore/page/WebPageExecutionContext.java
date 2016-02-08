@@ -37,11 +37,6 @@ public class WebPageExecutionContext extends LayoutExecutionContext implements I
   private final IWebPage <? extends IWebPageExecutionContext> m_aWebPage;
   private final HCNodeList m_aNodeList = new HCNodeList ();
 
-  public WebPageExecutionContext (@Nonnull final IWebPageExecutionContext aWPEC)
-  {
-    this (aWPEC, aWPEC.getWebPage ());
-  }
-
   public WebPageExecutionContext (@Nonnull final ILayoutExecutionContext aLEC,
                                   @Nonnull final IWebPage <? extends IWebPageExecutionContext> aWebPage)
   {
