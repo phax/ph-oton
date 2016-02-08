@@ -707,7 +707,7 @@ public class FineUploaderBasic
     {
       final JSAssocArray aRequest = new JSAssocArray ();
       if (!m_aRequestEndpoint.equals (DEFAULT_REQUEST_ENDPOINT))
-        aRequest.add ("endpoint", m_aRequestEndpoint.getAsString ());
+        aRequest.add ("endpoint", m_aRequestEndpoint.getAsStringWithEncodedParameters ());
       if (!m_aRequestParams.isEmpty ())
       {
         final JSAssocArray aParams = new JSAssocArray ();

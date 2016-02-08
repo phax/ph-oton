@@ -215,7 +215,7 @@ public class FeedEntry extends AbstractFeedElement
     for (final IFeedElement aContributor : m_aContributors)
       aElement.appendChild (aContributor.getAsElement ("contributor"));
     if (m_aID != null)
-      aElement.appendElement (CFeed.XMLNS_ATOM, "id").appendText (m_aID.getAsString ());
+      aElement.appendElement (CFeed.XMLNS_ATOM, "id").appendText (m_aID.getAsStringWithEncodedParameters ());
     for (final IFeedElement aLink : m_aLinks)
       aElement.appendChild (aLink.getAsElement ("link"));
     if (m_aPublished != null)

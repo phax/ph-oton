@@ -47,12 +47,12 @@ public class FeedLink extends AbstractFeedElement
 
   public FeedLink (@Nonnull final ISimpleURL aHref)
   {
-    this (aHref.getAsString ());
+    this (aHref.getAsStringWithEncodedParameters ());
   }
 
   public FeedLink (@Nonnull final ISimpleURL aHref, @Nullable final String sRel)
   {
-    this (aHref.getAsString (), sRel);
+    this (aHref.getAsStringWithEncodedParameters (), sRel);
   }
 
   public FeedLink (@Nullable final String sHref)

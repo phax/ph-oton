@@ -45,7 +45,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   public StreamOrLocalURIToURLConverter ()
   {}
 
-  protected static final boolean isProjectRelativeURI (@Nonnull @Nonempty final String sURI)
+  public static final boolean isProjectRelativeURI (@Nonnull @Nonempty final String sURI)
   {
     // Absolute paths are project relative files and therefore are relative to
     // the servlet context directory

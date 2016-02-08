@@ -289,7 +289,7 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
     // Call embedder
     final JSInvocation aInvocation = JSExpr.ref ("swfobject")
                                            .invoke ("embedSWF")
-                                           .arg (m_aSWFURL.getAsString ())
+                                           .arg (m_aSWFURL.getAsStringWithEncodedParameters ())
                                            .arg (getID ())
                                            .arg (m_sWidth)
                                            .arg (m_sHeight)
@@ -297,7 +297,7 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
     // only supported by Flash Player 6.0.65; m_nWidth >= 310 && m_nHeight >=
     // 147;
     if (m_aExpressInstallSWFURL != null)
-      aInvocation.arg (m_aExpressInstallSWFURL.getAsString ());
+      aInvocation.arg (m_aExpressInstallSWFURL.getAsStringWithEncodedParameters ());
     else
       aInvocation.argNull ();
     aInvocation.arg (jsFlashvars).arg (jsParams).arg (jsAttributes);

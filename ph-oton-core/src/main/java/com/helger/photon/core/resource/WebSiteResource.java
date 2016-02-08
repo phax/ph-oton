@@ -189,7 +189,7 @@ public class WebSiteResource
         // anything right now
         final String sBasePath = FilenameHelper.getPath (PhotonHTMLSettings.getURIToURLConverter ()
                                                                            .getAsURL (m_sPath)
-                                                                           .getAsString ());
+                                                                           .getAsStringWithEncodedParameters ());
         return _readAndParseCSS (m_aResource, sBasePath, bRegular);
       default:
         throw new IllegalStateException ("Unsupported resource type " + m_eResourceType);

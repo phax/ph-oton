@@ -208,9 +208,9 @@ public final class DataTablesHelper
       final JSVar jsTR = aOpenCloseCallback.body ().var ("r",
                                                          JQuery.jQueryThis ().parents (EHTMLElement.TR).component0 ());
       final JSConditional aIf = aOpenCloseCallback.body ()._if (jsTable.invoke ("fnIsOpen").arg (jsTR));
-      aIf._then ().assign (JSExpr.THIS.ref (CHTMLAttributes.SRC), aExpandImgURL.getAsString ());
+      aIf._then ().assign (JSExpr.THIS.ref (CHTMLAttributes.SRC), aExpandImgURL.getAsStringWithEncodedParameters ());
       aIf._then ().invoke (jsTable, "fnClose").arg (jsTR);
-      aIf._else ().assign (JSExpr.THIS.ref (CHTMLAttributes.SRC), aCollapseImgURL.getAsString ());
+      aIf._else ().assign (JSExpr.THIS.ref (CHTMLAttributes.SRC), aCollapseImgURL.getAsStringWithEncodedParameters ());
       aIf._else ()
          .invoke (jsTable, "fnOpen")
          .arg (jsTR)

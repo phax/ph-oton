@@ -207,10 +207,13 @@ public class GoServlet extends AbstractUnifiedResponseServlet
     }
 
     if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsString ());
+      s_aLogger.debug ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsStringWithEncodedParameters ());
     else
       if (GlobalDebug.isDebugMode ())
-        s_aLogger.info ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsString ());
+        s_aLogger.info ("Following go-mapping item '" +
+                        sKey +
+                        "' to " +
+                        aTargetURL.getAsStringWithEncodedParameters ());
 
     // Main redirect :)
     aUnifiedResponse.setRedirect (aTargetURL);

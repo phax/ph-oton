@@ -182,10 +182,12 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
 
     for (final ICSSPathProvider aCSS : PhotonCSS.getAllRegisteredCSSIncludesForThisRequest ())
       aSpecialNodes.addExternalCSS (aCSS.getMediaList (),
-                                    PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular).getAsString ());
+                                    PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular)
+                                                      .getAsStringWithEncodedParameters ());
 
     for (final IJSPathProvider aJS : PhotonJS.getAllRegisteredJSIncludesForThisRequest ())
-      aSpecialNodes.addExternalJS (PhotonHTMLSettings.getJSPath (aRequestScope, aJS, bRegular).getAsString ());
+      aSpecialNodes.addExternalJS (PhotonHTMLSettings.getJSPath (aRequestScope, aJS, bRegular)
+                                                     .getAsStringWithEncodedParameters ());
   }
 
   /**

@@ -21,7 +21,6 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SMap;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.embedded.AbstractHCObject;
 import com.helger.html.hc.html.embedded.HCEmbed;
@@ -57,10 +56,8 @@ public class HCYouTubeEmbed extends AbstractHCObject <HCYouTubeEmbed>
     aEmbed.setCustomAttr ("allowfullscreen", Boolean.toString (bAllowFullScreen));
 
     // Build the correct URL based on the passed settings
-    final SMap aURLParams = new SMap ("hl", "en_US");
-    aURLParams.add ("fs", bAllowFullScreen ? "1" : "0");
-    final ISimpleURL aURL = new SimpleURL (aBaseURL).addAll (aURLParams);
-    aParamMovie.setValue (aURL.getAsString ());
+    final ISimpleURL aURL = new SimpleURL (aBaseURL).add ("hl", "en_US").add ("fs", bAllowFullScreen ? "1" : "0");
+    aParamMovie.setValue (aURL.getAsStringWithEncodedParameters ());
     aEmbed.setSrc (aURL);
   }
 }

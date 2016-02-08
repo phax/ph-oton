@@ -113,7 +113,7 @@ public class GoMappingItem implements Serializable
   @Nonnull
   public String getTargetURLAsString ()
   {
-    return m_aTargetURL.getAsString ();
+    return m_aTargetURL.getAsStringWithEncodedParameters ();
   }
 
   public boolean isEditable ()

@@ -132,7 +132,7 @@ public class FBLike extends AbstractFBNode
   protected void applyProperties (@Nonnull final IMicroElement aElement,
                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    aElement.setAttribute ("href", m_aURL.getAsString ());
+    aElement.setAttribute ("href", m_aURL.getAsStringWithEncodedParameters ());
     if (m_bWithSendButton)
       aElement.setAttribute ("send", Boolean.TRUE.toString ());
     if (m_aLayout != null)

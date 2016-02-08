@@ -41,7 +41,9 @@ public final class JSServerLog
                                             @Nonnull final String sKey,
                                             final boolean bDebugMode)
   {
-    return new JSInvocation ("serverLogInit").arg (aURL.getAsString ()).arg (sKey).arg (bDebugMode);
+    return new JSInvocation ("serverLogInit").arg (aURL.getAsStringWithEncodedParameters ())
+                                             .arg (sKey)
+                                             .arg (bDebugMode);
   }
 
   @Nonnull

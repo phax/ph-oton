@@ -198,7 +198,7 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
   public JSAssocArray getAsJSObject ()
   {
     final JSAssocArray ret = new JSAssocArray ();
-    ret.add (JSON_URL, m_aURL.getAsString ());
+    ret.add (JSON_URL, m_aURL.getAsStringWithEncodedParameters ());
     if (StringHelper.hasText (m_sCacheKey))
       ret.add (JSON_CACHE_KEY, m_sCacheKey);
     if (m_nTTL != DEFAULT_TTL)

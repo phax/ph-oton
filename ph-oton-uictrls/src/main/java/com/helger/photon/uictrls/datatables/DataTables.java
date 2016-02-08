@@ -1204,7 +1204,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
         // Load texts from there
         final SimpleURL aFinalURL = new SimpleURL (m_aTextLoadingURL).add (m_sTextLoadingURLLocaleParameterName,
                                                                            m_aDisplayLocale.getLanguage ());
-        aLanguage = new JsonObject ().add ("url", aFinalURL.getAsString ());
+        aLanguage = new JsonObject ().add ("url", aFinalURL.getAsStringWithEncodedParameters ());
       }
       else
       {

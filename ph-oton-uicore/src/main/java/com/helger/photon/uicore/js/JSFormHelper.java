@@ -96,7 +96,7 @@ public final class JSFormHelper
   public static JSInvocation updateElementViaAjax (@Nonnull @Nonempty final String sFieldID,
                                                    @Nonnull final ISimpleURL aUpdateCallURL)
   {
-    return updateElementViaAjax (sFieldID, aUpdateCallURL.getAsString ());
+    return updateElementViaAjax (sFieldID, aUpdateCallURL.getAsStringWithEncodedParameters ());
   }
 
   @Nonnull

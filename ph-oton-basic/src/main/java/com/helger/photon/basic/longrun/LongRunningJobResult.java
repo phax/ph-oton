@@ -94,7 +94,7 @@ public final class LongRunningJobResult implements IHasStringRepresentation
       case TEXT:
         return getResultText ();
       case LINK:
-        return getResultLink ().getAsString ();
+        return getResultLink ().getAsStringWithEncodedParameters ();
       default:
         throw new IllegalStateException ("Unhandled type: " + m_eType);
     }

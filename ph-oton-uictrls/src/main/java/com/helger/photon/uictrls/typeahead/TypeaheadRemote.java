@@ -389,7 +389,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   public JSAssocArray getAsJSObject ()
   {
     final JSAssocArray ret = new JSAssocArray ();
-    ret.add (JSON_URL, m_aURL.getAsString ());
+    ret.add (JSON_URL, m_aURL.getAsStringWithEncodedParameters ());
     if (!m_sDataType.equals (DEFAULT_DATA_TYPE))
       ret.add (JSON_DATA_TYPE, m_sDataType);
     if (m_eCache.isDefined ())

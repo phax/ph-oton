@@ -105,7 +105,7 @@ public interface IAjaxFunctionDeclaration extends IHasName
       return getInvocationURI (aRequestScope);
     }
 
-    return getInvocationURL (aRequestScope, aParams).getAsString ();
+    return getInvocationURL (aRequestScope, aParams).getAsStringWithEncodedParameters ();
   }
 
   /**

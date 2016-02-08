@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.deprecated.HCCenter;
 import com.helger.html.hc.html.forms.HCButton_Submit;
@@ -152,7 +153,7 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
     final HCBody aBody = aHtml.getBody ();
     final HCSpan aSpan = aBody.addAndReturnChild (new HCSpan ().setID (CLogin.LAYOUT_AREAID_LOGIN));
     final HCCenter aCenter = aSpan.addAndReturnChild (new HCCenter ());
-    final HCForm aForm = aCenter.addAndReturnChild (new HCForm (aRequestScope.getURL ()));
+    final HCForm aForm = aCenter.addAndReturnChild (new HCForm (new SimpleURL (aRequestScope.getURL ())));
     aForm.setSubmitPressingEnter (true);
 
     // The hidden field that triggers the validation

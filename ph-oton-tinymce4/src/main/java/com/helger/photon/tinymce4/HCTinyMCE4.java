@@ -1220,7 +1220,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
     if (m_eTinyMCELanguage != null)
       aOptions.add ("language", m_eTinyMCELanguage.getValue ());
     if (m_aLanguageURL != null)
-      aOptions.add ("language_url", m_aLanguageURL.getAsString ());
+      aOptions.add ("language_url", m_aLanguageURL.getAsStringWithEncodedParameters ());
     if (m_eNoWrap.isDefined ())
       aOptions.add ("nowrap", isNoWrap ());
     if (m_eObjectResizing.isDefined ())
@@ -1240,18 +1240,19 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
     {
       final JsonObject aJsonObject = new JsonObject ();
       for (final TinyMCE4ExternalPlugin aExternalPlugin : m_aExternalPlugins)
-        aJsonObject.add (aExternalPlugin.getPluginName (), aExternalPlugin.getPluginURL ().getAsString ());
+        aJsonObject.add (aExternalPlugin.getPluginName (),
+                         aExternalPlugin.getPluginURL ().getAsStringWithEncodedParameters ());
       aOptions.add ("external_plugins", aJsonObject);
     }
     aOptions.add ("selector", m_sSelector);
     if (m_eSkin != null)
       aOptions.add ("skin", m_eSkin.getValue ());
     if (m_aSkinURL != null)
-      aOptions.add ("skin_url", m_aSkinURL.getAsString ());
+      aOptions.add ("skin_url", m_aSkinURL.getAsStringWithEncodedParameters ());
     if (m_eTheme != null)
       aOptions.add ("theme", m_eTheme.getValue ());
     if (m_aThemeURL != null)
-      aOptions.add ("theme_url", m_aThemeURL.getAsString ());
+      aOptions.add ("theme_url", m_aThemeURL.getAsStringWithEncodedParameters ());
     if (m_eInline.isDefined ())
       aOptions.add ("inline", isInline ());
     if (m_eHiddenInput.isDefined ())
