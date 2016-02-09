@@ -48,7 +48,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   public static final String JSON_FILTER = "filter";
   public static final String JSON_AJAX = "ajax";
 
-  public static final String DEFAULT_WILDCARD = "%QUERY";
+  // In the typeahead this is "%QUERY" but because of % URL encoding this sucks
+  public static final String DEFAULT_WILDCARD = "_query_";
   public static final EBloodhoundRemoteRateLimitBy DEFAULT_RATE_LIMIT_BY = EBloodhoundRemoteRateLimitBy.DEBOUNCE;
   public static final int DEFAULT_RATE_LIMIT_WAIT = 300;
 
@@ -100,7 +101,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   /**
    * @return The pattern in <code>url</code> that will be replaced with the
    *         user's query when a request is made. Defaults to
-   *         <code>%QUERY</code>.
+   *         {@link #DEFAULT_WILDCARD}.
    */
   @Nullable
   public String getWildcard ()
@@ -110,7 +111,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
 
   /**
    * The pattern in <code>url</code> that will be replaced with the user's query
-   * when a request is made. Defaults to <code>%QUERY</code>.
+   * when a request is made. Defaults to {@link #DEFAULT_WILDCARD}.
    *
    * @param sWildcard
    *        The wild card to use. May be <code>null</code>.

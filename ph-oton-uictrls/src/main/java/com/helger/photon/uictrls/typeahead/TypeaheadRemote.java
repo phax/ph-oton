@@ -53,7 +53,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   public static final String JSON_FILTER = "filter";
 
   public static final String DEFAULT_DATA_TYPE = "json";
-  public static final String DEFAULT_WILDCARD = "%QUERY";
+  // In the typeahead this is "%QUERY" but because of % URL encoding this sucks
+  public static final String DEFAULT_WILDCARD = "_query_";
   public static final ETypeaheadRemoteRateLimitFunction DEFAULT_RATE_LIMIT_FN = ETypeaheadRemoteRateLimitFunction.DEBOUNCE;
   public static final int DEFAULT_RATE_LIMIT_WAIT = 300;
   public static final int DEFAULT_MAX_PARALLEL_REQUESTS = 6;
@@ -200,7 +201,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
 
   /**
    * The pattern in <code>url</code> that will be replaced with the user's query
-   * when a request is made. Defaults to <code>%QUERY</code>.
+   * when a request is made. Defaults to {@link #DEFAULT_WILDCARD}.
    *
    * @param sWildcard
    *        The wild card to use. May be <code>null</code>.
@@ -216,7 +217,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   /**
    * @return The pattern in <code>url</code> that will be replaced with the
    *         user's query when a request is made. Defaults to
-   *         <code>%QUERY</code>.
+   *         {@link #DEFAULT_WILDCARD}.
    */
   @Nullable
   public String getWildcard ()
@@ -396,7 +397,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
       ret.add (JSON_CACHE, m_eCache.getAsBooleanValue (false));
     if (m_nTimeout != 0)
       ret.add (JSON_TIMEOUT, m_nTimeout);
-    if (m_sWildcard != null && !m_sWildcard.equals (DEFAULT_WILDCARD))
+    if (m_sWildcard != null)
       ret.add (JSON_WILDCARD, m_sWildcard);
     if (m_aReplace != null)
       ret.add (JSON_REPLACE, m_aReplace);
