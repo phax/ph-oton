@@ -17,32 +17,13 @@
 package com.helger.webappdemo.jetty;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.ConnectException;
-import java.net.InetAddress;
-import java.net.Socket;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.helger.photon.jetty.JettyStopper;
 
 public final class JettyStopPHOTONDEMO
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (JettyStopPHOTONDEMO.class);
-
   public static void main (final String [] args) throws IOException
   {
-    try (final Socket s = new Socket (InetAddress.getByName (null), JettyMonitor.STOP_PORT))
-    {
-      s.setSoLinger (false, 0);
-
-      final OutputStream out = s.getOutputStream ();
-      s_aLogger.info ("Sending jetty stop request");
-      out.write ((JettyMonitor.STOP_KEY + "\r\nstop\r\n").getBytes ());
-      out.flush ();
-    }
-    catch (final ConnectException ex)
-    {
-      s_aLogger.warn ("Jetty is not running");
-    }
+    new JettyStopper ().run ();
   }
 }

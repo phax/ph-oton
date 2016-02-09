@@ -62,22 +62,17 @@
       <groupId>com.helger</groupId>
       <artifactId>ph-settings</artifactId>
     </dependency>
-    
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-webapp</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-annotations</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <!-- Must be 3.1.0 for Jetty! -->
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-oton-jetty</artifactId>
+^      <scope>test</scope>
     </dependency>
   </dependencies>
 
