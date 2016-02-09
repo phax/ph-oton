@@ -37,13 +37,15 @@ public final class TypeaheadRemoteTest
   {
     final JSWriterSettings aJSWS = new JSWriterSettings ().setIndentAndAlign (false);
     final TypeaheadRemote p = new TypeaheadRemote (new SimpleURL ("/a.json"));
-    assertEquals ("{url:'\\/a.json'}", p.getAsJSObject ().getJSCode (aJSWS));
+    assertEquals ("{url:'\\/a.json',wildcard:'_query_'}", p.getAsJSObject ().getJSCode (aJSWS));
     p.setDataType ("js");
-    assertEquals ("{url:'\\/a.json',dataType:'js'}", p.getAsJSObject ().getJSCode (aJSWS));
+    assertEquals ("{url:'\\/a.json',dataType:'js',wildcard:'_query_'}", p.getAsJSObject ().getJSCode (aJSWS));
     p.setCache (false);
-    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false}", p.getAsJSObject ().getJSCode (aJSWS));
+    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,wildcard:'_query_'}",
+                  p.getAsJSObject ().getJSCode (aJSWS));
     p.setTimeout (1000);
-    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000}", p.getAsJSObject ().getJSCode (aJSWS));
+    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000,wildcard:'_query_'}",
+                  p.getAsJSObject ().getJSCode (aJSWS));
     p.setWildcard ("$Q");
     assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000,wildcard:'$Q'}",
                   p.getAsJSObject ().getJSCode (aJSWS));
