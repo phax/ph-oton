@@ -257,6 +257,16 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
+   * Callback before anything else happens. Handle with care!
+   *
+   * @param aSC
+   *        ServletContext
+   */
+  @OverrideOnDemand
+  protected void onTheVeryBeginning (@Nonnull final ServletContext aSC)
+  {}
+
+  /**
    * Callback before init. By default some relevant debug information is emitted
    *
    * @param aSC
@@ -455,6 +465,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
     final StopWatch aSW = StopWatch.createdStarted ();
     m_aInitializationStartDT = LocalDateTime.now ();
+
+    // Call callback
+    onTheVeryBeginning (aSC);
 
     // set global debug/trace mode
     final boolean bDebugMode = StringParser.parseBool (getInitParameterDebug (aSC));
