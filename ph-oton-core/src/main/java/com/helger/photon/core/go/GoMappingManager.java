@@ -166,18 +166,18 @@ public class GoMappingManager extends AbstractSimpleDAO
 
   public void reload ()
   {
-    try
-    {
-      m_aRWLock.writeLockedThrowing ( () -> {
-        m_aMap.clear ();
+    m_aRWLock.writeLocked ( () -> {
+      m_aMap.clear ();
+      try
+      {
         initialRead ();
-      });
-      s_aLogger.info ("Reloaded " + m_aMap.size () + " go-mappings!");
-    }
-    catch (final DAOException ex)
-    {
-      throw new IllegalStateException ("Failed to reload go-mappings", ex);
-    }
+      }
+      catch (final DAOException ex)
+      {
+        throw new IllegalStateException ("Failed to reload go-mappings", ex);
+      }
+    });
+    s_aLogger.info ("Reloaded " + m_aMap.size () + " go-mappings!");
   }
 
   @Nonnull
@@ -295,16 +295,22 @@ public class GoMappingManager extends AbstractSimpleDAO
    *
    * @param aMenuTree
    *        The menu tree to search. May not be <code>null</code>.
-   * @throws IllegalStateException
-   *         If at least one menu item is not present
+   * @param aErrorCallback
+   *        The callback that is invoked for all invalid {@link GoMappingItem}
+   *        objects.
+   * @return The number of errors occurred. Always &ge; 0.
    */
-  public void checkInternalMappings (@Nonnull final IMenuTree aMenuTree)
+  @Nonnegative
+  public int checkInternalMappings (@Nonnull final IMenuTree aMenuTree,
+                                    @Nonnull final Consumer <GoMappingItem> aErrorCallback)
   {
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
+    ValueEnforcer.notNull (aErrorCallback, "ErrorCallback");
     final IRequestManager aARM = ApplicationRequestManager.getRequestMgr ();
 
-    m_aRWLock.readLocked ( () -> {
+    return m_aRWLock.readLocked ( () -> {
       int nCount = 0;
+      int nErrors = 0;
       for (final GoMappingItem aItem : m_aMap.values ())
         if (aItem.isInternal ())
         {
@@ -314,10 +320,21 @@ public class GoMappingManager extends AbstractSimpleDAO
           {
             ++nCount;
             if (aMenuTree.getItemWithID (sParamValue) == null)
-              throw new IllegalStateException ("Go-mapping item " + aItem + " is invalid");
+            {
+              ++nErrors;
+              aErrorCallback.accept (aItem);
+            }
           }
         }
-      s_aLogger.info ("Successfully checked " + nCount + " internal go-mappings for consistency");
+      if (nErrors == 0)
+        s_aLogger.info ("Successfully checked " + nCount + " internal go-mappings for consistency");
+      else
+        s_aLogger.warn ("Checked " +
+                        nCount +
+                        " internal go-mappings for consistency and found " +
+                        nErrors +
+                        " errors!");
+      return nErrors;
     });
   }
 
