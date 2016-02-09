@@ -178,6 +178,11 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
+        <artifactId>ph-oton-jetty</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
         <artifactId>ph-oton-bootstrap3</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -280,6 +285,7 @@
     <module>ph-oton-uicore</module>
     <module>ph-oton-tinymce4</module>
     <module>ph-oton-uictrls</module>
+    <module>ph-oton-jetty</module>
     <module>ph-oton-bootstrap3</module>
     <module>ph-oton-bootstrap3-uictrls</module>
     <module>ph-oton-bootstrap3-pages</module>
