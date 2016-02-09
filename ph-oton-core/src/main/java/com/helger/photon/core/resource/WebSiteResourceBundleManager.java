@@ -288,7 +288,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
         final WebSiteResourceWithCondition aBundleCandidate = aCopy.get (0);
         if (aFirst.canBeBundledWith (aBundleCandidate))
         {
-          // Can be bundled
+          // Can be bundled -> add and try next
           aBundleResources.add (aBundleCandidate);
           aCopy.remove (0);
         }
