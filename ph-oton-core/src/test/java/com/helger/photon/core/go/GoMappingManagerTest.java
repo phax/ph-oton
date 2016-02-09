@@ -56,7 +56,7 @@ public final class GoMappingManagerTest
     assertEquals ("https://joinup.ec.europa.eu/software/cipaedelivery/description",
                   aMgr.getItemOfKey ("external1").getTargetURLAsString ());
     assertEquals ("https://www.google.at", aMgr.getItemOfKey ("external2").getTargetURLAsString ());
-    assertEquals ("http://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32010L0045",
+    assertEquals ("http://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A32010L0045",
                   aMgr.getItemOfKey ("external3").getTargetURLAsString ());
   }
 
