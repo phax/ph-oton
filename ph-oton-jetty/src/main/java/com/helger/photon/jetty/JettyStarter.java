@@ -125,6 +125,7 @@ public final class JettyStarter
     aWebAppCtx.setTempDirectory (new File (SystemProperties.getTmpDir () + '/' + m_sDirBaseName + ".webapp"));
     aWebAppCtx.setParentLoaderPriority (true);
     aWebAppCtx.setThrowUnavailableOnStartupException (true);
+
     // Important to add the AnnotationConfiguration!
     aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
                                                          new WebXmlConfiguration (),
@@ -142,6 +143,8 @@ public final class JettyStarter
       aMgr.setDeleteUnrestorableSessions (true);
       aWebAppCtx.setSessionHandler (new SessionHandler (aMgr));
     }
+
+    aWebAppCtx.getSessionHandler ().getSessionManager ().getSessionCookieConfig ().setName ("PHOTONSESSIONID");
 
     aServer.setHandler (aWebAppCtx);
     final ServletContextHandler aCtx = aWebAppCtx;
