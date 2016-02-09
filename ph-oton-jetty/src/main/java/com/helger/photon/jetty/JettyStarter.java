@@ -37,12 +37,13 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.file.FilenameHelper;
+import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.system.SystemProperties;
 
 /**
- * Run ebiz4all as a standalone web application in Jetty on port 8080.<br>
- * http://localhost:8080/kb
+ * Run a standalone web application in Jetty on port 8080.<br>
+ * http://localhost:8080/
  *
  * @author Philip Helger
  */
@@ -50,18 +51,26 @@ import com.helger.commons.system.SystemProperties;
 public final class JettyStarter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (JettyStarter.class);
-  private static final String RESOURCE_PREFIX = "target/webapp-classes";
 
+  private final String m_sAppName;
   private final String m_sDirBaseName;
   private int m_nPort = 8080;
   private boolean m_bRunStopMonitor = true;
   private String m_sStopKey = InternalJettyStopMonitorThread.STOP_KEY;
   private int m_nStopPort = InternalJettyStopMonitorThread.STOP_PORT;
   private boolean m_bSpecialSessionMgr = true;
+  private String m_sResourceBase = "target/webapp-classes";
+  private String m_sContextPath = "/";
+
+  public JettyStarter (@Nonnull final Class <?> aAppClass)
+  {
+    this (ClassHelper.getClassLocalName (aAppClass));
+  }
 
   public JettyStarter (@Nonnull @Nonempty final String sAppName)
   {
     ValueEnforcer.notEmpty (sAppName, "AppName");
+    m_sAppName = sAppName;
     m_sDirBaseName = FilenameHelper.getAsSecureValidFilename (sAppName);
     if (StringHelper.hasNoText (m_sDirBaseName))
       throw new IllegalStateException ("FolderName is empty.");
@@ -105,10 +114,28 @@ public final class JettyStarter
     return this;
   }
 
+  @Nonnull
+  public JettyStarter setResourceBase (@Nonnull @Nonempty final String sResourceBase)
+  {
+    ValueEnforcer.notEmpty (sResourceBase, "sResourceBase");
+    m_sResourceBase = sResourceBase;
+    return this;
+  }
+
+  @Nonnull
+  public JettyStarter setContextPath (@Nonnull @Nonempty final String sContextPath)
+  {
+    ValueEnforcer.notEmpty (sContextPath, "sContextPath");
+    m_sContextPath = sContextPath;
+    return this;
+  }
+
   public void run () throws Exception
   {
     if (System.getSecurityManager () != null)
       throw new IllegalStateException ("Security Manager is set but not supported - aborting!");
+
+    final String sTempDir = SystemProperties.getTmpDir ();
 
     // Create main server
     final Server aServer = new Server ();
@@ -119,10 +146,10 @@ public final class JettyStarter
     aServer.setConnectors (new Connector [] { aConnector });
 
     final WebAppContext aWebAppCtx = new WebAppContext ();
-    aWebAppCtx.setDescriptor (RESOURCE_PREFIX + "/WEB-INF/web.xml");
-    aWebAppCtx.setResourceBase (RESOURCE_PREFIX);
-    aWebAppCtx.setContextPath ("/");
-    aWebAppCtx.setTempDirectory (new File (SystemProperties.getTmpDir () + '/' + m_sDirBaseName + ".webapp"));
+    aWebAppCtx.setDescriptor (m_sResourceBase + "/WEB-INF/web.xml");
+    aWebAppCtx.setResourceBase (m_sResourceBase);
+    aWebAppCtx.setContextPath (m_sContextPath);
+    aWebAppCtx.setTempDirectory (new File (sTempDir + '/' + m_sDirBaseName + ".webapp"));
     aWebAppCtx.setParentLoaderPriority (true);
     aWebAppCtx.setThrowUnavailableOnStartupException (true);
 
@@ -138,7 +165,7 @@ public final class JettyStarter
     if (m_bSpecialSessionMgr)
     {
       final HashSessionManager aMgr = new HashSessionManager ();
-      aMgr.setStoreDirectory (new File (SystemProperties.getTmpDir () + '/' + m_sDirBaseName + ".sessions"));
+      aMgr.setStoreDirectory (new File (sTempDir + '/' + m_sDirBaseName + ".sessions"));
       aMgr.setLazyLoad (true);
       aMgr.setDeleteUnrestorableSessions (true);
       aWebAppCtx.setSessionHandler (new SessionHandler (aMgr));
@@ -155,7 +182,10 @@ public final class JettyStarter
     aServer.setStopAtShutdown (true);
 
     if (false)
+    {
+      // Debug output
       aServer.setDumpBeforeStop (true);
+    }
 
     // Starting shutdown listener thread
     if (m_bRunStopMonitor)
@@ -165,20 +195,21 @@ public final class JettyStarter
     {
       // Starting the engines:
       aServer.start ();
+      s_aLogger.info ("Started Jetty " + m_sAppName);
     }
     catch (final Throwable t)
     {
       // Do not throw something here, in case some exception occurs in finally
       // code
-      s_aLogger.error ("Failed to start Jetty!", t);
+      s_aLogger.error ("Failed to start Jetty " + m_sAppName + "!", t);
     }
     finally
     {
       if (aCtx.isFailed ())
       {
-        s_aLogger.error ("Failed to start server - stopping server!");
+        s_aLogger.error ("Failed to start Jetty " + m_sAppName + " - stopping server!");
         aServer.stop ();
-        s_aLogger.error ("Failed to start server - stopped server!");
+        s_aLogger.error ("Failed to start Jetty " + m_sAppName + " - stopped server!");
       }
       else
         if (!aServer.isFailed ())

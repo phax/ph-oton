@@ -26,6 +26,11 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.charset.CCharset;
 
+/**
+ * Stop a Jetty that was started with {@link JettyStarter}.
+ *
+ * @author Philip Helger
+ */
 public final class JettyStopper
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (JettyStopper.class);
@@ -60,10 +65,11 @@ public final class JettyStopper
 
       try (final OutputStream out = s.getOutputStream ())
       {
-        s_aLogger.info ("Sending jetty stop request");
+        s_aLogger.info ("Sending Jetty stop request");
         out.write ((m_sStopKey + "\r\nstop\r\n").getBytes (CCharset.CHARSET_UTF_8_OBJ));
         out.flush ();
       }
+      s_aLogger.info ("Done");
     }
     catch (final ConnectException ex)
     {

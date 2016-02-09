@@ -31,6 +31,6 @@ public final class RunInJettyPHOTONDEMO
 {
   public static void main (final String [] args) throws Exception
   {
-    new JettyStarter (RunInJettyPHOTONDEMO.class.getName ()).run ();
+    new JettyStarter (RunInJettyPHOTONDEMO.class).run ();
   }
 }
