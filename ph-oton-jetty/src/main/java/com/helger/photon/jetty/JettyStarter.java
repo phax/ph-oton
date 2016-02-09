@@ -208,8 +208,16 @@ public final class JettyStarter
       if (aCtx.isFailed ())
       {
         s_aLogger.error ("Failed to start Jetty " + m_sAppName + " - stopping server!");
-        aServer.stop ();
-        s_aLogger.error ("Failed to start Jetty " + m_sAppName + " - stopped server!");
+        try
+        {
+          // Throws an Exception e.g. in log4j2 2.5
+          aServer.stop ();
+          s_aLogger.error ("Failed to start Jetty " + m_sAppName + " - stopped server!");
+        }
+        catch (final Throwable t)
+        {
+          s_aLogger.error ("Error stopping Jetty " + m_sAppName + " after startup errors!", t);
+        }
       }
       else
         if (!aServer.isFailed ())
