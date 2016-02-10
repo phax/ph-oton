@@ -27,7 +27,6 @@ import com.helger.commons.charset.CCharset;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IHasDescription;
 import com.helger.photon.uictrls.prism.EPrismLanguage;
 
@@ -87,14 +86,6 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
   public String getDescription ()
   {
     return m_sDescription;
-  }
-
-  /**
-   * @return <code>true</code> if this configuration file has a description.
-   */
-  public boolean hasDescription ()
-  {
-    return StringHelper.hasText (m_sDescription);
   }
 
   /**
