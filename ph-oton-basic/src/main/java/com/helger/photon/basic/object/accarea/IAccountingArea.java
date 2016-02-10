@@ -44,6 +44,18 @@ public interface IAccountingArea extends IClientObject, IHasDisplayName, IHasUIT
     return StringHelper.hasText (getCompanyType ());
   }
 
+  @Nonnull
+  default String getDisplayNameAndCompanyType ()
+  {
+    return getDisplayNameAndCompanyType (" ");
+  }
+
+  @Nonnull
+  default String getDisplayNameAndCompanyType (@Nonnull final String sSep)
+  {
+    return StringHelper.getImplodedNonEmpty (sSep, getDisplayName (), getCompanyType ());
+  }
+
   /**
    * @return The company UID.
    */
@@ -73,7 +85,7 @@ public interface IAccountingArea extends IClientObject, IHasDisplayName, IHasUIT
   @Nullable
   String getCustomerNumber ();
 
-  default boolean hasCustomeNumber ()
+  default boolean hasCustomerNumber ()
   {
     return StringHelper.hasText (getCustomerNumber ());
   }
