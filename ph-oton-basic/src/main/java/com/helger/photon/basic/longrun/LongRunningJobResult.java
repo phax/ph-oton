@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.lang.IHasStringRepresentation;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.string.ToStringGenerator;
@@ -33,7 +32,7 @@ import com.helger.commons.url.ISimpleURL;
  *
  * @author Philip Helger
  */
-public final class LongRunningJobResult implements IHasStringRepresentation
+public final class LongRunningJobResult
 {
   private final ELongRunningJobResultType m_eType;
   private final Object m_aResult;

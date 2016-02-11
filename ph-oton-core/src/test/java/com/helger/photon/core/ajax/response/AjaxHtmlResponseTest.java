@@ -66,7 +66,7 @@ public final class AjaxHtmlResponseTest
       assertNotNull (aResponse);
       assertNotNull (aResponse.getSuccessValue ());
       assertNotNull (aResponse.getSuccessValue ().getValue (AjaxHtmlResponse.PROPERTY_HTML));
-      System.out.println (aResponse.getSuccessValue ().getValue (AjaxHtmlResponse.PROPERTY_HTML).getAsStringValue ());
+      System.out.println (aResponse.getSuccessValue ().getValue (AjaxHtmlResponse.PROPERTY_HTML).getAsString ());
     }
     finally
     {

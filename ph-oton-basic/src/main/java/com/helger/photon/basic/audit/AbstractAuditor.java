@@ -86,7 +86,7 @@ public abstract class AbstractAuditor implements IAuditor
       if (aArgs != null)
         for (final Object aArg : aArgs)
           aData.add (aArg);
-      return new JsonObject ().add (sObjectType, aData).getAsString ();
+      return new JsonObject ().add (sObjectType, aData).getAsJsonString ();
     }
 
     // Use regular formatting

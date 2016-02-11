@@ -33,7 +33,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.lang.IHasStringRepresentation;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.microdom.IHasMicroNodeRepresentation;
 import com.helger.commons.microdom.IMicroElement;
@@ -46,7 +45,7 @@ import com.helger.commons.string.StringHelper;
  *
  * @author Philip Helger
  */
-public class ThreadDescriptor implements IHasStringRepresentation, IHasMicroNodeRepresentation
+public class ThreadDescriptor implements IHasMicroNodeRepresentation
 {
   public static final boolean DEFAULT_ENABLE_THREAD_INFO = false;
 

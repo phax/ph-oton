@@ -38,7 +38,7 @@ public final class TypeaheadDatumTest
     assertEquals ("Value", p.getValue ());
     assertEquals (CollectionHelper.newList ("Token", "for", "this", "value"), p.getAllTokens ());
     assertEquals ("{\"value\":\"Value\",\"tokens\":[\"Token\",\"for\",\"this\",\"value\"]}",
-                  p.getAsJson ().getAsString ());
+                  p.getAsJson ().getAsJsonString ());
     assertEquals ("{value:'Value',tokens:['Token','for','this','value']}", p.getAsJSObject ().getJSCode (aJSWS));
   }
 }

@@ -31,16 +31,15 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.lang.IHasStringRepresentation;
 import com.helger.commons.microdom.IHasMicroNodeRepresentation;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 
 @NotThreadSafe
-public class InternalErrorMetadata implements IHasStringRepresentation, IHasMicroNodeRepresentation
+public class InternalErrorMetadata implements IHasMicroNodeRepresentation
 {
   @Immutable
-  public static final class Entry implements IHasStringRepresentation, IHasMicroNodeRepresentation
+  public static final class Entry implements IHasMicroNodeRepresentation
   {
     private final String m_sKey;
     private final String m_sValue;

@@ -71,7 +71,7 @@ public class DefaultCSPReportingServlet extends HttpServlet
   @OverrideOnDemand
   protected void handleCSPReport (@Nonnull final IJson aJson)
   {
-    s_aLogger.warn ("CSP report: " + aJson.getAsString (new JsonWriterSettings ().setIndentEnabled (true)));
+    s_aLogger.warn ("CSP report: " + aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
   }
 
   @Override

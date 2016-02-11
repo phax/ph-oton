@@ -43,7 +43,7 @@ public class AjaxDatatablesResponse extends AbstractAjaxResponse
   public void applyToResponse (final UnifiedResponse aUnifiedResponse)
   {
     final IJsonObject aJson = AjaxHtmlResponse.getResponseAsJSON (isSuccess (), m_aResponseData, m_aSpecialNodes, null);
-    aUnifiedResponse.setContentAndCharset (aJson.getAsString (), CCharset.CHARSET_UTF_8_OBJ)
+    aUnifiedResponse.setContentAndCharset (aJson.getAsJsonString (), CCharset.CHARSET_UTF_8_OBJ)
                     .setMimeType (CMimeType.APPLICATION_JSON);
   }
 }

@@ -37,7 +37,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.lang.IHasStringRepresentation;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.microdom.IHasMicroNodeRepresentation;
 import com.helger.commons.microdom.IMicroElement;
@@ -51,7 +50,7 @@ import com.helger.commons.timing.StopWatch;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class ThreadDescriptorList implements IHasStringRepresentation, IHasMicroNodeRepresentation
+public class ThreadDescriptorList implements IHasMicroNodeRepresentation
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ThreadDescriptorList.class);
 
