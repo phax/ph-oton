@@ -97,7 +97,7 @@ public class WebSiteResourceBundle
   @Nullable
   public WebSiteResource getResourceAtIndex (@Nonnegative final int nIndex)
   {
-    return CollectionHelper.getSafe (m_aResources, nIndex);
+    return CollectionHelper.getAtIndex (m_aResources, nIndex);
   }
 
   @Nonnull

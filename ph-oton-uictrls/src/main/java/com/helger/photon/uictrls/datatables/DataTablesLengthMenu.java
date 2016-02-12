@@ -97,7 +97,7 @@ public class DataTablesLengthMenu
   @Nullable
   public DataTablesLengthMenuItem getItemAtIndex (@Nonnegative final int nIndex)
   {
-    return CollectionHelper.getSafe (m_aList, nIndex);
+    return CollectionHelper.getAtIndex (m_aList, nIndex);
   }
 
   @Nonnull

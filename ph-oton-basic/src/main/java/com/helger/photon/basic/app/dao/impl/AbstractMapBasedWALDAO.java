@@ -155,7 +155,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   public final <RETTYPE> Collection <RETTYPE> getAll (@Nullable final Predicate <INTERFACETYPE> aFilter,
                                                       @Nonnull final Function <INTERFACETYPE, RETTYPE> aMapper)
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (), aFilter, aMapper));
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAllMapped (m_aMap.values (), aFilter, aMapper));
   }
 
   @Nullable
@@ -168,7 +168,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   public final <RETTYPE> RETTYPE getFirst (@Nullable final Predicate <INTERFACETYPE> aFilter,
                                            @Nonnull final Function <INTERFACETYPE, RETTYPE> aMapper)
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.findFirst (m_aMap.values (), aFilter, aMapper));
+    return m_aRWLock.readLocked ( () -> CollectionHelper.findFirstMapped (m_aMap.values (), aFilter, aMapper));
   }
 
   public final boolean containsAny ()

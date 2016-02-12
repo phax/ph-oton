@@ -147,7 +147,7 @@ public final class PathDescriptorVariableConstraint
     }
 
     // Optional value
-    final String sConstraintValue = CollectionHelper.getSafe (aParts, 1);
+    final String sConstraintValue = CollectionHelper.getAtIndex (aParts, 1);
     if (eConstraintType.isRequiresValue () && StringHelper.hasNoText (sConstraintValue))
     {
       s_aLogger.error ("Variable constraint type '" +

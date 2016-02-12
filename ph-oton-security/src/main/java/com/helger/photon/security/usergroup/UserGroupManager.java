@@ -711,7 +711,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sUserID))
       return new ArrayList <> ();
 
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (),
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAllMapped (m_aMap.values (),
                                                                  aUserGroup -> aUserGroup.containsUserID (sUserID),
                                                                  aUserGroup -> aUserGroup.getID ()));
   }
@@ -904,7 +904,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sRoleID))
       return new ArrayList <> ();
 
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (),
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAllMapped (m_aMap.values (),
                                                                  aUserGroup -> aUserGroup.containsRoleID (sRoleID),
                                                                  aUserGroup -> aUserGroup.getID ()));
   }

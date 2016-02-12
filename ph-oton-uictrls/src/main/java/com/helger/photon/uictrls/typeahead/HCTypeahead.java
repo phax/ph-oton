@@ -102,7 +102,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   @Nullable
   public TypeaheadDataset getDatasetAtIndex (@Nonnegative final int nIndex)
   {
-    return CollectionHelper.getSafe (m_aDatasets, nIndex);
+    return CollectionHelper.getAtIndex (m_aDatasets, nIndex);
   }
 
   @Nonnull
