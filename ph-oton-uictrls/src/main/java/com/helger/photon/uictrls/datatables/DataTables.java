@@ -23,6 +23,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnegative;
@@ -66,6 +68,7 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
+import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSVar;
 import com.helger.json.IJsonObject;
@@ -232,7 +235,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // DataTables - Columns
   //
   /** Set column definition initialisation properties. */
-  private final List <DataTablesColumnDef> m_aColumnDefs = new ArrayList <DataTablesColumnDef> ();
+  private final List <DataTablesColumnDef> m_aColumnDefs = new ArrayList <> ();
 
   //
   // DataTables - Internationalisation
@@ -249,6 +252,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // Custom properties
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
   private EDataTablesFilterType m_eServerFilterType = EDataTablesFilterType.DEFAULT;
+  private Consumer <JSPackage> m_aJSBeforeModifier;
+  private BiConsumer <JSPackage, JSVar> m_aJSAfterModifier;
 
   /**
    * Apply to an existing table. If the table does not have an ID yet, a new one
@@ -982,6 +987,32 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
+  @Nullable
+  public Consumer <JSPackage> getJSBeforeModifier ()
+  {
+    return m_aJSBeforeModifier;
+  }
+
+  @Nonnull
+  public DataTables setJSBeforeModifier (@Nullable final Consumer <JSPackage> aJSBeforeModifier)
+  {
+    m_aJSBeforeModifier = aJSBeforeModifier;
+    return this;
+  }
+
+  @Nullable
+  public BiConsumer <JSPackage, JSVar> getJSAfterModifier ()
+  {
+    return m_aJSAfterModifier;
+  }
+
+  @Nonnull
+  public DataTables setJSAfterModifier (@Nullable final BiConsumer <JSPackage, JSVar> aJSAfterModifier)
+  {
+    m_aJSAfterModifier = aJSAfterModifier;
+    return this;
+  }
+
   /**
    * modify parameter map
    *
@@ -990,28 +1021,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    */
   @OverrideOnDemand
   protected void modifyParams (@Nonnull final JSAssocArray aParams)
-  {}
-
-  /**
-   * Add JS code before the data tables init is called
-   *
-   * @param aPackage
-   *        The JS Package to add the code to
-   */
-  @OverrideOnDemand
-  protected void addCodeBeforeDataTables (@Nonnull final JSPackage aPackage)
-  {}
-
-  /**
-   * Add JS code before the data tables init is called
-   *
-   * @param aPackage
-   *        The JS Package to add the code to
-   * @param aJSTable
-   *        The JS reference to the created DataTables object
-   */
-  @OverrideOnDemand
-  protected void addCodeAfterDataTables (@Nonnull final JSPackage aPackage, @Nonnull final JSVar aJSTable)
   {}
 
   @Nonnull
@@ -1057,6 +1066,12 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public JQueryInvocation invokeDataTablesAPI ()
   {
     return JQuery.idRef (m_aTable).jqinvoke ("DataTable");
+  }
+
+  @Nonnull
+  public static JSInvocation invokeDataTablesMoment ()
+  {
+    return JQuery.fn ().ref ("dataTable").invoke ("moment");
   }
 
   @Override
@@ -1236,7 +1251,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     // main on document ready code
     final JSPackage aJSCode = new JSPackage ();
 
-    addCodeBeforeDataTables (aJSCode);
+    if (m_aJSBeforeModifier != null)
+      m_aJSBeforeModifier.accept (aJSCode);
 
     final JSVar aJSTable = aJSCode.var (m_sJSVariableName, invokeDataTables ().arg (aParams));
 
@@ -1244,7 +1260,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
       aPlugin.addInitJS (this, aJSCode, aJSTable);
 
-    addCodeAfterDataTables (aJSCode, aJSTable);
+    if (m_aJSAfterModifier != null)
+      m_aJSAfterModifier.accept (aJSCode, aJSTable);
 
     // Main HTML code for this element :)
     setJSCodeProvider (m_bGenerateOnDocumentReady ? HCSettings.getOnDocumentReadyProvider ()
