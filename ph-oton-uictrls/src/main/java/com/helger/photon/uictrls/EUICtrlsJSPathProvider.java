@@ -54,6 +54,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   DATATABLES_SCROLLER ("datatables/Scroller-1.4.1/js/dataTables.scroller.js"),
   DATATABLES_SEARCH_HIGHLIGHT ("datatables/searchHighlight/dataTables.searchHighlight.js"),
   DATATABLES_SELECT ("datatables/Select-1.1.2/js/dataTables.select.js"),
+  DATATABLES_SORTING_MOMENT ("datatables/sorting/datetime-moment.js"),
   EXCANVAS ("chart/excanvas.js", "if lt IE 9"),
   FINEUPLOADER_320 ("fineupload/320/fineuploader.js"),
   FINEUPLOADER_330 ("fineupload/330/fineuploader.js"),

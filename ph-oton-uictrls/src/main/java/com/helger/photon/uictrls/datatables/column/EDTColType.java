@@ -33,4 +33,9 @@ public enum EDTColType
   TIME,
   VERSION,
   XML;
+
+  public boolean isDateTimeType ()
+  {
+    return this == DATE || this == DATETIME || this == TIME;
+  }
 }

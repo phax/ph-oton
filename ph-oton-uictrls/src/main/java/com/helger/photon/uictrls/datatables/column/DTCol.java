@@ -46,6 +46,7 @@ import com.helger.photon.uictrls.datatables.DataTables;
 public class DTCol extends AbstractHCCol <DTCol>
 {
   private IHCNode m_aHeaderNode;
+  private EDTColType m_eColType;
   private ESortOrder m_eInitialSorting = null;
   private boolean m_bSearchable = DataTablesColumnDef.DEFAULT_SEARCHABLE;
   private boolean m_bOrderable = DataTablesColumnDef.DEFAULT_ORDERABLE;
@@ -70,20 +71,27 @@ public class DTCol extends AbstractHCCol <DTCol>
     setHeaderNode (aHeaderNode);
   }
 
-  @Nonnull
-  public DTCol setDisplayType (@Nonnull final EDTColType eBaseType, @Nonnull final Locale aDisplayLocale)
+  @Nullable
+  public EDTColType getColType ()
   {
-    return setDisplayType (eBaseType, aDisplayLocale, null);
+    return m_eColType;
   }
 
   @Nonnull
-  public DTCol setDisplayType (@Nonnull final EDTColType eBaseType,
+  public DTCol setDisplayType (@Nonnull final EDTColType eColType, @Nonnull final Locale aDisplayLocale)
+  {
+    return setDisplayType (eColType, aDisplayLocale, null);
+  }
+
+  @Nonnull
+  public DTCol setDisplayType (@Nonnull final EDTColType eColType,
                                @Nonnull final Locale aDisplayLocale,
                                @Nullable final Function <? super String, String> aFormatter)
   {
-    ValueEnforcer.notNull (eBaseType, "BaseType");
+    ValueEnforcer.notNull (eColType, "BaseType");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
-    switch (eBaseType)
+    m_eColType = eColType;
+    switch (eColType)
     {
       case BOOLEAN:
         // Nothing special
@@ -129,7 +137,7 @@ public class DTCol extends AbstractHCCol <DTCol>
         setOrderable (false);
         break;
       default:
-        throw new IllegalArgumentException ("Unsupported base type provided: " + eBaseType);
+        throw new IllegalArgumentException ("Unsupported base type provided: " + eColType);
     }
     return this;
   }

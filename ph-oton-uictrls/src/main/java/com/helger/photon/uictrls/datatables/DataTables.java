@@ -19,10 +19,12 @@ package com.helger.photon.uictrls.datatables;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -82,6 +84,8 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.ajax.DataTablesServerData;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
+import com.helger.photon.uictrls.datatables.column.EDTColType;
+import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginClientSortingDate;
 
 @OutOfBandNode
 public class DataTables extends AbstractHCScriptInline <DataTables>
@@ -530,6 +534,16 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
     m_aAjaxBuilder = aAjaxBuilder;
     return this;
+  }
+
+  public boolean isServerSide ()
+  {
+    return m_aAjaxBuilder != null;
+  }
+
+  public boolean isClientSide ()
+  {
+    return m_aAjaxBuilder == null;
   }
 
   @Nonnull
@@ -1074,11 +1088,28 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return JQuery.fn ().ref ("dataTable").invoke ("moment");
   }
 
+  private void _applyClientSideSortingSettings ()
+  {
+    // Add client-side date/time formatter
+    final Set <EDTColType> aDateTimeTypes = EnumSet.noneOf (EDTColType.class);
+    for (final IHCCol <?> aCol : m_aTable.getAllColumns ())
+      if (aCol instanceof DTCol)
+      {
+        final EDTColType eColType = ((DTCol) aCol).getColType ();
+        if (eColType != null && eColType.isDateTimeType ())
+          aDateTimeTypes.add (eColType);
+      }
+    if (!aDateTimeTypes.isEmpty ())
+      addPlugin (new DataTablesPluginClientSortingDate (aDateTimeTypes));
+  }
+
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
+    _applyClientSideSortingSettings ();
 
     // Determine all applicable plugins
     final List <IDataTablesPlugin> aRelevantPlugins = new ArrayList <> ();
@@ -1128,8 +1159,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     //
 
     // Server handling parameters
-    final boolean bServerSide = m_aAjaxBuilder != null;
-    if (bServerSide)
+    if (isServerSide ())
     {
       aParams.add ("serverSide", true);
       // This copies the content of the table
@@ -1233,7 +1263,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     // DataTables - Plugins
     //
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
-      aParams.add (aPlugin.getName (), aPlugin.getInitParams ());
+    {
+      final IJSExpression aInitParams = aPlugin.getInitParams ();
+      if (aInitParams != null)
+        aParams.add (aPlugin.getName (), aInitParams);
+    }
 
     //
     // rest
