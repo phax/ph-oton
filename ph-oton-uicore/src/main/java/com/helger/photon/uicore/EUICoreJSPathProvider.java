@@ -45,7 +45,7 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   JQUERY_MOUSEWHEEL ("uicore/jqueryplugins/jquery.mousewheel.js"),
   JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/2.1.2/jquery.placeholder.js", "if lt IE 10"),
   JQUERY_PLACEHOLDER_ALL ("uicore/jqueryplaceholder/jquery.placeholder-all.js", "if lt IE 10"),
-
+  MOMENT ("uicore/moment/2.11.2/moment-with-locales.js"),
   /** Edit placeholder fix for IE &lt; 10 */
   @Deprecated PLACEHOLDER_FIX ("uicore/placeholder/placeholder-fix.js", "if lt IE 10"),
   /**
