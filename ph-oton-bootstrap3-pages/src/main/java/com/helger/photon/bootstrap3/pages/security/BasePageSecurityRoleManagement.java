@@ -52,6 +52,7 @@ import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
+import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -188,9 +189,11 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     else
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
-      for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aAssignedUserGroups,
-                                                                     IHasName.getComparatorCollating (aDisplayLocale)))
-        aUserGroupUI.addChild (new HCDiv ().addChild (aUserGroup.getName ()));
+      CollectionHelper.getSorted (aAssignedUserGroups, IHasName.getComparatorCollating (aDisplayLocale))
+                      .forEach (aUserGroup -> aUserGroupUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
+                                                                                                                    BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
+                                                                                                                    aUserGroup.getID (),
+                                                                                                                    null)).addChild (aUserGroup.getName ()))));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                Integer.toString (aAssignedUserGroups.size ())))
                                                    .setCtrl (aUserGroupUI));

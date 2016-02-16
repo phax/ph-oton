@@ -16,7 +16,6 @@
  */
 package com.helger.photon.bootstrap3.pages.security;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -57,6 +56,7 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
+import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -211,14 +211,16 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     {
       // Convert IDs to objects
       final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
-      final List <IUser> aAssignedUsers = new ArrayList <IUser> (aAssignedUserIDs.size ());
-      for (final String sUserID : aAssignedUserIDs)
-        aAssignedUsers.add (aUserMgr.getUserOfID (sUserID));
+      final List <IUser> aAssignedUsers = CollectionHelper.newListMapped (aAssignedUserIDs,
+                                                                          sUserID -> aUserMgr.getUserOfID (sUserID));
 
       final HCNodeList aUserUI = new HCNodeList ();
-      for (final IUser aUser : CollectionHelper.getSorted (aAssignedUsers,
-                                                           IHasDisplayName.getComparatorCollating (aDisplayLocale)))
-        aUserUI.addChild (new HCDiv ().addChild (aUser.getDisplayName ()));
+      CollectionHelper.getSortedInline (aAssignedUsers, IHasDisplayName.getComparatorCollating (aDisplayLocale))
+                      .forEach (aUser -> aUserUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
+                                                                                                          BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
+                                                                                                          aUser.getID (),
+                                                                                                          null)).addChild (aUser.getDisplayName ()))));
+
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aAssignedUserIDs.size ())))
                                                    .setCtrl (aUserUI));
@@ -235,14 +237,16 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     {
       // Convert IDs to objects
       final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
-      final List <IRole> aAssignedRoles = new ArrayList <IRole> (aAssignedRoleIDs.size ());
-      for (final String sRoleID : aAssignedRoleIDs)
-        aAssignedRoles.add (aRoleMgr.getRoleOfID (sRoleID));
+      final List <IRole> aAssignedRoles = CollectionHelper.newListMapped (aAssignedRoleIDs,
+                                                                          sRoleID -> aRoleMgr.getRoleOfID (sRoleID));
 
       final HCNodeList aRoleUI = new HCNodeList ();
-      for (final IRole aRole : CollectionHelper.getSorted (aAssignedRoles,
-                                                           IHasName.getComparatorCollating (aDisplayLocale)))
-        aRoleUI.addChild (new HCDiv ().addChild (aRole.getName ()));
+      CollectionHelper.getSorted (aAssignedRoles, IHasName.getComparatorCollating (aDisplayLocale))
+                      .forEach (aRole -> aRoleUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
+                                                                                                          BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
+                                                                                                          aRole.getID (),
+                                                                                                          null)).addChild (aRole.getName ()))));
+
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aAssignedRoleIDs.size ())))
                                                    .setCtrl (aRoleUI));

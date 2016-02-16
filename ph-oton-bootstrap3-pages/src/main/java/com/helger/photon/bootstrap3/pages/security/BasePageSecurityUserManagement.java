@@ -65,6 +65,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -365,9 +366,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     else
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
-      for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aUserGroups,
-                                                                     IHasName.getComparatorCollating (aDisplayLocale)))
-        aUserGroupUI.addChild (new HCDiv ().addChild (aUserGroup.getName ()));
+      CollectionHelper.getSorted (aUserGroups, IHasName.getComparatorCollating (aDisplayLocale))
+                      .forEach (aUG -> aUserGroupUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
+                                                                                                             BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
+                                                                                                             aUG.getID (),
+                                                                                                             null)).addChild (aUG.getName ()))));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                Integer.toString (aUserGroups.size ())))
                                                    .setCtrl (aUserGroupUI));
@@ -383,9 +386,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     else
     {
       final HCNodeList aRoleUI = new HCNodeList ();
-      for (final IRole aRole : CollectionHelper.getSorted (aUserRoles,
-                                                           IHasName.getComparatorCollating (aDisplayLocale)))
-        aRoleUI.addChild (new HCDiv ().addChild (aRole.getName ()));
+      CollectionHelper.getSorted (aUserRoles, IHasName.getComparatorCollating (aDisplayLocale))
+                      .forEach (aRole -> aRoleUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
+                                                                                                          BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
+                                                                                                          aRole.getID (),
+                                                                                                          null)).addChild (aRole.getName ()))));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                           Integer.toString (aUserRoles.size ())))
                                                    .setCtrl (aRoleUI));
@@ -824,17 +829,21 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
       // Login name
       if (bSeparateLoginName)
-        aRow.addCell (new HCA (aViewLink).addChild (aCurUser.getLoginName ()));
+        aRow.addCell (aCurUser.getLoginName ());
 
       // Email address
-      aRow.addCell (new HCA (aViewLink).addChild (aCurUser.getEmailAddress ()));
+      aRow.addCell (HCA_MailTo.createLinkedEmail (aCurUser.getEmailAddress ()));
 
       // User groups
-      final Collection <IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aCurUser.getID ());
-      aRow.addCell (new HCA (aViewLink).addChild (StringHelper.getImploded (", ",
-                                                                            CollectionHelper.getSorted (aUserGroups,
-                                                                                                        IHasName.getComparatorCollating (aDisplayLocale)),
-                                                                            IUserGroup::getName)));
+      {
+        final Collection <IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aCurUser.getID ());
+        final IHCCell <?> aUserGroupCell = aRow.addCell ();
+        CollectionHelper.getSorted (aUserGroups, IHasName.getComparatorCollating (aDisplayLocale))
+                        .forEach (aUG -> aUserGroupCell.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
+                                                                                                                 BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
+                                                                                                                 aUG.getID (),
+                                                                                                                 null)).addChild (aUG.getName ()))));
+      }
 
       // Last login
       aRow.addCell (PDTToString.getAsString (aCurUser.getLastLoginDateTime (), aDisplayLocale));
@@ -847,9 +856,12 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       else
         aActionCell.addChild (createEmptyAction ());
 
-      // Copy
+      // Copy user
       aActionCell.addChild (" ");
-      aActionCell.addChild (createCopyLink (aWPEC, aCurUser));
+      if (isActionAllowed (aWPEC, EWebPageFormAction.COPY, aCurUser))
+        aActionCell.addChild (createCopyLink (aWPEC, aCurUser));
+      else
+        aActionCell.addChild (createEmptyAction ());
 
       // Reset password of user
       aActionCell.addChild (" ");
