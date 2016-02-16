@@ -69,12 +69,14 @@ public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>
   }
 
   @Nonnull
+  @Deprecated
   public Tab addTab (@Nullable final String sLabel, @Nullable final IHCNode aContent)
   {
     return addTab (null, new HCTextNode (sLabel), aContent, DEFAULT_ACTIVE);
   }
 
   @Nonnull
+  @Deprecated
   public Tab addTab (@Nullable final String sLabel, @Nullable final IHCNode aContent, final boolean bActive)
   {
     return addTab (null, new HCTextNode (sLabel), aContent, bActive);
@@ -87,6 +89,7 @@ public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>
   }
 
   @Nonnull
+  @Deprecated
   public Tab addTab (@Nullable final String sLabel,
                      @Nullable final IHCNode aContent,
                      final boolean bActive,
@@ -105,18 +108,21 @@ public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>
   }
 
   @Nonnull
+  @Deprecated
   public Tab addTab (@Nullable final IHCNode aLabel, @Nullable final IHCNode aContent)
   {
     return addTab (null, aLabel, aContent, DEFAULT_ACTIVE);
   }
 
   @Nonnull
+  @Deprecated
   public Tab addTab (@Nullable final IHCNode aLabel, @Nullable final IHCNode aContent, final boolean bActive)
   {
     return addTab (null, aLabel, aContent, bActive);
   }
 
   @Nonnull
+  @Deprecated
   public Tab addTab (@Nullable final IHCNode aLabel,
                      @Nullable final IHCNode aContent,
                      final boolean bActive,

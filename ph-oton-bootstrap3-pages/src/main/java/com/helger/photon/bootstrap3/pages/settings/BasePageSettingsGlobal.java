@@ -149,7 +149,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext>
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_GLOBAL_PRODUCTION.getDisplayText (aDisplayLocale))
                                                    .setCtrl (new HCCheckBox (FIELD_GLOBAL_PRODUCTION,
                                                                              GlobalDebug.isProductionMode ())));
-      aTabBox.addTab (EText.MSG_HEADER_GLOBAL.getDisplayText (aDisplayLocale), aForm);
+      aTabBox.addTab ("global", EText.MSG_HEADER_GLOBAL.getDisplayText (aDisplayLocale), aForm);
     }
 
     // Email global settings
@@ -198,7 +198,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext>
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aCtrl));
       }
-      aTabBox.addTab (EText.MSG_HEADER_EMAIL.getDisplayText (aDisplayLocale), aForm);
+      aTabBox.addTab ("email", EText.MSG_HEADER_EMAIL.getDisplayText (aDisplayLocale), aForm);
     }
 
     aForm0.addChild (aTabBox);

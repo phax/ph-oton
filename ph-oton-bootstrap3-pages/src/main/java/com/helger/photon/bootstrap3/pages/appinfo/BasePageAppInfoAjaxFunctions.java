@@ -174,7 +174,7 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
         }
 
         // Add to tab box
-        aTabBox.addTab (sAppScopeID, aTab);
+        aTabBox.addTab (sAppScopeID, sAppScopeID, aTab);
       }
     }
 

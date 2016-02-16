@@ -161,9 +161,11 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                    if (nDepth > 0)
                                      aCell.addStyle (CCSSProperties.PADDING_LEFT.newValue (ECSSUnit.em (nDepth)));
 
-                                   // hardware address (usually MAC) of the
-                                   // interface if it has one and if it can be
-                                   // accessed given the current privileges.
+                                   /*
+                                    * hardware address (usually MAC) of the
+                                    * interface if it has one and if it can be
+                                    * accessed given the current privileges.
+                                    */
                                    try
                                    {
                                      final byte [] aMAC = aNI.getHardwareAddress ();
@@ -174,7 +176,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                      aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
-                                   // network interface is up and running.
+                                   /* network interface is up and running. */
                                    try
                                    {
                                      aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isUp (), aDisplayLocale));
@@ -184,7 +186,9 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                      aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
-                                   // network interface is a loopback interface.
+                                   /*
+                                    * network interface is a loopback interface.
+                                    */
                                    try
                                    {
                                      aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isLoopback (), aDisplayLocale));
@@ -194,11 +198,12 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                      aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
-                                   // network interface is a point to point
-                                   // interface. A typical point to point
-                                   // interface would be a PPP connection
-                                   // through
-                                   // a modem.
+                                   /*
+                                    * network interface is a point to point
+                                    * interface. A typical point to point
+                                    * interface would be a PPP connection
+                                    * through a modem.
+                                    */
                                    try
                                    {
                                      aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isPointToPoint (), aDisplayLocale));
@@ -208,8 +213,10 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                      aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
-                                   // network interface supports multicasting or
-                                   // not.
+                                   /*
+                                    * network interface supports multicasting or
+                                    * not.
+                                    */
                                    try
                                    {
                                      aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.supportsMulticast (),
@@ -220,8 +227,10 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                      aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
-                                   // Maximum Transmission Unit (MTU) of this
-                                   // interface.
+                                   /*
+                                    * Maximum Transmission Unit (MTU) of this
+                                    * interface.
+                                    */
                                    int nMTU = -1;
                                    try
                                    {
@@ -261,7 +270,8 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setPageLengthAll ();
 
-      aTabBox.addTab (EText.MSG_NETWORK_INTERFACES.getDisplayText (aDisplayLocale),
+      aTabBox.addTab ("network",
+                      EText.MSG_NETWORK_INTERFACES.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
     aNodeList.addChild (aTabBox);

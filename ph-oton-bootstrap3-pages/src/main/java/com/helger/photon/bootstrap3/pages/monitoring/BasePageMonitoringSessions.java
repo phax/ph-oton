@@ -296,12 +296,15 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aNodeList.addChild (aToolbar);
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
-    aTabBox.addTab (EText.MSG_SESSION.getDisplayText (aDisplayLocale), _getSessionScopeInfo (aWPEC, aScope));
+    aTabBox.addTab ("session", EText.MSG_SESSION.getDisplayText (aDisplayLocale), _getSessionScopeInfo (aWPEC, aScope));
     for (final ISessionApplicationScope aSessionAppScope : CollectionHelper.getSortedByKey (aScope.getAllSessionApplicationScopes ())
                                                                            .values ())
-      aTabBox.addTab (EText.MSG_SESSION_APPLICATION_SCOPES.getDisplayTextWithArgs (aDisplayLocale,
+    {
+      aTabBox.addTab (aSessionAppScope.getID (),
+                      EText.MSG_SESSION_APPLICATION_SCOPES.getDisplayTextWithArgs (aDisplayLocale,
                                                                                    aSessionAppScope.getID ()),
                       _getSessionApplicationScopeInfo (aWPEC, aSessionAppScope));
+    }
     aNodeList.addChild (aTabBox);
   }
 

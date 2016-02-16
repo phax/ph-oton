@@ -647,9 +647,11 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     aToolbar.addButtonNew (EText.BUTTON_CREATE_NEW.getDisplayText (aDisplayLocale), createCreateURL (aWPEC));
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
-    aTabBox.addTab (EText.TAB_LABEL_ACTIVE.getDisplayText (aDisplayLocale),
+    aTabBox.addTab ("active",
+                    EText.TAB_LABEL_ACTIVE.getDisplayText (aDisplayLocale),
                     _createList (aWPEC, "active", aValue -> !aValue.isDeleted ()));
-    aTabBox.addTab (EText.TAB_LABEL_DELETED.getDisplayText (aDisplayLocale),
+    aTabBox.addTab ("deleted",
+                    EText.TAB_LABEL_DELETED.getDisplayText (aDisplayLocale),
                     _createList (aWPEC, "deleted", aValue -> aValue.isDeleted ()));
     aNodeList.addChild (aTabBox);
   }

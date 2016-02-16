@@ -161,7 +161,8 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
 
-      aTabBox.addTab (EText.MSG_SERVLETS.getDisplayText (aDisplayLocale),
+      aTabBox.addTab ("servlets",
+                      EText.MSG_SERVLETS.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
@@ -198,7 +199,8 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
 
-      aTabBox.addTab (EText.MSG_FILTERS.getDisplayText (aDisplayLocale),
+      aTabBox.addTab ("filters",
+                      EText.MSG_FILTERS.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 

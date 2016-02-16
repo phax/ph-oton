@@ -166,7 +166,7 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
         }
 
         // Add to tab box
-        aTabBox.addTab (sAppScopeID, aTab);
+        aTabBox.addTab (sAppScopeID, sAppScopeID, aTab);
       }
     }
 

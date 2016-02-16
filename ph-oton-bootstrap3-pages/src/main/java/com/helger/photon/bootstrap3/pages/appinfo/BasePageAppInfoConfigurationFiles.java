@@ -132,7 +132,7 @@ public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
         sTabLabelSuffix = " (!)";
       }
 
-      aTabBox.addTab (aCF.getResource ().getPath () + sTabLabelSuffix, aContent);
+      aTabBox.addTab (aCF.getID (), aCF.getResource ().getPath () + sTabLabelSuffix, aContent);
     }
 
     if (aTabBox.hasNoTabs ())

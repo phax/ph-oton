@@ -156,7 +156,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setPageLengthAll ();
 
-      aTabBox.addTab (EText.TAB_PROVIDERS.getDisplayText (aDisplayLocale),
+      aTabBox.addTab ("providers",
+                      EText.TAB_PROVIDERS.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
@@ -186,7 +187,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setPageLengthAll ();
-      aTabBox.addTab (EText.TAB_ALGORITHMS.getDisplayText (aDisplayLocale),
+      aTabBox.addTab ("algos",
+                      EText.TAB_ALGORITHMS.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 
@@ -229,6 +231,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
         }
 
         aTabBox.addTab (sProviderName,
+                        sProviderName,
                         new HCNodeList ().addChild (aTable)
                                          .addChild (aDataTables)
                                          .addChild (createDataGroupHeader (EText.MSG_PROPS.getDisplayText (aDisplayLocale)))
@@ -286,7 +289,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aDataTables.setPageLengthAll ();
-      aTabBox.addTab (EText.TAB_SSLCONTEXT.getDisplayText (aDisplayLocale),
+      aTabBox.addTab ("sslcontext",
+                      EText.TAB_SSLCONTEXT.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChild (aTable).addChild (aDataTables));
     }
 

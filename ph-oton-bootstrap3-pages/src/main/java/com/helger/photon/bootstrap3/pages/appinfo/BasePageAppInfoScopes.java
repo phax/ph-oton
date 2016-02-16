@@ -218,13 +218,15 @@ public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext>
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
     // Global scope
-    aTabBox.addTab (EText.MSG_GLOBAL_SCOPE.getDisplayTextWithArgs (aDisplayLocale, aGlobalScope.getID ()),
+    aTabBox.addTab ("global",
+                    EText.MSG_GLOBAL_SCOPE.getDisplayTextWithArgs (aDisplayLocale, aGlobalScope.getID ()),
                     _getGlobalScopeInfo (aWPEC, aGlobalScope));
 
     // Application scopes
     for (final IApplicationScope aAppScope : CollectionHelper.getSortedByKey (aGlobalScope.getAllApplicationScopes ())
                                                              .values ())
-      aTabBox.addTab (EText.MSG_APPLICATION_SCOPE.getDisplayTextWithArgs (aDisplayLocale, aAppScope.getID ()),
+      aTabBox.addTab (aAppScope.getID (),
+                      EText.MSG_APPLICATION_SCOPE.getDisplayTextWithArgs (aDisplayLocale, aAppScope.getID ()),
                       _getApplicationScopeInfo (aWPEC, aAppScope));
 
     aNodeList.addChild (aTabBox);

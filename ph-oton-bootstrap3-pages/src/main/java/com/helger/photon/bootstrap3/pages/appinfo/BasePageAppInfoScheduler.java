@@ -202,7 +202,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
           }
         aTab.addChild (aDetailUL);
 
-        aTabBox.addTab (aScheduler.getSchedulerName (), aTab);
+        aTabBox.addTab (aScheduler.getSchedulerName (), aScheduler.getSchedulerName (), aTab);
       }
 
       if (aTabBox.hasNoTabs ())

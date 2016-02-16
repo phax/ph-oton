@@ -290,7 +290,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableTimer);
       aNL.addChild (aDataTables);
 
-      aTabBox.addTab (EText.MSG_TAB_TIMER.getDisplayText (aDisplayLocale), aNL);
+      aTabBox.addTab ("timer", EText.MSG_TAB_TIMER.getDisplayText (aDisplayLocale), aNL);
     }
     {
       final HCNodeList aNL = new HCNodeList ();
@@ -299,7 +299,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableSize);
       aNL.addChild (aDataTables);
 
-      aTabBox.addTab (EText.MSG_TAB_SIZE.getDisplayText (aDisplayLocale), aNL);
+      aTabBox.addTab ("size", EText.MSG_TAB_SIZE.getDisplayText (aDisplayLocale), aNL);
     }
     {
       final HCNodeList aNL = new HCNodeList ();
@@ -308,7 +308,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableCounter);
       aNL.addChild (aDataTables);
 
-      aTabBox.addTab (EText.MSG_TAB_COUNTER.getDisplayText (aDisplayLocale), aNL);
+      aTabBox.addTab ("counter", EText.MSG_TAB_COUNTER.getDisplayText (aDisplayLocale), aNL);
     }
     {
       final HCNodeList aNL = new HCNodeList ();
@@ -317,7 +317,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableCache);
       aNL.addChild (aDataTables);
 
-      aTabBox.addTab (EText.MSG_TAB_CACHE.getDisplayText (aDisplayLocale), aNL);
+      aTabBox.addTab ("cache", EText.MSG_TAB_CACHE.getDisplayText (aDisplayLocale), aNL);
     }
 
     aNodeList.addChild (aTabBox);
