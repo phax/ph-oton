@@ -1090,17 +1090,20 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   private void _applyClientSideSortingSettings ()
   {
-    // Add client-side date/time formatter
-    final Set <EDTColType> aDateTimeTypes = EnumSet.noneOf (EDTColType.class);
-    for (final IHCCol <?> aCol : m_aTable.getAllColumns ())
-      if (aCol instanceof DTCol)
-      {
-        final EDTColType eColType = ((DTCol) aCol).getColType ();
-        if (eColType != null && eColType.isDateTimeType ())
-          aDateTimeTypes.add (eColType);
-      }
-    if (!aDateTimeTypes.isEmpty ())
-      addPlugin (new DataTablesPluginClientSortingDate (aDateTimeTypes));
+    if (isClientSide ())
+    {
+      // Add client-side date/time formatter
+      final Set <EDTColType> aDateTimeTypes = EnumSet.noneOf (EDTColType.class);
+      for (final IHCCol <?> aCol : m_aTable.getAllColumns ())
+        if (aCol instanceof DTCol)
+        {
+          final EDTColType eColType = ((DTCol) aCol).getColType ();
+          if (eColType != null && eColType.isDateTimeType ())
+            aDateTimeTypes.add (eColType);
+        }
+      if (!aDateTimeTypes.isEmpty ())
+        addPlugin (new DataTablesPluginClientSortingDate (aDateTimeTypes));
+    }
   }
 
   @Override
