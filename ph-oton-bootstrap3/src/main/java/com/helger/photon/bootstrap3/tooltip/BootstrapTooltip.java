@@ -35,7 +35,6 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
-import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.jquery.IJQuerySelector;
@@ -397,17 +396,17 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
   @Nonnull
   public static IHCNode createSimpleTooltip (@Nonnull final String sTitle)
   {
-    final HCSpan aSpan = new HCSpan ().addChild (EBootstrapIcon.QUESTION_SIGN.getAsNode ());
-    final BootstrapTooltip aTooltip = new BootstrapTooltip (aSpan).setTooltipTitle (sTitle);
-    return new HCNodeList ().addChild (aSpan).addChild (aTooltip);
+    final IHCElement <?> aIcon = EBootstrapIcon.QUESTION_SIGN.getAsNode ();
+    final BootstrapTooltip aTooltip = new BootstrapTooltip (aIcon).setTooltipTitle (sTitle);
+    return new HCNodeList ().addChild (aIcon).addChild (aTooltip);
   }
 
   @Nonnull
   public static IHCNode createSimpleTooltip (@Nonnull final IHCNode aTitle)
   {
-    final HCSpan aSpan = new HCSpan ().addChild (EBootstrapIcon.QUESTION_SIGN.getAsNode ());
-    final BootstrapTooltip aTooltip = new BootstrapTooltip (aSpan).setTooltipTitle (aTitle);
-    return new HCNodeList ().addChild (aSpan).addChild (aTooltip);
+    final IHCElement <?> aIcon = EBootstrapIcon.QUESTION_SIGN.getAsNode ();
+    final BootstrapTooltip aTooltip = new BootstrapTooltip (aIcon).setTooltipTitle (aTitle);
+    return new HCNodeList ().addChild (aIcon).addChild (aTooltip);
   }
 
   @Nonnull
