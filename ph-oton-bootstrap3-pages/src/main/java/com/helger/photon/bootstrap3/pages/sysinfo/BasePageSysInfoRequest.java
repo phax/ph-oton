@@ -41,6 +41,7 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
+import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -124,7 +125,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
     // HTTP headers
     {
       final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star ());
-      aTable.setID (getID () + "$http");
+      aTable.setID (getID () + "http");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, List <String>> aEntry : CollectionHelper.getSortedByKey (RequestHelper.getRequestHeaderMap (aHttpRequest)
@@ -134,13 +135,15 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
       {
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (HCExtHelper.list2divList (aEntry.getValue ()));
       }
-      aTabBox.addTab (EText.MSG_HTTP_HEADERS.getDisplayText (aDisplayLocale), aTable);
+      final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+      aTabBox.addTab (EText.MSG_HTTP_HEADERS.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChildren (aTable, aDT));
     }
 
     // Cookies
     {
       final BootstrapTable aTable = new BootstrapTable (new HCCol (), new HCCol (), new HCCol ());
-      aTable.setID (getID () + "$cookies");
+      aTable.setID (getID () + "cookies");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale),
                                        EText.MSG_DETAILS.getDisplayText (aDisplayLocale));
@@ -160,39 +163,44 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
 
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (aCookie.getValue ()).addCell (sOther);
       }
-      aTabBox.addTab (EText.MSG_COOKIES.getDisplayText (aDisplayLocale), aTable);
+      final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+      aTabBox.addTab (EText.MSG_COOKIES.getDisplayText (aDisplayLocale), new HCNodeList ().addChildren (aTable, aDT));
     }
 
     // Request parameters
     {
       final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star ());
-      aTable.setID (getID () + "$params");
+      aTable.setID (getID () + "params");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestParameterMap (aHttpRequest).entrySet ())
       {
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (aEntry.getValue ());
       }
-      aTabBox.addTab (EText.MSG_PARAMETERS.getDisplayText (aDisplayLocale), aTable);
+      final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+      aTabBox.addTab (EText.MSG_PARAMETERS.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChildren (aTable, aDT));
     }
 
     // Request properties
     {
       final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star ());
-      aTable.setID (getID () + "$props");
+      aTable.setID (getID () + "props");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestFieldMap (aHttpRequest).entrySet ())
       {
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (aEntry.getValue ());
       }
-      aTabBox.addTab (EText.MSG_PROPERTIES.getDisplayText (aDisplayLocale), aTable);
+      final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+      aTabBox.addTab (EText.MSG_PROPERTIES.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChildren (aTable, aDT));
     }
 
     // Request attributes
     {
       final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star (), HCCol.star ());
-      aTable.setID (getID () + "$attrs");
+      aTable.setID (getID () + "attrs");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
@@ -205,7 +213,9 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
               .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
               .addCell (String.valueOf (aEntry.getValue ()));
       }
-      aTabBox.addTab (EText.MSG_ATTRIBUTES.getDisplayText (aDisplayLocale), aTable);
+      final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+      aTabBox.addTab (EText.MSG_ATTRIBUTES.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChildren (aTable, aDT));
     }
     aNodeList.addChild (aTabBox);
   }
