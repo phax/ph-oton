@@ -712,8 +712,8 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
       return new ArrayList <> ();
 
     return m_aRWLock.readLocked ( () -> CollectionHelper.getAllMapped (m_aMap.values (),
-                                                                 aUserGroup -> aUserGroup.containsUserID (sUserID),
-                                                                 aUserGroup -> aUserGroup.getID ()));
+                                                                       aUserGroup -> aUserGroup.containsUserID (sUserID),
+                                                                       aUserGroup -> aUserGroup.getID ()));
   }
 
   /**
@@ -905,8 +905,8 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
       return new ArrayList <> ();
 
     return m_aRWLock.readLocked ( () -> CollectionHelper.getAllMapped (m_aMap.values (),
-                                                                 aUserGroup -> aUserGroup.containsRoleID (sRoleID),
-                                                                 aUserGroup -> aUserGroup.getID ()));
+                                                                       aUserGroup -> aUserGroup.containsRoleID (sRoleID),
+                                                                       aUserGroup -> aUserGroup.getID ()));
   }
 
   public boolean containsUserGroupWithAssignedRole (@Nullable final String sRoleID)
