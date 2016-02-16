@@ -81,6 +81,12 @@ public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>
   }
 
   @Nonnull
+  public Tab addTab (@Nullable final String sID, @Nullable final String sLabel, @Nullable final IHCNode aContent)
+  {
+    return addTab (sID, new HCTextNode (sLabel), aContent, DEFAULT_ACTIVE);
+  }
+
+  @Nonnull
   public Tab addTab (@Nullable final String sLabel,
                      @Nullable final IHCNode aContent,
                      final boolean bActive,
