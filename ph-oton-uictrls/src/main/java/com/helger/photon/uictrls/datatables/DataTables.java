@@ -536,11 +536,21 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
+  /**
+   * @return <code>true</code> if DataTables server side processing is used,
+   *         <code>false</code> otherwise.
+   * @see #isClientSide()
+   */
   public boolean isServerSide ()
   {
     return m_aAjaxBuilder != null;
   }
 
+  /**
+   * @return <code>true</code> if DataTables client side processing is used,
+   *         <code>false</code> otherwise.
+   * @see #isServerSide()
+   */
   public boolean isClientSide ()
   {
     return m_aAjaxBuilder == null;
