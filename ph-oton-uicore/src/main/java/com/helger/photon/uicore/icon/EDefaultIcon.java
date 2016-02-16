@@ -18,7 +18,7 @@ package com.helger.photon.uicore.icon;
 
 import javax.annotation.Nullable;
 
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.IHCElement;
 
 /**
  * Contains all default icon types
@@ -66,7 +66,7 @@ public enum EDefaultIcon implements IIcon
    *         set.
    */
   @Nullable
-  public IHCNode getAsNode ()
+  public IHCElement <?> getAsNode ()
   {
     final IIcon aIcon = getIcon ();
     return aIcon == null ? null : aIcon.getAsNode ();

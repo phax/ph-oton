@@ -19,7 +19,7 @@ package com.helger.photon.uicore.icon;
 import javax.annotation.Nonnull;
 
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.IHCElement;
 
 /**
  * A base interface for icons
@@ -33,5 +33,5 @@ public interface IIcon extends ICSSClassProvider
    *         itself!
    */
   @Nonnull
-  IHCNode getAsNode ();
+  IHCElement <?> getAsNode ();
 }
