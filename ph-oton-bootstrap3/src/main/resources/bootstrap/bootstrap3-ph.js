@@ -16,3 +16,26 @@ $(function () {
     $('select.form-control').removeClass('form-control').css('width', '100%');
   }
 });
+
+
+/** Auto show Tabs */
+//http://stackoverflow.com/questions/7862233/twitter-bootstrap-tabs-go-to-specific-tab-on-page-reload-or-hyperlink?rq=1
+$(document).ready(function() {
+  var hash = document.location.hash;
+  // Use prefix to create a non-existing ID so that no scrolling occurs!
+  var prefix = "tab_";
+  if (hash) {
+    $('.nav-tabs a[href="'+hash.replace(prefix,"")+'"]').tab('show');
+  }
+  
+  // Change hash for page-reload
+  $('.nav-tabs a').on('shown.bs.tab', function (e) {
+    var realHash = e.target.hash.replace("#", "#" + prefix);
+    if (history.replaceState) {
+      history.replaceState ({}, null, realHash); 
+    } else {
+      // Polyfill for old browsers
+      window.location.hash = realHash; 
+    }
+  });
+});
