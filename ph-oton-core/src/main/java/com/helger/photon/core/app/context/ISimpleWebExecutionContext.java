@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.app.context;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -25,6 +24,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.attr.IAttributeContainer;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
@@ -66,7 +66,7 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
    * @return <code>null</code> if no such attribute value exists
    */
   @Nullable
-  default List <String> getAttributeAsList (@Nullable final String sName)
+  default ICommonsList <String> getAttributeAsList (@Nullable final String sName)
   {
     return getAttributeAsList (sName, null);
   }
@@ -81,7 +81,7 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
    * @return <code>default</code> if no such attribute value exists
    */
   @Nullable
-  List <String> getAttributeAsList (@Nullable String sName, @Nullable List <String> aDefault);
+  ICommonsList <String> getAttributeAsList (@Nullable String sName, @Nullable ICommonsList <String> aDefault);
 
   /**
    * Check if a attribute with the given name is present in the request and has

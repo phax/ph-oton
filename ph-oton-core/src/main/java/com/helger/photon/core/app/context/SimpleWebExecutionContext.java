@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -33,6 +32,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.attr.AttributeValueConverter;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
@@ -181,7 +181,8 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   }
 
   @Nullable
-  public List <String> getAttributeAsList (@Nullable final String sName, @Nullable final List <String> aDefault)
+  public ICommonsList <String> getAttributeAsList (@Nullable final String sName,
+                                                   @Nullable final ICommonsList <String> aDefault)
   {
     return m_aRequestScope.getAttributeAsList (sName, aDefault);
   }

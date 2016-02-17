@@ -124,7 +124,7 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext>
                                         new DTCol (EText.MSG_LOCALES.getDisplayText (aDisplayLocale)).setOrderable (false)).setID (getID ());
 
     // For all languages
-    for (final Map.Entry <String, List <Locale>> aEntry : aMapLanguageToLocale.entrySet ())
+    for (final Map.Entry <String, ? extends List <Locale>> aEntry : aMapLanguageToLocale.entrySet ())
     {
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (aEntry.getKey ());
