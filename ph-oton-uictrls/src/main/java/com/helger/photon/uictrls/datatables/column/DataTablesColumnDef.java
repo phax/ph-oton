@@ -171,28 +171,6 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return this;
   }
 
-  @Deprecated
-  @Nonnull
-  public DataTablesColumnDef addClasses (@Nullable final ICSSClassProvider aCSSClassProvider)
-  {
-    m_aClassNames.addClasses (aCSSClassProvider);
-    return this;
-  }
-
-  @Nonnull
-  public DataTablesColumnDef addClasses (@Nullable final ICSSClassProvider... aCSSClassProviders)
-  {
-    m_aClassNames.addClasses (aCSSClassProviders);
-    return this;
-  }
-
-  @Nonnull
-  public DataTablesColumnDef addClasses (@Nullable final Iterable <? extends ICSSClassProvider> aCSSClassProviders)
-  {
-    m_aClassNames.addClasses (aCSSClassProviders);
-    return this;
-  }
-
   @Nonnull
   public DataTablesColumnDef removeClass (@Nullable final ICSSClassProvider aCSSClassProvider)
   {

@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls.autonumeric;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.special.IHCSpecialNodeListModifier;
@@ -36,10 +36,10 @@ public final class HCAutoNumericSpecialNodeListModifier implements IHCSpecialNod
 {
   @Nonnull
   @ReturnsMutableCopy
-  public List <? extends IHCNode> modifySpecialNodes (@Nonnull final List <? extends IHCNode> aNodes)
+  public ICommonsList <? extends IHCNode> modifySpecialNodes (@Nonnull final ICommonsList <? extends IHCNode> aNodes)
   {
-    final List <IHCNode> ret = new ArrayList <IHCNode> ();
-    final List <HCAutoNumericJS> aDTPs = new ArrayList <HCAutoNumericJS> ();
+    final ICommonsList <IHCNode> ret = new CommonsList <> ();
+    final ICommonsList <HCAutoNumericJS> aDTPs = new CommonsList <> ();
     int nFirstIndex = -1;
     int nIndex = 0;
     for (final IHCNode aNode : aNodes)
@@ -62,15 +62,15 @@ public final class HCAutoNumericSpecialNodeListModifier implements IHCSpecialNod
     }
 
     final CollectingJSCodeProvider aMergedJS = new CollectingJSCodeProvider ();
-    final List <HCAutoNumericJS> aRest = CollectionHelper.newList (aDTPs);
-    while (!aRest.isEmpty ())
+    final ICommonsList <HCAutoNumericJS> aRest = CollectionHelper.newList (aDTPs);
+    while (aRest.isNotEmpty ())
     {
       final HCAutoNumericJS aCurrent = aRest.remove (0);
       final AbstractHCAutoNumeric <?> aCurrentAutoNumeric = aCurrent.getAutoNumeric ();
       final JSAssocArray aCurrentJSOptions = aCurrentAutoNumeric.getJSOptions ();
 
       // Find all other auto numerics with the same options
-      final List <HCAutoNumericJS> aSameOptions = new ArrayList <HCAutoNumericJS> ();
+      final ICommonsList <HCAutoNumericJS> aSameOptions = new CommonsList <> ();
       final Iterator <HCAutoNumericJS> itRest = aRest.iterator ();
       while (itRest.hasNext ())
       {

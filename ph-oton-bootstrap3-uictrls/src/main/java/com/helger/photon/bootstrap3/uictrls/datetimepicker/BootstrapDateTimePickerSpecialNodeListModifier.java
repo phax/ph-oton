@@ -23,6 +23,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.hc.special.IHCSpecialNodeListModifier;
@@ -33,10 +35,10 @@ import com.helger.html.jscode.JSAssocArray;
 
 public final class BootstrapDateTimePickerSpecialNodeListModifier implements IHCSpecialNodeListModifier
 {
-  public List <? extends IHCNode> modifySpecialNodes (@Nonnull final List <? extends IHCNode> aNodes)
+  public ICommonsList <? extends IHCNode> modifySpecialNodes (@Nonnull final ICommonsList <? extends IHCNode> aNodes)
   {
-    final List <IHCNode> ret = new ArrayList <IHCNode> ();
-    final List <BootstrapDateTimePickerJS> aDTPs = new ArrayList <BootstrapDateTimePickerJS> ();
+    final ICommonsList <IHCNode> ret = new CommonsList <> ();
+    final ICommonsList <BootstrapDateTimePickerJS> aDTPs = new CommonsList <> ();
     int nFirstIndex = -1;
     int nIndex = 0;
     for (final IHCNode aNode : aNodes)
@@ -59,8 +61,8 @@ public final class BootstrapDateTimePickerSpecialNodeListModifier implements IHC
     }
 
     final CollectingJSCodeProvider aMergedJS = new CollectingJSCodeProvider ();
-    final List <BootstrapDateTimePickerJS> aRest = CollectionHelper.newList (aDTPs);
-    while (!aRest.isEmpty ())
+    final ICommonsList <BootstrapDateTimePickerJS> aRest = CollectionHelper.newList (aDTPs);
+    while (aRest.isNotEmpty ())
     {
       final BootstrapDateTimePickerJS aCurrent = aRest.remove (0);
       final JSAssocArray aCurrentJSOptions = aCurrent.getDateTimePicker ().getJSOptions ();

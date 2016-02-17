@@ -21,7 +21,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.string.StringHelper;
 import com.helger.css.property.CCSSProperties;
 import com.helger.css.property.ECSSProperty;
@@ -48,11 +47,6 @@ public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstra
 
   public AbstractBootstrapObject ()
   {}
-
-  public final boolean hasID ()
-  {
-    return StringHelper.hasText (m_sID);
-  }
 
   @Nullable
   public final String getID ()
@@ -87,20 +81,6 @@ public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstra
                                                "' will be removed - this may have side effects");
       }
     m_sID = sID;
-    return thisAsT ();
-  }
-
-  @Nonnull
-  public final THISTYPE setUniqueID ()
-  {
-    return setID (GlobalIDFactory.getNewStringID ());
-  }
-
-  @Nonnull
-  public THISTYPE ensureID ()
-  {
-    if (!hasID ())
-      setUniqueID ();
     return thisAsT ();
   }
 
