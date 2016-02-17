@@ -16,6 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -47,7 +48,8 @@ final class ComparatorDataTablesServerDataRow implements IComparator <DataTables
       final DataTablesServerDataCell aCell2 = aRow2.getCellAtIndex (nSortColumnIndex);
 
       // Main compare
-      ret = aOrderColumn.getServerSideComparator ().compare (aCell1.getTextContent (), aCell2.getTextContent ());
+      ret = Comparator.nullsFirst (aOrderColumn.getServerSideComparator ()).compare (aCell1.getTextContent (),
+                                                                                     aCell2.getTextContent ());
       if (ret != 0)
         break;
     }

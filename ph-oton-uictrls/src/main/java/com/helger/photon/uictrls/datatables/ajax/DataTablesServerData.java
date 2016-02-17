@@ -17,7 +17,6 @@
 package com.helger.photon.uictrls.datatables.ajax;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -31,6 +30,8 @@ import javax.annotation.concurrent.GuardedBy;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.collection.ext.CommonsList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -85,7 +86,7 @@ public final class DataTablesServerData implements IHasUIState
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final ColumnData [] m_aColumns;
-  private final List <DataTablesServerDataRow> m_aRows;
+  private final ICommonsList <DataTablesServerDataRow> m_aRows;
   private final Locale m_aDisplayLocale;
   @GuardedBy ("m_aRWLock")
   private DataTablesServerSortState m_aServerSortState;
@@ -124,7 +125,7 @@ public final class DataTablesServerData implements IHasUIState
     final IHCConversionSettings aRealCS = createConversionSettings ();
 
     // Row data
-    m_aRows = new ArrayList <DataTablesServerDataRow> (aTable.getBodyRowCount ());
+    m_aRows = new CommonsList <> (aTable.getBodyRowCount ());
     for (final HCRow aRow : aTable.getAllBodyRows ())
       m_aRows.add (new DataTablesServerDataRow (aRow, aRealCS));
     m_aDisplayLocale = aDisplayLocale;
