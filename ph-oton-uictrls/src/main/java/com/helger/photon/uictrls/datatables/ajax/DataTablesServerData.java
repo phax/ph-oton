@@ -17,7 +17,6 @@
 package com.helger.photon.uictrls.datatables.ajax;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -176,7 +175,7 @@ public final class DataTablesServerData implements IHasUIState
 
     m_aRWLock.writeLocked ( () -> {
       m_aServerSortState = aNewServerSortState;
-      Collections.sort (m_aRows, aComp);
+      m_aRows.sort (aComp);
     });
   }
 
@@ -188,7 +187,7 @@ public final class DataTablesServerData implements IHasUIState
 
   @Nonnull
   @ReturnsMutableObject ("speed")
-  public List <DataTablesServerDataRow> directGetAllRows ()
+  public ICommonsList <DataTablesServerDataRow> directGetAllRows ()
   {
     return m_aRows;
   }
