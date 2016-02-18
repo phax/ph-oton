@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +31,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.cache.AbstractNotifyingCache;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.compare.IComparator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.format.PDTFromString;
@@ -119,7 +120,7 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
   private static final class Searcher
   {
     private String m_sRest;
-    private final Map <String, EDateTimePickerFormatToken> m_aAllMatching = new HashMap <String, EDateTimePickerFormatToken> ();
+    private final ICommonsMap <String, EDateTimePickerFormatToken> m_aAllMatching = new CommonsHashMap <> ();
     private final Comparator <String> m_aComp = IComparator.getComparatorStringLongestFirst ();
 
     public Searcher (@Nonnull final String sRest)
@@ -148,9 +149,9 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
 
       Map.Entry <String, EDateTimePickerFormatToken> aEntry;
       if (m_aAllMatching.size () == 1)
-        aEntry = CollectionHelper.getFirstElement (m_aAllMatching);
+        aEntry = m_aAllMatching.getFirstElement ();
       else
-        aEntry = CollectionHelper.getFirstElement (CollectionHelper.getSortedByKey (m_aAllMatching, m_aComp));
+        aEntry = m_aAllMatching.getSortedByKey (m_aComp).getFirstElement ();
       m_sRest = m_sRest.substring (aEntry.getKey ().length ());
       return aEntry.getValue ();
     }

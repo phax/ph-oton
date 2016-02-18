@@ -112,7 +112,7 @@ public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     String ret = aEntry.getText (aDisplayLocale);
     if (StringHelper.hasNoText (ret))
       if (aEntry.getAllTexts ().getSize () == 1)
-        ret = CollectionHelper.getFirstElement (aEntry.getAllTexts ().getAllTexts ()).getValue ();
+        ret = aEntry.getAllTexts ().getAllTexts ().getFirstValue ();
     return ret;
   }
 

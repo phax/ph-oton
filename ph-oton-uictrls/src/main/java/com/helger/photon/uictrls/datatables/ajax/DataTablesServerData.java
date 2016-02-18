@@ -29,7 +29,7 @@ import javax.annotation.concurrent.GuardedBy;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.ext.CommonsList;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.StringHelper;
@@ -124,7 +124,7 @@ public final class DataTablesServerData implements IHasUIState
     final IHCConversionSettings aRealCS = createConversionSettings ();
 
     // Row data
-    m_aRows = new CommonsList <> (aTable.getBodyRowCount ());
+    m_aRows = new CommonsArrayList <> (aTable.getBodyRowCount ());
     for (final HCRow aRow : aTable.getAllBodyRows ())
       m_aRows.add (new DataTablesServerDataRow (aRow, aRealCS));
     m_aDisplayLocale = aDisplayLocale;

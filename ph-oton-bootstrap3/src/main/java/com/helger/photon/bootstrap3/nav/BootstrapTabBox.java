@@ -18,7 +18,6 @@ package com.helger.photon.bootstrap3.nav;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -82,7 +81,7 @@ public class BootstrapTabBox extends AbstractTabBox <BootstrapTabBox>
     if (StringHelper.hasNoText (sActiveTabID))
     {
       // Activate first tab by default
-      sActiveTabID = CollectionHelper.getFirstKey (m_aTabs);
+      sActiveTabID = m_aTabs.getFirstKey ();
     }
 
     final BootstrapNav aNav = new BootstrapNav (EBootstrapNavType.TABS);

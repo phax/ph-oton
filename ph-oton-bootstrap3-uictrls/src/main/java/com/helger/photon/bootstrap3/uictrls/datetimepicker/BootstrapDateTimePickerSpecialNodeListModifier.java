@@ -23,7 +23,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.CommonsList;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.script.HCScriptInline;
@@ -37,8 +37,8 @@ public final class BootstrapDateTimePickerSpecialNodeListModifier implements IHC
 {
   public ICommonsList <? extends IHCNode> modifySpecialNodes (@Nonnull final ICommonsList <? extends IHCNode> aNodes)
   {
-    final ICommonsList <IHCNode> ret = new CommonsList <> ();
-    final ICommonsList <BootstrapDateTimePickerJS> aDTPs = new CommonsList <> ();
+    final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
+    final ICommonsList <BootstrapDateTimePickerJS> aDTPs = new CommonsArrayList <> ();
     int nFirstIndex = -1;
     int nIndex = 0;
     for (final IHCNode aNode : aNodes)

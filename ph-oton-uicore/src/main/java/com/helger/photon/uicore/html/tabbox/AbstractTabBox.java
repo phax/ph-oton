@@ -16,9 +16,7 @@
  */
 package com.helger.photon.uicore.html.tabbox;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -30,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
@@ -48,7 +48,7 @@ public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractTabBox.class);
 
-  protected final Map <String, Tab> m_aTabs = new LinkedHashMap <String, Tab> ();
+  protected final ICommonsMap <String, Tab> m_aTabs = new CommonsLinkedHashMap <> ();
   private String m_sActiveTabID;
 
   public AbstractTabBox ()
@@ -202,7 +202,7 @@ public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>
     Tab aTab = getActiveTab ();
     // Invalid or no active tab -> use first tab (as done below in build)
     if (aTab == null)
-      aTab = CollectionHelper.getFirstValue (m_aTabs);
+      aTab = m_aTabs.getFirstValue ();
     return aTab;
   }
 
