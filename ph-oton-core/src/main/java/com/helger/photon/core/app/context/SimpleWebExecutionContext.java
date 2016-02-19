@@ -18,11 +18,9 @@ package com.helger.photon.core.app.context;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -32,7 +30,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.attr.AttributeValueConverter;
+import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
@@ -109,7 +110,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, Object> getAllAttributes ()
+  public ICommonsMap <String, Object> getAllAttributes ()
   {
     return m_aRequestScope.getAllAttributes ();
   }
@@ -168,14 +169,14 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllAttributeNames ()
+  public ICommonsSet <String> getAllAttributeNames ()
   {
     return m_aRequestScope.getAllAttributeNames ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <Object> getAllAttributeValues ()
+  public ICommonsCollection <Object> getAllAttributeValues ()
   {
     return m_aRequestScope.getAllAttributeValues ();
   }
