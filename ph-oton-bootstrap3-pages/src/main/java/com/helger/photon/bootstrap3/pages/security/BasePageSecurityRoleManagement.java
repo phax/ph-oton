@@ -179,8 +179,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                                    .setCtrl (HCExtHelper.nl2divList (aSelectedObject.getDescription ())));
 
     // All user groups to which the role is assigned
-    final Collection <IUserGroup> aAssignedUserGroups = PhotonSecurityManager.getUserGroupMgr ()
-                                                                             .getAllUserGroupsWithAssignedRole (aSelectedObject.getID ());
+    final Collection <? extends IUserGroup> aAssignedUserGroups = PhotonSecurityManager.getUserGroupMgr ()
+                                                                                       .getAllUserGroupsWithAssignedRole (aSelectedObject.getID ());
     if (aAssignedUserGroups.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
@@ -304,7 +304,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     {
       final ISimpleURL aViewLink = createViewURL (aWPEC, aRole);
 
-      final Collection <IUserGroup> aAssignedUserGroups = aUserGroupManager.getAllUserGroupsWithAssignedRole (aRole.getID ());
+      final Collection <? extends IUserGroup> aAssignedUserGroups = aUserGroupManager.getAllUserGroupsWithAssignedRole (aRole.getID ());
 
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (aRole.getID ());

@@ -17,11 +17,8 @@
 package com.helger.photon.basic.app.dao.impl;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.Comparator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -36,6 +33,11 @@ import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.microdom.IMicroDocument;
@@ -51,7 +53,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
                                              extends AbstractWALDAO <IMPLTYPE> implements IMapBasedDAO <INTERFACETYPE>
 {
   private final String m_sXMLItemElementName;
-  private final Map <String, IMPLTYPE> m_aMap = new HashMap <> ();
+  private final ICommonsMap <String, IMPLTYPE> m_aMap = new CommonsHashMap <> ();
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nonnull @Nonempty final String sFilename,
@@ -95,7 +97,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("root");
-    for (final IMPLTYPE aItem : CollectionHelper.getSortedByKey (m_aMap).values ())
+    for (final IMPLTYPE aItem : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
       eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aItem, m_sXMLItemElementName));
     return aDoc;
   }
@@ -131,31 +133,31 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 
   @Nonnull
   @ReturnsMutableCopy
-  public final Collection <? extends INTERFACETYPE> getNone ()
+  public final ICommonsCollection <? extends INTERFACETYPE> getNone ()
   {
-    return new ArrayList <> ();
+    return new CommonsArrayList <> ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public final Collection <? extends INTERFACETYPE> getAll ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public final Collection <? extends INTERFACETYPE> getAll (@Nullable final Predicate <INTERFACETYPE> aFilter)
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (), aFilter));
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aFilter));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public final <RETTYPE> Collection <RETTYPE> getAll (@Nullable final Predicate <INTERFACETYPE> aFilter,
-                                                      @Nonnull final Function <INTERFACETYPE, RETTYPE> aMapper)
+  public final <RETTYPE> Collection <RETTYPE> getAllMapped (@Nullable final Predicate <INTERFACETYPE> aFilter,
+                                                            @Nonnull final Function <INTERFACETYPE, RETTYPE> aMapper)
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAllMapped (m_aMap.values (), aFilter, aMapper));
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValuesMapped (aFilter, aMapper));
   }
 
   @Nullable
@@ -165,15 +167,15 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   }
 
   @Nullable
-  public final <RETTYPE> RETTYPE getFirst (@Nullable final Predicate <INTERFACETYPE> aFilter,
-                                           @Nonnull final Function <INTERFACETYPE, RETTYPE> aMapper)
+  public final <RETTYPE> RETTYPE getFirstMapped (@Nullable final Predicate <INTERFACETYPE> aFilter,
+                                                 @Nonnull final Function <INTERFACETYPE, RETTYPE> aMapper)
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.findFirstMapped (m_aMap.values (), aFilter, aMapper));
   }
 
   public final boolean containsAny ()
   {
-    return m_aRWLock.readLocked ( () -> !m_aMap.isEmpty ());
+    return m_aRWLock.readLocked ( () -> m_aMap.isNotEmpty ());
   }
 
   public final boolean containsAny (@Nullable final Predicate <INTERFACETYPE> aFilter)
@@ -200,9 +202,9 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 
   @Nonnull
   @ReturnsMutableCopy
-  public final Set <String> getAllIDs ()
+  public final ICommonsSet <String> getAllIDs ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aMap.keySet ()));
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfKeySet ());
   }
 
   @Nonnegative

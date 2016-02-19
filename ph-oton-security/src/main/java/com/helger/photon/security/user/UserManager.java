@@ -16,8 +16,6 @@
  */
 package com.helger.photon.security.user;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -40,6 +38,9 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroDocument;
@@ -68,7 +69,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   private static final Logger s_aLogger = LoggerFactory.getLogger (UserManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final Map <String, User> m_aUsers = new HashMap <> ();
+  private final ICommonsMap <String, User> m_aUsers = new CommonsHashMap <> ();
 
   private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
 
@@ -439,19 +440,16 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <User> getAllUsers ()
+  public ICommonsList <User> getAllUsers ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aUsers.values ()));
+    return m_aRWLock.readLocked ( () -> m_aUsers.copyOfValues ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <User> getAllUsers (@Nullable final Predicate <IUser> aFilter)
+  public ICommonsList <User> getAllUsers (@Nullable final Predicate <IUser> aFilter)
   {
-    if (aFilter == null)
-      return getAllUsers ();
-
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aUsers.values (), aFilter));
+    return m_aRWLock.readLocked ( () -> m_aUsers.copyOfValues (aFilter));
   }
 
   @Nonnegative
@@ -469,7 +467,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <User> getAllActiveUsers ()
+  public ICommonsList <User> getAllActiveUsers ()
   {
     return getAllUsers (aUser -> !aUser.isDeleted () && aUser.isEnabled ());
   }
@@ -489,7 +487,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <User> getAllDisabledUsers ()
+  public ICommonsList <User> getAllDisabledUsers ()
   {
     return getAllUsers (aUser -> !aUser.isDeleted () && aUser.isDisabled ());
   }
@@ -500,7 +498,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <User> getAllNotDeletedUsers ()
+  public ICommonsList <User> getAllNotDeletedUsers ()
   {
     return getAllUsers (aUser -> !aUser.isDeleted ());
   }
@@ -510,7 +508,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <User> getAllDeletedUsers ()
+  public ICommonsList <User> getAllDeletedUsers ()
   {
     return getAllUsers (aUser -> aUser.isDeleted ());
   }

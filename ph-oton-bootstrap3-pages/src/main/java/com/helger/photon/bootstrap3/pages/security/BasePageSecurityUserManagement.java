@@ -357,7 +357,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                  .setCtrl (aSelectedObject.getPasswordHash ().getAlgorithmName ()));
 
     // user groups
-    final Collection <IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aSelectedObject.getID ());
+    final Collection <? extends IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aSelectedObject.getID ());
     if (aUserGroups.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
@@ -836,13 +836,13 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
       // User groups
       {
-        final Collection <IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aCurUser.getID ());
         final IHCCell <?> aUserGroupCell = aRow.addCell ();
-        CollectionHelper.getSorted (aUserGroups, IHasName.getComparatorCollating (aDisplayLocale))
-                        .forEach (aUG -> aUserGroupCell.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
-                                                                                                                 BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
-                                                                                                                 aUG.getID (),
-                                                                                                                 null)).addChild (aUG.getName ()))));
+        aUserGroupMgr.getAllUserGroupsWithAssignedUser (aCurUser.getID ())
+                     .getSorted (IHasName.getComparatorCollating (aDisplayLocale))
+                     .forEach (aUG -> aUserGroupCell.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
+                                                                                                              BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
+                                                                                                              aUG.getID (),
+                                                                                                              null)).addChild (aUG.getName ()))));
       }
 
       // Last login

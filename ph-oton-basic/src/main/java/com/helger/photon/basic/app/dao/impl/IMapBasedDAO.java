@@ -40,15 +40,15 @@ public interface IMapBasedDAO <INTERFACETYPE extends IHasID <String>>
 
   @Nonnull
   @ReturnsMutableCopy
-  <RETTYPE> Collection <RETTYPE> getAll (@Nullable Predicate <INTERFACETYPE> aFilter,
-                                         @Nonnull Function <INTERFACETYPE, RETTYPE> aMapper);
+  <RETTYPE> Collection <RETTYPE> getAllMapped (@Nullable Predicate <INTERFACETYPE> aFilter,
+                                               @Nonnull Function <INTERFACETYPE, RETTYPE> aMapper);
 
   @Nullable
   INTERFACETYPE getFirst (@Nullable Predicate <INTERFACETYPE> aFilter);
 
   @Nullable
-  <RETTYPE> RETTYPE getFirst (@Nullable Predicate <INTERFACETYPE> aFilter,
-                              @Nonnull Function <INTERFACETYPE, RETTYPE> aMapper);
+  <RETTYPE> RETTYPE getFirstMapped (@Nullable Predicate <INTERFACETYPE> aFilter,
+                                    @Nonnull Function <INTERFACETYPE, RETTYPE> aMapper);
 
   boolean containsAny (@Nullable Predicate <INTERFACETYPE> aFilter);
 

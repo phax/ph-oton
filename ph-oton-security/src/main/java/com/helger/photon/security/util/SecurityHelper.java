@@ -32,6 +32,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
@@ -80,20 +82,17 @@ public final class SecurityHelper
 
   public static boolean hasUserRole (@Nullable final String sUserID, @Nullable final String sRoleID)
   {
-    final Collection <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
-                                                                     .getAllUserGroupsWithAssignedUser (sUserID);
-    for (final IUserGroup aUserGroup : aUserGroups)
-      if (aUserGroup.containsRoleID (sRoleID))
-        return true;
-    return false;
+    return PhotonSecurityManager.getUserGroupMgr ()
+                                .getAllUserGroupsWithAssignedUser (sUserID)
+                                .containsAny (aUG -> aUG.containsRoleID (sRoleID));
   }
 
   public static boolean hasUserAllRoles (@Nullable final String sUserID, @Nullable final Collection <String> aRoleIDs)
   {
     if (CollectionHelper.isNotEmpty (aRoleIDs))
     {
-      final Collection <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
-                                                                       .getAllUserGroupsWithAssignedUser (sUserID);
+      final Collection <? extends IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
+                                                                                 .getAllUserGroupsWithAssignedUser (sUserID);
       for (final String sRoleID : aRoleIDs)
       {
         boolean bFoundRole = false;
@@ -112,11 +111,11 @@ public final class SecurityHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static Set <String> getAllUserRoleIDs (@Nullable final String sUserID)
+  public static ICommonsSet <String> getAllUserRoleIDs (@Nullable final String sUserID)
   {
-    final Set <String> ret = new HashSet <String> ();
-    final Collection <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
-                                                                     .getAllUserGroupsWithAssignedUser (sUserID);
+    final ICommonsSet <String> ret = new CommonsHashSet <> ();
+    final Collection <? extends IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
+                                                                               .getAllUserGroupsWithAssignedUser (sUserID);
     for (final IUserGroup aUserGroup : aUserGroups)
       ret.addAll (aUserGroup.getAllContainedRoleIDs ());
     return ret;

@@ -18,7 +18,6 @@ package com.helger.photon.security.usergroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +35,10 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroDocument;
@@ -65,7 +68,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   private final UserManager m_aUserMgr;
   private final RoleManager m_aRoleMgr;
   @GuardedBy ("m_aRWLock")
-  private final Map <String, UserGroup> m_aMap = new HashMap <> ();
+  private final ICommonsMap <String, UserGroup> m_aMap = new CommonsHashMap <> ();
 
   private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList <> ();
 
@@ -383,7 +386,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   @ReturnsMutableCopy
   public List <? extends IUserGroup> getAllUserGroups ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
   }
 
   /**
@@ -686,13 +689,12 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
+  public ICommonsList <? extends IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
-      return new ArrayList <> ();
+      return new CommonsArrayList <> ();
 
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (),
-                                                                 aUserGroup -> aUserGroup.containsUserID (sUserID)));
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aUserGroup -> aUserGroup.containsUserID (sUserID)));
   }
 
   /**
@@ -706,14 +708,14 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
+  public ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
-      return new ArrayList <> ();
+      return new CommonsArrayList <> ();
 
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAllMapped (m_aMap.values (),
-                                                                       aUserGroup -> aUserGroup.containsUserID (sUserID),
-                                                                       aUserGroup -> aUserGroup.getID ()));
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newListMapped (m_aMap.values (),
+                                                                        aUserGroup -> aUserGroup.containsUserID (sUserID),
+                                                                        aUserGroup -> aUserGroup.getID ()));
   }
 
   /**
@@ -879,13 +881,12 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
+  public ICommonsList <? extends IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
   {
     if (StringHelper.hasNoText (sRoleID))
-      return new ArrayList <> ();
+      return new CommonsArrayList <> ();
 
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAll (m_aMap.values (),
-                                                                 aUserGroup -> aUserGroup.containsRoleID (sRoleID)));
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aUserGroup -> aUserGroup.containsRoleID (sRoleID)));
   }
 
   /**
@@ -904,9 +905,9 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sRoleID))
       return new ArrayList <> ();
 
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getAllMapped (m_aMap.values (),
-                                                                       aUserGroup -> aUserGroup.containsRoleID (sRoleID),
-                                                                       aUserGroup -> aUserGroup.getID ()));
+    return m_aRWLock.readLocked ( () -> CollectionHelper.newListMapped (m_aMap.values (),
+                                                                        aUserGroup -> aUserGroup.containsRoleID (sRoleID),
+                                                                        aUserGroup -> aUserGroup.getID ()));
   }
 
   public boolean containsUserGroupWithAssignedRole (@Nullable final String sRoleID)
