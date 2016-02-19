@@ -16,8 +16,6 @@
  */
 package com.helger.photon.uicore.html.tabbox;
 
-import java.util.List;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,9 +25,9 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsLinkedHashMap;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
@@ -48,7 +46,7 @@ public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractTabBox.class);
 
-  protected final ICommonsMap <String, Tab> m_aTabs = new CommonsLinkedHashMap <> ();
+  protected final ICommonsOrderedMap <String, Tab> m_aTabs = new CommonsLinkedHashMap <> ();
   private String m_sActiveTabID;
 
   public AbstractTabBox ()
@@ -167,9 +165,9 @@ public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <Tab> getAllTabs ()
+  public ICommonsList <Tab> getAllTabs ()
   {
-    return CollectionHelper.newList (m_aTabs.values ());
+    return m_aTabs.copyOfValues ();
   }
 
   @Nullable

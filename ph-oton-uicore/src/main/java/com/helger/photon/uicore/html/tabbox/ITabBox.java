@@ -16,12 +16,11 @@
  */
 package com.helger.photon.uicore.html.tabbox;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeList;
@@ -82,7 +81,7 @@ public interface ITabBox <THISTYPE extends ITabBox <THISTYPE>> extends IHCNodeLi
 
   @Nonnull
   @ReturnsMutableCopy
-  List <Tab> getAllTabs ();
+  ICommonsList <Tab> getAllTabs ();
 
   @Nullable
   Tab getTabOfID (@Nullable String sID);
