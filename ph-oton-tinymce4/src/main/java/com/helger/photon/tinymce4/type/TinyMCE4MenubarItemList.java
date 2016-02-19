@@ -122,7 +122,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
   @Nonnull
   public EChange removeAtIndex (@Nonnegative final int nIndex)
   {
-    return CollectionHelper.removeElementAtIndex (m_aList, nIndex);
+    return CollectionHelper.removeAtIndex (m_aList, nIndex);
   }
 
   @Nonnull

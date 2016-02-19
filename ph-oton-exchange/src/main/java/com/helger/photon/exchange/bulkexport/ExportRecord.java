@@ -70,7 +70,7 @@ public class ExportRecord implements IExportRecord
   @Nonnull
   public EChange removeFieldAtIndex (@Nonnegative final int nIndex)
   {
-    return CollectionHelper.removeElementAtIndex (m_aFields, nIndex);
+    return CollectionHelper.removeAtIndex (m_aFields, nIndex);
   }
 
   @Nonnull

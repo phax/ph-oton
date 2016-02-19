@@ -18,7 +18,6 @@ package com.helger.photon.uictrls.datatables.column;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -29,6 +28,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.ext.HCHasCSSClasses;
@@ -187,14 +187,14 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <ICSSClassProvider> getAllClasses ()
+  public ICommonsOrderedSet <ICSSClassProvider> getAllClasses ()
   {
     return m_aClassNames.getAllClasses ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllClassNames ()
+  public ICommonsOrderedSet <String> getAllClassNames ()
   {
     return m_aClassNames.getAllClassNames ();
   }
