@@ -25,6 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.charset.CCharset;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.microdom.IMicroNode;
@@ -284,7 +285,8 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
       if (aSpecialNodes.hasExternalCSSs ())
       {
         final JsonArray aList = new JsonArray ();
-        for (final Map.Entry <ICSSMediaList, List <String>> aEntry : aSpecialNodes.getAllExternalCSSs ().entrySet ())
+        for (final Map.Entry <ICSSMediaList, ICommonsList <String>> aEntry : aSpecialNodes.getAllExternalCSSs ()
+                                                                                          .entrySet ())
           for (final String sCSSFile : aEntry.getValue ())
             aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
                                         .add (SUBPROPERTY_CSS_HREF, sCSSFile));
