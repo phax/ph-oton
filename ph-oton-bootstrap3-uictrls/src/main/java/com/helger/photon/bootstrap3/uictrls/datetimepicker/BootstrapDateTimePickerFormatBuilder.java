@@ -149,9 +149,9 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
 
       Map.Entry <String, EDateTimePickerFormatToken> aEntry;
       if (m_aAllMatching.size () == 1)
-        aEntry = m_aAllMatching.getFirstElement ();
+        aEntry = m_aAllMatching.getFirstEntry ();
       else
-        aEntry = m_aAllMatching.getSortedByKey (m_aComp).getFirstElement ();
+        aEntry = m_aAllMatching.getSortedByKey (m_aComp).getFirstEntry ();
       m_sRest = m_sRest.substring (aEntry.getKey ().length ());
       return aEntry.getValue ();
     }
