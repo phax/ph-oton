@@ -17,6 +17,7 @@
 package com.helger.photon.core.ajax.response;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,8 +66,9 @@ public final class AjaxHtmlResponseTest
       final AjaxHtmlResponse aResponse = AjaxHtmlResponse.createSuccess (aRequestScope, aHtml);
       assertNotNull (aResponse);
       assertNotNull (aResponse.getSuccessValue ());
-      assertNotNull (aResponse.getSuccessValue ().getValue (AjaxHtmlResponse.PROPERTY_HTML));
-      System.out.println (aResponse.getSuccessValue ().getValue (AjaxHtmlResponse.PROPERTY_HTML).getAsString ());
+      assertNotNull (aResponse.getSuccessValue ().get (AjaxHtmlResponse.PROPERTY_HTML));
+      assertTrue (aResponse.getSuccessValue ().get (AjaxHtmlResponse.PROPERTY_HTML).isValue ());
+      System.out.println (aResponse.getSuccessValue ().getValueAsString (AjaxHtmlResponse.PROPERTY_HTML));
     }
     finally
     {
