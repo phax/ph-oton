@@ -602,19 +602,25 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   @OverrideOnDemand
   protected void handleStatisticsOnEnd ()
   {
-    // serialize statistics
-    try
+    // Avoid error if startup failed
+    if (WebFileIO.isInited ())
     {
-      final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
-      final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
-      aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
-      aDoc.getDocumentElement ().setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (LocalDateTime.now ()));
-      SimpleFileIO.writeFile (aDestPath, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
+      // serialize statistics
+      try
+      {
+        final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
+        final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
+        aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
+        aDoc.getDocumentElement ().setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (LocalDateTime.now ()));
+        SimpleFileIO.writeFile (aDestPath, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("Failed to write statistics on context shutdown.", t);
+      }
     }
-    catch (final Throwable t)
-    {
-      s_aLogger.error ("Failed to write statistics on context shutdown.", t);
-    }
+    else
+      s_aLogger.error ("Not writing statistics because WebFileIO was not initialized!");
   }
 
   public final void contextDestroyed (@Nonnull final ServletContextEvent aSCE)

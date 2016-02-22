@@ -64,9 +64,7 @@ public final class WebFileIO
   {
     ValueEnforcer.notNull (aFileOpMgr, "FileOpMgr");
 
-    s_aRWLock.writeLocked ( () -> {
-      s_aFileOpMgr = aFileOpMgr;
-    });
+    s_aRWLock.writeLocked ( () -> s_aFileOpMgr = aFileOpMgr);
   }
 
   /**
@@ -131,9 +129,10 @@ public final class WebFileIO
   public static IMutablePathRelativeIO getDataIO ()
   {
     return s_aRWLock.readLocked ( () -> {
-      if (s_aDataPath == null)
+      final IMutablePathRelativeIO ret = s_aDataPath;
+      if (ret == null)
         throw new IllegalStateException ("Data path was not initialized!");
-      return s_aDataPath;
+      return ret;
     });
   }
 
@@ -148,9 +147,10 @@ public final class WebFileIO
   public static IPathRelativeIO getServletContextIO ()
   {
     return s_aRWLock.readLocked ( () -> {
-      if (s_aServletContextPath == null)
+      final IPathRelativeIO ret = s_aServletContextPath;
+      if (ret == null)
         throw new IllegalStateException ("Servlet context path was not initialized!");
-      return s_aServletContextPath;
+      return ret;
     });
   }
 }
