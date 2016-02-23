@@ -67,13 +67,13 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   @Override
   protected void onRecoveryCreate (@Nonnull final IMPLTYPE aItem)
   {
-    internalAddItem (aItem);
+    internalAddItem (aItem, EDAOActionType.CREATE);
   }
 
   @Override
   protected void onRecoveryUpdate (@Nonnull final IMPLTYPE aItem)
   {
-    internalAddItem (aItem);
+    internalAddItem (aItem, EDAOActionType.UPDATE);
   }
 
   @Override
@@ -87,7 +87,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   protected final EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
     for (final IMicroElement eItem : aDoc.getDocumentElement ().getAllChildElements (m_sXMLItemElementName))
-      internalAddItem (MicroTypeConverter.convertToNative (eItem, getDataTypeClass ()));
+      internalAddItem (MicroTypeConverter.convertToNative (eItem, getDataTypeClass ()), EDAOActionType.CREATE);
     return EChange.UNCHANGED;
   }
 
@@ -103,12 +103,12 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   }
 
   @MustBeLocked (ELockType.WRITE)
-  protected final void internalAddItem (@Nonnull final IMPLTYPE aItem)
+  protected final void internalAddItem (@Nonnull final IMPLTYPE aItem, @Nonnull final EDAOActionType eActionType)
   {
     ValueEnforcer.notNull (aItem, "Item");
 
     final String sID = aItem.getID ();
-    if (m_aMap.containsKey (sID))
+    if (eActionType == EDAOActionType.CREATE && m_aMap.containsKey (sID))
       throw new IllegalArgumentException (ClassHelper.getClassLocalName (getDataTypeClass ()) +
                                           " with ID '" +
                                           sID +

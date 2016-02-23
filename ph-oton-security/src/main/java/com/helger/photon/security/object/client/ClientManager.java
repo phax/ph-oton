@@ -33,6 +33,7 @@ import com.helger.commons.callback.CallbackList;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.photon.basic.app.dao.impl.EDAOActionType;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.object.client.CClient;
 import com.helger.photon.basic.object.client.IClient;
@@ -61,7 +62,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
   @Nonnull
   protected EChange onInit ()
   {
-    internalAddItem (new Client (CClient.GLOBAL_CLIENT, CClient.GLOBAL_CLIENT_NAME));
+    internalAddItem (new Client (CClient.GLOBAL_CLIENT, CClient.GLOBAL_CLIENT_NAME), EDAOActionType.CREATE);
     return EChange.CHANGED;
   }
 
@@ -83,8 +84,8 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
       if (containsWithID (sClientID))
         return null;
 
-      internalAddItem (aClient);
-      markAsCreated (aClient);
+      internalAddItem (aClient, EDAOActionType.CREATE);
+      markAsChanged (aClient, EDAOActionType.CREATE);
     }
     finally
     {
@@ -125,7 +126,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aClient);
-      markAsUpdated (aClient);
+      markAsChanged (aClient, EDAOActionType.UPDATE);
     }
     finally
     {
@@ -165,7 +166,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
         AuditHelper.onAuditDeleteFailure (Client.OT, "already-deleted", sClientID);
         return EChange.UNCHANGED;
       }
-      markAsDeleted (aDeletedClient);
+      markAsChanged (aDeletedClient, EDAOActionType.DELETE);
     }
     finally
     {

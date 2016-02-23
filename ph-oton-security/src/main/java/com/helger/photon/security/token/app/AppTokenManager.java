@@ -85,7 +85,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
                                              sOwnerContactEmail);
 
     m_aRWLock.writeLocked ( () -> {
-      internalAddItem (aAppToken);
+      internalAddItem (aAppToken, EDAOActionType.CREATE);
       markAsChanged (aAppToken, EDAOActionType.CREATE);
     });
     AuditHelper.onAuditCreateSuccess (AppToken.OT,

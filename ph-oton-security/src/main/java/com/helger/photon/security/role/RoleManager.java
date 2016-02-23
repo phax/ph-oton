@@ -71,11 +71,13 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
     if (!containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       internalAddItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
                                  CSecurity.ROLE_ADMINISTRATOR_NAME,
-                                 (String) null));
+                                 (String) null),
+                       EDAOActionType.CREATE);
     if (!containsRoleWithID (CSecurity.ROLE_USER_ID))
       internalAddItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
                                  CSecurity.ROLE_USER_NAME,
-                                 (String) null));
+                                 (String) null),
+                       EDAOActionType.CREATE);
   }
 
   /**
@@ -110,7 +112,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
 
     m_aRWLock.writeLocked ( () -> {
       // Store
-      internalAddItem (aRole);
+      internalAddItem (aRole, EDAOActionType.CREATE);
       markAsChanged (aRole, EDAOActionType.CREATE);
     });
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), sName);
@@ -155,7 +157,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
 
     m_aRWLock.writeLocked ( () -> {
       // Store
-      internalAddItem (aRole);
+      internalAddItem (aRole, EDAOActionType.CREATE);
       markAsChanged (aRole, EDAOActionType.CREATE);
     });
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), "predefind-role", sName);
