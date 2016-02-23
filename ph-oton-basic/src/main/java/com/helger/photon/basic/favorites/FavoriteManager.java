@@ -31,9 +31,9 @@ import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.multimap.IMultiMapListBased;
 import com.helger.commons.collection.multimap.MultiHashMapArrayListBased;
-import com.helger.commons.lang.IHasSize;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroDocument;
@@ -52,11 +52,11 @@ import com.helger.photon.basic.audit.AuditHelper;
  * @author Philip Helger
  */
 @ThreadSafe
-public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSize
+public class FavoriteManager extends AbstractWALDAO <Favorite>
 {
-  private static final String ELEMENT_FAVORITES = "favorites";
-  private static final String ELEMENT_FAVORITE = "favorite";
+  private static final String ELEMENT_ITEM = "favorite";
 
+  /** Map from user ID to favorites */
   private final IMultiMapListBased <String, Favorite> m_aMap = new MultiHashMapArrayListBased <> ();
 
   public FavoriteManager (@Nonnull @Nonempty final String sFilename) throws DAOException
@@ -87,7 +87,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
   @Nonnull
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
-    for (final IMicroElement eFavorite : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_FAVORITE))
+    for (final IMicroElement eFavorite : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
       _addItem (MicroTypeConverter.convertToNative (eFavorite, Favorite.class));
     return EChange.UNCHANGED;
   }
@@ -97,10 +97,10 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_FAVORITES);
+    final IMicroElement eRoot = aDoc.appendElement ("root");
     for (final List <Favorite> aFavoritesOfUser : CollectionHelper.getSortedByKey (m_aMap).values ())
       for (final Favorite aFavorite : aFavoritesOfUser)
-        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aFavorite, ELEMENT_FAVORITE));
+        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aFavorite, ELEMENT_ITEM));
     return aDoc;
   }
 
@@ -120,9 +120,9 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
   }
 
   @Nonnegative
-  public int getSize ()
+  public long getSize ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.size ());
+    return m_aRWLock.readLocked ( () -> m_aMap.getTotalValueCount ());
   }
 
   public boolean isEmpty ()
@@ -138,7 +138,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <? extends IFavorite> getAllFavoritesOfUser (@Nullable final String sUserID)
+  public ICommonsList <? extends IFavorite> getAllFavoritesOfUser (@Nullable final String sUserID)
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.get (sUserID)));
   }
@@ -155,7 +155,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
     if (StringHelper.hasNoText (sUserID))
       return false;
 
-    final List <Favorite> aFavorites = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
+    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
     return CollectionHelper.isNotEmpty (aFavorites);
   }
 
@@ -182,8 +182,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
         StringHelper.hasNoText (sMenuItemID))
       return false;
 
-    final Map <String, String> aRealAdditionalParams = aAdditionalParams == null ? new HashMap <String, String> ()
-                                                                                 : aAdditionalParams;
+    final Map <String, String> aRealAdditionalParams = CollectionHelper.getNotNull (aAdditionalParams);
     for (final IFavorite aFavorite : getAllFavoritesOfUser (sUserID))
       if (aFavorite.hasSameContent (sApplicationID, sMenuItemID, aRealAdditionalParams))
         return true;
@@ -251,7 +250,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
       markAsChanged (aFavorite, EDAOActionType.CREATE);
     });
 
-    AuditHelper.onAuditCreateSuccess (Favorite.OT_FAVOURITE,
+    AuditHelper.onAuditCreateSuccess (Favorite.OT,
                                       aFavorite.getID (),
                                       sUserID,
                                       sApplicationID,
@@ -283,7 +282,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
     final Favorite aFavorite = CollectionHelper.findFirst (aFavorites, f -> sID.equals (f.getID ()));
     if (aFavorite == null)
     {
-      AuditHelper.onAuditModifyFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
+      AuditHelper.onAuditModifyFailure (Favorite.OT, sID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -293,7 +292,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
         return EChange.UNCHANGED;
 
       markAsChanged (aFavorite, EDAOActionType.UPDATE);
-      AuditHelper.onAuditModifySuccess (Favorite.OT_FAVOURITE, aFavorite.getID (), sUserID, sDisplayName);
+      AuditHelper.onAuditModifySuccess (Favorite.OT, aFavorite.getID (), sUserID, sDisplayName);
 
       return EChange.CHANGED;
     });
@@ -316,7 +315,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
     final Favorite aFavorite = CollectionHelper.findFirst (aFavorites, aOther -> sID.equals (aOther.getID ()));
     if (aFavorite == null)
     {
-      AuditHelper.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
+      AuditHelper.onAuditDeleteFailure (Favorite.OT, sID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -325,11 +324,11 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
       if (eChange.isChanged ())
       {
         markAsChanged (aFavorite, EDAOActionType.DELETE);
-        AuditHelper.onAuditDeleteSuccess (Favorite.OT_FAVOURITE, sID);
+        AuditHelper.onAuditDeleteSuccess (Favorite.OT, sID);
       }
       else
       {
-        AuditHelper.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sID, "no-such-id");
+        AuditHelper.onAuditDeleteFailure (Favorite.OT, sID, "no-such-id");
       }
       return eChange;
     });
@@ -351,11 +350,11 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
       if (eChange.isChanged ())
       {
         markAsChanged (aFavoritesOfUser, EDAOActionType.DELETE);
-        AuditHelper.onAuditDeleteSuccess (Favorite.OT_FAVOURITE, sUserID);
+        AuditHelper.onAuditDeleteSuccess (Favorite.OT, sUserID);
       }
       else
       {
-        AuditHelper.onAuditDeleteFailure (Favorite.OT_FAVOURITE, sUserID, "no-such-user-id");
+        AuditHelper.onAuditDeleteFailure (Favorite.OT, sUserID, "no-such-user-id");
       }
       return eChange;
     });

@@ -39,7 +39,7 @@ import com.helger.commons.type.ObjectType;
 @NotThreadSafe
 public class Favorite implements IFavorite
 {
-  public static final ObjectType OT_FAVOURITE = new ObjectType ("favourite");
+  public static final ObjectType OT = new ObjectType ("favourite");
 
   private final String m_sID;
   private final String m_sUserID;
