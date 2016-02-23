@@ -58,7 +58,7 @@ public class FavoriteMicroTypeConverter implements IMicroTypeConverter
     eFavourite.setAttribute (ATTR_MENU_ITEM_ID, aFavourite.getMenuItemID ());
     eFavourite.setAttribute (ATTR_DISPLAY_NAME, aFavourite.getDisplayName ());
 
-    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aFavourite.getAdditionalParams ())
+    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aFavourite.getAllAdditionalParams ())
                                                                    .entrySet ())
     {
       final IMicroElement eParam = eFavourite.appendElement (ELEMENT_ADDITIONAL_PARAM);

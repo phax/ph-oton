@@ -26,6 +26,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
@@ -44,7 +46,7 @@ public class Favorite implements IFavorite
   private final String m_sApplicationID;
   private final String m_sMenuItemID;
   private String m_sDisplayName;
-  private final Map <String, String> m_aAdditionalParams;
+  private final ICommonsMap <String, String> m_aAdditionalParams;
 
   public Favorite (@Nonnull @Nonempty final String sUserID,
                    @Nonnull @Nonempty final String sApplicationID,
@@ -72,7 +74,7 @@ public class Favorite implements IFavorite
     m_sMenuItemID = ValueEnforcer.notEmpty (sMenuItemID, "menu item ID");
     m_sApplicationID = ValueEnforcer.notEmpty (sApplicationID, "application ID");
     setDisplayName (sDisplayName);
-    m_aAdditionalParams = CollectionHelper.newMap (aAdditionalParams);
+    m_aAdditionalParams = new CommonsHashMap <> (aAdditionalParams);
   }
 
   @Nonnull
@@ -124,9 +126,9 @@ public class Favorite implements IFavorite
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, String> getAdditionalParams ()
+  public ICommonsMap <String, String> getAllAdditionalParams ()
   {
-    return CollectionHelper.newMap (m_aAdditionalParams);
+    return m_aAdditionalParams.getClone ();
   }
 
   public boolean hasSameContent (@Nullable final String sAppID,

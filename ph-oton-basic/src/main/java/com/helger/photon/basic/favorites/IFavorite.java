@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
 
@@ -61,7 +62,7 @@ public interface IFavorite extends IHasID <String>, IHasDisplayName, Serializabl
    */
   @Nonnull
   @ReturnsMutableCopy
-  Map <String, String> getAdditionalParams ();
+  ICommonsMap <String, String> getAllAdditionalParams ();
 
   /**
    * @param sAppID

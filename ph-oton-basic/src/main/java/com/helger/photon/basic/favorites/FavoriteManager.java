@@ -57,7 +57,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
   private static final String ELEMENT_FAVORITES = "favorites";
   private static final String ELEMENT_FAVORITE = "favorite";
 
-  private final IMultiMapListBased <String, Favorite> m_aMap = new MultiHashMapArrayListBased <String, Favorite> ();
+  private final IMultiMapListBased <String, Favorite> m_aMap = new MultiHashMapArrayListBased <> ();
 
   public FavoriteManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -156,11 +156,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite> implements IHasSi
       return false;
 
     final List <Favorite> aFavorites = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
-
-    if (CollectionHelper.isNotEmpty (aFavorites))
-      return CollectionHelper.isNotEmpty (aFavorites);
-
-    return false;
+    return CollectionHelper.isNotEmpty (aFavorites);
   }
 
   /**
