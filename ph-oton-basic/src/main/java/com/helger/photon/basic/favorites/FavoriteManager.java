@@ -310,12 +310,17 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
   @Nullable
   public EChange removeFavorite (@Nullable final String sUserID, @Nullable final String sID)
   {
-    final List <Favorite> aFavorites = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
+    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
+    if (aFavorites == null)
+    {
+      AuditHelper.onAuditDeleteFailure (Favorite.OT, sUserID, "no-such-id");
+      return EChange.UNCHANGED;
+    }
 
-    final Favorite aFavorite = CollectionHelper.findFirst (aFavorites, aOther -> sID.equals (aOther.getID ()));
+    final Favorite aFavorite = aFavorites.findFirst (aOther -> sID.equals (aOther.getID ()));
     if (aFavorite == null)
     {
-      AuditHelper.onAuditDeleteFailure (Favorite.OT, sID, "no-such-id");
+      AuditHelper.onAuditDeleteFailure (Favorite.OT, sUserID, sID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
