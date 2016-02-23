@@ -269,7 +269,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
       if (aRow.hasRowData ())
         aRowData.add (DT_ROW_DATA, aRow.directGetAllRowData ());
       if (aRow.hasRowAttr ())
-        aRowData.add (DT_ROW_ATTR, aRow.directGetAllRowAttr ());
+        aRowData.add (DT_ROW_ATTR, aRow.directGetAllRowAttrs ());
       int nCellIndex = 0;
       for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
       {

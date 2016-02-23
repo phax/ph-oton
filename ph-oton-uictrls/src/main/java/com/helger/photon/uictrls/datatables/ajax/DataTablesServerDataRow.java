@@ -17,9 +17,6 @@
 package com.helger.photon.uictrls.datatables.ajax;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnegative;
@@ -31,6 +28,10 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.html.AbstractHCElement;
@@ -49,9 +50,9 @@ public final class DataTablesServerDataRow implements Serializable
 
   private final String m_sRowID;
   private final String m_sRowClass;
-  private Map <String, String> m_aRowData;
-  private Map <String, String> m_aRowAttr;
-  private final List <DataTablesServerDataCell> m_aCells;
+  private ICommonsOrderedMap <String, String> m_aRowData;
+  private ICommonsOrderedMap <String, String> m_aRowAttr;
+  private final ICommonsList <DataTablesServerDataCell> m_aCells;
 
   public DataTablesServerDataRow (@Nonnull final HCRow aRow, @Nonnull final IHCConversionSettings aCS)
   {
@@ -60,23 +61,26 @@ public final class DataTablesServerDataRow implements Serializable
 
     m_sRowID = aRow.getID ();
     m_sRowClass = aRow.getAllClassesAsString ();
-    for (final Map.Entry <String, String> aEntry : aRow.getAllCustomAttrs ().entrySet ())
-      if (AbstractHCElement.isDataAttrName (aEntry.getKey ()))
-      {
-        // Data attribute
-        if (m_aRowData == null)
-          m_aRowData = new LinkedHashMap <> ();
-        m_aRowData.put (aEntry.getKey (), aEntry.getValue ());
-      }
-      else
-      {
-        // Custom non-data attribute
-        if (m_aRowAttr == null)
-          m_aRowAttr = new LinkedHashMap <> ();
-        m_aRowAttr.put (aEntry.getKey (), aEntry.getValue ());
-      }
-    m_aCells = new ArrayList <DataTablesServerDataCell> (aRow.getCellCount ());
-    for (final IHCCell <?> aCell : aRow.getAllCells ())
+
+    if (aRow.hasCustomAttrs ())
+      for (final Map.Entry <String, String> aEntry : aRow.getAllCustomAttrsIterable ())
+        if (AbstractHCElement.isDataAttrName (aEntry.getKey ()))
+        {
+          // Data attribute
+          if (m_aRowData == null)
+            m_aRowData = new CommonsLinkedHashMap <> ();
+          m_aRowData.put (aEntry.getKey (), aEntry.getValue ());
+        }
+        else
+        {
+          // Custom non-data attribute
+          if (m_aRowAttr == null)
+            m_aRowAttr = new CommonsLinkedHashMap <> ();
+          m_aRowAttr.put (aEntry.getKey (), aEntry.getValue ());
+        }
+
+    m_aCells = new CommonsArrayList <> (aRow.getCellCount ());
+    for (final IHCCell <?> aCell : aRow.getAllCellsIterable ())
       m_aCells.add (new DataTablesServerDataCell (aCell, aCS));
   }
 
@@ -112,7 +116,7 @@ public final class DataTablesServerDataRow implements Serializable
 
   @Nonnull
   @ReturnsMutableObject ("speed")
-  public Map <String, String> directGetAllRowData ()
+  public ICommonsOrderedMap <String, String> directGetAllRowData ()
   {
     return m_aRowData;
   }
@@ -124,14 +128,14 @@ public final class DataTablesServerDataRow implements Serializable
 
   @Nullable
   @ReturnsMutableObject ("speed")
-  public Map <String, String> directGetAllRowAttr ()
+  public ICommonsOrderedMap <String, String> directGetAllRowAttrs ()
   {
     return m_aRowAttr;
   }
 
   @Nonnull
   @ReturnsMutableObject ("speed")
-  public List <DataTablesServerDataCell> directGetAllCells ()
+  public ICommonsList <DataTablesServerDataCell> directGetAllCells ()
   {
     return m_aCells;
   }
