@@ -47,8 +47,8 @@ import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.audit.AuditManager;
 import com.helger.photon.security.lock.DefaultLockManager;
 import com.helger.photon.security.lock.ObjectLockManager;
-import com.helger.photon.security.login.DefaultUserLoginCallback;
 import com.helger.photon.security.login.ELoginResult;
+import com.helger.photon.security.login.IUserLoginCallback;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
 import com.helger.photon.security.role.RoleManager;
@@ -106,7 +106,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       m_aUserTokenMgr = new UserTokenManager (DIRECTORY_SECURITY + FILENAME_USERTOKENS_XML);
 
       // Remember the last login date of the user
-      LoggedInUserManager.getInstance ().getUserLoginCallbacks ().addCallback (new DefaultUserLoginCallback ()
+      LoggedInUserManager.getInstance ().getUserLoginCallbacks ().addCallback (new IUserLoginCallback ()
       {
         @Override
         public void onUserLogin (@Nonnull final LoginInfo aInfo)

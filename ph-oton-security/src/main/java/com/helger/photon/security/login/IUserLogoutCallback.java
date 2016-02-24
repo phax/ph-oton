@@ -34,5 +34,6 @@ public interface IUserLogoutCallback extends ICallback
    *        The login info of the user that just logged out. Never
    *        <code>null</code>.
    */
-  void onUserLogout (@Nonnull LoginInfo aInfo);
+  default void onUserLogout (@Nonnull final LoginInfo aInfo)
+  {}
 }

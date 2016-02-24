@@ -35,7 +35,8 @@ public interface IUserLoginCallback extends ICallback
    *        The login info of the user that just logged in. Never
    *        <code>null</code>.
    */
-  void onUserLogin (@Nonnull LoginInfo aInfo);
+  default void onUserLogin (@Nonnull final LoginInfo aInfo)
+  {}
 
   /**
    * Called when a user failed to logged in.
@@ -45,5 +46,6 @@ public interface IUserLoginCallback extends ICallback
    * @param eLoginResult
    *        The login result indicating the login error.
    */
-  void onUserLoginError (@Nonnull @Nonempty String sUserID, @Nonnull ELoginResult eLoginResult);
+  default void onUserLoginError (@Nonnull @Nonempty final String sUserID, @Nonnull final ELoginResult eLoginResult)
+  {}
 }

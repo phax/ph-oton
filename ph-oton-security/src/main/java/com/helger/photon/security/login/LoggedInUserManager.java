@@ -196,7 +196,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *
    * @author Philip Helger
    */
-  final class UserLogoutCallbackUnlockAllObjects extends DefaultUserLogoutCallback
+  final class UserLogoutCallbackUnlockAllObjects implements IUserLogoutCallback
   {
     @Override
     public void onUserLogout (@Nonnull final LoginInfo aInfo)
