@@ -198,13 +198,13 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                                   .setCtrl (aSelectedObject.getSessionScope ().getID ()));
 
     // Add custom attributes
-    final Map <String, Object> aAttrs = aSelectedObject.getAllAttributes ();
+    final Map <String, String> aAttrs = aSelectedObject.getAllAttributes ();
     if (!aAttrs.isEmpty ())
     {
       final HCTable aCustomAttrTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                                     new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID (aSelectedObject.getID ());
-      for (final Map.Entry <String, Object> aEntry : aAttrs.entrySet ())
-        aCustomAttrTable.addBodyRow ().addCells (aEntry.getKey (), String.valueOf (aEntry.getValue ()));
+      for (final Map.Entry <String, String> aEntry : aAttrs.entrySet ())
+        aCustomAttrTable.addBodyRow ().addCells (aEntry.getKey (), aEntry.getValue ());
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aCustomAttrTable);
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ATTRS.getDisplayText (aDisplayLocale))

@@ -207,7 +207,8 @@ public class LoginManager
     aLoginInfo.setAttribute (LOGIN_INFO_QUERY_STRING, aRequestScope.getQueryString ());
     aLoginInfo.setAttribute (LOGIN_INFO_USER_AGENT,
                              UserAgentDatabase.getHttpUserAgentStringFromRequest (aRequestScope.getRequest ()));
-    aLoginInfo.setAttribute (LOGIN_INFO_REQUEST_COUNT, aLoginInfo.getAttributeAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1);
+    aLoginInfo.setAttribute (LOGIN_INFO_REQUEST_COUNT,
+                             Integer.toString (aLoginInfo.getAttributeAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
   }
 
   /**

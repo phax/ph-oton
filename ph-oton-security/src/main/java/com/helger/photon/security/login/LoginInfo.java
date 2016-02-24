@@ -24,7 +24,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
+import com.helger.commons.collection.attr.MapBasedAttributeContainer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.IHasID;
@@ -38,7 +38,7 @@ import com.helger.photon.security.user.IUser;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class LoginInfo extends MapBasedAttributeContainerAny <String> implements IHasID <String>
+public final class LoginInfo extends MapBasedAttributeContainer <String, String> implements IHasID <String>
 {
   private final IUser m_aUser;
   private final ISessionScope m_aSessionScope;
