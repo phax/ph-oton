@@ -19,7 +19,6 @@ package com.helger.photon.core.smtp;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,6 +27,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -184,9 +184,9 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
   @Override
   @Nonnull
   @ReturnsMutableCopy
-  public List <FailedMailData> removeAll ()
+  public ICommonsList <FailedMailData> removeAll ()
   {
-    final List <FailedMailData> ret = super.removeAll ();
+    final ICommonsList <FailedMailData> ret = super.removeAll ();
     if (!ret.isEmpty ())
     {
       _markAsChanged ();
