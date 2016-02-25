@@ -23,9 +23,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
@@ -49,8 +46,6 @@ import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 @ThreadSafe
 public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> implements IReloadableDAO
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (RoleManager.class);
-
   private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public RoleManager (@Nonnull @Nonempty final String sFilename) throws DAOException
@@ -118,15 +113,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), sName);
 
     // Execute callback as the very last action
-    for (final IRoleModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onRoleCreated (aRole, false);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onRoleCreated callback on " + aRole.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onRoleCreated (aRole, false));
 
     return aRole;
   }
@@ -163,15 +150,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), "predefind-role", sName);
 
     // Execute callback as the very last action
-    for (final IRoleModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onRoleCreated (aRole, true);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onRoleCreated callback on " + aRole.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onRoleCreated (aRole, true));
 
     return aRole;
   }
@@ -207,15 +186,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
     AuditHelper.onAuditDeleteSuccess (Role.OT, sRoleID);
 
     // Execute callback as the very last action
-    for (final IRoleModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onRoleDeleted (aDeletedRole);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onRoleDeleted callback on " + aDeletedRole.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onRoleDeleted (aDeletedRole));
 
     return EChange.CHANGED;
   }
@@ -312,15 +283,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
     AuditHelper.onAuditModifySuccess (Role.OT, "name", sRoleID, sNewName);
 
     // Execute callback as the very last action
-    for (final IRoleModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onRoleRenamed (aRole);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onRoleRenamed callback on " + aRole.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onRoleRenamed (aRole));
 
     return EChange.CHANGED;
   }
@@ -373,15 +336,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
     AuditHelper.onAuditModifySuccess (Role.OT, "all", aRole.getID (), sNewName, sNewDescription, aNewCustomAttrs);
 
     // Execute callback as the very last action
-    for (final IRoleModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onRoleUpdated (aRole);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onRoleUpdated callback on " + aRole.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onRoleUpdated (aRole));
 
     return EChange.CHANGED;
   }

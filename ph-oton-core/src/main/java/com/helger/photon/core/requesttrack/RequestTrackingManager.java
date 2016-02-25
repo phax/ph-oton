@@ -17,7 +17,6 @@
 package com.helger.photon.core.requesttrack;
 
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +32,9 @@ import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
 import com.helger.web.scope.IRequestWebScope;
@@ -67,7 +68,7 @@ public final class RequestTrackingManager
   private boolean m_bParallelRunningRequestsAboveLimit = false;
   // Must be ordered!
   @GuardedBy ("m_aRWLock")
-  private final Map <String, TrackedRequest> m_aOpenRequests = new LinkedHashMap <String, TrackedRequest> ();
+  private final ICommonsOrderedMap <String, TrackedRequest> m_aOpenRequests = new CommonsLinkedHashMap <> ();
 
   public RequestTrackingManager ()
   {}
@@ -75,9 +76,7 @@ public final class RequestTrackingManager
   @Nonnull
   public RequestTrackingManager setLongRunningCheckEnabled (final boolean bLongRunningCheckEnabled)
   {
-    m_aRWLock.writeLocked ( () -> {
-      m_bLongRunningCheckEnabled = bLongRunningCheckEnabled;
-    });
+    m_aRWLock.writeLocked ( () -> m_bLongRunningCheckEnabled = bLongRunningCheckEnabled);
     return this;
   }
 
@@ -139,7 +138,7 @@ public final class RequestTrackingManager
                           @Nonnull final CallbackList <IParallelRunningRequestCallback> aCallbacks)
   {
     boolean bNotifyOnParallelRequests = false;
-    List <TrackedRequest> aOpenRequests = null;
+    ICommonsList <TrackedRequest> aOpenRequests = null;
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -152,7 +151,7 @@ public final class RequestTrackingManager
       {
         // Grab directly here to avoid another locked section
         bNotifyOnParallelRequests = true;
-        aOpenRequests = CollectionHelper.newList (m_aOpenRequests.values ());
+        aOpenRequests = m_aOpenRequests.copyOfValues ();
         // Remember that we're above limit
         m_bParallelRunningRequestsAboveLimit = true;
       }
@@ -165,15 +164,8 @@ public final class RequestTrackingManager
     if (bNotifyOnParallelRequests)
     {
       // Invoke callbacks "above limit"
-      try
-      {
-        for (final IParallelRunningRequestCallback aCallback : aCallbacks.getAllCallbacks ())
-          aCallback.onParallelRunningRequests (aOpenRequests.size (), aOpenRequests);
-      }
-      catch (final Throwable t)
-      {
-        new InternalErrorBuilder ().setThrowable (t).addCustomData ("context", "parallel-running-requests").handle ();
-      }
+      final ICommonsList <TrackedRequest> aFinalOpenRequests = aOpenRequests;
+      aCallbacks.forEach (aCB -> aCB.onParallelRunningRequests (aFinalOpenRequests.size (), aFinalOpenRequests));
     }
   }
 

@@ -316,22 +316,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nonnull
   private ELoginResult _onLoginError (@Nonnull @Nonempty final String sUserID, @Nonnull final ELoginResult eLoginResult)
   {
-    for (final IUserLoginCallback aUserLoginCallback : m_aUserLoginCallbacks.getAllCallbacks ())
-      try
-      {
-        aUserLoginCallback.onUserLoginError (sUserID, eLoginResult);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserLoginError callback on " +
-                         aUserLoginCallback +
-                         "(" +
-                         sUserID +
-                         "," +
-                         eLoginResult.toString () +
-                         ")",
-                         t);
-      }
+    m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLoginError (sUserID, eLoginResult));
     return eLoginResult;
   }
 
@@ -471,20 +456,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     AuditHelper.onAuditExecuteSuccess ("login-user", sUserID, aUser.getLoginName ());
 
     // Execute callback as the very last action
-    for (final IUserLoginCallback aUserLoginCallback : m_aUserLoginCallbacks.getAllCallbacks ())
-      try
-      {
-        aUserLoginCallback.onUserLogin (aInfo);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserLogin callback on " +
-                         aUserLoginCallback.toString () +
-                         "(" +
-                         aInfo.toString () +
-                         ")",
-                         t);
-      }
+    m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLogin (aInfo));
 
     return bLoggedOutUser ? ELoginResult.SUCCESS_WITH_LOGOUT : ELoginResult.SUCCESS;
   }
@@ -532,20 +504,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     AuditHelper.onAuditExecuteSuccess ("logout", sUserID);
 
     // Execute callback as the very last action
-    for (final IUserLogoutCallback aUserLogoutCallback : m_aUserLogoutCallbacks.getAllCallbacks ())
-      try
-      {
-        aUserLogoutCallback.onUserLogout (aInfo);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserLogout callback on " +
-                         aUserLogoutCallback.toString () +
-                         "(" +
-                         aInfo.toString () +
-                         ")",
-                         t);
-      }
+    m_aUserLogoutCallbacks.forEach (aCB -> aCB.onUserLogout (aInfo));
 
     return EChange.CHANGED;
   }

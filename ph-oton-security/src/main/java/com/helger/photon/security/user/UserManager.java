@@ -26,9 +26,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.IsLocked;
@@ -66,8 +63,6 @@ import com.helger.photon.security.password.salt.PasswordSalt;
 @ThreadSafe
 public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (UserManager.class);
-
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, User> m_aUsers = new CommonsHashMap <> ();
 
@@ -253,15 +248,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                                       Boolean.valueOf (bDisabled));
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserCreated (aUser, false);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserCreated callback on " + aUser.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserCreated (aUser, false));
 
     return aUser;
   }
@@ -346,15 +333,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                                       Boolean.valueOf (bDisabled));
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserCreated (aUser, true);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserCreated callback on " + aUser.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserCreated (aUser, true));
 
     return aUser;
   }
@@ -590,15 +569,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                                       Boolean.valueOf (bNewDisabled));
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserUpdated (aUser);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserUpdated callback on " + aUser.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserUpdated (aUser));
 
     return EChange.CHANGED;
   }
@@ -643,15 +614,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     AuditHelper.onAuditModifySuccess (User.OT, "password", sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserPasswordChanged (aUser);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserPasswordChanged callback on " + aUser.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserPasswordChanged (aUser));
 
     return EChange.CHANGED;
   }
@@ -705,15 +668,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     AuditHelper.onAuditModifySuccess (User.OT, "update-last-failed-login", sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserLastFailedLoginUpdated (aUser);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserLastFailedLoginUpdated callback on " + aUser.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserLastFailedLoginUpdated (aUser));
 
     return EChange.CHANGED;
   }
@@ -750,15 +705,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     AuditHelper.onAuditDeleteSuccess (User.OT, sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserDeleted (aUser);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserDeleted callback on " + aUser.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserDeleted (aUser));
 
     return EChange.CHANGED;
   }
@@ -795,15 +742,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     AuditHelper.onAuditUndeleteSuccess (User.OT, sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserUndeleted (aUser);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserUndeleted callback on " + aUser.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserUndeleted (aUser));
 
     return EChange.CHANGED;
   }
@@ -840,15 +779,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     AuditHelper.onAuditModifySuccess (User.OT, "disable", sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserEnabled (aUser, false);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserEnabled callback on " + aUser.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserEnabled (aUser, false));
 
     return EChange.CHANGED;
   }
@@ -885,15 +816,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     AuditHelper.onAuditModifySuccess (User.OT, "enable", sUserID);
 
     // Execute callback as the very last action
-    for (final IUserModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserEnabled (aUser, true);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserEnabled callback on " + aUser.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserEnabled (aUser, true));
 
     return EChange.CHANGED;
   }

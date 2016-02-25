@@ -24,9 +24,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
@@ -48,8 +45,6 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
  */
 public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, AppToken>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AppTokenManager.class);
-
   private static final String ELEMENT_ITEM = "apptoken";
 
   private final CallbackList <IAppTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
@@ -98,15 +93,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
                                       sOwnerContactEmail);
 
     // Execute callback as the very last action
-    for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onAppTokenCreated (aAppToken);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onAppTokenCreated callback on " + aAppToken.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onAppTokenCreated (aAppToken));
 
     return aAppToken;
   }
@@ -156,16 +143,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
                                       sOwnerContactEmail);
 
     // Execute callback as the very last action
-    for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onAppTokenUpdated (aAppToken);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onAppTokenUpdated callback on " + aAppToken.toString (), t);
-      }
-
+    m_aCallbacks.forEach (aCB -> aCB.onAppTokenUpdated (aAppToken));
     return EChange.CHANGED;
   }
 
@@ -196,15 +174,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
     AuditHelper.onAuditDeleteSuccess (AppToken.OT, aAppToken.getID ());
 
     // Execute callback as the very last action
-    for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onAppTokenDeleted (aAppToken);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onAppTokenDeleted callback on " + aAppToken.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onAppTokenDeleted (aAppToken));
 
     return EChange.CHANGED;
   }
@@ -245,19 +215,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
                                       sTokenString);
 
     // Execute callback as the very last action
-    for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onAppTokenCreateAccessToken (aAppToken, aAccessToken);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onAppTokenCreateAccessToken callback on " +
-                         aAppToken.toString () +
-                         " and " +
-                         aAccessToken.toString (),
-                         t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onAppTokenCreateAccessToken (aAppToken, aAccessToken));
 
     return EChange.CHANGED;
   }
@@ -298,15 +256,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
                                       sRevocationReason);
 
     // Execute callback as the very last action
-    for (final IAppTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onAppTokenRevokeAccessToken (aAppToken);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onAppTokenRevokeAccessToken callback on " + aAppToken.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onAppTokenRevokeAccessToken (aAppToken));
 
     return EChange.CHANGED;
   }

@@ -23,9 +23,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
@@ -48,8 +45,6 @@ import com.helger.photon.security.token.app.IAppToken;
  */
 public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, UserToken>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (UserTokenManager.class);
-
   private static final String ELEMENT_ITEM = "usertoken";
 
   private final CallbackList <IUserTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
@@ -84,15 +79,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
     AuditHelper.onAuditCreateSuccess (UserToken.OT, aUserToken.getID (), aCustomAttrs, aAppToken.getID (), sUserName);
 
     // Execute callback as the very last action
-    for (final IUserTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserTokenCreated (aUserToken);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserTokenCreated callback on " + aUserToken.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserTokenCreated (aUserToken));
 
     return aUserToken;
   }
@@ -130,15 +117,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
     AuditHelper.onAuditModifySuccess (UserToken.OT, sUserTokenID, aCustomAttrs, sUserName);
 
     // Execute callback as the very last action
-    for (final IUserTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserTokenUpdated (aUserToken);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserTokenUpdated callback on " + aUserToken.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserTokenUpdated (aUserToken));
 
     return EChange.CHANGED;
   }
@@ -170,15 +149,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
     AuditHelper.onAuditDeleteSuccess (UserToken.OT, aUserToken.getID ());
 
     // Execute callback as the very last action
-    for (final IUserTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserTokenDeleted (aUserToken);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserTokenDeleted callback on " + aUserToken.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserTokenDeleted (aUserToken));
 
     return EChange.CHANGED;
   }
@@ -219,19 +190,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
                                       sTokenString);
 
     // Execute callback as the very last action
-    for (final IUserTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserTokenCreateAccessToken (aUserToken, aAccessToken);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserTokenCreateAccessToken callback on " +
-                         aUserToken.toString () +
-                         " and " +
-                         aAccessToken.toString (),
-                         t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserTokenCreateAccessToken (aUserToken, aAccessToken));
 
     return EChange.CHANGED;
   }
@@ -272,15 +231,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
                                       sRevocationReason);
 
     // Execute callback as the very last action
-    for (final IUserTokenModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserTokenRevokeAccessToken (aUserToken);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserTokenRevokeAccessToken callback on " + aUserToken.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserTokenRevokeAccessToken (aUserToken));
 
     return EChange.CHANGED;
   }

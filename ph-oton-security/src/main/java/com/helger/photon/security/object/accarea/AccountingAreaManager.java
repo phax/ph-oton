@@ -18,17 +18,12 @@ package com.helger.photon.security.object.accarea;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ELockType;
@@ -38,6 +33,8 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroDocument;
@@ -64,12 +61,10 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   private static final String ELEMENT_ROOT = "accountingareas";
   private static final String ELEMENT_ITEM = "accountingarea";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AccountingAreaManager.class);
-
   @GuardedBy ("m_aRWLock")
-  private final Map <String, AccountingArea> m_aMap = new HashMap <String, AccountingArea> ();
+  private final ICommonsMap <String, AccountingArea> m_aMap = new CommonsHashMap <> ();
 
-  private final CallbackList <IAccountingAreaModificationCallback> m_aCallbacks = new CallbackList <IAccountingAreaModificationCallback> ();
+  private final CallbackList <IAccountingAreaModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public AccountingAreaManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -171,15 +166,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                       sCommercialCourt);
 
     // Execute callback as the very last action
-    for (final IAccountingAreaModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onAccountingAreaCreated (aAccountingArea);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onAccountingAreaCreated callback on " + aAccountingArea.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onAccountingAreaCreated (aAccountingArea));
 
     return aAccountingArea;
   }
@@ -255,15 +242,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                       sCommercialCourt);
 
     // Execute callback as the very last action
-    for (final IAccountingAreaModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onAccountingAreaUpdated (aAccountingArea);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onAccountingAreaUpdated callback on " + aAccountingArea.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onAccountingAreaUpdated (aAccountingArea));
 
     return EChange.CHANGED;
   }
@@ -295,17 +274,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
     AuditHelper.onAuditDeleteSuccess (AccountingArea.OT, sAccountingAreaID);
 
     // Execute callback as the very last action
-    for (final IAccountingAreaModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onAccountingAreaDeleted (aDeletedAccountingArea);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onAccountingAreaDeleted callback on " +
-                         aDeletedAccountingArea.toString (),
-                         t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onAccountingAreaDeleted (aDeletedAccountingArea));
 
     return EChange.CHANGED;
   }
@@ -314,7 +283,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   @ReturnsMutableCopy
   public Collection <? extends IAccountingArea> getAllAccountingAreas ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
   }
 
   @Nonnull

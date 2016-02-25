@@ -26,9 +26,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -63,8 +60,6 @@ import com.helger.photon.security.user.UserManager;
 @ThreadSafe
 public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDAO
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (UserGroupManager.class);
-
   private final UserManager m_aUserMgr;
   private final RoleManager m_aRoleMgr;
   @GuardedBy ("m_aRWLock")
@@ -213,17 +208,10 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     AuditHelper.onAuditCreateSuccess (UserGroup.OT, aUserGroup.getID (), sName, sDescription, aCustomAttrs);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserGroupCreated (aUserGroup, false);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserGroupCreated callback on " + aUserGroup.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupCreated (aUserGroup, false));
 
     return aUserGroup;
+
   }
 
   /**
@@ -265,15 +253,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
                                       aCustomAttrs);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserGroupCreated (aUserGroup, true);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserGroupCreated callback on " + aUserGroup.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupCreated (aUserGroup, true));
 
     return aUserGroup;
   }
@@ -313,15 +293,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     AuditHelper.onAuditDeleteSuccess (UserGroup.OT, sUserGroupID);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserGroupDeleted (aDeletedUserGroup);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserGroupDeleted callback on " + aDeletedUserGroup.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupDeleted (aDeletedUserGroup));
 
     return EChange.CHANGED;
   }
@@ -427,15 +399,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     AuditHelper.onAuditModifySuccess (UserGroup.OT, "name", sUserGroupID, sNewName);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserGroupRenamed (aUserGroup);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserGroupRenamed callback on " + aUserGroup.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupRenamed (aUserGroup));
 
     return EChange.CHANGED;
   }
@@ -494,15 +458,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
                                       aNewCustomAttrs);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserGroupUpdated (aUserGroup);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserGroupUpdated callback on " + aUserGroup.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUpdated (aUserGroup));
 
     return EChange.CHANGED;
   }
@@ -545,15 +501,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     AuditHelper.onAuditModifySuccess (UserGroup.OT, "assign-user", sUserGroupID, sUserID);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserGroupUserAssignment (aUserGroup, sUserID, true);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserGroupUserAssignment callback on " + aUserGroup.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUserAssignment (aUserGroup, sUserID, true));
 
     return EChange.CHANGED;
   }
@@ -595,15 +543,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     AuditHelper.onAuditModifySuccess (UserGroup.OT, "unassign-user", sUserGroupID, sUserID);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserGroupUserAssignment (aUserGroup, sUserID, false);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserGroupUserAssignment callback on " + aUserGroup.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUserAssignment (aUserGroup, sUserID, false));
 
     return EChange.CHANGED;
   }
@@ -647,15 +587,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
 
     // Execute callback as the very last action
     for (final IUserGroup aUserGroup : aAffectedUserGroups)
-      for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-        try
-        {
-          aCallback.onUserGroupUserAssignment (aUserGroup, sUserID, false);
-        }
-        catch (final Throwable t)
-        {
-          s_aLogger.error ("Failed to invoke onUserGroupUserAssignment callback on " + aUserGroup.toString (), t);
-        }
+      m_aCallbacks.forEach (aCB -> aCB.onUserGroupUserAssignment (aUserGroup, sUserID, false));
 
     return EChange.CHANGED;
   }
@@ -756,15 +688,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     AuditHelper.onAuditModifySuccess (UserGroup.OT, "assign-role", sUserGroupID, sRoleID);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserGroupRoleAssignment (aUserGroup, sRoleID, true);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserGroupRoleAssignment callback on " + aUserGroup.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (aUserGroup, sRoleID, true));
 
     return EChange.CHANGED;
   }
@@ -806,15 +730,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     AuditHelper.onAuditModifySuccess (UserGroup.OT, "unassign-role", sUserGroupID, sRoleID);
 
     // Execute callback as the very last action
-    for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onUserGroupRoleAssignment (aUserGroup, sRoleID, false);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onUserGroupRoleAssignment callback on " + aUserGroup.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (aUserGroup, sRoleID, false));
 
     return EChange.CHANGED;
   }
@@ -858,15 +774,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
 
     // Execute callback as the very last action
     for (final IUserGroup aUserGroup : aAffectedUserGroups)
-      for (final IUserGroupModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-        try
-        {
-          aCallback.onUserGroupRoleAssignment (aUserGroup, sRoleID, false);
-        }
-        catch (final Throwable t)
-        {
-          s_aLogger.error ("Failed to invoke onUserGroupRoleAssignment callback on " + aUserGroup.toString (), t);
-        }
+      m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (aUserGroup, sRoleID, false));
 
     return EChange.CHANGED;
   }

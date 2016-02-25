@@ -23,9 +23,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
@@ -47,8 +44,6 @@ import com.helger.photon.security.object.ObjectHelper;
  */
 public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> implements IClientResolver
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ClientManager.class);
-
   private static final String ELEMENT_ITEM = "client";
 
   private final CallbackList <IClientModificationCallback> m_aCallbacks = new CallbackList <> ();
@@ -94,15 +89,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
     AuditHelper.onAuditCreateSuccess (Client.OT, aClient.getID (), sDisplayName);
 
     // Execute callback as the very last action
-    for (final IClientModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onClientCreated (aClient);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onClientCreated callback on " + aClient.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onClientCreated (aClient));
 
     return aClient;
   }
@@ -135,15 +122,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
     AuditHelper.onAuditModifySuccess (Client.OT, "all", sClientID, sDisplayName);
 
     // Execute callback as the very last action
-    for (final IClientModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onClientUpdated (aClient);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onClientUpdated callback on " + aClient.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onClientUpdated (aClient));
 
     return EChange.CHANGED;
   }
@@ -175,15 +154,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
     AuditHelper.onAuditDeleteSuccess (Client.OT, sClientID);
 
     // Execute callback as the very last action
-    for (final IClientModificationCallback aCallback : m_aCallbacks.getAllCallbacks ())
-      try
-      {
-        aCallback.onClientDeleted (aDeletedClient);
-      }
-      catch (final Throwable t)
-      {
-        s_aLogger.error ("Failed to invoke onClientDeleted callback on " + aDeletedClient.toString (), t);
-      }
+    m_aCallbacks.forEach (aCB -> aCB.onClientDeleted (aDeletedClient));
 
     return EChange.CHANGED;
   }

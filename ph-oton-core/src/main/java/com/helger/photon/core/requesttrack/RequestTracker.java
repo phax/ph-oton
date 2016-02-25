@@ -55,8 +55,8 @@ public final class RequestTracker extends AbstractGlobalWebSingleton
   private static final Logger s_aLogger = LoggerFactory.getLogger (RequestTracker.class);
 
   private final RequestTrackingManager m_aRequestTrackingMgr = new RequestTrackingManager ();
-  private final CallbackList <ILongRunningRequestCallback> m_aLongRunningCallbacks = new CallbackList <ILongRunningRequestCallback> ();
-  private final CallbackList <IParallelRunningRequestCallback> m_aParallelRunningCallbacks = new CallbackList <IParallelRunningRequestCallback> ();
+  private final CallbackList <ILongRunningRequestCallback> m_aLongRunningCallbacks = new CallbackList <> ();
+  private final CallbackList <IParallelRunningRequestCallback> m_aParallelRunningCallbacks = new CallbackList <> ();
   private ScheduledExecutorService m_aExecSvc;
 
   private final class RequestTrackerMonitor extends AbstractWebScopeAwareRunnable
