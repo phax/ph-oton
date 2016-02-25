@@ -30,7 +30,6 @@ import com.helger.commons.callback.CallbackList;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.app.dao.impl.EDAOActionType;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.object.client.CClient;
 import com.helger.photon.basic.object.client.IClient;
@@ -144,7 +143,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
         AuditHelper.onAuditDeleteFailure (Client.OT, "already-deleted", sClientID);
         return EChange.UNCHANGED;
       }
-      markAsChanged (aDeletedClient, EDAOActionType.DELETE);
+      internalMarkItemDeleted (aDeletedClient);
     }
     finally
     {
