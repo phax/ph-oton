@@ -57,7 +57,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
   @Nonnull
   protected EChange onInit ()
   {
-    internalAddItem (new Client (CClient.GLOBAL_CLIENT, CClient.GLOBAL_CLIENT_NAME), EDAOActionType.CREATE);
+    internalAddItem (new Client (CClient.GLOBAL_CLIENT, CClient.GLOBAL_CLIENT_NAME));
     return EChange.CHANGED;
   }
 
@@ -79,8 +79,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
       if (containsWithID (sClientID))
         return null;
 
-      internalAddItem (aClient, EDAOActionType.CREATE);
-      markAsChanged (aClient, EDAOActionType.CREATE);
+      internalAddItem (aClient);
     }
     finally
     {
@@ -113,7 +112,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aClient);
-      markAsChanged (aClient, EDAOActionType.UPDATE);
+      internalUpdateItem (aClient);
     }
     finally
     {

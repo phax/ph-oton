@@ -80,8 +80,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
                                              sOwnerContactEmail);
 
     m_aRWLock.writeLocked ( () -> {
-      internalAddItem (aAppToken, EDAOActionType.CREATE);
-      markAsChanged (aAppToken, EDAOActionType.CREATE);
+      internalAddItem (aAppToken);
     });
     AuditHelper.onAuditCreateSuccess (AppToken.OT,
                                       aAppToken.getID (),
@@ -128,7 +127,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aAppToken);
-      markAsChanged (aAppToken, EDAOActionType.UPDATE);
+      internalUpdateItem (aAppToken);
     }
     finally
     {
@@ -200,7 +199,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
       aAppToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason);
       aAccessToken = aAppToken.createNewAccessToken (sTokenString);
       ObjectHelper.setLastModificationNow (aAppToken);
-      markAsChanged (aAppToken, EDAOActionType.UPDATE);
+      internalUpdateItem (aAppToken);
     }
     finally
     {
@@ -242,7 +241,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
         return EChange.UNCHANGED;
       }
       ObjectHelper.setLastModificationNow (aAppToken);
-      markAsChanged (aAppToken, EDAOActionType.UPDATE);
+      internalUpdateItem (aAppToken);
     }
     finally
     {

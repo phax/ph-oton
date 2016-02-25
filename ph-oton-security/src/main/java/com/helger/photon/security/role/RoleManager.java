@@ -66,13 +66,11 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
     if (!containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       internalAddItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
                                  CSecurity.ROLE_ADMINISTRATOR_NAME,
-                                 (String) null),
-                       EDAOActionType.CREATE);
+                                 (String) null));
     if (!containsRoleWithID (CSecurity.ROLE_USER_ID))
       internalAddItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
                                  CSecurity.ROLE_USER_NAME,
-                                 (String) null),
-                       EDAOActionType.CREATE);
+                                 (String) null));
   }
 
   /**
@@ -107,8 +105,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
 
     m_aRWLock.writeLocked ( () -> {
       // Store
-      internalAddItem (aRole, EDAOActionType.CREATE);
-      markAsChanged (aRole, EDAOActionType.CREATE);
+      internalAddItem (aRole);
     });
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), sName);
 
@@ -144,8 +141,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
 
     m_aRWLock.writeLocked ( () -> {
       // Store
-      internalAddItem (aRole, EDAOActionType.CREATE);
-      markAsChanged (aRole, EDAOActionType.CREATE);
+      internalAddItem (aRole);
     });
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), "predefind-role", sName);
 
@@ -274,7 +270,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aRole);
-      markAsChanged (aRole, EDAOActionType.UPDATE);
+      internalUpdateItem (aRole);
     }
     finally
     {
@@ -327,7 +323,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aRole);
-      markAsChanged (aRole, EDAOActionType.UPDATE);
+      internalUpdateItem (aRole);
     }
     finally
     {

@@ -72,13 +72,13 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   @Override
   protected void onRecoveryCreate (@Nonnull final IMPLTYPE aItem)
   {
-    internalAddItem (aItem, EDAOActionType.CREATE);
+    _addItem (aItem, EDAOActionType.CREATE);
   }
 
   @Override
   protected void onRecoveryUpdate (@Nonnull final IMPLTYPE aItem)
   {
-    internalAddItem (aItem, EDAOActionType.UPDATE);
+    _addItem (aItem, EDAOActionType.UPDATE);
   }
 
   @Override
@@ -92,7 +92,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   protected final EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
     for (final IMicroElement eItem : aDoc.getDocumentElement ().getAllChildElements (m_sXMLItemElementName))
-      internalAddItem (MicroTypeConverter.convertToNative (eItem, getDataTypeClass ()), EDAOActionType.CREATE);
+      _addItem (MicroTypeConverter.convertToNative (eItem, getDataTypeClass ()), EDAOActionType.CREATE);
     return EChange.UNCHANGED;
   }
 
@@ -116,7 +116,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
    *        The action type. Must be CREATE or UPDATE!
    */
   @MustBeLocked (ELockType.WRITE)
-  protected final void internalAddItem (@Nonnull final IMPLTYPE aNewItem, @Nonnull final EDAOActionType eActionType)
+  private void _addItem (@Nonnull final IMPLTYPE aNewItem, @Nonnull final EDAOActionType eActionType)
   {
     ValueEnforcer.notNull (aNewItem, "Item");
     ValueEnforcer.isTrue (eActionType == EDAOActionType.CREATE ||
@@ -144,12 +144,34 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     }
 
     m_aMap.put (sID, aNewItem);
+  }
 
-    // Callbacks
-    if (eActionType == EDAOActionType.CREATE)
-      m_aCallbacks.forEach (aCB -> aCB.onCreateItem (sID, aNewItem));
-    else
-      m_aCallbacks.forEach (aCB -> aCB.onUpdateItem (sID, aOldItem, aNewItem));
+  /**
+   * Add or update an item including invoking the callback
+   *
+   * @param aNewItem
+   *        The item to be added or updated
+   * @param eActionType
+   *        The action type. Must be CREATE or UPDATE!
+   */
+  @MustBeLocked (ELockType.WRITE)
+  protected final void internalAddItem (@Nonnull final IMPLTYPE aNewItem)
+  {
+    // Add to map
+    _addItem (aNewItem, EDAOActionType.CREATE);
+    // Trigger save changes
+    markAsChanged (aNewItem, EDAOActionType.CREATE);
+    // Invoke callbacks
+    m_aCallbacks.forEach (aCB -> aCB.onCreateItem (aNewItem));
+  }
+
+  @MustBeLocked (ELockType.WRITE)
+  protected final void internalUpdateItem (@Nonnull final IMPLTYPE aItem)
+  {
+    // Trigger save changes
+    markAsChanged (aItem, EDAOActionType.UPDATE);
+    // Invoke callbacks
+    m_aCallbacks.forEach (aCB -> aCB.onUpdateItem (aItem));
   }
 
   @MustBeLocked (ELockType.WRITE)

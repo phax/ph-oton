@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
@@ -876,27 +877,6 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   }
 
   /**
-   * This method must be called every time something changed in the DAO. It
-   * triggers the writing to a file if auto-save is active. This method must be
-   * called within a write-lock as it is not locked!
-   *
-   * @param aModifiedElement
-   *        The modified data element. May not be <code>null</code>.
-   * @param eActionType
-   *        The action that was performed. May not be <code>null</code>.
-   */
-  @MustBeLocked (ELockType.WRITE)
-  protected final void markAsChanged (@Nonnull final DATATYPE aModifiedElement,
-                                      @Nonnull final EDAOActionType eActionType)
-  {
-    ValueEnforcer.notNull (aModifiedElement, "ModifiedElement");
-    ValueEnforcer.notNull (eActionType, "ActionType");
-
-    // Convert single item to list
-    markAsChanged (CollectionHelper.newList (aModifiedElement), eActionType);
-  }
-
-  /**
    * @return The waiting time used before the file is effectively written. Never
    *         <code>null</code>. Default value is 10 seconds.
    */
@@ -918,6 +898,27 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   {
     ValueEnforcer.notNull (aWaitingTime, "WaitingTime");
     m_aWaitingTime = aWaitingTime;
+  }
+
+  /**
+   * This method must be called every time something changed in the DAO. It
+   * triggers the writing to a file if auto-save is active. This method must be
+   * called within a write-lock as it is not locked!
+   *
+   * @param aModifiedElement
+   *        The modified data element. May not be <code>null</code>.
+   * @param eActionType
+   *        The action that was performed. May not be <code>null</code>.
+   */
+  @MustBeLocked (ELockType.WRITE)
+  @OverridingMethodsMustInvokeSuper
+  protected void markAsChanged (@Nonnull final DATATYPE aModifiedElement, @Nonnull final EDAOActionType eActionType)
+  {
+    ValueEnforcer.notNull (aModifiedElement, "ModifiedElement");
+    ValueEnforcer.notNull (eActionType, "ActionType");
+
+    // Convert single item to list
+    markAsChanged (CollectionHelper.newList (aModifiedElement), eActionType);
   }
 
   @MustBeLocked (ELockType.WRITE)
