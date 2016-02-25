@@ -57,7 +57,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
   @Nonnull
   protected EChange onInit ()
   {
-    internalAddItem (new Client (CClient.GLOBAL_CLIENT, CClient.GLOBAL_CLIENT_NAME));
+    internalCreateItem (new Client (CClient.GLOBAL_CLIENT, CClient.GLOBAL_CLIENT_NAME));
     return EChange.CHANGED;
   }
 
@@ -79,7 +79,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
       if (containsWithID (sClientID))
         return null;
 
-      internalAddItem (aClient);
+      internalCreateItem (aClient);
     }
     finally
     {

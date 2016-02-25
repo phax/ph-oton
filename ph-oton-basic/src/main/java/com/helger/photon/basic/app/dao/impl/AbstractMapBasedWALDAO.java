@@ -26,6 +26,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -41,7 +42,6 @@ import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.ext.ICommonsSet;
-import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -50,9 +50,10 @@ import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.type.ITypedObject;
 
 @ThreadSafe
-public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
+public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
                                              extends AbstractWALDAO <IMPLTYPE> implements IMapBasedDAO <INTERFACETYPE>
 {
   private final String m_sXMLItemElementName;
@@ -110,20 +111,20 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   /**
    * Add or update an item
    *
-   * @param aNewItem
+   * @param aItem
    *        The item to be added or updated
    * @param eActionType
    *        The action type. Must be CREATE or UPDATE!
    */
   @MustBeLocked (ELockType.WRITE)
-  private void _addItem (@Nonnull final IMPLTYPE aNewItem, @Nonnull final EDAOActionType eActionType)
+  private void _addItem (@Nonnull final IMPLTYPE aItem, @Nonnull final EDAOActionType eActionType)
   {
-    ValueEnforcer.notNull (aNewItem, "Item");
+    ValueEnforcer.notNull (aItem, "Item");
     ValueEnforcer.isTrue (eActionType == EDAOActionType.CREATE ||
                           eActionType == EDAOActionType.UPDATE,
                           "Invalid action type provided!");
 
-    final String sID = aNewItem.getID ();
+    final String sID = aItem.getID ();
     final IMPLTYPE aOldItem = m_aMap.get (sID);
     if (eActionType == EDAOActionType.CREATE)
     {
@@ -131,7 +132,8 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
         throw new IllegalArgumentException (ClassHelper.getClassLocalName (getDataTypeClass ()) +
                                             " with ID '" +
                                             sID +
-                                            "' is already in use and can therefore not be created again!");
+                                            "' is already in use and can therefore not be created again. Old item = " +
+                                            aOldItem);
     }
     else
     {
@@ -143,7 +145,17 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
                                             "' is not yet in use and can therefore not be updated!");
     }
 
-    m_aMap.put (sID, aNewItem);
+    m_aMap.put (sID, aItem);
+  }
+
+  @Override
+  @MustBeLocked (ELockType.WRITE)
+  @OverridingMethodsMustInvokeSuper
+  @Deprecated
+  protected final void markAsChanged (@Nonnull final IMPLTYPE aModifiedElement,
+                                      @Nonnull final EDAOActionType eActionType)
+  {
+    super.markAsChanged (aModifiedElement, eActionType);
   }
 
   /**
@@ -155,12 +167,12 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
    *        The action type. Must be CREATE or UPDATE!
    */
   @MustBeLocked (ELockType.WRITE)
-  protected final void internalAddItem (@Nonnull final IMPLTYPE aNewItem)
+  protected final void internalCreateItem (@Nonnull final IMPLTYPE aNewItem)
   {
     // Add to map
     _addItem (aNewItem, EDAOActionType.CREATE);
     // Trigger save changes
-    markAsChanged (aNewItem, EDAOActionType.CREATE);
+    super.markAsChanged (aNewItem, EDAOActionType.CREATE);
     // Invoke callbacks
     m_aCallbacks.forEach (aCB -> aCB.onCreateItem (aNewItem));
   }
@@ -169,29 +181,42 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   protected final void internalUpdateItem (@Nonnull final IMPLTYPE aItem)
   {
     // Trigger save changes
-    markAsChanged (aItem, EDAOActionType.UPDATE);
+    super.markAsChanged (aItem, EDAOActionType.UPDATE);
     // Invoke callbacks
     m_aCallbacks.forEach (aCB -> aCB.onUpdateItem (aItem));
   }
 
   @MustBeLocked (ELockType.WRITE)
-  protected final IMPLTYPE internalRemoveItem (@Nullable final String sID)
+  @Nullable
+  protected final IMPLTYPE internalDeleteItem (@Nullable final String sID)
   {
     if (StringHelper.hasNoText (sID))
       return null;
 
-    final IMPLTYPE aRemovedItem = m_aMap.remove (sID);
-    if (aRemovedItem != null)
-      m_aCallbacks.forEach (aCB -> aCB.onRemoveItem (aRemovedItem));
+    final IMPLTYPE aDeletedItem = m_aMap.remove (sID);
+    if (aDeletedItem == null)
+      return null;
 
-    return aRemovedItem;
+    // Trigger save changes
+    super.markAsChanged (aDeletedItem, EDAOActionType.DELETE);
+    // Invoke callbacks
+    m_aCallbacks.forEach (aCB -> aCB.onDeleteItem (aDeletedItem));
+    return aDeletedItem;
   }
 
   @MustBeLocked (ELockType.WRITE)
-  protected final void internalRemoveAllItems ()
+  protected final void internalMarkItemDeleted (@Nonnull final IMPLTYPE aItem)
   {
-    if (m_aMap.removeAll ().isChanged ())
-      m_aCallbacks.forEach (aCB -> aCB.onRemoveAll ());
+    // Trigger save changes
+    super.markAsChanged (aItem, EDAOActionType.UPDATE);
+    // Invoke callbacks
+    m_aCallbacks.forEach (aCB -> aCB.onMarkItemDeleted (aItem));
+  }
+
+  @MustBeLocked (ELockType.WRITE)
+  protected final void internalRemoveAllItemsNoCallback ()
+  {
+    m_aMap.removeAll ().isChanged ();
   }
 
   @Nonnull

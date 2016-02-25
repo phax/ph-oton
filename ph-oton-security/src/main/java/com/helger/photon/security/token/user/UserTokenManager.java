@@ -73,7 +73,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
     final UserToken aUserToken = new UserToken (sTokenString, aCustomAttrs, aAppToken, sUserName);
 
     m_aRWLock.writeLocked ( () -> {
-      internalAddItem (aUserToken);
+      internalCreateItem (aUserToken);
     });
     AuditHelper.onAuditCreateSuccess (UserToken.OT, aUserToken.getID (), aCustomAttrs, aAppToken.getID (), sUserName);
 

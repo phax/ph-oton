@@ -33,10 +33,14 @@ public interface IDAOChangeCallback <INTERFACETYPE extends IHasID <String> & Ser
    * @param aItem
    *        The removed item. Never <code>null</code>.
    */
-  void onRemoveItem (@Nonnull INTERFACETYPE aItem);
+  void onDeleteItem (@Nonnull INTERFACETYPE aItem);
 
   /**
-   * Called after all items were removed and at least one item was present.
+   * Called after an item was marked as deleted (but is still present - special
+   * case of update!).
+   *
+   * @param aItem
+   *        The item that was marked as deleted. Never <code>null</code>.
    */
-  void onRemoveAll ();
+  void onMarkItemDeleted (@Nonnull INTERFACETYPE aItem);
 }

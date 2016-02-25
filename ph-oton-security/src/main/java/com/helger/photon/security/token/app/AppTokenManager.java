@@ -32,7 +32,6 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.app.dao.impl.EDAOActionType;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.object.ObjectHelper;
 import com.helger.photon.security.token.accesstoken.AccessToken;
@@ -80,7 +79,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
                                              sOwnerContactEmail);
 
     m_aRWLock.writeLocked ( () -> {
-      internalAddItem (aAppToken);
+      internalCreateItem (aAppToken);
     });
     AuditHelper.onAuditCreateSuccess (AppToken.OT,
                                       aAppToken.getID (),
@@ -164,7 +163,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
         AuditHelper.onAuditDeleteFailure (AppToken.OT, "already-deleted", aAppToken.getID ());
         return EChange.UNCHANGED;
       }
-      markAsChanged (aAppToken, EDAOActionType.DELETE);
+      internalMarkItemDeleted (aAppToken);
     }
     finally
     {

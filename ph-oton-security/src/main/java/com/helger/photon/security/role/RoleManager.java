@@ -32,7 +32,6 @@ import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.IReloadableDAO;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.app.dao.impl.EDAOActionType;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.ObjectHelper;
@@ -56,7 +55,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
   public void reload () throws DAOException
   {
     m_aRWLock.writeLockedThrowing ( () -> {
-      internalRemoveAllItems ();
+      internalRemoveAllItemsNoCallback ();
       initialRead ();
     });
   }
@@ -64,11 +63,11 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
   public void createDefaults ()
   {
     if (!containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
-      internalAddItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
+      internalCreateItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
                                  CSecurity.ROLE_ADMINISTRATOR_NAME,
                                  (String) null));
     if (!containsRoleWithID (CSecurity.ROLE_USER_ID))
-      internalAddItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
+      internalCreateItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
                                  CSecurity.ROLE_USER_NAME,
                                  (String) null));
   }
@@ -105,7 +104,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
 
     m_aRWLock.writeLocked ( () -> {
       // Store
-      internalAddItem (aRole);
+      internalCreateItem (aRole);
     });
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), sName);
 
@@ -141,7 +140,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
 
     m_aRWLock.writeLocked ( () -> {
       // Store
-      internalAddItem (aRole);
+      internalCreateItem (aRole);
     });
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), "predefind-role", sName);
 
@@ -165,15 +164,13 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
     m_aRWLock.writeLock ().lock ();
     try
     {
-      aDeletedRole = internalRemoveItem (sRoleID);
+      aDeletedRole = internalDeleteItem (sRoleID);
       if (aDeletedRole == null)
       {
         AuditHelper.onAuditDeleteFailure (Role.OT, "no-such-role-id", sRoleID);
         return EChange.UNCHANGED;
       }
-
       ObjectHelper.setDeletionNow (aDeletedRole);
-      markAsChanged (aDeletedRole, EDAOActionType.DELETE);
     }
     finally
     {
