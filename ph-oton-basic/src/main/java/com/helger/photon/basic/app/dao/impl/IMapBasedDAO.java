@@ -17,9 +17,11 @@
 package com.helger.photon.basic.app.dao.impl;
 
 import java.util.Collection;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
@@ -36,21 +38,38 @@ public interface IMapBasedDAO <INTERFACETYPE extends IHasID <String>>
 
   @Nonnull
   @ReturnsMutableCopy
-  Collection <? extends INTERFACETYPE> getAll (@Nullable Predicate <INTERFACETYPE> aFilter);
+  Collection <? extends INTERFACETYPE> getAll (@Nullable Predicate <? super INTERFACETYPE> aFilter);
+
+  void findAll (@Nullable Predicate <? super INTERFACETYPE> aFilter,
+                @Nonnull Consumer <? super INTERFACETYPE> aConsumer);
 
   @Nonnull
   @ReturnsMutableCopy
-  <RETTYPE> Collection <RETTYPE> getAllMapped (@Nullable Predicate <INTERFACETYPE> aFilter,
-                                               @Nonnull Function <INTERFACETYPE, RETTYPE> aMapper);
+  <RETTYPE> Collection <RETTYPE> getAllMapped (@Nullable Predicate <? super INTERFACETYPE> aFilter,
+                                               @Nonnull Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper);
+
+  <RETTYPE> void findAllMapped (@Nullable Predicate <? super INTERFACETYPE> aFilter,
+                                @Nonnull Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper,
+                                @Nonnull Consumer <? super RETTYPE> aConsumer);
 
   @Nullable
-  INTERFACETYPE getFirst (@Nullable Predicate <INTERFACETYPE> aFilter);
+  INTERFACETYPE getFirst (@Nullable Predicate <? super INTERFACETYPE> aFilter);
 
   @Nullable
-  <RETTYPE> RETTYPE getFirstMapped (@Nullable Predicate <INTERFACETYPE> aFilter,
-                                    @Nonnull Function <INTERFACETYPE, RETTYPE> aMapper);
+  <RETTYPE> RETTYPE getFirstMapped (@Nullable Predicate <? super INTERFACETYPE> aFilter,
+                                    @Nonnull Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper);
 
-  boolean containsAny (@Nullable Predicate <INTERFACETYPE> aFilter);
+  boolean containsAny (@Nullable Predicate <? super INTERFACETYPE> aFilter);
+
+  boolean containsNone (@Nullable Predicate <? super INTERFACETYPE> aFilter);
+
+  boolean containsOnly (@Nullable Predicate <? super INTERFACETYPE> aFilter);
 
   boolean containsWithID (@Nullable String sID);
+
+  @Nonnegative
+  int getCount ();
+
+  @Nonnegative
+  int getCount (@Nullable Predicate <? super INTERFACETYPE> aFilter);
 }
