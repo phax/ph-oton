@@ -32,6 +32,7 @@ import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsHashMap;
@@ -54,6 +55,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 {
   private final String m_sXMLItemElementName;
   private final ICommonsMap <String, IMPLTYPE> m_aMap = new CommonsHashMap <> ();
+  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList <> ();
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nonnull @Nonempty final String sFilename,
@@ -102,18 +104,49 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     return aDoc;
   }
 
+  /**
+   * Add or update an item
+   *
+   * @param aNewItem
+   *        The item to be added or updated
+   * @param eActionType
+   *        The action type. Must be CREATE or UPDATE!
+   */
   @MustBeLocked (ELockType.WRITE)
-  protected final void internalAddItem (@Nonnull final IMPLTYPE aItem, @Nonnull final EDAOActionType eActionType)
+  protected final void internalAddItem (@Nonnull final IMPLTYPE aNewItem, @Nonnull final EDAOActionType eActionType)
   {
-    ValueEnforcer.notNull (aItem, "Item");
+    ValueEnforcer.notNull (aNewItem, "Item");
+    ValueEnforcer.isTrue (eActionType == EDAOActionType.CREATE ||
+                          eActionType == EDAOActionType.UPDATE,
+                          "Invalid action type provided!");
 
-    final String sID = aItem.getID ();
-    if (eActionType == EDAOActionType.CREATE && m_aMap.containsKey (sID))
-      throw new IllegalArgumentException (ClassHelper.getClassLocalName (getDataTypeClass ()) +
-                                          " with ID '" +
-                                          sID +
-                                          "' is already in use!");
-    m_aMap.put (sID, aItem);
+    final String sID = aNewItem.getID ();
+    final IMPLTYPE aOldItem = m_aMap.get (sID);
+    if (eActionType == EDAOActionType.CREATE)
+    {
+      if (aOldItem != null)
+        throw new IllegalArgumentException (ClassHelper.getClassLocalName (getDataTypeClass ()) +
+                                            " with ID '" +
+                                            sID +
+                                            "' is already in use and can therefore not be created again!");
+    }
+    else
+    {
+      // Update
+      if (aOldItem == null)
+        throw new IllegalArgumentException (ClassHelper.getClassLocalName (getDataTypeClass ()) +
+                                            " with ID '" +
+                                            sID +
+                                            "' is not yet in use and can therefore not be updated!");
+    }
+
+    m_aMap.put (sID, aNewItem);
+
+    // Callbacks
+    if (eActionType == EDAOActionType.CREATE)
+      m_aCallbacks.forEach (aCB -> aCB.onCreateItem (sID, aNewItem));
+    else
+      m_aCallbacks.forEach (aCB -> aCB.onUpdateItem (sID, aOldItem, aNewItem));
   }
 
   @MustBeLocked (ELockType.WRITE)
@@ -122,13 +155,18 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     if (StringHelper.hasNoText (sID))
       return null;
 
-    return m_aMap.remove (sID);
+    final IMPLTYPE aRemovedItem = m_aMap.remove (sID);
+    if (aRemovedItem != null)
+      m_aCallbacks.forEach (aCB -> aCB.onRemoveItem (aRemovedItem));
+
+    return aRemovedItem;
   }
 
   @MustBeLocked (ELockType.WRITE)
   protected final void internalRemoveAllItems ()
   {
-    m_aMap.clear ();
+    if (m_aMap.removeAll ().isChanged ())
+      m_aCallbacks.forEach (aCB -> aCB.onRemoveAll ());
   }
 
   @Nonnull
