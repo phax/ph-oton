@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.ajax;
 
-import java.util.Map;
-
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,6 +26,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
@@ -105,7 +104,7 @@ public final class ApplicationAjaxManager extends AbstractApplicationWebSingleto
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ()
+  public ICommonsMap <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ()
   {
     return m_aInvoker.getAllRegisteredFunctions ();
   }

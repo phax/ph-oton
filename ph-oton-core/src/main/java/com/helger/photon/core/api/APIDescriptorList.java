@@ -16,11 +16,7 @@
  */
 package com.helger.photon.core.api;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 import javax.annotation.Nonnull;
@@ -31,6 +27,10 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsEnumMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptorHelper;
 import com.helger.photon.core.api.pathdescriptor.PathMatchingResult;
@@ -46,13 +46,13 @@ public class APIDescriptorList
   private static final Logger s_aLogger = LoggerFactory.getLogger (APIDescriptorList.class);
 
   /** Store APIDescriptor per HTTP method for quick access. */
-  private final Map <EHTTPMethod, List <APIDescriptor>> m_aMap = new EnumMap <> (EHTTPMethod.class);
+  private final ICommonsMap <EHTTPMethod, ICommonsList <APIDescriptor>> m_aMap = new CommonsEnumMap <> (EHTTPMethod.class);
 
   public APIDescriptorList ()
   {
     // Init map
     for (final EHTTPMethod e : EHTTPMethod.values ())
-      m_aMap.put (e, new ArrayList <> ());
+      m_aMap.put (e, new CommonsArrayList <> ());
   }
 
   public void addDescriptor (@Nonnull final APIDescriptor aDescriptor)
@@ -65,9 +65,9 @@ public class APIDescriptorList
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <IAPIDescriptor> getAllDescriptors ()
+  public ICommonsList <IAPIDescriptor> getAllDescriptors ()
   {
-    final List <IAPIDescriptor> ret = new ArrayList <> ();
+    final ICommonsList <IAPIDescriptor> ret = new CommonsArrayList <> ();
     for (final List <APIDescriptor> aList : m_aMap.values ())
       ret.addAll (aList);
     return ret;
@@ -91,9 +91,9 @@ public class APIDescriptorList
 
     // Split only once for performance reasons
     final String sSourcePath = aPath.getPath ();
-    final List <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sSourcePath);
+    final ICommonsList <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sSourcePath);
 
-    final List <InvokableAPIDescriptor> aMatching = new ArrayList <> ();
+    final ICommonsList <InvokableAPIDescriptor> aMatching = new CommonsArrayList <> ();
 
     // HTTP Method must match
     for (final APIDescriptor aDescriptor : m_aMap.get (aPath.getHTTPMethod ()))
@@ -108,7 +108,7 @@ public class APIDescriptorList
     if (nMatching == 1)
     {
       // 1 match - straight forward
-      return aMatching.get (0);
+      return aMatching.getFirst ();
     }
 
     // Use the resolver...

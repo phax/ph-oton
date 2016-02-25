@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.api;
 
-import java.util.Collection;
-
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,6 +23,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
+import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 
@@ -80,7 +79,7 @@ public interface IAPIInvoker
    */
   @Nonnull
   @ReturnsMutableCopy
-  Collection <? extends IAPIDescriptor> getAllAPIDescriptors ();
+  ICommonsCollection <? extends IAPIDescriptor> getAllAPIDescriptors ();
 
   @Nullable
   InvokableAPIDescriptor getAPIByPath (@Nonnull APIPath aPath);

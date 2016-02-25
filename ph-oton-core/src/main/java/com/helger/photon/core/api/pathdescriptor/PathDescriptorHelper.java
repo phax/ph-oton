@@ -16,12 +16,11 @@
  */
 package com.helger.photon.core.api.pathdescriptor;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.string.StringHelper;
 
@@ -45,7 +44,7 @@ public final class PathDescriptorHelper
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <String> getCleanPathParts (@Nonnull final String sPath)
+  public static ICommonsList <String> getCleanPathParts (@Nonnull final String sPath)
   {
     // Remove leading and trailing whitespaces and slashes
     String sRealPath = StringHelper.trimStartAndEnd (sPath.trim (), "/", "/");
@@ -54,7 +53,7 @@ public final class PathDescriptorHelper
     sRealPath = FilenameHelper.getCleanPath (sRealPath);
 
     // Split into pieces
-    final List <String> aPathParts = StringHelper.getExploded ('/', sRealPath);
+    final ICommonsList <String> aPathParts = StringHelper.getExploded ('/', sRealPath);
     return aPathParts;
   }
 }

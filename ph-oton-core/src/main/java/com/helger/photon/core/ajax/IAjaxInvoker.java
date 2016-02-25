@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.ajax;
 
-import java.util.Map;
-
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,6 +23,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -68,7 +67,7 @@ public interface IAjaxInvoker
 
   @Nonnull
   @ReturnsMutableCopy
-  Map <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ();
+  ICommonsMap <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ();
 
   /**
    * Get the registered AJAX function with the specified name

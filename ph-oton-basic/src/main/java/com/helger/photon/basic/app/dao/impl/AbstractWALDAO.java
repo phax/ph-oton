@@ -69,8 +69,6 @@ import com.helger.commons.xml.serialize.write.IXMLWriterSettings;
 import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.datetime.format.PDTToString;
 import com.helger.photon.basic.app.dao.IDAOIO;
-import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
-import com.helger.photon.basic.app.dao.IDAOWriteExceptionCallback;
 import com.helger.photon.basic.app.io.ConstantHasFilename;
 import com.helger.photon.basic.app.io.IHasFilename;
 import com.helger.photon.basic.audit.AuditHelper;
@@ -281,19 +279,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     if (getExceptionHandlersRead ().hasCallbacks ())
     {
       final IReadableResource aRes = aFile == null ? null : new FileSystemResource (aFile);
-      for (final IDAOReadExceptionCallback aExceptionHandlerRead : getExceptionHandlersRead ().getAllCallbacks ())
-      {
-        try
-        {
-          aExceptionHandlerRead.onDAOReadException (t, bIsInitialization, aRes);
-        }
-        catch (final Throwable t2)
-        {
-          s_aLogger.error ("Error in custom exception handler for reading " +
-                           (aRes == null ? "memory-only" : aRes.toString ()),
-                           t2);
-        }
-      }
+      getExceptionHandlersRead ().forEach (aCB -> aCB.onDAOReadException (t, bIsInitialization, aRes));
     }
   }
 
@@ -708,17 +694,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     {
       final IReadableResource aRes = new FileSystemResource (sErrorFilename);
       final String sXMLContent = aDoc == null ? "no XML document created" : MicroWriter.getXMLString (aDoc);
-      for (final IDAOWriteExceptionCallback aExceptionHandlerWrite : getExceptionHandlersWrite ().getAllCallbacks ())
-      {
-        try
-        {
-          aExceptionHandlerWrite.onDAOWriteException (t, aRes, sXMLContent);
-        }
-        catch (final Throwable t2)
-        {
-          s_aLogger.error ("Error in custom exception handler for writing " + aRes.toString (), t2);
-        }
-      }
+      getExceptionHandlersWrite ().forEach (aCB -> aCB.onDAOWriteException (t, aRes, sXMLContent));
     }
   }
 

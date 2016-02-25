@@ -16,9 +16,6 @@
  */
 package com.helger.photon.core.ajax;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,7 +30,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
@@ -69,14 +67,14 @@ public class AjaxInvoker implements IAjaxInvoker
                                                                                                                            "$timer");
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-  private final CallbackList <IAjaxExceptionCallback> m_aExceptionCallbacks = new CallbackList <IAjaxExceptionCallback> ();
-  private final CallbackList <IAjaxBeforeExecutionCallback> m_aBeforeExecutionCallbacks = new CallbackList <IAjaxBeforeExecutionCallback> ();
-  private final CallbackList <IAjaxAfterExecutionCallback> m_aAfterExecutionCallbacks = new CallbackList <IAjaxAfterExecutionCallback> ();
+  private final CallbackList <IAjaxExceptionCallback> m_aExceptionCallbacks = new CallbackList <> ();
+  private final CallbackList <IAjaxBeforeExecutionCallback> m_aBeforeExecutionCallbacks = new CallbackList <> ();
+  private final CallbackList <IAjaxAfterExecutionCallback> m_aAfterExecutionCallbacks = new CallbackList <> ();
   @GuardedBy ("m_aRWLock")
   private long m_nLongRunningExecutionLimitTime = DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS;
-  private final CallbackList <IAjaxLongRunningExecutionCallback> m_aLongRunningExecutionCallbacks = new CallbackList <IAjaxLongRunningExecutionCallback> ();
+  private final CallbackList <IAjaxLongRunningExecutionCallback> m_aLongRunningExecutionCallbacks = new CallbackList <> ();
   @GuardedBy ("m_aRWLock")
-  private final Map <String, IAjaxFunctionDeclaration> m_aMap = new HashMap <String, IAjaxFunctionDeclaration> ();
+  private final ICommonsMap <String, IAjaxFunctionDeclaration> m_aMap = new CommonsHashMap <> ();
 
   public AjaxInvoker ()
   {
@@ -120,9 +118,7 @@ public class AjaxInvoker implements IAjaxInvoker
 
   public void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
   {
-    m_aRWLock.writeLocked ( () -> {
-      m_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime;
-    });
+    m_aRWLock.writeLocked ( () -> m_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
   }
 
   @Nonnull
@@ -134,9 +130,9 @@ public class AjaxInvoker implements IAjaxInvoker
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ()
+  public ICommonsMap <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newMap (m_aMap));
+    return m_aRWLock.readLocked ( () -> m_aMap.getClone ());
   }
 
   @Nullable
@@ -197,15 +193,10 @@ public class AjaxInvoker implements IAjaxInvoker
       s_aStatsGlobalInvoke.increment ();
 
       // Invoke before handler
-      for (final IAjaxBeforeExecutionCallback aBeforeCallback : getBeforeExecutionCallbacks ().getAllCallbacks ())
-        try
-        {
-          aBeforeCallback.onBeforeExecution (this, sFunctionName, aRequestScope, aAjaxExecutor);
-        }
-        catch (final Throwable t)
-        {
-          s_aLogger.error ("Error invoking Ajax function before execution callback handler " + aBeforeCallback, t);
-        }
+      getBeforeExecutionCallbacks ().forEach (aCB -> aCB.onBeforeExecution (this,
+                                                                            sFunctionName,
+                                                                            aRequestScope,
+                                                                            aAjaxExecutor));
 
       // Register all external resources, prior to handling the main request, as
       // the JS/CSS elements will be contained in the AjaxDefaultResponse in
@@ -224,15 +215,11 @@ public class AjaxInvoker implements IAjaxInvoker
       }
 
       // Invoke after handler
-      for (final IAjaxAfterExecutionCallback aAfterCallback : getAfterExecutionCallbacks ().getAllCallbacks ())
-        try
-        {
-          aAfterCallback.onAfterExecution (this, sFunctionName, aRequestScope, aAjaxExecutor, aAjaxResponse);
-        }
-        catch (final Throwable t)
-        {
-          s_aLogger.error ("Error invoking Ajax after execution callback handler " + aAfterCallback, t);
-        }
+      getAfterExecutionCallbacks ().forEach (aCB -> aCB.onAfterExecution (this,
+                                                                          sFunctionName,
+                                                                          aRequestScope,
+                                                                          aAjaxExecutor,
+                                                                          aAjaxResponse));
 
       // Increment statistics after successful call
       s_aStatsFunctionInvoke.increment (sFunctionName);
@@ -244,35 +231,21 @@ public class AjaxInvoker implements IAjaxInvoker
       if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
       {
         // Long running execution
-        for (final IAjaxLongRunningExecutionCallback aLongRunningExecutionCallback : getLongRunningExecutionCallbacks ().getAllCallbacks ())
-          try
-          {
-            aLongRunningExecutionCallback.onLongRunningExecution (this,
-                                                                  sFunctionName,
-                                                                  aRequestScope,
-                                                                  aAjaxExecutor,
-                                                                  nExecutionMillis);
-          }
-          catch (final Throwable t)
-          {
-            s_aLogger.error ("Error invoking Ajax long running execution callback handler " +
-                             aLongRunningExecutionCallback,
-                             t);
-          }
+        getLongRunningExecutionCallbacks ().forEach (aCB -> aCB.onLongRunningExecution (this,
+                                                                                        sFunctionName,
+                                                                                        aRequestScope,
+                                                                                        aAjaxExecutor,
+                                                                                        nExecutionMillis));
       }
       return aAjaxResponse;
     }
     catch (final Throwable t)
     {
-      for (final IAjaxExceptionCallback aExceptionCallback : getExceptionCallbacks ().getAllCallbacks ())
-        try
-        {
-          aExceptionCallback.onAjaxExecutionException (this, sFunctionName, aAjaxExecutor, aRequestScope, t);
-        }
-        catch (final Throwable t2)
-        {
-          s_aLogger.error ("Error invoking Ajax exception callback handler " + aExceptionCallback, t2);
-        }
+      getExceptionCallbacks ().forEach (aCB -> aCB.onAjaxExecutionException (this,
+                                                                             sFunctionName,
+                                                                             aAjaxExecutor,
+                                                                             aRequestScope,
+                                                                             t));
 
       // Re-throw
       throw t;

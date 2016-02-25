@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.api;
 
-import java.util.Collection;
-
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,6 +31,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
+import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
@@ -129,7 +128,7 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends IAPIDescriptor> getAllAPIDescriptors ()
+  public ICommonsCollection <? extends IAPIDescriptor> getAllAPIDescriptors ()
   {
     return m_aRWLock.readLocked (m_aList::getAllDescriptors);
   }
@@ -160,28 +159,12 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
       s_aStatsGlobalInvoke.increment ();
 
       // Invoke before handler
-      for (final IAPIBeforeExecutionCallback aBeforeCallback : getBeforeExecutionCallbacks ().getAllCallbacks ())
-        try
-        {
-          aBeforeCallback.onBeforeExecution (this, aInvokableDescriptor, aRequestScope);
-        }
-        catch (final Throwable t)
-        {
-          s_aLogger.error ("Error invoking API function before execution callback handler " + aBeforeCallback, t);
-        }
+      getBeforeExecutionCallbacks ().forEach (aCB -> aCB.onBeforeExecution (this, aInvokableDescriptor, aRequestScope));
 
       aInvokableDescriptor.invokeAPI (aRequestScope, aUnifiedResponse);
 
       // Invoke after handler
-      for (final IAPIAfterExecutionCallback aAfterCallback : getAfterExecutionCallbacks ().getAllCallbacks ())
-        try
-        {
-          aAfterCallback.onAfterExecution (this, aInvokableDescriptor, aRequestScope);
-        }
-        catch (final Throwable t)
-        {
-          s_aLogger.error ("Error invoking API after execution callback handler " + aAfterCallback, t);
-        }
+      getAfterExecutionCallbacks ().forEach (aCB -> aCB.onAfterExecution (this, aInvokableDescriptor, aRequestScope));
 
       // Increment statistics after successful call
       s_aStatsFunctionInvoke.increment (sPath);
@@ -193,33 +176,18 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
       if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
       {
         // Long running execution
-        for (final IAPILongRunningExecutionCallback aLongRunningExecutionCallback : getLongRunningExecutionCallbacks ().getAllCallbacks ())
-          try
-          {
-            aLongRunningExecutionCallback.onLongRunningExecution (this,
-                                                                  aInvokableDescriptor,
-                                                                  aRequestScope,
-                                                                  nExecutionMillis);
-          }
-          catch (final Throwable t)
-          {
-            s_aLogger.error ("Error invoking API long running execution callback handler " +
-                             aLongRunningExecutionCallback,
-                             t);
-          }
+        getLongRunningExecutionCallbacks ().forEach (aCB -> aCB.onLongRunningExecution (this,
+                                                                                        aInvokableDescriptor,
+                                                                                        aRequestScope,
+                                                                                        nExecutionMillis));
       }
     }
     catch (final Throwable t)
     {
-      for (final IAPIExceptionCallback aExceptionCallback : getExceptionCallbacks ().getAllCallbacks ())
-        try
-        {
-          aExceptionCallback.onAPIExecutionException (this, aInvokableDescriptor, aRequestScope, t);
-        }
-        catch (final Throwable t2)
-        {
-          s_aLogger.error ("Error invoking API exception callback handler " + aExceptionCallback, t2);
-        }
+      getExceptionCallbacks ().forEach (aCB -> aCB.onAPIExecutionException (this,
+                                                                            aInvokableDescriptor,
+                                                                            aRequestScope,
+                                                                            t));
 
       // Re-throw
       if (t instanceof Exception)
