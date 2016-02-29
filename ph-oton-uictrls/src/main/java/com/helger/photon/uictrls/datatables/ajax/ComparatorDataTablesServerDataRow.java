@@ -48,8 +48,11 @@ final class ComparatorDataTablesServerDataRow implements IComparator <DataTables
       final DataTablesServerDataCell aCell2 = aRow2.getCellAtIndex (nSortColumnIndex);
 
       // Main compare
-      ret = Comparator.nullsFirst (aOrderColumn.getServerSideComparator ()).compare (aCell1.getTextContent (),
-                                                                                     aCell2.getTextContent ());
+      final Comparator <String> aBaseComp = aOrderColumn.getServerSideComparator ();
+      if (aOrderColumn.getSortDirectionOrDefault ().isAscending ())
+        ret = Comparator.nullsLast (aBaseComp).compare (aCell1.getTextContent (), aCell2.getTextContent ());
+      else
+        ret = Comparator.nullsFirst (aBaseComp).compare (aCell1.getTextContent (), aCell2.getTextContent ());
       if (ret != 0)
         break;
     }
