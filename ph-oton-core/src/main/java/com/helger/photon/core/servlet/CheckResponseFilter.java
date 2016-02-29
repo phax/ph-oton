@@ -35,6 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.string.StringHelper;
 import com.helger.web.servlet.request.RequestHelper;
 import com.helger.web.servlet.response.ResponseHelper;
@@ -110,7 +112,7 @@ public class CheckResponseFilter implements Filter
    */
   @OverrideOnDemand
   protected void checkHeaders (@Nonnull final String sRequestURL,
-                               @Nonnull final Map <String, List <String>> aHeaders,
+                               @Nonnull final Map <String, ? extends List <String>> aHeaders,
                                final int nStatusCode)
   {
     if (nStatusCode != HttpServletResponse.SC_OK && !aHeaders.isEmpty ())
@@ -122,7 +124,7 @@ public class CheckResponseFilter implements Filter
   {
     final String sRequestURL = RequestHelper.getURL (aHttpRequest);
     final int nStatusCode = aHttpResponse.getStatusCode ();
-    final Map <String, List <String>> aHeaders = aHttpResponse.getHeaderMap ().getAllHeaders ();
+    final ICommonsMap <String, ICommonsList <String>> aHeaders = aHttpResponse.getHeaderMap ().getAllHeaders ();
     final String sCharacterEncoding = aHttpResponse.getCharacterEncoding ();
     final String sContentType = aHttpResponse.getContentType ();
 

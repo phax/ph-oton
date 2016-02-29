@@ -16,7 +16,6 @@
  */
 package com.helger.photon.bootstrap3.pages.sysinfo;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -27,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.compare.IComparator;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.string.StringHelper;
@@ -128,10 +127,10 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
       aTable.setID (getID () + "http");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
-      for (final Map.Entry <String, List <String>> aEntry : CollectionHelper.getSortedByKey (RequestHelper.getRequestHeaderMap (aHttpRequest)
-                                                                                                          .getAllHeaders (),
-                                                                                             IComparator.getComparatorCollating (aDisplayLocale))
-                                                                            .entrySet ())
+      for (final Map.Entry <String, ICommonsList <String>> aEntry : RequestHelper.getRequestHeaderMap (aHttpRequest)
+                                                                                 .getAllHeaders ()
+                                                                                 .getSortedByKey (IComparator.getComparatorCollating (aDisplayLocale))
+                                                                                 .entrySet ())
       {
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (HCExtHelper.list2divList (aEntry.getValue ()));
       }
@@ -148,9 +147,9 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale),
                                        EText.MSG_DETAILS.getDisplayText (aDisplayLocale));
-      for (final Map.Entry <String, Cookie> aEntry : CollectionHelper.getSortedByKey (CookieHelper.getAllCookies (aHttpRequest),
-                                                                                      IComparator.getComparatorCollating (aDisplayLocale))
-                                                                     .entrySet ())
+      for (final Map.Entry <String, Cookie> aEntry : CookieHelper.getAllCookies (aHttpRequest)
+                                                                 .getSortedByKey (IComparator.getComparatorCollating (aDisplayLocale))
+                                                                 .entrySet ())
       {
         final Cookie aCookie = aEntry.getValue ();
         String sOther = "";
@@ -209,9 +208,9 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
-      for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aRequestScope.getAllAttributes (),
-                                                                                      IComparator.getComparatorCollating (aDisplayLocale))
-                                                                     .entrySet ())
+      for (final Map.Entry <String, Object> aEntry : aRequestScope.getAllAttributes ()
+                                                                  .getSortedByKey (IComparator.getComparatorCollating (aDisplayLocale))
+                                                                  .entrySet ())
       {
         aTable.addBodyRow ()
               .addCell (aEntry.getKey ())

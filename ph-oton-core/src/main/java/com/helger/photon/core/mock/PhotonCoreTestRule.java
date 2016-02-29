@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.io.resourceprovider.IReadableResourceProvider;
 import com.helger.commons.url.SMap;
 import com.helger.photon.core.servlet.WebAppListener;
@@ -56,7 +57,7 @@ public class PhotonCoreTestRule extends WebScopeTestRule
     this (createDefaultServletContextInitParameters ());
   }
 
-  public PhotonCoreTestRule (@Nullable final Map <String, String> aServletContextInitParameters)
+  public PhotonCoreTestRule (@Nullable final ICommonsMap <String, String> aServletContextInitParameters)
   {
     super (aServletContextInitParameters);
   }
