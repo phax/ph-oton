@@ -16,7 +16,6 @@
  */
 package com.helger.photon.basic.app.dao.impl;
 
-import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -27,6 +26,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.id.IHasID;
 
 @ThreadSafe
@@ -34,19 +34,19 @@ public interface IMapBasedDAO <INTERFACETYPE extends IHasID <String>>
 {
   @Nonnull
   @ReturnsMutableCopy
-  Collection <? extends INTERFACETYPE> getAll ();
+  ICommonsList <? extends INTERFACETYPE> getAll ();
 
   @Nonnull
   @ReturnsMutableCopy
-  Collection <? extends INTERFACETYPE> getAll (@Nullable Predicate <? super INTERFACETYPE> aFilter);
+  ICommonsList <? extends INTERFACETYPE> getAll (@Nullable Predicate <? super INTERFACETYPE> aFilter);
 
   void findAll (@Nullable Predicate <? super INTERFACETYPE> aFilter,
                 @Nonnull Consumer <? super INTERFACETYPE> aConsumer);
 
   @Nonnull
   @ReturnsMutableCopy
-  <RETTYPE> Collection <RETTYPE> getAllMapped (@Nullable Predicate <? super INTERFACETYPE> aFilter,
-                                               @Nonnull Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper);
+  <RETTYPE> ICommonsList <RETTYPE> getAllMapped (@Nullable Predicate <? super INTERFACETYPE> aFilter,
+                                                 @Nonnull Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper);
 
   <RETTYPE> void findAllMapped (@Nullable Predicate <? super INTERFACETYPE> aFilter,
                                 @Nonnull Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper,

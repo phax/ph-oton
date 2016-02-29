@@ -16,11 +16,10 @@
  */
 package com.helger.photon.basic.app.dao.container;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.photon.basic.app.dao.IAutoSaveAware;
 import com.helger.photon.basic.app.dao.IDAO;
 
@@ -37,5 +36,5 @@ public interface IDAOContainer extends IAutoSaveAware
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <IDAO> getAllContainedDAOs ();
+  ICommonsList <IDAO> getAllContainedDAOs ();
 }

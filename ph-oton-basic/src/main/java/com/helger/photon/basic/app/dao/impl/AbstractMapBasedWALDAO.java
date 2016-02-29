@@ -17,7 +17,6 @@
 package com.helger.photon.basic.app.dao.impl;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -40,6 +39,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.lang.ClassHelper;
@@ -228,14 +228,14 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
 
   @Nonnull
   @ReturnsMutableCopy
-  public final Collection <? extends INTERFACETYPE> getAll ()
+  public final ICommonsList <? extends INTERFACETYPE> getAll ()
   {
     return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public final Collection <? extends INTERFACETYPE> getAll (@Nullable final Predicate <? super INTERFACETYPE> aFilter)
+  public final ICommonsList <? extends INTERFACETYPE> getAll (@Nullable final Predicate <? super INTERFACETYPE> aFilter)
   {
     return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aFilter));
   }
@@ -248,8 +248,8 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
 
   @Nonnull
   @ReturnsMutableCopy
-  public final <RETTYPE> Collection <RETTYPE> getAllMapped (@Nullable final Predicate <? super INTERFACETYPE> aFilter,
-                                                            @Nonnull final Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper)
+  public final <RETTYPE> ICommonsList <RETTYPE> getAllMapped (@Nullable final Predicate <? super INTERFACETYPE> aFilter,
+                                                              @Nonnull final Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper)
   {
     return m_aRWLock.readLocked ( () -> m_aMap.copyOfValuesMapped (aFilter, aMapper));
   }

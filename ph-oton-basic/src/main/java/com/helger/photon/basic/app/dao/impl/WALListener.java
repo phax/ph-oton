@@ -16,10 +16,7 @@
  */
 package com.helger.photon.basic.app.dao.impl;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
@@ -29,11 +26,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.concurrent.ManagedExecutorService;
 import com.helger.commons.lang.TimeValue;
 import com.helger.commons.scope.IScope;
@@ -53,6 +55,7 @@ public final class WALListener extends AbstractGlobalSingleton
    *
    * @author Philip Helger
    */
+  @Immutable
   private static final class WALItem
   {
     private final ScheduledFuture <?> m_aFuture;
@@ -79,9 +82,9 @@ public final class WALListener extends AbstractGlobalSingleton
     }
   });
   @GuardedBy ("m_aRWLock")
-  private final Set <String> m_aWaitingDAOs = new HashSet <String> ();
+  private final ICommonsSet <String> m_aWaitingDAOs = new CommonsHashSet <> ();
   @GuardedBy ("m_aRWLock")
-  private final Map <String, WALListener.WALItem> m_aScheduledItems = new HashMap <String, WALListener.WALItem> ();
+  private final ICommonsMap <String, WALListener.WALItem> m_aScheduledItems = new CommonsHashMap <> ();
 
   @Deprecated
   @UsedViaReflection

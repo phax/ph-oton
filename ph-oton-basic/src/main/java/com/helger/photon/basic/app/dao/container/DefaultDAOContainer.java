@@ -16,14 +16,13 @@
  */
 package com.helger.photon.basic.app.dao.container;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.IDAO;
 
@@ -35,25 +34,25 @@ import com.helger.photon.basic.app.dao.IDAO;
  */
 public class DefaultDAOContainer extends AbstractDAOContainer
 {
-  private final List <IDAO> m_aDAOs;
+  private final ICommonsList <IDAO> m_aDAOs;
 
   public DefaultDAOContainer (@Nonnull @Nonempty final IDAO... aDAOs)
   {
     ValueEnforcer.notEmptyNoNullValue (aDAOs, "DAOs");
-    m_aDAOs = CollectionHelper.newList (aDAOs);
+    m_aDAOs = new CommonsArrayList <> (aDAOs);
   }
 
   public DefaultDAOContainer (@Nonnull @Nonempty final Iterable <? extends IDAO> aDAOs)
   {
     ValueEnforcer.notEmptyNoNullValue (aDAOs, "DAOs");
-    m_aDAOs = CollectionHelper.newList (aDAOs);
+    m_aDAOs = new CommonsArrayList <> (aDAOs);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IDAO> getAllContainedDAOs ()
+  public ICommonsList <IDAO> getAllContainedDAOs ()
   {
-    return CollectionHelper.newList (m_aDAOs);
+    return m_aDAOs.getClone ();
   }
 
   @Override
