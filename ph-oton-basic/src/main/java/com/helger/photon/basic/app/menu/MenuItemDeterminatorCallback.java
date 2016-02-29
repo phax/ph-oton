@@ -27,7 +27,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.tree.util.TreeVisitor;
@@ -41,7 +42,7 @@ import com.helger.commons.tree.withid.DefaultTreeItemWithID;
  */
 public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCallback
 {
-  private final Map <String, Boolean> m_aItems = new HashMap <String, Boolean> ();
+  private final ICommonsMap <String, Boolean> m_aItems = new CommonsHashMap <> ();
   private final String m_sSelectedItemID;
   private final DefaultTreeItemWithID <String, IMenuObject> m_aSelectedItem;
 
@@ -147,9 +148,9 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
    */
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, Boolean> getAllItemIDs ()
+  public ICommonsMap <String, Boolean> getAllItemIDs ()
   {
-    return CollectionHelper.newMap (m_aItems);
+    return m_aItems.getClone ();
   }
 
   @Nonnull

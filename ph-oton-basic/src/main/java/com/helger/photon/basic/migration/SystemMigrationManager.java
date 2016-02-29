@@ -16,9 +16,8 @@
  */
 package com.helger.photon.basic.migration;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,7 +30,9 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.callback.INonThrowingCallable;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.collection.multimap.IMultiMapListBased;
 import com.helger.commons.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.microdom.IMicroDocument;
@@ -55,7 +56,7 @@ public class SystemMigrationManager extends AbstractSimpleDAO
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULTS = "systemmigrationresults";
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULT = "systemmigrationresult";
 
-  private final IMultiMapListBased <String, SystemMigrationResult> m_aMap = new MultiHashMapArrayListBased <String, SystemMigrationResult> ();
+  private final IMultiMapListBased <String, SystemMigrationResult> m_aMap = new MultiHashMapArrayListBased <> ();
 
   public SystemMigrationManager (@Nullable final String sFilename) throws DAOException
   {
@@ -77,7 +78,8 @@ public class SystemMigrationManager extends AbstractSimpleDAO
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_SYSTEM_MIGRATION_RESULTS);
-    for (final List <SystemMigrationResult> aMigrationResults : CollectionHelper.getSortedByKey (m_aMap).values ())
+    for (final List <SystemMigrationResult> aMigrationResults : m_aMap.getSortedByKey (Comparator.naturalOrder ())
+                                                                      .values ())
       for (final SystemMigrationResult aMigrationResult : aMigrationResults)
         eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aMigrationResult,
                                                                      ELEMENT_SYSTEM_MIGRATION_RESULT));
@@ -135,16 +137,16 @@ public class SystemMigrationManager extends AbstractSimpleDAO
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <SystemMigrationResult> getAllMigrationResults (@Nullable final String sMigrationID)
+  public ICommonsList <SystemMigrationResult> getAllMigrationResults (@Nullable final String sMigrationID)
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.get (sMigrationID)));
+    return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aMap.get (sMigrationID)));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <SystemMigrationResult> getAllMigrationResultsFlattened ()
+  public ICommonsList <SystemMigrationResult> getAllMigrationResultsFlattened ()
   {
-    final List <SystemMigrationResult> ret = new ArrayList <> ();
+    final ICommonsList <SystemMigrationResult> ret = new CommonsArrayList <> ();
     m_aRWLock.readLocked ( () -> {
       for (final List <SystemMigrationResult> aResults : m_aMap.values ())
         ret.addAll (aResults);
@@ -154,29 +156,21 @@ public class SystemMigrationManager extends AbstractSimpleDAO
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <SystemMigrationResult> getAllFailedMigrationResults (@Nullable final String sMigrationID)
+  public ICommonsList <SystemMigrationResult> getAllFailedMigrationResults (@Nullable final String sMigrationID)
   {
-    final List <SystemMigrationResult> ret = new ArrayList <> ();
-    for (final SystemMigrationResult aMigrationResult : getAllMigrationResults (sMigrationID))
-      if (aMigrationResult.isFailure ())
-        ret.add (aMigrationResult);
-    return ret;
+    return getAllMigrationResults (sMigrationID).getAll (SystemMigrationResult::isFailure);
   }
 
   public boolean wasMigrationExecutedSuccessfully (@Nullable final String sMigrationID)
   {
-    final List <SystemMigrationResult> aResults = getAllMigrationResults (sMigrationID);
-    for (final SystemMigrationResult aMigrationResult : aResults)
-      if (aMigrationResult.isSuccess ())
-        return true;
-    return false;
+    return getAllMigrationResults (sMigrationID).containsAny (SystemMigrationResult::isSuccess);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllMigrationIDs ()
+  public ICommonsSet <String> getAllMigrationIDs ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aMap.keySet ()));
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfKeySet ());
   }
 
   /**

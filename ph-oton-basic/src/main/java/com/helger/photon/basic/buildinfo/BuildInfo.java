@@ -20,7 +20,6 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnegative;
@@ -29,7 +28,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.microdom.util.XMLMapHandler;
 import com.helger.commons.string.StringParser;
@@ -62,12 +62,12 @@ public final class BuildInfo
   private static final String PREFIX_SYSPROPERTY = "systemproperty.";
   private static final String PREFIX_ENVVAR = "envvar.";
 
-  private final Map <String, String> m_aMap;
+  private final ICommonsMap <String, String> m_aMap;
   private final int m_nVersion;
-  private final Map <String, String> m_aSysProperties = new HashMap <String, String> ();
-  private final Map <String, String> m_aEnvVars = new HashMap <String, String> ();
+  private final ICommonsMap <String, String> m_aSysProperties = new CommonsHashMap <> ();
+  private final ICommonsMap <String, String> m_aEnvVars = new CommonsHashMap <> ();
 
-  public BuildInfo (@Nonnull final Map <String, String> aMap)
+  public BuildInfo (@Nonnull final ICommonsMap <String, String> aMap)
   {
     m_aMap = ValueEnforcer.notNull (aMap, "Map");
     m_nVersion = getInt ("buildinfo.version");
@@ -298,16 +298,16 @@ public final class BuildInfo
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, String> getAllSystemProperties ()
+  public ICommonsMap <String, String> getAllSystemProperties ()
   {
-    return CollectionHelper.newMap (m_aSysProperties);
+    return m_aSysProperties.getClone ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, String> getAllEnvVars ()
+  public ICommonsMap <String, String> getAllEnvVars ()
   {
-    return CollectionHelper.newMap (m_aEnvVars);
+    return m_aEnvVars.getClone ();
   }
 
   @Override
@@ -319,7 +319,7 @@ public final class BuildInfo
   @Nullable
   public static BuildInfo createFromResource (@Nonnull final IReadableResource aRes)
   {
-    final Map <String, String> aMap = XMLMapHandler.readMap (aRes);
+    final ICommonsMap <String, String> aMap = XMLMapHandler.readMap (aRes);
     if (aMap == null)
       return null;
     return new BuildInfo (aMap);

@@ -16,15 +16,13 @@
  */
 package com.helger.photon.basic.auth.subject;
 
-import java.util.List;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.lang.ServiceLoaderHelper;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 
@@ -38,7 +36,7 @@ import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 @Immutable
 public final class AuthCredentialToSubjectResolverManager
 {
-  private static volatile List <IAuthCredentialToSubjectResolverSPI> s_aHdlList;
+  private static volatile ICommonsList <IAuthCredentialToSubjectResolverSPI> s_aHdlList;
 
   static
   {
@@ -56,9 +54,9 @@ public final class AuthCredentialToSubjectResolverManager
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <IAuthCredentialToSubjectResolverSPI> getAllAuthCredentialToSubjectResolvers ()
+  public static ICommonsList <IAuthCredentialToSubjectResolverSPI> getAllAuthCredentialToSubjectResolvers ()
   {
-    return CollectionHelper.newList (s_aHdlList);
+    return s_aHdlList.getClone ();
   }
 
   /**

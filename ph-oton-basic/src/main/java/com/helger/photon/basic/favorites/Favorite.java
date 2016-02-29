@@ -25,7 +25,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.id.factory.GlobalIDFactory;
@@ -133,9 +132,10 @@ public class Favorite implements IFavorite
 
   public boolean hasSameContent (@Nullable final String sAppID,
                                  @Nullable final String sMenuItemID,
-                                 @Nullable final Map <String, String> aAdditionalParams)
+                                 @Nullable final ICommonsMap <String, String> aAdditionalParams)
   {
-    final Map <String, String> aRealAdditionalParams = CollectionHelper.getNotNull (aAdditionalParams);
+    final ICommonsMap <String, String> aRealAdditionalParams = aAdditionalParams != null ? aAdditionalParams
+                                                                                         : new CommonsHashMap <> ();
     return m_sApplicationID.equals (sAppID) &&
            m_sMenuItemID.equals (sMenuItemID) &&
            m_aAdditionalParams.equals (aRealAdditionalParams);

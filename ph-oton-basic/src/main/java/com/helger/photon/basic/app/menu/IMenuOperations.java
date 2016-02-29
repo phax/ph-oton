@@ -16,14 +16,16 @@
  */
 package com.helger.photon.basic.app.menu;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.url.ConstantHasSimpleURL;
 import com.helger.commons.url.IHasSimpleURL;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.photon.basic.app.page.IPage;
@@ -108,7 +110,7 @@ public interface IMenuOperations
    *         If the passed parent menu item could not be resolved
    */
   @Nonnull
-  IMenuItemPage createItem (@Nonnull String sParentID, @Nonnull String sItemID, @Nonnull IPage aPage);
+  IMenuItemPage createItem (@Nonnull final String sParentID, @Nonnull final String sItemID, @Nonnull final IPage aPage);
 
   /**
    * Append a new menu item below the specified parent.
@@ -124,7 +126,11 @@ public interface IMenuOperations
    *         If the passed parent menu item could not be resolved
    */
   @Nonnull
-  IMenuItemPage createItem (@Nonnull String sParentID, @Nonnull IPage aPage);
+  default IMenuItemPage createItem (@Nonnull final String sParentID, @Nonnull final IPage aPage)
+  {
+    ValueEnforcer.notNull (aPage, "Page");
+    return createItem (sParentID, aPage.getID (), aPage);
+  }
 
   /**
    * Append a new menu item below the specified parent.
@@ -140,7 +146,11 @@ public interface IMenuOperations
    *         If the passed parent menu item could not be resolved
    */
   @Nonnull
-  IMenuItemPage createItem (@Nonnull IMenuItem aParent, @Nonnull IPage aPage);
+  default IMenuItemPage createItem (@Nonnull final IMenuItem aParent, @Nonnull final IPage aPage)
+  {
+    ValueEnforcer.notNull (aParent, "Parent");
+    return createItem (aParent.getID (), aPage);
+  }
 
   /**
    * Append a new menu item at root level.
@@ -154,7 +164,12 @@ public interface IMenuOperations
    * @return The created menu item object. Never <code>null</code>.
    */
   @Nonnull
-  IMenuItemExternal createRootItem (@Nonnull String sItemID, @Nonnull ISimpleURL aURL, @Nonnull IHasDisplayText aName);
+  default IMenuItemExternal createRootItem (@Nonnull final String sItemID,
+                                            @Nonnull final ISimpleURL aURL,
+                                            @Nonnull final IHasDisplayText aName)
+  {
+    return createRootItem (sItemID, new ConstantHasSimpleURL (aURL), aName);
+  }
 
   /**
    * Append a new menu item at root level.
@@ -189,10 +204,13 @@ public interface IMenuOperations
    *         If the passed parent menu item could not be resolved
    */
   @Nonnull
-  IMenuItemExternal createItem (@Nonnull IMenuItem aParent,
-                                @Nonnull String sItemID,
-                                @Nonnull ISimpleURL aURL,
-                                @Nonnull IHasDisplayText aName);
+  default IMenuItemExternal createItem (@Nonnull final IMenuItem aParent,
+                                        @Nonnull final String sItemID,
+                                        @Nonnull final ISimpleURL aURL,
+                                        @Nonnull final IHasDisplayText aName)
+  {
+    return createItem (aParent, sItemID, new ConstantHasSimpleURL (aURL), aName);
+  }
 
   /**
    * Append a new menu item below the specified parent.
@@ -211,10 +229,14 @@ public interface IMenuOperations
    *         If the passed parent menu item could not be resolved
    */
   @Nonnull
-  IMenuItemExternal createItem (@Nonnull IMenuItem aParent,
-                                @Nonnull String sItemID,
-                                @Nonnull IHasSimpleURL aURL,
-                                @Nonnull IHasDisplayText aName);
+  default IMenuItemExternal createItem (@Nonnull final IMenuItem aParent,
+                                        @Nonnull final String sItemID,
+                                        @Nonnull final IHasSimpleURL aURL,
+                                        @Nonnull final IHasDisplayText aName)
+  {
+    ValueEnforcer.notNull (aParent, "Parent");
+    return createItem (aParent.getID (), sItemID, aURL, aName);
+  }
 
   /**
    * Append a new menu item below the specified parent.
@@ -233,10 +255,13 @@ public interface IMenuOperations
    *         If the passed parent menu item could not be resolved
    */
   @Nonnull
-  IMenuItemExternal createItem (@Nonnull String sParentID,
-                                @Nonnull String sItemID,
-                                @Nonnull ISimpleURL aURL,
-                                @Nonnull IHasDisplayText aName);
+  default IMenuItemExternal createItem (@Nonnull final String sParentID,
+                                        @Nonnull final String sItemID,
+                                        @Nonnull final ISimpleURL aURL,
+                                        @Nonnull final IHasDisplayText aName)
+  {
+    return createItem (sParentID, sItemID, new ConstantHasSimpleURL (aURL), aName);
+  }
 
   /**
    * Append a new menu item below the specified parent.
@@ -288,7 +313,7 @@ public interface IMenuOperations
    *        The default menu items to be set. May be <code>null</code>. This
    *        list may not contain any <code>null</code> entries.
    */
-  void setDefaultMenuItemIDs (@Nullable List <String> aDefaultMenuItemIDs);
+  void setDefaultMenuItemIDs (@Nullable Iterable <String> aDefaultMenuItemIDs);
 
   /**
    * Get the default menu item with the highest priority. Similar to
@@ -305,7 +330,7 @@ public interface IMenuOperations
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <String> getAllDefaultMenuItemIDs ();
+  ICommonsList <String> getAllDefaultMenuItemIDs ();
 
   /**
    * Get the default menu item object. Similar to
@@ -321,12 +346,12 @@ public interface IMenuOperations
    * Get the default menu item objects in the correct order.
    *
    * @return The list of all default menu items, in the order as specified by
-   *         {@link #setDefaultMenuItemIDs(List)}. Never <code>null</code> but
-   *         may be empty.
+   *         {@link #setDefaultMenuItemIDs(Iterable)}. Never <code>null</code>
+   *         but may be empty.
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <IMenuItemPage> getAllDefaultMenuItems ();
+  ICommonsList <IMenuItemPage> getAllDefaultMenuItems ();
 
   /**
    * Get the menu object with the specified ID

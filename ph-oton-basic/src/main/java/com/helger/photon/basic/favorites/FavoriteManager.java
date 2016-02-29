@@ -16,7 +16,7 @@
  */
 package com.helger.photon.basic.favorites;
 
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,9 +30,10 @@ import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.multimap.IMultiMapListBased;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -57,7 +58,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
   private static final String ELEMENT_ITEM = "favorite";
 
   /** Map from user ID to favorites */
-  private final IMultiMapListBased <String, Favorite> m_aMap = new MultiHashMapArrayListBased <> ();
+  private final MultiHashMapArrayListBased <String, Favorite> m_aMap = new MultiHashMapArrayListBased <> ();
 
   public FavoriteManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -98,7 +99,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("root");
-    for (final List <Favorite> aFavoritesOfUser : CollectionHelper.getSortedByKey (m_aMap).values ())
+    for (final ICommonsList <Favorite> aFavoritesOfUser : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
       for (final Favorite aFavorite : aFavoritesOfUser)
         eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aFavorite, ELEMENT_ITEM));
     return aDoc;
@@ -140,7 +141,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
   @ReturnsMutableCopy
   public ICommonsList <? extends IFavorite> getAllFavoritesOfUser (@Nullable final String sUserID)
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.get (sUserID)));
+    return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aMap.get (sUserID)));
   }
 
   /**
@@ -156,7 +157,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
       return false;
 
     final ICommonsList <Favorite> aFavorites = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
-    return CollectionHelper.isNotEmpty (aFavorites);
+    return aFavorites != null && aFavorites.isNotEmpty ();
   }
 
   /**
@@ -175,18 +176,18 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
   public boolean isFavorite (@Nullable final String sUserID,
                              @Nullable final String sApplicationID,
                              @Nullable final String sMenuItemID,
-                             @Nullable final Map <String, String> aAdditionalParams)
+                             @Nullable final ICommonsMap <String, String> aAdditionalParams)
   {
     if (StringHelper.hasNoText (sUserID) ||
         StringHelper.hasNoText (sApplicationID) ||
         StringHelper.hasNoText (sMenuItemID))
       return false;
 
-    final Map <String, String> aRealAdditionalParams = CollectionHelper.getNotNull (aAdditionalParams);
-    for (final IFavorite aFavorite : getAllFavoritesOfUser (sUserID))
-      if (aFavorite.hasSameContent (sApplicationID, sMenuItemID, aRealAdditionalParams))
-        return true;
-    return false;
+    final ICommonsMap <String, String> aRealAdditionalParams = aAdditionalParams != null ? aAdditionalParams
+                                                                                         : new CommonsHashMap <> ();
+    return getAllFavoritesOfUser (sUserID).containsAny (aFavorite -> aFavorite.hasSameContent (sApplicationID,
+                                                                                               sMenuItemID,
+                                                                                               aRealAdditionalParams));
   }
 
   /**
@@ -206,16 +207,15 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
   public IFavorite getFavorite (@Nullable final String sUserID,
                                 @Nullable final String sApplicationID,
                                 @Nullable final String sMenuItemID,
-                                @Nullable final Map <String, String> aAdditionalParams)
+                                @Nullable final ICommonsMap <String, String> aAdditionalParams)
   {
     if (StringHelper.hasText (sUserID) && StringHelper.hasText (sApplicationID) && StringHelper.hasText (sMenuItemID))
     {
-
-      final Map <String, String> aRealAdditionalParams = aAdditionalParams == null ? new HashMap <String, String> ()
-                                                                                   : aAdditionalParams;
-      for (final IFavorite aFavorite : getAllFavoritesOfUser (sUserID))
-        if (aFavorite.hasSameContent (sApplicationID, sMenuItemID, aRealAdditionalParams))
-          return aFavorite;
+      final ICommonsMap <String, String> aRealAdditionalParams = aAdditionalParams != null ? aAdditionalParams
+                                                                                           : new CommonsHashMap <> ();
+      return getAllFavoritesOfUser (sUserID).findFirst (aFavorite -> aFavorite.hasSameContent (sApplicationID,
+                                                                                               sMenuItemID,
+                                                                                               aRealAdditionalParams));
     }
     return null;
   }
@@ -277,9 +277,9 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
                                  @Nullable final String sDisplayName)
   {
 
-    final List <Favorite> aFavorites = m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.get (sUserID)));
+    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aMap.get (sUserID)));
 
-    final Favorite aFavorite = CollectionHelper.findFirst (aFavorites, f -> sID.equals (f.getID ()));
+    final Favorite aFavorite = aFavorites.findFirst (f -> f.getID ().equals (sID));
     if (aFavorite == null)
     {
       AuditHelper.onAuditModifyFailure (Favorite.OT, sID, "no-such-id");
@@ -317,7 +317,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
       return EChange.UNCHANGED;
     }
 
-    final Favorite aFavorite = aFavorites.findFirst (aOther -> sID.equals (aOther.getID ()));
+    final Favorite aFavorite = aFavorites.findFirst (aOther -> aOther.getID ().equals (sID));
     if (aFavorite == null)
     {
       AuditHelper.onAuditDeleteFailure (Favorite.OT, sUserID, sID, "no-such-id");
@@ -325,7 +325,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
     }
 
     return m_aRWLock.writeLocked ( () -> {
-      final EChange eChange = EChange.valueOf (aFavorites.remove (aFavorite));
+      final EChange eChange = aFavorites.removeObject (aFavorite);
       if (eChange.isChanged ())
       {
         markAsChanged (aFavorite, EDAOActionType.DELETE);

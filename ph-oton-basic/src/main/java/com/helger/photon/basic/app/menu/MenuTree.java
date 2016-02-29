@@ -16,8 +16,6 @@
  */
 package com.helger.photon.basic.app.menu;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
@@ -28,8 +26,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
@@ -40,9 +38,7 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
-import com.helger.commons.url.ConstantHasSimpleURL;
 import com.helger.commons.url.IHasSimpleURL;
-import com.helger.commons.url.ISimpleURL;
 import com.helger.photon.basic.app.page.IPage;
 
 /**
@@ -54,7 +50,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (MenuTree.class);
 
-  private List <String> m_aDefaultMenuItemIDs;
+  private final ICommonsList <String> m_aDefaultMenuItemIDs = new CommonsArrayList <> ();
 
   public MenuTree ()
   {}
@@ -119,64 +115,11 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   }
 
   @Nonnull
-  public IMenuItemPage createItem (@Nonnull final String sParentID, @Nonnull final IPage aPage)
-  {
-    ValueEnforcer.notNull (aPage, "Page");
-
-    return createItem (sParentID, aPage.getID (), aPage);
-  }
-
-  @Nonnull
-  public IMenuItemPage createItem (@Nonnull final IMenuItem aParent, @Nonnull final IPage aPage)
-  {
-    ValueEnforcer.notNull (aParent, "Parent");
-
-    return createItem (aParent.getID (), aPage);
-  }
-
-  @Nonnull
-  public IMenuItemExternal createRootItem (@Nonnull final String sItemID,
-                                           @Nonnull final ISimpleURL aURL,
-                                           @Nonnull final IHasDisplayText aName)
-  {
-    return createRootItem (sItemID, new ConstantHasSimpleURL (aURL), aName);
-  }
-
-  @Nonnull
   public IMenuItemExternal createRootItem (@Nonnull final String sItemID,
                                            @Nonnull final IHasSimpleURL aURL,
                                            @Nonnull final IHasDisplayText aName)
   {
     return _createChildItem (getRootItem (), new MenuItemExternal (sItemID, aURL, aName));
-  }
-
-  @Nonnull
-  public IMenuItemExternal createItem (@Nonnull final IMenuItem aParent,
-                                       @Nonnull final String sItemID,
-                                       @Nonnull final ISimpleURL aURL,
-                                       @Nonnull final IHasDisplayText aName)
-  {
-    return createItem (aParent, sItemID, new ConstantHasSimpleURL (aURL), aName);
-  }
-
-  @Nonnull
-  public IMenuItemExternal createItem (@Nonnull final IMenuItem aParent,
-                                       @Nonnull final String sItemID,
-                                       @Nonnull final IHasSimpleURL aURL,
-                                       @Nonnull final IHasDisplayText aName)
-  {
-    ValueEnforcer.notNull (aParent, "Parent");
-
-    return createItem (aParent.getID (), sItemID, aURL, aName);
-  }
-
-  @Nonnull
-  public IMenuItemExternal createItem (@Nonnull final String sParentID,
-                                       @Nonnull final String sItemID,
-                                       @Nonnull final ISimpleURL aURL,
-                                       @Nonnull final IHasDisplayText aName)
-  {
-    return createItem (sParentID, sItemID, new ConstantHasSimpleURL (aURL), aName);
   }
 
   @Nonnull
@@ -193,32 +136,33 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
 
   public void setDefaultMenuItemID (@Nullable final String sDefaultMenuItemID)
   {
-    m_aDefaultMenuItemIDs = sDefaultMenuItemID == null ? null : CollectionHelper.newList (sDefaultMenuItemID);
+    if (sDefaultMenuItemID == null)
+      m_aDefaultMenuItemIDs.clear ();
+    else
+      m_aDefaultMenuItemIDs.set (sDefaultMenuItemID);
   }
 
   public void setDefaultMenuItemIDs (@Nullable final String... aDefaultMenuItemIDs)
   {
-    m_aDefaultMenuItemIDs = ArrayHelper.isEmpty (aDefaultMenuItemIDs) ? null
-                                                                      : CollectionHelper.newList (aDefaultMenuItemIDs);
+    m_aDefaultMenuItemIDs.setAll (aDefaultMenuItemIDs);
   }
 
-  public void setDefaultMenuItemIDs (@Nullable final List <String> aDefaultMenuItemIDs)
+  public void setDefaultMenuItemIDs (@Nullable final Iterable <String> aDefaultMenuItemIDs)
   {
-    m_aDefaultMenuItemIDs = CollectionHelper.isEmpty (aDefaultMenuItemIDs) ? null
-                                                                           : CollectionHelper.newList (aDefaultMenuItemIDs);
+    m_aDefaultMenuItemIDs.setAll (aDefaultMenuItemIDs);
   }
 
   @Nullable
   public String getDefaultMenuItemID ()
   {
-    return CollectionHelper.getFirstElement (m_aDefaultMenuItemIDs);
+    return m_aDefaultMenuItemIDs.getFirst ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <String> getAllDefaultMenuItemIDs ()
+  public ICommonsList <String> getAllDefaultMenuItemIDs ()
   {
-    return CollectionHelper.newList (m_aDefaultMenuItemIDs);
+    return m_aDefaultMenuItemIDs.getClone ();
   }
 
   @Nullable
@@ -252,9 +196,9 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IMenuItemPage> getAllDefaultMenuItems ()
+  public ICommonsList <IMenuItemPage> getAllDefaultMenuItems ()
   {
-    final List <IMenuItemPage> ret = new ArrayList <IMenuItemPage> ();
+    final ICommonsList <IMenuItemPage> ret = new CommonsArrayList <> ();
     if (m_aDefaultMenuItemIDs != null)
       for (final String sDefaultMenuItemID : m_aDefaultMenuItemIDs)
       {

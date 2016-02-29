@@ -16,10 +16,6 @@
  */
 package com.helger.photon.basic.longrun;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,7 +28,9 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.ESuccess;
@@ -44,7 +42,7 @@ public final class LongRunningJobManager
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final Map <String, LongRunningJobData> m_aRunningJobs = new HashMap <> ();
+  private final ICommonsMap <String, LongRunningJobData> m_aRunningJobs = new CommonsHashMap <> ();
   private final LongRunningJobResultManager m_aResultMgr;
 
   public LongRunningJobManager (@Nonnull final LongRunningJobResultManager aResultMgr)
@@ -69,9 +67,10 @@ public final class LongRunningJobManager
 
     // Create a new unique in-memory ID
     final String sJobID = GlobalIDFactory.getNewStringID ();
-    m_aRWLock.writeLocked ( () -> {
-      m_aRunningJobs.put (sJobID, new LongRunningJobData (sJobID, aJob.getJobDescription (), sStartingUserID));
-    });
+    m_aRWLock.writeLocked ( () -> m_aRunningJobs.put (sJobID,
+                                                      new LongRunningJobData (sJobID,
+                                                                              aJob.getJobDescription (),
+                                                                              sStartingUserID)));
     return sJobID;
   }
 
@@ -118,9 +117,9 @@ public final class LongRunningJobManager
 
   @Nonnull
   @Nonempty
-  public Collection <LongRunningJobData> getAllRunningJobs ()
+  public ICommonsCollection <LongRunningJobData> getAllRunningJobs ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aRunningJobs.values ()));
+    return m_aRWLock.readLocked ( () -> m_aRunningJobs.copyOfValues ());
   }
 
   public void waitUntilAllJobsAreFinished () throws InterruptedException

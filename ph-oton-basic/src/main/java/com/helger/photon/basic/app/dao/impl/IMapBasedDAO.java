@@ -27,6 +27,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.id.IHasID;
 
 @ThreadSafe
@@ -59,6 +60,8 @@ public interface IMapBasedDAO <INTERFACETYPE extends IHasID <String>>
   <RETTYPE> RETTYPE getFirstMapped (@Nullable Predicate <? super INTERFACETYPE> aFilter,
                                     @Nonnull Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper);
 
+  boolean containsAny ();
+
   boolean containsAny (@Nullable Predicate <? super INTERFACETYPE> aFilter);
 
   boolean containsNone (@Nullable Predicate <? super INTERFACETYPE> aFilter);
@@ -66,6 +69,10 @@ public interface IMapBasedDAO <INTERFACETYPE extends IHasID <String>>
   boolean containsOnly (@Nullable Predicate <? super INTERFACETYPE> aFilter);
 
   boolean containsWithID (@Nullable String sID);
+
+  @Nonnull
+  @ReturnsMutableCopy
+  ICommonsSet <String> getAllIDs ();
 
   @Nonnegative
   int getCount ();

@@ -16,9 +16,6 @@
  */
 package com.helger.photon.basic.app;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -27,7 +24,8 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
@@ -43,7 +41,7 @@ public final class PhotonPathMapper
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
-  private static Map <String, String> s_aMap = new HashMap <> ();
+  private static ICommonsMap <String, String> s_aMap = new CommonsHashMap <> ();
   @GuardedBy ("s_aRWLock")
   private static String s_sDefaultAppID;
 
@@ -68,9 +66,7 @@ public final class PhotonPathMapper
     ValueEnforcer.isTrue (sPath.startsWith ("/"), "Path must be empty or start with a slash");
     ValueEnforcer.isTrue (!sPath.endsWith ("/"), "Path must not end with a slash");
 
-    s_aRWLock.writeLocked ( () -> {
-      s_aMap.put (sApplicationID, sPath);
-    });
+    s_aRWLock.writeLocked ( () -> s_aMap.put (sApplicationID, sPath));
   }
 
   /**
@@ -140,9 +136,9 @@ public final class PhotonPathMapper
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static Map <String, String> getApplicationIDToPathMap ()
+  public static ICommonsMap <String, String> getApplicationIDToPathMap ()
   {
-    return s_aRWLock.readLocked ( () -> CollectionHelper.newMap (s_aMap));
+    return s_aRWLock.readLocked ( () -> s_aMap.getClone ());
   }
 
   /**
@@ -151,7 +147,7 @@ public final class PhotonPathMapper
    */
   public static boolean containsMappings ()
   {
-    return s_aRWLock.readLocked ( () -> !s_aMap.isEmpty ());
+    return s_aRWLock.readLocked ( () -> s_aMap.isNotEmpty ());
   }
 
   /**

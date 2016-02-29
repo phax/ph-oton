@@ -16,9 +16,7 @@
  */
 package com.helger.photon.basic.longrun;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Comparator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,7 +25,9 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroDocument;
@@ -42,7 +42,7 @@ public class LongRunningJobResultManager extends AbstractSimpleDAO
   private static final String ELEMENT_ROOT = "root";
   private static final String ELEMENT_JOBDATA = "jobdata";
 
-  private final Map <String, LongRunningJobData> m_aMap = new LinkedHashMap <String, LongRunningJobData> ();
+  private final ICommonsOrderedMap <String, LongRunningJobData> m_aMap = new CommonsLinkedHashMap <> ();
 
   public LongRunningJobResultManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -66,7 +66,7 @@ public class LongRunningJobResultManager extends AbstractSimpleDAO
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
-    for (final LongRunningJobData aJobData : CollectionHelper.getSortedByKey (m_aMap).values ())
+    for (final LongRunningJobData aJobData : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
       eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aJobData, ELEMENT_JOBDATA));
     return aDoc;
   }
@@ -92,9 +92,9 @@ public class LongRunningJobResultManager extends AbstractSimpleDAO
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <LongRunningJobData> getAllJobResults ()
+  public ICommonsList <LongRunningJobData> getAllJobResults ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
   }
 
   @Nullable

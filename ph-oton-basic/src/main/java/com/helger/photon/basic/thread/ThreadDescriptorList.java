@@ -17,13 +17,9 @@
 package com.helger.photon.basic.thread;
 
 import java.lang.Thread.State;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -37,6 +33,13 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsEnumMap;
+import com.helger.commons.collection.ext.CommonsTreeSet;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsNavigableSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.microdom.IHasMicroNodeRepresentation;
 import com.helger.commons.microdom.IMicroElement;
@@ -54,7 +57,7 @@ public class ThreadDescriptorList implements IHasMicroNodeRepresentation
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ThreadDescriptorList.class);
 
-  private final List <ThreadDescriptor> m_aList = new ArrayList <ThreadDescriptor> ();
+  private final ICommonsList <ThreadDescriptor> m_aList = new CommonsArrayList <> ();
   private String m_sError;
 
   public ThreadDescriptorList ()
@@ -70,9 +73,9 @@ public class ThreadDescriptorList implements IHasMicroNodeRepresentation
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <ThreadDescriptor> getAllDescriptors ()
+  public ICommonsList <ThreadDescriptor> getAllDescriptors ()
   {
-    return CollectionHelper.newList (m_aList);
+    return m_aList.getClone ();
   }
 
   @Nonnull
@@ -90,17 +93,17 @@ public class ThreadDescriptorList implements IHasMicroNodeRepresentation
 
   @Nonnull
   @ReturnsMutableCopy
-  private Map <State, Set <Long>> _getStateMap ()
+  private ICommonsMap <State, ICommonsNavigableSet <Long>> _getStateMap ()
   {
     // Group threads by state
-    final Map <State, Set <Long>> aStateMap = new EnumMap <State, Set <Long>> (State.class);
+    final ICommonsMap <State, ICommonsNavigableSet <Long>> aStateMap = new CommonsEnumMap <> (State.class);
     for (final ThreadDescriptor aDescriptor : m_aList)
     {
       final State eState = aDescriptor.getThreadState ();
-      Set <Long> aThreadIDs = aStateMap.get (eState);
+      ICommonsNavigableSet <Long> aThreadIDs = aStateMap.get (eState);
       if (aThreadIDs == null)
       {
-        aThreadIDs = new TreeSet <Long> ();
+        aThreadIDs = new CommonsTreeSet <Long> ();
         aStateMap.put (eState, aThreadIDs);
       }
       aThreadIDs.add (Long.valueOf (aDescriptor.getThreadID ()));
@@ -122,7 +125,7 @@ public class ThreadDescriptorList implements IHasMicroNodeRepresentation
     aSB.append ("Total thread count: ").append (m_aList.size ()).append ('\n');
 
     // Emit thread IDs grouped by state
-    final Map <State, Set <Long>> aStateMap = _getStateMap ();
+    final ICommonsMap <State, ICommonsNavigableSet <Long>> aStateMap = _getStateMap ();
     for (final State eState : State.values ())
     {
       final Set <Long> aThreadIDs = aStateMap.get (eState);
@@ -150,17 +153,17 @@ public class ThreadDescriptorList implements IHasMicroNodeRepresentation
     eRet.setAttribute ("threadcount", m_aList.size ());
 
     // Emit thread IDs grouped by state
-    final Map <State, Set <Long>> aStateMap = _getStateMap ();
+    final ICommonsMap <State, ICommonsNavigableSet <Long>> aStateMap = _getStateMap ();
     for (final State eState : State.values ())
     {
-      final Set <Long> aThreadIDs = aStateMap.get (eState);
+      final ICommonsSet <Long> aThreadIDs = aStateMap.get (eState);
       final int nSize = CollectionHelper.getSize (aThreadIDs);
 
       final IMicroElement eThreadState = eRet.appendElement ("threadstate");
       eThreadState.setAttribute ("id", eState.toString ());
       eThreadState.setAttribute ("threadcount", nSize);
       if (nSize > 0)
-        eThreadState.appendText (StringHelper.getImploded (",", aThreadIDs));
+        eThreadState.appendText (StringHelper.getImploded (',', aThreadIDs));
     }
 
     // Append all stack traces at the end

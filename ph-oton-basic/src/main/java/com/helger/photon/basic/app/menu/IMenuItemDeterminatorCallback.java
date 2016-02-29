@@ -16,11 +16,10 @@
  */
 package com.helger.photon.basic.app.menu;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.hierarchy.visit.IHierarchyVisitorCallback;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 
@@ -46,5 +45,5 @@ public interface IMenuItemDeterminatorCallback extends
    */
   @Nonnull
   @ReturnsMutableCopy
-  Map <String, Boolean> getAllItemIDs ();
+  ICommonsMap <String, Boolean> getAllItemIDs ();
 }

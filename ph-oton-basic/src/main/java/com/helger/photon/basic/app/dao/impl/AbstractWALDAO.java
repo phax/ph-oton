@@ -44,7 +44,7 @@ import com.helger.commons.annotation.IsLocked;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.io.EAppend;
 import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileIOError;
@@ -918,7 +918,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     ValueEnforcer.notNull (eActionType, "ActionType");
 
     // Convert single item to list
-    markAsChanged (CollectionHelper.newList (aModifiedElement), eActionType);
+    markAsChanged (new CommonsArrayList <> (aModifiedElement), eActionType);
   }
 
   @MustBeLocked (ELockType.WRITE)

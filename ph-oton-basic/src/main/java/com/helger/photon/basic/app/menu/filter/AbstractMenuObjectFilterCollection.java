@@ -17,7 +17,6 @@
 package com.helger.photon.basic.app.menu.filter;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -27,7 +26,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.menu.IMenuObjectFilter;
@@ -42,25 +42,25 @@ import com.helger.photon.basic.app.menu.IMenuObjectFilter;
 public abstract class AbstractMenuObjectFilterCollection extends AbstractMenuObjectFilter
                                                          implements Iterable <IMenuObjectFilter>
 {
-  private final List <IMenuObjectFilter> m_aFilters;
+  private final ICommonsList <IMenuObjectFilter> m_aFilters;
 
   public AbstractMenuObjectFilterCollection (@Nonnull @Nonempty final Iterable <? extends IMenuObjectFilter> aFilters)
   {
     ValueEnforcer.notEmpty (aFilters, "Filters");
-    m_aFilters = CollectionHelper.newList (aFilters);
+    m_aFilters = new CommonsArrayList <> (aFilters);
   }
 
   public AbstractMenuObjectFilterCollection (@Nonnull @Nonempty final IMenuObjectFilter... aFilters)
   {
     ValueEnforcer.notEmpty (aFilters, "Filters");
-    m_aFilters = CollectionHelper.newList (aFilters);
+    m_aFilters = new CommonsArrayList <> (aFilters);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IMenuObjectFilter> getAllContainedFilters ()
+  public ICommonsList <IMenuObjectFilter> getAllContainedFilters ()
   {
-    return CollectionHelper.newList (m_aFilters);
+    return m_aFilters.getClone ();
   }
 
   @Nonnull

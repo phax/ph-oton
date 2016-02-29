@@ -16,6 +16,7 @@
  */
 package com.helger.photon.basic.favorites;
 
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -23,7 +24,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
@@ -58,8 +58,9 @@ public class FavoriteMicroTypeConverter implements IMicroTypeConverter
     eFavourite.setAttribute (ATTR_MENU_ITEM_ID, aFavourite.getMenuItemID ());
     eFavourite.setAttribute (ATTR_DISPLAY_NAME, aFavourite.getDisplayName ());
 
-    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aFavourite.getAllAdditionalParams ())
-                                                                   .entrySet ())
+    for (final Map.Entry <String, String> aEntry : aFavourite.getAllAdditionalParams ()
+                                                             .getSortedByKey (Comparator.naturalOrder ())
+                                                             .entrySet ())
     {
       final IMicroElement eParam = eFavourite.appendElement (ELEMENT_ADDITIONAL_PARAM);
       eParam.setAttribute (ATTR_NAME, aEntry.getKey ());

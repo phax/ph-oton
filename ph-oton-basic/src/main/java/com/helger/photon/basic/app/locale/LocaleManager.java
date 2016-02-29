@@ -16,10 +16,7 @@
  */
 package com.helger.photon.basic.app.locale;
 
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,7 +24,9 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -39,7 +38,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class LocaleManager implements ILocaleManager
 {
-  private final Set <Locale> m_aLocales = new LinkedHashSet <Locale> ();
+  private final ICommonsOrderedSet <Locale> m_aLocales = new CommonsLinkedHashSet <> ();
   private Locale m_aDefaultLocale;
 
   public LocaleManager ()
@@ -83,14 +82,14 @@ public class LocaleManager implements ILocaleManager
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <Locale> getAllAvailableLocales ()
+  public ICommonsList <Locale> getAllAvailableLocales ()
   {
-    return CollectionHelper.newList (m_aLocales);
+    return m_aLocales.getCopyAsList ();
   }
 
   public boolean hasLocales ()
   {
-    return !m_aLocales.isEmpty ();
+    return m_aLocales.isNotEmpty ();
   }
 
   public boolean isSupportedLocale (@Nullable final Locale aLocale)

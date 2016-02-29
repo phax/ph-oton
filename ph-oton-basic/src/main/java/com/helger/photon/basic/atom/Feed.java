@@ -16,9 +16,6 @@
  */
 package com.helger.photon.basic.atom;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
@@ -27,7 +24,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroDocument;
@@ -41,7 +39,7 @@ public class Feed extends FeedSource
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (Feed.class);
 
-  private final List <FeedEntry> m_aEntries = new ArrayList <FeedEntry> ();
+  private final ICommonsList <FeedEntry> m_aEntries = new CommonsArrayList <> ();
 
   public Feed ()
   {}
@@ -56,9 +54,9 @@ public class Feed extends FeedSource
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <FeedEntry> getAllEntries ()
+  public ICommonsList <FeedEntry> getAllEntries ()
   {
-    return CollectionHelper.newList (m_aEntries);
+    return m_aEntries.getClone ();
   }
 
   @Nonnegative

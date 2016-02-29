@@ -216,7 +216,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   @MustBeLocked (ELockType.WRITE)
   protected final void internalRemoveAllItemsNoCallback ()
   {
-    m_aMap.removeAll ().isChanged ();
+    m_aMap.removeAll ();
   }
 
   @Nonnull

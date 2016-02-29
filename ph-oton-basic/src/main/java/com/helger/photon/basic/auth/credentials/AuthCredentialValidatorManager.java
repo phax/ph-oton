@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.lang.ServiceLoaderHelper;
 import com.helger.commons.string.StringHelper;
@@ -34,7 +34,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @Immutable
 public final class AuthCredentialValidatorManager
 {
-  private static List <IAuthCredentialValidatorSPI> s_aHdlList;
+  private static ICommonsList <IAuthCredentialValidatorSPI> s_aHdlList;
 
   static
   {
@@ -48,9 +48,9 @@ public final class AuthCredentialValidatorManager
 
   @Nonnull
   @ReturnsMutableCopy
-  public static List <IAuthCredentialValidatorSPI> getAllAuthCredentialValidators ()
+  public static ICommonsList <IAuthCredentialValidatorSPI> getAllAuthCredentialValidators ()
   {
-    return CollectionHelper.newList (s_aHdlList);
+    return s_aHdlList.getClone ();
   }
 
   @Nonnull

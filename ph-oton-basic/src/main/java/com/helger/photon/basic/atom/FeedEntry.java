@@ -16,11 +16,6 @@
  */
 package com.helger.photon.basic.atom;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
@@ -30,7 +25,10 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.mime.EMimeContentType;
@@ -47,12 +45,12 @@ public class FeedEntry extends AbstractFeedElement
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FeedEntry.class);
 
-  private final List <FeedPerson> m_aAuthors = new ArrayList <FeedPerson> ();
-  private final List <FeedCategory> m_aCategories = new ArrayList <FeedCategory> ();
+  private final ICommonsList <FeedPerson> m_aAuthors = new CommonsArrayList <> ();
+  private final ICommonsList <FeedCategory> m_aCategories = new CommonsArrayList <> ();
   private IFeedContent m_aContent;
-  private final List <FeedPerson> m_aContributors = new ArrayList <FeedPerson> ();
+  private final ICommonsList <FeedPerson> m_aContributors = new CommonsArrayList <> ();
   private ISimpleURL m_aID;
-  private final List <FeedLink> m_aLinks = new ArrayList <FeedLink> ();
+  private final ICommonsList <FeedLink> m_aLinks = new CommonsArrayList <> ();
   private FeedDate m_aPublished;
   private IFeedTextConstruct m_aRights;
   private FeedSource m_aSource;
@@ -71,9 +69,9 @@ public class FeedEntry extends AbstractFeedElement
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <FeedPerson> getAllAuthors ()
+  public ICommonsList <FeedPerson> getAllAuthors ()
   {
-    return CollectionHelper.newList (m_aAuthors);
+    return m_aAuthors.getClone ();
   }
 
   public void addCategory (@Nonnull final FeedCategory aCategory)
@@ -84,9 +82,9 @@ public class FeedEntry extends AbstractFeedElement
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <FeedCategory> getAllCategories ()
+  public ICommonsList <FeedCategory> getAllCategories ()
   {
-    return CollectionHelper.newList (m_aCategories);
+    return m_aCategories.getClone ();
   }
 
   public void setContent (@Nullable final IFeedContent aContent)
@@ -108,9 +106,9 @@ public class FeedEntry extends AbstractFeedElement
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <FeedPerson> getAllContributors ()
+  public ICommonsList <FeedPerson> getAllContributors ()
   {
-    return CollectionHelper.newList (m_aContributors);
+    return m_aContributors.getClone ();
   }
 
   public void setID (@Nullable final ISimpleURL aID)
@@ -132,9 +130,9 @@ public class FeedEntry extends AbstractFeedElement
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <FeedLink> getAllLinks ()
+  public ICommonsList <FeedLink> getAllLinks ()
   {
-    return CollectionHelper.newList (m_aLinks);
+    return m_aLinks.getClone ();
   }
 
   public void setPublished (@Nullable final FeedDate aPublished)
@@ -337,7 +335,7 @@ public class FeedEntry extends AbstractFeedElement
     // attribute value of "alternate" that has the same combination of type and
     // hreflang attribute values.
     {
-      final Set <String> aUniques = new HashSet <String> ();
+      final ICommonsSet <String> aUniques = new CommonsHashSet <> ();
       for (final FeedLink aLink : m_aLinks)
         if (FeedLink.REL_ALTERNATE.equals (aLink.getRel ()))
         {

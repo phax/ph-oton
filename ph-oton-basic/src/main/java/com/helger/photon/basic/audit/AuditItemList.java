@@ -16,7 +16,6 @@
  */
 package com.helger.photon.basic.audit;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -27,7 +26,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -39,14 +39,14 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 final class AuditItemList
 {
-  private final List <IAuditItem> m_aItems = new ArrayList <IAuditItem> ();
+  private final ICommonsList <IAuditItem> m_aItems = new CommonsArrayList <> ();
 
   public AuditItemList ()
   {}
 
   void internalKeepOnlyLast ()
   {
-    final IAuditItem aLastItem = CollectionHelper.getLastElement (m_aItems);
+    final IAuditItem aLastItem = m_aItems.getLast ();
     m_aItems.clear ();
     m_aItems.add (aLastItem);
   }
@@ -66,9 +66,9 @@ final class AuditItemList
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IAuditItem> getAllItems ()
+  public ICommonsList <IAuditItem> getAllItems ()
   {
-    return CollectionHelper.newList (m_aItems);
+    return m_aItems.getClone ();
   }
 
   @Nonnull
@@ -76,8 +76,7 @@ final class AuditItemList
   public List <IAuditItem> getLastItems (@Nonnegative final int nMaxItems)
   {
     final int nEndIndex = Math.min (nMaxItems, m_aItems.size ());
-    return CollectionHelper.getSorted (m_aItems, Comparator.comparing (IAuditItem::getDateTime).reversed ())
-                           .subList (0, nEndIndex);
+    return m_aItems.getSorted (Comparator.comparing (IAuditItem::getDateTime).reversed ()).subList (0, nEndIndex);
   }
 
   @Override

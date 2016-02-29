@@ -16,9 +16,7 @@
  */
 package com.helger.photon.basic.atom;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -31,7 +29,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
@@ -45,13 +44,13 @@ public class FeedSource extends AbstractFeedElement
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FeedSource.class);
 
-  private final List <FeedPerson> m_aAuthors = new ArrayList <FeedPerson> ();
-  private final List <FeedCategory> m_aCategories = new ArrayList <FeedCategory> ();
-  private final List <FeedPerson> m_aContributors = new ArrayList <FeedPerson> ();
+  private final ICommonsList <FeedPerson> m_aAuthors = new CommonsArrayList <> ();
+  private final ICommonsList <FeedCategory> m_aCategories = new CommonsArrayList <> ();
+  private final ICommonsList <FeedPerson> m_aContributors = new CommonsArrayList <> ();
   private FeedGenerator m_aGenerator;
   private String m_sIcon;
   private String m_sID;
-  private final List <FeedLink> m_aLinks = new ArrayList <FeedLink> ();
+  private final ICommonsList <FeedLink> m_aLinks = new CommonsArrayList <> ();
   private String m_sLogo;
   private IFeedTextConstruct m_aRights;
   private IFeedTextConstruct m_aSubtitle;
@@ -69,9 +68,9 @@ public class FeedSource extends AbstractFeedElement
 
   @Nonnull
   @ReturnsMutableCopy
-  public final List <FeedPerson> getAuthors ()
+  public final ICommonsList <FeedPerson> getAuthors ()
   {
-    return CollectionHelper.newList (m_aAuthors);
+    return m_aAuthors.getClone ();
   }
 
   public final void addCategory (@Nonnull final FeedCategory aCategory)
@@ -82,9 +81,9 @@ public class FeedSource extends AbstractFeedElement
 
   @Nonnull
   @ReturnsMutableCopy
-  public final List <FeedCategory> getCategories ()
+  public final ICommonsList <FeedCategory> getCategories ()
   {
-    return CollectionHelper.newList (m_aCategories);
+    return m_aCategories.getClone ();
   }
 
   public final void addContributor (@Nonnull final FeedPerson aContributor)
@@ -95,9 +94,9 @@ public class FeedSource extends AbstractFeedElement
 
   @Nonnull
   @ReturnsMutableCopy
-  public final List <FeedPerson> getContributors ()
+  public final ICommonsList <FeedPerson> getContributors ()
   {
-    return CollectionHelper.newList (m_aContributors);
+    return m_aContributors.getClone ();
   }
 
   public final void setGenerator (@Nullable final FeedGenerator aGenerator)
@@ -141,9 +140,9 @@ public class FeedSource extends AbstractFeedElement
 
   @Nonnull
   @ReturnsMutableCopy
-  public final List <FeedLink> getLinks ()
+  public final ICommonsList <FeedLink> getLinks ()
   {
-    return CollectionHelper.newList (m_aLinks);
+    return m_aLinks.getClone ();
   }
 
   public final void setLogo (@Nullable final String sLogo)
