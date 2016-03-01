@@ -24,7 +24,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hc.html.forms.HCCheckBox;
+import com.helger.html.hc.html.forms.AbstractHCCheckBox;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -113,7 +113,7 @@ public class RequestFieldBooleanMultiValue extends RequestField implements IHCRe
 
     // Check if the hidden parameter for "checkbox is contained in the request"
     // is present?
-    aValues = aScope.getAttributeAsList (HCCheckBox.getHiddenFieldName (sFieldName));
+    aValues = aScope.getAttributeAsList (AbstractHCCheckBox.getHiddenFieldName (sFieldName));
     if (aValues != null && aValues.contains (sFieldValue))
       return false;
 

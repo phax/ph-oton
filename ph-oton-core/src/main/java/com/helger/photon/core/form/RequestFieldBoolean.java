@@ -22,7 +22,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hc.html.forms.HCCheckBox;
+import com.helger.html.hc.html.forms.AbstractHCCheckBox;
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -110,7 +110,7 @@ public class RequestFieldBoolean extends RequestField implements IHCRequestField
 
     // Check if the hidden parameter for "checkbox is contained in the request"
     // is present?
-    if (aScope.containsAttribute (HCCheckBox.getHiddenFieldName (sFieldName)))
+    if (aScope.containsAttribute (AbstractHCCheckBox.getHiddenFieldName (sFieldName)))
       return false;
 
     // Neither nor - default!
