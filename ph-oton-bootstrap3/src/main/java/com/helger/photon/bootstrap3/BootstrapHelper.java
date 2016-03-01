@@ -22,10 +22,8 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
-import com.helger.html.hc.html.forms.HCCheckBox;
+import com.helger.html.hc.html.forms.AbstractHCInput;
 import com.helger.html.hc.html.forms.HCCtrlHelper;
-import com.helger.html.hc.html.forms.HCHiddenField;
-import com.helger.html.hc.html.forms.HCRadioButton;
 import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.html.script.IHCScript;
 
@@ -42,10 +40,25 @@ public final class BootstrapHelper
   {
     if (aCtrl != null)
     {
-      if (!(aCtrl instanceof HCCheckBox) && !(aCtrl instanceof HCRadioButton) && !(aCtrl instanceof HCHiddenField))
+      if (aCtrl instanceof AbstractHCInput <?>)
       {
-        // input, select and textarea except for checkbox, radio button and
+        // all except for checkbox, radio button and
         // hidden field
+        final AbstractHCInput <?> aInput = (AbstractHCInput <?>) aCtrl;
+        switch (aInput.getType ())
+        {
+          case CHECKBOX:
+          case RADIO:
+          case HIDDEN:
+            // Do not add the class!
+            break;
+          default:
+            aCtrl.addClass (CBootstrapCSS.FORM_CONTROL);
+            break;
+        }
+      }
+      else
+      {
         aCtrl.addClass (CBootstrapCSS.FORM_CONTROL);
       }
     }

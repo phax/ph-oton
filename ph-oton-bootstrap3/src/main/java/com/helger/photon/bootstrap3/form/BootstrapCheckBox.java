@@ -21,12 +21,12 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
-import com.helger.html.hc.html.forms.HCCheckBox;
+import com.helger.html.hc.html.forms.AbstractHCCheckBox;
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
-public class BootstrapCheckBox extends HCCheckBox
+public class BootstrapCheckBox extends AbstractHCCheckBox <BootstrapCheckBox>
 {
   private void _init ()
   {

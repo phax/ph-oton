@@ -42,6 +42,7 @@ import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -144,11 +145,11 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext>
     {
       final BootstrapViewForm aForm = new BootstrapViewForm ();
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_GLOBAL_DEBUG.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCCheckBox (FIELD_GLOBAL_DEBUG,
-                                                                             GlobalDebug.isDebugMode ())));
+                                                   .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_GLOBAL_DEBUG,
+                                                                                                      GlobalDebug.isDebugMode ()))));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_GLOBAL_PRODUCTION.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCCheckBox (FIELD_GLOBAL_PRODUCTION,
-                                                                             GlobalDebug.isProductionMode ())));
+                                                   .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_GLOBAL_PRODUCTION,
+                                                                                                      GlobalDebug.isProductionMode ()))));
       aTabBox.addTab ("global", EText.MSG_HEADER_GLOBAL.getDisplayText (aDisplayLocale), aForm);
     }
 

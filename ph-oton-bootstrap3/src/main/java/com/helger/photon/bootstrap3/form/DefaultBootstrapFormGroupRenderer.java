@@ -105,25 +105,28 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     if (aFirstControl instanceof IHCInput <?>)
     {
       final IHCInput <?> aEdit = (IHCInput <?>) aFirstControl;
-
-      // Only check for null, so that empty string overrides this
-      // default behaviour
-      if (aEdit.getPlaceholder () == null)
+      if (aEdit.getType ().hasPlaceholder ())
       {
-        if (aLabel instanceof HCFormLabel)
+        // Only check for null, so that empty string overrides this
+        // default behaviour
+        if (aEdit.getPlaceholder () == null)
         {
-          // Special handling for the form label, which has explicit support for
-          // label texts
-          aEdit.setPlaceholder (aLabel.getPlainText ());
-        }
-        else
-        {
-          // Trim eventually trailing ":" from string
-          String sNewPlaceholder = StringHelper.trimEnd (aLabel.getPlainText (), HCFormLabelHelper.LABEL_END);
-          // Trim trailing "*" or "°" marker
-          sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_ALTERNATIVE);
-          sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_MANDATORY);
-          aEdit.setPlaceholder (sNewPlaceholder);
+          if (aLabel instanceof HCFormLabel)
+          {
+            // Special handling for the form label, which has explicit support
+            // for
+            // label texts
+            aEdit.setPlaceholder (aLabel.getPlainText ());
+          }
+          else
+          {
+            // Trim eventually trailing ":" from string
+            String sNewPlaceholder = StringHelper.trimEnd (aLabel.getPlainText (), HCFormLabelHelper.LABEL_END);
+            // Trim trailing "*" or "°" marker
+            sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_ALTERNATIVE);
+            sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_MANDATORY);
+            aEdit.setPlaceholder (sNewPlaceholder);
+          }
         }
       }
     }
