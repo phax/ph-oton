@@ -16,7 +16,6 @@
  */
 package com.helger.photon.basic.app.request;
 
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -29,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.attr.AttributeValueConverter;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.scope.mgr.ScopeManager;
@@ -127,7 +128,7 @@ public class RequestManager implements IRequestManager
   private static Map <String, Object> _getParametersFromPath (@Nonnull final String sPath)
   {
     // Use paths for standard menu items
-    final Map <String, Object> ret = new LinkedHashMap <String, Object> ();
+    final ICommonsMap <String, Object> ret = new CommonsLinkedHashMap <> ();
     for (final String sPair : StringHelper.getExploded ('/', StringHelper.trimStartAndEnd (sPath, "/")))
     {
       final String [] aElements = StringHelper.getExplodedArray (SEPARATOR_CHAR, sPair, 2);

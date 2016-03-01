@@ -17,9 +17,7 @@
 package com.helger.photon.core.api.pathdescriptor;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -28,6 +26,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -78,7 +78,7 @@ public final class PathDescriptor
       return PathMatchingResult.NO_MATCH;
     }
 
-    final Map <String, String> aVariableValues = new LinkedHashMap <String, String> ();
+    final ICommonsOrderedMap <String, String> aVariableValues = new CommonsLinkedHashMap <> ();
     for (int i = 0; i < nPartCount; ++i)
     {
       final PathDescriptorPart aPart = m_aPathParts.get (i);

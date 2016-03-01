@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.app.error;
 
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -24,6 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
@@ -48,7 +49,7 @@ public class InternalErrorBuilder
   private IUIInternalErrorHandler m_aUIErrorHandler;
   private Throwable m_aThrowable;
   private IRequestWebScopeWithoutResponse m_aRequestScope;
-  private Map <String, String> m_aCustomData;
+  private final ICommonsOrderedMap <String, String> m_aCustomData = new CommonsLinkedHashMap <> ();
   private EmailAttachmentList m_aEmailAttachments;
   private Locale m_aDisplayLocale;
   private boolean m_bInvokeCustomExceptionHandler = DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER;
@@ -95,8 +96,6 @@ public class InternalErrorBuilder
   @Nonnull
   public InternalErrorBuilder addCustomData (@Nonnull final String sKey, @Nullable final String sValue)
   {
-    if (m_aCustomData == null)
-      m_aCustomData = new LinkedHashMap <String, String> ();
     m_aCustomData.put (sKey, sValue);
     return this;
   }
@@ -104,7 +103,7 @@ public class InternalErrorBuilder
   @Nonnull
   public InternalErrorBuilder setCustomData (@Nullable final Map <String, String> aCustomData)
   {
-    m_aCustomData = aCustomData;
+    m_aCustomData.setAll (aCustomData);
     return this;
   }
 

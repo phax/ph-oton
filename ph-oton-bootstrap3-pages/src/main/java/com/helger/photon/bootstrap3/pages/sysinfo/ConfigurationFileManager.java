@@ -16,21 +16,19 @@
  */
 package com.helger.photon.bootstrap3.pages.sysinfo;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 
 public final class ConfigurationFileManager extends AbstractGlobalSingleton
 {
-  private final Map <String, ConfigurationFile> m_aMap = new LinkedHashMap <String, ConfigurationFile> ();
+  private final ICommonsOrderedMap <String, ConfigurationFile> m_aMap = new CommonsLinkedHashMap <> ();
 
   @Deprecated
   @UsedViaReflection
@@ -55,8 +53,8 @@ public final class ConfigurationFileManager extends AbstractGlobalSingleton
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <ConfigurationFile> getAllConfigurationFiles ()
+  public ICommonsList <ConfigurationFile> getAllConfigurationFiles ()
   {
-    return CollectionHelper.newList (m_aMap.values ());
+    return m_aMap.copyOfValues ();
   }
 }

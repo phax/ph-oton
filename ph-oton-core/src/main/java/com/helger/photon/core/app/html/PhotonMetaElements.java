@@ -18,7 +18,6 @@ package com.helger.photon.core.app.html;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -33,6 +32,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.microdom.util.XMLMapHandler;
 import com.helger.html.meta.IMetaElement;
@@ -67,7 +68,7 @@ public final class PhotonMetaElements
 
     if (aRes.exists ())
     {
-      final Map <String, String> aMetaElements = new LinkedHashMap <String, String> ();
+      final ICommonsOrderedMap <String, String> aMetaElements = new CommonsLinkedHashMap <> ();
       if (XMLMapHandler.readMap (aRes, aMetaElements).isFailure ())
         s_aLogger.error ("Failed to read meta element file " + aRes.getPath ());
 
