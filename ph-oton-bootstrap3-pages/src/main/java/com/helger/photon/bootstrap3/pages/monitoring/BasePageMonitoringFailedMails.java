@@ -32,7 +32,6 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.email.IEmailAddress;
 import com.helger.commons.errorlist.FormErrors;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
@@ -88,7 +87,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                            extends AbstractBootstrapWebPageForm <FailedMailData, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     MSG_ID ("ID", "ID"),
     MSG_ERROR_DT ("Fehler-Datum", "Error date"),
@@ -305,9 +304,9 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
         for (final IEmailAttachment aAttachment : aAttachments.getAllAttachments ())
         {
           String sText = aAttachment.getFilename ();
-          if (aAttachment.getCharset () != null)
+          if (aAttachment.hasCharset ())
             sText += " (" + aAttachment.getCharset ().name () + ")";
-          if (StringHelper.hasText (aAttachment.getContentType ()))
+          if (aAttachment.hasContentType ())
             sText += " [" + aAttachment.getContentType () + "]";
           sText += "; disposition=" + aAttachment.getDisposition ().getID ();
           aAttachmentNodeList.addChild (new HCDiv ().addChild (sText));
