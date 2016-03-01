@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls.tools.supplementary;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.charset.CCharset;
+import com.helger.commons.collection.ext.CommonsTreeSet;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CSSSelector;
@@ -42,14 +42,14 @@ public class MainExtractFontAwesomeCSSClasses
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EUICtrlsCSSPathProvider.FONT_AWESOME4.getCSSItemPath (true)),
                                                                CCharset.CHARSET_UTF_8_OBJ,
                                                                ECSSVersion.CSS30);
-    final Set <String> aClasses = new TreeSet <String> ();
-    final Set <String> aClassesIcon = new TreeSet <String> ();
+    final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
+    final ICommonsSet <String> aClassesIcon = new CommonsTreeSet <> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()
     {
       @Override
       public void onStyleRuleSelector (@Nonnull final CSSSelector aSelector)
       {
-        final List <ICSSSelectorMember> aMembers = aSelector.getAllMembers ();
+        final ICommonsList <ICSSSelectorMember> aMembers = aSelector.getAllMembers ();
         for (final ICSSSelectorMember aMember : aMembers)
           if (aMember instanceof CSSSelectorSimpleMember)
           {

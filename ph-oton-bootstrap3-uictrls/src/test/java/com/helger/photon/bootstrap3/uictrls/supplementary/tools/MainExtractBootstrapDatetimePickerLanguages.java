@@ -18,18 +18,18 @@ package com.helger.photon.bootstrap3.uictrls.supplementary.tools;
 
 import java.io.File;
 import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
 
+import com.helger.commons.collection.ext.CommonsTreeSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.string.StringHelper;
 
-public class MainExtractBootstrapDatetimePickerLanguages
+public final class MainExtractBootstrapDatetimePickerLanguages
 {
   public static void main (final String [] args)
   {
-    final Set <String> aAll = new TreeSet <String> ();
+    final ICommonsSet <String> aAll = new CommonsTreeSet <> ();
     for (final File aFile : new FileSystemIterator ("src\\main\\resources\\bootstrap\\datetimepicker\\locales"))
       if (aFile.getName ().endsWith (".js") && !aFile.getName ().endsWith (".min.js"))
       {

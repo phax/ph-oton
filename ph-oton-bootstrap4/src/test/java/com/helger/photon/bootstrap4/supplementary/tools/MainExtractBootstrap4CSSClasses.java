@@ -17,12 +17,12 @@
 package com.helger.photon.bootstrap4.supplementary.tools;
 
 import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.charset.CCharset;
+import com.helger.commons.collection.ext.CommonsTreeSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CSSSelector;
@@ -41,7 +41,7 @@ public class MainExtractBootstrap4CSSClasses
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EBootstrapCSSPathProvider.BOOTSTRAP_400.getCSSItemPath (true)),
                                                                CCharset.CHARSET_UTF_8_OBJ,
                                                                ECSSVersion.CSS30);
-    final Set <String> aClasses = new TreeSet <String> ();
+    final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()
     {
       @Override
