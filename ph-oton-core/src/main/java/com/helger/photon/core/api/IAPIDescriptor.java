@@ -16,11 +16,10 @@
  */
 package com.helger.photon.core.api;
 
-import java.util.Set;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.factory.IFactory;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
 import com.helger.web.http.EHTTPMethod;
@@ -70,7 +69,7 @@ public interface IAPIDescriptor
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <String> getAllRequiredHeaders ();
+  ICommonsOrderedSet <String> getAllRequiredHeaders ();
 
   /**
    * @return <code>true</code> if this API has required request parameters.
@@ -83,5 +82,5 @@ public interface IAPIDescriptor
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <String> getAllRequiredParams ();
+  ICommonsOrderedSet <String> getAllRequiredParams ();
 }

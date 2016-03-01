@@ -17,8 +17,6 @@
 package com.helger.photon.core.app.html;
 
 import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -31,6 +29,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -172,11 +172,11 @@ public final class PhotonCSS
 
   /**
    * @return A non-<code>null</code> set with all CSS paths to be included
-   *         globally. Order is ensured using LinkedHashSet.
+   *         globally.
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static Set <ICSSPathProvider> getAllRegisteredCSSIncludesForGlobal ()
+  public static ICommonsOrderedSet <ICSSPathProvider> getAllRegisteredCSSIncludesForGlobal ()
   {
     return s_aGlobal.getAllItems ();
   }
@@ -253,15 +253,15 @@ public final class PhotonCSS
 
   /**
    * @return A non-<code>null</code> set with all CSS paths to be included in
-   *         this request. Order is ensured using LinkedHashSet.
+   *         this request.
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static Set <ICSSPathProvider> getAllRegisteredCSSIncludesForThisRequest ()
+  public static ICommonsOrderedSet <ICSSPathProvider> getAllRegisteredCSSIncludesForThisRequest ()
   {
     final CSSResourceSet aSet = _getPerRequestSet (false);
     if (aSet == null)
-      return new LinkedHashSet <ICSSPathProvider> ();
+      return new CommonsLinkedHashSet<> ();
     aSet.markAsCollected ();
     return aSet.getAllItems ();
   }

@@ -16,8 +16,6 @@
  */
 package com.helger.photon.uictrls.fineupload;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +28,10 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
@@ -75,13 +76,13 @@ public class FineUploaderBasic
   private boolean m_bAutoUpload = DEFAULT_AUTO_UPLOAD;
 
   private ISimpleURL m_aRequestEndpoint = DEFAULT_REQUEST_ENDPOINT;
-  private final Map <String, String> m_aRequestParams = new LinkedHashMap <String, String> ();
+  private final ICommonsOrderedMap <String, String> m_aRequestParams = new CommonsLinkedHashMap<> ();
   private boolean m_bRequestParamsInBody = DEFAULT_REQUEST_PARAMS_IN_BODY;
-  private final Map <String, String> m_aRequestCustomHeaders = new LinkedHashMap <String, String> ();
+  private final ICommonsOrderedMap <String, String> m_aRequestCustomHeaders = new CommonsLinkedHashMap<> ();
   private boolean m_bRequestForceMultipart = DEFAULT_REQUEST_FORCE_MULTIPART;
   private String m_sRequestInputName = DEFAULT_REQUEST_INPUT_NAME;
 
-  private final Set <String> m_aValidationAllowedExtensions = new LinkedHashSet <String> ();
+  private final ICommonsOrderedSet <String> m_aValidationAllowedExtensions = new CommonsLinkedHashSet<> ();
   private int m_nValidationSizeLimit = DEFAULT_VALIDATION_SIZE_LIMIT;
   private int m_nValidationMinSizeLimit = DEFAULT_VALIDATION_MIN_SIZE_LIMIT;
   private boolean m_bValidationStopOnFirstInvalidFile = DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE;
@@ -150,9 +151,9 @@ public class FineUploaderBasic
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, String> getAllParams ()
+  public ICommonsOrderedMap <String, String> getAllParams ()
   {
-    return CollectionHelper.newMap (m_aRequestParams);
+    return m_aRequestParams.getClone ();
   }
 
   /**
@@ -166,9 +167,7 @@ public class FineUploaderBasic
   @Nonnull
   public FineUploaderBasic setParams (@Nullable final Map <String, String> aParams)
   {
-    m_aRequestParams.clear ();
-    if (aParams != null)
-      m_aRequestParams.putAll (aParams);
+    m_aRequestParams.setAll (aParams);
     return this;
   }
 
@@ -183,8 +182,7 @@ public class FineUploaderBasic
   @Nonnull
   public FineUploaderBasic addParams (@Nullable final Map <String, String> aParams)
   {
-    if (aParams != null)
-      m_aRequestParams.putAll (aParams);
+    m_aRequestParams.addAll (aParams);
     return this;
   }
 
@@ -235,9 +233,9 @@ public class FineUploaderBasic
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, String> getAllCustomHeaders ()
+  public ICommonsOrderedMap <String, String> getAllCustomHeaders ()
   {
-    return CollectionHelper.newMap (m_aRequestCustomHeaders);
+    return m_aRequestCustomHeaders.getClone ();
   }
 
   /**
@@ -251,9 +249,7 @@ public class FineUploaderBasic
   @Nonnull
   public FineUploaderBasic setCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
-    m_aRequestCustomHeaders.clear ();
-    if (aCustomHeaders != null)
-      m_aRequestCustomHeaders.putAll (aCustomHeaders);
+    m_aRequestCustomHeaders.setAll (aCustomHeaders);
     return this;
   }
 
@@ -268,8 +264,7 @@ public class FineUploaderBasic
   @Nonnull
   public FineUploaderBasic addCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
-    if (aCustomHeaders != null)
-      m_aRequestCustomHeaders.putAll (aCustomHeaders);
+    m_aRequestCustomHeaders.addAll (aCustomHeaders);
     return this;
   }
 
@@ -419,9 +414,9 @@ public class FineUploaderBasic
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllAllowedExtensions ()
+  public ICommonsOrderedSet <String> getAllAllowedExtensions ()
   {
-    return CollectionHelper.newSet (m_aValidationAllowedExtensions);
+    return m_aValidationAllowedExtensions.getClone ();
   }
 
   /**
@@ -439,9 +434,7 @@ public class FineUploaderBasic
   @Nonnull
   public FineUploaderBasic setAllowedExtensions (@Nullable final Set <String> aAllowedExtensions)
   {
-    m_aValidationAllowedExtensions.clear ();
-    if (aAllowedExtensions != null)
-      m_aValidationAllowedExtensions.addAll (aAllowedExtensions);
+    m_aValidationAllowedExtensions.setAll (aAllowedExtensions);
     return this;
   }
 
@@ -480,8 +473,7 @@ public class FineUploaderBasic
   @Nonnull
   public FineUploaderBasic addAllowedExtension (@Nonnull @Nonempty final String sAllowedExtension)
   {
-    if (StringHelper.hasNoText (sAllowedExtension))
-      throw new IllegalArgumentException ("allowedExtension");
+    ValueEnforcer.notEmpty (sAllowedExtension, "allowedExtension");
     m_aValidationAllowedExtensions.add (sAllowedExtension);
     return this;
   }
@@ -502,8 +494,7 @@ public class FineUploaderBasic
   @Nonnull
   public FineUploaderBasic setSizeLimit (@Nonnegative final int nSizeLimit)
   {
-    if (nSizeLimit < 0)
-      throw new IllegalArgumentException ("sizeLimit may not be negative!");
+    ValueEnforcer.isGE0 (nSizeLimit, "SizeLimit");
     m_nValidationSizeLimit = nSizeLimit;
     return this;
   }
@@ -524,8 +515,7 @@ public class FineUploaderBasic
   @Nonnull
   public FineUploaderBasic setMinSizeLimit (@Nonnegative final int nMinSizeLimit)
   {
-    if (nMinSizeLimit < 0)
-      throw new IllegalArgumentException ("minSizeLimit may not be negative!");
+    ValueEnforcer.isGE0 (nMinSizeLimit, "MinSizeLimit");
     m_nValidationMinSizeLimit = nMinSizeLimit;
     return this;
   }
@@ -576,8 +566,7 @@ public class FineUploaderBasic
   @Nonnull
   public FineUploaderBasic setInputName (@Nonnull @Nonempty final String sInputName)
   {
-    if (StringHelper.hasNoText (sInputName))
-      throw new IllegalArgumentException ("inputName");
+    ValueEnforcer.notEmpty (sInputName, "InputName");
 
     m_sRequestInputName = sInputName;
     return this;
@@ -708,7 +697,7 @@ public class FineUploaderBasic
       final JSAssocArray aRequest = new JSAssocArray ();
       if (!m_aRequestEndpoint.equals (DEFAULT_REQUEST_ENDPOINT))
         aRequest.add ("endpoint", m_aRequestEndpoint.getAsStringWithEncodedParameters ());
-      if (!m_aRequestParams.isEmpty ())
+      if (m_aRequestParams.isNotEmpty ())
       {
         final JSAssocArray aParams = new JSAssocArray ();
         for (final Map.Entry <String, String> aEntry : m_aRequestParams.entrySet ())
@@ -717,7 +706,7 @@ public class FineUploaderBasic
       }
       if (m_bRequestParamsInBody != DEFAULT_REQUEST_PARAMS_IN_BODY)
         aRequest.add ("paramsInBody", m_bRequestParamsInBody);
-      if (!m_aRequestCustomHeaders.isEmpty ())
+      if (m_aRequestCustomHeaders.isNotEmpty ())
       {
         final JSAssocArray aCustomHeaders = new JSAssocArray ();
         for (final Map.Entry <String, String> aEntry : m_aRequestCustomHeaders.entrySet ())
@@ -736,7 +725,7 @@ public class FineUploaderBasic
     // validation
     {
       final JSAssocArray aValidation = new JSAssocArray ();
-      if (!m_aValidationAllowedExtensions.isEmpty ())
+      if (m_aValidationAllowedExtensions.isNotEmpty ())
         aValidation.add ("allowedExtensions", new JSArray ().addAll (m_aValidationAllowedExtensions));
       if (m_nValidationSizeLimit != DEFAULT_VALIDATION_SIZE_LIMIT)
         aValidation.add ("sizeLimit", m_nValidationSizeLimit);

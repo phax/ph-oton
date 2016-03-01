@@ -18,11 +18,11 @@ package com.helger.photon.core.app.resource;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.state.EChange;
 
 /**
@@ -99,12 +99,11 @@ public interface IWebResourceSet <T> extends Serializable, Iterable <T>
   EChange removeAll ();
 
   /**
-   * @return A non-<code>null</code> set with all items. Order is ensured using
-   *         LinkedHashSet.
+   * @return A non-<code>null</code> set with all items.
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <T> getAllItems ();
+  ICommonsOrderedSet <T> getAllItems ();
 
   /**
    * Add all items to the provided target container.

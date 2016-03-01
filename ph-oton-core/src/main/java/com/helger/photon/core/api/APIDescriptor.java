@@ -16,15 +16,14 @@
  */
 package com.helger.photon.core.api;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.factory.FactoryNewInstance;
 import com.helger.commons.factory.IFactory;
 import com.helger.commons.string.StringHelper;
@@ -40,8 +39,8 @@ public class APIDescriptor implements IAPIDescriptor
 {
   private final APIPath m_aAPIPath;
   private final PathDescriptor m_aPathDescriptor;
-  private final Set <String> m_aRequiredHeaders = new LinkedHashSet <String> ();
-  private final Set <String> m_aRequiredParams = new LinkedHashSet <String> ();
+  private final ICommonsOrderedSet <String> m_aRequiredHeaders = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aRequiredParams = new CommonsLinkedHashSet<> ();
   private final IFactory <? extends IAPIExecutor> m_aExecutorFactory;
 
   /**
@@ -145,14 +144,14 @@ public class APIDescriptor implements IAPIDescriptor
 
   public boolean hasRequiredHeaders ()
   {
-    return !m_aRequiredHeaders.isEmpty ();
+    return m_aRequiredHeaders.isNotEmpty ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllRequiredHeaders ()
+  public ICommonsOrderedSet <String> getAllRequiredHeaders ()
   {
-    return CollectionHelper.newOrderedSet (m_aRequiredHeaders);
+    return m_aRequiredHeaders.getClone ();
   }
 
   /**
@@ -194,14 +193,14 @@ public class APIDescriptor implements IAPIDescriptor
 
   public boolean hasRequiredParams ()
   {
-    return !m_aRequiredParams.isEmpty ();
+    return m_aRequiredParams.isNotEmpty ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllRequiredParams ()
+  public ICommonsOrderedSet <String> getAllRequiredParams ()
   {
-    return CollectionHelper.newOrderedSet (m_aRequiredParams);
+    return m_aRequiredParams.getClone ();
   }
 
   @Override

@@ -18,9 +18,7 @@ package com.helger.photon.tinymce4;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -32,6 +30,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
@@ -108,8 +108,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   private ISimpleURL m_aLanguageURL;
   private ETriState m_eNoWrap = ETriState.UNDEFINED;
   private ETriState m_eObjectResizing = ETriState.UNDEFINED;
-  private final Set <ETinyMCE4Plugin> m_aPlugins = new LinkedHashSet <ETinyMCE4Plugin> ();
-  private final Set <TinyMCE4ExternalPlugin> m_aExternalPlugins = new LinkedHashSet <TinyMCE4ExternalPlugin> ();
+  private final ICommonsOrderedSet <ETinyMCE4Plugin> m_aPlugins = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <TinyMCE4ExternalPlugin> m_aExternalPlugins = new CommonsLinkedHashSet<> ();
   private String m_sSelector = DEFAULT_SELECTOR;
   private ETinyMCE4Skin m_eSkin;
   private ISimpleURL m_aSkinURL;
@@ -398,9 +398,9 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <ETinyMCE4Plugin> getAllPlugins ()
+  public ICommonsOrderedSet <ETinyMCE4Plugin> getAllPlugins ()
   {
-    return CollectionHelper.newOrderedSet (m_aPlugins);
+    return m_aPlugins.getClone ();
   }
 
   @Nonnegative
@@ -520,9 +520,9 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <TinyMCE4ExternalPlugin> getAllExternalPlugins ()
+  public ICommonsOrderedSet <TinyMCE4ExternalPlugin> getAllExternalPlugins ()
   {
-    return CollectionHelper.newOrderedSet (m_aExternalPlugins);
+    return m_aExternalPlugins.getClone ();
   }
 
   @Nonnegative
@@ -1225,7 +1225,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
       aOptions.add ("nowrap", isNoWrap ());
     if (m_eObjectResizing.isDefined ())
       aOptions.add ("object_resizing", isObjectResizing ());
-    if (!m_aPlugins.isEmpty ())
+    if (m_aPlugins.isNotEmpty ())
     {
       final StringBuilder aSB = new StringBuilder ();
       for (final ETinyMCE4Plugin ePlugin : m_aPlugins)
@@ -1236,7 +1236,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
       }
       aOptions.add ("plugins", aSB.toString ());
     }
-    if (!m_aExternalPlugins.isEmpty ())
+    if (m_aExternalPlugins.isNotEmpty ())
     {
       final JsonObject aJsonObject = new JsonObject ();
       for (final TinyMCE4ExternalPlugin aExternalPlugin : m_aExternalPlugins)

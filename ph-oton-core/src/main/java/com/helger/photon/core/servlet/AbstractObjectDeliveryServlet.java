@@ -17,9 +17,7 @@
 package com.helger.photon.core.servlet;
 
 import java.io.IOException;
-import java.util.LinkedHashSet;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,7 +30,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.regex.RegExHelper;
@@ -76,12 +75,12 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
                                                                                                     .nextLong ()) +
                                                                      '"';
 
-  private final Set <String> m_aDeniedFilenames = new LinkedHashSet <String> ();
-  private final Set <String> m_aDeniedExtensions = new LinkedHashSet <String> ();
-  private final Set <String> m_aDeniedRegExs = new LinkedHashSet <String> ();
-  private final Set <String> m_aAllowedFilenames = new LinkedHashSet <String> ();
-  private final Set <String> m_aAllowedExtensions = new LinkedHashSet <String> ();
-  private final Set <String> m_aAllowedRegExs = new LinkedHashSet <String> ();
+  private final ICommonsOrderedSet <String> m_aDeniedFilenames = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aDeniedExtensions = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aDeniedRegExs = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aAllowedFilenames = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aAllowedExtensions = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aAllowedRegExs = new CommonsLinkedHashSet<> ();
   private boolean m_bDeniedAllExtensions = false;
   private boolean m_bAllowedAllExtensions = false;
 
@@ -116,7 +115,7 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
    *        unification is only relevant because of the case insensitive file
    *        system on Windows machines.
    */
-  private static void _initialFillSet (@Nonnull final Set <String> aSet,
+  private static void _initialFillSet (@Nonnull final ICommonsOrderedSet <String> aSet,
                                        @Nullable final String sItemList,
                                        final boolean bUnify)
   {
@@ -205,44 +204,44 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
 
   @Nonnull
   @ReturnsMutableCopy
-  protected final Set <String> getAllDeniedFilenames ()
+  protected final ICommonsOrderedSet <String> getAllDeniedFilenames ()
   {
-    return CollectionHelper.newOrderedSet (m_aDeniedFilenames);
+    return m_aDeniedFilenames.getClone ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  protected final Set <String> getAllDeniedExtensions ()
+  protected final ICommonsOrderedSet <String> getAllDeniedExtensions ()
   {
-    return CollectionHelper.newOrderedSet (m_aDeniedExtensions);
+    return m_aDeniedExtensions.getClone ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  protected final Set <String> getAllDeniedRegExs ()
+  protected final ICommonsOrderedSet <String> getAllDeniedRegExs ()
   {
-    return CollectionHelper.newOrderedSet (m_aDeniedRegExs);
+    return m_aDeniedRegExs.getClone ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  protected final Set <String> getAllAllowedFilenames ()
+  protected final ICommonsOrderedSet <String> getAllAllowedFilenames ()
   {
-    return CollectionHelper.newOrderedSet (m_aAllowedFilenames);
+    return m_aAllowedFilenames.getClone ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  protected final Set <String> getAllAllowedExtensions ()
+  protected final ICommonsOrderedSet <String> getAllAllowedExtensions ()
   {
-    return CollectionHelper.newOrderedSet (m_aAllowedExtensions);
+    return m_aAllowedExtensions.getClone ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  protected final Set <String> getAllAllowedRegExs ()
+  protected final ICommonsOrderedSet <String> getAllAllowedRegExs ()
   {
-    return CollectionHelper.newOrderedSet (m_aAllowedRegExs);
+    return m_aAllowedRegExs.getClone ();
   }
 
   protected final boolean isDenyAllExtensions ()

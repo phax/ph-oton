@@ -16,12 +16,8 @@
  */
 package com.helger.photon.core.app.resource;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -33,7 +29,11 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EChange;
@@ -53,9 +53,9 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final List <IJSPathProvider> m_aList = new ArrayList <> ();
+  private final ICommonsList <IJSPathProvider> m_aList = new CommonsArrayList<> ();
   @GuardedBy ("m_aRWLock")
-  private final Set <IJSPathProvider> m_aItems = new LinkedHashSet <> ();
+  private final ICommonsSet <IJSPathProvider> m_aItems = new CommonsLinkedHashSet<> ();
   @GuardedBy ("m_aRWLock")
   private boolean m_bIsCollected = false;
 
@@ -179,9 +179,9 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <IJSPathProvider> getAllItems ()
+  public ICommonsOrderedSet <IJSPathProvider> getAllItems ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newOrderedSet (m_aList));
+    return m_aRWLock.readLocked ( () -> new CommonsLinkedHashSet<> (m_aList));
   }
 
   public void getAllItems (@Nonnull final Collection <? super IJSPathProvider> aTarget)
@@ -193,18 +193,18 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
 
   public boolean isEmpty ()
   {
-    return m_aRWLock.readLocked ( () -> m_aList.isEmpty ());
+    return m_aRWLock.readLocked (m_aList::isEmpty);
   }
 
   public boolean isNotEmpty ()
   {
-    return !isEmpty ();
+    return m_aRWLock.readLocked (m_aList::isNotEmpty);
   }
 
   @Nonnegative
   public int getCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aList.size ());
+    return m_aRWLock.readLocked (m_aList::size);
   }
 
   @Nonnull
