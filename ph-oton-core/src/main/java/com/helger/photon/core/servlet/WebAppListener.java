@@ -23,7 +23,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
@@ -44,6 +43,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.cleanup.CommonsCleanup;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsTreeMap;
+import com.helger.commons.collection.ext.ICommonsNavigableMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.id.factory.GlobalIDFactory;
@@ -180,7 +181,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected final void logInitParameters (@Nonnull final ServletContext aSC)
   {
     // Put them in a sorted map
-    final Map <String, String> aParams = new TreeMap <String, String> ();
+    final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap <> ();
     final Enumeration <?> aEnum = aSC.getInitParameterNames ();
     while (aEnum.hasMoreElements ())
     {
