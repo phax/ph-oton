@@ -16,9 +16,7 @@
  */
 package com.helger.photon.core.app.layout;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,7 +26,9 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
@@ -47,7 +47,7 @@ public class LayoutManagerProxy <LECTYPE extends ILayoutExecutionContext> implem
 {
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final Map <String, ILayoutAreaContentProvider <LECTYPE>> m_aContentProviders = new LinkedHashMap <String, ILayoutAreaContentProvider <LECTYPE>> ();
+  private final ICommonsOrderedMap <String, ILayoutAreaContentProvider <LECTYPE>> m_aContentProviders = new CommonsLinkedHashMap <> ();
 
   public LayoutManagerProxy ()
   {}
@@ -71,7 +71,7 @@ public class LayoutManagerProxy <LECTYPE extends ILayoutExecutionContext> implem
   @ReturnsMutableCopy
   public List <String> getAllAreaIDs ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aContentProviders.keySet ()));
+    return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aContentProviders.keySet ()));
   }
 
   @Nullable
@@ -81,10 +81,8 @@ public class LayoutManagerProxy <LECTYPE extends ILayoutExecutionContext> implem
   {
     ValueEnforcer.notNull (sAreaID, "AreaID");
 
-    return m_aRWLock.readLocked ( () -> {
-      final ILayoutAreaContentProvider <LECTYPE> aContentProvider = m_aContentProviders.get (sAreaID);
-      return aContentProvider == null ? null : aContentProvider.getContent (aLEC, aHead);
-    });
+    final ILayoutAreaContentProvider <LECTYPE> aContentProvider = m_aRWLock.readLocked ( () -> m_aContentProviders.get (sAreaID));
+    return aContentProvider == null ? null : aContentProvider.getContent (aLEC, aHead);
   }
 
   @Override

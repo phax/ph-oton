@@ -17,14 +17,8 @@
 package com.helger.photon.uictrls.datatables;
 
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.EnumSet;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -43,7 +37,10 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.annotation.Since;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.lang.CloneHelper;
@@ -239,7 +236,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // DataTables - Columns
   //
   /** Set column definition initialisation properties. */
-  private final List <DataTablesColumnDef> m_aColumnDefs = new ArrayList <> ();
+  private final ICommonsList <DataTablesColumnDef> m_aColumnDefs = new CommonsArrayList <> ();
 
   //
   // DataTables - Internationalisation
@@ -251,7 +248,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   //
   // DataTables - Plugins
   //
-  private final Map <String, IDataTablesPlugin> m_aPlugins = new LinkedHashMap <> ();
+  private final ICommonsOrderedMap <String, IDataTablesPlugin> m_aPlugins = new CommonsLinkedHashMap <> ();
 
   // Custom properties
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
@@ -803,14 +800,14 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   //
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <DataTablesColumnDef> getAllColumns ()
+  public ICommonsList <DataTablesColumnDef> getAllColumns ()
   {
-    return CollectionHelper.newList (m_aColumnDefs);
+    return m_aColumnDefs.getClone ();
   }
 
   public boolean hasColumns ()
   {
-    return !m_aColumnDefs.isEmpty ();
+    return m_aColumnDefs.isNotEmpty ();
   }
 
   @Nonnegative
@@ -992,9 +989,9 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IDataTablesPlugin> getAllPlugins ()
+  public ICommonsList <IDataTablesPlugin> getAllPlugins ()
   {
-    return CollectionHelper.newList (m_aPlugins.values ());
+    return m_aPlugins.copyOfValues ();
   }
 
   // XXX The Rest
@@ -1103,7 +1100,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     if (isClientSide ())
     {
       // Add client-side date/time formatter
-      final Set <EDTColType> aDateTimeTypes = EnumSet.noneOf (EDTColType.class);
+      final EnumSet <EDTColType> aDateTimeTypes = EnumSet.noneOf (EDTColType.class);
       for (final IHCCol <?> aCol : m_aTable.getAllColumns ())
         if (aCol instanceof DTCol)
         {
@@ -1125,7 +1122,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     _applyClientSideSortingSettings ();
 
     // Determine all applicable plugins
-    final List <IDataTablesPlugin> aRelevantPlugins = new ArrayList <> ();
+    final ICommonsList <IDataTablesPlugin> aRelevantPlugins = new CommonsArrayList <> ();
     for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
       if (aPlugin.canBeApplied (this))
         aRelevantPlugins.add (aPlugin);

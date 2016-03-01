@@ -16,12 +16,13 @@
  */
 package com.helger.photon.uicore.html.swf;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.css.ECSSUnit;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -52,9 +53,9 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
   private String m_sRequiredSWFVersion;
   // Optional
   private ISimpleURL m_aExpressInstallSWFURL;
-  private Map <String, Object> m_aFlashVars;
-  private Map <String, String> m_aObjectParams;
-  private Map <String, String> m_aObjectAttrs;
+  private ICommonsOrderedMap <String, Object> m_aFlashVars;
+  private ICommonsOrderedMap <String, String> m_aObjectParams;
+  private ICommonsOrderedMap <String, String> m_aObjectAttrs;
 
   public HCSWFObject ()
   {
@@ -171,7 +172,7 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
       throw new IllegalArgumentException ("The name '" + sName + "' is not a legal JS identifier!");
 
     if (m_aFlashVars == null)
-      m_aFlashVars = new LinkedHashMap <String, Object> ();
+      m_aFlashVars = new CommonsLinkedHashMap <> ();
     m_aFlashVars.put (sName, aValue);
     return this;
   }
@@ -207,7 +208,7 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
       throw new IllegalArgumentException ("The name '" + sName + "' is not a legal JS identifier!");
 
     if (m_aObjectParams == null)
-      m_aObjectParams = new LinkedHashMap <String, String> ();
+      m_aObjectParams = new CommonsLinkedHashMap <> ();
     m_aObjectParams.put (sName, sValue);
     return this;
   }
@@ -244,7 +245,7 @@ public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
       throw new IllegalArgumentException ("The name '" + sName + "' is not a legal JS identifier!");
 
     if (m_aObjectAttrs == null)
-      m_aObjectAttrs = new LinkedHashMap <String, String> ();
+      m_aObjectAttrs = new CommonsLinkedHashMap <> ();
     m_aObjectAttrs.put (sName, sValue);
     return this;
   }

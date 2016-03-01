@@ -16,11 +16,6 @@
  */
 package com.helger.photon.exchange.bulkimport;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,7 +25,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.type.ITypedObject;
@@ -56,10 +54,10 @@ public class BulkImportResult implements ISuccessIndicator
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final int m_nMaxWarnings;
   private boolean m_bSuccess = DEFAULT_SUCCESS;
-  private final Map <String, ITypedObject <String>> m_aAdded = new LinkedHashMap <String, ITypedObject <String>> ();
-  private final Map <String, ITypedObject <String>> m_aChanged = new LinkedHashMap <String, ITypedObject <String>> ();
-  private final List <String> m_aFailed = new ArrayList <String> ();
-  private final List <String> m_aWarnings = new ArrayList <String> ();
+  private final ICommonsOrderedMap <String, ITypedObject <String>> m_aAdded = new CommonsLinkedHashMap <> ();
+  private final ICommonsOrderedMap <String, ITypedObject <String>> m_aChanged = new CommonsLinkedHashMap <> ();
+  private final ICommonsList <String> m_aFailed = new CommonsArrayList <> ();
+  private final ICommonsList <String> m_aWarnings = new CommonsArrayList <> ();
   private int m_nAdditionalWarnings = 0;
 
   public BulkImportResult ()
@@ -74,16 +72,14 @@ public class BulkImportResult implements ISuccessIndicator
 
   public final void registerAdded (@Nonnull final ITypedObject <String> aObj)
   {
-    m_aRWLock.writeLocked ( () -> {
-      m_aAdded.put (aObj.getID (), aObj);
-    });
+    m_aRWLock.writeLocked ( () -> m_aAdded.put (aObj.getID (), aObj));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public final List <ITypedObject <String>> getAllAdded ()
+  public final ICommonsList <ITypedObject <String>> getAllAdded ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aAdded.values ()));
+    return m_aRWLock.readLocked ( () -> m_aAdded.copyOfValues ());
   }
 
   @Nonnegative
@@ -100,16 +96,14 @@ public class BulkImportResult implements ISuccessIndicator
 
   public final void registerChanged (@Nonnull final ITypedObject <String> aObj)
   {
-    m_aRWLock.writeLocked ( () -> {
-      m_aChanged.put (aObj.getID (), aObj);
-    });
+    m_aRWLock.writeLocked ( () -> m_aChanged.put (aObj.getID (), aObj));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public final List <ITypedObject <String>> getAllChanged ()
+  public final ICommonsList <ITypedObject <String>> getAllChanged ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aChanged.values ()));
+    return m_aRWLock.readLocked ( () -> m_aChanged.copyOfValues ());
   }
 
   @Nonnegative
@@ -126,9 +120,7 @@ public class BulkImportResult implements ISuccessIndicator
 
   public final void registerFailed (final String sID)
   {
-    m_aRWLock.writeLocked ( () -> {
-      m_aFailed.add (sID);
-    });
+    m_aRWLock.writeLocked ( () -> m_aFailed.add (sID));
   }
 
   /**
@@ -136,9 +128,9 @@ public class BulkImportResult implements ISuccessIndicator
    */
   @Nonnull
   @ReturnsMutableCopy
-  public final List <String> getAllFailed ()
+  public final ICommonsList <String> getAllFailed ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aFailed));
+    return m_aRWLock.readLocked ( () -> m_aFailed.getClone ());
   }
 
   @Nonnegative
@@ -169,9 +161,9 @@ public class BulkImportResult implements ISuccessIndicator
 
   @Nonnull
   @ReturnsMutableCopy
-  public final List <String> getAllWarnings ()
+  public final ICommonsList <String> getAllWarnings ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aWarnings));
+    return m_aRWLock.readLocked ( () -> m_aWarnings.getClone ());
   }
 
   /**
@@ -185,9 +177,7 @@ public class BulkImportResult implements ISuccessIndicator
 
   public final void setSuccess (final boolean bSuccess)
   {
-    m_aRWLock.writeLocked ( () -> {
-      m_bSuccess = bSuccess;
-    });
+    m_aRWLock.writeLocked ( () -> m_bSuccess = bSuccess);
   }
 
   /**

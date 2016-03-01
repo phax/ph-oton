@@ -16,12 +16,6 @@
  */
 package com.helger.photon.core.userdata;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -36,6 +30,12 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.scope.IScope;
 import com.helger.commons.string.StringHelper;
@@ -55,7 +55,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   private static final Logger s_aLogger = LoggerFactory.getLogger (UserUploadManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final Map <String, TemporaryUserDataObject> m_aMap = new HashMap <String, TemporaryUserDataObject> ();
+  private final ICommonsMap <String, TemporaryUserDataObject> m_aMap = new CommonsHashMap <> ();
 
   @Deprecated
   @UsedViaReflection
@@ -130,9 +130,9 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
    */
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, UserDataObject> confirmUploadedFiles (@Nullable final String... aFieldNames)
+  public ICommonsOrderedMap <String, UserDataObject> confirmUploadedFiles (@Nullable final String... aFieldNames)
   {
-    final Map <String, UserDataObject> ret = new LinkedHashMap <> ();
+    final ICommonsOrderedMap <String, UserDataObject> ret = new CommonsLinkedHashMap <> ();
     if (aFieldNames != null)
     {
       m_aRWLock.writeLocked ( () -> {
@@ -192,9 +192,9 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <String> cancelUploadedFiles (@Nullable final String... aFieldNames)
+  public ICommonsList <String> cancelUploadedFiles (@Nullable final String... aFieldNames)
   {
-    final List <String> ret = new ArrayList <> ();
+    final ICommonsList <String> ret = new CommonsArrayList <> ();
     if (ArrayHelper.isNotEmpty (aFieldNames))
     {
       m_aRWLock.writeLocked ( () -> {

@@ -17,7 +17,6 @@
 package com.helger.photon.tinymce4;
 
 import java.math.BigDecimal;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnegative;
@@ -29,8 +28,9 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ETriState;
@@ -108,8 +108,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   private ISimpleURL m_aLanguageURL;
   private ETriState m_eNoWrap = ETriState.UNDEFINED;
   private ETriState m_eObjectResizing = ETriState.UNDEFINED;
-  private final ICommonsOrderedSet <ETinyMCE4Plugin> m_aPlugins = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <TinyMCE4ExternalPlugin> m_aExternalPlugins = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <ETinyMCE4Plugin> m_aPlugins = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <TinyMCE4ExternalPlugin> m_aExternalPlugins = new CommonsLinkedHashSet <> ();
   private String m_sSelector = DEFAULT_SELECTOR;
   private ETinyMCE4Skin m_eSkin;
   private ISimpleURL m_aSkinURL;
@@ -181,7 +181,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   private JSAnonymousFunction m_aFileBrowserCallback;
 
   // Custom
-  private final Map <String, IJSExpression> m_aCustom = new LinkedHashMap <String, IJSExpression> ();
+  private final ICommonsOrderedMap <String, IJSExpression> m_aCustom = new CommonsLinkedHashMap <> ();
 
   private void _init ()
   {
@@ -1182,9 +1182,9 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, IJSExpression> getAllCustomOptions ()
+  public ICommonsOrderedMap <String, IJSExpression> getAllCustomOptions ()
   {
-    return CollectionHelper.newOrderedMap (m_aCustom);
+    return m_aCustom.getClone ();
   }
 
   public boolean containsCustomOption (@Nullable final String sName)

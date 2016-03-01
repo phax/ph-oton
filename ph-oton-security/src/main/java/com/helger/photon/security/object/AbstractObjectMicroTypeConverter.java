@@ -18,7 +18,6 @@ package com.helger.photon.security.object;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -26,6 +25,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.IMicroTypeConverter;
 import com.helger.photon.basic.object.IObject;
@@ -129,7 +130,7 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
   @Nonnull
   public static final StubObjectWithCustomAttrs getStubObjectWithCustomAttrs (@Nonnull final IMicroElement aElement)
   {
-    final Map <String, String> aCustomAttrs = new LinkedHashMap <String, String> ();
+    final ICommonsOrderedMap <String, String> aCustomAttrs = new CommonsLinkedHashMap <> ();
     for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
       aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
 

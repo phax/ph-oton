@@ -16,11 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -29,7 +25,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.ConstantHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayText;
@@ -41,7 +40,7 @@ public class DataTablesLengthMenu
   /** The numerical value representing 'show all items' */
   public static final int COUNT_ALL = -1;
 
-  private final List <DataTablesLengthMenuItem> m_aList = new ArrayList <DataTablesLengthMenuItem> ();
+  private final ICommonsList <DataTablesLengthMenuItem> m_aList = new CommonsArrayList <> ();
 
   public DataTablesLengthMenu ()
   {}
@@ -74,9 +73,9 @@ public class DataTablesLengthMenu
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <Integer, String> getAsMap (@Nonnull final Locale aDisplayLocale)
+  public ICommonsOrderedMap <Integer, String> getAsMap (@Nonnull final Locale aDisplayLocale)
   {
-    final Map <Integer, String> ret = new LinkedHashMap <Integer, String> ();
+    final ICommonsOrderedMap <Integer, String> ret = new CommonsLinkedHashMap <> ();
     for (final DataTablesLengthMenuItem aItem : m_aList)
       ret.put (Integer.valueOf (aItem.getItemCount ()), aItem.getDisplayText (aDisplayLocale));
     return ret;
@@ -89,15 +88,15 @@ public class DataTablesLengthMenu
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <DataTablesLengthMenuItem> getAllItems ()
+  public ICommonsList <DataTablesLengthMenuItem> getAllItems ()
   {
-    return CollectionHelper.newList (m_aList);
+    return m_aList.getClone ();
   }
 
   @Nullable
   public DataTablesLengthMenuItem getItemAtIndex (@Nonnegative final int nIndex)
   {
-    return CollectionHelper.getAtIndex (m_aList, nIndex);
+    return m_aList.getAtIndex (nIndex);
   }
 
   @Nonnull

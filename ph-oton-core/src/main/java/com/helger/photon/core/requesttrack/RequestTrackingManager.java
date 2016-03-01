@@ -236,7 +236,7 @@ public final class RequestTrackingManager
             {
               // Don't check any further, since all other requests should be
               // younger than the current one because we're using a
-              // LinkedHashMap!
+              // CommonsLinkedHashMap!
               break;
             }
           }
