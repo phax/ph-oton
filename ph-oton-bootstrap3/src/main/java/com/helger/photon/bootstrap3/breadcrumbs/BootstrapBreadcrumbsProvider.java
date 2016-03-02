@@ -16,13 +16,13 @@
  */
 package com.helger.photon.bootstrap3.breadcrumbs;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.photon.basic.app.menu.IMenuItem;
 import com.helger.photon.basic.app.menu.IMenuObject;
@@ -41,7 +41,7 @@ public final class BootstrapBreadcrumbsProvider
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
     final BootstrapBreadcrumbs aBreadcrumb = new BootstrapBreadcrumbs ();
-    final List <IMenuItem> aItems = new ArrayList <IMenuItem> ();
+    final ICommonsList <IMenuItem> aItems = new CommonsArrayList <> ();
     IMenuItem aCurrent = aLEC.getSelectedMenuItem ();
     while (aCurrent != null)
     {

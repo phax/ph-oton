@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.api.pathdescriptor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -25,8 +24,9 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
@@ -41,7 +41,7 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public final class PathDescriptor
 {
-  private final List <PathDescriptorPart> m_aPathParts = new ArrayList <> ();
+  private final ICommonsList <PathDescriptorPart> m_aPathParts = new CommonsArrayList <> ();
 
   private PathDescriptor (@Nonnull @Nonempty final List <String> aPathParts)
   {
@@ -52,9 +52,9 @@ public final class PathDescriptor
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <PathDescriptorPart> getAllParts ()
+  public ICommonsList <PathDescriptorPart> getAllParts ()
   {
-    return CollectionHelper.newList (m_aPathParts);
+    return m_aPathParts.getClone ();
   }
 
   /**
@@ -110,10 +110,7 @@ public final class PathDescriptor
 
   public boolean containsVariables ()
   {
-    for (final PathDescriptorPart aPart : m_aPathParts)
-      if (aPart.isVariable ())
-        return true;
-    return false;
+    return m_aPathParts.containsAny (aPart -> aPart.isVariable ());
   }
 
   @Override
@@ -145,7 +142,7 @@ public final class PathDescriptor
     ValueEnforcer.notEmpty (sPath, "Path");
 
     // Split into pieces
-    final List <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sPath);
+    final ICommonsList <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sPath);
     return new PathDescriptor (aPathParts);
   }
 }

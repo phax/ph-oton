@@ -16,16 +16,14 @@
  */
 package com.helger.photon.bootstrap3.inputgroup;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -39,9 +37,9 @@ import com.helger.photon.bootstrap3.button.BootstrapButton;
 public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
 {
   private final EBootstrapInputGroupSize m_eSize;
-  private final List <IHCNode> m_aPrefixes = new ArrayList <> ();
+  private final ICommonsList <IHCNode> m_aPrefixes = new CommonsArrayList <> ();
   private final IHCNode m_aInput;
-  private final List <IHCNode> m_aSuffixes = new ArrayList <> ();
+  private final ICommonsList <IHCNode> m_aSuffixes = new CommonsArrayList <> ();
 
   public BootstrapInputGroup (@Nonnull final IHCNode aInput)
   {
@@ -110,10 +108,7 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   @Nonnull
   public EChange removePrefixAtIndex (@Nonnegative final int nIndex)
   {
-    if (nIndex < 0 || nIndex >= m_aPrefixes.size ())
-      return EChange.UNCHANGED;
-    m_aPrefixes.remove (nIndex);
-    return EChange.CHANGED;
+    return m_aPrefixes.removeAtIndex (nIndex);
   }
 
   @Nonnull
@@ -125,14 +120,14 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IHCNode> getAllPrefixes ()
+  public ICommonsList <IHCNode> getAllPrefixes ()
   {
-    return CollectionHelper.newList (m_aPrefixes);
+    return m_aPrefixes.getClone ();
   }
 
   public boolean hasPrefixes ()
   {
-    return !m_aPrefixes.isEmpty ();
+    return m_aPrefixes.isNotEmpty ();
   }
 
   @Nonnegative
@@ -197,10 +192,7 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   @Nonnull
   public EChange removeSuffixAtIndex (@Nonnegative final int nIndex)
   {
-    if (nIndex < 0 || nIndex >= m_aSuffixes.size ())
-      return EChange.UNCHANGED;
-    m_aSuffixes.remove (nIndex);
-    return EChange.CHANGED;
+    return m_aSuffixes.removeAtIndex (nIndex);
   }
 
   @Nonnull
@@ -212,14 +204,14 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IHCNode> getAllSuffixes ()
+  public ICommonsList <IHCNode> getAllSuffixes ()
   {
-    return CollectionHelper.newList (m_aSuffixes);
+    return m_aSuffixes.getClone ();
   }
 
   public boolean hasSuffixes ()
   {
-    return !m_aSuffixes.isEmpty ();
+    return m_aSuffixes.isNotEmpty ();
   }
 
   @Nonnegative

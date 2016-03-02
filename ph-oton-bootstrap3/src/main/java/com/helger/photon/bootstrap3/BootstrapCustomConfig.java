@@ -16,15 +16,13 @@
  */
 package com.helger.photon.bootstrap3;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
@@ -39,8 +37,8 @@ import com.helger.html.resource.js.IJSPathProvider;
 public final class BootstrapCustomConfig
 {
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-  private static List <ICSSPathProvider> s_aCSS = new ArrayList <> ();
-  private static List <IJSPathProvider> s_aJS = new ArrayList <> ();
+  private static ICommonsList <ICSSPathProvider> s_aCSS = new CommonsArrayList <> ();
+  private static ICommonsList <IJSPathProvider> s_aJS = new CommonsArrayList <> ();
 
   static
   {
@@ -69,9 +67,9 @@ public final class BootstrapCustomConfig
 
   @Nonnull
   @Nonempty
-  public static List <ICSSPathProvider> getAllBootstrapCSS ()
+  public static ICommonsList <ICSSPathProvider> getAllBootstrapCSS ()
   {
-    return s_aRWLock.readLocked ( () -> CollectionHelper.newList (s_aCSS));
+    return s_aRWLock.readLocked ( () -> s_aCSS.getClone ());
   }
 
   public static void setBootstrapJS (@Nonnull @Nonempty final IJSPathProvider... aJSPathProvider)
@@ -87,8 +85,8 @@ public final class BootstrapCustomConfig
 
   @Nonnull
   @Nonempty
-  public static List <IJSPathProvider> getAllBootstrapJS ()
+  public static ICommonsList <IJSPathProvider> getAllBootstrapJS ()
   {
-    return s_aRWLock.readLocked ( () -> CollectionHelper.newList (s_aJS));
+    return s_aRWLock.readLocked ( () -> s_aJS.getClone ());
   }
 }

@@ -16,9 +16,6 @@
  */
 package com.helger.photon.core.api.pathdescriptor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -27,6 +24,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.StringHelper;
@@ -48,11 +47,11 @@ public final class PathDescriptorPart
 
   private final boolean m_bIsVariable;
   private final String m_sName;
-  private final List <PathDescriptorVariableConstraint> m_aVariableConstraints;
+  private final ICommonsList <PathDescriptorVariableConstraint> m_aVariableConstraints;
 
   private PathDescriptorPart (final boolean bIsVariable,
                               @Nonnull @Nonempty final String sName,
-                              @Nullable final List <PathDescriptorVariableConstraint> aVariableConstraints)
+                              @Nullable final ICommonsList <PathDescriptorVariableConstraint> aVariableConstraints)
   {
     ValueEnforcer.notEmpty (sName, "Name");
     m_bIsVariable = bIsVariable;
@@ -86,9 +85,9 @@ public final class PathDescriptorPart
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <PathDescriptorVariableConstraint> getAllVariableConstraints ()
+  public ICommonsList <PathDescriptorVariableConstraint> getAllVariableConstraints ()
   {
-    return CollectionHelper.newList (m_aVariableConstraints);
+    return new CommonsArrayList <> (m_aVariableConstraints);
   }
 
   /**
@@ -187,13 +186,13 @@ public final class PathDescriptorPart
 
       // Check for additional variable constraints
       // Example: {path:regex=^[0-9]+$}
-      final List <String> aVarPartParts = StringHelper.getExploded (CONSTRAINT_SEPARATOR, sVariablePart);
+      final ICommonsList <String> aVarPartParts = StringHelper.getExploded (CONSTRAINT_SEPARATOR, sVariablePart);
 
       // Variable name is always first
       final String sVariableName = aVarPartParts.get (0);
 
       // Constraints come afterwars
-      List <PathDescriptorVariableConstraint> aVariableConstraints = null;
+      ICommonsList <PathDescriptorVariableConstraint> aVariableConstraints = null;
       final int nVarPartPartCount = aVarPartParts.size ();
       if (nVarPartPartCount > 1)
       {
@@ -205,7 +204,7 @@ public final class PathDescriptorPart
           if (aConstraint != null)
           {
             if (aVariableConstraints == null)
-              aVariableConstraints = new ArrayList <PathDescriptorVariableConstraint> ();
+              aVariableConstraints = new CommonsArrayList <> ();
             aVariableConstraints.add (aConstraint);
           }
         }

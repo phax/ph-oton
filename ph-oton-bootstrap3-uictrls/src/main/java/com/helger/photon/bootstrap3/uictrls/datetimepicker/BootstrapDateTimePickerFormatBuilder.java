@@ -19,9 +19,7 @@ package com.helger.photon.bootstrap3.uictrls.datetimepicker;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -30,8 +28,9 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.cache.AbstractNotifyingCache;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.compare.IComparator;
 import com.helger.commons.string.ToStringGenerator;
@@ -42,7 +41,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
 {
-  private final List <Object> m_aList = new ArrayList <> ();
+  private final ICommonsList <Object> m_aList = new CommonsArrayList <> ();
 
   public BootstrapDateTimePickerFormatBuilder ()
   {}
@@ -64,9 +63,9 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <Object> getAllInternalObjects ()
+  public ICommonsList <Object> getAllInternalObjects ()
   {
-    return CollectionHelper.newList (m_aList);
+    return m_aList.getClone ();
   }
 
   @Nonnull

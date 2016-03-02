@@ -16,13 +16,10 @@
  */
 package com.helger.photon.bootstrap3.uictrls.datetimepicker;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.html.hc.IHCNode;
@@ -61,14 +58,14 @@ public final class BootstrapDateTimePickerSpecialNodeListModifier implements IHC
     }
 
     final CollectingJSCodeProvider aMergedJS = new CollectingJSCodeProvider ();
-    final ICommonsList <BootstrapDateTimePickerJS> aRest = CollectionHelper.newList (aDTPs);
+    final ICommonsList <BootstrapDateTimePickerJS> aRest = aDTPs.getClone ();
     while (aRest.isNotEmpty ())
     {
-      final BootstrapDateTimePickerJS aCurrent = aRest.remove (0);
+      final BootstrapDateTimePickerJS aCurrent = aRest.removeFirst ();
       final JSAssocArray aCurrentJSOptions = aCurrent.getDateTimePicker ().getJSOptions ();
 
       // Find all other date time pickers with the same options
-      final List <BootstrapDateTimePickerJS> aSameOptions = new ArrayList <BootstrapDateTimePickerJS> ();
+      final ICommonsList <BootstrapDateTimePickerJS> aSameOptions = new CommonsArrayList <> ();
       final Iterator <BootstrapDateTimePickerJS> itRest = aRest.iterator ();
       while (itRest.hasNext ())
       {

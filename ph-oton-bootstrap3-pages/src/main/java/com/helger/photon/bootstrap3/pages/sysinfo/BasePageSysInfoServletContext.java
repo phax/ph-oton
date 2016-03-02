@@ -16,8 +16,6 @@
  */
 package com.helger.photon.bootstrap3.pages.sysinfo;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -29,6 +27,8 @@ import javax.servlet.ServletRegistration;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
@@ -145,7 +145,7 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
         aRow.addCell (aRegistration.getName ());
         aRow.addCell (aRegistration.getClassName ());
 
-        final List <String> aInitParams = new ArrayList <String> ();
+        final ICommonsList <String> aInitParams = new CommonsArrayList <> ();
         for (final Map.Entry <String, String> aEntry : aRegistration.getInitParameters ().entrySet ())
           aInitParams.add (aEntry.getKey () + "=" + aEntry.getValue ());
         aRow.addCell (HCExtHelper.list2divList (aInitParams));
@@ -180,7 +180,7 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
         aRow.addCell (aRegistration.getName ());
         aRow.addCell (aRegistration.getClassName ());
 
-        final List <String> aInitParams = new ArrayList <String> ();
+        final ICommonsList <String> aInitParams = new CommonsArrayList <> ();
         for (final Map.Entry <String, String> aEntry : aRegistration.getInitParameters ().entrySet ())
           aInitParams.add (aEntry.getKey () + "=" + aEntry.getValue ());
         aRow.addCell (HCExtHelper.list2divList (aInitParams));

@@ -17,8 +17,6 @@
 package com.helger.photon.bootstrap3.pages.sysinfo;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -28,6 +26,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.io.misc.SizeHelper;
@@ -152,7 +152,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     final String sDir = SystemProperties.getPropertyValue (sSysPropName);
     if (sDir != null)
     {
-      final List <IHCNode> aList = new ArrayList <IHCNode> ();
+      final ICommonsList <IHCNode> aList = new CommonsArrayList <> ();
       // The property may contain several paths
       for (final String sPart : StringHelper.getExploded (SystemProperties.getPathSeparator (), sDir))
       {
@@ -168,7 +168,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         else
         {
           // Directory exists - scan content
-          final List <File> aFiles = CollectionHelper.newList (new FileSystemIterator (aEndorsedDir));
+          final ICommonsList <File> aFiles = new CommonsArrayList <> (new FileSystemIterator (aEndorsedDir));
           if (aFiles.isEmpty ())
           {
             // Directory is empty

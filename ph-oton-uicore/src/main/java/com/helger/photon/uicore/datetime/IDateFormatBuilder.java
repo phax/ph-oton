@@ -19,10 +19,11 @@ package com.helger.photon.uicore.datetime;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.helger.commons.collection.ext.ICommonsList;
 
 /**
  * Abstract date format builder interface
@@ -36,7 +37,7 @@ public interface IDateFormatBuilder
    *         {@link Character} objects.
    */
   @Nonnull
-  List <Object> getAllInternalObjects ();
+  ICommonsList <Object> getAllInternalObjects ();
 
   @Nonnull
   String getJSCalendarFormatString ();

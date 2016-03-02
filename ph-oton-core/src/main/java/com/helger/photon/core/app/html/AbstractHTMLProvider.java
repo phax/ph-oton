@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.app.html;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -26,6 +25,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
@@ -114,7 +115,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   protected void addMetaElements (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                   @Nonnull final HCHead aHead)
   {
-    final List <IMetaElement> aMetaElements = new ArrayList <IMetaElement> ();
+    final ICommonsList <IMetaElement> aMetaElements = new CommonsArrayList <> ();
     {
       // add special meta element at the beginning
       final IMimeType aMimeType = PhotonHTMLHelper.getMimeType (aRequestScope);
