@@ -16,8 +16,6 @@
  */
 package com.helger.photon.security.password.constraint;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnegative;
@@ -27,7 +25,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
@@ -40,7 +39,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class PasswordConstraintList implements IPasswordConstraintList
 {
-  private final List <IPasswordConstraint> m_aConstraints = new ArrayList <IPasswordConstraint> ();
+  private final ICommonsList <IPasswordConstraint> m_aConstraints = new CommonsArrayList <> ();
 
   public PasswordConstraintList ()
   {}
@@ -67,7 +66,7 @@ public class PasswordConstraintList implements IPasswordConstraintList
 
   public boolean hasConstraints ()
   {
-    return !m_aConstraints.isEmpty ();
+    return m_aConstraints.isNotEmpty ();
   }
 
   @Nonnegative
@@ -78,9 +77,9 @@ public class PasswordConstraintList implements IPasswordConstraintList
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IPasswordConstraint> getAllPasswordConstraints ()
+  public ICommonsList <IPasswordConstraint> getAllPasswordConstraints ()
   {
-    return CollectionHelper.newList (m_aConstraints);
+    return m_aConstraints.getClone ();
   }
 
   /**
@@ -110,7 +109,7 @@ public class PasswordConstraintList implements IPasswordConstraintList
   {
     if (aPasswordConstraint == null)
       return EChange.UNCHANGED;
-    return EChange.valueOf (m_aConstraints.remove (aPasswordConstraint));
+    return m_aConstraints.removeObject (aPasswordConstraint);
   }
 
   public boolean isPasswordValid (@Nullable final String sPlainTextPassword)
@@ -123,10 +122,10 @@ public class PasswordConstraintList implements IPasswordConstraintList
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <String> getInvalidPasswordDescriptions (@Nullable final String sPlainTextPassword,
-                                                       @Nonnull final Locale aContentLocale)
+  public ICommonsList <String> getInvalidPasswordDescriptions (@Nullable final String sPlainTextPassword,
+                                                               @Nonnull final Locale aContentLocale)
   {
-    final List <String> ret = new ArrayList <String> ();
+    final ICommonsList <String> ret = new CommonsArrayList <> ();
     for (final IPasswordConstraint aPasswordConstraint : m_aConstraints)
       if (!aPasswordConstraint.isPasswordValid (sPlainTextPassword))
         ret.add (aPasswordConstraint.getDescription (aContentLocale));
@@ -135,9 +134,9 @@ public class PasswordConstraintList implements IPasswordConstraintList
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <String> getAllPasswordConstraintDescriptions (@Nonnull final Locale aContentLocale)
+  public ICommonsList <String> getAllPasswordConstraintDescriptions (@Nonnull final Locale aContentLocale)
   {
-    final List <String> ret = new ArrayList <String> ();
+    final ICommonsList <String> ret = new CommonsArrayList <> ();
     for (final IPasswordConstraint aPasswordConstraint : m_aConstraints)
       ret.add (aPasswordConstraint.getDescription (aContentLocale));
     return ret;

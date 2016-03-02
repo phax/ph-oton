@@ -23,8 +23,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -33,7 +31,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
@@ -46,7 +45,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class ExportRecord implements IExportRecord
 {
-  private final List <IExportRecordField> m_aFields = new ArrayList <IExportRecordField> ();
+  private final ICommonsList <IExportRecordField> m_aFields = new CommonsArrayList <> ();
 
   public ExportRecord ()
   {}
@@ -70,7 +69,7 @@ public class ExportRecord implements IExportRecord
   @Nonnull
   public EChange removeFieldAtIndex (@Nonnegative final int nIndex)
   {
-    return CollectionHelper.removeAtIndex (m_aFields, nIndex);
+    return m_aFields.removeAtIndex (nIndex);
   }
 
   @Nonnull
@@ -200,14 +199,14 @@ public class ExportRecord implements IExportRecord
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IExportRecordField> getAllFields ()
+  public ICommonsList <IExportRecordField> getAllFields ()
   {
-    return CollectionHelper.newList (m_aFields);
+    return m_aFields.getClone ();
   }
 
   public boolean hasFields ()
   {
-    return !m_aFields.isEmpty ();
+    return m_aFields.isNotEmpty ();
   }
 
   @Nonnegative

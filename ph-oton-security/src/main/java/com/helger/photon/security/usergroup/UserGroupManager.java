@@ -16,7 +16,6 @@
  */
 package com.helger.photon.security.usergroup;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -562,7 +561,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sUserID))
       return EChange.UNCHANGED;
 
-    final List <IUserGroup> aAffectedUserGroups = new ArrayList <> ();
+    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList <> ();
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -749,7 +748,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sRoleID))
       return EChange.UNCHANGED;
 
-    final List <IUserGroup> aAffectedUserGroups = new ArrayList <> ();
+    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList <> ();
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -808,10 +807,10 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
+  public ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
   {
     if (StringHelper.hasNoText (sRoleID))
-      return new ArrayList <> ();
+      return new CommonsArrayList <> ();
 
     return m_aRWLock.readLocked ( () -> CollectionHelper.newListMapped (m_aMap.values (),
                                                                         aUserGroup -> aUserGroup.containsRoleID (sRoleID),

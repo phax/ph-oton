@@ -16,9 +16,6 @@
  */
 package com.helger.photon.uictrls.typeahead2;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,7 +23,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.WorkInProgress;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.css.DefaultCSSClassProvider;
@@ -68,7 +66,7 @@ public class HCTypeahead2 extends AbstractHCScriptInline <HCTypeahead2>
   private boolean m_bHighlight = DEFAULT_HIGHLIGHT;
   private boolean m_bHint = DEFAULT_HINT;
   private int m_nMinLength = DEFAULT_MIN_LENGTH;
-  private final List <TypeaheadDataset> m_aDatasets = new ArrayList <TypeaheadDataset> ();
+  private final ICommonsList <TypeaheadDataset> m_aDatasets = new CommonsArrayList <> ();
   private JSAnonymousFunction m_aOnOpened;
   private JSAnonymousFunction m_aOnClosed;
   private JSAnonymousFunction m_aOnCursorChanged;
@@ -156,9 +154,9 @@ public class HCTypeahead2 extends AbstractHCScriptInline <HCTypeahead2>
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <TypeaheadDataset> getAllDatasets ()
+  public ICommonsList <TypeaheadDataset> getAllDatasets ()
   {
-    return CollectionHelper.newList (m_aDatasets);
+    return m_aDatasets.getClone ();
   }
 
   /**
@@ -317,7 +315,7 @@ public class HCTypeahead2 extends AbstractHCScriptInline <HCTypeahead2>
     if (m_aDatasets.size () == 1)
     {
       // Exactly one dataset
-      ret.arg (CollectionHelper.getFirstElement (m_aDatasets).getAsJSObject ());
+      ret.arg (m_aDatasets.getFirst ().getAsJSObject ());
     }
     else
     {

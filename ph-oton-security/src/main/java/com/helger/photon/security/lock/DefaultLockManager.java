@@ -17,9 +17,6 @@
 package com.helger.photon.security.lock;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +35,12 @@ import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
@@ -62,7 +65,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   private ICurrentUserIDProvider m_aCurrentUserIDProvider;
 
   // Key: lockedObjectID, value: lock-info
-  private final Map <IDTYPE, ILockInfo> m_aLockedObjs = new HashMap <IDTYPE, ILockInfo> ();
+  private final ICommonsMap <IDTYPE, ILockInfo> m_aLockedObjs = new CommonsHashMap <> ();
 
   public DefaultLockManager (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
@@ -72,9 +75,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   public final void setCurrentUserIDProvider (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
-    m_aRWLock.writeLocked ( () -> {
-      m_aCurrentUserIDProvider = aCurrentUserIDProvider;
-    });
+    m_aRWLock.writeLocked ( () -> m_aCurrentUserIDProvider = aCurrentUserIDProvider);
   }
 
   @Nullable
@@ -123,14 +124,14 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return m_aRWLock.writeLocked ( () -> {
       ELocked eLocked;
       boolean bIsNewLock = false;
-      List <IDTYPE> aUnlockedObjects = null;
+      ICommonsList <IDTYPE> aUnlockedObjects = null;
 
       if (bUnlockOtherObjects)
       {
         // Unlock other objects first
-        aUnlockedObjects = new ArrayList <> ();
+        aUnlockedObjects = new CommonsArrayList <> ();
         // Unlock all except the object to be locked
-        _unlockAllObjects (sUserID, CollectionHelper.newSet (aObjID), aUnlockedObjects);
+        _unlockAllObjects (sUserID, new CommonsHashSet <> (aObjID), aUnlockedObjects);
       }
 
       final ILockInfo aCurrentLock = m_aLockedObjs.get (aObjID);
@@ -247,14 +248,14 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
 
   @Nonnull
   @ReturnsMutableCopy
-  public final List <IDTYPE> unlockAllObjectsOfCurrentUser ()
+  public final ICommonsList <IDTYPE> unlockAllObjectsOfCurrentUser ()
   {
     return unlockAllObjectsOfCurrentUserExcept ((Set <IDTYPE>) null);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public final List <IDTYPE> unlockAllObjectsOfCurrentUserExcept (@Nullable final Set <IDTYPE> aObjectsToKeepLocked)
+  public final ICommonsList <IDTYPE> unlockAllObjectsOfCurrentUserExcept (@Nullable final Set <IDTYPE> aObjectsToKeepLocked)
   {
     final String sCurrentUserID = _getCurrentUserID ();
     return unlockAllObjectsOfUserExcept (sCurrentUserID, aObjectsToKeepLocked);
@@ -262,7 +263,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
 
   @Nonnull
   @ReturnsMutableCopy
-  public final List <IDTYPE> unlockAllObjectsOfUser (@Nullable final String sUserID)
+  public final ICommonsList <IDTYPE> unlockAllObjectsOfUser (@Nullable final String sUserID)
   {
     return unlockAllObjectsOfUserExcept (sUserID, (Set <IDTYPE>) null);
   }
@@ -298,15 +299,13 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
 
   @Nonnull
   @ReturnsMutableCopy
-  public final List <IDTYPE> unlockAllObjectsOfUserExcept (@Nullable final String sUserID,
-                                                           @Nullable final Set <IDTYPE> aObjectsToKeepLocked)
+  public final ICommonsList <IDTYPE> unlockAllObjectsOfUserExcept (@Nullable final String sUserID,
+                                                                   @Nullable final Set <IDTYPE> aObjectsToKeepLocked)
   {
-    final List <IDTYPE> aUnlockedObjects = new ArrayList <IDTYPE> ();
+    final ICommonsList <IDTYPE> aUnlockedObjects = new CommonsArrayList <> ();
     if (StringHelper.hasText (sUserID))
     {
-      m_aRWLock.writeLocked ( () -> {
-        _unlockAllObjects (sUserID, aObjectsToKeepLocked, aUnlockedObjects);
-      });
+      m_aRWLock.writeLocked ( () -> _unlockAllObjects (sUserID, aObjectsToKeepLocked, aUnlockedObjects));
 
       if (!aUnlockedObjects.isEmpty ())
         if (s_aLogger.isInfoEnabled ())
@@ -350,21 +349,21 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
 
   @Nonnull
   @ReturnsMutableCopy
-  public final Set <IDTYPE> getAllLockedObjects ()
+  public final ICommonsSet <IDTYPE> getAllLockedObjects ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aLockedObjs.keySet ()));
+    return m_aRWLock.readLocked ( () -> m_aLockedObjs.copyOfKeySet ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public final Map <IDTYPE, ILockInfo> getAllLockInfos ()
+  public final ICommonsMap <IDTYPE, ILockInfo> getAllLockInfos ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newMap (m_aLockedObjs));
+    return m_aRWLock.readLocked ( () -> m_aLockedObjs.getClone ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <IDTYPE> getAllLockedObjectsOfCurrentUser ()
+  public ICommonsSet <IDTYPE> getAllLockedObjectsOfCurrentUser ()
   {
     final String sCurrentUserID = _getCurrentUserID ();
     return getAllLockedObjectsOfUser (sCurrentUserID);
@@ -372,9 +371,9 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <IDTYPE> getAllLockedObjectsOfUser (@Nullable final String sUserID)
+  public ICommonsSet <IDTYPE> getAllLockedObjectsOfUser (@Nullable final String sUserID)
   {
-    final Set <IDTYPE> ret = new HashSet <> ();
+    final ICommonsSet <IDTYPE> ret = new CommonsHashSet <> ();
     if (StringHelper.hasText (sUserID))
     {
       m_aRWLock.readLocked ( () -> {

@@ -16,13 +16,12 @@
  */
 package com.helger.photon.security.token.app;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
@@ -65,7 +64,7 @@ public final class AppTokenMicroTypeConverter extends AbstractObjectMicroTypeCon
   @Nonnull
   public AppToken convertToNative (@Nonnull final IMicroElement aElement)
   {
-    final List <AccessToken> aAccessTokens = new ArrayList <> ();
+    final ICommonsList <AccessToken> aAccessTokens = new CommonsArrayList <> ();
     for (final IMicroElement e : aElement.getAllChildElements (ELEMENT_ACCESS_TOKEN))
       aAccessTokens.add (MicroTypeConverter.convertToNative (e, AccessToken.class));
     final String sOwnerName = aElement.getAttributeValue (ATTR_OWNER_NAME);

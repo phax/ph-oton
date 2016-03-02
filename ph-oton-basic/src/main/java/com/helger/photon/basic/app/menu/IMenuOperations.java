@@ -287,7 +287,7 @@ public interface IMenuOperations
 
   /**
    * Set the default menu item. This is a shortcut for
-   * <code>setDefaultMenuItemIDs (new ArrayList (sDefaultMenuItemID));</code>.
+   * <code>setDefaultMenuItemIDs (new String[]{sDefaultMenuItemID});</code> .
    * The passed menu item ID must resolve to an {@link IMenuItemPage} object.
    *
    * @param sDefaultMenuItemID

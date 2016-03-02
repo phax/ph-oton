@@ -16,9 +16,6 @@
  */
 package com.helger.photon.basic.auth.token;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnegative;
@@ -28,6 +25,10 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
@@ -42,7 +43,7 @@ import com.helger.photon.basic.auth.subject.IAuthSubject;
 @ThreadSafe
 public final class AuthTokenRegistry extends AbstractGlobalSingleton
 {
-  private final Map <String, AuthToken> m_aMap = new HashMap <String, AuthToken> ();
+  private final ICommonsMap <String, AuthToken> m_aMap = new CommonsHashMap <> ();
 
   @Deprecated
   @UsedViaReflection
@@ -126,17 +127,13 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
    * @return The list and never <code>null</code>.
    */
   @Nonnull
-  public List <IAuthToken> getAllTokensOfSubject (@Nonnull final IAuthSubject aSubject)
+  public ICommonsList <? extends IAuthToken> getAllTokensOfSubject (@Nonnull final IAuthSubject aSubject)
   {
     ValueEnforcer.notNull (aSubject, "Subject");
 
-    final List <IAuthToken> ret = new ArrayList <> ();
-    m_aRWLock.readLocked ( () -> {
-      for (final AuthToken aToken : m_aMap.values ())
-        if (aToken.getIdentification ().getSubject ().equals (aSubject))
-          ret.add (aToken);
-    });
-    return ret;
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aToken -> aToken.getIdentification ()
+                                                                             .getSubject ()
+                                                                             .equals (aSubject)));
   }
 
   /**
@@ -153,7 +150,7 @@ public final class AuthTokenRegistry extends AbstractGlobalSingleton
 
     // get all token IDs matching a given subject
     // Note: required IAuthSubject to implement equals!
-    final List <String> aDelTokenIDs = new ArrayList <> ();
+    final ICommonsList <String> aDelTokenIDs = new CommonsArrayList <> ();
     m_aRWLock.readLocked ( () -> {
       for (final Map.Entry <String, AuthToken> aEntry : m_aMap.entrySet ())
         if (aEntry.getValue ().getIdentification ().getSubject ().equals (aSubject))

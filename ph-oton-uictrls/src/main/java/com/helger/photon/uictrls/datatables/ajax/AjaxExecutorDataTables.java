@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 import java.util.Locale;
@@ -28,6 +27,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.attr.AttributeValueConverter;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.string.StringParser;
 import com.helger.html.hc.special.HCSpecialNodes;
@@ -122,7 +123,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
             s_aLogger.error ("DataTables has column specific search term - this is not implemented for filter type ALL_TERMS_PER_ROW!");
         }
 
-      final List <DataTablesServerDataRow> aFilteredRows = new ArrayList <DataTablesServerDataRow> ();
+      final ICommonsList <DataTablesServerDataRow> aFilteredRows = new CommonsArrayList <> ();
       if (bContainsAnyColumnSpecificSearch)
       {
         // For all rows
@@ -246,7 +247,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
 
     // Build the resulting array
     final HCSpecialNodes aSpecialNodes = new HCSpecialNodes ();
-    final List <JsonObject> aData = new ArrayList <JsonObject> ();
+    final ICommonsList <JsonObject> aData = new CommonsArrayList <> ();
     int nResultRowCount = 0;
     final boolean bAllEntries = aRequestData.showAllEntries ();
     // Just in case ;-)
@@ -316,7 +317,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
     final boolean bSearchRegEx = aRequestScope.getAttributeAsBoolean (SEARCH_REGEX, false);
 
     // Read "order
-    final List <DTSSRequestDataOrderColumn> aOrderColumns = new ArrayList <> ();
+    final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns = new CommonsArrayList <> ();
     {
       // May be null
       final IRequestParamMap aOrder = aRequestScope.getRequestParamMap ().getMap (ORDER);
@@ -342,7 +343,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
       }
     }
 
-    final List <DTSSRequestDataColumn> aColumnData = new ArrayList <DTSSRequestDataColumn> ();
+    final ICommonsList <DTSSRequestDataColumn> aColumnData = new CommonsArrayList <> ();
     {
       // May be null
       final IRequestParamMap aColumns = aRequestScope.getRequestParamMap ().getMap (COLUMNS);

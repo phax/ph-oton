@@ -16,13 +16,12 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.state.ETriState;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -46,7 +45,7 @@ public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
   public static final ICSSClassProvider CSS_CLASS_NONE = DefaultCSSClassProvider.create ("none");
   public static final ICSSClassProvider CSS_CLASS_NEVER = DefaultCSSClassProvider.create ("never");
 
-  private List <DTPResponsiveBreakpoint> m_aBreakpoints;
+  private ICommonsList <DTPResponsiveBreakpoint> m_aBreakpoints;
   private ETriState m_eDetails = ETriState.UNDEFINED;
   /** function renderer( api, rowIdx ) */
   private JSAnonymousFunction m_aDetailsRenderer;
@@ -63,7 +62,7 @@ public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
   {
     ValueEnforcer.notNull (aBreakpoint, "Breakpoint");
     if (m_aBreakpoints == null)
-      m_aBreakpoints = new ArrayList <> ();
+      m_aBreakpoints = new CommonsArrayList <> ();
     m_aBreakpoints.add (aBreakpoint);
     return this;
   }

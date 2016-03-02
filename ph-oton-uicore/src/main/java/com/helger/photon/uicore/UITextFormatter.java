@@ -16,9 +16,6 @@
  */
 package com.helger.photon.uicore;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -26,6 +23,8 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.microdom.IMicroContainer;
 import com.helger.commons.microdom.util.MicroVisitor;
 import com.helger.commons.regex.RegExHelper;
@@ -60,7 +59,7 @@ public final class UITextFormatter
     {
       try
       {
-        final List <String> aParts = new ArrayList <String> ();
+        final ICommonsList <String> aParts = new CommonsArrayList <> ();
         String sValue = sOrigValue.substring (1, sOrigValue.length () - 1);
 
         final String [] aObjStart = RegExHelper.getAllMatchingGroupValues ("([\\[]*)([A-Za-z0-9_$]+@0x[0-9a-fA-F]{8})(?:: (.+))?",

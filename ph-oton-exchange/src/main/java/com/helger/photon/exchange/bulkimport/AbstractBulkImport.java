@@ -16,10 +16,8 @@
  */
 package com.helger.photon.exchange.bulkimport;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -27,7 +25,10 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.photon.exchange.EExchangeFileType;
 
@@ -39,8 +40,8 @@ import com.helger.photon.exchange.EExchangeFileType;
 public abstract class AbstractBulkImport implements IBulkImport
 {
   private final int m_nHeaderRowsToSkip;
-  private final List <IHasDisplayText> m_aColumnNames;
-  private final Set <EExchangeFileType> m_aFileTypes;
+  private final ICommonsList <IHasDisplayText> m_aColumnNames;
+  private final ICommonsOrderedSet <EExchangeFileType> m_aFileTypes;
 
   protected AbstractBulkImport (@Nonnegative final int nHeaderRowsToSkip,
                                 @Nonnull @Nonempty final List <IHasDisplayText> aColumnNames,
@@ -50,8 +51,8 @@ public abstract class AbstractBulkImport implements IBulkImport
     ValueEnforcer.notEmptyNoNullValue (aColumnNames, "ColumnNames");
     ValueEnforcer.notEmptyNoNullValue (aFileTypes, "FileTypes");
     m_nHeaderRowsToSkip = nHeaderRowsToSkip;
-    m_aColumnNames = aColumnNames;
-    m_aFileTypes = CollectionHelper.newOrderedSet (aFileTypes);
+    m_aColumnNames = new CommonsArrayList <> (aColumnNames);
+    m_aFileTypes = new CommonsLinkedHashSet <> (aFileTypes);
   }
 
   @Override
@@ -71,9 +72,9 @@ public abstract class AbstractBulkImport implements IBulkImport
   @Override
   @Nonnull
   @Nonempty
-  public final List <String> getColumnDescriptions (@Nonnull final Locale aContentLocale)
+  public final ICommonsList <String> getColumnDescriptions (@Nonnull final Locale aContentLocale)
   {
-    final List <String> ret = new ArrayList <String> (getColumnCount ());
+    final ICommonsList <String> ret = new CommonsArrayList <> (getColumnCount ());
     for (final IHasDisplayText aColumn : m_aColumnNames)
       ret.add (aColumn.getDisplayText (aContentLocale));
     return ret;
@@ -83,8 +84,8 @@ public abstract class AbstractBulkImport implements IBulkImport
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  public final List <EExchangeFileType> getSupportedFileTypes ()
+  public final ICommonsList <EExchangeFileType> getSupportedFileTypes ()
   {
-    return CollectionHelper.newList (m_aFileTypes);
+    return m_aFileTypes.getCopyAsList ();
   }
 }

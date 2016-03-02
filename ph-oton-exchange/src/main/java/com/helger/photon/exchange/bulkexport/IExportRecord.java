@@ -16,10 +16,10 @@
  */
 package com.helger.photon.exchange.bulkexport;
 
-import java.util.List;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+
+import com.helger.commons.collection.ext.ICommonsList;
 
 /**
  * Represents a single record to be exported.
@@ -32,7 +32,7 @@ public interface IExportRecord
    * @return A list of all fields in the correct order.
    */
   @Nonnull
-  List <? extends IExportRecordField> getAllFields ();
+  ICommonsList <? extends IExportRecordField> getAllFields ();
 
   /**
    * @return <code>true</code> if at least one field is present

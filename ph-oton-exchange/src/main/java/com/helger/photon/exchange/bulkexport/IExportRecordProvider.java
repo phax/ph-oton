@@ -18,6 +18,8 @@ package com.helger.photon.exchange.bulkexport;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.collection.ext.CommonsArrayList;
+
 /**
  * The main record provider.
  *
@@ -29,17 +31,27 @@ public interface IExportRecordProvider
    * @return The optional header record. Never <code>null</code>.
    */
   @Nonnull
-  Iterable <? extends IExportRecord> getHeaderRecords ();
+  default Iterable <? extends IExportRecord> getHeaderRecords ()
+  {
+    return new CommonsArrayList <> ();
+  }
 
   /**
    * @return An iterator for all body records. Never <code>null</code>.
    */
   @Nonnull
-  Iterable <? extends IExportRecord> getBodyRecords ();
+  default Iterable <? extends IExportRecord> getBodyRecords ()
+  {
+    return new CommonsArrayList <> ();
+  }
 
   /**
    * @return The optional footer record. Never <code>null</code>.
    */
   @Nonnull
-  Iterable <? extends IExportRecord> getFooterRecords ();
+  default Iterable <? extends IExportRecord> getFooterRecords ()
+  {
+    return new CommonsArrayList <> ();
+  }
+
 }

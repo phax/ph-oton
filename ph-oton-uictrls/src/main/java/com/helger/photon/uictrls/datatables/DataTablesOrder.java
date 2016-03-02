@@ -16,18 +16,17 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.html.jscode.JSArray;
 
 public class DataTablesOrder
 {
-  private final List <DataTablesOrderColumn> m_aColumns = new ArrayList <DataTablesOrderColumn> ();
+  private final ICommonsList <DataTablesOrderColumn> m_aColumns = new CommonsArrayList <> ();
 
   public DataTablesOrder ()
   {}

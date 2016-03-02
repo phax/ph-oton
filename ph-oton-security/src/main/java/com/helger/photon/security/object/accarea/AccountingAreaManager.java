@@ -16,9 +16,6 @@
  */
 package com.helger.photon.security.object.accarea;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -33,7 +30,10 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -281,16 +281,16 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends IAccountingArea> getAllAccountingAreas ()
+  public ICommonsCollection <? extends IAccountingArea> getAllAccountingAreas ()
   {
     return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final String sClientID)
+  public ICommonsCollection <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final String sClientID)
   {
-    final List <IAccountingArea> ret = new ArrayList <> ();
+    final ICommonsList <IAccountingArea> ret = new CommonsArrayList <> ();
     if (StringHelper.hasText (sClientID))
     {
       m_aRWLock.readLocked ( () -> {
@@ -304,9 +304,9 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final IClient aClient)
+  public ICommonsCollection <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final IClient aClient)
   {
-    final List <IAccountingArea> ret = new ArrayList <> ();
+    final ICommonsList <IAccountingArea> ret = new CommonsArrayList <> ();
     if (aClient != null)
     {
       m_aRWLock.readLocked ( () -> {
@@ -320,9 +320,9 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <String> getAllAccountingAreaIDsOfClient (@Nullable final String sClientID)
+  public ICommonsCollection <String> getAllAccountingAreaIDsOfClient (@Nullable final String sClientID)
   {
-    final List <String> ret = new ArrayList <> ();
+    final ICommonsList <String> ret = new CommonsArrayList <> ();
     if (StringHelper.hasText (sClientID))
     {
       m_aRWLock.readLocked ( () -> {
@@ -336,9 +336,9 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <String> getAllAccountingAreaIDsOfClient (@Nullable final IClient aClient)
+  public ICommonsCollection <String> getAllAccountingAreaIDsOfClient (@Nullable final IClient aClient)
   {
-    final List <String> ret = new ArrayList <> ();
+    final ICommonsList <String> ret = new CommonsArrayList <> ();
     if (aClient != null)
     {
       m_aRWLock.readLocked ( () -> {

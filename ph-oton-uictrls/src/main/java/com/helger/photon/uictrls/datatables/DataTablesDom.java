@@ -17,8 +17,6 @@
 package com.helger.photon.uictrls.datatables;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
@@ -30,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
@@ -42,19 +42,19 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   private static final String OPEN_DIV = "<";
   private static final String CLOSE_DIV = ">";
 
-  private final List <String> m_aElements;
+  private final ICommonsList <String> m_aElements;
   private int m_nOpenDivs = 0;
   private int m_nPos = -1;
 
   public DataTablesDom ()
   {
-    m_aElements = new ArrayList <String> ();
+    m_aElements = new CommonsArrayList <> ();
   }
 
   public DataTablesDom (@Nonnull final DataTablesDom aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
-    m_aElements = new ArrayList <String> (aOther.m_aElements);
+    m_aElements = new CommonsArrayList <> (aOther.m_aElements);
   }
 
   @CheckForSigned

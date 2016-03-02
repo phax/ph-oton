@@ -20,7 +20,6 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
@@ -34,6 +33,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.concurrent.collector.IConcurrentPerformer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -333,7 +334,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
 
   @Nullable
   @ReturnsMutableCopy
-  public List <IAuditItem> getAllAuditItemsOfDate (@Nonnull final LocalDate aDate)
+  public ICommonsList <IAuditItem> getAllAuditItemsOfDate (@Nonnull final LocalDate aDate)
   {
     ValueEnforcer.notNull (aDate, "Date");
 
@@ -342,7 +343,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
     if (!aFile.exists ())
       return null;
 
-    final List <IAuditItem> ret = new ArrayList <IAuditItem> ();
+    final ICommonsList <IAuditItem> ret = new CommonsArrayList <> ();
     final IMicroDocument aDoc = MicroReader.readMicroXML (aFile);
     readFromXML (aDoc, aItem -> ret.add (aItem));
     return ret;

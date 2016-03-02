@@ -16,7 +16,6 @@
  */
 package com.helger.photon.tinymce4.type;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.CheckForSigned;
@@ -26,20 +25,22 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 
 public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarControlList>
 {
-  private final List <ETinyMCE4ToolbarControl> m_aList;
+  private final ICommonsList <ETinyMCE4ToolbarControl> m_aList;
 
   /**
    * Constructor
    */
   public TinyMCE4ToolbarControlList ()
   {
-    m_aList = new ArrayList <ETinyMCE4ToolbarControl> ();
+    m_aList = new CommonsArrayList <> ();
   }
 
   /**
@@ -51,7 +52,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
   public TinyMCE4ToolbarControlList (@Nonnull final ETinyMCE4ToolbarControl... aList)
   {
     ValueEnforcer.notNull (aList, "List");
-    m_aList = CollectionHelper.newList (aList);
+    m_aList = new CommonsArrayList <> (aList);
   }
 
   /**
@@ -63,7 +64,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
   public TinyMCE4ToolbarControlList (@Nonnull final List <ETinyMCE4ToolbarControl> aList)
   {
     ValueEnforcer.notNull (aList, "List");
-    m_aList = CollectionHelper.newList (aList);
+    m_aList = new CommonsArrayList <> (aList);
   }
 
   /**
@@ -75,7 +76,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
   public TinyMCE4ToolbarControlList (@Nonnull final TinyMCE4ToolbarControlList aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
-    m_aList = CollectionHelper.newList (aOther.m_aList);
+    m_aList = aOther.m_aList.getClone ();
   }
 
   /**
@@ -84,9 +85,9 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <ETinyMCE4ToolbarControl> getAllControls ()
+  public ICommonsList <ETinyMCE4ToolbarControl> getAllControls ()
   {
-    return CollectionHelper.newList (m_aList);
+    return m_aList.getClone ();
   }
 
   @Nonnull
@@ -143,10 +144,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
   @Nonnull
   public EChange removeAll ()
   {
-    if (m_aList.isEmpty ())
-      return EChange.UNCHANGED;
-    m_aList.clear ();
-    return EChange.CHANGED;
+    return m_aList.removeAll ();
   }
 
   @Nonnull

@@ -16,14 +16,13 @@
  */
 package com.helger.photon.basic.atom;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.xml.XMLConstants;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.microdom.MicroElement;
@@ -31,7 +30,7 @@ import com.helger.commons.string.StringHelper;
 
 public class FeedOtherContent extends AbstractFeedElement implements IFeedContent
 {
-  private final List <Object> m_aChildren = new ArrayList <Object> ();
+  private final ICommonsList <Object> m_aChildren = new CommonsArrayList <> ();
   private final String m_sType;
 
   public FeedOtherContent (@Nonnull @Nonempty final String sType)

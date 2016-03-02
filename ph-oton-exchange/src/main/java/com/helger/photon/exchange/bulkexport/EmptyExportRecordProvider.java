@@ -25,5 +25,5 @@ import javax.annotation.concurrent.Immutable;
  * @author Philip Helger
  */
 @Immutable
-public class EmptyExportRecordProvider extends AbstractExportRecordProvider
+public class EmptyExportRecordProvider implements IExportRecordProvider
 {}

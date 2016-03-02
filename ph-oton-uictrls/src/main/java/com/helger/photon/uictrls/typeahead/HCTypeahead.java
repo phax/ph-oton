@@ -16,16 +16,14 @@
  */
 package com.helger.photon.uictrls.typeahead;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.css.DefaultCSSClassProvider;
@@ -55,7 +53,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   public static final ICSSClassProvider TT_IS_UNDER_CURSOR = DefaultCSSClassProvider.create ("tt-is-under-cursor");
 
   private final IJSExpression m_aSelector;
-  private final List <TypeaheadDataset> m_aDatasets = new ArrayList <TypeaheadDataset> ();
+  private final ICommonsList <TypeaheadDataset> m_aDatasets = new CommonsArrayList <> ();
   private JSAnonymousFunction m_aOnInitialized;
   private JSAnonymousFunction m_aOnOpened;
   private JSAnonymousFunction m_aOnClosed;
@@ -96,20 +94,20 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   @Nullable
   public TypeaheadDataset getFirstDataset ()
   {
-    return CollectionHelper.getFirstElement (m_aDatasets);
+    return m_aDatasets.getFirst ();
   }
 
   @Nullable
   public TypeaheadDataset getDatasetAtIndex (@Nonnegative final int nIndex)
   {
-    return CollectionHelper.getAtIndex (m_aDatasets, nIndex);
+    return m_aDatasets.getAtIndex (nIndex);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <TypeaheadDataset> getAllDatasets ()
+  public ICommonsList <TypeaheadDataset> getAllDatasets ()
   {
-    return CollectionHelper.newList (m_aDatasets);
+    return m_aDatasets.getClone ();
   }
 
   /**
@@ -249,7 +247,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
     if (m_aDatasets.size () == 1)
     {
       // Exactly one dataset
-      ret.arg (CollectionHelper.getFirstElement (m_aDatasets).getAsJSObject ());
+      ret.arg (m_aDatasets.getFirst ().getAsJSObject ());
     }
     else
     {

@@ -16,9 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -26,6 +23,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
@@ -45,7 +44,7 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
   public static final String DEFAULT_NAME = "main";
 
   /** List of buttons to be created. */
-  private final List <Object> m_aButtons = new ArrayList <> ();
+  private final ICommonsList <Object> m_aButtons = new CommonsArrayList <> ();
   /** Options to control the DOM structure Buttons creates. */
   private DTPButtonsDom m_aDom;
   /** Set a name for the instance for the group selector. */
@@ -117,7 +116,7 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
   {
     final JSAssocArray ret = new JSAssocArray ();
 
-    if (!m_aButtons.isEmpty ())
+    if (m_aButtons.isNotEmpty ())
     {
       final JSArray aButtons = new JSArray ();
       for (final Object aObj : m_aButtons)

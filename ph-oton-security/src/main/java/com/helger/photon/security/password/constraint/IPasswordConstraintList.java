@@ -17,7 +17,6 @@
 package com.helger.photon.security.password.constraint;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnegative;
@@ -25,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.lang.ICloneable;
 
 /**
@@ -51,7 +51,7 @@ public interface IPasswordConstraintList extends ICloneable <IPasswordConstraint
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <IPasswordConstraint> getAllPasswordConstraints ();
+  ICommonsList <IPasswordConstraint> getAllPasswordConstraints ();
 
   /**
    * Check if the passed plaintext password is valid. Breaks after the first
@@ -79,7 +79,8 @@ public interface IPasswordConstraintList extends ICloneable <IPasswordConstraint
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <String> getInvalidPasswordDescriptions (@Nullable String sPlainTextPassword, @Nonnull Locale aContentLocale);
+  ICommonsList <String> getInvalidPasswordDescriptions (@Nullable String sPlainTextPassword,
+                                                        @Nonnull Locale aContentLocale);
 
   /**
    * Get a list of all password constraint descriptions in the specified locale
@@ -92,5 +93,5 @@ public interface IPasswordConstraintList extends ICloneable <IPasswordConstraint
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <String> getAllPasswordConstraintDescriptions (@Nonnull Locale aContentLocale);
+  ICommonsList <String> getAllPasswordConstraintDescriptions (@Nonnull Locale aContentLocale);
 }

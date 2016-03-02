@@ -16,7 +16,6 @@
  */
 package com.helger.photon.tinymce4.type;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.CheckForSigned;
@@ -26,20 +25,22 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 
 public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemList>
 {
-  private final List <ETinyMCE4MenuItem> m_aList;
+  private final ICommonsList <ETinyMCE4MenuItem> m_aList;
 
   /**
    * Constructor
    */
   public TinyMCE4MenubarItemList ()
   {
-    m_aList = new ArrayList <ETinyMCE4MenuItem> ();
+    m_aList = new CommonsArrayList <> ();
   }
 
   /**
@@ -51,7 +52,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
   public TinyMCE4MenubarItemList (@Nonnull final ETinyMCE4MenuItem... aList)
   {
     ValueEnforcer.notNull (aList, "List");
-    m_aList = CollectionHelper.newList (aList);
+    m_aList = new CommonsArrayList <> (aList);
   }
 
   /**
@@ -63,7 +64,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
   public TinyMCE4MenubarItemList (@Nonnull final List <ETinyMCE4MenuItem> aList)
   {
     ValueEnforcer.notNull (aList, "List");
-    m_aList = CollectionHelper.newList (aList);
+    m_aList = new CommonsArrayList <> (aList);
   }
 
   /**

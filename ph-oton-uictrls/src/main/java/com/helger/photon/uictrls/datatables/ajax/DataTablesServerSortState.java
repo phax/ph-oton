@@ -17,7 +17,6 @@
 package com.helger.photon.uictrls.datatables.ajax;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -27,6 +26,8 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -39,15 +40,15 @@ import com.helger.photon.uictrls.datatables.column.ComparatorDT;
  */
 final class DataTablesServerSortState implements Serializable
 {
-  private final List <DTSSRequestDataOrderColumn> m_aOrderColumns;
+  private final ICommonsList <DTSSRequestDataOrderColumn> m_aOrderColumns;
 
   DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData, @Nonnull final Locale aDisplayLocale)
   {
-    this (aServerData, new ArrayList <DTSSRequestDataOrderColumn> (0), aDisplayLocale);
+    this (aServerData, new CommonsArrayList <> (0), aDisplayLocale);
   }
 
   public DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData,
-                                    @Nonnull final List <DTSSRequestDataOrderColumn> aOrderColumns,
+                                    @Nonnull final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns,
                                     @Nonnull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aServerData, "ServerData");

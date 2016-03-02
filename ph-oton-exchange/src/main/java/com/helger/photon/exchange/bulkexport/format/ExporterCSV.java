@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,6 +30,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.charset.EUnicodeBOM;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.csv.CCSV;
 import com.helger.commons.csv.CSVWriter;
 import com.helger.commons.io.stream.StreamHelper;
@@ -105,10 +105,11 @@ public final class ExporterCSV implements IExporterFile
     return m_eBOM;
   }
 
-  private static void _emitRecord (final List <List <String>> aRecords, final IExportRecord aRecord)
+  private static void _emitRecord (@Nonnull final ICommonsList <ICommonsList <String>> aRecords,
+                                   @Nonnull final IExportRecord aRecord)
   {
-    final List <? extends IExportRecordField> aAllFields = aRecord.getAllFields ();
-    final List <String> aValues = new ArrayList <String> (aAllFields.size ());
+    final ICommonsList <? extends IExportRecordField> aAllFields = aRecord.getAllFields ();
+    final ICommonsList <String> aValues = new CommonsArrayList <> (aAllFields.size ());
     for (final IExportRecordField aField : aAllFields)
     {
       final Object aFieldValue = aField.getFieldValue ();
@@ -128,7 +129,7 @@ public final class ExporterCSV implements IExporterFile
       ValueEnforcer.notNull (aProvider, "Provider");
       ValueEnforcer.notNull (aOS, "OutputStream");
 
-      final List <List <String>> aRecords = new ArrayList <List <String>> ();
+      final ICommonsList <ICommonsList <String>> aRecords = new CommonsArrayList <> ();
 
       // Header
       for (final IExportRecord aHeaderRecord : aProvider.getHeaderRecords ())

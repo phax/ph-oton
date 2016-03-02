@@ -16,15 +16,13 @@
  */
 package com.helger.photon.exchange.bulkexport;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -36,9 +34,9 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public class ConstantExportRecordProvider implements IExportRecordProvider
 {
-  private final List <IExportRecord> m_aHeader = new ArrayList <IExportRecord> ();
-  private final List <IExportRecord> m_aBody;
-  private final List <IExportRecord> m_aFooter = new ArrayList <IExportRecord> ();
+  private final ICommonsList <IExportRecord> m_aHeader = new CommonsArrayList <> ();
+  private final ICommonsList <IExportRecord> m_aBody;
+  private final ICommonsList <IExportRecord> m_aFooter = new CommonsArrayList <> ();
 
   public ConstantExportRecordProvider (@Nonnull final Iterable <? extends IExportRecord> aBody)
   {
@@ -58,7 +56,7 @@ public class ConstantExportRecordProvider implements IExportRecordProvider
     ValueEnforcer.notNull (aBody, "Body");
     if (aHeader != null)
       m_aHeader.add (aHeader);
-    m_aBody = CollectionHelper.newList (aBody);
+    m_aBody = new CommonsArrayList <> (aBody);
     if (aFooter != null)
       m_aFooter.add (aFooter);
   }

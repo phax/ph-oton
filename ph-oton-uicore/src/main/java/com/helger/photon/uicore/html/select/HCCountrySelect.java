@@ -16,16 +16,16 @@
  */
 package com.helger.photon.uicore.html.select;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.compare.IComparator;
 import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.text.display.IDisplayTextProvider;
@@ -48,10 +48,10 @@ public class HCCountrySelect extends HCExtSelect
   }
 
   @Nonnull
-  public static List <Locale> getAllCountries (@Nonnull final EWithDeprecated eWithDeprecated)
+  public static ICommonsList <Locale> getAllCountries (@Nonnull final EWithDeprecated eWithDeprecated)
   {
     final boolean bWithDeprecated = eWithDeprecated.getAsBoolean ();
-    final List <Locale> aLocales = new ArrayList <> ();
+    final ICommonsList <Locale> aLocales = new CommonsArrayList <> ();
     for (final Locale aCountry : CountryCache.getInstance ().getAllCountryLocales ())
       if (bWithDeprecated || !DeprecatedLocaleHandler.getDefaultInstance ().isDeprecatedLocaleWithFallback (aCountry))
         aLocales.add (aCountry);
@@ -112,7 +112,7 @@ public class HCCountrySelect extends HCExtSelect
     Comparator <Locale> aComp;
     if (aDisplayTextProvider == null)
       aComp = IComparator.getComparatorCollating (aLocale -> aLocale.getDisplayCountry (aDisplayLocale),
-                                                              aDisplayLocale);
+                                                  aDisplayLocale);
     else
       aComp = aDisplayTextProvider.getComparatorCollating (aDisplayLocale, aDisplayLocale);
 

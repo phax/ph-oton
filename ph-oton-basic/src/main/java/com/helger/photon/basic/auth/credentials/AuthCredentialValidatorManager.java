@@ -16,14 +16,13 @@
  */
 package com.helger.photon.basic.auth.credentials;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.lang.ServiceLoaderHelper;
@@ -59,7 +58,7 @@ public final class AuthCredentialValidatorManager
                                                                 @Nonnull final IAuthCredentials aCredentials)
   {
     // Collect all strings of all supporting credential validators
-    final List <String> aFailedMessages = new ArrayList <String> ();
+    final ICommonsList <String> aFailedMessages = new CommonsArrayList <> ();
 
     // Check all credential handlers if the can handle the passed credentials
     for (final IAuthCredentialValidatorSPI aHdl : s_aHdlList)

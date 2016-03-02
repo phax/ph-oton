@@ -17,14 +17,15 @@
 package com.helger.photon.security.lock;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.state.EChange;
 
 /**
@@ -168,7 +169,7 @@ public interface ILockManager <IDTYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <IDTYPE> unlockAllObjectsOfCurrentUser ();
+  ICommonsList <IDTYPE> unlockAllObjectsOfCurrentUser ();
 
   /**
    * Unlock all objects of the current user except for the passed objects.
@@ -180,7 +181,7 @@ public interface ILockManager <IDTYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <IDTYPE> unlockAllObjectsOfCurrentUserExcept (@Nullable Set <IDTYPE> aObjectsToKeepLocked);
+  ICommonsList <IDTYPE> unlockAllObjectsOfCurrentUserExcept (@Nullable Set <IDTYPE> aObjectsToKeepLocked);
 
   /**
    * Unlock all objects of the passed user.
@@ -192,7 +193,7 @@ public interface ILockManager <IDTYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <IDTYPE> unlockAllObjectsOfUser (@Nullable String sUserID);
+  ICommonsList <IDTYPE> unlockAllObjectsOfUser (@Nullable String sUserID);
 
   /**
    * Unlock all objects of the passed user except for the passed objects.
@@ -207,7 +208,8 @@ public interface ILockManager <IDTYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <IDTYPE> unlockAllObjectsOfUserExcept (@Nullable String sUserID, @Nullable Set <IDTYPE> aObjectsToKeepLocked);
+  ICommonsList <IDTYPE> unlockAllObjectsOfUserExcept (@Nullable String sUserID,
+                                                      @Nullable Set <IDTYPE> aObjectsToKeepLocked);
 
   /**
    * Check if the object with the given ID is locked by the current user.
@@ -248,7 +250,7 @@ public interface ILockManager <IDTYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <IDTYPE> getAllLockedObjects ();
+  ICommonsSet <IDTYPE> getAllLockedObjects ();
 
   /**
    * @return A non-<code>null</code> map of all locked objects of all users.
@@ -256,7 +258,7 @@ public interface ILockManager <IDTYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  Map <IDTYPE, ILockInfo> getAllLockInfos ();
+  ICommonsMap <IDTYPE, ILockInfo> getAllLockInfos ();
 
   /**
    * @return A non-<code>null</code> set of all locked objects of the current
@@ -264,7 +266,7 @@ public interface ILockManager <IDTYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <IDTYPE> getAllLockedObjectsOfCurrentUser ();
+  ICommonsSet <IDTYPE> getAllLockedObjectsOfCurrentUser ();
 
   /**
    * @param sUserID
@@ -275,5 +277,5 @@ public interface ILockManager <IDTYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <IDTYPE> getAllLockedObjectsOfUser (@Nullable String sUserID);
+  ICommonsSet <IDTYPE> getAllLockedObjectsOfUser (@Nullable String sUserID);
 }

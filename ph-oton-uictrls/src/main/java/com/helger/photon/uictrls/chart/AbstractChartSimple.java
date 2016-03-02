@@ -17,8 +17,6 @@
 package com.helger.photon.uictrls.chart;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -28,7 +26,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.mutable.MutableBigDecimal;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.traits.IGenericImplTrait;
@@ -138,14 +137,14 @@ public abstract class AbstractChartSimple <IMPLTYPE extends AbstractChartSimple 
     }
   }
 
-  private final List <DataSet> m_aDataSets = new ArrayList <DataSet> ();
+  private final ICommonsList <DataSet> m_aDataSets = new CommonsArrayList <> ();
 
   public AbstractChartSimple ()
   {}
 
   public boolean hasDataSet ()
   {
-    return !m_aDataSets.isEmpty ();
+    return m_aDataSets.isNotEmpty ();
   }
 
   @Nonnegative
@@ -156,9 +155,9 @@ public abstract class AbstractChartSimple <IMPLTYPE extends AbstractChartSimple 
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <DataSet> getAllDataSets ()
+  public ICommonsList <DataSet> getAllDataSets ()
   {
-    return CollectionHelper.newList (m_aDataSets);
+    return m_aDataSets.getClone ();
   }
 
   @Nonnull
