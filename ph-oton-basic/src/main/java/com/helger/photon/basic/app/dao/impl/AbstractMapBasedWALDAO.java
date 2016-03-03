@@ -17,6 +17,7 @@
 package com.helger.photon.basic.app.dao.impl;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -107,13 +108,19 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
     return EChange.UNCHANGED;
   }
 
+  @MustBeLocked (ELockType.READ)
+  protected final Collection <IMPLTYPE> getAllSortedByKey ()
+  {
+    return m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ();
+  }
+
   @Override
   @Nonnull
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("root");
-    for (final IMPLTYPE aItem : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
+    for (final IMPLTYPE aItem : getAllSortedByKey ())
       eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aItem, m_sXMLItemElementName));
     return aDoc;
   }
