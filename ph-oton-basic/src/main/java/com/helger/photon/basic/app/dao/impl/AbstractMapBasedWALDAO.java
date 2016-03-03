@@ -66,9 +66,18 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
                                  @Nonnull @Nonempty final String sFilename,
                                  @Nonnull @Nonempty final String sXMLItemElementName) throws DAOException
   {
+    this (aImplClass, sFilename, sXMLItemElementName, true);
+  }
+
+  public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
+                                 @Nonnull @Nonempty final String sFilename,
+                                 @Nonnull @Nonempty final String sXMLItemElementName,
+                                 final boolean bDoInitialRead) throws DAOException
+  {
     super (aImplClass, sFilename);
     m_sXMLItemElementName = ValueEnforcer.notEmpty (sXMLItemElementName, "XMLItemElementName");
-    initialRead ();
+    if (bDoInitialRead)
+      initialRead ();
   }
 
   @Override
