@@ -160,7 +160,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
                                                                                                   .size ())));
 
         // All job listener
-        final List <String> aListeners = new ArrayList <> ();
+        final List <String> aListeners = new ArrayList<> ();
         for (final JobListener aJobListener : aScheduler.getListenerManager ().getJobListeners ())
           aListeners.add (aJobListener.getName () + " - " + aJobListener.getClass ().getName ());
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LISTENERS.getDisplayText (aDisplayLocale))
@@ -182,9 +182,10 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
             aUL2.addItem (EText.MSG_START_TIME.getDisplayText (aDisplayLocale) +
                           PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getStartTime ()),
                                                    aDisplayLocale));
-            aUL2.addItem (EText.MSG_END_TIME.getDisplayText (aDisplayLocale) +
-                          PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getEndTime ()),
-                                                   aDisplayLocale));
+            if (aTrigger.getEndTime () != null)
+              aUL2.addItem (EText.MSG_END_TIME.getDisplayText (aDisplayLocale) +
+                            PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getEndTime ()),
+                                                     aDisplayLocale));
             aUL2.addItem (EText.MSG_PREVIOUS_FIRE_TIME.getDisplayText (aDisplayLocale) +
                           PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getPreviousFireTime ()),
                                                    aDisplayLocale));
