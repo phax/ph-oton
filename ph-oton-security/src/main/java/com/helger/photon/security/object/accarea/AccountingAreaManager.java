@@ -20,30 +20,15 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ELockType;
-import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsCollection;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroDocument;
-import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.masterdata.address.IAddress;
 import com.helger.masterdata.currency.ECurrency;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
+import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.object.accarea.IAccountingArea;
@@ -56,58 +41,14 @@ import com.helger.photon.security.object.ObjectHelper;
  *
  * @author Philip Helger
  */
-public final class AccountingAreaManager extends AbstractSimpleDAO implements IAccountingAreaResolver
+public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccountingArea, AccountingArea>
+                                         implements IAccountingAreaResolver
 {
-  private static final String ELEMENT_ROOT = "accountingareas";
   private static final String ELEMENT_ITEM = "accountingarea";
-
-  @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, AccountingArea> m_aMap = new CommonsHashMap <> ();
-
-  private final CallbackList <IAccountingAreaModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public AccountingAreaManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (sFilename);
-    initialRead ();
-  }
-
-  @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
-  {
-    for (final IMicroElement eAccountingArea : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
-      _addAccountingArea (MicroTypeConverter.convertToNative (eAccountingArea, AccountingArea.class));
-    return EChange.UNCHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected IMicroDocument createWriteData ()
-  {
-    final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
-    for (final AccountingArea aAccountingArea : CollectionHelper.getSortedByKey (m_aMap).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aAccountingArea, ELEMENT_ITEM));
-    return aDoc;
-  }
-
-  @Nonnull
-  @ReturnsMutableObject ("design")
-  public CallbackList <IAccountingAreaModificationCallback> getAccountingAreaModificationCallbacks ()
-  {
-    return m_aCallbacks;
-  }
-
-  @MustBeLocked (ELockType.WRITE)
-  private void _addAccountingArea (@Nonnull final AccountingArea aAccountingArea)
-  {
-    ValueEnforcer.notNull (aAccountingArea, "AccountingArea");
-
-    final String sAccountingAreaID = aAccountingArea.getID ();
-    if (m_aMap.containsKey (sAccountingAreaID))
-      throw new IllegalArgumentException ("AccountingArea ID '" + sAccountingAreaID + "' is already in use!");
-    m_aMap.put (aAccountingArea.getID (), aAccountingArea);
+    super (AccountingArea.class, sFilename, ELEMENT_ITEM);
   }
 
   @Nonnull
@@ -146,8 +87,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                                                aDisplayLocale);
 
     m_aRWLock.writeLocked ( () -> {
-      _addAccountingArea (aAccountingArea);
-      markAsChanged ();
+      internalCreateItem (aAccountingArea);
     });
     AuditHelper.onAuditCreateSuccess (AccountingArea.OT,
                                       aAccountingArea.getID (),
@@ -164,9 +104,6 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                       sOfficeLocation,
                                       sCommercialRegistrationNumber,
                                       sCommercialCourt);
-
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onAccountingAreaCreated (aAccountingArea));
 
     return aAccountingArea;
   }
@@ -189,17 +126,16 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                        @Nullable final String sCommercialCourt,
                                        @Nonnull final Locale aDisplayLocale)
   {
-    AccountingArea aAccountingArea;
+    final AccountingArea aAccountingArea = getOfID (sAccountingAreaID);
+    if (aAccountingArea == null)
+    {
+      AuditHelper.onAuditModifyFailure (AccountingArea.OT, sAccountingAreaID, "no-such-id");
+      return EChange.UNCHANGED;
+    }
+
     m_aRWLock.writeLock ().lock ();
     try
     {
-      aAccountingArea = m_aMap.get (sAccountingAreaID);
-      if (aAccountingArea == null)
-      {
-        AuditHelper.onAuditModifyFailure (AccountingArea.OT, sAccountingAreaID, "no-such-id");
-        return EChange.UNCHANGED;
-      }
-
       EChange eChange = EChange.UNCHANGED;
       eChange = eChange.or (aAccountingArea.setDisplayName (sDisplayName));
       eChange = eChange.or (aAccountingArea.setCompanyType (sCompanyType));
@@ -219,7 +155,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aAccountingArea);
-      markAsChanged ();
+      internalUpdateItem (aAccountingArea);
     }
     finally
     {
@@ -241,16 +177,13 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
                                       sCommercialRegistrationNumber,
                                       sCommercialCourt);
 
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onAccountingAreaUpdated (aAccountingArea));
-
     return EChange.CHANGED;
   }
 
   @Nonnull
   public EChange deleteAccountingArea (@Nullable final String sAccountingAreaID)
   {
-    final AccountingArea aDeletedAccountingArea = _getAccountingAreaOfID (sAccountingAreaID);
+    final AccountingArea aDeletedAccountingArea = getOfID (sAccountingAreaID);
     if (aDeletedAccountingArea == null)
     {
       AuditHelper.onAuditDeleteFailure (AccountingArea.OT, "no-such-object-id", sAccountingAreaID);
@@ -265,16 +198,13 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
         AuditHelper.onAuditDeleteFailure (AccountingArea.OT, "already-deleted", sAccountingAreaID);
         return EChange.UNCHANGED;
       }
-      markAsChanged ();
+      internalMarkItemDeleted (aDeletedAccountingArea);
     }
     finally
     {
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditDeleteSuccess (AccountingArea.OT, sAccountingAreaID);
-
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onAccountingAreaDeleted (aDeletedAccountingArea));
 
     return EChange.CHANGED;
   }
@@ -283,87 +213,42 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   @ReturnsMutableCopy
   public ICommonsCollection <? extends IAccountingArea> getAllAccountingAreas ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
+    return getAll ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsCollection <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final String sClientID)
   {
-    final ICommonsList <IAccountingArea> ret = new CommonsArrayList <> ();
-    if (StringHelper.hasText (sClientID))
-    {
-      m_aRWLock.readLocked ( () -> {
-        for (final IAccountingArea aAccountingArea : m_aMap.values ())
-          if (aAccountingArea.getClientID ().equals (sClientID))
-            ret.add (aAccountingArea);
-      });
-    }
-    return ret;
+    return getAll (a -> a.getClientID ().equals (sClientID));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsCollection <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final IClient aClient)
   {
-    final ICommonsList <IAccountingArea> ret = new CommonsArrayList <> ();
-    if (aClient != null)
-    {
-      m_aRWLock.readLocked ( () -> {
-        for (final IAccountingArea aAccountingArea : m_aMap.values ())
-          if (aAccountingArea.hasSameClient (aClient))
-            ret.add (aAccountingArea);
-      });
-    }
-    return ret;
+    return getAll (a -> a.hasSameClient (aClient));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsCollection <String> getAllAccountingAreaIDsOfClient (@Nullable final String sClientID)
   {
-    final ICommonsList <String> ret = new CommonsArrayList <> ();
-    if (StringHelper.hasText (sClientID))
-    {
-      m_aRWLock.readLocked ( () -> {
-        for (final IAccountingArea aAccountingArea : m_aMap.values ())
-          if (aAccountingArea.getClientID ().equals (sClientID))
-            ret.add (aAccountingArea.getID ());
-      });
-    }
-    return ret;
+    return getAllMapped (a -> a.getClientID ().equals (sClientID), IAccountingArea::getID);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsCollection <String> getAllAccountingAreaIDsOfClient (@Nullable final IClient aClient)
   {
-    final ICommonsList <String> ret = new CommonsArrayList <> ();
-    if (aClient != null)
-    {
-      m_aRWLock.readLocked ( () -> {
-        for (final IAccountingArea aAccountingArea : m_aMap.values ())
-          if (aAccountingArea.hasSameClient (aClient))
-            ret.add (aAccountingArea.getID ());
-      });
-    }
-    return ret;
-  }
-
-  @Nullable
-  private AccountingArea _getAccountingAreaOfID (@Nullable final String sID)
-  {
-    if (StringHelper.hasNoText (sID))
-      return null;
-
-    return m_aRWLock.readLocked ( () -> m_aMap.get (sID));
+    return getAllMapped (a -> a.hasSameClient (aClient), IAccountingArea::getID);
   }
 
   @Nullable
   public IAccountingArea getAccountingAreaOfID (@Nullable final String sID)
   {
     // Return type
-    return _getAccountingAreaOfID (sID);
+    return getOfID (sID);
   }
 
   @Nullable
@@ -375,10 +260,7 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
 
   public boolean containsAccountingAreaWithID (@Nullable final String sID)
   {
-    if (StringHelper.hasNoText (sID))
-      return false;
-
-    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sID));
+    return containsWithID (sID);
   }
 
   public boolean containsAccountingAreaWithID (@Nullable final String sID, @Nullable final IClient aClient)
@@ -389,14 +271,8 @@ public final class AccountingAreaManager extends AbstractSimpleDAO implements IA
   @Nullable
   public IAccountingArea getAccountingAreaOfName (@Nullable final String sName, @Nullable final IClient aClient)
   {
-    return m_aRWLock.readLocked ( () -> {
-      if (StringHelper.hasText (sName) && aClient != null)
-      {
-        for (final IAccountingArea aAccountingArea : m_aMap.values ())
-          if (aAccountingArea.hasSameClient (aClient) && aAccountingArea.getDisplayName ().equals (sName))
-            return aAccountingArea;
-      }
+    if (StringHelper.hasNoText (sName) || aClient == null)
       return null;
-    });
+    return getFirst (a -> a.hasSameClient (aClient) && a.getDisplayName ().equals (sName));
   }
 }

@@ -17,7 +17,8 @@ public interface IDAOChangeCallback <INTERFACETYPE extends IHasID <String> & Ser
    * @param aNewItem
    *        The newly created item. Never <code>null</code>.
    */
-  void onCreateItem (@Nonnull INTERFACETYPE aNewItem);
+  default void onCreateItem (@Nonnull final INTERFACETYPE aNewItem)
+  {}
 
   /**
    * Called after an item was updated.
@@ -25,7 +26,8 @@ public interface IDAOChangeCallback <INTERFACETYPE extends IHasID <String> & Ser
    * @param aItem
    *        The updated item. Never <code>null</code>.
    */
-  void onUpdateItem (@Nonnull INTERFACETYPE aItem);
+  default void onUpdateItem (@Nonnull final INTERFACETYPE aItem)
+  {}
 
   /**
    * Called after an item was removed.
@@ -33,7 +35,8 @@ public interface IDAOChangeCallback <INTERFACETYPE extends IHasID <String> & Ser
    * @param aItem
    *        The removed item. Never <code>null</code>.
    */
-  void onDeleteItem (@Nonnull INTERFACETYPE aItem);
+  default void onDeleteItem (@Nonnull final INTERFACETYPE aItem)
+  {}
 
   /**
    * Called after an item was marked as deleted (but is still present - special
@@ -42,5 +45,6 @@ public interface IDAOChangeCallback <INTERFACETYPE extends IHasID <String> & Ser
    * @param aItem
    *        The item that was marked as deleted. Never <code>null</code>.
    */
-  void onMarkItemDeleted (@Nonnull INTERFACETYPE aItem);
+  default void onMarkItemDeleted (@Nonnull final INTERFACETYPE aItem)
+  {}
 }

@@ -16,17 +16,14 @@
  */
 package com.helger.photon.security.object.client;
 
-import java.util.Collection;
-import java.util.Set;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
+import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
@@ -45,8 +42,6 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
 {
   private static final String ELEMENT_ITEM = "client";
 
-  private final CallbackList <IClientModificationCallback> m_aCallbacks = new CallbackList <> ();
-
   public ClientManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
     super (Client.class, sFilename, ELEMENT_ITEM);
@@ -60,34 +55,18 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
     return EChange.CHANGED;
   }
 
-  @Nonnull
-  @ReturnsMutableObject ("design")
-  public CallbackList <IClientModificationCallback> getClientModificationCallbacks ()
-  {
-    return m_aCallbacks;
-  }
-
   @Nullable
   public IClient createClient (@Nonnull @Nonempty final String sClientID, @Nonnull @Nonempty final String sDisplayName)
   {
+    if (containsWithID (sClientID))
+      return null;
+
     final Client aClient = new Client (sClientID, sDisplayName);
 
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      if (containsWithID (sClientID))
-        return null;
-
+    m_aRWLock.writeLocked ( () -> {
       internalCreateItem (aClient);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    });
     AuditHelper.onAuditCreateSuccess (Client.OT, aClient.getID (), sDisplayName);
-
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onClientCreated (aClient));
 
     return aClient;
   }
@@ -119,9 +98,6 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
     }
     AuditHelper.onAuditModifySuccess (Client.OT, "all", sClientID, sDisplayName);
 
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onClientUpdated (aClient));
-
     return EChange.CHANGED;
   }
 
@@ -151,9 +127,6 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
     }
     AuditHelper.onAuditDeleteSuccess (Client.OT, sClientID);
 
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onClientDeleted (aDeletedClient));
-
     return EChange.CHANGED;
   }
 
@@ -175,14 +148,14 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends IClient> getAllClients ()
+  public ICommonsCollection <? extends IClient> getAllClients ()
   {
     return getAll ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllClientIDs ()
+  public ICommonsSet <String> getAllClientIDs ()
   {
     return getAllIDs ();
   }
@@ -207,7 +180,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
    * @return <code>true</code> if either an empty collection was passed or if
    *         really all passed client IDs are contained!
    */
-  public boolean containsAllClientsWithID (@Nullable final Collection <String> aIDs)
+  public boolean containsAllClientsWithID (@Nullable final Iterable <String> aIDs)
   {
     if (aIDs != null)
       for (final String sClientID : aIDs)

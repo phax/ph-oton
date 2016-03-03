@@ -34,6 +34,7 @@ import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -58,8 +59,8 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
 {
   private final String m_sXMLItemElementName;
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IMPLTYPE> m_aMap = new CommonsHashMap <> ();
-  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList <> ();
+  private final ICommonsMap <String, IMPLTYPE> m_aMap = new CommonsHashMap<> ();
+  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList<> ();
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nonnull @Nonempty final String sFilename,
@@ -106,6 +107,13 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
     for (final IMPLTYPE aItem : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
       eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aItem, m_sXMLItemElementName));
     return aDoc;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public CallbackList <IDAOChangeCallback <INTERFACETYPE>> getCallbacks ()
+  {
+    return m_aCallbacks;
   }
 
   /**
@@ -223,7 +231,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   @ReturnsMutableCopy
   public final ICommonsCollection <? extends INTERFACETYPE> getNone ()
   {
-    return new CommonsArrayList <> ();
+    return new CommonsArrayList<> ();
   }
 
   @Nonnull
