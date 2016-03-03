@@ -100,7 +100,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
 
   @Override
   @Nonnull
-  protected final EChange onRead (@Nonnull final IMicroDocument aDoc)
+  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
     for (final IMicroElement eItem : aDoc.getDocumentElement ().getAllChildElements (m_sXMLItemElementName))
       _addItem (MicroTypeConverter.convertToNative (eItem, getDataTypeClass ()), EDAOActionType.CREATE);
