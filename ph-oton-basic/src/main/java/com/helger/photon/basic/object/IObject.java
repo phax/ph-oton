@@ -54,13 +54,27 @@ public interface IObject extends
   @Nullable
   String getCreationUserID ();
 
+  default boolean isLastChangeAfter (@Nonnull final LocalDateTime aDT)
+  {
+    final LocalDateTime aCreationDT = getCreationDateTime ();
+    if (aCreationDT != null && aCreationDT.isAfter (aDT))
+      return true;
+    final LocalDateTime aLastModDT = getLastModificationDateTime ();
+    if (aLastModDT != null && aLastModDT.isAfter (aDT))
+      return true;
+    final LocalDateTime aDeletionDT = getDeletionDateTime ();
+    if (aDeletionDT != null && aDeletionDT.isAfter (aDT))
+      return true;
+    return false;
+  }
+
   /**
    * @return <code>true</code> if this object is deleted, <code>false</code> if
    *         not.
    */
   default boolean isDeleted ()
   {
-    return getDeletionDateTime () != null;
+    return hasDeletionDateTime ();
   }
 
   /**
@@ -75,6 +89,6 @@ public interface IObject extends
   default boolean isDeleted (@Nonnull final LocalDateTime aDT)
   {
     ValueEnforcer.notNull (aDT, "LocalDateTime");
-    return isDeleted () && PDTHelper.isLessOrEqual (getDeletionDateTime (), aDT);
+    return hasDeletionDateTime () && PDTHelper.isLessOrEqual (getDeletionDateTime (), aDT);
   }
 }

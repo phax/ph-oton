@@ -99,7 +99,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                             extends AbstractWebPageSecurityObjectWithAttributes <IUser, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW_USER ("Neuen Benutzer anlegen", "Create new user"),
     TAB_ACTIVE ("Aktive Benutzer ({0})", "Active users ({0})"),
@@ -301,11 +301,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_CREATIONDATE.getDisplayText (aDisplayLocale))
                                                  .setCtrl (PDTToString.getAsString (aSelectedObject.getCreationDateTime (),
                                                                                     aDisplayLocale)));
-    if (aSelectedObject.getLastModificationDateTime () != null)
+    if (aSelectedObject.hasLastModificationDateTime ())
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LASTMODIFICATIONDATE.getDisplayText (aDisplayLocale))
                                                    .setCtrl (PDTToString.getAsString (aSelectedObject.getLastModificationDateTime (),
                                                                                       aDisplayLocale)));
-    if (aSelectedObject.getDeletionDateTime () != null)
+    if (aSelectedObject.hasDeletionDateTime ())
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DELETIONDATE.getDisplayText (aDisplayLocale))
                                                    .setCtrl (PDTToString.getAsString (aSelectedObject.getDeletionDateTime (),
                                                                                       aDisplayLocale)));
