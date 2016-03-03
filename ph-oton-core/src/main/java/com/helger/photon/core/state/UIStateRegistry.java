@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.state;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -29,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.regex.RegExHelper;
@@ -57,7 +58,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
   public static final ObjectType OT_HCNODE = new ObjectType ("hcnode");
   private static final Logger s_aLogger = LoggerFactory.getLogger (UIStateRegistry.class);
 
-  private final Map <ObjectType, Map <String, IHasUIState>> m_aMap = new HashMap <ObjectType, Map <String, IHasUIState>> ();
+  private final ICommonsMap <ObjectType, ICommonsMap <String, IHasUIState>> m_aMap = new CommonsHashMap<> ();
 
   @UsedViaReflection
   @Deprecated
@@ -164,12 +165,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
       throw new IllegalStateException ("Object has no typeID: " + aNewState);
 
     return m_aRWLock.writeLocked ( () -> {
-      Map <String, IHasUIState> aMap = m_aMap.get (aOT);
-      if (aMap == null)
-      {
-        aMap = new HashMap <> ();
-        m_aMap.put (aOT, aMap);
-      }
+      final Map <String, IHasUIState> aMap = m_aMap.computeIfAbsent (aOT, k -> new CommonsHashMap<> ());
 
       if (s_aLogger.isDebugEnabled () && aMap.containsKey (sStateID))
         s_aLogger.debug ("Overwriting " + aOT.getName () + " with ID " + sStateID + " with new object");
@@ -192,6 +188,8 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
   public EChange registerState (@Nonnull final IHCElement <?> aNewElement)
   {
     ValueEnforcer.notNull (aNewElement, "NewElement");
+    if (aNewElement.hasNoID ())
+      s_aLogger.warn ("Registering the state for an object that has no ID - creating a new ID now!");
 
     return registerState (aNewElement.ensureID ().getID (), aNewElement);
   }
@@ -210,10 +208,10 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
     ValueEnforcer.notEmpty (sStateID, "StateID");
 
     return m_aRWLock.writeLocked ( () -> {
-      final Map <String, IHasUIState> aMap = m_aMap.get (aObjectType);
+      final ICommonsMap <String, IHasUIState> aMap = m_aMap.get (aObjectType);
       if (aMap == null)
         return EChange.UNCHANGED;
-      return EChange.valueOf (aMap.remove (sStateID) != null);
+      return aMap.removeObject (sStateID);
     });
   }
 
