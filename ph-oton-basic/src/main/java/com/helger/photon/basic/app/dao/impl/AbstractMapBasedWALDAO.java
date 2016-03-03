@@ -109,7 +109,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
 
   @Override
   @Nonnull
-  protected final IMicroDocument createWriteData ()
+  protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("root");
