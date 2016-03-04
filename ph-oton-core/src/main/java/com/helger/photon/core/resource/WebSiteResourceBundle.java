@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.resource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
@@ -27,7 +26,8 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.mime.IMimeType;
@@ -47,7 +47,7 @@ import com.helger.html.hc.ext.HCConditionalCommentNode;
 @Immutable
 public class WebSiteResourceBundle
 {
-  private final List <WebSiteResource> m_aResources;
+  private final ICommonsList <WebSiteResource> m_aResources = new CommonsArrayList <> ();
   private final String m_sConditionalComment;
   private final boolean m_bIsBundlable;
   private final CSSMediaList m_aMediaList;
@@ -61,9 +61,7 @@ public class WebSiteResourceBundle
                                 @Nullable final ICSSMediaList aMediaList)
   {
     ValueEnforcer.notEmptyNoNullValue (aResources, "Resources");
-    m_aResources = new ArrayList <> ();
-    for (final WebSiteResourceWithCondition aResourceWithCond : aResources)
-      m_aResources.add (aResourceWithCond.getResource ());
+    m_aResources.addAllMapped (aResources, WebSiteResourceWithCondition::getResource);
     m_sConditionalComment = sConditionalComment;
     m_bIsBundlable = bIsBundlable;
     m_aMediaList = aMediaList == null || aMediaList.hasNoMedia () ? null : new CSSMediaList (aMediaList);
@@ -89,26 +87,23 @@ public class WebSiteResourceBundle
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  public List <WebSiteResource> getAllResources ()
+  public ICommonsList <WebSiteResource> getAllResources ()
   {
-    return CollectionHelper.newList (m_aResources);
+    return m_aResources.getClone ();
   }
 
   @Nullable
   public WebSiteResource getResourceAtIndex (@Nonnegative final int nIndex)
   {
-    return CollectionHelper.getAtIndex (m_aResources, nIndex);
+    return m_aResources.getAtIndex (nIndex);
   }
 
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  public List <String> getAllResourcePaths ()
+  public ICommonsList <String> getAllResourcePaths ()
   {
-    final List <String> ret = new ArrayList <String> ();
-    for (final WebSiteResource aResource : m_aResources)
-      ret.add (aResource.getPath ());
-    return ret;
+    return m_aResources.getAllMapped (WebSiteResource::getPath);
   }
 
   /**

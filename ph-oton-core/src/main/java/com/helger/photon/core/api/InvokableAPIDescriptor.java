@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.api;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
@@ -26,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
@@ -44,7 +42,7 @@ public final class InvokableAPIDescriptor
 
   private final IAPIDescriptor m_aDescriptor;
   private final String m_sPath;
-  private final Map <String, String> m_aPathVariables;
+  private final ICommonsOrderedMap <String, String> m_aPathVariables;
 
   /**
    * Constructor
@@ -59,7 +57,7 @@ public final class InvokableAPIDescriptor
    */
   public InvokableAPIDescriptor (@Nonnull final IAPIDescriptor aDescriptor,
                                  @Nonnull @Nonempty final String sPath,
-                                 @Nonnull final Map <String, String> aPathVariables)
+                                 @Nonnull final ICommonsOrderedMap <String, String> aPathVariables)
   {
     ValueEnforcer.notNull (aDescriptor, "Descriptor");
     ValueEnforcer.notEmpty (sPath, "Path");
@@ -67,7 +65,7 @@ public final class InvokableAPIDescriptor
 
     m_aDescriptor = aDescriptor;
     m_sPath = sPath;
-    m_aPathVariables = CollectionHelper.newOrderedMap (aPathVariables);
+    m_aPathVariables = aPathVariables.getClone ();
   }
 
   /**
@@ -96,9 +94,9 @@ public final class InvokableAPIDescriptor
    */
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, String> getAllPathVariables ()
+  public ICommonsOrderedMap <String, String> getAllPathVariables ()
   {
-    return CollectionHelper.newOrderedMap (m_aPathVariables);
+    return m_aPathVariables.getClone ();
   }
 
   /**

@@ -16,9 +16,6 @@
  */
 package com.helger.photon.core.form.csrf;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,7 +29,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.string.StringHelper;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
@@ -50,7 +48,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
   private static final Logger s_aLogger = LoggerFactory.getLogger (CSRFManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final Set <String> m_aNonces = new HashSet <> ();
+  private final ICommonsSet <String> m_aNonces = new CommonsHashSet <> ();
 
   @Deprecated
   @UsedViaReflection
@@ -117,8 +115,8 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllNonces ()
+  public ICommonsSet <String> getAllNonces ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aNonces));
+    return m_aRWLock.readLocked ( () -> m_aNonces.getClone ());
   }
 }

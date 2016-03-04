@@ -16,9 +16,8 @@
  */
 package com.helger.photon.core.go;
 
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.Locale;
-import java.util.Map;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnegative;
@@ -35,7 +34,8 @@ import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroDocument;
@@ -73,7 +73,7 @@ public class GoMappingManager extends AbstractSimpleDAO
   private static final Logger s_aLogger = LoggerFactory.getLogger (GoMappingManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final Map <String, GoMappingItem> m_aMap = new HashMap <> ();
+  private final ICommonsMap <String, GoMappingItem> m_aMap = new CommonsHashMap <> ();
 
   public GoMappingManager (@Nullable final String sFilename) throws DAOException
   {
@@ -145,7 +145,7 @@ public class GoMappingManager extends AbstractSimpleDAO
     final String sContextPath = WebScopeManager.getGlobalScope ().getContextPath ();
     final IMicroDocument ret = new MicroDocument ();
     final IMicroElement eRoot = ret.appendElement (ELEMENT_ROOT);
-    for (final GoMappingItem aItem : CollectionHelper.getSortedByKey (m_aMap).values ())
+    for (final GoMappingItem aItem : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
     {
       if (aItem.isInternal ())
       {
@@ -284,9 +284,9 @@ public class GoMappingManager extends AbstractSimpleDAO
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, GoMappingItem> getAllItems ()
+  public ICommonsMap <String, GoMappingItem> getAllItems ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newMap (m_aMap));
+    return m_aRWLock.readLocked ( () -> m_aMap.getClone ());
   }
 
   /**

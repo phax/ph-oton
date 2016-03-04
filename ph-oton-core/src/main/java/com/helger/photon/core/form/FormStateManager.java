@@ -17,8 +17,6 @@
 package com.helger.photon.core.form;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,7 +29,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
@@ -43,7 +42,7 @@ public final class FormStateManager extends AbstractSessionWebSingleton
   private static final Logger s_aLogger = LoggerFactory.getLogger (FormStateManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final Map <String, FormState> m_aMap = new HashMap <String, FormState> ();
+  private final ICommonsMap <String, FormState> m_aMap = new CommonsHashMap <> ();
   @GuardedBy ("m_aRWLock")
   private boolean m_bAtLeastOnceAFormState = false;
 
@@ -80,7 +79,7 @@ public final class FormStateManager extends AbstractSessionWebSingleton
 
   public boolean containsAnySavedFormState ()
   {
-    return m_aRWLock.readLocked ( () -> !m_aMap.isEmpty ());
+    return m_aRWLock.readLocked ( () -> m_aMap.isNotEmpty ());
   }
 
   @Nullable
@@ -93,24 +92,19 @@ public final class FormStateManager extends AbstractSessionWebSingleton
   @ReturnsMutableCopy
   public Collection <FormState> getAllFormStates ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aMap.values ()));
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
   }
 
   @Nonnull
   public EChange deleteFormState (@Nonnull final String sFlowID)
   {
-    return m_aRWLock.writeLocked ( () -> EChange.valueOf (m_aMap.remove (sFlowID) != null));
+    return m_aRWLock.writeLocked ( () -> m_aMap.removeObject (sFlowID));
   }
 
   @Nonnull
   public EChange deleteAllFormStates ()
   {
-    return m_aRWLock.writeLocked ( () -> {
-      if (m_aMap.isEmpty ())
-        return EChange.UNCHANGED;
-      m_aMap.clear ();
-      return EChange.CHANGED;
-    });
+    return m_aRWLock.writeLocked ( () -> m_aMap.removeAll ());
   }
 
   @Override

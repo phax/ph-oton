@@ -16,9 +16,6 @@
  */
 package com.helger.photon.core.app.error;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -30,7 +27,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.microdom.IHasMicroNodeRepresentation;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
@@ -83,12 +81,12 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
   private static final Logger s_aLogger = LoggerFactory.getLogger (InternalErrorMetadata.class);
 
   private final String m_sErrorID;
-  private final List <Entry> m_aFields = new ArrayList <Entry> ();
-  private final List <Entry> m_aRequestFields = new ArrayList <Entry> ();
-  private final List <Entry> m_aRequestHeaders = new ArrayList <Entry> ();
-  private final List <Entry> m_aRequestParameters = new ArrayList <Entry> ();
-  private final List <Entry> m_aRequestCookies = new ArrayList <Entry> ();
-  private final List <Entry> m_aSessionFields = new ArrayList <Entry> ();
+  private final ICommonsList <Entry> m_aFields = new CommonsArrayList <> ();
+  private final ICommonsList <Entry> m_aRequestFields = new CommonsArrayList <> ();
+  private final ICommonsList <Entry> m_aRequestHeaders = new CommonsArrayList <> ();
+  private final ICommonsList <Entry> m_aRequestParameters = new CommonsArrayList <> ();
+  private final ICommonsList <Entry> m_aRequestCookies = new CommonsArrayList <> ();
+  private final ICommonsList <Entry> m_aSessionFields = new CommonsArrayList <> ();
 
   public InternalErrorMetadata (@Nullable final String sErrorID)
   {
@@ -118,9 +116,9 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <Entry> getAllFields ()
+  public ICommonsList <Entry> getAllFields ()
   {
-    return CollectionHelper.newList (m_aFields);
+    return m_aFields.getClone ();
   }
 
   @Nonnull
@@ -132,9 +130,9 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <Entry> getAllRequestFields ()
+  public ICommonsList <Entry> getAllRequestFields ()
   {
-    return CollectionHelper.newList (m_aRequestFields);
+    return m_aRequestFields.getClone ();
   }
 
   @Nonnull
@@ -146,9 +144,9 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <Entry> getAllRequestHeaders ()
+  public ICommonsList <Entry> getAllRequestHeaders ()
   {
-    return CollectionHelper.newList (m_aRequestHeaders);
+    return m_aRequestHeaders.getClone ();
   }
 
   @Nonnull
@@ -160,9 +158,9 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <Entry> getAllRequestParameters ()
+  public ICommonsList <Entry> getAllRequestParameters ()
   {
-    return CollectionHelper.newList (m_aRequestParameters);
+    return m_aRequestParameters.getClone ();
   }
 
   @Nonnull
@@ -174,9 +172,9 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <Entry> getAllRequestCookies ()
+  public ICommonsList <Entry> getAllRequestCookies ()
   {
-    return CollectionHelper.newList (m_aRequestCookies);
+    return m_aRequestCookies.getClone ();
   }
 
   @Nonnull
@@ -188,9 +186,9 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <Entry> getAllSessionFields ()
+  public ICommonsList <Entry> getAllSessionFields ()
   {
-    return CollectionHelper.newList (m_aSessionFields);
+    return m_aSessionFields.getClone ();
   }
 
   @Nonnull

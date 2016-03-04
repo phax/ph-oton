@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -37,7 +38,7 @@ public final class PathMatchingResult
   public static final PathMatchingResult NO_MATCH = new PathMatchingResult ();
 
   private final boolean m_bMatch;
-  private final Map <String, String> m_aVariableValues;
+  private final ICommonsOrderedMap <String, String> m_aVariableValues;
 
   /**
    * Internal constructor for "no match"
@@ -48,7 +49,7 @@ public final class PathMatchingResult
     m_aVariableValues = null;
   }
 
-  public PathMatchingResult (@Nonnull final Map <String, String> aVariableValues)
+  public PathMatchingResult (@Nonnull final ICommonsOrderedMap <String, String> aVariableValues)
   {
     m_bMatch = true;
     m_aVariableValues = aVariableValues;
@@ -79,7 +80,7 @@ public final class PathMatchingResult
   }
 
   @Nonnull
-  public static PathMatchingResult createSuccess (@Nonnull final Map <String, String> aVariableValues)
+  public static PathMatchingResult createSuccess (@Nonnull final ICommonsOrderedMap <String, String> aVariableValues)
   {
     ValueEnforcer.notNull (aVariableValues, "VariableValues");
     return new PathMatchingResult (aVariableValues);

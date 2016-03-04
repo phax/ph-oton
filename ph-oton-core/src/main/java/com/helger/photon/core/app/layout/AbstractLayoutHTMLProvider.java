@@ -25,7 +25,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -56,14 +57,14 @@ public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecuti
   /** CSS class for each layout area - mainly for debugging */
   public static final ICSSClassProvider CSS_CLASS_LAYOUT_AREA = DefaultCSSClassProvider.create ("layout_area");
 
-  private final List <String> m_aLayoutAreaIDs;
+  private final ICommonsList <String> m_aLayoutAreaIDs;
   private boolean m_bCreateLayoutAreaSpan = DEFAULT_CREATE_LAYOUT_AREA_SPAN;
 
   public AbstractLayoutHTMLProvider (@Nonnull @Nonempty final List <String> aLayoutAreaIDs)
   {
     ValueEnforcer.notEmpty (aLayoutAreaIDs, "LayoutAreaIDs");
 
-    m_aLayoutAreaIDs = CollectionHelper.newList (aLayoutAreaIDs);
+    m_aLayoutAreaIDs = new CommonsArrayList <> (aLayoutAreaIDs);
   }
 
   /**
@@ -73,9 +74,9 @@ public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecuti
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  public final List <String> getAllLayoutAreaIDs ()
+  public final ICommonsList <String> getAllLayoutAreaIDs ()
   {
-    return CollectionHelper.newList (m_aLayoutAreaIDs);
+    return m_aLayoutAreaIDs.getClone ();
   }
 
   /**

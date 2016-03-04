@@ -20,7 +20,7 @@ import java.io.File;
 import java.net.InetAddress;
 import java.time.Clock;
 import java.time.ZonedDateTime;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -42,6 +42,10 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.base64.Base64;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.email.IEmailAddress;
@@ -96,7 +100,7 @@ public final class InternalErrorHandler
   {
     private ISMTPSettings m_aSMTPSettings;
     private IEmailAddress m_aSenderAddress;
-    private List <IEmailAddress> m_aReceiverAddresses;
+    private ICommonsList <IEmailAddress> m_aReceiverAddresses;
     private IEmailAttachmentList m_aAttachmentList;
 
     public EmailSettings ()
@@ -140,7 +144,7 @@ public final class InternalErrorHandler
     @Nonnull
     public EmailSettings setReceiverAddress (@Nullable final IEmailAddress aReceiverAddress)
     {
-      return setReceiverAddresses (aReceiverAddress == null ? null : CollectionHelper.newList (aReceiverAddress));
+      return setReceiverAddresses (aReceiverAddress == null ? null : new CommonsArrayList <> (aReceiverAddress));
     }
 
     @Nonnull
@@ -149,7 +153,7 @@ public final class InternalErrorHandler
       if (aReceiverAddresses != null && CollectionHelper.containsAnyNullElement (aReceiverAddresses))
         throw new IllegalArgumentException ("The list of receiver addresses may not contain any null element!");
 
-      m_aReceiverAddresses = CollectionHelper.newList (aReceiverAddresses);
+      m_aReceiverAddresses = new CommonsArrayList <> (aReceiverAddresses);
       return this;
     }
 
@@ -159,15 +163,15 @@ public final class InternalErrorHandler
       if (aReceiverAddresses != null && ArrayHelper.containsAnyNullElement (aReceiverAddresses))
         throw new IllegalArgumentException ("The array of receiver addresses may not contain any null element!");
 
-      m_aReceiverAddresses = CollectionHelper.newList (aReceiverAddresses);
+      m_aReceiverAddresses = new CommonsArrayList <> (aReceiverAddresses);
       return this;
     }
 
     @Nonnull
     @ReturnsMutableCopy
-    public List <IEmailAddress> getReceiverAddresses ()
+    public ICommonsList <IEmailAddress> getReceiverAddresses ()
     {
-      return CollectionHelper.newList (m_aReceiverAddresses);
+      return m_aReceiverAddresses.getClone ();
     }
 
     @Nonnull
@@ -199,16 +203,14 @@ public final class InternalErrorHandler
   private static IInternalErrorCallback s_aCustomExceptionHandler;
   private static boolean s_bEnableFullThreadDumps = DEFAULT_ENABLE_FULL_THREAD_DUMPS;
 
-  private static final Map <String, MutableInt> s_aIntErrCache = new HashMap <String, MutableInt> ();
+  private static final ICommonsMap <String, MutableInt> s_aIntErrCache = new CommonsHashMap <> ();
 
   private InternalErrorHandler ()
   {}
 
   public static void setSMTPSettings (@Nullable final ISMTPSettings aSMTPSettings)
   {
-    s_aRWLock.writeLocked ( () -> {
-      s_aEmailSettings.setSMTPSettings (aSMTPSettings);
-    });
+    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setSMTPSettings (aSMTPSettings));
   }
 
   @Nullable
@@ -219,9 +221,7 @@ public final class InternalErrorHandler
 
   public static void setSMTPSenderAddress (@Nullable final IEmailAddress aSenderAddress)
   {
-    s_aRWLock.writeLocked ( () -> {
-      s_aEmailSettings.setSenderAddress (aSenderAddress);
-    });
+    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setSenderAddress (aSenderAddress));
   }
 
   @Nullable
@@ -232,28 +232,22 @@ public final class InternalErrorHandler
 
   public static void setSMTPReceiverAddress (@Nullable final IEmailAddress aReceiverAddress)
   {
-    s_aRWLock.writeLocked ( () -> {
-      s_aEmailSettings.setReceiverAddress (aReceiverAddress);
-    });
+    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setReceiverAddress (aReceiverAddress));
   }
 
   public static void setSMTPReceiverAddresses (@Nullable final List <? extends IEmailAddress> aReceiverAddresses)
   {
-    s_aRWLock.writeLocked ( () -> {
-      s_aEmailSettings.setReceiverAddresses (aReceiverAddresses);
-    });
+    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setReceiverAddresses (aReceiverAddresses));
   }
 
   public static void setSMTPReceiverAddresses (@Nullable final IEmailAddress... aReceiverAddresses)
   {
-    s_aRWLock.writeLocked ( () -> {
-      s_aEmailSettings.setReceiverAddresses (aReceiverAddresses);
-    });
+    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setReceiverAddresses (aReceiverAddresses));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static List <IEmailAddress> getSMTPReceiverAddresses ()
+  public static ICommonsList <IEmailAddress> getSMTPReceiverAddresses ()
   {
     return s_aRWLock.readLocked (s_aEmailSettings::getReceiverAddresses);
   }
@@ -295,9 +289,7 @@ public final class InternalErrorHandler
    */
   public static void setCustomExceptionHandler (@Nullable final IInternalErrorCallback aCustomExceptionHandler)
   {
-    s_aRWLock.writeLocked ( () -> {
-      s_aCustomExceptionHandler = aCustomExceptionHandler;
-    });
+    s_aRWLock.writeLocked ( () -> s_aCustomExceptionHandler = aCustomExceptionHandler);
   }
 
   /**
@@ -371,7 +363,7 @@ public final class InternalErrorHandler
     }
 
     final IEmailAddress aSender = aEmailSettings.getSenderAddress ();
-    final List <IEmailAddress> aReceiver = aEmailSettings.getReceiverAddresses ();
+    final ICommonsList <IEmailAddress> aReceiver = aEmailSettings.getReceiverAddresses ();
     final ISMTPSettings aSMTPSettings = aEmailSettings.getSMTPSettings ();
 
     boolean bCanSend = true;
@@ -443,7 +435,7 @@ public final class InternalErrorHandler
     final IEmailAttachmentList aEmailAttachments = aEmailSettings.getAttachmentList ();
     if (aEmailAttachments != null)
     {
-      final List <IEmailAttachmentDataSource> aAttachments = aEmailAttachments.getAsDataSourceList ();
+      final ICommonsList <IEmailAttachmentDataSource> aAttachments = aEmailAttachments.getAsDataSourceList ();
       if (CollectionHelper.isNotEmpty (aAttachments))
       {
         final IMicroElement eAttachments = eRoot.appendElement ("attachments");
@@ -543,8 +535,9 @@ public final class InternalErrorHandler
         aMetadata.addField ("UAProfile", aProfile.toString ());
 
       // Add all request attributes
-      for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aRequestScope.getAllAttributes ())
-                                                                     .entrySet ())
+      for (final Map.Entry <String, Object> aEntry : aRequestScope.getAllAttributes ()
+                                                                  .getSortedByKey (Comparator.naturalOrder ())
+                                                                  .entrySet ())
         aMetadata.addField ("[Request] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
     }
     else
@@ -581,8 +574,9 @@ public final class InternalErrorHandler
         aMetadata.addField ("SessionID", aSessionScope.getID ());
 
         // Add all session attributes
-        for (final Map.Entry <String, Object> aEntry : CollectionHelper.getSortedByKey (aSessionScope.getAllAttributes ())
-                                                                       .entrySet ())
+        for (final Map.Entry <String, Object> aEntry : aSessionScope.getAllAttributes ()
+                                                                    .getSortedByKey (Comparator.naturalOrder ())
+                                                                    .entrySet ())
           aMetadata.addField ("[Session] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
       }
     }

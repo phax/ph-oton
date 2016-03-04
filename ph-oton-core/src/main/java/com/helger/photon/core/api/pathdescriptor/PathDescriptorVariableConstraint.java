@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.api.pathdescriptor;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -26,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.regex.RegExHelper;
@@ -135,10 +133,10 @@ public final class PathDescriptorVariableConstraint
     }
 
     // Split in type and value
-    final List <String> aParts = StringHelper.getExploded ('=', sConstraint, 2);
+    final ICommonsList <String> aParts = StringHelper.getExploded ('=', sConstraint, 2);
 
     // Mandatory type
-    final String sConstraintType = aParts.get (0);
+    final String sConstraintType = aParts.getAtIndex (0);
     final EPathDescriptorVariableConstraintType eConstraintType = EPathDescriptorVariableConstraintType.getFromIDOrNull (sConstraintType);
     if (eConstraintType == null)
     {
@@ -147,7 +145,7 @@ public final class PathDescriptorVariableConstraint
     }
 
     // Optional value
-    final String sConstraintValue = CollectionHelper.getAtIndex (aParts, 1);
+    final String sConstraintValue = aParts.getAtIndex (1);
     if (eConstraintType.isRequiresValue () && StringHelper.hasNoText (sConstraintValue))
     {
       s_aLogger.error ("Variable constraint type '" +
