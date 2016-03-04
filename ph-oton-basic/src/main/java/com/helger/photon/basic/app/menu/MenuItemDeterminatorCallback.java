@@ -16,9 +16,6 @@
  */
 package com.helger.photon.basic.app.menu;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -155,15 +152,15 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
 
   @Nonnull
   @ReturnsMutableCopy
-  public static Map <String, Boolean> getAllDisplayMenuItemIDs (@Nonnull final IMenuTree aMenuTree,
-                                                                @Nullable final String sSelectedMenuItemID)
+  public static ICommonsMap <String, Boolean> getAllDisplayMenuItemIDs (@Nonnull final IMenuTree aMenuTree,
+                                                                        @Nullable final String sSelectedMenuItemID)
   {
     return getAllDisplayMenuItemIDs (new MenuItemDeterminatorCallback (aMenuTree, sSelectedMenuItemID));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static Map <String, Boolean> getAllDisplayMenuItemIDs (@Nonnull final IMenuItemDeterminatorCallback aDeterminator)
+  public static ICommonsMap <String, Boolean> getAllDisplayMenuItemIDs (@Nonnull final IMenuItemDeterminatorCallback aDeterminator)
   {
     ValueEnforcer.notNull (aDeterminator, "Determinator");
 
@@ -182,11 +179,11 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static Map <String, Boolean> getAllMenuItemIDs (@Nonnull final IMenuTree aMenuTree)
+  public static ICommonsMap <String, Boolean> getAllMenuItemIDs (@Nonnull final IMenuTree aMenuTree)
   {
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
 
-    final Map <String, Boolean> ret = new HashMap <String, Boolean> ();
+    final ICommonsMap <String, Boolean> ret = new CommonsHashMap <> ();
     TreeVisitor.visitTree (aMenuTree,
                            new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
                            {

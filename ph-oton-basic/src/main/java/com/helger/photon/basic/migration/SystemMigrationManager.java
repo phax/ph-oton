@@ -148,7 +148,7 @@ public class SystemMigrationManager extends AbstractSimpleDAO
   {
     final ICommonsList <SystemMigrationResult> ret = new CommonsArrayList <> ();
     m_aRWLock.readLocked ( () -> {
-      for (final List <SystemMigrationResult> aResults : m_aMap.values ())
+      for (final ICommonsList <SystemMigrationResult> aResults : m_aMap.values ())
         ret.addAll (aResults);
     });
     return ret;

@@ -16,9 +16,7 @@
  */
 package com.helger.photon.basic.app;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,6 +25,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
@@ -41,8 +41,8 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 public final class PhotonSessionState extends AbstractSessionWebSingleton
 {
   private String m_sLastApplicationID;
-  private final Map <String, String> m_aSelectedMenuItems = new HashMap <> ();
-  private final Map <String, Locale> m_aSelectedLocales = new HashMap <> ();
+  private final ICommonsMap <String, String> m_aSelectedMenuItems = new CommonsHashMap <> ();
+  private final ICommonsMap <String, Locale> m_aSelectedLocales = new CommonsHashMap <> ();
 
   @Deprecated
   @UsedViaReflection

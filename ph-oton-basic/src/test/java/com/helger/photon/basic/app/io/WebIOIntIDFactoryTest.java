@@ -18,13 +18,12 @@ package com.helger.photon.basic.app.io;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.id.factory.IIntIDFactory;
 import com.helger.photon.basic.mock.PhotonBasicTestRule;
 
@@ -42,7 +41,7 @@ public final class WebIOIntIDFactoryTest
   public void testFileBasedIDProvider ()
   {
     final IIntIDFactory aIDProvider = new WebIOIntIDFactory ("junit.ids.dat");
-    final Set <Integer> aIDs = new HashSet <Integer> ();
+    final ICommonsSet <Integer> aIDs = new CommonsHashSet <> ();
 
     for (int i = 0; i < 1000; ++i)
     {

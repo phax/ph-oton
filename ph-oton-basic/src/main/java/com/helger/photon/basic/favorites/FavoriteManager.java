@@ -17,7 +17,6 @@
 package com.helger.photon.basic.favorites;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnegative;
@@ -350,7 +349,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
   public EChange removeAllFavoritesOfUser (@Nullable final String sUserID)
   {
     return m_aRWLock.writeLocked ( () -> {
-      final List <Favorite> aFavoritesOfUser = m_aMap.remove (sUserID);
+      final ICommonsList <Favorite> aFavoritesOfUser = m_aMap.remove (sUserID);
       final EChange eChange = EChange.valueOf (aFavoritesOfUser != null);
       if (eChange.isChanged ())
       {

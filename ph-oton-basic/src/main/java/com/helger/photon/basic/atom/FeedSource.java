@@ -16,9 +16,6 @@
  */
 package com.helger.photon.basic.atom;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
@@ -30,7 +27,9 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsHashSet;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
@@ -327,7 +326,7 @@ public class FeedSource extends AbstractFeedElement
     // attribute value of "alternate" that has the same combination of type and
     // hreflang attribute values.
     {
-      final Set <String> aUniques = new HashSet <String> ();
+      final ICommonsSet <String> aUniques = new CommonsHashSet <> ();
       for (final FeedLink aLink : m_aLinks)
         if (FeedLink.REL_ALTERNATE.equals (aLink.getRel ()))
         {

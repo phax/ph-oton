@@ -18,10 +18,10 @@ package com.helger.photon.basic.auth.token;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.junit.Test;
+
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 
 /**
  * Test class for class AuthTokenIDGenerator.
@@ -34,7 +34,7 @@ public final class AuthTokenIDGeneratorTest
   public void testAll ()
   {
     // Ensure they are unique....
-    final Set <String> aAll = new HashSet <String> ();
+    final ICommonsSet <String> aAll = new CommonsHashSet <> ();
     for (int i = 0; i < 1000; i++)
       assertTrue (aAll.add (AuthTokenIDGenerator.generateNewTokenID ()));
   }

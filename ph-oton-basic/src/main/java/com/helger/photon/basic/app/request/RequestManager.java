@@ -17,7 +17,6 @@
 package com.helger.photon.basic.app.request;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -125,7 +124,7 @@ public class RequestManager implements IRequestManager
   }
 
   @Nonnull
-  private static Map <String, Object> _getParametersFromPath (@Nonnull final String sPath)
+  private static ICommonsMap <String, Object> _getParametersFromPath (@Nonnull final String sPath)
   {
     // Use paths for standard menu items
     final ICommonsMap <String, Object> ret = new CommonsLinkedHashMap <> ();
@@ -139,9 +138,9 @@ public class RequestManager implements IRequestManager
   }
 
   @Nonnull
-  protected Map <String, Object> getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  protected ICommonsMap <String, Object> getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    Map <String, Object> ret = null;
+    ICommonsMap <String, Object> ret = null;
     if (m_bUsePaths)
     {
       // Use paths for standard menu items
@@ -158,7 +157,7 @@ public class RequestManager implements IRequestManager
   public void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                               @Nonnull @Nonempty final String sApplicationID)
   {
-    final Map <String, Object> aParams = getParametersFromRequest (aRequestScope);
+    final ICommonsMap <String, Object> aParams = getParametersFromRequest (aRequestScope);
 
     // determine page from request and store in request
     final String sMenuItemID = AttributeValueConverter.getAsString (m_sRequestParamNameMenuItem,
@@ -308,7 +307,7 @@ public class RequestManager implements IRequestManager
   }
 
   @Nonnull
-  protected Map <String, ?> getParametersFromURL (@Nonnull final ISimpleURL aURL)
+  protected ICommonsMap <String, ?> getParametersFromURL (@Nonnull final ISimpleURL aURL)
   {
     if (m_bUsePaths)
     {
@@ -326,7 +325,7 @@ public class RequestManager implements IRequestManager
     if (aURL == null)
       return null;
 
-    final Map <String, ?> aParams = getParametersFromURL (aURL);
+    final ICommonsMap <String, ?> aParams = getParametersFromURL (aURL);
     return AttributeValueConverter.getAsString (m_sRequestParamNameMenuItem,
                                                 aParams.get (m_sRequestParamNameMenuItem),
                                                 null);
@@ -338,7 +337,7 @@ public class RequestManager implements IRequestManager
     if (aURL == null)
       return null;
 
-    final Map <String, ?> aParams = getParametersFromURL (aURL);
+    final ICommonsMap <String, ?> aParams = getParametersFromURL (aURL);
     return AttributeValueConverter.getAsString (m_sRequestParamNameLocale,
                                                 aParams.get (m_sRequestParamNameLocale),
                                                 null);

@@ -16,13 +16,13 @@
  */
 package com.helger.photon.basic.app.locale;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.state.EChange;
 
 /**
@@ -64,7 +64,7 @@ public interface ILocaleManager
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <Locale> getAllAvailableLocales ();
+  ICommonsList <Locale> getAllAvailableLocales ();
 
   /**
    * @return <code>true</code> if at least one locale is present,

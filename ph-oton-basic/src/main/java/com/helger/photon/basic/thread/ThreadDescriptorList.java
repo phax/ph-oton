@@ -19,7 +19,6 @@ package com.helger.photon.basic.thread;
 import java.lang.Thread.State;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -100,12 +99,7 @@ public class ThreadDescriptorList implements IHasMicroNodeRepresentation
     for (final ThreadDescriptor aDescriptor : m_aList)
     {
       final State eState = aDescriptor.getThreadState ();
-      ICommonsNavigableSet <Long> aThreadIDs = aStateMap.get (eState);
-      if (aThreadIDs == null)
-      {
-        aThreadIDs = new CommonsTreeSet <Long> ();
-        aStateMap.put (eState, aThreadIDs);
-      }
+      final ICommonsNavigableSet <Long> aThreadIDs = aStateMap.computeIfAbsent (eState, k -> new CommonsTreeSet <> ());
       aThreadIDs.add (Long.valueOf (aDescriptor.getThreadID ()));
     }
     return aStateMap;
@@ -128,8 +122,8 @@ public class ThreadDescriptorList implements IHasMicroNodeRepresentation
     final ICommonsMap <State, ICommonsNavigableSet <Long>> aStateMap = _getStateMap ();
     for (final State eState : State.values ())
     {
-      final Set <Long> aThreadIDs = aStateMap.get (eState);
-      final int nSize = CollectionHelper.getSize (aThreadIDs);
+      final ICommonsSet <Long> aThreadIDs = aStateMap.get (eState);
+      final int nSize = aThreadIDs.size ();
       aSB.append ("Thread state ").append (eState).append (" [").append (nSize).append (']');
       if (nSize > 0)
         aSB.append (": ").append (aThreadIDs.toString ());
@@ -157,7 +151,7 @@ public class ThreadDescriptorList implements IHasMicroNodeRepresentation
     for (final State eState : State.values ())
     {
       final ICommonsSet <Long> aThreadIDs = aStateMap.get (eState);
-      final int nSize = CollectionHelper.getSize (aThreadIDs);
+      final int nSize = aThreadIDs.size ();
 
       final IMicroElement eThreadState = eRet.appendElement ("threadstate");
       eThreadState.setAttribute ("id", eState.toString ());
