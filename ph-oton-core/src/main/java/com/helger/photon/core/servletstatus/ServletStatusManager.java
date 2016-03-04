@@ -17,8 +17,6 @@
 package com.helger.photon.core.servletstatus;
 
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -36,7 +34,8 @@ import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.web.scope.IGlobalWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
@@ -53,7 +52,7 @@ public final class ServletStatusManager
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
-  private static final Map <String, ServletStatus> s_aMap = new HashMap <> ();
+  private static final ICommonsMap <String, ServletStatus> s_aMap = new CommonsHashMap <> ();
 
   private ServletStatusManager ()
   {}
@@ -74,13 +73,7 @@ public final class ServletStatusManager
       throw new IllegalStateException ("Passed servlet class is abstract: " + aServletClass);
 
     final String sKey = _getKey (aServletClass);
-    ServletStatus aStatus = s_aMap.get (sKey);
-    if (aStatus == null)
-    {
-      aStatus = new ServletStatus (aServletClass.getName ());
-      s_aMap.put (sKey, aStatus);
-    }
-    return aStatus;
+    return s_aMap.computeIfAbsent (sKey, k -> new ServletStatus (aServletClass.getName ()));
   }
 
   private static void _updateStatus (@Nonnull final Class <? extends HttpServlet> aServletClass,
@@ -130,9 +123,9 @@ public final class ServletStatusManager
 
   @Nonnull
   @ReturnsMutableCopy
-  public static Map <String, ServletStatus> getAllStatus ()
+  public static ICommonsMap <String, ServletStatus> getAllStatus ()
   {
-    return s_aRWLock.readLocked ( () -> CollectionHelper.newMap (s_aMap));
+    return s_aRWLock.readLocked ( () -> s_aMap.getClone ());
   }
 
   /**

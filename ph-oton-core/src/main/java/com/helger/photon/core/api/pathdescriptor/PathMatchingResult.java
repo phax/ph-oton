@@ -16,13 +16,11 @@
  */
 package com.helger.photon.core.api.pathdescriptor;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -49,8 +47,15 @@ public final class PathMatchingResult
     m_aVariableValues = null;
   }
 
+  /**
+   * Constructor for "match"
+   * 
+   * @param aVariableValues
+   *        Non-<code>null</code> but may empty matching variables.
+   */
   public PathMatchingResult (@Nonnull final ICommonsOrderedMap <String, String> aVariableValues)
   {
+    ValueEnforcer.notNull (aVariableValues, "VariableValues");
     m_bMatch = true;
     m_aVariableValues = aVariableValues;
   }
@@ -66,9 +71,9 @@ public final class PathMatchingResult
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, String> getAllVariableValues ()
+  public ICommonsOrderedMap <String, String> getAllVariableValues ()
   {
-    return CollectionHelper.newOrderedMap (m_aVariableValues);
+    return new CommonsLinkedHashMap <> (m_aVariableValues);
   }
 
   @Override
@@ -82,7 +87,6 @@ public final class PathMatchingResult
   @Nonnull
   public static PathMatchingResult createSuccess (@Nonnull final ICommonsOrderedMap <String, String> aVariableValues)
   {
-    ValueEnforcer.notNull (aVariableValues, "VariableValues");
     return new PathMatchingResult (aVariableValues);
   }
 }

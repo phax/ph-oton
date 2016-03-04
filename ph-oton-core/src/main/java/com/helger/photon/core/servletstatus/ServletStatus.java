@@ -17,8 +17,6 @@
 package com.helger.photon.core.servletstatus;
 
 import java.time.LocalDateTime;
-import java.util.EnumMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nonnegative;
@@ -32,6 +30,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsEnumMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.string.ToStringGenerator;
 
 @NotThreadSafe
@@ -41,7 +41,7 @@ public final class ServletStatus
 
   private final String m_sClassName;
   private EServletStatus m_eCurrentStatus;
-  private final EnumMap <EServletStatus, LocalDateTime> m_aStatusChangeDates = new EnumMap <EServletStatus, LocalDateTime> (EServletStatus.class);
+  private final ICommonsMap <EServletStatus, LocalDateTime> m_aStatusChangeDates = new CommonsEnumMap <> (EServletStatus.class);
   private final AtomicInteger m_aInvocationCount = new AtomicInteger (0);
 
   public ServletStatus (@Nonnull @Nonempty final String sClassName)
@@ -78,9 +78,9 @@ public final class ServletStatus
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <EServletStatus, LocalDateTime> getStatusChangeMap ()
+  public ICommonsMap <EServletStatus, LocalDateTime> getStatusChangeMap ()
   {
-    return new EnumMap <EServletStatus, LocalDateTime> (m_aStatusChangeDates);
+    return m_aStatusChangeDates.getClone ();
   }
 
   @Nullable
