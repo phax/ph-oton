@@ -16,8 +16,8 @@
  */
 package com.helger.photon.core.go;
 
-import java.util.EnumSet;
 import java.util.Enumeration;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -81,7 +81,7 @@ public class GoServlet extends AbstractUnifiedResponseServlet
 
   @Override
   @Nonnull
-  protected EnumSet <EHTTPMethod> getAllowedHTTPMethods ()
+  protected Set <EHTTPMethod> getAllowedHTTPMethods ()
   {
     return ALLOWED_METHDOS_GET;
   }

@@ -16,15 +16,14 @@
  */
 package com.helger.photon.bootstrap.demo.servlet;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.servlet.ServletContext;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.photon.bootstrap.demo.app.AppSecurity;
 import com.helger.photon.bootstrap.demo.app.AppSettings;
 import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
@@ -70,9 +69,9 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
   @Override
   @Nonnull
   @Nonempty
-  protected Map <String, IApplicationInitializer <LayoutExecutionContext>> getAllInitializers ()
+  protected ICommonsMap <String, IApplicationInitializer <LayoutExecutionContext>> getAllInitializers ()
   {
-    final Map <String, IApplicationInitializer <LayoutExecutionContext>> ret = new HashMap <String, IApplicationInitializer <LayoutExecutionContext>> ();
+    final ICommonsMap <String, IApplicationInitializer <LayoutExecutionContext>> ret = new CommonsHashMap<> ();
     ret.put (CApplication.APP_ID_SECURE, new InitializerSecure ());
     ret.put (CApplication.APP_ID_PUBLIC, new InitializerPublic ());
     return ret;

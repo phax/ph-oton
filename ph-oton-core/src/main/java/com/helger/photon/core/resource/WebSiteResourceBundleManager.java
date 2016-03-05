@@ -19,9 +19,8 @@ package com.helger.photon.core.resource;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,6 +34,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -68,9 +69,9 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResourceBundleManager.class);
   @GuardedBy ("m_aRWLock")
-  private final Map <WebSiteResourceBundle, String> m_aMapToData = new HashMap <WebSiteResourceBundle, String> ();
+  private final ICommonsMap <WebSiteResourceBundle, String> m_aMapToData = new CommonsHashMap<> ();
   @GuardedBy ("m_aRWLock")
-  private final Map <String, WebSiteResourceBundleSerialized> m_aMapToBundle = new HashMap <String, WebSiteResourceBundleSerialized> ();
+  private final ICommonsMap <String, WebSiteResourceBundleSerialized> m_aMapToBundle = new CommonsHashMap<> ();
 
   public WebSiteResourceBundleManager (@Nullable final String sFilename) throws DAOException
   {
@@ -200,8 +201,8 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_RESOURCE_BUNDLES);
-    for (final WebSiteResourceBundleSerialized aResourceBundle : CollectionHelper.getSortedByKey (m_aMapToBundle)
-                                                                                 .values ())
+    for (final WebSiteResourceBundleSerialized aResourceBundle : m_aMapToBundle.getSortedByKey (Comparator.naturalOrder ())
+                                                                               .values ())
     {
       final IMicroElement eBundle = eRoot.appendElement (ELEMENT_RESOURCE_BUNDLE);
       eBundle.setAttribute (ATTR_ID, aResourceBundle.getBundleID ());
@@ -228,9 +229,9 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, WebSiteResourceBundleSerialized> getAllResourceBundles ()
+  public ICommonsMap <String, WebSiteResourceBundleSerialized> getAllResourceBundles ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newMap (m_aMapToBundle));
+    return m_aRWLock.readLocked ( () -> m_aMapToBundle.getClone ());
   }
 
   /**
@@ -272,7 +273,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
   {
     ValueEnforcer.notEmptyNoNullValue (aList, "List");
 
-    final List <WebSiteResourceBundleSerialized> ret = new ArrayList <> ();
+    final List <WebSiteResourceBundleSerialized> ret = new ArrayList<> ();
 
     // Create a copy for modification
     boolean bCreatedAnyBundle = false;

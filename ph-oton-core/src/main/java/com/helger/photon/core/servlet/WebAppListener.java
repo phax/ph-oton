@@ -19,10 +19,9 @@ package com.helger.photon.core.servlet;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
@@ -42,9 +41,10 @@ import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.cleanup.CommonsCleanup;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsTreeMap;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsNavigableMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.id.factory.GlobalIDFactory;
@@ -171,9 +171,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     // List class path elements in trace mode
     if (GlobalDebug.isDebugMode ())
     {
-      final List <String> aCP = ClassPathHelper.getAllClassPathEntries ();
+      final ICommonsList <String> aCP = ClassPathHelper.getAllClassPathEntries ();
       s_aLogger.info ("Class path [" + aCP.size () + " elements]:");
-      for (final String sCP : CollectionHelper.getSortedInline (aCP))
+      for (final String sCP : aCP.getSorted (Comparator.naturalOrder ()))
         s_aLogger.info ("  " + sCP);
     }
   }
@@ -181,7 +181,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected final void logInitParameters (@Nonnull final ServletContext aSC)
   {
     // Put them in a sorted map
-    final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap <> ();
+    final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap<> ();
     final Enumeration <?> aEnum = aSC.getInitParameterNames ();
     while (aEnum.hasMoreElements ())
     {
@@ -204,13 +204,12 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected final void logThirdpartyModules ()
   {
     // List all third party modules for later evaluation
-    final Set <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
-                                                                     .getAllRegisteredThirdPartyModules ();
+    final ICommonsSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
+                                                                             .getAllRegisteredThirdPartyModules ();
     if (!aModules.isEmpty ())
     {
       s_aLogger.info ("Using the following third party modules:");
-      for (final IThirdPartyModule aModule : CollectionHelper.getSorted (aModules,
-                                                                         IHasDisplayName.getComparatorCollating (SystemHelper.getSystemLocale ())))
+      for (final IThirdPartyModule aModule : aModules.getSorted (IHasDisplayName.getComparatorCollating (SystemHelper.getSystemLocale ())))
         if (!aModule.isOptional ())
         {
           String sMsg = "  " + aModule.getDisplayName ();

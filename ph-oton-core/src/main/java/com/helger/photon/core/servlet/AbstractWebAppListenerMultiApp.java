@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
@@ -63,7 +63,7 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
 
   @Nonnull
   @Nonempty
-  protected abstract Map <String, IApplicationInitializer <LECTYPE>> getAllInitializers ();
+  protected abstract ICommonsMap <String, IApplicationInitializer <LECTYPE>> getAllInitializers ();
 
   /**
    * Set global system properties, after the content was initialized but before
@@ -102,8 +102,8 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
     initGlobals ();
 
     // Determine all initializers
-    final Map <String, IApplicationInitializer <LECTYPE>> aIniter = getAllInitializers ();
-    if (CollectionHelper.isEmpty (aIniter))
+    final ICommonsMap <String, IApplicationInitializer <LECTYPE>> aIniter = getAllInitializers ();
+    if (aIniter.isEmpty ())
       throw new IllegalStateException ("No application initializers provided!");
 
     // Invoke all initializers

@@ -17,8 +17,8 @@
 package com.helger.photon.core.userdata;
 
 import java.io.IOException;
-import java.util.EnumSet;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletException;
@@ -68,7 +68,7 @@ public class UserUploadServlet extends AbstractUnifiedResponseServlet
 
   @Override
   @Nonnull
-  protected EnumSet <EHTTPMethod> getAllowedHTTPMethods ()
+  protected Set <EHTTPMethod> getAllowedHTTPMethods ()
   {
     return ALLOWED_METHDOS_POST;
   }

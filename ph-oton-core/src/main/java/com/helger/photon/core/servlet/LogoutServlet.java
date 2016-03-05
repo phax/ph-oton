@@ -17,7 +17,7 @@
 package com.helger.photon.core.servlet;
 
 import java.io.IOException;
-import java.util.EnumSet;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletException;
@@ -53,7 +53,7 @@ public class LogoutServlet extends AbstractUnifiedResponseServlet
 
   @Override
   @Nonnull
-  protected EnumSet <EHTTPMethod> getAllowedHTTPMethods ()
+  protected Set <EHTTPMethod> getAllowedHTTPMethods ()
   {
     // HEAD makes no sense here
     return ALLOWED_METHDOS_GET_POST;

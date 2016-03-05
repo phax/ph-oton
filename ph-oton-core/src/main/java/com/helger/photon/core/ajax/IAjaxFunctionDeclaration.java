@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.factory.IFactory;
 import com.helger.commons.filter.IFilter;
 import com.helger.commons.name.IHasName;
@@ -99,7 +98,7 @@ public interface IAjaxFunctionDeclaration extends IHasName
   default String getInvocationURI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                    @Nullable final Map <String, String> aParams)
   {
-    if (CollectionHelper.isEmpty (aParams))
+    if (aParams == null || aParams.isEmpty ())
     {
       // No need to convert to SimpleURL and back
       return getInvocationURI (aRequestScope);

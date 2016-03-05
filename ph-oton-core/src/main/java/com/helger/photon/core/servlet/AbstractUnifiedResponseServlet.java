@@ -19,7 +19,6 @@ package com.helger.photon.core.servlet;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
@@ -36,8 +35,9 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.regex.RegExHelper;
@@ -73,15 +73,16 @@ import com.helger.web.servlets.scope.AbstractScopeAwareHttpServlet;
 public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareHttpServlet
 {
   /** Default allowed methods: HEAD, GET and POST */
-  public static final EnumSet <EHTTPMethod> DEFAULT_ALLOWED_METHDOS = EnumSet.of (EHTTPMethod.HEAD,
-                                                                                  EHTTPMethod.GET,
-                                                                                  EHTTPMethod.POST);
+  public static final Set <EHTTPMethod> DEFAULT_ALLOWED_METHDOS = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.HEAD,
+                                                                                                                 EHTTPMethod.GET,
+                                                                                                                 EHTTPMethod.POST));
   /** Allowed methods: GET and POST */
-  public static final EnumSet <EHTTPMethod> ALLOWED_METHDOS_GET_POST = EnumSet.of (EHTTPMethod.GET, EHTTPMethod.POST);
+  public static final Set <EHTTPMethod> ALLOWED_METHDOS_GET_POST = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.GET,
+                                                                                                                  EHTTPMethod.POST));
   /** Allowed methods: GET */
-  public static final EnumSet <EHTTPMethod> ALLOWED_METHDOS_GET = EnumSet.of (EHTTPMethod.GET);
+  public static final Set <EHTTPMethod> ALLOWED_METHDOS_GET = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.GET));
   /** Allowed methods: POST */
-  public static final EnumSet <EHTTPMethod> ALLOWED_METHDOS_POST = EnumSet.of (EHTTPMethod.POST);
+  public static final Set <EHTTPMethod> ALLOWED_METHDOS_POST = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.POST));
 
   /** The name of the request attribute uniquely identifying the request ID */
   public static final String REQUEST_ATTR_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "request.id";
@@ -182,10 +183,10 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
    */
   @OverrideOnDemand
   @Nonnull
-  @ReturnsMutableCopy
+  @ReturnsImmutableObject
   protected Set <EHTTPMethod> getAllowedHTTPMethods ()
   {
-    return CollectionHelper.newSet (DEFAULT_ALLOWED_METHDOS);
+    return DEFAULT_ALLOWED_METHDOS;
   }
 
   /**
@@ -365,14 +366,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
       m_aStatsHttpMethodDisallowed.increment (eHTTPMethod.getName ());
 
       // Build Allow response header
-      final StringBuilder aAllow = new StringBuilder ();
-      for (final EHTTPMethod eAllowedHTTPMethod : aAllowedHTTPMethods)
-      {
-        if (aAllow.length () > 0)
-          aAllow.append (", ");
-        aAllow.append (eAllowedHTTPMethod.getName ());
-      }
-      final String sAllow = aAllow.toString ();
+      final String sAllow = StringHelper.getImploded (", ", aAllowedHTTPMethods, EHTTPMethod::getName);
       s_aLogger.warn ("Request " +
                       aRequestScope.getURL () +
                       " uses disallowed HTTP method " +
@@ -466,7 +460,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         if (StringHelper.hasText (sRequestETags))
         {
           // Request header may contain several ETag values
-          final List <String> aAllETags = RegExHelper.getSplitToList (sRequestETags, ",\\s+");
+          final ICommonsList <String> aAllETags = RegExHelper.getSplitToList (sRequestETags, ",\\s+");
           if (aAllETags.isEmpty ())
             s_aLogger.warn ("Empty ETag list found (" + sRequestETags + ")");
           else

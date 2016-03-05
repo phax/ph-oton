@@ -16,10 +16,6 @@
  */
 package com.helger.photon.core.smtp;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,6 +25,9 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.lang.IHasSize;
 import com.helger.commons.microdom.IMicroDocument;
@@ -52,14 +51,14 @@ import com.helger.smtp.settings.SMTPSettings;
 @ThreadSafe
 public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasSize
 {
-  private static final String ELEMENT_NAMEDSMTPSETTINGSLIST = "namedsmtpsettingslist";
-  private static final String ELEMENT_NAMEDSMTPSETTINGS = "namedsmtpsettings";
+  private static final String ELEMENT_ROOT = "namedsmtpsettingslist";
+  private static final String ELEMENT_ITEM = "namedsmtpsettings";
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   private static boolean s_bCreateDefaults = true;
 
-  private final Map <String, NamedSMTPSettings> m_aMap = new HashMap <String, NamedSMTPSettings> ();
+  private final ICommonsMap <String, NamedSMTPSettings> m_aMap = new CommonsHashMap<> ();
 
   public static boolean isCreateDefaults ()
   {
@@ -108,8 +107,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
   @Nonnull
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
-    for (final IMicroElement eNamedSMTPSettings : aDoc.getDocumentElement ()
-                                                      .getAllChildElements (ELEMENT_NAMEDSMTPSETTINGS))
+    for (final IMicroElement eNamedSMTPSettings : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
       _addItem (MicroTypeConverter.convertToNative (eNamedSMTPSettings, NamedSMTPSettings.class));
     return EChange.UNCHANGED;
   }
@@ -119,9 +117,9 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_NAMEDSMTPSETTINGSLIST);
+    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
     for (final NamedSMTPSettings aNamedSMTPSettings : CollectionHelper.getSortedByKey (m_aMap).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aNamedSMTPSettings, ELEMENT_NAMEDSMTPSETTINGS));
+      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aNamedSMTPSettings, ELEMENT_ITEM));
     return aDoc;
   }
 
@@ -150,9 +148,9 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
    */
   @Nonnull
   @ReturnsMutableCopy
-  public Map <String, NamedSMTPSettings> getAllSettings ()
+  public ICommonsMap <String, NamedSMTPSettings> getAllSettings ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newMap (m_aMap));
+    return m_aRWLock.readLocked ( () -> m_aMap.getClone ());
   }
 
   /**
@@ -222,12 +220,8 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
     if (StringHelper.hasNoText (sName))
       return null;
 
-    return m_aRWLock.readLocked ( () -> {
-      for (final NamedSMTPSettings aSettings : m_aMap.values ())
-        if (aSettings.getName ().equals (sName))
-          return aSettings;
-      return null;
-    });
+    return m_aRWLock.readLocked ( () -> CollectionHelper.findFirst (m_aMap.values (),
+                                                                    aSettings -> aSettings.getName ().equals (sName)));
   }
 
   /**
@@ -342,7 +336,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
   public EChange removeAllSettings ()
   {
     // Get all available settings IDs
-    final Set <String> aAllIDs = m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aMap.keySet ()));
+    final ICommonsSet <String> aAllIDs = m_aRWLock.readLocked ( () -> m_aMap.copyOfKeySet ());
 
     // Batch remove all settings
     EChange eChange = EChange.UNCHANGED;

@@ -17,7 +17,7 @@
 package com.helger.photon.core.resource;
 
 import java.io.IOException;
-import java.util.EnumSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnegative;
@@ -104,7 +104,7 @@ public class ResourceBundleServlet extends AbstractObjectDeliveryServlet
 
   @Override
   @Nonnull
-  protected EnumSet <EHTTPMethod> getAllowedHTTPMethods ()
+  protected Set <EHTTPMethod> getAllowedHTTPMethods ()
   {
     return ALLOWED_METHDOS_GET;
   }
