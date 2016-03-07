@@ -23,6 +23,7 @@ import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.forms.AbstractHCInput;
+import com.helger.html.hc.html.forms.EHCInputType;
 import com.helger.html.hc.html.forms.HCCtrlHelper;
 import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.html.script.IHCScript;
@@ -40,27 +41,24 @@ public final class BootstrapHelper
   {
     if (aCtrl != null)
     {
+      boolean bAddClass = true;
       if (aCtrl instanceof AbstractHCInput <?>)
       {
         // all except for checkbox, radio button and
         // hidden field
         final AbstractHCInput <?> aInput = (AbstractHCInput <?>) aCtrl;
-        switch (aInput.getType ())
+
+        // May be null!
+        final EHCInputType eType = aInput.getType ();
+        if (eType == EHCInputType.CHECKBOX || eType == EHCInputType.RADIO || eType == EHCInputType.HIDDEN)
         {
-          case CHECKBOX:
-          case RADIO:
-          case HIDDEN:
-            // Do not add the class!
-            break;
-          default:
-            aCtrl.addClass (CBootstrapCSS.FORM_CONTROL);
-            break;
+          // Do not add the class!
+          bAddClass = false;
         }
       }
-      else
-      {
+
+      if (bAddClass)
         aCtrl.addClass (CBootstrapCSS.FORM_CONTROL);
-      }
     }
   }
 
