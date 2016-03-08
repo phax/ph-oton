@@ -32,6 +32,7 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.IHCElementWithChildren;
+import com.helger.html.hc.html.forms.EHCInputType;
 import com.helger.html.hc.html.forms.HCCheckBox;
 import com.helger.html.hc.html.forms.HCCtrlHelper;
 import com.helger.html.hc.html.forms.HCLabel;
@@ -64,11 +65,13 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   public DefaultBootstrapFormGroupRenderer ()
   {}
 
+  @Override
   public boolean isUseIcons ()
   {
     return m_bUseIcons;
   }
 
+  @Override
   @Nonnull
   public DefaultBootstrapFormGroupRenderer setUseIcons (final boolean bUseIcons)
   {
@@ -105,7 +108,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     if (aFirstControl instanceof IHCInput <?>)
     {
       final IHCInput <?> aEdit = (IHCInput <?>) aFirstControl;
-      if (aEdit.getType ().hasPlaceholder ())
+      final EHCInputType eType = aEdit.getType ();
+      if (eType != null && eType.hasPlaceholder ())
       {
         // Only check for null, so that empty string overrides this
         // default behaviour
@@ -204,6 +208,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
                                   @Nonnull final HCDiv aFinalNode)
   {}
 
+  @Override
   @Nonnull
   public HCDiv renderFormGroup (@Nonnull final IBootstrapFormGroupContainer aForm,
                                 @Nonnull final BootstrapFormGroup aFormGroup)
