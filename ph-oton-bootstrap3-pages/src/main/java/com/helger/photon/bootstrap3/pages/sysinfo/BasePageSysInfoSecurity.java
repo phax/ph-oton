@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap3.pages.sysinfo;
 
+import java.io.File;
 import java.security.Provider;
 import java.security.Provider.Service;
 import java.security.Security;
@@ -23,6 +24,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -33,13 +35,17 @@ import javax.net.ssl.SSLParameters;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.lang.PropertiesHelper;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.system.SystemProperties;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
+import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -69,6 +75,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
+    TAB_SECATTRS ("Attribute", "Attributes"),
     TAB_PROVIDERS ("Provider", "Providers"),
     TAB_ALGORITHMS ("Algorithmen", "Algorithms"),
     TAB_SSLCONTEXT ("SSLContext", "SSLContext"),
@@ -136,6 +143,54 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
     final List <Provider> aSortedProviders = CollectionHelper.getSorted (Security.getProviders (),
                                                                          Comparator.comparing (Provider::getName)
                                                                                    .thenComparing (Comparator.comparingDouble (Provider::getVersion)));
+
+    // show all Security attributes
+    {
+      File aSecurityPropFile = new File (SystemProperties.getJavaHome () + "/lib/security", "java.security");
+      ICommonsMap <String, String> aProps = PropertiesHelper.loadProperties (aSecurityPropFile);
+      if (aProps != null && "true".equalsIgnoreCase (aProps.get ("security.overridePropertiesFile")))
+      {
+        String sExtraPropFile = SystemProperties.getPropertyValueOrNull ("java.security.properties");
+        final boolean bOverrideAll = sExtraPropFile != null && sExtraPropFile.startsWith ("=");
+
+        if (bOverrideAll)
+        {
+          sExtraPropFile = sExtraPropFile.substring (1);
+          aProps.clear ();
+        }
+
+        // now load the user-specified file so its values
+        // will win if they conflict with the earlier values
+        if (sExtraPropFile != null)
+        {
+          sExtraPropFile = PropertiesHelper.expandSystemProperties (sExtraPropFile);
+          aSecurityPropFile = new File (sExtraPropFile);
+          if (aSecurityPropFile.exists ())
+            aProps = PropertiesHelper.loadProperties (aSecurityPropFile);
+          else
+            aProps = PropertiesHelper.loadProperties (new SimpleURL (sExtraPropFile));
+        }
+      }
+
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                              "-secattrs");
+
+      if (aProps != null)
+        for (final Map.Entry <String, String> aEntry : aProps.entrySet ())
+        {
+          final HCRow aRow = aTable.addBodyRow ();
+          aRow.addCell (aEntry.getKey ());
+          aRow.addCell (aEntry.getValue ());
+        }
+
+      final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+      aDataTables.setPageLengthAll ();
+
+      aTabBox.addTab ("secattrs",
+                      EText.TAB_SECATTRS.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChild (aTable).addChild (aDataTables));
+    }
 
     // show all providers
     {
@@ -230,7 +285,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
           aPropsRow.addCell (aSecurityProvider.getProperty (sName));
         }
 
-        aTabBox.addTab (sProviderName,
+        aTabBox.addTab (RegExHelper.getAsIdentifier (sProviderName),
                         sProviderName,
                         new HCNodeList ().addChild (aTable)
                                          .addChild (aDataTables)
