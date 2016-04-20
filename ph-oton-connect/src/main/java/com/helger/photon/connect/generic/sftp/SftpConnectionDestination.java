@@ -100,9 +100,9 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
        * Setup Strict HostKeyChecking to no so we don't get the unknown host key
        * exception
        */
-      final Properties config = new Properties ();
-      config.put ("StrictHostKeyChecking", "no");
-      aSession.setConfig (config);
+      final Properties aConfig = new Properties ();
+      aConfig.put ("StrictHostKeyChecking", "no");
+      aSession.setConfig (aConfig);
 
       // do connect
       aSession.connect (m_nConnectTimeoutMilliSeconds);
