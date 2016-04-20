@@ -132,8 +132,12 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
                                                                             .getFirstDayOfWeek ());
     // Use the calendar icon as default prefix
     addPrefix (EBootstrapIcon.CALENDAR.getAsNode ());
-    // Default to end date + 1 year
-    setEndDate (LocalDate.now ().plusYears (1));
+
+    if (false)
+    {
+      // Default to end date + 1 year
+      setEndDate (LocalDate.now ().plusYears (1));
+    }
   }
 
   /**
