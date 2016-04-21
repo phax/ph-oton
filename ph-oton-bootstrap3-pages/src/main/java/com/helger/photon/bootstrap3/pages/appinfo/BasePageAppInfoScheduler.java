@@ -16,8 +16,6 @@
  */
 package com.helger.photon.bootstrap3.pages.appinfo;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -36,6 +34,8 @@ import org.quartz.utils.DirtyFlagMap;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
@@ -160,7 +160,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
                                                                                                   .size ())));
 
         // All job listener
-        final List <String> aListeners = new ArrayList<> ();
+        final ICommonsList <String> aListeners = new CommonsArrayList<> ();
         for (final JobListener aJobListener : aScheduler.getListenerManager ().getJobListeners ())
           aListeners.add (aJobListener.getName () + " - " + aJobListener.getClass ().getName ());
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LISTENERS.getDisplayText (aDisplayLocale))

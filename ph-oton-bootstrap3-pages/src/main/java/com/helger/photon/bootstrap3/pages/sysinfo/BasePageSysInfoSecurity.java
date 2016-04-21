@@ -21,11 +21,9 @@ import java.security.Provider;
 import java.security.Provider.Service;
 import java.security.Security;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,7 +33,9 @@ import javax.net.ssl.SSLParameters;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashSet;
 import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.lang.PropertiesHelper;
 import com.helger.commons.regex.RegExHelper;
@@ -275,7 +275,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
         final BootstrapTable aPropsTable = new BootstrapTable (HCCol.star (), HCCol.star ());
         aPropsTable.addHeaderRow ().addCells (EText.MSG_KEY.getDisplayText (aDisplayLocale),
                                               EText.MSG_VALUE.getDisplayText (aDisplayLocale));
-        final Set <String> aKeys = new HashSet <String> ();
+        final ICommonsSet <String> aKeys = new CommonsHashSet<> ();
         for (final Object aName : aSecurityProvider.keySet ())
           aKeys.add ((String) aName);
         for (final String sName : CollectionHelper.getSorted (aKeys))

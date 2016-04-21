@@ -16,9 +16,7 @@
  */
 package com.helger.photon.uicore.facebook;
 
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,6 +27,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.cache.AbstractNotifyingCache;
 import com.helger.commons.cache.IMutableCache;
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.scope.IScope;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
@@ -116,7 +116,7 @@ public final class FacebookLocaleMapping extends AbstractGlobalWebSingleton
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (FacebookLocaleMapping.class);
 
-  private final Set <Locale> m_aFBLocales = new HashSet <Locale> ();
+  private final ICommonsSet <Locale> m_aFBLocales = new CommonsHashSet<> ();
 
   private final IMutableCache <Locale, Locale> m_aCache = new AbstractNotifyingCache <Locale, Locale> (FacebookLocaleMapping.class.getName ())
   {

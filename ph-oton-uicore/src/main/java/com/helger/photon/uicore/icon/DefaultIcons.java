@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uicore.icon;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -26,6 +25,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 
 /**
  * This class maintains the actual icon objects to the different default icons.
@@ -35,7 +36,7 @@ import com.helger.commons.collection.CollectionHelper;
 @NotThreadSafe
 public final class DefaultIcons
 {
-  private static final Map <EDefaultIcon, IIcon> s_aMap = new HashMap <EDefaultIcon, IIcon> ();
+  private static final ICommonsMap <EDefaultIcon, IIcon> s_aMap = new CommonsHashMap<> ();
 
   private DefaultIcons ()
   {}

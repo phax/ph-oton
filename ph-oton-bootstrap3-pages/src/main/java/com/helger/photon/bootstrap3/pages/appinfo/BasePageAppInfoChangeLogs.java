@@ -16,7 +16,6 @@
  */
 package com.helger.photon.bootstrap3.pages.appinfo;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -30,6 +29,8 @@ import com.helger.commons.changelog.ChangeLog;
 import com.helger.commons.changelog.ChangeLogEntry;
 import com.helger.commons.changelog.ChangeLogSerializer;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
@@ -125,7 +126,7 @@ public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     if (s_aCache == null)
     {
       // Get all change logs
-      List <ChangeLogEntry> aChangeLogEntries = new ArrayList <> ();
+      ICommonsList <ChangeLogEntry> aChangeLogEntries = new CommonsArrayList <> ();
       for (final ChangeLog aChangeLog : CollectionHelper.newList (ChangeLogSerializer.readAllChangeLogs ().values ()))
         aChangeLogEntries.addAll (aChangeLog.getAllEntries ());
 

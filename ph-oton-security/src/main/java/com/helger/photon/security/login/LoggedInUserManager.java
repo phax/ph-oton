@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.Duration;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnegative;
@@ -40,6 +38,8 @@ import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.scope.IScope;
 import com.helger.commons.scope.ISessionScope;
 import com.helger.commons.scope.mgr.ScopeManager;
@@ -213,9 +213,9 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
   // Set of logged in user IDs
   @GuardedBy ("m_aRWLock")
-  private final Map <String, LoginInfo> m_aLoggedInUsers = new HashMap <> ();
-  private final CallbackList <IUserLoginCallback> m_aUserLoginCallbacks = new CallbackList <> ();
-  private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList <> ();
+  private final ICommonsMap <String, LoginInfo> m_aLoggedInUsers = new CommonsHashMap<> ();
+  private final CallbackList <IUserLoginCallback> m_aUserLoginCallbacks = new CallbackList<> ();
+  private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList<> ();
   private boolean m_bLogoutAlreadyLoggedInUser = DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER;
 
   @Deprecated

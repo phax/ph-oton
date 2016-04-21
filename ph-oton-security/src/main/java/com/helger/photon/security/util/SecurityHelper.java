@@ -17,9 +17,7 @@
 package com.helger.photon.security.util;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -113,7 +111,7 @@ public final class SecurityHelper
   @ReturnsMutableCopy
   public static ICommonsSet <String> getAllUserRoleIDs (@Nullable final String sUserID)
   {
-    final ICommonsSet <String> ret = new CommonsHashSet <> ();
+    final ICommonsSet <String> ret = new CommonsHashSet<> ();
     final Collection <? extends IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
                                                                                .getAllUserGroupsWithAssignedUser (sUserID);
     for (final IUserGroup aUserGroup : aUserGroups)
@@ -123,11 +121,11 @@ public final class SecurityHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static Set <IRole> getAllUserRoles (@Nullable final String sUserID)
+  public static ICommonsSet <IRole> getAllUserRoles (@Nullable final String sUserID)
   {
     final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
-    final Set <String> aRoleIDs = getAllUserRoleIDs (sUserID);
-    final Set <IRole> ret = new HashSet <IRole> ();
+    final ICommonsSet <String> aRoleIDs = getAllUserRoleIDs (sUserID);
+    final ICommonsSet <IRole> ret = new CommonsHashSet<> ();
     for (final String sRoleID : aRoleIDs)
     {
       final IRole aRole = aRoleMgr.getRoleOfID (sRoleID);

@@ -16,9 +16,7 @@
  */
 package com.helger.photon.security.usergroup;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -29,6 +27,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
@@ -48,8 +48,8 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
 
   private String m_sName;
   private String m_sDescription;
-  private final Set <String> m_aUserIDs = new HashSet <> ();
-  private final Set <String> m_aRoleIDs = new HashSet <> ();
+  private final ICommonsSet <String> m_aUserIDs = new CommonsHashSet <> ();
+  private final ICommonsSet <String> m_aRoleIDs = new CommonsHashSet <> ();
 
   public UserGroup (@Nonnull @Nonempty final String sName,
                     @Nullable final String sDescription,
@@ -119,7 +119,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllContainedUserIDs ()
+  public ICommonsSet <String> getAllContainedUserIDs ()
   {
     return CollectionHelper.newSet (m_aUserIDs);
   }
@@ -156,7 +156,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllContainedRoleIDs ()
+  public ICommonsSet <String> getAllContainedRoleIDs ()
   {
     return CollectionHelper.newSet (m_aRoleIDs);
   }

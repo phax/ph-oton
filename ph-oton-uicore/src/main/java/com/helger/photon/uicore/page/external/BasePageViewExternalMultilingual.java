@@ -17,7 +17,6 @@
 package com.helger.photon.uicore.page.external;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -31,6 +30,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.microdom.IMicroContainer;
@@ -92,7 +93,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
 
   private final Locale m_aDefaultLocale;
   @GuardedBy ("m_aRWLock")
-  private final Map <Locale, ContentPerLocale> m_aContent = new HashMap <> ();
+  private final ICommonsMap <Locale, ContentPerLocale> m_aContent = new CommonsHashMap<> ();
 
   /**
    * This callback is called after the HTML content was successfully read

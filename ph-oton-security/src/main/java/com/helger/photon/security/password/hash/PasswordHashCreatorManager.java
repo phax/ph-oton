@@ -17,8 +17,6 @@
 package com.helger.photon.security.password.hash;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -33,6 +31,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -50,7 +50,7 @@ public class PasswordHashCreatorManager
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final Map <String, IPasswordHashCreator> m_aPasswordHashCreators = new HashMap <> ();
+  private final ICommonsMap <String, IPasswordHashCreator> m_aPasswordHashCreators = new CommonsHashMap<> ();
   @GuardedBy ("m_aRWLock")
   private IPasswordHashCreator m_aDefaultPasswordHashCreator;
 
