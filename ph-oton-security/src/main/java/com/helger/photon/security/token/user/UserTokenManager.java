@@ -17,7 +17,6 @@
 package com.helger.photon.security.token.user;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -27,6 +26,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
+import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
@@ -236,14 +236,14 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends IUserToken> getAllUserTokens ()
+  public ICommonsCollection <? extends IUserToken> getAllUserTokens ()
   {
     return getAll ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends IUserToken> getAllActiveUserTokens ()
+  public ICommonsCollection <? extends IUserToken> getAllActiveUserTokens ()
   {
     return getAll (aItem -> !aItem.isDeleted ());
   }

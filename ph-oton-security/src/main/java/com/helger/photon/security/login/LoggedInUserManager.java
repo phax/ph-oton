@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.Duration;
 import java.util.Collection;
-import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -39,7 +38,9 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.scope.IScope;
 import com.helger.commons.scope.ISessionScope;
 import com.helger.commons.scope.mgr.ScopeManager;
@@ -539,7 +540,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    */
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllLoggedInUserIDs ()
+  public ICommonsSet <String> getAllLoggedInUserIDs ()
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aLoggedInUsers.keySet ()));
   }
@@ -563,7 +564,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    */
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <LoginInfo> getAllLoginInfos ()
+  public ICommonsCollection <LoginInfo> getAllLoginInfos ()
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aLoggedInUsers.values ()));
   }

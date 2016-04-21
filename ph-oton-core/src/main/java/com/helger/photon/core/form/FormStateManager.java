@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.form;
 
-import java.util.Collection;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -30,6 +28,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EChange;
@@ -90,7 +89,7 @@ public final class FormStateManager extends AbstractSessionWebSingleton
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <FormState> getAllFormStates ()
+  public ICommonsCollection <FormState> getAllFormStates ()
   {
     return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
   }

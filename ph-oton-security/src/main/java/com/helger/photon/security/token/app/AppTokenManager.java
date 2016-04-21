@@ -17,7 +17,6 @@
 package com.helger.photon.security.token.app;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Map;
 
 import javax.annotation.Nonnegative;
@@ -28,6 +27,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
+import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
@@ -261,14 +261,14 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends IAppToken> getAllAppTokens ()
+  public ICommonsCollection <? extends IAppToken> getAllAppTokens ()
   {
     return getAll ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends IAppToken> getAllActiveAppTokens ()
+  public ICommonsCollection <? extends IAppToken> getAllActiveAppTokens ()
   {
     return getAll (aItem -> !aItem.isDeleted ());
   }

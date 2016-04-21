@@ -28,6 +28,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.IReloadableDAO;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
@@ -233,7 +234,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
    */
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <? extends IRole> getAllRoles ()
+  public ICommonsCollection <? extends IRole> getAllRoles ()
   {
     return getAll ();
   }
