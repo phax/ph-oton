@@ -16,9 +16,6 @@
  */
 package com.helger.photon.core.app.redirect;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -29,6 +26,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -43,7 +42,7 @@ public final class ForcedRedirectManager extends AbstractSessionWebSingleton
   private static final Logger s_aLogger = LoggerFactory.getLogger (ForcedRedirectManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final Map <String, IHCNode> m_aMap = new HashMap <String, IHCNode> ();
+  private final ICommonsMap <String, IHCNode> m_aMap = new CommonsHashMap<> ();
 
   @Deprecated
   @UsedViaReflection

@@ -16,13 +16,12 @@
  */
 package com.helger.photon.core.app.layout;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
@@ -34,7 +33,7 @@ public interface ILayoutManager <LECTYPE extends ILayoutExecutionContext>
 
   @Nonnull
   @ReturnsMutableCopy
-  List <String> getAllAreaIDs ();
+  ICommonsList <String> getAllAreaIDs ();
 
   @Nullable
   IHCNode getContentOfArea (@Nonnull @Nonempty String sAreaID, @Nonnull LECTYPE aLEC, @Nonnull HCHead aHead);

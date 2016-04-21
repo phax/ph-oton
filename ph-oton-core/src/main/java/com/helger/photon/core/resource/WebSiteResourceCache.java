@@ -17,8 +17,6 @@
 package com.helger.photon.core.resource;
 
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
@@ -30,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EChange;
@@ -48,7 +48,7 @@ public final class WebSiteResourceCache
   @GuardedBy ("s_aRWLock")
   private static boolean s_bCacheEnabled = !GlobalDebug.isDebugMode ();
   @GuardedBy ("s_aRWLock")
-  private static final Map <String, WebSiteResource> s_aMap = new HashMap <> ();
+  private static final ICommonsMap <String, WebSiteResource> s_aMap = new CommonsHashMap<> ();
 
   @PresentForCodeCoverage
   private static final WebSiteResourceCache s_aInstance = new WebSiteResourceCache ();

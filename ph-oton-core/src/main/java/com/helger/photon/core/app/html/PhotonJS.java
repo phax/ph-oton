@@ -17,8 +17,6 @@
 package com.helger.photon.core.app.html;
 
 import java.util.Collection;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,6 +29,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.concurrent.SimpleLock;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -57,7 +56,7 @@ public final class PhotonJS
   private static final String REQUEST_ATTR_JSRESOURCES = PhotonJS.class.getName ();
   private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonJS.class);
   private static final JSResourceSet s_aGlobal = new JSResourceSet ();
-  private static final Lock s_aLock = new ReentrantLock ();
+  private static final SimpleLock s_aLock = new SimpleLock ();
 
   private PhotonJS ()
   {}
@@ -176,9 +175,7 @@ public final class PhotonJS
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
 
-    s_aLock.lock ();
-    try
-    {
+    return s_aLock.locked ( () -> {
       JSResourceSet ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_JSRESOURCES);
       if (ret == null && bCreateIfNotExisting)
       {
@@ -186,11 +183,7 @@ public final class PhotonJS
         aRequestScope.setAttribute (REQUEST_ATTR_JSRESOURCES, ret);
       }
       return ret;
-    }
-    finally
-    {
-      s_aLock.unlock ();
-    }
+    });
   }
 
   /**

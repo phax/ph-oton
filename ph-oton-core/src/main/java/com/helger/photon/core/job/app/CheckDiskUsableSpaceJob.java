@@ -17,8 +17,6 @@
 package com.helger.photon.core.job.app;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -37,6 +35,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.io.misc.SizeHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.error.InternalErrorHandler;
@@ -128,7 +128,7 @@ public class CheckDiskUsableSpaceJob extends AbstractPhotonJob
 
     setApplicationScopeID (sApplicationID);
 
-    final Map <String, Object> aJobDataMap = new HashMap <> ();
+    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap<> ();
     aJobDataMap.put (JOB_DATA_ATTR_THRESHOLD_BYTES, Long.valueOf (nThresholdBytes));
 
     return GlobalQuartzScheduler.getInstance ().scheduleJob (CheckDiskUsableSpaceJob.class.getName (),

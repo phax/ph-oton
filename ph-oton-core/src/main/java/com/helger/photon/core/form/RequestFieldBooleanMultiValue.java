@@ -16,12 +16,11 @@
  */
 package com.helger.photon.core.form;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.html.forms.AbstractHCCheckBox;
@@ -107,7 +106,7 @@ public class RequestFieldBooleanMultiValue extends RequestField implements IHCRe
     final IRequestWebScopeWithoutResponse aScope = getScope ();
 
     // Get all values for the field name
-    List <String> aValues = aScope.getAttributeAsList (sFieldName);
+    ICommonsList <String> aValues = aScope.getAttributeAsList (sFieldName);
     if (aValues != null)
       return aValues.contains (sFieldValue);
 

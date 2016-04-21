@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.ajax.response;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -139,7 +138,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
       // Extract and merge all inline out-of-band nodes
       if (aConversionSettings.isExtractOutOfBandNodes ())
       {
-        final List <IHCNode> aOOBNodes = aHtml.getAllOutOfBandNodesWithMergedInlineNodes ();
+        final ICommonsList <IHCNode> aOOBNodes = aHtml.getAllOutOfBandNodesWithMergedInlineNodes ();
         aHtml.addAllOutOfBandNodesToHead (aOOBNodes);
       }
 

@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.job.smtp;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 
 import org.quartz.DisallowConcurrentExecution;
@@ -32,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.schedule.quartz.GlobalQuartzScheduler;
@@ -57,7 +56,7 @@ public class FailedMailResendJob extends AbstractPhotonJob
   @Override
   protected void onExecute (final JobExecutionContext aContext) throws JobExecutionException
   {
-    final List <FailedMailData> aFailedMails = PhotonCoreManager.getFailedMailQueue ().removeAll ();
+    final ICommonsList <FailedMailData> aFailedMails = PhotonCoreManager.getFailedMailQueue ().removeAll ();
     if (!aFailedMails.isEmpty ())
     {
       s_aLogger.info ("Resending " + aFailedMails.size () + " failed mails!");

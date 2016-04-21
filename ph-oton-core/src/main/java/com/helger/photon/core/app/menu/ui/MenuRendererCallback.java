@@ -16,12 +16,12 @@
  */
 package com.helger.photon.core.app.menu.ui;
 
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.impl.NonBlockingStack;
 import com.helger.commons.factory.IFactory;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
@@ -54,17 +54,17 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
   private final IFactory <T> m_aFactory;
   private final NonBlockingStack <T> m_aMenuListStack;
   private final IMenuItemRenderer <T> m_aRenderer;
-  private final Map <String, Boolean> m_aDisplayMenuItemIDs;
-  private final NonBlockingStack <HCLI> m_aMenuItemStack = new NonBlockingStack <> ();
-  private final NonBlockingStack <AtomicInteger> m_aChildCountStack = new NonBlockingStack <> ();
-  private final NonBlockingStack <DefaultTreeItemWithID <String, IMenuObject>> m_aTreeItemStack = new NonBlockingStack <> ();
+  private final ICommonsMap <String, Boolean> m_aDisplayMenuItemIDs;
+  private final NonBlockingStack <HCLI> m_aMenuItemStack = new NonBlockingStack<> ();
+  private final NonBlockingStack <AtomicInteger> m_aChildCountStack = new NonBlockingStack<> ();
+  private final NonBlockingStack <DefaultTreeItemWithID <String, IMenuObject>> m_aTreeItemStack = new NonBlockingStack<> ();
   private final String m_sSelectedItem;
 
   protected MenuRendererCallback (@Nonnull final ILayoutExecutionContext aLEC,
                                   @Nonnull final IFactory <T> aFactory,
                                   @Nonnull final NonBlockingStack <T> aMenuListStack,
                                   @Nonnull final IMenuItemRenderer <T> aRenderer,
-                                  @Nonnull final Map <String, Boolean> aDisplayMenuItemIDs)
+                                  @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
   {
     ValueEnforcer.notNull (aLEC, "LEC");
     ValueEnforcer.notNull (aMenuListStack, "MenuListStack");
@@ -291,7 +291,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
   public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
                                                                     @Nonnull final IFactory <T> aFactory,
                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer,
-                                                                    @Nonnull final Map <String, Boolean> aDisplayMenuItemIDs)
+                                                                    @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
   {
     return createRenderedMenu (aLEC, aFactory, aLEC.getMenuTree ().getRootItem (), aRenderer, aDisplayMenuItemIDs);
   }
@@ -321,11 +321,11 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
                                                                     @Nonnull final IFactory <T> aFactory,
                                                                     @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer,
-                                                                    @Nonnull final Map <String, Boolean> aDisplayMenuItemIDs)
+                                                                    @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
   {
     ValueEnforcer.notNull (aFactory, "Factory");
 
-    final NonBlockingStack <T> aNodeStack = new NonBlockingStack <> ();
+    final NonBlockingStack <T> aNodeStack = new NonBlockingStack<> ();
     aNodeStack.push (aFactory.get ());
     TreeVisitor.visitTreeItem (aStartTreeItem,
                                new MenuRendererCallback <T> (aLEC,

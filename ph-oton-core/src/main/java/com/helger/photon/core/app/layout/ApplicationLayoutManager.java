@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.app.layout;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
@@ -25,6 +23,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
 import com.helger.commons.string.ToStringGenerator;
@@ -70,7 +69,7 @@ public final class ApplicationLayoutManager <LECTYPE extends ILayoutExecutionCon
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <String> getAllAreaIDs ()
+  public ICommonsList <String> getAllAreaIDs ()
   {
     return m_aProxy.getAllAreaIDs ();
   }

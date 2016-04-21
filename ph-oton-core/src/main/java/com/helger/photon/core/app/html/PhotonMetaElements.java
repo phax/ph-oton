@@ -16,12 +16,8 @@
  */
 package com.helger.photon.core.app.html;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,8 +28,11 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedMap;
+import com.helger.commons.concurrent.SimpleLock;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.microdom.util.XMLMapHandler;
 import com.helger.html.meta.IMetaElement;
@@ -56,7 +55,7 @@ public final class PhotonMetaElements
   private static final String REQUEST_ATTR_METAELEMENTS = PhotonMetaElements.class.getName ();
   private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonMetaElements.class);
   private static final MetaElementList s_aGlobal = new MetaElementList ();
-  private static final Lock s_aLock = new ReentrantLock ();
+  private static final SimpleLock s_aLock = new SimpleLock ();
 
   private PhotonMetaElements ()
   {}
@@ -68,7 +67,7 @@ public final class PhotonMetaElements
 
     if (aRes.exists ())
     {
-      final ICommonsOrderedMap <String, String> aMetaElements = new CommonsLinkedHashMap <> ();
+      final ICommonsOrderedMap <String, String> aMetaElements = new CommonsLinkedHashMap<> ();
       if (XMLMapHandler.readMap (aRes, aMetaElements).isFailure ())
         s_aLogger.error ("Failed to read meta element file " + aRes.getPath ());
 
@@ -118,7 +117,7 @@ public final class PhotonMetaElements
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <IMetaElement> getAllRegisteredMetaElementsForGlobal ()
+  public static ICommonsList <IMetaElement> getAllRegisteredMetaElementsForGlobal ()
   {
     return s_aGlobal.getAllMetaElements ();
   }
@@ -142,9 +141,7 @@ public final class PhotonMetaElements
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
 
-    s_aLock.lock ();
-    try
-    {
+    return s_aLock.locked ( () -> {
       MetaElementList ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_METAELEMENTS);
       if (ret == null && bCreateIfNotExisting)
       {
@@ -152,11 +149,7 @@ public final class PhotonMetaElements
         aRequestScope.setAttribute (REQUEST_ATTR_METAELEMENTS, ret);
       }
       return ret;
-    }
-    finally
-    {
-      s_aLock.unlock ();
-    }
+    });
   }
 
   /**
@@ -200,10 +193,10 @@ public final class PhotonMetaElements
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <IMetaElement> getAllRegisteredMetaElementsForThisRequest ()
+  public static ICommonsList <IMetaElement> getAllRegisteredMetaElementsForThisRequest ()
   {
     final MetaElementList aSet = _getPerRequestSet (false);
-    return aSet == null ? new ArrayList <IMetaElement> () : aSet.getAllMetaElements ();
+    return aSet == null ? new CommonsArrayList<> () : aSet.getAllMetaElements ();
   }
 
   public static void getAllRegisteredMetaElementsForThisRequest (@Nonnull final Collection <? super IMetaElement> aTarget)

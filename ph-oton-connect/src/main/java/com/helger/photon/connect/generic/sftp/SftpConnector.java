@@ -19,7 +19,6 @@ package com.helger.photon.connect.generic.sftp;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.Vector;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
@@ -199,7 +198,7 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
     {
       try
       {
-        final Vector <?> aFiles = m_aChannel.ls (".");
+        final List <?> aFiles = m_aChannel.ls (".");
         for (final Object aFile : aFiles)
         {
           final ChannelSftp.LsEntry aEntry = (ChannelSftp.LsEntry) aFile;

@@ -18,7 +18,6 @@ package com.helger.photon.core.resource;
 
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -34,7 +33,9 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.microdom.IMicroDocument;
@@ -106,7 +107,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
         aMediaList.addMedium (eCSSMedium);
       }
 
-      final List <WebSiteResourceWithCondition> aResources = new ArrayList <WebSiteResourceWithCondition> ();
+      final ICommonsList <WebSiteResourceWithCondition> aResources = new CommonsArrayList<> ();
       for (final IMicroElement eResource : eResourceBundle.getAllChildElements (ELEMENT_RESOURCE))
       {
         final String sResourceType = eResource.getAttributeValue (ATTR_RESOURCE_TYPE);
@@ -268,22 +269,22 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <WebSiteResourceBundleSerialized> getResourceBundles (@Nonnull @Nonempty final List <WebSiteResourceWithCondition> aList,
-                                                                    final boolean bRegular)
+  public ICommonsList <WebSiteResourceBundleSerialized> getResourceBundles (@Nonnull @Nonempty final List <WebSiteResourceWithCondition> aList,
+                                                                            final boolean bRegular)
   {
     ValueEnforcer.notEmptyNoNullValue (aList, "List");
 
-    final List <WebSiteResourceBundleSerialized> ret = new ArrayList<> ();
+    final ICommonsList <WebSiteResourceBundleSerialized> ret = new CommonsArrayList<> ();
 
     // Create a copy for modification
     boolean bCreatedAnyBundle = false;
-    final List <WebSiteResourceWithCondition> aCopy = CollectionHelper.newList (aList);
+    final ICommonsList <WebSiteResourceWithCondition> aCopy = CollectionHelper.newList (aList);
     while (!aCopy.isEmpty ())
     {
       final WebSiteResourceWithCondition aFirst = aCopy.remove (0);
 
       // Find all resources that can be bundled with aFirst
-      final List <WebSiteResourceWithCondition> aBundleResources = CollectionHelper.newList (aFirst);
+      final ICommonsList <WebSiteResourceWithCondition> aBundleResources = CollectionHelper.newList (aFirst);
       while (!aCopy.isEmpty ())
       {
         final WebSiteResourceWithCondition aBundleCandidate = aCopy.get (0);

@@ -17,8 +17,6 @@
 package com.helger.photon.core.app.html;
 
 import java.util.Collection;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,6 +29,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.concurrent.SimpleLock;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -60,7 +59,7 @@ public final class PhotonCSS
   private static final String REQUEST_ATTR_CSSRESOURCES = PhotonCSS.class.getName ();
   private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonCSS.class);
   private static final CSSResourceSet s_aGlobal = new CSSResourceSet ();
-  private static final Lock s_aLock = new ReentrantLock ();
+  private static final SimpleLock s_aLock = new SimpleLock ();
 
   private PhotonCSS ()
   {}
@@ -200,9 +199,7 @@ public final class PhotonCSS
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
 
-    s_aLock.lock ();
-    try
-    {
+    return s_aLock.locked ( () -> {
       CSSResourceSet ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_CSSRESOURCES);
       if (ret == null && bCreateIfNotExisting)
       {
@@ -210,11 +207,7 @@ public final class PhotonCSS
         aRequestScope.setAttribute (REQUEST_ATTR_CSSRESOURCES, ret);
       }
       return ret;
-    }
-    finally
-    {
-      s_aLock.unlock ();
-    }
+    });
   }
 
   /**

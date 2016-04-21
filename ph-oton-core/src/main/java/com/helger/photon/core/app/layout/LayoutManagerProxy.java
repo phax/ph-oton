@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.app.layout;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -28,6 +26,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsLinkedHashMap;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.ToStringGenerator;
@@ -47,7 +46,7 @@ public class LayoutManagerProxy <LECTYPE extends ILayoutExecutionContext> implem
 {
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsOrderedMap <String, ILayoutAreaContentProvider <LECTYPE>> m_aContentProviders = new CommonsLinkedHashMap <> ();
+  private final ICommonsOrderedMap <String, ILayoutAreaContentProvider <LECTYPE>> m_aContentProviders = new CommonsLinkedHashMap<> ();
 
   public LayoutManagerProxy ()
   {}
@@ -69,9 +68,9 @@ public class LayoutManagerProxy <LECTYPE extends ILayoutExecutionContext> implem
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <String> getAllAreaIDs ()
+  public ICommonsList <String> getAllAreaIDs ()
   {
-    return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aContentProviders.keySet ()));
+    return m_aRWLock.readLocked ( () -> new CommonsArrayList<> (m_aContentProviders.keySet ()));
   }
 
   @Nullable

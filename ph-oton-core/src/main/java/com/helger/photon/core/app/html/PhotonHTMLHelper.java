@@ -16,13 +16,12 @@
  */
 package com.helger.photon.core.app.html;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.mime.MimeType;
@@ -153,10 +152,10 @@ public final class PhotonHTMLHelper
     if (bMergeCSS)
     {
       // Extract all CSS nodes for merging
-      final List <IHCNode> aCSSNodes = new ArrayList <> ();
+      final ICommonsList <IHCNode> aCSSNodes = new CommonsArrayList<> ();
       aHead.getAllAndRemoveAllCSSNodes (aCSSNodes);
 
-      final List <WebSiteResourceWithCondition> aCSSs = new ArrayList <> ();
+      final ICommonsList <WebSiteResourceWithCondition> aCSSs = new CommonsArrayList<> ();
       for (final IHCNode aNode : aCSSNodes)
       {
         boolean bStartMerge = true;
@@ -193,10 +192,10 @@ public final class PhotonHTMLHelper
     if (bMergeJS)
     {
       // Extract all JS nodes for merging
-      final List <IHCNode> aJSNodes = new ArrayList <> ();
+      final ICommonsList <IHCNode> aJSNodes = new CommonsArrayList<> ();
       aHead.getAllAndRemoveAllJSNodes (aJSNodes);
 
-      final List <WebSiteResourceWithCondition> aJSs = new ArrayList <> ();
+      final ICommonsList <WebSiteResourceWithCondition> aJSs = new CommonsArrayList<> ();
       for (final IHCNode aNode : aJSNodes)
       {
         boolean bStartMerge = true;

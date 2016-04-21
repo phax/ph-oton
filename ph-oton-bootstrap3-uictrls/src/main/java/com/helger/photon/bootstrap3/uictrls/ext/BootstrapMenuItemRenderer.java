@@ -17,11 +17,11 @@
 package com.helger.photon.bootstrap3.uictrls.ext;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.factory.FactoryNewInstance;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
@@ -197,7 +197,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
                                                   @Nonnull final IMenuItemDeterminatorCallback aDeterminator,
                                                   @Nonnull final BootstrapMenuItemRenderer aRenderer)
   {
-    final Map <String, Boolean> aAllDisplayMenuItemIDs = MenuItemDeterminatorCallback.getAllDisplayMenuItemIDs (aDeterminator);
+    final ICommonsMap <String, Boolean> aAllDisplayMenuItemIDs = MenuItemDeterminatorCallback.getAllDisplayMenuItemIDs (aDeterminator);
     final HCUL aUL = MenuRendererCallback.createRenderedMenu (aLEC,
                                                               FactoryNewInstance.create (HCUL.class),
                                                               aMenuTree.getRootItem (),
