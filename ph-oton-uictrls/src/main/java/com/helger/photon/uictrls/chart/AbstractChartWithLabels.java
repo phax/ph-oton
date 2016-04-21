@@ -25,6 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.traits.IGenericImplTrait;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
@@ -52,7 +53,7 @@ public abstract class AbstractChartWithLabels <IMPLTYPE extends AbstractChartWit
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <String> getAllLabels ()
+  public ICommonsList <String> getAllLabels ()
   {
     return CollectionHelper.newList (m_aLabels);
   }

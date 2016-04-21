@@ -16,14 +16,13 @@
  */
 package com.helger.photon.bootstrap3.button;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
@@ -38,18 +37,18 @@ public enum EBootstrapButtonGroupType
   VERTICAL (CBootstrapCSS.BTN_GROUP_VERTICAL),
   JUSTIFIED (CBootstrapCSS.BTN_GROUP, CBootstrapCSS.BTN_GROUP_JUSTIFIED);
 
-  private final List <ICSSClassProvider> m_aCSSClasses;
+  private final ICommonsList <ICSSClassProvider> m_aCSSClasses;
 
   private EBootstrapButtonGroupType (@Nullable final ICSSClassProvider... aCSSClasses)
   {
-    m_aCSSClasses = CollectionHelper.makeUnmodifiable (aCSSClasses);
+    m_aCSSClasses = CollectionHelper.newList (aCSSClasses);
   }
 
   @Nonnull
   @Nonempty
   @ReturnsImmutableObject
-  public List <ICSSClassProvider> getAllCSSClasses ()
+  public ICommonsList <ICSSClassProvider> getAllCSSClasses ()
   {
-    return m_aCSSClasses;
+    return CollectionHelper.newList (m_aCSSClasses);
   }
 }

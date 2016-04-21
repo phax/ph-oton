@@ -16,13 +16,12 @@
  */
 package com.helger.photon.bootstrap3.nav;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
@@ -40,7 +39,7 @@ public enum EBootstrapNavType
   PILLS_STACKED (CBootstrapCSS.NAV_PILLS, CBootstrapCSS.NAV_STACKED),
   PILLS_JUSTIFIED (CBootstrapCSS.NAV_PILLS, CBootstrapCSS.NAV_JUSTIFIED);
 
-  private final List <ICSSClassProvider> m_aCSSClasses;
+  private final ICommonsList <ICSSClassProvider> m_aCSSClasses;
 
   private EBootstrapNavType (@Nullable final ICSSClassProvider... aCSSClasses)
   {
@@ -49,7 +48,7 @@ public enum EBootstrapNavType
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <ICSSClassProvider> getAllCSSClasses ()
+  public ICommonsList <ICSSClassProvider> getAllCSSClasses ()
   {
     return CollectionHelper.newList (m_aCSSClasses);
   }

@@ -25,6 +25,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.json.IHasJson;
@@ -115,7 +116,7 @@ public final class DTSSResponseData implements IHasJson
    */
   @Nullable
   @ReturnsMutableCopy
-  public List <JsonObject> getData ()
+  public ICommonsList <JsonObject> getData ()
   {
     return m_aData == null ? null : CollectionHelper.newList (m_aData);
   }

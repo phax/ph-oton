@@ -17,7 +17,6 @@
 package com.helger.photon.bootstrap3.tooltip;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnegative;
@@ -27,6 +26,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.annotation.OutOfBandNode;
@@ -233,7 +233,7 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
 
   @Nullable
   @ReturnsMutableCopy
-  public List <EBootstrapTooltipTrigger> getTrigger ()
+  public ICommonsList <EBootstrapTooltipTrigger> getTrigger ()
   {
     return CollectionHelper.newList (m_aTrigger);
   }

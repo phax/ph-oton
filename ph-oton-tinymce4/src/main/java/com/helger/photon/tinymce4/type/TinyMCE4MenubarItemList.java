@@ -85,7 +85,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <ETinyMCE4MenuItem> getAllMenuItems ()
+  public ICommonsList <ETinyMCE4MenuItem> getAllMenuItems ()
   {
     return CollectionHelper.newList (m_aList);
   }

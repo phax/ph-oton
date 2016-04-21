@@ -28,6 +28,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.ICSSClassProvider;
@@ -341,7 +342,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <EDataTablesOrderDirectionType> getOrderSequence ()
+  public ICommonsList <EDataTablesOrderDirectionType> getOrderSequence ()
   {
     return CollectionHelper.newList (m_aOrderSequence);
   }

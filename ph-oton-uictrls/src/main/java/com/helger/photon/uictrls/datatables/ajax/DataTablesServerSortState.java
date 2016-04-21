@@ -18,7 +18,6 @@ package com.helger.photon.uictrls.datatables.ajax;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnegative;
@@ -87,7 +86,7 @@ final class DataTablesServerSortState implements Serializable
 
   @Nonnull
   @ReturnsMutableObject ("speed")
-  public List <DTSSRequestDataOrderColumn> directGetAllOrderColumns ()
+  public ICommonsList <DTSSRequestDataOrderColumn> directGetAllOrderColumns ()
   {
     return m_aOrderColumns;
   }

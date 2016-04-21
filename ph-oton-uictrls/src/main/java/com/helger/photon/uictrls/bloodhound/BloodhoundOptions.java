@@ -30,6 +30,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.jscode.IJSExpression;
@@ -223,7 +224,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
 
   @Nullable
   @ReturnsMutableCopy
-  public List <? extends BloodhoundDatum> getLocal ()
+  public ICommonsList <? extends BloodhoundDatum> getLocal ()
   {
     return m_aLocal == null ? null : CollectionHelper.newList (m_aLocal);
   }

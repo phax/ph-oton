@@ -25,6 +25,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -88,7 +89,7 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <IDTYPE> getUnlockedObjects ()
+  public ICommonsList <IDTYPE> getUnlockedObjects ()
   {
     return CollectionHelper.newList (m_aUnlockedObjects);
   }

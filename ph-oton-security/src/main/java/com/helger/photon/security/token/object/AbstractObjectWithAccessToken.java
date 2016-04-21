@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
@@ -61,7 +62,7 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCu
 
   @Nonnull
   @Nonempty
-  public List <AccessToken> getAllAccessTokens ()
+  public ICommonsList <AccessToken> getAllAccessTokens ()
   {
     return CollectionHelper.newList (m_aAccessTokens);
   }
