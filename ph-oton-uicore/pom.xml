@@ -100,6 +100,7 @@
             <exclude>src/main/resources/uicore/jquery/**</exclude>
             <exclude>src/main/resources/uicore/jqueryplaceholder/**</exclude>
             <exclude>src/main/resources/uicore/jqueryplugins/**</exclude>
+            <exclude>src/main/resources/uicore/moment/**</exclude>
             <exclude>src/main/resources/uicore/placeholder/**</exclude>
             <exclude>src/main/resources/uicore/respond/**</exclude>
             <exclude>src/main/resources/uicore/stacktrace/**</exclude>
