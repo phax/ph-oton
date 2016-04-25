@@ -33,7 +33,9 @@ import com.helger.commons.string.StringHelper;
 public enum EDateTimePickerLanguage
 {
   AR ("ar", "ar"),
+  AZ ("az", "az"),
   BG ("bg", "bg"),
+  BN ("bn", "bn"),
   CA ("ca", "ca"),
   CS ("cs", "cs"),
   DA ("da", "da"),
@@ -54,6 +56,7 @@ public enum EDateTimePickerLanguage
   IS ("is", "is"),
   IT ("it", "it"),
   JA ("ja", "ja"),
+  KA ("ka", "ka"),
   KO ("ko", "ko"),
   KR ("kr", "kr"),
   LT ("lt", "lt"),
