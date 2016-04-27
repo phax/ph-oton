@@ -27,7 +27,7 @@ import com.helger.commons.type.ObjectType;
 import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
 
 /**
- * Simplify auditing calls.
+ * Simplify system auditing calls.
  *
  * @author Philip Helger
  */
