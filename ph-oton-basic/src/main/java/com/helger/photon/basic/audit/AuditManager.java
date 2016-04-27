@@ -113,7 +113,9 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     }
   }
 
+  /** Element name of the root element of the serialized XML */
   public static final String ELEMENT_ITEMS = "items";
+  /** Element name of each item in the serialized XML */
   public static final String ELEMENT_ITEM = "item";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AuditManager.class);

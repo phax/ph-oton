@@ -24,6 +24,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ELockType;
+import com.helger.commons.annotation.IsLocked;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.microdom.IMicroDocument;
@@ -33,8 +35,9 @@ import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
+import com.helger.photon.basic.app.dao.impl.AbstractWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.photon.basic.app.dao.impl.EDAOActionType;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
 
 /**
@@ -44,11 +47,8 @@ import com.helger.photon.basic.auth.ICurrentUserIDProvider;
  * @author Philip Helger
  */
 @ThreadSafe
-public class SimpleAuditManager extends AbstractSimpleDAO implements IAuditor
+public class SimpleAuditManager extends AbstractWALDAO <AuditItem> implements IAuditor
 {
-  public static final String ELEMENT_ITEMS = "items";
-  public static final String ELEMENT_ITEM = "item";
-
   private final ICurrentUserIDProvider m_aCurrentUserIDProvider;
   private final AuditItemList m_aItems = new AuditItemList ();
 
@@ -66,9 +66,30 @@ public class SimpleAuditManager extends AbstractSimpleDAO implements IAuditor
   public SimpleAuditManager (@Nullable final String sFilename,
                              @Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider) throws DAOException
   {
-    super (sFilename);
+    super (AuditItem.class, sFilename);
     m_aCurrentUserIDProvider = ValueEnforcer.notNull (aCurrentUserIDProvider, "UserIDProvider");
     initialRead ();
+  }
+
+  @Override
+  @IsLocked (ELockType.WRITE)
+  protected void onRecoveryCreate (@Nonnull final AuditItem aItem)
+  {
+    m_aItems.internalAddItem (aItem);
+  }
+
+  @Override
+  @IsLocked (ELockType.WRITE)
+  protected void onRecoveryUpdate (@Nonnull final AuditItem aElement)
+  {
+    throw new UnsupportedOperationException ();
+  }
+
+  @Override
+  @IsLocked (ELockType.WRITE)
+  protected void onRecoveryDelete (@Nonnull final AuditItem aElement)
+  {
+    throw new UnsupportedOperationException ();
   }
 
   @Override
@@ -84,10 +105,10 @@ public class SimpleAuditManager extends AbstractSimpleDAO implements IAuditor
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ITEMS);
+    final IMicroElement eRoot = aDoc.appendElement ("root");
     // Is sorted internally!
     for (final IAuditItem aAuditItem : m_aItems.getAllItems ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aAuditItem, ELEMENT_ITEM));
+      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aAuditItem, AuditManager.ELEMENT_ITEM));
     return aDoc;
   }
 
@@ -105,9 +126,7 @@ public class SimpleAuditManager extends AbstractSimpleDAO implements IAuditor
     m_aRWLock.writeLocked ( () -> {
       m_aItems.internalAddItem (aAuditItem);
 
-      // In write-lock - it should be safe anyway since the caller
-      // serializes the calls to this method
-      markAsChanged ();
+      markAsChanged (aAuditItem, EDAOActionType.CREATE);
     });
   }
 
@@ -115,6 +134,13 @@ public class SimpleAuditManager extends AbstractSimpleDAO implements IAuditor
   public int getAuditItemCount ()
   {
     return m_aRWLock.readLocked (m_aItems::getItemCount);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <IAuditItem> getAllAuditItems ()
+  {
+    return m_aRWLock.readLocked ( () -> m_aItems.getAllItems ());
   }
 
   @Nonnull

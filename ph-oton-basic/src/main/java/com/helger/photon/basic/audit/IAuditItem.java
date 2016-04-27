@@ -16,6 +16,7 @@
  */
 package com.helger.photon.basic.audit;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
@@ -32,7 +33,7 @@ import com.helger.photon.basic.auth.CBasicSecurity;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IAuditItem extends ISuccessIndicator
+public interface IAuditItem extends ISuccessIndicator, Serializable
 {
   /**
    * @return The date and time when the audit item was created
