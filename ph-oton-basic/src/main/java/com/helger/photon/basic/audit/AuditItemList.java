@@ -37,7 +37,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @NotThreadSafe
-final class AuditItemList
+public final class AuditItemList
 {
   private final ICommonsList <IAuditItem> m_aItems = new CommonsArrayList <> ();
 

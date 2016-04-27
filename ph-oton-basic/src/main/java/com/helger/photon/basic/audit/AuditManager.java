@@ -65,7 +65,7 @@ import com.helger.photon.basic.auth.ICurrentUserIDProvider;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class AuditManager extends AbstractSimpleDAO implements IAuditManager
+public class AuditManager extends AbstractSimpleDAO implements IAuditManager
 {
   private static final class AuditHasFilename implements IHasFilename
   {
@@ -230,12 +230,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
     return m_aAuditor;
   }
 
-  private static interface IReadHandler
-  {
-    void onReadAuditItem (@Nonnull IAuditItem aItem);
-  }
-
-  public static void readFromXML (@Nonnull final IMicroDocument aDoc, @Nonnull final IReadHandler aHandler)
+  public static void readFromXML (@Nonnull final IMicroDocument aDoc, @Nonnull final IAuditManagerReadHandler aHandler)
   {
     ValueEnforcer.notNull (aDoc, "Doc");
     ValueEnforcer.notNull (aHandler, "Handler");
@@ -253,7 +248,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
       final String sUserID = eItem.getAttributeValue (ATTR_USER);
       if (StringHelper.hasNoText (sUserID))
       {
-        s_aLogger.warn ("Failed find user ID");
+        s_aLogger.warn ("Failed to find user ID");
         continue;
       }
 
@@ -294,7 +289,7 @@ public final class AuditManager extends AbstractSimpleDAO implements IAuditManag
       eItem.setAttribute (ATTR_DT_STRING, aAuditItem.getDateTime ().toString ());
       eItem.setAttribute (ATTR_USER, aAuditItem.getUserID ());
       eItem.setAttribute (ATTR_TYPE, aAuditItem.getType ().getID ());
-      eItem.setAttribute (ATTR_SUCCESS, Boolean.toString (aAuditItem.getSuccess ().isSuccess ()));
+      eItem.setAttribute (ATTR_SUCCESS, aAuditItem.getSuccess ().isSuccess ());
       eItem.appendText (aAuditItem.getAction ());
     }
     return aDoc;

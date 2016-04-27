@@ -35,7 +35,7 @@ import com.helger.photon.basic.auth.CBasicSecurity;
  * @author Philip Helger
  */
 @Immutable
-final class AuditItem implements IAuditItem
+public final class AuditItem implements IAuditItem
 {
   private final LocalDateTime m_aDateTime;
   private final String m_sUserID;

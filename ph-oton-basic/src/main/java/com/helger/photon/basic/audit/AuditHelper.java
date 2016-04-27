@@ -36,14 +36,8 @@ public final class AuditHelper
 {
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
-  private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor (new MockCurrentUserIDProvider (null))
-  {
-    @Override
-    protected String getAuditItemString (@Nonnull final IAuditItem aAuditItem)
-    {
-      return "!DEFAULT-AUDITOR! " + super.getAuditItemString (aAuditItem);
-    }
-  };
+  private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor (new MockCurrentUserIDProvider (null),
+                                                                      "!DEFAULT-AUDITOR! ");
 
   // This is the default dummy auditor that should be replaced with something
   // meaningful!
@@ -68,10 +62,7 @@ public final class AuditHelper
   {
     ValueEnforcer.notNull (aAuditor, "Auditor");
 
-    s_aRWLock.writeLocked ( () -> {
-      s_aAuditor = aAuditor;
-    });
-
+    s_aRWLock.writeLocked ( () -> s_aAuditor = aAuditor);
   }
 
   /**

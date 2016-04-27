@@ -38,7 +38,11 @@ import com.helger.commons.state.EChange;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
 
 /**
- * The class handles all audit items
+ * The class handles audit items asynchronously. If a new audit item is to be
+ * handled it is put into the {@link IConcurrentPerformer}'s queue as provided
+ * in the constructor.<br>
+ * Please ensure to call {@link #stop()} if this auditor is no longer used, so
+ * that the created {@link ExecutorService} can be gracefully shutdown.
  *
  * @author Philip Helger
  */
@@ -77,9 +81,7 @@ public class AsynchronousAuditor extends AbstractAuditor
   {
     ValueEnforcer.notNull (aAuditItem, "AuditItem");
 
-    m_aRWLock.writeLocked ( () -> {
-      m_aCollector.queueObject (aAuditItem);
-    });
+    m_aRWLock.writeLocked ( () -> m_aCollector.queueObject (aAuditItem));
   }
 
   @Nonnegative
@@ -89,9 +91,10 @@ public class AsynchronousAuditor extends AbstractAuditor
   }
 
   /**
-   * When using this auditor, it is important to call this stop method before
-   * shutdown. It avoids further queuing of objects and waits until all items
-   * are handled. This method blocks until all remaining objects are handled.
+   * When using this auditor, it is important to call this {@link #stop()}
+   * method before shutdown. It avoids further queuing of objects and waits
+   * until all items are handled. This method blocks until all remaining objects
+   * are handled.
    *
    * @return {@link EChange#CHANGED} if the shutdown was performed,
    *         {@link EChange#UNCHANGED} if the auditor was already shut down.
@@ -112,7 +115,7 @@ public class AsynchronousAuditor extends AbstractAuditor
 
       final int nQueueLength = m_aCollector.getQueueLength ();
       if (nQueueLength > 0)
-        s_aLogger.info ("Stopping auditor queues with " + nQueueLength + " items");
+        s_aLogger.info ("Stopping auditor queue with " + nQueueLength + " items");
       return false;
     }))
     {

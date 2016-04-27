@@ -19,11 +19,13 @@ package com.helger.photon.basic.audit;
 import java.time.format.DateTimeFormatter;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
 
 /**
@@ -37,9 +39,27 @@ public class LoggingAuditor extends AbstractAuditor
   public static final String VALUE_FAILURE = "failure";
   private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingAuditor.class);
 
+  private final String m_sCommonPrefix;
+
   public LoggingAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider)
   {
+    this (aUserIDProvider, "");
+  }
+
+  public LoggingAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider, @Nullable final String sCommonPrefix)
+  {
     super (aUserIDProvider);
+    m_sCommonPrefix = StringHelper.getNotNull (sCommonPrefix, "");
+  }
+
+  /**
+   * @return The prefix to be used in all logging lines. Never <code>null</code>
+   *         but maybe empty.
+   */
+  @Nonnull
+  public String getCommonPrefix ()
+  {
+    return m_sCommonPrefix;
   }
 
   @Nonnull
@@ -61,7 +81,7 @@ public class LoggingAuditor extends AbstractAuditor
   @OverrideOnDemand
   protected String getAuditItemString (@Nonnull final IAuditItem aAuditItem)
   {
-    return getDefaultAuditItemString (aAuditItem);
+    return m_sCommonPrefix + getDefaultAuditItemString (aAuditItem);
   }
 
   @Override
