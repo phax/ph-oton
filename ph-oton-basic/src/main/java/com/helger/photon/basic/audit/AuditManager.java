@@ -59,7 +59,9 @@ import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
 
 /**
- * The class handles all audit items
+ * The class handles all system audit actions. It collects them asynchronously
+ * (see {@link AsynchronousAuditor}) and writes them to XML files on a per-day
+ * basis.
  *
  * @author Philip Helger
  */
@@ -74,7 +76,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     {
       if (StringHelper.hasText (sBaseDir))
         ValueEnforcer.isTrue (FilenameHelper.endsWithPathSeparatorChar (sBaseDir),
-                              "BaseDir must end with path separator!");
+                              "BaseDir '" + sBaseDir + "' must end with path separator!");
       m_sBaseDir = sBaseDir;
     }
 
@@ -152,17 +154,17 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
    * @param sBaseDir
    *        The base directory, relative to the default IO base directory. May
    *        be <code>null</code> to indicate an in-memory auditor only.
-   * @param aUserIDProvider
+   * @param aCurrentUserIDProvider
    *        The current user ID provider. May not be <code>null</code>.
    * @throws DAOException
    *         In case reading failed
    */
   @ContainsSoftMigration
   public AuditManager (@Nullable final String sBaseDir,
-                       @Nonnull final ICurrentUserIDProvider aUserIDProvider) throws DAOException
+                       @Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider) throws DAOException
   {
     super (new AuditHasFilename (sBaseDir));
-    ValueEnforcer.notNull (aUserIDProvider, "UserIDProvider");
+    ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
 
     // Ensure base path is present (if provided)
     m_sBaseDir = sBaseDir;
@@ -205,7 +207,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
       }
     };
 
-    m_aAuditor = new AsynchronousAuditor (aUserIDProvider, aPerformer);
+    m_aAuditor = new AsynchronousAuditor (aCurrentUserIDProvider, aPerformer);
     initialRead ();
   }
 
