@@ -21,8 +21,10 @@ import java.time.LocalDateTime;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.state.ISuccessIndicator;
+import com.helger.photon.basic.auth.CBasicSecurity;
 
 /**
  * Base interface for a single audit item
@@ -48,7 +50,10 @@ public interface IAuditItem extends ISuccessIndicator
    * @return <code>true</code> if the user ID equals
    *         {@link com.helger.photon.basic.auth.CBasicSecurity#USER_ID_NONE_LOGGED_IN}
    */
-  boolean isAnonymousUser ();
+  default boolean isAnonymousUser ()
+  {
+    return CBasicSecurity.USER_ID_NONE_LOGGED_IN.equals (getUserID ());
+  }
 
   /**
    * @return The audit action type.
@@ -56,11 +61,23 @@ public interface IAuditItem extends ISuccessIndicator
   @Nonnull
   EAuditActionType getType ();
 
+  @Nonnull
+  @Nonempty
+  default String getTypeID ()
+  {
+    return getType ().getID ();
+  }
+
   /**
    * @return Success or error?
    */
   @Nonnull
   ESuccess getSuccess ();
+
+  default boolean isSuccess ()
+  {
+    return getSuccess ().isSuccess ();
+  }
 
   /**
    * @return The performed action in the syntax "action(param1,param2,...)"

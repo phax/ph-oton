@@ -18,7 +18,6 @@ package com.helger.photon.basic.audit;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
@@ -31,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -43,11 +43,10 @@ import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroDocument;
+import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.microdom.serialize.MicroReader;
 import com.helger.commons.state.EChange;
-import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.StringParser;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.util.PDTIOHelper;
@@ -114,11 +113,6 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
 
   public static final String ELEMENT_ITEMS = "items";
   public static final String ELEMENT_ITEM = "item";
-  public static final String ATTR_DT_STRING = "dts";
-  public static final String ATTR_USER = "user";
-  public static final String ATTR_TYPE = "type";
-  /* initially was called "succes" by accident */
-  public static final String ATTR_SUCCESS = "success";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AuditManager.class);
 
@@ -163,6 +157,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
    * @throws DAOException
    *         In case reading failed
    */
+  @ContainsSoftMigration
   public AuditManager (@Nullable final String sBaseDir,
                        @Nonnull final ICurrentUserIDProvider aUserIDProvider) throws DAOException
   {
@@ -195,6 +190,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
       }
     }
 
+    // This is the performer that invoked in a background thread
     final IConcurrentPerformer <List <IAuditItem>> aPerformer = aAuditItems -> {
       if (!aAuditItems.isEmpty ())
       {
@@ -237,34 +233,8 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
 
     for (final IMicroElement eItem : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
     {
-      final String sDT = eItem.getAttributeValue (ATTR_DT_STRING);
-      final LocalDateTime aDT = LocalDateTime.parse (sDT);
-      if (aDT == null)
-      {
-        s_aLogger.warn ("Failed to parse date time '" + sDT + "'");
-        continue;
-      }
-
-      final String sUserID = eItem.getAttributeValue (ATTR_USER);
-      if (StringHelper.hasNoText (sUserID))
-      {
-        s_aLogger.warn ("Failed to find user ID");
-        continue;
-      }
-
-      final String sType = eItem.getAttributeValue (ATTR_TYPE);
-      final EAuditActionType eType = EAuditActionType.getFromIDOrNull (sType);
-      if (eType == null)
-      {
-        s_aLogger.warn ("Failed to parse change type '" + sType + "'");
-        continue;
-      }
-
-      final String sSuccess = eItem.getAttributeValue (ATTR_SUCCESS);
-      final ESuccess eSuccess = ESuccess.valueOf (StringParser.parseBool (sSuccess));
-
-      final String sAction = eItem.getTextContent ();
-      aHandler.onReadAuditItem (new AuditItem (aDT, sUserID, eType, eSuccess, sAction));
+      final AuditItem aAuditItem = MicroTypeConverter.convertToNative (eItem, AuditItem.class);
+      aHandler.onReadAuditItem (aAuditItem);
     }
   }
 
@@ -281,17 +251,10 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eCIL = aDoc.appendElement (ELEMENT_ITEMS);
+    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ITEMS);
     // Is sorted internally!
     for (final IAuditItem aAuditItem : m_aItems.getAllItems ())
-    {
-      final IMicroElement eItem = eCIL.appendElement (ELEMENT_ITEM);
-      eItem.setAttribute (ATTR_DT_STRING, aAuditItem.getDateTime ().toString ());
-      eItem.setAttribute (ATTR_USER, aAuditItem.getUserID ());
-      eItem.setAttribute (ATTR_TYPE, aAuditItem.getType ().getID ());
-      eItem.setAttribute (ATTR_SUCCESS, aAuditItem.getSuccess ().isSuccess ());
-      eItem.appendText (aAuditItem.getAction ());
-    }
+      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aAuditItem, ELEMENT_ITEM));
     return aDoc;
   }
 

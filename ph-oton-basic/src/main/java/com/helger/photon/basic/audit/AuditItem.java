@@ -80,11 +80,6 @@ public final class AuditItem implements IAuditItem
     return m_sUserID;
   }
 
-  public boolean isAnonymousUser ()
-  {
-    return CBasicSecurity.USER_ID_NONE_LOGGED_IN.equals (m_sUserID);
-  }
-
   @Nonnull
   public EAuditActionType getType ()
   {
@@ -95,16 +90,6 @@ public final class AuditItem implements IAuditItem
   public ESuccess getSuccess ()
   {
     return m_eSuccess;
-  }
-
-  public boolean isSuccess ()
-  {
-    return m_eSuccess.isSuccess ();
-  }
-
-  public boolean isFailure ()
-  {
-    return m_eSuccess.isFailure ();
   }
 
   @Nonnull
