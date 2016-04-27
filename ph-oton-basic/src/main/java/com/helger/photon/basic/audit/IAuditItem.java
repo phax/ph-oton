@@ -42,7 +42,8 @@ public interface IAuditItem extends ISuccessIndicator, Serializable
   LocalDateTime getDateTime ();
 
   /**
-   * @return The user who triggered the audit item.
+   * @return The ID of the user who triggered the action that resulted in this
+   *         audit item.
    */
   @Nonnull
   String getUserID ();
@@ -57,11 +58,14 @@ public interface IAuditItem extends ISuccessIndicator, Serializable
   }
 
   /**
-   * @return The audit action type.
+   * @return The audit action type. Never <code>null</code>.
    */
   @Nonnull
   EAuditActionType getType ();
 
+  /**
+   * @return The ID of the audit action type. Never <code>null</code>.
+   */
   @Nonnull
   @Nonempty
   default String getTypeID ()
@@ -81,7 +85,8 @@ public interface IAuditItem extends ISuccessIndicator, Serializable
   }
 
   /**
-   * @return The performed action in the syntax "action(param1,param2,...)"
+   * @return The performed action in a textual representation like
+   *         "action(param1,param2,...)"
    */
   @Nonnull
   String getAction ();
