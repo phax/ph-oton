@@ -24,7 +24,6 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.URLResource;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.IURIToURLConverter;
 import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLHelper;
 import com.helger.commons.url.URLProtocolRegistry;
@@ -32,7 +31,7 @@ import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * The default implementation of {@link IURIToURLConverter} that uses
+ * The default implementation of {@link IWebURIToURLConverter} that uses
  * {@link LinkHelper#getStreamURL(IRequestWebScopeWithoutResponse, String)} to
  * convert relative URIs to URLs. If you are using a different stream servlet
  * path, you may need to provide your own implementation and use it in
