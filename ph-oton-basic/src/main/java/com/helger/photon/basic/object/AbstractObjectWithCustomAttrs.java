@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.hashcode.IHashCodeGenerator;
 
 /**
  * Abstract base implementation of {@link IObjectWithCustomAttrs} that handles
@@ -33,8 +34,8 @@ import com.helger.commons.hashcode.HashCodeGenerator;
  */
 public abstract class AbstractObjectWithCustomAttrs extends AbstractBaseObjectWithCustomAttrs
 {
-  // Status member
-  private Integer m_aHashCode;
+  // Status vars
+  private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
   public AbstractObjectWithCustomAttrs (@Nonnull final IObjectWithCustomAttrs aObject)
   {
@@ -80,12 +81,9 @@ public abstract class AbstractObjectWithCustomAttrs extends AbstractBaseObjectWi
   @Override
   public final int hashCode ()
   {
-    Integer aObj = m_aHashCode;
-    if (aObj == null)
-    {
-      aObj = new HashCodeGenerator (this).append (getID ()).getHashCodeObj ();
-      m_aHashCode = aObj;
-    }
-    return aObj.intValue ();
+    int ret = m_nHashCode;
+    if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
+      ret = m_nHashCode = new HashCodeGenerator (this).append (getID ()).getHashCode ();
+    return ret;
   }
 }

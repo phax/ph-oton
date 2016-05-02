@@ -25,6 +25,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.object.AbstractBaseObject;
 import com.helger.photon.basic.object.accarea.IAccountingArea;
@@ -38,7 +39,8 @@ public abstract class AbstractAccountingAreaObject extends AbstractBaseObject im
 {
   private final IClient m_aClient;
   private final IAccountingArea m_aAccountingArea;
-  private Integer m_aHashCode;
+  // Status vars
+  private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
   protected AbstractAccountingAreaObject (@Nonnull final IAccountingAreaObject aOther)
   {
@@ -172,16 +174,13 @@ public abstract class AbstractAccountingAreaObject extends AbstractBaseObject im
   @Override
   public final int hashCode ()
   {
-    Integer aObj = m_aHashCode;
-    if (aObj == null)
-    {
-      aObj = new HashCodeGenerator (this).append (m_aClient)
-                                         .append (m_aAccountingArea)
-                                         .append (getID ())
-                                         .getHashCodeObj ();
-      m_aHashCode = aObj;
-    }
-    return aObj.intValue ();
+    int ret = m_nHashCode;
+    if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
+      ret = m_nHashCode = new HashCodeGenerator (this).append (m_aClient)
+                                                      .append (m_aAccountingArea)
+                                                      .append (getID ())
+                                                      .getHashCode ();
+    return ret;
   }
 
   @Override

@@ -30,6 +30,7 @@ import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -47,13 +48,13 @@ import com.helger.html.hc.ext.HCConditionalCommentNode;
 @Immutable
 public class WebSiteResourceBundle
 {
-  private final ICommonsList <WebSiteResource> m_aResources = new CommonsArrayList <> ();
+  private final ICommonsList <WebSiteResource> m_aResources = new CommonsArrayList<> ();
   private final String m_sConditionalComment;
   private final boolean m_bIsBundlable;
   private final CSSMediaList m_aMediaList;
   // Status vars
   private final EWebSiteResourceType m_eResourceType;
-  private Integer m_aHashCode;
+  private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
   public WebSiteResourceBundle (@Nonnull @Nonempty final List <WebSiteResourceWithCondition> aResources,
                                 @Nullable final String sConditionalComment,
@@ -180,13 +181,14 @@ public class WebSiteResourceBundle
   @Override
   public int hashCode ()
   {
-    if (m_aHashCode == null)
-      m_aHashCode = new HashCodeGenerator (this).append (m_aResources)
-                                                .append (m_sConditionalComment)
-                                                .append (m_bIsBundlable)
-                                                .append (m_aMediaList)
-                                                .getHashCodeObj ();
-    return m_aHashCode.intValue ();
+    int ret = m_nHashCode;
+    if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
+      ret = m_nHashCode = new HashCodeGenerator (this).append (m_aResources)
+                                                      .append (m_sConditionalComment)
+                                                      .append (m_bIsBundlable)
+                                                      .append (m_aMediaList)
+                                                      .getHashCode ();
+    return ret;
   }
 
   @Override

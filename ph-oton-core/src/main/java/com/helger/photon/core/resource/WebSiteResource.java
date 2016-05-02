@@ -32,6 +32,7 @@ import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.io.IHasInputStream;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -73,7 +74,7 @@ public class WebSiteResource
   private final boolean m_bResourceExists;
   private final byte [] m_aContentHash;
   private final String m_sContentHash;
-  private Integer m_aHashCode;
+  private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
   public WebSiteResource (@Nonnull final EWebSiteResourceType eResourceType,
                           @Nonnull @Nonempty final String sPath,
@@ -249,13 +250,14 @@ public class WebSiteResource
   public int hashCode ()
   {
     // Cache hashCode :)
-    if (m_aHashCode == null)
-      m_aHashCode = new HashCodeGenerator (this).append (m_eResourceType)
-                                                .append (m_sPath)
-                                                .append (m_aCharset)
-                                                .append (m_aContentHash)
-                                                .getHashCodeObj ();
-    return m_aHashCode.intValue ();
+    int ret = m_nHashCode;
+    if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
+      ret = m_nHashCode = new HashCodeGenerator (this).append (m_eResourceType)
+                                                      .append (m_sPath)
+                                                      .append (m_aCharset)
+                                                      .append (m_aContentHash)
+                                                      .getHashCode ();
+    return ret;
   }
 
   @Override

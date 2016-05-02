@@ -25,6 +25,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.object.AbstractBaseObject;
 import com.helger.photon.basic.object.client.IClient;
@@ -34,9 +35,9 @@ import com.helger.photon.security.object.StubObject;
 @Immutable
 public abstract class AbstractClientObject extends AbstractBaseObject implements IClientObject
 {
-  @Nonnull
   private final IClient m_aClient;
-  private Integer m_aHashCode;
+  // Status vars
+  private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
   protected AbstractClientObject (@Nonnull final IClientObject aBase)
   {
@@ -113,13 +114,10 @@ public abstract class AbstractClientObject extends AbstractBaseObject implements
   @Override
   public final int hashCode ()
   {
-    Integer aObj = m_aHashCode;
-    if (aObj == null)
-    {
-      aObj = new HashCodeGenerator (this).append (m_aClient).append (getID ()).getHashCodeObj ();
-      m_aHashCode = aObj;
-    }
-    return aObj.intValue ();
+    int ret = m_nHashCode;
+    if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
+      ret = m_nHashCode = new HashCodeGenerator (this).append (m_aClient).append (getID ()).getHashCode ();
+    return ret;
   }
 
   @Override
