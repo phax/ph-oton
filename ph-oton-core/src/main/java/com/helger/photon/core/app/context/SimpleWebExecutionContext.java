@@ -21,6 +21,7 @@ import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -113,6 +114,11 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public ICommonsMap <String, Object> getAllAttributes ()
   {
     return m_aRequestScope.getAllAttributes ();
+  }
+
+  public void forAllAttributes (@Nonnull final BiConsumer <? super String, ? super Object> aConsumer)
+  {
+    m_aRequestScope.forAllAttributes (aConsumer);
   }
 
   @Nullable

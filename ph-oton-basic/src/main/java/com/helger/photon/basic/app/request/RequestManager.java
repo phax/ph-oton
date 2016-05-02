@@ -27,8 +27,6 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.attr.AttributeValueConverter;
-import com.helger.commons.collection.ext.CommonsLinkedHashMap;
-import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.scope.mgr.ScopeManager;
@@ -37,6 +35,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
+import com.helger.commons.url.URLParameterList;
 import com.helger.photon.basic.app.PhotonPathMapper;
 import com.helger.photon.basic.app.PhotonSessionState;
 import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
@@ -124,44 +123,42 @@ public class RequestManager implements IRequestManager
   }
 
   @Nonnull
-  private static ICommonsMap <String, Object> _getParametersFromPath (@Nonnull final String sPath)
+  private static URLParameterList _getParametersFromPath (@Nonnull final String sPath)
   {
     // Use paths for standard menu items
-    final ICommonsMap <String, Object> ret = new CommonsLinkedHashMap <> ();
+    final URLParameterList ret = new URLParameterList ();
     for (final String sPair : StringHelper.getExploded ('/', StringHelper.trimStartAndEnd (sPath, "/")))
     {
       final String [] aElements = StringHelper.getExplodedArray (SEPARATOR_CHAR, sPair, 2);
       if (aElements.length == 2)
-        ret.put (aElements[0], aElements[1]);
+        ret.add (aElements[0], aElements[1]);
     }
     return ret;
   }
 
   @Nonnull
-  protected ICommonsMap <String, Object> getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  protected URLParameterList getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    ICommonsMap <String, Object> ret = null;
     if (m_bUsePaths)
     {
       // Use paths for standard menu items
-      ret = _getParametersFromPath (aRequestScope.getPathInfo ());
+      return _getParametersFromPath (aRequestScope.getPathInfo ());
     }
-    else
-    {
-      // Use request parameters
-      ret = aRequestScope.getAllAttributes ();
-    }
+
+    // Use request parameters
+    final URLParameterList ret = new URLParameterList ();
+    aRequestScope.forAllAttributes ( (k, v) -> ret.add (k, String.valueOf (v)));
     return ret;
   }
 
   public void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                               @Nonnull @Nonempty final String sApplicationID)
   {
-    final ICommonsMap <String, Object> aParams = getParametersFromRequest (aRequestScope);
+    final URLParameterList aParams = getParametersFromRequest (aRequestScope);
 
     // determine page from request and store in request
     final String sMenuItemID = AttributeValueConverter.getAsString (m_sRequestParamNameMenuItem,
-                                                                    aParams.get (m_sRequestParamNameMenuItem),
+                                                                    aParams.getFirstParamValue (m_sRequestParamNameMenuItem),
                                                                     null);
     if (sMenuItemID != null)
     {
@@ -175,7 +172,7 @@ public class RequestManager implements IRequestManager
 
     // determine locale from request and store in session
     final String sDisplayLocale = AttributeValueConverter.getAsString (m_sRequestParamNameLocale,
-                                                                       aParams.get (m_sRequestParamNameLocale),
+                                                                       aParams.getFirstParamValue (m_sRequestParamNameLocale),
                                                                        null);
     if (sDisplayLocale != null)
     {
@@ -307,7 +304,7 @@ public class RequestManager implements IRequestManager
   }
 
   @Nonnull
-  protected ICommonsMap <String, ?> getParametersFromURL (@Nonnull final ISimpleURL aURL)
+  protected URLParameterList getParametersFromURL (@Nonnull final ISimpleURL aURL)
   {
     if (m_bUsePaths)
     {
@@ -325,9 +322,9 @@ public class RequestManager implements IRequestManager
     if (aURL == null)
       return null;
 
-    final ICommonsMap <String, ?> aParams = getParametersFromURL (aURL);
+    final URLParameterList aParams = getParametersFromURL (aURL);
     return AttributeValueConverter.getAsString (m_sRequestParamNameMenuItem,
-                                                aParams.get (m_sRequestParamNameMenuItem),
+                                                aParams.getFirstParamValue (m_sRequestParamNameMenuItem),
                                                 null);
   }
 
@@ -337,9 +334,9 @@ public class RequestManager implements IRequestManager
     if (aURL == null)
       return null;
 
-    final ICommonsMap <String, ?> aParams = getParametersFromURL (aURL);
+    final URLParameterList aParams = getParametersFromURL (aURL);
     return AttributeValueConverter.getAsString (m_sRequestParamNameLocale,
-                                                aParams.get (m_sRequestParamNameLocale),
+                                                aParams.getFirstParamValue (m_sRequestParamNameLocale),
                                                 null);
   }
 

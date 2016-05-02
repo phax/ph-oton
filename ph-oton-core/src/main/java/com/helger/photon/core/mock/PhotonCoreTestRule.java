@@ -75,7 +75,7 @@ public class PhotonCoreTestRule extends WebScopeTestRule
       }
     });
     MockHttpListener.addDefaultListener (new MockServletRequestListenerScopeAware ());
-    MockHttpListener.setToDefault ();
+    MockHttpListener.setCurrentToDefault ();
   }
 
   @Override
