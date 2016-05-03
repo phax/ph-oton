@@ -156,8 +156,10 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this action needs write access,
-   *         <code>false</code> if the action is read-only.
+   * @return <code>true</code> if this action needs write access (for creating
+   *         or modifying), <code>false</code> if the action is read-only.
+   * @see #isCreating()
+   * @see #isModifying()
    */
   public boolean isWriting ()
   {
