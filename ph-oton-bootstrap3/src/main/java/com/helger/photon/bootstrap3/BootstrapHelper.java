@@ -72,8 +72,7 @@ public final class BootstrapHelper
   public static void markChildrenAsFormControls (@Nullable final IHCNode aParent)
   {
     if (aParent != null)
-      for (final IHCNode aChild : aParent.getAllChildren ())
-        markAsFormControls (HCCtrlHelper.getAllHCControls (aChild));
+      aParent.forAllChildren (aChild -> markAsFormControls (HCCtrlHelper.getAllHCControls (aChild)));
   }
 
   public static boolean containsFormControlStatic (@Nullable final IHCNode aNode)
@@ -89,10 +88,7 @@ public final class BootstrapHelper
     if (aNode != null)
     {
       // E.g. HCNodeList
-      if (aNode.hasChildren ())
-        for (final IHCNode aChild : aNode.getAllChildren ())
-          if (containsFormControlStatic (aChild))
-            return true;
+      return aNode.findFirstChild (aChild -> containsFormControlStatic (aChild)) != null;
     }
 
     return false;
@@ -110,9 +106,7 @@ public final class BootstrapHelper
       else
       {
         // Descend only in non-elements - e.g. HCNodeList
-        if (aNode.hasChildren ())
-          for (final IHCNode aChild : aNode.getAllChildren ())
-            makeFormControlStatic (aChild);
+        aNode.forAllChildren (aChild -> makeFormControlStatic (aChild));
       }
     }
   }

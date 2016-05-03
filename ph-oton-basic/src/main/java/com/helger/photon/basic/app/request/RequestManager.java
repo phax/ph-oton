@@ -222,14 +222,11 @@ public class RequestManager implements IRequestManager
     final DefaultTreeItemWithID <String, IMenuObject> aRootItem = aMenuTree.getRootItem ();
     if (aRootItem.hasChildren ())
       for (final DefaultTreeItemWithID <String, IMenuObject> aItem : aRootItem.getAllChildren ())
-        if (aItem.getData () instanceof IMenuItemPage)
-        {
-          final IMenuItemPage aFirstMenuItem = (IMenuItemPage) aItem.getData ();
-          if (aFirstMenuItem.matchesDisplayFilter ())
-            return aFirstMenuItem;
-        }
+        if (aItem.getData () instanceof IMenuItemPage && aItem.getData ().matchesDisplayFilter ())
+          return (IMenuItemPage) aItem.getData ();
 
     throw new IllegalStateException ("No menu item is present!");
+
   }
 
   @Nonnull
