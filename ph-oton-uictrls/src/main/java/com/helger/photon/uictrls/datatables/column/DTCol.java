@@ -131,7 +131,7 @@ public class DTCol extends AbstractHCCol <DTCol>
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         break;
       case VERSION:
-        setComparator (ComparatorDT.getComparator (aFormatter, s -> new Version (s)));
+        setComparator (ComparatorDT.getComparator (aFormatter, Version::parse));
         break;
       case XML:
         setOrderable (false);
