@@ -232,7 +232,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
    * @param aFinder
    *        The finder. Never <code>null</code>.
    * @param aLEC
-   *        The leyout execution context. Never <code>null</code>.
+   *        The layout execution context. Never <code>null</code>.
    * @return A non-<code>null</code> list with all datums to use.
    */
   @Nonnull
