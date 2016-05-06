@@ -18,6 +18,7 @@ package com.helger.photon.bootstrap3.pages.form;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -233,7 +234,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
         final String sObjectID = aFormState.getAllAttributes ().getAttributeAsString (CPageParam.PARAM_OBJECT);
         aActionCell.addChild (new HCA (aWPEC.getLinkToMenuItem (aFormState.getPageID ())
                                             .add (CPageParam.PARAM_ACTION, sAction)
-                                            .addIfNonNull (CPageParam.PARAM_OBJECT, sObjectID)
+                                            .addIf (CPageParam.PARAM_OBJECT, sObjectID, Objects::nonNull)
                                             .add (FIELD_FLOW_ID, aFormState.getFlowID ())
                                             .add (FIELD_RESTORE_FLOW_ID,
                                                   aFormState.getFlowID ())).setTitle (EText.SAVED_STATE_EDIT.getDisplayText (aDisplayLocale))
