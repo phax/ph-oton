@@ -16,6 +16,8 @@
  */
 package com.helger.photon.bootstrap3.form;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -28,6 +30,7 @@ import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.AbstractBootstrapObject;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 
@@ -123,6 +126,12 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
       for (final String sValue : aValues)
         aNodeList.addChild (new HCDiv ().addChild (sValue));
     return setCtrl (aNodeList);
+  }
+
+  @Nonnull
+  public final BootstrapFormGroup setCtrl (final boolean bYesOrNo, @Nonnull final Locale aDisplayLocale)
+  {
+    return setCtrl (EPhotonCoreText.getYesOrNo (bYesOrNo, aDisplayLocale));
   }
 
   @Nonnull
