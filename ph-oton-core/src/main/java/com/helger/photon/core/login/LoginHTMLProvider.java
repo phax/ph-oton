@@ -40,10 +40,10 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.html.AbstractHTMLProvider;
-import com.helger.photon.security.login.ELoginResult;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -54,12 +54,12 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public class LoginHTMLProvider extends AbstractHTMLProvider
 {
   private final boolean m_bLoginError;
-  private final ELoginResult m_eLoginResult;
+  private final ICredentialValidationResult m_aLoginResult;
 
-  public LoginHTMLProvider (final boolean bLoginError, @Nonnull final ELoginResult eLoginResult)
+  public LoginHTMLProvider (final boolean bLoginError, @Nonnull final ICredentialValidationResult aLoginResult)
   {
     m_bLoginError = bLoginError;
-    m_eLoginResult = ValueEnforcer.notNull (eLoginResult, "LoginResult");
+    m_aLoginResult = ValueEnforcer.notNull (aLoginResult, "LoginResult");
   }
 
   /**
@@ -72,9 +72,9 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
   }
 
   @Nonnull
-  public final ELoginResult getLoginResult ()
+  public final ICredentialValidationResult getLoginResult ()
   {
-    return m_eLoginResult;
+    return m_aLoginResult;
   }
 
   /**
@@ -110,11 +110,12 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
 
   @Nullable
   @OverrideOnDemand
-  protected String getTextErrorMessage (@Nonnull final Locale aDisplayLocale, @Nonnull final ELoginResult eLoginResult)
+  protected String getTextErrorMessage (@Nonnull final Locale aDisplayLocale,
+                                        @Nonnull final ICredentialValidationResult aLoginResult)
   {
     return EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) +
            " " +
-           eLoginResult.getDisplayText (aDisplayLocale);
+           aLoginResult.getDisplayText (aDisplayLocale);
   }
 
   @Nullable
@@ -163,7 +164,7 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
     if (showHeaderText ())
       aForm.addChild (new HCDiv ().addChild (getTextHeader (aDisplayLocale)).addClass (CLogin.CSS_CLASS_LOGIN_HEADER));
     if (m_bLoginError)
-      aForm.addChild (new HCDiv ().addChild (getTextErrorMessage (aDisplayLocale, m_eLoginResult))
+      aForm.addChild (new HCDiv ().addChild (getTextErrorMessage (aDisplayLocale, m_aLoginResult))
                                   .addClass (CLogin.CSS_CLASS_LOGIN_ERRORMSG));
 
     // User name and password table

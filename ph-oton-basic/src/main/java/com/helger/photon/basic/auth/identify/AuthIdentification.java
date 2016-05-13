@@ -25,6 +25,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 
 /**
@@ -46,7 +47,7 @@ public final class AuthIdentification implements IAuthIdentification
   public AuthIdentification (@Nullable final IAuthSubject aSubject)
   {
     m_aSubject = aSubject;
-    m_aIdentificationDT = LocalDateTime.now ();
+    m_aIdentificationDT = PDTFactory.getCurrentLocalDateTime ();
   }
 
   @Nullable

@@ -28,6 +28,9 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
+import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
+import com.helger.photon.basic.auth.identify.AuthIdentificationManager;
+import com.helger.photon.basic.auth.identify.AuthIdentificationResult;
 import com.helger.photon.core.app.html.IHTMLProvider;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.photon.security.login.ELoginResult;
@@ -35,6 +38,7 @@ import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.user.credentials.UserPasswordCredentials;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 import com.helger.web.useragent.UserAgentDatabase;
@@ -91,14 +95,16 @@ public class LoginManager
    *
    * @param bLoginError
    *        If <code>true</code> an error occurred in a previous login action
-   * @param eLoginResult
-   *        The login result - only relevant in case of a login error
+   * @param aLoginResult
+   *        The login result - only relevant in case of a login error. Never
+   *        <code>null</code>.
    * @return Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected IHTMLProvider createLoginScreen (final boolean bLoginError, @Nonnull final ELoginResult eLoginResult)
+  protected IHTMLProvider createLoginScreen (final boolean bLoginError,
+                                             @Nonnull final ICredentialValidationResult aLoginResult)
   {
-    return new LoginHTMLProvider (bLoginError, eLoginResult);
+    return new LoginHTMLProvider (bLoginError, aLoginResult);
   }
 
   /**
@@ -176,11 +182,11 @@ public class LoginManager
    *
    * @param aUser
    *        The user who just logged in. Never <code>null</code>.
-   * @param eLoginResult
-   *        The login result. A success message anyway.
+   * @param aLoginResult
+   *        The login result. A success message anyway. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onUserLogin (@Nonnull final IUser aUser, @Nonnull final ELoginResult eLoginResult)
+  protected void onUserLogin (@Nonnull final IUser aUser, @Nonnull final ICredentialValidationResult aLoginResult)
   {}
 
   /**
@@ -234,7 +240,7 @@ public class LoginManager
     {
       // No user currently logged in -> start login
       boolean bLoginError = false;
-      ELoginResult eLoginResult = ELoginResult.SUCCESS;
+      ICredentialValidationResult aLoginResult = ELoginResult.SUCCESS;
 
       // Is the special login-check action present?
       if (isLoginInProgress (aRequestScope))
@@ -250,35 +256,66 @@ public class LoginManager
         // Get all required rules - may be null
         final Collection <String> aRequiredRoleIDs = getAllRequiredRoleIDs ();
 
-        // Try main login
-        eLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, aRequiredRoleIDs);
-        if (eLoginResult.isSuccess ())
+        if (true)
         {
-          // Credentials are valid - implies that the user was resolved
-          // correctly
-          sSessionUserID = aUser.getID ();
+          // Try main login
+          final AuthIdentificationResult aResult = AuthIdentificationManager.validateLoginCredentialsAndCreateToken (new UserPasswordCredentials (aUser,
+                                                                                                                                                  sPassword,
+                                                                                                                                                  aRequiredRoleIDs));
+          if (aResult.isSuccess ())
+          {
+            // Credentials are valid - implies that the user was resolved
+            // correctly
+            aLoginResult = ELoginResult.SUCCESS;
+            sSessionUserID = aUser.getID ();
 
-          // Invoke callback
-          onUserLogin (aUser, eLoginResult);
-          bLoggedInInThisRequest = true;
+            // Invoke callback
+            onUserLogin (aUser, aLoginResult);
+            bLoggedInInThisRequest = true;
+          }
+          else
+          {
+            // Credentials are invalid
+            aLoginResult = aResult.getCredentialValidationFailure ();
+            if (GlobalDebug.isDebugMode ())
+              s_aLogger.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
+
+            // Anyway show the error message only if at least some credential
+            // values are passed
+            bLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
+          }
         }
-
-        if (eLoginResult.isFailure ())
+        else
         {
-          // Credentials are invalid
-          if (GlobalDebug.isDebugMode ())
-            s_aLogger.warn ("Login of '" + sLoginName + "' failed because " + eLoginResult);
+          // Try main login
+          aLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, aRequiredRoleIDs);
+          if (aLoginResult.isSuccess ())
+          {
+            // Credentials are valid - implies that the user was resolved
+            // correctly
+            sSessionUserID = aUser.getID ();
 
-          // Anyway show the error message only if at least some credential
-          // values are passed
-          bLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
+            // Invoke callback
+            onUserLogin (aUser, aLoginResult);
+            bLoggedInInThisRequest = true;
+          }
+          else
+          {
+            // Credentials are invalid
+            if (GlobalDebug.isDebugMode ())
+              s_aLogger.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
+
+            // Anyway show the error message only if at least some credential
+            // values are passed
+            bLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
+          }
         }
       }
 
       if (sSessionUserID == null)
       {
         // Show login screen as no user is in the session
-        final IHTMLProvider aLoginScreenProvider = createLoginScreen (bLoginError, eLoginResult);
+        final IHTMLProvider aLoginScreenProvider = createLoginScreen (bLoginError, aLoginResult);
         PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aLoginScreenProvider);
       }
     }

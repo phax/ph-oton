@@ -16,9 +16,16 @@
  */
 package com.helger.photon.security.user.credentials;
 
+import java.util.Collection;
+
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
@@ -34,11 +41,15 @@ public class UserPasswordCredentials implements IUserPasswordCredentials
 {
   private final IUser m_aUser;
   private final String m_sPassword;
+  private final ICommonsList <String> m_aRequiredRoles;
 
-  public UserPasswordCredentials (@Nullable final IUser aUser, @Nullable final String sPassword)
+  public UserPasswordCredentials (@Nullable final IUser aUser,
+                                  @Nullable final String sPassword,
+                                  @Nullable final Collection <String> aRequiredRoles)
   {
     m_aUser = aUser;
     m_sPassword = sPassword;
+    m_aRequiredRoles = new CommonsArrayList <> (aRequiredRoles);
   }
 
   @Nullable
@@ -53,6 +64,13 @@ public class UserPasswordCredentials implements IUserPasswordCredentials
     return m_sPassword;
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsCollection <String> getAllRequiredRoles ()
+  {
+    return m_aRequiredRoles.getClone ();
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -61,18 +79,22 @@ public class UserPasswordCredentials implements IUserPasswordCredentials
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final UserPasswordCredentials rhs = (UserPasswordCredentials) o;
-    return EqualsHelper.equals (m_aUser, rhs.m_aUser) && EqualsHelper.equals (m_sPassword, rhs.m_sPassword);
+    return EqualsHelper.equals (m_aUser, rhs.m_aUser) &&
+           EqualsHelper.equals (m_sPassword, rhs.m_sPassword) & m_aRequiredRoles.equals (rhs.m_aRequiredRoles);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aUser).append (m_sPassword).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aUser).append (m_sPassword).append (m_aRequiredRoles).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("User", m_aUser).appendPassword ("Password").toString ();
+    return new ToStringGenerator (this).append ("User", m_aUser)
+                                       .appendPassword ("Password")
+                                       .append ("RequiredRoles", m_aRequiredRoles)
+                                       .toString ();
   }
 }

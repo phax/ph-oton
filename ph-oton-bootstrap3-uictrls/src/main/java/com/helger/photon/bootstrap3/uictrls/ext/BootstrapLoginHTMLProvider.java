@@ -33,6 +33,7 @@ import com.helger.html.hc.html.sections.HCBody;
 import com.helger.html.hc.html.sections.HCH2;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.base.BootstrapContainer;
 import com.helger.photon.bootstrap3.button.BootstrapSubmitButton;
@@ -44,7 +45,6 @@ import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.login.CLogin;
 import com.helger.photon.core.login.LoginHTMLProvider;
-import com.helger.photon.security.login.ELoginResult;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -57,17 +57,17 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
   private final IHCNode m_aPageTitle;
 
   public BootstrapLoginHTMLProvider (final boolean bLoginError,
-                                     @Nonnull final ELoginResult eLoginResult,
+                                     @Nonnull final ICredentialValidationResult aLoginResult,
                                      @Nullable final String sPageTitle)
   {
-    this (bLoginError, eLoginResult, HCTextNode.createOnDemand (sPageTitle));
+    this (bLoginError, aLoginResult, HCTextNode.createOnDemand (sPageTitle));
   }
 
   public BootstrapLoginHTMLProvider (final boolean bLoginError,
-                                     @Nonnull final ELoginResult eLoginResult,
+                                     @Nonnull final ICredentialValidationResult aLoginResult,
                                      @Nullable final IHCNode aPageTitle)
   {
-    super (bLoginError, eLoginResult);
+    super (bLoginError, aLoginResult);
     m_aPageTitle = aPageTitle;
   }
 

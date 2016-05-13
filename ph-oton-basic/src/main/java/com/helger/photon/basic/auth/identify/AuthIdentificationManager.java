@@ -73,7 +73,10 @@ public final class AuthIdentificationManager
     // try to get AuthSubject from passed credentials
     final IAuthSubject aSubject = AuthCredentialToSubjectResolverManager.getSubjectFromCredentials (aCredentials);
     if (aSubject != null)
-      s_aLogger.info ("Credentials " + aCredentials + " correspond to subject " + aSubject);
+    {
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("Credentials " + aCredentials + " correspond to subject " + aSubject);
+    }
     else
       s_aLogger.error ("Failed to resolve credentials " + aCredentials + " to an auth subject!");
 

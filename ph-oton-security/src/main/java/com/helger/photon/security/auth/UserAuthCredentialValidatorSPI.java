@@ -45,6 +45,8 @@ public final class UserAuthCredentialValidatorSPI implements IAuthCredentialVali
   public ELoginResult validateCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
     final IUserPasswordCredentials aUPC = (IUserPasswordCredentials) aCredentials;
-    return LoggedInUserManager.getInstance ().loginUser (aUPC.getUser (), aUPC.getPassword (), null);
+    return LoggedInUserManager.getInstance ().loginUser (aUPC.getUser (),
+                                                         aUPC.getPassword (),
+                                                         aUPC.getAllRequiredRoles ());
   }
 }
