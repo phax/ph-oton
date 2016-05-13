@@ -247,13 +247,18 @@ public class LoginManager
         // Resolve user - may be null
         final IUser aUser = getUserOfLoginName (sLoginName);
 
+        // Get all required rules - may be null
+        final Collection <String> aRequiredRoleIDs = getAllRequiredRoleIDs ();
+
         // Try main login
-        eLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, getAllRequiredRoleIDs ());
+        eLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, aRequiredRoleIDs);
         if (eLoginResult.isSuccess ())
         {
           // Credentials are valid - implies that the user was resolved
           // correctly
           sSessionUserID = aUser.getID ();
+
+          // Invoke callback
           onUserLogin (aUser, eLoginResult);
           bLoggedInInThisRequest = true;
         }

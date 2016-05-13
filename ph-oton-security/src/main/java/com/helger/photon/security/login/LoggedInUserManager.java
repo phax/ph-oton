@@ -19,7 +19,6 @@ package com.helger.photon.security.login;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.Duration;
-import java.util.Collection;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -36,7 +35,6 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.collection.ext.ICommonsMap;
@@ -46,7 +44,6 @@ import com.helger.commons.scope.ISessionScope;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
@@ -159,7 +156,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       m_sUserID = aUser.getID ();
     }
 
-    void _reset ()
+    void reset ()
     {
       // Reset to avoid access while or after logout
       m_aUser = null;
@@ -177,7 +174,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       final LoggedInUserManager aOwningMgr = m_aOwningMgr;
       final String sUserID = m_sUserID;
 
-      _reset ();
+      reset ();
 
       // Finally logout the user
       if (aOwningMgr != null)
@@ -197,7 +194,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *
    * @author Philip Helger
    */
-  final class UserLogoutCallbackUnlockAllObjects implements IUserLogoutCallback
+  final class InternalUserLogoutCallbackUnlockAllObjects implements IUserLogoutCallback
   {
     @Override
     public void onUserLogout (@Nonnull final LoginInfo aInfo)
@@ -214,9 +211,9 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
   // Set of logged in user IDs
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, LoginInfo> m_aLoggedInUsers = new CommonsHashMap<> ();
-  private final CallbackList <IUserLoginCallback> m_aUserLoginCallbacks = new CallbackList<> ();
-  private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList<> ();
+  private final ICommonsMap <String, LoginInfo> m_aLoggedInUsers = new CommonsHashMap <> ();
+  private final CallbackList <IUserLoginCallback> m_aUserLoginCallbacks = new CallbackList <> ();
+  private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList <> ();
   private boolean m_bLogoutAlreadyLoggedInUser = DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER;
 
   @Deprecated
@@ -224,7 +221,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   public LoggedInUserManager ()
   {
     // Ensure that all objects of a user are unlocked upon logout
-    m_aUserLogoutCallbacks.addCallback (new UserLogoutCallbackUnlockAllObjects ());
+    m_aUserLogoutCallbacks.addCallback (new InternalUserLogoutCallbackUnlockAllObjects ());
   }
 
   /**
@@ -271,6 +268,22 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     m_aRWLock.writeLocked ( () -> m_bLogoutAlreadyLoggedInUser = bLogoutAlreadyLoggedInUser);
   }
 
+  @Nonnull
+  private ELoginResult _onLoginError (@Nonnull @Nonempty final String sUserID, @Nonnull final ELoginResult eLoginResult)
+  {
+    m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLoginError (sUserID, eLoginResult));
+    return eLoginResult;
+  }
+
+  void internalSessionActivateUser (@Nonnull final IUser aUser, @Nonnull final ISessionScope aSessionScope)
+  {
+    ValueEnforcer.notNull (aUser, "User");
+    ValueEnforcer.notNull (aSessionScope, "SessionScope");
+
+    final LoginInfo aInfo = new LoginInfo (aUser, aSessionScope);
+    m_aRWLock.writeLocked ( () -> m_aLoggedInUsers.put (aUser.getID (), aInfo));
+  }
+
   /**
    * Login the passed user without much ado.
    *
@@ -283,7 +296,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nonnull
   public ELoginResult loginUser (@Nullable final String sLoginName, @Nullable final String sPlainTextPassword)
   {
-    return loginUser (sLoginName, sPlainTextPassword, (Collection <String>) null);
+    return loginUser (sLoginName, sPlainTextPassword, (Iterable <String>) null);
   }
 
   /**
@@ -302,7 +315,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nonnull
   public ELoginResult loginUser (@Nullable final String sLoginName,
                                  @Nullable final String sPlainTextPassword,
-                                 @Nullable final Collection <String> aRequiredRoleIDs)
+                                 @Nullable final Iterable <String> aRequiredRoleIDs)
   {
     // Try to resolve the user
     final IUser aUser = PhotonSecurityManager.getUserMgr ().getUserOfLoginName (sLoginName);
@@ -312,22 +325,6 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       return ELoginResult.USER_NOT_EXISTING;
     }
     return loginUser (aUser, sPlainTextPassword, aRequiredRoleIDs);
-  }
-
-  @Nonnull
-  private ELoginResult _onLoginError (@Nonnull @Nonempty final String sUserID, @Nonnull final ELoginResult eLoginResult)
-  {
-    m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLoginError (sUserID, eLoginResult));
-    return eLoginResult;
-  }
-
-  void internalSessionActivateUser (@Nonnull final IUser aUser, @Nonnull final ISessionScope aSessionScope)
-  {
-    ValueEnforcer.notNull (aUser, "User");
-    ValueEnforcer.notNull (aSessionScope, "SessionScope");
-
-    final LoginInfo aInfo = new LoginInfo (aUser, aSessionScope);
-    m_aRWLock.writeLocked ( () -> m_aLoggedInUsers.put (aUser.getID (), aInfo));
   }
 
   /**
@@ -347,7 +344,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nonnull
   public ELoginResult loginUser (@Nullable final IUser aUser,
                                  @Nullable final String sPlainTextPassword,
-                                 @Nullable final Collection <String> aRequiredRoleIDs)
+                                 @Nullable final Iterable <String> aRequiredRoleIDs)
   {
     if (aUser == null)
       return ELoginResult.USER_NOT_EXISTING;
@@ -371,10 +368,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     // Are all roles present?
     if (!SecurityHelper.hasUserAllRoles (sUserID, aRequiredRoleIDs))
     {
-      AuditHelper.onAuditExecuteFailure ("login",
-                                         sUserID,
-                                         "user-is-missing-required-roles",
-                                         StringHelper.getToString (aRequiredRoleIDs));
+      AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-is-missing-required-roles", aRequiredRoleIDs);
       return _onLoginError (sUserID, ELoginResult.USER_IS_MISSING_ROLE);
     }
 
@@ -426,11 +420,13 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
         }
         else
         {
+          // Error: user already logged in
           AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-already-logged-in");
           return _onLoginError (sUserID, ELoginResult.USER_ALREADY_LOGGED_IN);
         }
       }
 
+      // Update user in session
       final InternalSessionUserHolder aSUH = InternalSessionUserHolder.getInstance ();
       if (aSUH.hasUser ())
       {
@@ -487,7 +483,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       // manually logged out without destructing the underlying session
       final InternalSessionUserHolder aSUH = InternalSessionUserHolder.getInstanceIfInstantiatedInScope (aInfo.getSessionScope ());
       if (aSUH != null)
-        aSUH._reset ();
+        aSUH.reset ();
 
       // Set logout time - in case somebody has a strong reference to the
       // LoginInfo object
@@ -542,7 +538,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllLoggedInUserIDs ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aLoggedInUsers.keySet ()));
+    return m_aRWLock.readLocked ( () -> m_aLoggedInUsers.copyOfKeySet ());
   }
 
   /**
@@ -566,7 +562,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @ReturnsMutableCopy
   public ICommonsCollection <LoginInfo> getAllLoginInfos ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aLoggedInUsers.values ()));
+    return m_aRWLock.readLocked ( () -> m_aLoggedInUsers.copyOfValues ());
   }
 
   /**

@@ -34,7 +34,8 @@ import com.helger.photon.basic.auth.token.AuthTokenRegistry;
 import com.helger.photon.basic.auth.token.IAuthToken;
 
 /**
- * This is the main class for creating an {@link IAuthToken} from credentials.
+ * This is the main class for creating an {@link IAuthToken} from
+ * {@link IAuthCredentials}.
  *
  * @author Philip Helger
  */
