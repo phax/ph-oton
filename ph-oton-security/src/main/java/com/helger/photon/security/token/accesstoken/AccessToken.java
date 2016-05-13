@@ -33,7 +33,8 @@ import com.helger.photon.security.token.revocation.RevocationStatus;
 /**
  * This class represents a single token. It uniquely belongs to an application
  * token or a user token. It consists of a random string token, a not-before
- * date time and an optional not-after date time.
+ * date time and an optional not-after date time. Additionally it contains a
+ * revocation status.
  *
  * @author Philip Helger
  */

@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
@@ -41,7 +42,7 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
 public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCustomAttrs
                                                     implements IObjectWithAccessToken
 {
-  private final List <AccessToken> m_aAccessTokens;
+  private final ICommonsList <AccessToken> m_aAccessTokens;
 
   // Status vars
   private AccessToken m_aActiveAccessToken;
@@ -56,7 +57,8 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCu
                                         @Nonnull @Nonempty final List <AccessToken> aAccessTokens)
   {
     super (aStubObject);
-    m_aAccessTokens = ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");
+    ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");
+    m_aAccessTokens = new CommonsArrayList <> (aAccessTokens);
     m_aActiveAccessToken = _getIfNotRevoked (CollectionHelper.getLastElement (aAccessTokens));
   }
 
@@ -64,7 +66,7 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCu
   @Nonempty
   public ICommonsList <AccessToken> getAllAccessTokens ()
   {
-    return CollectionHelper.newList (m_aAccessTokens);
+    return m_aAccessTokens.getClone ();
   }
 
   @Nullable

@@ -28,6 +28,11 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
+/**
+ * The default implementation of {@link IRevocationStatus}.
+ *
+ * @author Philip Helger
+ */
 @NotThreadSafe
 public class RevocationStatus implements IRevocationStatus
 {
@@ -81,6 +86,21 @@ public class RevocationStatus implements IRevocationStatus
     return m_sRevocationReason;
   }
 
+  /**
+   * Mark the owning item as revoked.
+   *
+   * @param sRevocationUserID
+   *        The ID of the user who revoked it. May neither be <code>null</code>
+   *        nor empty.
+   * @param aRevocationDT
+   *        The date and time when the revocation took place. May not be
+   *        <code>null</code>.
+   * @param sRevocationReason
+   *        A human readable reason why revocation took place. May neither be
+   *        <code>null</code> nor empty.
+   * @throws IllegalStateException
+   *         If this status already denotes a revoked object.
+   */
   public void markRevoked (@Nonnull @Nonempty final String sRevocationUserID,
                            @Nonnull final LocalDateTime aRevocationDT,
                            @Nonnull @Nonempty final String sRevocationReason)

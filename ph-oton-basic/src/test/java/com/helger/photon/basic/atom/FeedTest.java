@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.commons.random.VerySecureRandom;
+import com.helger.commons.random.RandomHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.grouping.HCDiv;
@@ -31,7 +31,7 @@ public final class FeedTest
   private Feed _createSimpleFeed (final int nEntryCount)
   {
     final Feed aFeed = new Feed ();
-    aFeed.setID (Integer.toString (VerySecureRandom.getInstance ().nextInt ()));
+    aFeed.setID (Integer.toString (RandomHelper.getRandom ().nextInt ()));
     aFeed.setTitle (new FeedPlainTextConstruct ("Title of the feed"));
     aFeed.setUpdated (FeedDate.createNow ());
     aFeed.addLink (new FeedLink ("http://localhost/feedtest", FeedLink.REL_SELF));

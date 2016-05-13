@@ -22,7 +22,8 @@ import java.time.LocalDateTime;
 import javax.annotation.Nullable;
 
 /**
- * Read-only interface for the revocation status.
+ * Read-only interface for the revocation status. This is e.g. used to determine
+ * if app tokens or user tokens are revoked or not.
  *
  * @author Philip Helger
  */

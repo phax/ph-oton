@@ -19,6 +19,7 @@ package com.helger.photon.basic.auth.credentials;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -53,6 +54,8 @@ public final class AuthCredentialValidatorManager
   @SuppressFBWarnings ("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   public static ICredentialValidationResult validateCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
+    ValueEnforcer.notNull (aCredentials, "Credentials");
+
     // Collect all strings of all supporting credential validators
     final ICommonsList <ICredentialValidationResult> aFailedValidations = new CommonsArrayList <> ();
 
