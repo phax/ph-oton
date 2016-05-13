@@ -21,15 +21,15 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
 
 /**
  * Represents the different login results.
  *
  * @author Philip Helger
  */
-public enum ELoginResult implements ISuccessIndicator,IHasDisplayText
+public enum ELoginResult implements ICredentialValidationResult
 {
   /** Login was successfully */
   SUCCESS (ELoginResultText.SUCCESS),

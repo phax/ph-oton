@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.auth.credentials.CredentialValidationResult;
+import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
 import com.helger.photon.basic.auth.token.IAuthToken;
 
 /**
@@ -34,56 +34,38 @@ import com.helger.photon.basic.auth.token.IAuthToken;
  */
 public class AuthIdentificationResult implements ISuccessIndicator, Serializable
 {
-  private final CredentialValidationResult m_aCredentialValidationResult;
   private final IAuthToken m_aAuthToken;
+  private final ICredentialValidationResult m_aCredentialValidationFailure;
 
   /**
-   * Constructor for a failure in authentication.
-   *
-   * @param aCredentialValidationResult
-   *        The validation result. May not be <code>null</code> and must be a
-   *        failure!
-   */
-  public AuthIdentificationResult (@Nonnull final CredentialValidationResult aCredentialValidationResult)
-  {
-    ValueEnforcer.notNull (aCredentialValidationResult, "CredentialValidationResult");
-    if (aCredentialValidationResult.isSuccess ())
-      throw new IllegalStateException ("Don't call this method for successfuly credential validation!");
-    m_aCredentialValidationResult = aCredentialValidationResult;
-    m_aAuthToken = null;
-  }
-
-  /**
-   * Constructor for success authentication.
+   * Constructor.
    *
    * @param aAuthToken
-   *        The auth token. May not be <code>null</code>.
+   *        The auth token. May not be <code>null</code> in case of success.
+   *        Must be <code>null</code> in case of failure.
+   * @param aCredentialValidationFailure
+   *        The validation failure. May not be <code>null</code> in case of
+   *        failure. Must be <code>null</code> in case of success.
    */
-  public AuthIdentificationResult (@Nonnull final IAuthToken aAuthToken)
+  protected AuthIdentificationResult (@Nullable final IAuthToken aAuthToken,
+                                      @Nullable final ICredentialValidationResult aCredentialValidationFailure)
   {
-    ValueEnforcer.notNull (aAuthToken, "AuthToken");
-    m_aCredentialValidationResult = null;
+    ValueEnforcer.isFalse (aAuthToken == null && aCredentialValidationFailure == null, "One parameter must be set");
+    ValueEnforcer.isFalse (aAuthToken != null && aCredentialValidationFailure != null, "Only one parameter may be set");
+    if (aCredentialValidationFailure != null && aCredentialValidationFailure.isSuccess ())
+      throw new IllegalStateException ("Don't call this method for successfuly credential validation!");
     m_aAuthToken = aAuthToken;
+    m_aCredentialValidationFailure = aCredentialValidationFailure;
   }
 
   public boolean isSuccess ()
   {
-    return m_aCredentialValidationResult == null;
+    return m_aAuthToken != null;
   }
 
   public boolean isFailure ()
   {
-    return m_aCredentialValidationResult != null;
-  }
-
-  /**
-   * @return The credential validation error message or <code>null</code> in
-   *         case of successful identification
-   */
-  @Nullable
-  public String getCredentialValidationErrorMessage ()
-  {
-    return m_aCredentialValidationResult == null ? null : m_aCredentialValidationResult.getErrorMessage ();
+    return m_aCredentialValidationFailure != null;
   }
 
   /**
@@ -96,11 +78,50 @@ public class AuthIdentificationResult implements ISuccessIndicator, Serializable
     return m_aAuthToken;
   }
 
+  /**
+   * @return The credential validation failure or <code>null</code> in case of
+   *         success.
+   */
+  @Nullable
+  public ICredentialValidationResult getCredentialValidationFailure ()
+  {
+    return m_aCredentialValidationFailure;
+  }
+
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("CredentialValidationResult", m_aCredentialValidationResult)
-                                       .append ("AuthToken", m_aAuthToken)
+    return new ToStringGenerator (this).append ("AuthToken", m_aAuthToken)
+                                       .append ("CredentialValidationFailure", m_aCredentialValidationFailure)
                                        .toString ();
+  }
+
+  /**
+   * Factory method for success authentication.
+   *
+   * @param aAuthToken
+   *        The auth token. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static AuthIdentificationResult createSuccess (@Nonnull final IAuthToken aAuthToken)
+  {
+    ValueEnforcer.notNull (aAuthToken, "AuthToken");
+    return new AuthIdentificationResult (aAuthToken, null);
+  }
+
+  /**
+   * Factory method for error in authentication.
+   *
+   * @param aCredentialValidationFailure
+   *        The validation failure. May not be <code>null</code> in case of
+   *        failure!
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static AuthIdentificationResult createFailure (@Nonnull final ICredentialValidationResult aCredentialValidationFailure)
+  {
+    ValueEnforcer.notNull (aCredentialValidationFailure, "CredentialValidationFailure");
+    return new AuthIdentificationResult (null, aCredentialValidationFailure);
   }
 }

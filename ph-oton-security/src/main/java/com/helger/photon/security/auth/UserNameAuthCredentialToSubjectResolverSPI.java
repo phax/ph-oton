@@ -21,28 +21,32 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
+import com.helger.photon.basic.auth.credentials.userpw.IUserNamePasswordCredentials;
 import com.helger.photon.basic.auth.subject.IAuthCredentialToSubjectResolverSPI;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
-import com.helger.photon.security.user.credentials.IUserPasswordCredentials;
+import com.helger.photon.security.user.UserManager;
 
 /**
  * Implementation of {@link IAuthCredentialToSubjectResolverSPI} supporting
- * {@link IUserPasswordCredentials} without resolution.
+ * {@link IUserNamePasswordCredentials} and the resolution via the global
+ * {@link UserManager}.
  *
  * @author Philip Helger
  */
 @IsSPIImplementation
-public class UserAuthCredentialToSubjectResolverSPI implements IAuthCredentialToSubjectResolverSPI
+public class UserNameAuthCredentialToSubjectResolverSPI implements IAuthCredentialToSubjectResolverSPI
 {
   public boolean supportsCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
-    return aCredentials instanceof IUserPasswordCredentials;
+    return aCredentials instanceof IUserNamePasswordCredentials;
   }
 
   @Nullable
   public IUser getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
-    final IUserPasswordCredentials aUPC = (IUserPasswordCredentials) aCredentials;
-    return aUPC.getUser ();
+    final IUserNamePasswordCredentials aUPC = (IUserNamePasswordCredentials) aCredentials;
+    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    return aUserMgr.getUserOfLoginName (aUPC.getUserName ());
   }
 }

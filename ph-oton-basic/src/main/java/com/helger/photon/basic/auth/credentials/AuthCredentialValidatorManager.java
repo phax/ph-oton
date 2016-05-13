@@ -16,8 +16,6 @@
  */
 package com.helger.photon.basic.auth.credentials;
 
-import java.util.Locale;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -26,7 +24,6 @@ import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.lang.ServiceLoaderHelper;
-import com.helger.commons.string.StringHelper;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -54,17 +51,16 @@ public final class AuthCredentialValidatorManager
 
   @Nonnull
   @SuppressFBWarnings ("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
-  public static CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale,
-                                                                @Nonnull final IAuthCredentials aCredentials)
+  public static ICredentialValidationResult validateCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
     // Collect all strings of all supporting credential validators
-    final ICommonsList <String> aFailedMessages = new CommonsArrayList <> ();
+    final ICommonsList <ICredentialValidationResult> aFailedValidations = new CommonsArrayList <> ();
 
     // Check all credential handlers if the can handle the passed credentials
     for (final IAuthCredentialValidatorSPI aHdl : s_aHdlList)
       if (aHdl.supportsCredentials (aCredentials))
       {
-        final CredentialValidationResult aResult = aHdl.validateCredentials (aDisplayLocale, aCredentials);
+        final ICredentialValidationResult aResult = aHdl.validateCredentials (aCredentials);
         if (aResult == null)
           throw new IllegalStateException ("validateCredentials returned a null object from " +
                                            aHdl +
@@ -75,12 +71,13 @@ public final class AuthCredentialValidatorManager
           // This validator successfully validated the passed credentials
           return aResult;
         }
-        aFailedMessages.add (aResult.getErrorMessage ());
+        aFailedValidations.add (aResult);
       }
 
-    if (aFailedMessages.isEmpty ())
-      aFailedMessages.add ("No credential validator supported the provided credentials: " + aCredentials);
+    if (aFailedValidations.isEmpty ())
+      aFailedValidations.add (new CredentialValidationResult ("No credential validator supported the provided credentials: " +
+                                                              aCredentials));
 
-    return new CredentialValidationResult (StringHelper.getImplodedNonEmpty ('\n', aFailedMessages));
+    return new CredentialValidationResultList (aFailedValidations);
   }
 }

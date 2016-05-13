@@ -16,8 +16,6 @@
  */
 package com.helger.photon.basic.auth.identify;
 
-import java.util.Locale;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -26,8 +24,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.photon.basic.auth.credentials.AuthCredentialValidatorManager;
-import com.helger.photon.basic.auth.credentials.CredentialValidationResult;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
+import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
 import com.helger.photon.basic.auth.subject.AuthCredentialToSubjectResolverManager;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.basic.auth.token.AuthTokenRegistry;
@@ -51,26 +49,22 @@ public final class AuthIdentificationManager
    * Validate the login credentials, try to resolve the subject and create a
    * token upon success.
    *
-   * @param aDisplayLocale
-   *        Display locale.
    * @param aCredentials
    *        The credentials to validate. If <code>null</code> it is treated as
    *        error.
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static AuthIdentificationResult validateLoginCredentialsAndCreateToken (@Nonnull final Locale aDisplayLocale,
-                                                                                 @Nonnull final IAuthCredentials aCredentials)
+  public static AuthIdentificationResult validateLoginCredentialsAndCreateToken (@Nonnull final IAuthCredentials aCredentials)
   {
     ValueEnforcer.notNull (aCredentials, "Credentials");
 
     // validate credentials
-    final CredentialValidationResult aValidationResult = AuthCredentialValidatorManager.validateCredentials (aDisplayLocale,
-                                                                                                             aCredentials);
+    final ICredentialValidationResult aValidationResult = AuthCredentialValidatorManager.validateCredentials (aCredentials);
     if (aValidationResult.isFailure ())
     {
       s_aLogger.warn ("Credentials have been rejected: " + aCredentials);
-      return new AuthIdentificationResult (aValidationResult);
+      return AuthIdentificationResult.createFailure (aValidationResult);
     }
 
     if (s_aLogger.isDebugEnabled ())
@@ -90,6 +84,6 @@ public final class AuthIdentificationManager
     final IAuthToken aNewAuthToken = AuthTokenRegistry.getInstance ()
                                                       .createToken (aIdentification,
                                                                     IAuthToken.EXPIRATION_SECONDS_INFINITE);
-    return new AuthIdentificationResult (aNewAuthToken);
+    return AuthIdentificationResult.createSuccess (aNewAuthToken);
   }
 }

@@ -16,12 +16,9 @@
  */
 package com.helger.photon.security.auth;
 
-import java.util.Locale;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.photon.basic.auth.credentials.CredentialValidationResult;
 import com.helger.photon.basic.auth.credentials.IAuthCredentialValidatorSPI;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 import com.helger.photon.security.login.ELoginResult;
@@ -46,15 +43,14 @@ public final class UserTokenAuthCredentialValidatorSPI implements IAuthCredentia
   }
 
   @Nonnull
-  public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale,
-                                                         @Nonnull final IAuthCredentials aCredentials)
+  public ELoginResult validateCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
     final ITokenCredentials aATC = (ITokenCredentials) aCredentials;
     final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     if (aUserTokenMgr.getUserTokenOfTokenString (aATC.getTokenString ()) != null)
-      return CredentialValidationResult.SUCCESS;
+      return ELoginResult.SUCCESS;
 
     // Credential validation failed
-    return new CredentialValidationResult (ELoginResult.TOKEN_NOT_EXISTING.getDisplayText (aDisplayLocale));
+    return ELoginResult.TOKEN_NOT_EXISTING;
   }
 }

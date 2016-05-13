@@ -16,8 +16,6 @@
  */
 package com.helger.photon.basic.auth.credentials;
 
-import java.util.Locale;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.IsSPIInterface;
@@ -49,13 +47,10 @@ public interface IAuthCredentialValidatorSPI
    * previous call to {@link #supportsCredentials(IAuthCredentials)} returned
    * <code>true</code> .
    *
-   * @param aDisplayLocale
-   *        The display locale for error messages. Never <code>null</code>.
    * @param aCredentials
    *        The credentials to be validated. Never <code>null</code>.
    * @return The credential validation result. May not be <code>null</code>.
    */
   @Nonnull
-  CredentialValidationResult validateCredentials (@Nonnull Locale aDisplayLocale,
-                                                  @Nonnull IAuthCredentials aCredentials);
+  ICredentialValidationResult validateCredentials (@Nonnull IAuthCredentials aCredentials);
 }

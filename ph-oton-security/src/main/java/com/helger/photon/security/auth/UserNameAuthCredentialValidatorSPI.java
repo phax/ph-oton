@@ -17,32 +17,34 @@
 package com.helger.photon.security.auth;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.IsSPIImplementation;
+import com.helger.photon.basic.auth.credentials.IAuthCredentialValidatorSPI;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
-import com.helger.photon.basic.auth.subject.IAuthCredentialToSubjectResolverSPI;
+import com.helger.photon.basic.auth.credentials.userpw.IUserNamePasswordCredentials;
+import com.helger.photon.security.login.ELoginResult;
+import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.user.IUser;
-import com.helger.photon.security.user.credentials.IUserPasswordCredentials;
 
 /**
- * Implementation of {@link IAuthCredentialToSubjectResolverSPI} supporting
- * {@link IUserPasswordCredentials} without resolution.
+ * An implementation of the {@link IAuthCredentialValidatorSPI} for
+ * {@link IUserNamePasswordCredentials} using the {@link LoggedInUserManager} to
+ * login {@link IUser} objects.
  *
  * @author Philip Helger
  */
 @IsSPIImplementation
-public class UserAuthCredentialToSubjectResolverSPI implements IAuthCredentialToSubjectResolverSPI
+public final class UserNameAuthCredentialValidatorSPI implements IAuthCredentialValidatorSPI
 {
   public boolean supportsCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
-    return aCredentials instanceof IUserPasswordCredentials;
+    return aCredentials instanceof IUserNamePasswordCredentials;
   }
 
-  @Nullable
-  public IUser getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
+  @Nonnull
+  public ELoginResult validateCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
-    final IUserPasswordCredentials aUPC = (IUserPasswordCredentials) aCredentials;
-    return aUPC.getUser ();
+    final IUserNamePasswordCredentials aUPC = (IUserNamePasswordCredentials) aCredentials;
+    return LoggedInUserManager.getInstance ().loginUser (aUPC.getUserName (), aUPC.getPassword ());
   }
 }

@@ -23,57 +23,55 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
- * Default implementation of {@link ICredentialValidationResult}.
+ * An implementation of {@link ICredentialValidationResult} that uses multiple
+ * ICredentialValidationResult instances.
  *
  * @author Philip Helger
  */
-public class CredentialValidationResult implements ICredentialValidationResult
+public class CredentialValidationResultList implements ICredentialValidationResult
 {
-  public static final CredentialValidationResult SUCCESS = new CredentialValidationResult ();
-
-  private final String m_sErrorMsg;
-
-  /**
-   * Success only constructor.
-   */
-  protected CredentialValidationResult ()
-  {
-    m_sErrorMsg = null;
-  }
+  private final ICommonsList <ICredentialValidationResult> m_aResults;
+  private final boolean m_bFailure;
 
   /**
-   * Constructor with an error message
+   * Constructor with multiple results
    *
-   * @param sErrorMsg
-   *        The error message. May neither be <code>null</code> nor empty.
+   * @param aResults
+   *        The collection of results. May neither be <code>null</code> nor
+   *        empty.
    */
-  public CredentialValidationResult (@Nonnull @Nonempty final String sErrorMsg)
+  public CredentialValidationResultList (@Nonnull @Nonempty final Iterable <? extends ICredentialValidationResult> aResults)
   {
-    m_sErrorMsg = ValueEnforcer.notEmpty (sErrorMsg, "ErrorMessage");
+    ValueEnforcer.notEmpty (aResults, "Results");
+    m_aResults = new CommonsArrayList <> (aResults);
+    m_bFailure = m_aResults.containsAny (ICredentialValidationResult::isFailure);
   }
 
   public boolean isSuccess ()
   {
-    return m_sErrorMsg == null;
+    return !m_bFailure;
   }
 
   public boolean isFailure ()
   {
-    return m_sErrorMsg != null;
+    return m_bFailure;
   }
 
   @Nullable
   public String getDisplayText (@Nonnull final Locale aDisplayLocale)
   {
-    return m_sErrorMsg;
+    return StringHelper.getImploded ('\n', m_aResults, aResult -> aResult.getDisplayText (aDisplayLocale));
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ErrorMsg", m_sErrorMsg).toString ();
+    return new ToStringGenerator (this).append ("Results", m_aResults).append ("Failure", m_bFailure).toString ();
   }
 }

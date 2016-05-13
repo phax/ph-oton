@@ -56,7 +56,7 @@ public final class AuthIdentification implements IAuthIdentification
   }
 
   @Nonnull
-  public LocalDateTime getIdentificationDate ()
+  public LocalDateTime getIdentificationDateTime ()
   {
     return m_aIdentificationDT;
   }

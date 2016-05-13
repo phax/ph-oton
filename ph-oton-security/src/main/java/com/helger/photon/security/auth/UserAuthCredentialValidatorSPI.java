@@ -16,22 +16,19 @@
  */
 package com.helger.photon.security.auth;
 
-import java.util.Locale;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.photon.basic.auth.credentials.CredentialValidationResult;
 import com.helger.photon.basic.auth.credentials.IAuthCredentialValidatorSPI;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
-import com.helger.photon.basic.auth.credentials.userpw.IUserNamePasswordCredentials;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.user.credentials.IUserPasswordCredentials;
 
 /**
  * An implementation of the {@link IAuthCredentialValidatorSPI} for
- * {@link IUserNamePasswordCredentials} using the {@link LoggedInUserManager} to
+ * {@link IUserPasswordCredentials} using the {@link LoggedInUserManager} to
  * login {@link IUser} objects.
  *
  * @author Philip Helger
@@ -41,20 +38,13 @@ public final class UserAuthCredentialValidatorSPI implements IAuthCredentialVali
 {
   public boolean supportsCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
-    return aCredentials instanceof IUserNamePasswordCredentials;
+    return aCredentials instanceof IUserPasswordCredentials;
   }
 
   @Nonnull
-  public CredentialValidationResult validateCredentials (@Nonnull final Locale aDisplayLocale,
-                                                         @Nonnull final IAuthCredentials aCredentials)
+  public ELoginResult validateCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
-    final IUserNamePasswordCredentials aUPC = (IUserNamePasswordCredentials) aCredentials;
-    final ELoginResult eLoginResult = LoggedInUserManager.getInstance ().loginUser (aUPC.getUserName (),
-                                                                                    aUPC.getPassword ());
-    if (eLoginResult.isSuccess ())
-      return CredentialValidationResult.SUCCESS;
-
-    // Credential validation failed
-    return new CredentialValidationResult (eLoginResult.getDisplayText (aDisplayLocale));
+    final IUserPasswordCredentials aUPC = (IUserPasswordCredentials) aCredentials;
+    return LoggedInUserManager.getInstance ().loginUser (aUPC.getUser (), aUPC.getPassword (), null);
   }
 }

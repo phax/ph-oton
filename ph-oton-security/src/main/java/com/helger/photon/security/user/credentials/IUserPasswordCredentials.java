@@ -14,37 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.auth.identify;
+package com.helger.photon.security.user.credentials;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.photon.basic.auth.subject.IAuthSubject;
+import com.helger.photon.basic.auth.credentials.IAuthCredentials;
+import com.helger.photon.security.user.IUser;
 
 /**
- * The interface representing the successful login of an {@link IAuthSubject}
- * (e.g. user) at a given date and time.
+ * This interface represents {@link IUser} and password credentials passed from
+ * a login page.
  *
  * @author Philip Helger
  */
-public interface IAuthIdentification extends Serializable
+public interface IUserPasswordCredentials extends IAuthCredentials
 {
   /**
-   * @return The identified subject. May be <code>null</code> if no subject
-   *         matched the credentials.
+   * @return The user to check. May be <code>null</code>.
    */
   @Nullable
-  IAuthSubject getSubject ();
+  IUser getUser ();
 
   /**
-   * Method to retrieve the time stamp of when this object was created.
-   *
-   * @return The date and time the identification occurred. Never
-   *         <code>null</code>.
+   * @return The password to check. May be <code>null</code>.
    */
-  @Nonnull
-  LocalDateTime getIdentificationDateTime ();
+  @Nullable
+  String getPassword ();
 }
