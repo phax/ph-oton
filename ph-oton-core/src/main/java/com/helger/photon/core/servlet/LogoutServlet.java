@@ -118,8 +118,10 @@ public class LogoutServlet extends AbstractUnifiedResponseServlet
       // 1. Invalidate the session
       // 2. Triggers the session scope destruction (via the HttpSessionListener)
       // 3. which triggers WebScopeManager.onSessionEnd
-      // 4. which triggers WebScopeSessionManager.getInstance ().onSessionEnd
+      // 4. which triggers ScopeSessionManager.onScopeEnd
       // 5. which triggers ISessionWebScope.destroyScope
+      // 6. which triggers InternalSessionUserHolder.onDestroy
+      // 7. which triggers LoggedInUserManager.logoutUser
       aHttpSession.invalidate ();
     }
 
