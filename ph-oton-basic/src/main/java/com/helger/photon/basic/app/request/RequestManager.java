@@ -221,9 +221,13 @@ public class RequestManager implements IRequestManager
     // Last fallback: use the first menu item
     final DefaultTreeItemWithID <String, IMenuObject> aRootItem = aMenuTree.getRootItem ();
     if (aRootItem.hasChildren ())
-      for (final DefaultTreeItemWithID <String, IMenuObject> aItem : aRootItem.getAllChildren ())
-        if (aItem.getData () instanceof IMenuItemPage && aItem.getData ().matchesDisplayFilter ())
-          return (IMenuItemPage) aItem.getData ();
+    {
+      final IMenuItemPage ret = aRootItem.findFirstChildMapped (aItem -> aItem.getData () instanceof IMenuItemPage &&
+                                                                         aItem.getData ().matchesDisplayFilter (),
+                                                                aItem -> (IMenuItemPage) aItem.getData ());
+      if (ret != null)
+        return ret;
+    }
 
     throw new IllegalStateException ("No menu item is present!");
 
