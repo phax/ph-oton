@@ -236,7 +236,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // DataTables - Columns
   //
   /** Set column definition initialisation properties. */
-  private final ICommonsList <DataTablesColumnDef> m_aColumnDefs = new CommonsArrayList <> ();
+  private final ICommonsList <DataTablesColumnDef> m_aColumnDefs = new CommonsArrayList<> ();
 
   //
   // DataTables - Internationalisation
@@ -248,7 +248,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   //
   // DataTables - Plugins
   //
-  private final ICommonsOrderedMap <String, IDataTablesPlugin> m_aPlugins = new CommonsLinkedHashMap <> ();
+  private final ICommonsOrderedMap <String, IDataTablesPlugin> m_aPlugins = new CommonsLinkedHashMap<> ();
 
   // Custom properties
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
@@ -403,6 +403,15 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bLengthChange;
   }
 
+  /**
+   * Feature control the end user's ability to change the paging display length
+   * of the table.
+   *
+   * @param bLengthChange
+   *        <code>true</code> to enable it, <code>false</code> to disable it. If
+   *        <code>false</code> the selector on top disappears.
+   * @return this for chaining
+   */
   @Nonnull
   public DataTables setLengthChange (final boolean bLengthChange)
   {
@@ -705,7 +714,10 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   {
     m_aLengthMenu = aLengthMenu;
     if (aLengthMenu != null && !aLengthMenu.isEmpty ())
+    {
       setPageLength (aLengthMenu.getItemAtIndex (0).getItemCount ());
+      setLengthChange (aLengthMenu.getItemCount () > 1);
+    }
     return this;
   }
 
@@ -1122,7 +1134,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     _applyClientSideSortingSettings ();
 
     // Determine all applicable plugins
-    final ICommonsList <IDataTablesPlugin> aRelevantPlugins = new CommonsArrayList <> ();
+    final ICommonsList <IDataTablesPlugin> aRelevantPlugins = new CommonsArrayList<> ();
     for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
       if (aPlugin.canBeApplied (this))
         aRelevantPlugins.add (aPlugin);
