@@ -273,6 +273,6 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
   {
     if (StringHelper.hasNoText (sName) || aClient == null)
       return null;
-    return getFirst (a -> a.hasSameClient (aClient) && a.getDisplayName ().equals (sName));
+    return findFirst (a -> a.hasSameClient (aClient) && a.getDisplayName ().equals (sName));
   }
 }

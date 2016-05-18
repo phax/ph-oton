@@ -54,15 +54,17 @@ public interface IMapBasedDAO <INTERFACETYPE extends IHasID <String>>
                                 @Nonnull Consumer <? super RETTYPE> aConsumer);
 
   @Nullable
-  INTERFACETYPE getFirst (@Nullable Predicate <? super INTERFACETYPE> aFilter);
+  INTERFACETYPE findFirst (@Nullable Predicate <? super INTERFACETYPE> aFilter);
 
   @Nullable
-  <RETTYPE> RETTYPE getFirstMapped (@Nullable Predicate <? super INTERFACETYPE> aFilter,
-                                    @Nonnull Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper);
+  <RETTYPE> RETTYPE findFirstMapped (@Nullable Predicate <? super INTERFACETYPE> aFilter,
+                                     @Nonnull Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper);
 
   boolean containsAny ();
 
   boolean containsAny (@Nullable Predicate <? super INTERFACETYPE> aFilter);
+
+  boolean containsNone ();
 
   boolean containsNone (@Nullable Predicate <? super INTERFACETYPE> aFilter);
 

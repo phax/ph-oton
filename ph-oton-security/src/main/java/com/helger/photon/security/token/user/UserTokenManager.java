@@ -265,7 +265,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
     if (StringHelper.hasNoText (sTokenString))
       return null;
 
-    return getFirst (aUserToken -> {
+    return findFirst (aUserToken -> {
       final IAccessToken aAccessToken = aUserToken.getActiveAccessToken ();
       return aAccessToken != null && aAccessToken.getTokenString ().equals (sTokenString);
     });

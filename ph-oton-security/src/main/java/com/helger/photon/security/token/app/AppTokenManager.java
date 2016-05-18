@@ -308,7 +308,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
     if (StringHelper.hasNoText (sTokenString))
       return null;
 
-    return getFirst (aAppToken -> {
+    return findFirst (aAppToken -> {
       final IAccessToken aAccessToken = aAppToken.getActiveAccessToken ();
       return aAccessToken != null && aAccessToken.getTokenString ().equals (sTokenString);
     });

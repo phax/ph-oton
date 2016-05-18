@@ -290,14 +290,14 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   }
 
   @Nullable
-  public final INTERFACETYPE getFirst (@Nullable final Predicate <? super INTERFACETYPE> aFilter)
+  public final INTERFACETYPE findFirst (@Nullable final Predicate <? super INTERFACETYPE> aFilter)
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.findFirst (m_aMap.values (), aFilter));
   }
 
   @Nullable
-  public final <RETTYPE> RETTYPE getFirstMapped (@Nullable final Predicate <? super INTERFACETYPE> aFilter,
-                                                 @Nonnull final Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper)
+  public final <RETTYPE> RETTYPE findFirstMapped (@Nullable final Predicate <? super INTERFACETYPE> aFilter,
+                                                  @Nonnull final Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper)
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.findFirstMapped (m_aMap.values (), aFilter, aMapper));
   }
@@ -310,6 +310,11 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   public final boolean containsAny (@Nullable final Predicate <? super INTERFACETYPE> aFilter)
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.containsAny (m_aMap.values (), aFilter));
+  }
+
+  public final boolean containsNone ()
+  {
+    return m_aRWLock.readLocked ( () -> m_aMap.isEmpty ());
   }
 
   public final boolean containsNone (@Nullable final Predicate <? super INTERFACETYPE> aFilter)
