@@ -64,9 +64,9 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   PDFMAKE ("pdfmake/0.1.18/pdfmake.js"),
   VFS_FONTS ("pdfmake/0.1.18/vfs_fonts.js"),
   PRISMJS ("prismjs/prism.js"),
-  SELECT2 ("select2/4.0.0/js/select2.js"),
-  SELECT2_LOCALE ("select2/4.0.0/js/i18n/{0}.js", false),
-  TETHER ("tether/1.1.1/js/tether.js"),
+  SELECT2 ("select2/4.0.2/js/select2.js"),
+  SELECT2_LOCALE ("select2/4.0.2/js/i18n/{0}.js", false),
+  TETHER ("tether/1.3.1/js/tether.js"),
   /** https://github.com/twitter/typeahead.js/ */
   TYPEAHEAD_0_9 ("typeahead/0.9.3/typeahead.js"),
   /** https://github.com/twitter/typeahead.js/ */
