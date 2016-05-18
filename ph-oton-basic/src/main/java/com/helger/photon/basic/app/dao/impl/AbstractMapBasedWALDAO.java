@@ -183,12 +183,10 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   }
 
   /**
-   * Add or update an item including invoking the callback
+   * Add an item including invoking the callback
    *
    * @param aNewItem
-   *        The item to be added or updated
-   * @param eActionType
-   *        The action type. Must be CREATE or UPDATE!
+   *        The item to be added. May not be <code>null</code>.
    */
   @MustBeLocked (ELockType.WRITE)
   protected final void internalCreateItem (@Nonnull final IMPLTYPE aNewItem)
@@ -201,6 +199,12 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
     m_aCallbacks.forEach (aCB -> aCB.onCreateItem (aNewItem));
   }
 
+  /**
+   * Update and existing item including invoking the callback
+   *
+   * @param aItem
+   *        The item to be updated. May not be <code>null</code>.
+   */
   @MustBeLocked (ELockType.WRITE)
   protected final void internalUpdateItem (@Nonnull final IMPLTYPE aItem)
   {

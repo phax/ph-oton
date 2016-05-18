@@ -28,8 +28,6 @@ public interface IDAOChangeCallback <INTERFACETYPE extends IHasID <String> & Ser
   /**
    * Called after a new item was created.
    *
-   * @param sID
-   *        The ID of the created item. Never <code>null</code> nor empty.
    * @param aNewItem
    *        The newly created item. Never <code>null</code>.
    */
