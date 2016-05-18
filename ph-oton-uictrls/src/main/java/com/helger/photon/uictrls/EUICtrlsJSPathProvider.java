@@ -63,6 +63,8 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   JSZIP ("jszip/2.5.0-6/jszip.js"),
   PDFMAKE ("pdfmake/0.1.18/pdfmake.js"),
   VFS_FONTS ("pdfmake/0.1.18/vfs_fonts.js"),
+  PDFOBJECT1 ("pdfobject/1.2/pdfobject.js"),
+  PDFOBJECT2 ("pdfobject/1.2/pdfobject.js"),
   PRISMJS ("prismjs/prism.js"),
   SELECT2 ("select2/4.0.2/js/select2.js"),
   SELECT2_LOCALE ("select2/4.0.2/js/i18n/{0}.js", false),
