@@ -1,6 +1,7 @@
 package com.helger.photon.uictrls.pdfobject;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
@@ -22,11 +23,31 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 public class HCPDFObject extends AbstractHCDiv <HCPDFObject>
 {
   private final ISimpleURL m_aPathToPDF;
+  private PDFObjectOptions m_aOptions;
 
   public HCPDFObject (@Nonnull final ISimpleURL aPathToPDF)
   {
     ensureID ();
     m_aPathToPDF = ValueEnforcer.notNull (aPathToPDF, "PathToPDF");
+  }
+
+  @Nonnull
+  public ISimpleURL getPathToPDF ()
+  {
+    return m_aPathToPDF;
+  }
+
+  @Nonnull
+  public HCPDFObject setOptions (@Nullable final PDFObjectOptions aOptions)
+  {
+    m_aOptions = aOptions;
+    return this;
+  }
+
+  @Nullable
+  public PDFObjectOptions getOptions ()
+  {
+    return m_aOptions;
   }
 
   @Override
@@ -39,7 +60,7 @@ public class HCPDFObject extends AbstractHCDiv <HCPDFObject>
     // Add special JS code
     aTargetNode.addChild (new HCScriptInline (PDFObjectJS.embed (m_aPathToPDF,
                                                                  JQuerySelector.id (this).invoke (),
-                                                                 null)));
+                                                                 m_aOptions)));
   }
 
   @Override
