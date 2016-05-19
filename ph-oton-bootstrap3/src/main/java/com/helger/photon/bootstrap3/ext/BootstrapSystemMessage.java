@@ -33,14 +33,21 @@ import com.helger.photon.bootstrap3.alert.AbstractBootstrapAlert;
 import com.helger.photon.bootstrap3.alert.EBootstrapAlertType;
 import com.helger.photon.uicore.UITextFormatter;
 
+/**
+ * Render the system message using a Bootstrap alert window.
+ *
+ * @author Philip Helger
+ */
 public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSystemMessage>
 {
-  private static final BiConsumer <String, BootstrapSystemMessage> DEFAULT_FORMATTER = (s,
-                                                                                        t) -> t.addChildren (HCExtHelper.nl2divList (s));
+  public static final BiConsumer <String, BootstrapSystemMessage> FORMATTER_DEFAULT = (sText,
+                                                                                       aCtrl) -> aCtrl.addChildren (HCExtHelper.nl2divList (sText));
+  public static final BiConsumer <String, BootstrapSystemMessage> FORMATTER_MARKDOWN = (sText,
+                                                                                        aCtrl) -> aCtrl.addChild (UITextFormatter.markdown (sText));
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
-  private static BiConsumer <String, BootstrapSystemMessage> s_aFormatter = DEFAULT_FORMATTER;
+  private static BiConsumer <String, BootstrapSystemMessage> s_aFormatter = FORMATTER_DEFAULT;
 
   @Nonnull
   public static BiConsumer <String, BootstrapSystemMessage> getDefaultFormatter ()
@@ -57,7 +64,8 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
    */
   public static void setDefaultFormatter (@Nonnull final BiConsumer <String, BootstrapSystemMessage> aFormatter)
   {
-    s_aRWLock.writeLocked ( () -> s_aFormatter = ValueEnforcer.notNull (aFormatter, "Formatter"));
+    ValueEnforcer.notNull (aFormatter, "Formatter");
+    s_aRWLock.writeLocked ( () -> s_aFormatter = aFormatter);
   }
 
   /**
@@ -69,7 +77,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
    */
   public static void setDefaultUseMarkdown (final boolean bUseMarkdown)
   {
-    setDefaultFormatter (bUseMarkdown ? (s, t) -> t.addChild (UITextFormatter.markdown (s)) : DEFAULT_FORMATTER);
+    setDefaultFormatter (bUseMarkdown ? FORMATTER_MARKDOWN : FORMATTER_DEFAULT);
   }
 
   @Nonnull
