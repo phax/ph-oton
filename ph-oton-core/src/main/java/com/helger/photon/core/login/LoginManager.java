@@ -256,7 +256,7 @@ public class LoginManager
         // Get all required rules - may be null
         final Collection <String> aRequiredRoleIDs = getAllRequiredRoleIDs ();
 
-        if (true)
+        if (false)
         {
           // Try main login
           final AuthIdentificationResult aResult = AuthIdentificationManager.validateLoginCredentialsAndCreateToken (new UserPasswordCredentials (aUser,
