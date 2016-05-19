@@ -27,6 +27,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.auth.CBasicSecurity;
 
 /**
@@ -48,7 +49,7 @@ public final class AuditItem implements IAuditItem
                     @Nonnull final ESuccess eSuccess,
                     @Nonnull final String sAction)
   {
-    this (LocalDateTime.now (),
+    this (PDTFactory.getCurrentLocalDateTime (),
           StringHelper.hasText (sUserID) ? sUserID : CBasicSecurity.USER_ID_NONE_LOGGED_IN,
           eType,
           eSuccess,

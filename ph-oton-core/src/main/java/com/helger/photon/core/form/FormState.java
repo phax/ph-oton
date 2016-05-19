@@ -30,6 +30,7 @@ import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ITypedObject;
 import com.helger.commons.type.ObjectType;
+import com.helger.datetime.PDTFactory;
 import com.helger.json.JsonObject;
 
 @Immutable
@@ -51,7 +52,7 @@ public class FormState implements ITypedObject <String>, Serializable
     ValueEnforcer.notNull (aAttrs, "Attrs");
 
     m_sPageID = sPageID;
-    m_aDT = LocalDateTime.now ();
+    m_aDT = PDTFactory.getCurrentLocalDateTime ();
     m_sFlowID = sFlowID;
     m_aAttrs = aAttrs;
   }

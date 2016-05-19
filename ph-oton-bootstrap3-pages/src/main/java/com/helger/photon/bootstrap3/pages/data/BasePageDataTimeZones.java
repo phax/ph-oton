@@ -34,6 +34,7 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
+import com.helger.datetime.PDTFactory;
 import com.helger.datetime.config.PDTConfig;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -111,7 +112,7 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext>
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final LocalDateTime aNow = LocalDateTime.now ();
+    final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
 
     // Get default time zone
     final ZoneId aCurrentDTZ = PDTConfig.getDefaultZoneId ();

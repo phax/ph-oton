@@ -32,6 +32,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
+import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTFormatPatterns;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -136,7 +137,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     if (false)
     {
       // Default to end date + 1 year
-      setEndDate (LocalDate.now ().plusYears (1));
+      setEndDate (PDTFactory.getCurrentLocalDate ().plusYears (1));
     }
   }
 

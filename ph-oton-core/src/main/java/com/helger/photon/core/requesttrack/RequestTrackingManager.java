@@ -17,7 +17,6 @@
 package com.helger.photon.core.requesttrack;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnegative;
@@ -32,6 +31,7 @@ import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.callback.CallbackList;
+import com.helger.commons.callback.ICallbackList;
 import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedMap;
@@ -204,12 +204,12 @@ public final class RequestTrackingManager
     }
   }
 
-  public void checkForLongRunningRequests (@Nonnull final List <ILongRunningRequestCallback> aCallbacks)
+  public void checkForLongRunningRequests (@Nonnull final ICallbackList <ILongRunningRequestCallback> aCallbacks)
   {
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Checking for long running requests");
 
-    if (!aCallbacks.isEmpty ())
+    if (aCallbacks.hasCallbacks ())
     {
       m_aRWLock.readLocked ( () -> {
         // Check only if they are enabled!
@@ -227,10 +227,9 @@ public final class RequestTrackingManager
             if (nRunningMilliseconds > nNotificationMS)
             {
               // Invoke callbacks
-              for (final ILongRunningRequestCallback aCallback : aCallbacks)
-                aCallback.onLongRunningRequest (aItem.getKey (),
-                                                aItem.getValue ().getRequestScope (),
-                                                nRunningMilliseconds);
+              aCallbacks.forEach (aCB -> aCB.onLongRunningRequest (aItem.getKey (),
+                                                                   aItem.getValue ().getRequestScope (),
+                                                                   nRunningMilliseconds));
             }
             else
             {

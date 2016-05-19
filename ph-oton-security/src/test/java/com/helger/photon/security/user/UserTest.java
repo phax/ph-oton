@@ -22,7 +22,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.time.LocalDateTime;
 import java.util.Locale;
 
 import org.junit.Rule;
@@ -32,6 +31,7 @@ import org.junit.rules.TestRule;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.convert.MicroTypeConverter;
+import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 import com.helger.photon.security.password.GlobalPasswordSettings;
@@ -58,7 +58,7 @@ public final class UserTest
                                  "Helger",
                                  "bla",
                                  Locale.GERMANY,
-                                 LocalDateTime.now (),
+                                 PDTFactory.getCurrentLocalDateTime (),
                                  0,
                                  0,
                                  false);
@@ -90,7 +90,7 @@ public final class UserTest
                                  null,
                                  null,
                                  Locale.GERMANY,
-                                 LocalDateTime.now (),
+                                 PDTFactory.getCurrentLocalDateTime (),
                                  0,
                                  0,
                                  false);
@@ -133,7 +133,7 @@ public final class UserTest
                                  "Helger",
                                  "bla",
                                  Locale.GERMANY,
-                                 LocalDateTime.now (),
+                                 PDTFactory.getCurrentLocalDateTime (),
                                  0,
                                  0,
                                  false);

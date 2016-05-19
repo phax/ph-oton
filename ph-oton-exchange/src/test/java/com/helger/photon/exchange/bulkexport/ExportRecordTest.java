@@ -20,13 +20,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
 
 import org.junit.Test;
+
+import com.helger.datetime.PDTFactory;
 
 /**
  * Test class for class {@link ExportRecord}.
@@ -39,11 +36,11 @@ public final class ExportRecordTest
   public void testAddFieldTyped ()
   {
     final ExportRecord aRecordWithAllTypes = new ExportRecord ().addField ("Hallo")
-                                                                .addField (LocalTime.now ())
-                                                                .addField (LocalDate.now ())
-                                                                .addField (LocalDateTime.now ())
-                                                                .addField (ZonedDateTime.now ())
-                                                                .addField (OffsetDateTime.now ())
+                                                                .addField (PDTFactory.getCurrentLocalTime ())
+                                                                .addField (PDTFactory.getCurrentLocalDate ())
+                                                                .addField (PDTFactory.getCurrentLocalDateTime ())
+                                                                .addField (PDTFactory.getCurrentZonedDateTime ())
+                                                                .addField (PDTFactory.getCurrentOffsetDateTime ())
                                                                 .addField (true)
                                                                 .addField (Boolean.FALSE)
                                                                 .addField (4711)
@@ -61,11 +58,11 @@ public final class ExportRecordTest
   public void testAddFieldUntyped ()
   {
     final ExportRecord aRecordWithAllTypes = new ExportRecord ().addField ((Object) "Hallo")
-                                                                .addField ((Object) LocalTime.now ())
-                                                                .addField ((Object) LocalDate.now ())
-                                                                .addField ((Object) LocalDateTime.now ())
-                                                                .addField ((Object) ZonedDateTime.now ())
-                                                                .addField ((Object) OffsetDateTime.now ())
+                                                                .addField ((Object) PDTFactory.getCurrentLocalTime ())
+                                                                .addField ((Object) PDTFactory.getCurrentLocalDate ())
+                                                                .addField ((Object) PDTFactory.getCurrentLocalDateTime ())
+                                                                .addField ((Object) PDTFactory.getCurrentZonedDateTime ())
+                                                                .addField ((Object) PDTFactory.getCurrentOffsetDateTime ())
                                                                 .addField ((Object) Boolean.FALSE)
                                                                 .addField ((Object) Integer.valueOf (-34))
                                                                 .addField ((Object) Long.valueOf (Long.MIN_VALUE))

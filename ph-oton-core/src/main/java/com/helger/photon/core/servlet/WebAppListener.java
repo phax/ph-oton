@@ -181,7 +181,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected final void logInitParameters (@Nonnull final ServletContext aSC)
   {
     // Put them in a sorted map
-    final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap<> ();
+    final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap <> ();
     final Enumeration <?> aEnum = aSC.getInitParameterNames ();
     while (aEnum.hasMoreElements ())
     {
@@ -464,7 +464,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       throw new IllegalStateException ("WebAppListener was already instantiated!");
 
     final StopWatch aSW = StopWatch.createdStarted ();
-    m_aInitializationStartDT = LocalDateTime.now ();
+    m_aInitializationStartDT = PDTFactory.getCurrentLocalDateTime ();
 
     // Call callback
     onTheVeryBeginning (aSC);
@@ -517,7 +517,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     afterContextInitialized (aSC);
 
     // Remember end time
-    m_aInitializationEndDT = LocalDateTime.now ();
+    m_aInitializationEndDT = PDTFactory.getCurrentLocalDateTime ();
 
     // Finally
     if (s_aLogger.isInfoEnabled ())
@@ -611,7 +611,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
         final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
         final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
         aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
-        aDoc.getDocumentElement ().setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (LocalDateTime.now ()));
+        aDoc.getDocumentElement ()
+            .setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
         SimpleFileIO.writeFile (aDestPath, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
       }
       catch (final Throwable t)

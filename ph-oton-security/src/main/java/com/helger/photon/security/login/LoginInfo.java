@@ -30,6 +30,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.scope.ISessionScope;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.datetime.PDTFactory;
 import com.helger.photon.security.user.IUser;
 
 /**
@@ -50,7 +51,7 @@ public final class LoginInfo extends MapBasedAttributeContainer <String, String>
   {
     m_aUser = ValueEnforcer.notNull (aUser, "User");
     m_aSessionScope = ValueEnforcer.notNull (aSessionScope, "SessionScope");
-    m_aLoginDT = LocalDateTime.now ();
+    m_aLoginDT = PDTFactory.getCurrentLocalDateTime ();
     m_aLastAccessDT = m_aLoginDT;
   }
 
@@ -114,7 +115,7 @@ public final class LoginInfo extends MapBasedAttributeContainer <String, String>
    */
   public void setLastAccessDTNow ()
   {
-    m_aLastAccessDT = LocalDateTime.now ();
+    m_aLastAccessDT = PDTFactory.getCurrentLocalDateTime ();
   }
 
   /**
@@ -132,7 +133,7 @@ public final class LoginInfo extends MapBasedAttributeContainer <String, String>
    */
   public void setLogoutDTNow ()
   {
-    m_aLogoutDT = LocalDateTime.now ();
+    m_aLogoutDT = PDTFactory.getCurrentLocalDateTime ();
   }
 
   /**

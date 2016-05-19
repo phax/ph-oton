@@ -86,7 +86,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
       // No base dir -> in memory only
       if (StringHelper.hasNoText (m_sBaseDir))
         return null;
-      return m_sBaseDir + getRelativeAuditFilename (LocalDate.now ());
+      return m_sBaseDir + getRelativeAuditFilename (PDTFactory.getCurrentLocalDate ());
     }
 
     @Override
@@ -316,7 +316,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
   {
     if (m_aEarliestAuditDate == null)
     {
-      final LocalDate aNow = LocalDate.now ();
+      final LocalDate aNow = PDTFactory.getCurrentLocalDate ();
       LocalDate aEarliest = aNow;
       // In in memory only the current data is available
       if (!isInMemory ())

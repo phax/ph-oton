@@ -37,6 +37,7 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.datetime.PDTFactory;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.url.LinkHelper;
@@ -63,7 +64,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
                                           @Nonnull final WebSiteResourceBundle aBundle,
                                           final boolean bRegular)
   {
-    this (sBundleID, aBundle, LocalDateTime.now ());
+    this (sBundleID, aBundle, PDTFactory.getCurrentLocalDateTime ());
     // Always serialize new bundles
     _ensureSerialized (bRegular);
   }

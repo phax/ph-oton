@@ -25,6 +25,7 @@ import javax.xml.XMLConstants;
 import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
+import com.helger.datetime.PDTFactory;
 import com.helger.web.datetime.PDTWebDateHelper;
 
 /**
@@ -70,6 +71,6 @@ public class FeedDate extends AbstractFeedElement
   @Nonnull
   public static FeedDate createNow ()
   {
-    return new FeedDate (LocalDateTime.now ());
+    return new FeedDate (PDTFactory.getCurrentLocalDateTime ());
   }
 }

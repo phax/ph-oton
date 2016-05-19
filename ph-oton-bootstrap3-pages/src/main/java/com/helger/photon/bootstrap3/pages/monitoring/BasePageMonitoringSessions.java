@@ -205,7 +205,8 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                                          .setCtrl (PDTToString.getAsString (aLastAccessDT,
                                                                                             aDisplayLocale)));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_AGE.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (Duration.between (aCreationDT, LocalDateTime.now ())
+                                                         .setCtrl (Duration.between (aCreationDT,
+                                                                                     PDTFactory.getCurrentLocalDateTime ())
                                                                            .toString ()));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_TIMEOUT.getDisplayText (aDisplayLocale))
                                                          .setCtrl (EText.MSG_SCOPE_SESSION_TIMEOUT_TEXT.getDisplayTextWithArgs (aDisplayLocale,

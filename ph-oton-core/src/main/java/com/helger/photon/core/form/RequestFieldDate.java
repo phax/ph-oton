@@ -29,6 +29,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.datetime.util.PDTXMLConverter;
 
@@ -123,20 +124,20 @@ public class RequestFieldDate extends RequestField
   public static RequestFieldDate createLocalDateNow (@Nonnull @Nonempty final String sFieldName,
                                                      @Nonnull final Locale aDisplayLocale)
   {
-    return new RequestFieldDate (sFieldName, LocalDate.now (), aDisplayLocale);
+    return new RequestFieldDate (sFieldName, PDTFactory.getCurrentLocalDate (), aDisplayLocale);
   }
 
   @Nonnull
   public static RequestFieldDate createLocalDateTimeNow (@Nonnull @Nonempty final String sFieldName,
                                                          @Nonnull final Locale aDisplayLocale)
   {
-    return new RequestFieldDate (sFieldName, LocalDateTime.now (), aDisplayLocale);
+    return new RequestFieldDate (sFieldName, PDTFactory.getCurrentLocalDateTime (), aDisplayLocale);
   }
 
   @Nonnull
   public static RequestFieldDate createDateTimeNow (@Nonnull @Nonempty final String sFieldName,
                                                     @Nonnull final Locale aDisplayLocale)
   {
-    return new RequestFieldDate (sFieldName, ZonedDateTime.now (), aDisplayLocale);
+    return new RequestFieldDate (sFieldName, PDTFactory.getCurrentZonedDateTime (), aDisplayLocale);
   }
 }

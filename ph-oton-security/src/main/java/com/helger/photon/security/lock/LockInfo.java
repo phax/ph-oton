@@ -25,6 +25,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.datetime.PDTFactory;
 
 /**
  * Default implementation of the {@link ILockInfo} interface.
@@ -40,7 +41,7 @@ public final class LockInfo implements ILockInfo
   public LockInfo (@Nonnull @Nonempty final String sUserID)
   {
     m_sUserID = ValueEnforcer.notEmpty (sUserID, "UserID");
-    m_aLockTime = LocalDateTime.now ();
+    m_aLockTime = PDTFactory.getCurrentLocalDateTime ();
   }
 
   @Nonnull

@@ -33,6 +33,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsEnumMap;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.datetime.PDTFactory;
 
 @NotThreadSafe
 public final class ServletStatus
@@ -73,7 +74,7 @@ public final class ServletStatus
                        " for " +
                        m_sClassName);
     m_eCurrentStatus = ValueEnforcer.notNull (eNewStatus, "NewStatus");
-    m_aStatusChangeDates.put (eNewStatus, LocalDateTime.now ());
+    m_aStatusChangeDates.put (eNewStatus, PDTFactory.getCurrentLocalDateTime ());
   }
 
   @Nonnull

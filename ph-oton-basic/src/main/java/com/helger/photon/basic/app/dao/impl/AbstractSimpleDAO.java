@@ -54,6 +54,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.commons.xml.serialize.write.IXMLWriterSettings;
 import com.helger.commons.xml.serialize.write.XMLWriterSettings;
+import com.helger.datetime.PDTFactory;
 import com.helger.datetime.format.PDTToString;
 import com.helger.photon.basic.app.dao.IDAOIO;
 import com.helger.photon.basic.app.io.ConstantHasFilename;
@@ -301,7 +302,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
             m_aStatsCounterInitTimer.addTime (aSW.stopAndGetMillis ());
             m_aStatsCounterInitSuccess.increment ();
             m_nInitCount++;
-            m_aLastInitDT = LocalDateTime.now ();
+            m_aLastInitDT = PDTFactory.getCurrentLocalDateTime ();
           }
           finally
           {
@@ -336,7 +337,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
               m_aStatsCounterReadTimer.addTime (aSW.stopAndGetMillis ());
               m_aStatsCounterReadSuccess.increment ();
               m_nReadCount++;
-              m_aLastReadDT = LocalDateTime.now ();
+              m_aLastReadDT = PDTFactory.getCurrentLocalDateTime ();
             }
             finally
             {
@@ -544,7 +545,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
       m_aStatsCounterWriteTimer.addTime (aSW.stopAndGetMillis ());
       m_aStatsCounterWriteSuccess.increment ();
       m_nWriteCount++;
-      m_aLastWriteDT = LocalDateTime.now ();
+      m_aLastWriteDT = PDTFactory.getCurrentLocalDateTime ();
       return ESuccess.SUCCESS;
     }
     catch (final Throwable t)

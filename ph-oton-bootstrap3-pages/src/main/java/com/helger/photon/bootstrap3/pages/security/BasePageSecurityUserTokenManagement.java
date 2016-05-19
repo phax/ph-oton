@@ -16,7 +16,6 @@
  */
 package com.helger.photon.bootstrap3.pages.security;
 
-import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -39,6 +38,7 @@ import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.datetime.PDTFactory;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCTextArea;
@@ -446,7 +446,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
       {
         aUserTokenMgr.createNewAccessToken (aSelectedObject.getID (),
                                             LoggedInUserManager.getInstance ().getCurrentUserID (),
-                                            LocalDateTime.now (),
+                                            PDTFactory.getCurrentLocalDateTime (),
                                             sRevocationReason,
                                             sTokenString);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (bRevokedOld ? EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
@@ -514,7 +514,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
         final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
         aUserTokenMgr.revokeAccessToken (aSelectedObject.getID (),
                                          LoggedInUserManager.getInstance ().getCurrentUserID (),
-                                         LocalDateTime.now (),
+                                         PDTFactory.getCurrentLocalDateTime (),
                                          sRevocationReason);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EBaseText.REVOKE_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                   aSelectedObject.getDisplayName ())));

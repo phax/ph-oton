@@ -29,6 +29,7 @@ import com.helger.commons.id.IHasID;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IMultilingualText;
+import com.helger.datetime.PDTFactory;
 
 /**
  * This class contains the data for a single long running job.
@@ -56,7 +57,7 @@ public final class LongRunningJobData implements IHasID <String>
   {
     m_sID = ValueEnforcer.notEmpty (sJobID, "JobID");
     m_aJobDescription = ValueEnforcer.notNull (aJobDescription, "JobDescription");
-    m_aStartDateTime = LocalDateTime.now ();
+    m_aStartDateTime = PDTFactory.getCurrentLocalDateTime ();
     m_sStartingUserID = sStartingUserID;
   }
 
@@ -119,7 +120,7 @@ public final class LongRunningJobData implements IHasID <String>
       throw new IllegalStateException ("Job was already ended");
 
     // Save the date
-    m_aEndDateTime = LocalDateTime.now ();
+    m_aEndDateTime = PDTFactory.getCurrentLocalDateTime ();
     m_eExecSuccess = eExecSucess;
     // Build the main results
     m_aResult = aResult;

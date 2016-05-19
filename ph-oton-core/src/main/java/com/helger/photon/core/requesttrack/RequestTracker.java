@@ -73,7 +73,7 @@ public final class RequestTracker extends AbstractGlobalWebSingleton
       // Check for long running requests
       try
       {
-        m_aRequestTrackingMgr.checkForLongRunningRequests (m_aLongRunningCallbacks.getAllCallbacks ());
+        m_aRequestTrackingMgr.checkForLongRunningRequests (m_aLongRunningCallbacks);
       }
       catch (final Throwable t)
       {

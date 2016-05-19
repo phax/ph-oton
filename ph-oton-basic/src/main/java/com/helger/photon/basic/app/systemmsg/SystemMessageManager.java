@@ -33,6 +33,7 @@ import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
@@ -135,7 +136,7 @@ public final class SystemMessageManager extends AbstractSimpleDAO
       m_sMessage = sMessage;
 
       // Update last update
-      m_aLastUpdate = LocalDateTime.now ();
+      m_aLastUpdate = PDTFactory.getCurrentLocalDateTime ();
       markAsChanged ();
       AuditHelper.onAuditExecuteSuccess ("update-system-message", eMessageType, sMessage);
       return EChange.CHANGED;

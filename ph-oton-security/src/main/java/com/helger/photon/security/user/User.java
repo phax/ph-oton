@@ -32,6 +32,7 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
+import com.helger.datetime.PDTFactory;
 import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.StubObjectWithCustomAttrs;
@@ -334,7 +335,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
 
   void onSuccessfulLogin ()
   {
-    m_aLastLoginDT = LocalDateTime.now ();
+    m_aLastLoginDT = PDTFactory.getCurrentLocalDateTime ();
     m_nLoginCount++;
     m_nConsecutiveFailedLoginCount = 0;
   }
