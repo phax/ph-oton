@@ -21,8 +21,9 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.charset.CCharset;
+import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.messagedigest.EMessageDigestAlgorithm;
-import com.helger.commons.messagedigest.MessageDigestGeneratorHelper;
+import com.helger.commons.messagedigest.MessageDigestValue;
 import com.helger.photon.security.password.salt.IPasswordSalt;
 
 /**
@@ -53,9 +54,8 @@ public final class PasswordHashCreatorDefault extends AbstractPasswordHashCreato
   {
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
 
-    final byte [] aDigest = MessageDigestGeneratorHelper.getAllDigestBytes (USER_PASSWORD_ALGO,
-                                                                            sPlainTextPassword,
-                                                                            CCharset.CHARSET_UTF_8_OBJ);
-    return MessageDigestGeneratorHelper.getHexValueFromDigest (aDigest);
+    return MessageDigestValue.create (CharsetManager.getAsBytes (sPlainTextPassword, CCharset.CHARSET_UTF_8_OBJ),
+                                      USER_PASSWORD_ALGO)
+                             .getHexEncodedDigestString ();
   }
 }

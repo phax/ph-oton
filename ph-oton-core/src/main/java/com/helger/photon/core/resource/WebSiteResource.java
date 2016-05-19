@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.resource;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
@@ -39,7 +40,7 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.messagedigest.EMessageDigestAlgorithm;
-import com.helger.commons.messagedigest.MessageDigestGeneratorHelper;
+import com.helger.commons.messagedigest.MessageDigestValue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
@@ -101,13 +102,22 @@ public class WebSiteResource
 
     if (m_bResourceExists)
     {
-      m_aContentHash = MessageDigestGeneratorHelper.getAllDigestBytesFromInputStream (aRes.getInputStream (),
-                                                                                      EMessageDigestAlgorithm.SHA_512);
-      m_sContentHash = StringHelper.getHexEncoded (m_aContentHash);
+      byte [] aDigestBytes = ArrayHelper.EMPTY_BYTE_ARRAY;
+      try
+      {
+        aDigestBytes = MessageDigestValue.create (aRes.getInputStream (), EMessageDigestAlgorithm.SHA_512)
+                                         .getAllDigestBytes ();
+      }
+      catch (final IOException ex)
+      {
+        s_aLogger.error ("Failed to create message digest of " + aRes.getPath (), ex);
+      }
+      m_aContentHash = aDigestBytes;
+      m_sContentHash = StringHelper.getHexEncoded (aDigestBytes);
     }
     else
     {
-      m_aContentHash = new byte [0];
+      m_aContentHash = ArrayHelper.EMPTY_BYTE_ARRAY;
       m_sContentHash = "";
     }
   }
