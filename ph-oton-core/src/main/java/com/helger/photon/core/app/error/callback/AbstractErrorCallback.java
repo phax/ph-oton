@@ -144,6 +144,18 @@ public abstract class AbstractErrorCallback implements
   public void onParallelRunningRequestsBelowLimit ()
   {}
 
+  /**
+   * Install the provided error callback for the following things:
+   * <ul>
+   * <li>ApplicationAjaxManager - exception handler</li>
+   * <li>ApplicationAPIManager - exception handler</li>
+   * <li>AbstractDAO - read and write exception handler</li>
+   * <li>RequestTracker - long running requests and parallel running requests
+   * </li></li>
+   * 
+   * @param aCallback
+   *        The callback to be installed. May not be <code>null</code>.
+   */
   public static void install (@Nonnull final AbstractErrorCallback aCallback)
   {
     ApplicationAjaxManager.getInstance ().getExceptionCallbacks ().addCallback (aCallback);
