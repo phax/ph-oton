@@ -26,7 +26,7 @@ import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.PDTFactory;
-import com.helger.web.datetime.PDTWebDateHelper;
+import com.helger.datetime.util.PDTWebDateHelper;
 
 /**
  * ATOM date construct.

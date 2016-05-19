@@ -67,9 +67,9 @@ import com.helger.commons.vminit.VirtualMachineInitializer;
 import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.util.PDTIOHelper;
+import com.helger.datetime.util.PDTWebDateHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOIntIDFactory;
-import com.helger.web.datetime.PDTWebDateHelper;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.web.servlet.server.StaticServerInfo;
 
