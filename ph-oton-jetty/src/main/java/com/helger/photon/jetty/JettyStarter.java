@@ -55,17 +55,21 @@ import com.helger.commons.system.SystemProperties;
 @Immutable
 public final class JettyStarter
 {
+  public static final int DEFAULT_PORT = 8080;
+  public static final String DEFAULT_STOP_KEY = InternalJettyStopMonitorThread.STOP_KEY;
+  public static final int DEFAULT_STOP_PORT = InternalJettyStopMonitorThread.STOP_PORT;
+  public static final String DEFAULT_CONTEXT_PATH = "/";
   private static final Logger s_aLogger = LoggerFactory.getLogger (JettyStarter.class);
 
   private final String m_sAppName;
   private final String m_sDirBaseName;
-  private int m_nPort = 8080;
+  private int m_nPort = DEFAULT_PORT;
   private boolean m_bRunStopMonitor = true;
-  private String m_sStopKey = InternalJettyStopMonitorThread.STOP_KEY;
-  private int m_nStopPort = InternalJettyStopMonitorThread.STOP_PORT;
+  private String m_sStopKey = DEFAULT_STOP_KEY;
+  private int m_nStopPort = DEFAULT_STOP_PORT;
   private boolean m_bSpecialSessionMgr = true;
   private String m_sResourceBase = "target/webapp-classes";
-  private String m_sContextPath = "/";
+  private String m_sContextPath = DEFAULT_CONTEXT_PATH;
 
   public JettyStarter (@Nonnull final Class <?> aAppClass)
   {
@@ -81,6 +85,14 @@ public final class JettyStarter
       throw new IllegalStateException ("FolderName is empty.");
   }
 
+  /**
+   * Set the port to be used to run the application. Defaults to
+   * {@value #DEFAULT_PORT}
+   *
+   * @param nPort
+   *        The port to be used. Must be &gt; 0.
+   * @return this for chaining
+   */
   @Nonnull
   public JettyStarter setPort (@Nonnegative final int nPort)
   {
@@ -89,6 +101,14 @@ public final class JettyStarter
     return this;
   }
 
+  /**
+   * Enable or disable the "stop monitor" that listens for the graceful
+   * shutdown. By default this is enabled.
+   *
+   * @param bRunStopMonitor
+   *        <code>true</code> to enable it, <code>false</code> to disable it.
+   * @return this for chaining
+   */
   @Nonnull
   public JettyStarter setRunStopMonitor (final boolean bRunStopMonitor)
   {
@@ -96,6 +116,15 @@ public final class JettyStarter
     return this;
   }
 
+  /**
+   * Set the hidden "stop key" that must be submitted to stop the server.
+   * Defaults to {@link #DEFAULT_STOP_KEY}. If set here, it must also be set in
+   * {@link JettyStopper}.
+   *
+   * @param sStopKey
+   *        The stop key to be used. May not be <code>null</code>.
+   * @return this for chaining
+   */
   @Nonnull
   public JettyStarter setStopKey (@Nonnull final String sStopKey)
   {
@@ -104,6 +133,16 @@ public final class JettyStarter
     return this;
   }
 
+  /**
+   * Set the port on which the "stop monitor" should be running. Defaults to
+   * {@value #DEFAULT_STOP_PORT}. When running multiple Jettys at once, each
+   * instance must use it's own stop port. If this is set here, it must also be
+   * set in {@link JettyStopper}.
+   *
+   * @param nStopPort
+   *        The stop port to be used. Must be &gt; 0.
+   * @return this for chaining
+   */
   @Nonnull
   public JettyStarter setStopPort (@Nonnegative final int nStopPort)
   {
@@ -112,6 +151,12 @@ public final class JettyStarter
     return this;
   }
 
+  /**
+   * @param bSpecialSessionMgr
+   *        <code>true</code> to set a session manager that allows for
+   *        persistent activation and passivation of sessions.
+   * @return this for chaining
+   */
   @Nonnull
   public JettyStarter setSpecialSessionMgr (final boolean bSpecialSessionMgr)
   {
@@ -119,6 +164,14 @@ public final class JettyStarter
     return this;
   }
 
+  /**
+   * Set the common resource base (directory) from which all web application
+   * resources will be loaded (servlet context root).
+   * 
+   * @param sResourceBase
+   *        The path. May neither be <code>null</code> nor empty.
+   * @return this for chaining
+   */
   @Nonnull
   public JettyStarter setResourceBase (@Nonnull @Nonempty final String sResourceBase)
   {
@@ -127,6 +180,15 @@ public final class JettyStarter
     return this;
   }
 
+  /**
+   * Set the context path in which the web application should run. By default
+   * this {@link #DEFAULT_CONTEXT_PATH}
+   * 
+   * @param sContextPath
+   *        The new context path. May neither be <code>null</code> nor empty and
+   *        must start with a slash.
+   * @return this for chaining
+   */
   @Nonnull
   public JettyStarter setContextPath (@Nonnull @Nonempty final String sContextPath)
   {
@@ -135,6 +197,12 @@ public final class JettyStarter
     return this;
   }
 
+  /**
+   * Run Jetty with the provided settings.
+   * 
+   * @throws Exception
+   *         In case something goes wrong
+   */
   public void run () throws Exception
   {
     if (System.getSecurityManager () != null)
