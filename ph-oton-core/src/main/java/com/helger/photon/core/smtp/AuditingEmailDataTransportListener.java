@@ -17,13 +17,11 @@
 package com.helger.photon.core.smtp;
 
 import javax.annotation.Nonnull;
-import javax.mail.event.TransportEvent;
 
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.audit.AuditHelper;
-import com.helger.smtp.data.IEmailData;
+import com.helger.smtp.listener.EmailDataTransportEvent;
 import com.helger.smtp.listener.IEmailDataTransportListener;
-import com.helger.smtp.settings.ISMTPSettings;
 import com.helger.smtp.transport.listener.LoggingTransportListener;
 
 /**
@@ -35,42 +33,25 @@ import com.helger.smtp.transport.listener.LoggingTransportListener;
  */
 public class AuditingEmailDataTransportListener implements IEmailDataTransportListener
 {
-  public void messageDelivered (@Nonnull final ISMTPSettings aSMTPSettings,
-                                @Nonnull final IEmailData aEmailData,
-                                @Nonnull final TransportEvent aEvent)
+  public void messageDelivered (@Nonnull final EmailDataTransportEvent aEvent)
   {
     AuditHelper.onAuditExecuteSuccess ("email-message-delivered",
-                                       aEmailData.getSubject (),
+                                       aEvent.getEmailData ().getSubject (),
                                        aEvent.getValidSentAddresses (),
                                        aEvent.getValidUnsentAddresses (),
                                        aEvent.getInvalidAddresses (),
-                                       LoggingTransportListener.getMessageString (aEvent.getMessage ()));
+                                       LoggingTransportListener.getMessageString (aEvent.getMimeMessage ()));
   }
 
-  public void messageNotDelivered (@Nonnull final ISMTPSettings aSMTPSettings,
-                                   @Nonnull final IEmailData aEmailData,
-                                   @Nonnull final TransportEvent aEvent)
+  public void messageNotDelivered (@Nonnull final EmailDataTransportEvent aEvent)
   {
     AuditHelper.onAuditExecuteFailure ("email-message-delivered",
                                        "not-delivered",
-                                       aEmailData.getSubject (),
+                                       aEvent.getEmailData ().getSubject (),
                                        aEvent.getValidSentAddresses (),
                                        aEvent.getValidUnsentAddresses (),
                                        aEvent.getInvalidAddresses (),
-                                       LoggingTransportListener.getMessageString (aEvent.getMessage ()));
-  }
-
-  public void messagePartiallyDelivered (@Nonnull final ISMTPSettings aSMTPSettings,
-                                         @Nonnull final IEmailData aEmailData,
-                                         @Nonnull final TransportEvent aEvent)
-  {
-    AuditHelper.onAuditExecuteFailure ("email-message-delivered",
-                                       "partially-delivered",
-                                       aEmailData.getSubject (),
-                                       aEvent.getValidSentAddresses (),
-                                       aEvent.getValidUnsentAddresses (),
-                                       aEvent.getInvalidAddresses (),
-                                       LoggingTransportListener.getMessageString (aEvent.getMessage ()));
+                                       LoggingTransportListener.getMessageString (aEvent.getMimeMessage ()));
   }
 
   @Override

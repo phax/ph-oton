@@ -21,7 +21,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.mail.event.ConnectionListener;
-import javax.mail.event.TransportListener;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
@@ -73,7 +72,6 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext>
     MSG_EMAIL_CONNECTION_TIMEOUT ("Verbindungs-Timeout", "Connection timeout"),
     MSG_EMAIL_SOCKET_TIMEOUT ("Socket-Timeout", "Socket timeout"),
     MSG_EMAIL_CONNECTION_LISTENER ("ConnectionListener", "ConnectionListener"),
-    MSG_EMAIL_TRANSPORT_LISTENER ("TransportListener", "TransportListener"),
     MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER ("EmailDataTransportListener", "EmailDataTransportListener"),
     MSG_NONE ("keiner", "none"),
     MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
@@ -179,15 +177,6 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext>
         if (!aCtrl.hasChildren ())
           aCtrl.addChild (new HCEM ().addChild (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_CONNECTION_LISTENER.getDisplayText (aDisplayLocale))
-                                                     .setCtrl (aCtrl));
-      }
-      {
-        final HCNodeList aCtrl = new HCNodeList ();
-        for (final TransportListener aListener : EmailGlobalSettings.getAllTransportListeners ())
-          aCtrl.addChild (new HCDiv ().addChild (String.valueOf (aListener)));
-        if (!aCtrl.hasChildren ())
-          aCtrl.addChild (new HCEM ().addChild (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aCtrl));
       }
       {
