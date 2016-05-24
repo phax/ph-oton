@@ -87,7 +87,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                            extends AbstractBootstrapWebPageForm <FailedMailData, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     MSG_ID ("ID", "ID"),
     MSG_ERROR_DT ("Fehler-Datum", "Error date"),
@@ -241,7 +241,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final IEmailData aEmailData = aSelectedObject.getEmailData ();
-    final Throwable aError = aSelectedObject.getError ();
+    final Throwable aError = aSelectedObject.getTransportThrowable ();
 
     final BootstrapViewForm aTable = aNodeList.addAndReturnChild (new BootstrapViewForm ());
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ID.getDisplayText (aDisplayLocale))
@@ -498,14 +498,14 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     {
       final ISimpleURL aViewURL = createViewURL (aWPEC, aItem);
       final IEmailData aEmailData = aItem.getEmailData ();
-      final Throwable aError = aItem.getError ();
+      final Throwable aThrowable = aItem.getTransportThrowable ();
 
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (new HCA (aViewURL).addChild (aItem.getID ()));
       aRow.addCell (PDTToString.getAsString (aItem.getErrorDateTime (), aDisplayLocale));
       aRow.addCell (aItem.getSMTPServerDisplayText ());
       aRow.addCell (aEmailData == null ? null : aEmailData.getSubject ());
-      aRow.addCell (aError == null ? null : aError.getMessage ());
+      aRow.addCell (aThrowable == null ? null : aThrowable.getMessage ());
     }
 
     aNodeList.addChild (aTable);
