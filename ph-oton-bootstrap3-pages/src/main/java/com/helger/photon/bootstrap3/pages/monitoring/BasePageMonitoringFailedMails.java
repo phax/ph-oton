@@ -40,6 +40,7 @@ import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.ext.HCA_MailTo;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCRow;
@@ -48,6 +49,7 @@ import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
+import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButton;
@@ -57,6 +59,7 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
+import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.mgr.PhotonCoreManager;
@@ -75,6 +78,8 @@ import com.helger.smtp.failed.FailedMailData;
 import com.helger.smtp.failed.FailedMailQueue;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.smtp.settings.ISMTPSettings;
+import com.helger.smtp.transport.MailSendDetails;
+import com.helger.smtp.transport.MailTransportError;
 
 /**
  * Show all failed mails.
@@ -241,7 +246,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final IEmailData aEmailData = aSelectedObject.getEmailData ();
-    final Throwable aError = aSelectedObject.getTransportThrowable ();
+    final MailTransportError aError = aSelectedObject.getTransportError ();
 
     final BootstrapViewForm aTable = aNodeList.addAndReturnChild (new BootstrapViewForm ());
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ID.getDisplayText (aDisplayLocale))
@@ -317,8 +322,26 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     }
     if (aError != null)
     {
+      BootstrapTable aDetailsTable = null;
+      if (aError.hasAnyDetails ())
+      {
+        aDetailsTable = new BootstrapTable ();
+        aDetailsTable.addHeaderRow ().addCells ("Empfänger Adresse", "Adresse gültig", "Fehlermeldung");
+
+        for (final MailSendDetails aMailSendDetail : aError.getAllDetails ())
+        {
+          final HCRow aRow = aDetailsTable.addBodyRow ();
+          aRow.addCell (HCA_MailTo.createLinkedEmail (aMailSendDetail.getAddress ()));
+          aRow.addCell ().addChild (aMailSendDetail.isAddressValid () ? EDefaultIcon.YES.getAsNode ()
+                                                                      : EDefaultIcon.NO.getAsNode ());
+          aRow.addCell (HCExtHelper.nl2divList (aMailSendDetail.getErrorMessage ()));
+        }
+      }
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ERROR.getDisplayText (aDisplayLocale))
-                                                    .setCtrl (aError.getMessage ()));
+                                                    .setCtrl (new BootstrapErrorBox ().addChild (aError.getThrowable ()
+                                                                                                       .getMessage ()),
+                                                              aDetailsTable));
+
     }
   }
 
