@@ -63,7 +63,6 @@ import com.helger.commons.thirdparty.IThirdPartyModule;
 import com.helger.commons.thirdparty.ThirdPartyModuleRegistry;
 import com.helger.commons.timing.StopWatch;
 import com.helger.commons.url.URLHelper;
-import com.helger.commons.vminit.VirtualMachineInitializer;
 import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.datetime.PDTFactory;
 import com.helger.datetime.util.PDTIOHelper;
@@ -84,9 +83,6 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 {
   static
   {
-    // Do this exactly once here
-    VirtualMachineInitializer.runInitialization ();
-
     // Ensure that any AWT code runs headless (fonts etc.)
     SystemProperties.setPropertyValue ("java.awt.headless", "true");
   }
@@ -181,7 +177,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected final void logInitParameters (@Nonnull final ServletContext aSC)
   {
     // Put them in a sorted map
-    final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap <> ();
+    final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap<> ();
     final Enumeration <?> aEnum = aSC.getInitParameterNames ();
     while (aEnum.hasMoreElements ())
     {
