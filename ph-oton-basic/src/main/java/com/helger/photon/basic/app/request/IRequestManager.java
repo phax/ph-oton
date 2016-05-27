@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
+import com.helger.photon.basic.app.PhotonSessionState;
 import com.helger.photon.basic.app.menu.IMenuItem;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -142,7 +143,18 @@ public interface IRequestManager
   String getRequestDisplayLanguage ();
 
   @Nonnull
-  SimpleURL getLinkToMenuItem (@Nonnull IRequestWebScopeWithoutResponse aRequestScope, @Nonnull String sMenuItemID);
+  default SimpleURL getLinkToMenuItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                       @Nonnull final String sMenuItemID)
+  {
+    // Determine the current application ID
+    final String sAppID = PhotonSessionState.getInstance ().getLastApplicationID ();
+    return getLinkToMenuItem (sAppID, aRequestScope, sMenuItemID);
+  }
+
+  @Nonnull
+  SimpleURL getLinkToMenuItem (@Nonnull @Nonempty String sAppID,
+                               @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+                               @Nonnull String sMenuItemID);
 
   @Nullable
   String getMenuItemFromURL (@Nullable ISimpleURL aURL);

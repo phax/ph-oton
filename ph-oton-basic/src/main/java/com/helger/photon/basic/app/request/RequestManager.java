@@ -273,24 +273,19 @@ public class RequestManager implements IRequestManager
   }
 
   @Nonnull
-  public SimpleURL getLinkToMenuItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+  public SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID,
+                                      @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                       @Nonnull final String sMenuItemID)
   {
-    String sPath;
-    if (true)
-    {
-      final String sAppID = PhotonSessionState.getInstance ().getLastApplicationID ();
-      final String sServletPath = PhotonPathMapper.getPathOfApplicationIDOrDefault (sAppID);
-      if (sServletPath == null)
-        throw new IllegalStateException ("Failed to determine the servlet path for app ID '" +
-                                         sAppID +
-                                         "'. Please make sure you initialized PhotonPathMapper correctly!");
-      sPath = aRequestScope.getContextPath () + sServletPath + "/";
-    }
-    else
-    {
-      sPath = aRequestScope.getContextAndServletPath ();
-    }
+    // Get the servlet path from the app ID
+    final String sServletPath = PhotonPathMapper.getPathOfApplicationIDOrDefault (sAppID);
+    if (sServletPath == null)
+      throw new IllegalStateException ("Failed to determine the servlet path for app ID '" +
+                                       sAppID +
+                                       "'. Please make sure you initialized PhotonPathMapper correctly!");
+
+    // Prepend the context path
+    final String sPath = aRequestScope.getContextPath () + sServletPath + "/";
 
     if (m_bUsePaths)
     {
@@ -304,6 +299,14 @@ public class RequestManager implements IRequestManager
     return new SimpleURL (aRequestScope.encodeURL (sPath)).add (m_sRequestParamNameMenuItem, sMenuItemID);
   }
 
+  /**
+   * Extract the special parameters from the URL - either by path or by
+   * parameter.
+   *
+   * @param aURL
+   *        Source URL. May not be <code>null</code>.
+   * @return Never <code>null</code> list
+   */
   @Nonnull
   protected URLParameterList getParametersFromURL (@Nonnull final ISimpleURL aURL)
   {

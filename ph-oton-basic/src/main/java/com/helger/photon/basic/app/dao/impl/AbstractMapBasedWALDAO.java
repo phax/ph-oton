@@ -19,6 +19,8 @@ package com.helger.photon.basic.app.dao.impl;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -325,6 +327,39 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   public final boolean containsOnly (@Nullable final Predicate <? super INTERFACETYPE> aFilter)
   {
     return m_aRWLock.readLocked ( () -> CollectionHelper.containsOnly (m_aMap.values (), aFilter));
+  }
+
+  public final void forEach (@Nullable final BiConsumer <? super String, ? super INTERFACETYPE> aConsumer)
+  {
+    m_aRWLock.readLocked ( () -> m_aMap.forEach (aConsumer));
+  }
+
+  public final void forEach (@Nullable final BiPredicate <? super String, ? super INTERFACETYPE> aFilter,
+                             @Nullable final BiConsumer <? super String, ? super INTERFACETYPE> aConsumer)
+  {
+    m_aRWLock.readLocked ( () -> m_aMap.forEach (aFilter, aConsumer));
+  }
+
+  public final void forEachKey (@Nullable final Consumer <? super String> aConsumer)
+  {
+    m_aRWLock.readLocked ( () -> m_aMap.forEachKey (aConsumer));
+  }
+
+  public final void forEachKey (@Nullable final Predicate <? super String> aFilter,
+                                @Nullable final Consumer <? super String> aConsumer)
+  {
+    m_aRWLock.readLocked ( () -> m_aMap.forEachKey (aFilter, aConsumer));
+  }
+
+  public final void forEachValue (@Nullable final Consumer <? super INTERFACETYPE> aConsumer)
+  {
+    m_aRWLock.readLocked ( () -> m_aMap.forEachValue (aConsumer));
+  }
+
+  public final void forEachValue (@Nullable final Predicate <? super INTERFACETYPE> aFilter,
+                                  @Nullable final Consumer <? super INTERFACETYPE> aConsumer)
+  {
+    m_aRWLock.readLocked ( () -> m_aMap.forEachValue (aFilter, aConsumer));
   }
 
   @Nullable
