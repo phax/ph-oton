@@ -17,7 +17,6 @@
 package com.helger.photon.core.app.context;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -178,7 +177,7 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
   }
 
   /**
-   * Get the URL of the specified menu it.
+   * Get the URL to the specified menu item.
    *
    * @param sMenuItemID
    *        The ID of the menu item to link to. May not be <code>null</code>.
@@ -188,21 +187,18 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
   SimpleURL getLinkToMenuItem (@Nonnull String sMenuItemID);
 
   /**
-   * Get the URL of the specified menu it.
+   * Get the URL to the specified menu item in the passed application. This is
+   * helpful when linking between different applications.
    *
-   * @param aParams
-   *        The optional request parameters to be used. May be <code>null</code>
-   *        or empty.
+   * @param sAppID
+   *        The application ID to use. May neither be <code>null</code> nor
+   *        empty.
    * @param sMenuItemID
    *        The ID of the menu item to link to. May not be <code>null</code>.
-   * @return The non-<code>null</code> URL to the specified menu item with the
-   *         passed parameters.
+   * @return The non-<code>null</code> URL to the specified menu item.
    */
   @Nonnull
-  default SimpleURL getLinkToMenuItem (@Nonnull final String sMenuItemID, @Nullable final Map <String, String> aParams)
-  {
-    return getLinkToMenuItem (sMenuItemID).addAll (aParams);
-  }
+  SimpleURL getLinkToMenuItem (@Nonnull @Nonempty String sAppID, @Nonnull String sMenuItemID);
 
   /**
    * Get the full URL (incl. protocol) and parameters of the current request.

@@ -78,21 +78,6 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
   }
 
   /**
-   * Get the URL to the current page with the provided set of parameters.
-   *
-   * @param aParams
-   *        The optional request parameters to be used. May be <code>null</code>
-   *        or empty.
-   * @return The non-<code>null</code> URL to the current page (selected menu
-   *         item) with the passed parameters.
-   */
-  @Nonnull
-  default SimpleURL getSelfHref (@Nullable final Map <String, String> aParams)
-  {
-    return getLinkToMenuItem (getSelectedMenuItemID (), aParams);
-  }
-
-  /**
    * Throw a {@link ForcedRedirectException} with the self href of the current
    * layout context. This immediately stops the request and sends a HTTP
    * redirect to the client.

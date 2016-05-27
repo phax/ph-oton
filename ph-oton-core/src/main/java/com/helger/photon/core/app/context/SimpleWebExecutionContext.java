@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.attr.AttributeValueConverter;
 import com.helger.commons.collection.ext.ICommonsCollection;
@@ -59,7 +60,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   private final Locale m_aDisplayLocale;
   private final IMenuTree m_aMenuTree;
   // Status vars
-  private IRequestManager m_aARM;
+  private transient IRequestManager m_aARM;
 
   public SimpleWebExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC)
   {
@@ -217,12 +218,25 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   }
 
   @Nonnull
-  public SimpleURL getLinkToMenuItem (@Nonnull final String sMenuItemID)
+  private IRequestManager _getARM ()
   {
     // Cache for performance reasons
-    if (m_aARM == null)
-      m_aARM = ApplicationRequestManager.getRequestMgr ();
-    return m_aARM.getLinkToMenuItem (m_aRequestScope, sMenuItemID);
+    IRequestManager ret = m_aARM;
+    if (ret == null)
+      ret = m_aARM = ApplicationRequestManager.getRequestMgr ();
+    return ret;
+  }
+
+  @Nonnull
+  public SimpleURL getLinkToMenuItem (@Nonnull final String sMenuItemID)
+  {
+    return _getARM ().getLinkToMenuItem (m_aRequestScope, sMenuItemID);
+  }
+
+  @Nonnull
+  public SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID, @Nonnull final String sMenuItemID)
+  {
+    return _getARM ().getLinkToMenuItem (sAppID, m_aRequestScope, sMenuItemID);
   }
 
   @Override
