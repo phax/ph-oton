@@ -32,7 +32,7 @@ import com.helger.photon.core.ajax.AjaxSettings;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
-import com.helger.photon.core.api.ApplicationAPIManager;
+import com.helger.photon.core.api.APISettings;
 import com.helger.photon.core.api.IAPIExceptionCallback;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
@@ -159,7 +159,7 @@ public abstract class AbstractErrorCallback implements
   public static void install (@Nonnull final AbstractErrorCallback aCallback)
   {
     AjaxSettings.getExceptionCallbacks ().addCallback (aCallback);
-    ApplicationAPIManager.getInstance ().getExceptionCallbacks ().addCallback (aCallback);
+    APISettings.getExceptionCallbacks ().addCallback (aCallback);
     AbstractDAO.getExceptionHandlersRead ().addCallback (aCallback);
     AbstractDAO.getExceptionHandlersWrite ().addCallback (aCallback);
     RequestTracker.getLongRunningRequestCallbacks ().addCallback (aCallback);

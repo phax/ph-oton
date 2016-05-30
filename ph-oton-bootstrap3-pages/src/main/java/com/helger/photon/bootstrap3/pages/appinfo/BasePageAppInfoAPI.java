@@ -36,6 +36,7 @@ import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.api.APISettings;
 import com.helger.photon.core.api.ApplicationAPIManager;
 import com.helger.photon.core.api.IAPIAfterExecutionCallback;
 import com.helger.photon.core.api.IAPIBeforeExecutionCallback;
@@ -151,13 +152,14 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
                                               new DTCol (EText.MSG_CALLBACK.getDisplayText (aDisplayLocale))).setID (getID () +
                                                                                                                      sAppScopeID +
                                                                                                                      "-api-cb");
-          for (final IAPIExceptionCallback aCB : aMgr.getExceptionCallbacks ().getAllCallbacks ())
+          for (final IAPIExceptionCallback aCB : APISettings.getExceptionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("Exception", aCB.toString ());
-          for (final IAPIBeforeExecutionCallback aCB : aMgr.getBeforeExecutionCallbacks ().getAllCallbacks ())
+          for (final IAPIBeforeExecutionCallback aCB : APISettings.getBeforeExecutionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("BeforeExecution", aCB.toString ());
-          for (final IAPIAfterExecutionCallback aCB : aMgr.getAfterExecutionCallbacks ().getAllCallbacks ())
+          for (final IAPIAfterExecutionCallback aCB : APISettings.getAfterExecutionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("AfterExecution", aCB.toString ());
-          for (final IAPILongRunningExecutionCallback aCB : aMgr.getLongRunningExecutionCallbacks ().getAllCallbacks ())
+          for (final IAPILongRunningExecutionCallback aCB : APISettings.getLongRunningExecutionCallbacks ()
+                                                                       .getAllCallbacks ())
             aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
           aTab.addChild (aTable);
 

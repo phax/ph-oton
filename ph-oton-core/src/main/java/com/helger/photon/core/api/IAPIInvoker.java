@@ -16,13 +16,10 @@
  */
 package com.helger.photon.core.api;
 
-import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
@@ -35,36 +32,6 @@ import com.helger.web.servlet.response.UnifiedResponse;
  */
 public interface IAPIInvoker
 {
-  @Nonnull
-  @ReturnsMutableObject ("design")
-  CallbackList <IAPIExceptionCallback> getExceptionCallbacks ();
-
-  @Nonnull
-  @ReturnsMutableObject ("design")
-  CallbackList <IAPIBeforeExecutionCallback> getBeforeExecutionCallbacks ();
-
-  @Nonnull
-  @ReturnsMutableObject ("design")
-  CallbackList <IAPIAfterExecutionCallback> getAfterExecutionCallbacks ();
-
-  /**
-   * @return The milliseconds after which an execution is considered long
-   *         running.
-   */
-  @CheckForSigned
-  long getLongRunningExecutionLimitTime ();
-
-  /**
-   * Set the milliseconds after which an execution is considered long running.
-   *
-   * @param nLongRunningExecutionLimitTime
-   *        The milliseconds to use. Value &le; 0 are considered "no limit"
-   */
-  void setLongRunningExecutionLimitTime (long nLongRunningExecutionLimitTime);
-
-  @Nonnull
-  CallbackList <IAPILongRunningExecutionCallback> getLongRunningExecutionCallbacks ();
-
   /**
    * Register a new API.
    *

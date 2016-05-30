@@ -1,4 +1,4 @@
-package com.helger.photon.core.ajax;
+package com.helger.photon.core.api;
 
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
@@ -9,16 +9,16 @@ import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.photon.core.ajax.callback.LoggingAjaxExceptionCallback;
-import com.helger.photon.core.ajax.callback.LoggingAjaxLongRunningExecutionCallback;
+import com.helger.photon.core.api.callback.LoggingAPIExceptionCallback;
+import com.helger.photon.core.api.callback.LoggingAPILongRunningExecutionCallback;
 
 /**
- * A central helper class that centrally manages the AJAX callbacks.
+ * A central helper class that centrally manages the API callbacks.
  *
  * @author Philip Helger
  */
 @ThreadSafe
-public final class AjaxSettings
+public final class APISettings
 {
   /**
    * Default milliseconds until an implementation is considered long running.
@@ -26,40 +26,40 @@ public final class AjaxSettings
   public static final long DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS = CGlobal.MILLISECONDS_PER_SECOND;
 
   private static final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-  private static final CallbackList <IAjaxExceptionCallback> m_aExceptionCallbacks = new CallbackList <> ();
-  private static final CallbackList <IAjaxBeforeExecutionCallback> m_aBeforeExecutionCallbacks = new CallbackList <> ();
-  private static final CallbackList <IAjaxAfterExecutionCallback> m_aAfterExecutionCallbacks = new CallbackList <> ();
+  private static final CallbackList <IAPIExceptionCallback> m_aExceptionCallbacks = new CallbackList <> ();
+  private static final CallbackList <IAPIBeforeExecutionCallback> m_aBeforeExecutionCallbacks = new CallbackList <> ();
+  private static final CallbackList <IAPIAfterExecutionCallback> m_aAfterExecutionCallbacks = new CallbackList <> ();
   @GuardedBy ("m_aRWLock")
   private static long m_nLongRunningExecutionLimitTime = DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS;
-  private static final CallbackList <IAjaxLongRunningExecutionCallback> m_aLongRunningExecutionCallbacks = new CallbackList <> ();
+  private static final CallbackList <IAPILongRunningExecutionCallback> m_aLongRunningExecutionCallbacks = new CallbackList <> ();
 
   static
   {
     // Register default handler
-    getExceptionCallbacks ().addCallback (new LoggingAjaxExceptionCallback ());
-    getLongRunningExecutionCallbacks ().addCallback (new LoggingAjaxLongRunningExecutionCallback ());
+    getExceptionCallbacks ().addCallback (new LoggingAPIExceptionCallback ());
+    getLongRunningExecutionCallbacks ().addCallback (new LoggingAPILongRunningExecutionCallback ());
   }
 
-  private AjaxSettings ()
+  private APISettings ()
   {}
 
   @Nonnull
   @ReturnsMutableObject ("design")
-  public static CallbackList <IAjaxExceptionCallback> getExceptionCallbacks ()
+  public static CallbackList <IAPIExceptionCallback> getExceptionCallbacks ()
   {
     return m_aExceptionCallbacks;
   }
 
   @Nonnull
   @ReturnsMutableObject ("design")
-  public static CallbackList <IAjaxBeforeExecutionCallback> getBeforeExecutionCallbacks ()
+  public static CallbackList <IAPIBeforeExecutionCallback> getBeforeExecutionCallbacks ()
   {
     return m_aBeforeExecutionCallbacks;
   }
 
   @Nonnull
   @ReturnsMutableObject ("design")
-  public static CallbackList <IAjaxAfterExecutionCallback> getAfterExecutionCallbacks ()
+  public static CallbackList <IAPIAfterExecutionCallback> getAfterExecutionCallbacks ()
   {
     return m_aAfterExecutionCallbacks;
   }
@@ -83,7 +83,7 @@ public final class AjaxSettings
 
   @Nonnull
   @ReturnsMutableObject ("design")
-  public static CallbackList <IAjaxLongRunningExecutionCallback> getLongRunningExecutionCallbacks ()
+  public static CallbackList <IAPILongRunningExecutionCallback> getLongRunningExecutionCallbacks ()
   {
     return m_aLongRunningExecutionCallbacks;
   }
