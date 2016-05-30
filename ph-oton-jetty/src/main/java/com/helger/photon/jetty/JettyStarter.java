@@ -39,6 +39,7 @@ import org.eclipse.jetty.webapp.WebXmlConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.file.FilenameHelper;
@@ -167,7 +168,7 @@ public final class JettyStarter
   /**
    * Set the common resource base (directory) from which all web application
    * resources will be loaded (servlet context root).
-   * 
+   *
    * @param sResourceBase
    *        The path. May neither be <code>null</code> nor empty.
    * @return this for chaining
@@ -183,7 +184,7 @@ public final class JettyStarter
   /**
    * Set the context path in which the web application should run. By default
    * this {@link #DEFAULT_CONTEXT_PATH}
-   * 
+   *
    * @param sContextPath
    *        The new context path. May neither be <code>null</code> nor empty and
    *        must start with a slash.
@@ -199,7 +200,7 @@ public final class JettyStarter
 
   /**
    * Run Jetty with the provided settings.
-   * 
+   *
    * @throws Exception
    *         In case something goes wrong
    */
@@ -212,27 +213,34 @@ public final class JettyStarter
 
     // Create main server
     final Server aServer = new Server ();
-    // Create connector on Port
-    final ServerConnector aConnector = new ServerConnector (aServer);
-    aConnector.setPort (m_nPort);
-    aConnector.setIdleTimeout (30000);
-    aServer.setConnectors (new Connector [] { aConnector });
+    {
+      // Create connector on Port
+      final ServerConnector aConnector = new ServerConnector (aServer);
+      aConnector.setPort (m_nPort);
+      aConnector.setIdleTimeout (30000);
+      aServer.setConnectors (new Connector [] { aConnector });
+      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormContentSize",
+                            Integer.valueOf (2 * CGlobal.BYTES_PER_MEGABYTE));
+      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormKeys", Integer.valueOf (10000));
+    }
 
     final WebAppContext aWebAppCtx = new WebAppContext ();
-    aWebAppCtx.setDescriptor (m_sResourceBase + "/WEB-INF/web.xml");
-    aWebAppCtx.setResourceBase (m_sResourceBase);
-    aWebAppCtx.setContextPath (m_sContextPath);
-    aWebAppCtx.setTempDirectory (new File (sTempDir + '/' + m_sDirBaseName + ".webapp"));
-    aWebAppCtx.setParentLoaderPriority (true);
-    aWebAppCtx.setThrowUnavailableOnStartupException (true);
+    {
+      aWebAppCtx.setDescriptor (m_sResourceBase + "/WEB-INF/web.xml");
+      aWebAppCtx.setResourceBase (m_sResourceBase);
+      aWebAppCtx.setContextPath (m_sContextPath);
+      aWebAppCtx.setTempDirectory (new File (sTempDir + '/' + m_sDirBaseName + ".webapp"));
+      aWebAppCtx.setParentLoaderPriority (true);
+      aWebAppCtx.setThrowUnavailableOnStartupException (true);
 
-    // Important to add the AnnotationConfiguration!
-    aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
-                                                         new WebXmlConfiguration (),
-                                                         new MetaInfConfiguration (),
-                                                         new FragmentConfiguration (),
-                                                         new JettyWebXmlConfiguration (),
-                                                         new AnnotationConfiguration () });
+      // Important to add the AnnotationConfiguration!
+      aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
+                                                           new WebXmlConfiguration (),
+                                                           new MetaInfConfiguration (),
+                                                           new FragmentConfiguration (),
+                                                           new JettyWebXmlConfiguration (),
+                                                           new AnnotationConfiguration () });
+    }
 
     // Set session store directory to passivate/activate sessions
     if (m_bSpecialSessionMgr)

@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.ajax;
 
-import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -25,11 +24,8 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
@@ -41,7 +37,6 @@ import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
-import com.helger.photon.core.ajax.callback.LoggingAjaxExceptionCallback;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -53,11 +48,6 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 @ThreadSafe
 public class AjaxInvoker implements IAjaxInvoker
 {
-  /**
-   * Default milliseconds until an implementation is considered long running.
-   */
-  public static final long DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS = CGlobal.MILLISECONDS_PER_SECOND;
-
   private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxInvoker.class);
   private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (AjaxInvoker.class.getName () +
                                                                                                                     "$invocations");
@@ -67,20 +57,11 @@ public class AjaxInvoker implements IAjaxInvoker
                                                                                                                            "$timer");
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-  private final CallbackList <IAjaxExceptionCallback> m_aExceptionCallbacks = new CallbackList <> ();
-  private final CallbackList <IAjaxBeforeExecutionCallback> m_aBeforeExecutionCallbacks = new CallbackList <> ();
-  private final CallbackList <IAjaxAfterExecutionCallback> m_aAfterExecutionCallbacks = new CallbackList <> ();
   @GuardedBy ("m_aRWLock")
-  private long m_nLongRunningExecutionLimitTime = DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS;
-  private final CallbackList <IAjaxLongRunningExecutionCallback> m_aLongRunningExecutionCallbacks = new CallbackList <> ();
-  @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IAjaxFunctionDeclaration> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <String, IAjaxFunctionDeclaration> m_aFuncDecls = new CommonsHashMap <> ();
 
   public AjaxInvoker ()
-  {
-    // Register default handler
-    getExceptionCallbacks ().addCallback (new LoggingAjaxExceptionCallback ());
-  }
+  {}
 
   public static boolean isValidFunctionName (@Nullable final String sFunctionName)
   {
@@ -90,49 +71,10 @@ public class AjaxInvoker implements IAjaxInvoker
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public CallbackList <IAjaxExceptionCallback> getExceptionCallbacks ()
-  {
-    return m_aExceptionCallbacks;
-  }
-
-  @Nonnull
-  @ReturnsMutableObject ("design")
-  public CallbackList <IAjaxBeforeExecutionCallback> getBeforeExecutionCallbacks ()
-  {
-    return m_aBeforeExecutionCallbacks;
-  }
-
-  @Nonnull
-  @ReturnsMutableObject ("design")
-  public CallbackList <IAjaxAfterExecutionCallback> getAfterExecutionCallbacks ()
-  {
-    return m_aAfterExecutionCallbacks;
-  }
-
-  @CheckForSigned
-  public long getLongRunningExecutionLimitTime ()
-  {
-    return m_aRWLock.readLocked ( () -> m_nLongRunningExecutionLimitTime);
-  }
-
-  public void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
-  {
-    m_aRWLock.writeLocked ( () -> m_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
-  }
-
-  @Nonnull
-  @ReturnsMutableObject ("design")
-  public CallbackList <IAjaxLongRunningExecutionCallback> getLongRunningExecutionCallbacks ()
-  {
-    return m_aLongRunningExecutionCallbacks;
-  }
-
-  @Nonnull
   @ReturnsMutableCopy
   public ICommonsMap <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.getClone ());
+    return m_aRWLock.readLocked ( () -> m_aFuncDecls.getClone ());
   }
 
   @Nullable
@@ -141,7 +83,7 @@ public class AjaxInvoker implements IAjaxInvoker
     if (StringHelper.hasNoText (sFunctionName))
       return null;
 
-    return m_aRWLock.readLocked ( () -> m_aMap.get (sFunctionName));
+    return m_aRWLock.readLocked ( () -> m_aFuncDecls.get (sFunctionName));
   }
 
   public boolean isRegisteredFunction (@Nullable final String sFunctionName)
@@ -149,7 +91,7 @@ public class AjaxInvoker implements IAjaxInvoker
     if (StringHelper.hasNoText (sFunctionName))
       return false;
 
-    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sFunctionName));
+    return m_aRWLock.readLocked ( () -> m_aFuncDecls.containsKey (sFunctionName));
   }
 
   public void registerFunction (@Nonnull final IAjaxFunctionDeclaration aFunctionDeclaration)
@@ -159,11 +101,11 @@ public class AjaxInvoker implements IAjaxInvoker
     final String sFunctionName = aFunctionDeclaration.getName ();
 
     m_aRWLock.writeLocked ( () -> {
-      if (m_aMap.containsKey (sFunctionName))
+      if (m_aFuncDecls.containsKey (sFunctionName))
         throw new IllegalArgumentException ("An Ajax function with the name '" +
                                             sFunctionName +
                                             "' is already registered");
-      m_aMap.put (sFunctionName, aFunctionDeclaration);
+      m_aFuncDecls.put (sFunctionName, aFunctionDeclaration);
     });
 
     if (s_aLogger.isDebugEnabled ())
@@ -193,10 +135,8 @@ public class AjaxInvoker implements IAjaxInvoker
       s_aStatsGlobalInvoke.increment ();
 
       // Invoke before handler
-      getBeforeExecutionCallbacks ().forEach (aCB -> aCB.onBeforeExecution (this,
-                                                                            sFunctionName,
-                                                                            aRequestScope,
-                                                                            aAjaxExecutor));
+      AjaxSettings.getBeforeExecutionCallbacks ()
+                  .forEach (aCB -> aCB.onBeforeExecution (this, sFunctionName, aRequestScope, aAjaxExecutor));
 
       // Register all external resources, prior to handling the main request, as
       // the JS/CSS elements will be contained in the AjaxDefaultResponse in
@@ -215,11 +155,12 @@ public class AjaxInvoker implements IAjaxInvoker
       }
 
       // Invoke after handler
-      getAfterExecutionCallbacks ().forEach (aCB -> aCB.onAfterExecution (this,
-                                                                          sFunctionName,
-                                                                          aRequestScope,
-                                                                          aAjaxExecutor,
-                                                                          aAjaxResponse));
+      AjaxSettings.getAfterExecutionCallbacks ()
+                  .forEach (aCB -> aCB.onAfterExecution (this,
+                                                         sFunctionName,
+                                                         aRequestScope,
+                                                         aAjaxExecutor,
+                                                         aAjaxResponse));
 
       // Increment statistics after successful call
       s_aStatsFunctionInvoke.increment (sFunctionName);
@@ -227,25 +168,23 @@ public class AjaxInvoker implements IAjaxInvoker
       // Long running AJAX request?
       final long nExecutionMillis = aSW.stopAndGetMillis ();
       s_aStatsFunctionTimer.addTime (sFunctionName, nExecutionMillis);
-      final long nLimitMS = getLongRunningExecutionLimitTime ();
+      final long nLimitMS = AjaxSettings.getLongRunningExecutionLimitTime ();
       if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
       {
         // Long running execution
-        getLongRunningExecutionCallbacks ().forEach (aCB -> aCB.onLongRunningExecution (this,
-                                                                                        sFunctionName,
-                                                                                        aRequestScope,
-                                                                                        aAjaxExecutor,
-                                                                                        nExecutionMillis));
+        AjaxSettings.getLongRunningExecutionCallbacks ()
+                    .forEach (aCB -> aCB.onLongRunningExecution (this,
+                                                                 sFunctionName,
+                                                                 aRequestScope,
+                                                                 aAjaxExecutor,
+                                                                 nExecutionMillis));
       }
       return aAjaxResponse;
     }
     catch (final Throwable t)
     {
-      getExceptionCallbacks ().forEach (aCB -> aCB.onAjaxExecutionException (this,
-                                                                             sFunctionName,
-                                                                             aAjaxExecutor,
-                                                                             aRequestScope,
-                                                                             t));
+      AjaxSettings.getExceptionCallbacks ()
+                  .forEach (aCB -> aCB.onAjaxExecutionException (this, sFunctionName, aAjaxExecutor, aRequestScope, t));
 
       // Re-throw
       throw t;
@@ -255,12 +194,6 @@ public class AjaxInvoker implements IAjaxInvoker
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("map", m_aMap)
-                                       .append ("exceptionCallbacks", m_aExceptionCallbacks)
-                                       .append ("beforeExecutionCallbacks", m_aBeforeExecutionCallbacks)
-                                       .append ("afterExecutionCallbacks", m_aAfterExecutionCallbacks)
-                                       .append ("longRunningExecutionLimitTime", m_nLongRunningExecutionLimitTime)
-                                       .append ("longRunningExecutionCallbacks", m_aLongRunningExecutionCallbacks)
-                                       .toString ();
+    return new ToStringGenerator (this).append ("map", m_aFuncDecls).toString ();
   }
 }

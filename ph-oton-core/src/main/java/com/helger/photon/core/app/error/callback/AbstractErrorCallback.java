@@ -28,7 +28,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
 import com.helger.photon.basic.app.dao.IDAOWriteExceptionCallback;
 import com.helger.photon.basic.app.dao.impl.AbstractDAO;
-import com.helger.photon.core.ajax.ApplicationAjaxManager;
+import com.helger.photon.core.ajax.AjaxSettings;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
@@ -152,13 +152,13 @@ public abstract class AbstractErrorCallback implements
    * <li>AbstractDAO - read and write exception handler</li>
    * <li>RequestTracker - long running requests and parallel running requests
    * </li></li>
-   * 
+   *
    * @param aCallback
    *        The callback to be installed. May not be <code>null</code>.
    */
   public static void install (@Nonnull final AbstractErrorCallback aCallback)
   {
-    ApplicationAjaxManager.getInstance ().getExceptionCallbacks ().addCallback (aCallback);
+    AjaxSettings.getExceptionCallbacks ().addCallback (aCallback);
     ApplicationAPIManager.getInstance ().getExceptionCallbacks ().addCallback (aCallback);
     AbstractDAO.getExceptionHandlersRead ().addCallback (aCallback);
     AbstractDAO.getExceptionHandlersWrite ().addCallback (aCallback);

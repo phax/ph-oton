@@ -37,6 +37,7 @@ import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.ajax.AjaxSettings;
 import com.helger.photon.core.ajax.ApplicationAjaxManager;
 import com.helger.photon.core.ajax.IAjaxAfterExecutionCallback;
 import com.helger.photon.core.ajax.IAjaxBeforeExecutionCallback;
@@ -158,14 +159,14 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
                                               new DTCol (EText.MSG_CALLBACK.getDisplayText (aDisplayLocale))).setID (getID () +
                                                                                                                      sAppScopeID +
                                                                                                                      "-ajax-cb");
-          for (final IAjaxExceptionCallback aCB : aMgr.getExceptionCallbacks ().getAllCallbacks ())
+          for (final IAjaxExceptionCallback aCB : AjaxSettings.getExceptionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("Exception", aCB.toString ());
-          for (final IAjaxBeforeExecutionCallback aCB : aMgr.getBeforeExecutionCallbacks ().getAllCallbacks ())
+          for (final IAjaxBeforeExecutionCallback aCB : AjaxSettings.getBeforeExecutionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("BeforeExecution", aCB.toString ());
-          for (final IAjaxAfterExecutionCallback aCB : aMgr.getAfterExecutionCallbacks ().getAllCallbacks ())
+          for (final IAjaxAfterExecutionCallback aCB : AjaxSettings.getAfterExecutionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("AfterExecution", aCB.toString ());
-          for (final IAjaxLongRunningExecutionCallback aCB : aMgr.getLongRunningExecutionCallbacks ()
-                                                                 .getAllCallbacks ())
+          for (final IAjaxLongRunningExecutionCallback aCB : AjaxSettings.getLongRunningExecutionCallbacks ()
+                                                                         .getAllCallbacks ())
             aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
           aTab.addChild (aTable);
 
