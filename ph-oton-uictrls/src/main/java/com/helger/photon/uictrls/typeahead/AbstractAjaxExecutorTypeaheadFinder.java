@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uictrls.typeahead;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -28,9 +27,11 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.json.IJsonArray;
 import com.helger.json.JsonArray;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutorWithContext;
 import com.helger.photon.core.ajax.response.AjaxJsonResponse;
@@ -236,8 +237,8 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
    * @return A non-<code>null</code> list with all datums to use.
    */
   @Nonnull
-  protected abstract List <? extends TypeaheadDatum> getAllMatchingDatums (@Nonnull Finder aFinder,
-                                                                           @Nonnull LECTYPE aLEC);
+  protected abstract ICommonsList <? extends TypeaheadDatum> getAllMatchingDatums (@Nonnull Finder aFinder,
+                                                                                   @Nonnull LECTYPE aLEC);
 
   @Override
   @Nonnull
@@ -254,12 +255,10 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     final Finder aFinder = createFinder (sOriginalQuery, aLEC);
 
     // Map from ID to name
-    final List <? extends TypeaheadDatum> aMatchingDatums = getAllMatchingDatums (aFinder, aLEC);
+    final ICommonsList <? extends TypeaheadDatum> aMatchingDatums = getAllMatchingDatums (aFinder, aLEC);
 
     // Convert to JSON, sorted by display name using the current display locale
-    final JsonArray ret = new JsonArray ();
-    for (final TypeaheadDatum aDatum : aMatchingDatums)
-      ret.add (aDatum.getAsJson ());
+    final IJsonArray ret = new JsonArray ().addAllMapped (aMatchingDatums, aDatum -> aDatum.getAsJson ());
 
     // Use the simple response, because the response layout is predefined!
     return AjaxJsonResponse.createSuccess (ret);
