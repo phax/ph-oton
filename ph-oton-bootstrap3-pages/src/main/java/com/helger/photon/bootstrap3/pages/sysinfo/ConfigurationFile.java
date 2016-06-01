@@ -27,6 +27,7 @@ import com.helger.commons.charset.CCharset;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
+import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IHasDescription;
 import com.helger.photon.uictrls.prism.EPrismLanguage;
 
@@ -127,5 +128,15 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
   {
     m_eSyntaxHighlightLanguage = ValueEnforcer.notNull (eSyntaxHighlightLanguage, "SyntaxHighlightLanguage");
     return this;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("Resource", m_aRes)
+                                       .append ("Description", m_sDescription)
+                                       .append ("DefaultCharset", m_aDefaultCharset)
+                                       .append ("Syntax", m_eSyntaxHighlightLanguage)
+                                       .toString ();
   }
 }
