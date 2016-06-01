@@ -23,7 +23,7 @@ import java.math.BigInteger;
 
 import org.junit.Test;
 
-import com.helger.datetime.PDTFactory;
+import com.helger.commons.datetime.PDTFactory;
 
 /**
  * Test class for class {@link ExportRecord}.
