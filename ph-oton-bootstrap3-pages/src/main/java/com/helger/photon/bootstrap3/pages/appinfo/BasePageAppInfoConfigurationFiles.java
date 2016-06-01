@@ -27,6 +27,7 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
+import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
@@ -132,7 +133,7 @@ public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
         sTabLabelSuffix = " (!)";
       }
 
-      aTabBox.addTab (aCF.getID (), aCF.getResource ().getPath () + sTabLabelSuffix, aContent);
+      aTabBox.addTab (HCHelper.getAsHTMLID (aCF.getID ()), aCF.getResource ().getPath () + sTabLabelSuffix, aContent);
     }
 
     if (aTabBox.hasNoTabs ())
