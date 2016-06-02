@@ -151,7 +151,8 @@ public abstract class AbstractErrorCallback implements
    * <li>ApplicationAPIManager - exception handler</li>
    * <li>AbstractDAO - read and write exception handler</li>
    * <li>RequestTracker - long running requests and parallel running requests
-   * </li></li>
+   * </li>
+   * </ul>
    *
    * @param aCallback
    *        The callback to be installed. May not be <code>null</code>.
