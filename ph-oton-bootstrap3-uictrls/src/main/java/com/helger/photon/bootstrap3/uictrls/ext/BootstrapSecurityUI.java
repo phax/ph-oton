@@ -16,13 +16,13 @@
  */
 package com.helger.photon.bootstrap3.uictrls.ext;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.photon.security.password.GlobalPasswordSettings;
@@ -46,10 +46,10 @@ public final class BootstrapSecurityUI
    * @return <code>null</code> if not special constraints are defined.
    */
   @Nullable
-  public static List <IHCNode> createPasswordConstraintTip (@Nonnull final Locale aDisplayLocale)
+  public static ICommonsList <IHCNode> createPasswordConstraintTip (@Nonnull final Locale aDisplayLocale)
   {
-    final List <String> aTexts = GlobalPasswordSettings.getPasswordConstraintList ()
-                                                       .getAllPasswordConstraintDescriptions (aDisplayLocale);
+    final ICommonsList <String> aTexts = GlobalPasswordSettings.getPasswordConstraintList ()
+                                                               .getAllPasswordConstraintDescriptions (aDisplayLocale);
     if (aTexts.isEmpty ())
       return null;
 

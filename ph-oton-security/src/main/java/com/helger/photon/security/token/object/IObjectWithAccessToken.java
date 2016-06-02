@@ -16,13 +16,12 @@
  */
 package com.helger.photon.security.token.object;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.basic.object.IObjectWithCustomAttrs;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
@@ -41,7 +40,7 @@ public interface IObjectWithAccessToken extends IObjectWithCustomAttrs, IAuthSub
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  List <? extends IAccessToken> getAllAccessTokens ();
+  ICommonsList <? extends IAccessToken> getAllAccessTokens ();
 
   /**
    * @return The main token to access this application from the outside. May be

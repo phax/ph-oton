@@ -16,17 +16,16 @@
  */
 package com.helger.photon.uicore.facebook.opengraph;
 
-import java.util.Map;
-
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.IsSPIInterface;
+import com.helger.commons.collection.ext.ICommonsMap;
 
 @IsSPIInterface
 public interface IFacebookObjectProvider
 {
   @Nullable
-  Map <EOpenGraphObjectProperty, String> getObject ();
+  ICommonsMap <EOpenGraphObjectProperty, String> getObject ();
 
   /**
    * @return A positive integer (default=0) where a higher number represent a

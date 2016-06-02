@@ -26,7 +26,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsHashSet;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.equals.EqualsHelper;
@@ -108,7 +107,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
 
   public boolean hasContainedUsers ()
   {
-    return !m_aUserIDs.isEmpty ();
+    return m_aUserIDs.isNotEmpty ();
   }
 
   @Nonnegative
@@ -121,7 +120,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllContainedUserIDs ()
   {
-    return CollectionHelper.newSet (m_aUserIDs);
+    return m_aUserIDs.getClone ();
   }
 
   public boolean containsUserID (final String sUserID)
@@ -145,7 +144,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
 
   public boolean hasContainedRoles ()
   {
-    return !m_aRoleIDs.isEmpty ();
+    return m_aRoleIDs.isNotEmpty ();
   }
 
   @Nonnegative
@@ -158,7 +157,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllContainedRoleIDs ()
   {
-    return CollectionHelper.newSet (m_aRoleIDs);
+    return m_aRoleIDs.getClone ();
   }
 
   public boolean containsRoleID (final String sRoleID)

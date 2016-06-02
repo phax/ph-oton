@@ -16,12 +16,11 @@
  */
 package com.helger.photon.security.role;
 
-import java.util.Set;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsSet;
 
 /**
  * Base read-only interface for objects containing roles.
@@ -48,7 +47,7 @@ public interface IRoleContainer
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <String> getAllContainedRoleIDs ();
+  ICommonsSet <String> getAllContainedRoleIDs ();
 
   /**
    * Check if the passed role is contained in this container.

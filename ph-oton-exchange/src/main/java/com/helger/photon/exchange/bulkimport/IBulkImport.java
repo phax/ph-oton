@@ -16,13 +16,13 @@
  */
 package com.helger.photon.exchange.bulkimport;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.IHasInputStream;
 import com.helger.photon.exchange.EExchangeFileType;
 
@@ -38,7 +38,7 @@ public interface IBulkImport
    */
   @Nonnull
   @Nonempty
-  List <EExchangeFileType> getSupportedFileTypes ();
+  ICommonsList <EExchangeFileType> getSupportedFileTypes ();
 
   /**
    * @return The initial rows to skip.
@@ -61,7 +61,7 @@ public interface IBulkImport
    */
   @Nonnull
   @Nonempty
-  List <String> getColumnDescriptions (@Nonnull Locale aContentLocale);
+  ICommonsList <String> getColumnDescriptions (@Nonnull Locale aContentLocale);
 
   /**
    * Read the objects from the passed input stream.
