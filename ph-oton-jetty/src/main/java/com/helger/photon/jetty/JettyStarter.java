@@ -85,6 +85,9 @@ public class JettyStarter
     m_sDirBaseName = FilenameHelper.getAsSecureValidFilename (sAppName);
     if (StringHelper.hasNoText (m_sDirBaseName))
       throw new IllegalStateException ("FolderName is empty.");
+
+    // Must be directly called on System to have an effect!
+    System.setProperty ("log4j2.disable.jmx", "true");
   }
 
   /**
@@ -137,7 +140,7 @@ public class JettyStarter
 
   /**
    * Set the port on which the "stop monitor" should be running. Defaults to
-   * {@value #DEFAULT_STOP_PORT}. When running multiple Jettys at once, each
+   * {@link #DEFAULT_STOP_PORT}. When running multiple Jettys at once, each
    * instance must use it's own stop port. If this is set here, it must also be
    * set in {@link JettyStopper}.
    *
