@@ -62,7 +62,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   private int m_nLimit = DEFAULT_LIMIT;
   private IJSExpression m_aDupDetector;
   private IJSExpression m_aSorter;
-  private List <? extends BloodhoundDatum> m_aLocal;
+  private ICommonsList <? extends BloodhoundDatum> m_aLocal;
   private BloodhoundPrefetch m_aPrefetch;
   private BloodhoundRemote m_aRemote;
 
@@ -77,7 +77,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
     m_nLimit = aOther.m_nLimit;
     m_aDupDetector = aOther.m_aDupDetector;
     m_aSorter = aOther.m_aSorter;
-    m_aLocal = aOther.m_aLocal == null ? null : CollectionHelper.newList (aOther.m_aLocal);
+    m_aLocal = aOther.m_aLocal == null ? null : aOther.m_aLocal.getClone ();
     m_aPrefetch = aOther.m_aPrefetch == null ? null : aOther.m_aPrefetch.getClone ();
     m_aRemote = aOther.m_aRemote == null ? null : aOther.m_aRemote.getClone ();
   }
@@ -226,7 +226,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   @ReturnsMutableCopy
   public ICommonsList <? extends BloodhoundDatum> getLocal ()
   {
-    return m_aLocal == null ? null : CollectionHelper.newList (m_aLocal);
+    return m_aLocal == null ? null : m_aLocal.getClone ();
   }
 
   @Nonnull

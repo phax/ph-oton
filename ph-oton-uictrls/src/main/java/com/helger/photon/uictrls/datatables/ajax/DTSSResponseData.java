@@ -16,15 +16,12 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.special.IHCSpecialNodes;
@@ -43,7 +40,7 @@ public final class DTSSResponseData implements IHasJson
   private final int m_nDraw;
   private final int m_nTotalRecords;
   private final int m_nTotalDisplayRecords;
-  private final List <JsonObject> m_aData;
+  private final ICommonsList <JsonObject> m_aData;
   private final IHCSpecialNodes m_aSpecialNodes;
   private final String m_sErrorMsg;
 
@@ -65,7 +62,7 @@ public final class DTSSResponseData implements IHasJson
   public DTSSResponseData (final int nDraw,
                            final int nTotalRecords,
                            final int nTotalDisplayRecords,
-                           @Nullable final List <JsonObject> aData,
+                           @Nullable final ICommonsList <JsonObject> aData,
                            @Nullable final String sErrorMsg,
                            @Nonnull final IHCSpecialNodes aSpecialNodes)
   {
@@ -118,7 +115,7 @@ public final class DTSSResponseData implements IHasJson
   @ReturnsMutableCopy
   public ICommonsList <JsonObject> getData ()
   {
-    return m_aData == null ? null : CollectionHelper.newList (m_aData);
+    return m_aData == null ? null : m_aData.getClone ();
   }
 
   @Nullable

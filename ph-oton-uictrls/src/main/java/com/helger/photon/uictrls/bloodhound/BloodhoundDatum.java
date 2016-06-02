@@ -17,7 +17,6 @@
 package com.helger.photon.uictrls.bloodhound;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -26,7 +25,8 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
@@ -52,7 +52,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
   public static final String JSON_TOKENS = "tokens";
 
   private final String m_sValue;
-  private final List <String> m_aTokens;
+  private final ICommonsList <String> m_aTokens;
 
   /**
    * Constructor using {@link #getTokensFromValue(String)} to tokenize the
@@ -79,7 +79,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
     m_sValue = sValue;
-    m_aTokens = CollectionHelper.newList (aTokens);
+    m_aTokens = new CommonsArrayList <> (aTokens);
   }
 
   /**
@@ -95,7 +95,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
     m_sValue = sValue;
-    m_aTokens = CollectionHelper.newList (aTokens);
+    m_aTokens = new CommonsArrayList <> (aTokens);
   }
 
   /**
@@ -112,9 +112,9 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
    */
   @Nonnull
   @ReturnsMutableCopy
-  public final List <String> getAllTokens ()
+  public final ICommonsList <String> getAllTokens ()
   {
-    return CollectionHelper.newList (m_aTokens);
+    return m_aTokens.getClone ();
   }
 
   /**

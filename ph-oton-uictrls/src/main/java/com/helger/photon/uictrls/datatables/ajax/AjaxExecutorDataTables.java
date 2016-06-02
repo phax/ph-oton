@@ -17,7 +17,6 @@
 package com.helger.photon.uictrls.datatables.ajax;
 
 import java.util.BitSet;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -99,10 +98,10 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
   }
 
   @Nonnull
-  private static List <DataTablesServerDataRow> _filter (@Nonnull final DTSSRequestData aRequestData,
-                                                         @Nonnull final DataTablesServerData aServerData)
+  private static ICommonsList <DataTablesServerDataRow> _filter (@Nonnull final DTSSRequestData aRequestData,
+                                                                 @Nonnull final DataTablesServerData aServerData)
   {
-    List <DataTablesServerDataRow> aResultRows = aServerData.directGetAllRows ();
+    ICommonsList <DataTablesServerDataRow> aResultRows = aServerData.directGetAllRows ();
     if (aRequestData.isSearchActive ())
     {
       final Locale aDisplayLocale = aServerData.getDisplayLocale ();
@@ -243,7 +242,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
   {
     _sort (aRequestData, aServerData);
 
-    final List <DataTablesServerDataRow> aResultRows = _filter (aRequestData, aServerData);
+    final ICommonsList <DataTablesServerDataRow> aResultRows = _filter (aRequestData, aServerData);
 
     // Build the resulting array
     final HCSpecialNodes aSpecialNodes = new HCSpecialNodes ();

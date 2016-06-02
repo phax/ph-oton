@@ -24,6 +24,8 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.EDTType;
 import com.helger.datetime.format.PDTFormatter;
@@ -37,12 +39,13 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 
 public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
 {
-  private final Set <EDTColType> m_aDateTimeTypes;
+  private final ICommonsSet <EDTColType> m_aDateTimeTypes;
 
   public DataTablesPluginClientSortingDate (@Nonnull @Nonempty final Set <EDTColType> aDateTimeTypes)
   {
     super ("clientSortingDate");
-    m_aDateTimeTypes = ValueEnforcer.notEmptyNoNullValue (aDateTimeTypes, "DateTimeTypes");
+    ValueEnforcer.notEmptyNoNullValue (aDateTimeTypes, "DateTimeTypes");
+    m_aDateTimeTypes = new CommonsHashSet <> (aDateTimeTypes);
   }
 
   @Override

@@ -17,17 +17,17 @@
 package com.helger.photon.uictrls.datatables.ajax;
 
 import java.util.Comparator;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.compare.IComparator;
 import com.helger.commons.string.ToStringGenerator;
 
 final class ComparatorDataTablesServerDataRow implements IComparator <DataTablesServerDataRow>
 {
-  private final List <DTSSRequestDataOrderColumn> m_aOrderColumns;
+  private final ICommonsList <DTSSRequestDataOrderColumn> m_aOrderColumns;
 
   ComparatorDataTablesServerDataRow (@Nonnull final DataTablesServerSortState aServerSortState)
   {

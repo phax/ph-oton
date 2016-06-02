@@ -26,6 +26,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
@@ -73,7 +74,7 @@ public class TypeaheadDataset
   private String m_sEngine;
   private IJSExpression m_aHeader;
   private IJSExpression m_aFooter;
-  private List <? extends TypeaheadDatum> m_aLocal;
+  private ICommonsList <? extends TypeaheadDatum> m_aLocal;
   private TypeaheadPrefetch m_aPrefetch;
   private TypeaheadRemote m_aRemote;
 
@@ -86,8 +87,7 @@ public class TypeaheadDataset
    */
   public TypeaheadDataset (@Nonnull @Nonempty final String sName)
   {
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("name");
+    ValueEnforcer.notEmpty (sName, "Name");
     m_sName = sName;
   }
 
@@ -114,8 +114,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setValueKey (@Nonnull @Nonempty final String sValueKey)
   {
-    if (StringHelper.hasNoText (sValueKey))
-      throw new IllegalArgumentException ("valueKey");
+    ValueEnforcer.notEmpty (sValueKey, "ValueKey");
     m_sValueKey = sValueKey;
     return this;
   }
@@ -142,8 +141,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setLimit (@Nonnegative final int nLimit)
   {
-    if (nLimit < 1)
-      throw new IllegalArgumentException ("Limit too small: " + nLimit);
+    ValueEnforcer.isGT0 (nLimit, "Limit");
     m_nLimit = nLimit;
     return this;
   }

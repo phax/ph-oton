@@ -16,8 +16,6 @@
  */
 package com.helger.photon.uictrls.chart;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -25,6 +23,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.traits.IGenericImplTrait;
 import com.helger.html.jscode.JSArray;
@@ -41,7 +40,7 @@ import com.helger.html.jscode.JSAssocArray;
 public abstract class AbstractChartWithLabels <IMPLTYPE extends AbstractChartWithLabels <IMPLTYPE>>
                                               implements IChart, IGenericImplTrait <IMPLTYPE>
 {
-  private List <String> m_aLabels;
+  private ICommonsList <String> m_aLabels;
 
   public AbstractChartWithLabels ()
   {}
@@ -55,13 +54,13 @@ public abstract class AbstractChartWithLabels <IMPLTYPE extends AbstractChartWit
   @ReturnsMutableCopy
   public ICommonsList <String> getAllLabels ()
   {
-    return CollectionHelper.newList (m_aLabels);
+    return new CommonsArrayList <> (m_aLabels);
   }
 
   @Nonnull
   public IMPLTYPE setLabels (@Nullable final String... aLabels)
   {
-    m_aLabels = CollectionHelper.newList (aLabels);
+    m_aLabels = new CommonsArrayList <> (aLabels);
     return thisAsT ();
   }
 

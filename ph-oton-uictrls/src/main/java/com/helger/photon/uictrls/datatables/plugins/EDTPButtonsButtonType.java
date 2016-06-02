@@ -16,13 +16,12 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.name.IHasName;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.core.app.html.PhotonJS;
@@ -82,12 +81,12 @@ public enum EDTPButtonsButtonType implements IHasName
   COLUMNS_TOGGLE ("columnsToggle", EUICtrlsJSPathProvider.DATATABLES_BUTTONS_COLVIS);
 
   private final String m_sName;
-  private final List <IJSPathProvider> m_aJSIncludes;
+  private final ICommonsList <IJSPathProvider> m_aJSIncludes;
 
   private EDTPButtonsButtonType (@Nonnull @Nonempty final String sName, @Nullable final IJSPathProvider... aJSIncludes)
   {
     m_sName = sName;
-    m_aJSIncludes = CollectionHelper.newList (aJSIncludes);
+    m_aJSIncludes = new CommonsArrayList <> (aJSIncludes);
   }
 
   @Nonnull

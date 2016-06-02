@@ -28,6 +28,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.string.StringHelper;
@@ -81,7 +82,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   /** Live DOM sorting type assignment. */
   private String m_sOrderDataType;
   /** Order direction application sequence. */
-  private List <EDataTablesOrderDirectionType> m_aOrderSequence;
+  private ICommonsList <EDataTablesOrderDirectionType> m_aOrderSequence;
   /** Render (process) the data for use in the table. */
   private IJSExpression m_aRender;
   /** Enable or disable filtering on the data in this column. */
@@ -344,20 +345,20 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   @ReturnsMutableCopy
   public ICommonsList <EDataTablesOrderDirectionType> getOrderSequence ()
   {
-    return CollectionHelper.newList (m_aOrderSequence);
+    return new CommonsArrayList <> (m_aOrderSequence);
   }
 
   @Nonnull
   public DataTablesColumnDef setOrderSequence (@Nullable final EDataTablesOrderDirectionType... aOrderSequence)
   {
-    m_aOrderSequence = ArrayHelper.isEmpty (aOrderSequence) ? null : CollectionHelper.newList (aOrderSequence);
+    m_aOrderSequence = ArrayHelper.isEmpty (aOrderSequence) ? null : new CommonsArrayList <> (aOrderSequence);
     return this;
   }
 
   @Nonnull
   public DataTablesColumnDef setOrderSequence (@Nullable final List <EDataTablesOrderDirectionType> aOrderSequence)
   {
-    m_aOrderSequence = CollectionHelper.isEmpty (aOrderSequence) ? null : CollectionHelper.newList (aOrderSequence);
+    m_aOrderSequence = CollectionHelper.isEmpty (aOrderSequence) ? null : new CommonsArrayList <> (aOrderSequence);
     return this;
   }
 
