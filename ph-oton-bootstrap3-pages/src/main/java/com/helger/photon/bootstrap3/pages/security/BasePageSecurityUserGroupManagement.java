@@ -28,6 +28,9 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.name.IHasDisplayName;
@@ -253,12 +256,15 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     }
 
     // custom attributes
-    final Map <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
+    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
 
     // Callback for custom attributes
-    final Set <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aForm);
+    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
+                                                                                aSelectedObject,
+                                                                                aCustomAttrs,
+                                                                                aForm);
 
-    if (!aCustomAttrs.isEmpty ())
+    if (aCustomAttrs.isNotEmpty ())
     {
       // Show remaining custom attributes
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
@@ -294,7 +300,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final String sName = aWPEC.getAttributeAsString (FIELD_NAME);
     final String sDescription = aWPEC.getAttributeAsString (FIELD_DESCRIPTION);
-    final Collection <String> aRoleIDs = aWPEC.getAttributeAsList (FIELD_ROLES);
+    final ICommonsCollection <String> aRoleIDs = aWPEC.getAttributeAsList (FIELD_ROLES);
     final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
@@ -308,10 +314,10 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         aFormErrors.addFieldError (FIELD_ROLES, EText.ERROR_INVALID_ROLES.getDisplayText (aDisplayLocale));
 
     // Call custom method
-    final Map <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC,
-                                                                               aSelectedObject,
-                                                                               aFormErrors,
-                                                                               eFormAction);
+    final ICommonsMap <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC,
+                                                                                       aSelectedObject,
+                                                                                       aFormErrors,
+                                                                                       eFormAction);
 
     if (aFormErrors.isEmpty ())
     {

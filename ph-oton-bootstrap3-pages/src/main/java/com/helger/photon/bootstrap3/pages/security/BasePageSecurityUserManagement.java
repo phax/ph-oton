@@ -29,6 +29,9 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.email.EmailAddressHelper;
 import com.helger.commons.equals.EqualsHelper;
@@ -99,7 +102,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                             extends AbstractWebPageSecurityObjectWithAttributes <IUser, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW_USER ("Neuen Benutzer anlegen", "Create new user"),
     TAB_ACTIVE ("Aktive Benutzer ({0})", "Active users ({0})"),
@@ -397,12 +400,15 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     }
 
     // custom attributes
-    final Map <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
+    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
 
     // Callback for custom attributes
-    final Set <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aForm);
+    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
+                                                                                aSelectedObject,
+                                                                                aCustomAttrs,
+                                                                                aForm);
 
-    if (!aCustomAttrs.isEmpty ())
+    if (aCustomAttrs.isNotEmpty ())
     {
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
       aAttrTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
@@ -448,8 +454,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final String sPasswordConf = aWPEC.getAttributeAsString (FIELD_PASSWORD_CONFIRM);
     final boolean bEnabled = bIsAdministrator ? true : aWPEC.getCheckBoxAttr (FIELD_ENABLED, DEFAULT_USER_ENABLED);
     final String sDescription = aWPEC.getAttributeAsString (FIELD_DESCRIPTION);
-    final Collection <String> aUserGroupIDs = bIsAdministrator ? aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ())
-                                                               : aWPEC.getAttributeAsList (FIELD_USERGROUPS);
+    final ICommonsCollection <String> aUserGroupIDs = bIsAdministrator ? aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ())
+                                                                       : aWPEC.getAttributeAsList (FIELD_USERGROUPS);
 
     if (useEmailAddressAsLoginName ())
     {
@@ -502,10 +508,10 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         aFormErrors.addFieldError (FIELD_USERGROUPS, EText.ERROR_INVALID_USERGROUPS.getDisplayText (aDisplayLocale));
 
     // Call custom method
-    final Map <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC,
-                                                                               aSelectedObject,
-                                                                               aFormErrors,
-                                                                               eFormAction);
+    final ICommonsMap <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC,
+                                                                                       aSelectedObject,
+                                                                                       aFormErrors,
+                                                                                       eFormAction);
 
     if (aFormErrors.isEmpty ())
     {

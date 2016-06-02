@@ -19,7 +19,6 @@ package com.helger.photon.bootstrap3.pages.security;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,6 +26,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.name.IHasName;
@@ -200,12 +201,15 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     }
 
     // custom attributes
-    final Map <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
+    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
 
     // Callback for custom attributes
-    final Set <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aForm);
+    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
+                                                                                aSelectedObject,
+                                                                                aCustomAttrs,
+                                                                                aForm);
 
-    if (!aCustomAttrs.isEmpty ())
+    if (aCustomAttrs.isNotEmpty ())
     {
       // Show remaining custom attributes
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());

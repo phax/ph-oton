@@ -17,13 +17,14 @@
 package com.helger.photon.bootstrap3.pages.security;
 
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.IMultilingualText;
@@ -102,10 +103,10 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
    */
   @Nullable
   @OverrideOnDemand
-  protected Set <String> onShowSelectedObjectCustomAttrs (@Nonnull final WPECTYPE aWPEC,
-                                                          @Nonnull final DATATYPE aSelectedObject,
-                                                          @Nonnull final Map <String, String> aCustomAttrs,
-                                                          @Nonnull final BootstrapViewForm aTable)
+  protected ICommonsSet <String> onShowSelectedObjectCustomAttrs (@Nonnull final WPECTYPE aWPEC,
+                                                                  @Nonnull final DATATYPE aSelectedObject,
+                                                                  @Nonnull final Map <String, String> aCustomAttrs,
+                                                                  @Nonnull final BootstrapViewForm aTable)
   {
     return null;
   }
@@ -140,10 +141,10 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
    */
   @OverrideOnDemand
   @Nullable
-  protected Map <String, String> validateCustomInputParameters (@Nonnull final WPECTYPE aWPEC,
-                                                                @Nullable final DATATYPE aSelectedObject,
-                                                                @Nonnull final FormErrors aFormErrors,
-                                                                @Nonnull final EWebPageFormAction eFormAction)
+  protected ICommonsMap <String, String> validateCustomInputParameters (@Nonnull final WPECTYPE aWPEC,
+                                                                        @Nullable final DATATYPE aSelectedObject,
+                                                                        @Nonnull final FormErrors aFormErrors,
+                                                                        @Nonnull final EWebPageFormAction eFormAction)
   {
     return null;
   }

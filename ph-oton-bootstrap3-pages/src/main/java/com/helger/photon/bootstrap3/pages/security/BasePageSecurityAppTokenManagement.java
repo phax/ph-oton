@@ -18,7 +18,6 @@ package com.helger.photon.bootstrap3.pages.security;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
@@ -27,6 +26,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.errorlist.FormErrors;
@@ -218,12 +219,15 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     }
 
     // custom attributes
-    final Map <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
+    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
 
     // Callback for custom attributes
-    final Set <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aForm);
+    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
+                                                                                aSelectedObject,
+                                                                                aCustomAttrs,
+                                                                                aForm);
 
-    if (!aCustomAttrs.isEmpty ())
+    if (aCustomAttrs.isNotEmpty ())
     {
       // Show remaining custom attributes
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
@@ -345,10 +349,10 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     }
 
     // Call custom method
-    final Map <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC,
-                                                                               aSelectedObject,
-                                                                               aFormErrors,
-                                                                               eFormAction);
+    final ICommonsMap <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC,
+                                                                                       aSelectedObject,
+                                                                                       aFormErrors,
+                                                                                       eFormAction);
 
     if (aFormErrors.isEmpty ())
     {
