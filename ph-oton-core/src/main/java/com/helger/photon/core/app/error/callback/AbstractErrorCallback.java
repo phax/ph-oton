@@ -17,17 +17,27 @@
 package com.helger.photon.core.app.error.callback;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.collection.lru.LRUSet;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.url.SMap;
 import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
 import com.helger.photon.basic.app.dao.IDAOWriteExceptionCallback;
 import com.helger.photon.basic.app.dao.impl.AbstractDAO;
+import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.core.ajax.AjaxSettings;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
@@ -43,6 +53,7 @@ import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.core.requesttrack.TrackedRequest;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.web.servlet.request.RequestHelper;
 
 /**
@@ -59,6 +70,28 @@ public abstract class AbstractErrorCallback implements
                                             ILongRunningRequestCallback,
                                             IParallelRunningRequestCallback
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractErrorCallback.class);
+  private final ICommonsSet <String> m_aHandledLongRunning = new LRUSet <> (1000);
+
+  @Nonnull
+  protected static final Locale getSafeDisplayLocale (@Nonnull final Locale aFallback)
+  {
+    try
+    {
+      // This may fail, if a weird application context is used
+      return ApplicationRequestManager.getRequestMgr ().getRequestDisplayLocale ();
+    }
+    catch (final IllegalStateException ex)
+    {
+      // I just want to know, where and how this happens...
+      final IRequestWebScope aRequestScope = WebScopeManager.getRequestScopeOrNull ();
+      final String sAppID = aRequestScope == null ? "<no request scope present>"
+                                                  : ScopeManager.getRequestApplicationID (aRequestScope);
+      s_aLogger.warn ("Failed to retrieve default locale for application ID '" + sAppID + "'");
+      return aFallback;
+    }
+  }
+
   /**
    * Implement this method to handle all errors in a similar way.
    *
@@ -71,10 +104,13 @@ public abstract class AbstractErrorCallback implements
    * @param sErrorCode
    *        The unique error code for this error. Neither <code>null</code> nor
    *        empty.
+   * @param aCustomAttrs
+   *        Optional custom attributes to be emitted. May be <code>null</code>.
    */
   protected abstract void onError (@Nullable Throwable t,
                                    @Nullable IRequestWebScopeWithoutResponse aRequestScope,
-                                   @Nonnull @Nonempty String sErrorCode);
+                                   @Nonnull @Nonempty String sErrorCode,
+                                   @Nullable Map <String, String> aCustomAttrs);
 
   public void onAjaxExecutionException (@Nullable final IAjaxInvoker aAjaxInvoker,
                                         @Nullable final String sAjaxFunctionName,
@@ -85,7 +121,7 @@ public abstract class AbstractErrorCallback implements
     final String sErrorCode = "ajax-error-" +
                               (StringHelper.hasText (sAjaxFunctionName) ? sAjaxFunctionName + "-" : "") +
                               InternalErrorHandler.createNewErrorID ();
-    onError (t, aRequestScope, sErrorCode);
+    onError (t, aRequestScope, sErrorCode, new SMap ().add ("ajax-function-name", sAjaxFunctionName));
   }
 
   public void onAPIExecutionException (@Nullable final IAPIInvoker aAPIInvoker,
@@ -94,7 +130,7 @@ public abstract class AbstractErrorCallback implements
                                        @Nonnull final Throwable t)
   {
     final String sErrorCode = "api-error-" + InternalErrorHandler.createNewErrorID () + "-" + aDescriptor.getPath ();
-    onError (t, aRequestScope, sErrorCode);
+    onError (t, aRequestScope, sErrorCode, new SMap ().add ("api-path", aDescriptor.getPath ()));
   }
 
   public void onDAOReadException (@Nonnull final Throwable t,
@@ -105,7 +141,7 @@ public abstract class AbstractErrorCallback implements
                               (bInit ? "init" : "read") +
                               " error" +
                               (aRes == null ? "" : " for " + aRes.getPath ());
-    onError (t, null, sErrorCode);
+    onError (t, null, sErrorCode, new SMap ().add ("action", bInit ? "init" : "read").add ("path", aRes.getPath ()));
   }
 
   public void onDAOWriteException (@Nonnull final Throwable t,
@@ -113,21 +149,25 @@ public abstract class AbstractErrorCallback implements
                                    @Nonnull final CharSequence aFileContent)
   {
     final String sErrorCode = "DAO write error for " + aRes.getPath () + " with " + aFileContent.length () + " chars";
-    onError (t, null, sErrorCode);
+    onError (t,
+             null,
+             sErrorCode,
+             new SMap ().add ("action", "write").add ("path", aRes.getPath ()).add ("content", aFileContent));
   }
 
   public void onLongRunningRequest (@Nonnull @Nonempty final String sUniqueRequestID,
                                     @Nonnull final IRequestWebScope aRequestScope,
                                     @Nonnegative final long nRunningMilliseconds)
   {
-    onError ((Throwable) null,
-             aRequestScope,
-             "Long running request. ID=" +
-                            sUniqueRequestID +
-                            "; millisecs=" +
-                            nRunningMilliseconds +
-                            "; URL=" +
-                            RequestHelper.getURL (aRequestScope.getRequest ()));
+    if (m_aHandledLongRunning.add (sUniqueRequestID))
+    {
+      onError ((Throwable) null,
+               aRequestScope,
+               "Long running request.",
+               new SMap ().add ("request-id", sUniqueRequestID)
+                          .add ("millisecconds", nRunningMilliseconds)
+                          .add ("URL", RequestHelper.getURL (aRequestScope.getRequest ())));
+    }
   }
 
   public void onParallelRunningRequests (@Nonnegative final int nParallelRequests,
@@ -138,7 +178,8 @@ public abstract class AbstractErrorCallback implements
       aURLs.append ('\n').append (aRequest.getRequestScope ().getURL ());
     onError ((Throwable) null,
              (IRequestWebScopeWithoutResponse) null,
-             "Currently " + nParallelRequests + " parallel requests are active: " + aURLs.toString ());
+             "Currently " + nParallelRequests + " parallel requests are active: " + aURLs.toString (),
+             new SMap ().add ("parallel-requests", nParallelRequests));
   }
 
   public void onParallelRunningRequestsBelowLimit ()

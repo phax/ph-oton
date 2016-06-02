@@ -101,6 +101,14 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
+  public InternalErrorBuilder addCustomData (@Nullable final Map <String, String> aMap)
+  {
+    if (aMap != null)
+      m_aCustomData.putAll (aMap);
+    return this;
+  }
+
+  @Nonnull
   public InternalErrorBuilder setCustomData (@Nullable final Map <String, String> aCustomData)
   {
     m_aCustomData.setAll (aCustomData);
