@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -81,6 +82,7 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
   public static final boolean DEFAULT_HTML = false;
   public static final EBootstrapTooltipPosition DEFAULT_PLACEMENT = EBootstrapTooltipPosition.TOP;
   public static final boolean DEFAULT_PLACEMENT_AUTO = false;
+  @CodingStyleguideUnaware
   public static final Set <EBootstrapTooltipTrigger> DEFAULT_TRIGGER = CollectionHelper.makeUnmodifiable (CollectionHelper.newSortedSet (EBootstrapTooltipTrigger.HOVER,
                                                                                                                                          EBootstrapTooltipTrigger.FOCUS));
 

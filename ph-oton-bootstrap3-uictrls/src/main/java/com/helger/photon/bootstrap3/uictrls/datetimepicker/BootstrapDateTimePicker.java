@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.datetime.PDTFactory;
@@ -89,6 +90,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   private EDateTimePickerDayOfWeek m_eWeekStart;
   private LocalDate m_aStartDate;
   private LocalDate m_aEndDate;
+  @CodingStyleguideUnaware
   private Set <EDateTimePickerDayOfWeek> m_aDaysOfWeekDisabled;
   private boolean m_bAutoclose = DEFAULT_AUTOCLOSE;
   private EDateTimePickerViewType m_eStartView;

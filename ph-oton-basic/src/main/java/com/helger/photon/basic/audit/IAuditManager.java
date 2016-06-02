@@ -23,6 +23,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 
 /**
@@ -61,6 +62,7 @@ public interface IAuditManager
    */
   @Nonnull
   @ReturnsMutableCopy
+  @CodingStyleguideUnaware
   List <IAuditItem> getLastAuditItems (@Nonnegative int nMaxItems);
 
   /**

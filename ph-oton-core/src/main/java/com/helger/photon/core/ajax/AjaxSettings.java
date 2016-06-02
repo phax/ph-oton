@@ -25,13 +25,13 @@ public final class AjaxSettings
    */
   public static final long DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS = CGlobal.MILLISECONDS_PER_SECOND;
 
-  private static final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-  private static final CallbackList <IAjaxExceptionCallback> m_aExceptionCallbacks = new CallbackList <> ();
-  private static final CallbackList <IAjaxBeforeExecutionCallback> m_aBeforeExecutionCallbacks = new CallbackList <> ();
-  private static final CallbackList <IAjaxAfterExecutionCallback> m_aAfterExecutionCallbacks = new CallbackList <> ();
-  @GuardedBy ("m_aRWLock")
-  private static long m_nLongRunningExecutionLimitTime = DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS;
-  private static final CallbackList <IAjaxLongRunningExecutionCallback> m_aLongRunningExecutionCallbacks = new CallbackList <> ();
+  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
+  private static final CallbackList <IAjaxExceptionCallback> s_aExceptionCallbacks = new CallbackList <> ();
+  private static final CallbackList <IAjaxBeforeExecutionCallback> s_aBeforeExecutionCallbacks = new CallbackList <> ();
+  private static final CallbackList <IAjaxAfterExecutionCallback> s_aAfterExecutionCallbacks = new CallbackList <> ();
+  @GuardedBy ("s_aRWLock")
+  private static long s_nLongRunningExecutionLimitTime = DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS;
+  private static final CallbackList <IAjaxLongRunningExecutionCallback> s_aLongRunningExecutionCallbacks = new CallbackList <> ();
 
   static
   {
@@ -47,27 +47,27 @@ public final class AjaxSettings
   @ReturnsMutableObject ("design")
   public static CallbackList <IAjaxExceptionCallback> getExceptionCallbacks ()
   {
-    return m_aExceptionCallbacks;
+    return s_aExceptionCallbacks;
   }
 
   @Nonnull
   @ReturnsMutableObject ("design")
   public static CallbackList <IAjaxBeforeExecutionCallback> getBeforeExecutionCallbacks ()
   {
-    return m_aBeforeExecutionCallbacks;
+    return s_aBeforeExecutionCallbacks;
   }
 
   @Nonnull
   @ReturnsMutableObject ("design")
   public static CallbackList <IAjaxAfterExecutionCallback> getAfterExecutionCallbacks ()
   {
-    return m_aAfterExecutionCallbacks;
+    return s_aAfterExecutionCallbacks;
   }
 
   @CheckForSigned
   public static long getLongRunningExecutionLimitTime ()
   {
-    return m_aRWLock.readLocked ( () -> m_nLongRunningExecutionLimitTime);
+    return s_aRWLock.readLocked ( () -> s_nLongRunningExecutionLimitTime);
   }
 
   /**
@@ -78,13 +78,13 @@ public final class AjaxSettings
    */
   public static void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
   {
-    m_aRWLock.writeLocked ( () -> m_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
+    s_aRWLock.writeLocked ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
   }
 
   @Nonnull
   @ReturnsMutableObject ("design")
   public static CallbackList <IAjaxLongRunningExecutionCallback> getLongRunningExecutionCallbacks ()
   {
-    return m_aLongRunningExecutionCallbacks;
+    return s_aLongRunningExecutionCallbacks;
   }
 }

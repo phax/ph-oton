@@ -23,6 +23,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.changelog.ChangeLog;
@@ -81,6 +82,7 @@ public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     }
   }
 
+  @CodingStyleguideUnaware
   private static List <ChangeLogEntry> s_aCache;
 
   public BasePageAppInfoChangeLogs (@Nonnull @Nonempty final String sID)

@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -73,6 +74,7 @@ public final class AuditItemList
 
   @Nonnull
   @ReturnsImmutableObject
+  @CodingStyleguideUnaware
   public List <IAuditItem> getLastItems (@Nonnegative final int nMaxItems)
   {
     final int nEndIndex = Math.min (nMaxItems, m_aItems.size ());

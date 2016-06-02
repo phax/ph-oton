@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -282,6 +283,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
 
   @Nonnull
   @ReturnsMutableCopy
+  @CodingStyleguideUnaware
   public List <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
   {
     return m_aRWLock.readLocked ( () -> m_aItems.getLastItems (nMaxItems));

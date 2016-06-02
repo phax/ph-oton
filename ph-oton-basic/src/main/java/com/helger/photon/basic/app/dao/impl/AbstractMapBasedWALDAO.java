@@ -33,6 +33,7 @@ import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
@@ -62,8 +63,8 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
 {
   private final String m_sXMLItemElementName;
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IMPLTYPE> m_aMap = new CommonsHashMap<> ();
-  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList<> ();
+  private final ICommonsMap <String, IMPLTYPE> m_aMap = new CommonsHashMap <> ();
+  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList <> ();
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nonnull @Nonempty final String sFilename,
@@ -111,6 +112,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   }
 
   @MustBeLocked (ELockType.READ)
+  @CodingStyleguideUnaware
   protected final Collection <IMPLTYPE> getAllSortedByKey ()
   {
     return m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ();
@@ -253,7 +255,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   @ReturnsMutableCopy
   public final ICommonsCollection <? extends INTERFACETYPE> getNone ()
   {
-    return new CommonsArrayList<> ();
+    return new CommonsArrayList <> ();
   }
 
   @Nonnull

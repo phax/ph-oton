@@ -17,7 +17,6 @@
 package com.helger.photon.core.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -27,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ServiceLoaderHelper;
 import com.helger.commons.state.EContinue;
@@ -50,7 +50,7 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractApplicationServlet.class);
 
-  private final List <IApplicationRequestListenerSPI> m_aListeners;
+  private final ICommonsList <IApplicationRequestListenerSPI> m_aListeners;
 
   protected AbstractApplicationServlet ()
   {

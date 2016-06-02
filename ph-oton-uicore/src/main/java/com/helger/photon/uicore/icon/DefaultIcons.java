@@ -16,15 +16,12 @@
  */
 package com.helger.photon.uicore.icon;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsMap;
 
@@ -36,7 +33,7 @@ import com.helger.commons.collection.ext.ICommonsMap;
 @NotThreadSafe
 public final class DefaultIcons
 {
-  private static final ICommonsMap <EDefaultIcon, IIcon> s_aMap = new CommonsHashMap<> ();
+  private static final ICommonsMap <EDefaultIcon, IIcon> s_aMap = new CommonsHashMap <> ();
 
   private DefaultIcons ()
   {}
@@ -67,9 +64,9 @@ public final class DefaultIcons
 
   @Nonnull
   @ReturnsMutableCopy
-  public static Map <EDefaultIcon, IIcon> getAll ()
+  public static ICommonsMap <EDefaultIcon, IIcon> getAll ()
   {
-    return CollectionHelper.newMap (s_aMap);
+    return s_aMap.getClone ();
   }
 
   /**

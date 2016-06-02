@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.photon.core.api.APIPath;
 import com.helger.photon.core.api.ApplicationAPIManager;
@@ -49,6 +50,7 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
 
   @Override
   @Nonnull
+  @CodingStyleguideUnaware
   protected EnumSet <EHTTPMethod> getAllowedHTTPMethods ()
   {
     return ALL;

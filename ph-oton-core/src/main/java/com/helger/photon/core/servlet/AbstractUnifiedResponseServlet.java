@@ -34,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.collection.CollectionHelper;
@@ -73,15 +74,19 @@ import com.helger.web.servlets.scope.AbstractScopeAwareHttpServlet;
 public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareHttpServlet
 {
   /** Default allowed methods: HEAD, GET and POST */
+  @CodingStyleguideUnaware
   public static final Set <EHTTPMethod> DEFAULT_ALLOWED_METHDOS = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.HEAD,
                                                                                                                  EHTTPMethod.GET,
                                                                                                                  EHTTPMethod.POST));
   /** Allowed methods: GET and POST */
+  @CodingStyleguideUnaware
   public static final Set <EHTTPMethod> ALLOWED_METHDOS_GET_POST = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.GET,
                                                                                                                   EHTTPMethod.POST));
   /** Allowed methods: GET */
+  @CodingStyleguideUnaware
   public static final Set <EHTTPMethod> ALLOWED_METHDOS_GET = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.GET));
   /** Allowed methods: POST */
+  @CodingStyleguideUnaware
   public static final Set <EHTTPMethod> ALLOWED_METHDOS_POST = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.POST));
 
   /** The name of the request attribute uniquely identifying the request ID */

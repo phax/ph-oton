@@ -25,6 +25,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
@@ -42,7 +43,7 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
   private final IDTYPE m_aObjID;
   private final ELocked m_eLocked;
   private final boolean m_bIsNewLock;
-  private final List <IDTYPE> m_aUnlockedObjects;
+  private final ICommonsList <IDTYPE> m_aUnlockedObjects;
 
   public LockResult (@Nonnull final IDTYPE aObjID,
                      @Nonnull final ELocked eLocked,
@@ -52,7 +53,7 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
     m_aObjID = ValueEnforcer.notNull (aObjID, "ObjectID");
     m_eLocked = ValueEnforcer.notNull (eLocked, "Locked");
     m_bIsNewLock = bIsNewLock;
-    m_aUnlockedObjects = CollectionHelper.newList (aUnlockedObjects);
+    m_aUnlockedObjects = new CommonsArrayList <> (aUnlockedObjects);
   }
 
   /**
@@ -91,7 +92,7 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
   @ReturnsMutableCopy
   public ICommonsList <IDTYPE> getUnlockedObjects ()
   {
-    return CollectionHelper.newList (m_aUnlockedObjects);
+    return m_aUnlockedObjects.getClone ();
   }
 
   @Override
