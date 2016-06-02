@@ -20,7 +20,7 @@ import java.io.File;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.server.Connector;
@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.string.StringHelper;
@@ -53,8 +54,8 @@ import com.helger.commons.system.SystemProperties;
  *
  * @author Philip Helger
  */
-@Immutable
-public final class JettyStarter
+@NotThreadSafe
+public class JettyStarter
 {
   public static final int DEFAULT_PORT = 8080;
   public static final String DEFAULT_STOP_KEY = InternalJettyStopMonitorThread.STOP_KEY;
@@ -199,6 +200,36 @@ public final class JettyStarter
   }
 
   /**
+   * Customize
+   *
+   * @param aServerConnector
+   *        Server connector
+   */
+  @OverrideOnDemand
+  protected void customizeServerConnector (@Nonnull final ServerConnector aServerConnector)
+  {}
+
+  /**
+   * Customize
+   *
+   * @param aServer
+   *        Server
+   */
+  @OverrideOnDemand
+  protected void customizeServer (@Nonnull final Server aServer)
+  {}
+
+  /**
+   * Customize
+   *
+   * @param aWebAppCtx
+   *        Web application context
+   */
+  @OverrideOnDemand
+  protected void customizeWebAppCtx (@Nonnull final WebAppContext aWebAppCtx)
+  {}
+
+  /**
    * Run Jetty with the provided settings.
    *
    * @throws Exception
@@ -218,10 +249,12 @@ public final class JettyStarter
       final ServerConnector aConnector = new ServerConnector (aServer);
       aConnector.setPort (m_nPort);
       aConnector.setIdleTimeout (30000);
+      customizeServerConnector (aConnector);
       aServer.setConnectors (new Connector [] { aConnector });
       aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormContentSize",
                             Integer.valueOf (2 * CGlobal.BYTES_PER_MEGABYTE));
-      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormKeys", Integer.valueOf (10000));
+      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormKeys", Integer.valueOf (20000));
+      customizeServer (aServer);
     }
 
     final WebAppContext aWebAppCtx = new WebAppContext ();
@@ -253,6 +286,8 @@ public final class JettyStarter
     }
 
     aWebAppCtx.getSessionHandler ().getSessionManager ().getSessionCookieConfig ().setName ("PHOTONSESSIONID");
+
+    customizeWebAppCtx (aWebAppCtx);
 
     aServer.setHandler (aWebAppCtx);
     final ServletContextHandler aCtx = aWebAppCtx;
