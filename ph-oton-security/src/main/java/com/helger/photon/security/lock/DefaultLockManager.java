@@ -163,7 +163,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
           s_aLogger.info ("User '" + sUserID + "' locked object '" + aObjID + "'");
       }
 
-      return new LockResult <IDTYPE> (aObjID, eLocked, bIsNewLock, aUnlockedObjects);
+      return new LockResult <> (aObjID, eLocked, bIsNewLock, aUnlockedObjects);
     });
   }
 

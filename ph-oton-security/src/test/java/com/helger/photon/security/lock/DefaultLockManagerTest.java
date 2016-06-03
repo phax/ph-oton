@@ -39,7 +39,7 @@ public final class DefaultLockManagerTest
   {
     final String sUser1 = "user1";
     final String sObjID1 = "obj1";
-    final DefaultLockManager <String> aLM = new DefaultLockManager <String> (MockCurrentUserIDProvider.getInstance ());
+    final DefaultLockManager <String> aLM = new DefaultLockManager <> (MockCurrentUserIDProvider.getInstance ());
     assertFalse (aLM.isObjectLockedByAnyUser (sObjID1));
     assertFalse (aLM.isObjectLockedByCurrentUser (sObjID1));
     assertFalse (aLM.isObjectLockedByOtherUser (sObjID1));
@@ -144,7 +144,7 @@ public final class DefaultLockManagerTest
     final String sObjID1 = "obj1";
     final String sObjID2 = "obj2";
     final String sObjID3 = "obj3";
-    final DefaultLockManager <String> aLM = new DefaultLockManager <String> (MockCurrentUserIDProvider.getInstance ());
+    final DefaultLockManager <String> aLM = new DefaultLockManager <> (MockCurrentUserIDProvider.getInstance ());
     assertFalse (aLM.isObjectLockedByAnyUser (sObjID1));
     assertFalse (aLM.isObjectLockedByCurrentUser (sObjID1));
     assertFalse (aLM.isObjectLockedByOtherUser (sObjID1));

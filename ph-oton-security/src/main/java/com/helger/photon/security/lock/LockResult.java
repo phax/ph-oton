@@ -132,6 +132,6 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
   @Nonnull
   public static <IDTYPE> LockResult <IDTYPE> createFailure (@Nonnull final IDTYPE aObjID)
   {
-    return new LockResult <IDTYPE> (aObjID, ELocked.NOT_LOCKED, false, null);
+    return new LockResult <> (aObjID, ELocked.NOT_LOCKED, false, null);
   }
 }
