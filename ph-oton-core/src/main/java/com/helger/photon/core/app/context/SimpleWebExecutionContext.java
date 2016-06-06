@@ -196,9 +196,9 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   }
 
   @Nonnull
-  public Iterator <Map.Entry <String, Object>> getIterator ()
+  public Iterator <Map.Entry <String, Object>> iterator ()
   {
-    return m_aRequestScope.getIterator ();
+    return m_aRequestScope.iterator ();
   }
 
   public boolean getCheckBoxAttr (@Nullable final String sName, final boolean bDefaultValue)
