@@ -61,9 +61,9 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   private final UserManager m_aUserMgr;
   private final RoleManager m_aRoleMgr;
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, UserGroup> m_aMap = new CommonsHashMap<> ();
+  private final ICommonsMap <String, UserGroup> m_aMap = new CommonsHashMap <> ();
 
-  private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList<> ();
+  private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserGroupManager (@Nonnull @Nonempty final String sFilename,
                            @Nonnull final UserManager aUserMgr,
@@ -106,8 +106,9 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   @Nonnull
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
-    for (final IMicroElement eUserGroup : aDoc.getDocumentElement ().getAllChildElements ())
-      _addUserGroup (MicroTypeConverter.convertToNative (eUserGroup, UserGroup.class));
+    aDoc.getDocumentElement ()
+        .forAllChildElements (eUserGroup -> _addUserGroup (MicroTypeConverter.convertToNative (eUserGroup,
+                                                                                               UserGroup.class)));
     return EChange.UNCHANGED;
   }
 
@@ -560,7 +561,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sUserID))
       return EChange.UNCHANGED;
 
-    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList<> ();
+    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList <> ();
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -622,7 +623,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public ICommonsList <? extends IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
-      return new CommonsArrayList<> ();
+      return new CommonsArrayList <> ();
 
     return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aUserGroup -> aUserGroup.containsUserID (sUserID)));
   }
@@ -641,7 +642,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
-      return new CommonsArrayList<> ();
+      return new CommonsArrayList <> ();
 
     return m_aRWLock.readLocked ( () -> CollectionHelper.newListMapped (m_aMap.values (),
                                                                         aUserGroup -> aUserGroup.containsUserID (sUserID),
@@ -747,7 +748,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sRoleID))
       return EChange.UNCHANGED;
 
-    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList<> ();
+    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList <> ();
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -790,7 +791,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public ICommonsList <? extends IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
   {
     if (StringHelper.hasNoText (sRoleID))
-      return new CommonsArrayList<> ();
+      return new CommonsArrayList <> ();
 
     return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aUserGroup -> aUserGroup.containsRoleID (sRoleID)));
   }
@@ -809,7 +810,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
   {
     if (StringHelper.hasNoText (sRoleID))
-      return new CommonsArrayList<> ();
+      return new CommonsArrayList <> ();
 
     return m_aRWLock.readLocked ( () -> CollectionHelper.newListMapped (m_aMap.values (),
                                                                         aUserGroup -> aUserGroup.containsRoleID (sRoleID),

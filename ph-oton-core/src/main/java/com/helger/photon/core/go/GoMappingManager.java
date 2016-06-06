@@ -114,8 +114,7 @@ public class GoMappingManager extends AbstractSimpleDAO
     ValueEnforcer.notNull (aDoc, "Doc");
     ValueEnforcer.notNull (aCallback, "Callback");
 
-    for (final IMicroElement eItem : aDoc.getDocumentElement ().getAllChildElements ())
-    {
+    aDoc.getDocumentElement ().forAllChildElements (eItem -> {
       final String sTagName = eItem.getTagName ();
       final String sKey = eItem.getAttributeValue (ATTR_KEY);
       final String sHref = eItem.getAttributeValue (ATTR_HREF);
@@ -129,7 +128,7 @@ public class GoMappingManager extends AbstractSimpleDAO
           aCallback.accept (new GoMappingItem (sKey, true, sHref, bIsEditable));
         else
           s_aLogger.error ("Unsupported go-mapping tag '" + sTagName + "'");
-    }
+    });
   }
 
   @Override
