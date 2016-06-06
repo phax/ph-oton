@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.hierarchy.visit.IHierarchyVisitorCallback;
-import com.helger.commons.tree.withid.DefaultTreeItemWithID;
+import com.helger.tree.withid.DefaultTreeItemWithID;
 
 /**
  * Base interface for {@link MenuItemDeterminatorCallback}.

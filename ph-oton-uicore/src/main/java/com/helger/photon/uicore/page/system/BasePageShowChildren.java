@@ -26,8 +26,6 @@ import com.helger.commons.collection.impl.NonBlockingStack;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.tree.util.TreeVisitor;
-import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCUL;
 import com.helger.html.hc.html.grouping.IHCLI;
@@ -38,6 +36,8 @@ import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.tree.util.TreeVisitor;
+import com.helger.tree.withid.DefaultTreeItemWithID;
 
 public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
 {

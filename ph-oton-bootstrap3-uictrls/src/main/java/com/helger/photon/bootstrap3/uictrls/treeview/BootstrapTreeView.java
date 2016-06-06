@@ -29,11 +29,6 @@ import com.helger.commons.collection.impl.NonBlockingStack;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.state.ETriState;
-import com.helger.commons.tree.BasicTree;
-import com.helger.commons.tree.DefaultTree;
-import com.helger.commons.tree.DefaultTreeItem;
-import com.helger.commons.tree.ITreeItem;
-import com.helger.commons.tree.util.TreeVisitor;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -48,6 +43,11 @@ import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsJSPathProvider;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.tree.BasicTree;
+import com.helger.tree.DefaultTree;
+import com.helger.tree.DefaultTreeItem;
+import com.helger.tree.ITreeItem;
+import com.helger.tree.util.TreeVisitor;
 
 /**
  * Bootstrap Tree View from https://github.com/jonmiles/bootstrap-treeview

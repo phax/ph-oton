@@ -26,8 +26,6 @@ import com.helger.commons.collection.impl.NonBlockingStack;
 import com.helger.commons.factory.IFactory;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
-import com.helger.commons.tree.util.TreeVisitor;
-import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.IHCList;
@@ -39,6 +37,8 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.menu.MenuItemDeterminatorCallback;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
+import com.helger.tree.util.TreeVisitor;
+import com.helger.tree.withid.DefaultTreeItemWithID;
 
 /**
  * Renders menu item nodes.

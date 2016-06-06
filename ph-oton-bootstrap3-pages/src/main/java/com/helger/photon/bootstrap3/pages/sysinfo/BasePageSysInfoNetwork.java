@@ -35,10 +35,6 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.tree.sort.TreeWithIDSorter;
-import com.helger.commons.tree.util.TreeVisitor;
-import com.helger.commons.tree.withid.DefaultTreeItemWithID;
-import com.helger.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.html.tabular.HCRow;
@@ -55,7 +51,10 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
-import com.helger.web.networkinterface.NetworkInterfaceHelper;
+import com.helger.tree.sort.TreeWithIDSorter;
+import com.helger.tree.util.TreeVisitor;
+import com.helger.tree.withid.DefaultTreeItemWithID;
+import com.helger.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 
 /**
  * Page with information on the current network settings

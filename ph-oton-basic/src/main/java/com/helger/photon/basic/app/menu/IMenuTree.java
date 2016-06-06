@@ -18,8 +18,8 @@ package com.helger.photon.basic.app.menu;
 
 import javax.annotation.Nullable;
 
-import com.helger.commons.tree.withid.DefaultTreeItemWithID;
-import com.helger.commons.tree.withid.unique.ITreeWithGlobalUniqueID;
+import com.helger.tree.withid.DefaultTreeItemWithID;
+import com.helger.tree.withid.unique.ITreeWithGlobalUniqueID;
 
 /**
  * A combination of a tree and the menu operations

@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
-import com.helger.commons.tree.withid.DefaultTreeItemWithID;
+import com.helger.tree.withid.DefaultTreeItemWithID;
 
 /**
  * Abstract base implementation of {@link IMenuItemDeterminatorCallback}.

@@ -35,11 +35,11 @@ import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.commons.tree.util.TreeVisitor;
-import com.helger.commons.tree.withid.DefaultTreeItemWithID;
-import com.helger.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 import com.helger.commons.url.IHasSimpleURL;
 import com.helger.photon.basic.app.page.IPage;
+import com.helger.tree.util.TreeVisitor;
+import com.helger.tree.withid.DefaultTreeItemWithID;
+import com.helger.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 
 /**
  * Represents a single menu tree

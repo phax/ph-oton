@@ -32,7 +32,6 @@ import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.tree.withid.DefaultTreeItemWithID;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLParameterList;
@@ -44,6 +43,7 @@ import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
+import com.helger.tree.withid.DefaultTreeItemWithID;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
