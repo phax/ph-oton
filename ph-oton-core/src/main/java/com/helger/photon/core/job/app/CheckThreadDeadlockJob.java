@@ -21,9 +21,7 @@ import javax.annotation.Nonnull;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.ScheduleBuilder;
-import org.quartz.SimpleTrigger;
-import org.quartz.TriggerBuilder;
+import org.quartz.SimpleScheduleBuilder;
 import org.quartz.TriggerKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +32,7 @@ import com.helger.commons.deadlock.ThreadDeadlockDetector;
 import com.helger.photon.core.app.error.MailingThreadDeadlockCallback;
 import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.schedule.quartz.GlobalQuartzScheduler;
+import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
 
 /**
  * A Quartz job to be scheduled to check for thread dead locks.
@@ -75,7 +74,7 @@ public class CheckThreadDeadlockJob extends AbstractPhotonJob
    * @return The created trigger key for further usage. Never <code>null</code>.
    */
   @Nonnull
-  public static TriggerKey schedule (@Nonnull final ScheduleBuilder <SimpleTrigger> aScheduleBuilder,
+  public static TriggerKey schedule (@Nonnull final SimpleScheduleBuilder aScheduleBuilder,
                                      @Nonnull @Nonempty final String sApplicationID)
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
@@ -83,9 +82,9 @@ public class CheckThreadDeadlockJob extends AbstractPhotonJob
     setApplicationScopeID (sApplicationID);
 
     return GlobalQuartzScheduler.getInstance ().scheduleJob (CheckThreadDeadlockJob.class.getName (),
-                                                             TriggerBuilder.newTrigger ()
-                                                                           .startNow ()
-                                                                           .withSchedule (aScheduleBuilder),
+                                                             JDK8TriggerBuilder.newTrigger ()
+                                                                               .startNow ()
+                                                                               .withSchedule (aScheduleBuilder),
                                                              CheckThreadDeadlockJob.class,
                                                              null);
   }

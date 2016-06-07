@@ -27,7 +27,6 @@ import org.quartz.JobExecutionException;
 import org.quartz.ScheduleBuilder;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
-import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +41,7 @@ import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.error.InternalErrorHandler;
 import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.schedule.quartz.GlobalQuartzScheduler;
+import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
 import com.helger.smtp.data.EEmailType;
 import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
@@ -132,9 +132,9 @@ public class CheckDiskUsableSpaceJob extends AbstractPhotonJob
     aJobDataMap.put (JOB_DATA_ATTR_THRESHOLD_BYTES, Long.valueOf (nThresholdBytes));
 
     return GlobalQuartzScheduler.getInstance ().scheduleJob (CheckDiskUsableSpaceJob.class.getName (),
-                                                             TriggerBuilder.newTrigger ()
-                                                                           .startNow ()
-                                                                           .withSchedule (SimpleScheduleBuilder.repeatMinutelyForever (60)),
+                                                             JDK8TriggerBuilder.newTrigger ()
+                                                                               .startNow ()
+                                                                               .withSchedule (SimpleScheduleBuilder.repeatMinutelyForever (60)),
                                                              CheckDiskUsableSpaceJob.class,
                                                              aJobDataMap);
   }
