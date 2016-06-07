@@ -40,11 +40,11 @@ import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.ext.ICommonsNavigableSet;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.lang.StackTraceHelper;
-import com.helger.commons.microdom.IHasMicroNodeRepresentation;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
+import com.helger.xml.microdom.IHasMicroNodeRepresentation;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroElement;
 
 /**
  * This class contains a list of {@link ThreadDescriptor} objects.

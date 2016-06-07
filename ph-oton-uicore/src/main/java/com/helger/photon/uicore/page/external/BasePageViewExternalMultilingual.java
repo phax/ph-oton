@@ -34,13 +34,13 @@ import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.locale.LocaleHelper;
-import com.helger.commons.microdom.IMicroContainer;
-import com.helger.commons.microdom.IMicroNode;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.hc.impl.HCDOMWrapper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.xml.microdom.IMicroContainer;
+import com.helger.xml.microdom.IMicroNode;
 
 /**
  * Renders a page with HTML code that is provided from an external resource

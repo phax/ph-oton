@@ -21,9 +21,9 @@ import javax.xml.XMLConstants;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroElement;
 
 public class FeedOutOfLineContent extends AbstractFeedElement implements IFeedContent
 {

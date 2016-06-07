@@ -19,11 +19,11 @@ package com.helger.photon.security.config;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
-import com.helger.commons.microdom.convert.IMicroTypeConverterRegistry;
 import com.helger.photon.security.object.accarea.AccountingArea;
 import com.helger.photon.security.object.accarea.AccountingAreaMicroTypeConverter;
 import com.helger.photon.security.object.client.Client;
+import com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI;
+import com.helger.xml.microdom.convert.IMicroTypeConverterRegistry;
 
 /**
  * Special micro type converter for this project.

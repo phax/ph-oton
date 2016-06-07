@@ -25,10 +25,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SMap;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
+import com.helger.xml.mock.XMLTestHelper;
 
 /**
  * Test class for class {@link AppToken}.
@@ -49,7 +49,7 @@ public final class AppTokenTest
                                              "http://junit.org",
                                              "Unit Tester",
                                              "ut@example.org");
-    CommonsTestHelper.testMicroTypeConversion (aAppToken);
+    XMLTestHelper.testMicroTypeConversion (aAppToken);
     assertTrue (StringHelper.hasText (aAppToken.getActiveTokenString ()));
   }
 
@@ -62,7 +62,7 @@ public final class AppTokenTest
                                              "http://junit.org",
                                              "Unit Tester",
                                              "ut@example.org");
-    CommonsTestHelper.testMicroTypeConversion (aAppToken);
+    XMLTestHelper.testMicroTypeConversion (aAppToken);
     assertEquals ("blafootoken", aAppToken.getActiveTokenString ());
   }
 }

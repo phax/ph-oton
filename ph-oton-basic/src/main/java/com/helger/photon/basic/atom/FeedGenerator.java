@@ -20,10 +20,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IHasDescription;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroElement;
 
 /**
  * Represents the generator of a feed.

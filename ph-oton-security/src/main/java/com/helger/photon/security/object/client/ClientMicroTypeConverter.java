@@ -20,10 +20,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroElement;
 import com.helger.photon.basic.object.client.IClient;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroElement;
 
 public final class ClientMicroTypeConverter extends AbstractObjectMicroTypeConverter
 {

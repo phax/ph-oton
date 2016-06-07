@@ -19,8 +19,6 @@ package com.helger.photon.basic.config;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
-import com.helger.commons.microdom.convert.IMicroTypeConverterRegistry;
 import com.helger.photon.basic.audit.AuditItem;
 import com.helger.photon.basic.audit.AuditItemMicroTypeConverter;
 import com.helger.photon.basic.favorites.Favorite;
@@ -29,6 +27,8 @@ import com.helger.photon.basic.longrun.LongRunningJobData;
 import com.helger.photon.basic.longrun.LongRunningJobDataMicroTypeConverter;
 import com.helger.photon.basic.migration.SystemMigrationResult;
 import com.helger.photon.basic.migration.SystemMigrationResultMicroTypeConverter;
+import com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI;
+import com.helger.xml.microdom.convert.IMicroTypeConverterRegistry;
 
 /**
  * Special micro type converter for this project.

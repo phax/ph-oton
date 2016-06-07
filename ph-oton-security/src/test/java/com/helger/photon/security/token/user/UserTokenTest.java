@@ -25,13 +25,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SMap;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.app.AppTokenManager;
 import com.helger.photon.security.token.app.IAppToken;
+import com.helger.xml.mock.XMLTestHelper;
 
 /**
  * Test class for class {@link UserToken}.
@@ -51,7 +51,7 @@ public final class UserTokenTest
 
     final UserToken aUserToken = new UserToken (null, (Map <String, String>) null, aAppToken, "Unit test user token");
     assertTrue (StringHelper.hasText (aUserToken.getActiveTokenString ()));
-    CommonsTestHelper.testMicroTypeConversion (aUserToken);
+    XMLTestHelper.testMicroTypeConversion (aUserToken);
   }
 
   @Test
@@ -65,6 +65,6 @@ public final class UserTokenTest
     assertEquals (1, aUserToken.getAttributes ().getAttributeCount ());
     assertEquals ("value", aUserToken.getAttributes ().getAttributeAsString ("key"));
 
-    CommonsTestHelper.testMicroTypeConversion (aUserToken);
+    XMLTestHelper.testMicroTypeConversion (aUserToken);
   }
 }

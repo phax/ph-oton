@@ -27,8 +27,6 @@ import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.microdom.IMicroNode;
-import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -58,6 +56,8 @@ import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.serialize.MicroWriter;
 
 /**
  * Ajax response with HTML content. The returned Content-Type is JSON and the

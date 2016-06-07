@@ -34,10 +34,6 @@ import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroDocument;
-import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.IReloadableDAO;
@@ -49,6 +45,10 @@ import com.helger.photon.security.object.ObjectHelper;
 import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.UserManager;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroDocument;
+import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 /**
  * This class manages the available user groups.

@@ -55,14 +55,9 @@ import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.lang.StackTraceHelper;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroDocument;
-import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.scope.mgr.ScopeSessionManager;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.datetime.util.PDTIOHelper;
 import com.helger.datetime.util.PDTWebDateHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
@@ -85,6 +80,11 @@ import com.helger.web.servlet.request.RequestLogger;
 import com.helger.web.useragent.UserAgentDatabase;
 import com.helger.web.useragent.uaprofile.UAProfile;
 import com.helger.web.useragent.uaprofile.UAProfileDatabase;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroDocument;
+import com.helger.xml.microdom.serialize.MicroWriter;
+import com.helger.xml.serialize.write.XMLWriterSettings;
 
 /**
  * A handler for internal errors

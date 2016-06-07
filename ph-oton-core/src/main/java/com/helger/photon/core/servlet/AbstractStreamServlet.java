@@ -32,16 +32,16 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.mime.EMimeContentType;
-import com.helger.commons.mime.MimeTypeInfoManager;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
-import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.ResponseHelperSettings;
 import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.xml.serialize.write.XMLWriterSettings;
+import com.helger.xml.util.mime.MimeTypeInfoManager;
 
 /**
  * Simple servlet to forward requests to pages normally not visible to the

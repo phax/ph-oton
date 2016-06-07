@@ -22,12 +22,12 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroElement;
-import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 /**
  * Micro type converter for class {@link AppToken}.

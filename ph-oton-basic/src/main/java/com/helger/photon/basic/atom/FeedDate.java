@@ -23,10 +23,10 @@ import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 
 import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.util.PDTWebDateHelper;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroElement;
 
 /**
  * ATOM date construct.

@@ -21,9 +21,6 @@ import javax.xml.XMLConstants;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.IMicroNode;
-import com.helger.commons.microdom.MicroElement;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLDocTypes;
 import com.helger.html.EHTMLVersion;
@@ -31,6 +28,9 @@ import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.render.HCRenderer;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.MicroElement;
 
 public abstract class AbstractFeedXHTML extends AbstractFeedElement
 {

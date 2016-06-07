@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 import org.junit.Test;
 
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.xml.schema.XMLSchemaCache;
+import com.helger.xml.schema.XMLSchemaCache;
 
 /**
  * Test class for class {@link CWebSpecs}.

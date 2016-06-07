@@ -18,7 +18,7 @@ package com.helger.photon.exchange.bulkexport;
 
 import org.junit.Test;
 
-import com.helger.commons.mock.CommonsTestHelper;
+import com.helger.commons.mock.SPITestHelper;
 
 /**
  * SPI definitions test
@@ -30,6 +30,6 @@ public final class SPITest
   @Test
   public void testBasic () throws Exception
   {
-    CommonsTestHelper.testIfAllSPIImplementationsAreValid ();
+    SPITestHelper.testIfAllSPIImplementationsAreValid ();
   }
 }

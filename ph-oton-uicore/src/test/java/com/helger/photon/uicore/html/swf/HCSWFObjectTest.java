@@ -22,11 +22,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.microdom.IMicroNode;
-import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.photon.core.mock.PhotonCoreTestRule;
+import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.serialize.MicroWriter;
 
 /**
  * Test class for class {@link HCSWFObject}.

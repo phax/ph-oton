@@ -29,16 +29,16 @@ import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.microdom.IMicroContainer;
-import com.helger.commons.microdom.util.MicroVisitor;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.xml.serialize.read.SAXReaderSettings;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.parser.XHTMLParser;
 import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.xml.microdom.IMicroContainer;
+import com.helger.xml.microdom.util.MicroVisitor;
+import com.helger.xml.serialize.read.SAXReaderSettings;
 
 /**
  * Base class for pages consisting of external HTML code that is provided from

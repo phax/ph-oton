@@ -22,12 +22,12 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
-import com.helger.commons.microdom.IMicroComment;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.IMicroNode;
-import com.helger.commons.xml.CXML;
 import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLVersion;
+import com.helger.xml.CXML;
+import com.helger.xml.microdom.IMicroComment;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroNode;
 
 /**
  * Perform a standard cleansing on externally parsed HTML content. This

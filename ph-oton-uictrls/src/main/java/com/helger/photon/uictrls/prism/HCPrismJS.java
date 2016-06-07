@@ -21,7 +21,6 @@ import java.util.EnumSet;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.microdom.IMicroElement;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.css.DefaultCSSClassProvider;
@@ -33,6 +32,7 @@ import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
+import com.helger.xml.microdom.IMicroElement;
 
 /**
  * prism.js pre + code element.

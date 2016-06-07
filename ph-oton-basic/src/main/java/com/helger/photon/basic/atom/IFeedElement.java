@@ -21,7 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroElement;
 
 /**
  * Base interface for all ATOM feeds

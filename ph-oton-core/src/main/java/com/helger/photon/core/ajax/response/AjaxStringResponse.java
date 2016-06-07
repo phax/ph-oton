@@ -26,18 +26,18 @@ import org.w3c.dom.Node;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.microdom.IMicroNode;
-import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.xml.serialize.write.IXMLWriterSettings;
-import com.helger.commons.xml.serialize.write.XMLWriter;
-import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.serialize.MicroWriter;
+import com.helger.xml.serialize.write.IXMLWriterSettings;
+import com.helger.xml.serialize.write.XMLWriter;
+import com.helger.xml.serialize.write.XMLWriterSettings;
 
 /**
  * A simple AJAX response, based on an {@link String} value.

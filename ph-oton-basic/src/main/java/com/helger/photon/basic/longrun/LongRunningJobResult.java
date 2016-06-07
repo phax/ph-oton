@@ -22,10 +22,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.microdom.IMicroNode;
-import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.serialize.MicroWriter;
 
 /**
  * This class represents the result of a single long running job execution.

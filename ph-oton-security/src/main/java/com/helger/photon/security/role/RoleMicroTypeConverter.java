@@ -19,11 +19,11 @@ package com.helger.photon.security.role;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroElement;
-import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.util.MicroHelper;
 
 /**
  * Convert {@link Role} objects to {@link IMicroElement} and vice versa.

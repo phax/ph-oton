@@ -25,13 +25,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.masterdata.address.Address;
 import com.helger.masterdata.address.EAddressType;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.basic.object.client.IClient;
 import com.helger.photon.security.object.client.Client;
+import com.helger.xml.mock.XMLTestHelper;
 
 /**
  * Test class for class {@link AccountingArea}
@@ -88,6 +88,6 @@ public final class AccountingAreaTest
     assertEquals ("ABC", a.getCommercialRegistrationNumber ());
     assertEquals ("Wien2", a.getCommercialCourt ());
 
-    CommonsTestHelper.testMicroTypeConversion (a);
+    XMLTestHelper.testMicroTypeConversion (a);
   }
 }

@@ -21,12 +21,12 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.microdom.IMicroElement;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.photon.uicore.facebook.AbstractFBNode;
+import com.helger.xml.microdom.IMicroElement;
 
 public class FBLike extends AbstractFBNode
 {

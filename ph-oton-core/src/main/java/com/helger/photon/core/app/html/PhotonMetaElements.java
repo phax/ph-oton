@@ -34,12 +34,12 @@ import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.concurrent.SimpleLock;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.microdom.util.XMLMapHandler;
 import com.helger.html.meta.IMetaElement;
 import com.helger.html.meta.MetaElement;
 import com.helger.html.meta.MetaElementList;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
+import com.helger.xml.microdom.util.XMLMapHandler;
 
 /**
  * This class keeps track of all the meta elements that must be included

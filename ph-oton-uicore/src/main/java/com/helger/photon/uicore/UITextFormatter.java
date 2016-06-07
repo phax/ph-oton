@@ -25,8 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.microdom.IMicroContainer;
-import com.helger.commons.microdom.util.MicroVisitor;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLVersion;
@@ -41,6 +39,8 @@ import com.helger.html.markdown.MarkdownConfiguration;
 import com.helger.html.markdown.MarkdownProcessor;
 import com.helger.html.parser.XHTMLParser;
 import com.helger.photon.uicore.page.external.PageViewExternalHTMLCleanser;
+import com.helger.xml.microdom.IMicroContainer;
+import com.helger.xml.microdom.util.MicroVisitor;
 
 @Immutable
 public final class UITextFormatter

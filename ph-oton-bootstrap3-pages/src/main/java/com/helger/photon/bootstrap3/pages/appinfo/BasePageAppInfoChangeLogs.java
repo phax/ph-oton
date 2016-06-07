@@ -28,7 +28,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.changelog.ChangeLog;
 import com.helger.commons.changelog.ChangeLogEntry;
-import com.helger.commons.changelog.ChangeLogSerializer;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -49,6 +48,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
+import com.helger.xml.util.changelog.ChangeLogSerializer;
 
 /**
  * Page with all linked third party libraries
@@ -128,7 +128,7 @@ public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     if (s_aCache == null)
     {
       // Get all change logs
-      ICommonsList <ChangeLogEntry> aChangeLogEntries = new CommonsArrayList <> ();
+      ICommonsList <ChangeLogEntry> aChangeLogEntries = new CommonsArrayList<> ();
       for (final ChangeLog aChangeLog : CollectionHelper.newList (ChangeLogSerializer.readAllChangeLogs ().values ()))
         aChangeLogEntries.addAll (aChangeLog.getAllEntries ());
 

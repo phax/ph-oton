@@ -27,10 +27,10 @@ import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.ICommonsOrderedMap;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.convert.IMicroTypeConverter;
 import com.helger.photon.basic.object.IObject;
 import com.helger.photon.basic.object.IObjectWithCustomAttrs;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.convert.IMicroTypeConverter;
 
 /**
  * Abstract base class for object related micro type conversion.

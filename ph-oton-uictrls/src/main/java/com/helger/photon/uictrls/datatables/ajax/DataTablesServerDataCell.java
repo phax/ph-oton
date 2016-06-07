@@ -29,10 +29,6 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.microdom.IMicroNode;
-import com.helger.commons.microdom.IMicroNodeWithChildren;
-import com.helger.commons.microdom.IMicroText;
-import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -45,6 +41,10 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.html.hc.special.IHCSpecialNodes;
+import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.IMicroNodeWithChildren;
+import com.helger.xml.microdom.IMicroText;
+import com.helger.xml.microdom.serialize.MicroWriter;
 
 /**
  * This class holds table cells to be used by the DataTables server side

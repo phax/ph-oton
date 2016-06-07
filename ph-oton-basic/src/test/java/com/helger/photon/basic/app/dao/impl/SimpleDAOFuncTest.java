@@ -26,10 +26,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.MicroDocument;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.mock.PhotonBasicTestRule;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.MicroDocument;
 
 /**
  * Test class for class {@link AbstractSimpleDAO}.

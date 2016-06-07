@@ -19,12 +19,12 @@ package com.helger.photon.bootstrap3.form;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import com.helger.commons.microdom.IMicroElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.forms.AbstractHCRadioButton;
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
+import com.helger.xml.microdom.IMicroElement;
 
 public class BootstrapRadioButton extends AbstractHCRadioButton <BootstrapRadioButton>
 {

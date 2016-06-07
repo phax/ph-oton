@@ -22,11 +22,11 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.IMicroNode;
-import com.helger.commons.microdom.MicroElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.impl.AbstractHCNode;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.MicroElement;
 
 /**
  * Abstract base class for FB nodes

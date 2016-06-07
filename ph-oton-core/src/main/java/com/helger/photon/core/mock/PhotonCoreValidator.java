@@ -24,13 +24,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.IMicroNode;
-import com.helger.commons.microdom.serialize.MicroReader;
-import com.helger.commons.microdom.util.MicroRecursiveIterator;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.serialize.MicroReader;
+import com.helger.xml.microdom.util.MicroRecursiveIterator;
 
 @Immutable
 public final class PhotonCoreValidator

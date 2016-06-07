@@ -31,9 +31,6 @@ import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.concurrent.SimpleLock;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.serialize.MicroReader;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.css.CSSFilenameHelper;
@@ -44,6 +41,9 @@ import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.photon.core.app.resource.CSSResourceSet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.serialize.MicroReader;
 
 /**
  * This class keeps track of all the CSS files that must be included globally or

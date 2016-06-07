@@ -26,17 +26,17 @@ import javax.annotation.WillClose;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroDocument;
-import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.state.ESuccess;
-import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.photon.exchange.EExchangeFileType;
 import com.helger.photon.exchange.bulkexport.IExportRecord;
 import com.helger.photon.exchange.bulkexport.IExportRecordField;
 import com.helger.photon.exchange.bulkexport.IExportRecordProvider;
 import com.helger.photon.exchange.bulkexport.IExporterFile;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroDocument;
+import com.helger.xml.microdom.serialize.MicroWriter;
+import com.helger.xml.serialize.write.XMLWriterSettings;
 
 /**
  * Implementation of {@link IExporterFile} for XML files

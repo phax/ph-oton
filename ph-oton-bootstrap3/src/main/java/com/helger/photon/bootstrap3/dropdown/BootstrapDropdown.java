@@ -21,7 +21,6 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.microdom.IMicroElement;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
@@ -31,6 +30,7 @@ import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.base.BootstrapCaret;
+import com.helger.xml.microdom.IMicroElement;
 
 public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
 {

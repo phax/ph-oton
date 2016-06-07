@@ -30,12 +30,12 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.salt.PasswordSalt;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 /**
  * Test class for class {@link User}.

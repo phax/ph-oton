@@ -24,11 +24,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.url.SMap;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.object.StubObjectWithCustomAttrs;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 /**
  * Test class for class {@link UserGroup}.

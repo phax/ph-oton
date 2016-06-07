@@ -42,11 +42,6 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroDocument;
-import com.helger.commons.microdom.convert.MicroTypeConverter;
-import com.helger.commons.microdom.serialize.MicroReader;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -58,6 +53,11 @@ import com.helger.photon.basic.app.io.IMutablePathRelativeIO;
 import com.helger.photon.basic.app.io.IPathRelativeIO;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroDocument;
+import com.helger.xml.microdom.convert.MicroTypeConverter;
+import com.helger.xml.microdom.serialize.MicroReader;
 
 /**
  * The class handles all system audit actions. It collects them asynchronously

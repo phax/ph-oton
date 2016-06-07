@@ -28,13 +28,11 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
-import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.timing.StopWatch;
-import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.photon.basic.atom.Feed;
 import com.helger.photon.basic.atom.FeedGenerator;
 import com.helger.photon.basic.atom.FeedLink;
@@ -42,6 +40,8 @@ import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxStringResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.xml.microdom.serialize.MicroWriter;
+import com.helger.xml.serialize.write.XMLWriterSettings;
 
 /**
  * Abstract news feed action.

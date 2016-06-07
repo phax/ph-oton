@@ -28,10 +28,6 @@ import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.IsLocked;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroDocument;
-import com.helger.commons.microdom.convert.MicroTypeConverter;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.ToStringGenerator;
@@ -39,6 +35,10 @@ import com.helger.photon.basic.app.dao.impl.AbstractWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.app.dao.impl.EDAOActionType;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroDocument;
+import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 /**
  * The class handles audit actions in a very simple way. All actions are

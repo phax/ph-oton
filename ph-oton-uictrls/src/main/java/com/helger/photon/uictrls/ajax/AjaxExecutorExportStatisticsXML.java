@@ -18,12 +18,12 @@ package com.helger.photon.uictrls.ajax;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.serialize.MicroWriter;
-import com.helger.commons.statistics.util.StatisticsExporter;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxStringResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.serialize.MicroWriter;
+import com.helger.xml.util.statistics.StatisticsExporter;
 
 /**
  * A simple actions that exports the current statistics as XML

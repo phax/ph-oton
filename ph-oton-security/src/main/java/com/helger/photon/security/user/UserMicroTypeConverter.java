@@ -24,9 +24,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroElement;
-import com.helger.commons.microdom.util.MicroHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
@@ -34,6 +31,9 @@ import com.helger.photon.security.password.hash.PasswordHash;
 import com.helger.photon.security.password.hash.PasswordHashCreatorDefault;
 import com.helger.photon.security.password.salt.IPasswordSalt;
 import com.helger.photon.security.password.salt.PasswordSalt;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.util.MicroHelper;
 
 public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConverter
 {

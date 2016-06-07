@@ -51,10 +51,7 @@ import com.helger.commons.exception.InitializationException;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.lang.ClassPathHelper;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.name.IHasDisplayName;
-import com.helger.commons.statistics.util.StatisticsExporter;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.system.EJVMVendor;
@@ -64,13 +61,17 @@ import com.helger.commons.thirdparty.IThirdPartyModule;
 import com.helger.commons.thirdparty.ThirdPartyModuleRegistry;
 import com.helger.commons.timing.StopWatch;
 import com.helger.commons.url.URLHelper;
-import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.datetime.util.PDTIOHelper;
 import com.helger.datetime.util.PDTWebDateHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOIntIDFactory;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.web.servlet.server.StaticServerInfo;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.serialize.MicroWriter;
+import com.helger.xml.serialize.write.XMLWriterSettings;
+import com.helger.xml.util.XMLCleanup;
+import com.helger.xml.util.statistics.StatisticsExporter;
 
 /**
  * This class is intended to handle the initial application startup and the
@@ -646,6 +647,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
     // Clear commons cache also manually - but after destroy because it
     // is used in equals and hashCode implementations
+    XMLCleanup.cleanup ();
     CommonsCleanup.cleanup ();
 
     // De-init

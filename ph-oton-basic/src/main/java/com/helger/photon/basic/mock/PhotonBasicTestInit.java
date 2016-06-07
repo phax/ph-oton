@@ -25,6 +25,7 @@ import com.helger.commons.cleanup.CommonsCleanup;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOIntIDFactory;
+import com.helger.xml.util.XMLCleanup;
 
 /**
  * Static test init and shutdown code for this project
@@ -54,6 +55,7 @@ public final class PhotonBasicTestInit
     WebFileIO.resetPaths ();
 
     // Clean commons
+    XMLCleanup.cleanup ();
     CommonsCleanup.cleanup ();
   }
 }
