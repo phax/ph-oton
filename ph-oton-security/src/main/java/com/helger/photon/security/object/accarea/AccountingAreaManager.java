@@ -48,7 +48,7 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
 
   public AccountingAreaManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (AccountingArea.class, sFilename, ELEMENT_ITEM);
+    super (AccountingArea.class, sFilename);
   }
 
   @Nonnull

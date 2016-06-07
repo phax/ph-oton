@@ -17,7 +17,6 @@
 package com.helger.photon.basic.object.client;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
@@ -47,21 +46,6 @@ public abstract class AbstractHasClient implements IHasClient
   public final IClient getClient ()
   {
     return m_aClient;
-  }
-
-  public final boolean hasSameClientID (@Nullable final String sClientID)
-  {
-    return getClientID ().equals (sClientID);
-  }
-
-  public final boolean hasSameClientID (@Nullable final IClientObject aClientObject)
-  {
-    return aClientObject != null && hasSameClientID (aClientObject.getClientID ());
-  }
-
-  public boolean hasSameClient (@Nullable final IClient aClient)
-  {
-    return m_aClient.equals (aClient);
   }
 
   @Override

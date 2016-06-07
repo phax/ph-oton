@@ -18,6 +18,8 @@ package com.helger.photon.basic.object.client;
 
 import javax.annotation.Nullable;
 
+import com.helger.commons.equals.EqualsHelper;
+
 /**
  * Base interface for objects that have a client ID.
  *
@@ -39,5 +41,8 @@ public interface IHasClientID
    * @return <code>true</code> if this object and the passed object have the
    *         same client ID
    */
-  boolean hasSameClientID (@Nullable String sClientID);
+  default boolean hasSameClientID (@Nullable final String sClientID)
+  {
+    return EqualsHelper.equals (getClientID (), sClientID);
+  }
 }

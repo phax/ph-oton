@@ -50,7 +50,7 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
 
   public AppTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (AppToken.class, sFilename, ELEMENT_ITEM);
+    super (AppToken.class, sFilename);
   }
 
   /**

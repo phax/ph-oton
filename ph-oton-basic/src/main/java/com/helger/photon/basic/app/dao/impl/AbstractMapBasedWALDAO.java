@@ -24,6 +24,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -61,25 +62,36 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
 public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
                                              extends AbstractWALDAO <IMPLTYPE> implements IMapBasedDAO <INTERFACETYPE>
 {
-  private final String m_sXMLItemElementName;
-  @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IMPLTYPE> m_aMap = new CommonsHashMap <> ();
-  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList <> ();
+  protected static final String ELEMENT_ROOT = "root";
+  protected static final String ELEMENT_ITEM = "item";
 
+  @GuardedBy ("m_aRWLock")
+  private final ICommonsMap <String, IMPLTYPE> m_aMap;
+  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList<> ();
+
+  /**
+   * Default constructor
+   *
+   * @param aImplClass
+   *        Implementation class. May not be <code>null</code>.
+   * @param sFilename
+   *        The filename to read and write.
+   * @throws DAOException
+   *         If reading and reading fails
+   */
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
-                                 @Nonnull @Nonempty final String sFilename,
-                                 @Nonnull @Nonempty final String sXMLItemElementName) throws DAOException
+                                 @Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    this (aImplClass, sFilename, sXMLItemElementName, true);
+    this (aImplClass, sFilename, true, () -> new CommonsHashMap<> ());
   }
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nonnull @Nonempty final String sFilename,
-                                 @Nonnull @Nonempty final String sXMLItemElementName,
-                                 final boolean bDoInitialRead) throws DAOException
+                                 final boolean bDoInitialRead,
+                                 final Supplier <ICommonsMap <String, IMPLTYPE>> aMapSupplier) throws DAOException
   {
     super (aImplClass, sFilename);
-    m_sXMLItemElementName = ValueEnforcer.notEmpty (sXMLItemElementName, "XMLItemElementName");
+    m_aMap = aMapSupplier.get ();
     if (bDoInitialRead)
       initialRead ();
   }
@@ -106,8 +118,10 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   @Nonnull
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
-    for (final IMicroElement eItem : aDoc.getDocumentElement ().getAllChildElements (m_sXMLItemElementName))
-      _addItem (MicroTypeConverter.convertToNative (eItem, getDataTypeClass ()), EDAOActionType.CREATE);
+    // Read all child elements independent of the name - soft migration
+    aDoc.getDocumentElement ()
+        .forAllChildElements (eItem -> _addItem (MicroTypeConverter.convertToNative (eItem, getDataTypeClass ()),
+                                                 EDAOActionType.CREATE));
     return EChange.UNCHANGED;
   }
 
@@ -123,9 +137,9 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement ("root");
+    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
     for (final IMPLTYPE aItem : getAllSortedByKey ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aItem, m_sXMLItemElementName));
+      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aItem, ELEMENT_ITEM));
     return aDoc;
   }
 
@@ -255,7 +269,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   @ReturnsMutableCopy
   public final ICommonsCollection <? extends INTERFACETYPE> getNone ()
   {
-    return new CommonsArrayList <> ();
+    return new CommonsArrayList<> ();
   }
 
   @Nonnull
@@ -373,6 +387,20 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
     return m_aRWLock.readLocked ( () -> m_aMap.get (sID));
   }
 
+  /**
+   * Get the item at the specified index. This method only returns defined
+   * results if a CommonLinkedHashMap is used for data storage.
+   *
+   * @param nIndex
+   *        The index to retrieve. Should be &ge; 0.
+   * @return <code>null</code> if an invalid index was provided.
+   */
+  @Nullable
+  protected final INTERFACETYPE getAtIndex (@Nonnegative final int nIndex)
+  {
+    return m_aRWLock.readLocked ( () -> CollectionHelper.getAtIndex (m_aMap.values (), nIndex));
+  }
+
   public final boolean containsWithID (@Nullable final String sID)
   {
     if (StringHelper.hasNoText (sID))
@@ -403,9 +431,6 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("XMLItemElementName", m_sXMLItemElementName)
-                            .append ("Map", m_aMap)
-                            .toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("Map", m_aMap).toString ();
   }
 }

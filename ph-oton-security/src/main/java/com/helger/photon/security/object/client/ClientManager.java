@@ -44,7 +44,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
 
   public ClientManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (Client.class, sFilename, ELEMENT_ITEM);
+    super (Client.class, sFilename);
   }
 
   @Override

@@ -50,7 +50,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
 
   public RoleManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (Role.class, sFilename, "role");
+    super (Role.class, sFilename);
   }
 
   public void reload () throws DAOException

@@ -50,7 +50,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
 
   public UserTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (UserToken.class, sFilename, ELEMENT_ITEM);
+    super (UserToken.class, sFilename);
   }
 
   /**

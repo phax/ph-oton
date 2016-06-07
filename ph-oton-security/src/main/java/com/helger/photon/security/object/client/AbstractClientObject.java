@@ -85,21 +85,6 @@ public abstract class AbstractClientObject extends AbstractBaseObject implements
     return m_aClient;
   }
 
-  public final boolean hasSameClientID (@Nullable final IClientObject aClientObject)
-  {
-    return aClientObject != null && hasSameClientID (aClientObject.getClientID ());
-  }
-
-  public final boolean hasSameClientID (@Nullable final String sClientID)
-  {
-    return getClientID ().equals (sClientID);
-  }
-
-  public boolean hasSameClient (@Nullable final IClient aClient)
-  {
-    return m_aClient.equals (aClient);
-  }
-
   @Override
   public final boolean equals (final Object o)
   {
