@@ -40,8 +40,6 @@ import com.helger.photon.security.object.ObjectHelper;
  */
 public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> implements IClientResolver
 {
-  private static final String ELEMENT_ITEM = "client";
-
   public ClientManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
     super (Client.class, sFilename);

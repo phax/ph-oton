@@ -44,9 +44,7 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
  */
 public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, AppToken>
 {
-  private static final String ELEMENT_ITEM = "apptoken";
-
-  private final CallbackList <IAppTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
+  private final CallbackList <IAppTokenModificationCallback> m_aCallbacks = new CallbackList<> ();
 
   public AppTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {

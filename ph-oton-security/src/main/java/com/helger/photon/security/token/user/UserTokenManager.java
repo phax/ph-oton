@@ -44,9 +44,7 @@ import com.helger.photon.security.token.app.IAppToken;
  */
 public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, UserToken>
 {
-  private static final String ELEMENT_ITEM = "usertoken";
-
-  private final CallbackList <IUserTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
+  private final CallbackList <IUserTokenModificationCallback> m_aCallbacks = new CallbackList<> ();
 
   public UserTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {

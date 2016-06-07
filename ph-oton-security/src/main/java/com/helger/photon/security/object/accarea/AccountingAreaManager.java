@@ -44,8 +44,6 @@ import com.helger.photon.security.object.ObjectHelper;
 public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccountingArea, AccountingArea>
                                          implements IAccountingAreaResolver
 {
-  private static final String ELEMENT_ITEM = "accountingarea";
-
   public AccountingAreaManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
     super (AccountingArea.class, sFilename);
