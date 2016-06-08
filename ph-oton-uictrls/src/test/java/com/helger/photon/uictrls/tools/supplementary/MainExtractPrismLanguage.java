@@ -17,11 +17,11 @@
 package com.helger.photon.uictrls.tools.supplementary;
 
 import java.io.File;
-import java.util.List;
 import java.util.Locale;
 
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
@@ -41,7 +41,8 @@ public class MainExtractPrismLanguage
     // Languages
     {
       final String sLanguages = aURL.getParam ("languages");
-      final List <String> aLanguages = CollectionHelper.getSorted (StringHelper.getExploded ('+', sLanguages));
+      final ICommonsList <String> aLanguages = CollectionHelper.getSortedInline (StringHelper.getExploded ('+',
+                                                                                                           sLanguages));
       // Special "none" language
       aLanguages.add (0, "none");
       for (final String sLanguage : aLanguages)
@@ -53,9 +54,12 @@ public class MainExtractPrismLanguage
     // Plugins
     {
       final String sPlugins = aURL.getParam ("plugins");
-      final List <String> aPlugins = CollectionHelper.getSorted (StringHelper.getExploded ('+', sPlugins));
+      final ICommonsList <String> aPlugins = CollectionHelper.getSorted (StringHelper.getExploded ('+', sPlugins));
       for (final String sPlugin : aPlugins)
-        System.out.println (sPlugin.replace ('-', '_').toUpperCase (Locale.US) + " (\"" + sPlugin + "\"),");
+        System.out.println (StringHelper.replaceAll (sPlugin, '-', '_').toUpperCase (Locale.US) +
+                            " (\"" +
+                            sPlugin +
+                            "\"),");
     }
   }
 }

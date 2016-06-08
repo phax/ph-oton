@@ -24,6 +24,7 @@ import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.CommonsTreeSet;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.commons.string.StringHelper;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CSSSelector;
 import com.helger.css.decl.CSSSelectorSimpleMember;
@@ -63,7 +64,7 @@ public class MainExtractBootstrap3CSSClasses
     {
       final String sClassName = sClass.substring (1);
       String sFieldName = sClassName.toUpperCase (Locale.US);
-      sFieldName = sFieldName.replace ('-', '_');
+      sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
       System.out.println ("public static final ICSSClassProvider " +
                           sFieldName +
                           " = DefaultCSSClassProvider.create (\"" +
@@ -79,7 +80,7 @@ public class MainExtractBootstrap3CSSClasses
       {
         final String sClassName = sClass.substring (1);
         String sFieldName = sClassName.toUpperCase (Locale.US);
-        sFieldName = sFieldName.replace ('-', '_');
+        sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
         System.out.println (sFieldName.substring ("glyphicon-".length ()) + " (CBootstrapCSS." + sFieldName + "),");
       }
   }
