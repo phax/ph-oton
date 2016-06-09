@@ -236,7 +236,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // DataTables - Columns
   //
   /** Set column definition initialisation properties. */
-  private final ICommonsList <DataTablesColumnDef> m_aColumnDefs = new CommonsArrayList<> ();
+  private final ICommonsList <DataTablesColumnDef> m_aColumnDefs = new CommonsArrayList <> ();
 
   //
   // DataTables - Internationalisation
@@ -248,7 +248,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   //
   // DataTables - Plugins
   //
-  private final ICommonsOrderedMap <String, IDataTablesPlugin> m_aPlugins = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, IDataTablesPlugin> m_aPlugins = new CommonsLinkedHashMap <> ();
 
   // Custom properties
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
@@ -431,6 +431,10 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
+  /**
+   * @return <code>true</code> if the paging UI controls are displayed (bottom
+   *         right), <code>false</code> otheriwse.
+   */
   public boolean isPaging ()
   {
     return m_bPaging;
@@ -717,6 +721,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     {
       setPageLength (aLengthMenu.getItemAtIndex (0).getItemCount ());
       setLengthChange (aLengthMenu.getItemCount () > 1);
+      setPaging (aLengthMenu.getItemCount () > 1);
     }
     return this;
   }
@@ -1134,7 +1139,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     _applyClientSideSortingSettings ();
 
     // Determine all applicable plugins
-    final ICommonsList <IDataTablesPlugin> aRelevantPlugins = new CommonsArrayList<> ();
+    final ICommonsList <IDataTablesPlugin> aRelevantPlugins = new CommonsArrayList <> ();
     for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
       if (aPlugin.canBeApplied (this))
         aRelevantPlugins.add (aPlugin);
@@ -1206,6 +1211,10 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("ajax", aAF);
       JSJQueryHelper.registerExternalResources ();
     }
+    else
+    {
+      aParams.add ("serverSide", false);
+    }
 
     //
     // callbacks
@@ -1237,9 +1246,9 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     // Provide any empty array if no sorting is defined, because otherwise an
     // implicit sorting of the first column, ascending is done
     aParams.add ("order", m_aInitialOrder != null ? m_aInitialOrder.getAsJS () : new JSArray ());
-    if (m_nPageLength != DEFAULT_PAGE_LENGTH)
+    if (m_nPageLength != DEFAULT_PAGE_LENGTH && m_bLengthChange)
       aParams.add ("pageLength", m_nPageLength);
-    if (m_ePagingType != null)
+    if (m_ePagingType != null && m_bPaging)
       aParams.add ("pagingType", m_ePagingType.getName ());
     if (m_bRetrieve != DEFAULT_RETRIEVE)
       aParams.add ("retrieve", m_bRetrieve);
