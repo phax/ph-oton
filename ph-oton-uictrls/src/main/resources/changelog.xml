@@ -18,6 +18,11 @@
 
 -->
 <changelog xmlns="http://www.helger.com/xsd/changelog/1.0" version="1.0" component="ph-oton-uicore">
+  <entry date="2016-06-09" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to Datatables 1.10.12</text>
+    </change>
+  </entry>
   <entry date="2015-10-23" category="tech" action="add">
     <change>
       <text locale="en">Added Tether 1.1.1</text>
