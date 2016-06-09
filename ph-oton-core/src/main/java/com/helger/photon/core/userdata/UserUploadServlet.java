@@ -33,7 +33,6 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
-import com.helger.json.serialize.JsonWriter;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.web.fileupload.IFileItem;
@@ -147,7 +146,7 @@ public class UserUploadServlet extends AbstractUnifiedResponseServlet
         }
       }
     }
-    aUnifiedResponse.setMimeType (CMimeType.APPLICATION_JSON).setContentAndCharset (JsonWriter.getAsString (ret),
+    aUnifiedResponse.setMimeType (CMimeType.APPLICATION_JSON).setContentAndCharset (ret.getAsJsonString (),
                                                                                     CCharset.CHARSET_UTF_8_OBJ);
   }
 
