@@ -23,7 +23,6 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsMap;
@@ -36,6 +35,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
+import com.helger.smtp.CSMTP;
 import com.helger.smtp.settings.ISMTPSettings;
 import com.helger.smtp.settings.SMTPSettings;
 import com.helger.xml.microdom.IMicroDocument;
@@ -58,7 +58,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
 
   private static boolean s_bCreateDefaults = true;
 
-  private final ICommonsMap <String, NamedSMTPSettings> m_aMap = new CommonsHashMap<> ();
+  private final ICommonsMap <String, NamedSMTPSettings> m_aMap = new CommonsHashMap <> ();
 
   public static boolean isCreateDefaults ()
   {
@@ -98,7 +98,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
                                                        CNamedSMTPSettings.NAMED_SMTP_SETTINGS_DEFAULT_PORT,
                                                        null,
                                                        null,
-                                                       CCharset.CHARSET_UTF_8,
+                                                       CSMTP.CHARSET_SMTP_OBJ,
                                                        false)));
     return EChange.CHANGED;
   }
@@ -250,7 +250,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
                                       aNamedSettings.getName (),
                                       aSettings.getHostName (),
                                       Integer.valueOf (aSettings.getPort ()),
-                                      aSettings.getCharset (),
+                                      aSettings.getCharsetName (),
                                       Boolean.valueOf (aSettings.isSSLEnabled ()),
                                       Boolean.valueOf (aSettings.isSTARTTLSEnabled ()),
                                       Long.valueOf (aSettings.getConnectionTimeoutMilliSecs ()),
@@ -294,12 +294,12 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
                                         aNamedSettings.getID (),
                                         aNamedSettings.getName (),
                                         aSettings.getHostName (),
-                                        Integer.toString (aSettings.getPort ()),
-                                        aSettings.getCharset (),
-                                        Boolean.toString (aSettings.isSSLEnabled ()),
-                                        Boolean.toString (aSettings.isSTARTTLSEnabled ()),
-                                        Long.toString (aSettings.getConnectionTimeoutMilliSecs ()),
-                                        Long.toString (aSettings.getTimeoutMilliSecs ()));
+                                        Integer.valueOf (aSettings.getPort ()),
+                                        aSettings.getCharsetName (),
+                                        Boolean.valueOf (aSettings.isSSLEnabled ()),
+                                        Boolean.valueOf (aSettings.isSTARTTLSEnabled ()),
+                                        Long.valueOf (aSettings.getConnectionTimeoutMilliSecs ()),
+                                        Long.valueOf (aSettings.getTimeoutMilliSecs ()));
       return EChange.CHANGED;
     });
   }

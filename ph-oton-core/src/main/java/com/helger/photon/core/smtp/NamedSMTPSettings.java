@@ -29,7 +29,6 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ITypedObject;
 import com.helger.commons.type.ObjectType;
 import com.helger.smtp.settings.ISMTPSettings;
-import com.helger.smtp.settings.ReadOnlySMTPSettings;
 
 public class NamedSMTPSettings implements ITypedObject <String>, Serializable
 {
@@ -96,11 +95,9 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
   {
     ValueEnforcer.notNull (aSMTPSettings, "SMTPSettings");
 
-    // Ensure that the implementation type is the same!
-    final ISMTPSettings aRealSMTPSettings = new ReadOnlySMTPSettings (aSMTPSettings);
-    if (aRealSMTPSettings.equals (m_aSMTPSettings))
+    if (aSMTPSettings.equals (m_aSMTPSettings))
       return EChange.UNCHANGED;
-    m_aSMTPSettings = aRealSMTPSettings;
+    m_aSMTPSettings = aSMTPSettings;
     return EChange.CHANGED;
   }
 

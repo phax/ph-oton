@@ -85,7 +85,7 @@ import com.helger.smtp.data.EEmailType;
 import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.smtp.settings.ISMTPSettings;
-import com.helger.smtp.settings.ReadOnlySMTPSettings;
+import com.helger.smtp.settings.SMTPSettings;
 import com.helger.web.port.CNetworkPort;
 
 public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
@@ -114,18 +114,27 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
     MSG_NO_PASSWORD_SET ("keines gesetzt", "none defined"),
     TITLE_CREATE ("Neue SMTP-Einstellungen anlegen", "Create new SMTP settings"),
     TITLE_EDIT ("SMTP-Einstellungen ''{0}'' bearbeiten", "Edit SMTP settings ''{0}''"),
-    ERROR_NAME_EMPTY ("Es muss ein Name für diese SMTP-Einstellungen angegeben werden!", "A name must be provided for these SMTP settings!"),
-    ERROR_HOSTNAME_EMPTY ("Es muss ein Host-Name oder eine IP-Adresse des SMTP-Servers angegeben werden!", "A name or IP address of the SMTP server must be provided!"),
-    ERROR_PORT_INVALID ("Der angegebene Port ist ungültig. Gültige Ports liegen zwischen {0} und {1}!", "The provided port is invalid. Valid ports must be between {0} and {1}!"),
+    ERROR_NAME_EMPTY ("Es muss ein Name für diese SMTP-Einstellungen angegeben werden!",
+                      "A name must be provided for these SMTP settings!"),
+    ERROR_HOSTNAME_EMPTY ("Es muss ein Host-Name oder eine IP-Adresse des SMTP-Servers angegeben werden!",
+                          "A name or IP address of the SMTP server must be provided!"),
+    ERROR_PORT_INVALID ("Der angegebene Port ist ungültig. Gültige Ports liegen zwischen {0} und {1}!",
+                        "The provided port is invalid. Valid ports must be between {0} and {1}!"),
     ERROR_CHARSET_INVALID ("Der ausgewählte Zeichensatz ist ungültig!", "The selected character set is invalid!"),
-    ERROR_CONNECTION_TIMEOUT_INVALID ("Das Verbindungs-Timeout muss größer oder gleich 0 sein!", "The connection timeout must be greater or equal to 0!"),
-    ERROR_SOCKET_TIMEOUT_INVALID ("Das Verbindungs-Timeout muss größer oder gleich 0 sein!", "The connection timeout must be greater or equal to 0!"),
-    SUCCESS_CREATE ("Die neue SMTP-Einstellungen wurden erfolgreich angelegt!", "Successfully created the new SMTP settings!"),
+    ERROR_CONNECTION_TIMEOUT_INVALID ("Das Verbindungs-Timeout muss größer oder gleich 0 sein!",
+                                      "The connection timeout must be greater or equal to 0!"),
+    ERROR_SOCKET_TIMEOUT_INVALID ("Das Verbindungs-Timeout muss größer oder gleich 0 sein!",
+                                  "The connection timeout must be greater or equal to 0!"),
+    SUCCESS_CREATE ("Die neue SMTP-Einstellungen wurden erfolgreich angelegt!",
+                    "Successfully created the new SMTP settings!"),
     SUCCESS_EDIT ("Die SMTP-Einstellungen wurde erfolgreich bearbeitet!", "Sucessfully edited the SMTP settings!"),
-    DELETE_QUERY ("Sollen die SMTP-Einstellungen ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the SMTP settings ''{0}''?"),
-    DELETE_SUCCESS ("Die SMTP-Einstellungen ''{0}'' wurden erfolgreich gelöscht!", "The SMTP settings ''{0}'' were successfully deleted!"),
+    DELETE_QUERY ("Sollen die SMTP-Einstellungen ''{0}'' wirklich gelöscht werden?",
+                  "Are you sure to delete the SMTP settings ''{0}''?"),
+    DELETE_SUCCESS ("Die SMTP-Einstellungen ''{0}'' wurden erfolgreich gelöscht!",
+                    "The SMTP settings ''{0}'' were successfully deleted!"),
     DELETE_ERROR ("Fehler beim Löschen der SMTP-Einstellungen ''{0}''!", "Error deleting the SMTP settings ''{0}''!"),
-    TITLE_TEST_MAIL ("Test-E-Mail mit den SMTP-Einstellungen ''{0}'' versenden", "Send test email with SMTP settings ''{0}''"),
+    TITLE_TEST_MAIL ("Test-E-Mail mit den SMTP-Einstellungen ''{0}'' versenden",
+                     "Send test email with SMTP settings ''{0}''"),
     MSG_SEND_TEST_MAIL ("Test-E-Mail senden", "Send test mail"),
     BUTTON_SEND_TEST_MAIL ("Test-E-Mail senden", "Send test mail"),
     MSG_SENDER ("Absender", "Sender"),
@@ -134,11 +143,14 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
     MSG_BODY ("Inhalt", "Body"),
     TEST_SUBJECT ("Test-E-Mail", "Test email"),
     TEST_BODY ("Das ist eine automatisch generierte Test-E-Mail", "This is an automatically generated test email"),
-    ERR_SENDER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.", "A valid email address must be provided"),
-    ERR_RECEIVER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.", "A valid email address must be provided"),
+    ERR_SENDER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.",
+                        "A valid email address must be provided"),
+    ERR_RECEIVER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.",
+                          "A valid email address must be provided"),
     ERR_SUBJECT_INVALID ("Es muss Betreff angegeben werden.", "An email subject must be provided"),
     ERR_BODY_INVALID ("Es muss eine gültige Nachricht angegeben werden.", "A valid email message must be provided"),
-    SUCCESS_TEST_MAIL ("Die Test-Nachricht wurde zum Versand übermittelt.", "The test email message was scheduled for sending.");
+    SUCCESS_TEST_MAIL ("Die Test-Nachricht wurde zum Versand übermittelt.",
+                       "The test email message was scheduled for sending.");
 
     private final IMultilingualText m_aTP;
 
@@ -177,7 +189,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
   private static final String FIELD_TEST_SUBJECT = "tsubject";
   private static final String FIELD_TEST_BODY = "tbody";
 
-  private static final String DEFAULT_CHARSET = CSMTP.CHARSET_SMTP;
+  private static final String DEFAULT_CHARSET_NAME = CSMTP.CHARSET_SMTP_OBJ.name ();
   private static final String ACTION_TEST_MAIL = "testmail";
 
   private final transient NamedSMTPSettingsManager m_aMgr;
@@ -279,7 +291,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
                                                                                                            : EText.MSG_NO_PASSWORD_SET.getDisplayText (aDisplayLocale)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_CHARSET.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (aSettings.getCharset ()));
+                                                 .setCtrl (aSettings.getCharsetName ()));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_SSL.getDisplayText (aDisplayLocale))
                                                  .setCtrl (EPhotonCoreText.getYesOrNo (aSettings.isSSLEnabled (),
@@ -317,13 +329,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
       sPassword = aSelectedObject.getSMTPSettings ().getPassword ();
     }
     final String sCharset = aWPEC.getAttributeAsString (FIELD_CHARSET);
-    Charset aCharset = null;
-    try
-    {
-      aCharset = CharsetManager.getCharsetFromName (sCharset);
-    }
-    catch (final IllegalArgumentException ex)
-    {}
+    final Charset aCharset = CharsetManager.getCharsetFromNameOrNull (sCharset);
+
     final boolean bSSLEnabled = aWPEC.getCheckBoxAttr (FIELD_SSL, EmailGlobalSettings.isUseSSL ());
     final boolean bSTARTTLSEnabled = aWPEC.getCheckBoxAttr (FIELD_STARTTLS, EmailGlobalSettings.isUseSTARTTLS ());
     final long nConnectionTimeoutMS = aWPEC.getAttributeAsLong (FIELD_CONNECTION_TIMEOUT, CGlobal.ILLEGAL_ULONG);
@@ -356,16 +363,16 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
     if (aFormErrors.isEmpty ())
     {
       // All fields are valid -> save
-      final ReadOnlySMTPSettings aSMTPSettings = new ReadOnlySMTPSettings (sHostName,
-                                                                           nPort,
-                                                                           sUserName,
-                                                                           sPassword,
-                                                                           sCharset,
-                                                                           bSSLEnabled,
-                                                                           bSTARTTLSEnabled,
-                                                                           nConnectionTimeoutMS,
-                                                                           nSocketTimeoutMS,
-                                                                           bDebugSMTP);
+      final SMTPSettings aSMTPSettings = new SMTPSettings (sHostName,
+                                                           nPort,
+                                                           sUserName,
+                                                           sPassword,
+                                                           aCharset,
+                                                           bSSLEnabled,
+                                                           bSTARTTLSEnabled,
+                                                           nConnectionTimeoutMS,
+                                                           nSocketTimeoutMS,
+                                                           bDebugSMTP);
 
       if (eFormAction.isEdit ())
       {
@@ -448,8 +455,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
       final String sCharset = EText.LABEL_CHARSET.getDisplayText (aDisplayLocale);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sCharset)
                                                    .setCtrl (new HCCharsetSelect (new RequestField (FIELD_CHARSET,
-                                                                                                    aSettings == null ? DEFAULT_CHARSET
-                                                                                                                      : aSettings.getCharset ()),
+                                                                                                    aSettings == null ? DEFAULT_CHARSET_NAME
+                                                                                                                      : aSettings.getCharsetName ()),
                                                                                   true,
                                                                                   aDisplayLocale))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_CHARSET)));
