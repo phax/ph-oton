@@ -133,7 +133,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext>
       GlobalDebug.setDebugModeDirect (bGlobalDebug);
       GlobalDebug.setProductionModeDirect (bGlobalProduction);
 
-      aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
+      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
     }
 
     final BootstrapForm aForm0 = aNodeList.addAndReturnChild (createFormSelf (aWPEC));

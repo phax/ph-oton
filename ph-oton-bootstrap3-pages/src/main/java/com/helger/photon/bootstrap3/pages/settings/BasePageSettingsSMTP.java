@@ -314,7 +314,6 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
                                                  @Nonnull final FormErrors aFormErrors,
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final String sName = aWPEC.getAttributeAsString (FIELD_NAME);
@@ -378,13 +377,13 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
       {
         // We're editing an existing object
         if (m_aMgr.updateSettings (aSelectedObject.getID (), sName, aSMTPSettings).isChanged ())
-          aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
       }
       else
       {
         // We're creating a new object
         m_aMgr.addSettings (sName, aSMTPSettings);
-        aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
+        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
       }
     }
   }
@@ -532,15 +531,18 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
   @Override
   protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final NamedSMTPSettings aSelectedObject)
   {
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     if (m_aMgr.removeSettings (aSelectedObject.getID ()).isChanged ())
-      aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                            aSelectedObject.getName ())));
+    {
+      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                               aSelectedObject.getName ())));
+    }
     else
-      aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                        aSelectedObject.getName ())));
+    {
+      aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                           aSelectedObject.getName ())));
+    }
   }
 
   @Override
@@ -578,7 +580,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
           aMailData.setBody (sBody);
           ScopedMailAPI.getInstance ().queueMail (aSelectedObject.getSMTPSettings (), aMailData);
 
-          aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_TEST_MAIL.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_TEST_MAIL.getDisplayText (aDisplayLocale)));
 
           return true;
         }
