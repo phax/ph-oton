@@ -23,6 +23,14 @@ import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
+/**
+ * Special {@link AbstractAjaxExecutor} that requires an
+ * {@link ILayoutExecutionContext} object to be present.
+ *
+ * @author Philip Helger
+ * @param <LECTYPE>
+ *        LayoutExecutionContext implementation type
+ */
 public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutExecutionContext>
                                                       extends AbstractAjaxExecutor
 {
@@ -37,7 +45,9 @@ public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutEx
   protected abstract LECTYPE createLayoutExecutionContext (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
 
   /**
-   * This method must be overridden by every handler
+   * This method must be overridden by every handler. It is called with the LEC
+   * created by
+   * {@link #createLayoutExecutionContext(IRequestWebScopeWithoutResponse)}
    *
    * @param aLEC
    *        The layout execution context. Never <code>null</code>.

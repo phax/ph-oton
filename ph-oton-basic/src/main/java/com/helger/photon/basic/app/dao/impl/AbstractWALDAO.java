@@ -382,7 +382,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
           {
             // initial setup for non-existing file
             if (isDebugLogging ())
-              s_aLogger.debug ("Trying to initialize DAO XML file '" + aFinalFile.getAbsolutePath () + "'");
+              s_aLogger.info ("Trying to initialize WAL DAO XML file '" + aFinalFile.getAbsolutePath () + "'");
 
             beginWithoutAutoSave ();
             try
@@ -412,7 +412,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
           {
             // Read existing file
             if (isDebugLogging ())
-              s_aLogger.debug ("Trying to read DAO XML file '" + aFinalFile.getAbsolutePath () + "'");
+              s_aLogger.info ("Trying to read WAL DAO XML file '" + aFinalFile.getAbsolutePath () + "'");
 
             m_aStatsCounterReadTotal.increment ();
             final IMicroDocument aDoc = MicroReader.readMicroXML (aFinalFile);
@@ -728,7 +728,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     }
 
     if (isDebugLogging ())
-      s_aLogger.info ("Trying to write DAO file '" + sFilename + "'");
+      s_aLogger.info ("Trying to write WAL DAO file '" + sFilename + "'");
 
     File aFile = null;
     IMicroDocument aDoc = null;
@@ -919,7 +919,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     ValueEnforcer.notNull (eActionType, "ActionType");
 
     // Convert single item to list
-    markAsChanged (new CommonsArrayList <> (aModifiedElement), eActionType);
+    markAsChanged (new CommonsArrayList<> (aModifiedElement), eActionType);
   }
 
   @MustBeLocked (ELockType.WRITE)
