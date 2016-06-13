@@ -23,7 +23,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.port.DefaultNetworkPorts;
+import com.helger.web.port.NetworkPortHelper;
 
 /**
  * Default abstract implementation of the {@link IBaseServerConnectionSettings}
@@ -45,7 +45,7 @@ public abstract class AbstractServerConnectionSettings implements IBaseServerCon
                                            @Nonnull @Nonempty final String sUserName)
   {
     ValueEnforcer.notEmpty (sIP, "Address");
-    if (!DefaultNetworkPorts.isValidPort (nPort))
+    if (!NetworkPortHelper.isValidPort (nPort))
       throw new IllegalArgumentException ("port is invalid: " + nPort);
     ValueEnforcer.notEmpty (sUserName, "UserName");
 
