@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.masterdata.address.IAddress;
@@ -209,35 +209,35 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsCollection <? extends IAccountingArea> getAllAccountingAreas ()
+  public ICommonsList <? extends IAccountingArea> getAllAccountingAreas ()
   {
     return getAll ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsCollection <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final String sClientID)
+  public ICommonsList <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final String sClientID)
   {
     return getAll (a -> a.getClientID ().equals (sClientID));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsCollection <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final IClient aClient)
+  public ICommonsList <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final IClient aClient)
   {
     return getAll (a -> a.hasSameClient (aClient));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsCollection <String> getAllAccountingAreaIDsOfClient (@Nullable final String sClientID)
+  public ICommonsList <String> getAllAccountingAreaIDsOfClient (@Nullable final String sClientID)
   {
     return getAllMapped (a -> a.getClientID ().equals (sClientID), IAccountingArea::getID);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsCollection <String> getAllAccountingAreaIDsOfClient (@Nullable final IClient aClient)
+  public ICommonsList <String> getAllAccountingAreaIDsOfClient (@Nullable final IClient aClient)
   {
     return getAllMapped (a -> a.hasSameClient (aClient), IAccountingArea::getID);
   }
