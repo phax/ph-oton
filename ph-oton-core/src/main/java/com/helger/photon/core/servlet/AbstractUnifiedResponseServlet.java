@@ -59,7 +59,7 @@ import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.web.scope.request.RequestScopeInitializer;
-import com.helger.web.servlet.request.RequestHelper;
+import com.helger.web.scope.util.RequestHelper;
 import com.helger.web.servlet.response.UnifiedResponse;
 import com.helger.web.servlet.server.StaticServerInfo;
 import com.helger.web.servlets.scope.AbstractScopeAwareHttpServlet;

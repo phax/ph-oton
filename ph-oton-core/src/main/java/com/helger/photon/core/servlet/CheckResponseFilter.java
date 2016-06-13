@@ -38,7 +38,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.string.StringHelper;
-import com.helger.web.servlet.request.RequestHelper;
+import com.helger.web.scope.util.RequestHelper;
 import com.helger.web.servlet.response.ResponseHelper;
 import com.helger.web.servlet.response.StatusAwareHttpResponseWrapper;
 

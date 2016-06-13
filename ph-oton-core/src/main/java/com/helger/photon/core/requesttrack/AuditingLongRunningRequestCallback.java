@@ -23,7 +23,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.web.scope.IRequestWebScope;
-import com.helger.web.servlet.request.RequestHelper;
+import com.helger.web.scope.util.RequestHelper;
 
 /**
  * A simple implementation of {@link ILongRunningRequestCallback} simply

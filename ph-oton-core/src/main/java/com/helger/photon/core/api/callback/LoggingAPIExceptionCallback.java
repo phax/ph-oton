@@ -29,7 +29,7 @@ import com.helger.photon.core.api.IAPIExceptionCallback;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.request.RequestLogger;
+import com.helger.web.scope.util.RequestLogger;
 
 /**
  * Implementation of {@link IAPIExceptionCallback} logging to an SLF4J logger
