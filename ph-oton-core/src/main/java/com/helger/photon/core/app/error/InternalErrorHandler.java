@@ -76,7 +76,7 @@ import com.helger.smtp.transport.MailAPI;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
-import com.helger.web.scope.util.RequestLogger;
+import com.helger.web.servlet.request.RequestLogger;
 import com.helger.web.useragent.UserAgentDatabase;
 import com.helger.web.useragent.uaprofile.UAProfile;
 import com.helger.web.useragent.uaprofile.UAProfileDatabase;
