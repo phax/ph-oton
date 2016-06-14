@@ -37,7 +37,7 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public abstract class AbstractBaseObject implements IObject
 {
-  private final String m_sID;
+  private String m_sID;
   private final LocalDateTime m_aCreationDT;
   private final String m_sCreationUserID;
   private LocalDateTime m_aLastModificationDT;
@@ -71,6 +71,12 @@ public abstract class AbstractBaseObject implements IObject
     m_sLastModificationUserID = sLastModificationUserID;
     m_aDeletionDT = aDeletionDT;
     m_sDeletionUserID = sDeletionUserID;
+  }
+
+  @Deprecated
+  public final void internalForceID (@Nonnull @Nonempty final String sID)
+  {
+    m_sID = ValueEnforcer.notEmpty (sID, "ID");
   }
 
   @Nonnull
