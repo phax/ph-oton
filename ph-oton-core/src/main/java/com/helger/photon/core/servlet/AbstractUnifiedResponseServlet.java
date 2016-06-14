@@ -57,9 +57,9 @@ import com.helger.web.http.EHTTPMethod;
 import com.helger.web.http.EHTTPVersion;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.web.scope.request.RequestScopeInitializer;
 import com.helger.web.scope.util.RequestHelper;
+import com.helger.web.servlet.ServletContextPathHolder;
 import com.helger.web.servlet.response.UnifiedResponse;
 import com.helger.web.servlet.server.StaticServerInfo;
 import com.helger.web.servlets.scope.AbstractScopeAwareHttpServlet;
@@ -361,7 +361,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
       StaticServerInfo.init (aRequestScope.getScheme (),
                              aRequestScope.getServerName (),
                              aRequestScope.getServerPort (),
-                             WebScopeManager.getGlobalScope ().getContextPath ());
+                             ServletContextPathHolder.getContextPath ());
     }
 
     final Set <EHTTPMethod> aAllowedHTTPMethods = getAllowedHTTPMethods ();

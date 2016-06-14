@@ -35,6 +35,7 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLProtocolRegistry;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
+import com.helger.web.servlet.ServletContextPathHolder;
 
 /**
  * Misc utilities to create link URLs.
@@ -135,7 +136,7 @@ public final class LinkHelper
     if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sHRef))
       return sHRef;
 
-    final String sContextPath = WebScopeManager.getGlobalScope ().getContextPath ();
+    final String sContextPath = ServletContextPathHolder.getContextPath ();
     return _getURIWithContext (sContextPath, sHRef);
   }
 
@@ -393,7 +394,7 @@ public final class LinkHelper
   @Nonnull
   public static SimpleURL getHomeLinkWithoutSession ()
   {
-    final String sContextPath = WebScopeManager.getGlobalScope ().getContextPath ();
+    final String sContextPath = ServletContextPathHolder.getContextPath ();
     return new SimpleURL (sContextPath.length () == 0 ? "/" : sContextPath);
   }
 

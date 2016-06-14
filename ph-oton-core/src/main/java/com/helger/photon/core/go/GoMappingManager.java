@@ -49,7 +49,7 @@ import com.helger.photon.basic.app.request.IRequestManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.mgr.WebScopeManager;
+import com.helger.web.servlet.ServletContextPathHolder;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
@@ -141,7 +141,7 @@ public class GoMappingManager extends AbstractSimpleDAO
   @Override
   protected IMicroDocument createWriteData ()
   {
-    final String sContextPath = WebScopeManager.getGlobalScope ().getContextPath ();
+    final String sContextPath = ServletContextPathHolder.getContextPath ();
     final IMicroDocument ret = new MicroDocument ();
     final IMicroElement eRoot = ret.appendElement (ELEMENT_ROOT);
     for (final GoMappingItem aItem : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
