@@ -44,9 +44,9 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.util.RequestHelper;
-import com.helger.web.scope.util.RequestLogger;
 import com.helger.web.servlet.cookie.CookieHelper;
+import com.helger.web.servlet.request.RequestHelper;
+import com.helger.web.servlet.request.RequestLogger;
 
 /**
  * Page with information on the current request
