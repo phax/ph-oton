@@ -66,14 +66,9 @@ public class PhotonCoreTestRule extends WebScopeTestRule
   protected void initListener ()
   {
     MockHttpListener.removeAllDefaultListeners ();
-    MockHttpListener.addDefaultListener (new WebAppListener ()
-    {
-      @Override
-      public boolean isHandleStatisticsOnEnd ()
-      {
-        return false;
-      }
-    });
+    final WebAppListener aListener = new WebAppListener ();
+    aListener.setHandleStatisticsOnEnd (false);
+    MockHttpListener.addDefaultListener (aListener);
     MockHttpListener.addDefaultListener (new MockServletRequestListenerScopeAware ());
     MockHttpListener.setCurrentToDefault ();
   }

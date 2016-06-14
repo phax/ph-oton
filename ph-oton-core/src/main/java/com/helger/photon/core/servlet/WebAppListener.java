@@ -131,6 +131,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   private static final AtomicBoolean s_aInited = new AtomicBoolean (false);
   private LocalDateTime m_aInitializationStartDT;
   private LocalDateTime m_aInitializationEndDT;
+  private boolean m_bHandleStatisticsOnEnd = true;
 
   public WebAppListener ()
   {}
@@ -178,7 +179,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected final void logInitParameters (@Nonnull final ServletContext aSC)
   {
     // Put them in a sorted map
-    final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap<> ();
+    final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap <> ();
     final Enumeration <?> aEnum = aSC.getInitParameterNames ();
     while (aEnum.hasMoreElements ())
     {
@@ -570,10 +571,16 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    * @return <code>true</code> to write statistics on context shutdown,
    *         <code>false</code> to not do so
    */
-  @OverrideOnDemand
-  protected boolean isHandleStatisticsOnEnd ()
+  public final boolean isHandleStatisticsOnEnd ()
   {
-    return true;
+    return m_bHandleStatisticsOnEnd;
+  }
+
+  @Nonnull
+  public final WebAppListener setHandleStatisticsOnEnd (final boolean bHandleStatisticsOnEnd)
+  {
+    m_bHandleStatisticsOnEnd = bHandleStatisticsOnEnd;
+    return this;
   }
 
   /**
