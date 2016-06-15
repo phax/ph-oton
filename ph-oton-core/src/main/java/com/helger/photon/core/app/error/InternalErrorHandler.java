@@ -171,7 +171,8 @@ public final class InternalErrorHandler
     @ReturnsMutableCopy
     public ICommonsList <IEmailAddress> getReceiverAddresses ()
     {
-      return m_aReceiverAddresses.getClone ();
+      // May be null
+      return new CommonsArrayList <> (m_aReceiverAddresses);
     }
 
     @Nonnull
