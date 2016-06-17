@@ -226,6 +226,8 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   @MustBeLocked (ELockType.WRITE)
   protected final void internalUpdateItem (@Nonnull final IMPLTYPE aItem)
   {
+    // Add to map - ensure to overwrite any existing
+    _addItem (aItem, EDAOActionType.UPDATE);
     // Trigger save changes
     super.markAsChanged (aItem, EDAOActionType.UPDATE);
     // Invoke callbacks
