@@ -48,18 +48,18 @@ import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.ITypedObject;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 @ThreadSafe
-public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
+public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
                                              extends AbstractWALDAO <IMPLTYPE> implements IMapBasedDAO <INTERFACETYPE>
 {
   protected static final String ELEMENT_ROOT = "root";
@@ -67,7 +67,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
 
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, IMPLTYPE> m_aMap;
-  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList<> ();
+  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList <> ();
 
   /**
    * Default constructor
@@ -82,7 +82,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    this (aImplClass, sFilename, true, () -> new CommonsHashMap<> ());
+    this (aImplClass, sFilename, true, () -> new CommonsHashMap <> ());
   }
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
@@ -269,7 +269,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends ITypedObject
   @ReturnsMutableCopy
   public final ICommonsCollection <? extends INTERFACETYPE> getNone ()
   {
-    return new CommonsArrayList<> ();
+    return new CommonsArrayList <> ();
   }
 
   @Nonnull
