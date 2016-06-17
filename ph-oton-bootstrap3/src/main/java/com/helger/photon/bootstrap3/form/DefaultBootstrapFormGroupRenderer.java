@@ -39,6 +39,7 @@ import com.helger.html.hc.html.forms.HCLabel;
 import com.helger.html.hc.html.forms.HCRadioButton;
 import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.html.forms.IHCInput;
+import com.helger.html.hc.html.forms.IHCTextArea;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.photon.bootstrap3.BootstrapHelper;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
@@ -91,6 +92,24 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     return this;
   }
 
+  @Nonnull
+  private static String _getPlaceholderText (@Nonnull final IHCElementWithChildren <?> aLabel)
+  {
+    if (aLabel instanceof HCFormLabel)
+    {
+      // Special handling for the form label, which has explicit support
+      // for label texts
+      return aLabel.getPlainText ();
+    }
+
+    // Trim eventually trailing ":" from string
+    String sNewPlaceholder = StringHelper.trimEnd (aLabel.getPlainText (), HCFormLabelHelper.LABEL_END);
+    // Trim trailing "*" or "°" marker
+    sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_ALTERNATIVE);
+    sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_MANDATORY);
+    return sNewPlaceholder;
+  }
+
   /**
    * Modify the first control that is inserted. This method is only called when
    * a label is present.
@@ -109,31 +128,16 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     {
       final IHCInput <?> aEdit = (IHCInput <?>) aFirstControl;
       final EHCInputType eType = aEdit.getType ();
-      if (eType != null && eType.hasPlaceholder ())
-      {
-        // Only check for null, so that empty string overrides this
-        // default behaviour
-        if (aEdit.getPlaceholder () == null)
-        {
-          if (aLabel instanceof HCFormLabel)
-          {
-            // Special handling for the form label, which has explicit support
-            // for
-            // label texts
-            aEdit.setPlaceholder (aLabel.getPlainText ());
-          }
-          else
-          {
-            // Trim eventually trailing ":" from string
-            String sNewPlaceholder = StringHelper.trimEnd (aLabel.getPlainText (), HCFormLabelHelper.LABEL_END);
-            // Trim trailing "*" or "°" marker
-            sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_ALTERNATIVE);
-            sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_MANDATORY);
-            aEdit.setPlaceholder (sNewPlaceholder);
-          }
-        }
-      }
+      if (eType != null && eType.hasPlaceholder () && !aEdit.hasPlaceholder ())
+        aEdit.setPlaceholder (_getPlaceholderText (aLabel));
     }
+    else
+      if (aFirstControl instanceof IHCTextArea <?>)
+      {
+        final IHCTextArea <?> aTextArea = (IHCTextArea <?>) aFirstControl;
+        if (!aTextArea.hasPlaceholder ())
+          aTextArea.setPlaceholder (_getPlaceholderText (aLabel));
+      }
   }
 
   /**
