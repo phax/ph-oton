@@ -20,7 +20,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.random.VerySecureRandom;
+import com.helger.commons.random.RandomHelper;
 import com.helger.commons.string.StringHelper;
 
 /**
@@ -47,7 +47,7 @@ public final class AuthTokenIDGenerator
   public static String generateNewTokenID (@Nonnegative final int nBytes)
   {
     final byte [] aID = new byte [nBytes];
-    VerySecureRandom.getInstance ().nextBytes (aID);
+    RandomHelper.getRandom ().nextBytes (aID);
     return StringHelper.getHexEncoded (aID);
   }
 }

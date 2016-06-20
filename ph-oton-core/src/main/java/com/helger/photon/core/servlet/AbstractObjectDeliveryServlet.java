@@ -33,7 +33,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.random.VerySecureRandom;
+import com.helger.commons.random.RandomHelper;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.state.EContinue;
@@ -71,16 +71,16 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
    * classpath resources.
    */
   protected static final String ETAG_VALUE_OBJECT_DELIVERY_SERVLET = '"' +
-                                                                     Long.toString (VerySecureRandom.getInstance ()
-                                                                                                    .nextLong ()) +
+                                                                     Long.toString (RandomHelper.getRandom ()
+                                                                                                .nextLong ()) +
                                                                      '"';
 
-  private final ICommonsOrderedSet <String> m_aDeniedFilenames = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aDeniedExtensions = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aDeniedRegExs = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aAllowedFilenames = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aAllowedExtensions = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aAllowedRegExs = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aDeniedFilenames = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aDeniedExtensions = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aDeniedRegExs = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aAllowedFilenames = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aAllowedExtensions = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aAllowedRegExs = new CommonsLinkedHashSet <> ();
   private boolean m_bDeniedAllExtensions = false;
   private boolean m_bAllowedAllExtensions = false;
 
