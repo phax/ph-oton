@@ -32,7 +32,6 @@ import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.html.sections.HCBody;
 import com.helger.html.hc.html.sections.HCH2;
 import com.helger.html.hc.html.textlevel.HCSpan;
-import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.base.BootstrapContainer;
@@ -44,24 +43,18 @@ import com.helger.photon.bootstrap3.pageheader.BootstrapPageHeader;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.login.CLogin;
-import com.helger.photon.uicore.login.LoginHTMLProvider;
+import com.helger.photon.uicore.login.AbstractLoginHTMLProvider;
+import com.helger.photon.uicore.login.SimpleLoginHTMLProvider;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * A special {@link LoginHTMLProvider} with Bootstrap UI.
+ * A special {@link SimpleLoginHTMLProvider} with Bootstrap UI.
  *
  * @author Philip Helger
  */
-public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
+public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
 {
   private final IHCNode m_aPageTitle;
-
-  public BootstrapLoginHTMLProvider (final boolean bLoginError,
-                                     @Nonnull final ICredentialValidationResult aLoginResult,
-                                     @Nullable final String sPageTitle)
-  {
-    this (bLoginError, aLoginResult, HCTextNode.createOnDemand (sPageTitle));
-  }
 
   public BootstrapLoginHTMLProvider (final boolean bLoginError,
                                      @Nonnull final ICredentialValidationResult aLoginResult,
@@ -69,6 +62,14 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
   {
     super (bLoginError, aLoginResult);
     m_aPageTitle = aPageTitle;
+  }
+
+  @Override
+  @Nullable
+  @OverrideOnDemand
+  protected String getTextFieldUserName (@Nonnull final Locale aDisplayLocale)
+  {
+    return EPhotonCoreText.EMAIL_ADDRESS.getDisplayText (aDisplayLocale);
   }
 
   /**
@@ -177,21 +178,21 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
     aForm.addChild (new HCHiddenField (CLogin.REQUEST_PARAM_ACTION, CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS));
     aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
-    if (showLoginError ())
+    if (isLoginError ())
       aForm.addChild (new BootstrapErrorBox ().addChild (getTextErrorMessage (aDisplayLocale, getLoginResult ())));
 
     // User name and password table
-    final String sUserName = EPhotonCoreText.EMAIL_ADDRESS.getDisplayText (aDisplayLocale);
+    final String sUserName = getTextFieldUserName (aDisplayLocale);
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sUserName)
                                                  .setCtrl (new HCEdit (CLogin.REQUEST_ATTR_USERID).setPlaceholder (sUserName)
                                                                                                   .setAutoFocus (true)));
 
-    final String sPassword = EPhotonCoreText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale);
+    final String sPassword = getTextFieldPassword (aDisplayLocale);
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPassword)
                                                  .setCtrl (new HCEditPassword (CLogin.REQUEST_ATTR_PASSWORD).setPlaceholder (sPassword)));
 
     // Submit button
-    aForm.addChild (new BootstrapSubmitButton ().addChild (EPhotonCoreText.LOGIN_BUTTON_SUBMIT.getDisplayText (aDisplayLocale)));
+    aForm.addChild (new BootstrapSubmitButton ().addChild (getLoginButtonText (aDisplayLocale)));
 
     // Customize
     onAfterForm (aSWEC, aForm);

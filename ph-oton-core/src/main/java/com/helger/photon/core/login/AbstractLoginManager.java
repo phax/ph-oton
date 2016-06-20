@@ -50,7 +50,7 @@ import com.helger.web.useragent.UserAgentDatabase;
  *
  * @author Philip Helger
  */
-public abstract class LoginManager
+public abstract class AbstractLoginManager
 {
   /**
    * Attribute name for the LoginInfo attribute that holds the remote address of
@@ -90,7 +90,7 @@ public abstract class LoginManager
    */
   public static final String LOGIN_INFO_REQUEST_COUNT = "request-count";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoginManager.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractLoginManager.class);
 
   /**
    * A list of all role IDs that the user must have so that he can login! May be
@@ -98,7 +98,7 @@ public abstract class LoginManager
    */
   private ICommonsCollection <String> m_aRequiredRoleIDs;
 
-  public LoginManager ()
+  public AbstractLoginManager ()
   {}
 
   public void setRequiredRoleIDs (@Nullable final Collection <String> aRequiredRoleIDs)
@@ -179,18 +179,6 @@ public abstract class LoginManager
   }
 
   /**
-   * Callback method to notify on a successful login
-   *
-   * @param aUser
-   *        The user who just logged in. Never <code>null</code>.
-   * @param aLoginResult
-   *        The login result. A success message anyway. Never <code>null</code>.
-   */
-  @OverrideOnDemand
-  protected void onUserLogin (@Nonnull final IUser aUser, @Nonnull final ICredentialValidationResult aLoginResult)
-  {}
-
-  /**
    * Modify the passed {@link LoginInfo} object with details of the passed
    * request scope. This method is called for every request!
    *
@@ -266,9 +254,6 @@ public abstract class LoginManager
             // correctly
             aLoginResult = ELoginResult.SUCCESS;
             sSessionUserID = aUser.getID ();
-
-            // Invoke callback
-            onUserLogin (aUser, aLoginResult);
             bLoggedInInThisRequest = true;
           }
           else
@@ -292,9 +277,6 @@ public abstract class LoginManager
             // Credentials are valid - implies that the user was resolved
             // correctly
             sSessionUserID = aUser.getID ();
-
-            // Invoke callback
-            onUserLogin (aUser, aLoginResult);
             bLoggedInInThisRequest = true;
           }
           else

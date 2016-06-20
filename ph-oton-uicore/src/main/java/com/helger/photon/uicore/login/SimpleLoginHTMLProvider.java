@@ -21,7 +21,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
@@ -41,12 +40,8 @@ import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
-import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
-import com.helger.photon.core.app.html.AbstractHTMLProvider;
 import com.helger.photon.core.login.CLogin;
-import com.helger.photon.uicore.page.IWebPageCSRFHandler;
-import com.helger.photon.uicore.page.WebPageCSRFHandler;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -54,50 +49,11 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public class LoginHTMLProvider extends AbstractHTMLProvider
+public class SimpleLoginHTMLProvider extends AbstractLoginHTMLProvider
 {
-  private final boolean m_bLoginError;
-  private final ICredentialValidationResult m_aLoginResult;
-  private IWebPageCSRFHandler m_aCSRFHandler = WebPageCSRFHandler.INSTANCE;
-
-  public LoginHTMLProvider (final boolean bLoginError, @Nonnull final ICredentialValidationResult aLoginResult)
+  public SimpleLoginHTMLProvider (final boolean bLoginError, @Nonnull final ICredentialValidationResult aLoginResult)
   {
-    m_bLoginError = bLoginError;
-    m_aLoginResult = ValueEnforcer.notNull (aLoginResult, "LoginResult");
-  }
-
-  /**
-   * @return <code>true</code> if the login screen is shown for an error,
-   *         <code>false</code> if the login screen is shown for the first time.
-   */
-  public final boolean showLoginError ()
-  {
-    return m_bLoginError;
-  }
-
-  @Nonnull
-  public final ICredentialValidationResult getLoginResult ()
-  {
-    return m_aLoginResult;
-  }
-
-  /**
-   * @return The current CSRF handler. Never <code>null</code>.
-   */
-  public final IWebPageCSRFHandler getCSRFHandler ()
-  {
-    return m_aCSRFHandler;
-  }
-
-  /**
-   * Set the CSRF handler to be used.
-   *
-   * @param aCSRFHandler
-   *        The new handler. May not be <code>null</code>.
-   */
-  public final void setCSRFHandler (@Nonnull final IWebPageCSRFHandler aCSRFHandler)
-  {
-    m_aCSRFHandler = ValueEnforcer.notNull (aCSRFHandler, "CSRFHandler");
+    super (bLoginError, aLoginResult);
   }
 
   /**
@@ -122,37 +78,6 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
   protected IHCNode createLabelNode (@Nullable final String sText)
   {
     return new HCTextNode (sText);
-  }
-
-  @Nullable
-  @OverrideOnDemand
-  protected String getTextHeader (@Nonnull final Locale aDisplayLocale)
-  {
-    return EPhotonCoreText.LOGIN_HEADER.getDisplayText (aDisplayLocale);
-  }
-
-  @Nullable
-  @OverrideOnDemand
-  protected String getTextErrorMessage (@Nonnull final Locale aDisplayLocale,
-                                        @Nonnull final ICredentialValidationResult aLoginResult)
-  {
-    return EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) +
-           " " +
-           aLoginResult.getDisplayText (aDisplayLocale);
-  }
-
-  @Nullable
-  @OverrideOnDemand
-  protected String getTextFieldUserName (@Nonnull final Locale aDisplayLocale)
-  {
-    return EPhotonCoreText.LOGIN_FIELD_USERNAME.getDisplayText (aDisplayLocale);
-  }
-
-  @Nullable
-  @OverrideOnDemand
-  protected String getTextFieldPassword (@Nonnull final Locale aDisplayLocale)
-  {
-    return EPhotonCoreText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale);
   }
 
   /**
@@ -182,13 +107,13 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
 
     // The hidden field that triggers the validation
     aForm.addChild (new HCHiddenField (CLogin.REQUEST_PARAM_ACTION, CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS));
-    aForm.addChild (m_aCSRFHandler.createCSRFNonceField ());
+    aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
     aForm.addChild (new HCDiv ().addClass (CLogin.CSS_CLASS_LOGIN_APPLOGO));
     if (showHeaderText ())
       aForm.addChild (new HCDiv ().addChild (getTextHeader (aDisplayLocale)).addClass (CLogin.CSS_CLASS_LOGIN_HEADER));
-    if (m_bLoginError)
-      aForm.addChild (new HCDiv ().addChild (getTextErrorMessage (aDisplayLocale, m_aLoginResult))
+    if (isLoginError ())
+      aForm.addChild (new HCDiv ().addChild (getTextErrorMessage (aDisplayLocale, getLoginResult ()))
                                   .addClass (CLogin.CSS_CLASS_LOGIN_ERRORMSG));
 
     // User name and password table
@@ -206,6 +131,6 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
 
     // Submit button
     final IHCCell <?> aCell = aTable.addBodyRow ().addCell ().setColspan (aTable.getColumnCount ());
-    aCell.addChild (new HCButton_Submit (EPhotonCoreText.LOGIN_BUTTON_SUBMIT.getDisplayText (aDisplayLocale)));
+    aCell.addChild (new HCButton_Submit (getLoginButtonText (aDisplayLocale)));
   }
 }
