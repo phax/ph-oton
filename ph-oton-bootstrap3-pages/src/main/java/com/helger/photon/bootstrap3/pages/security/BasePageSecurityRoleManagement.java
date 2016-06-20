@@ -53,6 +53,7 @@ import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
@@ -110,14 +111,50 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     }
   }
 
+  private void _init ()
+  {
+    setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <IRole, WPECTYPE> ()
+    {
+      @Override
+      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                      @Nonnull final BootstrapForm aForm,
+                                      @Nonnull final IRole aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                         aSelectedObject.getName ())));
+      }
+
+      @Override
+      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IRole aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+
+        if (aRoleMgr.deleteRole (aSelectedObject.getID ()).isChanged ())
+        {
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                   aSelectedObject.getName ())));
+        }
+        else
+        {
+          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                               aSelectedObject.getName ())));
+        }
+      }
+    });
+  }
+
   public BasePageSecurityRoleManagement (@Nonnull @Nonempty final String sID)
   {
     super (sID, EWebPageText.PAGE_NAME_SECURITY_ROLES.getAsMLT ());
+    _init ();
   }
 
   public BasePageSecurityRoleManagement (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
+    _init ();
   }
 
   public BasePageSecurityRoleManagement (@Nonnull @Nonempty final String sID,
@@ -125,6 +162,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                          @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
+    _init ();
   }
 
   public BasePageSecurityRoleManagement (@Nonnull @Nonempty final String sID,
@@ -132,6 +170,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                          @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
+    _init ();
   }
 
   @Override
@@ -261,34 +300,6 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     return aRole != null &&
            !aRole.getID ().equals (CSecurity.ROLE_ADMINISTRATOR_ID) &&
            !aUserGroupMgr.containsUserGroupWithAssignedRole (aRole.getID ());
-  }
-
-  @Override
-  protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final BootstrapForm aForm,
-                                  @Nonnull final IRole aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                     aSelectedObject.getName ())));
-  }
-
-  @Override
-  protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IRole aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
-
-    if (aRoleMgr.deleteRole (aSelectedObject.getID ()).isChanged ())
-    {
-      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               aSelectedObject.getName ())));
-    }
-    else
-    {
-      aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                           aSelectedObject.getName ())));
-    }
   }
 
   @Override

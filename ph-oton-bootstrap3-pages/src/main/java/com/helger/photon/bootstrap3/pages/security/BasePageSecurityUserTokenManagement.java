@@ -59,6 +59,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
@@ -85,7 +86,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   @Translatable
   protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-    VALIDITY_APP_TOKEN_MSG ("Es ist noch kein App-Token vorhanden. Es muss mindestens ein App-Token vorhanden sein um ein Benutzer-Token anlegen zu können.", "No app token is present! At least one app token must be present to create a user token for it."),
+    VALIDITY_APP_TOKEN_MSG ("Es ist noch kein App-Token vorhanden. Es muss mindestens ein App-Token vorhanden sein um ein Benutzer-Token anlegen zu können.",
+                            "No app token is present! At least one app token must be present to create a user token for it."),
     VALIDITY_APP_TOKEN_BUTTON ("Neues App-Token anlegen", "Create new app token"),
     BUTTON_CREATE_NEW ("Neues Benutzer-Token anlegen", "Create new user token"),
     HEADER_EDIT ("Benutzer-Token von ''{0}'' bearbeiten", "Edit user token of ''{0}''"),
@@ -98,11 +100,16 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     LABEL_USER_NAME ("Benutzername", "User name"),
     ERR_APP_TOKEN_EMPTY ("Das App Token muss angegeben werden!", "The app token must be specified!"),
     ERR_USER_NAME_EMPTY ("Der Benutzername darf nicht leer sein!", "The user name may not be empty!"),
-    CREATE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich erstellt.", "The user token for ''{0}'' was successfully created."),
-    EDIT_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich bearbeitet.", "The user token for ''{0}'' was successfully edited."),
-    DELETE_QUERY ("Sind Sie sicher, dass Sie das Benutzer-Token für ''{0}'' löschen wollen?", "Are you sure you want to delete the user token of ''{0}''?"),
-    DELETE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich gelöscht!", "User token of ''{0}'' was successfully deleted!"),
-    DELETE_ERROR ("Beim Löschen des Benutzer-Token für ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while deleting user token of ''{0}''!"),
+    CREATE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich erstellt.",
+                    "The user token for ''{0}'' was successfully created."),
+    EDIT_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich bearbeitet.",
+                  "The user token for ''{0}'' was successfully edited."),
+    DELETE_QUERY ("Sind Sie sicher, dass Sie das Benutzer-Token für ''{0}'' löschen wollen?",
+                  "Are you sure you want to delete the user token of ''{0}''?"),
+    DELETE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich gelöscht!",
+                    "User token of ''{0}'' was successfully deleted!"),
+    DELETE_ERROR ("Beim Löschen des Benutzer-Token für ''{0}'' ist ein Fehler aufgetreten!",
+                  "An error occurred while deleting user token of ''{0}''!"),
     TAB_LABEL_ACTIVE ("Aktiv", "Active"),
     TAB_LABEL_DELETED ("Gelöscht", "Deleted"),
     HEADER_APP_TOKEN ("App-Token", "App token"),
@@ -140,15 +147,49 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   public static final String FIELD_TOKEN_STRING = "tokenstring";
   public static final String FIELD_REVOCATION_REASON = "revocationreason";
 
+  private void _init ()
+  {
+    setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <IUserToken, WPECTYPE> ()
+    {
+      @Override
+      @OverrideOnDemand
+      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                      @Nonnull final BootstrapForm aForm,
+                                      @Nonnull final IUserToken aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                         aSelectedObject.getDisplayName ())));
+      }
+
+      @Override
+      @OverrideOnDemand
+      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+
+        if (aUserTokenMgr.deleteUserToken (aSelectedObject.getID ()).isChanged ())
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                   aSelectedObject.getDisplayName ())));
+        else
+          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                               aSelectedObject.getDisplayName ())));
+      }
+    });
+  }
+
   public BasePageSecurityUserTokenManagement (@Nonnull @Nonempty final String sID)
   {
     super (sID, EWebPageText.PAGE_NAME_SECURITY_USER_TOKENS.getAsMLT ());
+    _init ();
   }
 
   public BasePageSecurityUserTokenManagement (@Nonnull @Nonempty final String sID,
                                               @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
+    _init ();
   }
 
   public BasePageSecurityUserTokenManagement (@Nonnull @Nonempty final String sID,
@@ -156,6 +197,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                               @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
+    _init ();
   }
 
   public BasePageSecurityUserTokenManagement (@Nonnull @Nonempty final String sID,
@@ -163,6 +205,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                               @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
+    _init ();
   }
 
   @Override
@@ -367,40 +410,6 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                                  sUserName)));
       }
     }
-  }
-
-  @Override
-  @OverrideOnDemand
-  protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final BootstrapForm aForm,
-                                  @Nonnull final IUserToken aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                     aSelectedObject.getDisplayName ())));
-  }
-
-  /**
-   * Perform object delete
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @param aSelectedObject
-   *        The object to be deleted. Never <code>null</code>.
-   */
-  @Override
-  @OverrideOnDemand
-  protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
-
-    if (aUserTokenMgr.deleteUserToken (aSelectedObject.getID ()).isChanged ())
-      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               aSelectedObject.getDisplayName ())));
-    else
-      aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                           aSelectedObject.getDisplayName ())));
   }
 
   public static boolean canRevokeAccessToken (@Nullable final IUserToken aUserToken)

@@ -43,6 +43,7 @@ import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.core.EPhotonCoreText;
@@ -69,8 +70,10 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
     DELETE_QUERY ("Sollen diese gemerkten Daten wirklich gelöscht werden?", "Are you sure to delete this saved data?"),
     DELETE_SUCCESS ("Die gemerkten Daten wurden erfolgreich gelöscht!", "The saved data was successfully deleted!"),
     DELETE_ERROR ("Fehler beim Löschen der gemerkten Daten!", "Error deleting the saved data!"),
-    DELETE_ALL_QUERY ("Sollen alle gemerkten Daten wirklich gelöscht werden?", "Are you sure to delete all saved data?"),
-    DELETE_ALL_SUCCESS ("Alle gemerkten Daten wurden erfolgreich gelöscht!", "All saved data was successfully deleted!"),
+    DELETE_ALL_QUERY ("Sollen alle gemerkten Daten wirklich gelöscht werden?",
+                      "Are you sure to delete all saved data?"),
+    DELETE_ALL_SUCCESS ("Alle gemerkten Daten wurden erfolgreich gelöscht!",
+                        "All saved data was successfully deleted!"),
     DELETE_ALL_ERROR ("Fehler beim Löschen der gemerkten Daten!", "Error deleting the saved data!"),
     NONE_PRESENT ("Es sind keine gemerkten Daten vorhanden!", "No saved data is available"),
     BUTTON_DELETE ("Alle löschen", "Delete all"),
@@ -93,9 +96,36 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
     }
   }
 
+  private void _init ()
+  {
+    setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <FormState, WPECTYPE> ()
+    {
+      @Override
+      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                      @Nonnull final BootstrapForm aForm,
+                                      @Nonnull final FormState aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayText (aDisplayLocale)));
+      }
+
+      @Override
+      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final FormState aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+
+        if (FormStateManager.getInstance ().deleteFormState (aSelectedObject.getID ()).isChanged ())
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayText (aDisplayLocale)));
+        else
+          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayText (aDisplayLocale)));
+      }
+    });
+  }
+
   public BasePageFormSavedStates (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
     super (sID, sName);
+    _init ();
   }
 
   public BasePageFormSavedStates (@Nonnull @Nonempty final String sID,
@@ -103,6 +133,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
                                   @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
+    _init ();
   }
 
   public BasePageFormSavedStates (@Nonnull @Nonempty final String sID,
@@ -110,6 +141,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
                                   @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
+    _init ();
   }
 
   @Override
@@ -137,27 +169,6 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
                                 @Nonnull final EWebPageFormAction eFormAction,
                                 @Nonnull final FormErrors aFormErrors)
   {}
-
-  @Override
-  protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final BootstrapForm aForm,
-                                  @Nonnull final FormState aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayText (aDisplayLocale)));
-  }
-
-  @Override
-  protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final FormState aSelectedObject)
-  {
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-
-    if (FormStateManager.getInstance ().deleteFormState (aSelectedObject.getID ()).isChanged ())
-      aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayText (aDisplayLocale)));
-    else
-      aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayText (aDisplayLocale)));
-  }
 
   @Override
   protected boolean handleCustomActions (@Nonnull final WPECTYPE aWPEC, @Nullable final FormState aSelectedObject)

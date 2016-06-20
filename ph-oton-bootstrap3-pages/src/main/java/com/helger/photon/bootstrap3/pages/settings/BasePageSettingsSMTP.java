@@ -58,6 +58,7 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
@@ -194,10 +195,44 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
 
   private final transient NamedSMTPSettingsManager m_aMgr;
 
+  private void _init ()
+  {
+    setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <NamedSMTPSettings, WPECTYPE> ()
+    {
+      @Override
+      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                      @Nonnull final BootstrapForm aForm,
+                                      @Nonnull final NamedSMTPSettings aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                         aSelectedObject.getName ())));
+      }
+
+      @Override
+      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final NamedSMTPSettings aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+
+        if (m_aMgr.removeSettings (aSelectedObject.getID ()).isChanged ())
+        {
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                   aSelectedObject.getName ())));
+        }
+        else
+        {
+          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                               aSelectedObject.getName ())));
+        }
+      }
+    });
+  }
+
   public BasePageSettingsSMTP (@Nonnull final NamedSMTPSettingsManager aMgr, @Nonnull @Nonempty final String sID)
   {
     super (sID, EWebPageText.PAGE_NAME_SETTINGS_SMTP.getAsMLT ());
     m_aMgr = ValueEnforcer.notNull (aMgr, "NamedSMTPSettingsManager");
+    _init ();
   }
 
   public BasePageSettingsSMTP (@Nonnull final NamedSMTPSettingsManager aMgr,
@@ -206,6 +241,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
   {
     super (sID, sName);
     m_aMgr = ValueEnforcer.notNull (aMgr, "NamedSMTPSettingsManager");
+    _init ();
   }
 
   public BasePageSettingsSMTP (@Nonnull final NamedSMTPSettingsManager aMgr,
@@ -215,6 +251,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
   {
     super (sID, sName, sDescription);
     m_aMgr = ValueEnforcer.notNull (aMgr, "NamedSMTPSettingsManager");
+    _init ();
   }
 
   public BasePageSettingsSMTP (@Nonnull final NamedSMTPSettingsManager aMgr,
@@ -224,6 +261,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
   {
     super (sID, aName, aDescription);
     m_aMgr = ValueEnforcer.notNull (aMgr, "NamedSMTPSettingsManager");
+    _init ();
   }
 
   @Override
@@ -516,33 +554,6 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
   protected IHCNode getTestMailIcon ()
   {
     return EFamFamIcon.EMAIL_GO.getAsNode ();
-  }
-
-  @Override
-  protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final BootstrapForm aForm,
-                                  @Nonnull final NamedSMTPSettings aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                     aSelectedObject.getName ())));
-  }
-
-  @Override
-  protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final NamedSMTPSettings aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-
-    if (m_aMgr.removeSettings (aSelectedObject.getID ()).isChanged ())
-    {
-      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               aSelectedObject.getName ())));
-    }
-    else
-    {
-      aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                           aSelectedObject.getName ())));
-    }
   }
 
   @Override

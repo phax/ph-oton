@@ -57,6 +57,7 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
@@ -92,7 +93,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                            extends AbstractBootstrapWebPageForm <FailedMailData, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
     MSG_ID ("ID", "ID"),
     MSG_ERROR_DT ("Fehler-Datum", "Error date"),
@@ -115,8 +116,10 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     DELETE_SUCCESS ("Das E-Mail wurde erfolgreich gelöscht.", "The email was successfully deleted."),
     DELETE_ALL_SUCCESS_1 ("Es wurde 1 E-Mail erfolgreich gelöscht.", "1 email was successfully deleted."),
     DELETE_ALL_SUCCESS_N ("Es wurden {0} E-Mails erfolgreich gelöscht.", "{0} emails were successfully deleted."),
-    MSG_BUTTON_RESEND_DEFAULT_SETTINGS ("Erneut versenden (mit aktuellen SMTP-Einstellungen)", "Resend (with current SMTP settings)"),
-    MSG_BUTTON_RESEND_ALL_DEFAULT_SETTINGS ("Alle erneut versenden (mit aktuellen SMTP-Einstellungen)", "Resend all (with current SMTP settings)");
+    MSG_BUTTON_RESEND_DEFAULT_SETTINGS ("Erneut versenden (mit aktuellen SMTP-Einstellungen)",
+                                        "Resend (with current SMTP settings)"),
+    MSG_BUTTON_RESEND_ALL_DEFAULT_SETTINGS ("Alle erneut versenden (mit aktuellen SMTP-Einstellungen)",
+                                            "Resend all (with current SMTP settings)");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -147,11 +150,40 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
 
   private final FailedMailQueue m_aFailedMailQueue;
 
+  private void _init ()
+  {
+    setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <FailedMailData, WPECTYPE> ()
+    {
+      @Override
+      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                      @Nonnull final BootstrapForm aForm,
+                                      @Nonnull final FailedMailData aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayText (aDisplayLocale)));
+      }
+
+      @Override
+      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final FailedMailData aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+
+        // Delete a single failed mail without querying
+        if (m_aFailedMailQueue.remove (aSelectedObject.getID ()) != null)
+        {
+          s_aLogger.info ("Deleted single failed mail with ID " + aSelectedObject.getID () + "!");
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayText (aDisplayLocale)));
+        }
+      }
+    });
+  }
+
   public BasePageMonitoringFailedMails (@Nonnull @Nonempty final String sID,
                                         @Nonnull final FailedMailQueue aFailedMailQueue)
   {
     super (sID, EWebPageText.PAGE_NAME_MONITORING_FAILED_MAILS.getAsMLT ());
     m_aFailedMailQueue = ValueEnforcer.notNull (aFailedMailQueue, "FailedMailQueue");
+    _init ();
   }
 
   public BasePageMonitoringFailedMails (@Nonnull @Nonempty final String sID,
@@ -160,6 +192,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
   {
     super (sID, sName);
     m_aFailedMailQueue = ValueEnforcer.notNull (aFailedMailQueue, "FailedMailQueue");
+    _init ();
   }
 
   public BasePageMonitoringFailedMails (@Nonnull @Nonempty final String sID,
@@ -169,6 +202,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
   {
     super (sID, sName, sDescription);
     m_aFailedMailQueue = ValueEnforcer.notNull (aFailedMailQueue, "FailedMailQueue");
+    _init ();
   }
 
   public BasePageMonitoringFailedMails (@Nonnull @Nonempty final String sID,
@@ -178,6 +212,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
   {
     super (sID, aName, aDescription);
     m_aFailedMailQueue = ValueEnforcer.notNull (aFailedMailQueue, "FailedMailQueue");
+    _init ();
   }
 
   @Override
@@ -362,29 +397,6 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                 @Nonnull final FormErrors aFormErrors)
   {
     throw new UnsupportedOperationException ();
-  }
-
-  @Override
-  protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final BootstrapForm aForm,
-                                  @Nonnull final FailedMailData aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayText (aDisplayLocale)));
-  }
-
-  @Override
-  protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final FailedMailData aSelectedObject)
-  {
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-
-    // Delete a single failed mail without querying
-    if (m_aFailedMailQueue.remove (aSelectedObject.getID ()) != null)
-    {
-      s_aLogger.info ("Deleted single failed mail with ID " + aSelectedObject.getID () + "!");
-      aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayText (aDisplayLocale)));
-    }
   }
 
   private void _handleDeleteAll (@Nonnull final WPECTYPE aWPEC)

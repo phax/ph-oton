@@ -68,6 +68,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerUndelete;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
@@ -103,7 +104,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                             extends AbstractWebPageSecurityObjectWithAttributes <IUser, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW_USER ("Neuen Benutzer anlegen", "Create new user"),
     TAB_ACTIVE ("Aktive Benutzer ({0})", "Active users ({0})"),
@@ -145,21 +146,31 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     ERROR_LOGINNAME_REQUIRED ("Es muss ein Benutzername angegeben werden!", "A user name must be specified!"),
     ERROR_LASTNAME_REQUIRED ("Es muss ein Nachname angegeben werden!", "A last name must be specified!"),
     ERROR_EMAIL_REQUIRED ("Es muss eine E-Mail-Adresse angegeben werden!", "An email address must be specified!"),
-    ERROR_EMAIL_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden!", "A valid email address must be specified!"),
-    ERROR_EMAIL_IN_USE ("Ein anderer Benutzer mit dieser E-Mail-Adresse existiert bereits!", "Another user with this email address already exists!"),
+    ERROR_EMAIL_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden!",
+                         "A valid email address must be specified!"),
+    ERROR_EMAIL_IN_USE ("Ein anderer Benutzer mit dieser E-Mail-Adresse existiert bereits!",
+                        "Another user with this email address already exists!"),
     ERROR_PASSWORDS_DONT_MATCH ("Die Passwörter stimmen nicht überein!", "Passwords don't match"),
-    ERROR_NO_USERGROUP ("Es muss mindestens eine Benutzergruppe ausgewählt werden!", "At least one user group must be selected!"),
-    ERROR_INVALID_USERGROUPS ("Mindestens eine der angegebenen Benutzergruppen ist ungültig!", "At least one selected user group is invalid!"),
+    ERROR_NO_USERGROUP ("Es muss mindestens eine Benutzergruppe ausgewählt werden!",
+                        "At least one user group must be selected!"),
+    ERROR_INVALID_USERGROUPS ("Mindestens eine der angegebenen Benutzergruppen ist ungültig!",
+                              "At least one selected user group is invalid!"),
     SUCCESS_CREATE ("Der neue Benutzer wurde erfolgreich angelegt!", "Successfully created the new user!"),
     SUCCESS_EDIT ("Der Benutzer wurde erfolgreich bearbeitet!", "Sucessfully edited the user!"),
     FAILURE_CREATE ("Fehler beim Anlegen des Benutzers!", "Error creating the new user!"),
-    SUCCESS_RESET_PASSWORD ("Das neue Passwort vom Benutzer ''{0}'' wurde gespeichert!", "Successfully saved the new password of user ''{0}''!"),
-    DEL_QUERY ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' löschen wollen?", "Are you sure you want to delete user ''{0}''?"),
+    SUCCESS_RESET_PASSWORD ("Das neue Passwort vom Benutzer ''{0}'' wurde gespeichert!",
+                            "Successfully saved the new password of user ''{0}''!"),
+    DEL_QUERY ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' löschen wollen?",
+               "Are you sure you want to delete user ''{0}''?"),
     DEL_SUCCESS ("Der Benutzer ''{0}'' wurde erfolgreich gelöscht!", "User ''{0}'' was successfully deleted!"),
-    DEL_ERROR ("Beim Löschen des Benutzers ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while deleting user ''{0}''!"),
-    UNDEL_QUERY ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' wiederherstellen wollen?", "Are you sure you want to undelete user ''{0}''?"),
-    UNDEL_SUCCESS ("Der Benutzer ''{0}'' wurde erfolgreich wiederhergestellt!", "User ''{0}'' was successfully undeleted!"),
-    UNDEL_ERROR ("Beim Wiederherstellen des Benutzers ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while undeleting user ''{0}''!");
+    DEL_ERROR ("Beim Löschen des Benutzers ''{0}'' ist ein Fehler aufgetreten!",
+               "An error occurred while deleting user ''{0}''!"),
+    UNDEL_QUERY ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' wiederherstellen wollen?",
+                 "Are you sure you want to undelete user ''{0}''?"),
+    UNDEL_SUCCESS ("Der Benutzer ''{0}'' wurde erfolgreich wiederhergestellt!",
+                   "User ''{0}'' was successfully undeleted!"),
+    UNDEL_ERROR ("Beim Wiederherstellen des Benutzers ''{0}'' ist ein Fehler aufgetreten!",
+                 "An error occurred while undeleting user ''{0}''!");
 
     private final IMultilingualText m_aTP;
 
@@ -198,6 +209,34 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
   private void _init ()
   {
+    setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <IUser, WPECTYPE> ()
+    {
+      @Override
+      @OverrideOnDemand
+      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                      @Nonnull final BootstrapForm aForm,
+                                      @Nonnull final IUser aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DEL_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                      aSelectedObject.getDisplayName ())));
+      }
+
+      @Override
+      @OverrideOnDemand
+      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+
+        if (aUserMgr.deleteUser (aSelectedObject.getID ()).isChanged ())
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                aSelectedObject.getDisplayName ())));
+        else
+          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                            aSelectedObject.getDisplayName ())));
+      }
+    });
     setUndeleteHandler (new AbstractBootstrapWebPageActionHandlerUndelete <IUser, WPECTYPE> ()
     {
       @Override
@@ -941,40 +980,6 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     aNodeList.addChild (aDataTables);
 
     return aNodeList;
-  }
-
-  @Override
-  @OverrideOnDemand
-  protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final BootstrapForm aForm,
-                                  @Nonnull final IUser aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DEL_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                  aSelectedObject.getDisplayName ())));
-  }
-
-  /**
-   * Perform object delete
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @param aSelectedObject
-   *        The object to be deleted. Never <code>null</code>.
-   */
-  @Override
-  @OverrideOnDemand
-  protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
-
-    if (aUserMgr.deleteUser (aSelectedObject.getID ()).isChanged ())
-      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                            aSelectedObject.getDisplayName ())));
-    else
-      aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                        aSelectedObject.getDisplayName ())));
   }
 
   @Override

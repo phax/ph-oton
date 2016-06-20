@@ -58,6 +58,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -95,11 +96,16 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
     ERR_OWNER_NAME_EMPTY ("Der Eigentümer muss angegeben werden!", "The owner must be specified!"),
     ERR_OWNER_URL_INVALID ("Die URL ist ungültig!", "The URL is invalid!"),
     ERR_OWNER_EMAIL_INVALID ("Die E-Mail-Adresse ist ungültig!", "The email address is invalid!"),
-    CREATE_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich erstellt.", "The app token for ''{0}'' was successfully created."),
-    EDIT_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich bearbeitet.", "The app token for ''{0}'' was successfully edited."),
-    DELETE_QUERY ("Sind Sie sicher, dass Sie das App-Token für ''{0}'' löschen wollen?", "Are you sure you want to delete the app token of ''{0}''?"),
-    DELETE_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich gelöscht!", "App token of ''{0}'' was successfully deleted!"),
-    DELETE_ERROR ("Beim Löschen des App-Token für ''{0}'' ist ein Fehler aufgetreten!", "An error occurred while deleting app token of ''{0}''!"),
+    CREATE_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich erstellt.",
+                    "The app token for ''{0}'' was successfully created."),
+    EDIT_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich bearbeitet.",
+                  "The app token for ''{0}'' was successfully edited."),
+    DELETE_QUERY ("Sind Sie sicher, dass Sie das App-Token für ''{0}'' löschen wollen?",
+                  "Are you sure you want to delete the app token of ''{0}''?"),
+    DELETE_SUCCESS ("Das App-Token für ''{0}'' wurde erfolgreich gelöscht!",
+                    "App token of ''{0}'' was successfully deleted!"),
+    DELETE_ERROR ("Beim Löschen des App-Token für ''{0}'' ist ein Fehler aufgetreten!",
+                  "An error occurred while deleting app token of ''{0}''!"),
     TAB_LABEL_ACTIVE ("Aktiv", "Active"),
     TAB_LABEL_DELETED ("Gelöscht", "Deleted"),
     HEADER_OWNER_NAME ("Eigentümer", "Owner"),
@@ -140,14 +146,48 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
   public static final String FIELD_TOKEN_STRING = "tokenstring";
   public static final String FIELD_REVOCATION_REASON = "revocationreason";
 
+  private void _init ()
+  {
+    setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <IAppToken, WPECTYPE> ()
+    {
+      @Override
+      @OverrideOnDemand
+      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                      @Nonnull final BootstrapForm aForm,
+                                      @Nonnull final IAppToken aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                         aSelectedObject.getDisplayName ())));
+      }
+
+      @Override
+      @OverrideOnDemand
+      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IAppToken aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
+
+        if (aAppTokenMgr.deleteAppToken (aSelectedObject.getID ()).isChanged ())
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                   aSelectedObject.getDisplayName ())));
+        else
+          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                               aSelectedObject.getDisplayName ())));
+      }
+    });
+  }
+
   public BasePageSecurityAppTokenManagement (@Nonnull @Nonempty final String sID)
   {
     super (sID, EWebPageText.PAGE_NAME_SECURITY_APP_TOKENS.getAsMLT ());
+    _init ();
   }
 
   public BasePageSecurityAppTokenManagement (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
+    _init ();
   }
 
   public BasePageSecurityAppTokenManagement (@Nonnull @Nonempty final String sID,
@@ -155,6 +195,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                              @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
+    _init ();
   }
 
   public BasePageSecurityAppTokenManagement (@Nonnull @Nonempty final String sID,
@@ -162,6 +203,7 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                              @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
+    _init ();
   }
 
   @Override
@@ -379,40 +421,6 @@ public class BasePageSecurityAppTokenManagement <WPECTYPE extends IWebPageExecut
                                                                                                                  sOwnerName)));
       }
     }
-  }
-
-  @Override
-  @OverrideOnDemand
-  protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final BootstrapForm aForm,
-                                  @Nonnull final IAppToken aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                     aSelectedObject.getDisplayName ())));
-  }
-
-  /**
-   * Perform object delete
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @param aSelectedObject
-   *        The object to be deleted. Never <code>null</code>.
-   */
-  @Override
-  @OverrideOnDemand
-  protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IAppToken aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
-
-    if (aAppTokenMgr.deleteAppToken (aSelectedObject.getID ()).isChanged ())
-      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               aSelectedObject.getDisplayName ())));
-    else
-      aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                           aSelectedObject.getDisplayName ())));
   }
 
   public static boolean canRevokeAccessToken (@Nullable final IAppToken aAppToken)

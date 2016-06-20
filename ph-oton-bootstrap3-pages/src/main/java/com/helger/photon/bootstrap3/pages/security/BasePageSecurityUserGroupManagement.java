@@ -59,6 +59,7 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
@@ -104,9 +105,12 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     TITLE_EDIT ("Benutzergruppe ''{0}'' bearbeiten", "Edit user group ''{0}''"),
     ERROR_NAME_REQUIRED ("Es muss ein Name angegeben werden!", "A name must be specified!"),
     ERROR_NO_ROLE ("Es muss mindestens eine Rolle ausgewählt werden!", "At least one role must be selected!"),
-    ERROR_INVALID_ROLES ("Mindestens eine der angegebenen Rolle ist ungültig!", "At least one selected role is invalid!"),
-    DELETE_QUERY ("Soll die Benutzergruppe ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the user group ''{0}''?"),
-    DELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurden erfolgreich gelöscht!", "The user group ''{0}'' was successfully deleted!"),
+    ERROR_INVALID_ROLES ("Mindestens eine der angegebenen Rolle ist ungültig!",
+                         "At least one selected role is invalid!"),
+    DELETE_QUERY ("Soll die Benutzergruppe ''{0}'' wirklich gelöscht werden?",
+                  "Are you sure to delete the user group ''{0}''?"),
+    DELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurden erfolgreich gelöscht!",
+                    "The user group ''{0}'' was successfully deleted!"),
     DELETE_ERROR ("Fehler beim Löschen der Benutzergruppe ''{0}''!", "Error deleting the user group ''{0}''!"),
     SUCCESS_CREATE ("Die neue BenutzerGruppe wurde erfolgreich angelegt!", "Successfully created the new user group!"),
     SUCCESS_EDIT ("Die Benutzergruppe wurde erfolgreich bearbeitet!", "Sucessfully edited the user group!");
@@ -135,15 +139,47 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   public static final String FIELD_DESCRIPTION = "description";
   public static final String FIELD_ROLES = "roles";
 
+  private void _init ()
+  {
+    setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <IUserGroup, WPECTYPE> ()
+    {
+      @Override
+      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                      @Nonnull final BootstrapForm aForm,
+                                      @Nonnull final IUserGroup aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                         aSelectedObject.getName ())));
+      }
+
+      @Override
+      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+
+        if (aUserGroupMgr.deleteUserGroup (aSelectedObject.getID ()).isChanged ())
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                   aSelectedObject.getName ())));
+        else
+          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                               aSelectedObject.getName ())));
+      }
+    });
+  }
+
   public BasePageSecurityUserGroupManagement (@Nonnull @Nonempty final String sID)
   {
     super (sID, EWebPageText.PAGE_NAME_SECURITY_USER_GROUPS.getAsMLT ());
+    _init ();
   }
 
   public BasePageSecurityUserGroupManagement (@Nonnull @Nonempty final String sID,
                                               @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
+    _init ();
   }
 
   public BasePageSecurityUserGroupManagement (@Nonnull @Nonempty final String sID,
@@ -151,6 +187,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                               @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
+    _init ();
   }
 
   public BasePageSecurityUserGroupManagement (@Nonnull @Nonempty final String sID,
@@ -158,6 +195,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                               @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
+    _init ();
   }
 
   @Override
@@ -412,30 +450,6 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     return aUserGroup != null &&
            !aUserGroup.hasContainedUsers () &&
            !aUserGroup.getID ().equals (CSecurity.USERGROUP_ADMINISTRATORS_ID);
-  }
-
-  @Override
-  protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final BootstrapForm aForm,
-                                  @Nonnull final IUserGroup aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                     aSelectedObject.getName ())));
-  }
-
-  @Override
-  protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
-
-    if (aUserGroupMgr.deleteUserGroup (aSelectedObject.getID ()).isChanged ())
-      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               aSelectedObject.getName ())));
-    else
-      aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                           aSelectedObject.getName ())));
   }
 
   @Override
