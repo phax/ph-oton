@@ -1039,23 +1039,6 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   {}
 
   /**
-   * Handle some other custom action
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @param aSelectedObject
-   *        The selected object. May be <code>null</code>.
-   * @return <code>true</code> to show the list afterwards. <code>false</code>
-   *         if the object list should not be shown.
-   */
-  @OverrideOnDemand
-  @Deprecated
-  protected boolean handleCustomActions (@Nonnull final WPECTYPE aWPEC, @Nullable final DATATYPE aSelectedObject)
-  {
-    return true;
-  }
-
-  /**
    * @param aWPEC
    *        The web page execution context. Never <code>null</code>.
    */
@@ -1148,12 +1131,6 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                         if (s_aLogger.isDebugEnabled ())
                           s_aLogger.debug ("Custom handler for page '" + getID () + "' and action '" + sAction + "'");
                       }
-                  }
-                  else
-                  {
-                    eFormAction = EWebPageFormAction.CUSTOM;
-                    if (s_aLogger.isDebugEnabled ())
-                      s_aLogger.debug ("Custom handler for page '" + getID () + "' and action '" + sAction + "'");
                   }
                 }
     }
@@ -1302,10 +1279,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
         case CUSTOM:
         {
           // Other proprietary actions
-          if (m_aCustomHandlers.containsKey (sAction))
-            bShowList = m_aCustomHandlers.get (sAction).handleAction (aWPEC, aSelectedObject);
-          else
-            bShowList = handleCustomActions (aWPEC, aSelectedObject);
+          bShowList = m_aCustomHandlers.get (sAction).handleAction (aWPEC, aSelectedObject);
           break;
         }
       }
