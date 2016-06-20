@@ -68,7 +68,7 @@ public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> exte
 
   public SystemPageNotFound ()
   {
-    super (PAGEID_SYSTEM_NOTFOUND, ETextBase.PAGENAME.m_aTP);
+    super (PAGEID_SYSTEM_NOTFOUND, ETextBase.PAGENAME.m_aTP, null);
   }
 
   @Override

@@ -50,20 +50,20 @@ public abstract class AbstractBootstrapWebPageSimpleForm <DATATYPE extends IHasI
 {
   public AbstractBootstrapWebPageSimpleForm (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
-    super (sID, sName);
+    super (sID, getAsMLT (sName), null);
   }
 
   public AbstractBootstrapWebPageSimpleForm (@Nonnull @Nonempty final String sID,
                                              @Nonnull final IMultilingualText aName)
   {
-    super (sID, aName);
+    super (sID, aName, null);
   }
 
   public AbstractBootstrapWebPageSimpleForm (@Nonnull @Nonempty final String sID,
                                              @Nonnull final String sName,
                                              @Nullable final String sDescription)
   {
-    super (sID, sName, sDescription);
+    super (sID, getAsMLT (sName), getAsMLT (sDescription));
   }
 
   public AbstractBootstrapWebPageSimpleForm (@Nonnull @Nonempty final String sID,

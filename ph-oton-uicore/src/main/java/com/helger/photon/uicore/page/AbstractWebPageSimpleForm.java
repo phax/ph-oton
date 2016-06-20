@@ -76,23 +76,6 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageSimpleForm.class);
 
-  public AbstractWebPageSimpleForm (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
-  {
-    super (sID, sName);
-  }
-
-  public AbstractWebPageSimpleForm (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
-  {
-    super (sID, aName);
-  }
-
-  public AbstractWebPageSimpleForm (@Nonnull @Nonempty final String sID,
-                                    @Nonnull final String sName,
-                                    @Nullable final String sDescription)
-  {
-    super (sID, sName, sDescription);
-  }
-
   public AbstractWebPageSimpleForm (@Nonnull @Nonempty final String sID,
                                     @Nonnull final IMultilingualText aName,
                                     @Nullable final IMultilingualText aDescription)

@@ -5,6 +5,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
@@ -14,15 +15,22 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
 
-public abstract class WebPageDeleteHandler <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
-                                           extends AbstractWebPageActionHandler <WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
-                                           implements
-                                           IWebPageDeleteHandler <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
+public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
+                                                         extends
+                                                         AbstractWebPageActionHandler <WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
+                                                         implements IWebPageActionHandler <DATATYPE, WPECTYPE>
 {
   public static final String FORM_ID_DELETE = "deleteform";
 
-  public WebPageDeleteHandler ()
+  public AbstractWebPageActionHandlerDelete ()
   {}
+
+  @Nonnull
+  @Nonempty
+  public final String getActionName ()
+  {
+    return CPageParam.ACTION_DELETE;
+  }
 
   /**
    * Show the delete query.
@@ -35,10 +43,9 @@ public abstract class WebPageDeleteHandler <DATATYPE extends IHasID <String>, WP
    *        The object to be deleted. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                  @Nonnull final FORM_TYPE aForm,
-                                  @Nonnull final DATATYPE aSelectedObject)
-  {}
+  protected abstract void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                           @Nonnull final FORM_TYPE aForm,
+                                           @Nonnull final DATATYPE aSelectedObject);
 
   /**
    * Perform object delete
@@ -49,8 +56,7 @@ public abstract class WebPageDeleteHandler <DATATYPE extends IHasID <String>, WP
    *        The object to be deleted. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
-  {}
+  protected abstract void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject);
 
   /**
    * @param aWPEC
@@ -66,28 +72,6 @@ public abstract class WebPageDeleteHandler <DATATYPE extends IHasID <String>, WP
     return true;
   }
 
-  /**
-   * @param aWPEC
-   *        Web page execution context. May not be <code>null</code>.
-   * @return A newly created toolbar. May be overridden to create other types of
-   *         toolbars :). May not be <code>null</code>.
-   */
-  @Nonnull
-  @OverrideOnDemand
-  protected abstract TOOLBAR_TYPE createNewDeleteToolbar (@Nonnull final WPECTYPE aWPEC);
-
-  /**
-   * Add additional elements to the delete toolbar
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @param aToolbar
-   *        The toolbar to be modified
-   */
-  @OverrideOnDemand
-  protected void modifyDeleteToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final TOOLBAR_TYPE aToolbar)
-  {}
-
   @Nullable
   @OverrideOnDemand
   protected String getDeleteToolbarSubmitButtonText (@Nonnull final Locale aDisplayLocale)
@@ -101,6 +85,18 @@ public abstract class WebPageDeleteHandler <DATATYPE extends IHasID <String>, WP
   {
     return EDefaultIcon.YES;
   }
+
+  /**
+   * Add additional elements to the delete toolbar
+   *
+   * @param aWPEC
+   *        The web page execution context
+   * @param aToolbar
+   *        The toolbar to be modified
+   */
+  @OverrideOnDemand
+  protected void modifyDeleteToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final TOOLBAR_TYPE aToolbar)
+  {}
 
   /**
    * Create toolbar for deleting an existing object
@@ -121,7 +117,7 @@ public abstract class WebPageDeleteHandler <DATATYPE extends IHasID <String>, WP
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final TOOLBAR_TYPE aToolbar = createNewDeleteToolbar (aWPEC);
+    final TOOLBAR_TYPE aToolbar = createToolbar (aWPEC);
     aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE);
     aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
     aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
@@ -135,7 +131,7 @@ public abstract class WebPageDeleteHandler <DATATYPE extends IHasID <String>, WP
     return aToolbar;
   }
 
-  public boolean handleDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
+  public final boolean handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
   {
     final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();
@@ -146,6 +142,7 @@ public abstract class WebPageDeleteHandler <DATATYPE extends IHasID <String>, WP
       // Check if the nonce matches
       if (aCSRFHandler.checkCSRFNonce (aWPEC).isContinue ())
       {
+        // Main delete
         performDelete (aWPEC, aSelectedObject);
       }
 
@@ -162,7 +159,10 @@ public abstract class WebPageDeleteHandler <DATATYPE extends IHasID <String>, WP
       // Add the nonce for CSRF check
       aForm.addChild (aCSRFHandler.createCSRFNonceField ());
 
+      // Show the main query
       showDeleteQuery (aWPEC, aForm, aSelectedObject);
+
+      // Show the toolbar?
       if (showDeleteToolbar (aWPEC, aSelectedObject))
         aForm.addChild (createDeleteToolbar (aWPEC, aForm, aSelectedObject));
       bShowList = false;

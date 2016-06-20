@@ -128,23 +128,14 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
   }
 
   private final IMenuTree m_aMenuTree;
-  private final BasePageShowChildrenRenderer m_aRenderer;
+  private BasePageShowChildrenRenderer m_aRenderer = new BasePageShowChildrenRenderer ();
 
   public BasePageShowChildren (@Nonnull @Nonempty final String sID,
                                @Nonnull final IMultilingualText aName,
                                @Nonnull final IMenuTree aMenuTree)
   {
-    this (sID, aName, aMenuTree, new BasePageShowChildrenRenderer ());
-  }
-
-  public BasePageShowChildren (@Nonnull @Nonempty final String sID,
-                               @Nonnull final IMultilingualText aName,
-                               @Nonnull final IMenuTree aMenuTree,
-                               @Nonnull final BasePageShowChildrenRenderer aRenderer)
-  {
-    super (sID, aName);
+    super (sID, aName, null);
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
-    m_aRenderer = ValueEnforcer.notNull (aRenderer, "Renderer");
     // Menu item cannot be resolved here, because the menu tree is not yet
     // ready!
   }
@@ -153,19 +144,14 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
                                @Nonnull final String sName,
                                @Nonnull final IMenuTree aMenuTree)
   {
-    this (sID, sName, aMenuTree, new BasePageShowChildrenRenderer ());
+    this (sID, getAsMLT (sName), aMenuTree);
   }
 
-  public BasePageShowChildren (@Nonnull @Nonempty final String sID,
-                               @Nonnull final String sName,
-                               @Nonnull final IMenuTree aMenuTree,
-                               @Nonnull final BasePageShowChildrenRenderer aRenderer)
+  @Nonnull
+  public BasePageShowChildren <WPECTYPE> setRenderer (final BasePageShowChildrenRenderer aRenderer)
   {
-    super (sID, sName);
-    m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
     m_aRenderer = ValueEnforcer.notNull (aRenderer, "Renderer");
-    // Menu item cannot be resolved here, because the menu tree is not yet
-    // ready!
+    return this;
   }
 
   @Nonnull

@@ -68,6 +68,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerUndelete;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
@@ -195,14 +196,48 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
   private Locale m_aDefaultUserLocale;
 
+  private void _init ()
+  {
+    setUndeleteHandler (new AbstractBootstrapWebPageActionHandlerUndelete <IUser, WPECTYPE> ()
+    {
+      @Override
+      @OverrideOnDemand
+      protected void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                        @Nonnull final BootstrapForm aForm,
+                                        @Nonnull final IUser aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.UNDEL_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                        aSelectedObject.getDisplayName ())));
+      }
+
+      @Override
+      @OverrideOnDemand
+      protected void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+
+        if (aUserMgr.undeleteUser (aSelectedObject.getID ()).isChanged ())
+          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.UNDEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                  aSelectedObject.getDisplayName ())));
+        else
+          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.UNDEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                              aSelectedObject.getDisplayName ())));
+      }
+    });
+  }
+
   public BasePageSecurityUserManagement (@Nonnull @Nonempty final String sID)
   {
     super (sID, EWebPageText.PAGE_NAME_SECURITY_USERS.getAsMLT ());
+    _init ();
   }
 
   public BasePageSecurityUserManagement (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
+    _init ();
   }
 
   public BasePageSecurityUserManagement (@Nonnull @Nonempty final String sID,
@@ -210,6 +245,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                          @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
+    _init ();
   }
 
   public BasePageSecurityUserManagement (@Nonnull @Nonempty final String sID,
@@ -217,6 +253,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                          @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
+    _init ();
   }
 
   @Nonnull
@@ -938,40 +975,6 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     else
       aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                         aSelectedObject.getDisplayName ())));
-  }
-
-  @Override
-  @OverrideOnDemand
-  protected void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                    @Nonnull final BootstrapForm aForm,
-                                    @Nonnull final IUser aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (new BootstrapQuestionBox ().addChild (EText.UNDEL_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                    aSelectedObject.getDisplayName ())));
-  }
-
-  /**
-   * Perform object undelete
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @param aSelectedObject
-   *        The object to be deleted. Never <code>null</code>.
-   */
-  @Override
-  @OverrideOnDemand
-  protected void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
-
-    if (aUserMgr.undeleteUser (aSelectedObject.getID ()).isChanged ())
-      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.UNDEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                              aSelectedObject.getDisplayName ())));
-    else
-      aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.UNDEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                          aSelectedObject.getDisplayName ())));
   }
 
   @Override

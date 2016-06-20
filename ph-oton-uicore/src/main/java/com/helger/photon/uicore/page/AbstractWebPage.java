@@ -55,63 +55,6 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    *
    * @param sID
    *        The unique page ID. May not be <code>null</code>.
-   */
-  public AbstractWebPage (@Nonnull @Nonempty final String sID)
-  {
-    super (sID);
-  }
-
-  /**
-   * Constructor
-   *
-   * @param sID
-   *        The unique page ID. May not be <code>null</code>.
-   * @param sName
-   *        The constant (non-translatable) name of the page. May not be
-   *        <code>null</code>.
-   */
-  public AbstractWebPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
-  {
-    super (sID, sName);
-  }
-
-  /**
-   * Constructor
-   *
-   * @param sID
-   *        The unique page ID. May not be <code>null</code>.
-   * @param sName
-   *        The constant (non-translatable) name of the page. May not be
-   *        <code>null</code>.
-   * @param sDescription
-   *        The constant (non-translatable) description of the page. May be
-   *        <code>null</code>.
-   */
-  public AbstractWebPage (@Nonnull @Nonempty final String sID,
-                          @Nonnull final String sName,
-                          @Nullable final String sDescription)
-  {
-    super (sID, sName, sDescription);
-  }
-
-  /**
-   * Constructor
-   *
-   * @param sID
-   *        The unique page ID. May not be <code>null</code>.
-   * @param aName
-   *        The name of the page. May not be <code>null</code>.
-   */
-  public AbstractWebPage (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
-  {
-    super (sID, aName);
-  }
-
-  /**
-   * Constructor
-   *
-   * @param sID
-   *        The unique page ID. May not be <code>null</code>.
    * @param aName
    *        The name of the page. May not be <code>null</code>.
    * @param aDescription

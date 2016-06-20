@@ -49,19 +49,19 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
 {
   public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
-    super (sID, sName);
+    super (sID, getAsMLT (sName), null);
   }
 
   public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
-    super (sID, aName);
+    super (sID, aName, null);
   }
 
   public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID,
                                        @Nonnull final String sName,
                                        @Nullable final String sDescription)
   {
-    super (sID, sName, sDescription);
+    super (sID, getAsMLT (sName), getAsMLT (sDescription));
   }
 
   public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID,

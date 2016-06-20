@@ -41,12 +41,12 @@ public abstract class AbstractPage implements IPage
   private final String m_sID;
   private IMultilingualText m_aName;
   private IMultilingualText m_aDescription;
-  private final MapBasedAttributeContainerAny <String> m_aAttrs = new MapBasedAttributeContainerAny <> ();
+  private final MapBasedAttributeContainerAny <String> m_aAttrs = new MapBasedAttributeContainerAny<> ();
 
-  @Nonnull
-  private static ReadOnlyMultilingualText _getAsMLT (@Nonnull final String sText)
+  @Nullable
+  public static ReadOnlyMultilingualText getAsMLT (@Nullable final String sText)
   {
-    return new ReadOnlyMultilingualText (CGlobal.LOCALE_INDEPENDENT, sText);
+    return sText == null ? null : new ReadOnlyMultilingualText (CGlobal.LOCALE_INDEPENDENT, sText);
   }
 
   /**
@@ -71,7 +71,7 @@ public abstract class AbstractPage implements IPage
    */
   public AbstractPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
-    this (sID, _getAsMLT (sName));
+    this (sID, getAsMLT (sName));
   }
 
   /**
@@ -90,7 +90,7 @@ public abstract class AbstractPage implements IPage
                        @Nonnull final String sName,
                        @Nullable final String sDescription)
   {
-    this (sID, _getAsMLT (sName), sDescription == null ? null : _getAsMLT (sDescription));
+    this (sID, getAsMLT (sName), getAsMLT (sDescription));
   }
 
   /**

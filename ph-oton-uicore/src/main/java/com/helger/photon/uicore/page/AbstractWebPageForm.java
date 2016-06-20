@@ -92,32 +92,27 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   public static final String FIELD_RESTORE_FLOW_ID = AjaxExecutorSaveFormState.FIELD_RESTORE_FLOW_ID;
   public static final String FORM_ID_INPUT = "inputform";
   public static final String FORM_ID_DELETE = "deleteform";
-  public static final String FORM_ID_UNDELETE = "undeleteform";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageForm.class);
 
-  public AbstractWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
-  {
-    super (sID, sName);
-  }
-
-  public AbstractWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
-  {
-    super (sID, aName);
-  }
-
-  public AbstractWebPageForm (@Nonnull @Nonempty final String sID,
-                              @Nonnull final String sName,
-                              @Nullable final String sDescription)
-  {
-    super (sID, sName, sDescription);
-  }
+  private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aDeleteHandler;
+  private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aUndeleteHandler;
 
   public AbstractWebPageForm (@Nonnull @Nonempty final String sID,
                               @Nonnull final IMultilingualText aName,
                               @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
+  }
+
+  protected final void setDeleteHandler (@Nullable final IWebPageActionHandler <DATATYPE, WPECTYPE> aDeleteHandler)
+  {
+    m_aDeleteHandler = aDeleteHandler;
+  }
+
+  protected final void setUndeleteHandler (@Nullable final IWebPageActionHandler <DATATYPE, WPECTYPE> aUndeleteHandler)
+  {
+    m_aUndeleteHandler = aUndeleteHandler;
   }
 
   /**
@@ -1160,120 +1155,6 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   /**
-   * Show the undelete query.
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @param aForm
-   *        The handled form. Never <code>null</code>.
-   * @param aSelectedObject
-   *        The object to be deleted. Never <code>null</code>.
-   */
-  @OverrideOnDemand
-  protected void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                    @Nonnull final FORM_TYPE aForm,
-                                    @Nonnull final DATATYPE aSelectedObject)
-  {}
-
-  /**
-   * Perform object undelete
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @param aSelectedObject
-   *        The object to be deleted. Never <code>null</code>.
-   */
-  @OverrideOnDemand
-  protected void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
-  {}
-
-  /**
-   * @param aWPEC
-   *        The web page execution context
-   * @param aSelectedObject
-   *        The selected object. Never <code>null</code>.
-   * @return <code>true</code> to show the delete toolbar, <code>false</code> to
-   *         draw your own toolbar
-   */
-  @OverrideOnDemand
-  protected boolean showUndeleteToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
-  {
-    return true;
-  }
-
-  /**
-   * @param aWPEC
-   *        Web page execution context. May not be <code>null</code>.
-   * @return A newly created toolbar. May be overridden to create other types of
-   *         toolbars :). May not be <code>null</code>.
-   */
-  @Nonnull
-  @OverrideOnDemand
-  protected TOOLBAR_TYPE createNewUndeleteToolbar (@Nonnull final WPECTYPE aWPEC)
-  {
-    return createToolbar (aWPEC);
-  }
-
-  /**
-   * Add additional elements to the undelete toolbar
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @param aToolbar
-   *        The toolbar to be modified
-   */
-  @OverrideOnDemand
-  protected void modifyUndeleteToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final TOOLBAR_TYPE aToolbar)
-  {}
-
-  @Nullable
-  @OverrideOnDemand
-  protected String getUndeleteToolbarSubmitButtonText (@Nonnull final Locale aDisplayLocale)
-  {
-    return EPhotonCoreText.BUTTON_YES.getDisplayText (aDisplayLocale);
-  }
-
-  @Nullable
-  @OverrideOnDemand
-  protected IIcon getUndeleteToolbarSubmitButtonIcon ()
-  {
-    return EDefaultIcon.YES;
-  }
-
-  /**
-   * Create toolbar for undeleting an existing object
-   *
-   * @param aWPEC
-   *        The web page execution context
-   * @param aForm
-   *        The handled form. Never <code>null</code>.
-   * @param aSelectedObject
-   *        Selected object. Never <code>null</code>.
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  @OverrideOnDemand
-  protected TOOLBAR_TYPE createUndeleteToolbar (@Nonnull final WPECTYPE aWPEC,
-                                                @Nonnull final FORM_TYPE aForm,
-                                                @Nonnull final DATATYPE aSelectedObject)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-
-    final TOOLBAR_TYPE aToolbar = createNewUndeleteToolbar (aWPEC);
-    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_UNDELETE);
-    aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
-    aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
-    // Yes button
-    aToolbar.addSubmitButton (getUndeleteToolbarSubmitButtonText (aDisplayLocale), getDeleteToolbarSubmitButtonIcon ());
-    // No button
-    aToolbar.addButtonNo (aDisplayLocale);
-
-    // Callback
-    modifyUndeleteToolbar (aWPEC, aToolbar);
-    return aToolbar;
-  }
-
-  /**
    * Handle some other custom action
    *
    * @param aWPEC
@@ -1363,7 +1244,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
               else
                 if (CPageParam.ACTION_UNDELETE.equals (sAction))
                 {
-                  if (aSelectedObject != null)
+                  if (aSelectedObject != null && m_aUndeleteHandler != null)
                     eFormAction = EWebPageFormAction.UNDELETE;
                 }
                 else
@@ -1506,67 +1387,46 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
         }
         case DELETE:
         {
-          final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
-
-          if (bIsFormSubmitted)
+          if (m_aDeleteHandler != null)
           {
-            // Check if the nonce matches
-            if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
-            {
-              performDelete (aWPEC, aSelectedObject);
-            }
-
-            bShowList = true;
+            bShowList = m_aDeleteHandler.handleAction (aWPEC, aSelectedObject);
           }
           else
           {
-            final FORM_TYPE aForm = createFormSelf (aWPEC);
-            aNodeList.addChild (aForm);
+            final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
 
-            // Set unique ID
-            aForm.setID (FORM_ID_DELETE);
+            if (bIsFormSubmitted)
+            {
+              // Check if the nonce matches
+              if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
+              {
+                performDelete (aWPEC, aSelectedObject);
+              }
 
-            // Add the nonce for CSRF check
-            aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
+              bShowList = true;
+            }
+            else
+            {
+              final FORM_TYPE aForm = createFormSelf (aWPEC);
+              aNodeList.addChild (aForm);
 
-            showDeleteQuery (aWPEC, aForm, aSelectedObject);
-            if (showDeleteToolbar (aWPEC, aSelectedObject))
-              aForm.addChild (createDeleteToolbar (aWPEC, aForm, aSelectedObject));
-            bShowList = false;
+              // Set unique ID
+              aForm.setID (FORM_ID_DELETE);
+
+              // Add the nonce for CSRF check
+              aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
+
+              showDeleteQuery (aWPEC, aForm, aSelectedObject);
+              if (showDeleteToolbar (aWPEC, aSelectedObject))
+                aForm.addChild (createDeleteToolbar (aWPEC, aForm, aSelectedObject));
+              bShowList = false;
+            }
           }
-
           break;
         }
         case UNDELETE:
         {
-          final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
-
-          if (bIsFormSubmitted)
-          {
-            // Check if the nonce matches
-            if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
-            {
-              performUndelete (aWPEC, aSelectedObject);
-            }
-
-            bShowList = true;
-          }
-          else
-          {
-            final FORM_TYPE aForm = createFormSelf (aWPEC);
-            aNodeList.addChild (aForm);
-
-            // Set unique ID
-            aForm.setID (FORM_ID_UNDELETE);
-
-            // Add the nonce for CSRF check
-            aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
-
-            showUndeleteQuery (aWPEC, aForm, aSelectedObject);
-            if (showUndeleteToolbar (aWPEC, aSelectedObject))
-              aForm.addChild (createUndeleteToolbar (aWPEC, aForm, aSelectedObject));
-            bShowList = false;
-          }
+          bShowList = m_aUndeleteHandler.handleAction (aWPEC, aSelectedObject);
           break;
         }
         case CUSTOM:

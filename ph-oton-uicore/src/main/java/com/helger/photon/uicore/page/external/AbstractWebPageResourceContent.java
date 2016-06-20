@@ -99,12 +99,12 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
 
   public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
-    super (sID, sName);
+    super (sID, getAsMLT (sName), null);
   }
 
   public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
-    super (sID, aName);
+    super (sID, aName, null);
   }
 
   /**
