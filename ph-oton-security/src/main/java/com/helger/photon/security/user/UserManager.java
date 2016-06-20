@@ -23,25 +23,18 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ELockType;
-import com.helger.commons.annotation.IsLocked;
-import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.IReloadableDAO;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
+import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
@@ -50,10 +43,6 @@ import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.hash.PasswordHash;
 import com.helger.photon.security.password.salt.IPasswordSalt;
 import com.helger.photon.security.password.salt.PasswordSalt;
-import com.helger.xml.microdom.IMicroDocument;
-import com.helger.xml.microdom.IMicroElement;
-import com.helger.xml.microdom.MicroDocument;
-import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 /**
  * This class manages the available users.
@@ -61,97 +50,66 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
  * @author Philip Helger
  */
 @ThreadSafe
-public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
+public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements IReloadableDAO
 {
-  @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, User> m_aUsers = new CommonsHashMap <> ();
-
   private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (sFilename);
-    initialRead ();
+    super (User.class, sFilename);
   }
 
   public void reload () throws DAOException
   {
     m_aRWLock.writeLockedThrowing ( () -> {
-      m_aUsers.clear ();
+      internalRemoveAllItemsNoCallback ();
       initialRead ();
     });
-  }
-
-  @Override
-  @Nonnull
-  protected EChange onInit ()
-  {
-    return EChange.UNCHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
-  {
-    aDoc.getDocumentElement ()
-        .forAllChildElements (eUser -> _addUser (MicroTypeConverter.convertToNative (eUser, User.class)));
-    return EChange.UNCHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected IMicroDocument createWriteData ()
-  {
-    final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement ("users");
-    for (final User aUser : CollectionHelper.getSortedByKey (m_aUsers).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aUser, "user"));
-    return aDoc;
   }
 
   public void createDefaults ()
   {
     // Create Administrator
-    if (!containsUserWithID (CSecurity.USER_ADMINISTRATOR_ID))
-      _addUser (new User (CSecurity.USER_ADMINISTRATOR_ID,
-                          CSecurity.USER_ADMINISTRATOR_LOGIN,
-                          CSecurity.USER_ADMINISTRATOR_EMAIL,
-                          GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                CSecurity.USER_ADMINISTRATOR_PASSWORD),
-                          CSecurity.USER_ADMINISTRATOR_NAME,
-                          (String) null,
-                          (String) null,
-                          (Locale) null,
-                          (Map <String, String>) null,
-                          false));
+    if (!containsWithID (CSecurity.USER_ADMINISTRATOR_ID))
+      m_aRWLock.writeLocked ( () -> internalCreateItem (new User (CSecurity.USER_ADMINISTRATOR_ID,
+                                                                  CSecurity.USER_ADMINISTRATOR_LOGIN,
+                                                                  CSecurity.USER_ADMINISTRATOR_EMAIL,
+                                                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                                                        CSecurity.USER_ADMINISTRATOR_PASSWORD),
+                                                                  CSecurity.USER_ADMINISTRATOR_NAME,
+                                                                  (String) null,
+                                                                  (String) null,
+                                                                  (Locale) null,
+                                                                  (Map <String, String>) null,
+                                                                  false)));
 
     // Create regular user
     if (!containsUserWithID (CSecurity.USER_USER_ID))
-      _addUser (new User (CSecurity.USER_USER_ID,
-                          CSecurity.USER_USER_LOGIN,
-                          CSecurity.USER_USER_EMAIL,
-                          GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                CSecurity.USER_USER_PASSWORD),
-                          CSecurity.USER_USER_NAME,
-                          (String) null,
-                          (String) null,
-                          (Locale) null,
-                          (Map <String, String>) null,
-                          false));
+      m_aRWLock.writeLocked ( () -> internalCreateItem (new User (CSecurity.USER_USER_ID,
+                                                                  CSecurity.USER_USER_LOGIN,
+                                                                  CSecurity.USER_USER_EMAIL,
+                                                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                                                        CSecurity.USER_USER_PASSWORD),
+                                                                  CSecurity.USER_USER_NAME,
+                                                                  (String) null,
+                                                                  (String) null,
+                                                                  (Locale) null,
+                                                                  (Map <String, String>) null,
+                                                                  false)));
 
     // Create guest user
     if (!containsUserWithID (CSecurity.USER_GUEST_ID))
-      _addUser (new User (CSecurity.USER_GUEST_ID,
-                          CSecurity.USER_GUEST_LOGIN,
-                          CSecurity.USER_GUEST_EMAIL,
-                          GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                CSecurity.USER_GUEST_PASSWORD),
-                          CSecurity.USER_GUEST_NAME,
-                          (String) null,
-                          (String) null,
-                          (Locale) null,
-                          (Map <String, String>) null,
-                          false));
+      m_aRWLock.writeLocked ( () -> internalCreateItem (new User (CSecurity.USER_GUEST_ID,
+                                                                  CSecurity.USER_GUEST_LOGIN,
+                                                                  CSecurity.USER_GUEST_EMAIL,
+                                                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                                                        CSecurity.USER_GUEST_PASSWORD),
+                                                                  CSecurity.USER_GUEST_NAME,
+                                                                  (String) null,
+                                                                  (String) null,
+                                                                  (Locale) null,
+                                                                  (Map <String, String>) null,
+                                                                  false)));
   }
 
   /**
@@ -162,15 +120,6 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   public CallbackList <IUserModificationCallback> getUserModificationCallbacks ()
   {
     return m_aCallbacks;
-  }
-
-  @MustBeLocked (ELockType.WRITE)
-  private void _addUser (@Nonnull final User aUser)
-  {
-    final String sUserID = aUser.getID ();
-    if (m_aUsers.containsKey (sUserID))
-      throw new IllegalArgumentException ("User ID " + sUserID + " is already in use!");
-    m_aUsers.put (sUserID, aUser);
   }
 
   /**
@@ -233,8 +182,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                                  bDisabled);
 
     m_aRWLock.writeLocked ( () -> {
-      _addUser (aUser);
-      markAsChanged ();
+      internalCreateItem (aUser);
     });
     AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
@@ -317,8 +265,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                                  bDisabled);
 
     m_aRWLock.writeLocked ( () -> {
-      _addUser (aUser);
-      markAsChanged ();
+      internalCreateItem (aUser);
     });
     AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
@@ -348,20 +295,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
    */
   public boolean containsUserWithID (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
-      return false;
-
-    return m_aRWLock.readLocked ( () -> m_aUsers.containsKey (sUserID));
-  }
-
-  @Nullable
-  @IsLocked (ELockType.READ)
-  private User _getUserOfID (@Nullable final String sUserID)
-  {
-    if (StringHelper.hasNoText (sUserID))
-      return null;
-
-    return m_aRWLock.readLocked ( () -> m_aUsers.get (sUserID));
+    return containsWithID (sUserID);
   }
 
   /**
@@ -375,7 +309,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   public IUser getUserOfID (@Nullable final String sUserID)
   {
     // Change return type
-    return _getUserOfID (sUserID);
+    return getOfID (sUserID);
   }
 
   /**
@@ -391,9 +325,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     if (StringHelper.hasNoText (sLoginName))
       return null;
 
-    return m_aRWLock.readLocked ( () -> CollectionHelper.findFirst (m_aUsers.values (),
-                                                                    aUser -> aUser.getLoginName ()
-                                                                                  .equals (sLoginName)));
+    return findFirst (x -> x.getLoginName ().equals (sLoginName));
   }
 
   /**
@@ -409,8 +341,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     if (StringHelper.hasNoText (sEmailAddress))
       return null;
 
-    return m_aRWLock.readLocked ( () -> CollectionHelper.findFirst (m_aUsers.values (),
-                                                                    aUser -> sEmailAddress.equals (aUser.getEmailAddress ())));
+    return findFirst (x -> sEmailAddress.equals (x.getEmailAddress ()));
   }
 
   /**
@@ -419,25 +350,22 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <User> getAllUsers ()
+  public ICommonsList <? extends IUser> getAllUsers ()
   {
-    return m_aRWLock.readLocked ( () -> m_aUsers.copyOfValues ());
+    return getAll ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <User> getAllUsers (@Nullable final Predicate <IUser> aFilter)
+  public ICommonsList <? extends IUser> getAllUsers (@Nullable final Predicate <? super IUser> aFilter)
   {
-    return m_aRWLock.readLocked ( () -> m_aUsers.copyOfValues (aFilter));
+    return getAll (aFilter);
   }
 
   @Nonnegative
-  public int getUserCount (@Nullable final Predicate <IUser> aFilter)
+  public int getUserCount (@Nullable final Predicate <? super IUser> aFilter)
   {
-    if (aFilter == null)
-      return m_aRWLock.readLocked ( () -> m_aUsers.size ());
-
-    return m_aRWLock.readLocked ( () -> CollectionHelper.getCount (m_aUsers.values (), aFilter));
+    return getCount (aFilter);
   }
 
   /**
@@ -446,9 +374,9 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <User> getAllActiveUsers ()
+  public ICommonsList <? extends IUser> getAllActiveUsers ()
   {
-    return getAllUsers (aUser -> !aUser.isDeleted () && aUser.isEnabled ());
+    return getAll (aUser -> !aUser.isDeleted () && aUser.isEnabled ());
   }
 
   /**
@@ -457,7 +385,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @Nonnegative
   public int getActiveUserCount ()
   {
-    return getUserCount (aUser -> !aUser.isDeleted () && aUser.isEnabled ());
+    return getCount (aUser -> !aUser.isDeleted () && aUser.isEnabled ());
   }
 
   /**
@@ -466,9 +394,9 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <User> getAllDisabledUsers ()
+  public ICommonsList <? extends IUser> getAllDisabledUsers ()
   {
-    return getAllUsers (aUser -> !aUser.isDeleted () && aUser.isDisabled ());
+    return getAll (aUser -> !aUser.isDeleted () && aUser.isDisabled ());
   }
 
   /**
@@ -477,9 +405,9 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <User> getAllNotDeletedUsers ()
+  public ICommonsList <? extends IUser> getAllNotDeletedUsers ()
   {
-    return getAllUsers (aUser -> !aUser.isDeleted ());
+    return getAll (aUser -> !aUser.isDeleted ());
   }
 
   /**
@@ -487,9 +415,9 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <User> getAllDeletedUsers ()
+  public ICommonsList <? extends IUser> getAllDeletedUsers ()
   {
-    return getAllUsers (aUser -> aUser.isDeleted ());
+    return getAll (aUser -> aUser.isDeleted ());
   }
 
   /**
@@ -527,7 +455,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
                               final boolean bNewDisabled)
   {
     // Resolve user
-    final User aUser = _getUserOfID (sUserID);
+    final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id");
@@ -550,7 +478,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aUser);
-      markAsChanged ();
+      internalUpdateItem (aUser);
     }
     finally
     {
@@ -587,7 +515,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   public EChange setUserPassword (@Nullable final String sUserID, @Nonnull final String sNewPlainTextPassword)
   {
     // Resolve user
-    final User aUser = _getUserOfID (sUserID);
+    final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "password");
@@ -605,7 +533,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aUser);
-      markAsChanged ();
+      internalUpdateItem (aUser);
     }
     finally
     {
@@ -623,7 +551,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   public EChange updateUserLastLogin (@Nullable final String sUserID)
   {
     // Resolve user
-    final User aUser = _getUserOfID (sUserID);
+    final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "update-last-login");
@@ -634,7 +562,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     try
     {
       aUser.onSuccessfulLogin ();
-      markAsChanged ();
+      internalMarkItemDeleted (aUser);
     }
     finally
     {
@@ -648,7 +576,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   public EChange updateUserLastFailedLogin (@Nullable final String sUserID)
   {
     // Resolve user
-    final User aUser = _getUserOfID (sUserID);
+    final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "update-last-failed-login");
@@ -659,7 +587,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     try
     {
       aUser.onFailedLogin ();
-      markAsChanged ();
+      internalUpdateItem (aUser);
     }
     finally
     {
@@ -684,7 +612,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @Nonnull
   public EChange deleteUser (@Nullable final String sUserID)
   {
-    final User aUser = _getUserOfID (sUserID);
+    final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditDeleteFailure (User.OT, sUserID, "no-such-user-id");
@@ -696,7 +624,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     {
       if (ObjectHelper.setDeletionNow (aUser).isUnchanged ())
         return EChange.UNCHANGED;
-      markAsChanged ();
+      internalMarkItemDeleted (aUser);
     }
     finally
     {
@@ -721,7 +649,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @Nonnull
   public EChange undeleteUser (@Nullable final String sUserID)
   {
-    final User aUser = _getUserOfID (sUserID);
+    final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditUndeleteFailure (User.OT, sUserID, "no-such-user-id");
@@ -733,7 +661,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     {
       if (ObjectHelper.setUndeletionNow (aUser).isUnchanged ())
         return EChange.UNCHANGED;
-      markAsChanged ();
+      internalMarkItemUndeleted (aUser);
     }
     finally
     {
@@ -758,7 +686,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @Nonnull
   public EChange disableUser (@Nullable final String sUserID)
   {
-    final User aUser = _getUserOfID (sUserID);
+    final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "disable");
@@ -770,7 +698,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     {
       if (aUser.setDisabled (true).isUnchanged ())
         return EChange.UNCHANGED;
-      markAsChanged ();
+      internalUpdateItem (aUser);
     }
     finally
     {
@@ -795,7 +723,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
   @Nonnull
   public EChange enableUser (@Nullable final String sUserID)
   {
-    final User aUser = _getUserOfID (sUserID);
+    final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
       AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "enable");
@@ -807,7 +735,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
     {
       if (aUser.setDisabled (false).isUnchanged ())
         return EChange.UNCHANGED;
-      markAsChanged ();
+      internalUpdateItem (aUser);
     }
     finally
     {
@@ -838,7 +766,7 @@ public class UserManager extends AbstractSimpleDAO implements IReloadableDAO
       return false;
 
     // Is there such a user?
-    final IUser aUser = getUserOfID (sUserID);
+    final IUser aUser = getOfID (sUserID);
     if (aUser == null)
       return false;
 
