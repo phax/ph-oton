@@ -47,6 +47,7 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandler;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -116,14 +117,63 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
 
   private static final String ACTION_LOGOUT_USER = "logoutuser";
 
+  private void _init ()
+  {
+    addCustomHandler (ACTION_LOGOUT_USER, new AbstractBootstrapWebPageActionHandler <LoginInfo, WPECTYPE> (true)
+    {
+      public boolean handleAction (final WPECTYPE aWPEC, final LoginInfo aSelectedObject)
+      {
+        if (!canLogoutUser (aSelectedObject.getUser ()))
+          throw new IllegalStateException ("Won't work!");
+
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final HCNodeList aNodeList = aWPEC.getNodeList ();
+        final String sUserName = SecurityHelper.getUserDisplayName (aSelectedObject.getUser (), aDisplayLocale);
+
+        if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
+        {
+          // Destroy the session of the user -> this triggers the logout
+          aSelectedObject.getSessionScope ().selfDestruct ();
+
+          // Check if logout worked
+          if (aSelectedObject.isLogout ())
+          {
+            aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.LOGOUT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                     sUserName)));
+          }
+          else
+          {
+            aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.LOGOUT_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                 sUserName)));
+          }
+        }
+
+        // Show question
+        final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
+        aForm.addChild (new BootstrapSuccessBox ().addChild (EText.LOGOUT_QUESTION.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                           sUserName)));
+
+        final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+        aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_LOGOUT_USER);
+        aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
+        aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
+        aToolbar.addSubmitButtonYes (aDisplayLocale);
+        aToolbar.addButtonNo (aDisplayLocale);
+        return false;
+      }
+    });
+  }
+
   public BasePageMonitoringLoginInfo (@Nonnull @Nonempty final String sID)
   {
     super (sID, EWebPageText.PAGE_NAME_MONITORING_LOGIN_INFO.getAsMLT ());
+    _init ();
   }
 
   public BasePageMonitoringLoginInfo (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
+    _init ();
   }
 
   public BasePageMonitoringLoginInfo (@Nonnull @Nonempty final String sID,
@@ -131,6 +181,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                       @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
+    _init ();
   }
 
   public BasePageMonitoringLoginInfo (@Nonnull @Nonempty final String sID,
@@ -138,6 +189,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                       @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
+    _init ();
   }
 
   @Override
@@ -250,55 +302,6 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
   protected IHCNode getLogoutUserIcon ()
   {
     return EDefaultIcon.KEY.getIcon ().getAsNode ();
-  }
-
-  @Override
-  protected boolean handleCustomActions (@Nonnull final WPECTYPE aWPEC, @Nullable final LoginInfo aSelectedObject)
-  {
-    if (aWPEC.hasAction (ACTION_LOGOUT_USER) && aSelectedObject != null)
-    {
-      if (!canLogoutUser (aSelectedObject.getUser ()))
-        throw new IllegalStateException ("Won't work!");
-
-      final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-      final HCNodeList aNodeList = aWPEC.getNodeList ();
-      final String sUserName = SecurityHelper.getUserDisplayName (aSelectedObject.getUser (), aDisplayLocale);
-
-      if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
-      {
-        // Destroy the session of the user -> this triggers the logout
-        aSelectedObject.getSessionScope ().selfDestruct ();
-
-        // Check if logout worked
-        if (aSelectedObject.isLogout ())
-        {
-          aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.LOGOUT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                sUserName)));
-        }
-        else
-        {
-          aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.LOGOUT_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                            sUserName)));
-        }
-
-        // Show list
-        return true;
-      }
-
-      // Show question
-      final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
-      aForm.addChild (new BootstrapSuccessBox ().addChild (EText.LOGOUT_QUESTION.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                         sUserName)));
-
-      final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-      aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_LOGOUT_USER);
-      aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
-      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
-      aToolbar.addSubmitButtonYes (aDisplayLocale);
-      aToolbar.addButtonNo (aDisplayLocale);
-      return false;
-    }
-    return true;
   }
 
   @Override

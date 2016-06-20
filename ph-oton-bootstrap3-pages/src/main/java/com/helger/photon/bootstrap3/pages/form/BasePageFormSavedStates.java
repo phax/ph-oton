@@ -43,6 +43,7 @@ import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandler;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
@@ -120,6 +121,33 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
           aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayText (aDisplayLocale)));
       }
     });
+    addCustomHandler (CPageParam.ACTION_DELETE_ALL,
+                      new AbstractBootstrapWebPageActionHandler <FormState, WPECTYPE> (false)
+                      {
+                        public boolean handleAction (@Nonnull final WPECTYPE aWPEC, final FormState aSelectedObject)
+                        {
+                          final HCNodeList aNodeList = aWPEC.getNodeList ();
+                          final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+
+                          if (aWPEC.hasSubAction (CPageParam.ACTION_SAVE))
+                          {
+                            if (FormStateManager.getInstance ().deleteAllFormStates ().isChanged ())
+                              aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.DELETE_ALL_SUCCESS.getDisplayText (aDisplayLocale)));
+                            else
+                              aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.DELETE_ALL_ERROR.getDisplayText (aDisplayLocale)));
+                            return true;
+                          }
+
+                          final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
+                          aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_ALL_QUERY.getDisplayText (aDisplayLocale)));
+                          final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+                          aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE_ALL);
+                          aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
+                          aToolbar.addSubmitButtonYes (aDisplayLocale);
+                          aToolbar.addButtonNo (aDisplayLocale);
+                          return false;
+                        }
+                      });
   }
 
   public BasePageFormSavedStates (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
@@ -169,36 +197,6 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
                                 @Nonnull final EWebPageFormAction eFormAction,
                                 @Nonnull final FormErrors aFormErrors)
   {}
-
-  @Override
-  protected boolean handleCustomActions (@Nonnull final WPECTYPE aWPEC, @Nullable final FormState aSelectedObject)
-  {
-    if (aWPEC.hasAction (CPageParam.ACTION_DELETE_ALL))
-    {
-      final HCNodeList aNodeList = aWPEC.getNodeList ();
-      final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-
-      if (aWPEC.hasSubAction (CPageParam.ACTION_SAVE))
-      {
-        if (FormStateManager.getInstance ().deleteAllFormStates ().isChanged ())
-          aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.DELETE_ALL_SUCCESS.getDisplayText (aDisplayLocale)));
-        else
-          aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.DELETE_ALL_ERROR.getDisplayText (aDisplayLocale)));
-        return true;
-      }
-
-      final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
-      aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_ALL_QUERY.getDisplayText (aDisplayLocale)));
-      final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-      aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE_ALL);
-      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
-      aToolbar.addSubmitButtonYes (aDisplayLocale);
-      aToolbar.addButtonNo (aDisplayLocale);
-      return false;
-    }
-
-    return true;
-  }
 
   @Override
   protected void showListOfExistingObjects (@Nonnull final WPECTYPE aWPEC)

@@ -22,7 +22,7 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
 
   public AbstractWebPageActionHandlerUndelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
-    super (CPageParam.ACTION_UNDELETE, true, aUIHandler);
+    super (true, aUIHandler);
   }
 
   /**

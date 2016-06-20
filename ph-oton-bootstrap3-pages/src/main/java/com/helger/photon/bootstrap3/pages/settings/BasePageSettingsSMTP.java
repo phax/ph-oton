@@ -58,6 +58,7 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandler;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
@@ -224,6 +225,79 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
           aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                aSelectedObject.getName ())));
         }
+      }
+    });
+    addCustomHandler (ACTION_TEST_MAIL, new AbstractBootstrapWebPageActionHandler <NamedSMTPSettings, WPECTYPE> (true)
+    {
+      public boolean handleAction (final WPECTYPE aWPEC, final NamedSMTPSettings aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final HCNodeList aNodeList = aWPEC.getNodeList ();
+        final FormErrors aFormErrors = new FormErrors ();
+
+        if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
+        {
+          final String sSender = aWPEC.getAttributeAsString (FIELD_TEST_SENDER);
+          final String sReceiver = aWPEC.getAttributeAsString (FIELD_TEST_RECEIVER);
+          final String sSubject = aWPEC.getAttributeAsString (FIELD_TEST_SUBJECT);
+          final String sBody = aWPEC.getAttributeAsString (FIELD_TEST_BODY);
+
+          if (!EmailAddressHelper.isValid (sSender))
+            aFormErrors.addFieldError (FIELD_TEST_SENDER, EText.ERR_SENDER_INVALID.getDisplayText (aDisplayLocale));
+          if (!EmailAddressHelper.isValid (sReceiver))
+            aFormErrors.addFieldError (FIELD_TEST_RECEIVER, EText.ERR_RECEIVER_INVALID.getDisplayText (aDisplayLocale));
+          if (StringHelper.hasNoText (sSubject))
+            aFormErrors.addFieldError (FIELD_TEST_SUBJECT, EText.ERR_SUBJECT_INVALID.getDisplayText (aDisplayLocale));
+          if (StringHelper.hasNoText (sBody))
+            aFormErrors.addFieldError (FIELD_TEST_BODY, EText.ERR_BODY_INVALID.getDisplayText (aDisplayLocale));
+
+          if (aFormErrors.isEmpty ())
+          {
+            final EmailData aMailData = new EmailData (EEmailType.TEXT);
+            aMailData.setFrom (sSender);
+            aMailData.setTo (sReceiver);
+            aMailData.setSubject (sSubject);
+            aMailData.setBody (sBody);
+            ScopedMailAPI.getInstance ().queueMail (aSelectedObject.getSMTPSettings (), aMailData);
+
+            aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_TEST_MAIL.getDisplayText (aDisplayLocale)));
+            return true;
+          }
+        }
+
+        // Show question
+        final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
+
+        aForm.addChild (getUIHandler ().createActionHeader (EText.TITLE_TEST_MAIL.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                          aSelectedObject.getName ())));
+
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_SENDER.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCEdit (new RequestField (FIELD_TEST_SENDER,
+                                                                                             VendorInfo.getVendorEmail ())))
+                                                     .setErrorList (aFormErrors.getListOfField (FIELD_TEST_SENDER)));
+
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_RECEIVER.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCEdit (new RequestField (FIELD_TEST_RECEIVER,
+                                                                                             VendorInfo.getVendorEmail ())))
+                                                     .setErrorList (aFormErrors.getListOfField (FIELD_TEST_RECEIVER)));
+
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_SUBJECT.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCEdit (new RequestField (FIELD_TEST_SUBJECT,
+                                                                                             EText.TEST_SUBJECT.getDisplayText (aDisplayLocale))))
+                                                     .setErrorList (aFormErrors.getListOfField (FIELD_TEST_SUBJECT)));
+
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_BODY.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCTextAreaAutosize (new RequestField (FIELD_TEST_BODY,
+                                                                                                         EText.TEST_BODY.getDisplayText (aDisplayLocale))).setRows (5))
+                                                     .setErrorList (aFormErrors.getListOfField (FIELD_TEST_BODY)));
+
+        final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+        aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_TEST_MAIL);
+        aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
+        aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
+        aToolbar.addSubmitButton (EText.BUTTON_SEND_TEST_MAIL.getDisplayText (aDisplayLocale), EDefaultIcon.YES);
+        aToolbar.addButtonCancel (aDisplayLocale);
+        return false;
       }
     });
   }
@@ -554,84 +628,6 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
   protected IHCNode getTestMailIcon ()
   {
     return EFamFamIcon.EMAIL_GO.getAsNode ();
-  }
-
-  @Override
-  protected boolean handleCustomActions (@Nonnull final WPECTYPE aWPEC,
-                                         @Nullable final NamedSMTPSettings aSelectedObject)
-  {
-    if (aWPEC.hasAction (ACTION_TEST_MAIL) && aSelectedObject != null)
-    {
-      final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-      final HCNodeList aNodeList = aWPEC.getNodeList ();
-      final FormErrors aFormErrors = new FormErrors ();
-
-      if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
-      {
-        final String sSender = aWPEC.getAttributeAsString (FIELD_TEST_SENDER);
-        final String sReceiver = aWPEC.getAttributeAsString (FIELD_TEST_RECEIVER);
-        final String sSubject = aWPEC.getAttributeAsString (FIELD_TEST_SUBJECT);
-        final String sBody = aWPEC.getAttributeAsString (FIELD_TEST_BODY);
-
-        if (!EmailAddressHelper.isValid (sSender))
-          aFormErrors.addFieldError (FIELD_TEST_SENDER, EText.ERR_SENDER_INVALID.getDisplayText (aDisplayLocale));
-        if (!EmailAddressHelper.isValid (sReceiver))
-          aFormErrors.addFieldError (FIELD_TEST_RECEIVER, EText.ERR_RECEIVER_INVALID.getDisplayText (aDisplayLocale));
-        if (StringHelper.hasNoText (sSubject))
-          aFormErrors.addFieldError (FIELD_TEST_SUBJECT, EText.ERR_SUBJECT_INVALID.getDisplayText (aDisplayLocale));
-        if (StringHelper.hasNoText (sBody))
-          aFormErrors.addFieldError (FIELD_TEST_BODY, EText.ERR_BODY_INVALID.getDisplayText (aDisplayLocale));
-
-        if (aFormErrors.isEmpty ())
-        {
-          final EmailData aMailData = new EmailData (EEmailType.TEXT);
-          aMailData.setFrom (sSender);
-          aMailData.setTo (sReceiver);
-          aMailData.setSubject (sSubject);
-          aMailData.setBody (sBody);
-          ScopedMailAPI.getInstance ().queueMail (aSelectedObject.getSMTPSettings (), aMailData);
-
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_TEST_MAIL.getDisplayText (aDisplayLocale)));
-
-          return true;
-        }
-      }
-
-      // Show question
-      final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
-
-      aForm.addChild (getUIHandler ().createActionHeader (EText.TITLE_TEST_MAIL.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                        aSelectedObject.getName ())));
-
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_SENDER.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCEdit (new RequestField (FIELD_TEST_SENDER,
-                                                                                           VendorInfo.getVendorEmail ())))
-                                                   .setErrorList (aFormErrors.getListOfField (FIELD_TEST_SENDER)));
-
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_RECEIVER.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCEdit (new RequestField (FIELD_TEST_RECEIVER,
-                                                                                           VendorInfo.getVendorEmail ())))
-                                                   .setErrorList (aFormErrors.getListOfField (FIELD_TEST_RECEIVER)));
-
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_SUBJECT.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCEdit (new RequestField (FIELD_TEST_SUBJECT,
-                                                                                           EText.TEST_SUBJECT.getDisplayText (aDisplayLocale))))
-                                                   .setErrorList (aFormErrors.getListOfField (FIELD_TEST_SUBJECT)));
-
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_BODY.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCTextAreaAutosize (new RequestField (FIELD_TEST_BODY,
-                                                                                                       EText.TEST_BODY.getDisplayText (aDisplayLocale))).setRows (5))
-                                                   .setErrorList (aFormErrors.getListOfField (FIELD_TEST_BODY)));
-
-      final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-      aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_TEST_MAIL);
-      aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
-      aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
-      aToolbar.addSubmitButton (EText.BUTTON_SEND_TEST_MAIL.getDisplayText (aDisplayLocale), EDefaultIcon.YES);
-      aToolbar.addButtonCancel (aDisplayLocale);
-      return false;
-    }
-    return true;
   }
 
   @Override

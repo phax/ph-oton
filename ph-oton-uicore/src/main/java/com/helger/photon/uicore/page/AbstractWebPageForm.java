@@ -31,6 +31,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.id.factory.GlobalIDFactory;
@@ -97,6 +99,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aDeleteHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aUndeleteHandler;
+  private final ICommonsMap <String, IWebPageActionHandler <DATATYPE, WPECTYPE>> m_aCustomHandlers = new CommonsHashMap <> ();
 
   public AbstractWebPageForm (@Nonnull @Nonempty final String sID,
                               @Nonnull final IMultilingualText aName,
@@ -121,6 +124,18 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   protected final void setUndeleteHandler (@Nullable final IWebPageActionHandler <DATATYPE, WPECTYPE> aUndeleteHandler)
   {
     m_aUndeleteHandler = aUndeleteHandler;
+  }
+
+  protected final void addCustomHandler (@Nonnull @Nonempty final String sActionName,
+                                         @Nullable final IWebPageActionHandler <DATATYPE, WPECTYPE> aCustomHandler)
+  {
+    ValueEnforcer.notEmpty (sActionName, "ActionName");
+    if (aCustomHandler != null)
+    {
+      if (m_aCustomHandlers.containsKey (sActionName))
+        throw new IllegalArgumentException ("A custom handler for action '" + sActionName + "' is already registered!");
+      m_aCustomHandlers.put (sActionName, aCustomHandler);
+    }
   }
 
   /**
@@ -1123,7 +1138,23 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                 else
                 {
                   // Non standard action - must be custom
-                  eFormAction = EWebPageFormAction.CUSTOM;
+                  final IWebPageActionHandler <DATATYPE, WPECTYPE> aHandler = m_aCustomHandlers.get (sAction);
+                  if (aHandler != null)
+                  {
+                    if (!aHandler.isSelectedObjectRequired () || aSelectedObject != null)
+                      if (aHandler.canHandleAction (aSelectedObject))
+                      {
+                        eFormAction = EWebPageFormAction.CUSTOM;
+                        if (s_aLogger.isDebugEnabled ())
+                          s_aLogger.debug ("Custom handler for page '" + getID () + "' and action '" + sAction + "'");
+                      }
+                  }
+                  else
+                  {
+                    eFormAction = EWebPageFormAction.CUSTOM;
+                    if (s_aLogger.isDebugEnabled ())
+                      s_aLogger.debug ("Custom handler for page '" + getID () + "' and action '" + sAction + "'");
+                  }
                 }
     }
 
@@ -1271,7 +1302,10 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
         case CUSTOM:
         {
           // Other proprietary actions
-          bShowList = handleCustomActions (aWPEC, aSelectedObject);
+          if (m_aCustomHandlers.containsKey (sAction))
+            bShowList = m_aCustomHandlers.get (sAction).handleAction (aWPEC, aSelectedObject);
+          else
+            bShowList = handleCustomActions (aWPEC, aSelectedObject);
           break;
         }
       }

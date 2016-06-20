@@ -66,7 +66,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, IMPLTYPE> m_aMap;
-  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList<> ();
+  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList <> ();
 
   /**
    * Default constructor
@@ -81,7 +81,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    this (aImplClass, sFilename, true, () -> new CommonsHashMap<> ());
+    this (aImplClass, sFilename, true, () -> new CommonsHashMap <> ());
   }
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
@@ -174,7 +174,9 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
                                             " with ID '" +
                                             sID +
                                             "' is already in use and can therefore not be created again. Old item = " +
-                                            aOldItem);
+                                            aOldItem +
+                                            "; New item = " +
+                                            aItem);
     }
     else
     {
@@ -183,7 +185,8 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
         throw new IllegalArgumentException (ClassHelper.getClassLocalName (getDataTypeClass ()) +
                                             " with ID '" +
                                             sID +
-                                            "' is not yet in use and can therefore not be updated!");
+                                            "' is not yet in use and can therefore not be updated! Updated item = " +
+                                            aItem);
     }
 
     m_aMap.put (sID, aItem);
@@ -261,6 +264,15 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   }
 
   @MustBeLocked (ELockType.WRITE)
+  protected final void internalMarkItemUndeleted (@Nonnull final IMPLTYPE aItem)
+  {
+    // Trigger save changes
+    super.markAsChanged (aItem, EDAOActionType.UPDATE);
+    // Invoke callbacks
+    m_aCallbacks.forEach (aCB -> aCB.onMarkItemUndeleted (aItem));
+  }
+
+  @MustBeLocked (ELockType.WRITE)
   protected final void internalRemoveAllItemsNoCallback ()
   {
     m_aMap.removeAll ();
@@ -270,7 +282,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   @ReturnsMutableCopy
   public final ICommonsList <? extends INTERFACETYPE> getNone ()
   {
-    return new CommonsArrayList<> ();
+    return new CommonsArrayList <> ();
   }
 
   @Nonnull

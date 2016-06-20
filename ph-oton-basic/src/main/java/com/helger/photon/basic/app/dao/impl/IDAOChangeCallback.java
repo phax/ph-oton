@@ -61,4 +61,14 @@ public interface IDAOChangeCallback <INTERFACETYPE extends IHasID <String> & Ser
    */
   default void onMarkItemDeleted (@Nonnull final INTERFACETYPE aItem)
   {}
+
+  /**
+   * Called after an item was marked as undeleted.
+   *
+   * @param aItem
+   *        The item that was marked as not deleted anymore. Never
+   *        <code>null</code>.
+   */
+  default void onMarkItemUndeleted (@Nonnull final INTERFACETYPE aItem)
+  {}
 }

@@ -17,10 +17,8 @@
 package com.helger.photon.bootstrap3.pages.security;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,6 +28,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
@@ -68,6 +67,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandler;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageActionHandlerUndelete;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
@@ -265,6 +265,86 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                                                                               aSelectedObject.getDisplayName ())));
       }
     });
+    addCustomHandler (ACTION_RESET_PASSWORD, new AbstractBootstrapWebPageActionHandler <IUser, WPECTYPE> (true)
+    {
+      public boolean canHandleAction (@Nonnull final IUser aSelectedObject)
+      {
+        return SecurityUIHelper.canResetPassword (aSelectedObject);
+      }
+
+      public boolean handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
+      {
+        final HCNodeList aNodeList = aWPEC.getNodeList ();
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final boolean bShowForm = true;
+        final FormErrors aFormErrors = new FormErrors ();
+        final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+
+        if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
+        {
+          // Check if the nonce matches
+          if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
+          {
+            final String sPlainTextPassword = aWPEC.getAttributeAsString (FIELD_PASSWORD);
+            final String sPlainTextPasswordConfirm = aWPEC.getAttributeAsString (FIELD_PASSWORD_CONFIRM);
+
+            final ICommonsList <String> aPasswordErrors = GlobalPasswordSettings.getPasswordConstraintList ()
+                                                                                .getInvalidPasswordDescriptions (sPlainTextPassword,
+                                                                                                                 aDisplayLocale);
+            for (final String sPasswordError : aPasswordErrors)
+              aFormErrors.addFieldError (FIELD_PASSWORD, sPasswordError);
+            if (!EqualsHelper.equals (sPlainTextPassword, sPlainTextPasswordConfirm))
+              aFormErrors.addFieldError (FIELD_PASSWORD_CONFIRM,
+                                         EText.ERROR_PASSWORDS_DONT_MATCH.getDisplayText (aDisplayLocale));
+
+            if (aFormErrors.isEmpty ())
+            {
+              aUserMgr.setUserPassword (aSelectedObject.getID (), sPlainTextPassword);
+              aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                            SecurityHelper.getUserDisplayName (aSelectedObject,
+                                                                                                                                                               aDisplayLocale))));
+              return true;
+            }
+          }
+        }
+        if (bShowForm)
+        {
+          // Show input form
+          final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ()
+                                                                          .hasConstraints ();
+          final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
+          aForm.addChild (getUIHandler ().createActionHeader (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                 SecurityHelper.getUserDisplayName (aSelectedObject,
+                                                                                                                                                    aDisplayLocale))));
+
+          final String sPassword = EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale);
+          aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPassword,
+                                                                  bHasAnyPasswordConstraint ? ELabelType.MANDATORY
+                                                                                            : ELabelType.OPTIONAL)
+                                                       .setCtrl (new HCEditPassword (FIELD_PASSWORD).setPlaceholder (sPassword))
+                                                       .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
+                                                       .setErrorList (aFormErrors.getListOfField (FIELD_PASSWORD)));
+
+          final String sPasswordConfirm = EText.LABEL_PASSWORD_CONFIRM.getDisplayText (aDisplayLocale);
+          aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPasswordConfirm,
+                                                                  bHasAnyPasswordConstraint ? ELabelType.MANDATORY
+                                                                                            : ELabelType.OPTIONAL)
+                                                       .setCtrl (new HCEditPassword (FIELD_PASSWORD_CONFIRM).setPlaceholder (sPasswordConfirm))
+                                                       .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
+                                                       .setErrorList (aFormErrors.getListOfField (FIELD_PASSWORD_CONFIRM)));
+
+          final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+          aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_RESET_PASSWORD);
+          aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
+          aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
+          // Add the nonce for CSRF check
+          aToolbar.addChild (getCSRFHandler ().createCSRFNonceField ());
+          aToolbar.addSubmitButtonSave (aDisplayLocale);
+          aToolbar.addButtonCancel (aDisplayLocale);
+        }
+        return false;
+      }
+    });
   }
 
   public BasePageSecurityUserManagement (@Nonnull @Nonempty final String sID)
@@ -356,20 +436,6 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     return true;
   }
 
-  /**
-   * Check if the password of a user can be reset or not. Currently the
-   * passwords of all not deleted users can be reset.
-   *
-   * @param aUser
-   *        The user to check. May be <code>null</code>.
-   * @return <code>true</code> if the password can be reset, <code>false</code>
-   *         if not.
-   */
-  protected final boolean canResetPassword (@Nonnull final IUser aUser)
-  {
-    return SecurityUIHelper.canResetPassword (aUser);
-  }
-
   @Override
   @OverrideOnDemand
   protected void onShowSelectedObjectTableStart (@Nonnull final WPECTYPE aWPEC,
@@ -436,7 +502,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                  .setCtrl (aSelectedObject.getPasswordHash ().getAlgorithmName ()));
 
     // user groups
-    final Collection <? extends IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aSelectedObject.getID ());
+    final ICommonsCollection <? extends IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aSelectedObject.getID ());
     if (aUserGroups.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
@@ -456,7 +522,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     }
 
     // roles
-    final Set <IRole> aUserRoles = SecurityHelper.getAllUserRoles (aSelectedObject.getID ());
+    final ICommonsSet <IRole> aUserRoles = SecurityHelper.getAllUserRoles (aSelectedObject.getID ());
     if (aUserRoles.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
@@ -567,9 +633,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
     if (!bEdit)
     {
-      final List <String> aPasswordErrors = GlobalPasswordSettings.getPasswordConstraintList ()
-                                                                  .getInvalidPasswordDescriptions (sPassword,
-                                                                                                   aDisplayLocale);
+      final ICommonsList <String> aPasswordErrors = GlobalPasswordSettings.getPasswordConstraintList ()
+                                                                          .getInvalidPasswordDescriptions (sPassword,
+                                                                                                           aDisplayLocale);
       for (final String sPasswordError : aPasswordErrors)
         aFormErrors.addFieldError (FIELD_PASSWORD, sPasswordError);
       if (!EqualsHelper.equals (sPassword, sPasswordConf))
@@ -612,15 +678,16 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                               !bEnabled);
 
         // assign to the matching user groups
-        final Collection <String> aPrevUserGroupIDs = aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (sUserID);
+        final ICommonsCollection <String> aPrevUserGroupIDs = aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (sUserID);
         // Create all missing assignments
-        final Set <String> aUserGroupsToBeAssigned = CollectionHelper.getDifference (aUserGroupIDs, aPrevUserGroupIDs);
+        final ICommonsSet <String> aUserGroupsToBeAssigned = CollectionHelper.getDifference (aUserGroupIDs,
+                                                                                             aPrevUserGroupIDs);
         for (final String sUserGroupID : aUserGroupsToBeAssigned)
           aUserGroupMgr.assignUserToUserGroup (sUserGroupID, sUserID);
 
         // Delete all old assignments
-        final Set <String> aUserGroupsToBeUnassigned = CollectionHelper.getDifference (aPrevUserGroupIDs,
-                                                                                       aUserGroupIDs);
+        final ICommonsSet <String> aUserGroupsToBeUnassigned = CollectionHelper.getDifference (aPrevUserGroupIDs,
+                                                                                               aUserGroupIDs);
         for (final String sUserGroupID : aUserGroupsToBeUnassigned)
           aUserGroupMgr.unassignUserFromUserGroup (sUserGroupID, sUserID);
 
@@ -769,8 +836,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     }
 
     {
-      final Collection <String> aUserGroupIDs = aSelectedObject == null ? aWPEC.getAttributeAsList (FIELD_USERGROUPS)
-                                                                        : aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ());
+      final ICommonsCollection <String> aUserGroupIDs = aSelectedObject == null ? aWPEC.getAttributeAsList (FIELD_USERGROUPS)
+                                                                                : aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ());
       final HCUserGroupForUserSelect aSelect = new HCUserGroupForUserSelect (new RequestField (FIELD_USERGROUPS),
                                                                              aUserGroupIDs);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
@@ -787,86 +854,6 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
     // Custom overridable
     onShowInputFormEnd (aWPEC, aSelectedObject, aForm, eFormAction, aFormErrors);
-  }
-
-  @Override
-  protected boolean handleCustomActions (@Nonnull final WPECTYPE aWPEC, @Nullable final IUser aSelectedObject)
-  {
-    if (aWPEC.hasAction (ACTION_RESET_PASSWORD) && aSelectedObject != null)
-    {
-      if (!canResetPassword (aSelectedObject))
-        throw new IllegalStateException ("Won't work!");
-
-      final HCNodeList aNodeList = aWPEC.getNodeList ();
-      final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-      final boolean bShowForm = true;
-      final FormErrors aFormErrors = new FormErrors ();
-      final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
-
-      if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
-      {
-        // Check if the nonce matches
-        if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
-        {
-          final String sPlainTextPassword = aWPEC.getAttributeAsString (FIELD_PASSWORD);
-          final String sPlainTextPasswordConfirm = aWPEC.getAttributeAsString (FIELD_PASSWORD_CONFIRM);
-
-          final List <String> aPasswordErrors = GlobalPasswordSettings.getPasswordConstraintList ()
-                                                                      .getInvalidPasswordDescriptions (sPlainTextPassword,
-                                                                                                       aDisplayLocale);
-          for (final String sPasswordError : aPasswordErrors)
-            aFormErrors.addFieldError (FIELD_PASSWORD, sPasswordError);
-          if (!EqualsHelper.equals (sPlainTextPassword, sPlainTextPasswordConfirm))
-            aFormErrors.addFieldError (FIELD_PASSWORD_CONFIRM,
-                                       EText.ERROR_PASSWORDS_DONT_MATCH.getDisplayText (aDisplayLocale));
-
-          if (aFormErrors.isEmpty ())
-          {
-            aUserMgr.setUserPassword (aSelectedObject.getID (), sPlainTextPassword);
-            aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                          SecurityHelper.getUserDisplayName (aSelectedObject,
-                                                                                                                                                             aDisplayLocale))));
-            return true;
-          }
-        }
-      }
-      if (bShowForm)
-      {
-        // Show input form
-        final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
-        final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
-        aForm.addChild (getUIHandler ().createActionHeader (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               SecurityHelper.getUserDisplayName (aSelectedObject,
-                                                                                                                                                  aDisplayLocale))));
-
-        final String sPassword = EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale);
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPassword,
-                                                                bHasAnyPasswordConstraint ? ELabelType.MANDATORY
-                                                                                          : ELabelType.OPTIONAL)
-                                                     .setCtrl (new HCEditPassword (FIELD_PASSWORD).setPlaceholder (sPassword))
-                                                     .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
-                                                     .setErrorList (aFormErrors.getListOfField (FIELD_PASSWORD)));
-
-        final String sPasswordConfirm = EText.LABEL_PASSWORD_CONFIRM.getDisplayText (aDisplayLocale);
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPasswordConfirm,
-                                                                bHasAnyPasswordConstraint ? ELabelType.MANDATORY
-                                                                                          : ELabelType.OPTIONAL)
-                                                     .setCtrl (new HCEditPassword (FIELD_PASSWORD_CONFIRM).setPlaceholder (sPasswordConfirm))
-                                                     .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
-                                                     .setErrorList (aFormErrors.getListOfField (FIELD_PASSWORD_CONFIRM)));
-
-        final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-        aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_RESET_PASSWORD);
-        aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
-        aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
-        // Add the nonce for CSRF check
-        aToolbar.addChild (getCSRFHandler ().createCSRFNonceField ());
-        aToolbar.addSubmitButtonSave (aDisplayLocale);
-        aToolbar.addButtonCancel (aDisplayLocale);
-      }
-      return false;
-    }
-    return true;
   }
 
   @Nullable
@@ -947,7 +934,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
       // Reset password of user
       aActionCell.addChild (" ");
-      if (canResetPassword (aCurUser))
+      if (SecurityUIHelper.canResetPassword (aCurUser))
       {
         aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
                                             .add (CPageParam.PARAM_ACTION, ACTION_RESET_PASSWORD)
@@ -995,18 +982,18 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
-    final Collection <? extends IUser> aActiveUsers = aUserMgr.getAllActiveUsers ();
+    final ICommonsCollection <? extends IUser> aActiveUsers = aUserMgr.getAllActiveUsers ();
     aTabBox.addTab ("active",
                     EText.TAB_ACTIVE.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aActiveUsers.size ())),
                     getTabWithUsers (aWPEC, aActiveUsers, getID () + "1"));
 
-    final Collection <? extends IUser> aDisabledUsers = aUserMgr.getAllDisabledUsers ();
+    final ICommonsCollection <? extends IUser> aDisabledUsers = aUserMgr.getAllDisabledUsers ();
     aTabBox.addTab ("disabled",
                     EText.TAB_DISABLED.getDisplayTextWithArgs (aDisplayLocale,
                                                                Integer.toString (aDisabledUsers.size ())),
                     getTabWithUsers (aWPEC, aDisabledUsers, getID () + "2"));
 
-    final Collection <? extends IUser> aDeletedUsers = aUserMgr.getAllDeletedUsers ();
+    final ICommonsCollection <? extends IUser> aDeletedUsers = aUserMgr.getAllDeletedUsers ();
     aTabBox.addTab ("deleted",
                     EText.TAB_DELETED.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aDeletedUsers.size ())),
                     getTabWithUsers (aWPEC, aDeletedUsers, getID () + "3"));
