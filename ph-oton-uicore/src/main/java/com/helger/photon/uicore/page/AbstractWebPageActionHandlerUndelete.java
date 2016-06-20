@@ -5,7 +5,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
@@ -16,20 +15,15 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
 
 public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
-                                                    extends
-                                                    AbstractWebPageActionHandler <WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
-                                                    implements IWebPageActionHandler <DATATYPE, WPECTYPE>
+                                                           extends
+                                                           AbstractWebPageActionHandler <WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
+                                                           implements IWebPageActionHandler <DATATYPE, WPECTYPE>
 {
   public static final String FORM_ID_UNDELETE = "undeleteform";
 
   public AbstractWebPageActionHandlerUndelete ()
-  {}
-
-  @Nonnull
-  @Nonempty
-  public final String getActionName ()
   {
-    return CPageParam.ACTION_UNDELETE;
+    super (CPageParam.ACTION_UNDELETE, true);
   }
 
   /**

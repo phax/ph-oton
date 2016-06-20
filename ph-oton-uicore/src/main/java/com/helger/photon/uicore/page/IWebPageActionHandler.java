@@ -27,10 +27,7 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
    * @return <code>true</code> if this action can only be executed when an
    *         object is selected, <code>false</code> otherwise.
    */
-  default boolean isSelectedObjectRequired ()
-  {
-    return true;
-  }
+  boolean isSelectedObjectRequired ();
 
   /**
    * This is the main entry to action handling. This method is only called if

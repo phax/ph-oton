@@ -5,7 +5,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
@@ -23,13 +22,8 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
   public static final String FORM_ID_DELETE = "deleteform";
 
   public AbstractWebPageActionHandlerDelete ()
-  {}
-
-  @Nonnull
-  @Nonempty
-  public final String getActionName ()
   {
-    return CPageParam.ACTION_DELETE;
+    super (CPageParam.ACTION_DELETE, true);
   }
 
   /**
