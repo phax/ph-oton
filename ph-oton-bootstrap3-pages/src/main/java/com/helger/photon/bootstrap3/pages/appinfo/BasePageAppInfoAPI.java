@@ -144,7 +144,7 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
 
         // Show all callbacks
         {
-          aTab.addChild (createDataGroupHeader (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
+          aTab.addChild (getUIHandler ().createDataGroupHeader (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
 
           final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0,
                                                                                                                       1)

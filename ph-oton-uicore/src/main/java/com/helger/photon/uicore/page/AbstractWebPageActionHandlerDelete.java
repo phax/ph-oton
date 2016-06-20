@@ -20,7 +20,7 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
 {
   public static final String FORM_ID_DELETE = "deleteform";
 
-  public AbstractWebPageActionHandlerDelete (@Nonnull final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
+  public AbstractWebPageActionHandlerDelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
     super (CPageParam.ACTION_DELETE, true, aUIHandler);
   }

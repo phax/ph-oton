@@ -229,8 +229,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                         aSelectedObject.getName ())));
+    aNodeList.addChild (getUIHandler ().createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                         aSelectedObject.getName ())));
     final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
     onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
 
@@ -407,9 +407,9 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                 @Nonnull final FormErrors aFormErrors)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    aForm.addChild (createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                         aSelectedObject.getName ())
-                                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
+    aForm.addChild (getUIHandler ().createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                         aSelectedObject.getName ())
+                                                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
 
     // Name
     {

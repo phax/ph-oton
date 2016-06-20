@@ -62,9 +62,10 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
                                             extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-    ERROR_NO_USER_PRESENT ("Es ist kein Benutzer angemeldet, daher kann auch das Passwort nicht geändert werden.", "Since no user is logged in no password change is possible."),
+    ERROR_NO_USER_PRESENT ("Es ist kein Benutzer angemeldet, daher kann auch das Passwort nicht geändert werden.",
+                           "Since no user is logged in no password change is possible."),
     TITLE ("Passwort von ''{0}'' ändern", "Change password of ''{0}''"),
     LABEL_OLD_PASSWORD ("Altes Passwort", "Old password"),
     LABEL_PASSWORD ("Neues Passwort", "New password"),
@@ -172,10 +173,10 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
       {
         // Show input form
         final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
-        final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
-        aForm.addChild (createActionHeader (EText.TITLE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                SecurityHelper.getUserDisplayName (aCurrentUser,
-                                                                                                                   aDisplayLocale))));
+        final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
+        aForm.addChild (getUIHandler ().createActionHeader (EText.TITLE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                SecurityHelper.getUserDisplayName (aCurrentUser,
+                                                                                                                                   aDisplayLocale))));
 
         final String sLabelOldPassword = EText.LABEL_OLD_PASSWORD.getDisplayText (aDisplayLocale);
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sLabelOldPassword, ELabelType.MANDATORY)

@@ -144,7 +144,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
         final DirtyFlagMap <String, Object> aContext = aScheduler.getContext ();
         if (!aContext.isEmpty ())
         {
-          aNodeList.addChild (createActionHeader (EText.MSG_CONTEXT.getDisplayText (aDisplayLocale)));
+          aNodeList.addChild (getUIHandler ().createActionHeader (EText.MSG_CONTEXT.getDisplayText (aDisplayLocale)));
           final HCTable aContextTable = new HCTable (HCCol.star (), HCCol.star ());
           for (final Map.Entry <String, Object> aEntry : aContext.entrySet ())
             aContextTable.addBodyRow ().addCells (aEntry.getKey (), aEntry.getValue ().toString ());
@@ -160,7 +160,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
                                                                                                   .size ())));
 
         // All job listener
-        final ICommonsList <String> aListeners = new CommonsArrayList<> ();
+        final ICommonsList <String> aListeners = new CommonsArrayList <> ();
         for (final JobListener aJobListener : aScheduler.getListenerManager ().getJobListeners ())
           aListeners.add (aJobListener.getName () + " - " + aJobListener.getClass ().getName ());
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LISTENERS.getDisplayText (aDisplayLocale))

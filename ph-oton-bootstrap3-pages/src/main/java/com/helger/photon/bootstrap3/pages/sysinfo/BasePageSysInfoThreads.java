@@ -66,7 +66,8 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext>
                 Thread.NORM_PRIORITY +
                 "/" +
                 Thread.MAX_PRIORITY +
-                "; Zeitpunkt: {1}", "Total count={0}; Prios (min/norm/max): " +
+                "; Zeitpunkt: {1}",
+                "Total count={0}; Prios (min/norm/max): " +
                                     Thread.MIN_PRIORITY +
                                     "/" +
                                     Thread.NORM_PRIORITY +
@@ -151,10 +152,10 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext>
     final Map <Thread, StackTraceElement []> aThreads = CollectionHelper.getSortedByKey (Thread.getAllStackTraces (),
                                                                                          Comparator.comparing (Thread::getId));
 
-    aNodeList.addChild (createActionHeader (EText.MSG_HEADER.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                     Integer.valueOf (aThreads.size ()),
-                                                                                     PDTToString.getAsString (PDTFactory.getCurrentLocalDateTime (),
-                                                                                                              aDisplayLocale))));
+    aNodeList.addChild (getUIHandler ().createActionHeader (EText.MSG_HEADER.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                     Integer.valueOf (aThreads.size ()),
+                                                                                                     PDTToString.getAsString (PDTFactory.getCurrentLocalDateTime (),
+                                                                                                                              aDisplayLocale))));
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                  aDisplayLocale)
                                                                                                 .setInitialSorting (ESortOrder.ASCENDING),

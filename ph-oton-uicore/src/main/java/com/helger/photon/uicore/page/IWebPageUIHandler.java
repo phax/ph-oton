@@ -3,35 +3,38 @@ package com.helger.photon.uicore.page;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.forms.IHCForm;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
+import com.helger.commons.string.StringHelper;
+import com.helger.html.hc.html.IHCElementWithChildren;
+import com.helger.html.hc.html.grouping.HCDiv;
+import com.helger.photon.uicore.css.CUICoreCSS;
 
-public interface IWebPageUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
+public interface IWebPageUIHandler
 {
-  /**
-   * @param aLEC
-   *        Layout execution context
-   * @return A form that links to the current page.
-   */
-  @Nonnull
-  FORM_TYPE createFormSelf (@Nonnull ILayoutExecutionContext aLEC);
-
-  /**
-   * @param aLEC
-   *        Layout execution context
-   * @return A file upload form that links to the current page.
-   */
-  @Nonnull
-  FORM_TYPE createFormFileUploadSelf (@Nonnull ILayoutExecutionContext aLEC);
-
-  @Nonnull
-  TOOLBAR_TYPE createToolbar (@Nonnull ILayoutExecutionContext aWPEC);
+  @Nullable
+  default IHCElementWithChildren <?> createActionHeader ()
+  {
+    return new HCDiv ().addClass (CUICoreCSS.CSS_CLASS_ACTION_HEADER);
+  }
 
   @Nullable
-  IHCNode createErrorBox (@Nonnull ILayoutExecutionContext aWPEC, @Nullable String sErrorMsg);
+  default IHCElementWithChildren <?> createActionHeader (@Nullable final String sText)
+  {
+    if (StringHelper.hasNoText (sText))
+      return null;
+    return createActionHeader ().addChild (sText);
+  }
+
+  @Nonnull
+  default IHCElementWithChildren <?> createDataGroupHeader ()
+  {
+    return new HCDiv ().addClass (CUICoreCSS.CSS_CLASS_DATAGROUP_HEADER);
+  }
 
   @Nullable
-  IHCNode createIncorrectInputBox (@Nonnull ILayoutExecutionContext aWPEC);
+  default IHCElementWithChildren <?> createDataGroupHeader (@Nullable final String sText)
+  {
+    if (StringHelper.hasNoText (sText))
+      return null;
+    return createDataGroupHeader ().addChild (sText);
+  }
 }

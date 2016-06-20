@@ -60,7 +60,8 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext>
     MSG_FORMAT_JS ("JS formatieren?", "Format JS?"),
     MSG_CONSISTENCY_CHECKS_ENABLED ("Konsistenzprüfungen aktiv?", "Consistency checks enabled?"),
     MSG_EXTRACT_OUT_OF_BAND_NODES ("Out-of-band Knoten extrahieren?", "Extract out-of-band nodes?"),
-    MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS ("Auto-Vervollständigung für Passwort-Felder?", "Auto complete for password fields?"),
+    MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS ("Auto-Vervollständigung für Passwort-Felder?",
+                                          "Auto complete for password fields?"),
     MSG_ON_DOCUMENT_READY_PROVIDER ("JavaScript document.ready Ersteller", "JavaScript document.ready provider"),
     MSG_SCRIPT_INLINE_MODE ("<script> Modus", "<script> mode"),
     MSG_STYLE_INLINE_MODE ("<style> Modus", "<style> mode"),
@@ -165,7 +166,7 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext>
     }
     else
     {
-      final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+      final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
 
       {
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_HTML_VERSION.getDisplayText (aDisplayLocale))

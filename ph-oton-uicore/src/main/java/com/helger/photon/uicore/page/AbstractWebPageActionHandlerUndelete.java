@@ -20,7 +20,7 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
 {
   public static final String FORM_ID_UNDELETE = "undeleteform";
 
-  public AbstractWebPageActionHandlerUndelete (@Nonnull final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
+  public AbstractWebPageActionHandlerUndelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
     super (CPageParam.ACTION_UNDELETE, true, aUIHandler);
   }

@@ -261,8 +261,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    aNodeList.addChild (createActionHeader (EText.HEADER_SHOW.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                      aSelectedObject.getUserName ())));
+    aNodeList.addChild (getUIHandler ().createActionHeader (EText.HEADER_SHOW.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                      aSelectedObject.getUserName ())));
 
     final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
     onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
@@ -324,9 +324,9 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final boolean bEdit = eFormAction.isEdit ();
 
-    aForm.addChild (createActionHeader (bEdit ? EText.HEADER_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                          aSelectedObject.getDisplayName ())
-                                              : EText.HEADER_CREATE.getDisplayText (aDisplayLocale)));
+    aForm.addChild (getUIHandler ().createActionHeader (bEdit ? EText.HEADER_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                          aSelectedObject.getDisplayName ())
+                                                              : EText.HEADER_CREATE.getDisplayText (aDisplayLocale)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_APP_TOKEN.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCAppTokenSelect (new RequestField (FIELD_APP_TOKEN,
@@ -475,16 +475,16 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     if (bRevokedOld)
     {
       // Show only if something can be revoked...
-      aForm.addChild (createActionHeader (EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                      aSelectedObject.getDisplayName ())));
+      aForm.addChild (getUIHandler ().createActionHeader (EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                      aSelectedObject.getDisplayName ())));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EBaseText.LABEL_REASON.getDisplayText (aDisplayLocale))
                                                    .setCtrl (new HCTextArea (new RequestField (FIELD_REVOCATION_REASON)))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_REVOCATION_REASON)));
     }
     else
     {
-      aForm.addChild (createActionHeader (EBaseText.CREATE_NEW_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                           aSelectedObject.getDisplayName ())));
+      aForm.addChild (getUIHandler ().createActionHeader (EBaseText.CREATE_NEW_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                           aSelectedObject.getDisplayName ())));
     }
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_TOKEN_STRING.getDisplayText (aDisplayLocale))
@@ -537,8 +537,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     }
 
     final BootstrapForm aForm = new BootstrapForm (aWPEC.getSelfHref ());
-    aForm.addChild (createActionHeader (EBaseText.REVOKE_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                     aSelectedObject.getDisplayName ())));
+    aForm.addChild (getUIHandler ().createActionHeader (EBaseText.REVOKE_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                     aSelectedObject.getDisplayName ())));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EBaseText.LABEL_REASON.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCTextArea (new RequestField (FIELD_REVOCATION_REASON)))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_REVOCATION_REASON)));

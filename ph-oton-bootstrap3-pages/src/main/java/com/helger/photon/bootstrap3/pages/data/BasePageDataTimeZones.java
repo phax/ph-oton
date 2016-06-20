@@ -117,10 +117,11 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext>
     // Get default time zone
     final ZoneId aCurrentDTZ = PDTConfig.getDefaultZoneId ();
 
-    aNodeList.addChild (createActionHeader (EText.MSG_CURRENT_TIMEZONE.getDisplayText (aDisplayLocale) +
-                                            aCurrentDTZ.getId () +
-                                            " - " +
-                                            aCurrentDTZ.getDisplayName (TextStyle.FULL, aDisplayLocale)));
+    aNodeList.addChild (getUIHandler ().createActionHeader (EText.MSG_CURRENT_TIMEZONE.getDisplayText (aDisplayLocale) +
+                                                            aCurrentDTZ.getId () +
+                                                            " - " +
+                                                            aCurrentDTZ.getDisplayName (TextStyle.FULL,
+                                                                                        aDisplayLocale)));
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_SHORTNAME.getDisplayText (aDisplayLocale)),

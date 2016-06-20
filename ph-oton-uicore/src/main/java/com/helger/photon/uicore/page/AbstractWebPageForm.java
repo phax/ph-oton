@@ -94,21 +94,21 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageForm.class);
 
-  private final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
+  private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aDeleteHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aUndeleteHandler;
 
   public AbstractWebPageForm (@Nonnull @Nonempty final String sID,
                               @Nonnull final IMultilingualText aName,
                               @Nullable final IMultilingualText aDescription,
-                              @Nonnull final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
+                              @Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
     super (sID, aName, aDescription);
     m_aUIHandler = ValueEnforcer.notNull (aUIHandler, "UIHandler");
   }
 
   @Nonnull
-  protected final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
+  protected final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
   {
     return m_aUIHandler;
   }

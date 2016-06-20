@@ -23,8 +23,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.hc.IHCNode;
-import com.helger.photon.bootstrap3.form.BootstrapForm;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
@@ -65,26 +63,8 @@ public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecuti
   }
 
   @Nonnull
-  protected BootstrapForm createFormSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  protected BootstrapWebPageUIHandler getUIHandler ()
   {
-    return BootstrapUI.createFormSelf (aLEC);
-  }
-
-  @Nonnull
-  protected BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC)
-  {
-    return BootstrapUI.createFormFileUploadSelf (aLEC);
-  }
-
-  @Nonnull
-  protected final IHCNode createErrorBox (@Nullable final String sErrorMsg)
-  {
-    return BootstrapUI.createErrorBox (sErrorMsg);
-  }
-
-  @Nonnull
-  protected final IHCNode createIncorrectInputBox (@Nonnull final WPECTYPE aWPEC)
-  {
-    return BootstrapUI.createIncorrectInputBox (aWPEC);
+    return BootstrapWebPageUIHandler.INSTANCE;
   }
 }

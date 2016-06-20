@@ -398,9 +398,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
-    aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                         SecurityHelper.getUserDisplayName (aSelectedObject,
-                                                                                                                            aDisplayLocale))));
+    aNodeList.addChild (getUIHandler ().createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                         SecurityHelper.getUserDisplayName (aSelectedObject,
+                                                                                                                                            aDisplayLocale))));
     final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
     onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
     if (!useEmailAddressAsLoginName ())
@@ -674,10 +674,10 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
-    aForm.addChild (createActionHeader (bEdit ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                         SecurityHelper.getUserDisplayName (aSelectedObject,
-                                                                                                                            aDisplayLocale))
-                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
+    aForm.addChild (getUIHandler ().createActionHeader (bEdit ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                         SecurityHelper.getUserDisplayName (aSelectedObject,
+                                                                                                                                            aDisplayLocale))
+                                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
     if (!useEmailAddressAsLoginName ())
     {
       final String sLoginName = EText.LABEL_LOGINNAME.getDisplayText (aDisplayLocale);
@@ -835,9 +835,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         // Show input form
         final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
         final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
-        aForm.addChild (createActionHeader (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                               SecurityHelper.getUserDisplayName (aSelectedObject,
-                                                                                                                                  aDisplayLocale))));
+        aForm.addChild (getUIHandler ().createActionHeader (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                               SecurityHelper.getUserDisplayName (aSelectedObject,
+                                                                                                                                                  aDisplayLocale))));
 
         final String sPassword = EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale);
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sPassword,

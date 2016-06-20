@@ -119,7 +119,7 @@ public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
       String sTabLabelSuffix = "";
 
       if (aCF.hasDescription ())
-        aContent.addChild (createDataGroupHeader (aCF.getDescription ()));
+        aContent.addChild (getUIHandler ().createDataGroupHeader (aCF.getDescription ()));
 
       if (aCF.exists ())
       {

@@ -177,7 +177,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayText (aDisplayLocale)));
+    aNodeList.addChild (getUIHandler ().createActionHeader (EText.HEADER_DETAILS.getDisplayText (aDisplayLocale)));
     final BootstrapViewForm aTable = aNodeList.addAndReturnChild (new BootstrapViewForm ());
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USERID.getDisplayText (aDisplayLocale))
                                                   .setCtrl (aSelectedObject.getUserID ()));

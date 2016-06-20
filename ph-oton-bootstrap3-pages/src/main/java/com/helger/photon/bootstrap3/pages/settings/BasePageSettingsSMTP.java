@@ -307,8 +307,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final ISMTPSettings aSettings = aSelectedObject.getSMTPSettings ();
 
-    aNodeList.addChild (createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                         aSelectedObject.getName ())));
+    aNodeList.addChild (getUIHandler ().createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                         aSelectedObject.getName ())));
 
     final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_NAME.getDisplayText (aDisplayLocale))
@@ -436,9 +436,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final ISMTPSettings aSettings = aSelectedObject == null ? null : aSelectedObject.getSMTPSettings ();
 
-    aForm.addChild (createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                         aSelectedObject.getName ())
-                                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
+    aForm.addChild (getUIHandler ().createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                         aSelectedObject.getName ())
+                                                                              : EText.TITLE_CREATE.getDisplayText (aDisplayLocale)));
 
     {
       final String sName = EText.LABEL_NAME.getDisplayText (aDisplayLocale);
@@ -600,8 +600,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
       // Show question
       final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
 
-      aForm.addChild (createActionHeader (EText.TITLE_TEST_MAIL.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                        aSelectedObject.getName ())));
+      aForm.addChild (getUIHandler ().createActionHeader (EText.TITLE_TEST_MAIL.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                        aSelectedObject.getName ())));
 
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_SENDER.getDisplayText (aDisplayLocale))
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_TEST_SENDER,

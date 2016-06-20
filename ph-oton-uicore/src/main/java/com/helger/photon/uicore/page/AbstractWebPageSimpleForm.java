@@ -76,19 +76,19 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageSimpleForm.class);
 
-  private final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
+  private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
 
   public AbstractWebPageSimpleForm (@Nonnull @Nonempty final String sID,
                                     @Nonnull final IMultilingualText aName,
                                     @Nullable final IMultilingualText aDescription,
-                                    @Nonnull final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
+                                    @Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
     super (sID, aName, aDescription);
     m_aUIHandler = ValueEnforcer.notNull (aUIHandler, "UIHandler");
   }
 
   @Nonnull
-  protected final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
+  protected final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
   {
     return m_aUIHandler;
   }

@@ -24,11 +24,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.state.EValidity;
 import com.helger.commons.state.IValidityIndicator;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.html.IHCElementWithChildren;
-import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.photon.basic.app.page.AbstractPage;
 import com.helger.photon.uicore.css.CUICoreCSS;
 
@@ -166,59 +163,5 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
       // Invalid to display page
       onInvalidToDisplayPage (aWPEC);
     }
-  }
-
-  // Utility methods start here
-
-  @Nullable
-  public static IHCElementWithChildren <?> createActionHeaderDefault ()
-  {
-    return new HCDiv ().addClass (CUICoreCSS.CSS_CLASS_ACTION_HEADER);
-  }
-
-  @Nullable
-  public static IHCElementWithChildren <?> createActionHeaderDefault (@Nullable final String sText)
-  {
-    if (StringHelper.hasNoText (sText))
-      return null;
-    return createActionHeaderDefault ().addChild (sText);
-  }
-
-  @Nonnull
-  protected IHCElementWithChildren <?> createActionHeader ()
-  {
-    return createActionHeaderDefault ();
-  }
-
-  @Nullable
-  protected IHCElementWithChildren <?> createActionHeader (@Nullable final String sText)
-  {
-    return createActionHeaderDefault (sText);
-  }
-
-  @Nonnull
-  public static IHCElementWithChildren <?> createDataGroupHeaderDefault ()
-  {
-    return new HCDiv ().addClass (CUICoreCSS.CSS_CLASS_DATAGROUP_HEADER);
-  }
-
-  @Nullable
-  public static IHCElementWithChildren <?> createDataGroupHeaderDefault (@Nullable final String sText)
-  {
-    if (StringHelper.hasNoText (sText))
-      return null;
-    return createDataGroupHeaderDefault ().addChild (sText);
-  }
-
-  @Nonnull
-  protected IHCElementWithChildren <?> createDataGroupHeader ()
-  {
-    return createDataGroupHeaderDefault ();
-  }
-
-  @Nullable
-  protected IHCElementWithChildren <?> createDataGroupHeader (@Nullable final String sText)
-  {
-    return createDataGroupHeaderDefault (sText);
   }
 }

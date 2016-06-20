@@ -136,7 +136,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext>
       aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
     }
 
-    final BootstrapForm aForm0 = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+    final BootstrapForm aForm0 = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
     // GlobalDebug

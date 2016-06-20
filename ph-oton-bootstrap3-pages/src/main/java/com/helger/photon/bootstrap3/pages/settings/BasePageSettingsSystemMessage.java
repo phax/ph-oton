@@ -58,9 +58,10 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
                                            extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
   {
-    SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert", "The new system message was saved successfully."),
+    SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert",
+                  "The new system message was saved successfully."),
     LAST_UPDATE ("Letzte Aktualisierung: {0}", "Last update: {0}"),
     CURRENT_MESSAGE_TYPE ("Aktuelle Systemnachricht vom Typ ''{0}''", "Current system message of type ''{0}''"),
     NO_SYSTEM_MESSAGE ("Keine Systemnachricht gesetzt.", "No system message present.");
@@ -151,7 +152,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
       else
       {
         // Show input form
-        final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+        final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
 
         final String sSystemMessage = aSystemMsgMgr.getSystemMessage ();
         aForm.addChild (new HCSystemMessageTypeSelect (new RequestField (FIELD_MESSAGE_TYPE,
@@ -175,19 +176,19 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
       final LocalDateTime aLastUpdateDT = aSystemMsgMgr.getLastUpdateDT ();
       if (aLastUpdateDT != null)
       {
-        aNodeList.addChild (createActionHeader (EText.LAST_UPDATE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                          PDTToString.getAsString (aLastUpdateDT,
-                                                                                                                   aDisplayLocale))));
+        aNodeList.addChild (getUIHandler ().createActionHeader (EText.LAST_UPDATE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                          PDTToString.getAsString (aLastUpdateDT,
+                                                                                                                                   aDisplayLocale))));
       }
 
-      final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+      final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
 
       if (aSystemMsgMgr.hasSystemMessage ())
       {
         // Show current message
-        aForm.addChild (createDataGroupHeader (EText.CURRENT_MESSAGE_TYPE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                  aSystemMsgMgr.getMessageType ()
-                                                                                                               .getDisplayText (aDisplayLocale))));
+        aForm.addChild (getUIHandler ().createDataGroupHeader (EText.CURRENT_MESSAGE_TYPE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                  aSystemMsgMgr.getMessageType ()
+                                                                                                                               .getDisplayText (aDisplayLocale))));
         aForm.addChild (new HCDiv ().addChild (renderCurrentSystemMessage (aWPEC)));
       }
       else

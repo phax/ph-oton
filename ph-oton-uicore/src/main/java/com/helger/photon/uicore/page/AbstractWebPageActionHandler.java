@@ -13,11 +13,11 @@ public abstract class AbstractWebPageActionHandler <DATATYPE extends IHasID <Str
 {
   private final String m_sActionName;
   private final boolean m_bSelectedObjectRequired;
-  private final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
+  private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
 
   protected AbstractWebPageActionHandler (@Nonnull @Nonempty final String sActionName,
                                           final boolean bSelectedObjectRequired,
-                                          @Nonnull final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
+                                          @Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
     m_sActionName = ValueEnforcer.notEmpty (sActionName, "ActionName");
     m_bSelectedObjectRequired = bSelectedObjectRequired;
@@ -37,7 +37,7 @@ public abstract class AbstractWebPageActionHandler <DATATYPE extends IHasID <Str
   }
 
   @Nonnull
-  protected final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
+  protected final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
   {
     return m_aUIHandler;
   }
