@@ -44,7 +44,7 @@ import com.helger.photon.bootstrap3.pageheader.BootstrapPageHeader;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.login.CLogin;
-import com.helger.photon.core.login.LoginHTMLProvider;
+import com.helger.photon.uicore.login.LoginHTMLProvider;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -175,6 +175,7 @@ public class BootstrapLoginHTMLProvider extends LoginHTMLProvider
 
     // The hidden field that triggers the validation
     aForm.addChild (new HCHiddenField (CLogin.REQUEST_PARAM_ACTION, CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS));
+    aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
     if (showLoginError ())
       aForm.addChild (new BootstrapErrorBox ().addChild (getTextErrorMessage (aDisplayLocale, getLoginResult ())));

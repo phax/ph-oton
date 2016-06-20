@@ -102,7 +102,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                             extends AbstractWebPageSecurityObjectWithAttributes <IUser, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW_USER ("Neuen Benutzer anlegen", "Create new user"),
     TAB_ACTIVE ("Aktive Benutzer ({0})", "Active users ({0})"),
@@ -730,7 +730,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
       {
         // Check if the nonce matches
-        if (checkCSRFNonce (aWPEC).isContinue ())
+        if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
         {
           final String sPlainTextPassword = aWPEC.getAttributeAsString (FIELD_PASSWORD);
           final String sPlainTextPasswordConfirm = aWPEC.getAttributeAsString (FIELD_PASSWORD_CONFIRM);
@@ -784,7 +784,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
         aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
         // Add the nonce for CSRF check
-        aToolbar.addChild (createCSRFNonceField ());
+        aToolbar.addChild (getCSRFHandler ().createCSRFNonceField ());
         aToolbar.addSubmitButtonSave (aDisplayLocale);
         aToolbar.addButtonCancel (aDisplayLocale);
       }

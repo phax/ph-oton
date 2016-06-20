@@ -16,10 +16,14 @@
  */
 package com.helger.photon.uicore.page;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.sections.HCH1;
 import com.helger.photon.basic.app.page.IPage;
 
 /**
@@ -39,7 +43,11 @@ public interface IWebPage <WPECTYPE extends IWebPageExecutionContext> extends IP
    * @return The header/headline of the page. May be <code>null</code>.
    */
   @Nullable
-  String getHeaderText (@Nonnull WPECTYPE aWPEC);
+  default String getHeaderText (@Nonnull final WPECTYPE aWPEC)
+  {
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+    return getDisplayText (aDisplayLocale);
+  }
 
   /**
    * Get the headline of the page. By default it is a &lt;h1&gt; element with
@@ -52,7 +60,13 @@ public interface IWebPage <WPECTYPE extends IWebPageExecutionContext> extends IP
    * @return The header/headline of the page. May be <code>null</code>.
    */
   @Nullable
-  IHCNode getHeaderNode (@Nonnull WPECTYPE aWPEC);
+  default IHCNode getHeaderNode (@Nonnull final WPECTYPE aWPEC)
+  {
+    final String sHeaderText = getHeaderText (aWPEC);
+    if (StringHelper.hasNoText (sHeaderText))
+      return null;
+    return new HCH1 ().addChild (sHeaderText);
+  }
 
   /**
    * @param aWPEC

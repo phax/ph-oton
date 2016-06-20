@@ -16,11 +16,8 @@
  */
 package com.helger.photon.bootstrap.demo.app.ui;
 
-import java.util.Collection;
-
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapLoginHTMLProvider;
@@ -29,6 +26,11 @@ import com.helger.photon.core.login.LoginManager;
 
 public final class AppLoginManager extends LoginManager
 {
+  public AppLoginManager ()
+  {
+    setRequiredRoleIDs (CApp.REQUIRED_ROLE_IDS_CONFIG);
+  }
+
   @Override
   protected IHTMLProvider createLoginScreen (final boolean bLoginError,
                                              @Nonnull final ICredentialValidationResult aLoginResult)
@@ -36,13 +38,5 @@ public final class AppLoginManager extends LoginManager
     return new BootstrapLoginHTMLProvider (bLoginError,
                                            aLoginResult,
                                            CApp.getApplicationTitle () + " Administration - Login");
-  }
-
-  @Override
-  @Nonnull
-  @ReturnsImmutableObject
-  protected Collection <String> getAllRequiredRoleIDs ()
-  {
-    return CApp.REQUIRED_ROLE_IDS_CONFIG;
   }
 }

@@ -1419,7 +1419,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           if (bIsFormSubmitted)
           {
             // Check if the nonce matches
-            if (checkCSRFNonce (aWPEC).isContinue ())
+            if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
             {
               // try to save, only if nonce is as expected
               validateAndSaveInputParameters (aWPEC, aSelectedObject, aFormErrors, eFormAction);
@@ -1459,7 +1459,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             aForm.setID (FORM_ID_INPUT);
 
             // Add the nonce for CSRF check
-            aForm.addChild (createCSRFNonceField ());
+            aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
             // The unique form ID, that allows to identify on "transaction"
             // -> Used only for "form state remembering"
@@ -1511,7 +1511,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           if (bIsFormSubmitted)
           {
             // Check if the nonce matches
-            if (checkCSRFNonce (aWPEC).isContinue ())
+            if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
             {
               performDelete (aWPEC, aSelectedObject);
             }
@@ -1527,7 +1527,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             aForm.setID (FORM_ID_DELETE);
 
             // Add the nonce for CSRF check
-            aForm.addChild (createCSRFNonceField ());
+            aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
             showDeleteQuery (aWPEC, aForm, aSelectedObject);
             if (showDeleteToolbar (aWPEC, aSelectedObject))
@@ -1544,7 +1544,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           if (bIsFormSubmitted)
           {
             // Check if the nonce matches
-            if (checkCSRFNonce (aWPEC).isContinue ())
+            if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
             {
               performUndelete (aWPEC, aSelectedObject);
             }
@@ -1560,7 +1560,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             aForm.setID (FORM_ID_UNDELETE);
 
             // Add the nonce for CSRF check
-            aForm.addChild (createCSRFNonceField ());
+            aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
             showUndeleteQuery (aWPEC, aForm, aSelectedObject);
             if (showUndeleteToolbar (aWPEC, aSelectedObject))

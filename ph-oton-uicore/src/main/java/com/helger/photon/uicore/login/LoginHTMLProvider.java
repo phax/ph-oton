@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.login;
+package com.helger.photon.uicore.login;
 
 import java.util.Locale;
 
@@ -44,6 +44,9 @@ import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.html.AbstractHTMLProvider;
+import com.helger.photon.core.login.CLogin;
+import com.helger.photon.uicore.page.IWebPageCSRFHandler;
+import com.helger.photon.uicore.page.WebPageCSRFHandler;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -55,6 +58,7 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
 {
   private final boolean m_bLoginError;
   private final ICredentialValidationResult m_aLoginResult;
+  private IWebPageCSRFHandler m_aCSRFHandler = WebPageCSRFHandler.INSTANCE;
 
   public LoginHTMLProvider (final boolean bLoginError, @Nonnull final ICredentialValidationResult aLoginResult)
   {
@@ -75,6 +79,25 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
   public final ICredentialValidationResult getLoginResult ()
   {
     return m_aLoginResult;
+  }
+
+  /**
+   * @return The current CSRF handler. Never <code>null</code>.
+   */
+  public final IWebPageCSRFHandler getCSRFHandler ()
+  {
+    return m_aCSRFHandler;
+  }
+
+  /**
+   * Set the CSRF handler to be used.
+   *
+   * @param aCSRFHandler
+   *        The new handler. May not be <code>null</code>.
+   */
+  public final void setCSRFHandler (@Nonnull final IWebPageCSRFHandler aCSRFHandler)
+  {
+    m_aCSRFHandler = ValueEnforcer.notNull (aCSRFHandler, "CSRFHandler");
   }
 
   /**
@@ -159,6 +182,7 @@ public class LoginHTMLProvider extends AbstractHTMLProvider
 
     // The hidden field that triggers the validation
     aForm.addChild (new HCHiddenField (CLogin.REQUEST_PARAM_ACTION, CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS));
+    aForm.addChild (m_aCSRFHandler.createCSRFNonceField ());
 
     aForm.addChild (new HCDiv ().addClass (CLogin.CSS_CLASS_LOGIN_APPLOGO));
     if (showHeaderText ())

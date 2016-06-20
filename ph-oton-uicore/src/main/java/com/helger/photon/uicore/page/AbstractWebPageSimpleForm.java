@@ -705,7 +705,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
           if (bIsFormSubmitted)
           {
             // Check if the nonce matches
-            if (checkCSRFNonce (aWPEC).isContinue ())
+            if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
             {
               // try to save, only if nonce is as expected
               validateAndSaveInputParameters (aWPEC, aObject, aFormErrors, eSimpleFormAction);
@@ -741,7 +741,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
             aForm.setID (FORM_ID_INPUT);
 
             // Add the nonce for CSRF check
-            aForm.addChild (createCSRFNonceField ());
+            aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
             // Callback method
             modifyFormBeforeShowInputForm (aWPEC, aForm);

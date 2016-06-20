@@ -24,8 +24,9 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
@@ -49,7 +50,7 @@ import com.helger.web.useragent.UserAgentDatabase;
  *
  * @author Philip Helger
  */
-public class LoginManager
+public abstract class LoginManager
 {
   /**
    * Attribute name for the LoginInfo attribute that holds the remote address of
@@ -92,6 +93,20 @@ public class LoginManager
   private static final Logger s_aLogger = LoggerFactory.getLogger (LoginManager.class);
 
   /**
+   * A list of all role IDs that the user must have so that he can login! May be
+   * <code>null</code> to indicate that any valid user can login.
+   */
+  private ICommonsCollection <String> m_aRequiredRoleIDs;
+
+  public LoginManager ()
+  {}
+
+  public void setRequiredRoleIDs (@Nullable final Collection <String> aRequiredRoleIDs)
+  {
+    m_aRequiredRoleIDs = aRequiredRoleIDs == null ? null : new CommonsHashSet<> (aRequiredRoleIDs);
+  }
+
+  /**
    * Create the HTML code used to render the login screen
    *
    * @param bLoginError
@@ -102,11 +117,8 @@ public class LoginManager
    * @return Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected IHTMLProvider createLoginScreen (final boolean bLoginError,
-                                             @Nonnull final ICredentialValidationResult aLoginResult)
-  {
-    return new LoginHTMLProvider (bLoginError, aLoginResult);
-  }
+  protected abstract IHTMLProvider createLoginScreen (final boolean bLoginError,
+                                                      @Nonnull final ICredentialValidationResult aLoginResult);
 
   /**
    * Check if the login process is in progress
@@ -164,19 +176,6 @@ public class LoginManager
   protected IUser getUserOfLoginName (@Nullable final String sLoginName)
   {
     return PhotonSecurityManager.getUserMgr ().getUserOfLoginName (sLoginName);
-  }
-
-  /**
-   * @return A list of all role IDs that the user must have so that he can
-   *         login! May be <code>null</code> to indicate that any valid user can
-   *         login.
-   */
-  @Nullable
-  @OverrideOnDemand
-  @CodingStyleguideUnaware
-  protected Collection <String> getAllRequiredRoleIDs ()
-  {
-    return null;
   }
 
   /**
@@ -255,15 +254,12 @@ public class LoginManager
         // Resolve user - may be null
         final IUser aUser = getUserOfLoginName (sLoginName);
 
-        // Get all required rules - may be null
-        final Collection <String> aRequiredRoleIDs = getAllRequiredRoleIDs ();
-
         if (false)
         {
           // Try main login
           final AuthIdentificationResult aResult = AuthIdentificationManager.validateLoginCredentialsAndCreateToken (new UserPasswordCredentials (aUser,
                                                                                                                                                   sPassword,
-                                                                                                                                                  aRequiredRoleIDs));
+                                                                                                                                                  m_aRequiredRoleIDs));
           if (aResult.isSuccess ())
           {
             // Credentials are valid - implies that the user was resolved
@@ -290,7 +286,7 @@ public class LoginManager
         else
         {
           // Try main login
-          aLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, aRequiredRoleIDs);
+          aLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, m_aRequiredRoleIDs);
           if (aLoginResult.isSuccess ())
           {
             // Credentials are valid - implies that the user was resolved

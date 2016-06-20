@@ -44,7 +44,6 @@ import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.ext.ICommonsSet;
@@ -67,7 +66,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, IMPLTYPE> m_aMap;
-  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList <> ();
+  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList<> ();
 
   /**
    * Default constructor
@@ -82,7 +81,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    this (aImplClass, sFilename, true, () -> new CommonsHashMap <> ());
+    this (aImplClass, sFilename, true, () -> new CommonsHashMap<> ());
   }
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
@@ -269,9 +268,9 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsCollection <? extends INTERFACETYPE> getNone ()
+  public final ICommonsList <? extends INTERFACETYPE> getNone ()
   {
-    return new CommonsArrayList <> ();
+    return new CommonsArrayList<> ();
   }
 
   @Nonnull

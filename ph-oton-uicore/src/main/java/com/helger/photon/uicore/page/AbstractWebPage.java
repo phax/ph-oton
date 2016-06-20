@@ -16,30 +16,20 @@
  */
 package com.helger.photon.uicore.page;
 
-import java.util.Locale;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.state.EContinue;
 import com.helger.commons.state.EValidity;
 import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElementWithChildren;
-import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.hc.html.grouping.HCDiv;
-import com.helger.html.hc.html.sections.HCH1;
 import com.helger.photon.basic.app.page.AbstractPage;
-import com.helger.photon.core.form.csrf.CSRFSessionManager;
-import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.css.CUICoreCSS;
 
 /**
@@ -52,17 +42,13 @@ import com.helger.photon.uicore.css.CUICoreCSS;
 public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext> extends AbstractPage
                                       implements IWebPage <WPECTYPE>
 {
-  public static final boolean DEFAULT_CSRF_PREVENTION_ENABLED = true;
-
   // Commonly used CSS classes
   protected static final ICSSClassProvider CSS_CLASS_LEFT = CUICoreCSS.CSS_CLASS_LEFT;
   protected static final ICSSClassProvider CSS_CLASS_CENTER = CUICoreCSS.CSS_CLASS_CENTER;
   protected static final ICSSClassProvider CSS_CLASS_RIGHT = CUICoreCSS.CSS_CLASS_RIGHT;
   protected static final ICSSClassProvider CSS_CLASS_NOWRAP = CUICoreCSS.CSS_CLASS_NOWRAP;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPage.class);
-
-  private boolean m_bCSRFPreventionEnabled = DEFAULT_CSRF_PREVENTION_ENABLED;
+  private IWebPageCSRFHandler m_aCSRFHandler = WebPageCSRFHandler.INSTANCE;
 
   /**
    * Constructor
@@ -138,84 +124,23 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
     super (sID, aName, aDescription);
   }
 
-  public final boolean isCSRFPreventionEnabled ()
+  /**
+   * @return The current CSRF handler. Never <code>null</code>.
+   */
+  public final IWebPageCSRFHandler getCSRFHandler ()
   {
-    return m_bCSRFPreventionEnabled;
-  }
-
-  public final void setCSRFPreventionEnabled (final boolean bCSRFPreventionEnabled)
-  {
-    m_bCSRFPreventionEnabled = bCSRFPreventionEnabled;
+    return m_aCSRFHandler;
   }
 
   /**
-   * Callback method that is executed if a CSRF nonce mismatch occurs.
+   * Set the CSRF handler to be used.
    *
-   * @param aWPEC
-   *        Web page execution context. Never <code>null</code>.
-   * @param sNonce
-   *        The provided nonce. May be <code>null</code>.
+   * @param aCSRFHandler
+   *        The new handler. May not be <code>null</code>.
    */
-  @OverrideOnDemand
-  protected void onCSRFError (@Nonnull final WPECTYPE aWPEC, @Nullable final String sNonce)
+  public final void setCSRFHandler (@Nonnull final IWebPageCSRFHandler aCSRFHandler)
   {
-    s_aLogger.error ("The expected CSRF nonce on page '" +
-                     getID () +
-                     "' was not present.\nExpected: '" +
-                     CSRFSessionManager.getInstance ().getNonce () +
-                     "'\nBut got: '" +
-                     sNonce +
-                     "'");
-  }
-
-  @Nonnull
-  public final EContinue checkCSRFNonce (@Nonnull final WPECTYPE aWPEC)
-  {
-    if (m_bCSRFPreventionEnabled)
-    {
-      final CSRFSessionManager aCSRFSessionMgr = CSRFSessionManager.getInstance ();
-      final String sNonce = aWPEC.getAttributeAsString (CPageParam.FIELD_NONCE);
-      if (!aCSRFSessionMgr.isExpectedNonce (sNonce))
-      {
-        // CSRF failure!
-        onCSRFError (aWPEC, sNonce);
-        return EContinue.BREAK;
-      }
-    }
-
-    // Nonce is valid or check is disabled
-    return EContinue.CONTINUE;
-  }
-
-  @Nullable
-  public final HCHiddenField createCSRFNonceField ()
-  {
-    if (m_bCSRFPreventionEnabled)
-    {
-      final CSRFSessionManager aCSRFSessionMgr = CSRFSessionManager.getInstance ();
-      return new HCHiddenField (CPageParam.FIELD_NONCE, aCSRFSessionMgr.getNonce ());
-    }
-
-    // If disabled, don't emit a nonce
-    return null;
-  }
-
-  @Nullable
-  @OverrideOnDemand
-  public String getHeaderText (@Nonnull final WPECTYPE aWPEC)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    return getDisplayText (aDisplayLocale);
-  }
-
-  @Nullable
-  @OverrideOnDemand
-  public IHCNode getHeaderNode (@Nonnull final WPECTYPE aWPEC)
-  {
-    final String sHeaderText = getHeaderText (aWPEC);
-    if (StringHelper.hasNoText (sHeaderText))
-      return null;
-    return new HCH1 ().addChild (sHeaderText);
+    m_aCSRFHandler = ValueEnforcer.notNull (aCSRFHandler, "CSRFHandler");
   }
 
   /**

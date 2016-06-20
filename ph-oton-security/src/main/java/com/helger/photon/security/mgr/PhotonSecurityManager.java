@@ -90,6 +90,29 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   public PhotonSecurityManager ()
   {}
 
+  private void _initCallbacks ()
+  {
+    // Remember the last login date of the user
+    LoggedInUserManager.getInstance ().getUserLoginCallbacks ().addCallback (new IUserLoginCallback ()
+    {
+      @Override
+      public void onUserLogin (@Nonnull final LoginInfo aInfo)
+      {
+        m_aUserMgr.updateUserLastLogin (aInfo.getUserID ());
+      }
+
+      @Override
+      public void onUserLoginError (@Nonnull @Nonempty final String sUserID, @Nonnull final ELoginResult eLoginResult)
+      {
+        if (eLoginResult == ELoginResult.INVALID_PASSWORD)
+        {
+          // On invalid password, update consecutive failed login count
+          m_aUserMgr.updateUserLastFailedLogin (sUserID);
+        }
+      }
+    });
+  }
+
   @Override
   protected void onAfterInstantiation (@Nonnull final IScope aScope)
   {
@@ -105,25 +128,8 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       m_aAppTokenMgr = new AppTokenManager (DIRECTORY_SECURITY + FILENAME_APPTOKENS_XML);
       m_aUserTokenMgr = new UserTokenManager (DIRECTORY_SECURITY + FILENAME_USERTOKENS_XML);
 
-      // Remember the last login date of the user
-      LoggedInUserManager.getInstance ().getUserLoginCallbacks ().addCallback (new IUserLoginCallback ()
-      {
-        @Override
-        public void onUserLogin (@Nonnull final LoginInfo aInfo)
-        {
-          m_aUserMgr.updateUserLastLogin (aInfo.getUserID ());
-        }
-
-        @Override
-        public void onUserLoginError (@Nonnull @Nonempty final String sUserID, @Nonnull final ELoginResult eLoginResult)
-        {
-          if (eLoginResult == ELoginResult.INVALID_PASSWORD)
-          {
-            // On invalid password, update consecutive failed login count
-            m_aUserMgr.updateUserLastFailedLogin (sUserID);
-          }
-        }
-      });
+      // Init callbacks after all managers
+      _initCallbacks ();
 
       s_aLogger.info (ClassHelper.getClassLocalName (this) + " was initialized");
     }

@@ -62,7 +62,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
                                             extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     ERROR_NO_USER_PRESENT ("Es ist kein Benutzer angemeldet, daher kann auch das Passwort nicht geändert werden.", "Since no user is logged in no password change is possible."),
     TITLE ("Passwort von ''{0}'' ändern", "Change password of ''{0}''"),
@@ -140,7 +140,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
       if (aWPEC.hasAction (CPageParam.ACTION_PERFORM))
       {
         // Check if the CSRF nonce matches
-        if (checkCSRFNonce (aWPEC).isContinue ())
+        if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
         {
           final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
           final String sOldPlainTextPassword = aWPEC.getAttributeAsString (FIELD_OLD_PASSWORD);
@@ -201,7 +201,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
         final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_PERFORM);
         // Add the nonce for CSRF check
-        aToolbar.addChild (createCSRFNonceField ());
+        aToolbar.addChild (getCSRFHandler ().createCSRFNonceField ());
         aToolbar.addSubmitButtonSave (aDisplayLocale);
       }
     }

@@ -58,7 +58,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
                                            extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert", "The new system message was saved successfully."),
     LAST_UPDATE ("Letzte Aktualisierung: {0}", "Last update: {0}"),
@@ -136,7 +136,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
     {
       if (aWPEC.hasSubAction (CPageParam.ACTION_SAVE))
       {
-        if (checkCSRFNonce (aWPEC).isContinue ())
+        if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
         {
           // Save message
           final ESystemMessageType eNewMessageType = ESystemMessageType.getFromIDOrDefault (aWPEC.getAttributeAsString (FIELD_MESSAGE_TYPE));
@@ -160,7 +160,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         aForm.addChild (new HCTextAreaAutosize (new RequestField (FIELD_MESSAGE, sSystemMessage)));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE));
-        aForm.addChild (createCSRFNonceField ());
+        aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
         final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         aToolbar.addButtonCancel (aDisplayLocale);
