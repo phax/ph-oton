@@ -53,18 +53,18 @@ public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecuti
     super (sID, aName, aDescription);
   }
 
+  @Nonnull
+  protected BootstrapWebPageUIHandler getUIHandler ()
+  {
+    return BootstrapWebPageUIHandler.INSTANCE;
+  }
+
   @Override
   @Nullable
   @OverrideOnDemand
   public IHCNode getHeaderNode (@Nonnull final WPECTYPE aWPEC)
   {
     final String sHeaderText = getHeaderText (aWPEC);
-    return BootstrapUI.createPageHeader (sHeaderText);
-  }
-
-  @Nonnull
-  protected BootstrapWebPageUIHandler getUIHandler ()
-  {
-    return BootstrapWebPageUIHandler.INSTANCE;
+    return getUIHandler ().createPageHeader (sHeaderText);
   }
 }

@@ -5,10 +5,13 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.string.StringHelper;
+import com.helger.html.hc.html.sections.HCH1;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.EBootstrapFormType;
+import com.helger.photon.bootstrap3.pageheader.BootstrapPageHeader;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
@@ -19,6 +22,14 @@ public class BootstrapWebPageUIHandler implements IWebPageFormUIHandler <Bootstr
 
   protected BootstrapWebPageUIHandler ()
   {}
+
+  @Nullable
+  public BootstrapPageHeader createPageHeader (@Nullable final String sHeaderText)
+  {
+    if (StringHelper.hasNoText (sHeaderText))
+      return null;
+    return new BootstrapPageHeader ().addChild (new HCH1 ().addChild (sHeaderText));
+  }
 
   @Override
   @Nonnull

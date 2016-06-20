@@ -75,6 +75,6 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
   public IHCNode getHeaderNode (@Nonnull final WPECTYPE aWPEC)
   {
     final String sHeaderText = getHeaderText (aWPEC);
-    return BootstrapUI.createPageHeader (sHeaderText);
+    return getUIHandler ().createPageHeader (sHeaderText);
   }
 }

@@ -12,6 +12,17 @@ public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, T
                                        extends IWebPageUIHandler
 {
   /**
+   * Create a new in-page header
+   * 
+   * @param sHeaderText
+   *        The header text to be displayed. May be <code>null</code> or empty.
+   * @return <code>null</code> if the passed header text is <code>null</code> or
+   *         empty, a non-<code>null</code> node otherwise.
+   */
+  @Nullable
+  IHCNode createPageHeader (@Nullable String sHeaderText);
+
+  /**
    * @param aLEC
    *        Layout execution context
    * @return A form that links to the current page.
