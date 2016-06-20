@@ -27,6 +27,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.errorlist.FormErrors;
@@ -38,7 +39,6 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
@@ -76,37 +76,22 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageSimpleForm.class);
 
+  private final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
+
   public AbstractWebPageSimpleForm (@Nonnull @Nonempty final String sID,
                                     @Nonnull final IMultilingualText aName,
-                                    @Nullable final IMultilingualText aDescription)
+                                    @Nullable final IMultilingualText aDescription,
+                                    @Nonnull final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
     super (sID, aName, aDescription);
+    m_aUIHandler = ValueEnforcer.notNull (aUIHandler, "UIHandler");
   }
 
-  /**
-   * @param aLEC
-   *        Layout execution context
-   * @return A form that links to the current page.
-   */
   @Nonnull
-  protected abstract FORM_TYPE createFormSelf (@Nonnull final ILayoutExecutionContext aLEC);
-
-  /**
-   * @param aLEC
-   *        Layout execution context
-   * @return A file upload form that links to the current page.
-   */
-  @Nonnull
-  protected abstract FORM_TYPE createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC);
-
-  @Nonnull
-  protected abstract TOOLBAR_TYPE createToolbar (@Nonnull WPECTYPE aWPEC);
-
-  @Nullable
-  protected abstract IHCNode createErrorBox (@Nonnull WPECTYPE aWPEC, @Nullable String sErrorMsg);
-
-  @Nullable
-  protected abstract IHCNode createIncorrectInputBox (@Nonnull WPECTYPE aWPEC);
+  protected final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
+  {
+    return m_aUIHandler;
+  }
 
   /**
    * Get the display name of the passed object.
@@ -246,7 +231,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   @OverrideOnDemand
   protected TOOLBAR_TYPE createNewViewToolbar (@Nonnull final WPECTYPE aWPEC)
   {
-    return createToolbar (aWPEC);
+    return getUIHandler ().createToolbar (aWPEC);
   }
 
   /**
@@ -317,7 +302,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   @OverrideOnDemand
   protected TOOLBAR_TYPE createNewEditToolbar (@Nonnull final WPECTYPE aWPEC)
   {
-    return createToolbar (aWPEC);
+    return getUIHandler ().createToolbar (aWPEC);
   }
 
   /**
@@ -486,10 +471,10 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
           final String sDisplayObjectName = StringHelper.hasText (sObjectName) ? " '" + sObjectName + "'" : "";
           final String sDisplayUserName = aLockUser != null ? "'" + aLockUser.getDisplayName () + "'"
                                                             : EWebPageText.LOCKING_OTHER_USER.getDisplayText (aDisplayLocale);
-          aNodeList.addChild (createErrorBox (aWPEC,
-                                              EWebPageText.LOCKING_FAILED.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                  sDisplayObjectName,
-                                                                                                  sDisplayUserName)));
+          aNodeList.addChild (getUIHandler ().createErrorBox (aWPEC,
+                                                              EWebPageText.LOCKING_FAILED.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                  sDisplayObjectName,
+                                                                                                                  sDisplayUserName)));
           return EContinue.BREAK;
         }
       }
@@ -703,7 +688,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
               else
               {
                 // Show: changes could not be saved...
-                aNodeList.addChild (createIncorrectInputBox (aWPEC));
+                aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
 
                 // Callback method
                 onInputFormError (aWPEC, aFormErrors);
@@ -716,8 +701,8 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
             // Show the input form. Either for the first time or because of form
             // errors a n-th time
             bViewObject = false;
-            final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? createFormFileUploadSelf (aWPEC)
-                                                             : createFormSelf (aWPEC);
+            final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? getUIHandler ().createFormFileUploadSelf (aWPEC)
+                                                             : getUIHandler ().createFormSelf (aWPEC);
             aNodeList.addChild (aForm);
 
             // Set unique ID

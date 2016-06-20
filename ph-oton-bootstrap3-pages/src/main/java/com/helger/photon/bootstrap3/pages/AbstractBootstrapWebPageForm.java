@@ -25,10 +25,8 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.hc.IHCNode;
-import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.page.AbstractWebPageForm;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
@@ -49,26 +47,26 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
 {
   public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
-    super (sID, getAsMLT (sName), null);
+    super (sID, getAsMLT (sName), null, BootstrapWebPageUIHandler.INSTANCE);
   }
 
   public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
-    super (sID, aName, null);
+    super (sID, aName, null, BootstrapWebPageUIHandler.INSTANCE);
   }
 
   public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID,
                                        @Nonnull final String sName,
                                        @Nullable final String sDescription)
   {
-    super (sID, getAsMLT (sName), getAsMLT (sDescription));
+    super (sID, getAsMLT (sName), getAsMLT (sDescription), BootstrapWebPageUIHandler.INSTANCE);
   }
 
   public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID,
                                        @Nonnull final IMultilingualText aName,
                                        @Nullable final IMultilingualText aDescription)
   {
-    super (sID, aName, aDescription);
+    super (sID, aName, aDescription, BootstrapWebPageUIHandler.INSTANCE);
   }
 
   @Override
@@ -78,40 +76,5 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
   {
     final String sHeaderText = getHeaderText (aWPEC);
     return BootstrapUI.createPageHeader (sHeaderText);
-  }
-
-  @Override
-  @Nonnull
-  public BootstrapForm createFormSelf (@Nonnull final ILayoutExecutionContext aLEC)
-  {
-    return BootstrapUI.createFormSelf (aLEC);
-  }
-
-  @Override
-  @Nonnull
-  public BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC)
-  {
-    return BootstrapUI.createFormFileUploadSelf (aLEC);
-  }
-
-  @Override
-  @Nonnull
-  protected final BootstrapButtonToolbar createToolbar (@Nonnull final WPECTYPE aWPEC)
-  {
-    return new BootstrapButtonToolbar (aWPEC);
-  }
-
-  @Override
-  @Nonnull
-  protected final BootstrapErrorBox createErrorBox (@Nonnull final WPECTYPE aWPEC, @Nullable final String sErrorMsg)
-  {
-    return BootstrapUI.createErrorBox (sErrorMsg);
-  }
-
-  @Override
-  @Nonnull
-  protected final BootstrapErrorBox createIncorrectInputBox (@Nonnull final WPECTYPE aWPEC)
-  {
-    return BootstrapUI.createIncorrectInputBox (aWPEC);
   }
 }

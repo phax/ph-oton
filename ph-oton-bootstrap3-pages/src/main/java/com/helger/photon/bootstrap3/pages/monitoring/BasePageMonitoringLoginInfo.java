@@ -88,9 +88,11 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     MSG_NAME ("Name", "Wert"),
     MSG_VALUE ("Wert", "Value"),
     MSG_LOGOUT_USER ("Benutzer {0} abmelden", "Log out user {0}"),
-    LOGOUT_QUESTION ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' abmelden wollen?", "Are you sure you want to log out user ''{0}''?"),
+    LOGOUT_QUESTION ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' abmelden wollen?",
+                     "Are you sure you want to log out user ''{0}''?"),
     LOGOUT_SUCCESS ("Benutzer ''{0}'' wurde erfolgreich abgemeldet.", "User ''{0}'' was successfully logged out."),
-    LOGOUT_ERROR ("Benutzer ''{0}'' konnte nicht abgemeldet werden, weil er nicht mehr angemeldet war.", "User ''{0}'' could not be logged out because he was not logged in.");
+    LOGOUT_ERROR ("Benutzer ''{0}'' konnte nicht abgemeldet werden, weil er nicht mehr angemeldet war.",
+                  "User ''{0}'' could not be logged out because he was not logged in.");
 
     private final IMultilingualText m_aTP;
 
@@ -284,7 +286,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       }
 
       // Show question
-      final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+      final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
       aForm.addChild (new BootstrapSuccessBox ().addChild (EText.LOGOUT_QUESTION.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          sUserName)));
 

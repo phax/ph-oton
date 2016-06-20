@@ -187,7 +187,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
         return true;
       }
 
-      final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+      final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
       aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_ALL_QUERY.getDisplayText (aDisplayLocale)));
       final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
       aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE_ALL);

@@ -834,7 +834,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       {
         // Show input form
         final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
-        final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+        final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
         aForm.addChild (createActionHeader (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                SecurityHelper.getUserDisplayName (aSelectedObject,
                                                                                                                                   aDisplayLocale))));

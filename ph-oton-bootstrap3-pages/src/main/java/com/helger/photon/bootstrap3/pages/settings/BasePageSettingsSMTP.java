@@ -598,7 +598,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
       }
 
       // Show question
-      final BootstrapForm aForm = aNodeList.addAndReturnChild (createFormSelf (aWPEC));
+      final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
 
       aForm.addChild (createActionHeader (EText.TITLE_TEST_MAIL.getDisplayTextWithArgs (aDisplayLocale,
                                                                                         aSelectedObject.getName ())));

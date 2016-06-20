@@ -16,14 +16,13 @@ import com.helger.photon.uicore.icon.IIcon;
 
 public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
                                                          extends
-                                                         AbstractWebPageActionHandler <WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
-                                                         implements IWebPageActionHandler <DATATYPE, WPECTYPE>
+                                                         AbstractWebPageActionHandler <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
 {
   public static final String FORM_ID_DELETE = "deleteform";
 
-  public AbstractWebPageActionHandlerDelete ()
+  public AbstractWebPageActionHandlerDelete (@Nonnull final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
-    super (CPageParam.ACTION_DELETE, true);
+    super (CPageParam.ACTION_DELETE, true, aUIHandler);
   }
 
   /**
@@ -111,7 +110,7 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final TOOLBAR_TYPE aToolbar = createToolbar (aWPEC);
+    final TOOLBAR_TYPE aToolbar = getUIHandler ().createToolbar (aWPEC);
     aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE);
     aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
     aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
@@ -144,7 +143,7 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
     }
     else
     {
-      final FORM_TYPE aForm = createFormSelf (aWPEC);
+      final FORM_TYPE aForm = getUIHandler ().createFormSelf (aWPEC);
       aWPEC.getNodeList ().addChild (aForm);
 
       // Set unique ID

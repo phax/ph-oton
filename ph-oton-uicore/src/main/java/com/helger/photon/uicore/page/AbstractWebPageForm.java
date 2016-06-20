@@ -27,6 +27,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -42,7 +43,6 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
-import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
@@ -94,14 +94,23 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageForm.class);
 
+  private final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aDeleteHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aUndeleteHandler;
 
   public AbstractWebPageForm (@Nonnull @Nonempty final String sID,
                               @Nonnull final IMultilingualText aName,
-                              @Nullable final IMultilingualText aDescription)
+                              @Nullable final IMultilingualText aDescription,
+                              @Nonnull final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
     super (sID, aName, aDescription);
+    m_aUIHandler = ValueEnforcer.notNull (aUIHandler, "UIHandler");
+  }
+
+  @Nonnull
+  protected final IWebPageUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
+  {
+    return m_aUIHandler;
   }
 
   protected final void setDeleteHandler (@Nullable final IWebPageActionHandler <DATATYPE, WPECTYPE> aDeleteHandler)
@@ -113,31 +122,6 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   {
     m_aUndeleteHandler = aUndeleteHandler;
   }
-
-  /**
-   * @param aLEC
-   *        Layout execution context
-   * @return A form that links to the current page.
-   */
-  @Nonnull
-  protected abstract FORM_TYPE createFormSelf (@Nonnull final ILayoutExecutionContext aLEC);
-
-  /**
-   * @param aLEC
-   *        Layout execution context
-   * @return A file upload form that links to the current page.
-   */
-  @Nonnull
-  protected abstract FORM_TYPE createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC);
-
-  @Nonnull
-  protected abstract TOOLBAR_TYPE createToolbar (@Nonnull WPECTYPE aWPEC);
-
-  @Nullable
-  protected abstract IHCNode createErrorBox (@Nonnull WPECTYPE aWPEC, @Nullable String sErrorMsg);
-
-  @Nullable
-  protected abstract IHCNode createIncorrectInputBox (@Nonnull WPECTYPE aWPEC);
 
   /**
    * Get the display name of the passed object.
@@ -532,7 +516,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   @OverrideOnDemand
   protected TOOLBAR_TYPE createNewViewToolbar (@Nonnull final WPECTYPE aWPEC)
   {
-    return createToolbar (aWPEC);
+    return getUIHandler ().createToolbar (aWPEC);
   }
 
   /**
@@ -612,7 +596,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   @OverrideOnDemand
   protected TOOLBAR_TYPE createNewEditToolbar (@Nonnull final WPECTYPE aWPEC)
   {
-    return createToolbar (aWPEC);
+    return getUIHandler ().createToolbar (aWPEC);
   }
 
   /**
@@ -716,7 +700,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   @OverrideOnDemand
   protected TOOLBAR_TYPE createNewCreateToolbar (@Nonnull final WPECTYPE aWPEC)
   {
-    return createToolbar (aWPEC);
+    return getUIHandler ().createToolbar (aWPEC);
   }
 
   /**
@@ -895,10 +879,10 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           final String sDisplayObjectName = StringHelper.hasText (sObjectName) ? " '" + sObjectName + "'" : "";
           final String sDisplayUserName = aLockUser != null ? "'" + aLockUser.getDisplayName () + "'"
                                                             : EWebPageText.LOCKING_OTHER_USER.getDisplayText (aDisplayLocale);
-          aNodeList.addChild (createErrorBox (aWPEC,
-                                              EWebPageText.LOCKING_FAILED.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                  sDisplayObjectName,
-                                                                                                  sDisplayUserName)));
+          aNodeList.addChild (getUIHandler ().createErrorBox (aWPEC,
+                                                              EWebPageText.LOCKING_FAILED.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                  sDisplayObjectName,
+                                                                                                                  sDisplayUserName)));
           return EContinue.BREAK;
         }
       }
@@ -1050,6 +1034,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *         if the object list should not be shown.
    */
   @OverrideOnDemand
+  @Deprecated
   protected boolean handleCustomActions (@Nonnull final WPECTYPE aWPEC, @Nullable final DATATYPE aSelectedObject)
   {
     return true;
@@ -1107,7 +1092,10 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
       }
       else
         if (CPageParam.ACTION_CREATE.equals (sAction))
+        {
+          // No selected object required
           eFormAction = EWebPageFormAction.CREATE;
+        }
         else
           if (CPageParam.ACTION_EDIT.equals (sAction))
           {
@@ -1204,7 +1192,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
               else
               {
                 // Show: changes could not be saved...
-                aNodeList.addChild (createIncorrectInputBox (aWPEC));
+                aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
 
                 // Callback method
                 onInputFormError (aWPEC, aFormErrors);
@@ -1217,8 +1205,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             // Show the input form. Either for the first time or because of form
             // errors a n-th time
             bShowList = false;
-            final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? createFormFileUploadSelf (aWPEC)
-                                                             : createFormSelf (aWPEC);
+            final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? getUIHandler ().createFormFileUploadSelf (aWPEC)
+                                                             : getUIHandler ().createFormSelf (aWPEC);
             aNodeList.addChild (aForm);
 
             // Set unique ID

@@ -468,7 +468,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                                                                     aSelectedObject.getDisplayName ())));
         return false;
       }
-      aNodeList.addChild (createIncorrectInputBox (aWPEC));
+      aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
     }
 
     final BootstrapForm aForm = new BootstrapForm (aWPEC.getSelfHref ());
@@ -533,7 +533,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                                                   aSelectedObject.getDisplayName ())));
         return false;
       }
-      aNodeList.addChild (createIncorrectInputBox (aWPEC));
+      aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
     }
 
     final BootstrapForm aForm = new BootstrapForm (aWPEC.getSelfHref ());
