@@ -140,7 +140,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
       if (aWPEC.hasAction (CPageParam.ACTION_PERFORM))
       {
         // Check if the CSRF nonce matches
-        if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
+        if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
         {
           final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
           final String sOldPlainTextPassword = aWPEC.getAttributeAsString (FIELD_OLD_PASSWORD);

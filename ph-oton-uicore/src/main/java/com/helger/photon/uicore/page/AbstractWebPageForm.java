@@ -1419,7 +1419,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           if (bIsFormSubmitted)
           {
             // Check if the nonce matches
-            if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
+            if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
             {
               // try to save, only if nonce is as expected
               validateAndSaveInputParameters (aWPEC, aSelectedObject, aFormErrors, eFormAction);
@@ -1511,7 +1511,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           if (bIsFormSubmitted)
           {
             // Check if the nonce matches
-            if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
+            if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
             {
               performDelete (aWPEC, aSelectedObject);
             }
@@ -1544,7 +1544,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           if (bIsFormSubmitted)
           {
             // Check if the nonce matches
-            if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
+            if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
             {
               performUndelete (aWPEC, aSelectedObject);
             }

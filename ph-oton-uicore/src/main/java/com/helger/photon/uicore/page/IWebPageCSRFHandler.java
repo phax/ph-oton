@@ -23,29 +23,24 @@ public interface IWebPageCSRFHandler
   /**
    * Callback method that is executed if a CSRF nonce mismatch occurs.
    *
-   * @param aSrcPage
-   *        The page for which the check was executed. Never <code>null</code>.
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
    * @param sNonce
    *        The provided nonce. May be <code>null</code>.
    */
-  void onCSRFError (@Nonnull IWebPage <?> aSrcPage, @Nonnull IWebPageExecutionContext aWPEC, @Nullable String sNonce);
+  void onCSRFError (@Nonnull IWebPageExecutionContext aWPEC, @Nullable String sNonce);
 
   /**
    * Check if the nonce if the passed WPEC is correct. Calls
-   * {@link #onCSRFError(IWebPage, IWebPageExecutionContext, String)} upon
-   * failure.
+   * {@link #onCSRFError(IWebPageExecutionContext, String)} upon failure.
    *
-   * @param aSrcPage
-   *        The page for which the check was executed. Never <code>null</code>.
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
    * @return {@link EContinue#CONTINUE} if CSRF checking is disabled or was
    *         successful.
    */
   @Nonnull
-  EContinue checkCSRFNonce (@Nonnull IWebPage <?> aSrcPage, @Nonnull IWebPageExecutionContext aWPEC);
+  EContinue checkCSRFNonce (@Nonnull IWebPageExecutionContext aWPEC);
 
   /**
    * @return The HTML nonce hidden field or <code>null</code> if CSRF prevention

@@ -136,7 +136,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
     {
       if (aWPEC.hasSubAction (CPageParam.ACTION_SAVE))
       {
-        if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
+        if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
         {
           // Save message
           final ESystemMessageType eNewMessageType = ESystemMessageType.getFromIDOrDefault (aWPEC.getAttributeAsString (FIELD_MESSAGE_TYPE));

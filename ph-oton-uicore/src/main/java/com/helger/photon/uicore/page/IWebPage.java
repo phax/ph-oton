@@ -36,6 +36,12 @@ import com.helger.photon.basic.app.page.IPage;
 public interface IWebPage <WPECTYPE extends IWebPageExecutionContext> extends IPage
 {
   /**
+   * @return The current CSRF handler. Never <code>null</code>.
+   */
+  @Nonnull
+  IWebPageCSRFHandler getCSRFHandler ();
+
+  /**
    * Get the headline of the page. By default it is equal to the page name.
    *
    * @param aWPEC

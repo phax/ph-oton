@@ -730,7 +730,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
       {
         // Check if the nonce matches
-        if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
+        if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
         {
           final String sPlainTextPassword = aWPEC.getAttributeAsString (FIELD_PASSWORD);
           final String sPlainTextPasswordConfirm = aWPEC.getAttributeAsString (FIELD_PASSWORD_CONFIRM);

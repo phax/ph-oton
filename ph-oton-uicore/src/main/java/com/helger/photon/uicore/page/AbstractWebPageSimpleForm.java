@@ -705,7 +705,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
           if (bIsFormSubmitted)
           {
             // Check if the nonce matches
-            if (getCSRFHandler ().checkCSRFNonce (this, aWPEC).isContinue ())
+            if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
             {
               // try to save, only if nonce is as expected
               validateAndSaveInputParameters (aWPEC, aObject, aFormErrors, eSimpleFormAction);

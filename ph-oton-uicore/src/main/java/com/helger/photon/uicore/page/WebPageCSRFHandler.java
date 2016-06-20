@@ -20,7 +20,7 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
 {
   /**
    * The global instance of this class. This is used by default. All changes to
-   * this instance will effect all default occurances.
+   * this instance will effect all default occurrences.
    */
   public static final WebPageCSRFHandler INSTANCE = new WebPageCSRFHandler ();
 
@@ -43,12 +43,10 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
     return this;
   }
 
-  public void onCSRFError (@Nonnull final IWebPage <?> aSrcPage,
-                           @Nonnull final IWebPageExecutionContext aWPEC,
-                           @Nullable final String sNonce)
+  public void onCSRFError (@Nonnull final IWebPageExecutionContext aWPEC, @Nullable final String sNonce)
   {
     s_aLogger.error ("The expected CSRF nonce on page '" +
-                     aSrcPage.getID () +
+                     aWPEC.getWebPage ().getID () +
                      "' was not present.\nExpected: '" +
                      CSRFSessionManager.getInstance ().getNonce () +
                      "'\nBut got: '" +
@@ -57,7 +55,7 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
   }
 
   @Nonnull
-  public EContinue checkCSRFNonce (@Nonnull final IWebPage <?> aSrcPage, @Nonnull final IWebPageExecutionContext aWPEC)
+  public EContinue checkCSRFNonce (@Nonnull final IWebPageExecutionContext aWPEC)
   {
     if (m_bCSRFPreventionEnabled)
     {
@@ -66,7 +64,7 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
       if (!aCSRFSessionMgr.isExpectedNonce (sNonce))
       {
         // CSRF failure!
-        onCSRFError (aSrcPage, aWPEC, sNonce);
+        onCSRFError (aWPEC, sNonce);
         return EContinue.BREAK;
       }
     }

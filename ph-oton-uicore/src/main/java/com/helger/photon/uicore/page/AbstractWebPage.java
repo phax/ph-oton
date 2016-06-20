@@ -124,9 +124,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
     super (sID, aName, aDescription);
   }
 
-  /**
-   * @return The current CSRF handler. Never <code>null</code>.
-   */
+  @Nonnull
   public final IWebPageCSRFHandler getCSRFHandler ()
   {
     return m_aCSRFHandler;
