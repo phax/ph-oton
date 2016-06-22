@@ -29,7 +29,9 @@ import java.util.function.ToLongFunction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.compare.IComparator;
 import com.helger.commons.format.FormatterStringSkipSuffix;
 import com.helger.commons.locale.LocaleParser;
@@ -43,15 +45,34 @@ import com.helger.masterdata.currency.ECurrency;
  *
  * @author Philip Helger
  */
+@Immutable
 public final class ComparatorDT
 {
+  private ComparatorDT ()
+  {}
+
+  /**
+   * Get a Comparator that first formats a cell value (optional) and that
+   * converts it to type T using the provided mapper.
+   *
+   * @param aFormatter
+   *        Optional formatter to e.g. remove prefix or suffixes. May be
+   *        <code>null</code>.
+   * @param aMapper
+   *        The mapper to convert from String to a Comparable object. May not be
+   *        <code>null</code>.
+   * @return A {@link Comparator} that performs the respective comparison.
+   */
   @Nonnull
   public static <T extends Comparable <? super T>> Comparator <String> getComparator (@Nullable final Function <? super String, String> aFormatter,
                                                                                       @Nonnull final Function <? super String, T> aMapper)
   {
-    return Comparator.comparing (aFormatter == null ? sCell -> aMapper.apply (StringHelper.getNotNull (sCell))
-                                                    : sCell -> aMapper.apply (sCell == null ? ""
-                                                                                            : aFormatter.apply (sCell)));
+    Comparator <String> ret;
+    if (aFormatter == null)
+      ret = Comparator.comparing (sCell -> aMapper.apply (StringHelper.getNotNull (sCell)));
+    else
+      ret = Comparator.comparing (sCell -> aMapper.apply (sCell == null ? "" : aFormatter.apply (sCell)));
+    return Comparator.nullsFirst (ret);
   }
 
   @Nonnull
@@ -111,7 +132,11 @@ public final class ComparatorDT
   public static Comparator <String> getComparatorDate (@Nullable final Function <? super String, String> aFormatter,
                                                        @Nonnull final DateTimeFormatter aDTFormatter)
   {
-    return getComparator (aFormatter, sCellText -> PDTFromString.getLocalDateFromString (sCellText, aDTFormatter));
+    // TODO ph-commons >= 8.0.1 change to Supplier in ValueEnforcer
+    return getComparator (aFormatter,
+                          sCellText -> ValueEnforcer.notNull (PDTFromString.getLocalDateFromString (sCellText,
+                                                                                                    aDTFormatter),
+                                                              "Failed to parse " + sCellText));
   }
 
   @Nonnull
@@ -125,7 +150,11 @@ public final class ComparatorDT
   public static Comparator <String> getComparatorTime (@Nullable final Function <? super String, String> aFormatter,
                                                        @Nonnull final DateTimeFormatter aDTFormatter)
   {
-    return getComparator (aFormatter, sCellText -> PDTFromString.getLocalTimeFromString (sCellText, aDTFormatter));
+    // TODO ph-commons >= 8.0.1 change to Supplier in ValueEnforcer
+    return getComparator (aFormatter,
+                          sCellText -> ValueEnforcer.notNull (PDTFromString.getLocalTimeFromString (sCellText,
+                                                                                                    aDTFormatter),
+                                                              "Failed to parse " + sCellText));
   }
 
   @Nonnull
@@ -139,13 +168,18 @@ public final class ComparatorDT
   public static Comparator <String> getComparatorDateTime (@Nullable final Function <? super String, String> aFormatter,
                                                            @Nonnull final DateTimeFormatter aDTFormatter)
   {
-    return getComparator (aFormatter, sCellText -> PDTFromString.getLocalDateTimeFromString (sCellText, aDTFormatter));
+    // TODO ph-commons >= 8.0.1 change to Supplier in ValueEnforcer
+    return getComparator (aFormatter,
+                          sCellText -> ValueEnforcer.notNull (PDTFromString.getLocalDateTimeFromString (sCellText,
+                                                                                                        aDTFormatter),
+                                                              "Failed to parse " + sCellText));
   }
 
   @Nonnull
   public static Comparator <String> getComparatorDuration (@Nullable final Function <? super String, String> aFormatter)
   {
-    return getComparator (aFormatter, Duration::parse);
+    // TODO ph-datetime >= 5.0.1 change to PDTFromString.getDurationFromString
+    return getComparator (aFormatter, sCellText -> sCellText.isEmpty () ? null : Duration.parse (sCellText));
   }
 
   @Nonnull
@@ -153,9 +187,9 @@ public final class ComparatorDT
                                                          @Nonnull final Locale aDisplayLocale)
   {
     return IComparator.getComparatorCollating (aFormatter == null ? sCell -> StringHelper.getNotNull (sCell)
-                                                                              : sCell -> sCell == null ? ""
-                                                                                                       : aFormatter.apply (sCell),
-                                                           aDisplayLocale);
+                                                                  : sCell -> sCell == null ? ""
+                                                                                           : aFormatter.apply (sCell),
+                                               aDisplayLocale);
   }
 
   @Nonnull
