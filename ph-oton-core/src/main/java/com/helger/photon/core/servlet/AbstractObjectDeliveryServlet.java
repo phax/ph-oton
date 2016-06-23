@@ -75,12 +75,12 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
                                                                                                 .nextLong ()) +
                                                                      '"';
 
-  private final ICommonsOrderedSet <String> m_aDeniedFilenames = new CommonsLinkedHashSet <> ();
-  private final ICommonsOrderedSet <String> m_aDeniedExtensions = new CommonsLinkedHashSet <> ();
-  private final ICommonsOrderedSet <String> m_aDeniedRegExs = new CommonsLinkedHashSet <> ();
-  private final ICommonsOrderedSet <String> m_aAllowedFilenames = new CommonsLinkedHashSet <> ();
-  private final ICommonsOrderedSet <String> m_aAllowedExtensions = new CommonsLinkedHashSet <> ();
-  private final ICommonsOrderedSet <String> m_aAllowedRegExs = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aDeniedFilenames = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aDeniedExtensions = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aDeniedRegExs = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aAllowedFilenames = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aAllowedExtensions = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aAllowedRegExs = new CommonsLinkedHashSet<> ();
   private boolean m_bDeniedAllExtensions = false;
   private boolean m_bAllowedAllExtensions = false;
 

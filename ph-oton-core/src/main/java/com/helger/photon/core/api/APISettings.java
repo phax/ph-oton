@@ -42,12 +42,12 @@ public final class APISettings
   public static final long DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS = CGlobal.MILLISECONDS_PER_SECOND;
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-  private static final CallbackList <IAPIExceptionCallback> s_aExceptionCallbacks = new CallbackList <> ();
-  private static final CallbackList <IAPIBeforeExecutionCallback> s_aBeforeExecutionCallbacks = new CallbackList <> ();
-  private static final CallbackList <IAPIAfterExecutionCallback> s_aAfterExecutionCallbacks = new CallbackList <> ();
+  private static final CallbackList <IAPIExceptionCallback> s_aExceptionCallbacks = new CallbackList<> ();
+  private static final CallbackList <IAPIBeforeExecutionCallback> s_aBeforeExecutionCallbacks = new CallbackList<> ();
+  private static final CallbackList <IAPIAfterExecutionCallback> s_aAfterExecutionCallbacks = new CallbackList<> ();
   @GuardedBy ("s_aRWLock")
   private static long s_nLongRunningExecutionLimitTime = DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS;
-  private static final CallbackList <IAPILongRunningExecutionCallback> s_aLongRunningExecutionCallbacks = new CallbackList <> ();
+  private static final CallbackList <IAPILongRunningExecutionCallback> s_aLongRunningExecutionCallbacks = new CallbackList<> ();
 
   static
   {

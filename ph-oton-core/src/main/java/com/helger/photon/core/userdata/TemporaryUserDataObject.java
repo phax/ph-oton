@@ -25,9 +25,9 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.string.StringHelper;
 
 /**
- * A special version of {@link AbstractUserDataObject} creating a
- * "temporary only" file. A {@link TemporaryUserDataObject} always resides on
- * the file system and can be accessed by regular file IO.
+ * A special version of {@link AbstractUserDataObject} creating a "temporary
+ * only" file. A {@link TemporaryUserDataObject} always resides on the file
+ * system and can be accessed by regular file IO.
  *
  * @author Philip Helger
  */

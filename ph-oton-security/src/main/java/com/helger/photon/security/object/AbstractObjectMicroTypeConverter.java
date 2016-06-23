@@ -130,7 +130,7 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
   @Nonnull
   public static final StubObjectWithCustomAttrs getStubObjectWithCustomAttrs (@Nonnull final IMicroElement aElement)
   {
-    final ICommonsOrderedMap <String, String> aCustomAttrs = new CommonsLinkedHashMap <> ();
+    final ICommonsOrderedMap <String, String> aCustomAttrs = new CommonsLinkedHashMap<> ();
     for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
       aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
 

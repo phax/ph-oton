@@ -49,7 +49,7 @@ public class InternalErrorBuilder
   private IUIInternalErrorHandler m_aUIErrorHandler;
   private Throwable m_aThrowable;
   private IRequestWebScopeWithoutResponse m_aRequestScope;
-  private final ICommonsOrderedMap <String, String> m_aCustomData = new CommonsLinkedHashMap <> ();
+  private final ICommonsOrderedMap <String, String> m_aCustomData = new CommonsLinkedHashMap<> ();
   private EmailAttachmentList m_aEmailAttachments;
   private Locale m_aDisplayLocale;
   private boolean m_bInvokeCustomExceptionHandler = DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER;

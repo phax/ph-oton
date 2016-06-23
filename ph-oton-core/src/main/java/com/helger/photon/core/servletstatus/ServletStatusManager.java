@@ -52,7 +52,7 @@ public final class ServletStatusManager
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
-  private static final ICommonsMap <String, ServletStatus> s_aMap = new CommonsHashMap <> ();
+  private static final ICommonsMap <String, ServletStatus> s_aMap = new CommonsHashMap<> ();
 
   private ServletStatusManager ()
   {}

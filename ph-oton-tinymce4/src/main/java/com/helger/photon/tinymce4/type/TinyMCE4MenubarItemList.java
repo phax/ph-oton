@@ -40,7 +40,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
    */
   public TinyMCE4MenubarItemList ()
   {
-    m_aList = new CommonsArrayList <> ();
+    m_aList = new CommonsArrayList<> ();
   }
 
   /**
@@ -52,7 +52,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
   public TinyMCE4MenubarItemList (@Nonnull final ETinyMCE4MenuItem... aList)
   {
     ValueEnforcer.notNull (aList, "List");
-    m_aList = new CommonsArrayList <> (aList);
+    m_aList = new CommonsArrayList<> (aList);
   }
 
   /**
@@ -64,7 +64,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
   public TinyMCE4MenubarItemList (@Nonnull final List <ETinyMCE4MenuItem> aList)
   {
     ValueEnforcer.notNull (aList, "List");
-    m_aList = new CommonsArrayList <> (aList);
+    m_aList = new CommonsArrayList<> (aList);
   }
 
   /**

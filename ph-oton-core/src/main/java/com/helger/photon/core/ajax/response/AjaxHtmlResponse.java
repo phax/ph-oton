@@ -205,9 +205,9 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
    *        are kept as document.ready() scripts using this provider. If
    *        <code>null</code> than all document.ready() scripts are converted to
    *        regular scripts and are executed after all other scripts. For AJAX
-   *        calls, this should be <code>null</code> as there is no
-   *        "document ready" callback - alternatively you can provide a custom
-   *        "on document ready" provider.
+   *        calls, this should be <code>null</code> as there is no "document
+   *        ready" callback - alternatively you can provide a custom "on
+   *        document ready" provider.
    * @param sErrorMessage
    *        Optional error message if success if <code>false</code>
    */

@@ -34,7 +34,7 @@ import com.helger.commons.text.util.TextHelper;
  * @author Philip Helger
  */
 @Translatable
-public enum EPhotonCoreText implements IHasDisplayText,IHasDisplayTextWithArgs
+public enum EPhotonCoreText implements IHasDisplayText, IHasDisplayTextWithArgs
 {
   // Misc texts
   PAGE_HELP_TITLE ("Hilfe zu ''{0}'' anzeigen", "Show help for ''{0}''"),
@@ -48,7 +48,8 @@ public enum EPhotonCoreText implements IHasDisplayText,IHasDisplayTextWithArgs
   LOGIN_LOGOUT ("Abmelden", "Logout"),
   IMAGE_NONE ("keines", "none"),
   SAVE_CHANGES_SUCCESS ("Die Änderungen wurden erfolgreich gespeichert!", "The changes were saved successfully!"),
-  ERR_INCORRECT_INPUT ("Auf Grund fehlender oder falscher Eingaben konnte nicht gespeichert werden! Überprüfen Sie Ihre Eingaben und folgen Sie den Aufforderungen zur Fehlerbehebung.", "Due to missing or incorrect input saving was not possible. Check your input and follow the suggestions for error correction."),
+  ERR_INCORRECT_INPUT ("Auf Grund fehlender oder falscher Eingaben konnte nicht gespeichert werden! Überprüfen Sie Ihre Eingaben und folgen Sie den Aufforderungen zur Fehlerbehebung.",
+                       "Due to missing or incorrect input saving was not possible. Check your input and follow the suggestions for error correction."),
   PLEASE_SELECT ("(Wählen Sie einen Eintrag)", "(Select an item)"),
   SELECT_NONE ("(Kein)", "(None)"),
   CALENDAR_OPEN ("Kalender...", "Calendar..."),
@@ -83,7 +84,8 @@ public enum EPhotonCoreText implements IHasDisplayText,IHasDisplayTextWithArgs
                               "Notieren Sie sich bitte ihre persönliche Fehlernummer ''{0}'' für eine mögliche spätere Analyse.\n" +
                               "\n" +
                               "Sie können mit Ihrer Arbeit fortfahren.\n" +
-                              "Falls dieser Fehler wieder auftritt, vermeiden Sie bitte die Schritte die zu diesem Fehler geführt haben, und warten bis er behoben ist.", "Sorry!\n" +
+                              "Falls dieser Fehler wieder auftritt, vermeiden Sie bitte die Schritte die zu diesem Fehler geführt haben, und warten bis er behoben ist.",
+                              "Sorry!\n" +
                                                                                                                                                                           "An internal error was encountered.\n" +
                                                                                                                                                                           "\n" +
                                                                                                                                                                           "An automated error report was already sent to the technical responsible.\n" +

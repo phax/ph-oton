@@ -58,7 +58,7 @@ public class AjaxInvoker implements IAjaxInvoker
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IAjaxFunctionDeclaration> m_aFuncDecls = new CommonsHashMap <> ();
+  private final ICommonsMap <String, IAjaxFunctionDeclaration> m_aFuncDecls = new CommonsHashMap<> ();
 
   public AjaxInvoker ()
   {}
@@ -172,12 +172,11 @@ public class AjaxInvoker implements IAjaxInvoker
       if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
       {
         // Long running execution
-        AjaxSettings.getLongRunningExecutionCallbacks ()
-                    .forEach (aCB -> aCB.onLongRunningExecution (this,
-                                                                 sFunctionName,
-                                                                 aRequestScope,
-                                                                 aAjaxExecutor,
-                                                                 nExecutionMillis));
+        AjaxSettings.getLongRunningExecutionCallbacks ().forEach (aCB -> aCB.onLongRunningExecution (this,
+                                                                                                     sFunctionName,
+                                                                                                     aRequestScope,
+                                                                                                     aAjaxExecutor,
+                                                                                                     nExecutionMillis));
       }
       return aAjaxResponse;
     }

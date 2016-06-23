@@ -58,7 +58,7 @@ public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasS
 
   private static boolean s_bCreateDefaults = true;
 
-  private final ICommonsMap <String, NamedSMTPSettings> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <String, NamedSMTPSettings> m_aMap = new CommonsHashMap<> ();
 
   public static boolean isCreateDefaults ()
   {

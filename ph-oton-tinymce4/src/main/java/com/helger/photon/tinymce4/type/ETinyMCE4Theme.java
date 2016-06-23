@@ -31,26 +31,27 @@ import com.helger.commons.string.StringHelper;
  */
 public enum ETinyMCE4Theme
 {
-  MODERN ("modern", new TinyMCE4ToolbarControlList (ETinyMCE4ToolbarControl.UNDO,
-                                                    ETinyMCE4ToolbarControl.REDO,
-                                                    null,
-                                                    ETinyMCE4ToolbarControl.STYLESELECT,
-                                                    null,
-                                                    ETinyMCE4ToolbarControl.BOLD,
-                                                    ETinyMCE4ToolbarControl.ITALIC,
-                                                    null,
-                                                    ETinyMCE4ToolbarControl.ALIGNLEFT,
-                                                    ETinyMCE4ToolbarControl.ALIGNCENTER,
-                                                    ETinyMCE4ToolbarControl.ALIGNRIGHT,
-                                                    ETinyMCE4ToolbarControl.ALIGNJUSTIFY,
-                                                    null,
-                                                    ETinyMCE4ToolbarControl.BULLIST,
-                                                    ETinyMCE4ToolbarControl.NUMLIST,
-                                                    ETinyMCE4ToolbarControl.OUTDENT,
-                                                    ETinyMCE4ToolbarControl.INDENT,
-                                                    null,
-                                                    ETinyMCE4ToolbarControl.LINK,
-                                                    ETinyMCE4ToolbarControl.IMAGE));
+  MODERN ("modern",
+          new TinyMCE4ToolbarControlList (ETinyMCE4ToolbarControl.UNDO,
+                                          ETinyMCE4ToolbarControl.REDO,
+                                          null,
+                                          ETinyMCE4ToolbarControl.STYLESELECT,
+                                          null,
+                                          ETinyMCE4ToolbarControl.BOLD,
+                                          ETinyMCE4ToolbarControl.ITALIC,
+                                          null,
+                                          ETinyMCE4ToolbarControl.ALIGNLEFT,
+                                          ETinyMCE4ToolbarControl.ALIGNCENTER,
+                                          ETinyMCE4ToolbarControl.ALIGNRIGHT,
+                                          ETinyMCE4ToolbarControl.ALIGNJUSTIFY,
+                                          null,
+                                          ETinyMCE4ToolbarControl.BULLIST,
+                                          ETinyMCE4ToolbarControl.NUMLIST,
+                                          ETinyMCE4ToolbarControl.OUTDENT,
+                                          ETinyMCE4ToolbarControl.INDENT,
+                                          null,
+                                          ETinyMCE4ToolbarControl.LINK,
+                                          ETinyMCE4ToolbarControl.IMAGE));
 
   /** The default theme */
   public static final ETinyMCE4Theme DEFAULT = MODERN;

@@ -38,7 +38,7 @@ import com.helger.html.js.CJS;
  *
  * @author Philip Helger
  */
-public enum EWebSiteResourceType implements IHasID <String>,IHasDisplayName
+public enum EWebSiteResourceType implements IHasID <String>, IHasDisplayName
 {
   JS ("js", CMimeType.TEXT_JAVASCRIPT, CJS.FILE_EXTENSION_JS, "JavaScript")
   {

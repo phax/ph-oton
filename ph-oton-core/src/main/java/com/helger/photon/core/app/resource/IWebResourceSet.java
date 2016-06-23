@@ -114,9 +114,9 @@ public interface IWebResourceSet <T> extends Serializable, Iterable <T>
   void getAllItems (@Nonnull Collection <? super T> aTarget);
 
   /**
-   * Call this method to mark the resource set as
-   * "collected for further processing". This state may be used to determine
-   * additions afterwards which will potentially not be gathered.
+   * Call this method to mark the resource set as "collected for further
+   * processing". This state may be used to determine additions afterwards which
+   * will potentially not be gathered.
    */
   void markAsCollected ();
 

@@ -35,7 +35,8 @@ import com.helger.commons.text.util.TextHelper;
 public enum ELoginResultText implements IHasDisplayText
 {
   SUCCESS ("Die Anmeldung war erfolgreich.", "User logged in successfully."),
-  SUCCESS_WITH_LOGOUT ("Die Anmeldung war erfolgreich. Eine andere Sitzung wurde automatisch beendet.", "User logged in successfully. Another session was automatically closed."),
+  SUCCESS_WITH_LOGOUT ("Die Anmeldung war erfolgreich. Eine andere Sitzung wurde automatisch beendet.",
+                       "User logged in successfully. Another session was automatically closed."),
   USER_NOT_EXISTING ("Der Benutzername ist ungültig.", "No such user exists."),
   USER_IS_DELETED ("Der Benutzer existiert nicht mehr.", "The user not longer exists."),
   USER_IS_DISABLED ("Der Benutzer ist deaktiviert.", "The user is disabled."),

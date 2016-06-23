@@ -34,15 +34,21 @@ import com.helger.commons.text.util.TextHelper;
  * @author Philip Helger
  */
 @Translatable
-public enum EPasswordConstraintText implements IHasDisplayText,IHasDisplayTextWithArgs
+public enum EPasswordConstraintText implements IHasDisplayText, IHasDisplayTextWithArgs
 {
-  DESC_MIN_LENGTH ("Das Passwort muss mindestens {0} Zeichen haben.", "The password must have at least {0} character(s)."),
+  DESC_MIN_LENGTH ("Das Passwort muss mindestens {0} Zeichen haben.",
+                   "The password must have at least {0} character(s)."),
   DESC_MAX_LENGTH ("Das Passwort darf maximal {0} Zeichen haben.", "The password must have at last {0} character(s)."),
-  DESC_MUST_CONTAIN_DIGITS ("Das Passwort muss mindestens {0} Zahl(en) enthalten.", "The password must contain at least {0} digit(s)."),
-  DESC_MUST_CONTAIN_LETTERS ("Das Passwort muss mindestens {0} Buchstaben enthalten.", "The password must contain at least {0} letter(s)."),
-  DESC_MUST_CONTAIN_LETTERS_LOWERCASE ("Das Passwort muss mindestens {0} Kleinbuchstaben enthalten.", "The password must contain at least {0} lowercase letter(s)."),
-  DESC_MUST_CONTAIN_LETTERS_UPPERCASE ("Das Passwort muss mindestens {0} Großbuchstaben enthalten.", "The password must contain at least {0} uppercase letter(s)."),
-  DESC_MUST_CONTAIN_SPECIALS ("Das Passwort muss mindestens {0} Sonderzeichen enthalten.", "The password must contain at least {0} special char(s).");
+  DESC_MUST_CONTAIN_DIGITS ("Das Passwort muss mindestens {0} Zahl(en) enthalten.",
+                            "The password must contain at least {0} digit(s)."),
+  DESC_MUST_CONTAIN_LETTERS ("Das Passwort muss mindestens {0} Buchstaben enthalten.",
+                             "The password must contain at least {0} letter(s)."),
+  DESC_MUST_CONTAIN_LETTERS_LOWERCASE ("Das Passwort muss mindestens {0} Kleinbuchstaben enthalten.",
+                                       "The password must contain at least {0} lowercase letter(s)."),
+  DESC_MUST_CONTAIN_LETTERS_UPPERCASE ("Das Passwort muss mindestens {0} Großbuchstaben enthalten.",
+                                       "The password must contain at least {0} uppercase letter(s)."),
+  DESC_MUST_CONTAIN_SPECIALS ("Das Passwort muss mindestens {0} Sonderzeichen enthalten.",
+                              "The password must contain at least {0} special char(s).");
 
   private final IMultilingualText m_aTP;
 

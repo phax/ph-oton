@@ -49,7 +49,7 @@ public class UserPasswordCredentials implements IUserPasswordCredentials
   {
     m_aUser = aUser;
     m_sPassword = sPassword;
-    m_aRequiredRoles = new CommonsArrayList <> (aRequiredRoles);
+    m_aRequiredRoles = new CommonsArrayList<> (aRequiredRoles);
   }
 
   @Nullable

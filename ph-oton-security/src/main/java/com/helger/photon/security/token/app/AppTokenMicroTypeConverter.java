@@ -64,7 +64,7 @@ public final class AppTokenMicroTypeConverter extends AbstractObjectMicroTypeCon
   @Nonnull
   public AppToken convertToNative (@Nonnull final IMicroElement aElement)
   {
-    final ICommonsList <AccessToken> aAccessTokens = new CommonsArrayList <> ();
+    final ICommonsList <AccessToken> aAccessTokens = new CommonsArrayList<> ();
     for (final IMicroElement e : aElement.getAllChildElements (ELEMENT_ACCESS_TOKEN))
       aAccessTokens.add (MicroTypeConverter.convertToNative (e, AccessToken.class));
     final String sOwnerName = aElement.getAttributeValue (ATTR_OWNER_NAME);

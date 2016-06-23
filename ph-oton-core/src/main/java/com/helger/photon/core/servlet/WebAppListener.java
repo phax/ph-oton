@@ -179,7 +179,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected final void logInitParameters (@Nonnull final ServletContext aSC)
   {
     // Put them in a sorted map
-    final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap <> ();
+    final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap<> ();
     final Enumeration <?> aEnum = aSC.getInitParameterNames ();
     while (aEnum.hasMoreElements ())
     {

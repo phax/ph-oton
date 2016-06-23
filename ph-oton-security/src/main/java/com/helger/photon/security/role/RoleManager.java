@@ -46,7 +46,7 @@ import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 @ThreadSafe
 public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> implements IReloadableDAO
 {
-  private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <> ();
+  private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList<> ();
 
   public RoleManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -65,12 +65,12 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
   {
     if (!containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       internalCreateItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
-                                 CSecurity.ROLE_ADMINISTRATOR_NAME,
-                                 (String) null));
+                                    CSecurity.ROLE_ADMINISTRATOR_NAME,
+                                    (String) null));
     if (!containsRoleWithID (CSecurity.ROLE_USER_ID))
       internalCreateItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
-                                 CSecurity.ROLE_USER_NAME,
-                                 (String) null));
+                                    CSecurity.ROLE_USER_NAME,
+                                    (String) null));
   }
 
   /**

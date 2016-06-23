@@ -109,7 +109,7 @@ public final class ExporterCSV implements IExporterFile
                                    @Nonnull final IExportRecord aRecord)
   {
     final ICommonsList <? extends IExportRecordField> aAllFields = aRecord.getAllFields ();
-    final ICommonsList <String> aValues = new CommonsArrayList <> (aAllFields.size ());
+    final ICommonsList <String> aValues = new CommonsArrayList<> (aAllFields.size ());
     for (final IExportRecordField aField : aAllFields)
     {
       final Object aFieldValue = aField.getFieldValue ();
@@ -129,7 +129,7 @@ public final class ExporterCSV implements IExporterFile
       ValueEnforcer.notNull (aProvider, "Provider");
       ValueEnforcer.notNull (aOS, "OutputStream");
 
-      final ICommonsList <ICommonsList <String>> aRecords = new CommonsArrayList <> ();
+      final ICommonsList <ICommonsList <String>> aRecords = new CommonsArrayList<> ();
 
       // Header
       for (final IExportRecord aHeaderRecord : aProvider.getHeaderRecords ())
@@ -158,9 +158,8 @@ public final class ExporterCSV implements IExporterFile
           s_aLogger.error ("Failed to write BOM on stream", ex);
         }
 
-      try (
-          final CSVWriter aWriter = new CSVWriter (new OutputStreamWriter (aOS,
-                                                                           m_aCharset)).setSeparatorChar (m_cSeparator))
+      try (final CSVWriter aWriter = new CSVWriter (new OutputStreamWriter (aOS,
+                                                                            m_aCharset)).setSeparatorChar (m_cSeparator))
       {
         aWriter.writeAll (aRecords);
         return ESuccess.SUCCESS;

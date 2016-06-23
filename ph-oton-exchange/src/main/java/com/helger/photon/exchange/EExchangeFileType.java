@@ -40,7 +40,7 @@ import com.helger.poi.excel.EExcelVersion;
  *
  * @author Philip Helger
  */
-public enum EExchangeFileType implements IHasID <String>,IHasDisplayText
+public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
 {
   CSV ("csv", ".csv", CMimeType.TEXT_CSV, true, EExchangeFileTypeName.CSV)
   {
@@ -60,7 +60,11 @@ public enum EExchangeFileType implements IHasID <String>,IHasDisplayText
       return new ExporterExcel (EExcelVersion.XLS);
     }
   },
-  XLSX ("xlsx", EExcelVersion.XLSX.getFileExtension (), EExcelVersion.XLSX.getMimeType (), true, EExchangeFileTypeName.XLSX)
+  XLSX ("xlsx",
+        EExcelVersion.XLSX.getFileExtension (),
+        EExcelVersion.XLSX.getMimeType (),
+        true,
+        EExchangeFileTypeName.XLSX)
   {
     @Override
     @Nonnull
