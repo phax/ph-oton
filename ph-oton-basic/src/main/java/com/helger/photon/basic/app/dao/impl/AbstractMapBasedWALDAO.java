@@ -66,7 +66,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, IMPLTYPE> m_aMap;
-  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList <> ();
+  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList<> ();
 
   /**
    * Default constructor
@@ -81,7 +81,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    this (aImplClass, sFilename, true, () -> new CommonsHashMap <> ());
+    this (aImplClass, sFilename, true, () -> new CommonsHashMap<> ());
   }
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
@@ -209,7 +209,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
    *        The item to be added. May not be <code>null</code>.
    */
   @MustBeLocked (ELockType.WRITE)
-  protected final void internalCreateItem (@Nonnull final IMPLTYPE aNewItem)
+  protected final IMPLTYPE internalCreateItem (@Nonnull final IMPLTYPE aNewItem)
   {
     // Add to map
     _addItem (aNewItem, EDAOActionType.CREATE);
@@ -217,6 +217,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     super.markAsChanged (aNewItem, EDAOActionType.CREATE);
     // Invoke callbacks
     m_aCallbacks.forEach (aCB -> aCB.onCreateItem (aNewItem));
+    return aNewItem;
   }
 
   /**
@@ -280,9 +281,9 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsList <? extends INTERFACETYPE> getNone ()
+  public final <T> ICommonsList <T> getNone ()
   {
-    return new CommonsArrayList <> ();
+    return new CommonsArrayList<> ();
   }
 
   @Nonnull
@@ -297,6 +298,13 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   public final ICommonsList <? extends INTERFACETYPE> getAll (@Nullable final Predicate <? super INTERFACETYPE> aFilter)
   {
     return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aFilter));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  protected final Iterable <IMPLTYPE> internalDirectGetAll ()
+  {
+    return m_aRWLock.readLocked ( () -> m_aMap.values ());
   }
 
   public final void findAll (@Nullable final Predicate <? super INTERFACETYPE> aFilter,
@@ -420,6 +428,15 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
       return false;
 
     return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sID));
+  }
+
+  public final boolean containsAllIDs (@Nullable final Iterable <String> aIDs)
+  {
+    if (aIDs != null)
+      for (final String sID : aIDs)
+        if (!containsWithID (sID))
+          return false;
+    return true;
   }
 
   @Nonnull

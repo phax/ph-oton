@@ -52,7 +52,7 @@ import com.helger.photon.security.password.salt.PasswordSalt;
 @ThreadSafe
 public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements IReloadableDAO
 {
-  private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
+  private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList<> ();
 
   public UserManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -562,7 +562,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
     try
     {
       aUser.onSuccessfulLogin ();
-      internalMarkItemDeleted (aUser);
+      internalUpdateItem (aUser);
     }
     finally
     {
@@ -615,7 +615,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
     final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditDeleteFailure (User.OT, sUserID, "no-such-user-id");
+      AuditHelper.onAuditDeleteFailure (User.OT, "no-such-user-id", sUserID);
       return EChange.UNCHANGED;
     }
 
@@ -623,7 +623,10 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
     try
     {
       if (ObjectHelper.setDeletionNow (aUser).isUnchanged ())
+      {
+        AuditHelper.onAuditDeleteFailure (User.OT, "already-deleted", sUserID);
         return EChange.UNCHANGED;
+      }
       internalMarkItemDeleted (aUser);
     }
     finally

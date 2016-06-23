@@ -21,7 +21,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
@@ -29,15 +28,12 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.IReloadableDAO;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
+import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
@@ -45,10 +41,6 @@ import com.helger.photon.security.object.ObjectHelper;
 import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.UserManager;
-import com.helger.xml.microdom.IMicroDocument;
-import com.helger.xml.microdom.IMicroElement;
-import com.helger.xml.microdom.MicroDocument;
-import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 /**
  * This class manages the available user groups.
@@ -56,23 +48,20 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
  * @author Philip Helger
  */
 @ThreadSafe
-public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDAO
+public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGroup> implements IReloadableDAO
 {
   private final UserManager m_aUserMgr;
   private final RoleManager m_aRoleMgr;
-  @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, UserGroup> m_aMap = new CommonsHashMap <> ();
 
-  private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList <> ();
+  private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList<> ();
 
   public UserGroupManager (@Nonnull @Nonempty final String sFilename,
                            @Nonnull final UserManager aUserMgr,
                            @Nonnull final RoleManager aRoleMgr) throws DAOException
   {
-    super (sFilename);
+    super (UserGroup.class, sFilename);
     m_aUserMgr = ValueEnforcer.notNull (aUserMgr, "UserManager");
     m_aRoleMgr = ValueEnforcer.notNull (aRoleMgr, "RoleManager");
-    initialRead ();
   }
 
   @Nonnull
@@ -90,69 +79,41 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public void reload () throws DAOException
   {
     m_aRWLock.writeLockedThrowing ( () -> {
-      m_aMap.clear ();
+      internalRemoveAllItemsNoCallback ();
       initialRead ();
     });
-  }
-
-  @Override
-  @Nonnull
-  protected EChange onInit ()
-  {
-    return EChange.UNCHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
-  {
-    aDoc.getDocumentElement ()
-        .forAllChildElements (eUserGroup -> _addUserGroup (MicroTypeConverter.convertToNative (eUserGroup,
-                                                                                               UserGroup.class)));
-    return EChange.UNCHANGED;
-  }
-
-  @Override
-  @Nonnull
-  protected IMicroDocument createWriteData ()
-  {
-    final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement ("usergroups");
-    for (final UserGroup aUserGroup : CollectionHelper.getSortedByKey (m_aMap).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aUserGroup, "usergroup"));
-    return aDoc;
   }
 
   public void createDefaults ()
   {
     // Administrators user group
-    UserGroup aUG = getUserGroupOfID (CSecurity.USERGROUP_ADMINISTRATORS_ID);
+    UserGroup aUG = getOfID (CSecurity.USERGROUP_ADMINISTRATORS_ID);
     if (aUG == null)
-      aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
-                                          CSecurity.USERGROUP_ADMINISTRATORS_NAME,
-                                          (String) null));
+      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
+                                                                             CSecurity.USERGROUP_ADMINISTRATORS_NAME,
+                                                                             (String) null)));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_ADMINISTRATOR_ID))
       aUG.assignUser (CSecurity.USER_ADMINISTRATOR_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       aUG.assignRole (CSecurity.ROLE_ADMINISTRATOR_ID);
 
     // Users user group
-    aUG = getUserGroupOfID (CSecurity.USERGROUP_USERS_ID);
+    aUG = getOfID (CSecurity.USERGROUP_USERS_ID);
     if (aUG == null)
-      aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
-                                          CSecurity.USERGROUP_USERS_NAME,
-                                          (String) null));
+      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
+                                                                             CSecurity.USERGROUP_USERS_NAME,
+                                                                             (String) null)));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_USER_ID))
       aUG.assignUser (CSecurity.USER_USER_ID);
     if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_USER_ID))
       aUG.assignRole (CSecurity.ROLE_USER_ID);
 
     // Guests user group
-    aUG = getUserGroupOfID (CSecurity.USERGROUP_GUESTS_ID);
+    aUG = getOfID (CSecurity.USERGROUP_GUESTS_ID);
     if (aUG == null)
-      aUG = _addUserGroup (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
-                                          CSecurity.USERGROUP_GUESTS_NAME,
-                                          (String) null));
+      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
+                                                                             CSecurity.USERGROUP_GUESTS_NAME,
+                                                                             (String) null)));
     if (m_aUserMgr.containsUserWithID (CSecurity.USER_GUEST_ID))
       aUG.assignUser (CSecurity.USER_GUEST_ID);
     // no role for this user group
@@ -166,16 +127,6 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public CallbackList <IUserGroupModificationCallback> getUserGroupModificationCallbacks ()
   {
     return m_aCallbacks;
-  }
-
-  @Nonnull
-  private UserGroup _addUserGroup (@Nonnull final UserGroup aUserGroup)
-  {
-    final String sUserGroupID = aUserGroup.getID ();
-    if (m_aMap.containsKey (sUserGroupID))
-      throw new IllegalArgumentException ("User group ID " + sUserGroupID + " is already in use!");
-    m_aMap.put (sUserGroupID, aUserGroup);
-    return aUserGroup;
   }
 
   /**
@@ -201,8 +152,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
 
     m_aRWLock.writeLocked ( () -> {
       // Store
-      _addUserGroup (aUserGroup);
-      markAsChanged ();
+      internalCreateItem (aUserGroup);
     });
     AuditHelper.onAuditCreateSuccess (UserGroup.OT, aUserGroup.getID (), sName, sDescription, aCustomAttrs);
 
@@ -241,8 +191,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
 
     m_aRWLock.writeLocked ( () -> {
       // Store
-      _addUserGroup (aUserGroup);
-      markAsChanged ();
+      internalCreateItem (aUserGroup);
     });
     AuditHelper.onAuditCreateSuccess (UserGroup.OT,
                                       aUserGroup.getID (),
@@ -271,19 +220,22 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sUserGroupID))
       return EChange.UNCHANGED;
 
-    UserGroup aDeletedUserGroup;
+    final UserGroup aDeletedUserGroup = getOfID (sUserGroupID);
+    if (aDeletedUserGroup == null)
+    {
+      AuditHelper.onAuditDeleteFailure (UserGroup.OT, "no-such-usergroup-id", sUserGroupID);
+      return EChange.UNCHANGED;
+    }
+
     m_aRWLock.writeLock ().lock ();
     try
     {
-      aDeletedUserGroup = m_aMap.remove (sUserGroupID);
-      if (aDeletedUserGroup == null)
+      if (ObjectHelper.setDeletionNow (aDeletedUserGroup).isUnchanged ())
       {
-        AuditHelper.onAuditDeleteFailure (UserGroup.OT, "no-such-usergroup-id", sUserGroupID);
+        AuditHelper.onAuditDeleteFailure (UserGroup.OT, "already-deleted", sUserGroupID);
         return EChange.UNCHANGED;
       }
-
-      ObjectHelper.setDeletionNow (aDeletedUserGroup);
-      markAsChanged ();
+      internalMarkItemDeleted (aDeletedUserGroup);
     }
     finally
     {
@@ -307,10 +259,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
    */
   public boolean containsUserGroupWithID (@Nullable final String sUserGroupID)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
-      return false;
-
-    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sUserGroupID));
+    return containsWithID (sUserGroupID);
   }
 
   /**
@@ -323,15 +272,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
    */
   public boolean containsAllUserGroupsWithID (@Nullable final Collection <String> aUserGroupIDs)
   {
-    if (CollectionHelper.isEmpty (aUserGroupIDs))
-      return true;
-
-    return m_aRWLock.readLocked ( () -> {
-      for (final String sUserGroupID : aUserGroupIDs)
-        if (!m_aMap.containsKey (sUserGroupID))
-          return false;
-      return true;
-    });
+    return containsAllIDs (aUserGroupIDs);
   }
 
   /**
@@ -342,12 +283,9 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
    * @return <code>null</code> if no such user group exists
    */
   @Nullable
-  public UserGroup getUserGroupOfID (@Nullable final String sUserGroupID)
+  public IUserGroup getUserGroupOfID (@Nullable final String sUserGroupID)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
-      return null;
-
-    return m_aRWLock.readLocked ( () -> m_aMap.get (sUserGroupID));
+    return getOfID (sUserGroupID);
   }
 
   /**
@@ -357,7 +295,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   @ReturnsMutableCopy
   public ICommonsList <? extends IUserGroup> getAllUserGroups ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
+    return getAll ();
   }
 
   /**
@@ -375,7 +313,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public EChange renameUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sNewName)
   {
     // Resolve user group
-    final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
+    final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
       AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "name");
@@ -389,7 +327,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aUserGroup);
-      markAsChanged ();
+      internalUpdateItem (aUserGroup);
     }
     finally
     {
@@ -425,7 +363,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
                                    @Nullable final Map <String, String> aNewCustomAttrs)
   {
     // Resolve user group
-    final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
+    final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
       AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id");
@@ -443,7 +381,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aUserGroup);
-      markAsChanged ();
+      internalUpdateItem (aUserGroup);
     }
     finally
     {
@@ -477,7 +415,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public EChange assignUserToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sUserID)
   {
     // Resolve user group
-    final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
+    final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
       AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "assign-user");
@@ -491,7 +429,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aUserGroup);
-      markAsChanged ();
+      internalUpdateItem (aUserGroup);
     }
     finally
     {
@@ -519,7 +457,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public EChange unassignUserFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
   {
     // Resolve user group
-    final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
+    final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
       AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "unassign-user");
@@ -533,7 +471,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aUserGroup);
-      markAsChanged ();
+      internalUpdateItem (aUserGroup);
     }
     finally
     {
@@ -561,22 +499,22 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sUserID))
       return EChange.UNCHANGED;
 
-    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList <> ();
+    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList<> ();
     m_aRWLock.writeLock ().lock ();
     try
     {
       EChange eChange = EChange.UNCHANGED;
-      for (final UserGroup aUserGroup : m_aMap.values ())
+      for (final UserGroup aUserGroup : internalDirectGetAll ())
         if (aUserGroup.unassignUser (sUserID).isChanged ())
         {
           aAffectedUserGroups.add (aUserGroup);
           ObjectHelper.setLastModificationNow (aUserGroup);
+          internalUpdateItem (aUserGroup);
           eChange = EChange.CHANGED;
         }
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      markAsChanged ();
     }
     finally
     {
@@ -606,7 +544,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sUserID))
       return false;
 
-    final IUserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
+    final IUserGroup aUserGroup = getOfID (sUserGroupID);
     return aUserGroup == null ? false : aUserGroup.containsUserID (sUserID);
   }
 
@@ -623,9 +561,9 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public ICommonsList <? extends IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
-      return new CommonsArrayList <> ();
+      return new CommonsArrayList<> ();
 
-    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aUserGroup -> aUserGroup.containsUserID (sUserID)));
+    return getAll (aUserGroup -> aUserGroup.containsUserID (sUserID));
   }
 
   /**
@@ -642,11 +580,9 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
-      return new CommonsArrayList <> ();
+      return new CommonsArrayList<> ();
 
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newListMapped (m_aMap.values (),
-                                                                        aUserGroup -> aUserGroup.containsUserID (sUserID),
-                                                                        aUserGroup -> aUserGroup.getID ()));
+    return getAllMapped (aUserGroup -> aUserGroup.containsUserID (sUserID), aUserGroup -> aUserGroup.getID ());
   }
 
   /**
@@ -664,7 +600,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sRoleID)
   {
     // Resolve user group
-    final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
+    final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
       AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "assign-role");
@@ -678,7 +614,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aUserGroup);
-      markAsChanged ();
+      internalUpdateItem (aUserGroup);
     }
     finally
     {
@@ -706,7 +642,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public EChange unassignRoleFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sRoleID)
   {
     // Resolve user group
-    final UserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
+    final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
       AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "unassign-role");
@@ -720,7 +656,7 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
         return EChange.UNCHANGED;
 
       ObjectHelper.setLastModificationNow (aUserGroup);
-      markAsChanged ();
+      internalUpdateItem (aUserGroup);
     }
     finally
     {
@@ -748,22 +684,21 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
     if (StringHelper.hasNoText (sRoleID))
       return EChange.UNCHANGED;
 
-    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList <> ();
+    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList<> ();
     m_aRWLock.writeLock ().lock ();
     try
     {
       EChange eChange = EChange.UNCHANGED;
-      for (final UserGroup aUserGroup : m_aMap.values ())
+      for (final UserGroup aUserGroup : internalDirectGetAll ())
         if (aUserGroup.unassignRole (sRoleID).isChanged ())
         {
           aAffectedUserGroups.add (aUserGroup);
           ObjectHelper.setLastModificationNow (aUserGroup);
+          internalUpdateItem (aUserGroup);
           eChange = EChange.CHANGED;
         }
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
-
-      markAsChanged ();
     }
     finally
     {
@@ -791,9 +726,9 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public ICommonsList <? extends IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
   {
     if (StringHelper.hasNoText (sRoleID))
-      return new CommonsArrayList <> ();
+      return getNone ();
 
-    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aUserGroup -> aUserGroup.containsRoleID (sRoleID)));
+    return getAll (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
   }
 
   /**
@@ -810,16 +745,13 @@ public class UserGroupManager extends AbstractSimpleDAO implements IReloadableDA
   public ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
   {
     if (StringHelper.hasNoText (sRoleID))
-      return new CommonsArrayList <> ();
+      return getNone ();
 
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newListMapped (m_aMap.values (),
-                                                                        aUserGroup -> aUserGroup.containsRoleID (sRoleID),
-                                                                        aUserGroup -> aUserGroup.getID ()));
+    return getAllMapped (aUserGroup -> aUserGroup.containsRoleID (sRoleID), aUserGroup -> aUserGroup.getID ());
   }
 
   public boolean containsUserGroupWithAssignedRole (@Nullable final String sRoleID)
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.containsAny (m_aMap.values (),
-                                                                      aUserGroup -> aUserGroup.containsRoleID (sRoleID)));
+    return containsAny (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
   }
 }
