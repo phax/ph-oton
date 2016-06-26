@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ext.ICommonsSet;
-import com.helger.commons.collection.lru.LRUSet;
+import com.helger.commons.collection.impl.LRUSet;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.string.StringHelper;

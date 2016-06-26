@@ -80,10 +80,9 @@ public final class ComparatorDT
                                                              @Nonnull final Locale aDisplayLocale)
   {
     return getComparator (aFormatter,
-                          sCellText -> sCellText.isEmpty () ? BigDecimal.ZERO
-                                                            : LocaleParser.parseBigDecimal (sCellText,
-                                                                                            aDisplayLocale,
-                                                                                            BigDecimal.ZERO));
+                          sCellText -> sCellText.isEmpty () ? BigDecimal.ZERO : LocaleParser.parseBigDecimal (sCellText,
+                                                                                                              aDisplayLocale,
+                                                                                                              BigDecimal.ZERO));
   }
 
   @Nonnull
@@ -132,11 +131,10 @@ public final class ComparatorDT
   public static Comparator <String> getComparatorDate (@Nullable final Function <? super String, String> aFormatter,
                                                        @Nonnull final DateTimeFormatter aDTFormatter)
   {
-    // TODO ph-commons >= 8.0.1 change to Supplier in ValueEnforcer
     return getComparator (aFormatter,
                           sCellText -> ValueEnforcer.notNull (PDTFromString.getLocalDateFromString (sCellText,
                                                                                                     aDTFormatter),
-                                                              "Failed to parse " + sCellText));
+                                                              () -> "Failed to parse " + sCellText));
   }
 
   @Nonnull
@@ -150,11 +148,10 @@ public final class ComparatorDT
   public static Comparator <String> getComparatorTime (@Nullable final Function <? super String, String> aFormatter,
                                                        @Nonnull final DateTimeFormatter aDTFormatter)
   {
-    // TODO ph-commons >= 8.0.1 change to Supplier in ValueEnforcer
     return getComparator (aFormatter,
                           sCellText -> ValueEnforcer.notNull (PDTFromString.getLocalTimeFromString (sCellText,
                                                                                                     aDTFormatter),
-                                                              "Failed to parse " + sCellText));
+                                                              () -> "Failed to parse " + sCellText));
   }
 
   @Nonnull
@@ -168,11 +165,10 @@ public final class ComparatorDT
   public static Comparator <String> getComparatorDateTime (@Nullable final Function <? super String, String> aFormatter,
                                                            @Nonnull final DateTimeFormatter aDTFormatter)
   {
-    // TODO ph-commons >= 8.0.1 change to Supplier in ValueEnforcer
     return getComparator (aFormatter,
                           sCellText -> ValueEnforcer.notNull (PDTFromString.getLocalDateTimeFromString (sCellText,
                                                                                                         aDTFormatter),
-                                                              "Failed to parse " + sCellText));
+                                                              () -> "Failed to parse " + sCellText));
   }
 
   @Nonnull
