@@ -69,6 +69,7 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
 import com.helger.photon.uicore.js.JSFormHelper;
+import com.helger.photon.uicore.page.handler.IWebPageActionHandler;
 
 /**
  * Abstract base class for a web page that has the common form handling, with a

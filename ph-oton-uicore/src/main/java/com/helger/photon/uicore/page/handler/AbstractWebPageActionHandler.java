@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uicore.page;
+package com.helger.photon.uicore.page.handler;
 
 import javax.annotation.Nonnull;
 
@@ -22,6 +22,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
+import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uicore.page.IWebPageFormUIHandler;
 
 public abstract class AbstractWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
                                                    implements IWebPageActionHandler <DATATYPE, WPECTYPE>

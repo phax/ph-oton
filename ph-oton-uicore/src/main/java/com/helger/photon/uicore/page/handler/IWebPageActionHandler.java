@@ -14,11 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uicore.page;
+package com.helger.photon.uicore.page.handler;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.id.IHasID;
+import com.helger.photon.uicore.page.AbstractWebPageForm;
+import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**
  * Interface for handling delete actions inside an {@link AbstractWebPageForm}.

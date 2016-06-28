@@ -14,20 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.pages;
+package com.helger.photon.bootstrap3.pages.handler;
 
 import com.helger.commons.id.IHasID;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
-import com.helger.photon.uicore.page.AbstractWebPageActionHandlerDelete;
+import com.helger.photon.bootstrap3.pages.BootstrapWebPageUIHandler;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uicore.page.handler.AbstractWebPageActionHandler;
 
-public abstract class AbstractBootstrapWebPageActionHandlerDelete <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
-                                                                  extends
-                                                                  AbstractWebPageActionHandlerDelete <DATATYPE, WPECTYPE, BootstrapForm, BootstrapButtonToolbar>
+public abstract class AbstractBootstrapWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
+                                                            extends
+                                                            AbstractWebPageActionHandler <DATATYPE, WPECTYPE, BootstrapForm, BootstrapButtonToolbar>
 {
-  public AbstractBootstrapWebPageActionHandlerDelete ()
+  public AbstractBootstrapWebPageActionHandler (final boolean bSelectedObjectRequired)
   {
-    super (BootstrapWebPageUIHandler.INSTANCE);
+    super (bSelectedObjectRequired, BootstrapWebPageUIHandler.INSTANCE);
   }
 }
