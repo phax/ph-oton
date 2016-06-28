@@ -18,11 +18,13 @@ package com.helger.photon.uicore.page.handler;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.id.IHasID;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**
- * Interface for handling delete/undelete actions inside an AbstractWebPageForm.
+ * Interface for handling multi object actions.
  *
  * @author Philip Helger
  * @param <DATATYPE>
@@ -30,28 +32,18 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
+public interface IWebPageActionHandlerMulti <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
+                                            extends IWebPageActionHandler <DATATYPE, WPECTYPE>
 {
   /**
-   * @return <code>true</code> if this action can only be executed when an
-   *         object is selected, <code>false</code> otherwise.
+   * @param aWPEC
+   *        Web page execution context. Never <code>null</code>.
+   * @return A list of all selected objects. May neither be <code>null</code>
+   *         nor empty.
    */
-  boolean isSelectedObjectRequired ();
-
-  /**
-   * Check if the action handler can be executed on the provided object.
-   *
-   * @param aSelectedObject
-   *        The selected object. May be <code>null</code> if
-   *        {@link #isSelectedObjectRequired()} is <code>false</code>.
-   * @return <code>true</code> if
-   *         {@link #handleAction(IWebPageExecutionContext, IHasID)} can be
-   *         called on the provided object, <code>false</code> otherwise.
-   */
-  default boolean canHandleAction (final DATATYPE aSelectedObject)
-  {
-    return true;
-  }
+  @Nonnull
+  @ReturnsMutableCopy
+  ICommonsList <DATATYPE> getAllSelectedObjects (@Nonnull WPECTYPE aWPEC);
 
   /**
    * This is the main entry to action handling. This method is only called if
@@ -59,11 +51,10 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
    *
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
-   * @param aSelectedObject
-   *        Currently selected object. May be <code>null</code> if
-   *        {@link #isSelectedObjectRequired()} returned <code>false</code>.
+   * @param aSelectedObjects
+   *        Selected objects. May not be <code>null</code>.
    * @return <code>true</code> to show the list of all objects afterwards,
    *         <code>false</code> to not do so.
    */
-  boolean handleAction (@Nonnull WPECTYPE aWPEC, DATATYPE aSelectedObject);
+  boolean handleMultiAction (@Nonnull WPECTYPE aWPEC, @Nonnull ICommonsList <DATATYPE> aSelectedObjects);
 }

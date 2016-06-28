@@ -17,11 +17,14 @@
 package com.helger.photon.uicore.page.handler;
 
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.core.EPhotonCoreText;
@@ -33,15 +36,17 @@ import com.helger.photon.uicore.page.IWebPageCSRFHandler;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
 
-public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
-                                                           extends
-                                                           AbstractWebPageActionHandler <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
+public abstract class AbstractWebPageActionHandlerMultiUndelete <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
+                                                                extends
+                                                                AbstractWebPageActionHandlerMulti <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
 {
   public static final String FORM_ID_UNDELETE = "undeleteform";
 
-  public AbstractWebPageActionHandlerUndelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
+  public AbstractWebPageActionHandlerMultiUndelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
+                                                    @Nonnull @Nonempty final String sFieldName,
+                                                    @Nonnull final Function <String, DATATYPE> aResolver)
   {
-    super (true, aUIHandler);
+    super (aUIHandler, sFieldName, aResolver);
   }
 
   /**
@@ -51,13 +56,13 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
    *        The web page execution context
    * @param aForm
    *        The handled form. Never <code>null</code>.
-   * @param aSelectedObject
-   *        The object to be undeleted. Never <code>null</code>.
+   * @param aSelectedObjects
+   *        The objects to be undeleted. Never <code>null</code>.
    */
   @OverrideOnDemand
   protected void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
                                     @Nonnull final FORM_TYPE aForm,
-                                    @Nonnull final DATATYPE aSelectedObject)
+                                    @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {}
 
   /**
@@ -65,23 +70,25 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
    *
    * @param aWPEC
    *        The web page execution context
-   * @param aSelectedObject
-   *        The object to be undeleted. Never <code>null</code>.
+   * @param aSelectedObjects
+   *        The objects to be undeleted. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
+  protected void performUndelete (@Nonnull final WPECTYPE aWPEC,
+                                  @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {}
 
   /**
    * @param aWPEC
    *        The web page execution context
-   * @param aSelectedObject
-   *        The selected object. Never <code>null</code>.
-   * @return <code>true</code> to show the undelete toolbar, <code>false</code>
-   *         to draw your own toolbar
+   * @param aSelectedObjects
+   *        The selected objects. Never <code>null</code>.
+   * @return <code>true</code> to show the delete toolbar, <code>false</code> to
+   *         draw your own toolbar
    */
   @OverrideOnDemand
-  protected boolean showUndeleteToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
+  protected boolean showUndeleteToolbar (@Nonnull final WPECTYPE aWPEC,
+                                         @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {
     return true;
   }
@@ -119,22 +126,21 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
    *        The web page execution context
    * @param aForm
    *        The handled form. Never <code>null</code>.
-   * @param aSelectedObject
-   *        Selected object. Never <code>null</code>.
+   * @param aSelectedObjects
+   *        Selected objects. Never <code>null</code>.
    * @return Never <code>null</code>.
    */
   @Nonnull
   @OverrideOnDemand
   protected TOOLBAR_TYPE createUndeleteToolbar (@Nonnull final WPECTYPE aWPEC,
                                                 @Nonnull final FORM_TYPE aForm,
-                                                @Nonnull final DATATYPE aSelectedObject)
+                                                @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final TOOLBAR_TYPE aToolbar = getUIHandler ().createToolbar (aWPEC);
     aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_UNDELETE);
     aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
-    aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
     // Yes button
     aToolbar.addSubmitButton (getUndeleteToolbarSubmitButtonText (aDisplayLocale),
                               getUndeleteToolbarSubmitButtonIcon ());
@@ -146,7 +152,9 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
     return aToolbar;
   }
 
-  public final boolean handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
+  @Override
+  public final boolean handleMultiAction (@Nonnull final WPECTYPE aWPEC,
+                                          @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {
     final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();
@@ -157,7 +165,7 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
       // Check if the nonce matches
       if (aCSRFHandler.checkCSRFNonce (aWPEC).isContinue ())
       {
-        performUndelete (aWPEC, aSelectedObject);
+        performUndelete (aWPEC, aSelectedObjects);
       }
 
       bShowList = true;
@@ -174,11 +182,11 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
       aForm.addChild (aCSRFHandler.createCSRFNonceField ());
 
       // SHow the main query
-      showUndeleteQuery (aWPEC, aForm, aSelectedObject);
+      showUndeleteQuery (aWPEC, aForm, aSelectedObjects);
 
       // Show the toolbar?
-      if (showUndeleteToolbar (aWPEC, aSelectedObject))
-        aForm.addChild (createUndeleteToolbar (aWPEC, aForm, aSelectedObject));
+      if (showUndeleteToolbar (aWPEC, aSelectedObjects))
+        aForm.addChild (createUndeleteToolbar (aWPEC, aForm, aSelectedObjects));
       bShowList = false;
     }
 
