@@ -16,7 +16,7 @@
  */
 package com.helger.photon.bootstrap3.pages.handler;
 
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import javax.annotation.Nonnull;
 
@@ -33,7 +33,7 @@ public abstract class AbstractBootstrapWebPageActionHandlerMultiUndelete <DATATY
                                                                          AbstractWebPageActionHandlerMultiUndelete <DATATYPE, WPECTYPE, BootstrapForm, BootstrapButtonToolbar>
 {
   public AbstractBootstrapWebPageActionHandlerMultiUndelete (@Nonnull @Nonempty final String sFieldName,
-                                                             @Nonnull final Function <String, DATATYPE> aResolver)
+                                                             @Nonnull final BiFunction <WPECTYPE, String, DATATYPE> aResolver)
   {
     super (BootstrapWebPageUIHandler.INSTANCE, sFieldName, aResolver);
   }

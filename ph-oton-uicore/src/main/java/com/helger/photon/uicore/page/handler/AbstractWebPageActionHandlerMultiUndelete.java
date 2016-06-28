@@ -17,7 +17,7 @@
 package com.helger.photon.uicore.page.handler;
 
 import java.util.Locale;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,7 +44,7 @@ public abstract class AbstractWebPageActionHandlerMultiUndelete <DATATYPE extend
 
   public AbstractWebPageActionHandlerMultiUndelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
                                                     @Nonnull @Nonempty final String sFieldName,
-                                                    @Nonnull final Function <String, DATATYPE> aResolver)
+                                                    @Nonnull final BiFunction <WPECTYPE, String, DATATYPE> aResolver)
   {
     super (aUIHandler, sFieldName, aResolver);
   }

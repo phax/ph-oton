@@ -16,7 +16,7 @@
  */
 package com.helger.photon.uicore.page.handler;
 
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import javax.annotation.Nonnull;
 
@@ -36,11 +36,11 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
 {
   private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
   private final String m_sFieldName;
-  private final Function <String, DATATYPE> m_aResolver;
+  private final BiFunction <WPECTYPE, String, DATATYPE> m_aResolver;
 
   protected AbstractWebPageActionHandlerMulti (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
                                                @Nonnull @Nonempty final String sFieldName,
-                                               @Nonnull final Function <String, DATATYPE> aResolver)
+                                               @Nonnull final BiFunction <WPECTYPE, String, DATATYPE> aResolver)
   {
     m_aUIHandler = ValueEnforcer.notNull (aUIHandler, "UIHandler");
     m_sFieldName = ValueEnforcer.notEmpty (sFieldName, "FieldName");
@@ -62,7 +62,7 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
     final ICommonsList <String> aIDs = aWPEC.getAttributeAsList (m_sFieldName);
     if (aIDs != null)
       for (final String sID : aIDs)
-        ret.addIfNotNull (m_aResolver.apply (sID));
+        ret.addIfNotNull (m_aResolver.apply (aWPEC, sID));
     return ret;
   }
 
