@@ -141,6 +141,9 @@ public abstract class AbstractWebPageActionHandlerMultiUndelete <DATATYPE extend
     final TOOLBAR_TYPE aToolbar = getUIHandler ().createToolbar (aWPEC);
     aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_UNDELETE);
     aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
+    for (final DATATYPE aItem : aSelectedObjects)
+      aToolbar.addHiddenField (getFieldName (), aItem.getID ());
+
     // Yes button
     aToolbar.addSubmitButton (getUndeleteToolbarSubmitButtonText (aDisplayLocale),
                               getUndeleteToolbarSubmitButtonIcon ());

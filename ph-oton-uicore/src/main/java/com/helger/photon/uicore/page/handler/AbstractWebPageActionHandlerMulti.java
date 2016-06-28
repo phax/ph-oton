@@ -48,6 +48,13 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
   }
 
   @Nonnull
+  @Nonempty
+  protected final String getFieldName ()
+  {
+    return m_sFieldName;
+  }
+
+  @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <DATATYPE> getAllSelectedObjects (@Nonnull final WPECTYPE aWPEC)
   {
