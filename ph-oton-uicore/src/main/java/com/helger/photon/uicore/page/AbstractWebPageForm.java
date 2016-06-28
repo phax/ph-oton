@@ -100,7 +100,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aDeleteHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aUndeleteHandler;
-  private final ICommonsMap <String, IWebPageActionHandler <DATATYPE, WPECTYPE>> m_aCustomHandlers = new CommonsHashMap <> ();
+  private final ICommonsMap <String, IWebPageActionHandler <DATATYPE, WPECTYPE>> m_aCustomHandlers = new CommonsHashMap<> ();
 
   public AbstractWebPageForm (@Nonnull @Nonempty final String sID,
                               @Nonnull final IMultilingualText aName,
@@ -1081,7 +1081,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final String sAction = aWPEC.getAction ();
 
     // Default value is show list
-    EWebPageFormAction eFormAction = EWebPageFormAction.SHOW_LIST;
+    EWebPageFormAction eFormAction = EWebPageFormAction.DEFAULT;
+    IWebPageActionHandler <DATATYPE, WPECTYPE> aCustomHandler = null;
     if (StringHelper.hasText (sAction))
     {
       if (CPageParam.ACTION_VIEW.equals (sAction))
@@ -1122,11 +1123,11 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                 else
                 {
                   // Non standard action - must be custom
-                  final IWebPageActionHandler <DATATYPE, WPECTYPE> aHandler = m_aCustomHandlers.get (sAction);
-                  if (aHandler != null)
+                  aCustomHandler = m_aCustomHandlers.get (sAction);
+                  if (aCustomHandler != null)
                   {
-                    if (!aHandler.isSelectedObjectRequired () || aSelectedObject != null)
-                      if (aHandler.canHandleAction (aSelectedObject))
+                    if (!aCustomHandler.isSelectedObjectRequired () || aSelectedObject != null)
+                      if (aCustomHandler.canHandleAction (aSelectedObject))
                       {
                         eFormAction = EWebPageFormAction.CUSTOM;
                         if (s_aLogger.isDebugEnabled ())
@@ -1146,7 +1147,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                         eFormAction +
                         " is not allowed on object " +
                         (aSelectedObject == null ? "null" : aSelectedObject.getID ()));
-        eFormAction = EWebPageFormAction.CUSTOM;
+        eFormAction = EWebPageFormAction.DEFAULT;
       }
     }
 

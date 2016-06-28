@@ -41,6 +41,8 @@ public enum EWebPageFormAction implements IHasID <String>
   UNDELETE (CPageParam.ACTION_UNDELETE),
   CUSTOM ("$custom$");
 
+  public static final EWebPageFormAction DEFAULT = SHOW_LIST;
+
   private final String m_sID;
 
   private EWebPageFormAction (@Nonnull @Nonempty final String sID)
