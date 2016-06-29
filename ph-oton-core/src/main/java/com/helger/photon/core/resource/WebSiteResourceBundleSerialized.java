@@ -70,6 +70,16 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
     _ensureSerialized (bRegular);
   }
 
+  /**
+   * Constructor for de-serialization only.
+   * 
+   * @param sBundleID
+   *        Bundle ID
+   * @param aBundle
+   *        Bundle data
+   * @param aCreationDT
+   *        Bundle creation data
+   */
   WebSiteResourceBundleSerialized (@Nonnull @Nonempty final String sBundleID,
                                    @Nonnull final WebSiteResourceBundle aBundle,
                                    @Nonnull final LocalDateTime aCreationDT)

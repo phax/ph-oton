@@ -106,68 +106,77 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
       }
 
       final ICommonsList <WebSiteResourceWithCondition> aResources = new CommonsArrayList<> ();
-      for (final IMicroElement eResource : eResourceBundle.getAllChildElements (ELEMENT_RESOURCE))
+      if (!WebSiteResourceBundleSerialized.getResource (sBundleID).exists ())
       {
-        final String sResourceType = eResource.getAttributeValue (ATTR_RESOURCE_TYPE);
-        final EWebSiteResourceType eResourceType = EWebSiteResourceType.getFromIDOrNull (sResourceType);
-        if (eResourceType == null)
+        s_aLogger.warn ("No serialized bundle with ID '" + sBundleID + "' exists.");
+        bResourcesAreOutOfSync = true;
+      }
+      else
+      {
+        // Serialized bundle exists
+        for (final IMicroElement eResource : eResourceBundle.getAllChildElements (ELEMENT_RESOURCE))
         {
-          s_aLogger.warn ("No such resource type: " + sResourceType);
-          bResourcesAreOutOfSync = true;
-          continue;
-        }
-        final String sPath = eResource.getAttributeValue (ATTR_PATH);
-        final String sURL = eResource.getAttributeValue (ATTR_URL);
-        final String sHash = eResource.getAttributeValue (ATTR_CONTENT_HASH);
-        final String sCharset = eResource.getAttributeValue (ATTR_CHARSET);
-        // Soft migration as charset was added later
-        final Charset aCharset = sCharset == null ? WebSiteResource.DEFAULT_CHARSET
-                                                  : CharsetManager.getCharsetFromName (sCharset);
+          final String sResourceType = eResource.getAttributeValue (ATTR_RESOURCE_TYPE);
+          final EWebSiteResourceType eResourceType = EWebSiteResourceType.getFromIDOrNull (sResourceType);
+          if (eResourceType == null)
+          {
+            s_aLogger.warn ("No such resource type: " + sResourceType);
+            bResourcesAreOutOfSync = true;
+            continue;
+          }
+          final String sPath = eResource.getAttributeValue (ATTR_PATH);
+          final String sURL = eResource.getAttributeValue (ATTR_URL);
+          final String sHash = eResource.getAttributeValue (ATTR_CONTENT_HASH);
+          final String sCharset = eResource.getAttributeValue (ATTR_CHARSET);
+          // Soft migration as charset was added later
+          final Charset aCharset = sCharset == null ? WebSiteResource.DEFAULT_CHARSET
+                                                    : CharsetManager.getCharsetFromName (sCharset);
 
-        final WebSiteResource aNewResource = new WebSiteResource (eResourceType, sPath, aCharset);
-        if (!aNewResource.isExisting ())
-        {
-          s_aLogger.info ("Skipping resource bundle '" +
-                          sBundleID +
-                          "' skipping because resource '" +
-                          sPath +
-                          "' does not exist");
-          bResourcesAreOutOfSync = true;
-          continue;
-        }
-
-        // The relocation check makes now sense, because the hash code is
-        // the relevant enough...
-        if (false)
-          if (!aNewResource.getAsURLString ().equals (sURL))
+          final WebSiteResource aNewResource = new WebSiteResource (eResourceType, sPath, aCharset);
+          if (!aNewResource.isExisting ())
           {
             s_aLogger.info ("Skipping resource bundle '" +
                             sBundleID +
-                            "' because resource '" +
+                            "' skipping because resource '" +
                             sPath +
-                            "' was relocated from '" +
-                            sURL +
-                            "' to '" +
-                            aNewResource.getAsURLString () +
-                            "'");
+                            "' does not exist");
             bResourcesAreOutOfSync = true;
             continue;
           }
 
-        if (!aNewResource.getContentHashAsString ().equals (sHash))
-        {
-          s_aLogger.info ("Skipping resource bundle '" +
-                          sBundleID +
-                          "' skipping because resource '" +
-                          sPath +
-                          "' changed (hash mismatch)");
-          bResourcesAreOutOfSync = true;
-          continue;
+          // The relocation check makes now sense, because the hash code is
+          // the relevant enough...
+          if (false)
+            if (!aNewResource.getAsURLString ().equals (sURL))
+            {
+              s_aLogger.info ("Skipping resource bundle '" +
+                              sBundleID +
+                              "' because resource '" +
+                              sPath +
+                              "' was relocated from '" +
+                              sURL +
+                              "' to '" +
+                              aNewResource.getAsURLString () +
+                              "'");
+              bResourcesAreOutOfSync = true;
+              continue;
+            }
+
+          if (!aNewResource.getContentHashAsString ().equals (sHash))
+          {
+            s_aLogger.info ("Skipping resource bundle '" +
+                            sBundleID +
+                            "' skipping because resource '" +
+                            sPath +
+                            "' changed (hash mismatch)");
+            bResourcesAreOutOfSync = true;
+            continue;
+          }
+          aResources.add (new WebSiteResourceWithCondition (aNewResource,
+                                                            sConditionalComment,
+                                                            bCanBeBundled,
+                                                            aMediaList));
         }
-        aResources.add (new WebSiteResourceWithCondition (aNewResource,
-                                                          sConditionalComment,
-                                                          bCanBeBundled,
-                                                          aMediaList));
       }
 
       if (bResourcesAreOutOfSync)
@@ -233,6 +242,13 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
     return m_aRWLock.readLocked ( () -> m_aMapToBundle.getClone ());
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <WebSiteResourceBundleSerialized> getAllResourceBundlesSerialized ()
+  {
+    return m_aRWLock.readLocked ( () -> m_aMapToBundle.copyOfValues ());
+  }
+
   /**
    * Get the serialized resource bundle with the passed ID.
    *
@@ -277,20 +293,20 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
     // Create a copy for modification
     boolean bCreatedAnyBundle = false;
     final ICommonsList <WebSiteResourceWithCondition> aCopy = CollectionHelper.newList (aList);
-    while (!aCopy.isEmpty ())
+    while (aCopy.isNotEmpty ())
     {
-      final WebSiteResourceWithCondition aFirst = aCopy.remove (0);
+      final WebSiteResourceWithCondition aFirst = aCopy.removeFirst ();
 
       // Find all resources that can be bundled with aFirst
       final ICommonsList <WebSiteResourceWithCondition> aBundleResources = CollectionHelper.newList (aFirst);
-      while (!aCopy.isEmpty ())
+      while (aCopy.isNotEmpty ())
       {
-        final WebSiteResourceWithCondition aBundleCandidate = aCopy.get (0);
+        final WebSiteResourceWithCondition aBundleCandidate = aCopy.getFirst ();
         if (aFirst.canBeBundledWith (aBundleCandidate))
         {
           // Can be bundled -> add and try next
           aBundleResources.add (aBundleCandidate);
-          aCopy.remove (0);
+          aCopy.removeFirst ();
         }
         else
         {
@@ -360,9 +376,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
     // Write once at the end
     if (bCreatedAnyBundle)
     {
-      m_aRWLock.writeLocked ( () -> {
-        markAsChanged ();
-      });
+      m_aRWLock.writeLocked ( () -> markAsChanged ());
     }
 
     return ret;

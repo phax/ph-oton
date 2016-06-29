@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap3.pages.appinfo;
 
+import java.io.File;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -24,7 +25,10 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
@@ -36,6 +40,7 @@ import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.textlevel.HCBR;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButton;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
@@ -71,7 +76,8 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
     MSG_CACHE_NOW_ENABLED ("Der Cache ist jetzt aktiviert", "Cache is now enabled"),
     MSG_CACHE_NOW_DISABLED ("Der Cache ist jetzt deaktiviert", "Cache is now disabled"),
     MSG_RESBUNDLE_NOW_ENABLED ("Das ResourceBundleServlet ist jetzt aktiviert", "ResourceBundleServlet is now enabled"),
-    MSG_RESBUNDLE_NOW_DISABLED ("Das ResourceBundleServlet ist jetzt deaktiviert", "ResourceBundleServlet is now disabled"),
+    MSG_RESBUNDLE_NOW_DISABLED ("Das ResourceBundleServlet ist jetzt deaktiviert",
+                                "ResourceBundleServlet is now disabled"),
     MSG_RESBUNDLE_SERVLET ("ResourceBundleServlet registriert", "ResourceBundleServlet registered"),
     MSG_CACHE_ENABLED ("Cache aktiv", "Cache enabled"),
     MSG_RESBUNDLE_ENABLED ("ResourceBundleServlet aktiviert", "ResourceBundleServlet enabled"),
@@ -215,7 +221,8 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
                                         new DTCol (EText.MSG_CSS_MEDIA.getDisplayText (aDisplayLocale)).setDataSort (4,
                                                                                                                      1)).setID (getID ());
 
-    for (final WebSiteResourceBundleSerialized aBundle : m_aResBundleMgr.getAllResourceBundles ().values ())
+    final ICommonsList <WebSiteResourceBundleSerialized> aBundles = m_aResBundleMgr.getAllResourceBundlesSerialized ();
+    for (final WebSiteResourceBundleSerialized aBundle : aBundles)
     {
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (aBundle.getBundleID ());
@@ -229,5 +236,22 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
     aNodeList.addChild (aDataTables);
+
+    if (GlobalDebug.isDebugMode ())
+    {
+      aNodeList.addChild (getUIHandler ().createDataGroupHeader ("Resource bundle directory listing"));
+
+      final File aDir = WebFileIO.getDataIO ().getFile (WebSiteResourceBundleSerialized.RESOURCE_BUNDLE_PATH);
+      final HCTable aTable2 = new HCTable (new DTCol ("Filename"), new DTCol ("Active?")).setID (getID () + "2");
+      for (final File aFile : new FileSystemIterator (aDir))
+      {
+        final HCRow aRow = aTable2.addBodyRow ();
+        aRow.addCell (aFile.getName ());
+        aRow.addCell (m_aResBundleMgr.containsResourceBundleOfID (aFile.getName ()) ? "yes" : "no");
+      }
+      aNodeList.addChild (aTable2);
+      final DataTables aDataTables2 = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable2);
+      aNodeList.addChild (aDataTables2);
+    }
   }
 }
