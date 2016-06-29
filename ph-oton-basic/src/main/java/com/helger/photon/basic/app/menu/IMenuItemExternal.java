@@ -46,13 +46,19 @@ public interface IMenuItemExternal extends IMenuItem
    * @return The referenced external URL. Never <code>null</code>.
    */
   @Nonnull
-  ISimpleURL getURL ();
+  default ISimpleURL getURL ()
+  {
+    return getURLProvider ().getSimpleURL ();
+  }
 
   /*
    * Change return type
    */
   @Nonnull
-  IMenuItemExternal setTarget (@Nullable HC_Target eTarget);
+  default IMenuItemExternal setTarget (@Nullable final HC_Target aTarget)
+  {
+    return setTarget (aTarget == null ? null : aTarget.getName ());
+  }
 
   /*
    * Change return type

@@ -45,7 +45,10 @@ public interface IMenuItemPage extends IMenuItem
    * Change return type
    */
   @Nonnull
-  IMenuItemPage setTarget (@Nullable HC_Target eTarget);
+  default IMenuItemPage setTarget (@Nullable final HC_Target aTarget)
+  {
+    return setTarget (aTarget == null ? null : aTarget.getName ());
+  }
 
   /*
    * Change return type

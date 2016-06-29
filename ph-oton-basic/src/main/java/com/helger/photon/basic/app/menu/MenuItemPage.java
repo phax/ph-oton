@@ -25,10 +25,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.html.hc.html.HC_Target;
 import com.helger.photon.basic.app.page.IPage;
 
 /**
@@ -79,17 +77,6 @@ public class MenuItemPage extends AbstractMenuObject <MenuItemPage> implements I
   public String getTarget ()
   {
     return m_sTarget;
-  }
-
-  public boolean hasTarget ()
-  {
-    return StringHelper.hasText (m_sTarget);
-  }
-
-  @Nonnull
-  public MenuItemPage setTarget (@Nullable final HC_Target aTarget)
-  {
-    return setTarget (aTarget == null ? null : aTarget.getName ());
   }
 
   @Nonnull

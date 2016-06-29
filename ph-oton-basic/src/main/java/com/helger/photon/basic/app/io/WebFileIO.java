@@ -128,12 +128,10 @@ public final class WebFileIO
   @Nonnull
   public static IMutablePathRelativeIO getDataIO ()
   {
-    return s_aRWLock.readLocked ( () -> {
-      final IMutablePathRelativeIO ret = s_aDataPath;
-      if (ret == null)
-        throw new IllegalStateException ("Data path was not initialized!");
-      return ret;
-    });
+    final IMutablePathRelativeIO ret = s_aRWLock.readLocked ( () -> s_aDataPath);
+    if (ret == null)
+      throw new IllegalStateException ("Data path was not initialized!");
+    return ret;
   }
 
   /**
@@ -146,11 +144,9 @@ public final class WebFileIO
   @Nonnull
   public static IPathRelativeIO getServletContextIO ()
   {
-    return s_aRWLock.readLocked ( () -> {
-      final IPathRelativeIO ret = s_aServletContextPath;
-      if (ret == null)
-        throw new IllegalStateException ("Servlet context path was not initialized!");
-      return ret;
-    });
+    final IPathRelativeIO ret = s_aRWLock.readLocked ( () -> s_aServletContextPath);
+    if (ret == null)
+      throw new IllegalStateException ("Servlet context path was not initialized!");
+    return ret;
   }
 }

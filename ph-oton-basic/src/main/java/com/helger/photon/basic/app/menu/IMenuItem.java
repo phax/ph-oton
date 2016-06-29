@@ -19,6 +19,7 @@ package com.helger.photon.basic.app.menu;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.html.hc.html.HC_Target;
 
@@ -39,17 +40,23 @@ public interface IMenuItem extends IMenuObject, IHasDisplayText
    * @return <code>true</code> if an explicit target is defined,
    *         <code>false</code> otherwise.
    */
-  boolean hasTarget ();
+  default boolean hasTarget ()
+  {
+    return StringHelper.hasText (getTarget ());
+  }
 
   /**
    * Set the (HTML) target of the link.
    *
-   * @param eTarget
+   * @param aTarget
    *        The target window. May be <code>null</code>.
    * @return this
    */
   @Nonnull
-  IMenuItem setTarget (@Nullable HC_Target eTarget);
+  default IMenuItem setTarget (@Nullable final HC_Target aTarget)
+  {
+    return setTarget (aTarget == null ? null : aTarget.getName ());
+  }
 
   /**
    * Set the (HTML) target of the link.

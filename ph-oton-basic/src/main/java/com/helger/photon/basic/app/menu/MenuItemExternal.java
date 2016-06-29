@@ -25,12 +25,9 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.url.IHasSimpleURL;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hc.html.HC_Target;
 
 /**
  * Default implementation of the {@link IMenuItemExternal} interface.
@@ -65,12 +62,6 @@ public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal> impl
     return m_aURLProvider;
   }
 
-  @Nonnull
-  public ISimpleURL getURL ()
-  {
-    return m_aURLProvider.getSimpleURL ();
-  }
-
   @Nullable
   public String getDisplayText (@Nonnull final Locale aDisplayLocale)
   {
@@ -81,17 +72,6 @@ public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal> impl
   public String getTarget ()
   {
     return m_sTarget;
-  }
-
-  public boolean hasTarget ()
-  {
-    return StringHelper.hasText (m_sTarget);
-  }
-
-  @Nonnull
-  public MenuItemExternal setTarget (@Nullable final HC_Target aTarget)
-  {
-    return setTarget (aTarget == null ? null : aTarget.getName ());
   }
 
   @Nonnull

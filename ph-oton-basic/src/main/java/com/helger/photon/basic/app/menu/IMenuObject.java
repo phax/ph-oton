@@ -53,5 +53,9 @@ public interface IMenuObject extends IHasID <String>, IMutableAttributeContainer
    * @return <code>true</code> if either no display filter is installed, or if
    *         the installed filter matches, <code>false</code> otherwise.
    */
-  boolean matchesDisplayFilter ();
+  default boolean matchesDisplayFilter ()
+  {
+    final IMenuObjectFilter aDisplayFilter = getDisplayFilter ();
+    return aDisplayFilter == null || aDisplayFilter.test (this);
+  }
 }

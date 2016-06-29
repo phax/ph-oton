@@ -16,6 +16,12 @@
  */
 package com.helger.photon.basic.app.menu;
 
+import java.util.Locale;
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.helger.commons.filter.IFilter;
 import com.helger.commons.text.display.IHasDisplayText;
 
@@ -25,7 +31,26 @@ import com.helger.commons.text.display.IHasDisplayText;
  *
  * @author Philip Helger
  */
+@FunctionalInterface
 public interface IMenuObjectFilter extends IFilter <IMenuObject>, IHasDisplayText
 {
-  /* empty */
+  @Nullable
+  default String getDisplayText (@Nonnull final Locale aContentLocale)
+  {
+    return null;
+  }
+
+  @Nonnull
+  default IMenuObjectFilter and (@Nonnull final IMenuObjectFilter other)
+  {
+    Objects.requireNonNull (other);
+    return (t) -> test (t) && other.test (t);
+  }
+
+  @Nonnull
+  default IMenuObjectFilter or (@Nonnull final IMenuObjectFilter other)
+  {
+    Objects.requireNonNull (other);
+    return (t) -> test (t) || other.test (t);
+  }
 }
