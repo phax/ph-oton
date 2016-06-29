@@ -50,7 +50,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (MenuTree.class);
 
-  private final ICommonsList <String> m_aDefaultMenuItemIDs = new CommonsArrayList <> ();
+  private final ICommonsList <String> m_aDefaultMenuItemIDs = new CommonsArrayList<> ();
 
   public MenuTree ()
   {}
@@ -82,25 +82,9 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   }
 
   @Nonnull
-  public IMenuSeparator createSeparator (@Nonnull final IMenuItem aParent)
-  {
-    ValueEnforcer.notNull (aParent, "Parent");
-
-    return createSeparator (aParent.getID ());
-  }
-
-  @Nonnull
   public IMenuItemPage createRootItem (@Nonnull final String sItemID, @Nonnull final IPage aPage)
   {
     return _createChildItem (getRootItem (), new MenuItemPage (sItemID, aPage));
-  }
-
-  @Nonnull
-  public IMenuItemPage createRootItem (@Nonnull final IPage aPage)
-  {
-    ValueEnforcer.notNull (aPage, "Page");
-
-    return createRootItem (aPage.getID (), aPage);
   }
 
   @Nonnull
@@ -198,7 +182,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   @ReturnsMutableCopy
   public ICommonsList <IMenuItemPage> getAllDefaultMenuItems ()
   {
-    final ICommonsList <IMenuItemPage> ret = new CommonsArrayList <> ();
+    final ICommonsList <IMenuItemPage> ret = new CommonsArrayList<> ();
     if (m_aDefaultMenuItemIDs != null)
       for (final String sDefaultMenuItemID : m_aDefaultMenuItemIDs)
       {
@@ -288,7 +272,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("defaultMenuItemIDs", m_aDefaultMenuItemIDs)
+                            .appendIfNotNull ("DefaultMenuItemIDs", m_aDefaultMenuItemIDs)
                             .toString ();
   }
 }

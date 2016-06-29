@@ -42,7 +42,7 @@ public final class LongRunningJobManager
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, LongRunningJobData> m_aRunningJobs = new CommonsHashMap <> ();
+  private final ICommonsMap <String, LongRunningJobData> m_aRunningJobs = new CommonsHashMap<> ();
   private final LongRunningJobResultManager m_aResultMgr;
 
   public LongRunningJobManager (@Nonnull final LongRunningJobResultManager aResultMgr)
@@ -67,10 +67,8 @@ public final class LongRunningJobManager
 
     // Create a new unique in-memory ID
     final String sJobID = GlobalIDFactory.getNewStringID ();
-    m_aRWLock.writeLocked ( () -> m_aRunningJobs.put (sJobID,
-                                                      new LongRunningJobData (sJobID,
-                                                                              aJob.getJobDescription (),
-                                                                              sStartingUserID)));
+    final LongRunningJobData aJobData = new LongRunningJobData (sJobID, aJob.getJobDescription (), sStartingUserID);
+    m_aRWLock.writeLocked ( () -> m_aRunningJobs.put (sJobID, aJobData));
     return sJobID;
   }
 

@@ -16,6 +16,7 @@
  */
 package com.helger.photon.basic.longrun;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -37,7 +38,7 @@ import com.helger.commons.text.IMultilingualText;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class LongRunningJobData implements IHasID <String>
+public final class LongRunningJobData implements IHasID <String>, Serializable
 {
   private final String m_sID;
 

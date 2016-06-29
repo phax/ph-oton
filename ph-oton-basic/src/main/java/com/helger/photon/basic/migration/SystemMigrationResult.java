@@ -16,6 +16,7 @@
  */
 package com.helger.photon.basic.migration;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
@@ -37,7 +38,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
+public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator, Serializable
 {
   private final String m_sMigrationID;
   private final LocalDateTime m_aExecutionDT;

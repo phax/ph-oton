@@ -32,12 +32,12 @@ import com.helger.xml.microdom.serialize.MicroWriter;
  *
  * @author Philip Helger
  */
-public final class LongRunningJobResult
+public class LongRunningJobResult
 {
   private final ELongRunningJobResultType m_eType;
   private final Object m_aResult;
 
-  private LongRunningJobResult (@Nonnull final ELongRunningJobResultType eType, @Nonnull final Object aResult)
+  protected LongRunningJobResult (@Nonnull final ELongRunningJobResultType eType, @Nonnull final Object aResult)
   {
     ValueEnforcer.notNull (eType, "Type");
     ValueEnforcer.notNull (aResult, "Result");

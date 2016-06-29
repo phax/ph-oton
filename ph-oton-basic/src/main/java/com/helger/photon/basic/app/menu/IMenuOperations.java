@@ -70,7 +70,11 @@ public interface IMenuOperations
    *         If the passed parent menu item could not be resolved
    */
   @Nonnull
-  IMenuSeparator createSeparator (@Nonnull IMenuItem aParent);
+  default IMenuSeparator createSeparator (@Nonnull final IMenuItem aParent)
+  {
+    ValueEnforcer.notNull (aParent, "Parent");
+    return createSeparator (aParent.getID ());
+  }
 
   /**
    * Append a new menu item at root level.
@@ -93,7 +97,11 @@ public interface IMenuOperations
    *         the page. Never <code>null</code>.
    */
   @Nonnull
-  IMenuItemPage createRootItem (@Nonnull IPage aPage);
+  default IMenuItemPage createRootItem (@Nonnull final IPage aPage)
+  {
+    ValueEnforcer.notNull (aPage, "Page");
+    return createRootItem (aPage.getID (), aPage);
+  }
 
   /**
    * Append a new menu item below the specified parent.
