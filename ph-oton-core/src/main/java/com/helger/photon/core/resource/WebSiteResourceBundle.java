@@ -66,7 +66,7 @@ public class WebSiteResourceBundle
     m_sConditionalComment = sConditionalComment;
     m_bIsBundlable = bIsBundlable;
     m_aMediaList = aMediaList == null || aMediaList.hasNoMedia () ? null : new CSSMediaList (aMediaList);
-    m_eResourceType = aResources.get (0).getResource ().getResourceType ();
+    m_eResourceType = m_aResources.getFirst ().getResourceType ();
 
     // Consistency check
     for (final WebSiteResourceWithCondition aResource : aResources)
@@ -75,6 +75,9 @@ public class WebSiteResourceBundle
                                             aResources);
   }
 
+  /**
+   * @return The number of contained resources. Always &ge; 1.
+   */
   @Nonnegative
   public int getResourceCount ()
   {
@@ -194,7 +197,7 @@ public class WebSiteResourceBundle
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("resources", m_aResources)
+    return new ToStringGenerator (this).append ("Resources", m_aResources)
                                        .appendIfNotNull ("ConditionalComment", m_sConditionalComment)
                                        .append ("IsBundlable", m_bIsBundlable)
                                        .appendIfNotNull ("MediaList", m_aMediaList)

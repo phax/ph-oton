@@ -52,6 +52,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public class WebSiteResourceBundleSerialized implements IHasInputStream
 {
+  public static final String RESOURCE_BUNDLE_PATH = "resource-bundles/";
   public static final Charset CHARSET_TO_USE = CCharset.CHARSET_UTF_8_OBJ;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResourceBundleSerialized.class);
@@ -80,9 +81,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
 
   private void _ensureSerialized (final boolean bRegular)
   {
-    final FileSystemResource aTargetRes = WebFileIO.getDataIO ().getResource (
-                                                                              WebSiteResourceBundleManager.RESOURCE_BUNDLE_PATH +
-                                                                              m_sBundleID);
+    final FileSystemResource aTargetRes = getResource (m_sBundleID);
     if (!aTargetRes.exists ())
     {
       // persist file by merging all items
@@ -129,11 +128,13 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
               }
             }
             else
+            {
               s_aLogger.error ("Web site resource '" +
                                aRes.getPath () +
                                "' at '" +
                                aRes.getAsURLString () +
                                "' has no content/does not exist!");
+            }
           }
 
           s_aLogger.info ("Serialized " +
@@ -170,16 +171,16 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
   }
 
   @Nullable
-  public static InputStream getInputStream (@Nonnull @Nonempty final String sBundleID)
+  public static FileSystemResource getResource (@Nonnull @Nonempty final String sBundleID)
   {
     ValueEnforcer.notEmpty (sBundleID, "BundleID");
-    return WebFileIO.getDataIO ().getInputStream (WebSiteResourceBundleManager.RESOURCE_BUNDLE_PATH + sBundleID);
+    return WebFileIO.getDataIO ().getResource (RESOURCE_BUNDLE_PATH + sBundleID);
   }
 
   @Nullable
   public InputStream getInputStream ()
   {
-    return getInputStream (m_sBundleID);
+    return getResource (m_sBundleID).getInputStream ();
   }
 
   @Nonnull
@@ -226,9 +227,9 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("bundleID", m_sBundleID)
-                                       .append ("bundle", m_aBundle)
-                                       .append ("creationDT", m_aCreationDT)
+    return new ToStringGenerator (this).append ("BundleID", m_sBundleID)
+                                       .append ("Bundle", m_aBundle)
+                                       .append ("CreationDT", m_aCreationDT)
                                        .toString ();
   }
 }

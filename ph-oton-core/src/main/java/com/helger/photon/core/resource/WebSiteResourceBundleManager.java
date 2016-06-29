@@ -51,8 +51,6 @@ import com.helger.xml.microdom.MicroDocument;
 
 public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
 {
-  public static final String RESOURCE_BUNDLE_PATH = "resource-bundles/";
-
   private static final String ELEMENT_RESOURCE_BUNDLES = "resource-bundles";
   private static final String ELEMENT_RESOURCE_BUNDLE = "resource-bundle";
   private static final String ATTR_ID = "id";
