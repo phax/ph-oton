@@ -46,7 +46,10 @@ public interface IMutablePathRelativeIO extends IPathRelativeIO
    * @see #getBasePathFile()
    */
   @Nullable
-  OutputStream getOutputStream (@Nonnull String sRelativePath);
+  default OutputStream getOutputStream (@Nonnull final String sRelativePath)
+  {
+    return getOutputStream (sRelativePath, EAppend.TRUNCATE);
+  }
 
   /**
    * Get the {@link OutputStream} relative to the base path
@@ -59,7 +62,10 @@ public interface IMutablePathRelativeIO extends IPathRelativeIO
    * @see #getBasePathFile()
    */
   @Nullable
-  OutputStream getOutputStream (@Nonnull String sRelativePath, @Nonnull EAppend eAppend);
+  default OutputStream getOutputStream (@Nonnull final String sRelativePath, @Nonnull final EAppend eAppend)
+  {
+    return getResource (sRelativePath).getOutputStream (eAppend);
+  }
 
   /**
    * Get the {@link Writer} relative to the base path. An eventually existing
@@ -73,7 +79,10 @@ public interface IMutablePathRelativeIO extends IPathRelativeIO
    * @see #getBasePathFile()
    */
   @Nullable
-  Writer getWriter (@Nonnull String sRelativePath, @Nonnull Charset aCharset);
+  default Writer getWriter (@Nonnull final String sRelativePath, @Nonnull final Charset aCharset)
+  {
+    return getWriter (sRelativePath, aCharset, EAppend.TRUNCATE);
+  }
 
   /**
    * Get the {@link Writer} relative to the base path.
@@ -88,7 +97,12 @@ public interface IMutablePathRelativeIO extends IPathRelativeIO
    * @see #getBasePathFile()
    */
   @Nullable
-  Writer getWriter (@Nonnull String sRelativePath, @Nonnull Charset aCharset, @Nonnull EAppend eAppend);
+  default Writer getWriter (@Nonnull final String sRelativePath,
+                            @Nonnull final Charset aCharset,
+                            @Nonnull final EAppend eAppend)
+  {
+    return getResource (sRelativePath).getWriter (aCharset, eAppend);
+  }
 
   /**
    * Create the appropriate directory if it is not existing
@@ -104,25 +118,37 @@ public interface IMutablePathRelativeIO extends IPathRelativeIO
   FileIOError createDirectory (@Nonnull String sRelativePath, boolean bRecursive);
 
   @Nonnull
-  FileIOError deleteFile (@Nonnull String sFilename);
+  default FileIOError deleteFile (@Nonnull final String sFilename)
+  {
+    return deleteFile (getFile (sFilename));
+  }
 
   @Nonnull
   FileIOError deleteFile (@Nonnull File aFile);
 
   @Nonnull
-  FileIOError deleteFileIfExisting (@Nonnull String sFilename);
+  default FileIOError deleteFileIfExisting (@Nonnull final String sFilename)
+  {
+    return deleteFileIfExisting (getFile (sFilename));
+  }
 
   @Nonnull
   FileIOError deleteFileIfExisting (@Nonnull File aFile);
 
   @Nonnull
-  FileIOError deleteDirectory (@Nonnull String sDirName, boolean bDeleteRecursively);
+  default FileIOError deleteDirectory (@Nonnull final String sDirName, final boolean bDeleteRecursively)
+  {
+    return deleteDirectory (getFile (sDirName), bDeleteRecursively);
+  }
 
   @Nonnull
   FileIOError deleteDirectory (@Nonnull File fDir, boolean bDeleteRecursively);
 
   @Nonnull
-  FileIOError deleteDirectoryIfExisting (@Nonnull String sDirName, boolean bDeleteRecursively);
+  default FileIOError deleteDirectoryIfExisting (@Nonnull final String sDirName, final boolean bDeleteRecursively)
+  {
+    return deleteDirectoryIfExisting (getFile (sDirName), bDeleteRecursively);
+  }
 
   @Nonnull
   FileIOError deleteDirectoryIfExisting (@Nonnull File fDir, boolean bDeleteRecursively);

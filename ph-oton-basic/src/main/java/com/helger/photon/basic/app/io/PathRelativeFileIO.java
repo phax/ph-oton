@@ -17,21 +17,16 @@
 package com.helger.photon.basic.app.io;
 
 import java.io.File;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.exception.InitializationException;
@@ -40,9 +35,7 @@ import com.helger.commons.io.EAppend;
 import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.io.file.FileOperationManager;
-import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.iterate.FileSystemRecursiveIterator;
-import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.ToStringGenerator;
@@ -131,84 +124,11 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
   }
 
   @Nonnull
-  @Nonempty
-  public String getBasePath ()
-  {
-    return getBasePathFile ().getAbsolutePath ();
-  }
-
-  @Nonnull
-  public File getFile (@Nonnull final String sRelativePath)
-  {
-    return new File (getBasePathFile (), sRelativePath);
-  }
-
-  public boolean existsFile (@Nonnull final String sRelativePath)
-  {
-    return FileHelper.existsFile (getFile (sRelativePath));
-  }
-
-  public boolean existsDir (@Nonnull final String sRelativePath)
-  {
-    return FileHelper.existsDir (getFile (sRelativePath));
-  }
-
-  @Nonnull
-  public FileSystemResource getResource (@Nonnull final String sRelativePath)
-  {
-    return new FileSystemResource (getFile (sRelativePath));
-  }
-
-  @Nullable
-  public InputStream getInputStream (@Nonnull final String sRelativePath)
-  {
-    return getResource (sRelativePath).getInputStream ();
-  }
-
-  @Nullable
-  public Reader getReader (@Nonnull final String sRelativePath, @Nonnull final Charset aCharset)
-  {
-    return getResource (sRelativePath).getReader (aCharset);
-  }
-
-  @Nullable
-  public OutputStream getOutputStream (@Nonnull final String sRelativePath)
-  {
-    return getOutputStream (sRelativePath, EAppend.TRUNCATE);
-  }
-
-  @Nullable
-  public OutputStream getOutputStream (@Nonnull final String sRelativePath, @Nonnull final EAppend eAppend)
-  {
-    return getResource (sRelativePath).getOutputStream (eAppend);
-  }
-
-  @Nullable
-  public Writer getWriter (@Nonnull final String sRelativePath, @Nonnull final Charset aCharset)
-  {
-    return getWriter (sRelativePath, aCharset, EAppend.TRUNCATE);
-  }
-
-  @Nullable
-  public Writer getWriter (@Nonnull final String sRelativePath,
-                           @Nonnull final Charset aCharset,
-                           @Nonnull final EAppend eAppend)
-  {
-    return getResource (sRelativePath).getWriter (aCharset, eAppend);
-  }
-
-  @Nonnull
   public FileIOError createDirectory (@Nonnull final String sRelativePath, final boolean bRecursive)
   {
     final File aDir = getFile (sRelativePath);
     return bRecursive ? getFileOperationMgr ().createDirRecursiveIfNotExisting (aDir)
                       : getFileOperationMgr ().createDirIfNotExisting (aDir);
-  }
-
-  @Nonnull
-  public FileIOError deleteFile (@Nonnull final String sFilename)
-  {
-    return deleteFile (getFile (sFilename));
   }
 
   @Nonnull
@@ -218,21 +138,9 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
   }
 
   @Nonnull
-  public FileIOError deleteFileIfExisting (@Nonnull final String sFilename)
-  {
-    return deleteFileIfExisting (getFile (sFilename));
-  }
-
-  @Nonnull
   public FileIOError deleteFileIfExisting (@Nonnull final File aFile)
   {
     return getFileOperationMgr ().deleteFileIfExisting (aFile);
-  }
-
-  @Nonnull
-  public FileIOError deleteDirectory (@Nonnull final String sDirName, final boolean bDeleteRecursively)
-  {
-    return deleteDirectory (getFile (sDirName), bDeleteRecursively);
   }
 
   @Nonnull
@@ -240,12 +148,6 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
   {
     return bDeleteRecursively ? getFileOperationMgr ().deleteDirRecursive (fDir)
                               : getFileOperationMgr ().deleteDir (fDir);
-  }
-
-  @Nonnull
-  public FileIOError deleteDirectoryIfExisting (@Nonnull final String sDirName, final boolean bDeleteRecursively)
-  {
-    return deleteDirectoryIfExisting (getFile (sDirName), bDeleteRecursively);
   }
 
   @Nonnull
@@ -325,12 +227,6 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
   public ESuccess appendFile (@Nonnull final String sFilename, @Nonnull final byte [] aBytes)
   {
     return _writeFile (sFilename, EAppend.APPEND, aBytes);
-  }
-
-  @Nullable
-  public String getRelativeFilename (@Nonnull final File aAbsoluteFile)
-  {
-    return FilenameHelper.getRelativeToParentDirectory (aAbsoluteFile, m_aBasePath);
   }
 
   @Override

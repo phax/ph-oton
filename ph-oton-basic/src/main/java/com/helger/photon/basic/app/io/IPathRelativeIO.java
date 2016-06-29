@@ -26,6 +26,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.io.file.FileHelper;
+import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.resource.FileSystemResource;
 
 /**
@@ -48,7 +50,10 @@ public interface IPathRelativeIO extends Serializable
    */
   @Nonnull
   @Nonempty
-  String getBasePath ();
+  default String getBasePath ()
+  {
+    return getBasePathFile ().getAbsolutePath ();
+  }
 
   /**
    * Get a {@link File} relative to the base path.
@@ -59,7 +64,10 @@ public interface IPathRelativeIO extends Serializable
    * @see #getBasePathFile()
    */
   @Nonnull
-  File getFile (@Nonnull String sRelativePath);
+  default File getFile (@Nonnull final String sRelativePath)
+  {
+    return new File (getBasePathFile (), sRelativePath);
+  }
 
   /**
    * Check if a file relative to the base path exists
@@ -70,7 +78,10 @@ public interface IPathRelativeIO extends Serializable
    *         <code>false</code> otherwise.
    * @see #getBasePathFile()
    */
-  boolean existsFile (@Nonnull String sRelativePath);
+  default boolean existsFile (@Nonnull final String sRelativePath)
+  {
+    return FileHelper.existsFile (getFile (sRelativePath));
+  }
 
   /**
    * Check if a directory relative to the base path exists
@@ -81,7 +92,10 @@ public interface IPathRelativeIO extends Serializable
    *         <code>false</code> otherwise.
    * @see #getBasePathFile()
    */
-  boolean existsDir (@Nonnull String sRelativePath);
+  default boolean existsDir (@Nonnull final String sRelativePath)
+  {
+    return FileHelper.existsDir (getFile (sRelativePath));
+  }
 
   /**
    * Get the file system resource relative to the base path
@@ -93,7 +107,10 @@ public interface IPathRelativeIO extends Serializable
    * @see #getBasePathFile()
    */
   @Nonnull
-  FileSystemResource getResource (@Nonnull String sRelativePath);
+  default FileSystemResource getResource (@Nonnull final String sRelativePath)
+  {
+    return new FileSystemResource (getFile (sRelativePath));
+  }
 
   /**
    * Get the {@link InputStream} relative to the base path
@@ -104,7 +121,10 @@ public interface IPathRelativeIO extends Serializable
    * @see #getBasePathFile()
    */
   @Nullable
-  InputStream getInputStream (@Nonnull String sRelativePath);
+  default InputStream getInputStream (@Nonnull final String sRelativePath)
+  {
+    return getResource (sRelativePath).getInputStream ();
+  }
 
   /**
    * Get the {@link Reader} relative to the base path
@@ -117,7 +137,10 @@ public interface IPathRelativeIO extends Serializable
    * @see #getBasePathFile()
    */
   @Nullable
-  Reader getReader (@Nonnull String sRelativePath, @Nonnull Charset aCharset);
+  default Reader getReader (@Nonnull final String sRelativePath, @Nonnull final Charset aCharset)
+  {
+    return getResource (sRelativePath).getReader (aCharset);
+  }
 
   /**
    * Get the relative file name for the passed absolute file.
@@ -128,5 +151,9 @@ public interface IPathRelativeIO extends Serializable
    *         directory.
    */
   @Nullable
-  String getRelativeFilename (@Nonnull File aAbsoluteFile);
+  default String getRelativeFilename (@Nonnull final File aAbsoluteFile)
+  {
+    return FilenameHelper.getRelativeToParentDirectory (aAbsoluteFile, getBasePathFile ());
+  }
+
 }
