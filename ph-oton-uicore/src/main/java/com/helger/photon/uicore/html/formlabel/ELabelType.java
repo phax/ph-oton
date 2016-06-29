@@ -16,18 +16,39 @@
  */
 package com.helger.photon.uicore.html.formlabel;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.id.IHasID;
+import com.helger.commons.lang.EnumHelper;
+
 /**
  * Represents the possible label states.
  *
  * @author Philip Helger
  */
-public enum ELabelType
+public enum ELabelType implements IHasID <String>
 {
-  OPTIONAL,
-  MANDATORY,
-  ALTERNATIVE;
+  OPTIONAL ("optional"),
+  MANDATORY ("mandatory"),
+  ALTERNATIVE ("alternative");
 
   public static final ELabelType DEFAULT = OPTIONAL;
+
+  private final String m_sID;
+
+  private ELabelType (@Nonnull @Nonempty final String sID)
+  {
+    m_sID = sID;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getID ()
+  {
+    return m_sID;
+  }
 
   public boolean isOptional ()
   {
@@ -42,5 +63,11 @@ public enum ELabelType
   public boolean isAlternative ()
   {
     return this == ELabelType.ALTERNATIVE;
+  }
+
+  @Nullable
+  public static ELabelType getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (ELabelType.class, sID);
   }
 }
