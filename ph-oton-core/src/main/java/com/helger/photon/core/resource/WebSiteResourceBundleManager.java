@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.resource;
 
+import java.io.File;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -38,6 +39,7 @@ import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.id.factory.GlobalIDFactory;
+import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
@@ -45,6 +47,7 @@ import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ECSSMedium;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
@@ -197,6 +200,15 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
         m_aMapToData.put (aBundle, sBundleID);
         m_aMapToBundle.put (sBundleID, aBundleSerialized);
       }
+    }
+
+    // Remove all files for bundles that are invalid
+    {
+      final File aDir = WebFileIO.getDataIO ().getFile (WebSiteResourceBundleSerialized.RESOURCE_BUNDLE_PATH);
+      for (final File aFile : new FileSystemIterator (aDir))
+        if (!containsResourceBundleOfID (aFile.getName ()))
+          if (WebFileIO.getFileOpMgr ().deleteFile (aFile).isSuccess ())
+            s_aLogger.info ("Successfully deleted the unused resource bundle file " + aFile.getAbsolutePath ());
     }
 
     s_aLogger.info ("Successfully read " + m_aMapToBundle.size () + " resource bundles");
