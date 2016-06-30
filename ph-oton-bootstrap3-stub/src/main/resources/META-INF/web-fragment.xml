@@ -25,6 +25,9 @@
   <name>ph-oton-bootstrap3-stub</name>
   <distributable />
   <ordering>
+    <after>
+      <name>log4j</name>
+    </after>
     <before>
       <others />
     </before>
