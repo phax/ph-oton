@@ -32,7 +32,6 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.FragmentConfiguration;
 import org.eclipse.jetty.webapp.JettyWebXmlConfiguration;
-import org.eclipse.jetty.webapp.MetaInfConfiguration;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 import org.eclipse.jetty.webapp.WebXmlConfiguration;
@@ -47,6 +46,7 @@ import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.system.SystemProperties;
+import com.helger.photon.jetty.configure.MetaInfConfigurationExt;
 
 /**
  * Run a standalone web application in Jetty on port 8080.<br>
@@ -272,7 +272,7 @@ public class JettyStarter
       // Important to add the AnnotationConfiguration!
       aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
                                                            new WebXmlConfiguration (),
-                                                           new MetaInfConfiguration (),
+                                                           new MetaInfConfigurationExt (),
                                                            new FragmentConfiguration (),
                                                            new JettyWebXmlConfiguration (),
                                                            new AnnotationConfiguration () });
