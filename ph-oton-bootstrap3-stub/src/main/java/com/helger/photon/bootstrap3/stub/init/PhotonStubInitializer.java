@@ -122,8 +122,13 @@ public final class PhotonStubInitializer
     UnifiedResponseDefaultSettings.setAllowMimeSniffing (false);
     UnifiedResponseDefaultSettings.setEnableXSSFilter (true);
 
-    // Always use HTML5 for Bootstrap3
-    HCSettings.setDefaultHTMLVersion (EHTMLVersion.HTML5);
+    // Set only if still the default, because the method also changes the XML
+    // writer settings internally
+    if (HCSettings.getConversionSettings ().getHTMLVersion () == EHTMLVersion.DEFAULT)
+    {
+      // Always use HTML5 for Bootstrap3
+      HCSettings.setDefaultHTMLVersion (EHTMLVersion.HTML5);
+    }
 
     // Set new customizer only if the default customizer is present
     if (HCConversionSettings.isDefaultCustomizer (HCSettings.getConversionSettings ().getCustomizer ()))
