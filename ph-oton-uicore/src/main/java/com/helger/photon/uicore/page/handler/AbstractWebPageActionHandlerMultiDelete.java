@@ -137,7 +137,7 @@ public abstract class AbstractWebPageActionHandlerMultiDelete <DATATYPE extends 
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final TOOLBAR_TYPE aToolbar = getUIHandler ().createToolbar (aWPEC);
-    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE);
+    aToolbar.addHiddenField (CPageParam.PARAM_ACTION, aWPEC.getAction ());
     aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
     for (final DATATYPE aItem : aSelectedObjects)
       aToolbar.addHiddenField (getFieldName (), aItem.getID ());
