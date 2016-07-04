@@ -18,6 +18,7 @@ package com.helger.photon.security.object.accarea;
 
 import java.util.Locale;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -240,6 +241,12 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
   public ICommonsList <String> getAllAccountingAreaIDsOfClient (@Nullable final IClient aClient)
   {
     return getAllMapped (a -> a.hasSameClient (aClient), IAccountingArea::getID);
+  }
+
+  @Nonnegative
+  public int getCountAccountingAreaIDsOfClient (@Nullable final IClient aClient)
+  {
+    return getCount (a -> a.hasSameClient (aClient));
   }
 
   @Nullable
