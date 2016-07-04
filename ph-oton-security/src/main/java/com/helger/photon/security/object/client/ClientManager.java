@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
@@ -146,7 +146,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsCollection <? extends IClient> getAllClients ()
+  public ICommonsList <? extends IClient> getAllClients ()
   {
     return getAll ();
   }
@@ -161,29 +161,6 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
   @Nullable
   public IClient getClientOfID (@Nullable final String sID)
   {
-    // Change return type
     return getOfID (sID);
-  }
-
-  public boolean containsClientWithID (@Nullable final String sID)
-  {
-    return containsWithID (sID);
-  }
-
-  /**
-   * Check if all passed client IDs are contained
-   *
-   * @param aIDs
-   *        The IDs to be checked. May be <code>null</code>.
-   * @return <code>true</code> if either an empty collection was passed or if
-   *         really all passed client IDs are contained!
-   */
-  public boolean containsAllClientsWithID (@Nullable final Iterable <String> aIDs)
-  {
-    if (aIDs != null)
-      for (final String sClientID : aIDs)
-        if (!containsWithID (sClientID))
-          return false;
-    return true;
   }
 }

@@ -263,11 +263,6 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
     return aAccountingArea != null && aAccountingArea.hasSameClient (aClient) ? aAccountingArea : null;
   }
 
-  public boolean containsAccountingAreaWithID (@Nullable final String sID)
-  {
-    return containsWithID (sID);
-  }
-
   public boolean containsAccountingAreaWithID (@Nullable final String sID, @Nullable final IClient aClient)
   {
     return getAccountingAreaOfID (sID, aClient) != null;

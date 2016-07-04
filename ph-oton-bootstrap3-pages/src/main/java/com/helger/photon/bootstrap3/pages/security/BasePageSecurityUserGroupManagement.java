@@ -86,7 +86,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                                  AbstractWebPageSecurityObjectWithAttributes <IUserGroup, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW_USERGROUP ("Neue Benutzergruppe anlegen", "Create new user group"),
     HEADER_NAME ("Name", "Name"),
@@ -348,7 +348,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     if (CollectionHelper.isEmpty (aRoleIDs))
       aFormErrors.addFieldError (FIELD_ROLES, EText.ERROR_NO_ROLE.getDisplayText (aDisplayLocale));
     else
-      if (!aRoleMgr.containsAllRolesWithID (aRoleIDs))
+      if (!aRoleMgr.containsAllIDs (aRoleIDs))
         aFormErrors.addFieldError (FIELD_ROLES, EText.ERROR_INVALID_ROLES.getDisplayText (aDisplayLocale));
 
     // Call custom method

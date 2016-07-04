@@ -16,7 +16,6 @@
  */
 package com.helger.photon.security.role;
 
-import java.util.Collection;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -27,8 +26,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.IReloadableDAO;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
@@ -63,11 +61,11 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
 
   public void createDefaults ()
   {
-    if (!containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
+    if (!containsWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       internalCreateItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
                                     CSecurity.ROLE_ADMINISTRATOR_NAME,
                                     (String) null));
-    if (!containsRoleWithID (CSecurity.ROLE_USER_ID))
+    if (!containsWithID (CSecurity.ROLE_USER_ID))
       internalCreateItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
                                     CSecurity.ROLE_USER_NAME,
                                     (String) null));
@@ -186,37 +184,6 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
   }
 
   /**
-   * Check if the role with the specified ID is contained
-   *
-   * @param sRoleID
-   *        The role ID to be check
-   * @return <code>true</code> if such role exists, <code>false</code> otherwise
-   */
-  public boolean containsRoleWithID (@Nullable final String sRoleID)
-  {
-    return containsWithID (sRoleID);
-  }
-
-  /**
-   * Check if all passed role IDs are contained
-   *
-   * @param aRoleIDs
-   *        The role IDs to be checked. May be <code>null</code>.
-   * @return <code>true</code> if the collection is empty or if all contained
-   *         role IDs are contained
-   */
-  public boolean containsAllRolesWithID (@Nullable final Collection <String> aRoleIDs)
-  {
-    if (CollectionHelper.isEmpty (aRoleIDs))
-      return true;
-
-    for (final String sRoleID : aRoleIDs)
-      if (!containsWithID (sRoleID))
-        return false;
-    return true;
-  }
-
-  /**
    * Get the role with the specified ID
    *
    * @param sRoleID
@@ -234,7 +201,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsCollection <? extends IRole> getAllRoles ()
+  public ICommonsList <? extends IRole> getAllRoles ()
   {
     return getAll ();
   }

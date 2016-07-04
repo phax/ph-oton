@@ -295,11 +295,6 @@ public final class AppTokenManager extends AbstractMapBasedWALDAO <IAppToken, Ap
     return aAppToken != null && !aAppToken.isDeleted () ? aAppToken : null;
   }
 
-  public boolean containsAppTokenWithID (@Nullable final String sID)
-  {
-    return containsWithID (sID);
-  }
-
   @Nullable
   public IAppToken getAppTokenOfTokenString (@Nullable final String sTokenString)
   {

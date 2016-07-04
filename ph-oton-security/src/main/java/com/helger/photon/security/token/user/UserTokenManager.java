@@ -252,11 +252,6 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
     return getOfID (sID);
   }
 
-  public boolean containsUserTokenWithID (@Nullable final String sID)
-  {
-    return containsWithID (sID);
-  }
-
   @Nullable
   public IUserToken getUserTokenOfTokenString (@Nullable final String sTokenString)
   {

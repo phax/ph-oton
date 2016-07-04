@@ -16,7 +16,6 @@
  */
 package com.helger.photon.security.usergroup;
 
-import java.util.Collection;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -92,9 +91,9 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
       aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
                                                                              CSecurity.USERGROUP_ADMINISTRATORS_NAME,
                                                                              (String) null)));
-    if (m_aUserMgr.containsUserWithID (CSecurity.USER_ADMINISTRATOR_ID))
+    if (m_aUserMgr.containsWithID (CSecurity.USER_ADMINISTRATOR_ID))
       aUG.assignUser (CSecurity.USER_ADMINISTRATOR_ID);
-    if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
+    if (m_aRoleMgr.containsWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       aUG.assignRole (CSecurity.ROLE_ADMINISTRATOR_ID);
 
     // Users user group
@@ -103,9 +102,9 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
       aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
                                                                              CSecurity.USERGROUP_USERS_NAME,
                                                                              (String) null)));
-    if (m_aUserMgr.containsUserWithID (CSecurity.USER_USER_ID))
+    if (m_aUserMgr.containsWithID (CSecurity.USER_USER_ID))
       aUG.assignUser (CSecurity.USER_USER_ID);
-    if (m_aRoleMgr.containsRoleWithID (CSecurity.ROLE_USER_ID))
+    if (m_aRoleMgr.containsWithID (CSecurity.ROLE_USER_ID))
       aUG.assignRole (CSecurity.ROLE_USER_ID);
 
     // Guests user group
@@ -114,7 +113,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
       aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
                                                                              CSecurity.USERGROUP_GUESTS_NAME,
                                                                              (String) null)));
-    if (m_aUserMgr.containsUserWithID (CSecurity.USER_GUEST_ID))
+    if (m_aUserMgr.containsWithID (CSecurity.USER_GUEST_ID))
       aUG.assignUser (CSecurity.USER_GUEST_ID);
     // no role for this user group
   }
@@ -247,32 +246,6 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
     m_aCallbacks.forEach (aCB -> aCB.onUserGroupDeleted (aDeletedUserGroup));
 
     return EChange.CHANGED;
-  }
-
-  /**
-   * Check if a user group with the specified ID is contained
-   *
-   * @param sUserGroupID
-   *        The ID of the user group to check
-   * @return <code>true</code> if no user group exists, <code>false</code>
-   *         otherwise.
-   */
-  public boolean containsUserGroupWithID (@Nullable final String sUserGroupID)
-  {
-    return containsWithID (sUserGroupID);
-  }
-
-  /**
-   * Check if all passed user group IDs are contained
-   *
-   * @param aUserGroupIDs
-   *        The user group IDs to be checked. May be <code>null</code>.
-   * @return <code>true</code> if the collection is empty or if all contained
-   *         user group IDs are contained
-   */
-  public boolean containsAllUserGroupsWithID (@Nullable final Collection <String> aUserGroupIDs)
-  {
-    return containsAllIDs (aUserGroupIDs);
   }
 
   /**

@@ -84,7 +84,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
                                                                   false)));
 
     // Create regular user
-    if (!containsUserWithID (CSecurity.USER_USER_ID))
+    if (!containsWithID (CSecurity.USER_USER_ID))
       m_aRWLock.writeLocked ( () -> internalCreateItem (new User (CSecurity.USER_USER_ID,
                                                                   CSecurity.USER_USER_LOGIN,
                                                                   CSecurity.USER_USER_EMAIL,
@@ -98,7 +98,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
                                                                   false)));
 
     // Create guest user
-    if (!containsUserWithID (CSecurity.USER_GUEST_ID))
+    if (!containsWithID (CSecurity.USER_GUEST_ID))
       m_aRWLock.writeLocked ( () -> internalCreateItem (new User (CSecurity.USER_GUEST_ID,
                                                                   CSecurity.USER_GUEST_LOGIN,
                                                                   CSecurity.USER_GUEST_EMAIL,
@@ -286,19 +286,6 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
   }
 
   /**
-   * Check if a user with the specified ID is present.
-   *
-   * @param sUserID
-   *        The user ID to resolve. May be <code>null</code>.
-   * @return <code>true</code> if such user exists, <code>false</code>
-   *         otherwise.
-   */
-  public boolean containsUserWithID (@Nullable final String sUserID)
-  {
-    return containsWithID (sUserID);
-  }
-
-  /**
    * Get the user with the specified ID.
    *
    * @param sUserID
@@ -308,7 +295,6 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
   @Nullable
   public IUser getUserOfID (@Nullable final String sUserID)
   {
-    // Change return type
     return getOfID (sUserID);
   }
 

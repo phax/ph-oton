@@ -104,7 +104,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                             extends AbstractWebPageSecurityObjectWithAttributes <IUser, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW_USER ("Neuen Benutzer anlegen", "Create new user"),
     TAB_ACTIVE ("Aktive Benutzer ({0})", "Active users ({0})"),
@@ -646,7 +646,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     if (CollectionHelper.isEmpty (aUserGroupIDs))
       aFormErrors.addFieldError (FIELD_USERGROUPS, EText.ERROR_NO_USERGROUP.getDisplayText (aDisplayLocale));
     else
-      if (!aUserGroupMgr.containsAllUserGroupsWithID (aUserGroupIDs))
+      if (!aUserGroupMgr.containsAllIDs (aUserGroupIDs))
         aFormErrors.addFieldError (FIELD_USERGROUPS, EText.ERROR_INVALID_USERGROUPS.getDisplayText (aDisplayLocale));
 
     // Call custom method
