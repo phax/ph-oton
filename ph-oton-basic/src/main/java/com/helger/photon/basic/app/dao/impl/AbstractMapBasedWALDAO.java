@@ -48,6 +48,7 @@ import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.filter.IFilter;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.state.EChange;
@@ -58,21 +59,33 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 
+/**
+ * Base class for WAL based DAO that uses a simple {@link ICommonsMap} for data
+ * storage.
+ *
+ * @author Philip Helger
+ * @param <INTERFACETYPE>
+ *        Interface type to be handled
+ * @param <IMPLTYPE>
+ *        Implementation type to be handled
+ */
 @ThreadSafe
 public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
                                              extends AbstractWALDAO <IMPLTYPE> implements IMapBasedDAO <INTERFACETYPE>
 {
-  protected static final String ELEMENT_ROOT = "root";
-  protected static final String ELEMENT_ITEM = "item";
-
-  @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IMPLTYPE> m_aMap;
-  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList<> ();
-
+  /**
+   * Extensible constructor parameter builder. Must be static because it is used
+   * in the constructor and no <code>this</code> is present.
+   *
+   * @author Philip Helger
+   * @param <IMPLTYPE>
+   *        Implementation type to use.
+   */
   public static final class InitSettings <IMPLTYPE>
   {
     private boolean m_bDoInitialRead = true;
     private Supplier <ICommonsMap <String, IMPLTYPE>> m_aMapSupplier = () -> new CommonsHashMap<> ();
+    private IFilter <IMicroElement> m_aReadElementFilter = IFilter.all ();
 
     @Nonnull
     public InitSettings <IMPLTYPE> setDoInitialRead (final boolean bDoInitialRead)
@@ -93,7 +106,22 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     {
       return setMapSupplier ( () -> new CommonsLinkedHashMap<> ());
     }
+
+    @Nonnull
+    public InitSettings <IMPLTYPE> setReadElementFilter (@Nonnull final IFilter <IMicroElement> aReadElementFilter)
+    {
+      m_aReadElementFilter = ValueEnforcer.notNull (aReadElementFilter, "ReadElementFilter");
+      return this;
+    }
   }
+
+  protected static final String ELEMENT_ROOT = "root";
+  protected static final String ELEMENT_ITEM = "item";
+
+  @GuardedBy ("m_aRWLock")
+  private final ICommonsMap <String, IMPLTYPE> m_aMap;
+  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList<> ();
+  private IFilter <IMicroElement> m_aReadElementFilter;
 
   /**
    * Default constructor
@@ -117,6 +145,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   {
     super (aImplClass, sFilename);
     m_aMap = aInitSettings.m_aMapSupplier.get ();
+    m_aReadElementFilter = aInitSettings.m_aReadElementFilter;
     if (aInitSettings.m_bDoInitialRead)
       initialRead ();
   }
@@ -145,7 +174,8 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   {
     // Read all child elements independent of the name - soft migration
     aDoc.getDocumentElement ()
-        .forAllChildElements (eItem -> _addItem (MicroTypeConverter.convertToNative (eItem, getDataTypeClass ()),
+        .forAllChildElements (m_aReadElementFilter,
+                              eItem -> _addItem (MicroTypeConverter.convertToNative (eItem, getDataTypeClass ()),
                                                  EDAOActionType.CREATE));
     return EChange.UNCHANGED;
   }
