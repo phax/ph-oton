@@ -44,6 +44,7 @@ import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.ext.ICommonsSet;
@@ -68,6 +69,32 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   private final ICommonsMap <String, IMPLTYPE> m_aMap;
   private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList<> ();
 
+  public static final class InitSettings <IMPLTYPE>
+  {
+    private boolean m_bDoInitialRead = true;
+    private Supplier <ICommonsMap <String, IMPLTYPE>> m_aMapSupplier = () -> new CommonsHashMap<> ();
+
+    @Nonnull
+    public InitSettings <IMPLTYPE> setDoInitialRead (final boolean bDoInitialRead)
+    {
+      m_bDoInitialRead = bDoInitialRead;
+      return this;
+    }
+
+    @Nonnull
+    public InitSettings <IMPLTYPE> setMapSupplier (@Nonnull final Supplier <ICommonsMap <String, IMPLTYPE>> aMapSupplier)
+    {
+      m_aMapSupplier = ValueEnforcer.notNull (aMapSupplier, "MapSupplier");
+      return this;
+    }
+
+    @Nonnull
+    public InitSettings <IMPLTYPE> setOrderedMapSupplier ()
+    {
+      return setMapSupplier ( () -> new CommonsLinkedHashMap<> ());
+    }
+  }
+
   /**
    * Default constructor
    *
@@ -81,17 +108,16 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    this (aImplClass, sFilename, true, () -> new CommonsHashMap<> ());
+    this (aImplClass, sFilename, new InitSettings<> ());
   }
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nonnull @Nonempty final String sFilename,
-                                 final boolean bDoInitialRead,
-                                 final Supplier <ICommonsMap <String, IMPLTYPE>> aMapSupplier) throws DAOException
+                                 @Nonnull final InitSettings <IMPLTYPE> aInitSettings) throws DAOException
   {
     super (aImplClass, sFilename);
-    m_aMap = aMapSupplier.get ();
-    if (bDoInitialRead)
+    m_aMap = aInitSettings.m_aMapSupplier.get ();
+    if (aInitSettings.m_bDoInitialRead)
       initialRead ();
   }
 
@@ -397,6 +423,16 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
                                   @Nullable final Consumer <? super INTERFACETYPE> aConsumer)
   {
     m_aRWLock.readLocked ( () -> m_aMap.forEachValue (aFilter, aConsumer));
+  }
+
+  @Nullable
+  @MustBeLocked (ELockType.READ)
+  protected final IMPLTYPE getOfIDLocked (@Nullable final String sID)
+  {
+    if (StringHelper.hasNoText (sID))
+      return null;
+
+    return m_aMap.get (sID);
   }
 
   @Nullable

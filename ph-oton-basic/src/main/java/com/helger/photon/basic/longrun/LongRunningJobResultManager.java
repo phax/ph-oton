@@ -23,7 +23,6 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
@@ -33,7 +32,7 @@ public class LongRunningJobResultManager extends AbstractMapBasedWALDAO <LongRun
 {
   public LongRunningJobResultManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (LongRunningJobData.class, sFilename, true, () -> new CommonsLinkedHashMap<> ());
+    super (LongRunningJobData.class, sFilename, new InitSettings <LongRunningJobData> ().setOrderedMapSupplier ());
   }
 
   public void addResult (@Nonnull final LongRunningJobData aJobData)
