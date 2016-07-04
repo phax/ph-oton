@@ -344,16 +344,20 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsList <? extends INTERFACETYPE> getAll ()
+  public final ICommonsList <INTERFACETYPE> getAll ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
+    final ICommonsList <INTERFACETYPE> ret = new CommonsArrayList<> ();
+    m_aRWLock.readLocked ( () -> ret.addAll (m_aMap.values ()));
+    return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsList <? extends INTERFACETYPE> getAll (@Nullable final Predicate <? super INTERFACETYPE> aFilter)
+  public final ICommonsList <INTERFACETYPE> getAll (@Nullable final Predicate <? super INTERFACETYPE> aFilter)
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aFilter));
+    final ICommonsList <INTERFACETYPE> ret = new CommonsArrayList<> ();
+    m_aRWLock.readLocked ( () -> CollectionHelper.findAll (m_aMap.values (), aFilter, ret::add));
+    return ret;
   }
 
   @Nonnull
