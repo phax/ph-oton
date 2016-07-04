@@ -368,6 +368,13 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     return m_aRWLock.readLocked ( () -> m_aMap.values ());
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
+  protected final ICommonsList <IMPLTYPE> internalGetAll (@Nullable final Predicate <? super IMPLTYPE> aFilter)
+  {
+    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aFilter));
+  }
+
   public final void findAll (@Nullable final Predicate <? super INTERFACETYPE> aFilter,
                              @Nonnull final Consumer <? super INTERFACETYPE> aConsumer)
   {
