@@ -268,6 +268,8 @@ public class JettyStarter
       aWebAppCtx.setTempDirectory (new File (sTempDir + '/' + m_sDirBaseName + ".webapp"));
       aWebAppCtx.setParentLoaderPriority (true);
       aWebAppCtx.setThrowUnavailableOnStartupException (true);
+      // http://www.eclipse.org/jetty/documentation/9.3.x/configuring-webapps.html#container-include-jar-pattern
+      aWebAppCtx.setAttribute (WebInfConfiguration.CONTAINER_JAR_PATTERN, ".*\\.jar$|.*/classes/.*");
 
       // Important to add the AnnotationConfiguration!
       aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
