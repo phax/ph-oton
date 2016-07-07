@@ -274,8 +274,8 @@ public class JettyStarter
                                                            new WebXmlConfiguration (),
                                                            new MetaInfConfigurationExt (),
                                                            new FragmentConfiguration (),
-                                                           new JettyWebXmlConfiguration (),
-                                                           new AnnotationConfiguration () });
+                                                           new AnnotationConfiguration (),
+                                                           new JettyWebXmlConfiguration () });
     }
 
     // Set session store directory to passivate/activate sessions
