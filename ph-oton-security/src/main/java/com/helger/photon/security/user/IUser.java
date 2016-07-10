@@ -28,7 +28,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.text.IHasDescription;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.basic.object.IObjectWithCustomAttrs;
-import com.helger.photon.security.password.hash.PasswordHash;
+import com.helger.security.password.hash.PasswordHash;
 
 /**
  * Interface for a single user

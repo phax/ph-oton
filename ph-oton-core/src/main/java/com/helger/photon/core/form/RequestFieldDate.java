@@ -88,7 +88,7 @@ public class RequestFieldDate extends RequestField
                            @Nullable final XMLGregorianCalendar aDefaultValue,
                            @Nonnull final Locale aDisplayLocale)
   {
-    this (sFieldName, PDTXMLConverter.getDateTime (aDefaultValue), aDisplayLocale);
+    this (sFieldName, PDTXMLConverter.getZonedDateTime (aDefaultValue), aDisplayLocale);
   }
 
   @Nonnull

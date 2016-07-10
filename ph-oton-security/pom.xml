@@ -58,6 +58,10 @@
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-basic</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-security</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>

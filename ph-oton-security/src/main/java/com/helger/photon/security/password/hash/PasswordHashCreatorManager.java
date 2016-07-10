@@ -35,7 +35,9 @@ import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.security.password.salt.IPasswordSalt;
+import com.helger.security.password.hash.IPasswordHashCreator;
+import com.helger.security.password.hash.PasswordHash;
+import com.helger.security.password.salt.IPasswordSalt;
 
 /**
  * This class manages multiple {@link IPasswordHashCreator} instances

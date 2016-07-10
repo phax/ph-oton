@@ -33,11 +33,11 @@ import com.helger.commons.lang.ServiceLoaderHelper;
 import com.helger.photon.security.password.constraint.IPasswordConstraintList;
 import com.helger.photon.security.password.constraint.PasswordConstraintList;
 import com.helger.photon.security.password.hash.IPasswordHashCreatorRegistrarSPI;
-import com.helger.photon.security.password.hash.PasswordHash;
-import com.helger.photon.security.password.hash.PasswordHashCreatorDefault;
 import com.helger.photon.security.password.hash.PasswordHashCreatorManager;
-import com.helger.photon.security.password.hash.PasswordHashCreatorPBKDF2_1000_48;
-import com.helger.photon.security.password.salt.IPasswordSalt;
+import com.helger.security.password.hash.PasswordHash;
+import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_1000_48;
+import com.helger.security.password.hash.PasswordHashCreatorSHA512;
+import com.helger.security.password.salt.IPasswordSalt;
 
 /**
  * Central class for all password related elements.
@@ -58,7 +58,7 @@ public final class GlobalPasswordSettings
   static
   {
     // Register default implementation so that something is present
-    s_aPHCMgr.registerPasswordHashCreator (new PasswordHashCreatorDefault ());
+    s_aPHCMgr.registerPasswordHashCreator (new PasswordHashCreatorSHA512 ());
     s_aPHCMgr.registerPasswordHashCreator (new PasswordHashCreatorPBKDF2_1000_48 ());
 
     // Set the default password hash creator

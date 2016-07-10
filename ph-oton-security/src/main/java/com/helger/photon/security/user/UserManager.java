@@ -40,9 +40,9 @@ import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.ObjectHelper;
 import com.helger.photon.security.password.GlobalPasswordSettings;
-import com.helger.photon.security.password.hash.PasswordHash;
-import com.helger.photon.security.password.salt.IPasswordSalt;
-import com.helger.photon.security.password.salt.PasswordSalt;
+import com.helger.security.password.hash.PasswordHash;
+import com.helger.security.password.salt.IPasswordSalt;
+import com.helger.security.password.salt.PasswordSalt;
 
 /**
  * This class manages the available users.

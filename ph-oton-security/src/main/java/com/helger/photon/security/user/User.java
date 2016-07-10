@@ -36,7 +36,7 @@ import com.helger.commons.type.ObjectType;
 import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.StubObjectWithCustomAttrs;
-import com.helger.photon.security.password.hash.PasswordHash;
+import com.helger.security.password.hash.PasswordHash;
 
 /**
  * Default implementation of the {@link IUser} interface.

@@ -30,7 +30,8 @@ import com.helger.commons.annotation.IsSPIInterface;
 public interface IPasswordHashCreatorRegistrarSPI
 {
   /**
-   * Register all {@link IPasswordHashCreator} implementations.
+   * Register all {@link com.helger.security.password.hash.IPasswordHashCreator}
+   * implementations.
    *
    * @param aRegistry
    *        The registry to register your creators. Never <code>null</code>.

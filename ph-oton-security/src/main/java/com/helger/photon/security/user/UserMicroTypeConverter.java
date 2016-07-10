@@ -27,10 +27,10 @@ import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
-import com.helger.photon.security.password.hash.PasswordHash;
-import com.helger.photon.security.password.hash.PasswordHashCreatorDefault;
-import com.helger.photon.security.password.salt.IPasswordSalt;
-import com.helger.photon.security.password.salt.PasswordSalt;
+import com.helger.security.password.hash.PasswordHash;
+import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_1000_48;
+import com.helger.security.password.salt.IPasswordSalt;
+import com.helger.security.password.salt.PasswordSalt;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.util.MicroHelper;
@@ -94,7 +94,7 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
     if (sPasswordHashAlgorithm == null)
     {
       // migration
-      sPasswordHashAlgorithm = PasswordHashCreatorDefault.ALGORITHM;
+      sPasswordHashAlgorithm = PasswordHashCreatorPBKDF2_1000_48.ALGORITHM;
     }
     final String sSalt = ePasswordHash.getAttributeValue (ATTR_SALT);
     final IPasswordSalt aSalt = PasswordSalt.createFromStringMaybe (sSalt);
