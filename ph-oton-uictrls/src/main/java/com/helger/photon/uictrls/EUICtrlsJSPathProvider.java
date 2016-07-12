@@ -67,7 +67,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   PDFOBJECT1 ("pdfobject/1.2/pdfobject.js"),
   PDFOBJECT2 ("pdfobject/2.0/pdfobject.js"),
   PRISMJS ("prismjs/prism.js"),
-  SELECT2 ("select2/4.0.2/js/select2.js"),
+  SELECT2 ("select2/4.0.3/js/select2.js"),
   SELECT2_LOCALE ("select2/4.0.2/js/i18n/{0}.js", false),
   TETHER ("tether/1.3.1/js/tether.js"),
   /** https://github.com/twitter/typeahead.js/ */
