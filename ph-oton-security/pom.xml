@@ -30,7 +30,6 @@
   <description>ph-oton security components</description>
   <url>https://github.com/phax/ph-oton/ph-oton-security</url>
   <inceptionYear>2014</inceptionYear>
- 
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -38,12 +37,10 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
   <organization>
     <name>Philip Helger</name>
     <url>http://www.helger.com</url>
   </organization>
-
   <developers>
     <developer>
       <id>philip</id>
@@ -52,7 +49,6 @@
       <url>http://www.helger.com</url>
     </developer>
   </developers>
-
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
@@ -62,20 +58,17 @@
       <groupId>com.helger</groupId>
       <artifactId>ph-security</artifactId>
     </dependency>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <optional>true</optional>
     </dependency>
-
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
   <build>
     <plugins>
       <plugin>
@@ -84,12 +77,20 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Export-Package>
-              com.helger.photon.security.*
-            </Export-Package>
-            <Import-Package>
-              !javax.annotation.*,*
-            </Import-Package>
+            <Export-Package>com.helger.photon.security.*</Export-Package>
+            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)",
+osgi.extender; filter:="(osgi.extender=osgi.serviceloader.processor)",
+osgi.serviceloader; filter:="(osgi.serviceloader=com.helger.photon.security.password.hash.IPasswordHashCreatorRegistrarSPI)"; cardinality:=multiple</Require-Capability>
+            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.AppTokenAuthCredentialValidatorSPI,
+osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserAuthCredentialValidatorSPI,
+osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserNameAuthCredentialValidatorSPI,
+osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserTokenAuthCredentialValidatorSPI,
+osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.AppTokenAuthCredentialToSubjectResolverSPI,
+osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserAuthCredentialToSubjectResolverSPI,
+osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserNameAuthCredentialToSubjectResolverSPI,
+osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserTokenAuthCredentialToSubjectResolverSPI,
+osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.config.MicroTypeConverterRegistrar_ph_oton_security</Provide-Capability>
           </instructions>
         </configuration>
       </plugin>
