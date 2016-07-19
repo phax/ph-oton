@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.scope.mock.ScopeTestRule;
+import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
@@ -33,6 +34,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
 {
   private final File m_aDataPath;
   private final File m_aServletContextPath;
+  private boolean m_bDeleteAllData = false;
 
   /**
    * Ctor using the default storage path from {@link ScopeTestRule}
@@ -76,11 +78,25 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
     return m_aServletContextPath;
   }
 
+  @Nonnull
+  public PhotonBasicWebTestRule setDeleteAllData (final boolean bDeleteAllData)
+  {
+    m_bDeleteAllData = bDeleteAllData;
+    return this;
+  }
+
   @Override
   public void before ()
   {
     super.before ();
     PhotonBasicTestInit.init (m_aDataPath, m_aServletContextPath);
+
+    if (m_bDeleteAllData)
+    {
+      // Clean all contained files
+      WebFileIO.getFileOpMgr ().deleteDirRecursiveIfExisting (WebFileIO.getDataIO ().getBasePathFile ());
+      WebFileIO.getFileOpMgr ().createDir (WebFileIO.getDataIO ().getBasePathFile ());
+    }
   }
 
   @Override
