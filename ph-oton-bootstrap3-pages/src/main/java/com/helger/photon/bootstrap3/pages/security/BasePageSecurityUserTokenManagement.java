@@ -31,7 +31,6 @@ import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.errorlist.FormErrors;
-import com.helger.commons.state.EValidity;
 import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
@@ -52,14 +51,11 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
-import com.helger.photon.bootstrap3.alert.BootstrapWarnBox;
-import com.helger.photon.bootstrap3.button.BootstrapButton;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
-import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.pages.handler.AbstractBootstrapWebPageActionHandler;
 import com.helger.photon.bootstrap3.pages.handler.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
@@ -85,11 +81,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                  extends AbstractWebPageSecurityToken <IUserToken, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
-    VALIDITY_APP_TOKEN_MSG ("Es ist noch kein App-Token vorhanden. Es muss mindestens ein App-Token vorhanden sein um ein Benutzer-Token anlegen zu können.",
-                            "No app token is present! At least one app token must be present to create a user token for it."),
-    VALIDITY_APP_TOKEN_BUTTON ("Neues App-Token anlegen", "Create new app token"),
     BUTTON_CREATE_NEW ("Neues Benutzer-Token anlegen", "Create new user token"),
     HEADER_EDIT ("Benutzer-Token von ''{0}'' bearbeiten", "Edit user token of ''{0}''"),
     HEADER_CREATE ("Neues Benutzer-Token anlegen", "Create a new user token"),
@@ -376,19 +369,6 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   @Override
   protected IValidityIndicator isValidToDisplayPage (@Nonnull final WPECTYPE aWPEC)
   {
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
-    if (!aAppTokenMgr.containsActiveAppToken ())
-    {
-      aNodeList.addChild (new BootstrapWarnBox ().addChild (EText.VALIDITY_APP_TOKEN_MSG.getDisplayText (aDisplayLocale)));
-      aNodeList.addChild (new BootstrapButton ().addChild (EText.VALIDITY_APP_TOKEN_BUTTON.getDisplayText (aDisplayLocale))
-                                                .setOnClick (createCreateURL (aWPEC,
-                                                                              BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_APP_TOKEN))
-                                                .setIcon (EDefaultIcon.YES));
-      return EValidity.INVALID;
-    }
-
     return super.isValidToDisplayPage (aWPEC);
   }
 
@@ -410,14 +390,6 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     if (eFormAction.isDelete ())
       return !aSelectedObject.isDeleted ();
     return true;
-  }
-
-  @Nonnull
-  public static HCA createLink (@Nonnull final IWebPageExecutionContext aWPEC, @Nonnull final IAppToken aAppToken)
-  {
-    return new HCA (createViewURL (aWPEC,
-                                   BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_APP_TOKEN,
-                                   aAppToken)).addChild (aAppToken.getDisplayName ());
   }
 
   @Override

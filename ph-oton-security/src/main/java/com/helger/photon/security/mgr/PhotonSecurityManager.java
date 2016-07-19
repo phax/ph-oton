@@ -52,7 +52,6 @@ import com.helger.photon.security.login.IUserLoginCallback;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
 import com.helger.photon.security.role.RoleManager;
-import com.helger.photon.security.token.app.AppTokenManager;
 import com.helger.photon.security.token.user.UserTokenManager;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.UserGroupManager;
@@ -73,7 +72,6 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   public static final String FILENAME_USERS_XML = "users.xml";
   public static final String FILENAME_ROLES_XML = "roles.xml";
   public static final String FILENAME_USERGROUPS_XML = "usergroups.xml";
-  public static final String FILENAME_APPTOKENS_XML = "apptokens.xml";
   public static final String FILENAME_USERTOKENS_XML = "usertokens.xml";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonSecurityManager.class);
@@ -82,7 +80,6 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   private UserManager m_aUserMgr;
   private RoleManager m_aRoleMgr;
   private UserGroupManager m_aUserGroupMgr;
-  private AppTokenManager m_aAppTokenMgr;
   private UserTokenManager m_aUserTokenMgr;
 
   @Deprecated
@@ -125,7 +122,6 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       m_aUserMgr = new UserManager (DIRECTORY_SECURITY + FILENAME_USERS_XML);
       m_aRoleMgr = new RoleManager (DIRECTORY_SECURITY + FILENAME_ROLES_XML);
       m_aUserGroupMgr = new UserGroupManager (DIRECTORY_SECURITY + FILENAME_USERGROUPS_XML, m_aUserMgr, m_aRoleMgr);
-      m_aAppTokenMgr = new AppTokenManager (DIRECTORY_SECURITY + FILENAME_APPTOKENS_XML);
       m_aUserTokenMgr = new UserTokenManager (DIRECTORY_SECURITY + FILENAME_USERTOKENS_XML);
 
       // Init callbacks after all managers
@@ -166,12 +162,6 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   public static PhotonSecurityManager getInstance ()
   {
     return getGlobalSingleton (PhotonSecurityManager.class);
-  }
-
-  @Nonnull
-  public static AppTokenManager getAppTokenMgr ()
-  {
-    return getInstance ().m_aAppTokenMgr;
   }
 
   @Nonnull

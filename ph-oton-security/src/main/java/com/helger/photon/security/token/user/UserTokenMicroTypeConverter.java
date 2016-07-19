@@ -26,8 +26,8 @@ import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
-import com.helger.photon.security.token.app.AppTokenManager;
-import com.helger.photon.security.token.app.IAppToken;
+import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.user.UserManager;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
@@ -40,8 +40,7 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
 public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeConverter
 {
   private static final String ELEMENT_ACCESS_TOKEN = "accesstoken";
-  private static final String ATTR_APP_TOKEN_ID = "apptoken";
-  private static final String ATTR_USER_NAME = "username";
+  private static final String ATTR_USER_ID = "userid";
 
   @Nonnull
   public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
@@ -55,27 +54,24 @@ public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeCo
       aElement.appendChild (MicroTypeConverter.convertToMicroElement (aAccessToken,
                                                                       sNamespaceURI,
                                                                       ELEMENT_ACCESS_TOKEN));
-    aElement.setAttribute (ATTR_APP_TOKEN_ID, aValue.getAppToken ().getID ());
-    aElement.setAttribute (ATTR_USER_NAME, aValue.getUserName ());
+    aElement.setAttribute (ATTR_USER_ID, aValue.getUser ().getID ());
     return aElement;
   }
 
   @Nonnull
   public UserToken convertToNative (@Nonnull final IMicroElement aElement)
   {
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
+    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
 
     final ICommonsList <AccessToken> aAccessTokens = new CommonsArrayList<> ();
     for (final IMicroElement e : aElement.getAllChildElements (ELEMENT_ACCESS_TOKEN))
       aAccessTokens.add (MicroTypeConverter.convertToNative (e, AccessToken.class));
 
-    final String sAppTokenID = aElement.getAttributeValue (ATTR_APP_TOKEN_ID);
-    final IAppToken aAppToken = aAppTokenMgr.getAppTokenOfID (sAppTokenID);
-    if (aAppToken == null)
-      throw new IllegalStateException ("Failed to resolve app token with ID '" + sAppTokenID + "'");
+    final String sUserID = aElement.getAttributeValue (ATTR_USER_ID);
+    final IUser aUser = aUserMgr.getUserOfID (sUserID);
+    if (aUser == null)
+      throw new IllegalStateException ("Failed to resolve user with ID '" + sUserID + "'");
 
-    final String sUserName = aElement.getAttributeValue (ATTR_USER_NAME);
-
-    return new UserToken (getStubObjectWithCustomAttrs (aElement), aAccessTokens, aAppToken, sUserName);
+    return new UserToken (getStubObjectWithCustomAttrs (aElement), aAccessTokens, aUser);
   }
 }

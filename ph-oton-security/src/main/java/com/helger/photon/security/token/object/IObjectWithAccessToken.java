@@ -27,7 +27,7 @@ import com.helger.photon.basic.object.IObjectWithCustomAttrs;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 
 /**
- * Base interface for a application and user token.
+ * Base interface for all kind of access tokens.
  *
  * @author Philip Helger
  */

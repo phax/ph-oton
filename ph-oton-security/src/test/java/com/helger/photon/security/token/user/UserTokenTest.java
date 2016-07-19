@@ -17,8 +17,10 @@
 package com.helger.photon.security.token.user;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Rule;
@@ -29,8 +31,8 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SMap;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
-import com.helger.photon.security.token.app.AppTokenManager;
-import com.helger.photon.security.token.app.IAppToken;
+import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.user.UserManager;
 import com.helger.xml.mock.XMLTestHelper;
 
 /**
@@ -41,15 +43,25 @@ import com.helger.xml.mock.XMLTestHelper;
 public final class UserTokenTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
+  public final TestRule m_aRule = new PhotonBasicWebTestRule ().setDeleteAllData (true);
 
   @Test
   public void testCreate ()
   {
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
-    final IAppToken aAppToken = aAppTokenMgr.createAppToken (null, null, "unit test company", null, null, null);
+    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    final IUser aUser = aUserMgr.createPredefinedUser ("id1",
+                                                       "user1",
+                                                       "test@example.org",
+                                                       "foobar",
+                                                       "Test",
+                                                       "Last",
+                                                       "description",
+                                                       Locale.US,
+                                                       null,
+                                                       false);
+    assertNotNull (aUser);
 
-    final UserToken aUserToken = new UserToken (null, (Map <String, String>) null, aAppToken, "Unit test user token");
+    final UserToken aUserToken = new UserToken (null, (Map <String, String>) null, aUser);
     assertTrue (StringHelper.hasText (aUserToken.getActiveTokenString ()));
     XMLTestHelper.testMicroTypeConversion (aUserToken);
   }
@@ -57,10 +69,20 @@ public final class UserTokenTest
   @Test
   public void testCreateWithCustomAttrs ()
   {
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
-    final IAppToken aAppToken = aAppTokenMgr.createAppToken (null, null, "unit test company", null, null, null);
+    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    final IUser aUser = aUserMgr.createPredefinedUser ("id2",
+                                                       "user2",
+                                                       "test@example.org",
+                                                       "foobar",
+                                                       "Test",
+                                                       "Last",
+                                                       "description",
+                                                       Locale.US,
+                                                       null,
+                                                       false);
+    assertNotNull (aUser);
 
-    final UserToken aUserToken = new UserToken (null, new SMap ("key", "value"), aAppToken, "Unit test user token");
+    final UserToken aUserToken = new UserToken (null, new SMap ("key", "value"), aUser);
     assertTrue (StringHelper.hasText (aUserToken.getActiveTokenString ()));
     assertEquals (1, aUserToken.getAttributes ().getAttributeCount ());
     assertEquals ("value", aUserToken.getAttributes ().getAttributeAsString ("key"));

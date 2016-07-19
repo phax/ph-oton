@@ -393,7 +393,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
   @ReturnsMutableCopy
   public ICommonsList <? extends IUser> getAllNotDeletedUsers ()
   {
-    return getAll (aUser -> !aUser.isDeleted ());
+    return getAll (x -> !x.isDeleted ());
   }
 
   /**
@@ -403,7 +403,15 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
   @ReturnsMutableCopy
   public ICommonsList <? extends IUser> getAllDeletedUsers ()
   {
-    return getAll (aUser -> aUser.isDeleted ());
+    return getAll (x -> x.isDeleted ());
+  }
+
+  /**
+   * @return <code>true</code> if any non-deleted, enabled user exists.
+   */
+  public boolean containsAnyActiveUser ()
+  {
+    return containsAny (x -> !x.isDeleted () && x.isEnabled ());
   }
 
   /**

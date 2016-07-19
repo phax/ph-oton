@@ -25,13 +25,12 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 import com.helger.photon.security.token.accesstoken.AccessToken;
-import com.helger.photon.security.token.app.IAppToken;
 import com.helger.photon.security.token.object.AbstractObjectWithAccessToken;
+import com.helger.photon.security.user.IUser;
 
 /**
  * A single token for granting a machine user access to this application.
@@ -42,28 +41,23 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
 {
   public static final ObjectType OT = new ObjectType ("usertoken");
 
-  private final IAppToken m_aAppToken;
-  private String m_sUserName;
+  private final IUser m_aUser;
 
   public UserToken (@Nullable final String sTokenString,
                     @Nullable final Map <String, String> aCustomAttrs,
-                    @Nonnull final IAppToken aAppToken,
-                    @Nonnull @Nonempty final String sUserName)
+                    @Nonnull final IUser aUser)
   {
     this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs),
           CollectionHelper.newList (AccessToken.createAccessTokenValidFromNow (sTokenString)),
-          aAppToken,
-          sUserName);
+          aUser);
   }
 
   UserToken (@Nonnull final StubObjectWithCustomAttrs aStubObject,
              @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
-             @Nonnull final IAppToken aAppToken,
-             @Nonnull @Nonempty final String sUserName)
+             @Nonnull final IUser aUser)
   {
     super (aStubObject, aAccessTokens);
-    m_aAppToken = ValueEnforcer.notNull (aAppToken, "AppToken");
-    setUserName (sUserName);
+    m_aUser = ValueEnforcer.notNull (aUser, "User");
   }
 
   @Nonnull
@@ -76,30 +70,13 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
   @Nonempty
   public String getDisplayName ()
   {
-    return m_sUserName;
+    return m_aUser.getDisplayName ();
   }
 
   @Nonnull
-  public IAppToken getAppToken ()
+  public IUser getUser ()
   {
-    return m_aAppToken;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getUserName ()
-  {
-    return m_sUserName;
-  }
-
-  @Nonnull
-  public EChange setUserName (@Nonnull @Nonempty final String sUserName)
-  {
-    ValueEnforcer.notEmpty (sUserName, "UserName");
-    if (sUserName.equals (m_sUserName))
-      return EChange.UNCHANGED;
-    m_sUserName = sUserName;
-    return EChange.CHANGED;
+    return m_aUser;
   }
 
   // equals and hashCode are derived
@@ -107,9 +84,6 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("AppToken", m_aAppToken)
-                            .append ("UserName", m_sUserName)
-                            .toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("User", m_aUser).toString ();
   }
 }
