@@ -219,34 +219,34 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
   @ReturnsMutableCopy
   public ICommonsList <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final String sClientID)
   {
-    return getAll (a -> a.getClientID ().equals (sClientID));
+    return getAll (x -> x.hasSameClientID (sClientID));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final IClient aClient)
   {
-    return getAll (a -> a.hasSameClient (aClient));
+    return getAll (x -> x.hasSameClient (aClient));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllAccountingAreaIDsOfClient (@Nullable final String sClientID)
   {
-    return getAllMapped (a -> a.getClientID ().equals (sClientID), IAccountingArea::getID);
+    return getAllMapped (x -> x.hasSameClientID (sClientID), IAccountingArea::getID);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllAccountingAreaIDsOfClient (@Nullable final IClient aClient)
   {
-    return getAllMapped (a -> a.hasSameClient (aClient), IAccountingArea::getID);
+    return getAllMapped (x -> x.hasSameClient (aClient), IAccountingArea::getID);
   }
 
   @Nonnegative
   public int getCountAccountingAreaIDsOfClient (@Nullable final IClient aClient)
   {
-    return getCount (a -> a.hasSameClient (aClient));
+    return getCount (x -> x.hasSameClient (aClient));
   }
 
   @Nullable
