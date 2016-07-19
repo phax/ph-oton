@@ -73,13 +73,6 @@ public abstract class AbstractClientObject extends AbstractBaseObject implements
   }
 
   @Nonnull
-  @Nonempty
-  public final String getClientID ()
-  {
-    return m_aClient.getID ();
-  }
-
-  @Nonnull
   public final IClient getClient ()
   {
     return m_aClient;
