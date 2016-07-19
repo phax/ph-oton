@@ -475,7 +475,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                aSelectedObject == null ? null
                                                                                                                        : aSelectedObject.getUser ()),
                                                                              aDisplayLocale,
-                                                                             aValue -> !aValue.isDeleted ()).setReadOnly (bEdit))
+                                                                             x -> !x.isDeleted () &&
+                                                                                  x.isEnabled ()).setReadOnly (bEdit))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_USER)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_TOKEN_STRING.getDisplayText (aDisplayLocale))

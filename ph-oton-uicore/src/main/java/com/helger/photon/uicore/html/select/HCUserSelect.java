@@ -28,6 +28,11 @@ import com.helger.html.request.IHCRequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 
+/**
+ * A select for {@link IUser} objects.
+ * 
+ * @author Philip Helger
+ */
 public class HCUserSelect extends HCExtSelect
 {
   public HCUserSelect (@Nonnull final IHCRequestField aRF,

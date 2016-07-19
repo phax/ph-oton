@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IHasDescription;
 import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.basic.object.IObjectWithCustomAttrs;
@@ -83,7 +84,10 @@ public interface IUser extends IObjectWithCustomAttrs, IHasDescription, IAuthSub
    *         name are empty but never <code>null</code>.
    */
   @Nonnull
-  String getDisplayName ();
+  default String getDisplayName ()
+  {
+    return StringHelper.getConcatenatedOnDemand (getFirstName (), " ", getLastName ());
+  }
 
   /**
    * @return The desired locale of the user. May be <code>null</code>.
@@ -118,7 +122,10 @@ public interface IUser extends IObjectWithCustomAttrs, IHasDescription, IAuthSub
    *         is disabled
    * @see #isDisabled()
    */
-  boolean isEnabled ();
+  default boolean isEnabled ()
+  {
+    return !isDisabled ();
+  }
 
   /**
    * @return <code>true</code> if this user is disabled, <code>false</code> if

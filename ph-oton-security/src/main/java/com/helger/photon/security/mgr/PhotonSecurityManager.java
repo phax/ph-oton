@@ -122,6 +122,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       m_aUserMgr = new UserManager (DIRECTORY_SECURITY + FILENAME_USERS_XML);
       m_aRoleMgr = new RoleManager (DIRECTORY_SECURITY + FILENAME_ROLES_XML);
       m_aUserGroupMgr = new UserGroupManager (DIRECTORY_SECURITY + FILENAME_USERGROUPS_XML, m_aUserMgr, m_aRoleMgr);
+      // Must be after user manager
       m_aUserTokenMgr = new UserTokenManager (DIRECTORY_SECURITY + FILENAME_USERTOKENS_XML);
 
       // Init callbacks after all managers

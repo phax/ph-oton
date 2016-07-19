@@ -30,7 +30,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
@@ -345,12 +344,6 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
     m_nConsecutiveFailedLoginCount++;
   }
 
-  @Nonnull
-  public String getDisplayName ()
-  {
-    return StringHelper.getConcatenatedOnDemand (m_sFirstName, " ", m_sLastName);
-  }
-
   public boolean isDisabled ()
   {
     return m_bDisabled;
@@ -363,11 +356,6 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
       return EChange.UNCHANGED;
     m_bDisabled = bDisabled;
     return EChange.CHANGED;
-  }
-
-  public boolean isEnabled ()
-  {
-    return !m_bDisabled;
   }
 
   @Override
