@@ -298,6 +298,13 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
     return getOfID (sUserID);
   }
 
+  @Nullable
+  public IUser getActiveUserOfID (@Nullable final String sUserID)
+  {
+    final IUser aUser = getOfID (sUserID);
+    return aUser == null || aUser.isDeleted () || aUser.isDisabled () ? null : aUser;
+  }
+
   /**
    * Get the user with the specified login name
    *
@@ -362,7 +369,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
   @ReturnsMutableCopy
   public ICommonsList <? extends IUser> getAllActiveUsers ()
   {
-    return getAll (aUser -> !aUser.isDeleted () && aUser.isEnabled ());
+    return getAll (x -> !x.isDeleted () && x.isEnabled ());
   }
 
   /**
@@ -371,7 +378,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
   @Nonnegative
   public int getActiveUserCount ()
   {
-    return getCount (aUser -> !aUser.isDeleted () && aUser.isEnabled ());
+    return getCount (x -> !x.isDeleted () && x.isEnabled ());
   }
 
   /**
@@ -382,7 +389,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
   @ReturnsMutableCopy
   public ICommonsList <? extends IUser> getAllDisabledUsers ()
   {
-    return getAll (aUser -> !aUser.isDeleted () && aUser.isDisabled ());
+    return getAll (x -> !x.isDeleted () && x.isDisabled ());
   }
 
   /**

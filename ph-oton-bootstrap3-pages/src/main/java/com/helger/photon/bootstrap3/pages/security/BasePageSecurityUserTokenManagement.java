@@ -56,6 +56,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
+import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.pages.handler.AbstractBootstrapWebPageActionHandler;
 import com.helger.photon.bootstrap3.pages.handler.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
@@ -65,12 +66,12 @@ import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
-import com.helger.photon.security.token.app.AppTokenManager;
-import com.helger.photon.security.token.app.IAppToken;
 import com.helger.photon.security.token.user.IUserToken;
 import com.helger.photon.security.token.user.UserTokenManager;
+import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.user.UserManager;
 import com.helger.photon.uicore.css.CPageParam;
-import com.helger.photon.uicore.html.select.HCAppTokenSelect;
+import com.helger.photon.uicore.html.select.HCUserSelect;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -106,8 +107,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                   "An error occurred while deleting user token of ''{0}''!"),
     TAB_LABEL_ACTIVE ("Aktiv", "Active"),
     TAB_LABEL_DELETED ("Gelöscht", "Deleted"),
-    HEADER_APP_TOKEN ("App-Token", "App token"),
-    HEADER_USER_NAME ("Eigentümer", "Owner"),
+    HEADER_USER ("Benutzer", "User"),
     HEADER_USABLE ("Verwendbar?", "Usable?"),
     ACTION_EDIT ("Benutzer-Token für ''{0}'' bearbeiten", "Edit user token of ''{0}''"),
     ACTION_COPY ("Benutzer-Token für ''{0}'' kopieren", "Copy user token of ''{0}''"),
@@ -136,8 +136,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   public static final String ACTION_REVOKE_ACCESS_TOKEN = "revokeaccesstoken";
   public static final String ACTION_CREATE_NEW_ACCESS_TOKEN = "createnewaccesstoken";
 
-  public static final String FIELD_APP_TOKEN = "apptoken";
-  public static final String FIELD_USER_NAME = "username";
+  public static final String FIELD_USER = "user";
   public static final String FIELD_TOKEN_STRING = "tokenstring";
   public static final String FIELD_REVOCATION_REASON = "revocationreason";
 
@@ -392,6 +391,14 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     return true;
   }
 
+  @Nonnull
+  public static HCA createLink (@Nonnull final IWebPageExecutionContext aWPEC, @Nonnull final IUser aUser)
+  {
+    return new HCA (createViewURL (aWPEC,
+                                   BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
+                                   aUser)).addChild (aUser.getDisplayName ());
+  }
+
   @Override
   protected void showSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
   {
@@ -399,15 +406,13 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     aNodeList.addChild (getUIHandler ().createActionHeader (EText.HEADER_SHOW.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                      aSelectedObject.getUserName ())));
+                                                                                                      aSelectedObject.getDisplayName ())));
 
     final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
     onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_APP_TOKEN.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (createLink (aWPEC, aSelectedObject.getAppToken ())));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USER_NAME.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (aSelectedObject.getUserName ()));
+                                                 .setCtrl (createLink (aWPEC, aSelectedObject.getUser ())));
 
     {
       final IHCNode aAT = createAccessTokenListUI (aSelectedObject.getAllAccessTokens (), aDisplayLocale);
@@ -466,18 +471,12 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                               : EText.HEADER_CREATE.getDisplayText (aDisplayLocale)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_APP_TOKEN.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (new HCAppTokenSelect (new RequestField (FIELD_APP_TOKEN,
-                                                                                                   aSelectedObject == null ? null
-                                                                                                                           : aSelectedObject.getAppToken ()),
-                                                                                 aDisplayLocale,
-                                                                                 aValue -> !aValue.isDeleted ()).setReadOnly (bEdit))
-                                                 .setErrorList (aFormErrors.getListOfField (FIELD_APP_TOKEN)));
-
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_USER_NAME.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (new HCEdit (new RequestField (FIELD_USER_NAME,
-                                                                                         aSelectedObject == null ? null
-                                                                                                                 : aSelectedObject.getUserName ())))
-                                                 .setErrorList (aFormErrors.getListOfField (FIELD_USER_NAME)));
+                                                 .setCtrl (new HCUserSelect (new RequestField (FIELD_USER,
+                                                                                               aSelectedObject == null ? null
+                                                                                                                       : aSelectedObject.getUser ()),
+                                                                             aDisplayLocale,
+                                                                             aValue -> !aValue.isDeleted ()).setReadOnly (bEdit))
+                                                 .setErrorList (aFormErrors.getListOfField (FIELD_USER)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_TOKEN_STRING.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (FIELD_TOKEN_STRING,
@@ -497,22 +496,17 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final AppTokenManager aAppTokenMgr = PhotonSecurityManager.getAppTokenMgr ();
+    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     final boolean bEdit = eFormAction.isEdit ();
 
-    final String sAppTokenID = aWPEC.getAttributeAsString (FIELD_APP_TOKEN);
-    final IAppToken aAppToken = bEdit ? aSelectedObject.getAppToken ()
-                                      : aAppTokenMgr.getActiveAppTokenOfID (sAppTokenID);
-    final String sUserName = aWPEC.getAttributeAsString (FIELD_USER_NAME);
+    final String sUserID = aWPEC.getAttributeAsString (FIELD_USER);
+    final IUser aUser = bEdit ? aSelectedObject.getUser () : aUserMgr.getActiveUserOfID (sUserID);
     // Token string cannot be edited
     final String sTokenString = bEdit ? null : aWPEC.getAttributeAsString (FIELD_TOKEN_STRING);
 
-    if (aAppToken == null)
-      aFormErrors.addFieldError (FIELD_APP_TOKEN, EText.ERR_APP_TOKEN_EMPTY.getDisplayText (aDisplayLocale));
-
-    if (StringHelper.hasNoText (sUserName))
-      aFormErrors.addFieldError (FIELD_USER_NAME, EText.ERR_USER_NAME_EMPTY.getDisplayText (aDisplayLocale));
+    if (aUser == null)
+      aFormErrors.addFieldError (FIELD_USER, EText.ERR_APP_TOKEN_EMPTY.getDisplayText (aDisplayLocale));
 
     if (StringHelper.hasText (sTokenString))
     {
@@ -536,15 +530,15 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     {
       if (bEdit)
       {
-        aUserTokenMgr.updateUserToken (aSelectedObject.getID (), aCustomAttrMap, sUserName);
+        aUserTokenMgr.updateUserToken (aSelectedObject.getID (), aCustomAttrMap);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.EDIT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               sUserName)));
+                                                                                                               aUser.getDisplayName ())));
       }
       else
       {
-        aUserTokenMgr.createUserToken (sTokenString, aCustomAttrMap, aAppToken, sUserName);
+        aUserTokenMgr.createUserToken (sTokenString, aCustomAttrMap, aUser);
         aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                 sUserName)));
+                                                                                                                 aUser.getDisplayName ())));
       }
     }
   }
@@ -557,8 +551,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
 
-    final HCTable aTable = new HCTable (new DTCol (EText.HEADER_APP_TOKEN.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.HEADER_USER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+    final HCTable aTable = new HCTable (new DTCol (EText.HEADER_USER.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_USABLE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID () + sIDSuffix);
     for (final IUserToken aCurObject : aUserTokenMgr.getAllUserTokens ())
@@ -571,7 +564,6 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                    aCurObject.getActiveAccessToken ().isValidNow ();
 
         final HCRow aBodyRow = aTable.addBodyRow ();
-        aBodyRow.addCell (createLink (aWPEC, aCurObject.getAppToken ()));
         aBodyRow.addCell (new HCA (aViewURL).addChild (sDisplayName));
         aBodyRow.addCell (EPhotonCoreText.getYesOrNo (bUsableNow, aDisplayLocale));
 
