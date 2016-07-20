@@ -29,18 +29,21 @@ import com.helger.photon.basic.object.IObject;
 public interface IClientObject extends IObject, IHasClient
 {
   /**
+   * @return The client to which the object is assigned to. May not be
+   *         <code>null</code>.
+   */
+  @Nonnull
+  IClient getClient ();
+
+  /**
    * @return The client ID to which the object is assigned to. May neither be
    *         <code>null</code> nor empty.
    * @see #getClient()
    */
   @Nonnull
   @Nonempty
-  String getClientID ();
-
-  /**
-   * @return The client to which the object is assigned to. May not be
-   *         <code>null</code>.
-   */
-  @Nonnull
-  IClient getClient ();
+  default String getClientID ()
+  {
+    return getClient ().getID ();
+  }
 }

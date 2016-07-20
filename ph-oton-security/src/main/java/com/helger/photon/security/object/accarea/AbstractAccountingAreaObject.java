@@ -31,7 +31,6 @@ import com.helger.photon.basic.object.AbstractBaseObject;
 import com.helger.photon.basic.object.accarea.IAccountingArea;
 import com.helger.photon.basic.object.accarea.IAccountingAreaObject;
 import com.helger.photon.basic.object.client.IClient;
-import com.helger.photon.basic.object.client.IClientObject;
 import com.helger.photon.security.object.StubObject;
 
 @Immutable
@@ -114,21 +113,6 @@ public abstract class AbstractAccountingAreaObject extends AbstractBaseObject im
   public final IClient getClient ()
   {
     return m_aClient;
-  }
-
-  public final boolean hasSameClientID (@Nullable final IClientObject aClientObject)
-  {
-    return aClientObject != null && hasSameClientID (aClientObject.getClientID ());
-  }
-
-  public final boolean hasSameClientID (@Nullable final String sClientID)
-  {
-    return m_aClient.getID ().equals (sClientID);
-  }
-
-  public boolean hasSameClient (@Nullable final IClient aClient)
-  {
-    return m_aClient.equals (aClient);
   }
 
   @Nonnull
