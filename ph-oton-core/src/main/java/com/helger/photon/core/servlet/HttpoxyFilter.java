@@ -10,15 +10,22 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.helger.web.servlet.request.RequestLogger;
+
 /**
- * HTTP poxy problem avoidance-filter based on
+ * httpoxy problem avoidance-filter based on
  * https://www.apache.org/security/asf-httpoxy-response.txt
  *
  * @author Philip Helger
  */
-public class HttpPoxyFilter implements Filter
+public class HttpoxyFilter implements Filter
 {
-  public void init (final FilterConfig filterConfig) throws ServletException
+  private static final Logger s_aLogger = LoggerFactory.getLogger (HttpoxyFilter.class);
+
+  public void init (final FilterConfig aFilterConfig) throws ServletException
   {}
 
   public void destroy ()
@@ -29,10 +36,10 @@ public class HttpPoxyFilter implements Filter
                         @Nonnull final FilterChain aChain) throws java.io.IOException, ServletException
   {
 
-    final HttpServletRequest req = (HttpServletRequest) aRequest;
-    final HttpServletResponse res = (HttpServletResponse) aResponse;
+    final HttpServletRequest aHttpRequest = (HttpServletRequest) aRequest;
+    final HttpServletResponse aHttpResponse = (HttpServletResponse) aResponse;
 
-    final String poxy = req.getHeader ("proxy");
+    final String poxy = aHttpRequest.getHeader ("proxy");
     if (poxy == null)
     {
       // call next filter in the chain.
@@ -40,7 +47,10 @@ public class HttpPoxyFilter implements Filter
     }
     else
     {
-      res.sendError (400);
+      // potentially malicious request - log and block
+      s_aLogger.warn ("httpoxy request successfully blocked!");
+      RequestLogger.logRequestComplete (aHttpRequest);
+      aHttpResponse.sendError (HttpServletResponse.SC_BAD_REQUEST);
     }
   }
 }
