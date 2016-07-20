@@ -39,6 +39,7 @@ import com.helger.photon.core.go.GoServlet;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryServlet;
 import com.helger.photon.core.servlet.CharacterEncodingFilter;
+import com.helger.photon.core.servlet.HttpPoxyFilter;
 import com.helger.photon.core.servlet.LogoutServlet;
 import com.helger.photon.core.servlet.StreamServlet;
 import com.helger.photon.core.userdata.UserStreamServlet;
@@ -91,6 +92,15 @@ public final class PhotonStubServletInitializer
                                          aSC.getMinorVersion ());
 
       s_aLogger.info ("Registering default ph-oton listeners and servlets");
+
+      {
+        final FilterRegistration.Dynamic aFilter = aSC.addFilter ("HttpPoxyFilter", HttpPoxyFilter.class);
+        if (aFilter != null)
+        {
+          // Filter is new
+          aFilter.addMappingForUrlPatterns (null, false, "/*");
+        }
+      }
 
       {
         final FilterRegistration.Dynamic aFilter = aSC.addFilter ("CharacterEncodingFilter",
