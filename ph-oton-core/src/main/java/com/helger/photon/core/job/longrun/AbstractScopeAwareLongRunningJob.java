@@ -20,8 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import org.quartz.JobDataMap;
-import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +28,8 @@ import com.helger.photon.basic.longrun.ILongRunningJob;
 import com.helger.photon.basic.longrun.LongRunningJobManager;
 import com.helger.photon.basic.longrun.LongRunningJobResult;
 import com.helger.photon.basic.mgr.PhotonBasicManager;
+import com.helger.quartz.JobDataMap;
+import com.helger.quartz.IJobExecutionContext;
 import com.helger.schedule.job.AbstractScopeAwareJob;
 
 /**
@@ -68,7 +68,7 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
   @Override
   @OverridingMethodsMustInvokeSuper
   protected void beforeExecuteInScope (@Nonnull final JobDataMap aJobDataMap,
-                                       @Nonnull final JobExecutionContext aContext)
+                                       @Nonnull final IJobExecutionContext aContext)
   {
     final String sUserID = getCurrentUserID (aJobDataMap);
 
@@ -82,7 +82,7 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
   @Override
   @OverridingMethodsMustInvokeSuper
   protected void afterExecuteInScope (@Nonnull final JobDataMap aJobDataMap,
-                                      @Nonnull final JobExecutionContext aContext,
+                                      @Nonnull final IJobExecutionContext aContext,
                                       @Nonnull final ESuccess eExecSuccess)
   {
     // End long running job before the request scope is closed

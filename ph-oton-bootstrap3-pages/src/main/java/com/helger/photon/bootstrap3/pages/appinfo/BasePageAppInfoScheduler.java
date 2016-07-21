@@ -22,16 +22,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
-import org.quartz.JobListener;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.Trigger;
-import org.quartz.TriggerKey;
-import org.quartz.impl.matchers.GroupMatcher;
-import org.quartz.utils.DirtyFlagMap;
-
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -57,6 +47,15 @@ import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.quartz.IJobDetail;
+import com.helger.quartz.JobKey;
+import com.helger.quartz.IJobListener;
+import com.helger.quartz.IScheduler;
+import com.helger.quartz.SchedulerException;
+import com.helger.quartz.ITrigger;
+import com.helger.quartz.TriggerKey;
+import com.helger.quartz.impl.matchers.GroupMatcher;
+import com.helger.quartz.utils.DirtyFlagMap;
 import com.helger.schedule.quartz.QuartzSchedulerHelper;
 
 /**
@@ -136,7 +135,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
       final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
       // For all schedulers
-      for (final Scheduler aScheduler : QuartzSchedulerHelper.getSchedulerFactory ().getAllSchedulers ())
+      for (final IScheduler aScheduler : QuartzSchedulerHelper.getSchedulerFactory ().getAllSchedulers ())
       {
         final HCNodeList aTab = new HCNodeList ();
 
@@ -161,7 +160,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
 
         // All job listener
         final ICommonsList <String> aListeners = new CommonsArrayList <> ();
-        for (final JobListener aJobListener : aScheduler.getListenerManager ().getJobListeners ())
+        for (final IJobListener aJobListener : aScheduler.getListenerManager ().getJobListeners ())
           aListeners.add (aJobListener.getName () + " - " + aJobListener.getClass ().getName ());
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LISTENERS.getDisplayText (aDisplayLocale))
                                                             .setCtrl (HCExtHelper.list2divList (aListeners)));
@@ -172,9 +171,9 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
         for (final String sTriggerGroupName : aScheduler.getTriggerGroupNames ())
           for (final TriggerKey aTriggerKey : aScheduler.getTriggerKeys (GroupMatcher.triggerGroupEquals (sTriggerGroupName)))
           {
-            final Trigger aTrigger = aScheduler.getTrigger (aTriggerKey);
+            final ITrigger aTrigger = aScheduler.getTrigger (aTriggerKey);
             final JobKey aJobKey = aTrigger.getJobKey ();
-            final JobDetail aDetail = aScheduler.getJobDetail (aJobKey);
+            final IJobDetail aDetail = aScheduler.getJobDetail (aJobKey);
             final HCLI aLI = aDetailUL.addAndReturnItem (aJobKey.getName ());
             final HCUL aUL2 = aLI.addAndReturnChild (new HCUL ());
             aUL2.addItem (EText.MSG_JOB_CLASS.getDisplayText (aDisplayLocale) + aDetail.getJobClass ().getName ());

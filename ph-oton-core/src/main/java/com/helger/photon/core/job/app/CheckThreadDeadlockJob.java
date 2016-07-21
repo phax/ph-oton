@@ -18,11 +18,6 @@ package com.helger.photon.core.job.app;
 
 import javax.annotation.Nonnull;
 
-import org.quartz.DisallowConcurrentExecution;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.SimpleScheduleBuilder;
-import org.quartz.TriggerKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +26,11 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.deadlock.ThreadDeadlockDetector;
 import com.helger.photon.core.app.error.MailingThreadDeadlockCallback;
 import com.helger.photon.core.job.AbstractPhotonJob;
+import com.helger.quartz.DisallowConcurrentExecution;
+import com.helger.quartz.IJobExecutionContext;
+import com.helger.quartz.JobExecutionException;
+import com.helger.quartz.SimpleScheduleBuilder;
+import com.helger.quartz.TriggerKey;
 import com.helger.schedule.quartz.GlobalQuartzScheduler;
 import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
 
@@ -51,7 +51,7 @@ public class CheckThreadDeadlockJob extends AbstractPhotonJob
   {}
 
   @Override
-  protected void onExecute (@Nonnull final JobExecutionContext aContext) throws JobExecutionException
+  protected void onExecute (@Nonnull final IJobExecutionContext aContext) throws JobExecutionException
   {
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Checking for dead locks");

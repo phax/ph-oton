@@ -18,12 +18,11 @@ package com.helger.photon.core.job;
 
 import javax.annotation.Nonnull;
 
-import org.quartz.JobDataMap;
-import org.quartz.JobExecutionContext;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.photon.core.app.CApplication;
+import com.helger.quartz.JobDataMap;
+import com.helger.quartz.IJobExecutionContext;
 import com.helger.schedule.job.AbstractScopeAwareJob;
 
 /**
@@ -45,7 +44,7 @@ public abstract class AbstractPhotonJob extends AbstractScopeAwareJob
 
   @Override
   protected final String getApplicationScopeID (@Nonnull final JobDataMap aJobDataMap,
-                                                @Nonnull final JobExecutionContext aContext)
+                                                @Nonnull final IJobExecutionContext aContext)
   {
     return s_sAppID;
   }
