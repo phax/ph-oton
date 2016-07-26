@@ -42,6 +42,7 @@ import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
+import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
@@ -76,7 +77,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                          extends AbstractBootstrapWebPageForm <LoginInfo, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     MSG_USERNAME ("Benutzername", "User name"),
     MSG_LOGINDT ("Anmeldezeit", "Login time"),
@@ -150,8 +151,8 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
 
         // Show question
         final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
-        aForm.addChild (new BootstrapSuccessBox ().addChild (EText.LOGOUT_QUESTION.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                           sUserName)));
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.LOGOUT_QUESTION.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                            sUserName)));
 
         final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_LOGOUT_USER);
