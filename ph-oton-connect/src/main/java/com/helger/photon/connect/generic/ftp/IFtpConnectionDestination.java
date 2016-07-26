@@ -21,8 +21,8 @@ import javax.annotation.Nonnull;
 
 import org.apache.commons.net.ftp.FTPClient;
 
+import com.helger.network.port.DefaultNetworkPorts;
 import com.helger.photon.connect.generic.IConnectionDestination;
-import com.helger.web.port.DefaultNetworkPorts;
 
 public interface IFtpConnectionDestination extends IConnectionDestination <FTPClient>
 {

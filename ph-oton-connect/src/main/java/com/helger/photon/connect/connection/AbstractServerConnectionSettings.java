@@ -23,7 +23,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.port.NetworkPortHelper;
+import com.helger.network.port.NetworkPortHelper;
 
 /**
  * Default abstract implementation of the {@link IBaseServerConnectionSettings}

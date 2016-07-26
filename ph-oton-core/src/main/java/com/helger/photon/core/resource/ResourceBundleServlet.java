@@ -34,11 +34,11 @@ import com.helger.commons.charset.CCharset;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.state.EContinue;
+import com.helger.http.EHTTPMethod;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryServlet;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
-import com.helger.web.http.EHTTPMethod;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 

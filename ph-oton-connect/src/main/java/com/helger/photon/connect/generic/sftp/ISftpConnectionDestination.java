@@ -19,8 +19,8 @@ package com.helger.photon.connect.generic.sftp;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.helger.network.port.DefaultNetworkPorts;
 import com.helger.photon.connect.generic.IConnectionDestination;
-import com.helger.web.port.DefaultNetworkPorts;
 import com.jcraft.jsch.ChannelSftp;
 
 public interface ISftpConnectionDestination extends IConnectionDestination <ChannelSftp>

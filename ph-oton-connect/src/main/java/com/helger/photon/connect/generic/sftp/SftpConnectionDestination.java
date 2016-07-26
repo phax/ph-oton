@@ -27,9 +27,9 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
+import com.helger.network.port.CNetworkPort;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 import com.helger.photon.basic.auth.credentials.userpw.IUserNamePasswordCredentials;
-import com.helger.web.port.CNetworkPort;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;

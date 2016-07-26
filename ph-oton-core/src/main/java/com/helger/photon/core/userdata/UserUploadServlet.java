@@ -31,12 +31,12 @@ import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.StringHelper;
+import com.helger.http.EHTTPMethod;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.web.fileupload.IFileItem;
-import com.helger.web.http.EHTTPMethod;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 

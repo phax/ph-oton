@@ -49,6 +49,7 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.network.port.CNetworkPort;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
@@ -88,13 +89,12 @@ import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.smtp.settings.ISMTPSettings;
 import com.helger.smtp.settings.SMTPSettings;
-import com.helger.web.port.CNetworkPort;
 
 public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
                                   extends AbstractBootstrapWebPageForm <NamedSMTPSettings, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW ("Neue SMTP-Einstellungen anlegen", "Create new SMTP settings"),
     HEADER_NAME ("Name", "Name"),

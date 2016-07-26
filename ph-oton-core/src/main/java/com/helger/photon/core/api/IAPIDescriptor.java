@@ -21,8 +21,8 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.factory.IFactory;
+import com.helger.http.EHTTPMethod;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
-import com.helger.web.http.EHTTPMethod;
 
 /**
  * The read-only part of {@link APIDescriptor}.

@@ -32,9 +32,9 @@ import com.helger.commons.collection.ext.CommonsEnumMap;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.http.EHTTPMethod;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptorHelper;
 import com.helger.photon.core.api.pathdescriptor.PathMatchingResult;
-import com.helger.web.http.EHTTPMethod;
 
 /**
  * This class manages a list of {@link APIDescriptor} objects.

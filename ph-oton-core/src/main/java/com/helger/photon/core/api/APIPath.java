@@ -24,7 +24,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
-import com.helger.web.http.EHTTPMethod;
+import com.helger.http.EHTTPMethod;
 
 /**
  * This class contains a combination of path and HTTP method.

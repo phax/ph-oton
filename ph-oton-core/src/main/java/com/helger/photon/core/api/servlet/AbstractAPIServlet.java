@@ -28,12 +28,12 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.io.file.FilenameHelper;
+import com.helger.http.EHTTPMethod;
 import com.helger.photon.core.api.APIPath;
 import com.helger.photon.core.api.ApplicationAPIManager;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
-import com.helger.web.http.EHTTPMethod;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
 

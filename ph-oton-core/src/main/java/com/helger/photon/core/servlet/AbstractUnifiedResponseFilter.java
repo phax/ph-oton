@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.state.EContinue;
-import com.helger.web.http.EHTTPMethod;
-import com.helger.web.http.EHTTPVersion;
+import com.helger.http.EHTTPMethod;
+import com.helger.http.EHTTPVersion;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.request.RequestHelper;
