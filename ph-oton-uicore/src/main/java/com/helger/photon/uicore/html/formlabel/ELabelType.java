@@ -52,17 +52,17 @@ public enum ELabelType implements IHasID <String>
 
   public boolean isOptional ()
   {
-    return this == ELabelType.OPTIONAL;
+    return this == OPTIONAL;
   }
 
   public boolean isMandatory ()
   {
-    return this == ELabelType.MANDATORY;
+    return this == MANDATORY;
   }
 
   public boolean isAlternative ()
   {
-    return this == ELabelType.ALTERNATIVE;
+    return this == ALTERNATIVE;
   }
 
   @Nullable
