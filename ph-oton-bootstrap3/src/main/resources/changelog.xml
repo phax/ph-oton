@@ -18,6 +18,11 @@
 
 -->
 <changelog xmlns="http://www.helger.com/xsd/changelog/1.0" version="1.0" component="ph-oton-bootstrap3">
+  <entry date="2016-07-27" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to Bootstrap 3.3.7</text>
+    </change>
+  </entry>
   <entry date="2015-11-25" category="tech" action="update">
     <change>
       <text locale="en">Updated to Bootstrap 3.3.6</text>
