@@ -24,11 +24,11 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>7.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-oton-uictrls</artifactId>
+  <artifactId>ph-oton-datatables</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-oton-uictrls</name>
-  <description>Library with common JavaScript and Java UI components for web applications</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-uictrls</url>
+  <name>ph-oton-datatables</name>
+  <description>Datatables UI ctrl for the ph-oton stack</description>
+  <url>https://github.com/phax/ph-oton/ph-oton-datatables</url>
   <inceptionYear>2014</inceptionYear>
   <licenses>
     <license>
@@ -72,7 +72,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Export-Package>com.helger.photon.uictrls.*</Export-Package>
+            <Export-Package>com.helger.photon.uictrls.datatables.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
@@ -86,59 +86,8 @@
             <exclude>**/*.min.css</exclude>
             <exclude>**/NOTICE</exclude>
             <exclude>**/LICENSE</exclude>
-            <exclude>src/main/resources/animate/**</exclude>
-            <exclude>src/main/resources/autonumeric/**</exclude>
-            <exclude>src/main/resources/autosize/**</exclude>
-            <exclude>src/main/resources/chart/**</exclude>
-            <exclude>src/main/resources/colorbox/**</exclude>
-            <exclude>src/main/resources/famfam/**</exclude>
-            <exclude>src/main/resources/fineupload/**</exclude>
-            <exclude>src/test/resources/fineupload/**</exclude>
-            <exclude>src/main/resources/fontawesome/**</exclude>
-            <exclude>src/main/resources/handlebars/**</exclude>
-            <exclude>src/main/resources/js/big.*</exclude>
-            <exclude>src/main/resources/js/wow.*</exclude>
-            <exclude>src/main/resources/jscolor/**</exclude>
-            <exclude>src/main/resources/jszip/**</exclude>
-            <exclude>src/main/resources/pdfmake/**</exclude>
-            <exclude>src/main/resources/pdfobject/**</exclude>
-            <exclude>src/main/resources/prismjs/**</exclude>
-            <exclude>src/main/resources/select2/**</exclude>
-            <exclude>src/main/resources/tether/**</exclude>
-            <exclude>src/main/resources/typeahead/**</exclude>
+            <exclude>src/main/resources/datatables/**</exclude>
           </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.helger.maven</groupId>
-        <artifactId>ph-jscompress-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>jscompress</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <forceCreation>false</forceCreation>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.helger.maven</groupId>
-        <artifactId>ph-csscompress-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>csscompress</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <forceCompress>false</forceCompress>
-          <removeUnnecessaryCode>true</removeUnnecessaryCode>
-          <quoteURLs>true</quoteURLs>
-          <verbose>true</verbose>
-          <sourceDirectory>${basedir}/src/main/resources</sourceDirectory>
         </configuration>
       </plugin>
     </plugins>

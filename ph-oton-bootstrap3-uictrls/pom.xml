@@ -56,6 +56,10 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
+      <artifactId>ph-oton-datatables</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
       <artifactId>ph-oton-bootstrap3</artifactId>
     </dependency>
     <dependency>

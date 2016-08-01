@@ -172,6 +172,11 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
+        <artifactId>ph-oton-datatables</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
         <artifactId>ph-oton-uictrls</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -288,6 +293,7 @@
     <module>ph-oton-core</module>
     <module>ph-oton-uicore</module>
     <module>ph-oton-tinymce4</module>
+    <module>ph-oton-datatables</module>
     <module>ph-oton-uictrls</module>
     <module>ph-oton-jetty</module>
     <module>ph-oton-bootstrap3</module>

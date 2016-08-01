@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap3.uictrls.datatables.plugins;
 
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.photon.core.app.html.PhotonCSS;
-import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
+import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginSelect;
 
 public class BootstrapDataTablesPluginSelect extends DataTablesPluginSelect
@@ -28,7 +28,7 @@ public class BootstrapDataTablesPluginSelect extends DataTablesPluginSelect
   {
     super.registerExternalResources (aConversionSettings);
     // Change CSS
-    PhotonCSS.unregisterCSSIncludeFromThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SELECT);
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SELECT_BOOTSTRAP);
+    PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_SELECT);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_SELECT_BOOTSTRAP);
   }
 }

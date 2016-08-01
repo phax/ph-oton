@@ -27,8 +27,8 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
-import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
+import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
+import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 public class DataTablesPluginFixedHeader extends AbstractDataTablesPlugin
 {
@@ -128,7 +128,7 @@ public class DataTablesPluginFixedHeader extends AbstractDataTablesPlugin
   @Override
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
-    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_FIXED_HEADER);
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_FIXED_HEADER);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_FIXED_HEADER);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_FIXED_HEADER);
   }
 }

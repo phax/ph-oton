@@ -30,9 +30,9 @@ import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSVar;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
-import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
+import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 /**
  * Enable and configure the Scroller extension for DataTables. <br>
@@ -170,7 +170,7 @@ public class DataTablesPluginScroller extends AbstractDataTablesPlugin
   @Override
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_SCROLLER);
-    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SCROLLER);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_SCROLLER);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_SCROLLER);
   }
 }

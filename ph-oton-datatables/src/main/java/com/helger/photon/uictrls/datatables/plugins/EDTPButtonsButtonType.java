@@ -25,7 +25,7 @@ import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.name.IHasName;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
+import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 /**
  * DataTables Buttons plugin, button type
@@ -76,9 +76,9 @@ public enum EDTPButtonsButtonType implements IHasName
   PDF_FLASH ("pdfFlash"),
   PRINT ("print"),
   COLLECTION ("collection"),
-  COL_VIS ("colvis", EUICtrlsJSPathProvider.DATATABLES_BUTTONS_COLVIS),
-  COL_VIS_GROUP ("colvisGroup", EUICtrlsJSPathProvider.DATATABLES_BUTTONS_COLVIS),
-  COLUMNS_TOGGLE ("columnsToggle", EUICtrlsJSPathProvider.DATATABLES_BUTTONS_COLVIS);
+  COL_VIS ("colvis", EDataTablesJSPathProvider.DATATABLES_BUTTONS_COLVIS),
+  COL_VIS_GROUP ("colvisGroup", EDataTablesJSPathProvider.DATATABLES_BUTTONS_COLVIS),
+  COLUMNS_TOGGLE ("columnsToggle", EDataTablesJSPathProvider.DATATABLES_BUTTONS_COLVIS);
 
   private final String m_sName;
   private final ICommonsList <IJSPathProvider> m_aJSIncludes;
@@ -86,7 +86,7 @@ public enum EDTPButtonsButtonType implements IHasName
   private EDTPButtonsButtonType (@Nonnull @Nonempty final String sName, @Nullable final IJSPathProvider... aJSIncludes)
   {
     m_sName = sName;
-    m_aJSIncludes = new CommonsArrayList <> (aJSIncludes);
+    m_aJSIncludes = new CommonsArrayList<> (aJSIncludes);
   }
 
   @Nonnull

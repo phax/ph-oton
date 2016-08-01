@@ -34,17 +34,17 @@ import com.helger.html.jscode.JSAtom;
 import com.helger.html.jscode.JSExpr;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
-import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.DataTablesDom;
+import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
+import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 public class DataTablesPluginButtons extends AbstractDataTablesPlugin
 {
   public static final String DEFAULT_NAME = "main";
 
   /** List of buttons to be created. */
-  private final ICommonsList <Object> m_aButtons = new CommonsArrayList <> ();
+  private final ICommonsList <Object> m_aButtons = new CommonsArrayList<> ();
   /** Options to control the DOM structure Buttons creates. */
   private DTPButtonsDom m_aDom;
   /** Set a name for the instance for the group selector. */
@@ -149,8 +149,8 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
   @Override
   public void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_BUTTONS);
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.DATATABLES_BUTTONS);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_BUTTONS);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_BUTTONS);
     for (final Object aObj : m_aButtons)
       if (aObj instanceof DTPButtonsButton)
         ((DTPButtonsButton) aObj).registerExternalResources (aConversionSettings);

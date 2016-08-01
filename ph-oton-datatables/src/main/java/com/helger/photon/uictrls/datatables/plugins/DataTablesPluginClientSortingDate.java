@@ -33,8 +33,8 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
 
 public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
@@ -45,7 +45,7 @@ public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
   {
     super ("clientSortingDate");
     ValueEnforcer.notEmptyNoNullValue (aDateTimeTypes, "DateTimeTypes");
-    m_aDateTimeTypes = new CommonsHashSet <> (aDateTimeTypes);
+    m_aDateTimeTypes = new CommonsHashSet<> (aDateTimeTypes);
   }
 
   @Override
@@ -94,7 +94,7 @@ public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.MOMENT);
-    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.DATATABLES_SORTING_MOMENT);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_SORTING_MOMENT);
   }
 
   public IJSExpression getInitParams ()
