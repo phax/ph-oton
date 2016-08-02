@@ -75,14 +75,7 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-commons-parent-pom</artifactId>
-        <version>8.2.2</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>ph-datetime-parent-pom</artifactId>
-        <version>5.0.1</version>
+        <version>8.3.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -102,11 +95,6 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
-        <artifactId>ph-json</artifactId>
-        <version>3.0.0</version>
-      </dependency>
-      <dependency>
-        <groupId>com.helger</groupId>
         <artifactId>ph-css</artifactId>
         <version>5.0.0</version>
       </dependency>
@@ -121,11 +109,6 @@
         <groupId>com.helger</groupId>
         <artifactId>ph-poi</artifactId>
         <version>4.0.0</version>
-      </dependency>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>ph-settings</artifactId>
-        <version>3.0.3</version>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
