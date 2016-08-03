@@ -22,6 +22,7 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.state.EChange;
 
@@ -32,7 +33,7 @@ import com.helger.commons.state.EChange;
  * @param <T>
  *        The contained data type.
  */
-public interface IWebResourceSet <T> extends Serializable, Iterable <T>
+public interface IWebResourceSet <T> extends Serializable, ICommonsIterable <T>
 {
   /**
    * Add an item
