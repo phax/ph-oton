@@ -133,12 +133,12 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
         if (aRoleMgr.deleteRole (aSelectedObject.getID ()).isChanged ())
         {
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                    aSelectedObject.getName ())));
         }
         else
         {
-          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                aSelectedObject.getName ())));
         }
       }

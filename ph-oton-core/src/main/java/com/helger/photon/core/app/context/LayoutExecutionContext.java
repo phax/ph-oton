@@ -17,7 +17,6 @@
 package com.helger.photon.core.app.context;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,7 +32,6 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestManager;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
-import com.helger.photon.core.app.redirect.ForcedRedirectManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -67,20 +65,11 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     return m_aSelectedMenuItem;
   }
 
-  public void postRedirectGet (@Nullable final IHCNode aContent,
-                               @Nullable final Map <String, String> aAdditionalParameters) throws ForcedRedirectException
+  public void postRedirectGet (@Nonnull final ISimpleURL aTargetURL,
+                               @Nullable final IHCNode aContent) throws ForcedRedirectException
   {
     // Add the "PRG active" parameter
-    throw new ForcedRedirectException (m_aSelectedMenuItem.getID (),
-                                       getSelfHref ().add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE)
-                                                     .addAll (aAdditionalParameters),
-                                       aContent);
-  }
-
-  public void postRedirectGet (@Nonnull final ISimpleURL aTargetURL) throws ForcedRedirectException
-  {
-    // Add the "PRG active" parameter
-    throw new ForcedRedirectException (m_aSelectedMenuItem.getID (), aTargetURL, null);
+    throw new ForcedRedirectException (m_aSelectedMenuItem.getID (), aTargetURL, aContent);
   }
 
   @Override

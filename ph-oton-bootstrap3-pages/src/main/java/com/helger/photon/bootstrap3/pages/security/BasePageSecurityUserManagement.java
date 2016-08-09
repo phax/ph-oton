@@ -230,10 +230,10 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
 
         if (aUserMgr.deleteUser (aSelectedObject.getID ()).isChanged ())
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                 aSelectedObject.getDisplayName ())));
         else
-          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                             aSelectedObject.getDisplayName ())));
       }
     });
@@ -258,10 +258,10 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
 
         if (aUserMgr.undeleteUser (aSelectedObject.getID ()).isChanged ())
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.UNDEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.UNDEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                   aSelectedObject.getDisplayName ())));
         else
-          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.UNDEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.UNDEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                               aSelectedObject.getDisplayName ())));
       }
     });
@@ -691,7 +691,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         for (final String sUserGroupID : aUserGroupsToBeUnassigned)
           aUserGroupMgr.unassignUserFromUserGroup (sUserGroupID, sUserID);
 
-        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
+        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
       }
       else
       {
@@ -711,10 +711,10 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
           for (final String sUserGroupID : aUserGroupIDs)
             aUserGroupMgr.assignUserToUserGroup (sUserGroupID, aNewUser.getID ());
 
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
         }
         else
-          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.FAILURE_CREATE.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.FAILURE_CREATE.getDisplayText (aDisplayLocale)));
       }
     }
   }

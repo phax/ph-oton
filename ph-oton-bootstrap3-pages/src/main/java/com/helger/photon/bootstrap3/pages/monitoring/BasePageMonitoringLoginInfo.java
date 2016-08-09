@@ -139,12 +139,12 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
           // Check if logout worked
           if (aSelectedObject.isLogout ())
           {
-            aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.LOGOUT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+            aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.LOGOUT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                      sUserName)));
           }
           else
           {
-            aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.LOGOUT_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+            aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.LOGOUT_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                  sUserName)));
           }
         }

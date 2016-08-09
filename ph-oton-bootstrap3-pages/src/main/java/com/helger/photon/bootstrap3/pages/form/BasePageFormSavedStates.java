@@ -116,9 +116,9 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
         if (FormStateManager.getInstance ().deleteFormState (aSelectedObject.getID ()).isChanged ())
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayText (aDisplayLocale)));
         else
-          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayText (aDisplayLocale)));
       }
     });
     addCustomHandler (CPageParam.ACTION_DELETE_ALL,

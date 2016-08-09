@@ -174,7 +174,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
         if (m_aFailedMailQueue.remove (aSelectedObject.getID ()) != null)
         {
           s_aLogger.info ("Deleted single failed mail with ID " + aSelectedObject.getID () + "!");
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayText (aDisplayLocale)));
         }
       }
     });
@@ -193,7 +193,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                             final String sSuccessMsg = aFailedMails.size () == 1 ? EText.DELETE_ALL_SUCCESS_1.getDisplayText (aDisplayLocale)
                                                                                  : EText.DELETE_ALL_SUCCESS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                       Integer.toString (aFailedMails.size ()));
-                            aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (sSuccessMsg));
+                            aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (sSuccessMsg));
                           }
                           return true;
                         }
@@ -222,7 +222,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           ScopedMailAPI.getInstance ().queueMail (aSMTPSettings, aFailedMailData.getEmailData ());
 
           // Success message
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.RESENT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.RESENT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale)));
         }
         return true;
       }
@@ -261,7 +261,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final String sSuccessMsg = aFailedMails.size () == 1 ? EText.RESENT_ALL_SUCCESS_1.getDisplayText (aDisplayLocale)
                                                                : EText.RESENT_ALL_SUCCESS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                     Integer.toString (aFailedMails.size ()));
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (sSuccessMsg));
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (sSuccessMsg));
         }
         return true;
       }

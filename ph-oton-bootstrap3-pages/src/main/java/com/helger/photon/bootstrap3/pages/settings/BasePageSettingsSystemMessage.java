@@ -145,7 +145,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
           final EChange eChange = aSystemMsgMgr.setSystemMessage (eNewMessageType, sNewMessage);
           if (eChange.isChanged ())
           {
-            aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SAVE_SUCCESS.getDisplayText (aDisplayLocale)));
+            aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SAVE_SUCCESS.getDisplayText (aDisplayLocale)));
           }
         }
       }

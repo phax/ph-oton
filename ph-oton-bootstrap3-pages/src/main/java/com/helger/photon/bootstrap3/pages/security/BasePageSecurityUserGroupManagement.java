@@ -160,10 +160,10 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
         if (aUserGroupMgr.deleteUserGroup (aSelectedObject.getID ()).isChanged ())
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                    aSelectedObject.getName ())));
         else
-          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                aSelectedObject.getName ())));
       }
     });
@@ -383,7 +383,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         for (final String sRoleID : aRolesToBeUnassigned)
           aUserGroupMgr.unassignRoleFromUserGroup (sUserGroupID, sRoleID);
 
-        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
+        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
       }
       else
       {
@@ -394,7 +394,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         for (final String sRoleID : aRoleIDs)
           aUserGroupMgr.assignRoleToUserGroup (aNewUserGroup.getID (), sRoleID);
 
-        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
+        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
       }
     }
   }

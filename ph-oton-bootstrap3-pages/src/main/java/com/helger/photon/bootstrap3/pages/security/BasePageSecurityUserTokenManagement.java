@@ -173,10 +173,10 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
         final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
 
         if (aUserTokenMgr.deleteUserToken (aSelectedObject.getID ()).isChanged ())
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                    aSelectedObject.getDisplayName ())));
         else
-          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                aSelectedObject.getDisplayName ())));
       }
     });
@@ -230,7 +230,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                   PDTFactory.getCurrentLocalDateTime (),
                                                                   sRevocationReason,
                                                                   sTokenString);
-                              aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (bRevokedOld ? EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                              aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (bRevokedOld ? EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                                                                      aSelectedObject.getDisplayName ())
                                                                                                       : EBaseText.CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                                                           aSelectedObject.getDisplayName ())));
@@ -309,7 +309,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                LoggedInUserManager.getInstance ().getCurrentUserID (),
                                                                PDTFactory.getCurrentLocalDateTime (),
                                                                sRevocationReason);
-                              aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EBaseText.REVOKE_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                              aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EBaseText.REVOKE_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                                         aSelectedObject.getDisplayName ())));
                               return false;
                             }
@@ -532,13 +532,13 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
       if (bEdit)
       {
         aUserTokenMgr.updateUserToken (aSelectedObject.getID (), aCustomAttrMap);
-        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.EDIT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.EDIT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                aUser.getDisplayName ())));
       }
       else
       {
         aUserTokenMgr.createUserToken (sTokenString, aCustomAttrMap, aUser);
-        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                  aUser.getDisplayName ())));
       }
     }

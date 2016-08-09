@@ -217,12 +217,12 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
 
         if (m_aMgr.removeSettings (aSelectedObject.getID ()).isChanged ())
         {
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                    aSelectedObject.getName ())));
         }
         else
         {
-          aWPEC.postRedirectGet (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                aSelectedObject.getName ())));
         }
       }
@@ -260,7 +260,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
             aMailData.setBody (sBody);
             ScopedMailAPI.getInstance ().queueMail (aSelectedObject.getSMTPSettings (), aMailData);
 
-            aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_TEST_MAIL.getDisplayText (aDisplayLocale)));
+            aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_TEST_MAIL.getDisplayText (aDisplayLocale)));
             return true;
           }
         }
@@ -489,13 +489,13 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
       {
         // We're editing an existing object
         if (m_aMgr.updateSettings (aSelectedObject.getID (), sName, aSMTPSettings).isChanged ())
-          aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
       }
       else
       {
         // We're creating a new object
         m_aMgr.addSettings (sName, aSMTPSettings);
-        aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
+        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
       }
     }
   }

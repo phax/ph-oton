@@ -162,7 +162,7 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext>
       HCSettings.setScriptsInBody (bScriptsInBody);
       HCSettings.setUseRegularResources (bUseRegularResources);
 
-      aWPEC.postRedirectGet (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
+      aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
     }
     else
     {

@@ -28,7 +28,14 @@ import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.page.IPage;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
+import com.helger.photon.core.app.redirect.ForcedRedirectManager;
 
+/**
+ * Base interface for a current request context that also has "layout"
+ * information, meaning the currently selected menu item.
+ *
+ * @author Philip Helger
+ */
 public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
 {
   /**
@@ -87,10 +94,50 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    *        May be <code>null</code>.
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
+   * @deprecated Use {@link #postRedirectGetInternal(IHCNode)} instead
    */
+  @Deprecated
   default void postRedirectGet (@Nullable final IHCNode aContent) throws ForcedRedirectException
   {
-    postRedirectGet (aContent, (Map <String, String>) null);
+    postRedirectGetInternal (aContent);
+  }
+
+  /**
+   * Throw a {@link ForcedRedirectException} with the self href of the current
+   * layout context. This immediately stops the request and sends a HTTP
+   * redirect to the client.
+   *
+   * @param aContent
+   *        The content to be displayed next time the page is rendered via GET.
+   *        May be <code>null</code>.
+   * @throws ForcedRedirectException
+   *         Every time, since this is the P-R-G indicator.
+   */
+  default void postRedirectGetInternal (@Nullable final IHCNode aContent) throws ForcedRedirectException
+  {
+    postRedirectGetInternal (aContent, (Map <String, String>) null);
+  }
+
+  /**
+   * Throw a {@link ForcedRedirectException} with the self href of the current
+   * layout context. This immediately stops the request and sends a HTTP
+   * redirect to the client.
+   *
+   * @param aContent
+   *        The content to be displayed next time the page is rendered via GET.
+   *        May be <code>null</code>.
+   * @param aAdditionalParameters
+   *        Additional parameters to be added to the request. May be
+   *        <code>null</code> or empty.
+   * @throws ForcedRedirectException
+   *         Every time, since this is the P-R-G indicator.
+   * @deprecated Use {@link #postRedirectGetInternal(IHCNode,Map)} instead
+   */
+  @Deprecated
+  default void postRedirectGet (@Nullable final IHCNode aContent,
+                                @Nullable final Map <String, String> aAdditionalParameters) throws ForcedRedirectException
+  {
+    postRedirectGetInternal (aContent, aAdditionalParameters);
   }
 
   /**
@@ -107,8 +154,50 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
    */
-  void postRedirectGet (@Nullable IHCNode aContent,
-                        @Nullable Map <String, String> aAdditionalParameters) throws ForcedRedirectException;
+  default void postRedirectGetInternal (@Nullable final IHCNode aContent,
+                                        @Nullable final Map <String, String> aAdditionalParameters) throws ForcedRedirectException
+  {
+    // Add the "PRG active" parameter
+    postRedirectGet (getSelfHref ().add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE)
+                                   .addAll (aAdditionalParameters),
+                     aContent);
+  }
+
+  /**
+   * Throw a {@link ForcedRedirectException} with the provided internal URL and
+   * the passed content. This immediately stops the request and sends a HTTP
+   * redirect to the client. Important: this only works for application internal
+   * URLs, because external URLs will not have access to the provided content.
+   *
+   * @param aTargetURL
+   *        The target URL to redirect to via GET. May be <code>null</code>.
+   * @param aContent
+   *        The content to be displayed next time the page is rendered via GET.
+   *        May be <code>null</code>.
+   * @throws ForcedRedirectException
+   *         Every time, since this is the P-R-G indicator.
+   */
+  default void postRedirectGetInternal (@Nonnull final SimpleURL aTargetURL,
+                                        @Nullable final IHCNode aContent) throws ForcedRedirectException
+  {
+    postRedirectGet (aTargetURL.add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE), aContent);
+  }
+
+  /**
+   * Throw a {@link ForcedRedirectException} with the passed URL. This
+   * immediately stops the request and sends a HTTP redirect to the client.
+   *
+   * @param aTargetURL
+   *        The target URL to redirect to via GET. May be <code>null</code>.
+   * @throws ForcedRedirectException
+   *         Every time, since this is the P-R-G indicator.
+   * @deprecated Use {@link #postRedirectGetExternal(ISimpleURL)} instead
+   */
+  @Deprecated
+  default void postRedirectGet (@Nonnull final ISimpleURL aTargetURL) throws ForcedRedirectException
+  {
+    postRedirectGetExternal (aTargetURL);
+  }
 
   /**
    * Throw a {@link ForcedRedirectException} with the passed URL. This
@@ -119,5 +208,28 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
    */
-  void postRedirectGet (@Nonnull ISimpleURL aTargetURL) throws ForcedRedirectException;
+  default void postRedirectGetExternal (@Nonnull final ISimpleURL aTargetURL) throws ForcedRedirectException
+  {
+    postRedirectGet (aTargetURL, (IHCNode) null);
+  }
+
+  /**
+   * Throw a {@link ForcedRedirectException} with the provided URL and the
+   * passed content. This immediately stops the request and sends a HTTP
+   * redirect to the client. This method should not be called explicitly.
+   * Instead the "external" or "internal" PRG methods should be called.
+   *
+   * @param aTargetURL
+   *        The target URL to redirect to via GET. May be <code>null</code>.
+   * @param aContent
+   *        The content to be displayed next time the page is rendered via GET.
+   *        May be <code>null</code>.
+   * @throws ForcedRedirectException
+   *         Every time, since this is the P-R-G indicator.
+   * @see #postRedirectGetInternal(IHCNode)
+   * @see #postRedirectGetInternal(IHCNode, Map)
+   * @see #postRedirectGetInternal(SimpleURL, IHCNode)
+   * @see #postRedirectGetExternal(ISimpleURL)
+   */
+  void postRedirectGet (@Nonnull ISimpleURL aTargetURL, @Nullable IHCNode aContent) throws ForcedRedirectException;
 }
