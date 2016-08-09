@@ -25,7 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.factory.IFactory;
 import com.helger.commons.filter.IFilter;
 import com.helger.commons.name.IHasName;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.commons.url.SimpleURL;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -104,7 +104,7 @@ public interface IAjaxFunctionDeclaration extends IHasName
       return getInvocationURI (aRequestScope);
     }
 
-    return getInvocationURL (aRequestScope, aParams).getAsStringWithEncodedParameters ();
+    return getInvocationURL (aRequestScope).addAll (aParams).getAsStringWithEncodedParameters ();
   }
 
   /**
@@ -115,26 +115,9 @@ public interface IAjaxFunctionDeclaration extends IHasName
    *         <code>null</code>.
    */
   @Nonnull
-  default ISimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  default SimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return getInvocationURL (aRequestScope, (Map <String, String>) null);
-  }
-
-  /**
-   * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
-   * @param aParams
-   *        An optional map with URL parameters to be used in the URL. May be
-   *        <code>null</code> or empty.
-   * @return The URL where the AJAX function can be invoked. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  default ISimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                       @Nullable final Map <String, String> aParams)
-  {
-    return LinkHelper.getURLWithContext (aRequestScope, getPathWithoutContext (), aParams);
+    return LinkHelper.getURLWithContext (aRequestScope, getPathWithoutContext (), (Map <String, String>) null);
   }
 
   /**
