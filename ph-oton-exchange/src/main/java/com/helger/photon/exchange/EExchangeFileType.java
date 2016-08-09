@@ -48,7 +48,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
     @Nonnull
     public ExporterCSV createExporter ()
     {
-      return new ExporterCSV ().setCharset (CCharset.CHARSET_ISO_8859_1_OBJ).setSeparator (';');
+      return new ExporterCSV ().setCharset (CCharset.CHARSET_ISO_8859_1_OBJ).setSeparatorChar (';');
     }
   },
   XLS ("xls", EExcelVersion.XLS.getFileExtension (), EExcelVersion.XLS.getMimeType (), true, EExchangeFileTypeName.XLS)

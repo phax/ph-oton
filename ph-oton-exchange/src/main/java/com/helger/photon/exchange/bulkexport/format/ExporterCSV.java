@@ -54,7 +54,8 @@ public final class ExporterCSV implements IExporterFile
   private static final Logger s_aLogger = LoggerFactory.getLogger (ExporterCSV.class);
 
   private Charset m_aCharset;
-  private char m_cSeparator = CCSV.DEFAULT_SEPARATOR;
+  private char m_cSeparatorChar = CCSV.DEFAULT_SEPARATOR;
+  private char m_cQuoteChar = CCSV.DEFAULT_QUOTE_CHARACTER;
   private EUnicodeBOM m_eBOM;
 
   public ExporterCSV ()
@@ -80,16 +81,59 @@ public final class ExporterCSV implements IExporterFile
     return m_aCharset;
   }
 
+  /**
+   * @param cSeparator
+   *        Separator char
+   * @return this for chaining
+   * @deprecated Use {@link #setSeparatorChar(char)} instead
+   */
+  @Deprecated
   @Nonnull
   public ExporterCSV setSeparator (final char cSeparator)
   {
-    m_cSeparator = cSeparator;
+    return setSeparatorChar (cSeparator);
+  }
+
+  /**
+   * @param cSeparator
+   *        Separator char
+   * @return this for chaining
+   */
+  @Nonnull
+  public ExporterCSV setSeparatorChar (final char cSeparator)
+  {
+    m_cSeparatorChar = cSeparator;
     return this;
   }
 
+  /**
+   * @return Current separator char
+   * @deprecated Use {@link #getSeparatorChar()} instead
+   */
+  @Deprecated
   public char getSeparator ()
   {
-    return m_cSeparator;
+    return getSeparatorChar ();
+  }
+
+  /**
+   * @return Current separator char
+   */
+  public char getSeparatorChar ()
+  {
+    return m_cSeparatorChar;
+  }
+
+  @Nonnull
+  public ExporterCSV setQuoteChar (final char cQuote)
+  {
+    m_cQuoteChar = cQuote;
+    return this;
+  }
+
+  public char getQuoteChar ()
+  {
+    return m_cQuoteChar;
   }
 
   @Nonnull
@@ -159,7 +203,8 @@ public final class ExporterCSV implements IExporterFile
         }
 
       try (final CSVWriter aWriter = new CSVWriter (new OutputStreamWriter (aOS,
-                                                                            m_aCharset)).setSeparatorChar (m_cSeparator))
+                                                                            m_aCharset)).setSeparatorChar (m_cSeparatorChar)
+                                                                                        .setQuoteChar (m_cQuoteChar))
       {
         aWriter.writeAll (aRecords);
         return ESuccess.SUCCESS;
