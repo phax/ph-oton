@@ -71,7 +71,9 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
   public BootstrapForm (@Nullable final ISimpleURL aAction, @Nonnull final EBootstrapFormType eFormType)
   {
     super ();
-    setRole (EHTMLRole.FORM);
+    // Not needed, as the role is identical to the HTML semantics
+    if (false)
+      setRole (EHTMLRole.FORM);
     if (aAction != null)
       setAction (aAction);
     setFormType (eFormType);
