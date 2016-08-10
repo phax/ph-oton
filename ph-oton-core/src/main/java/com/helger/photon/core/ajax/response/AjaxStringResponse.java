@@ -20,6 +20,7 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.Immutable;
 
 import org.w3c.dom.Node;
@@ -80,6 +81,7 @@ public class AjaxStringResponse extends AbstractAjaxResponse
     return m_aMimeType;
   }
 
+  @OverridingMethodsMustInvokeSuper
   public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
   {
     aUnifiedResponse.setContentAndCharset (m_sValue, m_aCharset).setMimeType (m_aMimeType);

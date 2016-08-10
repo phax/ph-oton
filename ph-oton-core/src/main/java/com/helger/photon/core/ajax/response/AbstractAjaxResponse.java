@@ -38,11 +38,6 @@ public abstract class AbstractAjaxResponse implements IAjaxResponse
     return m_bSuccess;
   }
 
-  public final boolean isFailure ()
-  {
-    return !m_bSuccess;
-  }
-
   @Override
   public boolean equals (final Object o)
   {

@@ -119,6 +119,9 @@ public enum EPhotonCoreText implements IHasDisplayText, IHasDisplayTextWithArgs
   BUTTON_RESEND_ALL ("Alle erneut versenden", "Resend all"),
   BUTTON_ENABLE ("Aktivieren", "Enable"),
   BUTTON_DISABLE ("Deaktivieren", "Disable"),
+  BUTTON_PRINT ("Drucken", "Print"),
+  BUTTON_PRINT_PREVIEW ("Druckvorschau", "Print preview"),
+  BUTTON_PRINT_VIEW ("Druckansicht", "Print view"),
   TRUE ("Wahr", "True"),
   FALSE ("Falsch", "False");
 
