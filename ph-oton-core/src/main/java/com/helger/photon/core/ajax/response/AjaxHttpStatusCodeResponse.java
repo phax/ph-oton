@@ -96,6 +96,15 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   }
 
   /**
+   * @return HTTP 404
+   */
+  @Nonnull
+  public static AjaxHttpStatusCodeResponse createNotFound ()
+  {
+    return new AjaxHttpStatusCodeResponse (HttpServletResponse.SC_NOT_FOUND);
+  }
+
+  /**
    * @return HTTP 412
    */
   @Nonnull
