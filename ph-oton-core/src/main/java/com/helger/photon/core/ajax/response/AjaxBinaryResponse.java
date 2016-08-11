@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.ajax.response;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -45,6 +47,7 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
   private final byte [] m_aValue;
   private final IMimeType m_aMimeType;
   private final String m_sDispositionFilename;
+  private Charset m_aTextCharset = CCharset.CHARSET_UTF_8_OBJ;
 
   @SuppressFBWarnings ("EI_EXPOSE_REP2")
   public AjaxBinaryResponse (@Nonnull @Nonempty final byte [] aValue,
@@ -55,6 +58,21 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
     m_aValue = ValueEnforcer.notEmpty (aValue, "Value");
     m_aMimeType = ValueEnforcer.notNull (aMimeType, "MimeType");
     m_sDispositionFilename = ValueEnforcer.notEmpty (sDispositionFilename, "DispositionFilename");
+  }
+
+  /**
+   * Set the charset to be used for responses that have a "text/" based MIME
+   * type.
+   *
+   * @param aTextCharset
+   *        The charset to use. May not be <code>null</code>.
+   * @return this for chaining
+   */
+  @Nonnull
+  public AjaxBinaryResponse setTextCharset (@Nonnull final Charset aTextCharset)
+  {
+    m_aTextCharset = ValueEnforcer.notNull (aTextCharset, "TextCharset");
+    return this;
   }
 
   /**
@@ -91,6 +109,16 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
     return m_sDispositionFilename;
   }
 
+  /**
+   * @return The charset to be used for "text/" based MIME types. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public Charset getTextCharset ()
+  {
+    return m_aTextCharset;
+  }
+
   public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
   {
     aUnifiedResponse.setContent (m_aValue)
@@ -98,7 +126,7 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
                     .setContentDispositionFilename (m_sDispositionFilename);
 
     if (m_aMimeType.getContentType () == EMimeContentType.TEXT)
-      aUnifiedResponse.setCharset (CCharset.CHARSET_UTF_8_OBJ);
+      aUnifiedResponse.setCharset (m_aTextCharset);
   }
 
   @Override
@@ -111,7 +139,8 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
     final AjaxBinaryResponse rhs = (AjaxBinaryResponse) o;
     return EqualsHelper.equals (m_aValue, rhs.m_aValue) &&
            m_aMimeType.equals (rhs.m_aMimeType) &&
-           m_sDispositionFilename.equals (rhs.m_sDispositionFilename);
+           m_sDispositionFilename.equals (rhs.m_sDispositionFilename) &&
+           m_aTextCharset.equals (rhs.m_aTextCharset);
   }
 
   @Override
@@ -121,6 +150,7 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
                             .append (m_aValue)
                             .append (m_aMimeType)
                             .append (m_sDispositionFilename)
+                            .append (m_aTextCharset)
                             .getHashCode ();
   }
 
@@ -131,6 +161,7 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
                             .append ("Value.length", m_aValue.length)
                             .append ("MimeType", m_aMimeType)
                             .append ("DispositionFilename", m_sDispositionFilename)
+                            .append ("TextCharset", m_aTextCharset)
                             .toString ();
   }
 
