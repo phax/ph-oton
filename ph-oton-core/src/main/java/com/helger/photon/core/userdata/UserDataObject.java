@@ -46,6 +46,15 @@ public class UserDataObject extends AbstractUserDataObject
     return new UserDataObject (sPath);
   }
 
+  /**
+   * Create the {@link UserDataObject} only if the provided path is neither
+   * <code>null</code> nor empty.
+   * 
+   * @param sPath
+   *        The path to be used. May be <code>null</code>.
+   * @return <code>null</code> if an empty path was provided, a
+   *         non-<code>null</code> object otherwise.
+   */
   @Nullable
   public static UserDataObject createConditional (@Nullable final String sPath)
   {

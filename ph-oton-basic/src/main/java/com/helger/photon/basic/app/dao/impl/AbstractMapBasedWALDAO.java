@@ -465,8 +465,19 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     m_aRWLock.readLocked ( () -> m_aMap.forEachValue (aConsumer));
   }
 
+  protected final void internalForEachValue (@Nullable final Consumer <? super IMPLTYPE> aConsumer)
+  {
+    m_aRWLock.readLocked ( () -> m_aMap.forEachValue (aConsumer));
+  }
+
   public final void forEachValue (@Nullable final Predicate <? super INTERFACETYPE> aFilter,
                                   @Nullable final Consumer <? super INTERFACETYPE> aConsumer)
+  {
+    m_aRWLock.readLocked ( () -> m_aMap.forEachValue (aFilter, aConsumer));
+  }
+
+  protected final void internalForEachValue (@Nullable final Predicate <? super IMPLTYPE> aFilter,
+                                             @Nullable final Consumer <? super IMPLTYPE> aConsumer)
   {
     m_aRWLock.readLocked ( () -> m_aMap.forEachValue (aFilter, aConsumer));
   }
