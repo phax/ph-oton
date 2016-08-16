@@ -32,10 +32,12 @@ import com.helger.html.hc.ext.HCConditionalCommentNode;
 import com.helger.html.hc.html.metadata.HCCSSNodeDetector;
 import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.html.hc.html.metadata.HCLink;
+import com.helger.html.hc.html.metadata.HCMeta;
 import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.html.script.HCJSNodeDetector;
 import com.helger.html.hc.html.script.HCScriptFile;
 import com.helger.html.hc.render.HCRenderer;
+import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.core.mgr.PhotonCoreManager;
@@ -110,6 +112,10 @@ public final class PhotonHTMLHelper
   {
     // Build the main HC tree
     final HCHtml aHtml = aHTMLProvider.createHTML (aRequestScope);
+
+    // Add some ad comment :)
+    aHtml.getHead ().addMetaElement (new HCMeta ().setName (EStandardMetaElement.GENERATOR.getName ())
+                                                  .setContent ("https://github.com/phax/ph-oton // phax // ASL 2.0"));
 
     // Convert HTML to String, including namespaces
     final String sXMLCode = HCRenderer.getAsHTMLString (aHtml);
