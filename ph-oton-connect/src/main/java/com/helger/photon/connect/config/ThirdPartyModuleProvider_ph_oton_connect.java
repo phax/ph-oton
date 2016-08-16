@@ -40,7 +40,7 @@ public final class ThirdPartyModuleProvider_ph_oton_connect implements IThirdPar
   public static final IThirdPartyModule COMMONS_NET = new ThirdPartyModule ("Apache Commons Net",
                                                                             "Apache",
                                                                             ELicense.APACHE2,
-                                                                            new Version (3, 3, 0),
+                                                                            new Version (3, 5, 0),
                                                                             "http://commons.apache.org/net/");
 
   @Nullable
