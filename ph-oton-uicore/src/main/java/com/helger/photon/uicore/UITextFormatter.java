@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.hierarchy.visit.IHierarchyVisitorCallback;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLVersion;
@@ -40,6 +41,7 @@ import com.helger.html.markdown.MarkdownProcessor;
 import com.helger.html.parser.XHTMLParser;
 import com.helger.photon.uicore.page.external.PageViewExternalHTMLCleanser;
 import com.helger.xml.microdom.IMicroContainer;
+import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.util.MicroVisitor;
 
 @Immutable
@@ -51,6 +53,15 @@ public final class UITextFormatter
   private UITextFormatter ()
   {}
 
+  /**
+   * Try to separate the value created from regular <code>toString</code>
+   * implementations back into fields :) This is more of a heuristic.
+   *
+   * @param aValue
+   *        The source object which's <code>toString</code> method is invoked.
+   *        May be <code>null</code>.
+   * @return A slightly beautified version.
+   */
   @Nonnull
   public static IHCNode getToStringContent (final Object aValue)
   {
@@ -59,7 +70,7 @@ public final class UITextFormatter
     {
       try
       {
-        final ICommonsList <String> aParts = new CommonsArrayList <> ();
+        final ICommonsList <String> aParts = new CommonsArrayList<> ();
         String sValue = sOrigValue.substring (1, sOrigValue.length () - 1);
 
         final String [] aObjStart = RegExHelper.getAllMatchingGroupValues ("([\\[]*)([A-Za-z0-9_$]+@0x[0-9a-fA-F]{8})(?:: (.+))?",
@@ -88,12 +99,20 @@ public final class UITextFormatter
     return new HCTextNode (sOrigValue);
   }
 
-  @Nullable
-  public static IHCNode markdown (@Nullable final String s)
+  /**
+   * Process the provided String as Markdown and return the created IHCNode.
+   *
+   * @param sMD
+   *        The Markdown source to be invoked. May be <code>null</code>.
+   * @return Either the processed markdown code or in case of an internal error
+   *         a {@link HCTextNode} which contains the source text.
+   */
+  @Nonnull
+  public static IHCNode markdown (@Nullable final String sMD)
   {
     try
     {
-      final HCNodeList aNL = MARKDOWN.process (s).getNodeList ();
+      final HCNodeList aNL = MARKDOWN.process (sMD).getNodeList ();
 
       // Replace a single <p> element with its contents
       if (aNL.getChildCount () == 1 && aNL.getChildAtIndex (0) instanceof HCP)
@@ -103,28 +122,70 @@ public final class UITextFormatter
     }
     catch (final Exception ex)
     {
-      s_aLogger.warn ("Failed to markdown '" + s + "': " + ex.getMessage ());
-      return new HCTextNode (s);
+      s_aLogger.warn ("Failed to markdown '" + sMD + "': " + ex.getMessage ());
+      return new HCTextNode (sMD);
     }
   }
 
+  /**
+   * Same as {@link #markdown(String)} but returning <code>null</code> if the
+   * passed string is <code>null</code> or empty.
+   *
+   * @param sMD
+   *        The Markdown source to be invoked. May be <code>null</code>.
+   * @return <code>null</code> if the parameter is <code>null</code> or empty.
+   * @see #markdown(String)
+   */
   @Nullable
-  public static IHCNode markdownOnDemand (@Nullable final String s)
+  public static IHCNode markdownOnDemand (@Nullable final String sMD)
   {
-    return StringHelper.hasText (s) ? markdown (s) : null;
+    return StringHelper.hasText (sMD) ? markdown (sMD) : null;
   }
 
+  /**
+   * Parse the provided HTML string and convert it to an {@link IHCNode}. After
+   * parsing the code is cleaned up using {@link PageViewExternalHTMLCleanser}.
+   *
+   * @param sHTML
+   *        The source HTML. May not be <code>null</code>.
+   * @return The parsed HTML code as an {@link IHCNode}
+   * @throws IllegalStateException
+   *         If parsing fails
+   */
   @Nonnull
-  public static IHCNode unescapeHTML (@Nonnull final String s)
+  public static IHCNode unescapeHTML (@Nonnull final String sHTML)
+  {
+    // Do standard cleansing (setting the correct namespace URI etc.)
+    return unescapeHTML (sHTML,
+                         new PageViewExternalHTMLCleanser (HCSettings.getConversionSettings ().getHTMLVersion ()));
+  }
+
+  /**
+   * Parse the provided HTML string and convert it to an {@link IHCNode}. If
+   * necessary a separate cleanup can be performed using the provided handler.
+   *
+   * @param sHTML
+   *        The source HTML. May not be <code>null</code>.
+   * @param aCleanupHandler
+   *        An optional cleanup handler that is invoked if parsing succeeded.
+   *        May be <code>null</code>.
+   * @return The parsed HTML code as an {@link IHCNode}
+   * @throws IllegalStateException
+   *         If parsing fails
+   */
+  @Nonnull
+  public static IHCNode unescapeHTML (@Nonnull final String sHTML,
+                                      @Nullable final IHierarchyVisitorCallback <? super IMicroNode> aCleanupHandler)
   {
     // Parse content with a non-HTML5 parser because entity resolving would fail
+    // otherwise
     final XHTMLParser aXHTMLParser = new XHTMLParser (EHTMLVersion.XHTML11);
-    final IMicroContainer ret = aXHTMLParser.unescapeXHTMLFragment (s);
+    final IMicroContainer ret = aXHTMLParser.unescapeXHTMLFragment (sHTML);
     if (ret == null)
-      throw new IllegalStateException ("Failed to parse HTML code: " + s);
+      throw new IllegalStateException ("Failed to parse HTML code: " + sHTML);
 
-    // Do standard cleansing also setting the correct namespace URI
-    MicroVisitor.visit (ret, new PageViewExternalHTMLCleanser (HCSettings.getConversionSettings ().getHTMLVersion ()));
+    if (aCleanupHandler != null)
+      MicroVisitor.visit (ret, aCleanupHandler);
 
     // Convert micro container to IHCNode
     return new HCDOMWrapper (ret);

@@ -18,6 +18,7 @@ package com.helger.photon.uicore.page.external;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
@@ -35,12 +36,15 @@ import com.helger.xml.microdom.IMicroNode;
  * <ul>
  * <li>Setting the correct namespace as provided in the constructor</li>
  * <li>Removing any read <code>xml:space</code> attributes</li>
- * <li>Ensure that only valid elements are self-closed (
- * <code>&lt;.../&gt;</code>)</li>
+ * <li>Ensure that only valid elements are self-closed
+ * (<code>&lt;tag .../&gt;</code>) - all other documents will get an empty text
+ * node so that they are rendered as
+ * <code>&lt;tag ...&gt;&lt;/tag&gt;</code></li>
  * </ul>
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallback <IMicroNode>
 {
   private final EHTMLVersion m_eHTMLVersion;
