@@ -62,19 +62,19 @@ public class ConstantExportRecordProvider implements IExportRecordProvider
   }
 
   @Nonnull
-  public Iterable <? extends IExportRecord> getHeaderRecords ()
+  public ICommonsList <? extends IExportRecord> getHeaderRecords ()
   {
     return m_aHeader;
   }
 
   @Nonnull
-  public Iterable <? extends IExportRecord> getBodyRecords ()
+  public ICommonsList <? extends IExportRecord> getBodyRecords ()
   {
     return m_aBody;
   }
 
   @Nonnull
-  public Iterable <? extends IExportRecord> getFooterRecords ()
+  public ICommonsList <? extends IExportRecord> getFooterRecords ()
   {
     return m_aFooter;
   }

@@ -22,6 +22,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.metadata.HCLink;
@@ -44,6 +46,8 @@ import com.helger.web.scope.mgr.WebScopeManager;
  */
 public final class AjaxHtmlResponseTest
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxHtmlResponseTest.class);
+
   @Rule
   public final TestRule m_aRule = new PhotonBasicWebTestRule ();
 
@@ -68,7 +72,7 @@ public final class AjaxHtmlResponseTest
       assertNotNull (aResponse.getSuccessValue ());
       assertNotNull (aResponse.getSuccessValue ().get (AjaxHtmlResponse.PROPERTY_HTML));
       assertTrue (aResponse.getSuccessValue ().get (AjaxHtmlResponse.PROPERTY_HTML).isValue ());
-      System.out.println (aResponse.getSuccessValue ().getAsString (AjaxHtmlResponse.PROPERTY_HTML));
+      s_aLogger.info (aResponse.getSuccessValue ().getAsString (AjaxHtmlResponse.PROPERTY_HTML));
     }
     finally
     {

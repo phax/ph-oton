@@ -63,7 +63,7 @@ public final class ServletStatus
     return m_eCurrentStatus;
   }
 
-  void setCurrentStatus (@Nonnull final EServletStatus eNewStatus)
+  protected void internalSetCurrentStatus (@Nonnull final EServletStatus eNewStatus)
   {
     ValueEnforcer.notNull (eNewStatus, "NewStatus");
     if (EServletStatus.getSuccessorOf (m_eCurrentStatus) != eNewStatus)
@@ -90,7 +90,7 @@ public final class ServletStatus
     return eStatus == null ? null : m_aStatusChangeDates.get (eStatus);
   }
 
-  void incrementInvocationCount ()
+  protected void internalIncrementInvocationCount ()
   {
     m_aInvocationCount.incrementAndGet ();
   }

@@ -53,5 +53,4 @@ public interface IExportRecordProvider
   {
     return new CommonsArrayList<> ();
   }
-
 }

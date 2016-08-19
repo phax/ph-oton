@@ -57,9 +57,9 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
     this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs), sName, sDescription);
   }
 
-  UserGroup (@Nonnull final StubObjectWithCustomAttrs aStubObject,
-             @Nonnull @Nonempty final String sName,
-             @Nullable final String sDescription)
+  protected UserGroup (@Nonnull final StubObjectWithCustomAttrs aStubObject,
+                       @Nonnull @Nonempty final String sName,
+                       @Nullable final String sDescription)
   {
     super (aStubObject);
     setName (sName);
@@ -80,7 +80,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
   }
 
   @Nonnull
-  EChange setName (@Nonnull @Nonempty final String sName)
+  protected EChange setName (@Nonnull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
 
@@ -97,7 +97,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
   }
 
   @Nonnull
-  EChange setDescription (@Nullable final String sDescription)
+  protected EChange setDescription (@Nullable final String sDescription)
   {
     if (EqualsHelper.equals (sDescription, m_sDescription))
       return EChange.UNCHANGED;
@@ -129,7 +129,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
   }
 
   @Nonnull
-  EChange assignUser (@Nonnull @Nonempty final String sUserID)
+  protected EChange assignUser (@Nonnull @Nonempty final String sUserID)
   {
     ValueEnforcer.notEmpty (sUserID, "UserID");
 
@@ -137,7 +137,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
   }
 
   @Nonnull
-  EChange unassignUser (@Nonnull final String sUserID)
+  protected EChange unassignUser (@Nonnull final String sUserID)
   {
     return EChange.valueOf (m_aUserIDs.remove (sUserID));
   }
@@ -166,7 +166,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
   }
 
   @Nonnull
-  EChange assignRole (@Nonnull @Nonempty final String sRoleID)
+  protected EChange assignRole (@Nonnull @Nonempty final String sRoleID)
   {
     ValueEnforcer.notEmpty (sRoleID, "RoleID");
 
@@ -174,7 +174,7 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
   }
 
   @Nonnull
-  EChange unassignRole (@Nonnull final String sRoleID)
+  protected EChange unassignRole (@Nonnull final String sRoleID)
   {
     return EChange.valueOf (m_aRoleIDs.remove (sRoleID));
   }

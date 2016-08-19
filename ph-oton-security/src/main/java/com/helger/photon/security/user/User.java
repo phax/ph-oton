@@ -106,16 +106,16 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
   }
 
   // Internal use only
-  User (@Nonnull @Nonempty final String sID,
-        @Nonnull @Nonempty final String sLoginName,
-        @Nullable final String sEmailAddress,
-        @Nonnull final PasswordHash aPasswordHash,
-        @Nullable final String sFirstName,
-        @Nullable final String sLastName,
-        @Nullable final String sDescription,
-        @Nullable final Locale aDesiredLocale,
-        @Nullable final Map <String, String> aCustomAttrs,
-        final boolean bDisabled)
+  protected User (@Nonnull @Nonempty final String sID,
+                  @Nonnull @Nonempty final String sLoginName,
+                  @Nullable final String sEmailAddress,
+                  @Nonnull final PasswordHash aPasswordHash,
+                  @Nullable final String sFirstName,
+                  @Nullable final String sLastName,
+                  @Nullable final String sDescription,
+                  @Nullable final Locale aDesiredLocale,
+                  @Nullable final Map <String, String> aCustomAttrs,
+                  final boolean bDisabled)
   {
     this (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs),
           sLoginName,
@@ -163,18 +163,18 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
    * @param bDisabled
    *        <code>true</code> if the user is disabled
    */
-  User (@Nonnull final StubObjectWithCustomAttrs aStubObject,
-        @Nonnull @Nonempty final String sLoginName,
-        @Nullable final String sEmailAddress,
-        @Nonnull final PasswordHash aPasswordHash,
-        @Nullable final String sFirstName,
-        @Nullable final String sLastName,
-        @Nullable final String sDescription,
-        @Nullable final Locale aDesiredLocale,
-        @Nullable final LocalDateTime aLastLoginDT,
-        @Nonnegative final int nLoginCount,
-        @Nonnegative final int nConsecutiveFailedLoginCount,
-        final boolean bDisabled)
+  protected User (@Nonnull final StubObjectWithCustomAttrs aStubObject,
+                  @Nonnull @Nonempty final String sLoginName,
+                  @Nullable final String sEmailAddress,
+                  @Nonnull final PasswordHash aPasswordHash,
+                  @Nullable final String sFirstName,
+                  @Nullable final String sLastName,
+                  @Nullable final String sDescription,
+                  @Nullable final Locale aDesiredLocale,
+                  @Nullable final LocalDateTime aLastLoginDT,
+                  @Nonnegative final int nLoginCount,
+                  @Nonnegative final int nConsecutiveFailedLoginCount,
+                  final boolean bDisabled)
   {
     super (aStubObject);
     ValueEnforcer.isGE0 (nLoginCount, "LoginCount");
@@ -211,7 +211,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
   }
 
   @Nonnull
-  EChange setLoginName (@Nonnull @Nonempty final String sLoginName)
+  protected EChange setLoginName (@Nonnull @Nonempty final String sLoginName)
   {
     ValueEnforcer.notEmpty (sLoginName, "loginName");
 
@@ -228,7 +228,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
   }
 
   @Nonnull
-  EChange setEmailAddress (@Nullable final String sEmailAddress)
+  protected EChange setEmailAddress (@Nullable final String sEmailAddress)
   {
     if (EqualsHelper.equals (sEmailAddress, m_sEmailAddress))
       return EChange.UNCHANGED;
@@ -244,7 +244,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
   }
 
   @Nonnull
-  EChange setPasswordHash (@Nonnull final PasswordHash aPasswordHash)
+  protected EChange setPasswordHash (@Nonnull final PasswordHash aPasswordHash)
   {
     ValueEnforcer.notNull (aPasswordHash, "PasswordHash");
 
@@ -261,7 +261,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
   }
 
   @Nonnull
-  EChange setFirstName (@Nullable final String sFirstName)
+  protected EChange setFirstName (@Nullable final String sFirstName)
   {
     if (EqualsHelper.equals (sFirstName, m_sFirstName))
       return EChange.UNCHANGED;
@@ -276,7 +276,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
   }
 
   @Nonnull
-  EChange setLastName (@Nullable final String sLastName)
+  protected EChange setLastName (@Nullable final String sLastName)
   {
     if (EqualsHelper.equals (sLastName, m_sLastName))
       return EChange.UNCHANGED;
@@ -291,7 +291,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
   }
 
   @Nonnull
-  EChange setDescription (@Nullable final String sDescription)
+  protected EChange setDescription (@Nullable final String sDescription)
   {
     if (EqualsHelper.equals (sDescription, m_sDescription))
       return EChange.UNCHANGED;
@@ -306,7 +306,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
   }
 
   @Nonnull
-  EChange setDesiredLocale (@Nullable final Locale aDesiredLocale)
+  protected EChange setDesiredLocale (@Nullable final Locale aDesiredLocale)
   {
     if (EqualsHelper.equals (aDesiredLocale, m_aDesiredLocale))
       return EChange.UNCHANGED;
@@ -332,14 +332,14 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
     return m_nConsecutiveFailedLoginCount;
   }
 
-  void onSuccessfulLogin ()
+  protected void onSuccessfulLogin ()
   {
     m_aLastLoginDT = PDTFactory.getCurrentLocalDateTime ();
     m_nLoginCount++;
     m_nConsecutiveFailedLoginCount = 0;
   }
 
-  void onFailedLogin ()
+  protected void onFailedLogin ()
   {
     m_nConsecutiveFailedLoginCount++;
   }
@@ -350,7 +350,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
   }
 
   @Nonnull
-  EChange setDisabled (final boolean bDisabled)
+  protected EChange setDisabled (final boolean bDisabled)
   {
     if (bDisabled == m_bDisabled)
       return EChange.UNCHANGED;

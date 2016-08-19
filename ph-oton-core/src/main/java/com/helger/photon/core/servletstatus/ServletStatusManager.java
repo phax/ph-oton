@@ -82,7 +82,7 @@ public final class ServletStatusManager
     ValueEnforcer.notNull (eNewStatus, "NewStatus");
 
     s_aRWLock.writeLocked ( () -> {
-      _getOrCreateServletStatus (aServletClass).setCurrentStatus (eNewStatus);
+      _getOrCreateServletStatus (aServletClass).internalSetCurrentStatus (eNewStatus);
     });
 
     if (s_aLogger.isDebugEnabled ())
@@ -102,7 +102,7 @@ public final class ServletStatusManager
   public static void onServletInvocation (@Nonnull final Class <? extends HttpServlet> aServletClass)
   {
     s_aRWLock.writeLocked ( () -> {
-      _getOrCreateServletStatus (aServletClass).incrementInvocationCount ();
+      _getOrCreateServletStatus (aServletClass).internalIncrementInvocationCount ();
     });
   }
 

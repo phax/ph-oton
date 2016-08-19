@@ -51,9 +51,9 @@ public final class Role extends AbstractObjectWithCustomAttrs implements IRole
     this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs), sName, sDescription);
   }
 
-  Role (@Nonnull final StubObjectWithCustomAttrs aStubObject,
-        @Nonnull @Nonempty final String sName,
-        @Nullable final String sDescription)
+  protected Role (@Nonnull final StubObjectWithCustomAttrs aStubObject,
+                  @Nonnull @Nonempty final String sName,
+                  @Nullable final String sDescription)
   {
     super (aStubObject);
     setName (sName);
@@ -74,7 +74,7 @@ public final class Role extends AbstractObjectWithCustomAttrs implements IRole
   }
 
   @Nonnull
-  EChange setName (@Nonnull @Nonempty final String sName)
+  protected EChange setName (@Nonnull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
 
@@ -91,7 +91,7 @@ public final class Role extends AbstractObjectWithCustomAttrs implements IRole
   }
 
   @Nonnull
-  EChange setDescription (@Nullable final String sDescription)
+  protected EChange setDescription (@Nullable final String sDescription)
   {
     if (EqualsHelper.equals (sDescription, m_sDescription))
       return EChange.UNCHANGED;

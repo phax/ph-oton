@@ -41,7 +41,7 @@ public final class PhotonPathMapper
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
-  private static ICommonsMap <String, String> s_aMap = new CommonsHashMap <> ();
+  private static ICommonsMap <String, String> s_aMap = new CommonsHashMap<> ();
   @GuardedBy ("s_aRWLock")
   private static String s_sDefaultAppID;
 
@@ -63,8 +63,8 @@ public final class PhotonPathMapper
   {
     ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
     ValueEnforcer.notEmpty (sPath, "Path");
-    ValueEnforcer.isTrue (sPath.startsWith ("/"), "Path must be empty or start with a slash");
-    ValueEnforcer.isTrue (!sPath.endsWith ("/"), "Path must not end with a slash");
+    ValueEnforcer.isTrue (StringHelper.startsWith (sPath, '/'), "Path must be empty or start with a slash");
+    ValueEnforcer.isFalse (StringHelper.endsWith (sPath, '/'), "Path must not end with a slash");
 
     s_aRWLock.writeLocked ( () -> s_aMap.put (sApplicationID, sPath));
   }

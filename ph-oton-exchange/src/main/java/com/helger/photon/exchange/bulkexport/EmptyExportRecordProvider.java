@@ -26,4 +26,6 @@ import javax.annotation.concurrent.Immutable;
  */
 @Immutable
 public class EmptyExportRecordProvider implements IExportRecordProvider
-{}
+{
+  /* empty */
+}

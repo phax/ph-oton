@@ -90,7 +90,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
      *         is created. Never <code>null</code>.
      */
     @Nonnull
-    static InternalSessionUserHolder getInstance ()
+    private static InternalSessionUserHolder getInstance ()
     {
       return getSessionSingleton (InternalSessionUserHolder.class);
     }
@@ -100,13 +100,13 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
      *         <code>null</code> is returned.
      */
     @Nullable
-    static InternalSessionUserHolder getInstanceIfInstantiated ()
+    private static InternalSessionUserHolder getInstanceIfInstantiated ()
     {
       return getSessionSingletonIfInstantiated (InternalSessionUserHolder.class);
     }
 
     @Nullable
-    static InternalSessionUserHolder getInstanceIfInstantiatedInScope (@Nullable final ISessionScope aScope)
+    private static InternalSessionUserHolder getInstanceIfInstantiatedInScope (@Nullable final ISessionScope aScope)
     {
       return getSingletonIfInstantiated (aScope, InternalSessionUserHolder.class);
     }
@@ -133,18 +133,18 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       m_aOwningMgr.internalSessionActivateUser (m_aUser, aSessionScope);
     }
 
-    boolean hasUser ()
+    private boolean hasUser ()
     {
       return m_aUser != null;
     }
 
     @Nullable
-    String getUserID ()
+    private String getUserID ()
     {
       return m_sUserID;
     }
 
-    void setUser (@Nonnull final LoggedInUserManager aOwningMgr, @Nonnull final IUser aUser)
+    private void setUser (@Nonnull final LoggedInUserManager aOwningMgr, @Nonnull final IUser aUser)
     {
       ValueEnforcer.notNull (aOwningMgr, "OwningMgr");
       ValueEnforcer.notNull (aUser, "User");
@@ -156,7 +156,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       m_sUserID = aUser.getID ();
     }
 
-    void reset ()
+    private void reset ()
     {
       // Reset to avoid access while or after logout
       m_aUser = null;

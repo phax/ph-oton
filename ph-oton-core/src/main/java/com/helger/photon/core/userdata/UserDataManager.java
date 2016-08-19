@@ -63,14 +63,10 @@ public final class UserDataManager
    */
   public static void setUserDataPath (@Nonnull @Nonempty final String sUserDataPath)
   {
-    if (StringHelper.getLength (sUserDataPath) < 2)
-      throw new IllegalArgumentException ("userDataPath is too short");
-    if (!sUserDataPath.startsWith ("/"))
-      throw new IllegalArgumentException ("userDataPath must start with a slash");
+    ValueEnforcer.isTrue (StringHelper.getLength (sUserDataPath) >= 2, "userDataPath is too short");
+    ValueEnforcer.isTrue (StringHelper.startsWith (sUserDataPath, '/'), "userDataPath must start with a slash");
 
-    s_aRWLock.writeLocked ( () -> {
-      s_sUserDataPath = sUserDataPath;
-    });
+    s_aRWLock.writeLocked ( () -> s_sUserDataPath = sUserDataPath);
   }
 
   /**
