@@ -16,11 +16,10 @@
  */
 package com.helger.photon.basic.app.dao;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.helger.commons.callback.INonThrowingCallable;
-import com.helger.commons.callback.INonThrowingRunnable;
 
 /**
  * Abstraction layer around auto save stuff.
@@ -56,7 +55,7 @@ public interface IAutoSaveAware
    * @param aRunnable
    *        The runnable to be executed. May not be <code>null</code>.
    */
-  void performWithoutAutoSave (@Nonnull INonThrowingRunnable aRunnable);
+  void performWithoutAutoSave (@Nonnull Runnable aRunnable);
 
   /**
    * This method is used for batch processing of instructions (like the initial
@@ -71,5 +70,5 @@ public interface IAutoSaveAware
    *        Return type of the callable
    */
   @Nullable
-  <RETURNTYPE> RETURNTYPE performWithoutAutoSave (@Nonnull INonThrowingCallable <RETURNTYPE> aCallable);
+  <RETURNTYPE> RETURNTYPE performWithoutAutoSave (@Nonnull Supplier <RETURNTYPE> aCallable);
 }

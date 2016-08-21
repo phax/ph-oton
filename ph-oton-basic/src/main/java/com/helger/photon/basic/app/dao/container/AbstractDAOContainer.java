@@ -16,15 +16,14 @@
  */
 package com.helger.photon.basic.app.dao.container;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.callback.INonThrowingCallable;
-import com.helger.commons.callback.INonThrowingRunnable;
-import com.helger.commons.callback.adapter.AdapterRunnableToCallable;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.photon.basic.app.dao.IDAO;
 
@@ -41,8 +40,7 @@ public abstract class AbstractDAOContainer implements IDAOContainer
   @OverridingMethodsMustInvokeSuper
   public boolean isAutoSaveEnabled ()
   {
-    return m_aRWLock.readLocked ( () -> getAllContainedDAOs ().containsAny (aDAO -> aDAO != null &&
-                                                                                    aDAO.isAutoSaveEnabled ()));
+    return m_aRWLock.readLocked ( () -> containsAny (x -> x != null && x.isAutoSaveEnabled ()));
   }
 
   public final void beginWithoutAutoSave ()
@@ -63,21 +61,32 @@ public abstract class AbstractDAOContainer implements IDAOContainer
     });
   }
 
-  public final void performWithoutAutoSave (@Nonnull final INonThrowingRunnable aRunnable)
+  @OverridingMethodsMustInvokeSuper
+  public void performWithoutAutoSave (@Nonnull final Runnable aRunnable)
   {
-    performWithoutAutoSave (AdapterRunnableToCallable.createAdapter (aRunnable));
+    ValueEnforcer.notNull (aRunnable, "Runnable");
+
+    beginWithoutAutoSave ();
+    try
+    {
+      aRunnable.run ();
+    }
+    finally
+    {
+      endWithoutAutoSave ();
+    }
   }
 
   @OverridingMethodsMustInvokeSuper
   @Nullable
-  public <RETURNTYPE> RETURNTYPE performWithoutAutoSave (@Nonnull final INonThrowingCallable <RETURNTYPE> aCallable)
+  public <RETURNTYPE> RETURNTYPE performWithoutAutoSave (@Nonnull final Supplier <RETURNTYPE> aCallable)
   {
     ValueEnforcer.notNull (aCallable, "Callable");
 
     beginWithoutAutoSave ();
     try
     {
-      return aCallable.call ();
+      return aCallable.get ();
     }
     finally
     {

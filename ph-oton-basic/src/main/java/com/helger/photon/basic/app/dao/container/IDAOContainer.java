@@ -16,7 +16,10 @@
  */
 package com.helger.photon.basic.app.dao.container;
 
+import java.util.function.Predicate;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -37,4 +40,6 @@ public interface IDAOContainer extends IAutoSaveAware
   @Nonnull
   @ReturnsMutableCopy
   ICommonsList <IDAO> getAllContainedDAOs ();
+
+  boolean containsAny (@Nullable Predicate <? super IDAO> aFilter);
 }

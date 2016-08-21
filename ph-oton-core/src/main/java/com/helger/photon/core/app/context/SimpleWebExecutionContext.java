@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -120,6 +121,11 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public void forAllAttributes (@Nonnull final BiConsumer <? super String, ? super Object> aConsumer)
   {
     m_aRequestScope.forAllAttributes (aConsumer);
+  }
+
+  public void forAllAttributeValues (@Nonnull final Consumer <? super Object> aConsumer)
+  {
+    m_aRequestScope.forAllAttributeValues (aConsumer);
   }
 
   @Nullable

@@ -16,7 +16,10 @@
  */
 package com.helger.photon.basic.app.dao.container;
 
+import java.util.function.Predicate;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -39,13 +42,13 @@ public class DefaultDAOContainer extends AbstractDAOContainer
   public DefaultDAOContainer (@Nonnull @Nonempty final IDAO... aDAOs)
   {
     ValueEnforcer.notEmptyNoNullValue (aDAOs, "DAOs");
-    m_aDAOs = new CommonsArrayList <> (aDAOs);
+    m_aDAOs = new CommonsArrayList<> (aDAOs);
   }
 
   public DefaultDAOContainer (@Nonnull @Nonempty final Iterable <? extends IDAO> aDAOs)
   {
     ValueEnforcer.notEmptyNoNullValue (aDAOs, "DAOs");
-    m_aDAOs = new CommonsArrayList <> (aDAOs);
+    m_aDAOs = new CommonsArrayList<> (aDAOs);
   }
 
   @Nonnull
@@ -53,6 +56,11 @@ public class DefaultDAOContainer extends AbstractDAOContainer
   public ICommonsList <IDAO> getAllContainedDAOs ()
   {
     return m_aDAOs.getClone ();
+  }
+
+  public boolean containsAny (@Nullable final Predicate <? super IDAO> aFilter)
+  {
+    return m_aDAOs.containsAny (aFilter);
   }
 
   @Override

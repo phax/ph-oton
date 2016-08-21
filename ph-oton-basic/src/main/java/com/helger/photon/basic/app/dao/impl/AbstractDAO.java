@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.app.dao.impl;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -26,15 +28,11 @@ import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.callback.INonThrowingCallable;
-import com.helger.commons.callback.INonThrowingRunnable;
-import com.helger.commons.callback.IThrowingCallable;
 import com.helger.commons.callback.IThrowingRunnable;
-import com.helger.commons.callback.adapter.AdapterRunnableToCallable;
-import com.helger.commons.callback.adapter.AdapterThrowingRunnableToCallable;
 import com.helger.commons.collection.impl.NonBlockingStack;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.function.IThrowingSupplier;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.IDAO;
 import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
@@ -51,13 +49,13 @@ public abstract class AbstractDAO implements IDAO
   /** By default auto-save is enabled */
   public static final boolean DEFAULT_AUTO_SAVE_ENABLED = true;
 
-  private static CallbackList <IDAOReadExceptionCallback> s_aExceptionHandlersRead = new CallbackList <> ();
-  private static CallbackList <IDAOWriteExceptionCallback> s_aExceptionHandlersWrite = new CallbackList <> ();
+  private static CallbackList <IDAOReadExceptionCallback> s_aExceptionHandlersRead = new CallbackList<> ();
+  private static CallbackList <IDAOWriteExceptionCallback> s_aExceptionHandlersWrite = new CallbackList<> ();
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("m_aRWLock")
-  private final NonBlockingStack <Boolean> m_aAutoSaveStack = new NonBlockingStack <Boolean> ();
+  private final NonBlockingStack <Boolean> m_aAutoSaveStack = new NonBlockingStack<> ();
   @GuardedBy ("m_aRWLock")
   private boolean m_bPendingChanges = false;
   @GuardedBy ("m_aRWLock")
@@ -159,9 +157,19 @@ public abstract class AbstractDAO implements IDAO
    * @param aRunnable
    *        The callback to be executed
    */
-  public final void performWithoutAutoSave (@Nonnull final INonThrowingRunnable aRunnable)
+  public final void performWithoutAutoSave (@Nonnull final Runnable aRunnable)
   {
-    performWithoutAutoSave (AdapterRunnableToCallable.createAdapter (aRunnable));
+    ValueEnforcer.notNull (aRunnable, "Runnable");
+
+    beginWithoutAutoSave ();
+    try
+    {
+      aRunnable.run ();
+    }
+    finally
+    {
+      endWithoutAutoSave ();
+    }
   }
 
   /**
@@ -173,15 +181,14 @@ public abstract class AbstractDAO implements IDAO
    * @return The result of the callback. May be <code>null</code>.
    */
   @Nullable
-  public final <RETURNTYPE> RETURNTYPE performWithoutAutoSave (@Nonnull final INonThrowingCallable <RETURNTYPE> aCallable)
+  public final <RETURNTYPE> RETURNTYPE performWithoutAutoSave (@Nonnull final Supplier <RETURNTYPE> aCallable)
   {
     ValueEnforcer.notNull (aCallable, "Callable");
 
     beginWithoutAutoSave ();
     try
     {
-      // Main call of callable
-      return aCallable.call ();
+      return aCallable.get ();
     }
     finally
     {
@@ -202,7 +209,17 @@ public abstract class AbstractDAO implements IDAO
    */
   public final <EXTYPE extends Exception> void performWithoutAutoSave (@Nonnull final IThrowingRunnable <EXTYPE> aRunnable) throws EXTYPE
   {
-    performWithoutAutoSave (AdapterThrowingRunnableToCallable.createAdapter (aRunnable));
+    ValueEnforcer.notNull (aRunnable, "Runnable");
+
+    beginWithoutAutoSave ();
+    try
+    {
+      aRunnable.run ();
+    }
+    finally
+    {
+      endWithoutAutoSave ();
+    }
   }
 
   /**
@@ -220,7 +237,7 @@ public abstract class AbstractDAO implements IDAO
    *        Exception type that may be thrown
    */
   @Nullable
-  public final <RETURNTYPE, EXTYPE extends Exception> RETURNTYPE performWithoutAutoSave (@Nonnull final IThrowingCallable <RETURNTYPE, EXTYPE> aCallable) throws EXTYPE
+  public final <RETURNTYPE, EXTYPE extends Exception> RETURNTYPE performWithoutAutoSave (@Nonnull final IThrowingSupplier <RETURNTYPE, EXTYPE> aCallable) throws EXTYPE
   {
     ValueEnforcer.notNull (aCallable, "Callable");
 
@@ -228,7 +245,7 @@ public abstract class AbstractDAO implements IDAO
     try
     {
       // Main call of callable
-      return aCallable.call ();
+      return aCallable.get ();
     }
     finally
     {
