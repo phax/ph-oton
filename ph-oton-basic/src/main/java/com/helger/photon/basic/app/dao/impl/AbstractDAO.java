@@ -207,7 +207,7 @@ public abstract class AbstractDAO implements IDAO
    * @param <EXTYPE>
    *        Exception type that may be thrown
    */
-  public final <EXTYPE extends Exception> void performWithoutAutoSave (@Nonnull final IThrowingRunnable <EXTYPE> aRunnable) throws EXTYPE
+  public final <EXTYPE extends Exception> void performWithoutAutoSaveThrowing (@Nonnull final IThrowingRunnable <EXTYPE> aRunnable) throws EXTYPE
   {
     ValueEnforcer.notNull (aRunnable, "Runnable");
 
@@ -237,7 +237,7 @@ public abstract class AbstractDAO implements IDAO
    *        Exception type that may be thrown
    */
   @Nullable
-  public final <RETURNTYPE, EXTYPE extends Exception> RETURNTYPE performWithoutAutoSave (@Nonnull final IThrowingSupplier <RETURNTYPE, EXTYPE> aCallable) throws EXTYPE
+  public final <RETURNTYPE, EXTYPE extends Exception> RETURNTYPE performWithoutAutoSaveThrowing (@Nonnull final IThrowingSupplier <RETURNTYPE, EXTYPE> aCallable) throws EXTYPE
   {
     ValueEnforcer.notNull (aCallable, "Callable");
 

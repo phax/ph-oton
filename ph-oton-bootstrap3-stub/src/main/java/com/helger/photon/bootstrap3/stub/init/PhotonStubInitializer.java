@@ -22,7 +22,6 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.scope.ScopeHelper;
 import com.helger.commons.system.SystemProperties;
-import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
@@ -121,14 +120,6 @@ public final class PhotonStubInitializer
     // Default response headers to be added
     UnifiedResponseDefaultSettings.setAllowMimeSniffing (false);
     UnifiedResponseDefaultSettings.setEnableXSSFilter (true);
-
-    // Set only if still the default, because the method also changes the XML
-    // writer settings internally
-    if (HCSettings.getConversionSettings ().getHTMLVersion () == EHTMLVersion.DEFAULT)
-    {
-      // Always use HTML5 for Bootstrap3
-      HCSettings.setDefaultHTMLVersion (EHTMLVersion.HTML5);
-    }
 
     // Set new customizer only if the default customizer is present
     if (HCConversionSettings.isDefaultCustomizer (HCSettings.getConversionSettings ().getCustomizer ()))

@@ -6,26 +6,26 @@
 This set of Java libraries forms a package to build Java web applications.
 
 Release history:
-  * 2016-xx-yy: 7.0.0-beta2
-    * Updated to Java 1.8
+  * 7.0.0-beta2: 
     * Based on ph-commons 8.4.x
-  * 2016-07-27: 7.0.0-beta1
+  * 7.0.0-beta1 - 2016-07-27
     * Updated to Java 1.8
     * Based on ph-commons 8.2.x
-  * 2015-12-03: 6.2.0
+  * 6.2.0 - 2015-12-03 
     * extracted security module
     * added support for app and user token management
-  * 2015-10-02: 6.1.0
+    * Last release for Java 1.7
+  * 6.1.0 - 2015-10-02 
     * merged web actions and ajax functions
-  * 2015-09-14: 6.0.0
+  * 6.0.0 - 2015-09-14 
     * first ph-oton release based on old webbasics and webctrls etc.
     * requires ph-commons 6.x
 
 #Requirements
-  * Java 1.7+ is required for building (up to and including 6.2.0)
+  * Java 1.8+ is required for building 
   * Application server requirements:
-      * At least Tomcat 7.0.22
-      * Jetty 8 or 9 with AnnotationConfiguration enabled
+      * At least Tomcat 8.x
+      * Jetty 9.3.x with AnnotationConfiguration enabled
 
 ---
 
