@@ -36,7 +36,8 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   AUTOSIZE_ALL ("autosize/autosize-all.js"),
   /** BigDecimal support for JS */
   BIG_DECIMAL ("js/big.js"),
-  CHART ("chart/1.0.2/Chart.js"),
+  CHART_1 ("chart/1.0.2/Chart.js"),
+  CHART_2 ("chart/2.2.1/Chart.js"),
   COLORBOX ("colorbox/1.6.0/jquery.colorbox.js"),
   EXCANVAS ("chart/excanvas.js", "if lt IE 9"),
   FINEUPLOADER_320 ("fineupload/320/fineuploader.js"),

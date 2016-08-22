@@ -312,9 +312,9 @@ public class HCChart extends AbstractHCCanvas <HCChart>
   protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
-    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.CHART);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.CHART_1);
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.EXCANVAS);
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.CHART);
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.CHART_1);
   }
 
   /**
