@@ -57,9 +57,9 @@ public class HCLanguageSelect extends HCExtSelect
   }
 
   @Nonnull
-  public static HCLanguageSelect createForApplicationLocale (@Nonnull final IHCRequestField aRF,
-                                                             @Nonnull final Locale aDisplayLocale,
-                                                             final boolean bAlwaysShowPleaseSelect)
+  public static HCLanguageSelect createForApplicationLocales (@Nonnull final IHCRequestField aRF,
+                                                              @Nonnull final Locale aDisplayLocale,
+                                                              final boolean bAlwaysShowPleaseSelect)
   {
     return new HCLanguageSelect (aRF,
                                  aDisplayLocale,
