@@ -28,7 +28,7 @@ import com.helger.photon.core.form.RequestField;
  *
  * @author Philip Helger
  */
-public class HCEditYear extends HCAutoNumericInt
+public class HCEditYear extends AbstractHCAutoNumeric <HCEditYear>
 {
   /** Default minimum value is 0 */
   public static final int DEFAULT_MIN = 0;
@@ -38,6 +38,7 @@ public class HCEditYear extends HCAutoNumericInt
   public HCEditYear (@Nonnull final RequestField aRF, @Nonnull final Locale aDisplayLocale)
   {
     super (aRF, aDisplayLocale);
+    setDecimalPlaces (0);
     setMin (DEFAULT_MIN);
     setMax (DEFAULT_MAX);
   }
