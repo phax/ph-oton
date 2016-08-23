@@ -134,7 +134,10 @@ public final class ComparatorDT
     return getComparator (aFormatter,
                           sCellText -> ValueEnforcer.notNull (PDTFromString.getLocalDateFromString (sCellText,
                                                                                                     aDTFormatter),
-                                                              () -> "Failed to parse " + sCellText));
+                                                              () -> "Failed to parse date '" +
+                                                                    sCellText +
+                                                                    "' using formatter " +
+                                                                    aDTFormatter));
   }
 
   @Nonnull
@@ -151,7 +154,10 @@ public final class ComparatorDT
     return getComparator (aFormatter,
                           sCellText -> ValueEnforcer.notNull (PDTFromString.getLocalTimeFromString (sCellText,
                                                                                                     aDTFormatter),
-                                                              () -> "Failed to parse " + sCellText));
+                                                              () -> "Failed to parse time '" +
+                                                                    sCellText +
+                                                                    "' with formatter " +
+                                                                    aDTFormatter));
   }
 
   @Nonnull
@@ -168,7 +174,10 @@ public final class ComparatorDT
     return getComparator (aFormatter,
                           sCellText -> ValueEnforcer.notNull (PDTFromString.getLocalDateTimeFromString (sCellText,
                                                                                                         aDTFormatter),
-                                                              () -> "Failed to parse " + sCellText));
+                                                              () -> "Failed to parse datetime '" +
+                                                                    sCellText +
+                                                                    "' with formatter " +
+                                                                    aDTFormatter));
   }
 
   @Nonnull
