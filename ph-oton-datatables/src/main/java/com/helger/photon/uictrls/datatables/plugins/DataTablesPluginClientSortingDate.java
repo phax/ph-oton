@@ -37,6 +37,12 @@ import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
 
+/**
+ * Add date/time based sorting for client side DataTables. This is based on
+ * moment.js
+ * 
+ * @author Philip Helger
+ */
 public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
 {
   private final ICommonsSet <EDTColType> m_aDateTimeTypes;
