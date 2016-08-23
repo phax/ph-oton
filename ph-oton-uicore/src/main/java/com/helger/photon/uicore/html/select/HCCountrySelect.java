@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uicore.html.select;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Locale;
 
@@ -51,7 +50,7 @@ public class HCCountrySelect extends HCExtSelect
   public static ICommonsList <Locale> getAllCountries (@Nonnull final EWithDeprecated eWithDeprecated)
   {
     final boolean bWithDeprecated = eWithDeprecated.getAsBoolean ();
-    final ICommonsList <Locale> aLocales = new CommonsArrayList <> ();
+    final ICommonsList <Locale> aLocales = new CommonsArrayList<> ();
     for (final Locale aCountry : CountryCache.getInstance ().getAllCountryLocales ())
       if (bWithDeprecated || !DeprecatedLocaleHandler.getDefaultInstance ().isDeprecatedLocaleWithFallback (aCountry))
         aLocales.add (aCountry);
@@ -87,14 +86,14 @@ public class HCCountrySelect extends HCExtSelect
 
   public HCCountrySelect (@Nonnull final IHCRequestField aRF,
                           @Nonnull final Locale aDisplayLocale,
-                          @Nonnull final Collection <Locale> aLocales)
+                          @Nonnull final Iterable <? extends Locale> aLocales)
   {
     this (aRF, aDisplayLocale, aLocales, null);
   }
 
   public HCCountrySelect (@Nonnull final IHCRequestField aRF,
                           @Nonnull final Locale aDisplayLocale,
-                          @Nonnull final Collection <Locale> aLocales,
+                          @Nonnull final Iterable <? extends Locale> aLocales,
                           @Nullable final IDisplayTextProvider <Locale> aDisplayTextProvider)
   {
     // Backwards compatibility
@@ -103,7 +102,7 @@ public class HCCountrySelect extends HCExtSelect
 
   public HCCountrySelect (@Nonnull final IHCRequestField aRF,
                           @Nonnull final Locale aDisplayLocale,
-                          @Nonnull final Collection <Locale> aLocales,
+                          @Nonnull final Iterable <? extends Locale> aLocales,
                           @Nullable final IDisplayTextProvider <Locale> aDisplayTextProvider,
                           final boolean bAlwaysShowPleaseSelect)
   {
