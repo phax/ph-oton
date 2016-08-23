@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.attr.AttributeValueConverter;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -122,7 +123,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
             s_aLogger.error ("DataTables has column specific search term - this is not implemented for filter type ALL_TERMS_PER_ROW!");
         }
 
-      final ICommonsList <DataTablesServerDataRow> aFilteredRows = new CommonsArrayList <> ();
+      final ICommonsList <DataTablesServerDataRow> aFilteredRows = new CommonsArrayList<> ();
       if (bContainsAnyColumnSpecificSearch)
       {
         // For all rows
@@ -132,42 +133,45 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
           int nSearchableCellIndex = 0;
           for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
           {
-            final DTSSRequestDataColumn aColumn = aColumns[nSearchableCellIndex];
-            if (aColumn.isSearchable ())
-            {
-              // Determine search texts
-              final DTSSRequestDataSearch aColumnSearch = aColumn.getSearch ();
-              String [] aColumnSearchTexts;
-              boolean bColumnSearchRegEx;
-              if (aColumnSearch.hasSearchText ())
+            final DTSSRequestDataColumn aColumn = ArrayHelper.getSafeElement (aColumns, nSearchableCellIndex);
+            if (aColumn == null)
+              s_aLogger.warn ("Invalid columnn index " + nSearchableCellIndex + " for columns " + aColumns);
+            else
+              if (aColumn.isSearchable ())
               {
-                aColumnSearchTexts = aColumnSearch.getSearchTexts ();
-                bColumnSearchRegEx = aColumnSearch.isRegEx ();
-              }
-              else
-              {
-                aColumnSearchTexts = aGlobalSearchTexts;
-                bColumnSearchRegEx = bGlobalSearchRegEx;
-              }
-
-              // Search text may be null!
-              if (aColumnSearchTexts != null)
-              {
-                final BitSet aMatchingWords = new BitSet (aColumnSearchTexts.length);
-
-                // Main matching
-                if (bColumnSearchRegEx)
-                  aCell.matchRegEx (aColumnSearchTexts, aMatchingWords);
-                else
-                  aCell.matchPlainTextIgnoreCase (aColumnSearchTexts, aDisplayLocale, aMatchingWords);
-                if (!aMatchingWords.isEmpty ())
+                // Determine search texts
+                final DTSSRequestDataSearch aColumnSearch = aColumn.getSearch ();
+                String [] aColumnSearchTexts;
+                boolean bColumnSearchRegEx;
+                if (aColumnSearch.hasSearchText ())
                 {
-                  aFilteredRows.add (aRow);
-                  break;
+                  aColumnSearchTexts = aColumnSearch.getSearchTexts ();
+                  bColumnSearchRegEx = aColumnSearch.isRegEx ();
                 }
+                else
+                {
+                  aColumnSearchTexts = aGlobalSearchTexts;
+                  bColumnSearchRegEx = bGlobalSearchRegEx;
+                }
+
+                // Search text may be null!
+                if (aColumnSearchTexts != null)
+                {
+                  final BitSet aMatchingWords = new BitSet (aColumnSearchTexts.length);
+
+                  // Main matching
+                  if (bColumnSearchRegEx)
+                    aCell.matchRegEx (aColumnSearchTexts, aMatchingWords);
+                  else
+                    aCell.matchPlainTextIgnoreCase (aColumnSearchTexts, aDisplayLocale, aMatchingWords);
+                  if (!aMatchingWords.isEmpty ())
+                  {
+                    aFilteredRows.add (aRow);
+                    break;
+                  }
+                }
+                nSearchableCellIndex++;
               }
-              nSearchableCellIndex++;
-            }
           }
         }
       }
@@ -246,7 +250,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
 
     // Build the resulting array
     final HCSpecialNodes aSpecialNodes = new HCSpecialNodes ();
-    final ICommonsList <JsonObject> aData = new CommonsArrayList <> ();
+    final ICommonsList <JsonObject> aData = new CommonsArrayList<> ();
     int nResultRowCount = 0;
     final boolean bAllEntries = aRequestData.showAllEntries ();
     // Just in case ;-)
@@ -316,7 +320,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
     final boolean bSearchRegEx = aRequestScope.getAttributeAsBoolean (SEARCH_REGEX, false);
 
     // Read "order
-    final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns = new CommonsArrayList <> ();
+    final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns = new CommonsArrayList<> ();
     {
       // May be null
       final IRequestParamMap aOrder = aRequestScope.getRequestParamMap ().getMap (ORDER);
@@ -342,7 +346,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
       }
     }
 
-    final ICommonsList <DTSSRequestDataColumn> aColumnData = new CommonsArrayList <> ();
+    final ICommonsList <DTSSRequestDataColumn> aColumnData = new CommonsArrayList<> ();
     {
       // May be null
       final IRequestParamMap aColumns = aRequestScope.getRequestParamMap ().getMap (COLUMNS);
