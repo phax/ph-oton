@@ -278,7 +278,7 @@ public class RequestManager implements IRequestManager
                                       @Nonnull final String sMenuItemID)
   {
     // Get the servlet path from the app ID
-    final String sServletPath = PhotonPathMapper.getPathOfApplicationIDOrDefault (sAppID);
+    final String sServletPath = PhotonPathMapper.getApplicationServletPathOfApplicationIDOrDefault (sAppID);
     if (sServletPath == null)
       throw new IllegalStateException ("Failed to determine the servlet path for app ID '" +
                                        sAppID +

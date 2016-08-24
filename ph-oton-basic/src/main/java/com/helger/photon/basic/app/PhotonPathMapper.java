@@ -65,6 +65,11 @@ public final class PhotonPathMapper
       return m_sAjaxServletPath;
     }
 
+    private void setAjaxServletPath (@Nullable final String sAjaxServletPath)
+    {
+      m_sAjaxServletPath = sAjaxServletPath;
+    }
+
     @Override
     public String toString ()
     {
@@ -89,21 +94,65 @@ public final class PhotonPathMapper
    *
    * @param sApplicationID
    *        Application ID to use. May neither be <code>null</code> nor empty.
-   * @param sPath
+   * @param sApplicationServletPath
+   *        The path to use. May neither be <code>null</code> nor empty. Must
+   *        start with a "slash" but may not end with a slash. Valid example is
+   *        e.g. <code>/public</code>
+   * @deprecated Use {@link #setApplicationServletPathMapping(String,String)}
+   *             instead
+   */
+  @Deprecated
+  public static void setPathMapping (@Nonnull @Nonempty final String sApplicationID,
+                                     @Nonnull @Nonempty final String sApplicationServletPath)
+  {
+    setApplicationServletPathMapping (sApplicationID, sApplicationServletPath);
+  }
+
+  /**
+   * Set an application servlet path mapping. This overwrites existing mappings.
+   *
+   * @param sApplicationID
+   *        Application ID to use. May neither be <code>null</code> nor empty.
+   * @param sApplicationServletPath
    *        The path to use. May neither be <code>null</code> nor empty. Must
    *        start with a "slash" but may not end with a slash. Valid example is
    *        e.g. <code>/public</code>
    */
-  public static void setPathMapping (@Nonnull @Nonempty final String sApplicationID,
-                                     @Nonnull @Nonempty final String sPath)
+  public static void setApplicationServletPathMapping (@Nonnull @Nonempty final String sApplicationID,
+                                                       @Nonnull @Nonempty final String sApplicationServletPath)
   {
     ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
-    ValueEnforcer.notEmpty (sPath, "Path");
-    ValueEnforcer.isTrue (StringHelper.startsWith (sPath, '/'), "Path must be empty or start with a slash");
-    ValueEnforcer.isFalse (StringHelper.endsWith (sPath, '/'), "Path must not end with a slash");
+    ValueEnforcer.notEmpty (sApplicationServletPath, "ApplicationServletPath");
+    ValueEnforcer.isTrue (StringHelper.startsWith (sApplicationServletPath, '/'),
+                          "ApplicationServletPath must be empty or start with a slash");
+    ValueEnforcer.isFalse (StringHelper.endsWith (sApplicationServletPath, '/'),
+                           "ApplicationServletPath must not end with a slash");
 
     s_aRWLock.writeLocked ( () -> s_aMap.computeIfAbsent (sApplicationID, x -> new PathEntry ())
-                                        .setApplicationServletPath (sPath));
+                                        .setApplicationServletPath (sApplicationServletPath));
+  }
+
+  /**
+   * Set an ajax servlet path mapping. This overwrites existing mappings.
+   *
+   * @param sApplicationID
+   *        Application ID to use. May neither be <code>null</code> nor empty.
+   * @param sAjaxServletPath
+   *        The path to use. May neither be <code>null</code> nor empty. Must
+   *        start with a "slash" but may not end with a slash. Valid example is
+   *        e.g. <code>/publicajax</code>
+   */
+  public static void setAjaxServletPathMapping (@Nonnull @Nonempty final String sApplicationID,
+                                                @Nonnull @Nonempty final String sAjaxServletPath)
+  {
+    ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
+    ValueEnforcer.notEmpty (sAjaxServletPath, "AjaxServletPath");
+    ValueEnforcer.isTrue (StringHelper.startsWith (sAjaxServletPath, '/'),
+                          "AjaxServletPath must be empty or start with a slash");
+    ValueEnforcer.isFalse (StringHelper.endsWith (sAjaxServletPath, '/'), "AjaxServletPath must not end with a slash");
+
+    s_aRWLock.writeLocked ( () -> s_aMap.computeIfAbsent (sApplicationID, x -> new PathEntry ())
+                                        .setAjaxServletPath (sAjaxServletPath));
   }
 
   /**
@@ -152,7 +201,24 @@ public final class PhotonPathMapper
   }
 
   /**
-   * Get the path mapped to the specified application ID
+   * Get the application servlet path mapped to the specified application ID
+   *
+   * @param sApplicationID
+   *        Application ID to check. May be <code>null</code>.
+   * @return <code>null</code> if no mapping was found. A path starting with a
+   *         slash but not ending with a slash otherwise.
+   * @deprecated Use {@link #getApplicationServletPathOfApplicationID(String)}
+   *             instead
+   */
+  @Deprecated
+  @Nullable
+  public static String getPathOfApplicationID (@Nullable final String sApplicationID)
+  {
+    return getApplicationServletPathOfApplicationID (sApplicationID);
+  }
+
+  /**
+   * Get the application servlet path mapped to the specified application ID
    *
    * @param sApplicationID
    *        Application ID to check. May be <code>null</code>.
@@ -160,7 +226,7 @@ public final class PhotonPathMapper
    *         slash but not ending with a slash otherwise.
    */
   @Nullable
-  public static String getPathOfApplicationID (@Nullable final String sApplicationID)
+  public static String getApplicationServletPathOfApplicationID (@Nullable final String sApplicationID)
   {
     if (StringHelper.hasNoText (sApplicationID))
       return null;
@@ -172,11 +238,55 @@ public final class PhotonPathMapper
   }
 
   /**
-   * @return A copy of all contained mapping entries. Never <code>null</code>.
+   * Get the ajax servlet path mapped to the specified application ID
+   *
+   * @param sApplicationID
+   *        Application ID to check. May be <code>null</code>.
+   * @return <code>null</code> if no mapping was found. A path starting with a
+   *         slash but not ending with a slash otherwise.
+   */
+  @Nullable
+  public static String getAjaxServletPathOfApplicationID (@Nullable final String sApplicationID)
+  {
+    if (StringHelper.hasNoText (sApplicationID))
+      return null;
+
+    return s_aRWLock.readLocked ( () -> {
+      final PathEntry aEntry = s_aMap.get (sApplicationID);
+      return aEntry == null ? null : aEntry.getAjaxServletPath ();
+    });
+  }
+
+  /**
+   * @return <code>true</code> if mappings are already defined,
+   *         <code>false</code> otherwise.
+   */
+  public static boolean containsAnyMapping ()
+  {
+    return s_aRWLock.readLocked ( () -> s_aMap.isNotEmpty ());
+  }
+
+  /**
+   * @return A copy of all contained application servlet mapping entries. Never
+   *         <code>null</code>.
+   * @deprecated Use {@link #getApplicationIDToApplicationServletPathMap()}
+   *             instead
    */
   @Nonnull
   @ReturnsMutableCopy
+  @Deprecated
   public static ICommonsMap <String, String> getApplicationIDToPathMap ()
+  {
+    return getApplicationIDToApplicationServletPathMap ();
+  }
+
+  /**
+   * @return A copy of all contained application servlet mapping entries. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static ICommonsMap <String, String> getApplicationIDToApplicationServletPathMap ()
   {
     return s_aRWLock.readLocked ( () -> new CommonsHashMap<> (s_aMap.entrySet (),
                                                               x -> x.getKey (),
@@ -184,12 +294,16 @@ public final class PhotonPathMapper
   }
 
   /**
-   * @return <code>true</code> if mappings are already defined,
-   *         <code>false</code> otherwise.
+   * @return A copy of all contained ajax servlet mapping entries. Never
+   *         <code>null</code>.
    */
-  public static boolean containsMappings ()
+  @Nonnull
+  @ReturnsMutableCopy
+  public static ICommonsMap <String, String> getApplicationIDToAjaxServletPathMap ()
   {
-    return s_aRWLock.readLocked ( () -> s_aMap.isNotEmpty ());
+    return s_aRWLock.readLocked ( () -> new CommonsHashMap<> (s_aMap.entrySet (),
+                                                              x -> x.getKey (),
+                                                              x -> x.getValue ().getAjaxServletPath ()));
   }
 
   /**
@@ -199,7 +313,7 @@ public final class PhotonPathMapper
    * @param sApplicationID
    *        The application ID to set as the default. May neither be
    *        <code>null</code> nor empty.
-   * @see #setPathMapping(String, String)
+   * @see #setApplicationServletPathMapping(String, String)
    * @see #getDefaultApplicationID()
    */
   public static void setDefaultApplicationID (@Nonnull @Nonempty final String sApplicationID)
@@ -224,34 +338,107 @@ public final class PhotonPathMapper
   }
 
   /**
-   * Get the path mapped to the default application ID
+   * Get the application servlet path mapped to the default application ID
+   *
+   * @return <code>null</code> if no default application ID is set. A path
+   *         starting with a slash but not ending with a slash otherwise.
+   * @see #getDefaultApplicationID()
+   * @deprecated Use {@link #getApplicationServletPathOfDefaultApplicationID()}
+   *             instead
+   */
+  @Deprecated
+  @Nullable
+  public static String getPathOfDefaultApplicationID ()
+  {
+    return getApplicationServletPathOfDefaultApplicationID ();
+  }
+
+  /**
+   * Get the application servlet path mapped to the default application ID
    *
    * @return <code>null</code> if no default application ID is set. A path
    *         starting with a slash but not ending with a slash otherwise.
    * @see #getDefaultApplicationID()
    */
   @Nullable
-  public static String getPathOfDefaultApplicationID ()
+  public static String getApplicationServletPathOfDefaultApplicationID ()
   {
-    return getPathOfApplicationID (getDefaultApplicationID ());
+    return getApplicationServletPathOfApplicationID (getDefaultApplicationID ());
   }
 
   /**
-   * Get the path mapped to the specified application ID or (if no such
-   * application ID is present) return the path of the default application ID
+   * Get the ajax servlet path mapped to the default application ID
+   *
+   * @return <code>null</code> if no default application ID is set. A path
+   *         starting with a slash but not ending with a slash otherwise.
+   * @see #getDefaultApplicationID()
+   */
+  @Nullable
+  public static String getAjaxServletPathOfDefaultApplicationID ()
+  {
+    return getAjaxServletPathOfApplicationID (getDefaultApplicationID ());
+  }
+
+  /**
+   * Get the application servlet path mapped to the specified application ID or
+   * (if no such application ID is present) return the path of the default
+   * application ID
    *
    * @param sApplicationID
    *        Application ID to check. May be <code>null</code>.
    * @return <code>null</code> if no mapping was found and no default path is
    *         specified. A path starting with a slash but not ending with a slash
    *         otherwise.
-   * @see #getPathOfApplicationID(String)
-   * @see #getPathOfDefaultApplicationID()
+   * @see #getApplicationServletPathOfApplicationID(String)
+   * @see #getApplicationServletPathOfDefaultApplicationID()
+   * @deprecated Use
+   *             {@link #getApplicationServletPathOfApplicationIDOrDefault(String)}
+   *             instead
    */
+  @Deprecated
   @Nullable
   public static String getPathOfApplicationIDOrDefault (@Nullable final String sApplicationID)
   {
-    final String sPath = getPathOfApplicationID (sApplicationID);
-    return sPath != null ? sPath : getPathOfDefaultApplicationID ();
+    return getApplicationServletPathOfApplicationIDOrDefault (sApplicationID);
+  }
+
+  /**
+   * Get the application servlet path mapped to the specified application ID or
+   * (if no such application ID is present) return the path of the default
+   * application ID
+   *
+   * @param sApplicationID
+   *        Application ID to check. May be <code>null</code>.
+   * @return <code>null</code> if no mapping was found and no default path is
+   *         specified. A path starting with a slash but not ending with a slash
+   *         otherwise.
+   * @see #getApplicationServletPathOfApplicationID(String)
+   * @see #getApplicationServletPathOfDefaultApplicationID()
+   */
+  @Nullable
+  public static String getApplicationServletPathOfApplicationIDOrDefault (@Nullable final String sApplicationID)
+  {
+    final String sPath = getApplicationServletPathOfApplicationID (sApplicationID);
+    return sPath != null ? sPath : getApplicationServletPathOfDefaultApplicationID ();
+  }
+
+  /**
+   * Get the ajax servlet path mapped to the specified application ID or (if no
+   * such application ID is present) return the path of the default application
+   * ID
+   *
+   * @param sApplicationID
+   *        Application ID to check. May be <code>null</code>.
+   * @return <code>null</code> if no mapping was found and no default path is
+   *         specified. A path starting with a slash but not ending with a slash
+   *         otherwise.
+   * @see #getApplicationServletPathOfApplicationID(String)
+   * @see #getApplicationServletPathOfDefaultApplicationID()
+   */
+  @Nullable
+  public static String getAjaxServletPathOfApplicationIDOrDefault (@Nullable final String sApplicationID)
+  {
+    final String sPath = getAjaxServletPathOfApplicationID (sApplicationID);
+    return sPath != null ? sPath : getAjaxServletPathOfDefaultApplicationID ();
   }
 }

@@ -106,7 +106,7 @@ public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContex
                                         new DTCol (EText.MSG_PATH.getDisplayText (aDisplayLocale))).setID (getID ());
 
     final String sDefaultAppID = PhotonPathMapper.getDefaultApplicationID ();
-    for (final Map.Entry <String, String> aEntry : PhotonPathMapper.getApplicationIDToPathMap ().entrySet ())
+    for (final Map.Entry <String, String> aEntry : PhotonPathMapper.getApplicationIDToApplicationServletPathMap ().entrySet ())
     {
       final String sAppID = aEntry.getKey ();
       final boolean bIsDefault = sAppID.equals (sDefaultAppID);
