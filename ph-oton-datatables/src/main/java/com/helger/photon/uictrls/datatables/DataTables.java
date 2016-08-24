@@ -1032,6 +1032,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   @Nonnull
   public DataTables setJSBeforeModifier (@Nullable final Consumer <JSPackage> aJSBeforeModifier)
   {
+    // TODO this should be a list
     m_aJSBeforeModifier = aJSBeforeModifier;
     return this;
   }
@@ -1045,6 +1046,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   @Nonnull
   public DataTables setJSAfterModifier (@Nullable final BiConsumer <JSPackage, JSVar> aJSAfterModifier)
   {
+    // TODO this should be a list
     m_aJSAfterModifier = aJSAfterModifier;
     return this;
   }

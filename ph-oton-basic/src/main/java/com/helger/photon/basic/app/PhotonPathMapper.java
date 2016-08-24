@@ -29,27 +29,63 @@ import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.string.ToStringGenerator;
 
 /**
- * Global mapper between application ID and the respective servlet paths.
+ * Global mapper between application ID and the respective application servlet
+ * paths.
  *
  * @author Philip Helger
  */
 @ThreadSafe
 public final class PhotonPathMapper
 {
+  public static final class PathEntry
+  {
+    private String m_sApplicationServletPath;
+    private String m_sAjaxServletPath;
+
+    private PathEntry ()
+    {}
+
+    @Nullable
+    public String getApplicationServletPath ()
+    {
+      return m_sApplicationServletPath;
+    }
+
+    private void setApplicationServletPath (@Nullable final String sApplicationServletPath)
+    {
+      m_sApplicationServletPath = sApplicationServletPath;
+    }
+
+    @Nullable
+    public String getAjaxServletPath ()
+    {
+      return m_sAjaxServletPath;
+    }
+
+    @Override
+    public String toString ()
+    {
+      return new ToStringGenerator (null).append ("ApplicationServletPath", m_sApplicationServletPath)
+                                         .append ("AjaxServletPath", m_sAjaxServletPath)
+                                         .toString ();
+    }
+  }
+
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
-  private static ICommonsMap <String, String> s_aMap = new CommonsHashMap<> ();
-  @GuardedBy ("s_aRWLock")
   private static String s_sDefaultAppID;
+  @GuardedBy ("s_aRWLock")
+  private static ICommonsMap <String, PathEntry> s_aMap = new CommonsHashMap<> ();
 
   private PhotonPathMapper ()
   {}
 
   /**
-   * Set a path mapping.
+   * Set an application servlet path mapping. This overwrites existing mappings.
    *
    * @param sApplicationID
    *        Application ID to use. May neither be <code>null</code> nor empty.
@@ -66,13 +102,14 @@ public final class PhotonPathMapper
     ValueEnforcer.isTrue (StringHelper.startsWith (sPath, '/'), "Path must be empty or start with a slash");
     ValueEnforcer.isFalse (StringHelper.endsWith (sPath, '/'), "Path must not end with a slash");
 
-    s_aRWLock.writeLocked ( () -> s_aMap.put (sApplicationID, sPath));
+    s_aRWLock.writeLocked ( () -> s_aMap.computeIfAbsent (sApplicationID, x -> new PathEntry ())
+                                        .setApplicationServletPath (sPath));
   }
 
   /**
-   * Remove the path mapped to the specified application ID. If the specified
-   * application ID is the default one, the default application ID is set to
-   * <code>null</code>.
+   * Remove the all paths mapped to the specified application ID. If the
+   * specified application ID is the default one, the default application ID is
+   * set to <code>null</code>.
    *
    * @param sApplicationID
    *        Application ID to be removed. May be <code>null</code>.
@@ -128,7 +165,10 @@ public final class PhotonPathMapper
     if (StringHelper.hasNoText (sApplicationID))
       return null;
 
-    return s_aRWLock.readLocked ( () -> s_aMap.get (sApplicationID));
+    return s_aRWLock.readLocked ( () -> {
+      final PathEntry aEntry = s_aMap.get (sApplicationID);
+      return aEntry == null ? null : aEntry.getApplicationServletPath ();
+    });
   }
 
   /**
@@ -138,7 +178,9 @@ public final class PhotonPathMapper
   @ReturnsMutableCopy
   public static ICommonsMap <String, String> getApplicationIDToPathMap ()
   {
-    return s_aRWLock.readLocked ( () -> s_aMap.getClone ());
+    return s_aRWLock.readLocked ( () -> new CommonsHashMap<> (s_aMap.entrySet (),
+                                                              x -> x.getKey (),
+                                                              x -> x.getValue ().getApplicationServletPath ()));
   }
 
   /**
@@ -191,7 +233,7 @@ public final class PhotonPathMapper
   @Nullable
   public static String getPathOfDefaultApplicationID ()
   {
-    return s_aRWLock.readLocked ( () -> s_aMap.get (s_sDefaultAppID));
+    return getPathOfApplicationID (getDefaultApplicationID ());
   }
 
   /**

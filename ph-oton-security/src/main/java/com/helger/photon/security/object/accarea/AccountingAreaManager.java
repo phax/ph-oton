@@ -210,23 +210,29 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IAccountingArea> getAllAccountingAreas ()
+  public ICommonsList <IAccountingArea> getAllAccountingAreas ()
   {
     return getAll ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final String sClientID)
+  public ICommonsList <IAccountingArea> getAllAccountingAreasOfClient (@Nullable final String sClientID)
   {
     return getAll (x -> x.hasSameClientID (sClientID));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IAccountingArea> getAllAccountingAreasOfClient (@Nullable final IClient aClient)
+  public ICommonsList <IAccountingArea> getAllAccountingAreasOfClient (@Nullable final IClient aClient)
   {
     return getAll (x -> x.hasSameClient (aClient));
+  }
+
+  @Nonnegative
+  public int getCountAccountingAreasOfClient (@Nullable final IClient aClient)
+  {
+    return getCount (x -> x.hasSameClient (aClient));
   }
 
   @Nonnull
