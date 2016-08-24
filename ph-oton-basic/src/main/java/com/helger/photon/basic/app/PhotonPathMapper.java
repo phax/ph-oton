@@ -269,6 +269,17 @@ public final class PhotonPathMapper
   /**
    * @return A copy of all contained application servlet mapping entries. Never
    *         <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static ICommonsMap <String, PathEntry> getApplicationIDToPathEntryMap ()
+  {
+    return s_aRWLock.readLocked ( () -> new CommonsHashMap<> (s_aMap.getClone ()));
+  }
+
+  /**
+   * @return A copy of all contained application servlet mapping entries. Never
+   *         <code>null</code>.
    * @deprecated Use {@link #getApplicationIDToApplicationServletPathMap()}
    *             instead
    */
