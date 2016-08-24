@@ -88,6 +88,24 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
+  public InternalErrorBuilder addCustomData (@Nonnull final String sKey, final boolean bValue)
+  {
+    return addCustomData (sKey, Boolean.toString (bValue));
+  }
+
+  @Nonnull
+  public InternalErrorBuilder addCustomData (@Nonnull final String sKey, final int nValue)
+  {
+    return addCustomData (sKey, Integer.toString (nValue));
+  }
+
+  @Nonnull
+  public InternalErrorBuilder addCustomData (@Nonnull final String sKey, final long nValue)
+  {
+    return addCustomData (sKey, Long.toString (nValue));
+  }
+
+  @Nonnull
   public InternalErrorBuilder addCustomData (@Nonnull final String sKey, @Nonnull final Object aValue)
   {
     return addCustomData (sKey, String.valueOf (aValue));
