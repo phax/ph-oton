@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -27,7 +28,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -49,17 +50,21 @@ import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 
 /**
  * This class holds tables to be used by the DataTables server side handling.
+ * Each DataTable in each session is represented as a single object of this
+ * class. SO if you have a lot of DataTables instances of this class may use a
+ * huge amount of memory!
  *
  * @author Philip Helger
  */
 public final class DataTablesServerData implements IHasUIState
 {
   /**
-   * This class contains all data required for each column of a table.
+   * This class contains all data required for each column of a table. Currently
+   * a single field
    *
    * @author Philip Helger
    */
-  static final class ColumnData implements Serializable
+  private static final class ColumnData implements Serializable
   {
     private final Comparator <String> m_aComparator;
 
@@ -85,6 +90,7 @@ public final class DataTablesServerData implements IHasUIState
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final ColumnData [] m_aColumns;
+  @GuardedBy ("m_aRWLock")
   private final ICommonsList <DataTablesServerDataRow> m_aRows;
   private final Locale m_aDisplayLocale;
   @GuardedBy ("m_aRWLock")
@@ -124,7 +130,7 @@ public final class DataTablesServerData implements IHasUIState
     final IHCConversionSettings aRealCS = createConversionSettings ();
 
     // Row data
-    m_aRows = new CommonsArrayList <> (aTable.getBodyRowCount ());
+    m_aRows = new CommonsArrayList<> (aTable.getBodyRowCount ());
     for (final HCRow aRow : aTable.getAllBodyRows ())
       m_aRows.add (new DataTablesServerDataRow (aRow, aRealCS));
     m_aDisplayLocale = aDisplayLocale;
@@ -162,7 +168,7 @@ public final class DataTablesServerData implements IHasUIState
     return OT_DATATABLES;
   }
 
-  public boolean isServerSortStateEqual (@Nonnull final DataTablesServerSortState aOtherserverSortState)
+  public boolean hasServerSortState (@Nonnull final DataTablesServerSortState aOtherserverSortState)
   {
     return m_aRWLock.readLocked ( () -> m_aServerSortState.equals (aOtherserverSortState));
   }
@@ -182,24 +188,33 @@ public final class DataTablesServerData implements IHasUIState
   @Nonnegative
   public int getRowCount ()
   {
-    return m_aRows.size ();
+    return m_aRWLock.readLocked ( () -> m_aRows.size ());
+  }
+
+  /**
+   * Invoked the passed consumer in a read-lock!
+   * 
+   * @param aConsumer
+   *        Consumer to be invoked for each row. May not be <code>null</code>.
+   */
+  public void forEachRow (final Consumer <? super DataTablesServerDataRow> aConsumer)
+  {
+    m_aRWLock.readLocked ( () -> m_aRows.forEach (aConsumer));
   }
 
   @Nonnull
-  @ReturnsMutableObject ("speed")
-  public ICommonsList <DataTablesServerDataRow> directGetAllRows ()
+  @ReturnsMutableCopy
+  public ICommonsList <DataTablesServerDataRow> getAllRows ()
   {
-    return m_aRows;
+    return m_aRWLock.readLocked ( () -> m_aRows.getClone ());
   }
 
   @Nullable
   public DataTablesServerDataRow getRowOfID (@Nullable final String sID)
   {
-    if (StringHelper.hasText (sID))
-      for (final DataTablesServerDataRow aRow : m_aRows)
-        if (sID.equals (aRow.getRowID ()))
-          return aRow;
-    return null;
+    if (StringHelper.hasNoText (sID))
+      return null;
+    return m_aRWLock.readLocked ( () -> m_aRows.findFirst (x -> sID.equals (x.getRowID ())));
   }
 
   @Nonnull

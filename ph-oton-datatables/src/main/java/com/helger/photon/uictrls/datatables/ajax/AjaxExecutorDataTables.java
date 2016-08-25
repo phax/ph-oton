@@ -90,9 +90,9 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
                                                                                            aRequestData.directGetAllOrderColumns (),
                                                                                            aDisplayLocale);
       // Must we change the sorting?
-      if (!aServerData.isServerSortStateEqual (aNewServerSortState))
+      if (!aServerData.hasServerSortState (aNewServerSortState))
       {
-        // Remember the new server state and sort
+        // Remember the new server state and do the main sorting
         aServerData.setServerSortStateAndSort (aNewServerSortState);
       }
     }
@@ -102,148 +102,154 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
   private static ICommonsList <DataTablesServerDataRow> _filter (@Nonnull final DTSSRequestData aRequestData,
                                                                  @Nonnull final DataTablesServerData aServerData)
   {
-    ICommonsList <DataTablesServerDataRow> aResultRows = aServerData.directGetAllRows ();
-    if (aRequestData.isSearchActive ())
+    if (!aRequestData.isSearchActive ())
     {
-      final Locale aDisplayLocale = aServerData.getDisplayLocale ();
+      // Must return a copy in case the sort state of this datatable is changed
+      // in a parallel request
+      return aServerData.getAllRows ();
+    }
 
-      // filter rows
-      final DTSSRequestDataSearch aGlobalSearch = aRequestData.getSearch ();
-      final String [] aGlobalSearchTexts = aGlobalSearch.getSearchTexts ();
-      final boolean bGlobalSearchRegEx = aGlobalSearch.isRegEx ();
-      final DTSSRequestDataColumn [] aColumns = aRequestData.getColumnDataArray ();
-      final EDataTablesFilterType eFilterType = aServerData.getFilterType ();
+    final Locale aDisplayLocale = aServerData.getDisplayLocale ();
 
-      boolean bContainsAnyColumnSpecificSearch = false;
-      for (final DTSSRequestDataColumn aColumn : aColumns)
-        if (aColumn.isSearchable () && aColumn.getSearch ().hasSearchText ())
-        {
-          bContainsAnyColumnSpecificSearch = true;
-          if (eFilterType == EDataTablesFilterType.ALL_TERMS_PER_ROW)
-            s_aLogger.error ("DataTables has column specific search term - this is not implemented for filter type ALL_TERMS_PER_ROW!");
-        }
+    // filter rows
+    final DTSSRequestDataSearch aGlobalSearch = aRequestData.getSearch ();
+    final String [] aGlobalSearchTexts = aGlobalSearch.getSearchTexts ();
+    final boolean bGlobalSearchRegEx = aGlobalSearch.isRegEx ();
+    final DTSSRequestDataColumn [] aColumns = aRequestData.getColumnDataArray ();
+    final EDataTablesFilterType eFilterType = aServerData.getFilterType ();
 
-      final ICommonsList <DataTablesServerDataRow> aFilteredRows = new CommonsArrayList<> ();
-      if (bContainsAnyColumnSpecificSearch)
+    boolean bContainsAnyColumnSpecificSearch = false;
+    for (final DTSSRequestDataColumn aColumn : aColumns)
+      if (aColumn.isSearchable () && aColumn.getSearch ().hasSearchText ())
       {
-        // For all rows
-        for (final DataTablesServerDataRow aRow : aResultRows)
-        {
-          // For all cells in row
-          int nSearchableCellIndex = 0;
-          for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
-          {
-            final DTSSRequestDataColumn aColumn = ArrayHelper.getSafeElement (aColumns, nSearchableCellIndex);
-            if (aColumn == null)
-              s_aLogger.warn ("Invalid columnn index " + nSearchableCellIndex + " for columns " + aColumns);
-            else
-              if (aColumn.isSearchable ())
-              {
-                // Determine search texts
-                final DTSSRequestDataSearch aColumnSearch = aColumn.getSearch ();
-                String [] aColumnSearchTexts;
-                boolean bColumnSearchRegEx;
-                if (aColumnSearch.hasSearchText ())
-                {
-                  aColumnSearchTexts = aColumnSearch.getSearchTexts ();
-                  bColumnSearchRegEx = aColumnSearch.isRegEx ();
-                }
-                else
-                {
-                  aColumnSearchTexts = aGlobalSearchTexts;
-                  bColumnSearchRegEx = bGlobalSearchRegEx;
-                }
-
-                // Search text may be null!
-                if (aColumnSearchTexts != null)
-                {
-                  final BitSet aMatchingWords = new BitSet (aColumnSearchTexts.length);
-
-                  // Main matching
-                  if (bColumnSearchRegEx)
-                    aCell.matchRegEx (aColumnSearchTexts, aMatchingWords);
-                  else
-                    aCell.matchPlainTextIgnoreCase (aColumnSearchTexts, aDisplayLocale, aMatchingWords);
-                  if (!aMatchingWords.isEmpty ())
-                  {
-                    aFilteredRows.add (aRow);
-                    break;
-                  }
-                }
-                nSearchableCellIndex++;
-              }
-          }
-        }
+        bContainsAnyColumnSpecificSearch = true;
+        if (eFilterType == EDataTablesFilterType.ALL_TERMS_PER_ROW)
+          s_aLogger.error ("DataTables has column specific search term - this is not implemented for filter type ALL_TERMS_PER_ROW!");
       }
-      else
-      {
-        // Only global search is relevant
 
-        // For all rows
-        for (final DataTablesServerDataRow aRow : aResultRows)
+    final int nUnfilteredRowCount = aServerData.getRowCount ();
+    final ICommonsList <DataTablesServerDataRow> aFilteredRows = new CommonsArrayList<> ();
+    if (bContainsAnyColumnSpecificSearch)
+    {
+      // For all rows
+      aServerData.forEachRow (aRow -> {
+        // For all cells in row
+        int nSearchableCellIndex = 0;
+        for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
         {
-          // Each matching search term is represented as a bit in here
-          final BitSet aMatchingWords = new BitSet (aGlobalSearchTexts.length);
-
-          // For all cells in row
-          int nSearchableCellIndex = 0;
-          per_row: for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
-          {
-            final DTSSRequestDataColumn aColumn = aColumns[nSearchableCellIndex];
+          final DTSSRequestDataColumn aColumn = ArrayHelper.getSafeElement (aColumns, nSearchableCellIndex);
+          if (aColumn == null)
+            s_aLogger.warn ("Invalid columnn index " + nSearchableCellIndex + " for columns " + aColumns);
+          else
             if (aColumn.isSearchable ())
             {
-              // Main matching
-              if (bGlobalSearchRegEx)
-                aCell.matchRegEx (aGlobalSearchTexts, aMatchingWords);
-              else
-                aCell.matchPlainTextIgnoreCase (aGlobalSearchTexts, aDisplayLocale, aMatchingWords);
-
-              switch (eFilterType)
+              // Determine search texts
+              final DTSSRequestDataSearch aColumnSearch = aColumn.getSearch ();
+              String [] aColumnSearchTexts;
+              boolean bColumnSearchRegEx;
+              if (aColumnSearch.hasSearchText ())
               {
-                case ALL_TERMS_PER_ROW:
-                  if (aMatchingWords.cardinality () == aGlobalSearchTexts.length)
-                  {
-                    // Row matched all search terms
-                    aFilteredRows.add (aRow);
-
-                    // Goto next row
-                    break per_row;
-                  }
-                  break;
-                case ANY_TERM_PER_ROW:
-                  if (!aMatchingWords.isEmpty ())
-                  {
-                    // Row matched any search term
-                    aFilteredRows.add (aRow);
-
-                    // Goto next row
-                    break per_row;
-                  }
-                  // Clear again for next cell
-                  aMatchingWords.clear ();
-                  break;
-                default:
-                  throw new IllegalStateException ("Unhandled filter type: " + eFilterType);
+                aColumnSearchTexts = aColumnSearch.getSearchTexts ();
+                bColumnSearchRegEx = aColumnSearch.isRegEx ();
               }
+              else
+              {
+                aColumnSearchTexts = aGlobalSearchTexts;
+                bColumnSearchRegEx = bGlobalSearchRegEx;
+              }
+
+              // Search text may be null!
+              if (aColumnSearchTexts != null)
+              {
+                final BitSet aMatchingWords = new BitSet (aColumnSearchTexts.length);
+
+                // Main matching
+                if (bColumnSearchRegEx)
+                  aCell.matchRegEx (aColumnSearchTexts, aMatchingWords);
+                else
+                  aCell.matchPlainTextIgnoreCase (aColumnSearchTexts, aDisplayLocale, aMatchingWords);
+                if (!aMatchingWords.isEmpty ())
+                {
+                  aFilteredRows.add (aRow);
+                  break;
+                }
+              }
+              nSearchableCellIndex++;
             }
-            nSearchableCellIndex++;
-          }
         }
-      }
-
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("DataTables filtered " + aFilteredRows.size () + " rows out of " + aResultRows.size ());
-
-      // Use the filtered rows
-      aResultRows = aFilteredRows;
+      });
     }
-    return aResultRows;
+    else
+    {
+      // Only global search is relevant
+
+      // For all rows
+      aServerData.forEachRow (aRow -> {
+        // Each matching search term is represented as a bit in here
+        final BitSet aMatchingWords = new BitSet (aGlobalSearchTexts.length);
+
+        // For all cells in row
+        int nSearchableCellIndex = 0;
+        per_row: for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
+        {
+          final DTSSRequestDataColumn aColumn = aColumns[nSearchableCellIndex];
+          if (aColumn.isSearchable ())
+          {
+            // Main matching
+            if (bGlobalSearchRegEx)
+              aCell.matchRegEx (aGlobalSearchTexts, aMatchingWords);
+            else
+              aCell.matchPlainTextIgnoreCase (aGlobalSearchTexts, aDisplayLocale, aMatchingWords);
+
+            switch (eFilterType)
+            {
+              case ALL_TERMS_PER_ROW:
+                if (aMatchingWords.cardinality () == aGlobalSearchTexts.length)
+                {
+                  // Row matched all search terms
+                  aFilteredRows.add (aRow);
+
+                  // Goto next row
+                  break per_row;
+                }
+                break;
+              case ANY_TERM_PER_ROW:
+                if (!aMatchingWords.isEmpty ())
+                {
+                  // Row matched any search term
+                  aFilteredRows.add (aRow);
+
+                  // Goto next row
+                  break per_row;
+                }
+                // Clear again for next cell
+                aMatchingWords.clear ();
+                break;
+              default:
+                throw new IllegalStateException ("Unhandled filter type: " + eFilterType);
+            }
+          }
+          nSearchableCellIndex++;
+        }
+      });
+    }
+
+    if (s_aLogger.isDebugEnabled ())
+      s_aLogger.debug ("DataTables filtered " + aFilteredRows.size () + " rows out of " + nUnfilteredRowCount);
+
+    // Use the filtered rows
+    return aFilteredRows;
   }
 
   @Nonnull
   private static DTSSResponseData _handleRequest (@Nonnull final DTSSRequestData aRequestData,
                                                   @Nonnull final DataTablesServerData aServerData)
   {
+    // Sort before filtering, because if only filtering changes, the sorting
+    // does not need to be performed again. If we would filter first, we would
+    // need to apply the sorting each time which might be time consuming. So
+    // this pattern assumes that filtering changes more often than sorting order
+    // changes.
     _sort (aRequestData, aServerData);
 
     final ICommonsList <DataTablesServerDataRow> aResultRows = _filter (aRequestData, aServerData);

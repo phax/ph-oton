@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,7 @@ import com.helger.html.hc.html.tabular.IHCCell;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public final class DataTablesServerDataRow implements Serializable
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesServerDataRow.class);
@@ -68,18 +70,18 @@ public final class DataTablesServerDataRow implements Serializable
         {
           // Data attribute
           if (m_aRowData == null)
-            m_aRowData = new CommonsLinkedHashMap <> ();
+            m_aRowData = new CommonsLinkedHashMap<> ();
           m_aRowData.put (aEntry.getKey (), aEntry.getValue ());
         }
         else
         {
           // Custom non-data attribute
           if (m_aRowAttr == null)
-            m_aRowAttr = new CommonsLinkedHashMap <> ();
+            m_aRowAttr = new CommonsLinkedHashMap<> ();
           m_aRowAttr.put (aEntry.getKey (), aEntry.getValue ());
         }
 
-    m_aCells = new CommonsArrayList <> (aRow.getCellCount ());
+    m_aCells = new CommonsArrayList<> (aRow.getCellCount ());
     for (final IHCCell <?> aCell : aRow.getAllCellsIterable ())
       m_aCells.add (new DataTablesServerDataCell (aCell, aCS));
   }
