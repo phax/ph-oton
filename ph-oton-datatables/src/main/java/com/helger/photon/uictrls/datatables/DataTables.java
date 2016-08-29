@@ -791,6 +791,18 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bRetrieve;
   }
 
+  /**
+   * Retrieve the DataTables object for the given selector. Note that if the
+   * table has already been initialised, this parameter will cause DataTables to
+   * simply return the object that has already been set up - it will not take
+   * account of any changes you might have made to the initialisation object
+   * passed to DataTables (setting this parameter to true is an acknowledgement
+   * that you understand this!).
+   *
+   * @param bRetrieve
+   *        true to retrieve
+   * @return this for chaining
+   */
   @Nonnull
   public DataTables setRetrieve (final boolean bRetrieve)
   {
