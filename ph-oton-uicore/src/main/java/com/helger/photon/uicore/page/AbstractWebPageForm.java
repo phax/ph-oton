@@ -965,6 +965,30 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                                           @Nonnull EWebPageFormAction eFormAction);
 
   /**
+   * Show the input form again after successful
+   * {@link #validateAndSaveInputParameters(IWebPageExecutionContext, IHasID, FormErrors, EWebPageFormAction)}?
+   * Only called in case of success because otherwise the form is shown anyway.
+   *
+   * @param aWPEC
+   *        Web page execution context. Never <code>null</code>.
+   * @param aSelectedObject
+   *        The currently selected object. May be <code>null</code> when
+   *        creating a new object
+   * @param aFormErrors
+   *        Object for storing the validation errors. Never <code>null</code>.
+   * @param eFormAction
+   *        The form action mode. Either create, copy or edit.
+   */
+  @OverrideOnDemand
+  protected boolean showInputFormAgain (@Nonnull final WPECTYPE aWPEC,
+                                        @Nullable final DATATYPE aSelectedObject,
+                                        @Nonnull final FormErrors aFormErrors,
+                                        @Nonnull final EWebPageFormAction eFormAction)
+  {
+    return false;
+  }
+
+  /**
    * Callback method invoked when the input form finished successfully.
    *
    * @param aWPEC
@@ -1190,7 +1214,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
               if (aFormErrors.isEmpty ())
               {
                 // Save successful
-                bShowInputForm = false;
+                // Show input form again?
+                bShowInputForm = showInputFormAgain (aWPEC, aSelectedObject, aFormErrors, eFormAction);
 
                 // Remove an optionally stored state
                 final String sFlowID = aWPEC.getAttributeAsString (FIELD_FLOW_ID);
@@ -1262,6 +1287,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             }
             else
             {
+              // Create and copy
               if (showCreateToolbar (aWPEC, aSelectedObject))
                 aForm.addChild (createCreateToolbar (aWPEC, aForm, aSelectedObject));
             }
