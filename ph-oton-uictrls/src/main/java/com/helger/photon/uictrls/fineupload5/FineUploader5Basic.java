@@ -41,7 +41,7 @@ import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 
 /**
- * Wrapper for Fineuploader 3.1.1
+ * Wrapper for Fineuploader 5.x
  *
  * @author Philip Helger
  */
