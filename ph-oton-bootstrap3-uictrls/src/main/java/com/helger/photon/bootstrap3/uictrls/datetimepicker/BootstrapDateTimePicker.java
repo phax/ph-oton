@@ -18,6 +18,7 @@ package com.helger.photon.bootstrap3.uictrls.datetimepicker;
 
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.EnumSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -29,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.datetime.PDTFactory;
@@ -90,8 +90,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   private EDateTimePickerDayOfWeek m_eWeekStart;
   private LocalDate m_aStartDate;
   private LocalDate m_aEndDate;
-  @CodingStyleguideUnaware
-  private Set <EDateTimePickerDayOfWeek> m_aDaysOfWeekDisabled;
+  private EnumSet <EDateTimePickerDayOfWeek> m_aDaysOfWeekDisabled;
   private boolean m_bAutoclose = DEFAULT_AUTOCLOSE;
   private EDateTimePickerViewType m_eStartView;
   private EDateTimePickerViewType m_eMinView = EDateTimePickerViewType.MONTH;
@@ -225,7 +224,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <EDateTimePickerDayOfWeek> getDaysOfWeekDisabled ()
+  public EnumSet <EDateTimePickerDayOfWeek> getDaysOfWeekDisabled ()
   {
     return CollectionHelper.newEnumSet (EDateTimePickerDayOfWeek.class, m_aDaysOfWeekDisabled);
   }
