@@ -90,7 +90,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
      *         is created. Never <code>null</code>.
      */
     @Nonnull
-    private static InternalSessionUserHolder getInstance ()
+    private static InternalSessionUserHolder _getInstance ()
     {
       return getSessionSingleton (InternalSessionUserHolder.class);
     }
@@ -100,13 +100,13 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
      *         <code>null</code> is returned.
      */
     @Nullable
-    private static InternalSessionUserHolder getInstanceIfInstantiated ()
+    private static InternalSessionUserHolder _getInstanceIfInstantiated ()
     {
       return getSessionSingletonIfInstantiated (InternalSessionUserHolder.class);
     }
 
     @Nullable
-    private static InternalSessionUserHolder getInstanceIfInstantiatedInScope (@Nullable final ISessionScope aScope)
+    private static InternalSessionUserHolder _getInstanceIfInstantiatedInScope (@Nullable final ISessionScope aScope)
     {
       return getSingletonIfInstantiated (aScope, InternalSessionUserHolder.class);
     }
@@ -133,18 +133,18 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       m_aOwningMgr.internalSessionActivateUser (m_aUser, aSessionScope);
     }
 
-    private boolean hasUser ()
+    private boolean _hasUser ()
     {
       return m_aUser != null;
     }
 
     @Nullable
-    private String getUserID ()
+    private String _getUserID ()
     {
       return m_sUserID;
     }
 
-    private void setUser (@Nonnull final LoggedInUserManager aOwningMgr, @Nonnull final IUser aUser)
+    private void _setUser (@Nonnull final LoggedInUserManager aOwningMgr, @Nonnull final IUser aUser)
     {
       ValueEnforcer.notNull (aOwningMgr, "OwningMgr");
       ValueEnforcer.notNull (aUser, "User");
@@ -156,7 +156,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       m_sUserID = aUser.getID ();
     }
 
-    private void reset ()
+    private void _reset ()
     {
       // Reset to avoid access while or after logout
       m_aUser = null;
@@ -174,7 +174,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       final LoggedInUserManager aOwningMgr = m_aOwningMgr;
       final String sUserID = m_sUserID;
 
-      reset ();
+      _reset ();
 
       // Finally logout the user
       if (aOwningMgr != null)
@@ -427,12 +427,12 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       }
 
       // Update user in session
-      final InternalSessionUserHolder aSUH = InternalSessionUserHolder.getInstance ();
-      if (aSUH.hasUser ())
+      final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstance ();
+      if (aSUH._hasUser ())
       {
         // This session already has a user
         s_aLogger.warn ("The session user holder already has the user ID '" +
-                        aSUH.getUserID () +
+                        aSUH._getUserID () +
                         "' so the new ID '" +
                         sUserID +
                         "' will not be set!");
@@ -442,7 +442,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
       aInfo = new LoginInfo (aUser, ScopeManager.getSessionScope ());
       m_aLoggedInUsers.put (sUserID, aInfo);
-      aSUH.setUser (this, aUser);
+      aSUH._setUser (this, aUser);
     }
     finally
     {
@@ -481,9 +481,9 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
       // Ensure that the SessionUser is empty. This is only relevant if user is
       // manually logged out without destructing the underlying session
-      final InternalSessionUserHolder aSUH = InternalSessionUserHolder.getInstanceIfInstantiatedInScope (aInfo.getSessionScope ());
+      final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstanceIfInstantiatedInScope (aInfo.getSessionScope ());
       if (aSUH != null)
-        aSUH.reset ();
+        aSUH._reset ();
 
       // Set logout time - in case somebody has a strong reference to the
       // LoginInfo object
@@ -581,7 +581,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nullable
   public String getCurrentUserID ()
   {
-    final InternalSessionUserHolder aSUH = InternalSessionUserHolder.getInstanceIfInstantiated ();
+    final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstanceIfInstantiated ();
     return aSUH == null ? null : aSUH.m_sUserID;
   }
 
@@ -612,7 +612,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nullable
   public IUser getCurrentUser ()
   {
-    final InternalSessionUserHolder aSUH = InternalSessionUserHolder.getInstanceIfInstantiated ();
+    final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstanceIfInstantiated ();
     return aSUH == null ? null : aSUH.m_aUser;
   }
 

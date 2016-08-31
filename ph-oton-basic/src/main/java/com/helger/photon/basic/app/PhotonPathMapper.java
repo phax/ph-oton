@@ -54,7 +54,7 @@ public final class PhotonPathMapper
       return m_sApplicationServletPath;
     }
 
-    private void setApplicationServletPath (@Nullable final String sApplicationServletPath)
+    private void _setApplicationServletPath (@Nullable final String sApplicationServletPath)
     {
       m_sApplicationServletPath = sApplicationServletPath;
     }
@@ -65,7 +65,7 @@ public final class PhotonPathMapper
       return m_sAjaxServletPath;
     }
 
-    private void setAjaxServletPath (@Nullable final String sAjaxServletPath)
+    private void _setAjaxServletPath (@Nullable final String sAjaxServletPath)
     {
       m_sAjaxServletPath = sAjaxServletPath;
     }
@@ -129,7 +129,7 @@ public final class PhotonPathMapper
                            "ApplicationServletPath must not end with a slash");
 
     s_aRWLock.writeLocked ( () -> s_aMap.computeIfAbsent (sApplicationID, x -> new PathEntry ())
-                                        .setApplicationServletPath (sApplicationServletPath));
+                                        ._setApplicationServletPath (sApplicationServletPath));
   }
 
   /**
@@ -152,7 +152,7 @@ public final class PhotonPathMapper
     ValueEnforcer.isFalse (StringHelper.endsWith (sAjaxServletPath, '/'), "AjaxServletPath must not end with a slash");
 
     s_aRWLock.writeLocked ( () -> s_aMap.computeIfAbsent (sApplicationID, x -> new PathEntry ())
-                                        .setAjaxServletPath (sAjaxServletPath));
+                                        ._setAjaxServletPath (sAjaxServletPath));
   }
 
   /**
