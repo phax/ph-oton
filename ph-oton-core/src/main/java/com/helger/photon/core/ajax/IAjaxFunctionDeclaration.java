@@ -119,6 +119,23 @@ public interface IAjaxFunctionDeclaration extends IHasName
   {
     return LinkHelper.getURLWithContext (aRequestScope, getPathWithoutContext (), (Map <String, String>) null);
   }
+  /**
+   * @param aRequestScope
+   *        The request web scope to be used. Required for cookie-less handling.
+   *        May not be <code>null</code>.
+   * @param aParams
+   *        An optional map with URL parameters to be used in the URL. May be
+   *        <code>null</code> or empty.
+   * @return The URL where the AJAX function can be invoked. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  @Deprecated
+  default SimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                       @Nullable final Map <String, String> aParams)
+  {
+    return getInvocationURL (aRequestScope).addAll (aParams);
+  }
 
   /**
    * Check if this AJAX function can be executed for the passed request.
