@@ -158,8 +158,6 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
    *        The number of consecutive failed logins. Must be &ge; 0.
    * @param aCustomAttrs
    *        Custom attributes. May be <code>null</code>.
-   * @param bDeleted
-   *        <code>true</code> if the user is deleted, <code>false</code> if nto
    * @param bDisabled
    *        <code>true</code> if the user is disabled
    */
