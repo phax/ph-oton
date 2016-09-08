@@ -19,8 +19,8 @@ package com.helger.photon.uicore.serverlog;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.error.EErrorLevel;
-import com.helger.commons.error.IErrorLevel;
+import com.helger.commons.error.level.EErrorLevel;
+import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.log.LogHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;

@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCEditPassword;
@@ -169,7 +170,7 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
     final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
     final Locale aDisplayLocale = aSWEC.getDisplayLocale ();
 
-    final BootstrapForm aForm = new BootstrapForm (aRequestScope.getURL ());
+    final BootstrapForm aForm = new BootstrapForm (aSWEC).setAction (new SimpleURL (aRequestScope.getURL ()));
 
     // Customize
     onBeforeForm (aSWEC, aForm);

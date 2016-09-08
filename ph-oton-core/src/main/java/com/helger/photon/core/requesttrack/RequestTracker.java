@@ -32,7 +32,7 @@ import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.concurrent.ManagedExecutorService;
-import com.helger.commons.error.EErrorLevel;
+import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.scope.IScope;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.app.error.InternalErrorBuilder;

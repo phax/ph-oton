@@ -16,20 +16,20 @@
  */
 package com.helger.photon.bootstrap3.form;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.forms.AbstractHCForm;
 import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
+import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 
 @NotThreadSafe
 public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMutableBootstrapFormGroupContainer
@@ -37,7 +37,8 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
   public static final int DEFAULT_LEFT_PART = 3;
   public static final int DEFAULT_RIGHT_PART = CBootstrap.GRID_SYSTEM_MAX - DEFAULT_LEFT_PART;
 
-  private EBootstrapFormType m_eFormType;
+  private final Locale m_aDisplayLocale;
+  private EBootstrapFormType m_eFormType = EBootstrapFormType.DEFAULT;
   private BootstrapGridSpec m_aLeftGrid = BootstrapGridSpec.create (CBootstrap.GRID_SYSTEM_MAX,
                                                                     DEFAULT_LEFT_PART,
                                                                     DEFAULT_LEFT_PART,
@@ -48,35 +49,12 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
                                                                      DEFAULT_RIGHT_PART);
   private IBootstrapFormGroupRenderer m_aFormGroupRenderer = new DefaultBootstrapFormGroupRenderer ();
 
-  public BootstrapForm ()
+  public BootstrapForm (@Nonnull final ISimpleWebExecutionContext aLEC)
   {
-    this ((ISimpleURL) null);
-  }
-
-  public BootstrapForm (@Nullable final ISimpleURL aAction)
-  {
-    this (aAction, EBootstrapFormType.DEFAULT);
-  }
-
-  public BootstrapForm (@Nonnull final EBootstrapFormType eFormType)
-  {
-    this ((ISimpleURL) null, eFormType);
-  }
-
-  public BootstrapForm (@Nullable final String sAction)
-  {
-    this (sAction == null ? null : new SimpleURL (sAction), EBootstrapFormType.DEFAULT);
-  }
-
-  public BootstrapForm (@Nullable final ISimpleURL aAction, @Nonnull final EBootstrapFormType eFormType)
-  {
-    super ();
     // Not needed, as the role is identical to the HTML semantics
     if (false)
       setRole (EHTMLRole.FORM);
-    if (aAction != null)
-      setAction (aAction);
-    setFormType (eFormType);
+    m_aDisplayLocale = aLEC.getDisplayLocale ();
   }
 
   @Nonnull
@@ -180,7 +158,7 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
   @Nonnull
   public IHCElementWithChildren <?> getRenderedFormGroup (@Nonnull final BootstrapFormGroup aFormGroup)
   {
-    return m_aFormGroupRenderer.renderFormGroup (this, aFormGroup);
+    return m_aFormGroupRenderer.renderFormGroup (this, aFormGroup, m_aDisplayLocale);
   }
 
   @Nonnull

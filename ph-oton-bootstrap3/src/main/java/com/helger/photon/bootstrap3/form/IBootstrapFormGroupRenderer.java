@@ -16,6 +16,8 @@
  */
 package com.helger.photon.bootstrap3.form;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.html.IHCElementWithChildren;
@@ -37,9 +39,12 @@ public interface IBootstrapFormGroupRenderer
    *        Form the form group belongs to. May not be <code>null</code>.
    * @param aFormGroup
    *        The form group to be rendered. May not be <code>null</code>.
+   * @param aDisplayLocale
+   *        Display locale to be used. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
   @Nonnull
   IHCElementWithChildren <?> renderFormGroup (@Nonnull IBootstrapFormGroupContainer aForm,
-                                              @Nonnull BootstrapFormGroup aFormGroup);
+                                              @Nonnull BootstrapFormGroup aFormGroup,
+                                              @Nonnull Locale aDisplayLocale);
 }

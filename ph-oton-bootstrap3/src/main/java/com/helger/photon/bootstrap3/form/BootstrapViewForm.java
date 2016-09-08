@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -36,19 +37,20 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
   public static final int DEFAULT_LEFT_PART = 3;
   public static final int DEFAULT_RIGHT_PART = CBootstrap.GRID_SYSTEM_MAX - DEFAULT_LEFT_PART;
 
-  private EBootstrapFormType m_eFormType;
+  private EBootstrapFormType m_eFormType = EBootstrapFormType.HORIZONTAL;
   private BootstrapGridSpec m_aLeftGrid = BootstrapGridSpec.create (DEFAULT_LEFT_PART);
   private BootstrapGridSpec m_aRightGrid = BootstrapGridSpec.create (DEFAULT_RIGHT_PART);
   private IBootstrapFormGroupRenderer m_aFormGroupRenderer = new DefaultBootstrapFormGroupRenderer ();
 
   public BootstrapViewForm ()
   {
-    this (EBootstrapFormType.HORIZONTAL);
+    addClass (CSS_CLASS_VIEW_FORM);
   }
 
+  @Deprecated
   public BootstrapViewForm (@Nonnull final EBootstrapFormType eFormType)
   {
-    addClass (CSS_CLASS_VIEW_FORM);
+    this ();
     setFormType (eFormType);
   }
 
@@ -154,7 +156,9 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
   @Nonnull
   public IHCElementWithChildren <?> getRenderedFormGroup (@Nonnull final BootstrapFormGroup aFormGroup)
   {
-    return m_aFormGroupRenderer.renderFormGroup (this, aFormGroup);
+    // TODO find Locale for rendering
+    // Usually no error texts are used;
+    return m_aFormGroupRenderer.renderFormGroup (this, aFormGroup, CGlobal.DEFAULT_LOCALE);
   }
 
   @Nonnull

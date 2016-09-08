@@ -51,7 +51,7 @@ public class BootstrapWebPageUIHandler implements IWebPageFormUIHandler <Bootstr
   @Nonnull
   public BootstrapForm createFormSelf (@Nonnull final ILayoutExecutionContext aLEC)
   {
-    return new BootstrapForm (EBootstrapFormType.HORIZONTAL).setAction (aLEC.getSelfHref ());
+    return new BootstrapForm (aLEC).setFormType (EBootstrapFormType.HORIZONTAL).setAction (aLEC.getSelfHref ());
   }
 
   @Override

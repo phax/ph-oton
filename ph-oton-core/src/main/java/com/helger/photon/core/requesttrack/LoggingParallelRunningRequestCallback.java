@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.error.EErrorLevel;
-import com.helger.commons.error.IErrorLevel;
+import com.helger.commons.error.level.EErrorLevel;
+import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.log.LogHelper;
 import com.helger.commons.string.ToStringGenerator;
 

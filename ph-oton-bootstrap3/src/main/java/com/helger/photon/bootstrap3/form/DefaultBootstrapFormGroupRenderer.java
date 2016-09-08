@@ -17,15 +17,19 @@
 package com.helger.photon.bootstrap3.form;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.errorlist.IError;
-import com.helger.commons.errorlist.IErrorList;
+import com.helger.commons.error.IError;
+import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -59,6 +63,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 {
   public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_HELP_TEXT = DefaultCSSClassProvider.create ("form-group-help-text");
   public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_ERROR_TEXT = DefaultCSSClassProvider.create ("form-group-error-text");
+  private static final Logger s_aLogger = LoggerFactory.getLogger (DefaultBootstrapFormGroupRenderer.class);
 
   private boolean m_bUseIcons = false;
   private boolean m_bForceNoCheckBoxHandling = false;
@@ -184,14 +189,21 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
    *
    * @param aError
    *        The provided error. Never <code>null</code>.
-   * @return Never <code>null</code>.
+   * @param aContentLocale
+   *        Locale to be used to show error text.
+   * @return May be <code>null</code>.
    */
-  @Nonnull
+  @Nullable
   @OverrideOnDemand
-  protected IHCElement <?> createSingleErrorNode (@Nonnull final IError aError)
+  protected IHCElement <?> createSingleErrorNode (@Nonnull final IError aError, @Nonnull final Locale aContentLocale)
   {
+    final String sErrorText = aError.getAsString (aContentLocale);
+    if (StringHelper.hasNoText (sErrorText))
+      s_aLogger.warn ("Error " + aError + " has no test in locale " + aContentLocale);
+
     final BootstrapHelpBlock aErrorBlock = new BootstrapHelpBlock ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
-    aErrorBlock.addChild (aError.getErrorText ());
+    // Display it, even if it is empty (because of non-translation)
+    aErrorBlock.addChild (sErrorText);
     return aErrorBlock;
   }
 
@@ -215,7 +227,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   @Override
   @Nonnull
   public HCDiv renderFormGroup (@Nonnull final IBootstrapFormGroupContainer aForm,
-                                @Nonnull final BootstrapFormGroup aFormGroup)
+                                @Nonnull final BootstrapFormGroup aFormGroup,
+                                @Nonnull final Locale aDisplayLocale)
   {
     final EBootstrapFormType eFormType = aForm.getFormType ();
     final BootstrapGridSpec aLeftGrid = aForm.getLeft ();
@@ -391,14 +404,16 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     {
       for (final IError aError : aErrorList)
       {
-        final IHCElement <?> aErrorNode = createSingleErrorNode (aError);
-
-        if (eFormType == EBootstrapFormType.HORIZONTAL)
+        final IHCElement <?> aErrorNode = createSingleErrorNode (aError, aDisplayLocale);
+        if (aErrorNode != null)
         {
-          aLeftGrid.applyOffsetTo (aErrorNode);
-          aRightGrid.applyTo (aErrorNode);
+          if (eFormType == EBootstrapFormType.HORIZONTAL)
+          {
+            aLeftGrid.applyOffsetTo (aErrorNode);
+            aRightGrid.applyTo (aErrorNode);
+          }
+          aFinalNode.addChild (aErrorNode);
         }
-        aFinalNode.addChild (aErrorNode);
       }
     }
 

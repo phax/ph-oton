@@ -174,10 +174,10 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
 
         if (aUserTokenMgr.deleteUserToken (aSelectedObject.getID ()).isChanged ())
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                   aSelectedObject.getDisplayName ())));
+                                                                                                                           aSelectedObject.getDisplayName ())));
         else
           aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               aSelectedObject.getDisplayName ())));
+                                                                                                                       aSelectedObject.getDisplayName ())));
       }
     });
     addCustomHandler (ACTION_CREATE_NEW_ACCESS_TOKEN,
@@ -231,15 +231,15 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                   sRevocationReason,
                                                                   sTokenString);
                               aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (bRevokedOld ? EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                                                     aSelectedObject.getDisplayName ())
-                                                                                                      : EBaseText.CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                                          aSelectedObject.getDisplayName ())));
+                                                                                                                                                                                             aSelectedObject.getDisplayName ())
+                                                                                                              : EBaseText.CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                                                  aSelectedObject.getDisplayName ())));
                               return false;
                             }
                             aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
                           }
 
-                          final BootstrapForm aForm = new BootstrapForm (aWPEC.getSelfHref ());
+                          final BootstrapForm aForm = getUIHandler ().createFormSelf (aWPEC);
                           if (bRevokedOld)
                           {
                             // Show only if something can be revoked...
@@ -310,13 +310,13 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                PDTFactory.getCurrentLocalDateTime (),
                                                                sRevocationReason);
                               aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EBaseText.REVOKE_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                        aSelectedObject.getDisplayName ())));
+                                                                                                                                                                aSelectedObject.getDisplayName ())));
                               return false;
                             }
                             aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
                           }
 
-                          final BootstrapForm aForm = new BootstrapForm (aWPEC.getSelfHref ());
+                          final BootstrapForm aForm = getUIHandler ().createFormSelf (aWPEC);
                           aForm.addChild (getUIHandler ().createActionHeader (EBaseText.REVOKE_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                            aSelectedObject.getDisplayName ())));
                           aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EBaseText.LABEL_REASON.getDisplayText (aDisplayLocale))
@@ -533,13 +533,13 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
       {
         aUserTokenMgr.updateUserToken (aSelectedObject.getID (), aCustomAttrMap);
         aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.EDIT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               aUser.getDisplayName ())));
+                                                                                                                       aUser.getDisplayName ())));
       }
       else
       {
         aUserTokenMgr.createUserToken (sTokenString, aCustomAttrMap, aUser);
         aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                 aUser.getDisplayName ())));
+                                                                                                                         aUser.getDisplayName ())));
       }
     }
   }
