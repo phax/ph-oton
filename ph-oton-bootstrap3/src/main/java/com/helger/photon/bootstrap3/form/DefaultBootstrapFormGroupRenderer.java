@@ -197,9 +197,13 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   @OverrideOnDemand
   protected IHCElement <?> createSingleErrorNode (@Nonnull final IError aError, @Nonnull final Locale aContentLocale)
   {
-    final String sErrorText = aError.getAsString (aContentLocale);
+    String sErrorText = StringHelper.getNotNull (aError.getErrorText (aContentLocale));
     if (StringHelper.hasNoText (sErrorText))
       s_aLogger.warn ("Error " + aError + " has no test in locale " + aContentLocale);
+
+    final String sErrorID = aError.getErrorID ();
+    if (StringHelper.hasText (sErrorID))
+      sErrorText = "[" + sErrorID + "] " + sErrorText;
 
     final BootstrapHelpBlock aErrorBlock = new BootstrapHelpBlock ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
     // Display it, even if it is empty (because of non-translation)
