@@ -37,7 +37,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
@@ -134,13 +133,13 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
    *         If reading and reading fails
    */
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
-                                 @Nonnull @Nonempty final String sFilename) throws DAOException
+                                 @Nullable final String sFilename) throws DAOException
   {
     this (aImplClass, sFilename, new InitSettings<> ());
   }
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
-                                 @Nonnull @Nonempty final String sFilename,
+                                 @Nullable final String sFilename,
                                  @Nonnull final InitSettings <IMPLTYPE> aInitSettings) throws DAOException
   {
     super (aImplClass, sFilename);
