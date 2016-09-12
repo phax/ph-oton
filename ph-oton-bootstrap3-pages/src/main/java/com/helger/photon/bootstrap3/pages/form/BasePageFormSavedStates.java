@@ -25,7 +25,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
-import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
@@ -48,6 +47,7 @@ import com.helger.photon.bootstrap3.pages.handler.AbstractBootstrapWebPageAction
 import com.helger.photon.bootstrap3.pages.handler.AbstractBootstrapWebPageActionHandlerDelete;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.uicore.css.CPageParam;
@@ -186,7 +186,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
   @Override
   protected void validateAndSaveInputParameters (@Nonnull final WPECTYPE aWPEC,
                                                  @Nullable final FormState aSelectedObject,
-                                                 @Nonnull final FormErrors aFormErrors,
+                                                 @Nonnull final FormErrorList aFormErrors,
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {}
 
@@ -195,7 +195,7 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
                                 @Nullable final FormState aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
                                 @Nonnull final EWebPageFormAction eFormAction,
-                                @Nonnull final FormErrors aFormErrors)
+                                @Nonnull final FormErrorList aFormErrors)
   {}
 
   @Override

@@ -25,12 +25,12 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.ext.ICommonsSet;
-import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
+import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
@@ -143,7 +143,7 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
   @Nullable
   protected ICommonsMap <String, String> validateCustomInputParameters (@Nonnull final WPECTYPE aWPEC,
                                                                         @Nullable final DATATYPE aSelectedObject,
-                                                                        @Nonnull final FormErrors aFormErrors,
+                                                                        @Nonnull final FormErrorList aFormErrors,
                                                                         @Nonnull final EWebPageFormAction eFormAction)
   {
     return null;
@@ -171,6 +171,6 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
                                      @Nullable final DATATYPE aSelectedObject,
                                      @Nonnull final BootstrapForm aForm,
                                      @Nonnull final EWebPageFormAction eFormAction,
-                                     @Nonnull final FormErrors aFormErrors)
+                                     @Nonnull final FormErrorList aFormErrors)
   {}
 }

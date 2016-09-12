@@ -30,7 +30,6 @@ import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
@@ -63,6 +62,7 @@ import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
@@ -195,7 +195,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                           final HCNodeList aNodeList = aWPEC.getNodeList ();
                           final boolean bRevokedOld = aSelectedObject.getActiveAccessToken () != null;
 
-                          final FormErrors aFormErrors = new FormErrors ();
+                          final FormErrorList aFormErrors = new FormErrorList ();
                           if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
                           {
                             final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
@@ -294,7 +294,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                           final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
                           final HCNodeList aNodeList = aWPEC.getNodeList ();
 
-                          final FormErrors aFormErrors = new FormErrors ();
+                          final FormErrorList aFormErrors = new FormErrorList ();
                           if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
                           {
                             final String sRevocationReason = aWPEC.getAttributeAsString (FIELD_REVOCATION_REASON);
@@ -461,7 +461,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                 @Nullable final IUserToken aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
                                 @Nonnull final EWebPageFormAction eFormAction,
-                                @Nonnull final FormErrors aFormErrors)
+                                @Nonnull final FormErrorList aFormErrors)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final boolean bEdit = eFormAction.isEdit ();
@@ -493,7 +493,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   @Override
   protected void validateAndSaveInputParameters (@Nonnull final WPECTYPE aWPEC,
                                                  @Nullable final IUserToken aSelectedObject,
-                                                 @Nonnull final FormErrors aFormErrors,
+                                                 @Nonnull final FormErrorList aFormErrors,
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();

@@ -34,7 +34,6 @@ import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.email.EmailAddressHelper;
 import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
@@ -76,6 +75,7 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapSecurityUI;
 import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
@@ -231,10 +231,10 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
         if (aUserMgr.deleteUser (aSelectedObject.getID ()).isChanged ())
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                aSelectedObject.getDisplayName ())));
+                                                                                                                        aSelectedObject.getDisplayName ())));
         else
           aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                            aSelectedObject.getDisplayName ())));
+                                                                                                                    aSelectedObject.getDisplayName ())));
       }
     });
     setUndeleteHandler (new AbstractBootstrapWebPageActionHandlerUndelete <IUser, WPECTYPE> ()
@@ -259,10 +259,10 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
         if (aUserMgr.undeleteUser (aSelectedObject.getID ()).isChanged ())
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.UNDEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                  aSelectedObject.getDisplayName ())));
+                                                                                                                          aSelectedObject.getDisplayName ())));
         else
           aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.UNDEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                              aSelectedObject.getDisplayName ())));
+                                                                                                                      aSelectedObject.getDisplayName ())));
       }
     });
     addCustomHandler (ACTION_RESET_PASSWORD, new AbstractBootstrapWebPageActionHandler <IUser, WPECTYPE> (true)
@@ -277,7 +277,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         final HCNodeList aNodeList = aWPEC.getNodeList ();
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final boolean bShowForm = true;
-        final FormErrors aFormErrors = new FormErrors ();
+        final FormErrorList aFormErrors = new FormErrorList ();
         final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
 
         if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
@@ -579,7 +579,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
   @Override
   protected void validateAndSaveInputParameters (@Nonnull final WPECTYPE aWPEC,
                                                  @Nullable final IUser aSelectedObject,
-                                                 @Nonnull final FormErrors aFormErrors,
+                                                 @Nonnull final FormErrorList aFormErrors,
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
     final boolean bEdit = eFormAction.isEdit ();
@@ -734,7 +734,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                 @Nullable final IUser aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
                                 @Nonnull final EWebPageFormAction eFormAction,
-                                @Nonnull final FormErrors aFormErrors)
+                                @Nonnull final FormErrorList aFormErrors)
   {
     final boolean bEdit = eFormAction.isEdit ();
     final boolean bIsAdministrator = bEdit && aSelectedObject != null && aSelectedObject.isAdministrator ();

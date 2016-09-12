@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.state.EContinue;
@@ -44,6 +43,7 @@ import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.security.lock.ILockManager;
 import com.helger.photon.security.lock.LockResult;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
@@ -113,7 +113,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
    * @return <code>true</code> if the form for
-   *         {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageSimpleFormAction, FormErrors)}
+   *         {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageSimpleFormAction, FormErrorList)}
    *         should be a file-upload form, <code>false</code> if a regular form
    *         is sufficient.
    */
@@ -537,7 +537,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    */
   protected abstract void validateAndSaveInputParameters (@Nonnull WPECTYPE aWPEC,
                                                           @Nonnull DATATYPE aObject,
-                                                          @Nonnull FormErrors aFormErrors,
+                                                          @Nonnull FormErrorList aFormErrors,
                                                           @Nonnull EWebPageSimpleFormAction eSimpleFormAction);
 
   /**
@@ -559,13 +559,13 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    *        Object for storing the validation errors. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onInputFormError (@Nonnull final WPECTYPE aWPEC, @Nonnull final FormErrors aFormErrors)
+  protected void onInputFormError (@Nonnull final WPECTYPE aWPEC, @Nonnull final FormErrorList aFormErrors)
   {}
 
   /**
    * Add additional form IDs (e.g. client and accounting area). This method is
    * called before
-   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageSimpleFormAction, FormErrors)}
+   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageSimpleFormAction, FormErrorList)}
    * is called.
    *
    * @param aWPEC
@@ -597,12 +597,12 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
                                          @Nonnull DATATYPE aObject,
                                          @Nonnull FORM_TYPE aForm,
                                          @Nonnull EWebPageSimpleFormAction eSimpleFormAction,
-                                         @Nonnull FormErrors aFormErrors);
+                                         @Nonnull FormErrorList aFormErrors);
 
   /**
    * Add additional form IDs (e.g. client and accounting area). This method is
    * called after
-   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageSimpleFormAction, FormErrors)}
+   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageSimpleFormAction, FormErrorList)}
    * was called but before the toolbars are added.
    *
    * @param aWPEC
@@ -666,7 +666,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
         case EDIT:
         {
           // Create or edit a client
-          final FormErrors aFormErrors = new FormErrors ();
+          final FormErrorList aFormErrors = new FormErrorList ();
           boolean bShowInputForm = true;
           final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
 

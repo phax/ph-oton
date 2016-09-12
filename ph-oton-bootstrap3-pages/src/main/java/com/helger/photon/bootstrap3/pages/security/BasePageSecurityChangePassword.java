@@ -25,7 +25,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
@@ -40,6 +39,7 @@ import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapSecurityUI;
+import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
@@ -62,7 +62,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
                                             extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     ERROR_NO_USER_PRESENT ("Es ist kein Benutzer angemeldet, daher kann auch das Passwort nicht geändert werden.",
                            "Since no user is logged in no password change is possible."),
@@ -136,7 +136,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
     else
     {
       final boolean bShowForm = true;
-      final FormErrors aFormErrors = new FormErrors ();
+      final FormErrorList aFormErrors = new FormErrorList ();
 
       if (aWPEC.hasAction (CPageParam.ACTION_PERFORM))
       {

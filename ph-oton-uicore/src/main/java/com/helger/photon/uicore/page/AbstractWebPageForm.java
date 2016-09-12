@@ -33,7 +33,6 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.name.IHasDisplayName;
@@ -55,6 +54,7 @@ import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.core.form.RequestField;
@@ -159,7 +159,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
    * @return <code>true</code> if the form for
-   *         {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrors)}
+   *         {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrorList)}
    *         should be a file-upload form, <code>false</code> if a regular form
    *         is sufficient.
    */
@@ -961,12 +961,12 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   protected abstract void validateAndSaveInputParameters (@Nonnull WPECTYPE aWPEC,
                                                           @Nullable DATATYPE aSelectedObject,
-                                                          @Nonnull FormErrors aFormErrors,
+                                                          @Nonnull FormErrorList aFormErrors,
                                                           @Nonnull EWebPageFormAction eFormAction);
 
   /**
    * Show the input form again after successful
-   * {@link #validateAndSaveInputParameters(IWebPageExecutionContext, IHasID, FormErrors, EWebPageFormAction)}?
+   * {@link #validateAndSaveInputParameters(IWebPageExecutionContext, IHasID, FormErrorList, EWebPageFormAction)}?
    * Only called in case of success because otherwise the form is shown anyway.
    *
    * @param aWPEC
@@ -982,7 +982,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   @OverrideOnDemand
   protected boolean showInputFormAgain (@Nonnull final WPECTYPE aWPEC,
                                         @Nullable final DATATYPE aSelectedObject,
-                                        @Nonnull final FormErrors aFormErrors,
+                                        @Nonnull final FormErrorList aFormErrors,
                                         @Nonnull final EWebPageFormAction eFormAction)
   {
     return false;
@@ -1007,13 +1007,13 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        Object for storing the validation errors. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onInputFormError (@Nonnull final WPECTYPE aWPEC, @Nonnull final FormErrors aFormErrors)
+  protected void onInputFormError (@Nonnull final WPECTYPE aWPEC, @Nonnull final FormErrorList aFormErrors)
   {}
 
   /**
    * Add additional form IDs (e.g. client and accounting area). This method is
    * called before
-   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrors)}
+   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrorList)}
    * is called.
    *
    * @param aWPEC
@@ -1046,12 +1046,12 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                          @Nullable DATATYPE aSelectedObject,
                                          @Nonnull FORM_TYPE aForm,
                                          @Nonnull EWebPageFormAction eFormAction,
-                                         @Nonnull FormErrors aFormErrors);
+                                         @Nonnull FormErrorList aFormErrors);
 
   /**
    * Add additional form IDs (e.g. client and accounting area). This method is
    * called after
-   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrors)}
+   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrorList)}
    * was called but before the toolbars are added.
    *
    * @param aWPEC
@@ -1200,7 +1200,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
         case COPY:
         {
           // Create or edit a client
-          final FormErrors aFormErrors = new FormErrors ();
+          final FormErrorList aFormErrors = new FormErrorList ();
           boolean bShowInputForm = true;
           final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
 

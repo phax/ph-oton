@@ -30,7 +30,6 @@ import com.helger.commons.annotation.Translatable;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.email.EmailAddressHelper;
-import com.helger.commons.errorlist.FormErrors;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.text.IMultilingualText;
@@ -66,6 +65,7 @@ import com.helger.photon.bootstrap3.pages.handler.AbstractBootstrapWebPageAction
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.photon.core.smtp.CNamedSMTPSettings;
@@ -218,12 +218,12 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
         if (m_aMgr.removeSettings (aSelectedObject.getID ()).isChanged ())
         {
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                   aSelectedObject.getName ())));
+                                                                                                                           aSelectedObject.getName ())));
         }
         else
         {
           aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               aSelectedObject.getName ())));
+                                                                                                                       aSelectedObject.getName ())));
         }
       }
     });
@@ -233,7 +233,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final HCNodeList aNodeList = aWPEC.getNodeList ();
-        final FormErrors aFormErrors = new FormErrors ();
+        final FormErrorList aFormErrors = new FormErrorList ();
 
         if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
         {
@@ -423,7 +423,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
   @Override
   protected void validateAndSaveInputParameters (@Nonnull final WPECTYPE aWPEC,
                                                  @Nullable final NamedSMTPSettings aSelectedObject,
-                                                 @Nonnull final FormErrors aFormErrors,
+                                                 @Nonnull final FormErrorList aFormErrors,
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
@@ -505,7 +505,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
                                 @Nullable final NamedSMTPSettings aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
                                 @Nonnull final EWebPageFormAction eFormAction,
-                                @Nonnull final FormErrors aFormErrors)
+                                @Nonnull final FormErrorList aFormErrors)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final ISMTPSettings aSettings = aSelectedObject == null ? null : aSelectedObject.getSMTPSettings ();
