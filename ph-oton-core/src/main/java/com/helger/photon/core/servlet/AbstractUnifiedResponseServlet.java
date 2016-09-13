@@ -331,6 +331,15 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     RequestTracker.removeRequest (sID);
   }
 
+  @Nonnull
+  @OverrideOnDemand
+  protected UnifiedResponse createUnifiedResponse (@Nonnull final EHTTPVersion eHTTPVersion,
+                                                   @Nonnull final EHTTPMethod eHTTPMethod,
+                                                   @Nonnull final HttpServletRequest aHttpRequest)
+  {
+    return new UnifiedResponse (eHTTPVersion, eHTTPMethod, aHttpRequest);
+  }
+
   private void _run (@Nonnull final HttpServletRequest aHttpRequest,
                      @Nonnull final HttpServletResponse aHttpResponse,
                      @Nonnull final IRequestWebScope aRequestScope,
@@ -392,7 +401,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     // modification issues, for performance reasons. If all optimizations fail,
     // perform the regular request.
 
-    final UnifiedResponse aUnifiedResponse = new UnifiedResponse (eHTTPVersion, eHTTPMethod, aHttpRequest);
+    final UnifiedResponse aUnifiedResponse = createUnifiedResponse (eHTTPVersion, eHTTPMethod, aHttpRequest);
     if (initRequestState (aRequestScope, aUnifiedResponse).isBreak ())
     {
       if (s_aLogger.isDebugEnabled ())
