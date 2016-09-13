@@ -1167,7 +1167,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
       if (!isActionAllowed (aWPEC, eFormAction, aSelectedObject))
       {
         // Default back to custom
-        s_aLogger.info ("Action " +
+        s_aLogger.warn ("Action " +
                         eFormAction +
                         " is not allowed on object " +
                         (aSelectedObject == null ? "null" : aSelectedObject.getID ()));

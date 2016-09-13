@@ -37,7 +37,7 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
   public static final int DEFAULT_LEFT_PART = 3;
   public static final int DEFAULT_RIGHT_PART = CBootstrap.GRID_SYSTEM_MAX - DEFAULT_LEFT_PART;
 
-  private EBootstrapFormType m_eFormType = EBootstrapFormType.HORIZONTAL;
+  private EBootstrapFormType m_eFormType;
   private BootstrapGridSpec m_aLeftGrid = BootstrapGridSpec.create (DEFAULT_LEFT_PART);
   private BootstrapGridSpec m_aRightGrid = BootstrapGridSpec.create (DEFAULT_RIGHT_PART);
   private IBootstrapFormGroupRenderer m_aFormGroupRenderer = new DefaultBootstrapFormGroupRenderer ();
@@ -45,6 +45,8 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
   public BootstrapViewForm ()
   {
     addClass (CSS_CLASS_VIEW_FORM);
+    // Must call the setter to ensure the class is present
+    setFormType (EBootstrapFormType.HORIZONTAL);
   }
 
   @Deprecated
@@ -157,7 +159,7 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
   public IHCElementWithChildren <?> getRenderedFormGroup (@Nonnull final BootstrapFormGroup aFormGroup)
   {
     // TODO find Locale for rendering
-    // Usually no error texts are used;
+    // Usually no error texts are used; so this is not sooo important
     return m_aFormGroupRenderer.renderFormGroup (this, aFormGroup, CGlobal.DEFAULT_LOCALE);
   }
 
