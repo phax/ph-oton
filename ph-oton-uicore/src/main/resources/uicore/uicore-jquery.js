@@ -266,12 +266,12 @@ jqphClass.prototype = {
         callbackFctEnd(data.value,textStatus,xhr);
       }
     }else{
-      var msg='Error invoking ph AJAX function!';
-      if(data.errormessage){
-        window.alert(msg+' '+data.errormessage);
-      }else{
-        window.alert(msg);
-      }
+      var msg='Error invoking ph AJAX function';
+      if (textStatus)
+    	msg += ' ['+textStatus+']!';
+      if(data.errormessage)
+    	msg += ' '+data.errormessage;
+      window.alert(msg);
     }
   }
 };
