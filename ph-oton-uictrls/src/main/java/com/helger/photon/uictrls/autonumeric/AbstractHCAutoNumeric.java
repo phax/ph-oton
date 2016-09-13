@@ -41,9 +41,9 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSGlobal;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.html.IHCNodeWithJSOptions;
+import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.core.form.RequestField;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
@@ -79,7 +79,7 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   private EAutoNumericLeadingZero m_eLeadingZero;
   private EAutoNumericRoundingMode m_eRoundingMode;
 
-  public AbstractHCAutoNumeric (@Nullable final RequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public AbstractHCAutoNumeric (@Nullable final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
   {
     // Don't use NUMBER here - will create ugly spin buttons
     super (EHCInputType.TEXT);

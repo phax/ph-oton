@@ -21,7 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.photon.core.form.RequestField;
+import com.helger.html.request.IHCRequestField;
 
 /**
  * Special auto numeric that only takes integers (and not decimal places)
@@ -30,7 +30,7 @@ import com.helger.photon.core.form.RequestField;
  */
 public class HCAutoNumericInt extends AbstractHCAutoNumeric <HCAutoNumericInt>
 {
-  public HCAutoNumericInt (@Nullable final RequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCAutoNumericInt (@Nullable final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
   {
     super (aRF, aDisplayLocale);
     setDecimalPlaces (0);

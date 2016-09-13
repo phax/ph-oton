@@ -30,9 +30,9 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.AbstractHCInput;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.core.form.RequestField;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
@@ -53,7 +53,7 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
     // No input type needed
   }
 
-  public HCColorPicker (@Nonnull final RequestField aRF)
+  public HCColorPicker (@Nonnull final IHCRequestField aRF)
   {
     this ();
     setName (aRF.getFieldName ());

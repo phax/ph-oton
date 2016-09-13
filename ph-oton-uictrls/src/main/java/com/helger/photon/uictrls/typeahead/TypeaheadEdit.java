@@ -35,7 +35,7 @@ import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSVar;
-import com.helger.photon.core.form.RequestField;
+import com.helger.html.request.IHCRequestField;
 
 /**
  * This class encapsulates a HTML input field, a hidden field for the ID and the
@@ -47,13 +47,13 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
 {
   public static final String JSON_ID = "id";
 
-  private final RequestField m_aRFHidden;
+  private final IHCRequestField m_aRFHidden;
   private final String m_sHiddenFieldID;
   private final JSAnonymousFunction m_aSelectionCallback;
   private final HCTypeahead m_aScript;
 
-  public TypeaheadEdit (@Nonnull final RequestField aRFEdit,
-                        @Nonnull final RequestField aRFHidden,
+  public TypeaheadEdit (@Nonnull final IHCRequestField aRFEdit,
+                        @Nonnull final IHCRequestField aRFHidden,
                         @Nonnull final ISimpleURL aAjaxInvocationURL,
                         @Nonnull final Locale aDisplayLocale)
   {

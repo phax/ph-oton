@@ -20,7 +20,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.photon.core.form.RequestField;
+import com.helger.html.request.IHCRequestField;
 
 /**
  * Special numeric edit for years from {@value #DEFAULT_MIN} to
@@ -35,7 +35,7 @@ public class HCEditYear extends AbstractHCAutoNumeric <HCEditYear>
   /** Default maximum value is 0 */
   public static final int DEFAULT_MAX = 9999;
 
-  public HCEditYear (@Nonnull final RequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCEditYear (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
   {
     super (aRF, aDisplayLocale);
     setDecimalPlaces (0);

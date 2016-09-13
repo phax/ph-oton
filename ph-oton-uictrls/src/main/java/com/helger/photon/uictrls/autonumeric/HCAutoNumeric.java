@@ -28,7 +28,7 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSGlobal;
 import com.helger.html.jscode.JSInvocation;
-import com.helger.photon.core.form.RequestField;
+import com.helger.html.request.IHCRequestField;
 
 /**
  * jQuery autoNumeric plugin from
@@ -42,7 +42,7 @@ import com.helger.photon.core.form.RequestField;
 @NotThreadSafe
 public class HCAutoNumeric extends AbstractHCAutoNumeric <HCAutoNumeric>
 {
-  public HCAutoNumeric (@Nullable final RequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCAutoNumeric (@Nullable final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
   {
     super (aRF, aDisplayLocale);
   }
