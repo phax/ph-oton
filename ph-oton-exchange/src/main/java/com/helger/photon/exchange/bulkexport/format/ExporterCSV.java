@@ -56,6 +56,7 @@ public final class ExporterCSV implements IExporterFile
   private Charset m_aCharset;
   private char m_cSeparatorChar = CCSV.DEFAULT_SEPARATOR;
   private char m_cQuoteChar = CCSV.DEFAULT_QUOTE_CHARACTER;
+  private char m_cEscapeChar = CCSV.DEFAULT_ESCAPE_CHARACTER;
   private EUnicodeBOM m_eBOM;
 
   public ExporterCSV ()
@@ -137,6 +138,18 @@ public final class ExporterCSV implements IExporterFile
   }
 
   @Nonnull
+  public ExporterCSV setEscapeChar (final char cEscape)
+  {
+    m_cEscapeChar = cEscape;
+    return this;
+  }
+
+  public char getEscapeChar ()
+  {
+    return m_cEscapeChar;
+  }
+
+  @Nonnull
   public ExporterCSV setUnicodeBOM (@Nullable final EUnicodeBOM eBOM)
   {
     m_eBOM = eBOM;
@@ -204,7 +217,8 @@ public final class ExporterCSV implements IExporterFile
 
       try (final CSVWriter aWriter = new CSVWriter (new OutputStreamWriter (aOS,
                                                                             m_aCharset)).setSeparatorChar (m_cSeparatorChar)
-                                                                                        .setQuoteChar (m_cQuoteChar))
+                                                                                        .setQuoteChar (m_cQuoteChar)
+                                                                                        .setEscapeChar (m_cEscapeChar))
       {
         aWriter.writeAll (aRecords);
         return ESuccess.SUCCESS;

@@ -24,13 +24,13 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.iterate.IterableIterator;
 import com.helger.commons.io.stream.StreamHelper;
@@ -39,6 +39,7 @@ import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
+import com.helger.json.serialize.IJsonWriterSettings;
 import com.helger.json.serialize.JsonWriter;
 import com.helger.json.serialize.JsonWriterSettings;
 import com.helger.photon.exchange.EExchangeFileType;
@@ -52,6 +53,7 @@ import com.helger.photon.exchange.bulkexport.IExporterFile;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public final class ExporterJSON implements IExporterFile
 {
   public static final boolean DEFAULT_EMIT_TYPE = true;
@@ -63,12 +65,18 @@ public final class ExporterJSON implements IExporterFile
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (ExporterJSON.class);
 
-  private final JsonWriterSettings m_aJWS = new JsonWriterSettings ();
+  private IJsonWriterSettings m_aJWS = new JsonWriterSettings ();
   private Charset m_aCharset = CCharset.CHARSET_UTF_8_OBJ;
   private boolean m_bEmitType = DEFAULT_EMIT_TYPE;
 
   public ExporterJSON ()
   {}
+
+  @Nonnull
+  public Charset getCharset ()
+  {
+    return m_aCharset;
+  }
 
   @Nonnull
   public ExporterJSON setCharset (@Nonnull final Charset aCharset)
@@ -78,16 +86,16 @@ public final class ExporterJSON implements IExporterFile
   }
 
   @Nonnull
-  public Charset getCharset ()
+  public IJsonWriterSettings getJsonWriterSettings ()
   {
-    return m_aCharset;
+    return m_aJWS;
   }
 
   @Nonnull
-  @ReturnsMutableObject ("Design")
-  public JsonWriterSettings getJsonWriterSettings ()
+  public ExporterJSON setJsonWriterSettings (@Nonnull final IJsonWriterSettings aJWS)
   {
-    return m_aJWS;
+    m_aJWS = ValueEnforcer.notNull (aJWS, "JsonWriterSettings");
+    return this;
   }
 
   public boolean isEmitType ()
