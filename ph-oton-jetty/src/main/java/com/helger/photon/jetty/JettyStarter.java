@@ -251,7 +251,7 @@ public class JettyStarter
       // Create connector on Port
       final ServerConnector aConnector = new ServerConnector (aServer);
       aConnector.setPort (m_nPort);
-      aConnector.setIdleTimeout (30000);
+      aConnector.setIdleTimeout (300_000);
       customizeServerConnector (aConnector);
       aServer.setConnectors (new Connector [] { aConnector });
       aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormContentSize",
