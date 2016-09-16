@@ -16,8 +16,6 @@
  */
 package com.helger.photon.basic.object.accarea;
 
-import javax.annotation.Nullable;
-
 import com.helger.photon.basic.object.client.IClientObject;
 
 /**
@@ -27,18 +25,5 @@ import com.helger.photon.basic.object.client.IClientObject;
  */
 public interface IAccountingAreaObject extends IClientObject, IHasAccountingArea
 {
-  /**
-   * @return The accounting area ID to which the object is assigned to. May be
-   *         <code>null</code>.
-   * @see #getAccountingArea()
-   */
-  @Nullable
-  String getAccountingAreaID ();
-
-  /**
-   * @return The accounting area matching the given ID. May be <code>null</code>
-   *         .
-   */
-  @Nullable
-  IAccountingArea getAccountingArea ();
+  /* empty */
 }

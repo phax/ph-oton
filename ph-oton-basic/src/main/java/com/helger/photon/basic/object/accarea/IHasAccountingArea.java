@@ -34,6 +34,18 @@ public interface IHasAccountingArea extends IHasClient, IHasAccountingAreaID
   IAccountingArea getAccountingArea ();
 
   /**
+   * @return The accounting area ID to which the object is assigned to. May be
+   *         <code>null</code>.
+   * @see #getAccountingArea()
+   */
+  @Nullable
+  default String getAccountingAreaID ()
+  {
+    final IAccountingArea aAccountingArea = getAccountingArea ();
+    return aAccountingArea == null ? null : aAccountingArea.getID ();
+  }
+
+  /**
    * Check if the passed object has the same client ID and the same accounting
    * area ID as this object
    *
