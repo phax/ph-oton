@@ -33,6 +33,13 @@ public interface IHasClient extends IHasClientID
   @Nullable
   IClient getClient ();
 
+  @Nullable
+  default String getClientID ()
+  {
+    final IClient aClient = getClient ();
+    return aClient == null ? null : aClient.getID ();
+  }
+
   /**
    * Check if the passed object has the same client ID as this object
    *
