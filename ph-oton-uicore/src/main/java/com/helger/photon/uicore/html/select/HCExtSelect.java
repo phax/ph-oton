@@ -60,7 +60,7 @@ public class HCExtSelect extends AbstractHCSelect <HCExtSelect>
   @Nonnull
   public HCOption addOptionPleaseSelect (@Nonnull final Locale aDisplayLocale)
   {
-    return addOptionAtIndex (0, createOptionPleaseSelect (aDisplayLocale));
+    return addOptionAt (0, createOptionPleaseSelect (aDisplayLocale));
   }
 
   @Nonnull
@@ -72,6 +72,6 @@ public class HCExtSelect extends AbstractHCSelect <HCExtSelect>
   @Nonnull
   public HCOption addOptionNone (@Nonnull final Locale aDisplayLocale)
   {
-    return addOptionAtIndex (0, createOptionNone (aDisplayLocale));
+    return addOptionAt (0, createOptionNone (aDisplayLocale));
   }
 }

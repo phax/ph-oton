@@ -117,11 +117,11 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
     if (getIcon () != null)
     {
       final boolean bAddSeparator = hasChildren ();
-      addChild (0, getIcon ().getAsNode ());
+      addChildAt (0, getIcon ().getAsNode ());
       if (bAddSeparator)
       {
         // Add spacer
-        addChild (1, new HCTextNode (" "));
+        addChildAt (1, new HCTextNode (" "));
       }
     }
   }

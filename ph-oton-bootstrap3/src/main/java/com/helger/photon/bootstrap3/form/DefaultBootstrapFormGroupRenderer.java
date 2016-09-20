@@ -291,8 +291,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
           aLabel.removeAllChildren ().addChild (sLabelText);
         }
 
-        aLabel.addChild (0, aCtrls);
-        aLabel.addChild (1, " ");
+        aLabel.addChildAt (0, aCtrls);
+        aLabel.addChildAt (1, " ");
         aCtrlDiv.addChild (aLabel);
       }
 

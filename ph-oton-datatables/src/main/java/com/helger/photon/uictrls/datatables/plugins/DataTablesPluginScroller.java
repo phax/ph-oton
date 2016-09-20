@@ -163,8 +163,8 @@ public class DataTablesPluginScroller extends AbstractDataTablesPlugin
   public void addInitJS (@Nonnull final DataTables aDT, @Nonnull final JSPackage aJSCode, @Nonnull final JSVar aJSTable)
   {
     // See http://legacy.datatables.net/ref#fnAdjustColumnSizing
-    aJSCode.add (JQuery.jQueryWindow ().bind ("resize",
-                                              new JSAnonymousFunction (aJSTable.invoke ("fnAdjustColumnSizing"))));
+    aJSCode.add (JQuery.jQueryWindow ().on ("resize",
+                                            new JSAnonymousFunction (aJSTable.invoke ("fnAdjustColumnSizing"))));
   }
 
   @Override

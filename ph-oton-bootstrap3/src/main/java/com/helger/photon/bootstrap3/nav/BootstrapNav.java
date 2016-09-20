@@ -119,7 +119,7 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
     if (aIcon != null)
     {
       // Icon is the first child of the content
-      aContent.addChild (0, aIcon.getAsNode ());
+      aContent.addChildAt (0, aIcon.getAsNode ());
     }
     return this;
   }

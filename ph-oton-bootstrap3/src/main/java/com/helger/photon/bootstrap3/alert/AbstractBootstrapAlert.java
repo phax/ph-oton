@@ -92,7 +92,7 @@ public abstract class AbstractBootstrapAlert <THISTYPE extends AbstractBootstrap
     if (m_bShowClose)
     {
       addClass (CBootstrapCSS.ALERT_DISMISSABLE);
-      addChild (0, new BootstrapCloseIcon ().setDataAttr ("dismiss", "alert"));
+      addChildAt (0, new BootstrapCloseIcon ().setDataAttr ("dismiss", "alert"));
     }
   }
 }

@@ -73,7 +73,7 @@ public class BootstrapPanel extends AbstractHCDiv <BootstrapPanel>
     if (m_aHeader == null)
     {
       m_aHeader = new HCDiv ().addClass (CBootstrapCSS.PANEL_HEADING);
-      addChild (0, m_aHeader);
+      addChildAt (0, m_aHeader);
     }
     return m_aHeader;
   }
