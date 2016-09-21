@@ -46,18 +46,18 @@ public class InternalErrorBuilder
 {
   public static final boolean DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER = true;
 
-  private IUIInternalErrorHandler m_aUIErrorHandler;
-  private Throwable m_aThrowable;
-  private IRequestWebScopeWithoutResponse m_aRequestScope;
-  private final ICommonsOrderedMap <String, String> m_aCustomData = new CommonsLinkedHashMap<> ();
-  private EmailAttachmentList m_aEmailAttachments;
-  private Locale m_aDisplayLocale;
-  private boolean m_bInvokeCustomExceptionHandler = DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER;
+  protected IUIInternalErrorHandler m_aUIErrorHandler;
+  protected Throwable m_aThrowable;
+  protected IRequestWebScopeWithoutResponse m_aRequestScope;
+  protected final ICommonsOrderedMap <String, String> m_aCustomData = new CommonsLinkedHashMap<> ();
+  protected EmailAttachmentList m_aEmailAttachments;
+  protected Locale m_aDisplayLocale;
+  protected boolean m_bInvokeCustomExceptionHandler = DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER;
 
   public InternalErrorBuilder ()
   {
-    addCustomData ("GlobalDebug.debug", Boolean.toString (GlobalDebug.isDebugMode ()));
-    addCustomData ("GlobalDebug.production", Boolean.toString (GlobalDebug.isProductionMode ()));
+    addCustomData ("GlobalDebug.debug", GlobalDebug.isDebugMode ());
+    addCustomData ("GlobalDebug.production", GlobalDebug.isProductionMode ());
   }
 
   @Nonnull
