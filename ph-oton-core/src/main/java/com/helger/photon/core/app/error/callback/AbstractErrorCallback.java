@@ -74,7 +74,7 @@ public abstract class AbstractErrorCallback implements
   private final ICommonsSet <String> m_aHandledLongRunning = new LRUSet<> (1000);
 
   @Nonnull
-  protected static final Locale getSafeDisplayLocale (@Nonnull final Locale aFallback)
+  public static final Locale getSafeDisplayLocale (@Nonnull final Locale aFallback)
   {
     try
     {
@@ -141,7 +141,10 @@ public abstract class AbstractErrorCallback implements
                               (bInit ? "init" : "read") +
                               " error" +
                               (aRes == null ? "" : " for " + aRes.getPath ());
-    onError (t, null, sErrorCode, new SMap ().add ("action", bInit ? "init" : "read").add ("path", aRes.getPath ()));
+    onError (t,
+             null,
+             sErrorCode,
+             new SMap ().add ("action", bInit ? "init" : "read").add ("path", aRes == null ? null : aRes.getPath ()));
   }
 
   public void onDAOWriteException (@Nonnull final Throwable t,
