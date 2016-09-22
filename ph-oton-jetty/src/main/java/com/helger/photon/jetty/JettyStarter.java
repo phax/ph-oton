@@ -311,7 +311,7 @@ public class JettyStarter
 
     // Starting shutdown listener thread
     if (m_bRunStopMonitor)
-      new InternalJettyStopMonitorThread (m_nStopPort, m_sStopKey).start ();
+      new InternalJettyStopMonitorThread (m_nStopPort, m_sStopKey, () -> aServer.stop ()).start ();
 
     try
     {

@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.DevelopersNote;
+import com.helger.commons.callback.IThrowingRunnable;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.io.stream.StreamHelper;
 
@@ -42,21 +42,24 @@ final class InternalJettyStopMonitorThread extends Thread
   private final int m_nPort;
   private final String m_sKey;
   private final ServerSocket m_aServerSocket;
+  private final IThrowingRunnable <Exception> m_aAction;
 
-  public InternalJettyStopMonitorThread (@Nonnegative final int nPort, @Nonnull final String sKey) throws IOException
+  public InternalJettyStopMonitorThread (@Nonnegative final int nPort,
+                                         @Nonnull final String sKey,
+                                         @Nonnull final IThrowingRunnable <Exception> aAction) throws IOException
   {
     m_nPort = nPort;
     m_sKey = sKey;
     setDaemon (true);
     setName ("JettyStopMonitor");
     m_aServerSocket = new ServerSocket (m_nPort, 1, InetAddress.getByName (null));
+    m_aAction = aAction;
   }
 
   @Override
-  @DevelopersNote ("Consider throwing a runtime exception instead of System.exit (find bugs)")
   public void run ()
   {
-    while (true)
+    outer: while (true)
     {
       try (final Socket aSocket = m_aServerSocket.accept ();
            final LineNumberReader lin = new LineNumberReader (new InputStreamReader (aSocket.getInputStream (),
@@ -65,15 +68,21 @@ final class InternalJettyStopMonitorThread extends Thread
         // First line: key
         final String sKey = lin.readLine ();
         if (!m_sKey.equals (sKey))
+        {
+          s_aLogger.warn ("Stop key mismatch. Got '" + sKey + "' but was expecting something else");
           continue;
+        }
 
         // Second line: stop
         final String sCmd = lin.readLine ();
+        if (false)
+          s_aLogger.info ("Got command: " + sCmd);
         if ("stop".equals (sCmd))
         {
           StreamHelper.close (aSocket);
           StreamHelper.close (m_aServerSocket);
-          System.exit (0);
+          m_aAction.run ();
+          break outer;
         }
       }
       catch (final Exception e)
