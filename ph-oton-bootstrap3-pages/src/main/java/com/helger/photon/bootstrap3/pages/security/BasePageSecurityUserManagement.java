@@ -37,7 +37,6 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -104,7 +103,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                             extends AbstractWebPageSecurityObjectWithAttributes <IUser, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW_USER ("Neuen Benutzer anlegen", "Create new user"),
     TAB_ACTIVE ("Aktive Benutzer ({0})", "Active users ({0})"),
@@ -183,12 +182,6 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-    }
-
-    @Nullable
-    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-    {
-      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 

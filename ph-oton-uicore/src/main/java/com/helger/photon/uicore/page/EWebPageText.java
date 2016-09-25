@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -34,14 +33,15 @@ import com.helger.commons.text.util.TextHelper;
  * @author Philip Helger
  */
 @Translatable
-public enum EWebPageText implements IHasDisplayText,IHasDisplayTextWithArgs
+public enum EWebPageText implements IHasDisplayTextWithArgs
 {
   OBJECT_COPY ("Kopiere ''{0}''", "Copy ''{0}''"),
   OBJECT_DELETE ("Lösche ''{0}''", "Delete ''{0}''"),
   OBJECT_UNDELETE ("''{0}'' wiederherstellen", "Undelete ''{0}''"),
   OBJECT_EDIT ("Bearbeite ''{0}''", "Edit ''{0}''"),
   IMAGE_NONE ("keines", "none"),
-  LOCKING_FAILED ("Das Objekt{0} konnte nicht gesperrt werden, da es derzeit von {1} gesperrt ist.", "Failed to lock object{0} because it is currently locked by {1}!"),
+  LOCKING_FAILED ("Das Objekt{0} konnte nicht gesperrt werden, da es derzeit von {1} gesperrt ist.",
+                  "Failed to lock object{0} because it is currently locked by {1}!"),
   LOCKING_OTHER_USER ("einem anderen Benutzer", "another user"),
   PAGE_NAME_CHANGE_PASSWORD ("Passwort ändern", "Change password"),
   PAGE_NAME_SECURITY ("Sicherheit", "Security"),
@@ -107,11 +107,5 @@ public enum EWebPageText implements IHasDisplayText,IHasDisplayTextWithArgs
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
     return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-  }
-
-  @Nullable
-  public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-  {
-    return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
   }
 }

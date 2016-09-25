@@ -27,7 +27,6 @@ import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -50,12 +49,13 @@ public abstract class AbstractWebPageSecurityToken <DATATYPE extends IHasID <Str
   public static final int TOKEN_STRING_MIN_LENGTH = 16;
 
   @Translatable
-  protected static enum EBaseText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EBaseText implements IHasDisplayTextWithArgs
   {
     LABEL_TOKEN_STRING ("Zugriffs-Token", "Access token"),
     HELPTEXT_TOKEN_STRING ("Hier kann ein existierender Zugriffs-Token (Mindestlänge von " +
                            TOKEN_STRING_MIN_LENGTH +
-                           ") von einem anderen System eingegeben werden. Wenn das Feld leer gelassen wird, wird ein neuer Zugriffs-Token erstellt.", "An existing access token (minimum length of " +
+                           ") von einem anderen System eingegeben werden. Wenn das Feld leer gelassen wird, wird ein neuer Zugriffs-Token erstellt.",
+                           "An existing access token (minimum length of " +
                                                                                                                                                       TOKEN_STRING_MIN_LENGTH +
                                                                                                                                                       ") from another system can be provided here. If the field stays empty, a new access token is created."),
     LABEL_ACCESS_TOKENS ("Zugriffs-Token", "Access tokens"),
@@ -67,19 +67,28 @@ public abstract class AbstractWebPageSecurityToken <DATATYPE extends IHasID <Str
     SHOW_NOT_AFTER ("Gültig bis: {0}", "Not after: {0}"),
     ERR_TOKEN_STRING_TOO_SHORT ("Das Zugriffs-Token ist zu kurz. Es muss mindestens " +
                                 TOKEN_STRING_MIN_LENGTH +
-                                " Zeichen haben.", "The access token is too short. It must have at least " +
+                                " Zeichen haben.",
+                                "The access token is too short. It must have at least " +
                                                    TOKEN_STRING_MIN_LENGTH +
                                                    " characters."),
-    ERR_TOKEN_STRING_IN_USE ("Das Zugriffs-Token ist bereits vergeben und kann nicht nochmal vergeben werden.", "The access token is already in used and cannot be assigned again."),
+    ERR_TOKEN_STRING_IN_USE ("Das Zugriffs-Token ist bereits vergeben und kann nicht nochmal vergeben werden.",
+                             "The access token is already in used and cannot be assigned again."),
     LABEL_REASON ("Begründung", "Reason"),
     ERR_REASON_EMPTY ("Es muss eine Bgründung angegeben werden!", "A reason must be provided!"),
-    REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS ("Das alte Zugriffs-Token von ''{0}'' wurde widerrufen und ein Neues wurde erfolgreich erstellt.", "The old access token of ''{0}'' was revoked and a new access token was successfully created."),
-    REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_HEADER ("Das alte Zugriffs-Token von ''{0}'' widerrufen und ein Neues erstellen", "Revoke the old access token of ''{0}'' and create a new access token"),
-    CREATE_NEW_ACCESS_TOKEN_SUCCESS ("Das neue Zugriffs-Token für ''{0}'' wurde erfolgreich erstellt.", "A new access token for ''{0}'' was successfully created."),
-    CREATE_NEW_ACCESS_TOKEN_HEADER ("Ein neues Zugriffs-Token für ''{0}'' erstellen", "Create a new access token for ''{0}''"),
-    REVOKE_ACCESS_TOKEN_SUCCESS ("Das alte Zugriffs-Token von ''{0}'' wurde erfolgreich widerrufen.", "The old access token of ''{0}'' was successfully revoked."),
-    REVOKE_ACCESS_TOKEN_HEADER ("Das alte Zugriffs-Token von ''{0}'' widerrufen", "Revoke the old access token of ''{0}''"),
-    TITLE_ACTION_CREATE_NEW_ACCESS_TOKEN ("Neuen Zugriffs-Token für ''{0}'' erzeugen", "Create new access token for ''{0}''"),
+    REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS ("Das alte Zugriffs-Token von ''{0}'' wurde widerrufen und ein Neues wurde erfolgreich erstellt.",
+                                                "The old access token of ''{0}'' was revoked and a new access token was successfully created."),
+    REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_HEADER ("Das alte Zugriffs-Token von ''{0}'' widerrufen und ein Neues erstellen",
+                                               "Revoke the old access token of ''{0}'' and create a new access token"),
+    CREATE_NEW_ACCESS_TOKEN_SUCCESS ("Das neue Zugriffs-Token für ''{0}'' wurde erfolgreich erstellt.",
+                                     "A new access token for ''{0}'' was successfully created."),
+    CREATE_NEW_ACCESS_TOKEN_HEADER ("Ein neues Zugriffs-Token für ''{0}'' erstellen",
+                                    "Create a new access token for ''{0}''"),
+    REVOKE_ACCESS_TOKEN_SUCCESS ("Das alte Zugriffs-Token von ''{0}'' wurde erfolgreich widerrufen.",
+                                 "The old access token of ''{0}'' was successfully revoked."),
+    REVOKE_ACCESS_TOKEN_HEADER ("Das alte Zugriffs-Token von ''{0}'' widerrufen",
+                                "Revoke the old access token of ''{0}''"),
+    TITLE_ACTION_CREATE_NEW_ACCESS_TOKEN ("Neuen Zugriffs-Token für ''{0}'' erzeugen",
+                                          "Create new access token for ''{0}''"),
     TITLE_ACTION_REVOKE_ACCESS_TOKEN ("Zugriffs-Token für ''{0}'' zurückziehen", "Revoke access token for ''{0}''");
 
     private final IMultilingualText m_aTP;
@@ -93,12 +102,6 @@ public abstract class AbstractWebPageSecurityToken <DATATYPE extends IHasID <Str
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-    }
-
-    @Nullable
-    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-    {
-      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 

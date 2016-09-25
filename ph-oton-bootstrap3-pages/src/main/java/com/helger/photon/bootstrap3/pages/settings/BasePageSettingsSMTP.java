@@ -33,7 +33,6 @@ import com.helger.commons.email.EmailAddressHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -94,7 +93,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
                                   extends AbstractBootstrapWebPageForm <NamedSMTPSettings, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW ("Neue SMTP-Einstellungen anlegen", "Create new SMTP settings"),
     HEADER_NAME ("Name", "Name"),
@@ -165,12 +164,6 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-    }
-
-    @Nullable
-    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-    {
-      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 

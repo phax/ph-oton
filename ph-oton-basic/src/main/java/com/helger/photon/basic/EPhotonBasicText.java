@@ -24,7 +24,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -35,7 +34,7 @@ import com.helger.commons.text.util.TextHelper;
  * @author Philip Helger
  */
 @Translatable
-public enum EPhotonBasicText implements IHasDisplayText, IHasDisplayTextWithArgs
+public enum EPhotonBasicText implements IHasDisplayTextWithArgs
 {
   // Menu object filters
   MENU_OBJECT_FILTER_USER_LOGGED_IN ("ein Benutzer ist angemeldet", "a user is logged in"),
@@ -61,12 +60,6 @@ public enum EPhotonBasicText implements IHasDisplayText, IHasDisplayTextWithArgs
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
     return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-  }
-
-  @Nullable
-  public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-  {
-    return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
   }
 
   @Nonnull

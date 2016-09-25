@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -34,7 +33,7 @@ import com.helger.commons.text.util.TextHelper;
  * @author Philip Helger
  */
 @Translatable
-public enum EPasswordConstraintText implements IHasDisplayText, IHasDisplayTextWithArgs
+public enum EPasswordConstraintText implements IHasDisplayTextWithArgs
 {
   DESC_MIN_LENGTH ("Das Passwort muss mindestens {0} Zeichen haben.",
                    "The password must have at least {0} character(s)."),
@@ -61,11 +60,5 @@ public enum EPasswordConstraintText implements IHasDisplayText, IHasDisplayTextW
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
     return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-  }
-
-  @Nullable
-  public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-  {
-    return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
   }
 }

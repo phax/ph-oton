@@ -27,7 +27,6 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.state.EChange;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -58,7 +57,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
                                            extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayTextWithArgs
   {
     SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert",
                   "The new system message was saved successfully."),
@@ -77,12 +76,6 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-    }
-
-    @Nullable
-    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-    {
-      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 

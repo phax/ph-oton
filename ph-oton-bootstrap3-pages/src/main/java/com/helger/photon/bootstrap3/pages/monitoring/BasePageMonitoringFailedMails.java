@@ -33,7 +33,6 @@ import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.email.IEmailAddress;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -95,7 +94,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                            extends AbstractBootstrapWebPageForm <FailedMailData, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayTextWithArgs
   {
     MSG_ID ("ID", "ID"),
     MSG_ERROR_DT ("Fehler-Datum", "Error date"),
@@ -135,12 +134,6 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-    }
-
-    @Nullable
-    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-    {
-      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 
@@ -222,7 +215,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           ScopedMailAPI.getInstance ().queueMail (aSMTPSettings, aFailedMailData.getEmailData ());
 
           // Success message
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.RESENT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.RESENT_SUCCESS.getDisplayText (aDisplayLocale)));
         }
         return true;
       }
@@ -422,7 +415,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           aBody = HCExtHelper.nl2divList (aEmailData.getBody ());
           break;
         case HTML:
-          aBody = new CommonsArrayList <> (new HCTextNode (aEmailData.getBody ()));
+          aBody = new CommonsArrayList<> (new HCTextNode (aEmailData.getBody ()));
           break;
       }
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_BODY.getDisplayText (aDisplayLocale))

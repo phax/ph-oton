@@ -32,7 +32,6 @@ import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -75,7 +74,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                             extends AbstractWebPageSecurityObjectWithAttributes <IRole, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayTextWithArgs
   {
     HEADER_NAME ("Name", "Name"),
     HEADER_IN_USE ("Verwendet?", "In use?"),
@@ -103,12 +102,6 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     {
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
-
-    @Nullable
-    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-    {
-      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
-    }
   }
 
   private void _init ()
@@ -134,12 +127,12 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
         if (aRoleMgr.deleteRole (aSelectedObject.getID ()).isChanged ())
         {
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                   aSelectedObject.getName ())));
+                                                                                                                           aSelectedObject.getName ())));
         }
         else
         {
           aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               aSelectedObject.getName ())));
+                                                                                                                       aSelectedObject.getName ())));
         }
       }
     });

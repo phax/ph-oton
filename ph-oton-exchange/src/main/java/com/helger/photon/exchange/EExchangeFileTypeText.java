@@ -46,8 +46,8 @@ public enum EExchangeFileTypeText implements IHasDisplayTextWithArgs
   }
 
   @Nullable
-  public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
+  public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
+    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }
 }

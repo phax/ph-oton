@@ -36,7 +36,6 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.system.SystemHelper;
 import com.helger.commons.system.SystemProperties;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -70,7 +69,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
                                              extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayTextWithArgs
   {
     MSG_HEADER_SPECIAL_SYSPROPS ("Spezielle System-Eigenschaften:", "Special system properties:"),
     MSG_HEADER_SYSPROPS ("Alle System-Eigenschaften:", "All system properties:"),
@@ -112,12 +111,6 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     {
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
-
-    @Nullable
-    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-    {
-      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
-    }
   }
 
   public BasePageSysInfoSystemProperties (@Nonnull @Nonempty final String sID)
@@ -153,7 +146,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     final String sDir = SystemProperties.getPropertyValue (sSysPropName);
     if (sDir != null)
     {
-      final ICommonsList <IHCNode> aList = new CommonsArrayList <> ();
+      final ICommonsList <IHCNode> aList = new CommonsArrayList<> ();
       // The property may contain several paths
       for (final String sPart : StringHelper.getExploded (SystemProperties.getPathSeparator (), sDir))
       {
@@ -169,7 +162,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         else
         {
           // Directory exists - scan content
-          final ICommonsList <File> aFiles = new CommonsArrayList <> (new FileSystemIterator (aEndorsedDir));
+          final ICommonsList <File> aFiles = new CommonsArrayList<> (new FileSystemIterator (aEndorsedDir));
           if (aFiles.isEmpty ())
           {
             // Directory is empty
@@ -218,24 +211,21 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
                                        SystemHelper.getSystemCharset ().toString ());
         aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_LOCALE.getDisplayText (aDisplayLocale),
                                        SystemHelper.getSystemLocale ().toString ());
-        aTable.addBodyRow ()
-              .addCells (EText.MSG_SYSTEM_MEM_FREE.getDisplayText (aDisplayLocale),
-                         Long.toString (SystemHelper.getFreeMemory ()) +
-                                                                                    " / " +
-                                                                                    aSH.getAsMatching (SystemHelper.getFreeMemory (),
-                                                                                                       2));
-        aTable.addBodyRow ()
-              .addCells (EText.MSG_SYSTEM_MEM_MAX.getDisplayText (aDisplayLocale),
-                         Long.toString (SystemHelper.getMaxMemory ()) +
-                                                                                   " / " +
-                                                                                   aSH.getAsMatching (SystemHelper.getMaxMemory (),
-                                                                                                      2));
-        aTable.addBodyRow ()
-              .addCells (EText.MSG_SYSTEM_MEM_TOTAL.getDisplayText (aDisplayLocale),
-                         Long.toString (SystemHelper.getTotalMemory ()) +
-                                                                                     " / " +
-                                                                                     aSH.getAsMatching (SystemHelper.getTotalMemory (),
-                                                                                                        2));
+        aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_MEM_FREE.getDisplayText (aDisplayLocale),
+                                       Long.toString (SystemHelper.getFreeMemory ()) +
+                                                                                                  " / " +
+                                                                                                  aSH.getAsMatching (SystemHelper.getFreeMemory (),
+                                                                                                                     2));
+        aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_MEM_MAX.getDisplayText (aDisplayLocale),
+                                       Long.toString (SystemHelper.getMaxMemory ()) +
+                                                                                                 " / " +
+                                                                                                 aSH.getAsMatching (SystemHelper.getMaxMemory (),
+                                                                                                                    2));
+        aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_MEM_TOTAL.getDisplayText (aDisplayLocale),
+                                       Long.toString (SystemHelper.getTotalMemory ()) +
+                                                                                                   " / " +
+                                                                                                   aSH.getAsMatching (SystemHelper.getTotalMemory (),
+                                                                                                                      2));
         aTable.addBodyRow ().addCells (EText.MSG_CONTEXT_CLASSLOADER.getDisplayText (aDisplayLocale),
                                        ClassLoaderHelper.getContextClassLoader ().toString ());
         aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_CLASSLOADER.getDisplayText (aDisplayLocale),

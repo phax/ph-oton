@@ -6,7 +6,11 @@
 This set of Java libraries forms a package to build Java web applications.
 
 Release history:
-  * 7.0.0-beta2: 
+  * 7.0.0
+    * Requires ph-commons 8.5.2
+  * 7.0.0-beta3 - 2016-09-22
+    * Based on ph-commons 8.5.x
+  * 7.0.0-beta2 - 2016-08-31
     * Based on ph-commons 8.4.x
   * 7.0.0-beta1 - 2016-07-27
     * Updated to Java 1.8

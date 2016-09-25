@@ -36,7 +36,6 @@ import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -86,7 +85,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                                  AbstractWebPageSecurityObjectWithAttributes <IUserGroup, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW_USERGROUP ("Neue Benutzergruppe anlegen", "Create new user group"),
     HEADER_NAME ("Name", "Name"),
@@ -127,12 +126,6 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     {
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
-
-    @Nullable
-    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-    {
-      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
-    }
   }
 
   public static final String FIELD_NAME = "name";
@@ -161,10 +154,10 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
         if (aUserGroupMgr.deleteUserGroup (aSelectedObject.getID ()).isChanged ())
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                   aSelectedObject.getName ())));
+                                                                                                                           aSelectedObject.getName ())));
         else
           aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               aSelectedObject.getName ())));
+                                                                                                                       aSelectedObject.getName ())));
       }
     });
   }

@@ -28,7 +28,6 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -77,7 +76,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                          extends AbstractBootstrapWebPageForm <LoginInfo, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayTextWithArgs
   {
     MSG_USERNAME ("Benutzername", "User name"),
     MSG_LOGINDT ("Anmeldezeit", "Login time"),
@@ -108,12 +107,6 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     {
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
-
-    @Nullable
-    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-    {
-      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
-    }
   }
 
   private static final String ACTION_LOGOUT_USER = "logoutuser";
@@ -140,12 +133,12 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
           if (aSelectedObject.isLogout ())
           {
             aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.LOGOUT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                     sUserName)));
+                                                                                                                             sUserName)));
           }
           else
           {
             aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.LOGOUT_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                 sUserName)));
+                                                                                                                         sUserName)));
           }
         }
 

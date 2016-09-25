@@ -35,7 +35,6 @@ import com.helger.commons.scope.ISessionApplicationScope;
 import com.helger.commons.scope.ISessionScope;
 import com.helger.commons.scope.mgr.ScopeSessionManager;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -78,7 +77,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                         extends AbstractBootstrapWebPageForm <ISessionScope, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText,IHasDisplayTextWithArgs
+  protected static enum EText implements IHasDisplayTextWithArgs
   {
     MSG_SESSION ("Session Kontext", "Session scope"),
     MSG_SESSION_APPLICATION_SCOPE ("Session Application Kontext ''{0}''", "Session app scope ''{0}''"),
@@ -115,12 +114,6 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-    }
-
-    @Nullable
-    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-    {
-      return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
     }
   }
 

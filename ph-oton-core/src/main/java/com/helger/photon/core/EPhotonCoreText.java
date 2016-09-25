@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
@@ -34,7 +33,7 @@ import com.helger.commons.text.util.TextHelper;
  * @author Philip Helger
  */
 @Translatable
-public enum EPhotonCoreText implements IHasDisplayText, IHasDisplayTextWithArgs
+public enum EPhotonCoreText implements IHasDisplayTextWithArgs
 {
   // Misc texts
   PAGE_HELP_TITLE ("Hilfe zu ''{0}'' anzeigen", "Show help for ''{0}''"),
@@ -136,12 +135,6 @@ public enum EPhotonCoreText implements IHasDisplayText, IHasDisplayTextWithArgs
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
     return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
-  }
-
-  @Nullable
-  public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
-  {
-    return DefaultTextResolver.getTextWithArgsStatic (this, m_aTP, aContentLocale, aArgs);
   }
 
   @Nullable
