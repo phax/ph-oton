@@ -39,7 +39,7 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   /** JQuery 2.x */
   JQUERY_2 ("uicore/jquery/jquery-2.2.4.js"),
   /** JQuery 3.x */
-  JQUERY_3 ("uicore/jquery/jquery-3.1.0.js"),
+  JQUERY_3 ("uicore/jquery/jquery-3.1.1.js"),
   JQUERY_COOKIE ("uicore/jqueryplugins/jquery.cookie.js"),
   JQUERY_HIGHLIGHT ("uicore/jqueryplugins/jquery.highlight.js"),
   JQUERY_HOTKEYS ("uicore/jqueryplugins/jquery.hotkeys.js"),
