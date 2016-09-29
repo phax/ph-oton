@@ -18,11 +18,13 @@ package com.helger.photon.core.app.error;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.debug.GlobalDebug;
@@ -73,6 +75,12 @@ public class InternalErrorBuilder
     return this;
   }
 
+  @Nullable
+  public IUIInternalErrorHandler getUIErrorHandler ()
+  {
+    return m_aUIErrorHandler;
+  }
+
   @Nonnull
   public InternalErrorBuilder setThrowable (@Nullable final Throwable t)
   {
@@ -80,11 +88,23 @@ public class InternalErrorBuilder
     return this;
   }
 
+  @Nullable
+  public Throwable getThrowable ()
+  {
+    return m_aThrowable;
+  }
+
   @Nonnull
   public InternalErrorBuilder setRequestScope (@Nullable final IRequestWebScopeWithoutResponse aRequestScope)
   {
     m_aRequestScope = aRequestScope;
     return this;
+  }
+
+  @Nullable
+  public IRequestWebScopeWithoutResponse getRequestScope ()
+  {
+    return m_aRequestScope;
   }
 
   @Nonnull
@@ -134,6 +154,18 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsOrderedMap <String, String> getAllCustomData ()
+  {
+    return m_aCustomData.getClone ();
+  }
+
+  public void forEachCustomData (@Nonnull final BiConsumer <String, String> aConsumer)
+  {
+    m_aCustomData.forEach (aConsumer);
+  }
+
+  @Nonnull
   public InternalErrorBuilder addEmailAttachment (@Nullable final IEmailAttachment aEmailAttachment)
   {
     if (m_aEmailAttachments == null)
@@ -150,10 +182,22 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
+  public EmailAttachmentList getEmailAttachmentList ()
+  {
+    return new EmailAttachmentList (m_aEmailAttachments);
+  }
+
+  @Nonnull
   public InternalErrorBuilder setDisplayLocale (@Nullable final Locale aDisplayLocale)
   {
     m_aDisplayLocale = aDisplayLocale;
     return this;
+  }
+
+  @Nullable
+  public Locale getDisplayLocale ()
+  {
+    return m_aDisplayLocale;
   }
 
   @Nonnull
@@ -161,6 +205,11 @@ public class InternalErrorBuilder
   {
     m_bInvokeCustomExceptionHandler = bInvokeCustomExceptionHandler;
     return this;
+  }
+
+  public boolean isInvokeCustomExceptionHandler ()
+  {
+    return m_bInvokeCustomExceptionHandler;
   }
 
   /**
