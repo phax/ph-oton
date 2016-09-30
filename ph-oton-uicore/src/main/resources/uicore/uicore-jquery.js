@@ -110,7 +110,7 @@ $(document).ajaxError (function(event, jqXHR, ajaxSettings, thrownError) {
   }
 });
 
-jQuery.cachedScript = function(url, options) {
+jQuery.cachedScript = function(url, options, success) {
   if (console.log)
     console.log ("Dynamically loading Script "+url);
 
@@ -118,7 +118,8 @@ jQuery.cachedScript = function(url, options) {
   options = jQuery.extend(options || {}, {
     dataType : "script",
     cache : true,
-    url : url
+    url : url,
+    success : success
   });
   // Use $.ajax() since it is more flexible than $.getScript
   // Return the jqXHR object so we can chain callbacks
@@ -135,7 +136,7 @@ jQuery.cachedScriptWithJSCache = function(url, options, fctSuccess) {
     fctSuccess();
   }
   else {
-    jQuery.cachedScript (url, options).success(function () {
+    jQuery.cachedScript (url, options, function () {
       fctSuccess();
       // Remember that it was already loaded
       jQuery.scriptCache.push(url);
