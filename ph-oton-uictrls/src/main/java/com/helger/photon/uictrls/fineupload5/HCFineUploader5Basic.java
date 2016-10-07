@@ -104,7 +104,7 @@ public class HCFineUploader5Basic extends AbstractHCNodeList <HCFineUploader5Bas
 
     final JSVar aUpload = aPkg.var ("u" + sID, JQuery.idRef (sID));
     aPkg.add (aUpload.invoke ("fineUploader")
-                     .arg (m_aUploader.getJSON ())
+                     .arg (m_aUploader.getJSCode ())
                      .invoke ("on")
                      .arg ("submit")
                      .arg (aOnSubmit)

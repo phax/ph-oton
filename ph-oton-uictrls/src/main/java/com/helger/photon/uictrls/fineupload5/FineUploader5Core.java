@@ -28,6 +28,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsOrderedMap;
@@ -47,7 +48,7 @@ import com.helger.http.EHTTPMethod;
  *
  * @author Philip Helger
  */
-public class FineUploader5Core
+public class FineUploader5Core implements IFineUploader5Part
 {
   // core
   public static final boolean DEFAULT_CORE_AUTO_UPLOAD = true;
@@ -55,24 +56,6 @@ public class FineUploader5Core
   public static final boolean DEFAULT_CORE_DISABLE_CANCEL_FOR_FORM_UPLOADS = false;
   public static final int DEFAULT_CORE_MAX_CONNECTIONS = 3;
   public static final boolean DEFAULT_CORE_MULTIPLE = true;
-
-  // blobs
-  public static final String DEFAULT_BLOBS_DEFAULT_NAME = "Misc data";
-
-  // chunking
-  public static final boolean DEFAULT_CHUNKING_CONCURRENT_ENABLED = false;
-  public static final boolean DEFAULT_CHUNKING_ENABLED = false;
-  public static final boolean DEFAULT_CHUNKING_MANDATORY = false;
-  public static final long DEFAULT_CHUNKING_PART_SIZE = 2_000_000;
-  public static final String DEFAULT_CHUNKING_PARAM_NAMES_CHUNK_SIZE = "qqchunksize";
-  public static final String DEFAULT_CHUNKING_PARAM_NAMES_PART_BYTE_OFFSET = "qqpartbyteoffset";
-  public static final String DEFAULT_CHUNKING_PARAM_NAMES_PART_INDEX = "qqpartindex";
-  public static final String DEFAULT_CHUNKING_PARAM_NAMES_TOTAL_PARTS = "qqtotalparts";
-
-  // cors
-  public static final boolean DEFAULT_CORS_ALLOW_XDR = false;
-  public static final boolean DEFAULT_CORS_EXPECTED = false;
-  public static final boolean DEFAULT_CORS_SEND_CREDENTIALS = false;
 
   // delete file
   public static final boolean DEFAULT_DELETE_FILE_ENABLED = false;
@@ -144,26 +127,10 @@ public class FineUploader5Core
   private int m_nCoreMaxConnections = DEFAULT_CORE_MAX_CONNECTIONS;
   private boolean m_bCoreMultiple = DEFAULT_CORE_MULTIPLE;
 
-  // blobs
-  private final String m_sBlobsDefaultName = DEFAULT_BLOBS_DEFAULT_NAME;
-
+  private final FineUploader5Blobs m_aBlobs = new FineUploader5Blobs ();
   // TODO camera
-
-  // chunking
-  private final boolean m_bChunkingConcurrentEnabled = DEFAULT_CHUNKING_CONCURRENT_ENABLED;
-  private final boolean m_bChunkingEnabled = DEFAULT_CHUNKING_ENABLED;
-  private final boolean m_bChunkingMandatory = DEFAULT_CHUNKING_MANDATORY;
-  private final long m_nChunkingPartSize = DEFAULT_CHUNKING_PART_SIZE;
-  private final String m_sChunkingParamNamesChunkSize = DEFAULT_CHUNKING_PARAM_NAMES_CHUNK_SIZE;
-  private final String m_sChunkingParamNamesPartByteOffset = DEFAULT_CHUNKING_PARAM_NAMES_PART_BYTE_OFFSET;
-  private final String m_sChunkingParamNamesPartIndex = DEFAULT_CHUNKING_PARAM_NAMES_PART_INDEX;
-  private final String m_sChunkingParamNamesTotalParts = DEFAULT_CHUNKING_PARAM_NAMES_TOTAL_PARTS;
-  private ISimpleURL m_aChunkingSuccessEndpoint;
-
-  // cors
-  private final boolean m_bCorsAllowXdr = DEFAULT_CORS_ALLOW_XDR;
-  private final boolean m_bCorsExpected = DEFAULT_CORS_EXPECTED;
-  private final boolean m_bCorsSendCredentials = DEFAULT_CORS_SEND_CREDENTIALS;
+  private final FineUploader5Chunking m_aChunking = new FineUploader5Chunking ();
+  private final FineUploader5Cors m_aCors = new FineUploader5Cors ();
 
   // deleteFile
   private final ICommonsOrderedMap <String, String> m_aDeleteFileCustomHeaders = new CommonsLinkedHashMap<> ();
@@ -393,6 +360,29 @@ public class FineUploader5Core
     m_bCoreMultiple = bMultiple;
     return this;
   }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5Blobs getBlobs ()
+  {
+    return m_aBlobs;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5Chunking getChunking ()
+  {
+    return m_aChunking;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5Cors getCors ()
+  {
+    return m_aCors;
+  }
+
+  // OLD
 
   @Nonnull
   public ISimpleURL getRequestEndpoint ()
@@ -849,89 +839,39 @@ public class FineUploader5Core
     return ret;
   }
 
+  private static void _addIf (@Nonnull final JSAssocArray aAssocArray,
+                              @Nonnull @Nonempty final String sKey,
+                              @Nullable final JSAssocArray aExpr)
+  {
+    if (aExpr != null && !aExpr.isEmpty ())
+      aAssocArray.add (sKey, aExpr);
+  }
+
   @Nonnull
-  public final JSAssocArray getJSON ()
+  public JSAssocArray getJSCode ()
   {
     final JSAssocArray ret = new JSAssocArray ();
 
     // Core
-    {
-      if (m_bCoreAutoUpload != DEFAULT_CORE_AUTO_UPLOAD)
-        ret.add ("autoUpload", m_bCoreAutoUpload);
-      if (StringHelper.hasText (m_sCoreButtonElementID))
-        ret.add ("button", JSHtml.documentGetElementById (m_sCoreButtonElementID));
-      if (m_bCoreDebug != DEFAULT_CORE_DEBUG)
-        ret.add ("debug", m_bCoreDebug);
-      if (m_bCoreDisableCancelForFormUploads != DEFAULT_CORE_DISABLE_CANCEL_FOR_FORM_UPLOADS)
-        ret.add ("disableCancelForFormUploads", m_bCoreDisableCancelForFormUploads);
-      if (m_aCoreFormatFileName != null)
-        ret.add ("formatFileName", m_aCoreFormatFileName);
-      if (m_nCoreMaxConnections != DEFAULT_CORE_MAX_CONNECTIONS)
-        ret.add ("maxConnections", m_nCoreMaxConnections);
-      if (m_bCoreMultiple != DEFAULT_CORE_MULTIPLE)
-        ret.add ("multiple", m_bCoreMultiple);
-    }
+    if (m_bCoreAutoUpload != DEFAULT_CORE_AUTO_UPLOAD)
+      ret.add ("autoUpload", m_bCoreAutoUpload);
+    if (StringHelper.hasText (m_sCoreButtonElementID))
+      ret.add ("button", JSHtml.documentGetElementById (m_sCoreButtonElementID));
+    if (m_bCoreDebug != DEFAULT_CORE_DEBUG)
+      ret.add ("debug", m_bCoreDebug);
+    if (m_bCoreDisableCancelForFormUploads != DEFAULT_CORE_DISABLE_CANCEL_FOR_FORM_UPLOADS)
+      ret.add ("disableCancelForFormUploads", m_bCoreDisableCancelForFormUploads);
+    if (m_aCoreFormatFileName != null)
+      ret.add ("formatFileName", m_aCoreFormatFileName);
+    if (m_nCoreMaxConnections != DEFAULT_CORE_MAX_CONNECTIONS)
+      ret.add ("maxConnections", m_nCoreMaxConnections);
+    if (m_bCoreMultiple != DEFAULT_CORE_MULTIPLE)
+      ret.add ("multiple", m_bCoreMultiple);
 
-    // blobs
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-
-      if (!m_sBlobsDefaultName.equals (DEFAULT_BLOBS_DEFAULT_NAME))
-        aSub.add ("defaultName", m_sBlobsDefaultName);
-
-      if (!aSub.isEmpty ())
-        ret.add ("blobs", aSub);
-    }
-
+    _addIf (ret, "blobs", m_aBlobs.getJSCode ());
     // TODO camera
-
-    // chunking
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-
-      if (m_bChunkingConcurrentEnabled != DEFAULT_CHUNKING_CONCURRENT_ENABLED)
-        aSub.add ("concurrent", new JSAssocArray ().add ("enabled", m_bChunkingConcurrentEnabled));
-      if (m_bChunkingEnabled != DEFAULT_CHUNKING_ENABLED)
-        aSub.add ("enabled", m_bChunkingEnabled);
-      if (m_bChunkingMandatory != DEFAULT_CHUNKING_MANDATORY)
-        aSub.add ("mandatory", m_bChunkingMandatory);
-      if (m_nChunkingPartSize != DEFAULT_CHUNKING_PART_SIZE)
-        aSub.add ("partSize", m_nChunkingPartSize);
-
-      final JSAssocArray aParamNames = new JSAssocArray ();
-      if (!m_sChunkingParamNamesChunkSize.equals (DEFAULT_CHUNKING_PARAM_NAMES_CHUNK_SIZE))
-        aSub.add ("chunkSize", m_sChunkingParamNamesChunkSize);
-      if (!m_sChunkingParamNamesPartByteOffset.equals (DEFAULT_CHUNKING_PARAM_NAMES_PART_BYTE_OFFSET))
-        aSub.add ("partByteOffset", m_sChunkingParamNamesPartByteOffset);
-      if (!m_sChunkingParamNamesPartIndex.equals (DEFAULT_CHUNKING_PARAM_NAMES_PART_INDEX))
-        aSub.add ("partIndex", m_sChunkingParamNamesPartIndex);
-      if (!m_sChunkingParamNamesTotalParts.equals (DEFAULT_CHUNKING_PARAM_NAMES_TOTAL_PARTS))
-        aSub.add ("totalParts", m_sChunkingParamNamesTotalParts);
-      if (!aParamNames.isEmpty ())
-        aSub.add ("paramNames", aParamNames);
-
-      if (m_aChunkingSuccessEndpoint != null)
-        aSub.add ("success",
-                  new JSAssocArray ().add ("endpoint", m_aChunkingSuccessEndpoint.getAsStringWithEncodedParameters ()));
-
-      if (!aSub.isEmpty ())
-        ret.add ("chunking", aSub);
-    }
-
-    // cors
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-
-      if (m_bCorsAllowXdr != DEFAULT_CORS_ALLOW_XDR)
-        aSub.add ("allowXdr", m_bCorsAllowXdr);
-      if (m_bCorsExpected != DEFAULT_CORS_EXPECTED)
-        aSub.add ("expected", m_bCorsExpected);
-      if (m_bCorsSendCredentials != DEFAULT_CORS_SEND_CREDENTIALS)
-        aSub.add ("sendCredentials", m_bCorsSendCredentials);
-
-      if (!aSub.isEmpty ())
-        ret.add ("cors", aSub);
-    }
+    _addIf (ret, "chunking", m_aChunking.getJSCode ());
+    _addIf (ret, "cors", m_aCors.getJSCode ());
 
     // deleteFile
     {
