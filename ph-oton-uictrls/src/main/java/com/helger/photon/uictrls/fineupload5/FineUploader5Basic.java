@@ -32,13 +32,15 @@ import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.jquery.JQuery;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.html.JSHtml;
+import com.helger.http.EHTTPMethod;
 
 /**
  * Wrapper for Fineuploader 5.x
@@ -47,12 +49,15 @@ import com.helger.html.jscode.JSAssocArray;
  */
 public class FineUploader5Basic
 {
-  // Core
-  public static final boolean DEFAULT_AUTO_UPLOAD = true;
-  public static final boolean DEFAULT_DEBUG = false;
-  public static final boolean DEFAULT_DISABLE_CANCEL_FOR_FORM_UPLOADS = false;
-  public static final int DEFAULT_MAX_CONNECTIONS = 3;
-  public static final boolean DEFAULT_MULTIPLE = true;
+  // core
+  public static final boolean DEFAULT_CORE_AUTO_UPLOAD = true;
+  public static final boolean DEFAULT_CORE_DEBUG = false;
+  public static final boolean DEFAULT_CORE_DISABLE_CANCEL_FOR_FORM_UPLOADS = false;
+  public static final int DEFAULT_CORE_MAX_CONNECTIONS = 3;
+  public static final boolean DEFAULT_CORE_MULTIPLE = true;
+
+  // blobs
+  public static final String DEFAULT_BLOBS_DEFAULT_NAME = "Misc data";
 
   // chunking
   public static final boolean DEFAULT_CHUNKING_CONCURRENT_ENABLED = false;
@@ -69,37 +74,80 @@ public class FineUploader5Basic
   public static final boolean DEFAULT_CORS_EXPECTED = false;
   public static final boolean DEFAULT_CORS_SEND_CREDENTIALS = false;
 
-  // rest
-  public static final ISimpleURL DEFAULT_REQUEST_ENDPOINT = new SimpleURL ("/server/upload");
-  public static final boolean DEFAULT_REQUEST_PARAMS_IN_BODY = false;
-  public static final boolean DEFAULT_REQUEST_FORCE_MULTIPART = false;
-  public static final String DEFAULT_REQUEST_INPUT_NAME = "qqfile";
+  // delete file
+  public static final boolean DEFAULT_DELETE_FILE_ENABLED = false;
+  public static final ISimpleURL DEFAULT_DELETE_FILE_ENDPOINT = new SimpleURL ("/server/upload");
+  public static final EHTTPMethod DEFAULT_DELETE_FILE_METHOD = EHTTPMethod.DELETE;
 
-  public static final int DEFAULT_VALIDATION_SIZE_LIMIT = 0;
-  public static final int DEFAULT_VALIDATION_MIN_SIZE_LIMIT = 0;
-  public static final boolean DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE = true;
+  // form
+  public static final String DEFAULT_FORM_ELEMENT_ID = "qq-form";
+  public static final boolean DEFAULT_FORM_AUTO_UPLOAD = false;
+  public static final boolean DEFAULT_FORM_INTERCEPT_SUBMIT = true;
 
+  // paste
+  public static final String DEFAULT_PASTE_DEFAULT_NAME = "pasted_image";
+
+  // resume
+  public static final int DEFAULT_RESUME_RECORDS_EXPIRE_IN = 7;
+  public static final boolean DEFAULT_RESUME_ENABLED = false;
+  public static final String DEFAULT_RESUME_PARAM_NAMES_RESUMING = "qqresume";
+
+  // retry
+  public static final int DEFAULT_RETRY_AUTO_ATTEMPT_DELAY = 5;
   public static final boolean DEFAULT_RETRY_ENABLE_AUTO = false;
   public static final int DEFAULT_RETRY_MAX_AUTO_ATTEMPTS = 3;
-  public static final int DEFAULT_RETRY_AUTO_ATTEMPT_DELAY = 5;
   public static final String DEFAULT_RETRY_PREVENT_RETRY_RESPONSE_PROPERTY = "preventRetry";
 
+  // request
+  public static final ISimpleURL DEFAULT_REQUEST_ENDPOINT = new SimpleURL ("/server/upload");
+  public static final String DEFAULT_REQUEST_FILENAME_PARAM = "qqfilename";
+  public static final boolean DEFAULT_REQUEST_FORCE_MULTIPART = true;
+  public static final String DEFAULT_REQUEST_INPUT_NAME = "qqfile";
+  public static final EHTTPMethod DEFAULT_REQUEST_METHOD = EHTTPMethod.POST;
+  public static final boolean DEFAULT_REQUEST_PARAMS_IN_BODY = true;
+  public static final String DEFAULT_REQUEST_UUID_NAME = "qquuid";
+  public static final String DEFAULT_REQUEST_TOTAL_FILE_SIZE_NAME = "qqtotalfilesize";
+
+  // session
+  public static final boolean DEFAULT_SESSION_REFRESH_ON_RESET = true;
+
+  // text
+  public static final Set <String> DEFAULT_TEXT_SIZE_SYMBOLS = new CommonsLinkedHashSet<> ("kB",
+                                                                                           "MB",
+                                                                                           "GB",
+                                                                                           "TB",
+                                                                                           "PB",
+                                                                                           "EB").getAsUnmodifiable ();
+
+  // validation
+  public static final int DEFAULT_VALIDATION_ITEM_LIMIT = 0;
+  public static final int DEFAULT_VALIDATION_MIN_SIZE_LIMIT = 0;
+  public static final int DEFAULT_VALIDATION_SIZE_LIMIT = 0;
+  public static final boolean DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE = true;
+  public static final int DEFAULT_VALIDATION_IMAGE_MAX_HEIGHT = 0;
+  public static final int DEFAULT_VALIDATION_IMAGE_MAX_WIDTH = 0;
+  public static final int DEFAULT_VALIDATION_IMAGE_MIN_HEIGHT = 0;
+  public static final int DEFAULT_VALIDATION_IMAGE_MIN_WIDTH = 0;
+
+  // workarounds
+  public static final boolean DEFAULT_WORKAROUNDS = true;
+
+  // generic
   private final Locale m_aDisplayLocale;
 
-  // Core
-  private boolean m_bAutoUpload = DEFAULT_AUTO_UPLOAD;
-  private boolean m_bDebug = DEFAULT_DEBUG;
-  private String m_sButtonElementID;
-  private boolean m_bDisableCancelForFormUploads = DEFAULT_DISABLE_CANCEL_FOR_FORM_UPLOADS;
-  private IJSExpression m_aFormatFileName;
-  private int m_nMaxConnections = DEFAULT_MAX_CONNECTIONS;
-  private boolean m_bMultiple = DEFAULT_MULTIPLE;
+  // core
+  private boolean m_bCoreAutoUpload = DEFAULT_CORE_AUTO_UPLOAD;
+  private String m_sCoreButtonElementID;
+  private boolean m_bCoreDebug = DEFAULT_CORE_DEBUG;
+  private boolean m_bCoreDisableCancelForFormUploads = DEFAULT_CORE_DISABLE_CANCEL_FOR_FORM_UPLOADS;
+  private IJSExpression m_aCoreFormatFileName;
+  private int m_nCoreMaxConnections = DEFAULT_CORE_MAX_CONNECTIONS;
+  private boolean m_bCoreMultiple = DEFAULT_CORE_MULTIPLE;
 
   // blobs
-  private String m_sDefaultName;
+  private final String m_sBlobsDefaultName = DEFAULT_BLOBS_DEFAULT_NAME;
 
-  // camera
-  // TODO fine uploader camera options
+  // TODO camera
 
   // chunking
   private final boolean m_bChunkingConcurrentEnabled = DEFAULT_CHUNKING_CONCURRENT_ENABLED;
@@ -118,24 +166,77 @@ public class FineUploader5Basic
   private final boolean m_bCorsSendCredentials = DEFAULT_CORS_SEND_CREDENTIALS;
 
   // deleteFile
+  private IJSExpression m_aDeleteFileCustomHeaders;
+  private final boolean m_bDeleteFileEnabled = DEFAULT_DELETE_FILE_ENABLED;
+  private final ISimpleURL m_aDeleteFileEndpoint = DEFAULT_DELETE_FILE_ENDPOINT;
+  private final EHTTPMethod m_eDeleteFileMethod = DEFAULT_DELETE_FILE_METHOD;
+  private IJSExpression m_aDeleteFileParams;
 
-  // rest
-  private ISimpleURL m_aRequestEndpoint = DEFAULT_REQUEST_ENDPOINT;
-  private final ICommonsOrderedMap <String, String> m_aRequestParams = new CommonsLinkedHashMap<> ();
-  private boolean m_bRequestParamsInBody = DEFAULT_REQUEST_PARAMS_IN_BODY;
-  private final ICommonsOrderedMap <String, String> m_aRequestCustomHeaders = new CommonsLinkedHashMap<> ();
-  private boolean m_bRequestForceMultipart = DEFAULT_REQUEST_FORCE_MULTIPART;
-  private String m_sRequestInputName = DEFAULT_REQUEST_INPUT_NAME;
+  // TODO extraButtons
 
-  private final ICommonsOrderedSet <String> m_aValidationAllowedExtensions = new CommonsLinkedHashSet<> ();
-  private int m_nValidationSizeLimit = DEFAULT_VALIDATION_SIZE_LIMIT;
-  private int m_nValidationMinSizeLimit = DEFAULT_VALIDATION_MIN_SIZE_LIMIT;
-  private boolean m_bValidationStopOnFirstInvalidFile = DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE;
+  // form
+  private final String m_sFormElementID = DEFAULT_FORM_ELEMENT_ID;
+  private final boolean m_bFormAutoUpload = DEFAULT_FORM_AUTO_UPLOAD;
+  private final boolean m_bFormInterceptSubmit = DEFAULT_FORM_INTERCEPT_SUBMIT;
 
+  // messages
+  // All in EFineUploader5BasicText
+
+  // paste
+  private final String m_sPasteDefaultName = DEFAULT_PASTE_DEFAULT_NAME;
+  private String m_sPasteTargetElementID;
+
+  // resume
+  private final int m_nResumeRecordsExpireIn = DEFAULT_RESUME_RECORDS_EXPIRE_IN;
+  private final boolean m_bResumeEnabled = DEFAULT_RESUME_ENABLED;
+  private final String m_sResumeParamNamesResuming = DEFAULT_RESUME_PARAM_NAMES_RESUMING;
+
+  // retry
+  private int m_nRetryAutoAttemptDelay = DEFAULT_RETRY_AUTO_ATTEMPT_DELAY;
   private boolean m_bRetryEnableAuto = DEFAULT_RETRY_ENABLE_AUTO;
   private int m_nRetryMaxAutoAttempts = DEFAULT_RETRY_MAX_AUTO_ATTEMPTS;
-  private int m_nRetryAutoAttemptDelay = DEFAULT_RETRY_AUTO_ATTEMPT_DELAY;
   private String m_sRetryPreventRetryResponseProperty = DEFAULT_RETRY_PREVENT_RETRY_RESPONSE_PROPERTY;
+
+  // request
+  private final ICommonsOrderedMap <String, String> m_aRequestCustomHeaders = new CommonsLinkedHashMap<> ();
+  private ISimpleURL m_aRequestEndpoint = DEFAULT_REQUEST_ENDPOINT;
+  private final String m_sRequestFilenameParam = DEFAULT_REQUEST_FILENAME_PARAM;
+  private boolean m_bRequestForceMultipart = DEFAULT_REQUEST_FORCE_MULTIPART;
+  private String m_sRequestInputName = DEFAULT_REQUEST_INPUT_NAME;
+  private final EHTTPMethod m_eRequestMethod = DEFAULT_REQUEST_METHOD;
+  private final ICommonsOrderedMap <String, String> m_aRequestParams = new CommonsLinkedHashMap<> ();
+  private boolean m_bRequestParamsInBody = DEFAULT_REQUEST_PARAMS_IN_BODY;
+  private final String m_sRequestUUIDName = DEFAULT_REQUEST_UUID_NAME;
+  private final String m_sRequestTotalFileSizeName = DEFAULT_REQUEST_TOTAL_FILE_SIZE_NAME;
+
+  // TODO scaling
+
+  // session
+  private final ICommonsOrderedMap <String, String> m_aSessionCustomHeaders = new CommonsLinkedHashMap<> ();
+  private ISimpleURL m_aSessionEndpoint;
+  private final ICommonsOrderedMap <String, String> m_aSessionParams = new CommonsLinkedHashMap<> ();
+  private final boolean m_bSessionRefreshOnReset = DEFAULT_SESSION_REFRESH_ON_RESET;
+
+  // text
+  // partially in EFineUploader5BasicText
+  private final ICommonsOrderedSet <String> m_aTextSizeSymbols = new CommonsLinkedHashSet<> (DEFAULT_TEXT_SIZE_SYMBOLS);
+
+  // validation
+  private final ICommonsOrderedSet <IMimeType> m_aValidationAcceptFiles = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aValidationAllowedExtensions = new CommonsLinkedHashSet<> ();
+  private final int m_nValidationItemLimit = DEFAULT_VALIDATION_ITEM_LIMIT;
+  private int m_nValidationMinSizeLimit = DEFAULT_VALIDATION_MIN_SIZE_LIMIT;
+  private int m_nValidationSizeLimit = DEFAULT_VALIDATION_SIZE_LIMIT;
+  private boolean m_bValidationStopOnFirstInvalidFile = DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE;
+  private final int m_nValidationImageMaxHeight = DEFAULT_VALIDATION_IMAGE_MAX_HEIGHT;
+  private final int m_nValidationImageMaxWidth = DEFAULT_VALIDATION_IMAGE_MAX_WIDTH;
+  private final int m_nValidationImageMinHeight = DEFAULT_VALIDATION_IMAGE_MIN_HEIGHT;
+  private final int m_nValidationImageMinWidth = DEFAULT_VALIDATION_IMAGE_MIN_WIDTH;
+
+  // workarounds
+  private final boolean m_bWorkaroundsIosEmptyVideo = DEFAULT_WORKAROUNDS;
+  private final boolean m_bWorkaroundsIos8BrowserCrash = DEFAULT_WORKAROUNDS;
+  private final boolean m_bWorkaroundsIos8SafariUploads = DEFAULT_WORKAROUNDS;
 
   public FineUploader5Basic (@Nullable final Locale aDisplayLocale)
   {
@@ -150,7 +251,7 @@ public class FineUploader5Basic
 
   public boolean isDebug ()
   {
-    return m_bDebug;
+    return m_bCoreDebug;
   }
 
   /**
@@ -167,7 +268,7 @@ public class FineUploader5Basic
   @Nonnull
   public FineUploader5Basic setDebug (final boolean bDebug)
   {
-    m_bDebug = bDebug;
+    m_bCoreDebug = bDebug;
     return this;
   }
 
@@ -356,7 +457,7 @@ public class FineUploader5Basic
   @Nullable
   public String getButtonElementID ()
   {
-    return m_sButtonElementID;
+    return m_sCoreButtonElementID;
   }
 
   /**
@@ -371,13 +472,13 @@ public class FineUploader5Basic
   @Nonnull
   public FineUploader5Basic setButtonElementID (@Nullable final String sButtonElementID)
   {
-    m_sButtonElementID = sButtonElementID;
+    m_sCoreButtonElementID = sButtonElementID;
     return this;
   }
 
   public boolean isMultiple ()
   {
-    return m_bMultiple;
+    return m_bCoreMultiple;
   }
 
   /**
@@ -391,14 +492,14 @@ public class FineUploader5Basic
   @Nonnull
   public FineUploader5Basic setMultiple (final boolean bMultiple)
   {
-    m_bMultiple = bMultiple;
+    m_bCoreMultiple = bMultiple;
     return this;
   }
 
   @Nonnegative
   public int getMaxConnections ()
   {
-    return m_nMaxConnections;
+    return m_nCoreMaxConnections;
   }
 
   /**
@@ -412,13 +513,13 @@ public class FineUploader5Basic
   public FineUploader5Basic setMaxConnections (@Nonnegative final int nMaxConnections)
   {
     ValueEnforcer.isGT0 (nMaxConnections, "MaxConnections");
-    m_nMaxConnections = nMaxConnections;
+    m_nCoreMaxConnections = nMaxConnections;
     return this;
   }
 
   public boolean isDisableCancelForFormUploads ()
   {
-    return m_bDisableCancelForFormUploads;
+    return m_bCoreDisableCancelForFormUploads;
   }
 
   /**
@@ -433,13 +534,13 @@ public class FineUploader5Basic
   @Nonnull
   public FineUploader5Basic setDisableCancelForFormUploads (final boolean bDisableCancelForFormUploads)
   {
-    m_bDisableCancelForFormUploads = bDisableCancelForFormUploads;
+    m_bCoreDisableCancelForFormUploads = bDisableCancelForFormUploads;
     return this;
   }
 
   public boolean isAutoUpload ()
   {
-    return m_bAutoUpload;
+    return m_bCoreAutoUpload;
   }
 
   /**
@@ -453,7 +554,7 @@ public class FineUploader5Basic
   @Nonnull
   public FineUploader5Basic setAutoUpload (final boolean bAutoUpload)
   {
-    m_bAutoUpload = bAutoUpload;
+    m_bCoreAutoUpload = bAutoUpload;
     return this;
   }
 
@@ -724,18 +825,24 @@ public class FineUploader5Basic
   public final JSAssocArray getJSON ()
   {
     final JSAssocArray ret = new JSAssocArray ();
-    if (m_bDebug != DEFAULT_DEBUG)
-      ret.add ("debug", m_bDebug);
-    if (StringHelper.hasText (m_sButtonElementID))
-      ret.add ("button", JQuery.idRef (m_sButtonElementID).component0 ());
-    if (m_bMultiple != DEFAULT_MULTIPLE)
-      ret.add ("multiple", m_bMultiple);
-    if (m_nMaxConnections != DEFAULT_MAX_CONNECTIONS)
-      ret.add ("maxConnections", m_nMaxConnections);
-    if (m_bDisableCancelForFormUploads != DEFAULT_DISABLE_CANCEL_FOR_FORM_UPLOADS)
-      ret.add ("disableCancelForFormUploads", m_bDisableCancelForFormUploads);
-    if (m_bAutoUpload != DEFAULT_AUTO_UPLOAD)
-      ret.add ("autoUpload", m_bAutoUpload);
+
+    // Core
+    {
+      if (m_bCoreAutoUpload != DEFAULT_CORE_AUTO_UPLOAD)
+        ret.add ("autoUpload", m_bCoreAutoUpload);
+      if (StringHelper.hasText (m_sCoreButtonElementID))
+        ret.add ("button", JSHtml.documentGetElementById (m_sCoreButtonElementID));
+      if (m_bCoreDebug != DEFAULT_CORE_DEBUG)
+        ret.add ("debug", m_bCoreDebug);
+      if (m_bCoreDisableCancelForFormUploads != DEFAULT_CORE_DISABLE_CANCEL_FOR_FORM_UPLOADS)
+        ret.add ("disableCancelForFormUploads", m_bCoreDisableCancelForFormUploads);
+      if (m_aCoreFormatFileName != null)
+        ret.add ("formatFileName", m_aCoreFormatFileName);
+      if (m_nCoreMaxConnections != DEFAULT_CORE_MAX_CONNECTIONS)
+        ret.add ("maxConnections", m_nCoreMaxConnections);
+      if (m_bCoreMultiple != DEFAULT_CORE_MULTIPLE)
+        ret.add ("multiple", m_bCoreMultiple);
+    }
 
     // request
     {
@@ -786,12 +893,27 @@ public class FineUploader5Basic
     if (m_aDisplayLocale != null)
     {
       final JSAssocArray aMessages = new JSAssocArray ();
-      aMessages.add ("typeError", EFineUploader5BasicText.TYPE_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("sizeError", EFineUploader5BasicText.SIZE_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("minSizeError", EFineUploader5BasicText.MIN_SIZE_ERROR.getDisplayText (m_aDisplayLocale));
       aMessages.add ("emptyError", EFineUploader5BasicText.EMPTY_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("maxHeightImageError",
+                     EFineUploader5BasicText.MAX_HEIGHT_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("maxWidthImageError",
+                     EFineUploader5BasicText.MAX_WIDTH_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("minHeightImageError",
+                     EFineUploader5BasicText.MIN_HEIGHT_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("minWidthImageError",
+                     EFineUploader5BasicText.MIN_WIDTH_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("minSizeError", EFineUploader5BasicText.MIN_SIZE_ERROR.getDisplayText (m_aDisplayLocale));
       aMessages.add ("noFilesError", EFineUploader5BasicText.NO_FILES_ERROR.getDisplayText (m_aDisplayLocale));
       aMessages.add ("onLeave", EFineUploader5BasicText.ON_LEAVE.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("retryFailTooManyItemsError",
+                     EFineUploader5BasicText.RETRY_FAIL_TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("sizeError", EFineUploader5BasicText.SIZE_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("tooManyItemsError",
+                     EFineUploader5BasicText.TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("typeError", EFineUploader5BasicText.TYPE_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("unsupportedBrowserIos8Safari",
+                     EFineUploader5BasicText.UNSUPPORTED_BROWSER_IOS8_SAFARI.getDisplayText (m_aDisplayLocale));
+
       // extended
       extendJSONMessages (aMessages, m_aDisplayLocale);
       ret.add ("messages", aMessages);

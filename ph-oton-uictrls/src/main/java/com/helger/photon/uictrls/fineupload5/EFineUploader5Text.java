@@ -30,7 +30,6 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum EFineUploader5Text implements IHasDisplayText
 {
-  // messages
   TOO_MANY_FILE_ERROR ("Sie können immer nur eine Datei hierher ziehen.", "You may only drop one file."),
   // text
   UPLOAD_BUTTON ("Datei auswählen", "Upload a file"),
