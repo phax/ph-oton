@@ -56,19 +56,6 @@ public class FineUploader5Core implements IFineUploader5Part
   public static final int DEFAULT_CORE_MAX_CONNECTIONS = 3;
   public static final boolean DEFAULT_CORE_MULTIPLE = true;
 
-  // form
-  public static final String DEFAULT_FORM_ELEMENT_ID = "qq-form";
-  public static final boolean DEFAULT_FORM_AUTO_UPLOAD = false;
-  public static final boolean DEFAULT_FORM_INTERCEPT_SUBMIT = true;
-
-  // paste
-  public static final String DEFAULT_PASTE_DEFAULT_NAME = "pasted_image";
-
-  // resume
-  public static final int DEFAULT_RESUME_RECORDS_EXPIRE_IN = 7;
-  public static final boolean DEFAULT_RESUME_ENABLED = false;
-  public static final String DEFAULT_RESUME_PARAM_NAMES_RESUMING = "qqresume";
-
   // retry
   public static final int DEFAULT_RETRY_AUTO_ATTEMPT_DELAY = 5;
   public static final boolean DEFAULT_RETRY_ENABLE_AUTO = false;
@@ -121,29 +108,18 @@ public class FineUploader5Core implements IFineUploader5Part
   private int m_nCoreMaxConnections = DEFAULT_CORE_MAX_CONNECTIONS;
   private boolean m_bCoreMultiple = DEFAULT_CORE_MULTIPLE;
 
+  // messages
+  // All in EFineUploader5CoreText
+
   private final FineUploader5Blobs m_aBlobs = new FineUploader5Blobs ();
   // TODO camera
   private final FineUploader5Chunking m_aChunking = new FineUploader5Chunking ();
   private final FineUploader5Cors m_aCors = new FineUploader5Cors ();
   private final FineUploader5DeleteFile m_aDeleteFile = new FineUploader5DeleteFile ();
   // TODO extraButtons
-
-  // form
-  private final String m_sFormElementID = DEFAULT_FORM_ELEMENT_ID;
-  private final boolean m_bFormAutoUpload = DEFAULT_FORM_AUTO_UPLOAD;
-  private final boolean m_bFormInterceptSubmit = DEFAULT_FORM_INTERCEPT_SUBMIT;
-
-  // messages
-  // All in EFineUploader5CoreText
-
-  // paste
-  private final String m_sPasteDefaultName = DEFAULT_PASTE_DEFAULT_NAME;
-  private String m_sPasteTargetElementID;
-
-  // resume
-  private final int m_nResumeRecordsExpireIn = DEFAULT_RESUME_RECORDS_EXPIRE_IN;
-  private final boolean m_bResumeEnabled = DEFAULT_RESUME_ENABLED;
-  private final String m_sResumeParamNamesResuming = DEFAULT_RESUME_PARAM_NAMES_RESUMING;
+  private final FineUploader5Form m_aForm = new FineUploader5Form ();
+  private final FineUploader5Paste m_aPaste = new FineUploader5Paste ();
+  private final FineUploader5Resume m_aResume = new FineUploader5Resume ();
 
   // retry
   private int m_nRetryAutoAttemptDelay = DEFAULT_RETRY_AUTO_ATTEMPT_DELAY;
@@ -374,6 +350,27 @@ public class FineUploader5Core implements IFineUploader5Part
   public FineUploader5DeleteFile getDeleteFile ()
   {
     return m_aDeleteFile;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5Form getForm ()
+  {
+    return m_aForm;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5Paste getPaste ()
+  {
+    return m_aPaste;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5Resume getResume ()
+  {
+    return m_aResume;
   }
 
   // OLD
@@ -858,21 +855,7 @@ public class FineUploader5Core implements IFineUploader5Part
     _addIf (ret, "cors", m_aCors.getJSCode ());
     _addIf (ret, "deleteFile", m_aDeleteFile.getJSCode ());
     // TODO extraButtons
-
-    // form
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-
-      if (!m_sFormElementID.equals (DEFAULT_FORM_ELEMENT_ID))
-        aSub.add ("element", m_sFormElementID);
-      if (m_bFormAutoUpload != DEFAULT_FORM_AUTO_UPLOAD)
-        aSub.add ("autoUpload", m_bFormAutoUpload);
-      if (m_bFormInterceptSubmit != DEFAULT_FORM_INTERCEPT_SUBMIT)
-        aSub.add ("interceptSubmit", m_bFormInterceptSubmit);
-
-      if (!aSub.isEmpty ())
-        ret.add ("form", aSub);
-    }
+    _addIf (ret, "form", m_aForm.getJSCode ());
 
     // messages
     if (m_aDisplayLocale != null)
@@ -904,37 +887,8 @@ public class FineUploader5Core implements IFineUploader5Part
       ret.add ("messages", aMessages);
     }
 
-    // paste
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-
-      if (!m_sPasteDefaultName.equals (DEFAULT_PASTE_DEFAULT_NAME))
-        aSub.add ("defaultName", m_sPasteDefaultName);
-      if (StringHelper.hasText (m_sPasteTargetElementID))
-        aSub.add ("targetElement", JSHtml.documentGetElementById (m_sPasteTargetElementID));
-
-      if (!aSub.isEmpty ())
-        ret.add ("paste", aSub);
-    }
-
-    // resume
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-
-      if (m_nResumeRecordsExpireIn != DEFAULT_RESUME_RECORDS_EXPIRE_IN)
-        aSub.add ("recordsExpireIn", m_nResumeRecordsExpireIn);
-      if (m_bResumeEnabled != DEFAULT_RESUME_ENABLED)
-        aSub.add ("enabled", m_bResumeEnabled);
-
-      final JSAssocArray aParamNames = new JSAssocArray ();
-      if (!m_sResumeParamNamesResuming.equals (DEFAULT_RESUME_PARAM_NAMES_RESUMING))
-        aParamNames.add ("resuming", m_sResumeParamNamesResuming);
-      if (!aParamNames.isEmpty ())
-        aSub.add ("paramNames", aParamNames);
-
-      if (!aSub.isEmpty ())
-        ret.add ("resume", aSub);
-    }
+    _addIf (ret, "paste", m_aPaste.getJSCode ());
+    _addIf (ret, "resume", m_aResume.getJSCode ());
 
     // retry
     {
