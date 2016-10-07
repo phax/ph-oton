@@ -43,7 +43,7 @@ import com.helger.html.jscode.html.JSHtml;
 import com.helger.http.EHTTPMethod;
 
 /**
- * Wrapper for Fineuploader 5.x
+ * Wrapper for Fine Uploader 5.x
  *
  * @author Philip Helger
  */
@@ -158,7 +158,7 @@ public class FineUploader5Core
   private final String m_sChunkingParamNamesPartByteOffset = DEFAULT_CHUNKING_PARAM_NAMES_PART_BYTE_OFFSET;
   private final String m_sChunkingParamNamesPartIndex = DEFAULT_CHUNKING_PARAM_NAMES_PART_INDEX;
   private final String m_sChunkingParamNamesTotalParts = DEFAULT_CHUNKING_PARAM_NAMES_TOTAL_PARTS;
-  private String m_sChunkingSuccessEndpoint;
+  private ISimpleURL m_aChunkingSuccessEndpoint;
 
   // cors
   private final boolean m_bCorsAllowXdr = DEFAULT_CORS_ALLOW_XDR;
@@ -842,6 +842,67 @@ public class FineUploader5Core
         ret.add ("maxConnections", m_nCoreMaxConnections);
       if (m_bCoreMultiple != DEFAULT_CORE_MULTIPLE)
         ret.add ("multiple", m_bCoreMultiple);
+    }
+
+    // blobs
+    {
+      final JSAssocArray aSub = new JSAssocArray ();
+
+      if (!m_sBlobsDefaultName.equals (DEFAULT_BLOBS_DEFAULT_NAME))
+        aSub.add ("defaultName", m_sBlobsDefaultName);
+
+      if (!aSub.isEmpty ())
+        ret.add ("blobs", aSub);
+    }
+
+    // TODO camera
+
+    // chunking
+    {
+      final JSAssocArray aSub = new JSAssocArray ();
+
+      if (m_bChunkingConcurrentEnabled != DEFAULT_CHUNKING_CONCURRENT_ENABLED)
+        aSub.add ("concurrent", new JSAssocArray ().add ("enabled", m_bChunkingConcurrentEnabled));
+      if (m_bChunkingEnabled != DEFAULT_CHUNKING_ENABLED)
+        aSub.add ("enabled", m_bChunkingEnabled);
+      if (m_bChunkingMandatory != DEFAULT_CHUNKING_MANDATORY)
+        aSub.add ("mandatory", m_bChunkingMandatory);
+      if (m_nChunkingPartSize != DEFAULT_CHUNKING_PART_SIZE)
+        aSub.add ("partSize", m_nChunkingPartSize);
+
+      final JSAssocArray aParamNames = new JSAssocArray ();
+      if (!m_sChunkingParamNamesChunkSize.equals (DEFAULT_CHUNKING_PARAM_NAMES_CHUNK_SIZE))
+        aSub.add ("chunkSize", m_sChunkingParamNamesChunkSize);
+      if (!m_sChunkingParamNamesPartByteOffset.equals (DEFAULT_CHUNKING_PARAM_NAMES_PART_BYTE_OFFSET))
+        aSub.add ("partByteOffset", m_sChunkingParamNamesPartByteOffset);
+      if (!m_sChunkingParamNamesPartIndex.equals (DEFAULT_CHUNKING_PARAM_NAMES_PART_INDEX))
+        aSub.add ("partIndex", m_sChunkingParamNamesPartIndex);
+      if (!m_sChunkingParamNamesTotalParts.equals (DEFAULT_CHUNKING_PARAM_NAMES_TOTAL_PARTS))
+        aSub.add ("totalParts", m_sChunkingParamNamesTotalParts);
+      if (!aParamNames.isEmpty ())
+        aSub.add ("paramNames", aParamNames);
+
+      if (m_aChunkingSuccessEndpoint != null)
+        aSub.add ("success",
+                  new JSAssocArray ().add ("endpoint", m_aChunkingSuccessEndpoint.getAsStringWithEncodedParameters ()));
+
+      if (!aSub.isEmpty ())
+        ret.add ("chunking", aSub);
+    }
+
+    // cors
+    {
+      final JSAssocArray aSub = new JSAssocArray ();
+
+      if (m_bCorsAllowXdr != DEFAULT_CORS_ALLOW_XDR)
+        aSub.add ("allowXdr", m_bCorsAllowXdr);
+      if (m_bCorsExpected != DEFAULT_CORS_EXPECTED)
+        aSub.add ("expected", m_bCorsExpected);
+      if (m_bCorsSendCredentials != DEFAULT_CORS_SEND_CREDENTIALS)
+        aSub.add ("sendCredentials", m_bCorsSendCredentials);
+
+      if (!aSub.isEmpty ())
+        ret.add ("cors", aSub);
     }
 
     // request

@@ -11,9 +11,11 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.state.ESuccess;
@@ -26,25 +28,77 @@ import com.helger.photon.core.app.error.InternalErrorBuilder;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.response.UnifiedResponse;
-import com.helger.xml.serialize.write.XMLWriterSettings;
 
+/**
+ * <p>
+ * Abstract fine upload servlet that abstracts the necessary JSON response.
+ * </p>
+ * <h2>Deleting Files</h2>
+ * <p>
+ * If you have enabled this feature, you will need to handle the corresponding
+ * DELETE or POST requests server-side. The method is configurable via the
+ * method property of the deleteFile option.
+ * </p>
+ * <p>
+ * For DELETE requests, the UUID of the file to delete will be specified as the
+ * last element of the URI path. Any custom parameters specified will be added
+ * to the query string. For POST requests, the UUID is sent as a "qquuid"
+ * parameter, and a "_method" parameter is sent with a value of "DELETE". All
+ * POST request parameters are sent in the request payload.
+ * </p>
+ * <p>
+ * Success of the request will depend solely on the response code. Acceptable
+ * response codes that indicate success are 200, 202, and 204 for DELETE
+ * requests and 200-204 for POST requests.
+ * </p>
+ * <p>
+ * If you would like to enable the delete file feature for cross-origin
+ * environments in IE9 or older, you will need to set the allowXdr property of
+ * the cors client-side option and adjust your server-side code appropriately.
+ * Keep in mind that the Content-Type will be absent from the request header,
+ * and credentials (cookies) and non-simple headers cannot be sent.
+ * </p>
+ * 
+ * @author Philip Helger
+ */
 public abstract class AbstractFineUploader5Servlet extends AbstractUnifiedResponseServlet
 {
-  public static final String FIELD_FILENAME = "filename";
-  public static final String JSON_SUCCESS = "success";
-  public static final String JSON_ERROR = "error";
-  public static final String JSON_PREVENT_RETRY = "preventRetry";
-  public static final String JSON_RESET = "reset";
-  public static final String JSON_NEW_UUID = "newUuid";
-
+  @Immutable
   public static class Response
   {
+    public static final String JSON_SUCCESS = "success";
+    public static final String JSON_ERROR = "error";
+    public static final String JSON_PREVENT_RETRY = "preventRetry";
+    public static final String JSON_RESET = "reset";
+    public static final String JSON_NEW_UUID = "newUuid";
+
     private final ESuccess m_eSuccess;
     private final String m_sErrorMsg;
     private final ETriState m_ePreventRetry;
     private final ETriState m_eReset;
     private final String m_sNewUUID;
 
+    /**
+     * @param eSuccess
+     *        Success state. May not be <code>null</code>.
+     * @param sErrorMsg
+     *        Optional error message if a failure occurred.
+     * @param ePreventRetry
+     *        prevent Fine Uploader from making any further attempts to retry
+     *        uploading the file. Only suitable in case of an error. May not be
+     *        <code>null</code>.
+     * @param eReset
+     *        fail this attempt and restart with the first chunk on the next
+     *        attempt. Only applies if chunking is enabled. Note that, if resume
+     *        is also enabled, and this is the first chunk of a resume attempt,
+     *        this will result in the upload starting with the first chunk
+     *        immediately. Only suitable in case of an error. May not be
+     *        <code>null</code>.
+     * @param sNewUUID
+     *        When you would like to override the UUID for this file provided by
+     *        Fine Uploader. Only suitable in case of success. May be
+     *        <code>null</code>.
+     */
     protected Response (@Nonnull final ESuccess eSuccess,
                         @Nullable final String sErrorMsg,
                         @Nonnull final ETriState ePreventRetry,
@@ -80,12 +134,24 @@ public abstract class AbstractFineUploader5Servlet extends AbstractUnifiedRespon
       return getAsJson ().getAsJsonString ();
     }
 
+    /**
+     * Create a success response without a new UUID
+     *
+     * @return Never <code>null</code>.
+     */
     @Nonnull
     public static Response createSuccess ()
     {
       return createSuccess (null);
     }
 
+    /**
+     * Create a success response.
+     *
+     * @param sNewUUID
+     *        New UUID to use. May be <code>null</code>.
+     * @return Never <code>null</code>.
+     */
     @Nonnull
     public static Response createSuccess (@Nullable final String sNewUUID)
     {
@@ -129,8 +195,8 @@ public abstract class AbstractFineUploader5Servlet extends AbstractUnifiedRespon
   }
 
   /**
-   * Handle the uploaded file.
-   * 
+   * Handle the uploaded or deleted file.
+   *
    * @param aRequestScope
    *        The request scope.
    * @return Never <code>null</code>.
@@ -150,7 +216,7 @@ public abstract class AbstractFineUploader5Servlet extends AbstractUnifiedRespon
       // Mime type should be text/plain according to
       // http://docs.fineuploader.com/branch/master/endpoint_handlers/traditional.html
       aUnifiedResponse.disableCaching ()
-                      .setContentAndCharset (aResponse.getAsJsonString (), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
+                      .setContentAndCharset (aResponse.getAsJsonString (), CCharset.CHARSET_UTF_8_OBJ)
                       .setMimeType (CMimeType.TEXT_PLAIN);
     }
     catch (final Throwable t)
