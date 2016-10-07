@@ -166,11 +166,11 @@ public class FineUploader5Core
   private final boolean m_bCorsSendCredentials = DEFAULT_CORS_SEND_CREDENTIALS;
 
   // deleteFile
-  private IJSExpression m_aDeleteFileCustomHeaders;
+  private final ICommonsOrderedMap <String, String> m_aDeleteFileCustomHeaders = new CommonsLinkedHashMap<> ();
   private final boolean m_bDeleteFileEnabled = DEFAULT_DELETE_FILE_ENABLED;
   private final ISimpleURL m_aDeleteFileEndpoint = DEFAULT_DELETE_FILE_ENDPOINT;
   private final EHTTPMethod m_eDeleteFileMethod = DEFAULT_DELETE_FILE_METHOD;
-  private IJSExpression m_aDeleteFileParams;
+  private final ICommonsOrderedMap <String, String> m_aDeleteFileParams = new CommonsLinkedHashMap<> ();
 
   // TODO extraButtons
 
@@ -822,6 +822,16 @@ public class FineUploader5Core
   {}
 
   @Nonnull
+  @ReturnsMutableCopy
+  private static JSAssocArray _getAsJSAA (@Nonnull final Map <String, String> aMap)
+  {
+    final JSAssocArray ret = new JSAssocArray ();
+    for (final Map.Entry <String, String> aEntry : aMap.entrySet ())
+      ret.add (aEntry.getKey (), aEntry.getValue ());
+    return ret;
+  }
+
+  @Nonnull
   public final JSAssocArray getJSON ()
   {
     final JSAssocArray ret = new JSAssocArray ();
@@ -905,49 +915,40 @@ public class FineUploader5Core
         ret.add ("cors", aSub);
     }
 
-    // request
+    // deleteFile
     {
-      final JSAssocArray aRequest = new JSAssocArray ();
-      if (!m_aRequestEndpoint.equals (DEFAULT_REQUEST_ENDPOINT))
-        aRequest.add ("endpoint", m_aRequestEndpoint.getAsStringWithEncodedParameters ());
-      if (m_aRequestParams.isNotEmpty ())
-      {
-        final JSAssocArray aParams = new JSAssocArray ();
-        for (final Map.Entry <String, String> aEntry : m_aRequestParams.entrySet ())
-          aParams.add (aEntry.getKey (), aEntry.getValue ());
-        aRequest.add ("params", aParams);
-      }
-      if (m_bRequestParamsInBody != DEFAULT_REQUEST_PARAMS_IN_BODY)
-        aRequest.add ("paramsInBody", m_bRequestParamsInBody);
-      if (m_aRequestCustomHeaders.isNotEmpty ())
-      {
-        final JSAssocArray aCustomHeaders = new JSAssocArray ();
-        for (final Map.Entry <String, String> aEntry : m_aRequestCustomHeaders.entrySet ())
-          aCustomHeaders.add (aEntry.getKey (), aEntry.getValue ());
-        aRequest.add ("customHeaders", aCustomHeaders);
-      }
-      if (m_bRequestForceMultipart != DEFAULT_REQUEST_FORCE_MULTIPART)
-        aRequest.add ("forceMultipart", m_bRequestForceMultipart);
-      if (!m_sRequestInputName.equals (DEFAULT_REQUEST_INPUT_NAME))
-        aRequest.add ("inputName", m_sRequestInputName);
+      final JSAssocArray aSub = new JSAssocArray ();
 
-      if (!aRequest.isEmpty ())
-        ret.add ("request", aRequest);
+      if (m_aDeleteFileCustomHeaders.isNotEmpty ())
+        aSub.add ("customHeaders", _getAsJSAA (m_aDeleteFileCustomHeaders));
+      if (m_bDeleteFileEnabled != DEFAULT_DELETE_FILE_ENABLED)
+        aSub.add ("enabled", m_bDeleteFileEnabled);
+      if (!m_aDeleteFileEndpoint.equals (DEFAULT_DELETE_FILE_ENDPOINT))
+        aSub.add ("endpoint", m_aDeleteFileEndpoint.getAsStringWithEncodedParameters ());
+      if (!m_eDeleteFileMethod.equals (DEFAULT_DELETE_FILE_METHOD))
+        aSub.add ("method", m_eDeleteFileMethod.getName ());
+      if (m_aDeleteFileParams.isNotEmpty ())
+        aSub.add ("params", _getAsJSAA (m_aDeleteFileParams));
+
+      if (!aSub.isEmpty ())
+        ret.add ("deleteFile", aSub);
     }
 
-    // validation
+    // TODO extraButtons
+
+    // form
     {
-      final JSAssocArray aValidation = new JSAssocArray ();
-      if (m_aValidationAllowedExtensions.isNotEmpty ())
-        aValidation.add ("allowedExtensions", new JSArray ().addAll (m_aValidationAllowedExtensions));
-      if (m_nValidationSizeLimit != DEFAULT_VALIDATION_SIZE_LIMIT)
-        aValidation.add ("sizeLimit", m_nValidationSizeLimit);
-      if (m_nValidationMinSizeLimit != DEFAULT_VALIDATION_MIN_SIZE_LIMIT)
-        aValidation.add ("minSizeLimit", m_nValidationMinSizeLimit);
-      if (m_bValidationStopOnFirstInvalidFile != DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE)
-        aValidation.add ("stopOnFirstInvalidFile", m_bValidationStopOnFirstInvalidFile);
-      if (!aValidation.isEmpty ())
-        ret.add ("validation", aValidation);
+      final JSAssocArray aSub = new JSAssocArray ();
+
+      if (!m_sFormElementID.equals (DEFAULT_FORM_ELEMENT_ID))
+        aSub.add ("element", m_sFormElementID);
+      if (m_bFormAutoUpload != DEFAULT_FORM_AUTO_UPLOAD)
+        aSub.add ("autoUpload", m_bFormAutoUpload);
+      if (m_bFormInterceptSubmit != DEFAULT_FORM_INTERCEPT_SUBMIT)
+        aSub.add ("interceptSubmit", m_bFormInterceptSubmit);
+
+      if (!aSub.isEmpty ())
+        ret.add ("form", aSub);
     }
 
     // messages
@@ -978,6 +979,43 @@ public class FineUploader5Core
       // extended
       extendJSONMessages (aMessages, m_aDisplayLocale);
       ret.add ("messages", aMessages);
+    }
+
+    // old
+
+    // request
+    {
+      final JSAssocArray aRequest = new JSAssocArray ();
+      if (!m_aRequestEndpoint.equals (DEFAULT_REQUEST_ENDPOINT))
+        aRequest.add ("endpoint", m_aRequestEndpoint.getAsStringWithEncodedParameters ());
+      if (m_aRequestParams.isNotEmpty ())
+        aRequest.add ("params", _getAsJSAA (m_aRequestParams));
+      if (m_bRequestParamsInBody != DEFAULT_REQUEST_PARAMS_IN_BODY)
+        aRequest.add ("paramsInBody", m_bRequestParamsInBody);
+      if (m_aRequestCustomHeaders.isNotEmpty ())
+        aRequest.add ("customHeaders", _getAsJSAA (m_aRequestCustomHeaders));
+      if (m_bRequestForceMultipart != DEFAULT_REQUEST_FORCE_MULTIPART)
+        aRequest.add ("forceMultipart", m_bRequestForceMultipart);
+      if (!m_sRequestInputName.equals (DEFAULT_REQUEST_INPUT_NAME))
+        aRequest.add ("inputName", m_sRequestInputName);
+
+      if (!aRequest.isEmpty ())
+        ret.add ("request", aRequest);
+    }
+
+    // validation
+    {
+      final JSAssocArray aValidation = new JSAssocArray ();
+      if (m_aValidationAllowedExtensions.isNotEmpty ())
+        aValidation.add ("allowedExtensions", new JSArray ().addAll (m_aValidationAllowedExtensions));
+      if (m_nValidationSizeLimit != DEFAULT_VALIDATION_SIZE_LIMIT)
+        aValidation.add ("sizeLimit", m_nValidationSizeLimit);
+      if (m_nValidationMinSizeLimit != DEFAULT_VALIDATION_MIN_SIZE_LIMIT)
+        aValidation.add ("minSizeLimit", m_nValidationMinSizeLimit);
+      if (m_bValidationStopOnFirstInvalidFile != DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE)
+        aValidation.add ("stopOnFirstInvalidFile", m_bValidationStopOnFirstInvalidFile);
+      if (!aValidation.isEmpty ())
+        ret.add ("validation", aValidation);
     }
 
     // retry
