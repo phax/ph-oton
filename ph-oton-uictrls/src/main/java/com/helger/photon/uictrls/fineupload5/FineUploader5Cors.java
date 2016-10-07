@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.html.jscode.JSAssocArray;
 
 /**
- * Wrapper for Fine Uploader 5.x blobs part
+ * Wrapper for Fine Uploader 5.x cors part
  *
  * @author Philip Helger
  */
@@ -49,7 +49,7 @@ public class FineUploader5Cors implements IFineUploader5Part
    * XDomainRequest must be used.
    *
    * @param bAllowXdr
-   *        New value. May neither be <code>null</code> nor empty.
+   *        New value
    * @return this for chaining
    */
   @Nonnull
@@ -68,7 +68,7 @@ public class FineUploader5Cors implements IFineUploader5Part
    * Enable or disable cross-domain requests.
    *
    * @param bExpected
-   *        New value. May neither be <code>null</code> nor empty.
+   *        New value
    * @return this for chaining
    */
   @Nonnull
@@ -88,7 +88,7 @@ public class FineUploader5Cors implements IFineUploader5Part
    * Ignored if allowXdr is true and IE9 is being used.
    *
    * @param bSendCredentials
-   *        New value. May neither be <code>null</code> nor empty.
+   *        New value
    * @return this for chaining
    */
   @Nonnull

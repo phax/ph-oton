@@ -26,7 +26,7 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.html.jscode.JSAssocArray;
 
 /**
- * Wrapper for Fine Uploader 5.x
+ * Wrapper for Fine Uploader 5.x chunking part
  *
  * @author Philip Helger
  */

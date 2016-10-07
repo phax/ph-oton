@@ -50,17 +50,11 @@ import com.helger.http.EHTTPMethod;
  */
 public class FineUploader5Core implements IFineUploader5Part
 {
-  // core
   public static final boolean DEFAULT_CORE_AUTO_UPLOAD = true;
   public static final boolean DEFAULT_CORE_DEBUG = false;
   public static final boolean DEFAULT_CORE_DISABLE_CANCEL_FOR_FORM_UPLOADS = false;
   public static final int DEFAULT_CORE_MAX_CONNECTIONS = 3;
   public static final boolean DEFAULT_CORE_MULTIPLE = true;
-
-  // delete file
-  public static final boolean DEFAULT_DELETE_FILE_ENABLED = false;
-  public static final ISimpleURL DEFAULT_DELETE_FILE_ENDPOINT = new SimpleURL ("/server/upload");
-  public static final EHTTPMethod DEFAULT_DELETE_FILE_METHOD = EHTTPMethod.DELETE;
 
   // form
   public static final String DEFAULT_FORM_ELEMENT_ID = "qq-form";
@@ -131,14 +125,7 @@ public class FineUploader5Core implements IFineUploader5Part
   // TODO camera
   private final FineUploader5Chunking m_aChunking = new FineUploader5Chunking ();
   private final FineUploader5Cors m_aCors = new FineUploader5Cors ();
-
-  // deleteFile
-  private final ICommonsOrderedMap <String, String> m_aDeleteFileCustomHeaders = new CommonsLinkedHashMap<> ();
-  private final boolean m_bDeleteFileEnabled = DEFAULT_DELETE_FILE_ENABLED;
-  private final ISimpleURL m_aDeleteFileEndpoint = DEFAULT_DELETE_FILE_ENDPOINT;
-  private final EHTTPMethod m_eDeleteFileMethod = DEFAULT_DELETE_FILE_METHOD;
-  private final ICommonsOrderedMap <String, String> m_aDeleteFileParams = new CommonsLinkedHashMap<> ();
-
+  private final FineUploader5DeleteFile m_aDeleteFile = new FineUploader5DeleteFile ();
   // TODO extraButtons
 
   // form
@@ -380,6 +367,13 @@ public class FineUploader5Core implements IFineUploader5Part
   public FineUploader5Cors getCors ()
   {
     return m_aCors;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5DeleteFile getDeleteFile ()
+  {
+    return m_aDeleteFile;
   }
 
   // OLD
@@ -829,16 +823,6 @@ public class FineUploader5Core implements IFineUploader5Part
   protected void extendJSONMessages (@Nonnull final JSAssocArray aMessages, @Nonnull final Locale aDisplayLocale)
   {}
 
-  @Nonnull
-  @ReturnsMutableCopy
-  private static JSAssocArray _getAsJSAA (@Nonnull final Map <String, String> aMap)
-  {
-    final JSAssocArray ret = new JSAssocArray ();
-    for (final Map.Entry <String, String> aEntry : aMap.entrySet ())
-      ret.add (aEntry.getKey (), aEntry.getValue ());
-    return ret;
-  }
-
   private static void _addIf (@Nonnull final JSAssocArray aAssocArray,
                               @Nonnull @Nonempty final String sKey,
                               @Nullable final JSAssocArray aExpr)
@@ -872,26 +856,7 @@ public class FineUploader5Core implements IFineUploader5Part
     // TODO camera
     _addIf (ret, "chunking", m_aChunking.getJSCode ());
     _addIf (ret, "cors", m_aCors.getJSCode ());
-
-    // deleteFile
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-
-      if (m_aDeleteFileCustomHeaders.isNotEmpty ())
-        aSub.add ("customHeaders", _getAsJSAA (m_aDeleteFileCustomHeaders));
-      if (m_bDeleteFileEnabled != DEFAULT_DELETE_FILE_ENABLED)
-        aSub.add ("enabled", m_bDeleteFileEnabled);
-      if (!m_aDeleteFileEndpoint.equals (DEFAULT_DELETE_FILE_ENDPOINT))
-        aSub.add ("endpoint", m_aDeleteFileEndpoint.getAsStringWithEncodedParameters ());
-      if (!m_eDeleteFileMethod.equals (DEFAULT_DELETE_FILE_METHOD))
-        aSub.add ("method", m_eDeleteFileMethod.getName ());
-      if (m_aDeleteFileParams.isNotEmpty ())
-        aSub.add ("params", _getAsJSAA (m_aDeleteFileParams));
-
-      if (!aSub.isEmpty ())
-        ret.add ("deleteFile", aSub);
-    }
-
+    _addIf (ret, "deleteFile", m_aDeleteFile.getJSCode ());
     // TODO extraButtons
 
     // form
@@ -992,7 +957,7 @@ public class FineUploader5Core implements IFineUploader5Part
     {
       final JSAssocArray aSub = new JSAssocArray ();
       if (m_aRequestCustomHeaders.isNotEmpty ())
-        aSub.add ("customHeaders", _getAsJSAA (m_aRequestCustomHeaders));
+        aSub.add ("customHeaders", getAsJSAA (m_aRequestCustomHeaders));
       if (!m_aRequestEndpoint.equals (DEFAULT_REQUEST_ENDPOINT))
         aSub.add ("endpoint", m_aRequestEndpoint.getAsStringWithEncodedParameters ());
       if (!m_sRequestFilenameParam.equals (DEFAULT_REQUEST_FILENAME_PARAM))
@@ -1004,7 +969,7 @@ public class FineUploader5Core implements IFineUploader5Part
       if (!m_eRequestMethod.equals (DEFAULT_REQUEST_METHOD))
         aSub.add ("method", m_eRequestMethod.getName ());
       if (m_aRequestParams.isNotEmpty ())
-        aSub.add ("params", _getAsJSAA (m_aRequestParams));
+        aSub.add ("params", getAsJSAA (m_aRequestParams));
       if (m_bRequestParamsInBody != DEFAULT_REQUEST_PARAMS_IN_BODY)
         aSub.add ("paramsInBody", m_bRequestParamsInBody);
       if (!m_sRequestUUIDName.equals (DEFAULT_REQUEST_UUID_NAME))
@@ -1023,11 +988,11 @@ public class FineUploader5Core implements IFineUploader5Part
       final JSAssocArray aSub = new JSAssocArray ();
 
       if (m_aSessionCustomHeaders.isNotEmpty ())
-        aSub.add ("customHeaders", _getAsJSAA (m_aSessionCustomHeaders));
+        aSub.add ("customHeaders", getAsJSAA (m_aSessionCustomHeaders));
       if (m_aSessionEndpoint != null)
         aSub.add ("endpoint", m_aSessionEndpoint.getAsStringWithEncodedParameters ());
       if (m_aSessionParams.isNotEmpty ())
-        aSub.add ("params", _getAsJSAA (m_aSessionParams));
+        aSub.add ("params", getAsJSAA (m_aSessionParams));
       if (m_bSessionRefreshOnReset != DEFAULT_SESSION_REFRESH_ON_RESET)
         aSub.add ("refreshOnReset", m_bSessionRefreshOnReset);
 
