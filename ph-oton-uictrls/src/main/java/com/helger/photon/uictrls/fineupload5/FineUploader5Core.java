@@ -249,31 +249,153 @@ public class FineUploader5Core
     return m_aDisplayLocale;
   }
 
-  public boolean isCoreDebug ()
+  public boolean isAutoUpload ()
+  {
+    return m_bCoreAutoUpload;
+  }
+
+  /**
+   * Set to false if you want to be able to upload queued items later by calling
+   * the uploadStoredFiles() method.
+   *
+   * @param bAutoUpload
+   *        New value
+   * @return this
+   */
+  @Nonnull
+  public FineUploader5Core setAutoUpload (final boolean bAutoUpload)
+  {
+    m_bCoreAutoUpload = bAutoUpload;
+    return this;
+  }
+
+  @Nullable
+  public String getButtonElementID ()
+  {
+    return m_sCoreButtonElementID;
+  }
+
+  /**
+   * Specify an element to use as the 'select files' button. Cannot be a
+   * &lt;button&gt;.
+   *
+   * @param sButtonElementID
+   *        Element ID of the button
+   * @return this
+   */
+  @Nonnull
+  public FineUploader5Core setButtonElementID (@Nullable final String sButtonElementID)
+  {
+    m_sCoreButtonElementID = sButtonElementID;
+    return this;
+  }
+
+  public boolean isDebug ()
   {
     return m_bCoreDebug;
   }
 
   /**
-   * If enabled, this will result in log messages (such as server response)
-   * being written to the javascript console. If your browser does not support
-   * the [window.console
-   * object](https://developer.mozilla.org/en-US/docs/DOM/console.log), the
-   * value of this option is irrelevant.
+   * This will result in log messages being written to the window.console
+   * object.
    *
    * @param bCoreDebug
    *        New value
    * @return this
    */
   @Nonnull
-  public FineUploader5Core setCoreDebug (final boolean bCoreDebug)
+  public FineUploader5Core setDebug (final boolean bCoreDebug)
   {
     m_bCoreDebug = bCoreDebug;
     return this;
   }
 
+  public boolean isDisableCancelForFormUploads ()
+  {
+    return m_bCoreDisableCancelForFormUploads;
+  }
+
+  /**
+   * When true the cancel link does not appear next to files when the form
+   * uploader is used.
+   *
+   * @param bDisableCancelForFormUploads
+   *        New value
+   * @return this
+   */
   @Nonnull
-  public ISimpleURL getEndpoint ()
+  public FineUploader5Core setDisableCancelForFormUploads (final boolean bDisableCancelForFormUploads)
+  {
+    m_bCoreDisableCancelForFormUploads = bDisableCancelForFormUploads;
+    return this;
+  }
+
+  @Nullable
+  public IJSExpression getFormatFileName ()
+  {
+    return m_aCoreFormatFileName;
+  }
+
+  /**
+   * Provide a function to control the display of file names. The raw file name
+   * is passed into the function when it is invoked. Your function may return a
+   * modified file name. Note that this does not affect the actual file name,
+   * only the displayed file name.
+   *
+   * @param aCoreFormatFileName
+   *        New value
+   * @return this
+   */
+  @Nonnull
+  public FineUploader5Core setFormatFileName (@Nullable final IJSExpression aCoreFormatFileName)
+  {
+    m_aCoreFormatFileName = aCoreFormatFileName;
+    return this;
+  }
+
+  @Nonnegative
+  public int getMaxConnections ()
+  {
+    return m_nCoreMaxConnections;
+  }
+
+  /**
+   * Maximum allowable concurrent requests
+   *
+   * @param nMaxConnections
+   *        Maximum number. Must be &gt; 0.
+   * @return this
+   */
+  @Nonnull
+  public FineUploader5Core setMaxConnections (@Nonnegative final int nMaxConnections)
+  {
+    ValueEnforcer.isGT0 (nMaxConnections, "MaxConnections");
+    m_nCoreMaxConnections = nMaxConnections;
+    return this;
+  }
+
+  public boolean isMultiple ()
+  {
+    return m_bCoreMultiple;
+  }
+
+  /**
+   * When false this will prevent the user from simultaneously selecting or
+   * dropping more than one item.
+   *
+   * @param bMultiple
+   *        <code>true</code> for multiple, <code>false</code> for single
+   * @return this
+   */
+  @Nonnull
+  public FineUploader5Core setMultiple (final boolean bMultiple)
+  {
+    m_bCoreMultiple = bMultiple;
+    return this;
+  }
+
+  @Nonnull
+  public ISimpleURL getRequestEndpoint ()
   {
     return m_aRequestEndpoint;
   }
@@ -289,7 +411,7 @@ public class FineUploader5Core
    * @return this
    */
   @Nonnull
-  public FineUploader5Core setEndpoint (@Nonnull final ISimpleURL aRequestEndpoint)
+  public FineUploader5Core setRequestEndpoint (@Nonnull final ISimpleURL aRequestEndpoint)
   {
     m_aRequestEndpoint = ValueEnforcer.notNull (aRequestEndpoint, "RequestEndpoint");
     return this;
@@ -297,7 +419,7 @@ public class FineUploader5Core
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsOrderedMap <String, String> getAllParams ()
+  public ICommonsOrderedMap <String, String> getAllRequestParams ()
   {
     return m_aRequestParams.getClone ();
   }
@@ -311,7 +433,7 @@ public class FineUploader5Core
    * @return this
    */
   @Nonnull
-  public FineUploader5Core setParams (@Nullable final Map <String, String> aParams)
+  public FineUploader5Core setRequestParams (@Nullable final Map <String, String> aParams)
   {
     m_aRequestParams.setAll (aParams);
     return this;
@@ -326,7 +448,7 @@ public class FineUploader5Core
    * @return this
    */
   @Nonnull
-  public FineUploader5Core addParams (@Nullable final Map <String, String> aParams)
+  public FineUploader5Core addRequestParams (@Nullable final Map <String, String> aParams)
   {
     m_aRequestParams.addAll (aParams);
     return this;
@@ -343,7 +465,7 @@ public class FineUploader5Core
    * @return this
    */
   @Nonnull
-  public FineUploader5Core addParam (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  public FineUploader5Core addRequestParam (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -379,7 +501,7 @@ public class FineUploader5Core
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsOrderedMap <String, String> getAllCustomHeaders ()
+  public ICommonsOrderedMap <String, String> getAllRequestCustomHeaders ()
   {
     return m_aRequestCustomHeaders.getClone ();
   }
@@ -393,7 +515,7 @@ public class FineUploader5Core
    * @return this
    */
   @Nonnull
-  public FineUploader5Core setCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
+  public FineUploader5Core setRequestCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aRequestCustomHeaders.setAll (aCustomHeaders);
     return this;
@@ -408,7 +530,7 @@ public class FineUploader5Core
    * @return this
    */
   @Nonnull
-  public FineUploader5Core addCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
+  public FineUploader5Core addRequestCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aRequestCustomHeaders.addAll (aCustomHeaders);
     return this;
@@ -425,7 +547,7 @@ public class FineUploader5Core
    * @return this
    */
   @Nonnull
-  public FineUploader5Core addCustomHeader (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  public FineUploader5Core addRequestCustomHeader (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -434,7 +556,7 @@ public class FineUploader5Core
     return this;
   }
 
-  public boolean isForceMultipart ()
+  public boolean isRequestForceMultipart ()
   {
     return m_bRequestForceMultipart;
   }
@@ -448,113 +570,9 @@ public class FineUploader5Core
    * @return this
    */
   @Nonnull
-  public FineUploader5Core setForceMultipart (final boolean bForceMultipart)
+  public FineUploader5Core setRequestForceMultipart (final boolean bForceMultipart)
   {
     m_bRequestForceMultipart = bForceMultipart;
-    return this;
-  }
-
-  @Nullable
-  public String getButtonElementID ()
-  {
-    return m_sCoreButtonElementID;
-  }
-
-  /**
-   * Specify an element to use as the "select files" button. Note that this may
-   * <b>NOT</b> be a &lt;button&gt;, otherwise it will not work in Internet
-   * Explorer. Please see issue #33 for details.
-   *
-   * @param sButtonElementID
-   *        Element ID of the button
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setButtonElementID (@Nullable final String sButtonElementID)
-  {
-    m_sCoreButtonElementID = sButtonElementID;
-    return this;
-  }
-
-  public boolean isMultiple ()
-  {
-    return m_bCoreMultiple;
-  }
-
-  /**
-   * Set to false puts the uploader into what is best described as 'single-file
-   * upload mode'. See the [demo](http://fineuploader.com) for an example.
-   *
-   * @param bMultiple
-   *        <code>true</code> for multiple, <code>false</code> for single
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setMultiple (final boolean bMultiple)
-  {
-    m_bCoreMultiple = bMultiple;
-    return this;
-  }
-
-  @Nonnegative
-  public int getMaxConnections ()
-  {
-    return m_nCoreMaxConnections;
-  }
-
-  /**
-   * Maximum allowable concurrent uploads.
-   *
-   * @param nMaxConnections
-   *        Maximum number. Must be &gt; 0.
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setMaxConnections (@Nonnegative final int nMaxConnections)
-  {
-    ValueEnforcer.isGT0 (nMaxConnections, "MaxConnections");
-    m_nCoreMaxConnections = nMaxConnections;
-    return this;
-  }
-
-  public boolean isDisableCancelForFormUploads ()
-  {
-    return m_bCoreDisableCancelForFormUploads;
-  }
-
-  /**
-   * If true, the cancel link does not appear next to files when the form
-   * uploader is used. This may be desired since it may not be possible to
-   * interrupt a form-based upload in some cases.
-   *
-   * @param bDisableCancelForFormUploads
-   *        disable?
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setDisableCancelForFormUploads (final boolean bDisableCancelForFormUploads)
-  {
-    m_bCoreDisableCancelForFormUploads = bDisableCancelForFormUploads;
-    return this;
-  }
-
-  public boolean isAutoUpload ()
-  {
-    return m_bCoreAutoUpload;
-  }
-
-  /**
-   * Set to false if you want to be able to begin uploading selected/queued
-   * files later, by calling uploadStoredFiles().
-   *
-   * @param bAutoUpload
-   *        <code>false</code> to disable auto upload
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setAutoUpload (final boolean bAutoUpload)
-  {
-    m_bCoreAutoUpload = bAutoUpload;
     return this;
   }
 
@@ -981,56 +999,167 @@ public class FineUploader5Core
       ret.add ("messages", aMessages);
     }
 
-    // old
-
-    // request
+    // paste
     {
-      final JSAssocArray aRequest = new JSAssocArray ();
-      if (!m_aRequestEndpoint.equals (DEFAULT_REQUEST_ENDPOINT))
-        aRequest.add ("endpoint", m_aRequestEndpoint.getAsStringWithEncodedParameters ());
-      if (m_aRequestParams.isNotEmpty ())
-        aRequest.add ("params", _getAsJSAA (m_aRequestParams));
-      if (m_bRequestParamsInBody != DEFAULT_REQUEST_PARAMS_IN_BODY)
-        aRequest.add ("paramsInBody", m_bRequestParamsInBody);
-      if (m_aRequestCustomHeaders.isNotEmpty ())
-        aRequest.add ("customHeaders", _getAsJSAA (m_aRequestCustomHeaders));
-      if (m_bRequestForceMultipart != DEFAULT_REQUEST_FORCE_MULTIPART)
-        aRequest.add ("forceMultipart", m_bRequestForceMultipart);
-      if (!m_sRequestInputName.equals (DEFAULT_REQUEST_INPUT_NAME))
-        aRequest.add ("inputName", m_sRequestInputName);
+      final JSAssocArray aSub = new JSAssocArray ();
 
-      if (!aRequest.isEmpty ())
-        ret.add ("request", aRequest);
+      if (!m_sPasteDefaultName.equals (DEFAULT_PASTE_DEFAULT_NAME))
+        aSub.add ("defaultName", m_sPasteDefaultName);
+      if (StringHelper.hasText (m_sPasteTargetElementID))
+        aSub.add ("targetElement", JSHtml.documentGetElementById (m_sPasteTargetElementID));
+
+      if (!aSub.isEmpty ())
+        ret.add ("paste", aSub);
     }
 
-    // validation
+    // resume
     {
-      final JSAssocArray aValidation = new JSAssocArray ();
-      if (m_aValidationAllowedExtensions.isNotEmpty ())
-        aValidation.add ("allowedExtensions", new JSArray ().addAll (m_aValidationAllowedExtensions));
-      if (m_nValidationSizeLimit != DEFAULT_VALIDATION_SIZE_LIMIT)
-        aValidation.add ("sizeLimit", m_nValidationSizeLimit);
-      if (m_nValidationMinSizeLimit != DEFAULT_VALIDATION_MIN_SIZE_LIMIT)
-        aValidation.add ("minSizeLimit", m_nValidationMinSizeLimit);
-      if (m_bValidationStopOnFirstInvalidFile != DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE)
-        aValidation.add ("stopOnFirstInvalidFile", m_bValidationStopOnFirstInvalidFile);
-      if (!aValidation.isEmpty ())
-        ret.add ("validation", aValidation);
+      final JSAssocArray aSub = new JSAssocArray ();
+
+      if (m_nResumeRecordsExpireIn != DEFAULT_RESUME_RECORDS_EXPIRE_IN)
+        aSub.add ("recordsExpireIn", m_nResumeRecordsExpireIn);
+      if (m_bResumeEnabled != DEFAULT_RESUME_ENABLED)
+        aSub.add ("enabled", m_bResumeEnabled);
+
+      final JSAssocArray aParamNames = new JSAssocArray ();
+      if (!m_sResumeParamNamesResuming.equals (DEFAULT_RESUME_PARAM_NAMES_RESUMING))
+        aParamNames.add ("resuming", m_sResumeParamNamesResuming);
+      if (!aParamNames.isEmpty ())
+        aSub.add ("paramNames", aParamNames);
+
+      if (!aSub.isEmpty ())
+        ret.add ("resume", aSub);
     }
 
     // retry
     {
-      final JSAssocArray aRetry = new JSAssocArray ();
-      if (m_bRetryEnableAuto != DEFAULT_RETRY_ENABLE_AUTO)
-        aRetry.add ("enableAuto", m_bRetryEnableAuto);
-      if (m_nRetryMaxAutoAttempts != DEFAULT_RETRY_MAX_AUTO_ATTEMPTS)
-        aRetry.add ("maxAutoAttempts", m_nRetryMaxAutoAttempts);
+      final JSAssocArray aSub = new JSAssocArray ();
+
       if (m_nRetryAutoAttemptDelay != DEFAULT_RETRY_AUTO_ATTEMPT_DELAY)
-        aRetry.add ("autoAttemptDelay", m_nRetryAutoAttemptDelay);
-      if (!DEFAULT_RETRY_PREVENT_RETRY_RESPONSE_PROPERTY.equals (m_sRetryPreventRetryResponseProperty))
-        aRetry.add ("preventRetryResponseProperty", m_sRetryPreventRetryResponseProperty);
-      if (!aRetry.isEmpty ())
-        ret.add ("retry", aRetry);
+        aSub.add ("autoAttemptDelay", m_nRetryAutoAttemptDelay);
+      if (m_bRetryEnableAuto != DEFAULT_RETRY_ENABLE_AUTO)
+        aSub.add ("enableAuto", m_bRetryEnableAuto);
+      if (m_nRetryMaxAutoAttempts != DEFAULT_RETRY_MAX_AUTO_ATTEMPTS)
+        aSub.add ("maxAutoAttempts", m_nRetryMaxAutoAttempts);
+      if (!m_sRetryPreventRetryResponseProperty.equals (DEFAULT_RETRY_PREVENT_RETRY_RESPONSE_PROPERTY))
+        aSub.add ("preventRetryResponseProperty", m_sRetryPreventRetryResponseProperty);
+
+      if (!aSub.isEmpty ())
+        ret.add ("retry", aSub);
+    }
+
+    // request
+    {
+      final JSAssocArray aSub = new JSAssocArray ();
+      if (m_aRequestCustomHeaders.isNotEmpty ())
+        aSub.add ("customHeaders", _getAsJSAA (m_aRequestCustomHeaders));
+      if (!m_aRequestEndpoint.equals (DEFAULT_REQUEST_ENDPOINT))
+        aSub.add ("endpoint", m_aRequestEndpoint.getAsStringWithEncodedParameters ());
+      if (!m_sRequestFilenameParam.equals (DEFAULT_REQUEST_FILENAME_PARAM))
+        aSub.add ("filenameParam", m_sRequestFilenameParam);
+      if (m_bRequestForceMultipart != DEFAULT_REQUEST_FORCE_MULTIPART)
+        aSub.add ("forceMultipart", m_bRequestForceMultipart);
+      if (!m_sRequestInputName.equals (DEFAULT_REQUEST_INPUT_NAME))
+        aSub.add ("inputName", m_sRequestInputName);
+      if (!m_eRequestMethod.equals (DEFAULT_REQUEST_METHOD))
+        aSub.add ("method", m_eRequestMethod.getName ());
+      if (m_aRequestParams.isNotEmpty ())
+        aSub.add ("params", _getAsJSAA (m_aRequestParams));
+      if (m_bRequestParamsInBody != DEFAULT_REQUEST_PARAMS_IN_BODY)
+        aSub.add ("paramsInBody", m_bRequestParamsInBody);
+      if (!m_sRequestUUIDName.equals (DEFAULT_REQUEST_UUID_NAME))
+        aSub.add ("uuidName", m_sRequestUUIDName);
+      if (!m_sRequestTotalFileSizeName.equals (DEFAULT_REQUEST_TOTAL_FILE_SIZE_NAME))
+        aSub.add ("totalFileSizeName", m_sRequestTotalFileSizeName);
+
+      if (!aSub.isEmpty ())
+        ret.add ("request", aSub);
+    }
+
+    // TODO scaling
+
+    // session
+    {
+      final JSAssocArray aSub = new JSAssocArray ();
+
+      if (m_aSessionCustomHeaders.isNotEmpty ())
+        aSub.add ("customHeaders", _getAsJSAA (m_aSessionCustomHeaders));
+      if (m_aSessionEndpoint != null)
+        aSub.add ("endpoint", m_aSessionEndpoint.getAsStringWithEncodedParameters ());
+      if (m_aSessionParams.isNotEmpty ())
+        aSub.add ("params", _getAsJSAA (m_aSessionParams));
+      if (m_bSessionRefreshOnReset != DEFAULT_SESSION_REFRESH_ON_RESET)
+        aSub.add ("refreshOnReset", m_bSessionRefreshOnReset);
+
+      if (!aSub.isEmpty ())
+        ret.add ("session", aSub);
+    }
+
+    // text
+    {
+      final JSAssocArray aSub = new JSAssocArray ();
+      if (m_aDisplayLocale != null)
+      {
+        aSub.add ("defaultResponseError",
+                  EFineUploader5CoreText.DEFAULT_RESPONSE_ERROR.getDisplayText (m_aDisplayLocale));
+        aSub.add ("fileInputTitle", EFineUploader5CoreText.FILE_INPUT_TITLE.getDisplayText (m_aDisplayLocale));
+      }
+      if (!m_aTextSizeSymbols.equals (DEFAULT_TEXT_SIZE_SYMBOLS))
+        aSub.add ("sizeSymbols", new JSArray ().addAll (m_aTextSizeSymbols));
+
+      if (!aSub.isEmpty ())
+        ret.add ("text", aSub);
+    }
+
+    // validation
+    {
+      final JSAssocArray aSub = new JSAssocArray ();
+      if (m_aValidationAcceptFiles.isNotEmpty ())
+      {
+        final JSArray aArray = new JSArray ();
+        for (final IMimeType aMimeType : m_aValidationAcceptFiles)
+          aArray.add (aMimeType.getAsString ());
+        aSub.add ("acceptFiles", aArray);
+      }
+      if (m_aValidationAllowedExtensions.isNotEmpty ())
+        aSub.add ("allowedExtensions", new JSArray ().addAll (m_aValidationAllowedExtensions));
+      if (m_nValidationItemLimit != DEFAULT_VALIDATION_ITEM_LIMIT)
+        aSub.add ("itemLimit", m_nValidationSizeLimit);
+      if (m_nValidationMinSizeLimit != DEFAULT_VALIDATION_MIN_SIZE_LIMIT)
+        aSub.add ("minSizeLimit", m_nValidationMinSizeLimit);
+      if (m_nValidationSizeLimit != DEFAULT_VALIDATION_SIZE_LIMIT)
+        aSub.add ("sizeLimit", m_nValidationSizeLimit);
+      if (m_bValidationStopOnFirstInvalidFile != DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE)
+        aSub.add ("stopOnFirstInvalidFile", m_bValidationStopOnFirstInvalidFile);
+
+      final JSAssocArray aImage = new JSAssocArray ();
+      if (m_nValidationImageMaxHeight != DEFAULT_VALIDATION_IMAGE_MAX_HEIGHT)
+        aImage.add ("maxHeight", m_nValidationImageMaxHeight);
+      if (m_nValidationImageMaxWidth != DEFAULT_VALIDATION_IMAGE_MAX_WIDTH)
+        aImage.add ("maxWidth", m_nValidationImageMaxWidth);
+      if (m_nValidationImageMinHeight != DEFAULT_VALIDATION_IMAGE_MIN_HEIGHT)
+        aImage.add ("minHeight", m_nValidationImageMinHeight);
+      if (m_nValidationImageMinWidth != DEFAULT_VALIDATION_IMAGE_MIN_WIDTH)
+        aImage.add ("minWidth", m_nValidationImageMinWidth);
+      if (!aImage.isEmpty ())
+        aSub.add ("image", aImage);
+
+      if (!aSub.isEmpty ())
+        ret.add ("validation", aSub);
+    }
+
+    // workarounds
+    {
+      final JSAssocArray aSub = new JSAssocArray ();
+      if (m_bWorkaroundsIosEmptyVideo != DEFAULT_WORKAROUNDS)
+        aSub.add ("iosEmptyVideos", m_bWorkaroundsIosEmptyVideo);
+      if (m_bWorkaroundsIos8BrowserCrash != DEFAULT_WORKAROUNDS)
+        aSub.add ("ios8BrowserCrash", m_bWorkaroundsIos8BrowserCrash);
+      if (m_bWorkaroundsIos8SafariUploads != DEFAULT_WORKAROUNDS)
+        aSub.add ("ios8SafariUploads", m_bWorkaroundsIos8SafariUploads);
+
+      if (!aSub.isEmpty ())
+        ret.add ("workarounds", aSub);
     }
 
     extendJSON (ret, m_aDisplayLocale);
