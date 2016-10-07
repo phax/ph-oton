@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls.fineupload5;
+package com.helger.photon.uictrls.fineupload5.ui;
 
 import java.util.Locale;
 
@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.photon.uictrls.fineupload5.FineUploader5Core;
 
 public class FineUploader5UI extends FineUploader5Core
 {

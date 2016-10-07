@@ -4,7 +4,7 @@
  *
  * All rights reserved
  */
-package com.helger.photon.uictrls.fineupload5;
+package com.helger.photon.uictrls.fineupload5.servlet;
 
 import java.util.EnumSet;
 import java.util.Set;

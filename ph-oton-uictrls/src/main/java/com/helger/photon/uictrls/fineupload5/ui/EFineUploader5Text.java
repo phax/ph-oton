@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls.fineupload5;
+package com.helger.photon.uictrls.fineupload5.ui;
 
 import java.util.Locale;
 

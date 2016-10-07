@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls.fineupload5;
+package com.helger.photon.uictrls.fineupload5.ui;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,6 +40,7 @@ import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
+import com.helger.photon.uictrls.fineupload5.FineUploader5Core;
 import com.helger.web.scope.mgr.WebScopeManager;
 
 public class HCFineUploader5Basic extends AbstractHCNodeList <HCFineUploader5Basic>

@@ -56,9 +56,6 @@ public class FineUploader5Core implements IFineUploader5Part
                                                                                            "PB",
                                                                                            "EB").getAsUnmodifiable ();
 
-  // workarounds
-  public static final boolean DEFAULT_WORKAROUNDS = true;
-
   // generic
   private final Locale m_aDisplayLocale;
 
@@ -92,11 +89,7 @@ public class FineUploader5Core implements IFineUploader5Part
   // TODO scaling
   private final FineUploader5Session m_aSession = new FineUploader5Session ();
   private final FineUploader5Validation m_aValidation = new FineUploader5Validation ();
-
-  // workarounds
-  private final boolean m_bWorkaroundsIosEmptyVideo = DEFAULT_WORKAROUNDS;
-  private final boolean m_bWorkaroundsIos8BrowserCrash = DEFAULT_WORKAROUNDS;
-  private final boolean m_bWorkaroundsIos8SafariUploads = DEFAULT_WORKAROUNDS;
+  private final FineUploader5Workarounds m_aWorkarounds = new FineUploader5Workarounds ();
 
   public FineUploader5Core (@Nullable final Locale aDisplayLocale)
   {
@@ -331,7 +324,12 @@ public class FineUploader5Core implements IFineUploader5Part
     return m_aValidation;
   }
 
-  // OLD
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5Workarounds getWorkarounds ()
+  {
+    return m_aWorkarounds;
+  }
 
   /**
    * @param aRoot
@@ -443,20 +441,7 @@ public class FineUploader5Core implements IFineUploader5Part
     // TODO scaling
     _addIf (ret, "session", m_aSession.getJSCode ());
     _addIf (ret, "validation", m_aValidation.getJSCode ());
-
-    // workarounds
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-      if (m_bWorkaroundsIosEmptyVideo != DEFAULT_WORKAROUNDS)
-        aSub.add ("iosEmptyVideos", m_bWorkaroundsIosEmptyVideo);
-      if (m_bWorkaroundsIos8BrowserCrash != DEFAULT_WORKAROUNDS)
-        aSub.add ("ios8BrowserCrash", m_bWorkaroundsIos8BrowserCrash);
-      if (m_bWorkaroundsIos8SafariUploads != DEFAULT_WORKAROUNDS)
-        aSub.add ("ios8SafariUploads", m_bWorkaroundsIos8SafariUploads);
-
-      if (!aSub.isEmpty ())
-        ret.add ("workarounds", aSub);
-    }
+    _addIf (ret, "workarounds", m_aWorkarounds.getJSCode ());
 
     extendJSON (ret, m_aDisplayLocale);
     return ret;
