@@ -44,10 +44,10 @@ import com.helger.web.scope.mgr.WebScopeManager;
 
 public class HCFineUploader5Basic extends AbstractHCNodeList <HCFineUploader5Basic>
 {
-  private final FineUploader5Basic m_aUploader;
+  private final FineUploader5Core m_aUploader;
   private IHCElement <?> m_aButton;
 
-  public HCFineUploader5Basic (@Nonnull final FineUploader5Basic aUploader)
+  public HCFineUploader5Basic (@Nonnull final FineUploader5Core aUploader)
   {
     m_aUploader = ValueEnforcer.notNull (aUploader, "Uploader");
   }

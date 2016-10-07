@@ -47,7 +47,7 @@ import com.helger.http.EHTTPMethod;
  *
  * @author Philip Helger
  */
-public class FineUploader5Basic
+public class FineUploader5Core
 {
   // core
   public static final boolean DEFAULT_CORE_AUTO_UPLOAD = true;
@@ -180,7 +180,7 @@ public class FineUploader5Basic
   private final boolean m_bFormInterceptSubmit = DEFAULT_FORM_INTERCEPT_SUBMIT;
 
   // messages
-  // All in EFineUploader5BasicText
+  // All in EFineUploader5CoreText
 
   // paste
   private final String m_sPasteDefaultName = DEFAULT_PASTE_DEFAULT_NAME;
@@ -218,7 +218,7 @@ public class FineUploader5Basic
   private final boolean m_bSessionRefreshOnReset = DEFAULT_SESSION_REFRESH_ON_RESET;
 
   // text
-  // partially in EFineUploader5BasicText
+  // partially in EFineUploader5CoreText
   private final ICommonsOrderedSet <String> m_aTextSizeSymbols = new CommonsLinkedHashSet<> (DEFAULT_TEXT_SIZE_SYMBOLS);
 
   // validation
@@ -238,7 +238,7 @@ public class FineUploader5Basic
   private final boolean m_bWorkaroundsIos8BrowserCrash = DEFAULT_WORKAROUNDS;
   private final boolean m_bWorkaroundsIos8SafariUploads = DEFAULT_WORKAROUNDS;
 
-  public FineUploader5Basic (@Nullable final Locale aDisplayLocale)
+  public FineUploader5Core (@Nullable final Locale aDisplayLocale)
   {
     m_aDisplayLocale = aDisplayLocale;
   }
@@ -249,7 +249,7 @@ public class FineUploader5Basic
     return m_aDisplayLocale;
   }
 
-  public boolean isDebug ()
+  public boolean isCoreDebug ()
   {
     return m_bCoreDebug;
   }
@@ -261,14 +261,14 @@ public class FineUploader5Basic
    * object](https://developer.mozilla.org/en-US/docs/DOM/console.log), the
    * value of this option is irrelevant.
    *
-   * @param bDebug
+   * @param bCoreDebug
    *        New value
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setDebug (final boolean bDebug)
+  public FineUploader5Core setCoreDebug (final boolean bCoreDebug)
   {
-    m_bCoreDebug = bDebug;
+    m_bCoreDebug = bCoreDebug;
     return this;
   }
 
@@ -289,7 +289,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setEndpoint (@Nonnull final ISimpleURL aRequestEndpoint)
+  public FineUploader5Core setEndpoint (@Nonnull final ISimpleURL aRequestEndpoint)
   {
     m_aRequestEndpoint = ValueEnforcer.notNull (aRequestEndpoint, "RequestEndpoint");
     return this;
@@ -311,7 +311,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setParams (@Nullable final Map <String, String> aParams)
+  public FineUploader5Core setParams (@Nullable final Map <String, String> aParams)
   {
     m_aRequestParams.setAll (aParams);
     return this;
@@ -326,7 +326,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic addParams (@Nullable final Map <String, String> aParams)
+  public FineUploader5Core addParams (@Nullable final Map <String, String> aParams)
   {
     m_aRequestParams.addAll (aParams);
     return this;
@@ -343,7 +343,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic addParam (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  public FineUploader5Core addParam (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -371,7 +371,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setRequestParamsInBody (final boolean bRequestParamsInBody)
+  public FineUploader5Core setRequestParamsInBody (final boolean bRequestParamsInBody)
   {
     m_bRequestParamsInBody = bRequestParamsInBody;
     return this;
@@ -393,7 +393,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
+  public FineUploader5Core setCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aRequestCustomHeaders.setAll (aCustomHeaders);
     return this;
@@ -408,7 +408,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic addCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
+  public FineUploader5Core addCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aRequestCustomHeaders.addAll (aCustomHeaders);
     return this;
@@ -425,7 +425,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic addCustomHeader (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  public FineUploader5Core addCustomHeader (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -448,7 +448,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setForceMultipart (final boolean bForceMultipart)
+  public FineUploader5Core setForceMultipart (final boolean bForceMultipart)
   {
     m_bRequestForceMultipart = bForceMultipart;
     return this;
@@ -470,7 +470,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setButtonElementID (@Nullable final String sButtonElementID)
+  public FineUploader5Core setButtonElementID (@Nullable final String sButtonElementID)
   {
     m_sCoreButtonElementID = sButtonElementID;
     return this;
@@ -490,7 +490,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setMultiple (final boolean bMultiple)
+  public FineUploader5Core setMultiple (final boolean bMultiple)
   {
     m_bCoreMultiple = bMultiple;
     return this;
@@ -510,7 +510,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setMaxConnections (@Nonnegative final int nMaxConnections)
+  public FineUploader5Core setMaxConnections (@Nonnegative final int nMaxConnections)
   {
     ValueEnforcer.isGT0 (nMaxConnections, "MaxConnections");
     m_nCoreMaxConnections = nMaxConnections;
@@ -532,7 +532,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setDisableCancelForFormUploads (final boolean bDisableCancelForFormUploads)
+  public FineUploader5Core setDisableCancelForFormUploads (final boolean bDisableCancelForFormUploads)
   {
     m_bCoreDisableCancelForFormUploads = bDisableCancelForFormUploads;
     return this;
@@ -552,7 +552,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setAutoUpload (final boolean bAutoUpload)
+  public FineUploader5Core setAutoUpload (final boolean bAutoUpload)
   {
     m_bCoreAutoUpload = bAutoUpload;
     return this;
@@ -578,7 +578,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setAllowedExtensions (@Nullable final Set <String> aAllowedExtensions)
+  public FineUploader5Core setAllowedExtensions (@Nullable final Set <String> aAllowedExtensions)
   {
     m_aValidationAllowedExtensions.setAll (aAllowedExtensions);
     return this;
@@ -597,7 +597,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic addAllowedExtensions (@Nullable final Set <String> aAllowedExtensions)
+  public FineUploader5Core addAllowedExtensions (@Nullable final Set <String> aAllowedExtensions)
   {
     if (aAllowedExtensions != null)
       m_aValidationAllowedExtensions.addAll (aAllowedExtensions);
@@ -617,7 +617,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic addAllowedExtension (@Nonnull @Nonempty final String sAllowedExtension)
+  public FineUploader5Core addAllowedExtension (@Nonnull @Nonempty final String sAllowedExtension)
   {
     ValueEnforcer.notEmpty (sAllowedExtension, "allowedExtension");
     m_aValidationAllowedExtensions.add (sAllowedExtension);
@@ -638,7 +638,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setSizeLimit (@Nonnegative final int nSizeLimit)
+  public FineUploader5Core setSizeLimit (@Nonnegative final int nSizeLimit)
   {
     ValueEnforcer.isGE0 (nSizeLimit, "SizeLimit");
     m_nValidationSizeLimit = nSizeLimit;
@@ -659,7 +659,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setMinSizeLimit (@Nonnegative final int nMinSizeLimit)
+  public FineUploader5Core setMinSizeLimit (@Nonnegative final int nMinSizeLimit)
   {
     ValueEnforcer.isGE0 (nMinSizeLimit, "MinSizeLimit");
     m_nValidationMinSizeLimit = nMinSizeLimit;
@@ -686,7 +686,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setStopOnFirstInvalidFile (final boolean bStopOnFirstInvalidFile)
+  public FineUploader5Core setStopOnFirstInvalidFile (final boolean bStopOnFirstInvalidFile)
   {
     m_bValidationStopOnFirstInvalidFile = bStopOnFirstInvalidFile;
     return this;
@@ -710,7 +710,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setInputName (@Nonnull @Nonempty final String sInputName)
+  public FineUploader5Core setInputName (@Nonnull @Nonempty final String sInputName)
   {
     ValueEnforcer.notEmpty (sInputName, "InputName");
 
@@ -733,7 +733,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setRetryEnableAuto (final boolean bRetryEnableAuto)
+  public FineUploader5Core setRetryEnableAuto (final boolean bRetryEnableAuto)
   {
     m_bRetryEnableAuto = bRetryEnableAuto;
     return this;
@@ -753,7 +753,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setRetryMaxAutoAttempts (final int nRetryMaxAutoAttempts)
+  public FineUploader5Core setRetryMaxAutoAttempts (final int nRetryMaxAutoAttempts)
   {
     m_nRetryMaxAutoAttempts = nRetryMaxAutoAttempts;
     return this;
@@ -773,7 +773,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setRetryAutoAttemptDelay (final int nRetryAutoAttemptDelay)
+  public FineUploader5Core setRetryAutoAttemptDelay (final int nRetryAutoAttemptDelay)
   {
     m_nRetryAutoAttemptDelay = nRetryAutoAttemptDelay;
     return this;
@@ -794,7 +794,7 @@ public class FineUploader5Basic
    * @return this
    */
   @Nonnull
-  public FineUploader5Basic setRetryPreventRetryResponseProperty (@Nullable final String sRetryPreventRetryResponseProperty)
+  public FineUploader5Core setRetryPreventRetryResponseProperty (@Nullable final String sRetryPreventRetryResponseProperty)
   {
     m_sRetryPreventRetryResponseProperty = sRetryPreventRetryResponseProperty;
     return this;
@@ -893,26 +893,26 @@ public class FineUploader5Basic
     if (m_aDisplayLocale != null)
     {
       final JSAssocArray aMessages = new JSAssocArray ();
-      aMessages.add ("emptyError", EFineUploader5BasicText.EMPTY_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("emptyError", EFineUploader5CoreText.EMPTY_ERROR.getDisplayText (m_aDisplayLocale));
       aMessages.add ("maxHeightImageError",
-                     EFineUploader5BasicText.MAX_HEIGHT_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+                     EFineUploader5CoreText.MAX_HEIGHT_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
       aMessages.add ("maxWidthImageError",
-                     EFineUploader5BasicText.MAX_WIDTH_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+                     EFineUploader5CoreText.MAX_WIDTH_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
       aMessages.add ("minHeightImageError",
-                     EFineUploader5BasicText.MIN_HEIGHT_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+                     EFineUploader5CoreText.MIN_HEIGHT_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
       aMessages.add ("minWidthImageError",
-                     EFineUploader5BasicText.MIN_WIDTH_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("minSizeError", EFineUploader5BasicText.MIN_SIZE_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("noFilesError", EFineUploader5BasicText.NO_FILES_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("onLeave", EFineUploader5BasicText.ON_LEAVE.getDisplayText (m_aDisplayLocale));
+                     EFineUploader5CoreText.MIN_WIDTH_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("minSizeError", EFineUploader5CoreText.MIN_SIZE_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("noFilesError", EFineUploader5CoreText.NO_FILES_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("onLeave", EFineUploader5CoreText.ON_LEAVE.getDisplayText (m_aDisplayLocale));
       aMessages.add ("retryFailTooManyItemsError",
-                     EFineUploader5BasicText.RETRY_FAIL_TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("sizeError", EFineUploader5BasicText.SIZE_ERROR.getDisplayText (m_aDisplayLocale));
+                     EFineUploader5CoreText.RETRY_FAIL_TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("sizeError", EFineUploader5CoreText.SIZE_ERROR.getDisplayText (m_aDisplayLocale));
       aMessages.add ("tooManyItemsError",
-                     EFineUploader5BasicText.TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("typeError", EFineUploader5BasicText.TYPE_ERROR.getDisplayText (m_aDisplayLocale));
+                     EFineUploader5CoreText.TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
+      aMessages.add ("typeError", EFineUploader5CoreText.TYPE_ERROR.getDisplayText (m_aDisplayLocale));
       aMessages.add ("unsupportedBrowserIos8Safari",
-                     EFineUploader5BasicText.UNSUPPORTED_BROWSER_IOS8_SAFARI.getDisplayText (m_aDisplayLocale));
+                     EFineUploader5CoreText.UNSUPPORTED_BROWSER_IOS8_SAFARI.getDisplayText (m_aDisplayLocale));
 
       // extended
       extendJSONMessages (aMessages, m_aDisplayLocale);

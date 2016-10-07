@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.html.jscode.JSAssocArray;
 
-public class FineUploader5UI extends FineUploader5Basic
+public class FineUploader5UI extends FineUploader5Core
 {
   public FineUploader5UI (@Nonnull final Locale aDisplayLocale)
   {

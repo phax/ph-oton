@@ -28,7 +28,7 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 
 @Translatable
-public enum EFineUploader5BasicText implements IHasDisplayText
+public enum EFineUploader5CoreText implements IHasDisplayText
 {
   // message
   EMPTY_ERROR ("{file} ist leer. Wählen Sie Dateien ohne diese Datei aus.",
@@ -59,7 +59,7 @@ public enum EFineUploader5BasicText implements IHasDisplayText
 
   private final IMultilingualText m_aTP;
 
-  private EFineUploader5BasicText (@Nonnull final String sDE, @Nonnull final String sEN)
+  private EFineUploader5CoreText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }
