@@ -25,7 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.html.jscode.JSAssocArray;
 
 /**
- * Wrapper for Fine Uploader 5.x paste part
+ * Wrapper for Fine Uploader 5.x resume part
  *
  * @author Philip Helger
  */

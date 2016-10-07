@@ -17,7 +17,6 @@
 package com.helger.photon.uictrls.fineupload5;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnegative;
@@ -36,12 +35,10 @@ import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.html.JSHtml;
-import com.helger.http.EHTTPMethod;
 
 /**
  * Wrapper for Fine Uploader 5.x
@@ -55,22 +52,6 @@ public class FineUploader5Core implements IFineUploader5Part
   public static final boolean DEFAULT_CORE_DISABLE_CANCEL_FOR_FORM_UPLOADS = false;
   public static final int DEFAULT_CORE_MAX_CONNECTIONS = 3;
   public static final boolean DEFAULT_CORE_MULTIPLE = true;
-
-  // retry
-  public static final int DEFAULT_RETRY_AUTO_ATTEMPT_DELAY = 5;
-  public static final boolean DEFAULT_RETRY_ENABLE_AUTO = false;
-  public static final int DEFAULT_RETRY_MAX_AUTO_ATTEMPTS = 3;
-  public static final String DEFAULT_RETRY_PREVENT_RETRY_RESPONSE_PROPERTY = "preventRetry";
-
-  // request
-  public static final ISimpleURL DEFAULT_REQUEST_ENDPOINT = new SimpleURL ("/server/upload");
-  public static final String DEFAULT_REQUEST_FILENAME_PARAM = "qqfilename";
-  public static final boolean DEFAULT_REQUEST_FORCE_MULTIPART = true;
-  public static final String DEFAULT_REQUEST_INPUT_NAME = "qqfile";
-  public static final EHTTPMethod DEFAULT_REQUEST_METHOD = EHTTPMethod.POST;
-  public static final boolean DEFAULT_REQUEST_PARAMS_IN_BODY = true;
-  public static final String DEFAULT_REQUEST_UUID_NAME = "qquuid";
-  public static final String DEFAULT_REQUEST_TOTAL_FILE_SIZE_NAME = "qqtotalfilesize";
 
   // session
   public static final boolean DEFAULT_SESSION_REFRESH_ON_RESET = true;
@@ -120,25 +101,8 @@ public class FineUploader5Core implements IFineUploader5Part
   private final FineUploader5Form m_aForm = new FineUploader5Form ();
   private final FineUploader5Paste m_aPaste = new FineUploader5Paste ();
   private final FineUploader5Resume m_aResume = new FineUploader5Resume ();
-
-  // retry
-  private int m_nRetryAutoAttemptDelay = DEFAULT_RETRY_AUTO_ATTEMPT_DELAY;
-  private boolean m_bRetryEnableAuto = DEFAULT_RETRY_ENABLE_AUTO;
-  private int m_nRetryMaxAutoAttempts = DEFAULT_RETRY_MAX_AUTO_ATTEMPTS;
-  private String m_sRetryPreventRetryResponseProperty = DEFAULT_RETRY_PREVENT_RETRY_RESPONSE_PROPERTY;
-
-  // request
-  private final ICommonsOrderedMap <String, String> m_aRequestCustomHeaders = new CommonsLinkedHashMap<> ();
-  private ISimpleURL m_aRequestEndpoint = DEFAULT_REQUEST_ENDPOINT;
-  private final String m_sRequestFilenameParam = DEFAULT_REQUEST_FILENAME_PARAM;
-  private boolean m_bRequestForceMultipart = DEFAULT_REQUEST_FORCE_MULTIPART;
-  private String m_sRequestInputName = DEFAULT_REQUEST_INPUT_NAME;
-  private final EHTTPMethod m_eRequestMethod = DEFAULT_REQUEST_METHOD;
-  private final ICommonsOrderedMap <String, String> m_aRequestParams = new CommonsLinkedHashMap<> ();
-  private boolean m_bRequestParamsInBody = DEFAULT_REQUEST_PARAMS_IN_BODY;
-  private final String m_sRequestUUIDName = DEFAULT_REQUEST_UUID_NAME;
-  private final String m_sRequestTotalFileSizeName = DEFAULT_REQUEST_TOTAL_FILE_SIZE_NAME;
-
+  private final FineUploader5Retry m_aRetry = new FineUploader5Retry ();
+  private final FineUploader5Request m_aRequest = new FineUploader5Request ();
   // TODO scaling
 
   // session
@@ -373,189 +337,21 @@ public class FineUploader5Core implements IFineUploader5Part
     return m_aResume;
   }
 
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5Retry getRetry ()
+  {
+    return m_aRetry;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5Request getRequest ()
+  {
+    return m_aRequest;
+  }
+
   // OLD
-
-  @Nonnull
-  public ISimpleURL getRequestEndpoint ()
-  {
-    return m_aRequestEndpoint;
-  }
-
-  /**
-   * The is the endpoint used by both the form and ajax uploader. In the case of
-   * the form uploader, it is part of the form's action attribute value along
-   * with all parameters. In the case of the ajax uploader, it is makes up part
-   * of the URL of the XHR request (again, along with the parameters).
-   *
-   * @param aRequestEndpoint
-   *        The new action URL. May not be <code>null</code>.
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setRequestEndpoint (@Nonnull final ISimpleURL aRequestEndpoint)
-  {
-    m_aRequestEndpoint = ValueEnforcer.notNull (aRequestEndpoint, "RequestEndpoint");
-    return this;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsOrderedMap <String, String> getAllRequestParams ()
-  {
-    return m_aRequestParams.getClone ();
-  }
-
-  /**
-   * These parameters are sent with the request to the endpoint specified in the
-   * action option.
-   *
-   * @param aParams
-   *        New parameters to be set.
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setRequestParams (@Nullable final Map <String, String> aParams)
-  {
-    m_aRequestParams.setAll (aParams);
-    return this;
-  }
-
-  /**
-   * These parameters are sent with the request to the endpoint specified in the
-   * action option.
-   *
-   * @param aParams
-   *        New parameters to be added.
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core addRequestParams (@Nullable final Map <String, String> aParams)
-  {
-    m_aRequestParams.addAll (aParams);
-    return this;
-  }
-
-  /**
-   * These parameters are sent with the request to the endpoint specified in the
-   * action option.
-   *
-   * @param sKey
-   *        Parameter name
-   * @param sValue
-   *        Parameter value
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core addRequestParam (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
-  {
-    ValueEnforcer.notEmpty (sKey, "Key");
-    ValueEnforcer.notNull (sValue, "Value");
-
-    m_aRequestParams.put (sKey, sValue);
-    return this;
-  }
-
-  public boolean isRequestParamsInBody ()
-  {
-    return m_bRequestParamsInBody;
-  }
-
-  /**
-   * Set this to <code>true</code> if you want all parameters to be sent in the
-   * request body. Note that setting this option to <code>true</code> will force
-   * all requests to be multipart encoded. If the value is false all params will
-   * be included in the query string. See the associated blog post
-   * (http://blog.fineuploader
-   * .com/2012/11/include-params-in-request-body-or-query.html) for more
-   * details.
-   *
-   * @param bRequestParamsInBody
-   *        <code>true</code> to put request params in bodx
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setRequestParamsInBody (final boolean bRequestParamsInBody)
-  {
-    m_bRequestParamsInBody = bRequestParamsInBody;
-    return this;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsOrderedMap <String, String> getAllRequestCustomHeaders ()
-  {
-    return m_aRequestCustomHeaders.getClone ();
-  }
-
-  /**
-   * Additional headers sent along with the XHR POST request. Note that is
-   * option is only relevant to the ajax/XHR uploader.
-   *
-   * @param aCustomHeaders
-   *        Custom headers to be set.
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setRequestCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
-  {
-    m_aRequestCustomHeaders.setAll (aCustomHeaders);
-    return this;
-  }
-
-  /**
-   * Additional headers sent along with the XHR POST request. Note that is
-   * option is only relevant to the ajax/XHR uploader.
-   *
-   * @param aCustomHeaders
-   *        Custom headers to be added.
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core addRequestCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
-  {
-    m_aRequestCustomHeaders.addAll (aCustomHeaders);
-    return this;
-  }
-
-  /**
-   * Additional headers sent along with the XHR POST request. Note that is
-   * option is only relevant to the ajax/XHR uploader.
-   *
-   * @param sKey
-   *        Custom header name
-   * @param sValue
-   *        Custom header value
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core addRequestCustomHeader (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
-  {
-    ValueEnforcer.notEmpty (sKey, "Key");
-    ValueEnforcer.notNull (sValue, "Value");
-
-    m_aRequestCustomHeaders.put (sKey, sValue);
-    return this;
-  }
-
-  public boolean isRequestForceMultipart ()
-  {
-    return m_bRequestForceMultipart;
-  }
-
-  /**
-   * While form-based uploads will always be multipart requests, this forces XHR
-   * uploads to send files using multipart requests as well.
-   *
-   * @param bForceMultipart
-   *        <code>true</code> to force
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setRequestForceMultipart (final boolean bForceMultipart)
-  {
-    m_bRequestForceMultipart = bForceMultipart;
-    return this;
-  }
 
   @Nonnull
   @ReturnsMutableCopy
@@ -691,114 +487,6 @@ public class FineUploader5Core implements IFineUploader5Part
     return this;
   }
 
-  @Nonnull
-  @Nonempty
-  public String getInputName ()
-  {
-    return m_sRequestInputName;
-  }
-
-  /**
-   * This usually only useful with the ajax uploader, which sends the name of
-   * the file as a parameter, using a key name equal to the value of this
-   * options. In the case of the form uploader, this is simply the value of the
-   * name attribute of the file's associated input element.
-   *
-   * @param sInputName
-   *        The input name
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setInputName (@Nonnull @Nonempty final String sInputName)
-  {
-    ValueEnforcer.notEmpty (sInputName, "InputName");
-
-    m_sRequestInputName = sInputName;
-    return this;
-  }
-
-  public boolean isRetryEnableAuto ()
-  {
-    return m_bRetryEnableAuto;
-  }
-
-  /**
-   * If set to <code>true</code>, any error or non-200 response will prompt the
-   * uploader to automatically attempt to upload the file again. Default:
-   * <code>false</code>
-   *
-   * @param bRetryEnableAuto
-   *        <code>true</code> or <code>false</code>
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setRetryEnableAuto (final boolean bRetryEnableAuto)
-  {
-    m_bRetryEnableAuto = bRetryEnableAuto;
-    return this;
-  }
-
-  public int getRetryMaxAutoAttempts ()
-  {
-    return m_nRetryMaxAutoAttempts;
-  }
-
-  /**
-   * The maximum number of times the uploader will attempt to retry a failed
-   * upload. Ignored if retryEnableAuto is <code>false</code>.
-   *
-   * @param nRetryMaxAutoAttempts
-   *        The number of retry attempts.
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setRetryMaxAutoAttempts (final int nRetryMaxAutoAttempts)
-  {
-    m_nRetryMaxAutoAttempts = nRetryMaxAutoAttempts;
-    return this;
-  }
-
-  public int getRetryAutoAttemptDelay ()
-  {
-    return m_nRetryAutoAttemptDelay;
-  }
-
-  /**
-   * The number of seconds the uploader will wait in between automatic retry
-   * attempts. Ignored if enableAuto is false.
-   *
-   * @param nRetryAutoAttemptDelay
-   *        Number of seconds
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setRetryAutoAttemptDelay (final int nRetryAutoAttemptDelay)
-  {
-    m_nRetryAutoAttemptDelay = nRetryAutoAttemptDelay;
-    return this;
-  }
-
-  public String getRetryPreventRetryResponseProperty ()
-  {
-    return m_sRetryPreventRetryResponseProperty;
-  }
-
-  /**
-   * If this property is present in the server response and contains a value of
-   * true, the uploader will not allow any further retries of this file (manual
-   * or automatic).
-   *
-   * @param sRetryPreventRetryResponseProperty
-   *        property name
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setRetryPreventRetryResponseProperty (@Nullable final String sRetryPreventRetryResponseProperty)
-  {
-    m_sRetryPreventRetryResponseProperty = sRetryPreventRetryResponseProperty;
-    return this;
-  }
-
   /**
    * @param aRoot
    *        The JSON messages object to extend
@@ -849,14 +537,6 @@ public class FineUploader5Core implements IFineUploader5Part
     if (m_bCoreMultiple != DEFAULT_CORE_MULTIPLE)
       ret.add ("multiple", m_bCoreMultiple);
 
-    _addIf (ret, "blobs", m_aBlobs.getJSCode ());
-    // TODO camera
-    _addIf (ret, "chunking", m_aChunking.getJSCode ());
-    _addIf (ret, "cors", m_aCors.getJSCode ());
-    _addIf (ret, "deleteFile", m_aDeleteFile.getJSCode ());
-    // TODO extraButtons
-    _addIf (ret, "form", m_aForm.getJSCode ());
-
     // messages
     if (m_aDisplayLocale != null)
     {
@@ -887,54 +567,17 @@ public class FineUploader5Core implements IFineUploader5Part
       ret.add ("messages", aMessages);
     }
 
+    _addIf (ret, "blobs", m_aBlobs.getJSCode ());
+    // TODO camera
+    _addIf (ret, "chunking", m_aChunking.getJSCode ());
+    _addIf (ret, "cors", m_aCors.getJSCode ());
+    _addIf (ret, "deleteFile", m_aDeleteFile.getJSCode ());
+    // TODO extraButtons
+    _addIf (ret, "form", m_aForm.getJSCode ());
     _addIf (ret, "paste", m_aPaste.getJSCode ());
     _addIf (ret, "resume", m_aResume.getJSCode ());
-
-    // retry
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-
-      if (m_nRetryAutoAttemptDelay != DEFAULT_RETRY_AUTO_ATTEMPT_DELAY)
-        aSub.add ("autoAttemptDelay", m_nRetryAutoAttemptDelay);
-      if (m_bRetryEnableAuto != DEFAULT_RETRY_ENABLE_AUTO)
-        aSub.add ("enableAuto", m_bRetryEnableAuto);
-      if (m_nRetryMaxAutoAttempts != DEFAULT_RETRY_MAX_AUTO_ATTEMPTS)
-        aSub.add ("maxAutoAttempts", m_nRetryMaxAutoAttempts);
-      if (!m_sRetryPreventRetryResponseProperty.equals (DEFAULT_RETRY_PREVENT_RETRY_RESPONSE_PROPERTY))
-        aSub.add ("preventRetryResponseProperty", m_sRetryPreventRetryResponseProperty);
-
-      if (!aSub.isEmpty ())
-        ret.add ("retry", aSub);
-    }
-
-    // request
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-      if (m_aRequestCustomHeaders.isNotEmpty ())
-        aSub.add ("customHeaders", getAsJSAA (m_aRequestCustomHeaders));
-      if (!m_aRequestEndpoint.equals (DEFAULT_REQUEST_ENDPOINT))
-        aSub.add ("endpoint", m_aRequestEndpoint.getAsStringWithEncodedParameters ());
-      if (!m_sRequestFilenameParam.equals (DEFAULT_REQUEST_FILENAME_PARAM))
-        aSub.add ("filenameParam", m_sRequestFilenameParam);
-      if (m_bRequestForceMultipart != DEFAULT_REQUEST_FORCE_MULTIPART)
-        aSub.add ("forceMultipart", m_bRequestForceMultipart);
-      if (!m_sRequestInputName.equals (DEFAULT_REQUEST_INPUT_NAME))
-        aSub.add ("inputName", m_sRequestInputName);
-      if (!m_eRequestMethod.equals (DEFAULT_REQUEST_METHOD))
-        aSub.add ("method", m_eRequestMethod.getName ());
-      if (m_aRequestParams.isNotEmpty ())
-        aSub.add ("params", getAsJSAA (m_aRequestParams));
-      if (m_bRequestParamsInBody != DEFAULT_REQUEST_PARAMS_IN_BODY)
-        aSub.add ("paramsInBody", m_bRequestParamsInBody);
-      if (!m_sRequestUUIDName.equals (DEFAULT_REQUEST_UUID_NAME))
-        aSub.add ("uuidName", m_sRequestUUIDName);
-      if (!m_sRequestTotalFileSizeName.equals (DEFAULT_REQUEST_TOTAL_FILE_SIZE_NAME))
-        aSub.add ("totalFileSizeName", m_sRequestTotalFileSizeName);
-
-      if (!aSub.isEmpty ())
-        ret.add ("request", aSub);
-    }
-
+    _addIf (ret, "retry", m_aRetry.getJSCode ());
+    _addIf (ret, "request", m_aRequest.getJSCode ());
     // TODO scaling
 
     // session
