@@ -26,15 +26,10 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
-import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
-import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.ISimpleURL;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
@@ -53,9 +48,6 @@ public class FineUploader5Core implements IFineUploader5Part
   public static final int DEFAULT_CORE_MAX_CONNECTIONS = 3;
   public static final boolean DEFAULT_CORE_MULTIPLE = true;
 
-  // session
-  public static final boolean DEFAULT_SESSION_REFRESH_ON_RESET = true;
-
   // text
   public static final Set <String> DEFAULT_TEXT_SIZE_SYMBOLS = new CommonsLinkedHashSet<> ("kB",
                                                                                            "MB",
@@ -63,16 +55,6 @@ public class FineUploader5Core implements IFineUploader5Part
                                                                                            "TB",
                                                                                            "PB",
                                                                                            "EB").getAsUnmodifiable ();
-
-  // validation
-  public static final int DEFAULT_VALIDATION_ITEM_LIMIT = 0;
-  public static final int DEFAULT_VALIDATION_MIN_SIZE_LIMIT = 0;
-  public static final int DEFAULT_VALIDATION_SIZE_LIMIT = 0;
-  public static final boolean DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE = true;
-  public static final int DEFAULT_VALIDATION_IMAGE_MAX_HEIGHT = 0;
-  public static final int DEFAULT_VALIDATION_IMAGE_MAX_WIDTH = 0;
-  public static final int DEFAULT_VALIDATION_IMAGE_MIN_HEIGHT = 0;
-  public static final int DEFAULT_VALIDATION_IMAGE_MIN_WIDTH = 0;
 
   // workarounds
   public static final boolean DEFAULT_WORKAROUNDS = true;
@@ -92,6 +74,10 @@ public class FineUploader5Core implements IFineUploader5Part
   // messages
   // All in EFineUploader5CoreText
 
+  // text
+  // partially in EFineUploader5CoreText
+  private final ICommonsOrderedSet <String> m_aTextSizeSymbols = new CommonsLinkedHashSet<> (DEFAULT_TEXT_SIZE_SYMBOLS);
+
   private final FineUploader5Blobs m_aBlobs = new FineUploader5Blobs ();
   // TODO camera
   private final FineUploader5Chunking m_aChunking = new FineUploader5Chunking ();
@@ -104,28 +90,8 @@ public class FineUploader5Core implements IFineUploader5Part
   private final FineUploader5Retry m_aRetry = new FineUploader5Retry ();
   private final FineUploader5Request m_aRequest = new FineUploader5Request ();
   // TODO scaling
-
-  // session
-  private final ICommonsOrderedMap <String, String> m_aSessionCustomHeaders = new CommonsLinkedHashMap<> ();
-  private ISimpleURL m_aSessionEndpoint;
-  private final ICommonsOrderedMap <String, String> m_aSessionParams = new CommonsLinkedHashMap<> ();
-  private final boolean m_bSessionRefreshOnReset = DEFAULT_SESSION_REFRESH_ON_RESET;
-
-  // text
-  // partially in EFineUploader5CoreText
-  private final ICommonsOrderedSet <String> m_aTextSizeSymbols = new CommonsLinkedHashSet<> (DEFAULT_TEXT_SIZE_SYMBOLS);
-
-  // validation
-  private final ICommonsOrderedSet <IMimeType> m_aValidationAcceptFiles = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aValidationAllowedExtensions = new CommonsLinkedHashSet<> ();
-  private final int m_nValidationItemLimit = DEFAULT_VALIDATION_ITEM_LIMIT;
-  private int m_nValidationMinSizeLimit = DEFAULT_VALIDATION_MIN_SIZE_LIMIT;
-  private int m_nValidationSizeLimit = DEFAULT_VALIDATION_SIZE_LIMIT;
-  private boolean m_bValidationStopOnFirstInvalidFile = DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE;
-  private final int m_nValidationImageMaxHeight = DEFAULT_VALIDATION_IMAGE_MAX_HEIGHT;
-  private final int m_nValidationImageMaxWidth = DEFAULT_VALIDATION_IMAGE_MAX_WIDTH;
-  private final int m_nValidationImageMinHeight = DEFAULT_VALIDATION_IMAGE_MIN_HEIGHT;
-  private final int m_nValidationImageMinWidth = DEFAULT_VALIDATION_IMAGE_MIN_WIDTH;
+  private final FineUploader5Session m_aSession = new FineUploader5Session ();
+  private final FineUploader5Validation m_aValidation = new FineUploader5Validation ();
 
   // workarounds
   private final boolean m_bWorkaroundsIosEmptyVideo = DEFAULT_WORKAROUNDS;
@@ -351,141 +317,21 @@ public class FineUploader5Core implements IFineUploader5Part
     return m_aRequest;
   }
 
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5Session getSession ()
+  {
+    return m_aSession;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject ("design")
+  public FineUploader5Validation getValidation ()
+  {
+    return m_aValidation;
+  }
+
   // OLD
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsOrderedSet <String> getAllAllowedExtensions ()
-  {
-    return m_aValidationAllowedExtensions.getClone ();
-  }
-
-  /**
-   * This may be helpful if you want to restrict uploaded files to specific file
-   * types. Note that this validation option is only enforced by examining the
-   * extension of uploaded file names. For a more complete verification of the
-   * file type, you should use, for example, magic byte file identification on
-   * the server side and return {"success": false} in the response if the file
-   * type is not on your whitelist.
-   *
-   * @param aAllowedExtensions
-   *        The allowed extensions to be set.
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setAllowedExtensions (@Nullable final Set <String> aAllowedExtensions)
-  {
-    m_aValidationAllowedExtensions.setAll (aAllowedExtensions);
-    return this;
-  }
-
-  /**
-   * This may be helpful if you want to restrict uploaded files to specific file
-   * types. Note that this validation option is only enforced by examining the
-   * extension of uploaded file names. For a more complete verification of the
-   * file type, you should use, for example, magic byte file identification on
-   * the server side and return {"success": false} in the response if the file
-   * type is not on your whitelist.
-   *
-   * @param aAllowedExtensions
-   *        The allowed extensions to be added.
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core addAllowedExtensions (@Nullable final Set <String> aAllowedExtensions)
-  {
-    if (aAllowedExtensions != null)
-      m_aValidationAllowedExtensions.addAll (aAllowedExtensions);
-    return this;
-  }
-
-  /**
-   * This may be helpful if you want to restrict uploaded files to specific file
-   * types. Note that this validation option is only enforced by examining the
-   * extension of uploaded file names. For a more complete verification of the
-   * file type, you should use, for example, magic byte file identification on
-   * the server side and return {"success": false} in the response if the file
-   * type is not on your whitelist.
-   *
-   * @param sAllowedExtension
-   *        The allowed extension to be added. E.g. ("jpeg", "jpg", "gif")
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core addAllowedExtension (@Nonnull @Nonempty final String sAllowedExtension)
-  {
-    ValueEnforcer.notEmpty (sAllowedExtension, "allowedExtension");
-    m_aValidationAllowedExtensions.add (sAllowedExtension);
-    return this;
-  }
-
-  @Nonnegative
-  public int getSizeLimit ()
-  {
-    return m_nValidationSizeLimit;
-  }
-
-  /**
-   * Maximum allowable size, in bytes, for a file.
-   *
-   * @param nSizeLimit
-   *        Size limit. 0 == unlimited
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setSizeLimit (@Nonnegative final int nSizeLimit)
-  {
-    ValueEnforcer.isGE0 (nSizeLimit, "SizeLimit");
-    m_nValidationSizeLimit = nSizeLimit;
-    return this;
-  }
-
-  @Nonnegative
-  public int getMinSizeLimit ()
-  {
-    return m_nValidationMinSizeLimit;
-  }
-
-  /**
-   * Minimum allowable size, in bytes, for a file.
-   *
-   * @param nMinSizeLimit
-   *        Minimum size limit. 0 == unlimited
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setMinSizeLimit (@Nonnegative final int nMinSizeLimit)
-  {
-    ValueEnforcer.isGE0 (nMinSizeLimit, "MinSizeLimit");
-    m_nValidationMinSizeLimit = nMinSizeLimit;
-    return this;
-  }
-
-  public boolean isStopOnFirstInvalidFile ()
-  {
-    return m_bValidationStopOnFirstInvalidFile;
-  }
-
-  /**
-   * If true, when submitting multiple files, once a file is determined to be
-   * invalid, the upload process will terminate. If false, all valid files will
-   * be uploaded. Note: One downside to a false value can be seen if the default
-   * showMessage implementation is not overriden. In this case, an alert dialog
-   * will appear for each invalid file in the batch, and the upload process will
-   * not continue until the dialog is dismissed. If this is bothersome, simply
-   * override showMessage with a desirable implementation. 3.0 will likely have
-   * a showMessage default implementation that does not use the alert function.
-   *
-   * @param bStopOnFirstInvalidFile
-   *        <code>false</code> to not stop
-   * @return this
-   */
-  @Nonnull
-  public FineUploader5Core setStopOnFirstInvalidFile (final boolean bStopOnFirstInvalidFile)
-  {
-    m_bValidationStopOnFirstInvalidFile = bStopOnFirstInvalidFile;
-    return this;
-  }
 
   /**
    * @param aRoot
@@ -567,36 +413,6 @@ public class FineUploader5Core implements IFineUploader5Part
       ret.add ("messages", aMessages);
     }
 
-    _addIf (ret, "blobs", m_aBlobs.getJSCode ());
-    // TODO camera
-    _addIf (ret, "chunking", m_aChunking.getJSCode ());
-    _addIf (ret, "cors", m_aCors.getJSCode ());
-    _addIf (ret, "deleteFile", m_aDeleteFile.getJSCode ());
-    // TODO extraButtons
-    _addIf (ret, "form", m_aForm.getJSCode ());
-    _addIf (ret, "paste", m_aPaste.getJSCode ());
-    _addIf (ret, "resume", m_aResume.getJSCode ());
-    _addIf (ret, "retry", m_aRetry.getJSCode ());
-    _addIf (ret, "request", m_aRequest.getJSCode ());
-    // TODO scaling
-
-    // session
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-
-      if (m_aSessionCustomHeaders.isNotEmpty ())
-        aSub.add ("customHeaders", getAsJSAA (m_aSessionCustomHeaders));
-      if (m_aSessionEndpoint != null)
-        aSub.add ("endpoint", m_aSessionEndpoint.getAsStringWithEncodedParameters ());
-      if (m_aSessionParams.isNotEmpty ())
-        aSub.add ("params", getAsJSAA (m_aSessionParams));
-      if (m_bSessionRefreshOnReset != DEFAULT_SESSION_REFRESH_ON_RESET)
-        aSub.add ("refreshOnReset", m_bSessionRefreshOnReset);
-
-      if (!aSub.isEmpty ())
-        ret.add ("session", aSub);
-    }
-
     // text
     {
       final JSAssocArray aSub = new JSAssocArray ();
@@ -613,42 +429,20 @@ public class FineUploader5Core implements IFineUploader5Part
         ret.add ("text", aSub);
     }
 
-    // validation
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-      if (m_aValidationAcceptFiles.isNotEmpty ())
-      {
-        final JSArray aArray = new JSArray ();
-        for (final IMimeType aMimeType : m_aValidationAcceptFiles)
-          aArray.add (aMimeType.getAsString ());
-        aSub.add ("acceptFiles", aArray);
-      }
-      if (m_aValidationAllowedExtensions.isNotEmpty ())
-        aSub.add ("allowedExtensions", new JSArray ().addAll (m_aValidationAllowedExtensions));
-      if (m_nValidationItemLimit != DEFAULT_VALIDATION_ITEM_LIMIT)
-        aSub.add ("itemLimit", m_nValidationSizeLimit);
-      if (m_nValidationMinSizeLimit != DEFAULT_VALIDATION_MIN_SIZE_LIMIT)
-        aSub.add ("minSizeLimit", m_nValidationMinSizeLimit);
-      if (m_nValidationSizeLimit != DEFAULT_VALIDATION_SIZE_LIMIT)
-        aSub.add ("sizeLimit", m_nValidationSizeLimit);
-      if (m_bValidationStopOnFirstInvalidFile != DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE)
-        aSub.add ("stopOnFirstInvalidFile", m_bValidationStopOnFirstInvalidFile);
-
-      final JSAssocArray aImage = new JSAssocArray ();
-      if (m_nValidationImageMaxHeight != DEFAULT_VALIDATION_IMAGE_MAX_HEIGHT)
-        aImage.add ("maxHeight", m_nValidationImageMaxHeight);
-      if (m_nValidationImageMaxWidth != DEFAULT_VALIDATION_IMAGE_MAX_WIDTH)
-        aImage.add ("maxWidth", m_nValidationImageMaxWidth);
-      if (m_nValidationImageMinHeight != DEFAULT_VALIDATION_IMAGE_MIN_HEIGHT)
-        aImage.add ("minHeight", m_nValidationImageMinHeight);
-      if (m_nValidationImageMinWidth != DEFAULT_VALIDATION_IMAGE_MIN_WIDTH)
-        aImage.add ("minWidth", m_nValidationImageMinWidth);
-      if (!aImage.isEmpty ())
-        aSub.add ("image", aImage);
-
-      if (!aSub.isEmpty ())
-        ret.add ("validation", aSub);
-    }
+    _addIf (ret, "blobs", m_aBlobs.getJSCode ());
+    // TODO camera
+    _addIf (ret, "chunking", m_aChunking.getJSCode ());
+    _addIf (ret, "cors", m_aCors.getJSCode ());
+    _addIf (ret, "deleteFile", m_aDeleteFile.getJSCode ());
+    // TODO extraButtons
+    _addIf (ret, "form", m_aForm.getJSCode ());
+    _addIf (ret, "paste", m_aPaste.getJSCode ());
+    _addIf (ret, "resume", m_aResume.getJSCode ());
+    _addIf (ret, "retry", m_aRetry.getJSCode ());
+    _addIf (ret, "request", m_aRequest.getJSCode ());
+    // TODO scaling
+    _addIf (ret, "session", m_aSession.getJSCode ());
+    _addIf (ret, "validation", m_aValidation.getJSCode ());
 
     // workarounds
     {
