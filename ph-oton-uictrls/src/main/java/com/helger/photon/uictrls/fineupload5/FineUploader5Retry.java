@@ -18,7 +18,6 @@ package com.helger.photon.uictrls.fineupload5;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -128,7 +127,7 @@ public class FineUploader5Retry implements IFineUploader5Part
     return this;
   }
 
-  @Nullable
+  @Nonnull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

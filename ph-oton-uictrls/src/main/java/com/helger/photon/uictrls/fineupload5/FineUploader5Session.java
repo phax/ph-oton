@@ -191,7 +191,7 @@ public class FineUploader5Session implements IFineUploader5Part
   /**
    * Set this to false if you do not want the file list to be retrieved from the
    * server as part of a reset.
-   * 
+   *
    * @param bRefreshOnReset
    *        New value
    * @return this for chaining
@@ -203,7 +203,7 @@ public class FineUploader5Session implements IFineUploader5Part
     return this;
   }
 
-  @Nullable
+  @Nonnull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

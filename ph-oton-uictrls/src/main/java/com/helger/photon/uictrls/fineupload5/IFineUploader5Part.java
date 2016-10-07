@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.html.jscode.JSAssocArray;
@@ -16,7 +15,7 @@ import com.helger.html.jscode.JSAssocArray;
  */
 public interface IFineUploader5Part extends Serializable
 {
-  @Nullable
+  @Nonnull
   JSAssocArray getJSCode ();
 
   @Nonnull

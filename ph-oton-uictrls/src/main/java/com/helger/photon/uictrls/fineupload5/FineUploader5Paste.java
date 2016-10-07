@@ -82,7 +82,7 @@ public class FineUploader5Paste implements IFineUploader5Part
     return this;
   }
 
-  @Nullable
+  @Nonnull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

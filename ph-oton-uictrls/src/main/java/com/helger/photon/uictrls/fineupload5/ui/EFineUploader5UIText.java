@@ -28,10 +28,14 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 
 @Translatable
-public enum EFineUploader5Text implements IHasDisplayText
+public enum EFineUploader5UIText implements IHasDisplayText
 {
+  DELETE_FILE_CONFIRM_MESSAGE ("Soll die Datei {filename} gelöscht werden?",
+                               "Are you sure you want to delete {filename}?"),
+  DELETE_FILE_DELETING_FAILED_TEXT ("Löschen ist fehlgeschlagen", "Delete failed"),
+  DELETE_FILE_DELETING_STATUS_TEXT ("Löschen...", "Deleting..."),
+  // old
   TOO_MANY_FILE_ERROR ("Sie können immer nur eine Datei hierher ziehen.", "You may only drop one file."),
-  // text
   UPLOAD_BUTTON ("Datei auswählen", "Upload a file"),
   CANCEL_BUTTON ("Löschen", "Delete"),
   RETRY_BUTTON ("Wiederholen", "Retry"),
@@ -43,7 +47,7 @@ public enum EFineUploader5Text implements IHasDisplayText
 
   private final IMultilingualText m_aTP;
 
-  private EFineUploader5Text (@Nonnull final String sDE, @Nonnull final String sEN)
+  private EFineUploader5UIText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }

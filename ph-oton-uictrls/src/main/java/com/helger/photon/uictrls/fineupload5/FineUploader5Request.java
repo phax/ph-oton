@@ -344,7 +344,7 @@ public class FineUploader5Request implements IFineUploader5Part
     return this;
   }
 
-  @Nullable
+  @Nonnull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

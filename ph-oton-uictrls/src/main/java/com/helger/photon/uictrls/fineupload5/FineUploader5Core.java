@@ -42,6 +42,21 @@ import com.helger.html.jscode.html.JSHtml;
  */
 public class FineUploader5Core implements IFineUploader5Part
 {
+  protected static final String KEY_MESSAGES = "messages";
+  protected static final String KEY_TEXT = "text";
+  protected static final String KEY_BLOBS = "blobs";
+  protected static final String KEY_CHUNKING = "chunking";
+  protected static final String KEY_CORS = "cors";
+  protected static final String KEY_DELETE_FILE = "deleteFile";
+  protected static final String KEY_FORM = "form";
+  protected static final String KEY_PASTE = "paste";
+  protected static final String KEY_RESUME = "resume";
+  protected static final String KEY_RETRY = "retry";
+  protected static final String KEY_REQUEST = "request";
+  protected static final String KEY_SESSION = "session";
+  protected static final String KEY_VALIDATION = "validation";
+  protected static final String KEY_WORKAROUNDS = "workarounds";
+
   public static final boolean DEFAULT_CORE_AUTO_UPLOAD = true;
   public static final boolean DEFAULT_CORE_DEBUG = false;
   public static final boolean DEFAULT_CORE_DISABLE_CANCEL_FOR_FORM_UPLOADS = false;
@@ -332,32 +347,38 @@ public class FineUploader5Core implements IFineUploader5Part
   }
 
   /**
-   * @param aRoot
+   * @param sKey
+   *        The key under which it is added to the root JSON. Neither
+   *        <code>null</code> nor empty.
+   * @param aAssocArray
    *        The JSON messages object to extend
    * @param aDisplayLocale
    *        The locale to be used for test resolving. May be <code>null</code>
-   *        if none passed.
+   *        if none was provided in the constructor.
    */
   @OverrideOnDemand
-  protected void extendJSON (@Nonnull final JSAssocArray aRoot, @Nullable final Locale aDisplayLocale)
+  protected void extendJSONPart (@Nonnull @Nonempty final String sKey,
+                                 @Nonnull final JSAssocArray aAssocArray,
+                                 @Nullable final Locale aDisplayLocale)
   {}
 
   /**
-   * @param aMessages
+   * @param aAssocArray
    *        The JSON messages object to extend
    * @param aDisplayLocale
-   *        The locale to be used for test resolving
+   *        The locale to be used for test resolving. May be <code>null</code>
+   *        if none passed in the constructor.
    */
   @OverrideOnDemand
-  protected void extendJSONMessages (@Nonnull final JSAssocArray aMessages, @Nonnull final Locale aDisplayLocale)
+  protected void extendJSON (@Nonnull final JSAssocArray aAssocArray, @Nullable final Locale aDisplayLocale)
   {}
 
-  private static void _addIf (@Nonnull final JSAssocArray aAssocArray,
+  private void _extendAndAdd (@Nonnull final JSAssocArray aTo,
                               @Nonnull @Nonempty final String sKey,
-                              @Nullable final JSAssocArray aExpr)
+                              @Nonnull final JSAssocArray aAssocArray)
   {
-    if (aExpr != null && !aExpr.isEmpty ())
-      aAssocArray.add (sKey, aExpr);
+    extendJSONPart (sKey, aAssocArray, m_aDisplayLocale);
+    aTo.add (sKey, aAssocArray);
   }
 
   @Nonnull
@@ -384,31 +405,25 @@ public class FineUploader5Core implements IFineUploader5Part
     // messages
     if (m_aDisplayLocale != null)
     {
-      final JSAssocArray aMessages = new JSAssocArray ();
-      aMessages.add ("emptyError", EFineUploader5CoreText.EMPTY_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("maxHeightImageError",
-                     EFineUploader5CoreText.MAX_HEIGHT_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("maxWidthImageError",
-                     EFineUploader5CoreText.MAX_WIDTH_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("minHeightImageError",
-                     EFineUploader5CoreText.MIN_HEIGHT_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("minWidthImageError",
-                     EFineUploader5CoreText.MIN_WIDTH_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("minSizeError", EFineUploader5CoreText.MIN_SIZE_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("noFilesError", EFineUploader5CoreText.NO_FILES_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("onLeave", EFineUploader5CoreText.ON_LEAVE.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("retryFailTooManyItemsError",
-                     EFineUploader5CoreText.RETRY_FAIL_TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("sizeError", EFineUploader5CoreText.SIZE_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("tooManyItemsError",
-                     EFineUploader5CoreText.TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("typeError", EFineUploader5CoreText.TYPE_ERROR.getDisplayText (m_aDisplayLocale));
-      aMessages.add ("unsupportedBrowserIos8Safari",
-                     EFineUploader5CoreText.UNSUPPORTED_BROWSER_IOS8_SAFARI.getDisplayText (m_aDisplayLocale));
+      final JSAssocArray aSub = new JSAssocArray ();
+      aSub.add ("emptyError", EFineUploader5CoreText.EMPTY_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("maxHeightImageError", EFineUploader5CoreText.MAX_HEIGHT_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("maxWidthImageError", EFineUploader5CoreText.MAX_WIDTH_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("minHeightImageError", EFineUploader5CoreText.MIN_HEIGHT_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("minWidthImageError", EFineUploader5CoreText.MIN_WIDTH_IMAGE_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("minSizeError", EFineUploader5CoreText.MIN_SIZE_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("noFilesError", EFineUploader5CoreText.NO_FILES_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("onLeave", EFineUploader5CoreText.ON_LEAVE.getDisplayText (m_aDisplayLocale));
+      aSub.add ("retryFailTooManyItemsError",
+                EFineUploader5CoreText.RETRY_FAIL_TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("sizeError", EFineUploader5CoreText.SIZE_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("tooManyItemsError", EFineUploader5CoreText.TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("typeError", EFineUploader5CoreText.TYPE_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("unsupportedBrowserIos8Safari",
+                EFineUploader5CoreText.UNSUPPORTED_BROWSER_IOS8_SAFARI.getDisplayText (m_aDisplayLocale));
 
       // extended
-      extendJSONMessages (aMessages, m_aDisplayLocale);
-      ret.add ("messages", aMessages);
+      _extendAndAdd (ret, KEY_MESSAGES, aSub);
     }
 
     // text
@@ -423,25 +438,24 @@ public class FineUploader5Core implements IFineUploader5Part
       if (!m_aTextSizeSymbols.equals (DEFAULT_TEXT_SIZE_SYMBOLS))
         aSub.add ("sizeSymbols", new JSArray ().addAll (m_aTextSizeSymbols));
 
-      if (!aSub.isEmpty ())
-        ret.add ("text", aSub);
+      _extendAndAdd (ret, KEY_TEXT, aSub);
     }
 
-    _addIf (ret, "blobs", m_aBlobs.getJSCode ());
+    _extendAndAdd (ret, KEY_BLOBS, m_aBlobs.getJSCode ());
     // TODO camera
-    _addIf (ret, "chunking", m_aChunking.getJSCode ());
-    _addIf (ret, "cors", m_aCors.getJSCode ());
-    _addIf (ret, "deleteFile", m_aDeleteFile.getJSCode ());
+    _extendAndAdd (ret, KEY_CHUNKING, m_aChunking.getJSCode ());
+    _extendAndAdd (ret, KEY_CORS, m_aCors.getJSCode ());
+    _extendAndAdd (ret, KEY_DELETE_FILE, m_aDeleteFile.getJSCode ());
     // TODO extraButtons
-    _addIf (ret, "form", m_aForm.getJSCode ());
-    _addIf (ret, "paste", m_aPaste.getJSCode ());
-    _addIf (ret, "resume", m_aResume.getJSCode ());
-    _addIf (ret, "retry", m_aRetry.getJSCode ());
-    _addIf (ret, "request", m_aRequest.getJSCode ());
+    _extendAndAdd (ret, KEY_FORM, m_aForm.getJSCode ());
+    _extendAndAdd (ret, KEY_PASTE, m_aPaste.getJSCode ());
+    _extendAndAdd (ret, KEY_RESUME, m_aResume.getJSCode ());
+    _extendAndAdd (ret, KEY_RETRY, m_aRetry.getJSCode ());
+    _extendAndAdd (ret, KEY_REQUEST, m_aRequest.getJSCode ());
     // TODO scaling
-    _addIf (ret, "session", m_aSession.getJSCode ());
-    _addIf (ret, "validation", m_aValidation.getJSCode ());
-    _addIf (ret, "workarounds", m_aWorkarounds.getJSCode ());
+    _extendAndAdd (ret, KEY_SESSION, m_aSession.getJSCode ());
+    _extendAndAdd (ret, KEY_VALIDATION, m_aValidation.getJSCode ());
+    _extendAndAdd (ret, KEY_WORKAROUNDS, m_aWorkarounds.getJSCode ());
 
     extendJSON (ret, m_aDisplayLocale);
     return ret;

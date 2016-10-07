@@ -264,7 +264,7 @@ public class FineUploader5Validation implements IFineUploader5Part
 
   /**
    * Restrict images to a maximum height in pixels (wherever possible).
-   * 
+   *
    * @param nImageMaxHeight
    *        New value. Must be &ge; 0.
    * @return this for chaining
@@ -285,7 +285,7 @@ public class FineUploader5Validation implements IFineUploader5Part
 
   /**
    * Restrict images to a maximum width in pixels (wherever possible).
-   * 
+   *
    * @param nImageMaxWidth
    *        New value. Must be &ge; 0.
    * @return this for chaining
@@ -306,7 +306,7 @@ public class FineUploader5Validation implements IFineUploader5Part
 
   /**
    * Restrict images to a minimum height in pixels (wherever possible).
-   * 
+   *
    * @param nImageMinHeight
    *        New value. Must be &ge; 0.
    * @return this for chaining
@@ -327,7 +327,7 @@ public class FineUploader5Validation implements IFineUploader5Part
 
   /**
    * Restrict images to a minimum width in pixels (wherever possible).
-   * 
+   *
    * @param nImageMinWidth
    *        New value. Must be &ge; 0.
    * @return this for chaining
@@ -340,7 +340,7 @@ public class FineUploader5Validation implements IFineUploader5Part
     return this;
   }
 
-  @Nullable
+  @Nonnull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();
