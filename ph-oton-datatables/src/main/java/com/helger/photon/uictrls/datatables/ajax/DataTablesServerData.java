@@ -141,11 +141,13 @@ public final class DataTablesServerData implements IHasUIState
       m_aRows.add (new DataTablesServerDataRow (aRow, aRealCS));
       nCells += aRow.getCellCount ();
     }
-    s_aLogger.info ("Having ServerSide DataTables with " +
-                    aTable.getBodyRowCount () +
-                    " rows and a total of " +
-                    nCells +
-                    " cells");
+
+    if (s_aLogger.isDebugEnabled ())
+      s_aLogger.debug ("Having ServerSide DataTables with " +
+                       aTable.getBodyRowCount () +
+                       " rows and a total of " +
+                       nCells +
+                       " cells");
     m_aDisplayLocale = aDisplayLocale;
     m_aServerSortState = new DataTablesServerSortState (this, aDisplayLocale);
     m_eFilterType = eFilterType;

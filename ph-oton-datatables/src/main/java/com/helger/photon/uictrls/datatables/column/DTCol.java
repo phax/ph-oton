@@ -153,6 +153,14 @@ public class DTCol extends AbstractHCCol <DTCol>
   }
 
   @Nonnull
+  public DTCol setDisplayTypePercentage (@Nonnull final Locale aDisplayLocale)
+  {
+    setComparator (ComparatorDT.getComparatorPercentage (aDisplayLocale));
+    addClass (CUICoreCSS.CSS_CLASS_RIGHT);
+    return this;
+  }
+
+  @Nonnull
   public IHCNode getHeaderNode ()
   {
     return m_aHeaderNode;

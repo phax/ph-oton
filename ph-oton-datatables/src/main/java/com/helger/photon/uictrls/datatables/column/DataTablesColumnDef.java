@@ -95,7 +95,6 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   private boolean m_bVisible = DEFAULT_VISIBLE;
   /** Column width assignment. */
   private String m_sWidth;
-
   /** Server side comparator */
   private Comparator <String> m_aServerComparator;
 
