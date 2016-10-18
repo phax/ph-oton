@@ -131,6 +131,7 @@ public class DTCol extends AbstractHCCol <DTCol>
         break;
       case TEXT:
         m_aOrderSpec.setComparableExtractor (aFormatter, x -> x);
+        m_aOrderSpec.setCollating (true);
         break;
       case TIME:
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);

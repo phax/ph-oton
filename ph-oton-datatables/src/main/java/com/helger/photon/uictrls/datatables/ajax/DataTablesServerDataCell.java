@@ -189,20 +189,24 @@ public final class DataTablesServerDataCell implements Serializable
 
   public void matchRegEx (@Nonnull final String [] aSearchTexts, @Nonnull final BitSet aMatchingWords)
   {
+    // Ensure text is resolved
+    final String sTextContent = getTextContent ();
     for (int i = 0; i < aSearchTexts.length; ++i)
     {
       final String sSearchText = aSearchTexts[i];
-      if (RegExHelper.stringMatchesPattern (sSearchText, m_sTextContent))
+      if (RegExHelper.stringMatchesPattern (sSearchText, sTextContent))
         aMatchingWords.set (i);
     }
   }
 
   public void matchPlainTextCaseSensitive (@Nonnull final String [] aSearchTexts, @Nonnull final BitSet aMatchingWords)
   {
+    // Ensure text is resolved
+    final String sTextContent = getTextContent ();
     for (int i = 0; i < aSearchTexts.length; ++i)
     {
       final String sSearchText = aSearchTexts[i];
-      if (StringHelper.contains (m_sTextContent, sSearchText))
+      if (StringHelper.contains (sTextContent, sSearchText))
         aMatchingWords.set (i);
     }
   }
@@ -211,10 +215,12 @@ public final class DataTablesServerDataCell implements Serializable
                                         @Nonnull final Locale aDisplayLocale,
                                         @Nonnull final BitSet aMatchingWords)
   {
+    // Ensure text is resolved
+    final String sTextContent = getTextContent ();
     for (int i = 0; i < aSearchTexts.length; ++i)
     {
       final String sSearchText = aSearchTexts[i];
-      if (StringHelper.containsIgnoreCase (m_sTextContent, sSearchText, aDisplayLocale))
+      if (StringHelper.containsIgnoreCase (sTextContent, sSearchText, aDisplayLocale))
         aMatchingWords.set (i);
     }
   }
