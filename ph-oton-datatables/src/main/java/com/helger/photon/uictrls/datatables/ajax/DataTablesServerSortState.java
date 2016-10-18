@@ -17,7 +17,6 @@
 package com.helger.photon.uictrls.datatables.ajax;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.Locale;
 
 import javax.annotation.Nonnegative;
@@ -30,7 +29,7 @@ import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.uictrls.datatables.DataTables;
-import com.helger.photon.uictrls.datatables.column.ComparatorDT;
+import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
 
 /**
  * The current sort state of a {@link DataTables} object.
@@ -59,19 +58,15 @@ final class DataTablesServerSortState implements Serializable
     // Extract the comparators for all sort columns
     for (final DTSSRequestDataOrderColumn aSortColumn : aOrderColumns)
     {
-      // Get the configured comparator
-      Comparator <String> aStringComp = aServerData.getColumnComparator (aSortColumn.getColumnIndex ());
-      if (aStringComp == null)
+      // Get the configured order spec
+      DTOrderSpec aOrderSpec = aServerData.getColumnOrderSpec (aSortColumn.getColumnIndex ());
+      if (aOrderSpec == null)
       {
-        // Default to String comparator
-        aStringComp = ComparatorDT.getComparatorString (null, aDisplayLocale);
+        // Ensure something is present
+        aOrderSpec = new DTOrderSpec ();
       }
-      if (aSortColumn.getSortDirectionOrDefault ().isDescending ())
-      {
-        // Reverse the comparator
-        aStringComp = aStringComp.reversed ();
-      }
-      aSortColumn.setServerSideComparator (aStringComp);
+      aOrderSpec.setDisplayLocale (aDisplayLocale);
+      aSortColumn.setOrderSpec (aOrderSpec);
     }
   }
 

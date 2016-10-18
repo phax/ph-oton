@@ -29,6 +29,7 @@ import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
 
 /**
  * Encapsulates the sorting information for the columns that are affected in
@@ -42,7 +43,7 @@ public final class DTSSRequestDataOrderColumn implements Serializable
 {
   private final int m_nColumnIndex;
   private final ESortOrder m_eSortOrder;
-  private Comparator <String> m_aServerSideComparator;
+  private DTOrderSpec m_aOrderSpec;
 
   public DTSSRequestDataOrderColumn (@Nonnegative final int nColumnIndex, @Nullable final ESortOrder eSortOrder)
   {
@@ -78,17 +79,39 @@ public final class DTSSRequestDataOrderColumn implements Serializable
     return m_eSortOrder == null ? ESortOrder.DEFAULT : m_eSortOrder;
   }
 
-  @Nonnull
-  public Comparator <String> getServerSideComparator ()
+  public void setOrderSpec (@Nonnull final DTOrderSpec aOrderSpec)
   {
-    if (m_aServerSideComparator == null)
-      throw new IllegalStateException ("No comparator defined!");
-    return m_aServerSideComparator;
+    ValueEnforcer.notNull (aOrderSpec, "OrderSpec");
+    m_aOrderSpec = aOrderSpec;
   }
 
-  public void setServerSideComparator (@Nonnull final Comparator <String> aServerSideComparator)
+  @Nonnull
+  public Comparator <String> getOrderComparator ()
   {
-    m_aServerSideComparator = ValueEnforcer.notNull (aServerSideComparator, "ServerSideComparator");
+    Comparator <String> ret;
+    final DTOrderSpec aOS = m_aOrderSpec;
+    if (aOS == null)
+    {
+      // No order information present
+      ret = Comparator.naturalOrder ();
+    }
+    else
+    {
+      // Use Comparator from order spec
+      ret = aOS.getComparator ();
+    }
+
+    final boolean bIsAscending = getSortDirectionOrDefault ().isAscending ();
+    if (!bIsAscending)
+    {
+      // Reverse the comparator
+      ret = ret.reversed ();
+    }
+
+    // Null handling
+    if (bIsAscending)
+      return Comparator.nullsFirst (ret);
+    return Comparator.nullsLast (ret);
   }
 
   @Override
@@ -113,7 +136,7 @@ public final class DTSSRequestDataOrderColumn implements Serializable
   {
     return new ToStringGenerator (this).append ("SolumnIndex", m_nColumnIndex)
                                        .append ("SortOrder", m_eSortOrder)
-                                       .append ("ServerSideComparator", m_aServerSideComparator)
+                                       .append ("OrderSpec", m_aOrderSpec)
                                        .toString ();
   }
 }

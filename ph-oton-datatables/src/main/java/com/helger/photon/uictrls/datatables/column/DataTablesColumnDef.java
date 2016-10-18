@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.column;
 
-import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
@@ -96,11 +95,13 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   /** Column width assignment. */
   private String m_sWidth;
   /** Server side comparator */
-  private Comparator <String> m_aServerComparator;
+  private final DTOrderSpec m_aOrderSpec;
 
   public DataTablesColumnDef (@Nonnegative final int nTarget)
   {
-    this (new int [] { nTarget });
+    ValueEnforcer.isGE0 (nTarget, "Target");
+    m_aTargets = new int [] { nTarget };
+    m_aOrderSpec = new DTOrderSpec ();
   }
 
   public DataTablesColumnDef (@Nonnull @Nonempty final int... aTargets)
@@ -109,11 +110,13 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     for (final int nTarget : aTargets)
       ValueEnforcer.isGE0 (nTarget, "Target");
     m_aTargets = ArrayHelper.getCopy (aTargets);
+    m_aOrderSpec = new DTOrderSpec ();
   }
 
   public DataTablesColumnDef (@Nonnegative final int nTarget, @Nonnull final DTCol aDTColumn)
   {
-    this (nTarget);
+    ValueEnforcer.isGE0 (nTarget, "Target");
+    m_aTargets = new int [] { nTarget };
     addClasses (aDTColumn.getAllClasses ());
     setName (aDTColumn.getName ());
     setOrderable (aDTColumn.isOrderable ());
@@ -129,7 +132,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
       if (!aDTColumn.isStar ())
         setWidth (aDTColumn.getWidth ());
 
-    setServerComparator (aDTColumn.getComparator ());
+    m_aOrderSpec = aDTColumn.getOrderSpec ();
   }
 
   @Nonnull
@@ -437,17 +440,10 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return this;
   }
 
-  @Nullable
-  public Comparator <String> getServerComparator ()
-  {
-    return m_aServerComparator;
-  }
-
   @Nonnull
-  public DataTablesColumnDef setServerComparator (@Nullable final Comparator <String> aServerComparator)
+  public DTOrderSpec getOrderSpec ()
   {
-    m_aServerComparator = aServerComparator;
-    return this;
+    return m_aOrderSpec;
   }
 
   @Nonnull

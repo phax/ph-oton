@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -49,6 +48,7 @@ import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.html.hc.impl.HCCustomizerList;
 import com.helger.photon.core.state.IHasUIState;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
+import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
 import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 
 /**
@@ -61,39 +61,11 @@ import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
  */
 public final class DataTablesServerData implements IHasUIState
 {
-  /**
-   * This class contains all data required for each column of a table. Currently
-   * a single field
-   *
-   * @author Philip Helger
-   */
-  private static final class ColumnData implements Serializable
-  {
-    private final Comparator <String> m_aComparator;
-
-    private ColumnData (@Nonnull final Comparator <String> aComparator)
-    {
-      m_aComparator = ValueEnforcer.notNull (aComparator, "Comparator");
-    }
-
-    @Nonnull
-    public Comparator <String> getComparator ()
-    {
-      return m_aComparator;
-    }
-
-    @Nullable
-    public static ColumnData create (@Nullable final Comparator <String> aComparator)
-    {
-      return aComparator == null ? null : new ColumnData (aComparator);
-    }
-  }
-
   public static final ObjectType OT_DATATABLES = new ObjectType ("datatables");
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesServerData.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-  private final ColumnData [] m_aColumns;
+  private final DTOrderSpec [] m_aColumns;
   @GuardedBy ("m_aRWLock")
   private final ICommonsList <DataTablesServerDataRow> m_aRows;
   private final Locale m_aDisplayLocale;
@@ -113,10 +85,10 @@ public final class DataTablesServerData implements IHasUIState
 
     // Column data
     final int nColumnCount = aTable.getColumnCount ();
-    m_aColumns = new ColumnData [nColumnCount];
+    m_aColumns = new DTOrderSpec [nColumnCount];
     for (final DataTablesColumnDef aColumn : aColumns)
     {
-      final ColumnData aColumnData = ColumnData.create (aColumn.getServerComparator ());
+      final DTOrderSpec aColumnData = aColumn.getOrderSpec ();
       for (final int nTarget : aColumn.getAllTargets ())
       {
         if (nTarget < 0 || nTarget >= nColumnCount)
@@ -129,6 +101,12 @@ public final class DataTablesServerData implements IHasUIState
         m_aColumns[nTarget] = aColumnData;
       }
     }
+
+    // Ensure all other columns are initialized with empty DTOrderSpec to have
+    // the benefit of a cached comparator
+    for (int i = 0; i < nColumnCount; ++i)
+      if (m_aColumns[i] == null)
+        m_aColumns[i] = new DTOrderSpec ().setDisplayLocale (aDisplayLocale);
 
     // Create HTML without namespaces
     final IHCConversionSettings aRealCS = createConversionSettings ();
@@ -239,10 +217,9 @@ public final class DataTablesServerData implements IHasUIState
   }
 
   @Nullable
-  public Comparator <String> getColumnComparator (@Nonnegative final int nColumnIndex)
+  public DTOrderSpec getColumnOrderSpec (@Nonnegative final int nColumnIndex)
   {
-    final ColumnData aColumnData = ArrayHelper.getSafeElement (m_aColumns, nColumnIndex);
-    return aColumnData == null ? null : aColumnData.getComparator ();
+    return ArrayHelper.getSafeElement (m_aColumns, nColumnIndex);
   }
 
   @Nonnull
