@@ -70,18 +70,18 @@ public final class DataTablesServerDataRow implements Serializable
         {
           // Data attribute
           if (m_aRowData == null)
-            m_aRowData = new CommonsLinkedHashMap<> ();
+            m_aRowData = new CommonsLinkedHashMap <> ();
           m_aRowData.put (aEntry.getKey (), aEntry.getValue ());
         }
         else
         {
           // Custom non-data attribute
           if (m_aRowAttr == null)
-            m_aRowAttr = new CommonsLinkedHashMap<> ();
+            m_aRowAttr = new CommonsLinkedHashMap <> ();
           m_aRowAttr.put (aEntry.getKey (), aEntry.getValue ());
         }
 
-    m_aCells = new CommonsArrayList<> (aRow.getCellCount ());
+    m_aCells = new CommonsArrayList <> (aRow.getCellCount ());
     for (final IHCCell <?> aCell : aRow.getAllCellsIterable ())
       m_aCells.add (new DataTablesServerDataCell (aCell, aCS));
   }

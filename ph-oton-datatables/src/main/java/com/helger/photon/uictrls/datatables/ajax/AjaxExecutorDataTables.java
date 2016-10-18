@@ -128,7 +128,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
       }
 
     final int nUnfilteredRowCount = aServerData.getRowCount ();
-    final ICommonsList <DataTablesServerDataRow> aFilteredRows = new CommonsArrayList<> ();
+    final ICommonsList <DataTablesServerDataRow> aFilteredRows = new CommonsArrayList <> ();
     if (bContainsAnyColumnSpecificSearch)
     {
       // For all rows
@@ -256,7 +256,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
 
     // Build the resulting array
     final HCSpecialNodes aSpecialNodes = new HCSpecialNodes ();
-    final ICommonsList <JsonObject> aData = new CommonsArrayList<> ();
+    final ICommonsList <JsonObject> aData = new CommonsArrayList <> ();
     int nResultRowCount = 0;
     final boolean bAllEntries = aRequestData.showAllEntries ();
     // Just in case ;-)
@@ -326,7 +326,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
     final boolean bSearchRegEx = aRequestScope.getAttributeAsBoolean (SEARCH_REGEX, false);
 
     // Read "order
-    final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns = new CommonsArrayList<> ();
+    final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns = new CommonsArrayList <> ();
     {
       // May be null
       final IRequestParamMap aOrder = aRequestScope.getRequestParamMap ().getMap (ORDER);
@@ -352,7 +352,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
       }
     }
 
-    final ICommonsList <DTSSRequestDataColumn> aColumnData = new CommonsArrayList<> ();
+    final ICommonsList <DTSSRequestDataColumn> aColumnData = new CommonsArrayList <> ();
     {
       // May be null
       final IRequestParamMap aColumns = aRequestScope.getRequestParamMap ().getMap (COLUMNS);
@@ -393,7 +393,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
                                                               aColumnData,
                                                               aOrderColumns);
 
-    // Resolve dataTables
+    // Resolve dataTables from UIStateRegistry
     final String sDataTablesID = aRequestScope.getAttributeAsString (OBJECT_ID);
     final DataTablesServerData aServerData = UIStateRegistry.getCurrent ().getCastedState (
                                                                                            DataTablesServerData.OT_DATATABLES,

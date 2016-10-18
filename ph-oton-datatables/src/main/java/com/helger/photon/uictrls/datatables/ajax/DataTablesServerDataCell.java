@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -58,6 +59,7 @@ public final class DataTablesServerDataCell implements Serializable
 
   private IHCConversionSettings m_aConversionSettings;
   private IHCNodeList <?> m_aContent;
+  private IMicroNode m_aMicroNode;
   private HCSpecialNodes m_aSpecialNodes = new HCSpecialNodes ();
   private String m_sHTML;
   private String m_sTextContent;
@@ -80,8 +82,8 @@ public final class DataTablesServerDataCell implements Serializable
   {
     out.writeObject (m_aContent);
     out.writeObject (m_aSpecialNodes);
-    out.writeUTF (m_sHTML);
-    out.writeUTF (m_sTextContent);
+    StreamHelper.writeSafeUTF (out, m_sHTML);
+    StreamHelper.writeSafeUTF (out, m_sTextContent);
   }
 
   private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
@@ -90,8 +92,8 @@ public final class DataTablesServerDataCell implements Serializable
     m_aConversionSettings = DataTablesServerData.createConversionSettings ();
     m_aContent = (HCNodeList) in.readObject ();
     m_aSpecialNodes = (HCSpecialNodes) in.readObject ();
-    m_sHTML = in.readUTF ();
-    m_sTextContent = in.readUTF ();
+    m_sHTML = StreamHelper.readSafeUTF (in);
+    m_sTextContent = StreamHelper.readSafeUTF (in);
   }
 
   public void setContent (@Nonnull final IHCNodeList <?> aCellChildren)
@@ -110,36 +112,16 @@ public final class DataTablesServerDataCell implements Serializable
     }
 
     m_aContent = aCellChildren;
+    m_sHTML = null;
+    m_sTextContent = null;
 
     // Convert to HC node to Micro node
-    final IMicroNode aMicroNode = m_aContent.convertToMicroNode (m_aConversionSettings);
-    if (aMicroNode == null)
+    m_aMicroNode = m_aContent.convertToMicroNode (m_aConversionSettings);
+    if (m_aMicroNode == null)
     {
+      // Avoid later checks
       m_sHTML = "";
-      m_sTextContent = null;
-    }
-    else
-    {
-      m_sHTML = MicroWriter.getNodeAsString (aMicroNode, m_aConversionSettings.getXMLWriterSettings ());
-
-      if (aMicroNode instanceof IMicroNodeWithChildren)
-        m_sTextContent = ((IMicroNodeWithChildren) aMicroNode).getTextContent ();
-      else
-        if (aMicroNode.isText ())
-        {
-          // ignore whitespace-only content
-          if (!((IMicroText) aMicroNode).isElementContentWhitespace ())
-            m_sTextContent = aMicroNode.getNodeValue ();
-          else
-            m_sTextContent = null;
-        }
-        else
-          if (aMicroNode.isCDATA ())
-          {
-            m_sTextContent = aMicroNode.getNodeValue ();
-          }
-          else
-            m_sTextContent = null;
+      m_sTextContent = "";
     }
   }
 
@@ -152,12 +134,50 @@ public final class DataTablesServerDataCell implements Serializable
   @Nullable
   public String getHTMLString ()
   {
-    return m_sHTML;
+    String ret = m_sHTML;
+    if (ret == null)
+    {
+      // Create lazy
+      ret = MicroWriter.getNodeAsString (m_aMicroNode, m_aConversionSettings.getXMLWriterSettings ());
+
+      // Avoid multiple calls for non-cached version
+      if (ret == null)
+        ret = "";
+      m_sHTML = ret;
+    }
+    return ret;
   }
 
   @Nonnull
   public String getTextContent ()
   {
+    String ret = m_sTextContent;
+    if (ret == null)
+    {
+      // Create lazy
+      // e.g. for initial sorting
+      final IMicroNode aMicroNode = m_aMicroNode;
+      if (aMicroNode instanceof IMicroNodeWithChildren)
+        ret = ((IMicroNodeWithChildren) aMicroNode).getTextContent ();
+      else
+        if (aMicroNode.isText ())
+        {
+          // ignore whitespace-only content
+          if (!((IMicroText) aMicroNode).isElementContentWhitespace ())
+            ret = aMicroNode.getNodeValue ();
+        }
+        else
+          if (aMicroNode.isCDATA ())
+          {
+            ret = aMicroNode.getNodeValue ();
+          }
+
+      // Avoid multiple calls for non-cached version
+      if (ret == null)
+        ret = "";
+      m_sTextContent = ret;
+    }
+
     return m_sTextContent;
   }
 

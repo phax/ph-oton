@@ -27,6 +27,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
@@ -87,6 +90,7 @@ public final class DataTablesServerData implements IHasUIState
   }
 
   public static final ObjectType OT_DATATABLES = new ObjectType ("datatables");
+  private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesServerData.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final ColumnData [] m_aColumns;
@@ -130,9 +134,18 @@ public final class DataTablesServerData implements IHasUIState
     final IHCConversionSettings aRealCS = createConversionSettings ();
 
     // Row data
-    m_aRows = new CommonsArrayList<> (aTable.getBodyRowCount ());
+    m_aRows = new CommonsArrayList <> (aTable.getBodyRowCount ());
+    int nCells = 0;
     for (final HCRow aRow : aTable.getAllBodyRows ())
+    {
       m_aRows.add (new DataTablesServerDataRow (aRow, aRealCS));
+      nCells += aRow.getCellCount ();
+    }
+    s_aLogger.info ("Having ServerSide DataTables with " +
+                    aTable.getBodyRowCount () +
+                    " rows and a total of " +
+                    nCells +
+                    " cells");
     m_aDisplayLocale = aDisplayLocale;
     m_aServerSortState = new DataTablesServerSortState (this, aDisplayLocale);
     m_eFilterType = eFilterType;
@@ -193,7 +206,7 @@ public final class DataTablesServerData implements IHasUIState
 
   /**
    * Invoked the passed consumer in a read-lock!
-   * 
+   *
    * @param aConsumer
    *        Consumer to be invoked for each row. May not be <code>null</code>.
    */
