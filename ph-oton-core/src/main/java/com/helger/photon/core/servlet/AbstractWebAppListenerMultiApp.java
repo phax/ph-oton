@@ -29,6 +29,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.css.propertyvalue.CSSValue;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
@@ -92,6 +93,9 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
     {
       // HTML output settings
       HCSettings.getMutableConversionSettings ().setToOptimized ();
+
+      // Disable CSS Value consistency checks
+      CSSValue.setConsistencyChecksEnabled (false);
     }
   }
 
