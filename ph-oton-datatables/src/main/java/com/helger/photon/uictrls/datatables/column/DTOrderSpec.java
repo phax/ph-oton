@@ -16,6 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables.column;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.function.Function;
@@ -28,33 +29,25 @@ import com.helger.commons.compare.IComparator;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.string.ToStringGenerator;
 
-public final class DTOrderSpec
+public final class DTOrderSpec implements Serializable
 {
   public static final boolean DEFAULT_COLLATING = true;
 
-  private Function <String, String> m_aFormatter;
   private IComparableExtractor <?> m_aComparableExtractor;
   private boolean m_bCollating = DEFAULT_COLLATING;
   private Locale m_aDisplayLocale;
   // Status vars
-  private Comparator <String> m_aComparator;
+  private transient Comparator <String> m_aComparator;
 
   public DTOrderSpec ()
   {}
 
   public void setFrom (@Nonnull final DTOrderSpec aOther)
   {
-    m_aFormatter = aOther.m_aFormatter;
     m_aComparableExtractor = aOther.m_aComparableExtractor;
     m_bCollating = aOther.m_bCollating;
     m_aDisplayLocale = aOther.m_aDisplayLocale;
     m_aComparator = aOther.m_aComparator;
-  }
-
-  @Nullable
-  public Function <String, String> getFormatter ()
-  {
-    return m_aFormatter;
   }
 
   @Nullable
@@ -67,16 +60,19 @@ public final class DTOrderSpec
   public <T extends Comparable <? super T>> DTOrderSpec setComparableExtractor (@Nullable final Function <String, String> aFormatter,
                                                                                 @Nullable final IComparableExtractor <T> aComparableExtractor)
   {
-    m_aFormatter = aFormatter;
     if (aFormatter == null)
+    {
+      // Use as is
       m_aComparableExtractor = aComparableExtractor;
+    }
     else
     {
+      // format, than extract
       final IComparableExtractor <T> aRealCE = x -> aComparableExtractor.apply (x == null ? null
                                                                                           : aFormatter.apply (x));
       m_aComparableExtractor = aRealCE;
     }
-    // reset
+    // reset status vars
     m_aComparator = null;
     return this;
   }
@@ -92,7 +88,7 @@ public final class DTOrderSpec
     if (bCollating != m_bCollating)
     {
       m_bCollating = bCollating;
-      // reset
+      // reset status vars
       m_aComparator = null;
     }
     return this;
@@ -110,7 +106,7 @@ public final class DTOrderSpec
     if (!EqualsHelper.equals (aDisplayLocale, m_aDisplayLocale))
     {
       m_aDisplayLocale = aDisplayLocale;
-      // reset
+      // reset status vars
       m_aComparator = null;
     }
     return this;
@@ -162,8 +158,7 @@ public final class DTOrderSpec
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Formatter", m_aFormatter)
-                                       .append ("ComparableExtractor", m_aComparableExtractor)
+    return new ToStringGenerator (this).append ("ComparableExtractor", m_aComparableExtractor)
                                        .append ("Collating", m_bCollating)
                                        .append ("DisplayLocale", m_aDisplayLocale)
                                        .append ("Comparator", m_aComparator)

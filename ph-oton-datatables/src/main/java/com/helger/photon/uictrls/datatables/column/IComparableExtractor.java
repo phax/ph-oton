@@ -16,9 +16,17 @@
  */
 package com.helger.photon.uictrls.datatables.column;
 
+import java.io.Serializable;
 import java.util.function.Function;
 
-public interface IComparableExtractor <T extends Comparable <? super T>> extends Function <String, T>
+/**
+ * Helper interface to extract a {@link Comparable} value from a String.
+ * 
+ * @author Philip Helger
+ * @param <T>
+ *        Comparable type to use.
+ */
+public interface IComparableExtractor <T extends Comparable <? super T>> extends Function <String, T>, Serializable
 {
   /* empty */
 }
