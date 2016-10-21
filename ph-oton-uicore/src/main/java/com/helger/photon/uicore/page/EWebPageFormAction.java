@@ -130,8 +130,8 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this action creates a new object,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if this action creates a new object (CREATE,
+   *         COPY), <code>false</code> otherwise.
    */
   public boolean isCreating ()
   {
@@ -139,9 +139,9 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this action modifies an existing object,
-   *         <code>false</code> if either creates a new object or just reads an
-   *         existing object.
+   * @return <code>true</code> if this action modifies an existing object (EDIT,
+   *         DELETE, UNDELETE), <code>false</code> if either creates a new
+   *         object or just reads an existing object.
    */
   public boolean isModifying ()
   {
@@ -149,8 +149,9 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this action only reads an existing format,
-   *         <code>false</code> if the action needs write access.
+   * @return <code>true</code> if this action only reads an existing format
+   *         (SHOW_LIST, VIEW), <code>false</code> if the action needs write
+   *         access.
    */
   public boolean isReadonly ()
   {
@@ -159,7 +160,8 @@ public enum EWebPageFormAction implements IHasID <String>
 
   /**
    * @return <code>true</code> if this action needs write access (for creating
-   *         or modifying), <code>false</code> if the action is read-only.
+   *         or modifying; CREATE, COPY, EDIT, DELETE, UNDELETE),
+   *         <code>false</code> if the action is read-only.
    * @see #isCreating()
    * @see #isModifying()
    */
