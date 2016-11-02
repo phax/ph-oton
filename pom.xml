@@ -67,7 +67,7 @@
     <m2e.jpa.activation>false</m2e.jpa.activation>
     <m2e.jsf.activation>false</m2e.jsf.activation>
     <log4j.version>2.7</log4j.version>
-    <jetty.version>9.3.13.v20161014</jetty.version>
+    <jetty.version>9.3.14.v20161028</jetty.version>
   </properties>
 
   <dependencyManagement>
