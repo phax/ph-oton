@@ -30,7 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.concurrent.ExtendedDefaultThreadFactory;
+import com.helger.commons.concurrent.BasicThreadFactory;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.concurrent.collector.ConcurrentCollectorMultiple;
 import com.helger.commons.concurrent.collector.IConcurrentPerformer;
@@ -54,7 +54,9 @@ public class AsynchronousAuditor extends AbstractAuditor
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final ConcurrentCollectorMultiple <IAuditItem> m_aCollector;
   // Just to have custom named threads....
-  private static final ThreadFactory s_aThreadFactory = new ExtendedDefaultThreadFactory ("AsyncAuditor");
+  private static final ThreadFactory s_aThreadFactory = new BasicThreadFactory.Builder ().setNamingPattern ("AsyncAuditor")
+                                                                                         .setDaemon (true)
+                                                                                         .build ();
   private final ExecutorService m_aSenderThreadPool;
 
   private static final class MyCollector extends ConcurrentCollectorMultiple <IAuditItem>
