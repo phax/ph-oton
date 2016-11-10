@@ -44,6 +44,7 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.scope.mgr.ScopeManager;
+import com.helger.commons.state.EChange;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
@@ -317,19 +318,21 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   protected void onRequestEnd (final boolean bExceptionOccurred)
   {}
 
-  private static void _trackBeforeHandleRequest (@Nonnull final IRequestWebScope aRequestScope)
+  @Nonnull
+  private static EChange _trackBeforeHandleRequest (@Nonnull final IRequestWebScope aRequestScope)
   {
     // Check if an attribute is already present
     // An ID may already be present, if the request is internally dispatched
     // (e.g. via the error handler)
     String sID = aRequestScope.getAttributeAsString (REQUEST_ATTR_ID);
-    if (sID == null)
-    {
-      // Create a unique ID for the request
-      sID = Long.toString (s_aRequestID.incrementAndGet ());
-      aRequestScope.setAttribute (REQUEST_ATTR_ID, sID);
-    }
+    if (sID != null)
+      return EChange.UNCHANGED;
+
+    // Create a unique ID for the request
+    sID = Long.toString (s_aRequestID.incrementAndGet ());
+    aRequestScope.setAttribute (REQUEST_ATTR_ID, sID);
     RequestTracker.addRequest (sID, aRequestScope);
+    return EChange.CHANGED;
   }
 
   private static void _trackAfterHandleRequest (@Nonnull final IRequestWebScope aRequestScope)
@@ -518,10 +521,11 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
       s_aLogger.error ("onRequestBegin failed", t);
     }
 
+    boolean bTrackedRequest = false;
     boolean bExceptionOccurred = true;
     try
     {
-      _trackBeforeHandleRequest (aRequestScope);
+      bTrackedRequest = _trackBeforeHandleRequest (aRequestScope).isChanged ();
 
       m_aStatsHandledRequestsTotal.increment ();
 
@@ -564,7 +568,8 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     }
     finally
     {
-      _trackAfterHandleRequest (aRequestScope);
+      if (bTrackedRequest)
+        _trackAfterHandleRequest (aRequestScope);
 
       // after-callback
       try
