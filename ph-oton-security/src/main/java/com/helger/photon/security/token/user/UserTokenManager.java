@@ -26,7 +26,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
@@ -230,14 +230,14 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsCollection <? extends IUserToken> getAllUserTokens ()
+  public ICommonsList <IUserToken> getAllUserTokens ()
   {
     return getAll ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsCollection <? extends IUserToken> getAllActiveUserTokens ()
+  public ICommonsList <IUserToken> getAllActiveUserTokens ()
   {
     return getAll (x -> !x.isDeleted ());
   }
