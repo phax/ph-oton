@@ -90,10 +90,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     HEADER_NAME ("Name", "Name"),
     HEADER_VALUE ("Wert", "Value"),
     LABEL_ATTRIBUTES ("Attribute", "Attributes"),
-    LABEL_APP_TOKEN ("App Token", "App token"),
-    LABEL_USER_NAME ("Benutzername", "User name"),
-    ERR_APP_TOKEN_EMPTY ("Das App Token muss angegeben werden!", "The app token must be specified!"),
-    ERR_USER_NAME_EMPTY ("Der Benutzername darf nicht leer sein!", "The user name may not be empty!"),
+    LABEL_USER ("Benutzer", "User"),
+    ERR_USER_EMPTY ("Es muss ein Benutzer ausgewählt werden!", "A user must be selected!"),
     CREATE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich erstellt.",
                     "The user token for ''{0}'' was successfully created."),
     EDIT_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich bearbeitet.",
@@ -404,7 +402,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
     onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_APP_TOKEN.getDisplayText (aDisplayLocale))
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USER.getDisplayText (aDisplayLocale))
                                                  .setCtrl (createLink (aWPEC, aSelectedObject.getUser ())));
 
     {
@@ -463,7 +461,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                           aSelectedObject.getDisplayName ())
                                                               : EText.HEADER_CREATE.getDisplayText (aDisplayLocale)));
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_APP_TOKEN.getDisplayText (aDisplayLocale))
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USER.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCUserSelect (new RequestField (FIELD_USER,
                                                                                                aSelectedObject == null ? null
                                                                                                                        : aSelectedObject.getUser ()),
@@ -500,7 +498,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final String sTokenString = bEdit ? null : aWPEC.getAttributeAsString (FIELD_TOKEN_STRING);
 
     if (aUser == null)
-      aFormErrors.addFieldError (FIELD_USER, EText.ERR_APP_TOKEN_EMPTY.getDisplayText (aDisplayLocale));
+      aFormErrors.addFieldError (FIELD_USER, EText.ERR_USER_EMPTY.getDisplayText (aDisplayLocale));
 
     if (StringHelper.hasText (sTokenString))
     {
