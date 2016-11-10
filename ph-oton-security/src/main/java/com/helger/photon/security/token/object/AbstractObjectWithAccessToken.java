@@ -75,12 +75,6 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCu
     return m_aActiveAccessToken;
   }
 
-  @Nullable
-  public String getActiveTokenString ()
-  {
-    return m_aActiveAccessToken == null ? null : m_aActiveAccessToken.getTokenString ();
-  }
-
   @Nonnull
   public EChange revokeActiveAccessToken (@Nonnull @Nonempty final String sRevocationUserID,
                                           @Nonnull final LocalDateTime aRevocationDT,

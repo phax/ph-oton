@@ -57,5 +57,9 @@ public interface IObjectWithAccessToken extends IObjectWithCustomAttrs, IAuthSub
    * @see #getActiveAccessToken()
    */
   @Nullable
-  String getActiveTokenString ();
+  default String getActiveTokenString ()
+  {
+    final IAccessToken aActiveAccessToken = getActiveAccessToken ();
+    return aActiveAccessToken == null ? null : aActiveAccessToken.getTokenString ();
+  }
 }
