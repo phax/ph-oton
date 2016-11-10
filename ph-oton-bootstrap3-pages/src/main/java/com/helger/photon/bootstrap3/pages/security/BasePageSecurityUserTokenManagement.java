@@ -46,6 +46,7 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
@@ -383,11 +384,13 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   }
 
   @Nonnull
-  public static HCA createLink (@Nonnull final IWebPageExecutionContext aWPEC, @Nonnull final IUser aUser)
+  public static IHCNode createUserLink (@Nonnull final IWebPageExecutionContext aWPEC, @Nonnull final IUser aUser)
   {
-    return new HCA (createViewURL (aWPEC,
-                                   BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
-                                   aUser)).addChild (aUser.getDisplayName ());
+    if (aWPEC.getMenuTree ().containsItemWithID (BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER))
+      return new HCA (createViewURL (aWPEC,
+                                     BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
+                                     aUser)).addChild (aUser.getDisplayName ());
+    return new HCTextNode (aUser.getDisplayName ());
   }
 
   @Override
@@ -403,7 +406,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USER.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (createLink (aWPEC, aSelectedObject.getUser ())));
+                                                 .setCtrl (createUserLink (aWPEC, aSelectedObject.getUser ())));
 
     {
       final IHCNode aAT = createAccessTokenListUI (aSelectedObject.getAllAccessTokens (), aDisplayLocale);
