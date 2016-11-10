@@ -90,9 +90,7 @@ public final class RequestTrackingManager
   {
     ValueEnforcer.isGT0 (nLongRunningMilliSeconds, "LongRunningMilliSeconds");
 
-    m_aRWLock.writeLocked ( () -> {
-      m_nLongRunningMilliSeconds = nLongRunningMilliSeconds;
-    });
+    m_aRWLock.writeLocked ( () -> m_nLongRunningMilliSeconds = nLongRunningMilliSeconds);
     return this;
   }
 
@@ -105,9 +103,7 @@ public final class RequestTrackingManager
   @Nonnull
   public RequestTrackingManager setParallelRunningRequestCheckEnabled (final boolean bParallelRunningRequestCheckEnabled)
   {
-    m_aRWLock.writeLocked ( () -> {
-      m_bParallelRunningRequestCheckEnabled = bParallelRunningRequestCheckEnabled;
-    });
+    m_aRWLock.writeLocked ( () -> m_bParallelRunningRequestCheckEnabled = bParallelRunningRequestCheckEnabled);
     return this;
   }
 
@@ -121,9 +117,7 @@ public final class RequestTrackingManager
   {
     ValueEnforcer.isGT0 (nParallelRunningRequestBarrier, "ParallelRunningRequestBarrier");
 
-    m_aRWLock.writeLocked ( () -> {
-      m_nParallelRunningRequestBarrier = nParallelRunningRequestBarrier;
-    });
+    m_aRWLock.writeLocked ( () -> m_nParallelRunningRequestBarrier = nParallelRunningRequestBarrier);
     return this;
   }
 
@@ -142,10 +136,20 @@ public final class RequestTrackingManager
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (m_aOpenRequests.put (sRequestID, new TrackedRequest (sRequestID, aRequestScope)) != null)
+      final TrackedRequest aTR = new TrackedRequest (sRequestID, aRequestScope);
+      final TrackedRequest aOldTR = m_aOpenRequests.put (sRequestID, aTR);
+
+      // An old TR may be present, if the request is dispatched internally, but
+      // in that case the request scope must have the same identity!
+      if (aOldTR != null && aOldTR.getRequestScope () != aRequestScope)
       {
         // Should never happen
-        s_aLogger.error ("Request ID '" + sRequestID + "' is already registered!");
+        s_aLogger.error ("Request ID '" +
+                         sRequestID +
+                         "' is already registered! Old TR: " +
+                         aOldTR +
+                         "; New TR: " +
+                         aTR);
       }
       if (m_bParallelRunningRequestCheckEnabled && m_aOpenRequests.size () >= m_nParallelRunningRequestBarrier)
       {

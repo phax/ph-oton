@@ -72,9 +72,9 @@ public final class TrackedRequest
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("requestID", m_sRequestID)
-                                       .append ("requestScope", m_aRequestScope)
-                                       .append ("startMillis", m_nStartMillis)
+    return new ToStringGenerator (this).append ("RequestID", m_sRequestID)
+                                       .append ("RequestScope", m_aRequestScope)
+                                       .append ("StartMillis", m_nStartMillis)
                                        .toString ();
   }
 }

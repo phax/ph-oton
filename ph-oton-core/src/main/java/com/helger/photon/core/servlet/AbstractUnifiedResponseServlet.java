@@ -319,9 +319,16 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
 
   private static void _trackBeforeHandleRequest (@Nonnull final IRequestWebScope aRequestScope)
   {
-    // Create a unique ID for the request
-    final String sID = Long.toString (s_aRequestID.incrementAndGet ());
-    aRequestScope.setAttribute (REQUEST_ATTR_ID, sID);
+    // Check if an attribute is already present
+    // An ID may already be present, if the request is internally dispatched
+    // (e.g. via the error handler)
+    String sID = aRequestScope.getAttributeAsString (REQUEST_ATTR_ID);
+    if (sID == null)
+    {
+      // Create a unique ID for the request
+      sID = Long.toString (s_aRequestID.incrementAndGet ());
+      aRequestScope.setAttribute (REQUEST_ATTR_ID, sID);
+    }
     RequestTracker.addRequest (sID, aRequestScope);
   }
 
