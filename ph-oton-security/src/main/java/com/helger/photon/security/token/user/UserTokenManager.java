@@ -34,7 +34,6 @@ import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.object.ObjectHelper;
 import com.helger.photon.security.token.accesstoken.AccessToken;
-import com.helger.photon.security.token.accesstoken.IAccessToken;
 import com.helger.photon.security.user.IUser;
 
 /**
@@ -240,7 +239,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
   @ReturnsMutableCopy
   public ICommonsCollection <? extends IUserToken> getAllActiveUserTokens ()
   {
-    return getAll (aItem -> !aItem.isDeleted ());
+    return getAll (x -> !x.isDeleted ());
   }
 
   @Nullable
@@ -255,10 +254,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
     if (StringHelper.hasNoText (sTokenString))
       return null;
 
-    return findFirst (aUserToken -> {
-      final IAccessToken aAccessToken = aUserToken.getActiveAccessToken ();
-      return aAccessToken != null && aAccessToken.getTokenString ().equals (sTokenString);
-    });
+    return findFirst (x -> sTokenString.equals (x.getActiveTokenString ()));
   }
 
   /**
@@ -274,11 +270,6 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
     if (StringHelper.hasNoText (sTokenString))
       return false;
 
-    return containsAny (aUserToken -> {
-      for (final IAccessToken aAccessToken : aUserToken.getAllAccessTokens ())
-        if (aAccessToken.getTokenString ().equals (sTokenString))
-          return true;
-      return false;
-    });
+    return containsAny (x -> x.findFirstAccessToken (y -> y.getTokenString ().equals (sTokenString)) != null);
   }
 }

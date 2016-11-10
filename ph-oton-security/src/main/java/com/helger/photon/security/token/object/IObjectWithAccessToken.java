@@ -16,6 +16,8 @@
  */
 package com.helger.photon.security.token.object;
 
+import java.util.function.Predicate;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -41,6 +43,18 @@ public interface IObjectWithAccessToken extends IObjectWithCustomAttrs, IAuthSub
   @Nonempty
   @ReturnsMutableCopy
   ICommonsList <? extends IAccessToken> getAllAccessTokens ();
+
+  /**
+   * Find the first access token matching the supplied filter.
+   *
+   * @param aFilter
+   *        The filter to use. May be <code>null</code>.
+   * @return The first access token (if filter is <code>null</code>) or the
+   *         first matching filter or <code>null</code> if no token is present,
+   *         or if no token matches the supplied filter.
+   */
+  @Nullable
+  IAccessToken findFirstAccessToken (@Nullable Predicate <? super IAccessToken> aFilter);
 
   /**
    * @return The main token to access this application from the outside. May be

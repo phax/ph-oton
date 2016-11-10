@@ -18,6 +18,7 @@ package com.helger.photon.security.token.object;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -67,6 +68,12 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCu
   public ICommonsList <AccessToken> getAllAccessTokens ()
   {
     return m_aAccessTokens.getClone ();
+  }
+
+  @Nullable
+  public IAccessToken findFirstAccessToken (@Nullable final Predicate <? super IAccessToken> aFilter)
+  {
+    return m_aAccessTokens.findFirst (aFilter);
   }
 
   @Nullable
