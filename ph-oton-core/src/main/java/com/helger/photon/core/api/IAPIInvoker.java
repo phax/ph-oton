@@ -51,6 +51,19 @@ public interface IAPIInvoker
   @Nullable
   InvokableAPIDescriptor getAPIByPath (@Nonnull APIPath aPath);
 
+  /**
+   * Invoke the specified API
+   * 
+   * @param aInvokableDescriptor
+   *        The invokable descriptor. Never <code>null</code>.
+   * @param aRequestScope
+   *        The current request scope. Never <code>null</code>.
+   * @param aUnifiedResponse
+   *        The current response object, with caching already disabled. Never
+   *        <code>null</code>.
+   * @throws Exception
+   *         In case something goes wrong
+   */
   void invoke (@Nonnull InvokableAPIDescriptor aInvokableDescriptor,
                @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
                @Nonnull UnifiedResponse aUnifiedResponse) throws Exception;
