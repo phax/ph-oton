@@ -17,6 +17,7 @@
 package com.helger.photon.basic.longrun;
 
 import java.io.File;
+import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,12 +33,12 @@ import com.helger.xml.microdom.serialize.MicroWriter;
  *
  * @author Philip Helger
  */
-public class LongRunningJobResult
+public class LongRunningJobResult implements Serializable
 {
   private final ELongRunningJobResultType m_eType;
-  private final Object m_aResult;
+  private final Serializable m_aResult;
 
-  protected LongRunningJobResult (@Nonnull final ELongRunningJobResultType eType, @Nonnull final Object aResult)
+  protected LongRunningJobResult (@Nonnull final ELongRunningJobResultType eType, @Nonnull final Serializable aResult)
   {
     ValueEnforcer.notNull (eType, "Type");
     ValueEnforcer.notNull (aResult, "Result");
@@ -52,7 +53,7 @@ public class LongRunningJobResult
   }
 
   @Nonnull
-  public Object getResultObject ()
+  public Serializable getResultObject ()
   {
     return m_aResult;
   }
