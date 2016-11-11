@@ -80,7 +80,8 @@ public class UserPasswordCredentials implements IUserPasswordCredentials
       return false;
     final UserPasswordCredentials rhs = (UserPasswordCredentials) o;
     return EqualsHelper.equals (m_aUser, rhs.m_aUser) &&
-           EqualsHelper.equals (m_sPassword, rhs.m_sPassword) & m_aRequiredRoles.equals (rhs.m_aRequiredRoles);
+           EqualsHelper.equals (m_sPassword, rhs.m_sPassword) &&
+           m_aRequiredRoles.equals (rhs.m_aRequiredRoles);
   }
 
   @Override
