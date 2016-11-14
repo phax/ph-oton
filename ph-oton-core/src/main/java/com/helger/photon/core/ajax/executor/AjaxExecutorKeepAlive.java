@@ -41,6 +41,9 @@ public final class AjaxExecutorKeepAlive extends AbstractAjaxExecutor
     if (GlobalDebug.isDebugMode ())
       s_aLogger.info ("AJAX Keep alive!");
 
+    // This is all we need. If a session is present, it gets accessed
+    aRequestScope.getSession (false);
+
     // Always success
     return AjaxJsonResponse.createSuccess ();
   }

@@ -111,7 +111,7 @@ public class LogoutServlet extends AbstractUnifiedResponseServlet
     onBeforeSessionInvalidate (aRequestScope);
 
     // Don't create a session, if none is present
-    final HttpSession aHttpSession = aRequestScope.getRequest ().getSession (false);
+    final HttpSession aHttpSession = aRequestScope.getSession (false);
     if (aHttpSession != null)
     {
       // Perform the main logout
