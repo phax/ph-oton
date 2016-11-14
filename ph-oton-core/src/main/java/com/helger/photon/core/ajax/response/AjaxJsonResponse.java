@@ -56,7 +56,8 @@ public class AjaxJsonResponse extends AbstractAjaxResponse
 
   public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
   {
-    final String sResponse = m_aValue != null ? m_aValue.getAsJsonString () : "";
+    // Ensure it is valid JSON
+    final String sResponse = m_aValue != null ? m_aValue.getAsJsonString () : "{}";
     final Charset aCharset = CCharset.CHARSET_UTF_8_OBJ;
     aUnifiedResponse.setContentAndCharset (sResponse, aCharset)
                     .setMimeType (new MimeType (CMimeType.APPLICATION_JSON).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
