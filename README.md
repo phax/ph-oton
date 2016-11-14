@@ -6,8 +6,9 @@
 This set of Java libraries forms a package to build Java web applications.
 
 Release history:
-  * v7.0.1
+  * v7.0.1 - 2016-11-14
     * Improvements in request tracking logging
+    * Misc small improvements in different areas
   * v7.0.0 - 2016-10-24
     * Requires ph-commons 8.5.2
   * v7.0.0-beta3 - 2016-09-22
