@@ -237,6 +237,7 @@ public class JettyStarter
    *
    * @param aServer
    *        The server that was started. Never <code>null</code>.
+   * @since 7.0.2
    */
   @OverrideOnDemand
   protected void onServerStarted (@Nonnull final Server aServer)
@@ -249,6 +250,7 @@ public class JettyStarter
    *        The server that was started. Never <code>null</code>.
    * @param t
    *        The exception that occurred
+   * @since 7.0.2
    */
   @OverrideOnDemand
   protected void onServerStartFailure (@Nonnull final Server aServer, @Nonnull final Throwable t)
