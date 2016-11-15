@@ -233,6 +233,28 @@ public class JettyStarter
   {}
 
   /**
+   * Callback to be invoked when server successfully finished startup.
+   *
+   * @param aServer
+   *        The server that was started. Never <code>null</code>.
+   */
+  @OverrideOnDemand
+  protected void onServerStarted (@Nonnull final Server aServer)
+  {}
+
+  /**
+   * Callback to be invoked when server failed startup.
+   *
+   * @param aServer
+   *        The server that was started. Never <code>null</code>.
+   * @param t
+   *        The exception that occurred
+   */
+  @OverrideOnDemand
+  protected void onServerStartFailure (@Nonnull final Server aServer, @Nonnull final Throwable t)
+  {}
+
+  /**
    * Run Jetty with the provided settings.
    *
    * @throws Exception
@@ -318,12 +340,18 @@ public class JettyStarter
       // Starting the engines:
       aServer.start ();
       s_aLogger.info ("Started Jetty " + m_sAppName);
+
+      // Callback
+      onServerStarted (aServer);
     }
     catch (final Throwable t)
     {
       // Do not throw something here, in case some exception occurs in finally
       // code
       s_aLogger.error ("Failed to start Jetty " + m_sAppName + "!", t);
+
+      // Callback
+      onServerStartFailure (aServer, t);
     }
     finally
     {
