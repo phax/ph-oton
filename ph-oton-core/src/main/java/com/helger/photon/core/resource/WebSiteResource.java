@@ -238,7 +238,7 @@ public class WebSiteResource
     // Append the version number to work around caching issues
     // Cut it down to the first 16 bytes, because the SHA512 hash is 128 bytes
     // long
-    final String sVersion = m_sContentHash.substring (0, 16);
+    final String sVersion = m_sContentHash.length () >= 16 ? m_sContentHash.substring (0, 16) : "";
     return PhotonHTMLSettings.getURIToURLConverter ().getAsURL (aRequestScope, m_sPath).add ("version", sVersion);
   }
 
