@@ -106,17 +106,11 @@ public final class WebSiteResourceCache
     if (ret != null)
       return ret;
 
-    return s_aRWLock.writeLocked ( () -> {
-      // Try again in write lock
-      WebSiteResource ret2 = s_aMap.get (sCacheKey);
-      if (ret2 == null)
-      {
-        // Init and put in map
-        ret2 = new WebSiteResource (eResourceType, sPath, aCharset);
-        s_aMap.put (sCacheKey, ret2);
-      }
-      return ret2;
-    });
+    // Try again in write lock
+    return s_aRWLock.writeLocked ( () -> s_aMap.computeIfAbsent (sCacheKey,
+                                                                 k -> new WebSiteResource (eResourceType,
+                                                                                           sPath,
+                                                                                           aCharset)));
   }
 
   @Nonnull
@@ -128,7 +122,7 @@ public final class WebSiteResourceCache
 
     final String sCacheKey = eType.getID () + "-" + sPath;
 
-    return s_aRWLock.writeLocked ( () -> EChange.valueOf (s_aMap.remove (sCacheKey) != null));
+    return s_aRWLock.writeLocked ( () -> s_aMap.removeObject (sCacheKey));
   }
 
   /**
@@ -139,11 +133,6 @@ public final class WebSiteResourceCache
   @Nonnull
   public static EChange clearCache ()
   {
-    return s_aRWLock.writeLocked ( () -> {
-      if (s_aMap.isEmpty ())
-        return EChange.UNCHANGED;
-      s_aMap.clear ();
-      return EChange.CHANGED;
-    });
+    return s_aRWLock.writeLocked ( () -> s_aMap.removeAll ());
   }
 }
