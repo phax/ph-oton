@@ -38,10 +38,12 @@ import com.helger.commons.io.IHasInputStream;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.resource.URLResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.commons.url.URLHelper;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.visit.AbstractModifyingCSSUrlVisitor;
@@ -50,6 +52,7 @@ import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriter;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
+import com.helger.photon.core.url.LinkHelper;
 import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 import com.helger.security.messagedigest.MessageDigestValue;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -85,22 +88,32 @@ public class WebSiteResource
     m_sPath = ValueEnforcer.notEmpty (sPath, "Path");
     m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
 
-    IReadableResource aRes = new ClassPathResource (m_sPath);
-    if (aRes.exists ())
+    IReadableResource aRes;
+    if (LinkHelper.hasKnownProtocol (sPath))
     {
+      aRes = new URLResource (URLHelper.getAsURL (sPath));
       m_bResourceExists = true;
     }
     else
     {
-      // Required for project specific files (like app.js) when running in
-      // Jetty
-      aRes = WebFileIO.getServletContextIO ().getResource (m_sPath);
-      m_bResourceExists = aRes.exists ();
+      aRes = new ClassPathResource (sPath);
+      if (aRes.exists ())
+      {
+        m_bResourceExists = true;
+      }
+      else
+      {
+        // Required for project specific files (like app.js) when running in
+        // Jetty
+        aRes = WebFileIO.getServletContextIO ().getResource (sPath);
+        m_bResourceExists = aRes.exists ();
+      }
     }
 
     m_aResource = aRes;
 
-    if (m_bResourceExists)
+    // No hash for external resources
+    if (m_bResourceExists && !(aRes instanceof URLResource))
     {
       byte [] aDigestBytes = ArrayHelper.EMPTY_BYTE_ARRAY;
       try
@@ -239,7 +252,9 @@ public class WebSiteResource
     // Cut it down to the first 16 bytes, because the SHA512 hash is 128 bytes
     // long
     final String sVersion = m_sContentHash.length () >= 16 ? m_sContentHash.substring (0, 16) : "";
-    return PhotonHTMLSettings.getURIToURLConverter ().getAsURL (aRequestScope, m_sPath).add ("version", sVersion);
+    return PhotonHTMLSettings.getURIToURLConverter ()
+                             .getAsURL (aRequestScope, m_sPath)
+                             .addIf ("version", sVersion, StringHelper::hasText);
   }
 
   @Override

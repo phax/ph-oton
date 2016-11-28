@@ -26,7 +26,6 @@ import com.helger.commons.io.resource.URLResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
 import com.helger.commons.url.URLHelper;
-import com.helger.commons.url.URLProtocolRegistry;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -63,7 +62,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
     ValueEnforcer.notEmpty (sURI, "URI");
 
     // If the URL is absolute, use it
-    if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI))
+    if (LinkHelper.hasKnownProtocol (sURI))
       return new URLResource (URLHelper.getAsURL (sURI));
 
     // Absolute paths are project relative files and therefore are relative to
@@ -87,7 +86,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
     ValueEnforcer.notEmpty (sURI, "URI");
 
     // If the URL is absolute, use it
-    if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI))
+    if (LinkHelper.hasKnownProtocol (sURI))
       return new SimpleURL (sURI);
 
     // Absolute paths stays
@@ -119,7 +118,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
     ValueEnforcer.notEmpty (sURI, "URI");
 
     // If the URL is absolute, use it
-    if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI))
+    if (LinkHelper.hasKnownProtocol (sURI))
       return new SimpleURL (sURI);
 
     // Absolute paths stay

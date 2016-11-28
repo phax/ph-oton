@@ -57,9 +57,7 @@ public final class PhotonHTMLSettings
   {
     ValueEnforcer.notNull (aURIToURLConverter, "URIToURLConverter");
 
-    s_aRWLock.writeLocked ( () -> {
-      s_aURIToURLConverter = aURIToURLConverter;
-    });
+    s_aRWLock.writeLocked ( () -> s_aURIToURLConverter = aURIToURLConverter);
   }
 
   @Nonnull

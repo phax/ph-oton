@@ -99,6 +99,22 @@ public final class LinkHelper
     return s_aRWLock.readLocked ( () -> "/" + s_sStreamServletName);
   }
 
+  /**
+   * Special "has known protocol" version that also supports the pseudo protocol
+   * "//" that maps to either "http" or "https" depending on the surrounding
+   * setup.
+   *
+   * @param sURI
+   *        Source URI. MAy be <code>null</code>.
+   * @return <code>true</code> if the URI has a known protocol or "//".
+   */
+  public static boolean hasKnownProtocol (@Nullable final String sURI)
+  {
+    if (StringHelper.hasNoText (sURI))
+      return false;
+    return URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI) || sURI.startsWith ("//");
+  }
+
   @Nonnull
   private static String _getURIWithContext (@Nonnull final String sContextPath, @Nonnull final String sHRef)
   {
@@ -133,7 +149,7 @@ public final class LinkHelper
     ValueEnforcer.notNull (sHRef, "HRef");
 
     // If known protocol, keep it
-    if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sHRef))
+    if (hasKnownProtocol (sHRef))
       return sHRef;
 
     final String sContextPath = ServletContextPathHolder.getContextPath ();
@@ -161,7 +177,7 @@ public final class LinkHelper
     ValueEnforcer.notNull (sHRef, "HRef");
 
     // If known protocol, keep it
-    if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sHRef))
+    if (hasKnownProtocol (sHRef))
       return sHRef;
 
     final String sContextPath = aRequestScope.getContextPath ();
@@ -266,7 +282,7 @@ public final class LinkHelper
   public static String getURIWithServerAndContext (@Nonnull final String sHRef)
   {
     // If known protocol, keep it
-    if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sHRef))
+    if (hasKnownProtocol (sHRef))
       return sHRef;
 
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
@@ -295,7 +311,7 @@ public final class LinkHelper
     ValueEnforcer.notNull (sHRef, "HRef");
 
     // If known protocol, keep it
-    if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sHRef))
+    if (hasKnownProtocol (sHRef))
       return sHRef;
 
     final String sContextPath = aRequestScope.getContextPath ();
@@ -421,7 +437,7 @@ public final class LinkHelper
     ValueEnforcer.notEmpty (sURL, "URL");
 
     // If the URL is absolute, use it
-    if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sURL))
+    if (hasKnownProtocol (sURL))
       return new SimpleURL (sURL);
 
     final StringBuilder aPrefix = new StringBuilder (getStreamServletPath ());
