@@ -248,9 +248,8 @@ public class GoMappingManager extends AbstractSimpleDAO
   public EChange removeAllItems ()
   {
     return m_aRWLock.writeLocked ( () -> {
-      if (m_aMap.isEmpty ())
+      if (m_aMap.removeAll ().isUnchanged ())
         return EChange.UNCHANGED;
-      m_aMap.clear ();
       markAsChanged ();
       return EChange.CHANGED;
     });
@@ -344,26 +343,6 @@ public class GoMappingManager extends AbstractSimpleDAO
   }
 
   /**
-   * This method is ONLY to be used within the MenuManager, since the renderer
-   * takes care, that the link to the menu item is handled correctly even if no
-   * session information are present.
-   *
-   * @param sKey
-   *        Go mapping key. May neither be <code>null</code> nor empty.
-   * @return <code>/webapp-context/go/<i>key</i></code>. Never <code>null</code>
-   */
-  @Nonnull
-  public static SimpleURL getGoLinkForMenuItem (@Nonnull @Nonempty final String sKey)
-  {
-    ValueEnforcer.notEmpty (sKey, "Key");
-
-    if (PhotonCoreManager.getGoMappingMgr ().getItemOfKey (sKey) == null)
-      s_aLogger.warn ("Building URL from invalid go-mapping item '" + sKey + "'");
-
-    return LinkHelper.getURLWithContext (GoServlet.SERVLET_DEFAULT_NAME + "/" + sKey);
-  }
-
-  /**
    * @param aRequestScope
    *        Current request scope. May not be <code>null</code>.
    * @param sKey
@@ -377,7 +356,7 @@ public class GoMappingManager extends AbstractSimpleDAO
     ValueEnforcer.notEmpty (sKey, "Key");
 
     if (PhotonCoreManager.getGoMappingMgr ().getItemOfKey (sKey) == null)
-      s_aLogger.warn ("Building URL from invalid go-mapping item '" + sKey + "'");
+      s_aLogger.warn ("Building URL from non-existing go-mapping item '" + sKey + "'");
 
     return LinkHelper.getURLWithContext (aRequestScope, GoServlet.SERVLET_DEFAULT_NAME + "/" + sKey);
   }

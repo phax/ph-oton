@@ -137,8 +137,6 @@ public class RequestParameterManager implements IRequestParameterManager
           return (IMenuItemPage) aMenuObject;
         }
       }
-      else
-        s_aLogger.warn ("Invalid menu item ID '" + sMenuItemID + "' provided");
     }
     return null;
   }
@@ -158,8 +156,6 @@ public class RequestParameterManager implements IRequestParameterManager
           return aDisplayLocale;
         }
       }
-      else
-        s_aLogger.warn ("Invalid locale '" + sDisplayLocale + "' provided");
     }
     return null;
   }
@@ -179,6 +175,9 @@ public class RequestParameterManager implements IRequestParameterManager
       // Store in session
       PhotonSessionState.getInstance ().setSelectedMenuItemID (sApplicationID, aMenuItem.getID ());
     }
+    else
+      if (StringHelper.hasText (sMenuItemID))
+        s_aLogger.warn ("Invalid menu item ID '" + sMenuItemID + "' provided");
 
     // determine locale from request
     final String sDisplayLocale = AttributeValueConverter.getAsString (m_sRequestParamNameLocale,
@@ -190,6 +189,9 @@ public class RequestParameterManager implements IRequestParameterManager
       // Store in session
       PhotonSessionState.getInstance ().setSelectedLocale (sApplicationID, aDisplayLocale);
     }
+    else
+      if (StringHelper.hasText (sDisplayLocale))
+        s_aLogger.warn ("Invalid locale '" + sDisplayLocale + "' provided");
   }
 
   @Nullable
@@ -256,15 +258,15 @@ public class RequestParameterManager implements IRequestParameterManager
   }
 
   @Nonnull
-  public SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID,
+  public SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sApplicationID,
                                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                       @Nonnull final String sMenuItemID)
   {
     // Get the servlet path from the app ID
-    final String sServletPath = PhotonPathMapper.getApplicationServletPathOfApplicationIDOrDefault (sAppID);
+    final String sServletPath = PhotonPathMapper.getApplicationServletPathOfApplicationIDOrDefault (sApplicationID);
     if (sServletPath == null)
       throw new IllegalStateException ("Failed to determine the servlet path for app ID '" +
-                                       sAppID +
+                                       sApplicationID +
                                        "'. Please make sure you initialized PhotonPathMapper correctly!");
 
     // Prepend the context path
