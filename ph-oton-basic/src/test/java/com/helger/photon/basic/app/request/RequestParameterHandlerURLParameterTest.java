@@ -32,26 +32,14 @@ public final class RequestParameterHandlerURLParameterTest
   @Rule
   public final TestRule m_aRule = new PhotonBasicWebTestRule ();
 
-  private boolean m_bInited = false;
+  private static final Locale LOCALE = LocaleCache.getInstance ().getLocale ("de_AT");
 
-  private void _test (@Nonnull final String sBasePath)
+  private void _test (@Nonnull final String sBasePath, @Nonnull final IMenuItemPage aMenuItem)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
     final RequestParameterHandlerURLParameter h = new RequestParameterHandlerURLParameter ();
     final String sParamLocale = h.getRequestParamNameLocale ();
     final String sParamMenuItem = h.getRequestParamNameMenuItem ();
-
-    final Locale aLocale = LocaleCache.getInstance ().getLocale ("de", "AT");
-    IMenuItemPage aMenuItem;
-    if (!m_bInited)
-    {
-      ApplicationLocaleManager.getLocaleMgr ().registerLocale (aLocale);
-      aMenuItem = ApplicationMenuTree.getTree ().createRootItem (new AbstractPage ("test")
-      {});
-      m_bInited = true;
-    }
-    else
-      aMenuItem = (IMenuItemPage) ApplicationMenuTree.getTree ().getMenuObjectOfID ("test");
 
     // No params
     SimpleURL aURL = h.buildURL (aRequestScope, sBasePath, null, null);
@@ -61,11 +49,11 @@ public final class RequestParameterHandlerURLParameterTest
     assertFalse (aParams.hasMenuItem ());
 
     // Locale only
-    aURL = h.buildURL (aRequestScope, sBasePath, aLocale, null);
+    aURL = h.buildURL (aRequestScope, sBasePath, LOCALE, null);
     assertEquals (sBasePath + "?" + sParamLocale + "=de_AT", aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromURL (aURL);
     assertTrue (aParams.hasLocale ());
-    assertEquals (aLocale, aParams.getLocale ());
+    assertEquals (LOCALE, aParams.getLocale ());
     assertFalse (aParams.hasMenuItem ());
 
     // Menu item only
@@ -77,7 +65,7 @@ public final class RequestParameterHandlerURLParameterTest
     assertEquals (aMenuItem, aParams.getMenuItem ());
 
     // Locale and menu item
-    aURL = h.buildURL (aRequestScope, sBasePath, aLocale, aMenuItem.getID ());
+    aURL = h.buildURL (aRequestScope, sBasePath, LOCALE, aMenuItem.getID ());
     assertEquals (sBasePath +
                   "?" +
                   sParamLocale +
@@ -87,7 +75,7 @@ public final class RequestParameterHandlerURLParameterTest
                   aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromURL (aURL);
     assertTrue (aParams.hasLocale ());
-    assertEquals (aLocale, aParams.getLocale ());
+    assertEquals (LOCALE, aParams.getLocale ());
     assertTrue (aParams.hasMenuItem ());
     assertEquals (aMenuItem, aParams.getMenuItem ());
   }
@@ -95,9 +83,13 @@ public final class RequestParameterHandlerURLParameterTest
   @Test
   public void testBasic ()
   {
-    _test ("");
-    _test ("/ctx");
-    _test ("/servlet");
-    _test ("/ctx/servlet");
+    ApplicationLocaleManager.getLocaleMgr ().registerLocale (LOCALE);
+    final IMenuItemPage aMenuItem = ApplicationMenuTree.getTree ().createRootItem (new AbstractPage ("test")
+    {});
+
+    _test ("", aMenuItem);
+    _test ("/ctx", aMenuItem);
+    _test ("/servlet", aMenuItem);
+    _test ("/ctx/servlet", aMenuItem);
   }
 }

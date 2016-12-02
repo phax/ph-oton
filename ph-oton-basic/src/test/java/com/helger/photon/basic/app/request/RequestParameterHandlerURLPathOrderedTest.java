@@ -1,7 +1,7 @@
 package com.helger.photon.basic.app.request;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
@@ -10,11 +10,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.url.SimpleURL;
-import com.helger.commons.url.URLParameter;
-import com.helger.commons.url.URLParameterList;
 import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
@@ -35,6 +32,8 @@ public final class RequestParameterHandlerURLPathOrderedTest
   @Rule
   public final TestRule m_aRule = new PhotonBasicWebTestRule ();
 
+  private static final Locale LOCALE = LocaleCache.getInstance ().getLocale ("de_AT");
+
   @Test
   public void testBasic ()
   {
@@ -42,106 +41,86 @@ public final class RequestParameterHandlerURLPathOrderedTest
     final IRequestWebScopeWithoutResponse aRequestScope = new RequestWebScope (aRequest,
                                                                                new MockHttpServletResponse ());
     final RequestParameterHandlerURLPathOrdered h = new RequestParameterHandlerURLPathOrdered ();
-    final IRequestParameterManager aRequestParamMgr = ApplicationRequestManager.getRequestMgr ();
 
-    final Locale aLocale = LocaleCache.getInstance ().getLocale ("de", "AT");
-    ApplicationLocaleManager.getLocaleMgr ().registerLocale (aLocale);
+    ApplicationLocaleManager.getLocaleMgr ().registerLocale (LOCALE);
     final IMenuItemPage aMenuItem = ApplicationMenuTree.getTree ().createRootItem (new AbstractPage ("test")
     {});
 
     // No params
-    SimpleURL aURL = h.buildURL (aRequestScope, "", null);
+    SimpleURL aURL = h.buildURL (aRequestScope, "", null, null);
     assertEquals ("", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
-    URLParameterList aParams = h.getParametersFromRequest (aRequestScope);
-    assertTrue (aParams.isEmpty ());
+    PhotonRequestParameters aParams = h.getParametersFromRequest (aRequestScope);
+    assertFalse (aParams.hasLocale ());
+    assertFalse (aParams.hasMenuItem ());
 
     // Locale only
-    aURL = h.buildURL (aRequestScope, "", new CommonsArrayList<> (new URLParameter (sParamLocale, "de_AT")));
+    aURL = h.buildURL (aRequestScope, "", LOCALE, null);
     assertEquals ("/de_AT", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromRequest (aRequestScope);
-    assertEquals (1, aParams.size ());
-    assertEquals ("de_AT", aParams.getFirstParamValue (sParamLocale));
-    assertNull (aParams.getFirstParamValue (sParamMenuItem));
+    assertTrue (aParams.hasLocale ());
+    assertEquals (LOCALE, aParams.getLocale ());
+    assertFalse (aParams.hasMenuItem ());
 
     // Locale only but not existing
-    aURL = h.buildURL (aRequestScope, "", new CommonsArrayList<> (new URLParameter (sParamLocale, "en_US")));
+    aURL = h.buildURL (aRequestScope, "", Locale.US, null);
     assertEquals ("/en_US", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromRequest (aRequestScope);
-    assertTrue (aParams.isEmpty ());
+    assertFalse (aParams.hasLocale ());
+    assertFalse (aParams.hasMenuItem ());
 
     // Menu item only
-    aURL = h.buildURL (aRequestScope, "", new CommonsArrayList<> (new URLParameter (sParamMenuItem, "test")));
+    aURL = h.buildURL (aRequestScope, "", null, aMenuItem.getID ());
     assertEquals ("/test", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromRequest (aRequestScope);
-    assertEquals (1, aParams.size ());
-    assertNull (aParams.getFirstParamValue (sParamLocale));
-    assertEquals ("test", aParams.getFirstParamValue (sParamMenuItem));
+    assertFalse (aParams.hasLocale ());
+    assertTrue (aParams.hasMenuItem ());
+    assertEquals (aMenuItem, aParams.getMenuItem ());
 
     // Menu item only but not existing
-    aURL = h.buildURL (aRequestScope, "", new CommonsArrayList<> (new URLParameter (sParamMenuItem, "other")));
+    aURL = h.buildURL (aRequestScope, "", null, "other");
     assertEquals ("/other", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromRequest (aRequestScope);
-    assertTrue (aParams.isEmpty ());
+    assertFalse (aParams.hasLocale ());
+    assertFalse (aParams.hasMenuItem ());
 
     // Locale and menu item
-    aURL = h.buildURL (aRequestScope,
-                       "",
-                       new CommonsArrayList<> (new URLParameter (sParamLocale, "de_AT"),
-                                               new URLParameter (sParamMenuItem, "test")));
+    aURL = h.buildURL (aRequestScope, "", LOCALE, aMenuItem.getID ());
     assertEquals ("/de_AT/test", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromRequest (aRequestScope);
-    assertEquals (2, aParams.size ());
-    assertEquals ("de_AT", aParams.getFirstParamValue (sParamLocale));
-    assertEquals ("test", aParams.getFirstParamValue (sParamMenuItem));
-
-    // Locale and menu item different input order
-    aURL = h.buildURL (aRequestScope,
-                       "",
-                       new CommonsArrayList<> (new URLParameter (sParamMenuItem, "test"),
-                                               new URLParameter (sParamLocale, "de_AT")));
-    assertEquals ("/de_AT/test", aURL.getAsStringWithEncodedParameters ());
-    aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
-    aParams = h.getParametersFromRequest (aRequestScope);
-    assertEquals (2, aParams.size ());
-    assertEquals ("de_AT", aParams.getFirstParamValue (sParamLocale));
-    assertEquals ("test", aParams.getFirstParamValue (sParamMenuItem));
+    assertTrue (aParams.hasLocale ());
+    assertEquals (LOCALE, aParams.getLocale ());
+    assertTrue (aParams.hasMenuItem ());
 
     // Locale and menu item - locale invalid
-    aURL = h.buildURL (aRequestScope,
-                       "",
-                       new CommonsArrayList<> (new URLParameter (sParamLocale, "en_US"),
-                                               new URLParameter (sParamMenuItem, "test")));
+    aURL = h.buildURL (aRequestScope, "", Locale.US, aMenuItem.getID ());
     assertEquals ("/en_US/test", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromRequest (aRequestScope);
-    assertEquals (1, aParams.size ());
-    assertEquals ("test", aParams.getFirstParamValue (sParamMenuItem));
+    assertFalse (aParams.hasLocale ());
+    assertTrue (aParams.hasMenuItem ());
+    assertEquals (aMenuItem, aParams.getMenuItem ());
 
     // Locale and menu item - menu item invalid
-    aURL = h.buildURL (aRequestScope,
-                       "",
-                       new CommonsArrayList<> (new URLParameter (sParamLocale, "de_AT"),
-                                               new URLParameter (sParamMenuItem, "other")));
+    aURL = h.buildURL (aRequestScope, "", LOCALE, "other");
     assertEquals ("/de_AT/other", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromRequest (aRequestScope);
-    assertEquals (1, aParams.size ());
-    assertEquals ("de_AT", aParams.getFirstParamValue (sParamLocale));
+    assertTrue (aParams.hasLocale ());
+    assertEquals (LOCALE, aParams.getLocale ());
+    assertFalse (aParams.hasMenuItem ());
 
     // Locale and menu item - both invalid
-    aURL = h.buildURL (aRequestScope,
-                       "",
-                       new CommonsArrayList<> (new URLParameter (sParamLocale, "en_US"),
-                                               new URLParameter (sParamMenuItem, "other")));
+    aURL = h.buildURL (aRequestScope, "", Locale.US, "other");
     assertEquals ("/en_US/other", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromRequest (aRequestScope);
-    assertTrue (aParams.isEmpty ());
+    assertFalse (aParams.hasLocale ());
+    assertFalse (aParams.hasMenuItem ());
   }
 }
