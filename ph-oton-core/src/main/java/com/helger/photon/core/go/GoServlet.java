@@ -38,7 +38,7 @@ import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
-import com.helger.photon.basic.app.request.IRequestManager;
+import com.helger.photon.basic.app.request.IRequestParameterManager;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
@@ -174,7 +174,7 @@ public class GoServlet extends AbstractUnifiedResponseServlet
           // If it is an internal menu item, check if this internal item is an
           // "external menu item" and if so, directly use the URL of the
           // external menu item
-          final IRequestManager aARM = ApplicationRequestManager.getRequestMgr ();
+          final IRequestParameterManager aARM = ApplicationRequestManager.getRequestMgr ();
           final String sTargetMenuItemID = aARM.getMenuItemFromURL (aGoItem.getTargetURL ());
 
           final IMenuObject aMenuObj = aMenuTree.getItemDataWithID (sTargetMenuItemID);

@@ -42,7 +42,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
-import com.helger.photon.basic.app.request.IRequestManager;
+import com.helger.photon.basic.app.request.IRequestParameterManager;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.useragent.IUserAgent;
@@ -61,7 +61,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   private final Locale m_aDisplayLocale;
   private final IMenuTree m_aMenuTree;
   // Status vars
-  private transient IRequestManager m_aARM;
+  private transient IRequestParameterManager m_aARM;
 
   public SimpleWebExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC)
   {
@@ -224,10 +224,10 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   }
 
   @Nonnull
-  private IRequestManager _getARM ()
+  private IRequestParameterManager _getARM ()
   {
     // Cache for performance reasons
-    IRequestManager ret = m_aARM;
+    IRequestParameterManager ret = m_aARM;
     if (ret == null)
       ret = m_aARM = ApplicationRequestManager.getRequestMgr ();
     return ret;

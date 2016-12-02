@@ -30,7 +30,7 @@ import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
-import com.helger.photon.basic.app.request.IRequestManager;
+import com.helger.photon.basic.app.request.IRequestParameterManager;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -83,7 +83,7 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
   @Nonnull
   public static LayoutExecutionContext createForAjaxOrAction (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final IRequestManager aRequestMgr = ApplicationRequestManager.getRequestMgr ();
+    final IRequestParameterManager aRequestMgr = ApplicationRequestManager.getRequestMgr ();
     // Get the locale from the session
     final Locale aDisplayLocale = aRequestMgr.getRequestDisplayLocale ();
     final IMenuTree aMenuTree = ApplicationMenuTree.getTree ();

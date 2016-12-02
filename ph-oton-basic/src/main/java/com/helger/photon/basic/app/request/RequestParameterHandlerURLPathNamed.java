@@ -42,7 +42,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @since 7.0.2
  */
 @Immutable
-public class RequestParameterHandlerURLPath implements IRequestParameterHandler
+public class RequestParameterHandlerURLPathNamed implements IRequestParameterHandler
 {
   /**
    * The separator char to be used if path based handling is enabled, to
@@ -55,7 +55,7 @@ public class RequestParameterHandlerURLPath implements IRequestParameterHandler
   /**
    * Default constructor using {@link #DEFAULT_SEPARATOR_CHAR} as the separator.
    */
-  public RequestParameterHandlerURLPath ()
+  public RequestParameterHandlerURLPathNamed ()
   {
     this (Character.toString (DEFAULT_SEPARATOR_CHAR));
   }
@@ -67,7 +67,7 @@ public class RequestParameterHandlerURLPath implements IRequestParameterHandler
    *        The separator to use. May neither be <code>null</code> nor empty.
    *        May not contain the "/" character!
    */
-  public RequestParameterHandlerURLPath (@Nonnull @Nonempty final String sSeparator)
+  public RequestParameterHandlerURLPathNamed (@Nonnull @Nonempty final String sSeparator)
   {
     ValueEnforcer.notEmpty (sSeparator, "Separator");
     ValueEnforcer.isTrue (sSeparator.indexOf ('/') < 0, "The separator may not contain a path delimiter '/'!");

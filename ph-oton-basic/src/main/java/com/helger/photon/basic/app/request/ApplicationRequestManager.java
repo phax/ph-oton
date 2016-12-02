@@ -33,7 +33,7 @@ import com.helger.commons.string.ToStringGenerator;
  */
 public final class ApplicationRequestManager extends AbstractGlobalSingleton
 {
-  private final RequestManager m_aProxy = new RequestManager ();
+  private final RequestParameterManager m_aProxy = new RequestParameterManager ();
 
   @Deprecated
   @UsedViaReflection
@@ -47,13 +47,13 @@ public final class ApplicationRequestManager extends AbstractGlobalSingleton
   }
 
   @Nonnull
-  public static IRequestManager getRequestMgr ()
+  public static IRequestParameterManager getRequestMgr ()
   {
     return getInstance ().m_aProxy;
   }
 
   @Nonnull
-  public IRequestManager getInstanceRequestMgr ()
+  public IRequestParameterManager getInstanceRequestMgr ()
   {
     return m_aProxy;
   }

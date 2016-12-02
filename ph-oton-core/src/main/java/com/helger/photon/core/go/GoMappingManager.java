@@ -45,7 +45,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
-import com.helger.photon.basic.app.request.IRequestManager;
+import com.helger.photon.basic.app.request.IRequestParameterManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -305,7 +305,7 @@ public class GoMappingManager extends AbstractSimpleDAO
   {
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
     ValueEnforcer.notNull (aErrorCallback, "ErrorCallback");
-    final IRequestManager aARM = ApplicationRequestManager.getRequestMgr ();
+    final IRequestParameterManager aARM = ApplicationRequestManager.getRequestMgr ();
 
     return m_aRWLock.readLocked ( () -> {
       int nCount = 0;

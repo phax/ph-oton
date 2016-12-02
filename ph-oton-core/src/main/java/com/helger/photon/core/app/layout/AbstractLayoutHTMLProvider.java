@@ -36,7 +36,7 @@ import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.html.sections.HCBody;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.photon.basic.app.request.ApplicationRequestManager;
-import com.helger.photon.basic.app.request.IRequestManager;
+import com.helger.photon.basic.app.request.IRequestParameterManager;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
@@ -105,7 +105,7 @@ public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecuti
 
   @Nonnull
   protected abstract LECTYPE createLayoutExecutionContext (@Nonnull ISimpleWebExecutionContext aSWEC,
-                                                           @Nonnull IRequestManager aRequestManager);
+                                                           @Nonnull IRequestParameterManager aRequestManager);
 
   /**
    * Overridable method that is called before the content areas are rendered
