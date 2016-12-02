@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,13 +28,13 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.attr.AttributeValueConverter;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.scope.mgr.ScopeManager;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
+import com.helger.commons.url.URLParameter;
 import com.helger.commons.url.URLParameterList;
 import com.helger.photon.basic.app.PhotonPathMapper;
 import com.helger.photon.basic.app.PhotonSessionState;
@@ -55,25 +56,28 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public class RequestManager implements IRequestManager
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (RequestManager.class);
 
-  private boolean m_bUsePaths = DEFAULT_USE_PATHS;
+  private IRequestParameterHandler m_aRequestParamHdl = new RequestParameterHandlerURLParameter ();
   private String m_sRequestParamNameMenuItem = DEFAULT_REQUEST_PARAMETER_MENUITEM;
   private String m_sRequestParamNameLocale = DEFAULT_REQUEST_PARAMETER_DISPLAY_LOCALE;
 
   public RequestManager ()
   {}
 
-  public boolean isUsePaths ()
+  @Nonnull
+  public final IRequestParameterHandler getParameterHandler ()
   {
-    return m_bUsePaths;
+    return m_aRequestParamHdl;
   }
 
-  public void setUsePaths (final boolean bUsePaths)
+  public final void setParameterHandler (@Nonnull final IRequestParameterHandler aRequestParameterHdl)
   {
-    m_bUsePaths = bUsePaths;
+    ValueEnforcer.notNull (aRequestParameterHdl, "RequestParameterHdl");
+    m_aRequestParamHdl = aRequestParameterHdl;
   }
 
   @Nonnull
@@ -86,10 +90,8 @@ public class RequestManager implements IRequestManager
   public final void setRequestParamNameMenuItem (@Nonnull @Nonempty final String sRequestParamNameMenuItem)
   {
     ValueEnforcer.notEmpty (sRequestParamNameMenuItem, "RequestParamNameMenuItem");
-    if (sRequestParamNameMenuItem.indexOf (SEPARATOR_CHAR) >= 0)
-      throw new IllegalArgumentException ("Request parameter name may not contain the '" +
-                                          SEPARATOR_CHAR +
-                                          "' character!");
+    ValueEnforcer.isTrue (m_aRequestParamHdl.isValidParameterName (sRequestParamNameMenuItem),
+                          () -> "Request parameter name '" + sRequestParamNameMenuItem + "' is invalid!");
     m_sRequestParamNameMenuItem = sRequestParamNameMenuItem;
   }
 
@@ -103,10 +105,8 @@ public class RequestManager implements IRequestManager
   public final void setRequestParamNameLocale (@Nonnull @Nonempty final String sRequestParamNameLocale)
   {
     ValueEnforcer.notEmpty (sRequestParamNameLocale, "RequestParamNameLocale");
-    if (sRequestParamNameLocale.indexOf (SEPARATOR_CHAR) >= 0)
-      throw new IllegalArgumentException ("Request parameter name may not contain the '" +
-                                          SEPARATOR_CHAR +
-                                          "' character!");
+    ValueEnforcer.isTrue (m_aRequestParamHdl.isValidParameterName (sRequestParamNameLocale),
+                          () -> "Request parameter name '" + sRequestParamNameLocale + "' is invalid!");
     m_sRequestParamNameLocale = sRequestParamNameLocale;
   }
 
@@ -122,39 +122,10 @@ public class RequestManager implements IRequestManager
     return ApplicationLocaleManager.getLocaleMgr ();
   }
 
-  @Nonnull
-  private static URLParameterList _getParametersFromPath (@Nonnull final String sPath)
-  {
-    // Use paths for standard menu items
-    final URLParameterList ret = new URLParameterList ();
-    for (final String sPair : StringHelper.getExploded ('/', StringHelper.trimStartAndEnd (sPath, "/")))
-    {
-      final String [] aElements = StringHelper.getExplodedArray (SEPARATOR_CHAR, sPair, 2);
-      if (aElements.length == 2)
-        ret.add (aElements[0], aElements[1]);
-    }
-    return ret;
-  }
-
-  @Nonnull
-  protected URLParameterList getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
-  {
-    if (m_bUsePaths)
-    {
-      // Use paths for standard menu items
-      return _getParametersFromPath (aRequestScope.getPathInfo ());
-    }
-
-    // Use request parameters
-    final URLParameterList ret = new URLParameterList ();
-    aRequestScope.forAllAttributes ( (k, v) -> ret.add (k, String.valueOf (v)));
-    return ret;
-  }
-
   public void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                               @Nonnull @Nonempty final String sApplicationID)
   {
-    final URLParameterList aParams = getParametersFromRequest (aRequestScope);
+    final URLParameterList aParams = m_aRequestParamHdl.getParametersFromRequest (aRequestScope);
 
     // determine page from request and store in request
     final String sMenuItemID = AttributeValueConverter.getAsString (m_sRequestParamNameMenuItem,
@@ -233,12 +204,6 @@ public class RequestManager implements IRequestManager
 
   }
 
-  @Nonnull
-  public String getRequestMenuItemID ()
-  {
-    return getRequestMenuItem ().getID ();
-  }
-
   @Nullable
   public Locale getSessionDisplayLocale ()
   {
@@ -261,18 +226,6 @@ public class RequestManager implements IRequestManager
   }
 
   @Nonnull
-  public Locale getRequestDisplayCountry ()
-  {
-    return CountryCache.getInstance ().getCountry (getRequestDisplayLocale ());
-  }
-
-  @Nonnull
-  public String getRequestDisplayLanguage ()
-  {
-    return getRequestDisplayLocale ().getLanguage ();
-  }
-
-  @Nonnull
   public SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID,
                                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                       @Nonnull final String sMenuItemID)
@@ -285,39 +238,13 @@ public class RequestManager implements IRequestManager
                                        "'. Please make sure you initialized PhotonPathMapper correctly!");
 
     // Prepend the context path
-    final String sPath = aRequestScope.getContextPath () + sServletPath + "/";
-
-    if (m_bUsePaths)
-    {
-      // Encode menuitem parameter into path
-      return new SimpleURL (aRequestScope.encodeURL (sPath +
-                                                     m_sRequestParamNameMenuItem +
-                                                     SEPARATOR_CHAR +
-                                                     sMenuItemID));
-    }
-    // Add menu item parameter as URL parameter
-    return new SimpleURL (aRequestScope.encodeURL (sPath)).add (m_sRequestParamNameMenuItem, sMenuItemID);
-  }
-
-  /**
-   * Extract the special parameters from the URL - either by path or by
-   * parameter.
-   *
-   * @param aURL
-   *        Source URL. May not be <code>null</code>.
-   * @return Never <code>null</code> list
-   */
-  @Nonnull
-  protected URLParameterList getParametersFromURL (@Nonnull final ISimpleURL aURL)
-  {
-    if (m_bUsePaths)
-    {
-      // Use paths for standard menu items
-      return _getParametersFromPath (aURL.getPath ());
-    }
-
-    // Use request parameters
-    return aURL.getAllParams ();
+    final String sBasePath = aRequestScope.getContextPath () + sServletPath;
+    return m_aRequestParamHdl.buildURL (aRequestScope,
+                                        sBasePath,
+                                        new CommonsArrayList<> (new URLParameter (m_sRequestParamNameLocale,
+                                                                                  getRequestDisplayLocale ().toString ()),
+                                                                new URLParameter (m_sRequestParamNameMenuItem,
+                                                                                  sMenuItemID)));
   }
 
   @Nullable
@@ -326,7 +253,7 @@ public class RequestManager implements IRequestManager
     if (aURL == null)
       return null;
 
-    final URLParameterList aParams = getParametersFromURL (aURL);
+    final URLParameterList aParams = m_aRequestParamHdl.getParametersFromURL (aURL);
     return AttributeValueConverter.getAsString (m_sRequestParamNameMenuItem,
                                                 aParams.getFirstParamValue (m_sRequestParamNameMenuItem),
                                                 null);
@@ -338,7 +265,7 @@ public class RequestManager implements IRequestManager
     if (aURL == null)
       return null;
 
-    final URLParameterList aParams = getParametersFromURL (aURL);
+    final URLParameterList aParams = m_aRequestParamHdl.getParametersFromURL (aURL);
     return AttributeValueConverter.getAsString (m_sRequestParamNameLocale,
                                                 aParams.getFirstParamValue (m_sRequestParamNameLocale),
                                                 null);
@@ -347,7 +274,7 @@ public class RequestManager implements IRequestManager
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("usePaths", m_bUsePaths)
+    return new ToStringGenerator (this).append ("RequestParamHandler", m_aRequestParamHdl)
                                        .append ("requestParamMenuItem", m_sRequestParamNameMenuItem)
                                        .append ("requestParamNameLocale", m_sRequestParamNameLocale)
                                        .toString ();

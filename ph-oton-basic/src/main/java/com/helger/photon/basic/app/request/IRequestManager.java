@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.PhotonSessionState;
@@ -32,6 +33,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public interface IRequestManager
 {
   /** By default request parameters are used - for backwards compatibility */
+  @Deprecated
   boolean DEFAULT_USE_PATHS = false;
 
   /** The default name of the parameter selecting the current menu item */
@@ -44,11 +46,25 @@ public interface IRequestManager
    * The separator char to be used if path based handling is enabled, to
    * separate name and value
    */
-  char SEPARATOR_CHAR = '-';
+  @Deprecated
+  char SEPARATOR_CHAR = RequestParameterHandlerURLPath.DEFAULT_SEPARATOR_CHAR;
 
-  boolean isUsePaths ();
+  @Deprecated
+  default boolean isUsePaths ()
+  {
+    return getParameterHandler () instanceof RequestParameterHandlerURLPath;
+  }
 
-  void setUsePaths (boolean bUsePaths);
+  @Deprecated
+  default void setUsePaths (final boolean bUsePaths)
+  {
+    setParameterHandler (bUsePaths ? new RequestParameterHandlerURLPath () : new RequestParameterHandlerURLParameter ());
+  }
+
+  @Nonnull
+  IRequestParameterHandler getParameterHandler ();
+
+  void setParameterHandler (@Nonnull IRequestParameterHandler aRequestParameterHdl);
 
   @Nonnull
   @Nonempty
@@ -99,7 +115,10 @@ public interface IRequestManager
    *         <code>null</code>.
    */
   @Nonnull
-  String getRequestMenuItemID ();
+  default String getRequestMenuItemID ()
+  {
+    return getRequestMenuItem ().getID ();
+  }
 
   /**
    * Get the locale stored in the session. If neither request nor session data
@@ -132,7 +151,10 @@ public interface IRequestManager
    * @see #getRequestDisplayLocale()
    */
   @Nonnull
-  Locale getRequestDisplayCountry ();
+  default Locale getRequestDisplayCountry ()
+  {
+    return CountryCache.getInstance ().getCountry (getRequestDisplayLocale ());
+  }
 
   /**
    * @return The language name from the current request display locale. Never
@@ -140,7 +162,10 @@ public interface IRequestManager
    * @see #getRequestDisplayLocale()
    */
   @Nonnull
-  String getRequestDisplayLanguage ();
+  default String getRequestDisplayLanguage ()
+  {
+    return getRequestDisplayLocale ().getLanguage ();
+  }
 
   @Nonnull
   default SimpleURL getLinkToMenuItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,

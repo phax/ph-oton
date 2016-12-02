@@ -61,6 +61,6 @@ public final class ApplicationRequestManager extends AbstractGlobalSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("rm", m_aProxy).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("RequestManager", m_aProxy).toString ();
   }
 }
