@@ -117,8 +117,9 @@ public interface IAjaxFunctionDeclaration extends IHasName
   @Nonnull
   default SimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return LinkHelper.getURLWithContext (aRequestScope, getPathWithoutContext (), (Map <String, String>) null);
+    return LinkHelper.getURLWithContext (aRequestScope, getPathWithoutContext ());
   }
+
   /**
    * @param aRequestScope
    *        The request web scope to be used. Required for cookie-less handling.
@@ -132,7 +133,7 @@ public interface IAjaxFunctionDeclaration extends IHasName
   @Nonnull
   @Deprecated
   default SimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                       @Nullable final Map <String, String> aParams)
+                                      @Nullable final Map <String, String> aParams)
   {
     return getInvocationURL (aRequestScope).addAll (aParams);
   }

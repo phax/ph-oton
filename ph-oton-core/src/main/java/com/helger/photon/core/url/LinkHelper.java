@@ -199,7 +199,7 @@ public final class LinkHelper
   @Nonnull
   public static SimpleURL getURLWithContext (@Nonnull final String sHRef)
   {
-    return getURLWithContext (sHRef, (Map <String, String>) null);
+    return new SimpleURL (getURIWithContext (sHRef));
   }
 
   /**
@@ -219,7 +219,7 @@ public final class LinkHelper
   public static SimpleURL getURLWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                              @Nonnull final String sHRef)
   {
-    return getURLWithContext (aRequestScope, sHRef, (Map <String, String>) null);
+    return new SimpleURL (getURIWithContext (aRequestScope, sHRef));
   }
 
   /**
@@ -237,6 +237,7 @@ public final class LinkHelper
    *         <code>null</code>.
    */
   @Nonnull
+  @Deprecated
   public static SimpleURL getURLWithContext (@Nonnull final String sHRef, @Nullable final Map <String, String> aParams)
   {
     return new SimpleURL (getURIWithContext (sHRef), aParams);
@@ -258,6 +259,7 @@ public final class LinkHelper
    *         <code>null</code>.
    */
   @Nonnull
+  @Deprecated
   public static SimpleURL getURLWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                              @Nonnull final String sHRef,
                                              @Nullable final Map <String, String> aParams)
@@ -334,7 +336,7 @@ public final class LinkHelper
   @Nonnull
   public static SimpleURL getURLWithServerAndContext (@Nonnull final String sHRef)
   {
-    return getURLWithServerAndContext (sHRef, (Map <String, String>) null);
+    return new SimpleURL (getURIWithServerAndContext (sHRef));
   }
 
   /**
@@ -354,7 +356,7 @@ public final class LinkHelper
   public static SimpleURL getURLWithServerAndContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                                       @Nonnull final String sHRef)
   {
-    return getURLWithServerAndContext (aRequestScope, sHRef, (Map <String, String>) null);
+    return new SimpleURL (getURIWithServerAndContext (aRequestScope, sHRef));
   }
 
   /**
@@ -372,6 +374,7 @@ public final class LinkHelper
    *         otherwise.
    */
   @Nonnull
+  @Deprecated
   public static SimpleURL getURLWithServerAndContext (@Nonnull final String sHRef,
                                                       @Nullable final Map <String, String> aParams)
   {
@@ -394,6 +397,7 @@ public final class LinkHelper
    *         otherwise.
    */
   @Nonnull
+  @Deprecated
   public static SimpleURL getURLWithServerAndContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                                       @Nonnull final String sHRef,
                                                       @Nullable final Map <String, String> aParams)
