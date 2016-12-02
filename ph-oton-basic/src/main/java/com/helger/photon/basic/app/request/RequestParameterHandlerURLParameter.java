@@ -25,7 +25,6 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -77,11 +76,5 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
     if (StringHelper.hasText (sMenuItemID))
       ret.add (getRequestParamNameMenuItem (), sMenuItemID);
     return ret;
-  }
-
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).toString ();
   }
 }
