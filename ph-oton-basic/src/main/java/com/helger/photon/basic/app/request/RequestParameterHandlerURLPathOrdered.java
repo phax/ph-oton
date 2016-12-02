@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.app.request;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -25,13 +27,10 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.commons.url.URLParameter;
-import com.helger.commons.url.URLParameterList;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -54,53 +53,36 @@ public class RequestParameterHandlerURLPathOrdered implements IRequestParameterH
   {}
 
   @Nonnull
-  protected URLParameterList getParametersFromPath (@Nonnull final String sPath)
+  protected PhotonRequestParameters getParametersFromPath (@Nonnull final String sPath)
   {
     // Use paths for standard menu items
-    final URLParameterList ret = new URLParameterList ();
-
-    final IRequestParameterManager aRequestParamMgr = ApplicationRequestManager.getRequestMgr ();
-    boolean bHasLocale = false;
-    boolean bHasMenuItem = false;
+    final PhotonRequestParameters ret = new PhotonRequestParameters ();
 
     for (final String sParamValue : StringHelper.getExploded ('/', StringHelper.trimStartAndEnd (sPath, "/")))
     {
-      String sParamName = null;
-      if (!bHasLocale && aRequestParamMgr.getLocaleFromParameterIfValid (sParamValue) != null)
-      {
-        // Valid locale was provided
-        sParamName = aRequestParamMgr.getRequestParamNameLocale ();
-        bHasLocale = true;
-      }
-      else
-        if (!bHasMenuItem && aRequestParamMgr.getMenuItemFromParameterIfValid (sParamValue) != null)
-        {
-          // Valid menu item was provided
-          sParamName = aRequestParamMgr.getRequestParamNameMenuItem ();
-          bHasMenuItem = true;
-        }
-        else
-        {
-          s_aLogger.warn ("Ignoring superfluous parameter '" + sParamValue + "'");
-        }
+      if (!ret.hasLocale ())
+        if (ret.setLocaleFromString (sParamValue) != null)
+          continue;
 
-      // ignore all other parameters
-      if (sParamName != null)
-        ret.add (sParamName, sParamValue);
+      if (!ret.hasMenuItem ())
+        if (ret.setMenuItemFromString (sParamValue) != null)
+          continue;
+
+      s_aLogger.warn ("Ignoring superfluous parameter '" + sParamValue + "'");
     }
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public URLParameterList getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public PhotonRequestParameters getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return getParametersFromPath (aRequestScope.getPathInfo ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public URLParameterList getParametersFromURL (@Nonnull final ISimpleURL aURL)
+  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL)
   {
     return getParametersFromPath (aURL.getPath ());
   }
@@ -108,40 +90,14 @@ public class RequestParameterHandlerURLPathOrdered implements IRequestParameterH
   @Nonnull
   public SimpleURL buildURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull @Nonempty final String sBasePath,
-                             @Nullable final ICommonsIterable <? extends URLParameter> aParameters)
+                             @Nullable final Locale aDisplayLocale,
+                             @Nullable final String sMenuItemID)
   {
-    // Encode menuitem parameter into path
     final StringBuilder aFullPath = new StringBuilder (sBasePath);
-    if (aParameters != null)
-    {
-      final IRequestParameterManager aRequestParamMgr = ApplicationRequestManager.getRequestMgr ();
-      final String sParamNameLocale = aRequestParamMgr.getRequestParamNameLocale ();
-      final String sParamNameMenuItem = aRequestParamMgr.getRequestParamNameMenuItem ();
-
-      String sLocale = null;
-      String sMenuItemID = null;
-      for (final URLParameter aParam : aParameters)
-      {
-        final String sParamName = aParam.getName ();
-        if (sParamName.equals (sParamNameLocale))
-          sLocale = aParam.getValue ();
-        else
-          if (sParamName.equals (sParamNameMenuItem))
-            sMenuItemID = aParam.getValue ();
-          else
-            s_aLogger.warn ("Ignoring superfluous provided parameter '" +
-                            sParamName +
-                            "' with value '" +
-                            aParam.getValue () +
-                            "'");
-      }
-
-      if (StringHelper.hasText (sLocale))
-        aFullPath.append ('/').append (sLocale);
-      if (StringHelper.hasText (sMenuItemID))
-        aFullPath.append ('/').append (sMenuItemID);
-    }
-
+    if (aDisplayLocale != null)
+      aFullPath.append ('/').append (aDisplayLocale.toString ());
+    if (StringHelper.hasText (sMenuItemID))
+      aFullPath.append ('/').append (sMenuItemID);
     return new SimpleURL (aRequestScope.encodeURL (aFullPath.toString ()));
   }
 

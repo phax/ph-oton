@@ -37,65 +37,14 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public interface IRequestParameterManager
 {
-  /** By default request parameters are used - for backwards compatibility */
-  @Deprecated
-  boolean DEFAULT_USE_PATHS = false;
-
-  /** The default name of the parameter selecting the current menu item */
-  String DEFAULT_REQUEST_PARAMETER_MENUITEM = "menuitem";
-
-  /** The default name of the parameter selecting the current display locale */
-  String DEFAULT_REQUEST_PARAMETER_DISPLAY_LOCALE = "locale";
-
-  /**
-   * The separator char to be used if path based handling is enabled, to
-   * separate name and value
-   */
-  @Deprecated
-  char SEPARATOR_CHAR = RequestParameterHandlerURLPathNamed.DEFAULT_SEPARATOR_CHAR;
-
-  @Deprecated
-  default boolean isUsePaths ()
-  {
-    return getParameterHandler () instanceof RequestParameterHandlerURLPathNamed;
-  }
-
-  @Deprecated
-  default void setUsePaths (final boolean bUsePaths)
-  {
-    setParameterHandler (bUsePaths ? new RequestParameterHandlerURLPathNamed ()
-                                   : new RequestParameterHandlerURLParameter ());
-  }
-
   @Nonnull
   IRequestParameterHandler getParameterHandler ();
 
   void setParameterHandler (@Nonnull IRequestParameterHandler aRequestParameterHdl);
 
-  @Nonnull
-  @Nonempty
-  String getRequestParamNameMenuItem ();
-
-  void setRequestParamNameMenuItem (@Nonnull @Nonempty String sRequestParamMenuItem);
-
-  @Nonnull
-  @Nonempty
-  String getRequestParamNameLocale ();
-
-  void setRequestParamNameLocale (@Nonnull @Nonempty String sRequestParamDisplayLocale);
-
-  @Nullable
-  IMenuItemPage getMenuItemFromParameterIfValid (@Nullable String sMenuItemID);
-
-  @Nullable
-  Locale getLocaleFromParameterIfValid (@Nullable String sDisplayLocale);
-
   /**
-   * To be called upon the beginning of each request. Checks for the content of
-   * the request parameter {@value #DEFAULT_REQUEST_PARAMETER_MENUITEM} to
-   * determine the selected menu item. Checks for the content of the request
-   * parameter {@value #DEFAULT_REQUEST_PARAMETER_DISPLAY_LOCALE} to determine
-   * any changes in the display locale.
+   * To be called upon the beginning of each request. Extracts the locale and
+   * menu item parameter from the request URL.
    *
    * @param aRequestScope
    *        The request scope that just begun. May not be <code>null</code>.

@@ -16,18 +16,18 @@
  */
 package com.helger.photon.basic.app.request;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsIterable;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.commons.url.URLParameter;
-import com.helger.commons.url.URLParameterList;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -39,42 +39,43 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @since 7.0.2
  */
 @Immutable
-public class RequestParameterHandlerURLParameter implements IRequestParameterHandler
+public class RequestParameterHandlerURLParameter extends AbstractRequestParameterHandlerNamed
 {
   public RequestParameterHandlerURLParameter ()
   {}
 
   @Nonnull
   @ReturnsMutableCopy
-  public URLParameterList getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public PhotonRequestParameters getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    // Use request parameters
-    final URLParameterList ret = new URLParameterList ();
-    aRequestScope.forAllAttributes ( (k, v) -> {
-      if (v instanceof String)
-        ret.add (k, (String) v);
-    });
+    final PhotonRequestParameters ret = new PhotonRequestParameters ();
+    ret.setLocaleFromString (aRequestScope.getAttributeAsString (getRequestParamNameLocale ()));
+    ret.setMenuItemFromString (aRequestScope.getAttributeAsString (getRequestParamNameMenuItem ()));
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public URLParameterList getParametersFromURL (@Nonnull final ISimpleURL aURL)
+  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL)
   {
-    // Use request parameters
-    return aURL.getAllParams ();
+    final PhotonRequestParameters ret = new PhotonRequestParameters ();
+    ret.setLocaleFromString (aURL.getParam (getRequestParamNameLocale ()));
+    ret.setMenuItemFromString (aURL.getParam (getRequestParamNameMenuItem ()));
+    return ret;
   }
 
   @Nonnull
   public SimpleURL buildURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull @Nonempty final String sBasePath,
-                             @Nullable final ICommonsIterable <? extends URLParameter> aParameters)
+                             @Nullable final Locale aDisplayLocale,
+                             @Nullable final String sMenuItemID)
   {
     // Add menu item parameter as URL parameter
     final SimpleURL ret = new SimpleURL (aRequestScope.encodeURL (sBasePath));
-    if (aParameters != null)
-      for (final URLParameter aParam : aParameters)
-        ret.add (aParam);
+    if (aDisplayLocale != null)
+      ret.add (getRequestParamNameLocale (), aDisplayLocale.toString ());
+    if (StringHelper.hasText (sMenuItemID))
+      ret.add (getRequestParamNameMenuItem (), sMenuItemID);
     return ret;
   }
 

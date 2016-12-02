@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Locale;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -15,6 +17,7 @@ import com.helger.commons.url.URLParameter;
 import com.helger.commons.url.URLParameterList;
 import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.page.AbstractPage;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.web.mock.MockHttpServletRequest;
@@ -40,11 +43,10 @@ public final class RequestParameterHandlerURLPathOrderedTest
                                                                                new MockHttpServletResponse ());
     final RequestParameterHandlerURLPathOrdered h = new RequestParameterHandlerURLPathOrdered ();
     final IRequestParameterManager aRequestParamMgr = ApplicationRequestManager.getRequestMgr ();
-    final String sParamLocale = aRequestParamMgr.getRequestParamNameLocale ();
-    final String sParamMenuItem = aRequestParamMgr.getRequestParamNameMenuItem ();
 
-    ApplicationLocaleManager.getLocaleMgr ().registerLocale (LocaleCache.getInstance ().getLocale ("de", "AT"));
-    ApplicationMenuTree.getTree ().createRootItem (new AbstractPage ("test")
+    final Locale aLocale = LocaleCache.getInstance ().getLocale ("de", "AT");
+    ApplicationLocaleManager.getLocaleMgr ().registerLocale (aLocale);
+    final IMenuItemPage aMenuItem = ApplicationMenuTree.getTree ().createRootItem (new AbstractPage ("test")
     {});
 
     // No params

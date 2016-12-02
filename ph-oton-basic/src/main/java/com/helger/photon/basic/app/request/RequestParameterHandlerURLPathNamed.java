@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.app.request;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -23,14 +25,11 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.commons.url.URLParameter;
-import com.helger.commons.url.URLParameterList;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -42,7 +41,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @since 7.0.2
  */
 @Immutable
-public class RequestParameterHandlerURLPathNamed implements IRequestParameterHandler
+public class RequestParameterHandlerURLPathNamed extends AbstractRequestParameterHandlerNamed
 {
   /**
    * The separator char to be used if path based handling is enabled, to
@@ -86,29 +85,37 @@ public class RequestParameterHandlerURLPathNamed implements IRequestParameterHan
   }
 
   @Nonnull
-  protected URLParameterList getParametersFromPath (@Nonnull final String sPath)
+  protected PhotonRequestParameters getParametersFromPath (@Nonnull final String sPath)
   {
     // Use paths for standard menu items
-    final URLParameterList ret = new URLParameterList ();
+    final PhotonRequestParameters ret = new PhotonRequestParameters ();
     for (final String sPair : StringHelper.getExploded ('/', StringHelper.trimStartAndEnd (sPath, "/")))
     {
       final ICommonsList <String> aElements = StringHelper.getExploded (m_sSeparator, sPair, 2);
       if (aElements.size () == 2)
-        ret.add (aElements.get (0), aElements.get (1));
+      {
+        final String sParamName = aElements.get (0);
+        final String sParamValue = aElements.get (1);
+        if (sParamName.equals (getRequestParamNameLocale ()))
+          ret.setLocaleFromString (sParamValue);
+        else
+          if (sParamName.equals (getRequestParamNameMenuItem ()))
+            ret.setMenuItemFromString (sParamValue);
+      }
     }
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public URLParameterList getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public PhotonRequestParameters getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return getParametersFromPath (aRequestScope.getPathInfo ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public URLParameterList getParametersFromURL (@Nonnull final ISimpleURL aURL)
+  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL)
   {
     return getParametersFromPath (aURL.getPath ());
   }
@@ -116,20 +123,19 @@ public class RequestParameterHandlerURLPathNamed implements IRequestParameterHan
   @Nonnull
   public SimpleURL buildURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull @Nonempty final String sBasePath,
-                             @Nullable final ICommonsIterable <? extends URLParameter> aParameters)
+                             @Nullable final Locale aDisplayLocale,
+                             @Nullable final String sMenuItemID)
   {
-    // Encode menuitem parameter into path
     final StringBuilder aFullPath = new StringBuilder (sBasePath);
-    if (aParameters != null)
-      for (final URLParameter aParam : aParameters)
-      {
-        final String sParamName = aParam.getName ();
-        if (!isValidParameterName (sParamName))
-          throw new IllegalArgumentException ("The passed parameter name '" +
-                                              sParamName +
-                                              "' contains the specified separator char and can therefore not be used!");
-        aFullPath.append ('/').append (sParamName).append (m_sSeparator).append (aParam.getValue ());
-      }
+
+    // Encode into path
+    if (aDisplayLocale != null)
+      aFullPath.append ('/')
+               .append (getRequestParamNameLocale ())
+               .append (m_sSeparator)
+               .append (aDisplayLocale.toString ());
+    if (StringHelper.hasText (sMenuItemID))
+      aFullPath.append ('/').append (getRequestParamNameMenuItem ()).append (m_sSeparator).append (sMenuItemID);
 
     return new SimpleURL (aRequestScope.encodeURL (aFullPath.toString ()));
   }

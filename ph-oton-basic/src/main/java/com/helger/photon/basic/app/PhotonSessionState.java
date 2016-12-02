@@ -29,6 +29,7 @@ import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
 /**
@@ -41,8 +42,8 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 public final class PhotonSessionState extends AbstractSessionWebSingleton
 {
   private String m_sLastApplicationID;
-  private final ICommonsMap <String, String> m_aSelectedMenuItems = new CommonsHashMap <> ();
-  private final ICommonsMap <String, Locale> m_aSelectedLocales = new CommonsHashMap <> ();
+  private final ICommonsMap <String, IMenuItemPage> m_aSelectedMenuItems = new CommonsHashMap<> ();
+  private final ICommonsMap <String, Locale> m_aSelectedLocales = new CommonsHashMap<> ();
 
   @Deprecated
   @UsedViaReflection
@@ -101,20 +102,34 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
     m_sLastApplicationID = sLastApplicationID;
   }
 
-  public void setSelectedMenuItemID (@Nonnull @Nonempty final String sApplicationID,
-                                     @Nonnull @Nonempty final String sMenuItemID)
+  public void setSelectedMenuItem (@Nonnull @Nonempty final String sApplicationID,
+                                     @Nonnull final IMenuItemPage aMenuItem)
   {
     ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
-    ValueEnforcer.notEmpty (sMenuItemID, "MenuItemID");
-    m_aSelectedMenuItems.put (sApplicationID, sMenuItemID);
+    ValueEnforcer.notNull (aMenuItem, "MenuItemID");
+    m_aSelectedMenuItems.put (sApplicationID, aMenuItem);
+  }
+
+  @Nullable
+  public IMenuItemPage getSelectedMenuItem (@Nullable final String sApplicationID)
+  {
+    if (StringHelper.hasNoText (sApplicationID))
+      return null;
+    return m_aSelectedMenuItems.get (sApplicationID);
   }
 
   @Nullable
   public String getSelectedMenuItemID (@Nullable final String sApplicationID)
   {
-    if (StringHelper.hasNoText (sApplicationID))
-      return null;
-    return m_aSelectedMenuItems.get (sApplicationID);
+    final IMenuItemPage aMenuItem = getSelectedMenuItem (sApplicationID);
+    return aMenuItem == null ? null : aMenuItem.getID ();
+  }
+
+  @Nullable
+  public static IMenuItemPage getSelectedMenuItemOfCurrentSession (@Nullable final String sApplicationID)
+  {
+    final PhotonSessionState aSessionState = getInstanceIfInstantiated ();
+    return aSessionState == null ? null : aSessionState.getSelectedMenuItem (sApplicationID);
   }
 
   @Nullable
