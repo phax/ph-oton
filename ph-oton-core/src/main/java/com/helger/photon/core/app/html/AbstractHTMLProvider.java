@@ -43,7 +43,7 @@ import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.basic.app.request.ApplicationRequestManager;
+import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.context.SimpleWebExecutionContext;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
@@ -76,7 +76,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   @OverrideOnDemand
   protected Locale getDisplayLocale ()
   {
-    return ApplicationRequestManager.getRequestMgr ().getRequestDisplayLocale ();
+    return RequestParameterManager.getInstance ().getRequestDisplayLocale ();
   }
 
   @Nonnull

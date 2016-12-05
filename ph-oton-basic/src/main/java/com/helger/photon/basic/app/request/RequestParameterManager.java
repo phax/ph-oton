@@ -24,6 +24,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
@@ -37,6 +38,7 @@ import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.tree.withid.DefaultTreeItemWithID;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
  * This class holds the per-request configuration settings.
@@ -46,14 +48,23 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * </ul>
  *
  * @author Philip Helger
+ * @since 7.0.2
  */
 @NotThreadSafe
-public class RequestParameterManager implements IRequestParameterManager
+public class RequestParameterManager extends AbstractGlobalWebSingleton implements IRequestParameterManager
 {
   private IRequestParameterHandler m_aRequestParamHdl = new RequestParameterHandlerURLParameter ();
 
+  @Deprecated
+  @UsedViaReflection
   public RequestParameterManager ()
   {}
+
+  @Nonnull
+  public static RequestParameterManager getInstance ()
+  {
+    return getGlobalSingleton (RequestParameterManager.class);
+  }
 
   @Nonnull
   public final IRequestParameterHandler getParameterHandler ()

@@ -37,7 +37,7 @@ import com.helger.commons.url.SMap;
 import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
 import com.helger.photon.basic.app.dao.IDAOWriteExceptionCallback;
 import com.helger.photon.basic.app.dao.impl.AbstractDAO;
-import com.helger.photon.basic.app.request.ApplicationRequestManager;
+import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.ajax.AjaxSettings;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
@@ -79,7 +79,7 @@ public abstract class AbstractErrorCallback implements
     try
     {
       // This may fail, if a weird application context is used
-      return ApplicationRequestManager.getRequestMgr ().getRequestDisplayLocale ();
+      return RequestParameterManager.getInstance ().getRequestDisplayLocale ();
     }
     catch (final IllegalStateException ex)
     {

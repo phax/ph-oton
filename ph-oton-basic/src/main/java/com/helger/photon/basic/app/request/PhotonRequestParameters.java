@@ -15,9 +15,10 @@ import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
 
 /**
- * Holder for the special ph-oton request parameters
+ * Holder for the special ph-oton parameters
  *
  * @author Philip Helger
+ * @since 7.0.2
  */
 @NotThreadSafe
 public class PhotonRequestParameters implements Serializable
@@ -28,23 +29,38 @@ public class PhotonRequestParameters implements Serializable
   public PhotonRequestParameters ()
   {}
 
+  /**
+   * @return The requested Locale. May be <code>null</code>.
+   */
   @Nullable
   public Locale getLocale ()
   {
     return m_aLocale;
   }
 
+  /**
+   * @return The requested Locale as string. May be <code>null</code>.
+   */
   @Nullable
   public String getLocaleAsString ()
   {
     return m_aLocale == null ? null : m_aLocale.toString ();
   }
 
+  /**
+   * @return <code>true</code> if a Locale is present
+   */
   public boolean hasLocale ()
   {
     return m_aLocale != null;
   }
 
+  /**
+   * Set the current locale
+   *
+   * @param aLocale
+   *        The Locale to use. May be <code>null</code>.
+   */
   public void setLocale (@Nullable final Locale aLocale)
   {
     m_aLocale = aLocale;
@@ -56,10 +72,12 @@ public class PhotonRequestParameters implements Serializable
     Locale ret = null;
     if (StringHelper.hasText (sDisplayLocale))
     {
+      // Is the locale globally valid?
       final Locale aDisplayLocale = LocaleCache.getInstance ().getLocale (sDisplayLocale);
       if (aDisplayLocale != null)
       {
-        // Check if the locale is present in the locale manager
+        // Check if the locale is present in the locale manager of the current
+        // application
         if (ApplicationLocaleManager.getLocaleMgr ().isSupportedLocale (aDisplayLocale))
           ret = aDisplayLocale;
       }
@@ -96,10 +114,12 @@ public class PhotonRequestParameters implements Serializable
     IMenuItemPage ret = null;
     if (StringHelper.hasText (sMenuItemID))
     {
-      // Validate the menu item ID and check the display filter!
+      // Check if the menu item exists in the current application menu tree
       final IMenuObject aMenuObject = ApplicationMenuTree.getTree ().getMenuObjectOfID (sMenuItemID);
       if (aMenuObject != null)
       {
+        // Only internal menu items pointing to a page are valid
+        // Only menu items that can be displayed are valid
         if (aMenuObject instanceof IMenuItemPage && aMenuObject.matchesDisplayFilter ())
           ret = (IMenuItemPage) aMenuObject;
       }

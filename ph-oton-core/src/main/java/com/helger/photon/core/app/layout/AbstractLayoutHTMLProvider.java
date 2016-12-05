@@ -35,8 +35,8 @@ import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.html.sections.HCBody;
 import com.helger.html.hc.html.textlevel.HCSpan;
-import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestParameterManager;
+import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
@@ -150,7 +150,7 @@ public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecuti
   protected void fillBody (@Nonnull final ISimpleWebExecutionContext aSWEC,
                            @Nonnull final HCHtml aHtml) throws ForcedRedirectException
   {
-    final LECTYPE aLEC = createLayoutExecutionContext (aSWEC, ApplicationRequestManager.getRequestMgr ());
+    final LECTYPE aLEC = createLayoutExecutionContext (aSWEC, RequestParameterManager.getInstance ());
 
     // create the default layout and fill the areas
     final HCHead aHead = aHtml.getHead ();

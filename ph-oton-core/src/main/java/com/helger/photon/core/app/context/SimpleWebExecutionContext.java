@@ -41,8 +41,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.basic.app.request.ApplicationRequestManager;
-import com.helger.photon.basic.app.request.IRequestParameterManager;
+import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.useragent.IUserAgent;
@@ -60,8 +59,6 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   private final IRequestWebScopeWithoutResponse m_aRequestScope;
   private final Locale m_aDisplayLocale;
   private final IMenuTree m_aMenuTree;
-  // Status vars
-  private transient IRequestParameterManager m_aARM;
 
   public SimpleWebExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC)
   {
@@ -224,25 +221,15 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   }
 
   @Nonnull
-  private IRequestParameterManager _getARM ()
-  {
-    // Cache for performance reasons
-    IRequestParameterManager ret = m_aARM;
-    if (ret == null)
-      ret = m_aARM = ApplicationRequestManager.getRequestMgr ();
-    return ret;
-  }
-
-  @Nonnull
   public SimpleURL getLinkToMenuItem (@Nonnull final String sMenuItemID)
   {
-    return _getARM ().getLinkToMenuItem (m_aRequestScope, sMenuItemID);
+    return RequestParameterManager.getInstance ().getLinkToMenuItem (m_aRequestScope, sMenuItemID);
   }
 
   @Nonnull
   public SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID, @Nonnull final String sMenuItemID)
   {
-    return _getARM ().getLinkToMenuItem (sAppID, m_aRequestScope, sMenuItemID);
+    return RequestParameterManager.getInstance ().getLinkToMenuItem (sAppID, m_aRequestScope, sMenuItemID);
   }
 
   @Override

@@ -44,8 +44,8 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.basic.app.request.ApplicationRequestManager;
 import com.helger.photon.basic.app.request.IRequestParameterManager;
+import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -304,7 +304,7 @@ public class GoMappingManager extends AbstractSimpleDAO
   {
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
     ValueEnforcer.notNull (aErrorCallback, "ErrorCallback");
-    final IRequestParameterManager aARM = ApplicationRequestManager.getRequestMgr ();
+    final IRequestParameterManager aRPM = RequestParameterManager.getInstance ();
 
     return m_aRWLock.readLocked ( () -> {
       int nCount = 0;
@@ -313,7 +313,7 @@ public class GoMappingManager extends AbstractSimpleDAO
         if (aItem.isInternal ())
         {
           // Get value of "menu item" parameter and check for existence
-          final String sParamValue = aARM.getMenuItemFromURL (aItem.getTargetURLReadonly ());
+          final String sParamValue = aRPM.getMenuItemFromURL (aItem.getTargetURLReadonly ());
           if (sParamValue != null)
           {
             ++nCount;

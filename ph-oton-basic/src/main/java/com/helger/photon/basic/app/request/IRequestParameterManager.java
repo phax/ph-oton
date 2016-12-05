@@ -34,6 +34,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * Predefined request parameter manager
  *
  * @author Philip Helger
+ * @since 7.0.2
  */
 public interface IRequestParameterManager
 {

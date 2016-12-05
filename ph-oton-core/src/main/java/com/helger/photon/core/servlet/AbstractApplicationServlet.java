@@ -31,7 +31,7 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ServiceLoaderHelper;
 import com.helger.commons.state.EContinue;
 import com.helger.photon.basic.app.PhotonSessionState;
-import com.helger.photon.basic.app.request.ApplicationRequestManager;
+import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.app.html.IHTMLProvider;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
@@ -65,7 +65,7 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
   protected void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Run default request initialization (menu item and locale)
-    ApplicationRequestManager.getRequestMgr ().onRequestBegin (aRequestScope, getApplicationID ());
+    RequestParameterManager.getInstance ().onRequestBegin (aRequestScope, getApplicationID ());
 
     // Invoke all "request begin" listener
     for (final IApplicationRequestListenerSPI aListener : m_aListeners)
