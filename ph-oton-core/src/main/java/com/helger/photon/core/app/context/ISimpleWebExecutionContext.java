@@ -27,6 +27,7 @@ import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
+import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.web.fileupload.IFileItem;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlet.request.IRequestParamMap;
@@ -177,18 +178,38 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
   }
 
   /**
-   * Get the URL to the specified menu item.
+   * Get the URL to the specified menu item using the current display locale.
    *
    * @param sMenuItemID
    *        The ID of the menu item to link to. May not be <code>null</code>.
    * @return The non-<code>null</code> URL to the specified menu item.
    */
   @Nonnull
-  SimpleURL getLinkToMenuItem (@Nonnull String sMenuItemID);
+  default SimpleURL getLinkToMenuItem (@Nonnull final String sMenuItemID)
+  {
+    return RequestParameterManager.getInstance ().getLinkToMenuItem (getRequestScope (), sMenuItemID);
+  }
+
+  /**
+   * Get the URL to the specified menu item.
+   *
+   * @param aDisplayLocale
+   *        Specific display locale to be used. May not be <code>null</code>.
+   * @param sMenuItemID
+   *        The ID of the menu item to link to. May not be <code>null</code>.
+   * @return The non-<code>null</code> URL to the specified menu item.
+   * @since 7.0.2
+   */
+  @Nonnull
+  default SimpleURL getLinkToMenuItem (@Nonnull final Locale aDisplayLocale, @Nonnull final String sMenuItemID)
+  {
+    return RequestParameterManager.getInstance ().getLinkToMenuItem (getRequestScope (), aDisplayLocale, sMenuItemID);
+  }
 
   /**
    * Get the URL to the specified menu item in the passed application. This is
-   * helpful when linking between different applications.
+   * helpful when linking between different applications. The current locale is
+   * used.
    *
    * @param sAppID
    *        The application ID to use. May neither be <code>null</code> nor
@@ -198,7 +219,36 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
    * @return The non-<code>null</code> URL to the specified menu item.
    */
   @Nonnull
-  SimpleURL getLinkToMenuItem (@Nonnull @Nonempty String sAppID, @Nonnull String sMenuItemID);
+  default SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID, @Nonnull final String sMenuItemID)
+  {
+    return RequestParameterManager.getInstance ().getLinkToMenuItem (sAppID, getRequestScope (), sMenuItemID);
+  }
+
+  /**
+   * Get the URL to the specified menu item in the passed application using the
+   * specified locale. This is helpful when linking between different
+   * applications.
+   *
+   * @param sAppID
+   *        The application ID to use. May neither be <code>null</code> nor
+   *        empty.
+   * @param aDisplayLocale
+   *        Specific display locale to be used. May not be <code>null</code>.
+   * @param sMenuItemID
+   *        The ID of the menu item to link to. May not be <code>null</code>.
+   * @return The non-<code>null</code> URL to the specified menu item.
+   * @since 7.0.2
+   */
+  @Nonnull
+  default SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID,
+                                       @Nonnull final Locale aDisplayLocale,
+                                       @Nonnull final String sMenuItemID)
+  {
+    return RequestParameterManager.getInstance ().getLinkToMenuItem (sAppID,
+                                                                     getRequestScope (),
+                                                                     aDisplayLocale,
+                                                                     sMenuItemID);
+  }
 
   /**
    * Get the full URL (incl. protocol) and parameters of the current request.

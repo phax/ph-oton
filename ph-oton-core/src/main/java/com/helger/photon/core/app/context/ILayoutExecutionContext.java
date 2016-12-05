@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.app.context;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -73,7 +74,7 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
   }
 
   /**
-   * Get the URL to the current page.
+   * Get the URL to the current page in the current locale.
    *
    * @return The non-<code>null</code> URL to the current page (selected menu
    *         item) with the passed parameters.
@@ -82,6 +83,22 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
   default SimpleURL getSelfHref ()
   {
     return getLinkToMenuItem (getSelectedMenuItemID ());
+  }
+
+  /**
+   * Get the URL to the current page in the specified locale.
+   *
+   * @param aDisplayLocale
+   *        The specific display locale to be used. May not be
+   *        <code>null</code>.
+   * @return The non-<code>null</code> URL to the current page (selected menu
+   *         item) with the passed parameters.
+   * @since 7.0.2
+   */
+  @Nonnull
+  default SimpleURL getSelfHref (@Nonnull final Locale aDisplayLocale)
+  {
+    return getLinkToMenuItem (aDisplayLocale, getSelectedMenuItemID ());
   }
 
   /**

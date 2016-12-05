@@ -68,7 +68,8 @@ public class RequestParameterHandlerURLPathOrdered implements IRequestParameterH
         if (ret.setMenuItemFromString (sParamValue) != null)
           continue;
 
-      s_aLogger.warn ("Ignoring superfluous parameter '" + sParamValue + "'");
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("Ignoring superfluous parameter '" + sParamValue + "'");
     }
     return ret;
   }

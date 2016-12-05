@@ -22,6 +22,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -48,6 +51,8 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
    * separate name and value
    */
   public static final char DEFAULT_SEPARATOR_CHAR = '-';
+
+  private static final Logger s_aLogger = LoggerFactory.getLogger (RequestParameterHandlerURLPathNamed.class);
 
   private final String m_sSeparator;
 
@@ -101,6 +106,9 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
         else
           if (sParamName.equals (getRequestParamNameMenuItem ()))
             ret.setMenuItemFromString (sParamValue);
+          else
+            if (s_aLogger.isDebugEnabled ())
+              s_aLogger.debug ("Ignoring superfluous parameter '" + sParamName + "' with value '" + sParamValue + "'");
       }
     }
     return ret;

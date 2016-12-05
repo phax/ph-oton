@@ -30,7 +30,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.attr.AttributeValueConverter;
 import com.helger.commons.collection.ext.ICommonsCollection;
@@ -39,9 +38,7 @@ import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.useragent.IUserAgent;
@@ -218,18 +215,6 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   public IUserAgent getUserAgent ()
   {
     return UserAgentDatabase.getUserAgent (m_aRequestScope.getRequest ());
-  }
-
-  @Nonnull
-  public SimpleURL getLinkToMenuItem (@Nonnull final String sMenuItemID)
-  {
-    return RequestParameterManager.getInstance ().getLinkToMenuItem (m_aRequestScope, sMenuItemID);
-  }
-
-  @Nonnull
-  public SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID, @Nonnull final String sMenuItemID)
-  {
-    return RequestParameterManager.getInstance ().getLinkToMenuItem (sAppID, m_aRequestScope, sMenuItemID);
   }
 
   @Override
