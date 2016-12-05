@@ -64,7 +64,7 @@ public interface IRequestParameterHandler extends Serializable
    * parameters.
    *
    * @param aRequestScope
-   *        Current request scope. May not be <code>null</code>.
+   *        Current request scope. May be <code>null</code>.
    * @param sBasePath
    *        The base path to use. May not be <code>null</code> and must NOT end
    *        with a "/".
@@ -75,7 +75,7 @@ public interface IRequestParameterHandler extends Serializable
    * @return The URL to use.
    */
   @Nonnull
-  SimpleURL buildURL (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+  SimpleURL buildURL (@Nullable IRequestWebScopeWithoutResponse aRequestScope,
                       @Nonnull @Nonempty String sBasePath,
                       @Nullable Locale aDisplayLocale,
                       @Nullable String sMenuItemID);

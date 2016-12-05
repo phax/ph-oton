@@ -64,13 +64,13 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
   }
 
   @Nonnull
-  public SimpleURL buildURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+  public SimpleURL buildURL (@Nullable final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull @Nonempty final String sBasePath,
                              @Nullable final Locale aDisplayLocale,
                              @Nullable final String sMenuItemID)
   {
     // Add menu item parameter as URL parameter
-    final SimpleURL ret = new SimpleURL (aRequestScope.encodeURL (sBasePath));
+    final SimpleURL ret = new SimpleURL (aRequestScope != null ? aRequestScope.encodeURL (sBasePath) : sBasePath);
     if (aDisplayLocale != null)
       ret.add (getRequestParamNameLocale (), aDisplayLocale.toString ());
     if (StringHelper.hasText (sMenuItemID))

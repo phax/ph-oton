@@ -121,7 +121,7 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
   }
 
   @Nonnull
-  public SimpleURL buildURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+  public SimpleURL buildURL (@Nullable final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull @Nonempty final String sBasePath,
                              @Nullable final Locale aDisplayLocale,
                              @Nullable final String sMenuItemID)
@@ -137,7 +137,8 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
     if (StringHelper.hasText (sMenuItemID))
       aFullPath.append ('/').append (getRequestParamNameMenuItem ()).append (m_sSeparator).append (sMenuItemID);
 
-    return new SimpleURL (aRequestScope.encodeURL (aFullPath.toString ()));
+    final String sFullPath = aFullPath.toString ();
+    return new SimpleURL (aRequestScope != null ? aRequestScope.encodeURL (sFullPath) : sFullPath);
   }
 
   @Override

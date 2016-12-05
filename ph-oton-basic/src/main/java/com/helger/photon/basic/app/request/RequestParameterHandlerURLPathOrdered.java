@@ -88,7 +88,7 @@ public class RequestParameterHandlerURLPathOrdered implements IRequestParameterH
   }
 
   @Nonnull
-  public SimpleURL buildURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+  public SimpleURL buildURL (@Nullable final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull @Nonempty final String sBasePath,
                              @Nullable final Locale aDisplayLocale,
                              @Nullable final String sMenuItemID)
@@ -98,7 +98,9 @@ public class RequestParameterHandlerURLPathOrdered implements IRequestParameterH
       aFullPath.append ('/').append (aDisplayLocale.toString ());
     if (StringHelper.hasText (sMenuItemID))
       aFullPath.append ('/').append (sMenuItemID);
-    return new SimpleURL (aRequestScope.encodeURL (aFullPath.toString ()));
+    final String sFullPath = aFullPath.toString ();
+
+    return new SimpleURL (aRequestScope != null ? aRequestScope.encodeURL (sFullPath) : sFullPath);
   }
 
   @Override
