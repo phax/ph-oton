@@ -20,7 +20,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -38,7 +38,7 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
  * @author Philip Helger
  * @since 6.1.0
  */
-@NotThreadSafe
+@ThreadSafe
 public final class PhotonSessionState extends AbstractSessionWebSingleton
 {
   private String m_sLastApplicationID;
@@ -79,7 +79,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
   @Nullable
   public String getLastApplicationID ()
   {
-    return m_sLastApplicationID;
+    return m_aRWLock.readLocked ( () -> m_sLastApplicationID);
   }
 
   /**
@@ -88,7 +88,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
    */
   public boolean hasLastApplicationID ()
   {
-    return StringHelper.hasText (m_sLastApplicationID);
+    return StringHelper.hasText (getLastApplicationID ());
   }
 
   /**
@@ -99,15 +99,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
    */
   public void setLastApplicationID (@Nullable final String sLastApplicationID)
   {
-    m_sLastApplicationID = sLastApplicationID;
-  }
-
-  public void setSelectedMenuItem (@Nonnull @Nonempty final String sApplicationID,
-                                     @Nonnull final IMenuItemPage aMenuItem)
-  {
-    ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
-    ValueEnforcer.notNull (aMenuItem, "MenuItemID");
-    m_aSelectedMenuItems.put (sApplicationID, aMenuItem);
+    m_aRWLock.writeLocked ( () -> m_sLastApplicationID = sLastApplicationID);
   }
 
   @Nullable
@@ -115,7 +107,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
   {
     if (StringHelper.hasNoText (sApplicationID))
       return null;
-    return m_aSelectedMenuItems.get (sApplicationID);
+    return m_aRWLock.readLocked ( () -> m_aSelectedMenuItems.get (sApplicationID));
   }
 
   @Nullable
@@ -139,11 +131,12 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
     return aSessionState == null ? null : aSessionState.getSelectedMenuItemID (sApplicationID);
   }
 
-  public void setSelectedLocale (@Nonnull @Nonempty final String sApplicationID, @Nonnull final Locale aLocale)
+  public void setSelectedMenuItem (@Nonnull @Nonempty final String sApplicationID,
+                                   @Nonnull final IMenuItemPage aMenuItem)
   {
     ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
-    ValueEnforcer.notNull (aLocale, "Locale");
-    m_aSelectedLocales.put (sApplicationID, aLocale);
+    ValueEnforcer.notNull (aMenuItem, "MenuItemID");
+    m_aRWLock.writeLocked ( () -> m_aSelectedMenuItems.put (sApplicationID, aMenuItem));
   }
 
   @Nullable
@@ -151,7 +144,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
   {
     if (StringHelper.hasNoText (sApplicationID))
       return null;
-    return m_aSelectedLocales.get (sApplicationID);
+    return m_aRWLock.readLocked ( () -> m_aSelectedLocales.get (sApplicationID));
   }
 
   @Nullable
@@ -159,6 +152,13 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
   {
     final PhotonSessionState aSessionState = getInstanceIfInstantiated ();
     return aSessionState == null ? null : aSessionState.getSelectedLocale (sApplicationID);
+  }
+
+  public void setSelectedLocale (@Nonnull @Nonempty final String sApplicationID, @Nonnull final Locale aLocale)
+  {
+    ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
+    ValueEnforcer.notNull (aLocale, "Locale");
+    m_aRWLock.writeLocked ( () -> m_aSelectedLocales.put (sApplicationID, aLocale));
   }
 
   @Override
