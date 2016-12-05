@@ -140,10 +140,13 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
     return new SimpleURL (aRequestScope.encodeURL (aFullPath.toString ()));
   }
 
+  @Override
   public boolean isValidParameterName (@Nonnull final String sParamName)
   {
     // Separator may not be part of the parameter name
-    return sParamName.indexOf (m_sSeparator) < 0;
+    // Path separator may not be part of the parameter name
+    // Question mark (separator between path and params) may not be part
+    return sParamName.indexOf (m_sSeparator) < 0 && sParamName.indexOf ('/') < 0 && sParamName.indexOf ('?') < 0;
   }
 
   @Override

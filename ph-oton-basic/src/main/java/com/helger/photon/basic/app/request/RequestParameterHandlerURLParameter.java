@@ -77,4 +77,12 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
       ret.add (getRequestParamNameMenuItem (), sMenuItemID);
     return ret;
   }
+
+  @Override
+  public boolean isValidParameterName (@Nonnull final String sParamName)
+  {
+    // Question mark (separator between path and params) may not be part
+    // Ampersand may not be part of the name
+    return sParamName.indexOf ('?') < 0 && sParamName.indexOf ('&') < 0;
+  }
 }

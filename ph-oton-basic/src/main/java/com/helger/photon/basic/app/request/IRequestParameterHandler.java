@@ -79,18 +79,4 @@ public interface IRequestParameterHandler extends Serializable
                       @Nonnull @Nonempty String sBasePath,
                       @Nullable Locale aDisplayLocale,
                       @Nullable String sMenuItemID);
-
-  /**
-   * Check if the passed parameter name is valid according to the rules of this
-   * parameter handler.
-   *
-   * @param sParamName
-   *        The parameter name to check. May not be <code>null</code>.
-   * @return <code>true</code> if the parameter is valid, <code>false</code>
-   *         otherwise.
-   */
-  default boolean isValidParameterName (@Nonnull final String sParamName)
-  {
-    return true;
-  }
 }
