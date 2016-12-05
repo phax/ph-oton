@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
@@ -36,6 +37,7 @@ import com.helger.commons.text.ReadOnlyMultilingualText;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public abstract class AbstractPage implements IPage
 {
   private final String m_sID;
@@ -203,8 +205,9 @@ public abstract class AbstractPage implements IPage
   public String toString ()
   {
     return new ToStringGenerator (this).append ("ID", m_sID)
-                                       .append ("name", m_aName)
-                                       .appendIfNotNull ("description", m_aDescription)
+                                       .append ("Name", m_aName)
+                                       .appendIfNotNull ("Description", m_aDescription)
+                                       .append ("Attrs", m_aAttrs)
                                        .toString ();
   }
 }

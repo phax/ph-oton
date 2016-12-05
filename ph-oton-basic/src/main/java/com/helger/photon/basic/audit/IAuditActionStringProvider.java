@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.audit;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -25,8 +27,13 @@ import com.helger.json.IJsonArray;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 
+/**
+ * Interface that is used to convert audit parameters to an audit string
+ * 
+ * @author Philip Helger
+ */
 @FunctionalInterface
-public interface IAuditActionStringProvider
+public interface IAuditActionStringProvider extends Serializable
 {
   /**
    * Create the audit string that should be persisted.

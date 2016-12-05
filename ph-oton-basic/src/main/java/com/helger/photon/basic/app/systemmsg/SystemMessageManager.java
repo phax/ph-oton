@@ -75,8 +75,8 @@ public final class SystemMessageManager extends AbstractSimpleDAO
       {
         throw new IllegalStateException ("Failed to reload system message", ex);
       }
-      s_aLogger.info ("Reloaded system message!");
     });
+    s_aLogger.info ("Reloaded system message!");
   }
 
   @Override

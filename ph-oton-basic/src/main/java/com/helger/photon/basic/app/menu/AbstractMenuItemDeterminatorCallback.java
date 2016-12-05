@@ -23,7 +23,7 @@ import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.tree.withid.DefaultTreeItemWithID;
 
 /**
- * Abstract base implementation of {@link IMenuItemDeterminatorCallback}.
+ * Abstract implementation of {@link IMenuItemDeterminatorCallback}.
  *
  * @author Philip Helger
  */

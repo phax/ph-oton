@@ -17,11 +17,11 @@
 package com.helger.photon.basic.app.menu;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.filter.IFilter;
 import com.helger.commons.text.display.IHasDisplayText;
 
@@ -41,16 +41,16 @@ public interface IMenuObjectFilter extends IFilter <IMenuObject>, IHasDisplayTex
   }
 
   @Nonnull
-  default IMenuObjectFilter and (@Nonnull final IMenuObjectFilter other)
+  default IMenuObjectFilter and (@Nonnull final IMenuObjectFilter aOther)
   {
-    Objects.requireNonNull (other);
-    return (t) -> test (t) && other.test (t);
+    ValueEnforcer.notNull (aOther, "Other");
+    return x -> test (x) && aOther.test (x);
   }
 
   @Nonnull
-  default IMenuObjectFilter or (@Nonnull final IMenuObjectFilter other)
+  default IMenuObjectFilter or (@Nonnull final IMenuObjectFilter aOther)
   {
-    Objects.requireNonNull (other);
-    return (t) -> test (t) || other.test (t);
+    ValueEnforcer.notNull (aOther, "Other");
+    return x -> test (x) || aOther.test (x);
   }
 }

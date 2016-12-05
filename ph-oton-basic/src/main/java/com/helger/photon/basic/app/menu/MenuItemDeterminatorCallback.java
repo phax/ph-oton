@@ -82,8 +82,8 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
     {
       // 1. Top level entries are always shown
       // 2. Show this item, if it is a parent of the selected item (sub menu)
-      // 3. Show this item, if it is a direct child of the selected item
-      // 4. Show this item, if if is a direct child of the selected item's
+      // 3. Show this item, if it is the selected item
+      // 4. Show this item, if if is a direct child of the selected item
       // parent
       if (bIsTopLevel)
       {

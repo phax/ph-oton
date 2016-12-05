@@ -75,9 +75,9 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
 
     AuditHasFilename (@Nullable final String sBaseDir)
     {
-      if (StringHelper.hasText (sBaseDir))
-        ValueEnforcer.isTrue (FilenameHelper.endsWithPathSeparatorChar (sBaseDir),
-                              "BaseDir '" + sBaseDir + "' must end with path separator!");
+      ValueEnforcer.isTrue (StringHelper.hasNoText (sBaseDir) ||
+                            FilenameHelper.endsWithPathSeparatorChar (sBaseDir),
+                            () -> "BaseDir '" + sBaseDir + "' must end with path separator!");
       m_sBaseDir = sBaseDir;
     }
 
@@ -307,7 +307,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     if (!aFile.exists ())
       return null;
 
-    final ICommonsList <IAuditItem> ret = new CommonsArrayList <> ();
+    final ICommonsList <IAuditItem> ret = new CommonsArrayList<> ();
     final IMicroDocument aDoc = MicroReader.readMicroXML (aFile);
     readFromXML (aDoc, aItem -> ret.add (aItem));
     return ret;

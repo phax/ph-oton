@@ -25,9 +25,9 @@ import com.helger.photon.basic.auth.ICurrentUserIDProvider;
  *
  * @author Philip Helger
  */
-public class IgnoringAuditor extends AbstractAuditor
+public class DoNothingAuditor extends AbstractAuditor
 {
-  public IgnoringAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider)
+  public DoNothingAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider)
   {
     super (aUserIDProvider);
   }

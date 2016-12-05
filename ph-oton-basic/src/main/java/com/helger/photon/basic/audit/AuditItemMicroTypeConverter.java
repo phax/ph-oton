@@ -82,7 +82,12 @@ public class AuditItemMicroTypeConverter implements IMicroTypeConverter
     if (eType == null)
       throw new IllegalStateException ("Failed to parse action type '" + sType + "'");
 
-    final String sSuccess = eItem.getAttributeValue (ATTR_SUCCESS);
+    String sSuccess = eItem.getAttributeValue (ATTR_SUCCESS);
+    if (sSuccess == null)
+    {
+      // Legacy handling
+      sSuccess = eItem.getAttributeValue ("succes");
+    }
     final ESuccess eSuccess = ESuccess.valueOf (StringParser.parseBool (sSuccess));
     final String sAction = eItem.getTextContent ();
 
