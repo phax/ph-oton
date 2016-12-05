@@ -159,6 +159,7 @@ public class RequestParameterManager extends AbstractGlobalWebSingleton implemen
   @Nonnull
   public SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sApplicationID,
                                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                      @Nonnull final Locale aDisplayLocale,
                                       @Nonnull final String sMenuItemID)
   {
     // Get the servlet path from the app ID
@@ -170,7 +171,7 @@ public class RequestParameterManager extends AbstractGlobalWebSingleton implemen
 
     // Prepend the context path
     final String sBasePath = aRequestScope.getContextPath () + sServletPath;
-    return m_aRequestParamHdl.buildURL (aRequestScope, sBasePath, getRequestDisplayLocale (), sMenuItemID);
+    return m_aRequestParamHdl.buildURL (aRequestScope, sBasePath, aDisplayLocale, sMenuItemID);
   }
 
   @Nullable

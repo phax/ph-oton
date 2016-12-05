@@ -139,8 +139,28 @@ public interface IRequestParameterManager
   }
 
   @Nonnull
+  default SimpleURL getLinkToMenuItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                       @Nonnull final Locale aDisplayLocale,
+                                       @Nonnull final String sMenuItemID)
+  {
+    // Determine the current application ID
+    final String sAppID = PhotonSessionState.getInstance ().getLastApplicationID ();
+    return getLinkToMenuItem (sAppID, aRequestScope, aDisplayLocale, sMenuItemID);
+  }
+
+  @Nonnull
+  default SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID,
+                                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                       @Nonnull final String sMenuItemID)
+  {
+    final Locale aDisplayLocale = getRequestDisplayLocale ();
+    return getLinkToMenuItem (sAppID, aRequestScope, aDisplayLocale, sMenuItemID);
+  }
+
+  @Nonnull
   SimpleURL getLinkToMenuItem (@Nonnull @Nonempty String sAppID,
                                @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+                               @Nonnull Locale aDisplayLocale,
                                @Nonnull String sMenuItemID);
 
   @Nullable
