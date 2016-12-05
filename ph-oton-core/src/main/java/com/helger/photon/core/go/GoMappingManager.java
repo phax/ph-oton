@@ -360,4 +360,20 @@ public class GoMappingManager extends AbstractSimpleDAO
 
     return LinkHelper.getURLWithContext (aRequestScope, GoServlet.SERVLET_DEFAULT_NAME + "/" + sKey);
   }
+
+  /**
+   * @param sKey
+   *        Go mapping key. May neither be <code>null</code> nor empty.
+   * @return <code>/webapp-context/go/<i>key</i></code>. Never <code>null</code>
+   */
+  @Nonnull
+  public static String getGoLinkURI (@Nonnull @Nonempty final String sKey)
+  {
+    ValueEnforcer.notEmpty (sKey, "Key");
+
+    if (PhotonCoreManager.getGoMappingMgr ().getItemOfKey (sKey) == null)
+      s_aLogger.warn ("Building URL from non-existing go-mapping item '" + sKey + "'");
+
+    return LinkHelper.getURIWithContext (GoServlet.SERVLET_DEFAULT_NAME + "/" + sKey);
+  }
 }
