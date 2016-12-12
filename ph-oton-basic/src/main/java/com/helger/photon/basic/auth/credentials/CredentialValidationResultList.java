@@ -66,7 +66,7 @@ public class CredentialValidationResultList implements ICredentialValidationResu
   @Nullable
   public String getDisplayText (@Nonnull final Locale aDisplayLocale)
   {
-    return StringHelper.getImploded ('\n', m_aResults, aResult -> aResult.getDisplayText (aDisplayLocale));
+    return StringHelper.getImplodedMapped ('\n', m_aResults, x -> x.getDisplayText (aDisplayLocale));
   }
 
   @Override

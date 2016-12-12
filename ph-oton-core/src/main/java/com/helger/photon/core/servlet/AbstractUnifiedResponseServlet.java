@@ -390,7 +390,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
       m_aStatsHttpMethodDisallowed.increment (eHTTPMethod.getName ());
 
       // Build Allow response header
-      final String sAllow = StringHelper.getImploded (", ", aAllowedHTTPMethods, EHTTPMethod::getName);
+      final String sAllow = StringHelper.getImplodedMapped (", ", aAllowedHTTPMethods, EHTTPMethod::getName);
       s_aLogger.warn ("Request " +
                       aRequestScope.getURL () +
                       " uses disallowed HTTP method " +

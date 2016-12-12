@@ -16,7 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import java.text.DateFormat;
+import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.Set;
 
@@ -29,6 +29,7 @@ import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.EDTType;
 import com.helger.datetime.format.PDTFormatter;
+import com.helger.datetime.format.PDTFormatter.EFormatterMode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.photon.core.app.html.PhotonJS;
@@ -40,7 +41,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 /**
  * Add date/time based sorting for client side DataTables. This is based on
  * moment.js
- * 
+ *
  * @author Philip Helger
  */
 public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
@@ -51,7 +52,7 @@ public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
   {
     super ("clientSortingDate");
     ValueEnforcer.notEmptyNoNullValue (aDateTimeTypes, "DateTimeTypes");
-    m_aDateTimeTypes = new CommonsHashSet<> (aDateTimeTypes);
+    m_aDateTimeTypes = new CommonsHashSet <> (aDateTimeTypes);
   }
 
   @Override
@@ -60,6 +61,7 @@ public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
     return aDT.isClientSide ();
   }
 
+  @Nonnull
   private static String _fixFormatter (@Nonnull final String s)
   {
     String ret = s;
@@ -90,7 +92,10 @@ public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
         }
         if (eDTType != null)
           p.add (DataTables.invokeDataTablesMoment ()
-                           .arg (_fixFormatter (PDTFormatter.getPattern (eDTType, aDisplayLocale, DateFormat.MEDIUM)))
+                           .arg (_fixFormatter (PDTFormatter.getPattern (eDTType,
+                                                                         aDisplayLocale,
+                                                                         FormatStyle.MEDIUM,
+                                                                         EFormatterMode.PARSE)))
                            .arg (aDisplayLocale.toString ()));
       }
     });

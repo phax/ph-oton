@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -32,6 +33,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.locale.LocaleParser;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.format.PDTFormatter;
+import com.helger.datetime.format.PDTFormatter.EFormatterMode;
 import com.helger.datetime.format.PDTFromString;
 import com.helger.masterdata.currency.ECurrency;
 
@@ -79,7 +81,7 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <LocalDate> getExtractorDate (@Nonnull final Locale aDisplayLocale)
   {
-    return getExtractorDate (PDTFormatter.getDefaultFormatterDate (aDisplayLocale));
+    return getExtractorDate (PDTFormatter.getFormatterDate (FormatStyle.MEDIUM, aDisplayLocale, EFormatterMode.PARSE));
   }
 
   @Nonnull
@@ -97,7 +99,7 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <LocalTime> getExtractorTime (@Nonnull final Locale aDisplayLocale)
   {
-    return getExtractorTime (PDTFormatter.getDefaultFormatterTime (aDisplayLocale));
+    return getExtractorTime (PDTFormatter.getFormatterTime (FormatStyle.MEDIUM, aDisplayLocale, EFormatterMode.PARSE));
   }
 
   @Nonnull
@@ -115,7 +117,9 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <LocalDateTime> getExtractorDateTime (@Nonnull final Locale aDisplayLocale)
   {
-    return getExtractorDateTime (PDTFormatter.getDefaultFormatterDateTime (aDisplayLocale));
+    return getExtractorDateTime (PDTFormatter.getFormatterDateTime (FormatStyle.MEDIUM,
+                                                                    aDisplayLocale,
+                                                                    EFormatterMode.PARSE));
   }
 
   @Nonnull
