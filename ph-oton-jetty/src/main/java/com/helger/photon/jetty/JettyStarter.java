@@ -26,7 +26,8 @@ import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.session.HashSessionManager;
+import org.eclipse.jetty.server.session.DefaultSessionCache;
+import org.eclipse.jetty.server.session.FileSessionDataStore;
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.webapp.Configuration;
@@ -308,14 +309,18 @@ public class JettyStarter
     // Set session store directory to passivate/activate sessions
     if (m_bSpecialSessionMgr)
     {
-      final HashSessionManager aMgr = new HashSessionManager ();
-      aMgr.setStoreDirectory (new File (sTempDir + '/' + m_sDirBaseName + ".sessions"));
-      aMgr.setLazyLoad (true);
-      aMgr.setDeleteUnrestorableSessions (true);
-      aWebAppCtx.setSessionHandler (new SessionHandler (aMgr));
+      final SessionHandler aHdl = new SessionHandler ();
+      final FileSessionDataStore aDataStore = new FileSessionDataStore ();
+      aDataStore.setStoreDir (new File (sTempDir + '/' + m_sDirBaseName + ".sessions"));
+      aDataStore.setDeleteUnrestorableFiles (true);
+      final DefaultSessionCache aCache = new DefaultSessionCache (aHdl);
+      aCache.setSessionDataStore (aDataStore);
+      aCache.setRemoveUnloadableSessions (true);
+      aHdl.setSessionCache (aCache);
+      aWebAppCtx.setSessionHandler (aHdl);
     }
 
-    aWebAppCtx.getSessionHandler ().getSessionManager ().getSessionCookieConfig ().setName ("PHOTONSESSIONID");
+    aWebAppCtx.getSessionHandler ().setSessionCookie ("PHOTONSESSIONID");
 
     customizeWebAppCtx (aWebAppCtx);
 
