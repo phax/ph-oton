@@ -33,7 +33,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
-import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.serialize.write.IXMLWriterSettings;

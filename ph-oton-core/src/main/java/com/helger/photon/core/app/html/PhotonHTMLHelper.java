@@ -44,8 +44,8 @@ import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.core.resource.WebSiteResourceWithCondition;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * A utility class for consistent HTML creation.

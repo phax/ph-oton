@@ -28,8 +28,8 @@ import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.log.LogHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.servlet.request.RequestHelper;
 import com.helger.web.scope.IRequestWebScope;
-import com.helger.web.servlet.request.RequestHelper;
 
 /**
  * A simple implementation of {@link ILongRunningRequestCallback} simply logging

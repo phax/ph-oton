@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.web.servlet.request.RequestLogger;
+import com.helger.servlet.request.RequestLogger;
 
 /**
  * httpoxy problem avoidance-filter based on

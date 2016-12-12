@@ -43,10 +43,10 @@ import com.helger.photon.core.userdata.UserDataManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.constraint.PasswordConstraintList;
 import com.helger.photon.security.password.constraint.PasswordConstraintMinLength;
+import com.helger.servlet.mock.MockHttpServletResponse;
+import com.helger.servlet.mock.OfflineHttpServletRequest;
 import com.helger.smtp.EmailGlobalSettings;
 import com.helger.smtp.transport.listener.LoggingConnectionListener;
-import com.helger.web.mock.MockHttpServletResponse;
-import com.helger.web.mock.OfflineHttpServletRequest;
 import com.helger.web.scope.mgr.WebScopeManager;
 
 /**

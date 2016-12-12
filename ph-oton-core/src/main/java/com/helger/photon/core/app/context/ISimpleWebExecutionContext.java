@@ -28,11 +28,11 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.RequestParameterManager;
+import com.helger.servlet.request.IRequestParamMap;
+import com.helger.useragent.IUserAgent;
+import com.helger.useragent.browser.BrowserInfo;
 import com.helger.web.fileupload.IFileItem;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.request.IRequestParamMap;
-import com.helger.web.useragent.IUserAgent;
-import com.helger.web.useragent.browser.BrowserInfo;
 
 public interface ISimpleWebExecutionContext extends IAttributeContainer <String, Object>
 {

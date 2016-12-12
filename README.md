@@ -9,6 +9,7 @@ Release history:
   * v7.0.2
     * Updated to Jetty 9.4.0
     * Binds to ph-commons 8.5.6
+    * Binds to ph-web 8.7.0
   * v7.0.1 - 2016-11-14
     * Improvements in request tracking logging
     * Misc small improvements in different areas

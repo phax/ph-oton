@@ -40,6 +40,7 @@ import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.regex.RegExHelper;
@@ -54,15 +55,19 @@ import com.helger.datetime.util.PDTHelper;
 import com.helger.http.CHTTPHeader;
 import com.helger.http.EHTTPMethod;
 import com.helger.http.EHTTPVersion;
+import com.helger.photon.basic.app.PhotonSessionState;
+import com.helger.photon.core.app.redirect.ForcedRedirectException;
+import com.helger.photon.core.app.redirect.ForcedRedirectManager;
 import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
+import com.helger.servlet.ServletContextPathHolder;
+import com.helger.servlet.StaticServerInfo;
+import com.helger.servlet.request.RequestHelper;
+import com.helger.servlet.response.ERedirectMode;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.request.RequestScopeInitializer;
-import com.helger.web.servlet.ServletContextPathHolder;
-import com.helger.web.servlet.request.RequestHelper;
-import com.helger.web.servlet.response.UnifiedResponse;
-import com.helger.web.servlet.server.StaticServerInfo;
 import com.helger.web.servlets.scope.AbstractScopeAwareHttpServlet;
 
 /**
@@ -291,25 +296,60 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
    *
    * @param aRequestScope
    *        The source request scope. Never <code>null</code>.
+   * @param aUnifiedResponse
+   *        The response to the current request. Never <code>null</code>.
    * @param t
    *        The Throwable that occurred. Never <code>null</code>.
+   * @return {@link EContinue#CONTINUE} to propagate the Exception,
+   *         {@link EContinue#BREAK} to swallow it. May not be
+   *         <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onException (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final Throwable t)
+  @Nonnull
+  protected EContinue onException (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                   @Nonnull final UnifiedResponse aUnifiedResponse,
+                                   @Nonnull final Throwable t)
   {
-    s_aLogger.error ("Error running servlet " +
-                     getClass () +
-                     " using " +
-                     aRequestScope.getMethod () +
-                     " on URI " +
-                     aRequestScope.getURL (),
-                     t);
+    if (t instanceof ForcedRedirectException)
+    {
+      final ForcedRedirectException aFRE = (ForcedRedirectException) t;
+      // Remember the content
+      ForcedRedirectManager.getInstance ().createForcedRedirect (aFRE);
+      // And set the redirect
+      aUnifiedResponse.setRedirect (aFRE.getRedirectTargetURL (), ERedirectMode.POST_REDIRECT_GET);
+      // Stop exception handling
+      return EContinue.BREAK;
+    }
+
+    final String sMsg = "Error on HTTP " +
+                        aRequestScope.getMethod () +
+                        " on resource '" +
+                        aRequestScope.getURL () +
+                        "' - Application ID '" +
+                        getApplicationID () +
+                        "'";
+
+    if (StreamHelper.isKnownEOFException (t))
+    {
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug (sMsg + " - " + ClassHelper.getClassLocalName (t) + " - " + t.getMessage ());
+
+      // Never propagate
+      return EContinue.BREAK;
+    }
+
+    // Log always including full exception
+    s_aLogger.error (sMsg, t);
+
+    // Propagate only in debug mode
+    return EContinue.valueOf (GlobalDebug.isDebugMode ());
   }
 
   /**
    * Called after a valid request was processed. This method is only called if
    * the handleRequest method was invoked. If an exception occurred this method
-   * is called after onException
+   * is called after
+   * {@link #onException(IRequestWebScopeWithoutResponse, UnifiedResponse, Throwable)}
    *
    * @param bExceptionOccurred
    *        if <code>true</code> an exception occurred in request processing.
@@ -357,6 +397,8 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   {
     // Increment invocation counter
     ServletStatusManager.onServletInvocation (getClass ());
+    // Set the last application ID in the session
+    PhotonSessionState.getInstance ().setLastApplicationID (getApplicationID ());
 
     final EHTTPVersion eHTTPVersion = RequestHelper.getHttpVersion (aHttpRequest);
     if (eHTTPVersion == null)
@@ -544,21 +586,11 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     catch (final Throwable t)
     {
       m_aStatsHandledRequestsFailure.increment ();
-      // Do not show the exceptions that occur, when client cancels a request.
-      if (StreamHelper.isKnownEOFException (t))
-      {
-        if (s_aLogger.isDebugEnabled ())
-          s_aLogger.debug ("Error delivering requested resource '" +
-                           aRequestScope.getPathWithinServlet () +
-                           "' - " +
-                           ClassHelper.getClassLocalName (t) +
-                           " - " +
-                           t.getMessage ());
-      }
-      else
-      {
-        onException (aRequestScope, t);
 
+      // Invoke exception handler
+      if (onException (aRequestScope, aUnifiedResponse, t).isContinue ())
+      {
+        // Propagate exception
         if (t instanceof IOException)
           throw (IOException) t;
         if (t instanceof ServletException)

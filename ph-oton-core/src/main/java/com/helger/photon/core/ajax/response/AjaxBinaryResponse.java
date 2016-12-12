@@ -31,7 +31,7 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.EMimeContentType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.servlet.response.UnifiedResponse;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 

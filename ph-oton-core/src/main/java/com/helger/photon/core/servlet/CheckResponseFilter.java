@@ -38,9 +38,9 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.string.StringHelper;
-import com.helger.web.servlet.request.RequestHelper;
-import com.helger.web.servlet.response.ResponseHelper;
-import com.helger.web.servlet.response.StatusAwareHttpResponseWrapper;
+import com.helger.servlet.request.RequestHelper;
+import com.helger.servlet.response.ResponseHelper;
+import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
 
 /**
  * This filter is used, to determine if some crucial information is missing in

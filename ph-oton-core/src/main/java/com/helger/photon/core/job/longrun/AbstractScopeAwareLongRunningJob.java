@@ -29,8 +29,8 @@ import com.helger.photon.basic.longrun.LongRunningJobManager;
 import com.helger.photon.basic.longrun.LongRunningJobResult;
 import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.quartz.JobDataMap;
+import com.helger.web.scope.util.AbstractScopeAwareJob;
 import com.helger.quartz.IJobExecutionContext;
-import com.helger.schedule.job.AbstractScopeAwareJob;
 
 /**
  * Abstract scope aware long running job.

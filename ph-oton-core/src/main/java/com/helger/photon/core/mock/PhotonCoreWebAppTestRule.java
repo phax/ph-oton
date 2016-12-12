@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.io.resourceprovider.IReadableResourceProvider;
-import com.helger.web.mock.MockServletContext;
+import com.helger.servlet.mock.MockServletContext;
 
 /**
  * A JUnit test rule that is suitable for all ph-oton projects. It is optimized

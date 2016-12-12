@@ -23,7 +23,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import com.helger.commons.charset.CCharset;
-import com.helger.web.mock.MockHttpServletResponse;
+import com.helger.servlet.mock.MockHttpServletResponse;
 import com.helger.web.scope.mock.WebScopeAwareTestSetup;
 import com.helger.web.scope.mock.WebScopeTestRule;
 

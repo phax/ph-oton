@@ -28,6 +28,7 @@ import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.quartz.DisallowConcurrentExecution;
 import com.helger.quartz.IJobExecutionContext;
+import com.helger.quartz.JobDataMap;
 import com.helger.quartz.JobExecutionException;
 import com.helger.quartz.SimpleScheduleBuilder;
 import com.helger.quartz.TriggerKey;
@@ -53,7 +54,8 @@ public class FailedMailResendJob extends AbstractPhotonJob
   {}
 
   @Override
-  protected void onExecute (final IJobExecutionContext aContext) throws JobExecutionException
+  protected void onExecute (@Nonnull final JobDataMap aJobDataMap,
+                            @Nonnull final IJobExecutionContext aContext) throws JobExecutionException
   {
     final ICommonsList <FailedMailData> aFailedMails = PhotonCoreManager.getFailedMailQueue ().removeAll ();
     if (!aFailedMails.isEmpty ())

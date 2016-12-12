@@ -39,8 +39,8 @@ import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryServlet;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * Special servlet to stream JS and CSS bundles.<br>

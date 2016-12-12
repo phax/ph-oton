@@ -41,9 +41,9 @@ import com.helger.photon.security.login.LoginInfo;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.credentials.UserPasswordCredentials;
+import com.helger.servlet.request.RequestHelper;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.response.UnifiedResponse;
-import com.helger.web.useragent.UserAgentDatabase;
 
 /**
  * Handle the application login process. This class requires a separate UI.
@@ -201,7 +201,7 @@ public abstract class AbstractLoginManager
     aLoginInfo.setAttribute (LOGIN_INFO_REQUEST_URI, aRequestScope.getRequestURI ());
     aLoginInfo.setAttribute (LOGIN_INFO_QUERY_STRING, aRequestScope.getQueryString ());
     aLoginInfo.setAttribute (LOGIN_INFO_USER_AGENT,
-                             UserAgentDatabase.getHttpUserAgentStringFromRequest (aRequestScope.getRequest ()));
+                             RequestHelper.getHttpUserAgentStringFromRequest (aRequestScope.getRequest ()));
     aLoginInfo.setAttribute (LOGIN_INFO_REQUEST_COUNT,
                              Integer.toString (aLoginInfo.getAttributeAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
   }

@@ -27,8 +27,8 @@ import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.io.resourceprovider.IReadableResourceProvider;
 import com.helger.commons.url.SMap;
 import com.helger.photon.core.servlet.WebAppListener;
-import com.helger.web.mock.MockHttpListener;
-import com.helger.web.mock.MockServletContext;
+import com.helger.servlet.mock.MockHttpListener;
+import com.helger.servlet.mock.MockServletContext;
 import com.helger.web.scope.mock.MockServletRequestListenerScopeAware;
 import com.helger.web.scope.mock.WebScopeTestRule;
 

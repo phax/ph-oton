@@ -37,9 +37,9 @@ import com.helger.commons.state.EContinue;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
+import com.helger.servlet.response.ResponseHelperSettings;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.response.ResponseHelperSettings;
-import com.helger.web.servlet.response.UnifiedResponse;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 import com.helger.xml.util.mime.MimeTypeInfoManager;
 

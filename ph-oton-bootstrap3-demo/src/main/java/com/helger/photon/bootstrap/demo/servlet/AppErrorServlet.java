@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.helger.photon.core.servlet.AbstractPublicApplicationServlet;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.response.UnifiedResponse;
 
 public class AppErrorServlet extends AbstractUnifiedResponseServlet
 {

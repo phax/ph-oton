@@ -41,8 +41,8 @@ import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.EDataTablesOrderDirectionType;
+import com.helger.servlet.request.IRequestParamMap;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.request.IRequestParamMap;
 
 /**
  * AJAX handler for filling DataTables

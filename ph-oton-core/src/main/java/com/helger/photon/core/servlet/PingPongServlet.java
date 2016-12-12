@@ -27,8 +27,8 @@ import com.helger.commons.mime.IMimeType;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * A simple availability-check servlet that responds with a "pong" text message.

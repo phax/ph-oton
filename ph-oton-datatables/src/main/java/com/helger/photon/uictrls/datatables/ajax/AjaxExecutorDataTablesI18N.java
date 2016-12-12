@@ -28,9 +28,9 @@ import com.helger.json.IJsonObject;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxJsonResponse;
 import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.servlet.response.ResponseHelperSettings;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.response.ResponseHelperSettings;
-import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * Action executor for providing the DataTables translated texts

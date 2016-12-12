@@ -34,8 +34,8 @@ import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.hc.html.sections.HCH1;
 import com.helger.html.js.UnparsedJSCodeProvider;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
-import com.helger.web.mock.MockHttpServletResponse;
-import com.helger.web.mock.OfflineHttpServletRequest;
+import com.helger.servlet.mock.MockHttpServletResponse;
+import com.helger.servlet.mock.OfflineHttpServletRequest;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 

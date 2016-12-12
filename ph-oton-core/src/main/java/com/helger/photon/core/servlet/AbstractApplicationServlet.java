@@ -27,19 +27,13 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ServiceLoaderHelper;
-import com.helger.commons.state.EContinue;
-import com.helger.photon.basic.app.PhotonSessionState;
 import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.app.html.IHTMLProvider;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
-import com.helger.photon.core.app.redirect.ForcedRedirectException;
-import com.helger.photon.core.app.redirect.ForcedRedirectManager;
 import com.helger.photon.core.spi.IApplicationRequestListenerSPI;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.response.ERedirectMode;
-import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * Base servlet for the main application.
@@ -109,75 +103,15 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
   @Nonnull
   protected abstract IHTMLProvider createHTMLProvider (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope);
 
-  /**
-   * Callback method instantiated upon exception. If you override this
-   * application ensure to call the method of this class as well as it handles
-   * the POST-REDIRECT-GET pattern in here (using the
-   * {@link ForcedRedirectException}).
-   *
-   * @param aRequestScope
-   *        Initial request scope
-   * @param aUnifiedResponse
-   *        Response to use
-   * @param t
-   *        Thrown exception
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  @OverrideOnDemand
-  @OverridingMethodsMustInvokeSuper
-  protected EContinue handleApplicationException (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                  @Nonnull final UnifiedResponse aUnifiedResponse,
-                                                  @Nonnull final Throwable t)
-  {
-    if (t instanceof ForcedRedirectException)
-    {
-      final ForcedRedirectException aFRE = (ForcedRedirectException) t;
-      // Remember the content
-      ForcedRedirectManager.getInstance ().createForcedRedirect (aFRE);
-      // And set the redirect
-      aUnifiedResponse.setRedirect (aFRE.getRedirectTargetURL (), ERedirectMode.POST_REDIRECT_GET);
-      // Stop exception handling
-      return EContinue.BREAK;
-    }
-    return EContinue.CONTINUE;
-  }
-
   @Override
   @OverridingMethodsMustInvokeSuper
   protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                 @Nonnull final UnifiedResponse aUnifiedResponse) throws IOException, ServletException
   {
-    final String sApplicationID = getApplicationID ();
+    // Who is responsible for creating the HTML?
+    final IHTMLProvider aHTMLProvider = createHTMLProvider (aRequestScope);
 
-    try
-    {
-      // Set the last application ID in the session
-      PhotonSessionState.getInstance ().setLastApplicationID (sApplicationID);
-
-      // Who is responsible for creating the HTML?
-      final IHTMLProvider aHTMLProvider = createHTMLProvider (aRequestScope);
-
-      // Create the HTML and put it into the response
-      PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aHTMLProvider);
-    }
-    catch (final Throwable t)
-    {
-      // Call exception callback
-      if (handleApplicationException (aRequestScope, aUnifiedResponse, t).isContinue ())
-      {
-        // Do not show the exceptions that occur, when client cancels a request.
-        if (!StreamHelper.isKnownEOFException (t))
-        {
-          // Catch Exception and re-throw
-          s_aLogger.error ("Error running application '" + sApplicationID + "'", t);
-          if (t instanceof ServletException)
-            throw (ServletException) t;
-          if (t instanceof IOException)
-            throw (IOException) t;
-          throw new ServletException (t);
-        }
-      }
-    }
+    // Create the HTML and put it into the response
+    PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aHTMLProvider);
   }
 }

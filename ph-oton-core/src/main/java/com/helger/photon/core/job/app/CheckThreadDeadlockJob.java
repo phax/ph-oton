@@ -28,6 +28,7 @@ import com.helger.photon.core.app.error.MailingThreadDeadlockCallback;
 import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.quartz.DisallowConcurrentExecution;
 import com.helger.quartz.IJobExecutionContext;
+import com.helger.quartz.JobDataMap;
 import com.helger.quartz.JobExecutionException;
 import com.helger.quartz.SimpleScheduleBuilder;
 import com.helger.quartz.TriggerKey;
@@ -51,7 +52,8 @@ public class CheckThreadDeadlockJob extends AbstractPhotonJob
   {}
 
   @Override
-  protected void onExecute (@Nonnull final IJobExecutionContext aContext) throws JobExecutionException
+  protected void onExecute (@Nonnull final JobDataMap aJobDataMap,
+                            @Nonnull final IJobExecutionContext aContext) throws JobExecutionException
   {
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Checking for dead locks");

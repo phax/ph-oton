@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.servlet.response.UnifiedResponse;
 
 /**
  * A simple AJAX response that sends an HTTP status code only

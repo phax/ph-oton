@@ -34,9 +34,9 @@ import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.singleton.AbstractApplicationWebSingleton;
-import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * Central API manager. Runs in an application scope.

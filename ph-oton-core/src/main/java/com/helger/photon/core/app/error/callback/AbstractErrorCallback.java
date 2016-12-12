@@ -51,10 +51,10 @@ import com.helger.photon.core.requesttrack.ILongRunningRequestCallback;
 import com.helger.photon.core.requesttrack.IParallelRunningRequestCallback;
 import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.core.requesttrack.TrackedRequest;
+import com.helger.servlet.request.RequestHelper;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
-import com.helger.web.servlet.request.RequestHelper;
 
 /**
  * A base class for a central error callback that handles all kind of errors and

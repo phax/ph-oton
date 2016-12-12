@@ -40,9 +40,9 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.core.form.RequestFieldBoolean;
+import com.helger.servlet.request.RequestHelper;
+import com.helger.useragent.IUserAgent;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.useragent.IUserAgent;
-import com.helger.web.useragent.UserAgentDatabase;
 
 /**
  * This object is instantiated per page view and contains the current request
@@ -214,7 +214,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   @Nonnull
   public IUserAgent getUserAgent ()
   {
-    return UserAgentDatabase.getUserAgent (m_aRequestScope.getRequest ());
+    return RequestHelper.getUserAgent (m_aRequestScope.getRequest ());
   }
 
   @Override

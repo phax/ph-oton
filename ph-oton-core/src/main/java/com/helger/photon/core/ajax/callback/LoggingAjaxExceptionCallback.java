@@ -29,8 +29,8 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.servlet.request.RequestLogger;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.request.RequestLogger;
 
 /**
  * Implementation of {@link IAjaxExceptionCallback} logging to an SLF4J logger

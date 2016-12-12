@@ -19,7 +19,7 @@ package com.helger.photon.core.ajax.response;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.state.ISuccessIndicator;
-import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.servlet.response.UnifiedResponse;
 
 /**
  * Base interface for an Ajax response with a JSON representation.

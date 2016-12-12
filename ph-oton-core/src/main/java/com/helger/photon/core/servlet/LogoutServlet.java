@@ -28,8 +28,8 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.http.EHTTPMethod;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.photon.core.url.LinkHelper;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * Handles the log-out of a user. Can be called with a user context and without.

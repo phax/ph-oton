@@ -30,7 +30,7 @@ import com.helger.commons.mime.MimeType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.json.IJson;
 import com.helger.json.JsonValue;
-import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.servlet.response.UnifiedResponse;
 
 /**
  * A simple AJAX response, based on an {@link IJson} value.

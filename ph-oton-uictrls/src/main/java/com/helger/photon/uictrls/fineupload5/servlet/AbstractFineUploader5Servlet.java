@@ -36,8 +36,8 @@ import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.servlet.response.UnifiedResponse;
 
 /**
  * <p>

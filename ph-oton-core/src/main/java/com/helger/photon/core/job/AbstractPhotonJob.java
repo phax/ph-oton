@@ -22,8 +22,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.photon.core.app.CApplication;
 import com.helger.quartz.JobDataMap;
+import com.helger.web.scope.util.AbstractScopeAwareJob;
 import com.helger.quartz.IJobExecutionContext;
-import com.helger.schedule.job.AbstractScopeAwareJob;
 
 /**
  * Base class for ph-oton jobs

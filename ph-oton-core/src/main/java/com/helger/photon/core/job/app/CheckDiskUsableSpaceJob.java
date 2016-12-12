@@ -35,10 +35,11 @@ import com.helger.photon.core.app.error.InternalErrorHandler;
 import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.quartz.DisallowConcurrentExecution;
 import com.helger.quartz.IJobExecutionContext;
+import com.helger.quartz.ISimpleTrigger;
+import com.helger.quartz.JobDataMap;
 import com.helger.quartz.JobExecutionException;
 import com.helger.quartz.ScheduleBuilder;
 import com.helger.quartz.SimpleScheduleBuilder;
-import com.helger.quartz.ISimpleTrigger;
 import com.helger.quartz.TriggerKey;
 import com.helger.schedule.quartz.GlobalQuartzScheduler;
 import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
@@ -65,9 +66,10 @@ public class CheckDiskUsableSpaceJob extends AbstractPhotonJob
   {}
 
   @Override
-  protected void onExecute (@Nonnull final IJobExecutionContext aContext) throws JobExecutionException
+  protected void onExecute (@Nonnull final JobDataMap aJobDataMap,
+                            @Nonnull final IJobExecutionContext aContext) throws JobExecutionException
   {
-    final long nThresholdBytes = aContext.getJobDetail ().getJobDataMap ().getLong (JOB_DATA_ATTR_THRESHOLD_BYTES);
+    final long nThresholdBytes = aJobDataMap.getLong (JOB_DATA_ATTR_THRESHOLD_BYTES);
     final File aBaseDir = WebFileIO.getDataIO ().getBasePathFile ();
 
     if (s_aLogger.isDebugEnabled ())

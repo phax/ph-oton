@@ -66,6 +66,9 @@ import com.helger.photon.basic.thread.ThreadDescriptorList;
 import com.helger.photon.core.app.error.callback.IInternalErrorCallback;
 import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
 import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.servlet.ServletHelper;
+import com.helger.servlet.request.RequestHelper;
+import com.helger.servlet.request.RequestLogger;
 import com.helger.smtp.data.EEmailType;
 import com.helger.smtp.data.EmailData;
 import com.helger.smtp.data.IEmailAttachmentDataSource;
@@ -73,13 +76,10 @@ import com.helger.smtp.data.IEmailAttachmentList;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.smtp.settings.ISMTPSettings;
 import com.helger.smtp.transport.MailAPI;
+import com.helger.useragent.uaprofile.UAProfile;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
-import com.helger.web.servlet.request.RequestLogger;
-import com.helger.web.useragent.UserAgentDatabase;
-import com.helger.web.useragent.uaprofile.UAProfile;
-import com.helger.web.useragent.uaprofile.UAProfileDatabase;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
@@ -518,7 +518,7 @@ public final class InternalErrorHandler
         aMetadata.addField ("Request URL", t2);
       }
 
-      aMetadata.addField ("User agent", UserAgentDatabase.getUserAgent (aRequestScope.getRequest ()).getAsString ());
+      aMetadata.addField ("User agent", RequestHelper.getUserAgent (aRequestScope.getRequest ()).getAsString ());
 
       try
       {
@@ -531,7 +531,7 @@ public final class InternalErrorHandler
       }
 
       // Mobile browser?
-      final UAProfile aProfile = UAProfileDatabase.getUAProfile (aRequestScope.getRequest ());
+      final UAProfile aProfile = RequestHelper.getUAProfile (aRequestScope.getRequest ());
       if (!aProfile.equals (UAProfile.EMPTY))
         aMetadata.addField ("UAProfile", aProfile.toString ());
 
@@ -647,7 +647,7 @@ public final class InternalErrorHandler
 
         try
         {
-          final Cookie [] aCookies = aHttpRequest.getCookies ();
+          final Cookie [] aCookies = ServletHelper.getRequestCookies (aHttpRequest);
           if (aCookies != null)
             for (final Cookie aCookie : aCookies)
               aMetadata.addRequestCookie (aCookie.getName (), aCookie.getValue ());

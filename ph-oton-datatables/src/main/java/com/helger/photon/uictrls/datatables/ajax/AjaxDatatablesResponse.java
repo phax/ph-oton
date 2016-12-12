@@ -25,7 +25,7 @@ import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.json.IJsonObject;
 import com.helger.photon.core.ajax.response.AbstractAjaxResponse;
 import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
-import com.helger.web.servlet.response.UnifiedResponse;
+import com.helger.servlet.response.UnifiedResponse;
 
 public class AjaxDatatablesResponse extends AbstractAjaxResponse
 {
