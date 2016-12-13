@@ -44,6 +44,7 @@ public final class PhotonPathMapper
   {
     private String m_sApplicationServletPath;
     private String m_sAjaxServletPath;
+    private String m_sAPIServletPath;
 
     private PathEntry ()
     {}
@@ -70,11 +71,23 @@ public final class PhotonPathMapper
       m_sAjaxServletPath = sAjaxServletPath;
     }
 
+    @Nullable
+    public String getAPIServletPath ()
+    {
+      return m_sAPIServletPath;
+    }
+
+    private void _setAPIServletPath (@Nullable final String sAPIServletPath)
+    {
+      m_sAPIServletPath = sAPIServletPath;
+    }
+
     @Override
     public String toString ()
     {
       return new ToStringGenerator (null).append ("ApplicationServletPath", m_sApplicationServletPath)
                                          .append ("AjaxServletPath", m_sAjaxServletPath)
+                                         .append ("APIServletPath", m_sAPIServletPath)
                                          .toString ();
     }
   }
@@ -84,29 +97,10 @@ public final class PhotonPathMapper
   @GuardedBy ("s_aRWLock")
   private static String s_sDefaultAppID;
   @GuardedBy ("s_aRWLock")
-  private static ICommonsMap <String, PathEntry> s_aMap = new CommonsHashMap<> ();
+  private static ICommonsMap <String, PathEntry> s_aMap = new CommonsHashMap <> ();
 
   private PhotonPathMapper ()
   {}
-
-  /**
-   * Set an application servlet path mapping. This overwrites existing mappings.
-   *
-   * @param sApplicationID
-   *        Application ID to use. May neither be <code>null</code> nor empty.
-   * @param sApplicationServletPath
-   *        The path to use. May neither be <code>null</code> nor empty. Must
-   *        start with a "slash" but may not end with a slash. Valid example is
-   *        e.g. <code>/public</code>
-   * @deprecated Use {@link #setApplicationServletPathMapping(String,String)}
-   *             instead
-   */
-  @Deprecated
-  public static void setPathMapping (@Nonnull @Nonempty final String sApplicationID,
-                                     @Nonnull @Nonempty final String sApplicationServletPath)
-  {
-    setApplicationServletPathMapping (sApplicationID, sApplicationServletPath);
-  }
 
   /**
    * Set an application servlet path mapping. This overwrites existing mappings.
@@ -153,6 +147,30 @@ public final class PhotonPathMapper
 
     s_aRWLock.writeLocked ( () -> s_aMap.computeIfAbsent (sApplicationID, x -> new PathEntry ())
                                         ._setAjaxServletPath (sAjaxServletPath));
+  }
+
+  /**
+   * Set an API servlet path mapping. This overwrites existing mappings.
+   *
+   * @param sApplicationID
+   *        Application ID to use. May neither be <code>null</code> nor empty.
+   * @param sAPIServletPath
+   *        The path to use. May neither be <code>null</code> nor empty. Must
+   *        start with a "slash" but may not end with a slash. Valid example is
+   *        e.g. <code>/publicapi</code>
+   * @since 7.0.2
+   */
+  public static void setAPIServletPathMapping (@Nonnull @Nonempty final String sApplicationID,
+                                               @Nonnull @Nonempty final String sAPIServletPath)
+  {
+    ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
+    ValueEnforcer.notEmpty (sAPIServletPath, "APIServletPath");
+    ValueEnforcer.isTrue (StringHelper.startsWith (sAPIServletPath, '/'),
+                          "APIServletPath must be empty or start with a slash");
+    ValueEnforcer.isFalse (StringHelper.endsWith (sAPIServletPath, '/'), "APIServletPath must not end with a slash");
+
+    s_aRWLock.writeLocked ( () -> s_aMap.computeIfAbsent (sApplicationID, x -> new PathEntry ())
+                                        ._setAPIServletPath (sAPIServletPath));
   }
 
   /**
@@ -207,23 +225,6 @@ public final class PhotonPathMapper
    *        Application ID to check. May be <code>null</code>.
    * @return <code>null</code> if no mapping was found. A path starting with a
    *         slash but not ending with a slash otherwise.
-   * @deprecated Use {@link #getApplicationServletPathOfApplicationID(String)}
-   *             instead
-   */
-  @Deprecated
-  @Nullable
-  public static String getPathOfApplicationID (@Nullable final String sApplicationID)
-  {
-    return getApplicationServletPathOfApplicationID (sApplicationID);
-  }
-
-  /**
-   * Get the application servlet path mapped to the specified application ID
-   *
-   * @param sApplicationID
-   *        Application ID to check. May be <code>null</code>.
-   * @return <code>null</code> if no mapping was found. A path starting with a
-   *         slash but not ending with a slash otherwise.
    */
   @Nullable
   public static String getApplicationServletPathOfApplicationID (@Nullable final String sApplicationID)
@@ -258,6 +259,27 @@ public final class PhotonPathMapper
   }
 
   /**
+   * Get the API servlet path mapped to the specified application ID
+   *
+   * @param sApplicationID
+   *        Application ID to check. May be <code>null</code>.
+   * @return <code>null</code> if no mapping was found. A path starting with a
+   *         slash but not ending with a slash otherwise.
+   * @since 7.0.2
+   */
+  @Nullable
+  public static String getAPIServletPathOfApplicationID (@Nullable final String sApplicationID)
+  {
+    if (StringHelper.hasNoText (sApplicationID))
+      return null;
+
+    return s_aRWLock.readLocked ( () -> {
+      final PathEntry aEntry = s_aMap.get (sApplicationID);
+      return aEntry == null ? null : aEntry.getAPIServletPath ();
+    });
+  }
+
+  /**
    * @return <code>true</code> if mappings are already defined,
    *         <code>false</code> otherwise.
    */
@@ -274,21 +296,7 @@ public final class PhotonPathMapper
   @ReturnsMutableCopy
   public static ICommonsMap <String, PathEntry> getApplicationIDToPathEntryMap ()
   {
-    return s_aRWLock.readLocked ( () -> new CommonsHashMap<> (s_aMap.getClone ()));
-  }
-
-  /**
-   * @return A copy of all contained application servlet mapping entries. Never
-   *         <code>null</code>.
-   * @deprecated Use {@link #getApplicationIDToApplicationServletPathMap()}
-   *             instead
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  @Deprecated
-  public static ICommonsMap <String, String> getApplicationIDToPathMap ()
-  {
-    return getApplicationIDToApplicationServletPathMap ();
+    return s_aRWLock.readLocked ( () -> new CommonsHashMap <> (s_aMap.getClone ()));
   }
 
   /**
@@ -299,9 +307,9 @@ public final class PhotonPathMapper
   @ReturnsMutableCopy
   public static ICommonsMap <String, String> getApplicationIDToApplicationServletPathMap ()
   {
-    return s_aRWLock.readLocked ( () -> new CommonsHashMap<> (s_aMap.entrySet (),
-                                                              x -> x.getKey (),
-                                                              x -> x.getValue ().getApplicationServletPath ()));
+    return s_aRWLock.readLocked ( () -> new CommonsHashMap <> (s_aMap.entrySet (),
+                                                               x -> x.getKey (),
+                                                               x -> x.getValue ().getApplicationServletPath ()));
   }
 
   /**
@@ -312,9 +320,23 @@ public final class PhotonPathMapper
   @ReturnsMutableCopy
   public static ICommonsMap <String, String> getApplicationIDToAjaxServletPathMap ()
   {
-    return s_aRWLock.readLocked ( () -> new CommonsHashMap<> (s_aMap.entrySet (),
-                                                              x -> x.getKey (),
-                                                              x -> x.getValue ().getAjaxServletPath ()));
+    return s_aRWLock.readLocked ( () -> new CommonsHashMap <> (s_aMap.entrySet (),
+                                                               x -> x.getKey (),
+                                                               x -> x.getValue ().getAjaxServletPath ()));
+  }
+
+  /**
+   * @return A copy of all contained API servlet mapping entries. Never
+   *         <code>null</code>.
+   * @since 7.0.2
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static ICommonsMap <String, String> getApplicationIDToAPIServletPathMap ()
+  {
+    return s_aRWLock.readLocked ( () -> new CommonsHashMap <> (s_aMap.entrySet (),
+                                                               x -> x.getKey (),
+                                                               x -> x.getValue ().getAPIServletPath ()));
   }
 
   /**
@@ -354,22 +376,6 @@ public final class PhotonPathMapper
    * @return <code>null</code> if no default application ID is set. A path
    *         starting with a slash but not ending with a slash otherwise.
    * @see #getDefaultApplicationID()
-   * @deprecated Use {@link #getApplicationServletPathOfDefaultApplicationID()}
-   *             instead
-   */
-  @Deprecated
-  @Nullable
-  public static String getPathOfDefaultApplicationID ()
-  {
-    return getApplicationServletPathOfDefaultApplicationID ();
-  }
-
-  /**
-   * Get the application servlet path mapped to the default application ID
-   *
-   * @return <code>null</code> if no default application ID is set. A path
-   *         starting with a slash but not ending with a slash otherwise.
-   * @see #getDefaultApplicationID()
    */
   @Nullable
   public static String getApplicationServletPathOfDefaultApplicationID ()
@@ -391,26 +397,17 @@ public final class PhotonPathMapper
   }
 
   /**
-   * Get the application servlet path mapped to the specified application ID or
-   * (if no such application ID is present) return the path of the default
-   * application ID
+   * Get the API servlet path mapped to the default application ID
    *
-   * @param sApplicationID
-   *        Application ID to check. May be <code>null</code>.
-   * @return <code>null</code> if no mapping was found and no default path is
-   *         specified. A path starting with a slash but not ending with a slash
-   *         otherwise.
-   * @see #getApplicationServletPathOfApplicationID(String)
-   * @see #getApplicationServletPathOfDefaultApplicationID()
-   * @deprecated Use
-   *             {@link #getApplicationServletPathOfApplicationIDOrDefault(String)}
-   *             instead
+   * @return <code>null</code> if no default application ID is set. A path
+   *         starting with a slash but not ending with a slash otherwise.
+   * @see #getDefaultApplicationID()
+   * @since 7.0.2
    */
-  @Deprecated
   @Nullable
-  public static String getPathOfApplicationIDOrDefault (@Nullable final String sApplicationID)
+  public static String getAPIServletPathOfDefaultApplicationID ()
   {
-    return getApplicationServletPathOfApplicationIDOrDefault (sApplicationID);
+    return getAPIServletPathOfApplicationID (getDefaultApplicationID ());
   }
 
   /**
@@ -443,13 +440,34 @@ public final class PhotonPathMapper
    * @return <code>null</code> if no mapping was found and no default path is
    *         specified. A path starting with a slash but not ending with a slash
    *         otherwise.
-   * @see #getApplicationServletPathOfApplicationID(String)
-   * @see #getApplicationServletPathOfDefaultApplicationID()
+   * @see #getAjaxServletPathOfApplicationID(String)
+   * @see #getAjaxServletPathOfDefaultApplicationID()
    */
   @Nullable
   public static String getAjaxServletPathOfApplicationIDOrDefault (@Nullable final String sApplicationID)
   {
     final String sPath = getAjaxServletPathOfApplicationID (sApplicationID);
     return sPath != null ? sPath : getAjaxServletPathOfDefaultApplicationID ();
+  }
+
+  /**
+   * Get the API servlet path mapped to the specified application ID or (if no
+   * such application ID is present) return the path of the default application
+   * ID
+   *
+   * @param sApplicationID
+   *        Application ID to check. May be <code>null</code>.
+   * @return <code>null</code> if no mapping was found and no default path is
+   *         specified. A path starting with a slash but not ending with a slash
+   *         otherwise.
+   * @see #getAPIServletPathOfApplicationID(String)
+   * @see #getAPIServletPathOfDefaultApplicationID()
+   * @since 7.0.2
+   */
+  @Nullable
+  public static String getAPIServletPathOfApplicationIDOrDefault (@Nullable final String sApplicationID)
+  {
+    final String sPath = getAPIServletPathOfApplicationID (sApplicationID);
+    return sPath != null ? sPath : getAPIServletPathOfDefaultApplicationID ();
   }
 }
