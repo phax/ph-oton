@@ -113,8 +113,11 @@ public final class PhotonStubInitializer
       // Enable Java Serialization debug
       SystemProperties.setPropertyValue ("sun.io.serialization.extendedDebugInfo", "true");
 
-      // Not production ready yet
-      WebScopeManager.setSessionPassivationAllowed (true);
+      if (false)
+      {
+        // Not production ready yet
+        WebScopeManager.setSessionPassivationAllowed (true);
+      }
 
       // Disable in debug mode
       RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);
