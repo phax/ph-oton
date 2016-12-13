@@ -18,6 +18,7 @@ package com.helger.photon.core.api;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -35,12 +36,14 @@ import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public class APIDescriptor implements IAPIDescriptor
 {
   private final APIPath m_aAPIPath;
   private final PathDescriptor m_aPathDescriptor;
-  private final ICommonsOrderedSet <String> m_aRequiredHeaders = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aRequiredParams = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aRequiredHeaders = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aRequiredParams = new CommonsLinkedHashSet <> ();
+  private IAPIExecutionFilter m_aExecutionFilter;
   private final IFactory <? extends IAPIExecutor> m_aExecutorFactory;
 
   /**
@@ -203,6 +206,24 @@ public class APIDescriptor implements IAPIDescriptor
     return m_aRequiredParams.getClone ();
   }
 
+  @Nullable
+  public IAPIExecutionFilter getExecutionFilter ()
+  {
+    return m_aExecutionFilter;
+  }
+
+  public boolean hasExecutionFilter ()
+  {
+    return getExecutionFilter () != null;
+  }
+
+  @Nonnull
+  public APIDescriptor setExecutionFilter (@Nullable final IAPIExecutionFilter aExecutionFilter)
+  {
+    m_aExecutionFilter = aExecutionFilter;
+    return this;
+  }
+
   @Override
   public String toString ()
   {
@@ -210,6 +231,8 @@ public class APIDescriptor implements IAPIDescriptor
                                        .append ("PathDescriptor", m_aPathDescriptor)
                                        .appendIf ("RequiredHeaders", m_aRequiredHeaders, CollectionHelper::isNotEmpty)
                                        .appendIf ("RequiredParams", m_aRequiredParams, CollectionHelper::isNotEmpty)
+                                       .append ("ExecutionFactory", m_aExecutorFactory)
+                                       .appendIfNotNull ("ExecutionFilter", m_aExecutionFilter)
                                        .toString ();
   }
 }

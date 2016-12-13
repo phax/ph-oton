@@ -17,6 +17,7 @@
 package com.helger.photon.core.api;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
@@ -83,4 +84,19 @@ public interface IAPIDescriptor
   @Nonnull
   @ReturnsMutableCopy
   ICommonsOrderedSet <String> getAllRequiredParams ();
+
+  /**
+   * @return The current execution filter. May be <code>null</code>.
+   */
+  @Nullable
+  IAPIExecutionFilter getExecutionFilter ();
+
+  /**
+   * @return <code>true</code> if an execution filter is present,
+   *         <code>false</code> otherwise.
+   */
+  default boolean hasExecutionFilter ()
+  {
+    return getExecutionFilter () != null;
+  }
 }

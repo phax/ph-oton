@@ -132,6 +132,14 @@ public final class InvokableAPIDescriptor
           return false;
         }
 
+    // Check explicit filter
+    if (m_aDescriptor.hasExecutionFilter ())
+      if (!m_aDescriptor.getExecutionFilter ().canExecute (aRequestScope))
+      {
+        s_aLogger.warn ("Request '" + m_sPath + "' cannot be executed because of ExecutionFilter");
+        return false;
+      }
+
     return true;
   }
 

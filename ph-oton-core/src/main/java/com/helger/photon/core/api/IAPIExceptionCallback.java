@@ -28,6 +28,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
+@FunctionalInterface
 public interface IAPIExceptionCallback extends ICallback
 {
   /**
