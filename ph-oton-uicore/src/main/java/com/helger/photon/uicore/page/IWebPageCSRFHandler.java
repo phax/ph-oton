@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.page;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -28,7 +30,7 @@ import com.helger.html.hc.html.forms.HCHiddenField;
  *
  * @author Philip Helger
  */
-public interface IWebPageCSRFHandler
+public interface IWebPageCSRFHandler extends Serializable
 {
   /**
    * @return <code>true</code> if CSRF prevention is enabled, <code>false</code>
