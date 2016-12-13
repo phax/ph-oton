@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.page.handler;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 
 import com.helger.commons.id.IHasID;
@@ -31,6 +33,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web page execution context type
  */
 public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
+                                       extends Serializable
 {
   /**
    * @return <code>true</code> if this action can only be executed when an
