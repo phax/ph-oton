@@ -99,6 +99,17 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
     }
   }
 
+  /**
+   * This method is called after globals and all initializers are done.
+   *
+   * @param aSC
+   *        {@link ServletContext} that is initialized.
+   * @since 7.0.2
+   */
+  @OverrideOnDemand
+  protected void afterContextAndInitializersDone (@Nonnull final ServletContext aSC)
+  {}
+
   @Override
   protected final void afterContextInitialized (@Nonnull final ServletContext aSC)
   {
@@ -155,5 +166,8 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
         WebScopeManager.onRequestEnd ();
       }
     }
+
+    // Call final callback
+    afterContextAndInitializersDone (aSC);
   }
 }
