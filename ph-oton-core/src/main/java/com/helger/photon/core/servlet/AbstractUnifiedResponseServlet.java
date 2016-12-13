@@ -597,6 +597,9 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
           throw (ServletException) t;
         throw new ServletException (t);
       }
+
+      // E.g. Post-Redirect-Get is handled with this
+      aUnifiedResponse.applyToResponse (aHttpResponse);
     }
     finally
     {
