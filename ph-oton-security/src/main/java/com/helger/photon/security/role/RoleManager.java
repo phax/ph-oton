@@ -44,7 +44,7 @@ import com.helger.photon.security.object.StubObjectWithCustomAttrs;
 @ThreadSafe
 public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> implements IReloadableDAO
 {
-  private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList<> ();
+  private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public RoleManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -201,7 +201,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IRole> getAllRoles ()
+  public ICommonsList <IRole> getAllRoles ()
   {
     return getAll ();
   }

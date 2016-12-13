@@ -52,7 +52,7 @@ import com.helger.security.password.salt.PasswordSalt;
 @ThreadSafe
 public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements IReloadableDAO
 {
-  private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList<> ();
+  private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -343,14 +343,14 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IUser> getAllUsers ()
+  public ICommonsList <IUser> getAllUsers ()
   {
     return getAll ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IUser> getAllUsers (@Nullable final Predicate <? super IUser> aFilter)
+  public ICommonsList <IUser> getAllUsers (@Nullable final Predicate <? super IUser> aFilter)
   {
     return getAll (aFilter);
   }
@@ -367,7 +367,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IUser> getAllActiveUsers ()
+  public ICommonsList <IUser> getAllActiveUsers ()
   {
     return getAll (x -> !x.isDeleted () && x.isEnabled ());
   }
@@ -387,7 +387,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IUser> getAllDisabledUsers ()
+  public ICommonsList <IUser> getAllDisabledUsers ()
   {
     return getAll (x -> !x.isDeleted () && x.isDisabled ());
   }
@@ -398,7 +398,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IUser> getAllNotDeletedUsers ()
+  public ICommonsList <IUser> getAllNotDeletedUsers ()
   {
     return getAll (x -> !x.isDeleted ());
   }
@@ -408,7 +408,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IUser> getAllDeletedUsers ()
+  public ICommonsList <IUser> getAllDeletedUsers ()
   {
     return getAll (x -> x.isDeleted ());
   }

@@ -52,7 +52,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
   private final UserManager m_aUserMgr;
   private final RoleManager m_aRoleMgr;
 
-  private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList<> ();
+  private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserGroupManager (@Nonnull @Nonempty final String sFilename,
                            @Nonnull final UserManager aUserMgr,
@@ -266,7 +266,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IUserGroup> getAllUserGroups ()
+  public ICommonsList <IUserGroup> getAllUserGroups ()
   {
     return getAll ();
   }
@@ -472,7 +472,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
     if (StringHelper.hasNoText (sUserID))
       return EChange.UNCHANGED;
 
-    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList<> ();
+    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList <> ();
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -531,10 +531,10 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
+  public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
-      return new CommonsArrayList<> ();
+      return new CommonsArrayList <> ();
 
     return getAll (aUserGroup -> aUserGroup.containsUserID (sUserID));
   }
@@ -553,7 +553,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
   public ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
   {
     if (StringHelper.hasNoText (sUserID))
-      return new CommonsArrayList<> ();
+      return new CommonsArrayList <> ();
 
     return getAllMapped (aUserGroup -> aUserGroup.containsUserID (sUserID), aUserGroup -> aUserGroup.getID ());
   }
@@ -657,7 +657,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
     if (StringHelper.hasNoText (sRoleID))
       return EChange.UNCHANGED;
 
-    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList<> ();
+    final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList <> ();
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -696,7 +696,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
+  public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
   {
     if (StringHelper.hasNoText (sRoleID))
       return getNone ();
