@@ -34,6 +34,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.string.StringParser;
+import com.helger.servlet.ServletHelper;
 
 /**
  * Special servlet filter that applies a certain encoding to a request and a
@@ -109,7 +110,7 @@ public class CharacterEncodingFilter implements Filter
           s_aLogger.info ("Changed request encoding from '" + sOldRequestEncoding + "' to '" + sEncoding + "'");
       }
       aResponse.setCharacterEncoding (sEncoding);
-      aRequest.setAttribute (REQUEST_ATTR, Boolean.TRUE);
+      ServletHelper.setRequestAttribute (aRequest, REQUEST_ATTR, Boolean.TRUE);
     }
 
     // Next filter in the chain
