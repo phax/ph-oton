@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
@@ -55,7 +57,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   public static final boolean DEFAULT_REMOVE_COMMENTS = true;
   public static final boolean DEFAULT_CLEAN_TEXTS = true;
 
-  private final String m_sServerPrefix;
+  private String m_sServerPrefixPath;
   private final EHTMLVersion m_eHTMLVersion;
   private final String m_sNamespaceURI;
   private boolean m_bRemoveComments = DEFAULT_REMOVE_COMMENTS;
@@ -69,28 +71,78 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   public PageViewExternalHTMLCleanser (@Nullable final EHTMLVersion eHTMLVersion)
   {
     // Cache once
-    m_sServerPrefix = ServletContextPathHolder.getContextPath () + "/";
+    m_sServerPrefixPath = ServletContextPathHolder.getContextPath () + "/";
     m_eHTMLVersion = eHTMLVersion;
     m_sNamespaceURI = eHTMLVersion == null ? null : eHTMLVersion.getNamespaceURI ();
   }
 
+  /**
+   * @return The server prefix path to be added to read links. May neither be
+   *         <code>null</code> nor empty.
+   * @since 7.0.2
+   */
+  @Nonnull
+  @Nonempty
+  public String getServerPrefixPath ()
+  {
+    return m_sServerPrefixPath;
+  }
+
+  /**
+   * Set the link prefix that will be added to links missing the prefix.
+   *
+   * @param sServerPrefixPath
+   *        The link prefix to use. May neither be <code>null</code> nor empty
+   * @return this for chaining
+   * @since 7.0.2
+   */
+  @Nonnull
+  public PageViewExternalHTMLCleanser setServerPrefixPath (@Nonnull @Nonempty final String sServerPrefixPath)
+  {
+    ValueEnforcer.notEmpty (sServerPrefixPath, "ServerPrefixPath");
+    m_sServerPrefixPath = sServerPrefixPath;
+    return this;
+  }
+
+  /**
+   * @return The HTML version as specified in the constructor. May be
+   *         <code>null</code>.
+   */
   @Nullable
   public EHTMLVersion getHTMLVersion ()
   {
     return m_eHTMLVersion;
   }
 
+  /**
+   * @return The HTML namespace URI from the HTML version specified in the
+   *         constructor. May be <code>null</code> if no HTML version was
+   *         specified or if the HTML version has no namespace URI.
+   */
   @Nullable
   public String getHTMLNamespaceURI ()
   {
     return m_sNamespaceURI;
   }
 
+  /**
+   * @return <code>true</code> if all comments will be removed,
+   *         <code>false</code> if not. Default is
+   *         {@link #DEFAULT_REMOVE_COMMENTS}.
+   */
   public boolean isRemoveComments ()
   {
     return m_bRemoveComments;
   }
 
+  /**
+   * Change if comments should be removed. By default comments are removed.
+   *
+   * @param bRemoveComments
+   *        <code>true</code> to remove comments, <code>false</code> to leave
+   *        them in.
+   * @return this for chaining
+   */
   @Nonnull
   public PageViewExternalHTMLCleanser setRemoveComments (final boolean bRemoveComments)
   {
@@ -98,11 +150,26 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
     return this;
   }
 
+  /**
+   * @return <code>true</code> if text content should be cleaned on whitespace
+   *         usage, <code>false</code> to not do it. Default is
+   *         {@link #DEFAULT_CLEAN_TEXTS}.
+   * @since 7.0.2
+   */
   public boolean isCleanTexts ()
   {
     return m_bCleanTexts;
   }
 
+  /**
+   * Change if texts should be cleaned. By default this happens.
+   *
+   * @param bCleanTexts
+   *        <code>true</code> to clean texts, <code>false</code> to leave them
+   *        untouched.
+   * @return this for chaining
+   * @since 7.0.2
+   */
   @Nonnull
   public PageViewExternalHTMLCleanser setCleanTexts (final boolean bCleanTexts)
   {
@@ -110,12 +177,32 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
     return this;
   }
 
+  /**
+   * Protected method to determine if a link (e.g. from an 'a' or 'img'
+   * elements) needs a context path prefix
+   *
+   * @param sHref
+   * @return
+   */
   @OverrideOnDemand
   protected boolean linkNeedsContextPath (@Nullable final String sHref)
   {
+    if (sHref == null)
+      return false;
+
+    // If prefix is defined and already present no need to change something
+    if (m_sServerPrefixPath.length () > 1 && sHref.startsWith (m_sServerPrefixPath))
+      return false;
+
     // javascript: and mailto: are handled by URLProtocolRegistry
-    return sHref != null && !URLProtocolRegistry.getInstance ().hasKnownProtocol (sHref) && !sHref.startsWith ("#");
+    if (URLProtocolRegistry.getInstance ().hasKnownProtocol (sHref) || sHref.startsWith ("#"))
+      return false;
+
+    // Prefix is needed
+    return true;
   }
+
+  private static final String [] LINK_ATTR_NAMES = new String [] { CHTMLAttributes.SRC, CHTMLAttributes.HREF };
 
   @Override
   public EHierarchyVisitorReturn onItemBeforeChildren (final IMicroNode aItem)
@@ -137,7 +224,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
         // Remove namespace URI for HTML5 usage (set to null)
         aElement.setNamespaceURI (m_sNamespaceURI);
 
-        // Remove this attribute
+        // Remove attribute xml:space
         aElement.removeAttribute (CXML.XML_NS_XML, "space");
 
         // Remove unnecessary attributes
@@ -149,14 +236,14 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
           aElement.removeAttribute (CHTMLAttributes.COLSPAN);
 
         // Ensure all link targets are server absolute
-        for (final String sLinkAttrName : new String [] { CHTMLAttributes.SRC, CHTMLAttributes.HREF })
+        for (final String sLinkAttrName : LINK_ATTR_NAMES)
         {
           String sPath = aElement.getAttributeValue (sLinkAttrName);
           if (sPath != null)
           {
             if (linkNeedsContextPath (sPath))
             {
-              sPath = m_sServerPrefix + sPath;
+              sPath = m_sServerPrefixPath + sPath;
               aElement.setAttribute (sLinkAttrName, sPath);
             }
           }
@@ -187,6 +274,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
               sTextNodeNew = StringHelper.replaceAll (sTextNodeNew, "\r", "");
               sTextNodeNew = StringHelper.replaceAll (sTextNodeNew, '\n', ' ');
               sTextNodeNew = StringHelper.replaceAll (sTextNodeNew, '\t', ' ');
+              // Merge 2 blanks to 1
               sTextNodeNew = StringHelper.replaceAllRepeatedly (sTextNodeNew, "  ", " ");
               if (!sTextNode.equals (sTextNodeNew))
                 aText.setData (sTextNodeNew);
