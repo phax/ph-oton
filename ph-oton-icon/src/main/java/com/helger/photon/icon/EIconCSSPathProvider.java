@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls;
+package com.helger.photon.icon;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,31 +30,14 @@ import com.helger.html.resource.css.ICSSPathProvider;
  *
  * @author Philip Helger
  */
-public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
+public enum EIconCSSPathProvider implements ICSSPathProvider
 {
-  /** https://github.com/daneden/animate.css */
-  ANIMATE ("animate/animate.css"),
-  AUTONUMERIC ("autonumeric/autonumeric.css"),
-  CHART_1 ("chart/Chart.css"),
-  COLORBOX ("colorbox/1.6.0/colorbox.css"),
-  FAMFAM_ICONS ("famfam/013/famfam.css"),
-  FAMFAM_FLAGS ("famfam/flags/flags.css"),
-  FINEUPLOADER_320 ("fineupload/320/fineuploader.css"),
-  FINEUPLOADER_330 ("fineupload/330/fineuploader.css"),
-  FINEUPLOADER_5 ("fineupload/5.11.10/fine-uploader.css"),
-  JSCOLOR ("jscolor/1.4.4ph/jscolor.css"),
-  PRISMJS ("prismjs/prism.css"),
-  PRISMJS_BOOTSTRAP ("prismjs/prism-bootstrap.css"),
-  SELECT2 ("select2/4.0.3/css/select2.css"),
-  TETHER ("tether/1.3.1/css/tether.css"),
-  TETHER_THEME_ARROWS ("tether/1.3.1/css/tether-theme-arrows.css"),
-  TETHER_THEME_ARROWS_DARK ("tether/1.3.1/css/tether-theme-arrows-dark.css"),
-  TETHER_THEME_BASIC ("tether/1.3.1/css/tether-theme-basic.css"),
-  TYPEAHEAD_BOOTSTRAP ("typeahead/typeahead.js-bootstrap.css");
+  /** http://fontawesome.io */
+  FONT_AWESOME4 ("fontawesome/4.7.0/css/font-awesome.css");
 
   private final ConstantCSSPathProvider m_aPP;
 
-  private EUICtrlsCSSPathProvider (@Nonnull @Nonempty final String sPath)
+  private EIconCSSPathProvider (@Nonnull @Nonempty final String sPath)
   {
     m_aPP = ConstantCSSPathProvider.create (sPath);
   }

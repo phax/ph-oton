@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls.tools.supplementary;
+package com.helger.photon.icon.tools.supplementary;
 
 import java.util.Locale;
 
@@ -34,17 +34,17 @@ import com.helger.css.decl.ICSSSelectorMember;
 import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.decl.visit.DefaultCSSVisitor;
 import com.helger.css.reader.CSSReader;
-import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
+import com.helger.photon.icon.EIconCSSPathProvider;
 
 public class MainExtractFontAwesomeCSSClasses
 {
   public static void main (final String [] args)
   {
-    final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EUICtrlsCSSPathProvider.FONT_AWESOME4.getCSSItemPath (true)),
+    final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EIconCSSPathProvider.FONT_AWESOME4.getCSSItemPath (true)),
                                                                CCharset.CHARSET_UTF_8_OBJ,
                                                                ECSSVersion.CSS30);
-    final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
-    final ICommonsSet <String> aClassesIcon = new CommonsTreeSet <> ();
+    final ICommonsSet <String> aClasses = new CommonsTreeSet<> ();
+    final ICommonsSet <String> aClassesIcon = new CommonsTreeSet<> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()
     {
       @Override
