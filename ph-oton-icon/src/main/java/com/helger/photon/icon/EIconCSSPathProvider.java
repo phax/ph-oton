@@ -33,7 +33,10 @@ import com.helger.html.resource.css.ICSSPathProvider;
 public enum EIconCSSPathProvider implements ICSSPathProvider
 {
   /** http://fontawesome.io */
-  FONT_AWESOME4 ("fontawesome/4.7.0/css/font-awesome.css");
+  FONT_AWESOME4 ("fontawesome/4.7.0/css/font-awesome.css"),
+  /** https://material.io/icons/ */
+  MATERIAL_DESIGN ("materialdesign/3.0.1/css/material-icons.css"),
+  PH_OTON_MATERIAL_DESIGN ("materialdesign/ph-oton-material-icons.css");
 
   private final ConstantCSSPathProvider m_aPP;
 

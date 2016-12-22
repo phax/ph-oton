@@ -83,6 +83,7 @@
             <exclude>**/NOTICE</exclude>
             <exclude>**/LICENSE</exclude>
             <exclude>src/main/resources/fontawesome/**</exclude>
+            <exclude>src/main/resources/materialdesign/**</exclude>
           </excludes>
         </configuration>
       </plugin>
