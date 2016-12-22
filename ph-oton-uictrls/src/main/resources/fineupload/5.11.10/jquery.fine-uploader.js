@@ -1,4 +1,4 @@
-// Fine Uploader 5.11.8 - (c) 2013-present Widen Enterprises, Inc. MIT licensed. http://fineuploader.com
+// Fine Uploader 5.11.10 - (c) 2013-present Widen Enterprises, Inc. MIT licensed. http://fineuploader.com
 (function(global) {
     (function($) {
         "use strict";
@@ -143,6 +143,110 @@
                     init.apply(self, selfArgs);
                 } else {
                     $.error("Method " + optionsOrCommand + " does not exist on jQuery.fineUploader");
+                }
+            });
+            if (retVals.length === 1) {
+                return retVals[0];
+            } else if (retVals.length > 1) {
+                return retVals;
+            }
+            return this;
+        };
+    })(jQuery);
+    (function($) {
+        "use strict";
+        var rootDataKey = "fineUploaderDnd", $el;
+        function init(options) {
+            if (!options) {
+                options = {};
+            }
+            options.dropZoneElements = [ $el ];
+            var xformedOpts = transformVariables(options);
+            addCallbacks(xformedOpts);
+            dnd(new qq.DragAndDrop(xformedOpts));
+            return $el;
+        }
+        function dataStore(key, val) {
+            var data = $el.data(rootDataKey);
+            if (val) {
+                if (data === undefined) {
+                    data = {};
+                }
+                data[key] = val;
+                $el.data(rootDataKey, data);
+            } else {
+                if (data === undefined) {
+                    return null;
+                }
+                return data[key];
+            }
+        }
+        function dnd(instanceToStore) {
+            return dataStore("dndInstance", instanceToStore);
+        }
+        function addCallbacks(transformedOpts) {
+            var callbacks = transformedOpts.callbacks = {};
+            $.each(new qq.DragAndDrop.callbacks(), function(prop, func) {
+                var name = prop, $callbackEl;
+                $callbackEl = $el;
+                callbacks[prop] = function() {
+                    var args = Array.prototype.slice.call(arguments), jqueryHandlerResult = $callbackEl.triggerHandler(name, args);
+                    return jqueryHandlerResult;
+                };
+            });
+        }
+        function transformVariables(source, dest) {
+            var xformed, arrayVals;
+            if (dest === undefined) {
+                xformed = {};
+            } else {
+                xformed = dest;
+            }
+            $.each(source, function(prop, val) {
+                if (val instanceof $) {
+                    xformed[prop] = val[0];
+                } else if ($.isPlainObject(val)) {
+                    xformed[prop] = {};
+                    transformVariables(val, xformed[prop]);
+                } else if ($.isArray(val)) {
+                    arrayVals = [];
+                    $.each(val, function(idx, arrayVal) {
+                        if (arrayVal instanceof $) {
+                            $.merge(arrayVals, arrayVal);
+                        } else {
+                            arrayVals.push(arrayVal);
+                        }
+                    });
+                    xformed[prop] = arrayVals;
+                } else {
+                    xformed[prop] = val;
+                }
+            });
+            if (dest === undefined) {
+                return xformed;
+            }
+        }
+        function isValidCommand(command) {
+            return $.type(command) === "string" && command === "dispose" && dnd()[command] !== undefined;
+        }
+        function delegateCommand(command) {
+            var xformedArgs = [], origArgs = Array.prototype.slice.call(arguments, 1);
+            transformVariables(origArgs, xformedArgs);
+            return dnd()[command].apply(dnd(), xformedArgs);
+        }
+        $.fn.fineUploaderDnd = function(optionsOrCommand) {
+            var self = this, selfArgs = arguments, retVals = [];
+            this.each(function(index, el) {
+                $el = $(el);
+                if (dnd() && isValidCommand(optionsOrCommand)) {
+                    retVals.push(delegateCommand.apply(self, selfArgs));
+                    if (self.length === 1) {
+                        return false;
+                    }
+                } else if (typeof optionsOrCommand === "object" || !optionsOrCommand) {
+                    init.apply(self, selfArgs);
+                } else {
+                    $.error("Method " + optionsOrCommand + " does not exist in Fine Uploader's DnD module.");
                 }
             });
             if (retVals.length === 1) {
@@ -738,7 +842,7 @@
         };
         qq.Error.prototype = new Error();
     })();
-    qq.version = "5.11.8";
+    qq.version = "5.11.10";
     qq.supportedFeatures = function() {
         "use strict";
         var supportsUploading, supportsUploadingBlobs, supportsFileDrop, supportsAjaxFileUploading, supportsFolderDrop, supportsChunking, supportsResume, supportsUploadViaPaste, supportsUploadCors, supportsDeleteFileXdr, supportsDeleteFileCorsXhr, supportsDeleteFileCors, supportsFolderSelection, supportsImagePreviews, supportsUploadProgress;
@@ -2084,18 +2188,19 @@
                 var self = this;
                 self._preventRetries[id] = responseJSON[self._options.retry.preventRetryResponseProperty];
                 if (self._shouldAutoRetry(id, name, responseJSON)) {
+                    var retryWaitPeriod = self._options.retry.autoAttemptDelay * 1e3;
                     self._maybeParseAndSendUploadError.apply(self, arguments);
                     self._options.callbacks.onAutoRetry(id, name, self._autoRetries[id]);
                     self._onBeforeAutoRetry(id, name);
+                    self._uploadData.setStatus(id, qq.status.UPLOAD_RETRYING);
                     self._retryTimeouts[id] = setTimeout(function() {
-                        self.log("Retrying " + name + "...");
-                        self._uploadData.setStatus(id, qq.status.UPLOAD_RETRYING);
+                        self.log("Starting retry for " + name + "...");
                         if (callback) {
                             callback(id);
                         } else {
                             self._handler.retry(id);
                         }
-                    }, self._options.retry.autoAttemptDelay * 1e3);
+                    }, retryWaitPeriod);
                     return true;
                 }
             },
@@ -3052,6 +3157,37 @@
                     }
                 });
             },
+            handleFailure: function(chunkIdx, id, response, xhr) {
+                var name = options.getName(id);
+                log("Chunked upload request failed for " + id + ", chunk " + chunkIdx);
+                handler.clearCachedChunk(id, chunkIdx);
+                var responseToReport = upload.normalizeResponse(response, false), inProgressIdx;
+                if (responseToReport.reset) {
+                    chunked.reset(id);
+                } else {
+                    inProgressIdx = qq.indexOf(handler._getFileState(id).chunking.inProgress, chunkIdx);
+                    if (inProgressIdx >= 0) {
+                        handler._getFileState(id).chunking.inProgress.splice(inProgressIdx, 1);
+                        handler._getFileState(id).chunking.remaining.unshift(chunkIdx);
+                    }
+                }
+                if (!handler._getFileState(id).temp.ignoreFailure) {
+                    if (concurrentChunkingPossible) {
+                        handler._getFileState(id).temp.ignoreFailure = true;
+                        log(qq.format("Going to attempt to abort these chunks: {}. These are currently in-progress: {}.", JSON.stringify(Object.keys(handler._getXhrs(id))), JSON.stringify(handler._getFileState(id).chunking.inProgress)));
+                        qq.each(handler._getXhrs(id), function(ckid, ckXhr) {
+                            log(qq.format("Attempting to abort file {}.{}. XHR readyState {}. ", id, ckid, ckXhr.readyState));
+                            ckXhr.abort();
+                            ckXhr._cancelled = true;
+                        });
+                        handler.moveInProgressToRemaining(id);
+                        connectionManager.free(id, true);
+                    }
+                    if (!options.onAutoRetry(id, name, responseToReport, xhr)) {
+                        upload.cleanup(id, responseToReport, xhr);
+                    }
+                }
+            },
             hasMoreParts: function(id) {
                 return !!handler._getFileState(id).chunking.remaining.length;
             },
@@ -3092,55 +3228,33 @@
                     if (concurrentChunkingPossible && connectionManager.available() && handler._getFileState(id).chunking.remaining.length) {
                         chunked.sendNext(id);
                     }
-                    handler.uploadChunk(id, chunkIdx, resuming).then(function success(response, xhr) {
-                        log("Chunked upload request succeeded for " + id + ", chunk " + chunkIdx);
-                        handler.clearCachedChunk(id, chunkIdx);
-                        var inProgressChunks = handler._getFileState(id).chunking.inProgress || [], responseToReport = upload.normalizeResponse(response, true), inProgressChunkIdx = qq.indexOf(inProgressChunks, chunkIdx);
-                        log(qq.format("Chunk {} for file {} uploaded successfully.", chunkIdx, id));
-                        chunked.done(id, chunkIdx, responseToReport, xhr);
-                        if (inProgressChunkIdx >= 0) {
-                            inProgressChunks.splice(inProgressChunkIdx, 1);
-                        }
-                        handler._maybePersistChunkedState(id);
-                        if (!chunked.hasMoreParts(id) && inProgressChunks.length === 0) {
-                            chunked.finalize(id);
-                        } else if (chunked.hasMoreParts(id)) {
-                            chunked.sendNext(id);
-                        } else {
-                            log(qq.format("File ID {} has no more chunks to send and these chunk indexes are still marked as in-progress: {}", id, JSON.stringify(inProgressChunks)));
-                        }
-                    }, function failure(response, xhr) {
-                        log("Chunked upload request failed for " + id + ", chunk " + chunkIdx);
-                        handler.clearCachedChunk(id, chunkIdx);
-                        var responseToReport = upload.normalizeResponse(response, false), inProgressIdx;
-                        if (responseToReport.reset) {
-                            chunked.reset(id);
-                        } else {
-                            inProgressIdx = qq.indexOf(handler._getFileState(id).chunking.inProgress, chunkIdx);
-                            if (inProgressIdx >= 0) {
-                                handler._getFileState(id).chunking.inProgress.splice(inProgressIdx, 1);
-                                handler._getFileState(id).chunking.remaining.unshift(chunkIdx);
+                    if (chunkData.blob.size === 0) {
+                        log(qq.format("Chunk {} for file {} will not be uploaded, zero sized chunk.", chunkIdx, id), "error");
+                        chunked.handleFailure(chunkIdx, id, "File is no longer available", null);
+                    } else {
+                        handler.uploadChunk(id, chunkIdx, resuming).then(function success(response, xhr) {
+                            log("Chunked upload request succeeded for " + id + ", chunk " + chunkIdx);
+                            handler.clearCachedChunk(id, chunkIdx);
+                            var inProgressChunks = handler._getFileState(id).chunking.inProgress || [], responseToReport = upload.normalizeResponse(response, true), inProgressChunkIdx = qq.indexOf(inProgressChunks, chunkIdx);
+                            log(qq.format("Chunk {} for file {} uploaded successfully.", chunkIdx, id));
+                            chunked.done(id, chunkIdx, responseToReport, xhr);
+                            if (inProgressChunkIdx >= 0) {
+                                inProgressChunks.splice(inProgressChunkIdx, 1);
                             }
-                        }
-                        if (!handler._getFileState(id).temp.ignoreFailure) {
-                            if (concurrentChunkingPossible) {
-                                handler._getFileState(id).temp.ignoreFailure = true;
-                                log(qq.format("Going to attempt to abort these chunks: {}. These are currently in-progress: {}.", JSON.stringify(Object.keys(handler._getXhrs(id))), JSON.stringify(handler._getFileState(id).chunking.inProgress)));
-                                qq.each(handler._getXhrs(id), function(ckid, ckXhr) {
-                                    log(qq.format("Attempting to abort file {}.{}. XHR readyState {}. ", id, ckid, ckXhr.readyState));
-                                    ckXhr.abort();
-                                    ckXhr._cancelled = true;
-                                });
-                                handler.moveInProgressToRemaining(id);
-                                connectionManager.free(id, true);
+                            handler._maybePersistChunkedState(id);
+                            if (!chunked.hasMoreParts(id) && inProgressChunks.length === 0) {
+                                chunked.finalize(id);
+                            } else if (chunked.hasMoreParts(id)) {
+                                chunked.sendNext(id);
+                            } else {
+                                log(qq.format("File ID {} has no more chunks to send and these chunk indexes are still marked as in-progress: {}", id, JSON.stringify(inProgressChunks)));
                             }
-                            if (!options.onAutoRetry(id, name, responseToReport, xhr)) {
-                                upload.cleanup(id, responseToReport, xhr);
-                            }
-                        }
-                    }).done(function() {
-                        handler.clearXhr(id, chunkIdx);
-                    });
+                        }, function failure(response, xhr) {
+                            chunked.handleFailure(chunkIdx, id, response, xhr);
+                        }).done(function() {
+                            handler.clearXhr(id, chunkIdx);
+                        });
+                    }
                 }
             }
         }, connectionManager = {
@@ -4568,69 +4682,6 @@
         });
         this._testing = {};
         this._testing.parseLittleEndian = parseLittleEndian;
-    };
-    qq.Identify = function(fileOrBlob, log) {
-        "use strict";
-        function isIdentifiable(magicBytes, questionableBytes) {
-            var identifiable = false, magicBytesEntries = [].concat(magicBytes);
-            qq.each(magicBytesEntries, function(idx, magicBytesArrayEntry) {
-                if (questionableBytes.indexOf(magicBytesArrayEntry) === 0) {
-                    identifiable = true;
-                    return false;
-                }
-            });
-            return identifiable;
-        }
-        qq.extend(this, {
-            isPreviewable: function() {
-                var self = this, identifier = new qq.Promise(), previewable = false, name = fileOrBlob.name === undefined ? "blob" : fileOrBlob.name;
-                log(qq.format("Attempting to determine if {} can be rendered in this browser", name));
-                log("First pass: check type attribute of blob object.");
-                if (this.isPreviewableSync()) {
-                    log("Second pass: check for magic bytes in file header.");
-                    qq.readBlobToHex(fileOrBlob, 0, 4).then(function(hex) {
-                        qq.each(self.PREVIEWABLE_MIME_TYPES, function(mime, bytes) {
-                            if (isIdentifiable(bytes, hex)) {
-                                if (mime !== "image/tiff" || qq.supportedFeatures.tiffPreviews) {
-                                    previewable = true;
-                                    identifier.success(mime);
-                                }
-                                return false;
-                            }
-                        });
-                        log(qq.format("'{}' is {} able to be rendered in this browser", name, previewable ? "" : "NOT"));
-                        if (!previewable) {
-                            identifier.failure();
-                        }
-                    }, function() {
-                        log("Error reading file w/ name '" + name + "'.  Not able to be rendered in this browser.");
-                        identifier.failure();
-                    });
-                } else {
-                    identifier.failure();
-                }
-                return identifier;
-            },
-            isPreviewableSync: function() {
-                var fileMime = fileOrBlob.type, isRecognizedImage = qq.indexOf(Object.keys(this.PREVIEWABLE_MIME_TYPES), fileMime) >= 0, previewable = false, name = fileOrBlob.name === undefined ? "blob" : fileOrBlob.name;
-                if (isRecognizedImage) {
-                    if (fileMime === "image/tiff") {
-                        previewable = qq.supportedFeatures.tiffPreviews;
-                    } else {
-                        previewable = true;
-                    }
-                }
-                !previewable && log(name + " is not previewable in this browser per the blob's type attr");
-                return previewable;
-            }
-        });
-    };
-    qq.Identify.prototype.PREVIEWABLE_MIME_TYPES = {
-        "image/jpeg": "ffd8ff",
-        "image/gif": "474946",
-        "image/png": "89504e",
-        "image/bmp": "424d",
-        "image/tiff": [ "49492a00", "4d4d002a" ]
     };
     qq.Identify = function(fileOrBlob, log) {
         "use strict";
@@ -6247,7 +6298,7 @@
                         this._templating.hideEditIcon(id);
                     }
                 }
-                if (newStatus === qq.status.UPLOAD_RETRYING) {
+                if (oldStatus === qq.status.UPLOAD_RETRYING && newStatus === qq.status.UPLOADING) {
                     this._templating.hideRetry(id);
                     this._templating.setStatusText(id);
                     qq(this._templating.getFileContainer(id)).removeClass(this._classes.retrying);
