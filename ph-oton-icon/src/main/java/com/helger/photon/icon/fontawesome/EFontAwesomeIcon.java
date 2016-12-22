@@ -23,6 +23,8 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.textlevel.HCI;
 import com.helger.html.hc.html.textlevel.HCSpan;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.icon.EIconCSSPathProvider;
 import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
@@ -967,5 +969,10 @@ public enum EFontAwesomeIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.SAVE_CLOSE, SAVE);
     DefaultIcons.set (EDefaultIcon.UP, ARROW_UP);
     DefaultIcons.set (EDefaultIcon.YES, CHECK);
+  }
+
+  public static void registerResources ()
+  {
+    PhotonCSS.registerCSSIncludeForThisRequest (EIconCSSPathProvider.FONT_AWESOME4);
   }
 }

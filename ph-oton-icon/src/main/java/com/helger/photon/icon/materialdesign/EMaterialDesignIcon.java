@@ -24,6 +24,8 @@ import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.textlevel.HCI;
+import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.icon.EIconCSSPathProvider;
 import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
@@ -1068,5 +1070,12 @@ public enum EMaterialDesignIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.SAVE_CLOSE, SAVE);
     DefaultIcons.set (EDefaultIcon.UP, ARROW_UPWARD);
     DefaultIcons.set (EDefaultIcon.YES, CHECK);
+  }
+
+  public static void registerResources ()
+  {
+    PhotonCSS.registerCSSIncludeForThisRequest (EIconCSSPathProvider.MATERIAL_ICONS);
+    PhotonCSS.registerCSSIncludeForThisRequest (EIconCSSPathProvider.MATERIAL_ICONS_LIST);
+    PhotonCSS.registerCSSIncludeForThisRequest (EIconCSSPathProvider.PH_OTON_MATERIAL_DESIGN);
   }
 }
