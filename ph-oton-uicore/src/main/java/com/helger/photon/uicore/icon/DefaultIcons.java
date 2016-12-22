@@ -33,7 +33,7 @@ import com.helger.commons.collection.ext.ICommonsMap;
 @NotThreadSafe
 public final class DefaultIcons
 {
-  private static final ICommonsMap <EDefaultIcon, IIcon> s_aMap = new CommonsHashMap <> ();
+  private static final ICommonsMap <EDefaultIcon, IIcon> s_aMap = new CommonsHashMap<> ();
 
   private DefaultIcons ()
   {}
@@ -44,7 +44,7 @@ public final class DefaultIcons
    */
   public static boolean areDefined ()
   {
-    return !s_aMap.isEmpty ();
+    return s_aMap.isNotEmpty ();
   }
 
   /**
@@ -62,6 +62,10 @@ public final class DefaultIcons
     return s_aMap.get (eDefaultIcon);
   }
 
+  /**
+   * @return A copy of all currently defined default icons. Never
+   *         <code>null</code> but maybe empty.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public static ICommonsMap <EDefaultIcon, IIcon> getAll ()
