@@ -58,3 +58,9 @@
 #menu .nav .nav .nav>li>a {
 	padding-left: 25px;
 }
+
+.icon-container {
+	display:inline-block;
+	width:150px;
+	overflow:hidden;
+}

@@ -20,11 +20,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.bootstrap.demo.pub.page.PagePublicLogin;
+import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconFontAwesome;
+import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconMaterialDesign;
 import com.helger.photon.security.menu.MenuObjectFilterNoUserLoggedIn;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uicore.page.external.BasePageViewExternal;
+import com.helger.photon.uicore.page.system.BasePageShowChildren;
 
 @Immutable
 public final class MenuPublic
@@ -38,6 +42,15 @@ public final class MenuPublic
     aMenuTree.createRootItem (new PagePublicLogin (CMenuPublic.MENU_LOGIN))
              .setDisplayFilter (new MenuObjectFilterNoUserLoggedIn ());
     aMenuTree.createRootSeparator ().setDisplayFilter (new MenuObjectFilterNoUserLoggedIn ());
+
+    // Icons stuff
+    {
+      final IMenuItemPage aIcons = aMenuTree.createRootItem (new BasePageShowChildren<> ("icon",
+                                                                                         "Icon sets",
+                                                                                         aMenuTree));
+      aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome ("icon-fa"));
+      aMenuTree.createItem (aIcons, new PagePublicIconMaterialDesign ("icon-md"));
+    }
 
     // Common stuff
     aMenuTree.createRootItem (new BasePageViewExternal <WebPageExecutionContext> (CMenuPublic.MENU_SITENOTICE,
