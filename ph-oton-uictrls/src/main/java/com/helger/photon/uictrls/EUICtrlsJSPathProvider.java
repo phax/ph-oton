@@ -46,7 +46,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   HANDLEBARS_3 ("handlebars/3.0.3/handlebars-v3.0.3.js"),
   JSCOLOR ("jscolor/1.4.4ph/jscolor.js"),
   JSZIP2 ("jszip/2.5.0-6/jszip.js"),
-  JSZIP3 ("jszip/3.0.0/jszip.js"),
+  JSZIP3 ("jszip/3.1.3/jszip.js"),
   PDFMAKE ("pdfmake/0.1.20/pdfmake.js"),
   VFS_FONTS ("pdfmake/0.1.20/vfs_fonts.js"),
   PDFOBJECT1 ("pdfobject/1.2/pdfobject.js"),
