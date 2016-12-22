@@ -43,7 +43,7 @@ public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
   FINEUPLOADER_330 ("fineupload/330/fineuploader.css"),
   FINEUPLOADER_5 ("fineupload/5.11.8/fine-uploader.css"),
   /** http://fontawesome.io */
-  FONT_AWESOME4 ("fontawesome/4.5.0/css/font-awesome.css"),
+  FONT_AWESOME4 ("fontawesome/4.7.0/css/font-awesome.css"),
   JSCOLOR ("jscolor/1.4.4ph/jscolor.css"),
   PRISMJS ("prismjs/prism.css"),
   PRISMJS_BOOTSTRAP ("prismjs/prism-bootstrap.css"),
