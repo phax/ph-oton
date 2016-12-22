@@ -42,11 +42,13 @@ public final class MenuPublic
     // Common stuff
     aMenuTree.createRootItem (new BasePageViewExternal <WebPageExecutionContext> (CMenuPublic.MENU_SITENOTICE,
                                                                                   "Site notice",
-                                                                                  new ClassPathResource ("viewpages/en/site-notice.xml")));
+                                                                                  new ClassPathResource ("viewpages/en/site-notice.xml"),
+                                                                                  null));
 
     aMenuTree.createRootItem (new BasePageViewExternal <WebPageExecutionContext> (CMenuPublic.MENU_GTC,
                                                                                   "GTC",
-                                                                                  new ClassPathResource ("viewpages/en/gtc.xml")))
+                                                                                  new ClassPathResource ("viewpages/en/gtc.xml"),
+                                                                                  null))
              .setAttribute (CMenuPublic.FLAG_FOOTER, Boolean.TRUE);
 
     // Set default

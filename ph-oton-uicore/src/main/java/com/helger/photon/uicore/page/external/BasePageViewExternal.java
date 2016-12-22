@@ -16,14 +16,16 @@
  */
 package com.helger.photon.uicore.page.external;
 
+import java.util.function.Consumer;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
@@ -50,17 +52,6 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
   @GuardedBy ("m_aRWLock")
   protected IMicroContainer m_aParsedContent;
 
-  /**
-   * This callback is called after the HTML content was successfully read
-   *
-   * @param aCont
-   *        The micro container containing all HTML elements contained in the
-   *        resource specified in the constructor. Never <code>null</code>.
-   */
-  @OverrideOnDemand
-  protected void afterPageRead (@Nonnull final IMicroContainer aCont)
-  {}
-
   @Nonnull
   private IMicroContainer _readFromResource (@Nonnull final IReadableResource aResource)
   {
@@ -68,26 +59,26 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
     final IMicroContainer ret = readHTMLPageFragment (aResource);
 
     // Perform callback
-    afterPageRead (ret);
+    if (hasContentCleanser ())
+      getContentCleanser ().accept (ret);
+
     return ret;
   }
 
   public BasePageViewExternal (@Nonnull @Nonempty final String sID,
                                @Nonnull final String sName,
-                               @Nonnull final IReadableResource aResource)
+                               @Nonnull final IReadableResource aResource,
+                               @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
-    super (sID, sName);
-
-    m_aResource = ValueEnforcer.notNull (aResource, "Resource");
-    // Read once anyway to check if the resource is readable
-    m_aParsedContent = _readFromResource (aResource);
+    this (sID, getAsMLT (sName), aResource, aContentCleanser);
   }
 
   public BasePageViewExternal (@Nonnull @Nonempty final String sID,
                                @Nonnull final IMultilingualText aName,
-                               @Nonnull final IReadableResource aResource)
+                               @Nonnull final IReadableResource aResource,
+                               @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
-    super (sID, aName);
+    super (sID, aName, aContentCleanser);
 
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     // Read once anyway to check if the resource is readable
@@ -114,14 +105,6 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
     return m_aRWLock.readLocked ( () -> m_aParsedContent.getClone ());
   }
 
-  /**
-   * Re-read the content from the underlying resource. This only makes sense, if
-   * {@link #isReadEveryTime()} is <code>false</code>.
-   *
-   * @see #isReadEveryTime()
-   * @see #setReadEveryTime(boolean)
-   */
-  @Override
   public void updateFromResource ()
   {
     m_aRWLock.writeLocked ( () -> m_aParsedContent = _readFromResource (m_aResource));

@@ -17,6 +17,7 @@
 package com.helger.photon.uicore.page.external;
 
 import java.nio.charset.Charset;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -49,13 +50,14 @@ import com.helger.xml.serialize.read.SAXReaderSettings;
  *        Web page execution context type
  */
 @ThreadSafe
-public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext>
-                                                     extends AbstractWebPage <WPECTYPE>
+public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext> extends
+                                                     AbstractWebPage <WPECTYPE> implements IWebPageResourceContent
 {
   public static final Charset DEFAULT_CHARSET = CCharset.CHARSET_UTF_8_OBJ;
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
 
+  private final Consumer <? super IMicroContainer> m_aContentCleanser;
   @GuardedBy ("m_aRWLock")
   private boolean m_bReadEveryTime = GlobalDebug.isDebugMode ();
 
@@ -97,37 +99,19 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
     return ret;
   }
 
-  public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
-  {
-    super (sID, getAsMLT (sName), null);
-  }
-
-  public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
+  public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID,
+                                         @Nonnull final IMultilingualText aName,
+                                         @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
     super (sID, aName, null);
+    m_aContentCleanser = aContentCleanser;
   }
 
-  /**
-   * @return <code>true</code> if the underlying resource should be read each
-   *         time {@link #fillContent(IWebPageExecutionContext)} is invoked or
-   *         <code>false</code> if the resource is read once in the constructor
-   *         and re-used over and over.
-   */
-  @SuppressWarnings ("javadoc")
   public final boolean isReadEveryTime ()
   {
     return m_aRWLock.readLocked ( () -> m_bReadEveryTime);
   }
 
-  /**
-   * @param bReadEveryTime
-   *        <code>true</code> if the underlying resource should be read each
-   *        time {@link #fillContent(IWebPageExecutionContext)} is invoked or
-   *        <code>false</code> if the resource should be read once in the
-   *        constructor and re-used over and over.
-   * @return this
-   */
-  @SuppressWarnings ("javadoc")
   @Nonnull
   public final AbstractWebPageResourceContent <WPECTYPE> setReadEveryTime (final boolean bReadEveryTime)
   {
@@ -135,18 +119,23 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
     return this;
   }
 
-  /**
-   * Re-read the content from the underlying resource. This only makes sense, if
-   * {@link #isReadEveryTime()} is <code>false</code>.
-   *
-   * @see #isReadEveryTime()
-   * @see #setReadEveryTime(boolean)
-   */
-  public abstract void updateFromResource ();
+  @Nullable
+  public final Consumer <? super IMicroContainer> getContentCleanser ()
+  {
+    return m_aContentCleanser;
+  }
+
+  public final boolean hasContentCleanser ()
+  {
+    return m_aContentCleanser != null;
+  }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("readEveryTime", m_bReadEveryTime).toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("ContentCleanser", m_aContentCleanser)
+                            .append ("ReadEveryTime", m_bReadEveryTime)
+                            .toString ();
   }
 }

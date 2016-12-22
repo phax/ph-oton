@@ -19,6 +19,7 @@ package com.helger.photon.uicore.page.external;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,7 +29,6 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsMap;
@@ -95,31 +95,15 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <Locale, ContentPerLocale> m_aContent = new CommonsHashMap<> ();
 
-  /**
-   * This callback is called after the HTML content was successfully read
-   *
-   * @param aLocale
-   *        The locale of the read resource. Never <code>null</code>.
-   * @param aResource
-   *        The read resource. Never <code>null</code>.
-   * @param aCont
-   *        The micro container containing all HTML elements contained in the
-   *        resource specified in the constructor. Never <code>null</code>.
-   */
-  @OverrideOnDemand
-  protected void afterPageRead (@Nonnull final Locale aLocale,
-                                @Nonnull final IReadableResource aResource,
-                                @Nonnull final IMicroContainer aCont)
-  {}
-
   @Nonnull
-  private IMicroContainer _readFromResource (@Nonnull final Locale aLocale, @Nonnull final IReadableResource aResource)
+  private IMicroContainer _readFromResource (@Nonnull final IReadableResource aResource)
   {
     // Main read
     final IMicroContainer ret = readHTMLPageFragment (aResource);
 
-    // Perform callback
-    afterPageRead (aLocale, aResource, ret);
+    // Perform cleansing
+    if (hasContentCleanser ())
+      getContentCleanser ().accept (ret);
     return ret;
   }
 
@@ -130,7 +114,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     {
       final Locale aLocale = aEntry.getKey ();
       final IReadableResource aResource = aEntry.getValue ();
-      final IMicroContainer aCont = _readFromResource (aLocale, aResource);
+      final IMicroContainer aCont = _readFromResource (aResource);
       m_aContent.put (aLocale, new ContentPerLocale (aResource, aCont));
     }
   }
@@ -138,25 +122,19 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
   public BasePageViewExternalMultilingual (@Nonnull @Nonempty final String sID,
                                            @Nonnull final String sName,
                                            @Nonnull final Map <Locale, IReadableResource> aResources,
-                                           @Nonnull final Locale aDefaultLocale)
+                                           @Nonnull final Locale aDefaultLocale,
+                                           @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
-    super (sID, sName);
-    ValueEnforcer.notEmpty (aResources, "Resources");
-    m_aDefaultLocale = ValueEnforcer.notNull (aDefaultLocale, "DefaultLocale");
-    if (!aResources.containsKey (aDefaultLocale))
-      throw new IllegalArgumentException ("The provided default locale " +
-                                          aDefaultLocale +
-                                          " is not present in the resource locales: " +
-                                          aResources.keySet ());
-    _init (aResources);
+    this (sID, getAsMLT (sName), aResources, aDefaultLocale, aContentCleanser);
   }
 
   public BasePageViewExternalMultilingual (@Nonnull @Nonempty final String sID,
                                            @Nonnull final IMultilingualText aName,
                                            @Nonnull final Map <Locale, IReadableResource> aResources,
-                                           @Nonnull final Locale aDefaultLocale)
+                                           @Nonnull final Locale aDefaultLocale,
+                                           @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
-    super (sID, aName);
+    super (sID, aName, aContentCleanser);
     ValueEnforcer.notEmpty (aResources, "Resources");
     m_aDefaultLocale = ValueEnforcer.notNull (aDefaultLocale, "DefaultLocale");
     if (!aResources.containsKey (aDefaultLocale))
@@ -195,23 +173,14 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     });
   }
 
-  /**
-   * Re-read the content from the underlying resource. This only makes sense, if
-   * {@link #isReadEveryTime()} is <code>false</code>.
-   *
-   * @see #isReadEveryTime()
-   * @see #setReadEveryTime(boolean)
-   */
-  @Override
   public void updateFromResource ()
   {
     m_aRWLock.writeLocked ( () -> {
       for (final Map.Entry <Locale, ContentPerLocale> aEntry : m_aContent.entrySet ())
       {
-        final Locale aLocale = aEntry.getKey ();
         final ContentPerLocale aContent = aEntry.getValue ();
         // Read again
-        final IMicroContainer aCont = _readFromResource (aLocale, aContent.getResource ());
+        final IMicroContainer aCont = _readFromResource (aContent.getResource ());
         // And update object on the fly
         aContent.setContainer (aCont);
       }
@@ -239,8 +208,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
                                          aDisplayLocale +
                                          " in page " +
                                          getID ());
-      return bReadFromResource ? _readFromResource (aLocaleToUse, aContent.getResource ())
-                               : aContent.getContainerClone ();
+      return bReadFromResource ? _readFromResource (aContent.getResource ()) : aContent.getContainerClone ();
     });
 
     aNodeList.addChild (new HCDOMWrapper (aNode));
