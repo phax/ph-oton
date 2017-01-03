@@ -81,7 +81,12 @@ public class PasswordHashCreatorManager
                                             "' is already registered!");
       m_aPasswordHashCreators.put (sAlgorithmName, aPasswordHashCreator);
     });
-    s_aLogger.info ("Registered password hash creator algorithm '" + sAlgorithmName + "' to " + aPasswordHashCreator);
+
+    if (s_aLogger.isDebugEnabled ())
+      s_aLogger.debug ("Registered password hash creator algorithm '" +
+                       sAlgorithmName +
+                       "' to " +
+                       aPasswordHashCreator);
   }
 
   public void unregisterPasswordHashCreator (@Nullable final IPasswordHashCreator aPasswordHashCreator)
