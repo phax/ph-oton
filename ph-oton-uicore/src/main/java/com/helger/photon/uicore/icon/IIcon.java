@@ -18,7 +18,7 @@ package com.helger.photon.uicore.icon;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
@@ -34,6 +34,6 @@ public interface IIcon extends ICSSClassProvider, Serializable
    * @return The icon as self-contained node. The node must be visible by
    *         itself!
    */
-  @Nonnull
+  @Nullable
   IHCElement <?> getAsNode ();
 }
