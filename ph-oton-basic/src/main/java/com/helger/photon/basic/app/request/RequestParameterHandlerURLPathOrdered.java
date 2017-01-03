@@ -36,7 +36,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 /**
  * An implementation of {@link IRequestParameterHandler} that takes the request
  * parameters from the URL path in the fixed order locale than menu item. It
- * build URLs in the form <code>basePath/<i>locale</i>/<i>menuItem</code>
+ * build URLs in the form <code>basePath/<i>locale</i>/<i>menuItem</i></code>
  *
  * @author Philip Helger
  * @since 7.0.2
