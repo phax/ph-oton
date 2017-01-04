@@ -146,7 +146,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     final String sDir = SystemProperties.getPropertyValue (sSysPropName);
     if (sDir != null)
     {
-      final ICommonsList <IHCNode> aList = new CommonsArrayList<> ();
+      final ICommonsList <IHCNode> aList = new CommonsArrayList <> ();
       // The property may contain several paths
       for (final String sPart : StringHelper.getExploded (SystemProperties.getPathSeparator (), sDir))
       {
@@ -162,7 +162,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         else
         {
           // Directory exists - scan content
-          final ICommonsList <File> aFiles = new CommonsArrayList<> (new FileSystemIterator (aEndorsedDir));
+          final ICommonsList <File> aFiles = new CommonsArrayList <> (new FileSystemIterator (aEndorsedDir));
           if (aFiles.isEmpty ())
           {
             // Directory is empty

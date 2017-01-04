@@ -57,7 +57,7 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
       ValueEnforcer.notNull (aRenderer, "Renderer");
 
       m_aWPEC = aWPEC;
-      m_aStack = new NonBlockingStack<> (aUL);
+      m_aStack = new NonBlockingStack <> (aUL);
       m_aRenderer = aRenderer;
     }
 
@@ -169,7 +169,7 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
       return null;
 
     final HCUL aUL = createRootUL ();
-    TreeVisitor.visitTreeItem (aMenuTreeItem, new ShowChildrenCallback<> (aWPEC, aUL, m_aRenderer));
+    TreeVisitor.visitTreeItem (aMenuTreeItem, new ShowChildrenCallback <> (aWPEC, aUL, m_aRenderer));
     return aUL;
   }
 

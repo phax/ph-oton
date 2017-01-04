@@ -275,7 +275,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
         final BootstrapTable aPropsTable = new BootstrapTable (HCCol.star (), HCCol.star ());
         aPropsTable.addHeaderRow ().addCells (EText.MSG_KEY.getDisplayText (aDisplayLocale),
                                               EText.MSG_VALUE.getDisplayText (aDisplayLocale));
-        final ICommonsSet <String> aKeys = new CommonsHashSet<> ();
+        final ICommonsSet <String> aKeys = new CommonsHashSet <> ();
         for (final Object aName : aSecurityProvider.keySet ())
           aKeys.add ((String) aName);
         for (final String sName : CollectionHelper.getSorted (aKeys))

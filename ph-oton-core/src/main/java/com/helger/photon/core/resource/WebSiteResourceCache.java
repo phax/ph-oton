@@ -48,7 +48,7 @@ public final class WebSiteResourceCache
   @GuardedBy ("s_aRWLock")
   private static boolean s_bCacheEnabled = !GlobalDebug.isDebugMode ();
   @GuardedBy ("s_aRWLock")
-  private static final ICommonsMap <String, WebSiteResource> s_aMap = new CommonsHashMap<> ();
+  private static final ICommonsMap <String, WebSiteResource> s_aMap = new CommonsHashMap <> ();
 
   @PresentForCodeCoverage
   private static final WebSiteResourceCache s_aInstance = new WebSiteResourceCache ();

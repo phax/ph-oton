@@ -93,7 +93,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
 
   private final Locale m_aDefaultLocale;
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <Locale, ContentPerLocale> m_aContent = new CommonsHashMap<> ();
+  private final ICommonsMap <Locale, ContentPerLocale> m_aContent = new CommonsHashMap <> ();
 
   @Nonnull
   private IMicroContainer _readFromResource (@Nonnull final IReadableResource aResource)

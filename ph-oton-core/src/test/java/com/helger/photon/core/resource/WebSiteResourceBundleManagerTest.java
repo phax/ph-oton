@@ -43,7 +43,7 @@ public final class WebSiteResourceBundleManagerTest
   @Test
   public void testBasicJS ()
   {
-    final ICommonsList <WebSiteResourceWithCondition> aList = new CommonsArrayList<> ();
+    final ICommonsList <WebSiteResourceWithCondition> aList = new CommonsArrayList <> ();
     aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("/res/serverlog.js"), true));
     aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("/res/stacktrace.js"), true));
     final ICommonsList <WebSiteResourceBundleSerialized> aBundles = PhotonCoreManager.getWebSiteResourceBundleMgr ()
@@ -55,7 +55,7 @@ public final class WebSiteResourceBundleManagerTest
   @Test
   public void testBasicCSS ()
   {
-    final ICommonsList <WebSiteResourceWithCondition> aList = new CommonsArrayList<> ();
+    final ICommonsList <WebSiteResourceWithCondition> aList = new CommonsArrayList <> ();
     aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("/res/animate.css"), true));
     aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("/res/famfam.css"), true));
     final ICommonsList <WebSiteResourceBundleSerialized> aBundles = PhotonCoreManager.getWebSiteResourceBundleMgr ()

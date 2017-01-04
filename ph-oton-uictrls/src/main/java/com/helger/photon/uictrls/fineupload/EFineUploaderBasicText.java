@@ -30,12 +30,16 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum EFineUploaderBasicText implements IHasDisplayText
 {
-  TYPE_ERROR ("{file} hat eine ungültige Erweiterung.\nErlaubt sind nur: {extensions}.", "{file} has an invalid extension.\nValid extension(s): {extensions}."),
-  SIZE_ERROR ("{file} ist zu groß. Die maximale Dateigröße ist {sizeLimit}.", "{file} is too large, maximum file size is {sizeLimit}."),
-  MIN_SIZE_ERROR ("{file} ist zu klein. Die minimale Dateigröße ist {minSizeLimit}.", "{file} is too small, minimum file size is {minSizeLimit}."),
+  TYPE_ERROR ("{file} hat eine ungültige Erweiterung.\nErlaubt sind nur: {extensions}.",
+              "{file} has an invalid extension.\nValid extension(s): {extensions}."),
+  SIZE_ERROR ("{file} ist zu groß. Die maximale Dateigröße ist {sizeLimit}.",
+              "{file} is too large, maximum file size is {sizeLimit}."),
+  MIN_SIZE_ERROR ("{file} ist zu klein. Die minimale Dateigröße ist {minSizeLimit}.",
+                  "{file} is too small, minimum file size is {minSizeLimit}."),
   EMPTY_ERROR ("{file} ist leer.", "{file} is empty, please select files again without it."),
   NO_FILES_ERROR ("Es wurde keine Dateien zum Hochladen ausgewählt.", "No files to upload."),
-  ON_LEAVE ("Derzeit werden Dateien hochgeladen. Wenn Sie diese seiten nun verlassen, wird das Hochladen abgebrochen!", "The files are being uploaded, if you leave now the upload will be cancelled.");
+  ON_LEAVE ("Derzeit werden Dateien hochgeladen. Wenn Sie diese seiten nun verlassen, wird das Hochladen abgebrochen!",
+            "The files are being uploaded, if you leave now the upload will be cancelled.");
 
   private final IMultilingualText m_aTP;
 

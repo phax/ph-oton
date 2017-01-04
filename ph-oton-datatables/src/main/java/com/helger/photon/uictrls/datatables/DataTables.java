@@ -234,7 +234,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // DataTables - Columns
   //
   /** Set column definition initialisation properties. */
-  private final ICommonsList <DataTablesColumnDef> m_aColumnDefs = new CommonsArrayList<> ();
+  private final ICommonsList <DataTablesColumnDef> m_aColumnDefs = new CommonsArrayList <> ();
 
   //
   // DataTables - Internationalisation
@@ -246,7 +246,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   //
   // DataTables - Plugins
   //
-  private final ICommonsOrderedMap <String, IDataTablesPlugin> m_aPlugins = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, IDataTablesPlugin> m_aPlugins = new CommonsLinkedHashMap <> ();
 
   // Custom properties
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
@@ -1151,7 +1151,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     _applyClientSideSortingSettings ();
 
     // Determine all applicable plugins
-    final ICommonsList <IDataTablesPlugin> aRelevantPlugins = new CommonsArrayList<> ();
+    final ICommonsList <IDataTablesPlugin> aRelevantPlugins = new CommonsArrayList <> ();
     for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
       if (aPlugin.canBeApplied (this))
         aRelevantPlugins.add (aPlugin);

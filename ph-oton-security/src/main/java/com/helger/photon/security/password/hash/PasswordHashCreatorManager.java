@@ -51,7 +51,7 @@ public class PasswordHashCreatorManager
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IPasswordHashCreator> m_aPasswordHashCreators = new CommonsHashMap<> ();
+  private final ICommonsMap <String, IPasswordHashCreator> m_aPasswordHashCreators = new CommonsHashMap <> ();
   @GuardedBy ("m_aRWLock")
   private IPasswordHashCreator m_aDefaultPasswordHashCreator;
 

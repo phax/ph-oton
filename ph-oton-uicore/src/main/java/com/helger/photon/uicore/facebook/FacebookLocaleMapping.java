@@ -116,7 +116,7 @@ public final class FacebookLocaleMapping extends AbstractGlobalWebSingleton
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (FacebookLocaleMapping.class);
 
-  private final ICommonsSet <Locale> m_aFBLocales = new CommonsHashSet<> ();
+  private final ICommonsSet <Locale> m_aFBLocales = new CommonsHashSet <> ();
 
   private final IMutableCache <Locale, Locale> m_aCache = new AbstractNotifyingCache <Locale, Locale> (FacebookLocaleMapping.class.getName ())
   {

@@ -254,7 +254,7 @@ public final class PhotonCSS
   {
     final CSSResourceSet aSet = _getPerRequestSet (false);
     if (aSet == null)
-      return new CommonsLinkedHashSet<> ();
+      return new CommonsLinkedHashSet <> ();
     aSet.markAsCollected ();
     return aSet.getAllItems ();
   }

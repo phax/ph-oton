@@ -38,9 +38,9 @@ public class FineUploader5Session implements IFineUploader5Part
 {
   public static final boolean DEFAULT_SESSION_REFRESH_ON_RESET = true;
 
-  private final ICommonsOrderedMap <String, String> m_aSessionCustomHeaders = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, String> m_aSessionCustomHeaders = new CommonsLinkedHashMap <> ();
   private ISimpleURL m_aSessionEndpoint;
-  private final ICommonsOrderedMap <String, String> m_aSessionParams = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, String> m_aSessionParams = new CommonsLinkedHashMap <> ();
   private boolean m_bSessionRefreshOnReset = DEFAULT_SESSION_REFRESH_ON_RESET;
 
   public FineUploader5Session ()

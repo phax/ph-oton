@@ -42,7 +42,7 @@ public final class ServletStatus
 
   private final String m_sClassName;
   private EServletStatus m_eCurrentStatus;
-  private final ICommonsMap <EServletStatus, LocalDateTime> m_aStatusChangeDates = new CommonsEnumMap<> (EServletStatus.class);
+  private final ICommonsMap <EServletStatus, LocalDateTime> m_aStatusChangeDates = new CommonsEnumMap <> (EServletStatus.class);
   private final AtomicInteger m_aInvocationCount = new AtomicInteger (0);
 
   public ServletStatus (@Nonnull @Nonempty final String sClassName)

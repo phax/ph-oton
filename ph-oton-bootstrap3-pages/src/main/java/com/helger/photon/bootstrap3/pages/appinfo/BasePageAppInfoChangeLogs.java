@@ -128,7 +128,7 @@ public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
     if (s_aCache == null)
     {
       // Get all change logs
-      ICommonsList <ChangeLogEntry> aChangeLogEntries = new CommonsArrayList<> ();
+      ICommonsList <ChangeLogEntry> aChangeLogEntries = new CommonsArrayList <> ();
       for (final ChangeLog aChangeLog : CollectionHelper.newList (ChangeLogSerializer.readAllChangeLogs ().values ()))
         aChangeLogEntries.addAll (aChangeLog.getAllEntries ());
 

@@ -73,7 +73,7 @@ public final class PathMatchingResult
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllVariableValues ()
   {
-    return new CommonsLinkedHashMap<> (m_aVariableValues);
+    return new CommonsLinkedHashMap <> (m_aVariableValues);
   }
 
   @Override

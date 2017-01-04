@@ -230,7 +230,7 @@ public final class PhotonJS
   {
     final JSResourceSet aSet = _getPerRequestSet (false);
     if (aSet == null)
-      return new CommonsLinkedHashSet<> ();
+      return new CommonsLinkedHashSet <> ();
     aSet.markAsCollected ();
     return aSet.getAllItems ();
   }

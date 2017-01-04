@@ -79,14 +79,16 @@ public enum EDateEditText implements IHasDisplayText
   CALENDAR_ABOUT ("Datum auswählen:\n" +
                   "- Benutzen Sie die \u00ab, \u00bb Buttons um das Jahr zu wählen\n" +
                   "- Benutzen Sie die \u2039, \u203a Buttons um den Monat zu wählen\n" +
-                  "- Für eine Schnellauswahl halten Sie die Maustaste über diesen Buttons fest.", "Date selection:\n" +
+                  "- Für eine Schnellauswahl halten Sie die Maustaste über diesen Buttons fest.",
+                  "Date selection:\n" +
                                                                                                   "- Use the \u00ab, \u00bb buttons to select year\n" +
                                                                                                   "- Use the \u2039, \u203a buttons to select month\n" +
                                                                                                   "- Hold mouse button on any of the above buttons for faster selection."),
   CALENDAR_ABOUT_TIME ("Zeit auswählen:\n" +
                        "- Klicken Sie auf die Teile der Uhrzeit, um diese zu erhöhen\n" +
                        "- oder klicken Sie mit festgehaltener Shift-Taste um diese zu verringern\n" +
-                       "- oder klicken und festhalten für Schnellauswahl.", "Time selection:\n" +
+                       "- oder klicken und festhalten für Schnellauswahl.",
+                       "Time selection:\n" +
                                                                             "- Click on any of the time parts to increase it\n" +
                                                                             "- or Shift-click to decrease it\n" +
                                                                             "- or click and drag for faster selection."),
@@ -102,7 +104,8 @@ public enum EDateEditText implements IHasDisplayText
   CALENDAR_WEEKEND ("0,6", "0,6"),
   CALENDAR_CLOSE ("Schließen", "Close"),
   CALENDAR_TODAY ("Heute", "Today"),
-  CALENDAR_TIME_PART ("(Shift-)Klick oder Festhalten und Ziehen um den Wert zu ändern", "(Shift-)Click or drag to change value"),
+  CALENDAR_TIME_PART ("(Shift-)Klick oder Festhalten und Ziehen um den Wert zu ändern",
+                      "(Shift-)Click or drag to change value"),
   CALENDAR_DEF_DATE_FORMAT ("%d.%m.%Y", "%Y-%m-%d"),
   CALENDAR_TT_DATE_FORMAT ("%A, %e. %B", "%a, %b %e"),
   CALENDAR_DEF_TIME_FORMAT ("%H:%M:%S", "%H:%M:%S %P"),

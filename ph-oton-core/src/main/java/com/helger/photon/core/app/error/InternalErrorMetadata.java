@@ -81,12 +81,12 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
   private static final Logger s_aLogger = LoggerFactory.getLogger (InternalErrorMetadata.class);
 
   private final String m_sErrorID;
-  private final ICommonsList <Entry> m_aFields = new CommonsArrayList<> ();
-  private final ICommonsList <Entry> m_aRequestFields = new CommonsArrayList<> ();
-  private final ICommonsList <Entry> m_aRequestHeaders = new CommonsArrayList<> ();
-  private final ICommonsList <Entry> m_aRequestParameters = new CommonsArrayList<> ();
-  private final ICommonsList <Entry> m_aRequestCookies = new CommonsArrayList<> ();
-  private final ICommonsList <Entry> m_aSessionFields = new CommonsArrayList<> ();
+  private final ICommonsList <Entry> m_aFields = new CommonsArrayList <> ();
+  private final ICommonsList <Entry> m_aRequestFields = new CommonsArrayList <> ();
+  private final ICommonsList <Entry> m_aRequestHeaders = new CommonsArrayList <> ();
+  private final ICommonsList <Entry> m_aRequestParameters = new CommonsArrayList <> ();
+  private final ICommonsList <Entry> m_aRequestCookies = new CommonsArrayList <> ();
+  private final ICommonsList <Entry> m_aSessionFields = new CommonsArrayList <> ();
 
   public InternalErrorMetadata (@Nullable final String sErrorID)
   {

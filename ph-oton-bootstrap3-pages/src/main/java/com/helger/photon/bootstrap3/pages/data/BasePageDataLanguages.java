@@ -111,7 +111,7 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext>
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IMultiMapListBased <String, Locale> aMapLanguageToLocale = new MultiHashMapArrayListBased<> ();
+    final IMultiMapListBased <String, Locale> aMapLanguageToLocale = new MultiHashMapArrayListBased <> ();
     for (final Locale aLocale : LocaleCache.getInstance ().getAllLocales ())
     {
       final String sLanguage = aLocale.getLanguage ();

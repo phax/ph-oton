@@ -67,7 +67,7 @@ public final class PhotonMetaElements
 
     if (aRes.exists ())
     {
-      final ICommonsOrderedMap <String, String> aMetaElements = new CommonsLinkedHashMap<> ();
+      final ICommonsOrderedMap <String, String> aMetaElements = new CommonsLinkedHashMap <> ();
       if (XMLMapHandler.readMap (aRes, aMetaElements).isFailure ())
         s_aLogger.error ("Failed to read meta element file " + aRes.getPath ());
 
@@ -196,7 +196,7 @@ public final class PhotonMetaElements
   public static ICommonsList <IMetaElement> getAllRegisteredMetaElementsForThisRequest ()
   {
     final MetaElementList aSet = _getPerRequestSet (false);
-    return aSet == null ? new CommonsArrayList<> () : aSet.getAllMetaElements ();
+    return aSet == null ? new CommonsArrayList <> () : aSet.getAllMetaElements ();
   }
 
   public static void getAllRegisteredMetaElementsForThisRequest (@Nonnull final Collection <? super IMetaElement> aTarget)

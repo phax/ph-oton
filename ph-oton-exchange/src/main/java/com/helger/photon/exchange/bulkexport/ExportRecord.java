@@ -45,7 +45,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class ExportRecord implements IExportRecord
 {
-  private final ICommonsList <IExportRecordField> m_aFields = new CommonsArrayList<> ();
+  private final ICommonsList <IExportRecordField> m_aFields = new CommonsArrayList <> ();
 
   public ExportRecord ()
   {}

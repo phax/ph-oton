@@ -56,7 +56,7 @@ public class SystemMigrationManager extends AbstractSimpleDAO
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULTS = "systemmigrationresults";
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULT = "systemmigrationresult";
 
-  private final IMultiMapListBased <String, SystemMigrationResult> m_aMap = new MultiHashMapArrayListBased<> ();
+  private final IMultiMapListBased <String, SystemMigrationResult> m_aMap = new MultiHashMapArrayListBased <> ();
 
   public SystemMigrationManager (@Nullable final String sFilename) throws DAOException
   {
@@ -139,14 +139,14 @@ public class SystemMigrationManager extends AbstractSimpleDAO
   @ReturnsMutableCopy
   public ICommonsList <SystemMigrationResult> getAllMigrationResults (@Nullable final String sMigrationID)
   {
-    return m_aRWLock.readLocked ( () -> new CommonsArrayList<> (m_aMap.get (sMigrationID)));
+    return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aMap.get (sMigrationID)));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <SystemMigrationResult> getAllMigrationResultsFlattened ()
   {
-    final ICommonsList <SystemMigrationResult> ret = new CommonsArrayList<> ();
+    final ICommonsList <SystemMigrationResult> ret = new CommonsArrayList <> ();
     m_aRWLock.readLocked ( () -> {
       for (final ICommonsList <SystemMigrationResult> aResults : m_aMap.values ())
         ret.addAll (aResults);

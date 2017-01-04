@@ -47,8 +47,8 @@ public class FineUploader5Validation implements IFineUploader5Part
   public static final int DEFAULT_VALIDATION_IMAGE_MIN_HEIGHT = 0;
   public static final int DEFAULT_VALIDATION_IMAGE_MIN_WIDTH = 0;
 
-  private final ICommonsOrderedSet <IMimeType> m_aValidationAcceptFiles = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aValidationAllowedExtensions = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <IMimeType> m_aValidationAcceptFiles = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aValidationAllowedExtensions = new CommonsLinkedHashSet <> ();
   private int m_nValidationItemLimit = DEFAULT_VALIDATION_ITEM_LIMIT;
   private int m_nValidationMinSizeLimit = DEFAULT_VALIDATION_MIN_SIZE_LIMIT;
   private int m_nValidationSizeLimit = DEFAULT_VALIDATION_SIZE_LIMIT;

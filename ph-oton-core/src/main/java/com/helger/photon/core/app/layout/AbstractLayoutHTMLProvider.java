@@ -64,7 +64,7 @@ public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecuti
   {
     ValueEnforcer.notEmpty (aLayoutAreaIDs, "LayoutAreaIDs");
 
-    m_aLayoutAreaIDs = new CommonsArrayList<> (aLayoutAreaIDs);
+    m_aLayoutAreaIDs = new CommonsArrayList <> (aLayoutAreaIDs);
   }
 
   /**

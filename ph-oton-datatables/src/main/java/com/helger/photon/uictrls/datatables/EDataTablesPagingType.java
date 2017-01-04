@@ -29,7 +29,8 @@ import com.helger.commons.name.IHasName;
  */
 public enum EDataTablesPagingType implements IHasName
 {
-  @Since ("1.10.8") NUMBERS("numbers"),
+  @Since ("1.10.8")
+  NUMBERS("numbers"),
   SIMPLE ("simple"),
   SIMPLE_NUMBERS ("simple_numbers"),
   FULL ("full"),

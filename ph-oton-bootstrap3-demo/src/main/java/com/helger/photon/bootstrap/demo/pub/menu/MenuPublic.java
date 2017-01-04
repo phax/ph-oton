@@ -45,9 +45,9 @@ public final class MenuPublic
 
     // Icons stuff
     {
-      final IMenuItemPage aIcons = aMenuTree.createRootItem (new BasePageShowChildren<> ("icon",
-                                                                                         "Icon sets",
-                                                                                         aMenuTree));
+      final IMenuItemPage aIcons = aMenuTree.createRootItem (new BasePageShowChildren <> ("icon",
+                                                                                          "Icon sets",
+                                                                                          aMenuTree));
       aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome ("icon-fa"));
       aMenuTree.createItem (aIcons, new PagePublicIconMaterialDesign ("icon-md"));
     }

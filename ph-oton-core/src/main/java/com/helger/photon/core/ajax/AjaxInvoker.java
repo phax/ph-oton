@@ -58,7 +58,7 @@ public class AjaxInvoker implements IAjaxInvoker
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IAjaxFunctionDeclaration> m_aFuncDecls = new CommonsHashMap<> ();
+  private final ICommonsMap <String, IAjaxFunctionDeclaration> m_aFuncDecls = new CommonsHashMap <> ();
 
   public AjaxInvoker ()
   {}

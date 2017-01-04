@@ -63,7 +63,7 @@ public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeCo
   {
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
 
-    final ICommonsList <AccessToken> aAccessTokens = new CommonsArrayList<> ();
+    final ICommonsList <AccessToken> aAccessTokens = new CommonsArrayList <> ();
     for (final IMicroElement e : aElement.getAllChildElements (ELEMENT_ACCESS_TOKEN))
       aAccessTokens.add (MicroTypeConverter.convertToNative (e, AccessToken.class));
 

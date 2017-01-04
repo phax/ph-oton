@@ -64,12 +64,12 @@ public class FineUploader5Core implements IFineUploader5Part
   public static final boolean DEFAULT_CORE_MULTIPLE = true;
 
   // text
-  public static final Set <String> DEFAULT_TEXT_SIZE_SYMBOLS = new CommonsLinkedHashSet<> ("kB",
-                                                                                           "MB",
-                                                                                           "GB",
-                                                                                           "TB",
-                                                                                           "PB",
-                                                                                           "EB").getAsUnmodifiable ();
+  public static final Set <String> DEFAULT_TEXT_SIZE_SYMBOLS = new CommonsLinkedHashSet <> ("kB",
+                                                                                            "MB",
+                                                                                            "GB",
+                                                                                            "TB",
+                                                                                            "PB",
+                                                                                            "EB").getAsUnmodifiable ();
 
   // generic
   private final Locale m_aDisplayLocale;
@@ -88,7 +88,7 @@ public class FineUploader5Core implements IFineUploader5Part
 
   // text
   // partially in EFineUploader5CoreText
-  private final ICommonsOrderedSet <String> m_aTextSizeSymbols = new CommonsLinkedHashSet<> (DEFAULT_TEXT_SIZE_SYMBOLS);
+  private final ICommonsOrderedSet <String> m_aTextSizeSymbols = new CommonsLinkedHashSet <> (DEFAULT_TEXT_SIZE_SYMBOLS);
 
   private final FineUploader5Blobs m_aBlobs = new FineUploader5Blobs ();
   // TODO camera

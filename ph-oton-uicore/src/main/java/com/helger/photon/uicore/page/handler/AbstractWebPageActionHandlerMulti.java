@@ -58,7 +58,7 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
   @ReturnsMutableCopy
   public ICommonsList <DATATYPE> getAllSelectedObjects (@Nonnull final WPECTYPE aWPEC)
   {
-    final ICommonsList <DATATYPE> ret = new CommonsArrayList<> ();
+    final ICommonsList <DATATYPE> ret = new CommonsArrayList <> ();
     final ICommonsList <String> aIDs = aWPEC.getAttributeAsList (m_sFieldName);
     if (aIDs != null)
       for (final String sID : aIDs)

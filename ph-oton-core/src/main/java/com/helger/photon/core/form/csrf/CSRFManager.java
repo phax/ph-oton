@@ -48,7 +48,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
   private static final Logger s_aLogger = LoggerFactory.getLogger (CSRFManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final ICommonsSet <String> m_aNonces = new CommonsHashSet<> ();
+  private final ICommonsSet <String> m_aNonces = new CommonsHashSet <> ();
 
   @Deprecated
   @UsedViaReflection

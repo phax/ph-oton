@@ -111,7 +111,7 @@ public final class SecurityHelper
   @ReturnsMutableCopy
   public static ICommonsSet <String> getAllUserRoleIDs (@Nullable final String sUserID)
   {
-    final ICommonsSet <String> ret = new CommonsHashSet<> ();
+    final ICommonsSet <String> ret = new CommonsHashSet <> ();
     final Collection <? extends IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
                                                                                .getAllUserGroupsWithAssignedUser (sUserID);
     for (final IUserGroup aUserGroup : aUserGroups)
@@ -125,7 +125,7 @@ public final class SecurityHelper
   {
     final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
     final ICommonsSet <String> aRoleIDs = getAllUserRoleIDs (sUserID);
-    final ICommonsSet <IRole> ret = new CommonsHashSet<> ();
+    final ICommonsSet <IRole> ret = new CommonsHashSet <> ();
     for (final String sRoleID : aRoleIDs)
     {
       final IRole aRole = aRoleMgr.getRoleOfID (sRoleID);

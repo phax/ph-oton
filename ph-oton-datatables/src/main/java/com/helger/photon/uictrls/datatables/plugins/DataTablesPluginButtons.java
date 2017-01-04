@@ -44,7 +44,7 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
   public static final String DEFAULT_NAME = "main";
 
   /** List of buttons to be created. */
-  private final ICommonsList <Object> m_aButtons = new CommonsArrayList<> ();
+  private final ICommonsList <Object> m_aButtons = new CommonsArrayList <> ();
   /** Options to control the DOM structure Buttons creates. */
   private DTPButtonsDom m_aDom;
   /** Set a name for the instance for the group selector. */

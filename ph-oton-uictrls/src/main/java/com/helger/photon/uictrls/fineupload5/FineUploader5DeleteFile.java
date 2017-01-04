@@ -42,11 +42,11 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
   public static final ISimpleURL DEFAULT_DELETE_FILE_ENDPOINT = new SimpleURL ("/server/upload");
   public static final EHTTPMethod DEFAULT_DELETE_FILE_METHOD = EHTTPMethod.DELETE;
 
-  private final ICommonsOrderedMap <String, String> m_aDeleteFileCustomHeaders = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, String> m_aDeleteFileCustomHeaders = new CommonsLinkedHashMap <> ();
   private boolean m_bDeleteFileEnabled = DEFAULT_DELETE_FILE_ENABLED;
   private ISimpleURL m_aDeleteFileEndpoint = DEFAULT_DELETE_FILE_ENDPOINT;
   private EHTTPMethod m_eDeleteFileMethod = DEFAULT_DELETE_FILE_METHOD;
-  private final ICommonsOrderedMap <String, String> m_aDeleteFileParams = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, String> m_aDeleteFileParams = new CommonsLinkedHashMap <> ();
 
   public FineUploader5DeleteFile ()
   {}

@@ -39,7 +39,7 @@ import com.helger.tree.withid.DefaultTreeItemWithID;
  */
 public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCallback
 {
-  private final ICommonsMap <String, Boolean> m_aItems = new CommonsHashMap<> ();
+  private final ICommonsMap <String, Boolean> m_aItems = new CommonsHashMap <> ();
   private final String m_sSelectedItemID;
   private final DefaultTreeItemWithID <String, IMenuObject> m_aSelectedItem;
 
@@ -182,7 +182,7 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
   {
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
 
-    final ICommonsMap <String, Boolean> ret = new CommonsHashMap<> ();
+    final ICommonsMap <String, Boolean> ret = new CommonsHashMap <> ();
     TreeVisitor.visitTree (aMenuTree,
                            new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
                            {

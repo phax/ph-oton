@@ -33,7 +33,7 @@ import com.helger.photon.uicore.icon.IIcon;
  *
  * @author Philip Helger
  */
-public enum EFamFamFlagIcon implements IIcon,IHasID <String>
+public enum EFamFamFlagIcon implements IIcon, IHasID <String>
 {
   AD ("ad", "famfam-flag-ad"),
   AE ("ae", "famfam-flag-ae"),

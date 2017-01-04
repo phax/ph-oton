@@ -40,7 +40,7 @@ public class DataTablesLengthMenu
   /** The numerical value representing 'show all items' */
   public static final int COUNT_ALL = -1;
 
-  private final ICommonsList <DataTablesLengthMenuItem> m_aList = new CommonsArrayList<> ();
+  private final ICommonsList <DataTablesLengthMenuItem> m_aList = new CommonsArrayList <> ();
 
   public DataTablesLengthMenu ()
   {}
@@ -75,7 +75,7 @@ public class DataTablesLengthMenu
   @ReturnsMutableCopy
   public ICommonsOrderedMap <Integer, String> getAsMap (@Nonnull final Locale aDisplayLocale)
   {
-    final ICommonsOrderedMap <Integer, String> ret = new CommonsLinkedHashMap<> ();
+    final ICommonsOrderedMap <Integer, String> ret = new CommonsLinkedHashMap <> ();
     for (final DataTablesLengthMenuItem aItem : m_aList)
       ret.put (Integer.valueOf (aItem.getItemCount ()), aItem.getDisplayText (aDisplayLocale));
     return ret;

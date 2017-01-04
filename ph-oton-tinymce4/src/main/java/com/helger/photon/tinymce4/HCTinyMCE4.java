@@ -108,8 +108,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   private ISimpleURL m_aLanguageURL;
   private ETriState m_eNoWrap = ETriState.UNDEFINED;
   private ETriState m_eObjectResizing = ETriState.UNDEFINED;
-  private final ICommonsOrderedSet <ETinyMCE4Plugin> m_aPlugins = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <TinyMCE4ExternalPlugin> m_aExternalPlugins = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <ETinyMCE4Plugin> m_aPlugins = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <TinyMCE4ExternalPlugin> m_aExternalPlugins = new CommonsLinkedHashSet <> ();
   private String m_sSelector = DEFAULT_SELECTOR;
   private ETinyMCE4Skin m_eSkin;
   private ISimpleURL m_aSkinURL;
@@ -181,7 +181,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   private JSAnonymousFunction m_aFileBrowserCallback;
 
   // Custom
-  private final ICommonsOrderedMap <String, IJSExpression> m_aCustom = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, IJSExpression> m_aCustom = new CommonsLinkedHashMap <> ();
 
   private void _init ()
   {

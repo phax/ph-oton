@@ -43,8 +43,8 @@ public class MainExtractFontAwesomeCSSClasses
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EIconCSSPathProvider.FONT_AWESOME4.getCSSItemPath (true)),
                                                                CCharset.CHARSET_UTF_8_OBJ,
                                                                ECSSVersion.CSS30);
-    final ICommonsSet <String> aClasses = new CommonsTreeSet<> ();
-    final ICommonsSet <String> aClassesIcon = new CommonsTreeSet<> ();
+    final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
+    final ICommonsSet <String> aClassesIcon = new CommonsTreeSet <> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()
     {
       @Override

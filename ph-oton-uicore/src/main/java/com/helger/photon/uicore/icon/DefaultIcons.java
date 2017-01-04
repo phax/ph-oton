@@ -33,7 +33,7 @@ import com.helger.commons.collection.ext.ICommonsMap;
 @NotThreadSafe
 public final class DefaultIcons
 {
-  private static final ICommonsMap <EDefaultIcon, IIcon> s_aMap = new CommonsHashMap<> ();
+  private static final ICommonsMap <EDefaultIcon, IIcon> s_aMap = new CommonsHashMap <> ();
 
   private DefaultIcons ()
   {}

@@ -29,7 +29,7 @@ import com.helger.commons.string.ToStringGenerator;
 
 public final class ConfigurationFileManager extends AbstractGlobalSingleton
 {
-  private final ICommonsOrderedMap <String, ConfigurationFile> m_aMap = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, ConfigurationFile> m_aMap = new CommonsLinkedHashMap <> ();
 
   @Deprecated
   @UsedViaReflection

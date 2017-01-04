@@ -51,9 +51,10 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <BigDecimal> getExtractorBigDecimal (@Nonnull final Locale aDisplayLocale)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null : LocaleParser.parseBigDecimal (sCellText,
-                                                                                                  aDisplayLocale,
-                                                                                                  null);
+    return sCellText -> StringHelper.hasNoText (sCellText) ? null
+                                                           : LocaleParser.parseBigDecimal (sCellText,
+                                                                                           aDisplayLocale,
+                                                                                           null);
   }
 
   @Nonnull

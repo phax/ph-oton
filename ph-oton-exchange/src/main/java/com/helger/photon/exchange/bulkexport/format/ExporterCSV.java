@@ -166,7 +166,7 @@ public final class ExporterCSV implements IExporterFile
                                    @Nonnull final IExportRecord aRecord)
   {
     final ICommonsList <? extends IExportRecordField> aAllFields = aRecord.getAllFields ();
-    final ICommonsList <String> aValues = new CommonsArrayList<> (aAllFields.size ());
+    final ICommonsList <String> aValues = new CommonsArrayList <> (aAllFields.size ());
     for (final IExportRecordField aField : aAllFields)
     {
       final Object aFieldValue = aField.getFieldValue ();
@@ -186,7 +186,7 @@ public final class ExporterCSV implements IExporterFile
       ValueEnforcer.notNull (aProvider, "Provider");
       ValueEnforcer.notNull (aOS, "OutputStream");
 
-      final ICommonsList <ICommonsList <String>> aRecords = new CommonsArrayList<> ();
+      final ICommonsList <ICommonsList <String>> aRecords = new CommonsArrayList <> ();
 
       // Header
       for (final IExportRecord aHeaderRecord : aProvider.getHeaderRecords ())

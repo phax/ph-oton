@@ -59,7 +59,7 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCu
   {
     super (aStubObject);
     ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");
-    m_aAccessTokens = new CommonsArrayList<> (aAccessTokens);
+    m_aAccessTokens = new CommonsArrayList <> (aAccessTokens);
     m_aActiveAccessToken = _getIfNotRevoked (CollectionHelper.getLastElement (aAccessTokens));
   }
 

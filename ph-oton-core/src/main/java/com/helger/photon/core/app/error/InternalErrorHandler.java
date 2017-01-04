@@ -144,7 +144,7 @@ public final class InternalErrorHandler
     @Nonnull
     public EmailSettings setReceiverAddress (@Nullable final IEmailAddress aReceiverAddress)
     {
-      return setReceiverAddresses (aReceiverAddress == null ? null : new CommonsArrayList<> (aReceiverAddress));
+      return setReceiverAddresses (aReceiverAddress == null ? null : new CommonsArrayList <> (aReceiverAddress));
     }
 
     @Nonnull
@@ -153,7 +153,7 @@ public final class InternalErrorHandler
       if (aReceiverAddresses != null && CollectionHelper.containsAnyNullElement (aReceiverAddresses))
         throw new IllegalArgumentException ("The list of receiver addresses may not contain any null element!");
 
-      m_aReceiverAddresses = new CommonsArrayList<> (aReceiverAddresses);
+      m_aReceiverAddresses = new CommonsArrayList <> (aReceiverAddresses);
       return this;
     }
 
@@ -163,7 +163,7 @@ public final class InternalErrorHandler
       if (aReceiverAddresses != null && ArrayHelper.containsAnyNullElement (aReceiverAddresses))
         throw new IllegalArgumentException ("The array of receiver addresses may not contain any null element!");
 
-      m_aReceiverAddresses = new CommonsArrayList<> (aReceiverAddresses);
+      m_aReceiverAddresses = new CommonsArrayList <> (aReceiverAddresses);
       return this;
     }
 
@@ -172,7 +172,7 @@ public final class InternalErrorHandler
     public ICommonsList <IEmailAddress> getReceiverAddresses ()
     {
       // May be null
-      return new CommonsArrayList<> (m_aReceiverAddresses);
+      return new CommonsArrayList <> (m_aReceiverAddresses);
     }
 
     @Nonnull
@@ -204,7 +204,7 @@ public final class InternalErrorHandler
   private static IInternalErrorCallback s_aCustomExceptionHandler;
   private static boolean s_bEnableFullThreadDumps = DEFAULT_ENABLE_FULL_THREAD_DUMPS;
 
-  private static final ICommonsMap <String, MutableInt> s_aIntErrCache = new CommonsHashMap<> ();
+  private static final ICommonsMap <String, MutableInt> s_aIntErrCache = new CommonsHashMap <> ();
 
   private InternalErrorHandler ()
   {}

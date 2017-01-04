@@ -71,9 +71,9 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResourceBundleManager.class);
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <WebSiteResourceBundle, String> m_aMapToData = new CommonsHashMap<> ();
+  private final ICommonsMap <WebSiteResourceBundle, String> m_aMapToData = new CommonsHashMap <> ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, WebSiteResourceBundleSerialized> m_aMapToBundle = new CommonsHashMap<> ();
+  private final ICommonsMap <String, WebSiteResourceBundleSerialized> m_aMapToBundle = new CommonsHashMap <> ();
 
   public WebSiteResourceBundleManager (@Nullable final String sFilename) throws DAOException
   {
@@ -108,7 +108,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
         aMediaList.addMedium (eCSSMedium);
       }
 
-      final ICommonsList <WebSiteResourceWithCondition> aResources = new CommonsArrayList<> ();
+      final ICommonsList <WebSiteResourceWithCondition> aResources = new CommonsArrayList <> ();
       if (!WebSiteResourceBundleSerialized.getResource (sBundleID).exists ())
       {
         s_aLogger.warn ("No serialized bundle with ID '" + sBundleID + "' exists.");
@@ -300,7 +300,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
   {
     ValueEnforcer.notEmptyNoNullValue (aList, "List");
 
-    final ICommonsList <WebSiteResourceBundleSerialized> ret = new CommonsArrayList<> ();
+    final ICommonsList <WebSiteResourceBundleSerialized> ret = new CommonsArrayList <> ();
 
     // Create a copy for modification
     boolean bCreatedAnyBundle = false;

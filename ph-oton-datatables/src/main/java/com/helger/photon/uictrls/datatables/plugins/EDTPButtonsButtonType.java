@@ -86,7 +86,7 @@ public enum EDTPButtonsButtonType implements IHasName
   private EDTPButtonsButtonType (@Nonnull @Nonempty final String sName, @Nullable final IJSPathProvider... aJSIncludes)
   {
     m_sName = sName;
-    m_aJSIncludes = new CommonsArrayList<> (aJSIncludes);
+    m_aJSIncludes = new CommonsArrayList <> (aJSIncludes);
   }
 
   @Nonnull

@@ -70,7 +70,7 @@ public final class UITextFormatter
     {
       try
       {
-        final ICommonsList <String> aParts = new CommonsArrayList<> ();
+        final ICommonsList <String> aParts = new CommonsArrayList <> ();
         String sValue = sOrigValue.substring (1, sOrigValue.length () - 1);
 
         final String [] aObjStart = RegExHelper.getAllMatchingGroupValues ("([\\[]*)([A-Za-z0-9_$]+@0x[0-9a-fA-F]{8})(?:: (.+))?",

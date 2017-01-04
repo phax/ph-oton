@@ -42,13 +42,13 @@ public class DefaultDAOContainer extends AbstractDAOContainer
   public DefaultDAOContainer (@Nonnull @Nonempty final IDAO... aDAOs)
   {
     ValueEnforcer.notEmptyNoNullValue (aDAOs, "DAOs");
-    m_aDAOs = new CommonsArrayList<> (aDAOs);
+    m_aDAOs = new CommonsArrayList <> (aDAOs);
   }
 
   public DefaultDAOContainer (@Nonnull @Nonempty final Iterable <? extends IDAO> aDAOs)
   {
     ValueEnforcer.notEmptyNoNullValue (aDAOs, "DAOs");
-    m_aDAOs = new CommonsArrayList<> (aDAOs);
+    m_aDAOs = new CommonsArrayList <> (aDAOs);
   }
 
   @Nonnull

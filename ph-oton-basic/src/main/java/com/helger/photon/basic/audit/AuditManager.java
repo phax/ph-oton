@@ -307,7 +307,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     if (!aFile.exists ())
       return null;
 
-    final ICommonsList <IAuditItem> ret = new CommonsArrayList<> ();
+    final ICommonsList <IAuditItem> ret = new CommonsArrayList <> ();
     final IMicroDocument aDoc = MicroReader.readMicroXML (aFile);
     readFromXML (aDoc, aItem -> ret.add (aItem));
     return ret;

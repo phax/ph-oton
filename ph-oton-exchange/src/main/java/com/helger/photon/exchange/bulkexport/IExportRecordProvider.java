@@ -33,7 +33,7 @@ public interface IExportRecordProvider
   @Nonnull
   default Iterable <? extends IExportRecord> getHeaderRecords ()
   {
-    return new CommonsArrayList<> ();
+    return new CommonsArrayList <> ();
   }
 
   /**
@@ -42,7 +42,7 @@ public interface IExportRecordProvider
   @Nonnull
   default Iterable <? extends IExportRecord> getBodyRecords ()
   {
-    return new CommonsArrayList<> ();
+    return new CommonsArrayList <> ();
   }
 
   /**
@@ -51,6 +51,6 @@ public interface IExportRecordProvider
   @Nonnull
   default Iterable <? extends IExportRecord> getFooterRecords ()
   {
-    return new CommonsArrayList<> ();
+    return new CommonsArrayList <> ();
   }
 }

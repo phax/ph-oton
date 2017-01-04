@@ -73,7 +73,7 @@ public class GoMappingManager extends AbstractSimpleDAO
   private static final Logger s_aLogger = LoggerFactory.getLogger (GoMappingManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, GoMappingItem> m_aMap = new CommonsHashMap<> ();
+  private final ICommonsMap <String, GoMappingItem> m_aMap = new CommonsHashMap <> ();
 
   public GoMappingManager (@Nullable final String sFilename) throws DAOException
   {

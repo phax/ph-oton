@@ -273,8 +273,8 @@ public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
   public static <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> BootstrapTreeView create (@Nonnull final BasicTree <DATATYPE, ITEMTYPE> aTree,
                                                                                                       @Nonnull final Function <DATATYPE, BootstrapTreeViewItem> aConverter)
   {
-    final DefaultTree <BootstrapTreeViewItem> aNewTree = new DefaultTree<> ();
-    final NonBlockingStack <DefaultTreeItem <BootstrapTreeViewItem>> aParents = new NonBlockingStack<> ();
+    final DefaultTree <BootstrapTreeViewItem> aNewTree = new DefaultTree <> ();
+    final NonBlockingStack <DefaultTreeItem <BootstrapTreeViewItem>> aParents = new NonBlockingStack <> ();
     aParents.push (aNewTree.getRootItem ());
     TreeVisitor.visitTree (aTree, new DefaultHierarchyVisitorCallback <ITEMTYPE> ()
     {

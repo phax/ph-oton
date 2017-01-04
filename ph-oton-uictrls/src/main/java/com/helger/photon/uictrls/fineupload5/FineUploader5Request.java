@@ -47,13 +47,13 @@ public class FineUploader5Request implements IFineUploader5Part
   public static final String DEFAULT_REQUEST_UUID_NAME = "qquuid";
   public static final String DEFAULT_REQUEST_TOTAL_FILE_SIZE_NAME = "qqtotalfilesize";
 
-  private final ICommonsOrderedMap <String, String> m_aRequestCustomHeaders = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, String> m_aRequestCustomHeaders = new CommonsLinkedHashMap <> ();
   private ISimpleURL m_aRequestEndpoint = DEFAULT_REQUEST_ENDPOINT;
   private String m_sRequestFilenameParam = DEFAULT_REQUEST_FILENAME_PARAM;
   private boolean m_bRequestForceMultipart = DEFAULT_REQUEST_FORCE_MULTIPART;
   private String m_sRequestInputName = DEFAULT_REQUEST_INPUT_NAME;
   private EHTTPMethod m_eRequestMethod = DEFAULT_REQUEST_METHOD;
-  private final ICommonsOrderedMap <String, String> m_aRequestParams = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, String> m_aRequestParams = new CommonsLinkedHashMap <> ();
   private boolean m_bRequestParamsInBody = DEFAULT_REQUEST_PARAMS_IN_BODY;
   private String m_sRequestUUIDName = DEFAULT_REQUEST_UUID_NAME;
   private String m_sRequestTotalFileSizeName = DEFAULT_REQUEST_TOTAL_FILE_SIZE_NAME;

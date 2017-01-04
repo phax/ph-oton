@@ -62,7 +62,7 @@ public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
   {
     ValueEnforcer.notNull (aBreakpoint, "Breakpoint");
     if (m_aBreakpoints == null)
-      m_aBreakpoints = new CommonsArrayList<> ();
+      m_aBreakpoints = new CommonsArrayList <> ();
     m_aBreakpoints.add (aBreakpoint);
     return this;
   }

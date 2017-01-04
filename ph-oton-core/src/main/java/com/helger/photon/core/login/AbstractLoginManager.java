@@ -103,7 +103,7 @@ public abstract class AbstractLoginManager
 
   public void setRequiredRoleIDs (@Nullable final Collection <String> aRequiredRoleIDs)
   {
-    m_aRequiredRoleIDs = aRequiredRoleIDs == null ? null : new CommonsHashSet<> (aRequiredRoleIDs);
+    m_aRequiredRoleIDs = aRequiredRoleIDs == null ? null : new CommonsHashSet <> (aRequiredRoleIDs);
   }
 
   /**

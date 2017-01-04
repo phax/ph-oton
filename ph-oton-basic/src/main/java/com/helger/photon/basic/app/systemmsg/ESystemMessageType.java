@@ -32,7 +32,7 @@ import com.helger.photon.basic.EPhotonBasicText;
  *
  * @author Philip Helger
  */
-public enum ESystemMessageType implements IHasID <String>,IHasDisplayText
+public enum ESystemMessageType implements IHasID <String>, IHasDisplayText
 {
   INFO ("i", EPhotonBasicText.SYSTEM_MESSAGE_TYPE_INFO),
   WARNING ("w", EPhotonBasicText.SYSTEM_MESSAGE_TYPE_WARNING),

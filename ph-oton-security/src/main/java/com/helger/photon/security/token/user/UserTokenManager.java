@@ -43,7 +43,7 @@ import com.helger.photon.security.user.IUser;
  */
 public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, UserToken>
 {
-  private final CallbackList <IUserTokenModificationCallback> m_aCallbacks = new CallbackList<> ();
+  private final CallbackList <IUserTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {

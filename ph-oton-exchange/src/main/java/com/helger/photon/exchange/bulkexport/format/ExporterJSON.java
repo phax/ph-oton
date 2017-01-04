@@ -144,7 +144,7 @@ public final class ExporterJSON implements IExporterFile
 
     // Body
     final JsonArray aBody = new JsonArray ();
-    for (final IExportRecord aBodyRecord : new IterableIterator<> (aProvider.getBodyRecords ()))
+    for (final IExportRecord aBodyRecord : new IterableIterator <> (aProvider.getBodyRecords ()))
       aBody.add (_emitRecord (aBodyRecord));
     if (!aBody.isEmpty ())
       aDoc.add (ELEMENT_BODY, aBody);

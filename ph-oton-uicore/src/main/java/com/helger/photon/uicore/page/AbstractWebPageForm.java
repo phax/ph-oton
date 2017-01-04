@@ -100,7 +100,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aDeleteHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aUndeleteHandler;
-  private final ICommonsMap <String, IWebPageActionHandler <DATATYPE, WPECTYPE>> m_aCustomHandlers = new CommonsHashMap<> ();
+  private final ICommonsMap <String, IWebPageActionHandler <DATATYPE, WPECTYPE>> m_aCustomHandlers = new CommonsHashMap <> ();
 
   public AbstractWebPageForm (@Nonnull @Nonempty final String sID,
                               @Nonnull final IMultilingualText aName,

@@ -54,10 +54,10 @@ public class BulkImportResult implements ISuccessIndicator
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final int m_nMaxWarnings;
   private boolean m_bSuccess = DEFAULT_SUCCESS;
-  private final ICommonsOrderedMap <String, ITypedObject <String>> m_aAdded = new CommonsLinkedHashMap<> ();
-  private final ICommonsOrderedMap <String, ITypedObject <String>> m_aChanged = new CommonsLinkedHashMap<> ();
-  private final ICommonsList <String> m_aFailed = new CommonsArrayList<> ();
-  private final ICommonsList <String> m_aWarnings = new CommonsArrayList<> ();
+  private final ICommonsOrderedMap <String, ITypedObject <String>> m_aAdded = new CommonsLinkedHashMap <> ();
+  private final ICommonsOrderedMap <String, ITypedObject <String>> m_aChanged = new CommonsLinkedHashMap <> ();
+  private final ICommonsList <String> m_aFailed = new CommonsArrayList <> ();
+  private final ICommonsList <String> m_aWarnings = new CommonsArrayList <> ();
   private int m_nAdditionalWarnings = 0;
 
   public BulkImportResult ()

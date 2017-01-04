@@ -157,7 +157,7 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
       WebSiteResourceCache.setCacheEnabled (!WebSiteResourceCache.isCacheEnabled ());
       final boolean bCacheEnabled = WebSiteResourceCache.isCacheEnabled ();
       aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (bCacheEnabled ? EText.MSG_CACHE_NOW_ENABLED.getDisplayText (aDisplayLocale)
-                                                                                : EText.MSG_CACHE_NOW_DISABLED.getDisplayText (aDisplayLocale)));
+                                                                                        : EText.MSG_CACHE_NOW_DISABLED.getDisplayText (aDisplayLocale)));
       return;
     }
 
@@ -166,7 +166,7 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
       ResourceBundleServlet.setEnabled (!ResourceBundleServlet.isEnabled ());
       final boolean bResBundleActive = ResourceBundleServlet.isEnabled ();
       aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (bResBundleActive ? EText.MSG_RESBUNDLE_NOW_ENABLED.getDisplayText (aDisplayLocale)
-                                                                                   : EText.MSG_RESBUNDLE_NOW_DISABLED.getDisplayText (aDisplayLocale)));
+                                                                                           : EText.MSG_RESBUNDLE_NOW_DISABLED.getDisplayText (aDisplayLocale)));
       return;
     }
 

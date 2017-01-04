@@ -76,13 +76,13 @@ public class FineUploaderBasic
   private boolean m_bAutoUpload = DEFAULT_AUTO_UPLOAD;
 
   private ISimpleURL m_aRequestEndpoint = DEFAULT_REQUEST_ENDPOINT;
-  private final ICommonsOrderedMap <String, String> m_aRequestParams = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, String> m_aRequestParams = new CommonsLinkedHashMap <> ();
   private boolean m_bRequestParamsInBody = DEFAULT_REQUEST_PARAMS_IN_BODY;
-  private final ICommonsOrderedMap <String, String> m_aRequestCustomHeaders = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, String> m_aRequestCustomHeaders = new CommonsLinkedHashMap <> ();
   private boolean m_bRequestForceMultipart = DEFAULT_REQUEST_FORCE_MULTIPART;
   private String m_sRequestInputName = DEFAULT_REQUEST_INPUT_NAME;
 
-  private final ICommonsOrderedSet <String> m_aValidationAllowedExtensions = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aValidationAllowedExtensions = new CommonsLinkedHashSet <> ();
   private int m_nValidationSizeLimit = DEFAULT_VALIDATION_SIZE_LIMIT;
   private int m_nValidationMinSizeLimit = DEFAULT_VALIDATION_MIN_SIZE_LIMIT;
   private boolean m_bValidationStopOnFirstInvalidFile = DEFAULT_VALIDATION_STOP_ON_FIRST_INVALID_FILE;

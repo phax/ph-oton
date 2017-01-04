@@ -158,10 +158,10 @@ public final class PhotonHTMLHelper
     if (bMergeCSS)
     {
       // Extract all CSS nodes for merging
-      final ICommonsList <IHCNode> aCSSNodes = new CommonsArrayList<> ();
+      final ICommonsList <IHCNode> aCSSNodes = new CommonsArrayList <> ();
       aHead.getAllAndRemoveAllCSSNodes (aCSSNodes);
 
-      final ICommonsList <WebSiteResourceWithCondition> aCSSs = new CommonsArrayList<> ();
+      final ICommonsList <WebSiteResourceWithCondition> aCSSs = new CommonsArrayList <> ();
       for (final IHCNode aNode : aCSSNodes)
       {
         boolean bStartMerge = true;
@@ -198,10 +198,10 @@ public final class PhotonHTMLHelper
     if (bMergeJS)
     {
       // Extract all JS nodes for merging
-      final ICommonsList <IHCNode> aJSNodes = new CommonsArrayList<> ();
+      final ICommonsList <IHCNode> aJSNodes = new CommonsArrayList <> ();
       aHead.getAllAndRemoveAllJSNodes (aJSNodes);
 
-      final ICommonsList <WebSiteResourceWithCondition> aJSs = new CommonsArrayList<> ();
+      final ICommonsList <WebSiteResourceWithCondition> aJSs = new CommonsArrayList <> ();
       for (final IHCNode aNode : aJSNodes)
       {
         boolean bStartMerge = true;

@@ -68,7 +68,7 @@ public final class RequestTrackingManager
   private boolean m_bParallelRunningRequestsAboveLimit = false;
   // Must be ordered!
   @GuardedBy ("m_aRWLock")
-  private final ICommonsOrderedMap <String, TrackedRequest> m_aOpenRequests = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, TrackedRequest> m_aOpenRequests = new CommonsLinkedHashMap <> ();
 
   public RequestTrackingManager ()
   {}

@@ -130,7 +130,7 @@ public class CheckDiskUsableSpaceJob extends AbstractPhotonJob
 
     setApplicationScopeID (sApplicationID);
 
-    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap<> ();
+    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap <> ();
     aJobDataMap.put (JOB_DATA_ATTR_THRESHOLD_BYTES, Long.valueOf (nThresholdBytes));
 
     return GlobalQuartzScheduler.getInstance ().scheduleJob (CheckDiskUsableSpaceJob.class.getName (),

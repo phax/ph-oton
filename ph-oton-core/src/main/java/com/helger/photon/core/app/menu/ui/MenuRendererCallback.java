@@ -55,9 +55,9 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
   private final NonBlockingStack <T> m_aMenuListStack;
   private final IMenuItemRenderer <T> m_aRenderer;
   private final ICommonsMap <String, Boolean> m_aDisplayMenuItemIDs;
-  private final NonBlockingStack <HCLI> m_aMenuItemStack = new NonBlockingStack<> ();
-  private final NonBlockingStack <AtomicInteger> m_aChildCountStack = new NonBlockingStack<> ();
-  private final NonBlockingStack <DefaultTreeItemWithID <String, IMenuObject>> m_aTreeItemStack = new NonBlockingStack<> ();
+  private final NonBlockingStack <HCLI> m_aMenuItemStack = new NonBlockingStack <> ();
+  private final NonBlockingStack <AtomicInteger> m_aChildCountStack = new NonBlockingStack <> ();
+  private final NonBlockingStack <DefaultTreeItemWithID <String, IMenuObject>> m_aTreeItemStack = new NonBlockingStack <> ();
   private final String m_sSelectedItem;
 
   protected MenuRendererCallback (@Nonnull final ILayoutExecutionContext aLEC,
@@ -325,7 +325,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
   {
     ValueEnforcer.notNull (aFactory, "Factory");
 
-    final NonBlockingStack <T> aNodeStack = new NonBlockingStack<> ();
+    final NonBlockingStack <T> aNodeStack = new NonBlockingStack <> ();
     aNodeStack.push (aFactory.get ());
     TreeVisitor.visitTreeItem (aStartTreeItem,
                                new MenuRendererCallback <T> (aLEC,

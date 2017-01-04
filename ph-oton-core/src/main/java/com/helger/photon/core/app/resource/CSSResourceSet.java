@@ -54,9 +54,9 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsList <ICSSPathProvider> m_aList = new CommonsArrayList<> ();
+  private final ICommonsList <ICSSPathProvider> m_aList = new CommonsArrayList <> ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsSet <ICSSPathProvider> m_aItems = new CommonsHashSet<> ();
+  private final ICommonsSet <ICSSPathProvider> m_aItems = new CommonsHashSet <> ();
   @GuardedBy ("m_aRWLock")
   private boolean m_bIsCollected = false;
 
@@ -181,7 +181,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   @ReturnsMutableCopy
   public ICommonsOrderedSet <ICSSPathProvider> getAllItems ()
   {
-    return m_aRWLock.readLocked ( () -> new CommonsLinkedHashSet<> (m_aList));
+    return m_aRWLock.readLocked ( () -> new CommonsLinkedHashSet <> (m_aList));
   }
 
   public void getAllItems (@Nonnull final Collection <? super ICSSPathProvider> aTarget)

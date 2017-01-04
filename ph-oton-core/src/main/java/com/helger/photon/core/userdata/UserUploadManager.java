@@ -55,7 +55,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   private static final Logger s_aLogger = LoggerFactory.getLogger (UserUploadManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, TemporaryUserDataObject> m_aMap = new CommonsHashMap<> ();
+  private final ICommonsMap <String, TemporaryUserDataObject> m_aMap = new CommonsHashMap <> ();
 
   @Deprecated
   @UsedViaReflection
@@ -132,7 +132,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, UserDataObject> confirmUploadedFiles (@Nullable final String... aFieldNames)
   {
-    final ICommonsOrderedMap <String, UserDataObject> ret = new CommonsLinkedHashMap<> ();
+    final ICommonsOrderedMap <String, UserDataObject> ret = new CommonsLinkedHashMap <> ();
     if (aFieldNames != null)
     {
       m_aRWLock.writeLocked ( () -> {
@@ -194,7 +194,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   @ReturnsMutableCopy
   public ICommonsList <String> cancelUploadedFiles (@Nullable final String... aFieldNames)
   {
-    final ICommonsList <String> ret = new CommonsArrayList<> ();
+    final ICommonsList <String> ret = new CommonsArrayList <> ();
     if (ArrayHelper.isNotEmpty (aFieldNames))
     {
       m_aRWLock.writeLocked ( () -> {
