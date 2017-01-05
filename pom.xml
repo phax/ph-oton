@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2014-2016 Philip Helger (www.helger.com)
+    Copyright (C) 2014-2017 Philip Helger (www.helger.com)
     philip[at]helger[dot]com
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -195,6 +195,11 @@
         <artifactId>ph-oton-bootstrap3-stub</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-bootstrap4</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>com.jcraft</groupId>
@@ -292,5 +297,6 @@
     <module>ph-oton-bootstrap3-pages</module>
     <module>ph-oton-bootstrap3-stub</module>
     <module>ph-oton-bootstrap3-demo</module>
+    <module>ph-oton-bootstrap4</module>
   </modules>
 </project>
