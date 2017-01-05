@@ -5,6 +5,12 @@
 
 This set of Java libraries forms a package to build Java web applications.
 
+Contained subprojects are:
+  * ph-oton-html - Java wrapper for all HTML elements and attributes
+  * ph-oton-jscode - a Java code model to build structured JS code
+  * ph-oton-jquery - an extension to ph-html-jscode to also support jQuery
+  * ph-oton-bootstrap3 - Java Wrapper for the Bootstrap 3.x controls 
+
 Release history:
   * v7.0.2 - 2017-01-03
     * Updated to Jetty 9.4.0
