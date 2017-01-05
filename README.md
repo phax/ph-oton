@@ -6,10 +6,12 @@
 This set of Java libraries forms a package to build Java web applications.
 
 Release history:
-  * v7.0.2
+  * v7.0.2 - 2017-01-03
     * Updated to Jetty 9.4.0
     * Binds to ph-commons 8.5.6
     * Binds to ph-web 8.7.0
+    * Improved default request parameter handling customizability
+    * New artefact `ph-oton-icon`
   * v7.0.1 - 2016-11-14
     * Improvements in request tracking logging
     * Misc small improvements in different areas
