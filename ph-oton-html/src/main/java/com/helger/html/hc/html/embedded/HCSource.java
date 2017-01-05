@@ -1,0 +1,129 @@
+/**
+ * Copyright (C) 2014-2017 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.helger.html.hc.html.embedded;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.helger.commons.mime.IMimeType;
+import com.helger.commons.string.StringHelper;
+import com.helger.commons.url.ISimpleURL;
+import com.helger.html.CHTMLAttributes;
+import com.helger.html.EHTMLElement;
+import com.helger.html.annotation.SinceHTML5;
+import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.html.AbstractHCMediaElementChild;
+import com.helger.html.hc.html.IHCHasMedia;
+import com.helger.xml.microdom.IMicroElement;
+
+@SinceHTML5
+public class HCSource extends AbstractHCMediaElementChild <HCSource> implements IHCHasMedia <HCSource>
+{
+  private ISimpleURL m_aSrc;
+  private IMimeType m_aType;
+  // For picture
+  private String m_sSrcSet;
+  private String m_sSizes;
+  private String m_sMediaQuery;
+
+  public HCSource ()
+  {
+    super (EHTMLElement.SOURCE);
+  }
+
+  @Nullable
+  public ISimpleURL getSrc ()
+  {
+    return m_aSrc;
+  }
+
+  @Nonnull
+  public HCSource setSrc (@Nullable final ISimpleURL aSrc)
+  {
+    m_aSrc = aSrc;
+    return this;
+  }
+
+  @Nullable
+  public IMimeType getType ()
+  {
+    return m_aType;
+  }
+
+  @Nonnull
+  public HCSource setType (@Nullable final IMimeType aType)
+  {
+    m_aType = aType;
+    return this;
+  }
+
+  @Nullable
+  public String getSrcSet ()
+  {
+    return m_sSrcSet;
+  }
+
+  @Nonnull
+  public HCSource setSrcSet (@Nullable final String sSrcSet)
+  {
+    m_sSrcSet = sSrcSet;
+    return this;
+  }
+
+  @Nullable
+  public String getSizes ()
+  {
+    return m_sSizes;
+  }
+
+  @Nonnull
+  public HCSource setSizes (@Nullable final String sSizes)
+  {
+    m_sSizes = sSizes;
+    return this;
+  }
+
+  @Nullable
+  public String getMedia ()
+  {
+    return m_sMediaQuery;
+  }
+
+  @Nonnull
+  public HCSource setMedia (@Nullable final String sMediaQuery)
+  {
+    m_sMediaQuery = sMediaQuery;
+    return this;
+  }
+
+  @Override
+  protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
+  {
+    super.fillMicroElement (aElement, aConversionSettings);
+    if (m_aSrc != null)
+      aElement.setAttribute (CHTMLAttributes.SRC,
+                             m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+    if (m_aType != null)
+      aElement.setAttribute (CHTMLAttributes.TYPE, m_aType.getAsString ());
+    if (StringHelper.hasText (m_sSrcSet))
+      aElement.setAttribute (CHTMLAttributes.SRCSET, m_sSrcSet);
+    if (StringHelper.hasText (m_sSizes))
+      aElement.setAttribute (CHTMLAttributes.SIZES, m_sSizes);
+    if (StringHelper.hasText (m_sMediaQuery))
+      aElement.setAttribute (CHTMLAttributes.MEDIA, m_sMediaQuery);
+  }
+}

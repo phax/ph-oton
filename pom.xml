@@ -102,13 +102,6 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
-        <artifactId>ph-html-parent-pom</artifactId>
-        <version>6.0.4</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.helger</groupId>
         <artifactId>ph-schedule-parent-pom</artifactId>
         <version>3.6.0</version>
         <type>pom</type>
@@ -120,6 +113,21 @@
         <version>4.1.0</version>
       </dependency>
       
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-html</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-jscode</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-jquery</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-basic</artifactId>
@@ -281,6 +289,9 @@
   </build>
   
   <modules>
+    <module>ph-oton-html</module>
+    <module>ph-oton-jscode</module>
+    <module>ph-oton-jquery</module>
     <module>ph-oton-basic</module>
     <module>ph-oton-security</module>
     <module>ph-oton-exchange</module>

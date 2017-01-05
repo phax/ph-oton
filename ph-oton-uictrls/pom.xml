@@ -56,7 +56,7 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-html-jquery</artifactId>
+      <artifactId>ph-oton-jquery</artifactId>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
