@@ -33,10 +33,10 @@ import com.helger.html.resource.css.ICSSPathProvider;
 public enum EBootstrapCSSPathProvider implements ICSSPathProvider
 {
   /** Main Bootstrap CSS */
-  BOOTSTRAP ("bootstrap/4.0.0-a5/css/bootstrap.css"),
-  BOOTSTRAP_FLEX ("bootstrap/4.0.0-a5/css/bootstrap-flex.css"),
-  BOOTSTRAP_GRID ("bootstrap/4.0.0-a5/css/bootstrap-grid.css"),
-  BOOTSTRAP_REBOOT ("bootstrap/4.0.0-a5/css/bootstrap-reboot.css");
+  BOOTSTRAP ("bootstrap/4.0.0-a6/css/bootstrap.css"),
+  BOOTSTRAP_FLEX ("bootstrap/4.0.0-a6/css/bootstrap-flex.css"),
+  BOOTSTRAP_GRID ("bootstrap/4.0.0-a6/css/bootstrap-grid.css"),
+  BOOTSTRAP_REBOOT ("bootstrap/4.0.0-a6/css/bootstrap-reboot.css");
 
   private final ConstantCSSPathProvider m_aPP;
 
