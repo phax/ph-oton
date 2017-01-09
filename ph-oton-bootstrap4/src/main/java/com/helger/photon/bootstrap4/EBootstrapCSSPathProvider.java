@@ -34,7 +34,6 @@ public enum EBootstrapCSSPathProvider implements ICSSPathProvider
 {
   /** Main Bootstrap CSS */
   BOOTSTRAP ("bootstrap/4.0.0-a6/css/bootstrap.css"),
-  BOOTSTRAP_FLEX ("bootstrap/4.0.0-a6/css/bootstrap-flex.css"),
   BOOTSTRAP_GRID ("bootstrap/4.0.0-a6/css/bootstrap-grid.css"),
   BOOTSTRAP_REBOOT ("bootstrap/4.0.0-a6/css/bootstrap-reboot.css");
 
