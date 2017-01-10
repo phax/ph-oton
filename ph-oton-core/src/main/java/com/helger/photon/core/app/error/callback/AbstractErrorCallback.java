@@ -73,8 +73,8 @@ public abstract class AbstractErrorCallback implements
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractErrorCallback.class);
   private final ICommonsSet <String> m_aHandledLongRunning = new LRUSet <> (1000);
 
-  @Nonnull
-  public static final Locale getSafeDisplayLocale (@Nonnull final Locale aFallback)
+  @Nullable
+  public static final Locale getSafeDisplayLocale (@Nullable final Locale aFallback)
   {
     try
     {
