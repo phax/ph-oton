@@ -12,6 +12,9 @@ Contained subprojects are:
   * ph-oton-bootstrap3 - Java Wrapper for the Bootstrap 3.x controls 
 
 Release history:
+  * v7.0.3 - 2017-01-10
+    * Integrated ph-html into ph-oton
+    * Binds to ph-commons 8.6.0
   * v7.0.2 - 2017-01-03
     * Updated to Jetty 9.4.0
     * Binds to ph-commons 8.5.6
