@@ -43,20 +43,20 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
   {}
 
   @Nonnull
-  public String getText ()
+  public final String getText ()
   {
     return m_sText;
   }
 
   @Nonnull
-  public IMPLTYPE setText (@Nullable final String sText)
+  public final IMPLTYPE setText (@Nullable final String sText)
   {
     m_sText = StringHelper.getNotNull (sText);
     return thisAsT ();
   }
 
   @Nonnull
-  public IMPLTYPE prependText (@Nullable final String sText)
+  public final IMPLTYPE prependText (@Nullable final String sText)
   {
     if (StringHelper.hasText (sText))
       m_sText = sText + m_sText;
@@ -64,7 +64,7 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
   }
 
   @Nonnull
-  public IMPLTYPE appendText (@Nullable final String sText)
+  public final IMPLTYPE appendText (@Nullable final String sText)
   {
     if (StringHelper.hasText (sText))
       m_sText = m_sText + sText;
@@ -72,7 +72,7 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
   }
 
   @Nonnull
-  public IMPLTYPE setEscape (final boolean bEscape)
+  public final IMPLTYPE setEscape (final boolean bEscape)
   {
     m_bEscape = bEscape;
     return thisAsT ();
@@ -82,7 +82,7 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
    * @return <code>true</code> if XML escaping is enabled, <code>false</code> if
    *         it is disabled
    */
-  public boolean isEscape ()
+  public final boolean isEscape ()
   {
     return m_bEscape;
   }
