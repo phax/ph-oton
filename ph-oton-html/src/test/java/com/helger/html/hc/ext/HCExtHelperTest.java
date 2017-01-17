@@ -59,7 +59,7 @@ public final class HCExtHelperTest
   }
 
   @Test
-  public void testNl2diveList ()
+  public void testNl2divList ()
   {
     List <HCDiv> ret = HCExtHelper.nl2divList ("a\nb");
     assertNotNull (ret);

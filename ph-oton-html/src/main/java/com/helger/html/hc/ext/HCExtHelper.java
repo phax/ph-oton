@@ -26,6 +26,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCNode;
@@ -416,15 +417,13 @@ public final class HCExtHelper
     return createHCElement (eElement);
   }
 
-  @ReturnsMutableCopy
-  public static ICommonsList <IHCNode> nl2brList (@Nullable final String sText)
+  @FunctionalInterface
+  private static interface ILineConsumer
   {
-    final ICommonsList <IHCNode> ret = new CommonsArrayList<> ();
-    nl2brList (sText, ret::add);
-    return ret;
+    void accept (@Nonnull String sLine, boolean bIsLast);
   }
 
-  public static void nl2brList (@Nullable final String sText, @Nonnull final Consumer <? super IHCNode> aTarget)
+  public static void forEachLine (@Nullable final String sText, @Nonnull final ILineConsumer aTarget)
   {
     if (StringHelper.hasText (sText))
     {
@@ -436,19 +435,41 @@ public final class HCExtHelper
         final int nNext = sRealText.indexOf (PATTERN_NEWLINE, nIndex);
         if (nNext >= 0)
         {
-          if (nNext > nIndex)
-            aTarget.accept (new HCTextNode (sRealText.substring (nIndex, nNext)));
-          aTarget.accept (new HCBR ());
+          aTarget.accept (sRealText.substring (nIndex, nNext), false);
           nIndex = nNext + PATTERN_NEWLINE_LENGTH;
         }
         else
         {
           // Add the rest
-          aTarget.accept (new HCTextNode (sRealText.substring (nIndex)));
+          aTarget.accept (sRealText.substring (nIndex), true);
           break;
         }
       }
     }
+  }
+
+  @ReturnsMutableCopy
+  public static ICommonsList <IHCNode> nl2brList (@Nullable final String sText)
+  {
+    final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
+    nl2brList (sText, ret::add);
+    return ret;
+  }
+
+  public static void nl2brList (@Nullable final String sText, @Nonnull final Consumer <? super IHCNode> aTarget)
+  {
+    final MutableInt aCount = new MutableInt (0);
+    forEachLine (sText, (sLine, bLast) -> {
+      if (bLast || sLine.length () > 0)
+      {
+        final HCTextNode aTextNode = HCTextNode.createOnDemand (sLine);
+        if (aTextNode != null)
+          aTarget.accept (aTextNode);
+      }
+      if (!bLast)
+        aTarget.accept (new HCBR ());
+      aCount.inc ();
+    });
   }
 
   /**
@@ -467,8 +488,8 @@ public final class HCExtHelper
   @ReturnsMutableCopy
   public static ICommonsList <HCDiv> nl2divList (@Nullable final String sText)
   {
-    final ICommonsList <HCDiv> ret = new CommonsArrayList<> ();
-    nl2divList (sText, ret::add);
+    final ICommonsList <HCDiv> ret = new CommonsArrayList <> ();
+    forEachLine (sText, (sLine, bLast) -> ret.add (new HCDiv ().addChild (sLine)));
     return ret;
   }
 
@@ -486,45 +507,14 @@ public final class HCExtHelper
    */
   public static void nl2divList (@Nullable final String sText, @Nonnull final Consumer <? super HCDiv> aTarget)
   {
-    if (StringHelper.hasText (sText))
-    {
-      // Remove all "\r" chars
-      final String sRealText = StringHelper.removeAll (sText, '\r');
-      int nIndex = 0;
-      while (nIndex < sRealText.length ())
-      {
-        final int nNext = sRealText.indexOf (PATTERN_NEWLINE, nIndex);
-        if (nNext >= 0)
-        {
-          // There is a newline
-          aTarget.accept (new HCDiv ().addChild (sRealText.substring (nIndex, nNext)));
-          nIndex = nNext + PATTERN_NEWLINE_LENGTH;
-        }
-        else
-        {
-          // Add the rest
-          final String sRest = sRealText.substring (nIndex);
-          if (sRest.length () > 0)
-            aTarget.accept (new HCDiv ().addChild (sRest));
-          break;
-        }
-      }
-    }
+    forEachLine (sText, (sLine, bLast) -> aTarget.accept (new HCDiv ().addChild (sLine)));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public static ICommonsList <IHCNode> list2brList (@Nullable final Iterable <String> aCont)
   {
-    final ICommonsList <IHCNode> ret = new CommonsArrayList<> ();
-    if (aCont != null)
-      for (final String sText : aCont)
-      {
-        if (!ret.isEmpty ())
-          ret.add (new HCBR ());
-        ret.add (HCTextNode.createOnDemand (sText));
-      }
-    return ret;
+    return list2brList (aCont, Function.identity ());
   }
 
   @Nonnull
@@ -532,14 +522,18 @@ public final class HCExtHelper
   public static <SRCTYPE> ICommonsList <IHCNode> list2brList (@Nullable final Iterable <? extends SRCTYPE> aCont,
                                                               @Nonnull final Function <? super SRCTYPE, String> aMapper)
   {
-    final ICommonsList <IHCNode> ret = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     if (aCont != null)
+    {
+      int nIndex = 0;
       for (final SRCTYPE aItem : aCont)
       {
-        if (!ret.isEmpty ())
+        if (nIndex > 0)
           ret.add (new HCBR ());
         ret.add (HCTextNode.createOnDemand (aMapper.apply (aItem)));
+        nIndex++;
       }
+    }
     return ret;
   }
 
@@ -547,11 +541,7 @@ public final class HCExtHelper
   @ReturnsMutableCopy
   public static ICommonsList <IHCNode> list2divList (@Nullable final Iterable <String> aCont)
   {
-    final ICommonsList <IHCNode> ret = new CommonsArrayList<> ();
-    if (aCont != null)
-      for (final String sText : aCont)
-        ret.add (new HCDiv ().addChild (sText));
-    return ret;
+    return list2divList (aCont, Function.identity ());
   }
 
   @Nonnull
@@ -559,7 +549,7 @@ public final class HCExtHelper
   public static <SRCTYPE> ICommonsList <IHCNode> list2divList (@Nullable final Iterable <? extends SRCTYPE> aCont,
                                                                @Nonnull final Function <? super SRCTYPE, String> aMapper)
   {
-    final ICommonsList <IHCNode> ret = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     if (aCont != null)
       for (final SRCTYPE aItem : aCont)
         ret.add (new HCDiv ().addChild (aMapper.apply (aItem)));
