@@ -26,6 +26,7 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.IHCElementWithChildren;
+import com.helger.html.hc.html.forms.IHCButton;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
@@ -69,6 +70,13 @@ public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
     ValueEnforcer.notNull (aSelector, "Selector");
     ValueEnforcer.notNull (aMenu, "Menu");
     addClass (eDropdownType);
+
+    if (aSelector instanceof IHCButton <?>)
+    {
+      // If this is a dropdown for a button, add this class so that the
+      // alignment of buttons is correct
+      addClass (CBootstrapCSS.BTN_GROUP);
+    }
 
     // Link selector and menu
     aMenu.setCustomAttr (CHTMLAttributes.ARIA_LABELLEDBY, aSelector.ensureID ().getID ());
