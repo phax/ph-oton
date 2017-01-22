@@ -358,23 +358,25 @@ public class FeedEntry extends AbstractFeedElement
     // "type" attribute of atom:content is a MIME media type [MIMEREG], but is
     // not an XML media type [RFC3023], does not begin with "text/", and does
     // not end with "/xml" or "+xml".
-    if (m_aContent != null && m_aContent instanceof FeedOutOfLineContent)
+    if (m_aContent instanceof FeedOutOfLineContent)
+    {
       if (m_aSummary == null)
       {
         s_aLogger.warn ("Summary is required for out of line content!");
         return false;
       }
-
-    if (m_aContent != null && m_aContent instanceof FeedOtherContent)
-    {
-      final String sType = m_aContent.getType ();
-      if (!EMimeContentType.TEXT.isTypeOf (sType) && !sType.endsWith ("/xml") && !sType.endsWith ("+xml"))
-        if (m_aSummary == null)
-        {
-          s_aLogger.warn ("Summary is required for other content!");
-          return false;
-        }
     }
+    else
+      if (m_aContent instanceof FeedOtherContent)
+      {
+        final String sType = m_aContent.getType ();
+        if (!EMimeContentType.TEXT.isTypeOf (sType) && !sType.endsWith ("/xml") && !sType.endsWith ("+xml"))
+          if (m_aSummary == null)
+          {
+            s_aLogger.warn ("Summary is required for other content!");
+            return false;
+          }
+      }
 
     return true;
   }
