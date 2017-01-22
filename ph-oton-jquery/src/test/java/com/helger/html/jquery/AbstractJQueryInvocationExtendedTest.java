@@ -18,11 +18,10 @@ package com.helger.html.jquery;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import org.junit.Test;
 
 import com.helger.html.EHTMLElement;
 import com.helger.html.css.DefaultCSSClassProvider;

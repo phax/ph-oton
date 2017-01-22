@@ -22,7 +22,6 @@ import org.junit.Test;
 
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.photon.icon.EIconCSSPathProvider;
 
 /**
  * Test class for class {@link EIconCSSPathProvider}.
