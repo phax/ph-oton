@@ -22,8 +22,8 @@ import org.junit.rules.ExternalResource;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.EHTMLVersion;
-import com.helger.html.hc.config.DefaultHCOnDocumentReadyProvider;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
 import com.helger.html.js.UnparsedJSCodeProvider;
 
 /**
@@ -35,6 +35,8 @@ import com.helger.html.js.UnparsedJSCodeProvider;
  */
 public class HCTestRuleOptimized extends ExternalResource
 {
+  private IHCOnDocumentReadyProvider m_aOld;
+
   public HCTestRuleOptimized ()
   {}
 
@@ -45,6 +47,7 @@ public class HCTestRuleOptimized extends ExternalResource
   {
     HCSettings.setDefaultHTMLVersion (EHTMLVersion.XHTML11);
     HCSettings.getMutableConversionSettings ().setToOptimized ();
+    m_aOld = HCSettings.getOnDocumentReadyProvider ();
     HCSettings.setOnDocumentReadyProvider (aJSCodeProvider -> new UnparsedJSCodeProvider ("$(document).ready(function(){" +
                                                                                           aJSCodeProvider.getJSCode () +
                                                                                           "});"));
@@ -55,7 +58,7 @@ public class HCTestRuleOptimized extends ExternalResource
   @OverridingMethodsMustInvokeSuper
   public void after ()
   {
-    HCSettings.setOnDocumentReadyProvider (new DefaultHCOnDocumentReadyProvider ());
+    HCSettings.setOnDocumentReadyProvider (m_aOld);
     HCSettings.getMutableConversionSettings ().setToDefault ();
   }
 }

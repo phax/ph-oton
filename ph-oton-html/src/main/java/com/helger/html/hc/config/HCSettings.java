@@ -175,12 +175,14 @@ public final class HCSettings
     ValueEnforcer.notNull (eHTMLVersion, "HTMLVersion");
 
     // Update the HCSettings
+    final EHTMLVersion eOldVersion = getMutableConversionSettings ().getHTMLVersion ();
     getMutableConversionSettings ().setHTMLVersion (eHTMLVersion);
 
     // Update the XMLWriterSettings
     getMutableConversionSettings ().setXMLWriterSettings (HCConversionSettings.createDefaultXMLWriterSettings (eHTMLVersion));
 
-    s_aLogger.info ("Default HTML version set to " + eHTMLVersion);
+    if (!eHTMLVersion.equals (eOldVersion))
+      s_aLogger.info ("Default HTML version changed from " + eOldVersion + " to " + eHTMLVersion);
 
     if (eHTMLVersion.isAtLeastHTML5 ())
     {
@@ -255,8 +257,10 @@ public final class HCSettings
   {
     ValueEnforcer.notNull (eMode, "Mode");
 
+    final EHCScriptInlineMode eOld = getScriptInlineMode ();
     s_aRWLock.writeLocked ( () -> s_eScriptInlineMode = eMode);
-    s_aLogger.info ("Default <script> mode set to " + eMode);
+    if (!eMode.equals (eOld))
+      s_aLogger.info ("Default <script> mode changed from " + eOld + " to " + eMode);
   }
 
   /**
@@ -280,8 +284,10 @@ public final class HCSettings
   {
     ValueEnforcer.notNull (eStyleInlineMode, "mode");
 
+    final EHCStyleInlineMode eOld = getStyleInlineMode ();
     s_aRWLock.writeLocked ( () -> s_eStyleInlineMode = eStyleInlineMode);
-    s_aLogger.info ("Default <style> mode set to " + eStyleInlineMode);
+    if (!eStyleInlineMode.equals (eOld))
+      s_aLogger.info ("Default <style> mode changed from " + eOld + " to " + eStyleInlineMode);
   }
 
   @Nonnull
@@ -294,8 +300,10 @@ public final class HCSettings
   {
     ValueEnforcer.notNull (eNewLineMode, "NewLineMode");
 
+    final ENewLineMode eOld = getNewLineMode ();
     s_aRWLock.writeLocked ( () -> s_eNewLineMode = eNewLineMode);
-    s_aLogger.info ("Default new line mode set to " + eNewLineMode);
+    if (!eNewLineMode.equals (eOld))
+      s_aLogger.info ("Default new line mode changed from " + eOld + " to " + eNewLineMode);
   }
 
   public static boolean isOutOfBandDebuggingEnabled ()

@@ -183,7 +183,7 @@ final class Line
       final char c = m_sValue.charAt (i);
       if (c != ' ')
       {
-        if (c == ch)
+        if (c != ch)
           return 0;
         nCount++;
       }
@@ -445,7 +445,7 @@ final class Line
   @Nonnull
   private EHTMLElementType _checkHTML ()
   {
-    final ICommonsList <String> aTags = new CommonsLinkedList <> ();
+    final ICommonsList <String> aTags = new CommonsLinkedList<> ();
     final StringBuilder aSB = new StringBuilder ();
     int nPos = m_nLeading;
     if (m_sValue.charAt (m_nLeading + 1) == '!')
