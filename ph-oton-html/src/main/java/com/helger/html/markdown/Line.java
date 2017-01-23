@@ -173,25 +173,22 @@ final class Line
    *
    * @param ch
    *        The char to count.
-   * @return A value > 0 if this line only consists of 'ch' end spaces.
+   * @return A value &gt; 0 if this line only consists of 'ch' end spaces.
    */
   private int _countConsecutiveChars (final char ch)
   {
-    int count = 0;
+    int nCount = 0;
     for (int i = 0; i < m_sValue.length (); i++)
     {
       final char c = m_sValue.charAt (i);
-      if (c == ' ')
-        continue;
-      if (c == ch)
+      if (c != ' ')
       {
-        count++;
-        continue;
+        if (c == ch)
+          return 0;
+        nCount++;
       }
-      count = 0;
-      break;
     }
-    return count;
+    return nCount;
   }
 
   /**
@@ -204,7 +201,7 @@ final class Line
    */
   private int _countCharsStart (final char ch)
   {
-    int count = 0;
+    int nCount = 0;
     for (int i = 0; i < m_sValue.length (); i++)
     {
       final char c = m_sValue.charAt (i);
@@ -212,9 +209,9 @@ final class Line
         continue;
       if (c != ch)
         break;
-      count++;
+      nCount++;
     }
-    return count;
+    return nCount;
   }
 
   /**

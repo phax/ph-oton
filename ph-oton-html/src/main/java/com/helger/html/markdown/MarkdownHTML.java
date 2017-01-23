@@ -79,11 +79,11 @@ final class MarkdownHTML
       LINK_PREFIX.add (i < 0 ? sProtocol : sProtocol.substring (0, i));
     }
 
-    for (final EHTMLElement h : BLOCK_ELEMENTS)
-      HTML_BLOCK_ELEMENTS.add (h.getElementName ());
+    for (final EHTMLElement e : BLOCK_ELEMENTS)
+      HTML_BLOCK_ELEMENTS.add (e.getElementName ());
 
-    for (final EHTMLElement h : UNSAFE_ELEMENTS)
-      HTML_UNSAFE.add (h.getElementName ());
+    for (final EHTMLElement e : UNSAFE_ELEMENTS)
+      HTML_UNSAFE.add (e.getElementName ());
   }
 
   private MarkdownHTML ()

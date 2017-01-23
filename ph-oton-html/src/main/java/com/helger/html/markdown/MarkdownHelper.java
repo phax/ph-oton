@@ -63,23 +63,23 @@ final class MarkdownHelper
   /**
    * Skips spaces in the given String.
    *
-   * @param in
+   * @param sIn
    *        Input String.
-   * @param start
+   * @param nStart
    *        Starting position.
    * @return The new position or -1 if EOL has been reached.
    */
-  public static int skipSpaces (final String in, final int start)
+  public static int skipSpaces (final String sIn, final int nStart)
   {
-    int pos = start;
-    while (pos < in.length () && (in.charAt (pos) == ' ' || in.charAt (pos) == '\n'))
+    int pos = nStart;
+    while (pos < sIn.length () && (sIn.charAt (pos) == ' ' || sIn.charAt (pos) == '\n'))
       pos++;
-    return pos < in.length () ? pos : -1;
+    return pos < sIn.length () ? pos : -1;
   }
 
-  public static boolean isEscapeChar (final char ch)
+  public static boolean isEscapeChar (final char c)
   {
-    return ArrayHelper.contains (ESCAPE_CHARS, ch);
+    return ArrayHelper.contains (ESCAPE_CHARS, c);
   }
 
   /**

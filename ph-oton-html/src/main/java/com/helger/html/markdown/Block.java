@@ -31,19 +31,19 @@ final class Block
   /** This block's type. */
   public EBlockType m_eType = EBlockType.NONE;
   /** Head of linked lines. */
-  public Line m_aLines = null;
+  public Line m_aLines;
   /** Tail of linked lines. */
-  public Line m_aLineTail = null;
+  public Line m_aLineTail;
   /** Head of child blocks. */
-  public Block m_aBlocks = null;
+  public Block m_aBlocks;
   /** Tail of child blocks. */
-  public Block m_aBlockTail = null;
+  public Block m_aBlockTail;
   /** Next block. */
-  public Block m_aNext = null;
+  public Block m_aNext;
   /** Depth of headline BlockType. */
   public int m_nHeadlineDepth = 0;
   /** ID for headlines and list items */
-  public String m_sId = null;
+  public String m_sID;
   /** Block meta information */
   public String m_sMeta = "";
 
@@ -115,26 +115,26 @@ final class Block
    */
   public void removeListIndent (final boolean bExtendedMode)
   {
-    Line line = m_aLines;
-    while (line != null)
+    Line aLine = m_aLines;
+    while (aLine != null)
     {
-      if (!line.m_bIsEmpty)
+      if (!aLine.m_bIsEmpty)
       {
-        switch (line.getLineType (bExtendedMode))
+        switch (aLine.getLineType (bExtendedMode))
         {
           case ULIST:
-            line.m_sValue = line.m_sValue.substring (line.m_nLeading + 2);
+            aLine.m_sValue = aLine.m_sValue.substring (aLine.m_nLeading + 2);
             break;
           case OLIST:
-            line.m_sValue = line.m_sValue.substring (line.m_sValue.indexOf ('.') + 2);
+            aLine.m_sValue = aLine.m_sValue.substring (aLine.m_sValue.indexOf ('.') + 2);
             break;
           default:
-            line.m_sValue = line.m_sValue.substring (Math.min (line.m_nLeading, 4));
+            aLine.m_sValue = aLine.m_sValue.substring (Math.min (aLine.m_nLeading, 4));
             break;
         }
-        line.initLeading ();
+        aLine.initLeading ();
       }
-      line = line.m_aNext;
+      aLine = aLine.m_aNext;
     }
   }
 
@@ -168,15 +168,15 @@ final class Block
    */
   public boolean removeLeadingEmptyLines ()
   {
-    boolean wasEmpty = false;
-    Line line = m_aLines;
-    while (line != null && line.m_bIsEmpty)
+    boolean bWasEmpty = false;
+    Line aLine = m_aLines;
+    while (aLine != null && aLine.m_bIsEmpty)
     {
-      removeLine (line);
-      line = m_aLines;
-      wasEmpty = true;
+      removeLine (aLine);
+      aLine = m_aLines;
+      bWasEmpty = true;
     }
-    return wasEmpty;
+    return bWasEmpty;
   }
 
   /**
@@ -184,11 +184,11 @@ final class Block
    */
   public void removeTrailingEmptyLines ()
   {
-    Line line = m_aLineTail;
-    while (line != null && line.m_bIsEmpty)
+    Line aLine = m_aLineTail;
+    while (aLine != null && aLine.m_bIsEmpty)
     {
-      removeLine (line);
-      line = m_aLineTail;
+      removeLine (aLine);
+      aLine = m_aLineTail;
     }
   }
 
@@ -196,51 +196,52 @@ final class Block
    * Splits this block's lines, creating a new child block having 'line' as it's
    * lineTail.
    *
-   * @param line
+   * @param aLine
    *        The line to split from.
    * @return The newly created Block.
    */
-  public Block split (final Line line)
+  public Block split (final Line aLine)
   {
-    final Block block = new Block ();
+    final Block aBlock = new Block ();
 
-    block.m_aLines = m_aLines;
-    block.m_aLineTail = line;
-    m_aLines = line.m_aNext;
-    line.m_aNext = null;
+    aBlock.m_aLines = m_aLines;
+    aBlock.m_aLineTail = aLine;
+    m_aLines = aLine.m_aNext;
+    aLine.m_aNext = null;
     if (m_aLines == null)
       m_aLineTail = null;
     else
       m_aLines.m_aPrevious = null;
 
     if (m_aBlocks == null)
-      m_aBlocks = m_aBlockTail = block;
+      m_aBlocks = m_aBlockTail = aBlock;
     else
     {
-      m_aBlockTail.m_aNext = block;
-      m_aBlockTail = block;
+      m_aBlockTail.m_aNext = aBlock;
+      m_aBlockTail = aBlock;
     }
 
-    return block;
+    return aBlock;
   }
 
   /**
    * Removes the given line from this block.
    *
-   * @param line
+   * @param aLine
    *        Line to remove.
    */
-  public void removeLine (final Line line)
+  public void removeLine (final Line aLine)
   {
-    if (line.m_aPrevious == null)
-      m_aLines = line.m_aNext;
+    if (aLine.m_aPrevious == null)
+      m_aLines = aLine.m_aNext;
     else
-      line.m_aPrevious.m_aNext = line.m_aNext;
-    if (line.m_aNext == null)
-      m_aLineTail = line.m_aPrevious;
+      aLine.m_aPrevious.m_aNext = aLine.m_aNext;
+    if (aLine.m_aNext == null)
+      m_aLineTail = aLine.m_aPrevious;
     else
-      line.m_aNext.m_aPrevious = line.m_aPrevious;
-    line.m_aPrevious = line.m_aNext = null;
+      aLine.m_aNext.m_aPrevious = aLine.m_aPrevious;
+    aLine.m_aPrevious = null;
+    aLine.m_aNext = null;
   }
 
   /**
@@ -252,7 +253,10 @@ final class Block
   public void appendLine (@Nonnull final Line aLine)
   {
     if (m_aLineTail == null)
-      m_aLines = m_aLineTail = aLine;
+    {
+      m_aLines = aLine;
+      m_aLineTail = aLine;
+    }
     else
     {
       aLine.m_bPrevEmpty = m_aLineTail.m_bIsEmpty;
@@ -272,38 +276,39 @@ final class Block
     {
       return;
     }
-    Block outer = m_aBlocks, inner;
-    boolean hasParagraph = false;
-    while (outer != null && !hasParagraph)
+    Block aOuter = m_aBlocks;
+    Block aInner;
+    boolean bHasParagraph = false;
+    while (aOuter != null && !bHasParagraph)
     {
-      if (outer.m_eType == EBlockType.LIST_ITEM)
+      if (aOuter.m_eType == EBlockType.LIST_ITEM)
       {
-        inner = outer.m_aBlocks;
-        while (inner != null && !hasParagraph)
+        aInner = aOuter.m_aBlocks;
+        while (aInner != null && !bHasParagraph)
         {
-          if (inner.m_eType == EBlockType.PARAGRAPH)
-            hasParagraph = true;
-          inner = inner.m_aNext;
+          if (aInner.m_eType == EBlockType.PARAGRAPH)
+            bHasParagraph = true;
+          aInner = aInner.m_aNext;
         }
       }
-      outer = outer.m_aNext;
+      aOuter = aOuter.m_aNext;
     }
-    if (hasParagraph)
+    if (bHasParagraph)
     {
-      outer = m_aBlocks;
-      while (outer != null)
+      aOuter = m_aBlocks;
+      while (aOuter != null)
       {
-        if (outer.m_eType == EBlockType.LIST_ITEM)
+        if (aOuter.m_eType == EBlockType.LIST_ITEM)
         {
-          inner = outer.m_aBlocks;
-          while (inner != null)
+          aInner = aOuter.m_aBlocks;
+          while (aInner != null)
           {
-            if (inner.m_eType == EBlockType.NONE)
-              inner.m_eType = EBlockType.PARAGRAPH;
-            inner = inner.m_aNext;
+            if (aInner.m_eType == EBlockType.NONE)
+              aInner.m_eType = EBlockType.PARAGRAPH;
+            aInner = aInner.m_aNext;
           }
         }
-        outer = outer.m_aNext;
+        aOuter = aOuter.m_aNext;
       }
     }
   }

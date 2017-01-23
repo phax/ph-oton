@@ -63,7 +63,7 @@ final class Emitter
   /** Extension flag. */
   private boolean m_bUseExtensions = false;
   /** Newline flag. */
-  private boolean m_bConvertNewline2Br = false;
+  private final boolean m_bConvertNewline2Br;
   /** Plugins references **/
   private final ICommonsMap <String, AbstractMarkdownPlugin> m_aPlugins = new CommonsHashMap <> ();
 
@@ -87,33 +87,33 @@ final class Emitter
     m_bUseExtensions = bUseExtensions;
   }
 
-  public void register (@Nonnull final AbstractMarkdownPlugin plugin)
+  public void register (@Nonnull final AbstractMarkdownPlugin aPlugin)
   {
-    m_aPlugins.put (plugin.getPluginID (), plugin);
+    m_aPlugins.put (aPlugin.getPluginID (), aPlugin);
   }
 
   /**
    * Adds a LinkRef to this set of LinkRefs.
    *
-   * @param key
+   * @param sKey
    *        The key/id.
-   * @param linkRef
+   * @param aLinkRef
    *        The LinkRef.
    */
-  public void addLinkRef (@Nonnull final String key, final LinkRef linkRef)
+  public void addLinkRef (@Nonnull final String sKey, final LinkRef aLinkRef)
   {
-    m_aLinkRefs.put (key.toLowerCase (Locale.US), linkRef);
+    m_aLinkRefs.put (sKey.toLowerCase (Locale.US), aLinkRef);
   }
 
   /**
    * Transforms the given block recursively into HTML.
    *
-   * @param out
+   * @param aOut
    *        The StringBuilder to write to.
    * @param aRoot
    *        The Block to process.
    */
-  public void emit (final MarkdownHCStack out, final Block aRoot)
+  public void emit (final MarkdownHCStack aOut, final Block aRoot)
   {
     aRoot.removeSurroundingEmptyLines ();
     final IMarkdownDecorator aDecorator = m_aConfig.getDecorator ();
@@ -121,7 +121,7 @@ final class Emitter
     switch (aRoot.m_eType)
     {
       case RULER:
-        aDecorator.appendHorizontalRuler (out);
+        aDecorator.appendHorizontalRuler (aOut);
         return;
       case NONE:
       case XML:
@@ -129,31 +129,31 @@ final class Emitter
         // No open required
         break;
       case HEADLINE:
-        final IHCElementWithChildren <?> aHX = aDecorator.openHeadline (out, aRoot.m_nHeadlineDepth);
-        if (m_bUseExtensions && aRoot.m_sId != null)
-          aHX.setID (aRoot.m_sId);
+        final IHCElementWithChildren <?> aHX = aDecorator.openHeadline (aOut, aRoot.m_nHeadlineDepth);
+        if (m_bUseExtensions && aRoot.m_sID != null)
+          aHX.setID (aRoot.m_sID);
         break;
       case PARAGRAPH:
-        aDecorator.openParagraph (out);
+        aDecorator.openParagraph (aOut);
         break;
       case CODE:
       case FENCED_CODE:
         if (m_aConfig.getCodeBlockEmitter () == null)
-          aDecorator.openCodeBlock (out);
+          aDecorator.openCodeBlock (aOut);
         break;
       case BLOCKQUOTE:
-        aDecorator.openBlockquote (out);
+        aDecorator.openBlockquote (aOut);
         break;
       case UNORDERED_LIST:
-        aDecorator.openUnorderedList (out);
+        aDecorator.openUnorderedList (aOut);
         break;
       case ORDERED_LIST:
-        aDecorator.openOrderedList (out);
+        aDecorator.openOrderedList (aOut);
         break;
       case LIST_ITEM:
-        final HCLI aLI = aDecorator.openListItem (out);
-        if (m_bUseExtensions && aRoot.m_sId != null)
-          aLI.setID (aRoot.m_sId);
+        final HCLI aLI = aDecorator.openListItem (aOut);
+        if (m_bUseExtensions && aRoot.m_sID != null)
+          aLI.setID (aRoot.m_sID);
         break;
       default:
         break;
@@ -161,15 +161,15 @@ final class Emitter
 
     if (aRoot.hasLines ())
     {
-      _emitLines (out, aRoot);
+      _emitLines (aOut, aRoot);
     }
     else
     {
-      Block block = aRoot.m_aBlocks;
-      while (block != null)
+      Block aBlock = aRoot.m_aBlocks;
+      while (aBlock != null)
       {
-        emit (out, block);
-        block = block.m_aNext;
+        emit (aOut, aBlock);
+        aBlock = aBlock.m_aNext;
       }
     }
 
@@ -181,27 +181,27 @@ final class Emitter
       case XML_COMMENT:
         break;
       case HEADLINE:
-        aDecorator.closeHeadline (out, aRoot.m_nHeadlineDepth);
+        aDecorator.closeHeadline (aOut, aRoot.m_nHeadlineDepth);
         break;
       case PARAGRAPH:
-        aDecorator.closeParagraph (out);
+        aDecorator.closeParagraph (aOut);
         break;
       case CODE:
       case FENCED_CODE:
         if (m_aConfig.getCodeBlockEmitter () == null)
-          aDecorator.closeCodeBlock (out);
+          aDecorator.closeCodeBlock (aOut);
         break;
       case BLOCKQUOTE:
-        aDecorator.closeBlockquote (out);
+        aDecorator.closeBlockquote (aOut);
         break;
       case UNORDERED_LIST:
-        aDecorator.closeUnorderedList (out);
+        aDecorator.closeUnorderedList (aOut);
         break;
       case ORDERED_LIST:
-        aDecorator.closeOrderedList (out);
+        aDecorator.closeOrderedList (aOut);
         break;
       case LIST_ITEM:
-        aDecorator.closeListItem (out);
+        aDecorator.closeListItem (aOut);
         break;
       default:
         break;
@@ -211,35 +211,35 @@ final class Emitter
   /**
    * Transforms lines into HTML.
    *
-   * @param out
+   * @param aOut
    *        The StringBuilder to write to.
-   * @param block
+   * @param aBlock
    *        The Block to process.
    */
-  private void _emitLines (final MarkdownHCStack out, final Block block)
+  private void _emitLines (final MarkdownHCStack aOut, final Block aBlock)
   {
-    switch (block.m_eType)
+    switch (aBlock.m_eType)
     {
       case CODE:
-        _emitCodeLines (out, block.m_aLines, block.m_sMeta, true);
+        _emitCodeLines (aOut, aBlock.m_aLines, aBlock.m_sMeta, true);
         break;
       case FENCED_CODE:
-        _emitCodeLines (out, block.m_aLines, block.m_sMeta, false);
+        _emitCodeLines (aOut, aBlock.m_aLines, aBlock.m_sMeta, false);
         break;
       case PLUGIN:
-        emitPluginLines (out, block.m_aLines, block.m_sMeta);
+        emitPluginLines (aOut, aBlock.m_aLines, aBlock.m_sMeta);
         break;
       case XML:
-        _emitXMLLines (out, block.m_aLines);
+        _emitXMLLines (aOut, aBlock.m_aLines);
         break;
       case XML_COMMENT:
-        _emitXMLComment (out, block.m_aLines);
+        _emitXMLComment (aOut, aBlock.m_aLines);
         break;
       case PARAGRAPH:
-        _emitMarkedLines (out, block.m_aLines);
+        _emitMarkedLines (aOut, aBlock.m_aLines);
         break;
       default:
-        _emitMarkedLines (out, block.m_aLines);
+        _emitMarkedLines (aOut, aBlock.m_aLines);
         break;
     }
   }
@@ -247,22 +247,22 @@ final class Emitter
   /**
    * Finds the position of the given Token in the given String.
    *
-   * @param in
+   * @param sIn
    *        The String to search on.
-   * @param start
+   * @param nStart
    *        The starting character position.
-   * @param token
+   * @param eToken
    *        The token to find.
    * @return The position of the token or -1 if none could be found.
    */
-  private int _findInlineToken (final String in, final int start, final EMarkToken token)
+  private int _findInlineToken (final String sIn, final int nStart, final EMarkToken eToken)
   {
-    int pos = start;
-    while (pos < in.length ())
+    int nPos = nStart;
+    while (nPos < sIn.length ())
     {
-      if (_getToken (in, pos) == token)
-        return pos;
-      pos++;
+      if (_getToken (sIn, nPos) == eToken)
+        return nPos;
+      nPos++;
     }
     return -1;
   }
@@ -270,137 +270,139 @@ final class Emitter
   /**
    * Checks if there is a valid markdown link definition.
    *
-   * @param out
+   * @param aOut
    *        The StringBuilder containing the generated output.
-   * @param in
+   * @param sIn
    *        Input String.
-   * @param start
+   * @param nStart
    *        Starting position.
-   * @param token
+   * @param eToken
    *        Either LINK or IMAGE.
    * @return The new position or -1 if there is no valid markdown link.
    */
-  private int _checkInlineLink (final MarkdownHCStack out, final String in, final int start, final EMarkToken token)
+  private int _checkInlineLink (final MarkdownHCStack aOut, final String sIn, final int nStart, final EMarkToken eToken)
   {
-    boolean isAbbrev = false;
-    int pos = start + (token == EMarkToken.LINK ? 1 : 2);
-    final StringBuilder temp = new StringBuilder ();
+    boolean bIsAbbrev = false;
+    int nPos = nStart + (eToken == EMarkToken.LINK ? 1 : 2);
+    final StringBuilder aTmp = new StringBuilder ();
 
-    temp.setLength (0);
-    pos = MarkdownHelper.readMdLinkId (temp, in, pos);
-    if (pos < start)
+    aTmp.setLength (0);
+    nPos = MarkdownHelper.readMdLinkId (aTmp, sIn, nPos);
+    if (nPos < nStart)
       return -1;
 
-    final String name = temp.toString ();
-    String link = null, comment = null;
-    final int oldPos = pos++;
-    pos = MarkdownHelper.skipSpaces (in, pos);
-    if (pos < start)
+    final String sName = aTmp.toString ();
+    String sLink = null;
+    String sComment = null;
+    final int nOldPos = nPos++;
+    nPos = MarkdownHelper.skipSpaces (sIn, nPos);
+    if (nPos < nStart)
     {
-      final LinkRef lr = m_aLinkRefs.get (name.toLowerCase (Locale.US));
-      if (lr == null)
+      final LinkRef aLR = m_aLinkRefs.get (sName.toLowerCase (Locale.US));
+      if (aLR == null)
         return -1;
-      isAbbrev = lr.isAbbrev ();
-      link = lr.getLink ();
-      comment = lr.getTitle ();
-      pos = oldPos;
+      bIsAbbrev = aLR.isAbbrev ();
+      sLink = aLR.getLink ();
+      sComment = aLR.getTitle ();
+      nPos = nOldPos;
     }
     else
-      if (in.charAt (pos) == '(')
+      if (sIn.charAt (nPos) == '(')
       {
-        pos++;
-        pos = MarkdownHelper.skipSpaces (in, pos);
-        if (pos < start)
+        nPos++;
+        nPos = MarkdownHelper.skipSpaces (sIn, nPos);
+        if (nPos < nStart)
           return -1;
-        temp.setLength (0);
-        final boolean useLt = in.charAt (pos) == '<';
-        pos = useLt ? MarkdownHelper.readUntil (temp, in, pos + 1, '>') : MarkdownHelper.readMdLink (temp, in, pos);
-        if (pos < start)
+        aTmp.setLength (0);
+        final boolean bUseLt = sIn.charAt (nPos) == '<';
+        nPos = bUseLt ? MarkdownHelper.readUntil (aTmp, sIn, nPos + 1, '>')
+                      : MarkdownHelper.readMdLink (aTmp, sIn, nPos);
+        if (nPos < nStart)
           return -1;
-        if (useLt)
-          pos++;
-        link = temp.toString ();
+        if (bUseLt)
+          nPos++;
+        sLink = aTmp.toString ();
 
-        if (in.charAt (pos) == ' ')
+        if (sIn.charAt (nPos) == ' ')
         {
-          pos = MarkdownHelper.skipSpaces (in, pos);
-          if (pos > start && in.charAt (pos) == '"')
+          nPos = MarkdownHelper.skipSpaces (sIn, nPos);
+          if (nPos > nStart && sIn.charAt (nPos) == '"')
           {
-            pos++;
-            temp.setLength (0);
-            pos = MarkdownHelper.readUntil (temp, in, pos, '"');
-            if (pos < start)
+            nPos++;
+            aTmp.setLength (0);
+            nPos = MarkdownHelper.readUntil (aTmp, sIn, nPos, '"');
+            if (nPos < nStart)
               return -1;
-            comment = temp.toString ();
-            pos++;
-            pos = MarkdownHelper.skipSpaces (in, pos);
-            if (pos == -1)
+            sComment = aTmp.toString ();
+            nPos++;
+            nPos = MarkdownHelper.skipSpaces (sIn, nPos);
+            if (nPos == -1)
               return -1;
           }
         }
-        if (in.charAt (pos) != ')')
+        if (sIn.charAt (nPos) != ')')
           return -1;
       }
       else
-        if (in.charAt (pos) == '[')
+        if (sIn.charAt (nPos) == '[')
         {
-          pos++;
-          temp.setLength (0);
-          pos = MarkdownHelper.readRawUntil (temp, in, pos, ']');
-          if (pos < start)
+          nPos++;
+          aTmp.setLength (0);
+          nPos = MarkdownHelper.readRawUntil (aTmp, sIn, nPos, ']');
+          if (nPos < nStart)
             return -1;
-          final String id = temp.length () > 0 ? temp.toString () : name;
-          final LinkRef lr = m_aLinkRefs.get (id.toLowerCase (Locale.US));
-          if (lr != null)
+          final String sID = aTmp.length () > 0 ? aTmp.toString () : sName;
+          final LinkRef aLR = m_aLinkRefs.get (sID.toLowerCase (Locale.US));
+          if (aLR != null)
           {
-            link = lr.getLink ();
-            comment = lr.getTitle ();
+            sLink = aLR.getLink ();
+            sComment = aLR.getTitle ();
           }
         }
         else
         {
-          final LinkRef lr = m_aLinkRefs.get (name.toLowerCase (Locale.US));
-          if (lr == null)
+          final LinkRef aLR = m_aLinkRefs.get (sName.toLowerCase (Locale.US));
+          if (aLR == null)
             return -1;
-          isAbbrev = lr.isAbbrev ();
-          link = lr.getLink ();
-          comment = lr.getTitle ();
-          pos = oldPos;
+          bIsAbbrev = aLR.isAbbrev ();
+          sLink = aLR.getLink ();
+          sComment = aLR.getTitle ();
+          nPos = nOldPos;
         }
 
-    if (link == null)
+    if (sLink == null)
       return -1;
 
-    if (token == EMarkToken.LINK)
+    if (eToken == EMarkToken.LINK)
     {
-      if (isAbbrev && comment != null)
+      if (bIsAbbrev && sComment != null)
       {
         if (!m_bUseExtensions)
           return -1;
-        out.push (new HCAbbr ().setTitle (comment));
-        _recursiveEmitLine (out, name, 0, EMarkToken.NONE);
-        out.pop ();
+        aOut.push (new HCAbbr ().setTitle (sComment));
+        _recursiveEmitLine (aOut, sName, 0, EMarkToken.NONE);
+        aOut.pop ();
       }
       else
       {
-        final HCA aLink = m_aConfig.getDecorator ().openLink (out);
-        aLink.setHref (new SimpleURL (link));
-        if (comment != null)
-          aLink.setTitle (comment);
-        _recursiveEmitLine (out, name, 0, EMarkToken.NONE);
-        m_aConfig.getDecorator ().closeLink (out);
+        final HCA aLink = m_aConfig.getDecorator ().openLink (aOut);
+        aLink.setHref (new SimpleURL (sLink));
+        if (sComment != null)
+          aLink.setTitle (sComment);
+        _recursiveEmitLine (aOut, sName, 0, EMarkToken.NONE);
+        m_aConfig.getDecorator ().closeLink (aOut);
       }
     }
     else
     {
-      final HCImg aImg = m_aConfig.getDecorator ().appendImage (out);
-      aImg.setSrc (new SimpleURL (link));
-      aImg.setAlt (name);
-      if (comment != null)
-        aImg.setTitle (comment);
+      final HCImg aImg = m_aConfig.getDecorator ().appendImage (aOut);
+      aImg.setSrc (new SimpleURL (sLink));
+      aImg.setAlt (sName);
+      if (sComment != null)
+        aImg.setTitle (sComment);
     }
 
-    return pos;
+    return nPos;
   }
 
   /**
@@ -417,17 +419,17 @@ final class Emitter
    */
   private int _checkInlineHtml (final MarkdownHCStack out, final String in, final int nStart)
   {
-    final StringBuilder aTemp = new StringBuilder ();
+    final StringBuilder aTmp = new StringBuilder ();
 
     // Check for auto links
-    aTemp.setLength (0);
-    int nPos = MarkdownHelper.readUntil (aTemp, in, nStart + 1, ':', ' ', '>', '\n');
-    if (nPos != -1 && in.charAt (nPos) == ':' && MarkdownHTML.isLinkPrefix (aTemp.toString ()))
+    aTmp.setLength (0);
+    int nPos = MarkdownHelper.readUntil (aTmp, in, nStart + 1, ':', ' ', '>', '\n');
+    if (nPos != -1 && in.charAt (nPos) == ':' && MarkdownHTML.isLinkPrefix (aTmp.toString ()))
     {
-      nPos = MarkdownHelper.readUntil (aTemp, in, nPos, '>');
+      nPos = MarkdownHelper.readUntil (aTmp, in, nPos, '>');
       if (nPos != -1)
       {
-        final String sLink = aTemp.toString ();
+        final String sLink = aTmp.toString ();
         final HCA aLink = m_aConfig.getDecorator ().openLink (out);
         aLink.setHref (new SimpleURL (sLink)).addChild (sLink);
         m_aConfig.getDecorator ().closeLink (out);
@@ -436,14 +438,14 @@ final class Emitter
     }
 
     // Check for mailto or address auto link
-    aTemp.setLength (0);
-    nPos = MarkdownHelper.readUntil (aTemp, in, nStart + 1, '@', ' ', '>', '\n');
+    aTmp.setLength (0);
+    nPos = MarkdownHelper.readUntil (aTmp, in, nStart + 1, '@', ' ', '>', '\n');
     if (nPos != -1 && in.charAt (nPos) == '@')
     {
-      nPos = MarkdownHelper.readUntil (aTemp, in, nPos, '>');
+      nPos = MarkdownHelper.readUntil (aTmp, in, nPos, '>');
       if (nPos != -1)
       {
-        final String sLink = aTemp.toString ();
+        final String sLink = aTmp.toString ();
         final HCA aLink = m_aConfig.getDecorator ().openLink (out);
         if (sLink.startsWith ("@"))
         {
@@ -493,11 +495,11 @@ final class Emitter
         }
       }
 
-      aTemp.setLength (0);
-      final int t = MarkdownHelper.readXMLElement (aTemp, in, nStart, m_aConfig.isSafeMode ());
-      if (t != -1)
+      aTmp.setLength (0);
+      final int nNewPos = MarkdownHelper.readXMLElement (aTmp, in, nStart, m_aConfig.isSafeMode ());
+      if (nNewPos != -1)
       {
-        final String sElement = aTemp.toString ();
+        final String sElement = aTmp.toString ();
         if (sElement.endsWith ("/>"))
         {
           // Self closed tag - can be parsed
@@ -528,8 +530,7 @@ final class Emitter
               throw new MarkdownException ("Failed to get HC element: " + eRoot.getTagName ());
 
             // Clone all attributes
-            eRoot.forAllAttributes (aAttr -> aHC.setCustomAttr (aAttr.getAttributeName (),
-                                                                   aAttr.getAttributeValue ()));
+            eRoot.forAllAttributes (aAttr -> aHC.setCustomAttr (aAttr.getAttributeName (), aAttr.getAttributeValue ()));
 
             if (aHC.getElement ().mayBeSelfClosed ())
             {
@@ -543,7 +544,7 @@ final class Emitter
             }
           }
 
-        return t - 1;
+        return nNewPos - 1;
       }
     }
 
@@ -553,273 +554,272 @@ final class Emitter
   /**
    * Check if this is a valid XML/HTML entity.
    *
-   * @param out
+   * @param aOut
    *        The StringBuilder to write to.
-   * @param in
+   * @param sIn
    *        Input String.
-   * @param start
+   * @param nStart
    *        Starting position
    * @return The new position or -1 if this entity in invalid.
    */
-  private static int _checkInlineEntity (final StringBuilder out, final String in, final int start)
+  private static int _checkInlineEntity (final StringBuilder aOut, final String sIn, final int nStart)
   {
-    final int pos = MarkdownHelper.readUntil (out, in, start, ';');
-    if (pos < 0 || out.length () < 3)
+    final int nPos = MarkdownHelper.readUntil (aOut, sIn, nStart, ';');
+    if (nPos < 0 || aOut.length () < 3)
       return -1;
-    if (out.charAt (1) == '#')
+    if (aOut.charAt (1) == '#')
     {
-      if (out.charAt (2) == 'x' || out.charAt (2) == 'X')
+      if (aOut.charAt (2) == 'x' || aOut.charAt (2) == 'X')
       {
-        if (out.length () < 4)
+        if (aOut.length () < 4)
           return -1;
-        for (int i = 3; i < out.length (); i++)
+        for (int i = 3; i < aOut.length (); i++)
         {
-          final char c = out.charAt (i);
+          final char c = aOut.charAt (i);
           if ((c < '0' || c > '9') && ((c < 'a' || c > 'f') && (c < 'A' || c > 'F')))
             return -1;
         }
       }
       else
       {
-        for (int i = 2; i < out.length (); i++)
+        for (int i = 2; i < aOut.length (); i++)
         {
-          final char c = out.charAt (i);
+          final char c = aOut.charAt (i);
           if (c < '0' || c > '9')
             return -1;
         }
       }
-      out.append (';');
+      aOut.append (';');
     }
     else
     {
-      for (int i = 1; i < out.length (); i++)
+      for (int i = 1; i < aOut.length (); i++)
       {
-        final char c = out.charAt (i);
+        final char c = aOut.charAt (i);
         if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z'))
           return -1;
       }
-      out.append (';');
-      return EHTMLEntity.isValidEntityReference (out.toString ()) ? pos : -1;
+      aOut.append (';');
+      return EHTMLEntity.isValidEntityReference (aOut.toString ()) ? nPos : -1;
     }
 
-    return pos;
+    return nPos;
   }
 
   /**
    * Recursively scans through the given line, taking care of any markdown
    * stuff.
    *
-   * @param out
+   * @param aOut
    *        The StringBuilder to write to.
-   * @param in
+   * @param sIn
    *        Input String.
-   * @param start
+   * @param nStart
    *        Start position.
-   * @param token
+   * @param eToken
    *        The matching Token (for e.g. '*')
    * @return The position of the matching Token or -1 if token was NONE or no
    *         Token could be found.
    */
-  private int _recursiveEmitLine (final MarkdownHCStack out, final String in, final int start, final EMarkToken token)
+  private int _recursiveEmitLine (final MarkdownHCStack aOut,
+                                  final String sIn,
+                                  final int nStart,
+                                  final EMarkToken eToken)
   {
-    int pos = start;
+    int nPos = nStart;
     int a;
     int b;
-    final MarkdownHCStack temp = new MarkdownHCStack ();
-    final StringBuilder tempSB = new StringBuilder ();
-    while (pos < in.length ())
+    final MarkdownHCStack aTmp = new MarkdownHCStack ();
+    final StringBuilder aTmpSB = new StringBuilder ();
+    while (nPos < sIn.length ())
     {
-      final EMarkToken mt = _getToken (in, pos);
-      if (token != EMarkToken.NONE)
-        if (mt == token ||
-            (token == EMarkToken.EM_STAR && mt == EMarkToken.STRONG_STAR) ||
-            (token == EMarkToken.EM_UNDERSCORE && mt == EMarkToken.STRONG_UNDERSCORE))
-          return pos;
+      final EMarkToken eCurToken = _getToken (sIn, nPos);
+      if (eToken != EMarkToken.NONE)
+        if (eCurToken.equals (eToken) ||
+            (eToken == EMarkToken.EM_STAR && eCurToken == EMarkToken.STRONG_STAR) ||
+            (eToken == EMarkToken.EM_UNDERSCORE && eCurToken == EMarkToken.STRONG_UNDERSCORE))
+          return nPos;
 
-      switch (mt)
+      switch (eCurToken)
       {
         case IMAGE:
         case LINK:
-          b = _checkInlineLink (out, in, pos, mt);
+          b = _checkInlineLink (aOut, sIn, nPos, eCurToken);
           if (b > 0)
-          {
-            pos = b;
-          }
+            nPos = b;
           else
-          {
-            out.append (in.charAt (pos));
-          }
+            aOut.append (sIn.charAt (nPos));
           break;
         case EM_STAR:
         case EM_UNDERSCORE:
-          temp.reset ();
-          b = _recursiveEmitLine (temp, in, pos + 1, mt);
+          aTmp.reset ();
+          b = _recursiveEmitLine (aTmp, sIn, nPos + 1, eCurToken);
           if (b > 0)
           {
-            m_aConfig.getDecorator ().openEmphasis (out);
-            out.append (temp.getRoot ());
-            m_aConfig.getDecorator ().closeEmphasis (out);
-            pos = b;
+            m_aConfig.getDecorator ().openEmphasis (aOut);
+            aOut.append (aTmp.getRoot ());
+            m_aConfig.getDecorator ().closeEmphasis (aOut);
+            nPos = b;
           }
           else
           {
-            out.append (in.charAt (pos));
+            aOut.append (sIn.charAt (nPos));
           }
           break;
         case STRONG_STAR:
         case STRONG_UNDERSCORE:
-          temp.reset ();
-          b = _recursiveEmitLine (temp, in, pos + 2, mt);
+          aTmp.reset ();
+          b = _recursiveEmitLine (aTmp, sIn, nPos + 2, eCurToken);
           if (b > 0)
           {
-            m_aConfig.getDecorator ().openStrong (out);
-            out.append (temp.getRoot ());
-            m_aConfig.getDecorator ().closeStrong (out);
-            pos = b + 1;
+            m_aConfig.getDecorator ().openStrong (aOut);
+            aOut.append (aTmp.getRoot ());
+            m_aConfig.getDecorator ().closeStrong (aOut);
+            nPos = b + 1;
           }
           else
           {
-            out.append (in.charAt (pos));
+            aOut.append (sIn.charAt (nPos));
           }
           break;
         case STRIKE:
-          temp.reset ();
-          b = _recursiveEmitLine (temp, in, pos + 2, mt);
+          aTmp.reset ();
+          b = _recursiveEmitLine (aTmp, sIn, nPos + 2, eCurToken);
           if (b > 0)
           {
-            m_aConfig.getDecorator ().openStrike (out);
-            out.append (temp.getRoot ());
-            m_aConfig.getDecorator ().closeStrike (out);
-            pos = b + 1;
+            m_aConfig.getDecorator ().openStrike (aOut);
+            aOut.append (aTmp.getRoot ());
+            m_aConfig.getDecorator ().closeStrike (aOut);
+            nPos = b + 1;
           }
           else
           {
-            out.append (in.charAt (pos));
+            aOut.append (sIn.charAt (nPos));
           }
           break;
         case SUPER:
-          temp.reset ();
-          b = _recursiveEmitLine (temp, in, pos + 1, mt);
+          aTmp.reset ();
+          b = _recursiveEmitLine (aTmp, sIn, nPos + 1, eCurToken);
           if (b > 0)
           {
-            m_aConfig.getDecorator ().openSuper (out);
-            out.append (temp.getRoot ());
-            m_aConfig.getDecorator ().closeSuper (out);
-            pos = b;
+            m_aConfig.getDecorator ().openSuper (aOut);
+            aOut.append (aTmp.getRoot ());
+            m_aConfig.getDecorator ().closeSuper (aOut);
+            nPos = b;
           }
           else
           {
-            out.append (in.charAt (pos));
+            aOut.append (sIn.charAt (nPos));
           }
           break;
         case CODE_SINGLE:
         case CODE_DOUBLE:
-          a = pos + (mt == EMarkToken.CODE_DOUBLE ? 2 : 1);
-          b = _findInlineToken (in, a, mt);
+          a = nPos + (eCurToken == EMarkToken.CODE_DOUBLE ? 2 : 1);
+          b = _findInlineToken (sIn, a, eCurToken);
           if (b > 0)
           {
-            pos = b + (mt == EMarkToken.CODE_DOUBLE ? 1 : 0);
-            while (a < b && in.charAt (a) == ' ')
+            nPos = b + (eCurToken == EMarkToken.CODE_DOUBLE ? 1 : 0);
+            while (a < b && sIn.charAt (a) == ' ')
               a++;
             if (a < b)
             {
-              while (in.charAt (b - 1) == ' ')
+              while (sIn.charAt (b - 1) == ' ')
                 b--;
-              final HCCode aCode = m_aConfig.getDecorator ().openCodeSpan (out);
-              aCode.addChild (in.substring (a, b));
-              m_aConfig.getDecorator ().closeCodeSpan (out);
+              final HCCode aCode = m_aConfig.getDecorator ().openCodeSpan (aOut);
+              aCode.addChild (sIn.substring (a, b));
+              m_aConfig.getDecorator ().closeCodeSpan (aOut);
             }
           }
           else
           {
-            out.append (in.charAt (pos));
+            aOut.append (sIn.charAt (nPos));
           }
           break;
         case HTML:
-          b = _checkInlineHtml (out, in, pos);
+          b = _checkInlineHtml (aOut, sIn, nPos);
           if (b > 0)
           {
-            pos = b;
+            nPos = b;
           }
           else
           {
-            out.append ('<');
+            aOut.append ('<');
           }
           break;
         case ENTITY:
-          tempSB.setLength (0);
-          b = _checkInlineEntity (tempSB, in, pos);
+          aTmpSB.setLength (0);
+          b = _checkInlineEntity (aTmpSB, sIn, nPos);
           if (b > 0)
           {
             // Remove leading '&' and trailing ';'
-            out.append (new HCEntityNode (new HTMLEntity (tempSB.substring (1, tempSB.length () - 1)), " "));
-            pos = b;
+            aOut.append (new HCEntityNode (new HTMLEntity (aTmpSB.substring (1, aTmpSB.length () - 1)), " "));
+            nPos = b;
           }
           else
           {
-            out.append ('&');
+            aOut.append ('&');
           }
           break;
         case X_LINK_OPEN:
-          temp.reset ();
-          b = _recursiveEmitLine (temp, in, pos + 2, EMarkToken.X_LINK_CLOSE);
+          aTmp.reset ();
+          b = _recursiveEmitLine (aTmp, sIn, nPos + 2, EMarkToken.X_LINK_CLOSE);
           if (b > 0 && m_aConfig.getSpecialLinkEmitter () != null)
           {
-            m_aConfig.getSpecialLinkEmitter ().emitSpan (out, temp);
-            pos = b + 1;
+            m_aConfig.getSpecialLinkEmitter ().emitSpan (aOut, aTmp);
+            nPos = b + 1;
           }
           else
           {
-            out.append (in.charAt (pos));
+            aOut.append (sIn.charAt (nPos));
           }
           break;
         case X_COPY:
-          out.append (HCEntityNode.newCopy ());
-          pos += 2;
+          aOut.append (HCEntityNode.newCopy ());
+          nPos += 2;
           break;
         case X_REG:
-          out.append (new HCEntityNode (EHTMLEntity.copy, "(r)"));
-          pos += 2;
+          aOut.append (new HCEntityNode (EHTMLEntity.copy, "(r)"));
+          nPos += 2;
           break;
         case X_TRADE:
-          out.append (new HCEntityNode (EHTMLEntity.trade, "TM"));
-          pos += 3;
+          aOut.append (new HCEntityNode (EHTMLEntity.trade, "TM"));
+          nPos += 3;
           break;
         case X_NDASH:
-          out.append (new HCEntityNode (EHTMLEntity.ndash, "--"));
-          pos++;
+          aOut.append (new HCEntityNode (EHTMLEntity.ndash, "--"));
+          nPos++;
           break;
         case X_MDASH:
-          out.append (new HCEntityNode (EHTMLEntity.mdash, "---"));
-          pos += 2;
+          aOut.append (new HCEntityNode (EHTMLEntity.mdash, "---"));
+          nPos += 2;
           break;
         case X_HELLIP:
-          out.append (new HCEntityNode (EHTMLEntity.hellip, "..."));
-          pos += 2;
+          aOut.append (new HCEntityNode (EHTMLEntity.hellip, "..."));
+          nPos += 2;
           break;
         case X_LAQUO:
-          out.append (new HCEntityNode (EHTMLEntity.laquo, "<<"));
-          pos++;
+          aOut.append (new HCEntityNode (EHTMLEntity.laquo, "<<"));
+          nPos++;
           break;
         case X_RAQUO:
-          out.append (new HCEntityNode (EHTMLEntity.raquo, ">>"));
-          pos++;
+          aOut.append (new HCEntityNode (EHTMLEntity.raquo, ">>"));
+          nPos++;
           break;
         case X_RDQUO:
-          out.append (new HCEntityNode (EHTMLEntity.rdquo, "\""));
+          aOut.append (new HCEntityNode (EHTMLEntity.rdquo, "\""));
           break;
         case X_LDQUO:
-          out.append (new HCEntityNode (EHTMLEntity.ldquo, "\""));
+          aOut.append (new HCEntityNode (EHTMLEntity.ldquo, "\""));
           break;
         case ESCAPE:
-          pos++;
-          out.append (in.charAt (pos));
+          nPos++;
+          aOut.append (sIn.charAt (nPos));
           break;
         default:
-          out.append (in.charAt (pos));
+          aOut.append (sIn.charAt (nPos));
           break;
       }
-      pos++;
+      nPos++;
     }
     return -1;
   }
@@ -839,20 +839,20 @@ final class Emitter
   /**
    * Check if there is any markdown Token.
    *
-   * @param in
+   * @param sIn
    *        Input String.
-   * @param pos
+   * @param nPos
    *        Starting position.
    * @return The Token.
    */
   @Nonnull
-  private EMarkToken _getToken (final String in, final int pos)
+  private EMarkToken _getToken (final String sIn, final int nPos)
   {
-    final char c0 = pos > 0 ? _whitespaceToSpace (in.charAt (pos - 1)) : ' ';
-    final char c = _whitespaceToSpace (in.charAt (pos));
-    final char c1 = pos + 1 < in.length () ? _whitespaceToSpace (in.charAt (pos + 1)) : ' ';
-    final char c2 = pos + 2 < in.length () ? _whitespaceToSpace (in.charAt (pos + 2)) : ' ';
-    final char c3 = pos + 3 < in.length () ? _whitespaceToSpace (in.charAt (pos + 3)) : ' ';
+    final char c0 = nPos > 0 ? _whitespaceToSpace (sIn.charAt (nPos - 1)) : ' ';
+    final char c = _whitespaceToSpace (sIn.charAt (nPos));
+    final char c1 = nPos + 1 < sIn.length () ? _whitespaceToSpace (sIn.charAt (nPos + 1)) : ' ';
+    final char c2 = nPos + 2 < sIn.length () ? _whitespaceToSpace (sIn.charAt (nPos + 2)) : ' ';
+    final char c3 = nPos + 3 < sIn.length () ? _whitespaceToSpace (sIn.charAt (nPos + 3)) : ' ';
 
     switch (c)
     {
@@ -946,76 +946,76 @@ final class Emitter
   /**
    * Writes a set of markdown lines into the StringBuilder.
    *
-   * @param out
+   * @param aOut
    *        The StringBuilder to write to.
-   * @param lines
+   * @param aLines
    *        The lines to write.
    */
-  private void _emitMarkedLines (final MarkdownHCStack out, final Line lines)
+  private void _emitMarkedLines (final MarkdownHCStack aOut, final Line aLines)
   {
-    final StringBuilder in = new StringBuilder ();
-    Line line = lines;
-    while (line != null)
+    final StringBuilder aIn = new StringBuilder ();
+    Line aLine = aLines;
+    while (aLine != null)
     {
-      if (!line.m_bIsEmpty)
+      if (!aLine.m_bIsEmpty)
       {
-        in.append (line.m_sValue.substring (line.m_nLeading, line.m_sValue.length () - line.m_nTrailing));
-        if (line.m_nTrailing >= 2 && !m_bConvertNewline2Br)
-          in.append ("<br />");
+        aIn.append (aLine.m_sValue.substring (aLine.m_nLeading, aLine.m_sValue.length () - aLine.m_nTrailing));
+        if (aLine.m_nTrailing >= 2 && !m_bConvertNewline2Br)
+          aIn.append ("<br />");
       }
-      if (line.m_aNext != null)
+      if (aLine.m_aNext != null)
       {
-        in.append ('\n');
+        aIn.append ('\n');
         if (m_bConvertNewline2Br)
-          in.append ("<br />");
+          aIn.append ("<br />");
       }
-      line = line.m_aNext;
+      aLine = aLine.m_aNext;
     }
 
-    _recursiveEmitLine (out, in.toString (), 0, EMarkToken.NONE);
+    _recursiveEmitLine (aOut, aIn.toString (), 0, EMarkToken.NONE);
   }
 
   /**
    * Writes a set of raw lines into the StringBuilder.
    *
-   * @param out
+   * @param aOut
    *        The StringBuilder to write to.
-   * @param lines
+   * @param aLines
    *        The lines to write.
    */
-  private void _emitXMLLines (final MarkdownHCStack out, final Line lines)
+  private void _emitXMLLines (final MarkdownHCStack aOut, final Line aLines)
   {
-    Line line = lines;
+    Line aLine = aLines;
     if (m_aConfig.isSafeMode ())
     {
-      final StringBuilder temp = new StringBuilder ();
-      while (line != null)
+      final StringBuilder aTmpSB = new StringBuilder ();
+      while (aLine != null)
       {
-        if (!line.m_bIsEmpty)
-          temp.append (line.m_sValue.trim ());
-        line = line.m_aNext;
+        if (!aLine.m_bIsEmpty)
+          aTmpSB.append (aLine.m_sValue.trim ());
+        aLine = aLine.m_aNext;
       }
-      final String in = temp.toString ();
-      for (int pos = 0; pos < in.length (); pos++)
+      final String sIn = aTmpSB.toString ();
+      for (int nPos = 0; nPos < sIn.length (); nPos++)
       {
-        if (in.charAt (pos) == '<')
+        if (sIn.charAt (nPos) == '<')
         {
-          temp.setLength (0);
-          final int t = MarkdownHelper.readXMLElement (temp, in, pos, m_aConfig.isSafeMode ());
-          if (t != -1)
+          aTmpSB.setLength (0);
+          final int nNewPos = MarkdownHelper.readXMLElement (aTmpSB, sIn, nPos, m_aConfig.isSafeMode ());
+          if (nNewPos != -1)
           {
             // XXX Is this correct???
-            out.append (temp.toString ());
-            pos = t;
+            aOut.append (aTmpSB.toString ());
+            nPos = nNewPos;
           }
           else
           {
-            out.append (in.charAt (pos));
+            aOut.append (sIn.charAt (nPos));
           }
         }
         else
         {
-          out.append (in.charAt (pos));
+          aOut.append (sIn.charAt (nPos));
         }
       }
     }
@@ -1023,14 +1023,14 @@ final class Emitter
     {
       final StringBuilder aXML = new StringBuilder ();
       int nLines = 0;
-      while (line != null)
+      while (aLine != null)
       {
-        if (!line.m_bIsEmpty)
+        if (!aLine.m_bIsEmpty)
         {
-          aXML.append (line.m_sValue.trim ());
+          aXML.append (aLine.m_sValue.trim ());
           ++nLines;
         }
-        line = line.m_aNext;
+        aLine = aLine.m_aNext;
       }
 
       String sXML = aXML.toString ();
@@ -1045,23 +1045,23 @@ final class Emitter
       if (aDoc == null)
         throw new MarkdownException ("Failed to parse XML: " + sXML);
 
-      out.append (new HCDOMWrapper (aDoc.getDocumentElement ().detachFromParent ()));
+      aOut.append (new HCDOMWrapper (aDoc.getDocumentElement ().detachFromParent ()));
     }
   }
 
-  private void _emitXMLComment (final MarkdownHCStack out, final Line lines)
+  private void _emitXMLComment (final MarkdownHCStack aOut, final Line aLines)
   {
-    Line line = lines;
+    Line aLine = aLines;
     final StringBuilder aXML = new StringBuilder ();
-    while (line != null)
+    while (aLine != null)
     {
-      if (!line.m_bIsEmpty)
+      if (!aLine.m_bIsEmpty)
       {
         // Append without trimming!
-        aXML.append (line.m_sValue);
+        aXML.append (aLine.m_sValue);
       }
       aXML.append ('\n');
-      line = line.m_aNext;
+      aLine = aLine.m_aNext;
     }
 
     // Trim only once, so that newlines before or after a comment start/close is
@@ -1069,45 +1069,45 @@ final class Emitter
     final String sContent = StringHelper.trimStartAndEnd (aXML.toString ().trim (),
                                                           XMLEmitter.COMMENT_START,
                                                           XMLEmitter.COMMENT_END);
-    out.append (new HCCommentNode (sContent));
+    aOut.append (new HCCommentNode (sContent));
   }
 
   /**
    * Writes a code block into the StringBuilder.
    *
-   * @param out
+   * @param aOut
    *        The StringBuilder to write to.
    * @param aLines
    *        The lines to write.
-   * @param meta
+   * @param sMeta
    *        Meta information.
    */
-  private void _emitCodeLines (final MarkdownHCStack out,
+  private void _emitCodeLines (final MarkdownHCStack aOut,
                                final Line aLines,
-                               @Nonnull final String meta,
+                               @Nonnull final String sMeta,
                                final boolean bRemoveIndent)
   {
     Line aLine = aLines;
     if (m_aConfig.getCodeBlockEmitter () != null)
     {
-      final ICommonsList <String> list = new CommonsArrayList <> ();
+      final ICommonsList <String> aList = new CommonsArrayList <> ();
       while (aLine != null)
       {
         if (aLine.m_bIsEmpty)
-          list.add ("");
+          aList.add ("");
         else
-          list.add (bRemoveIndent ? aLine.m_sValue.substring (4) : aLine.m_sValue);
+          aList.add (bRemoveIndent ? aLine.m_sValue.substring (4) : aLine.m_sValue);
         aLine = aLine.m_aNext;
       }
-      m_aConfig.getCodeBlockEmitter ().emitBlock (out, list, meta);
+      m_aConfig.getCodeBlockEmitter ().emitBlock (aOut, aList, sMeta);
     }
     else
     {
       while (aLine != null)
       {
         if (!aLine.m_bIsEmpty)
-          out.append (aLine.m_sValue.substring (4));
-        out.append ('\n');
+          aOut.append (aLine.m_sValue.substring (4));
+        aOut.append ('\n');
         aLine = aLine.m_aNext;
       }
     }
@@ -1116,49 +1116,49 @@ final class Emitter
   /**
    * interprets a plugin block into the StringBuilder.
    *
-   * @param out
+   * @param aOut
    *        The StringBuilder to write to.
-   * @param lines
+   * @param aLines
    *        The lines to write.
-   * @param meta
+   * @param sMeta
    *        Meta information.
    */
-  protected void emitPluginLines (final MarkdownHCStack out, final Line lines, @Nonnull final String meta)
+  protected void emitPluginLines (final MarkdownHCStack aOut, final Line aLines, @Nonnull final String sMeta)
   {
-    Line line = lines;
+    Line aLine = aLines;
 
-    String idPlugin = meta;
-    String sparams = null;
-    ICommonsMap <String, String> params = null;
-    final int iow = meta.indexOf (' ');
-    if (iow != -1)
+    String sIDPlugin = sMeta;
+    String sParams = null;
+    ICommonsMap <String, String> aParams = null;
+    final int nIdxOfSpace = sMeta.indexOf (' ');
+    if (nIdxOfSpace != -1)
     {
-      idPlugin = meta.substring (0, iow);
-      sparams = meta.substring (iow + 1);
-      if (sparams != null)
+      sIDPlugin = sMeta.substring (0, nIdxOfSpace);
+      sParams = sMeta.substring (nIdxOfSpace + 1);
+      if (sParams != null)
       {
-        params = parsePluginParams (sparams);
+        aParams = parsePluginParams (sParams);
       }
     }
 
-    if (params == null)
+    if (aParams == null)
     {
-      params = new CommonsHashMap <> ();
+      aParams = new CommonsHashMap <> ();
     }
-    final ICommonsList <String> list = new CommonsArrayList <> ();
-    while (line != null)
+    final ICommonsList <String> aList = new CommonsArrayList <> ();
+    while (aLine != null)
     {
-      if (line.m_bIsEmpty)
-        list.add ("");
+      if (aLine.m_bIsEmpty)
+        aList.add ("");
       else
-        list.add (line.m_sValue);
-      line = line.m_aNext;
+        aList.add (aLine.m_sValue);
+      aLine = aLine.m_aNext;
     }
 
-    final AbstractMarkdownPlugin plugin = m_aPlugins.get (idPlugin);
-    if (plugin != null)
+    final AbstractMarkdownPlugin aPlugin = m_aPlugins.get (sIDPlugin);
+    if (aPlugin != null)
     {
-      plugin.emit (out, list, params);
+      aPlugin.emit (aOut, aList, aParams);
     }
   }
 

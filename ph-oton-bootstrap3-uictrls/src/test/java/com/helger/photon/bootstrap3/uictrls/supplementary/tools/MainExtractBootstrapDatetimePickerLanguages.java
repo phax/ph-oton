@@ -19,6 +19,9 @@ package com.helger.photon.bootstrap3.uictrls.supplementary.tools;
 import java.io.File;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.collection.ext.CommonsTreeSet;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
@@ -27,6 +30,8 @@ import com.helger.commons.string.StringHelper;
 
 public final class MainExtractBootstrapDatetimePickerLanguages
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (MainExtractBootstrapDatetimePickerLanguages.class);
+
   public static void main (final String [] args)
   {
     final ICommonsSet <String> aAll = new CommonsTreeSet <> ();
@@ -36,14 +41,16 @@ public final class MainExtractBootstrapDatetimePickerLanguages
         final String sLocale = StringHelper.trimStartAndEnd (aFile.getName (), "bootstrap-datetimepicker.", ".js");
         aAll.add (sLocale);
       }
+    final StringBuilder aSB = new StringBuilder ();
     for (final String s : aAll)
     {
       final String sLocale = StringHelper.replaceAll (s, "-", "_");
       if (!LocaleCache.getInstance ().containsLocale (sLocale))
       {
-        System.out.println ("/* Note: this is not a valid Java locale! */");
+        aSB.append ("/* Note: this is not a valid Java locale! */\n");
       }
-      System.out.println (sLocale.toUpperCase (Locale.US) + " (\"" + sLocale + "\", \"" + s + "\"),");
+      aSB.append (sLocale.toUpperCase (Locale.US) + " (\"" + sLocale + "\", \"" + s + "\"),\n");
     }
+    s_aLogger.info (aSB.toString ());
   }
 }

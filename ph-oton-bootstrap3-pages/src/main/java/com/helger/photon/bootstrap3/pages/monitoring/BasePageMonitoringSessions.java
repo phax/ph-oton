@@ -155,7 +155,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
   {
     if (eFormAction.isEdit ())
       return false;
-    return true;
+    return super.isActionAllowed (aWPEC, eFormAction, aSelectedObject);
   }
 
   @Nonnull
