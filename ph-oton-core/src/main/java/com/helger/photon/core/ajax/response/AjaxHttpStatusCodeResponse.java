@@ -97,6 +97,7 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
 
   /**
    * @return HTTP 400 Bad Request
+   * @since 7.0.4
    */
   @Nonnull
   public static AjaxHttpStatusCodeResponse createBadRequest ()

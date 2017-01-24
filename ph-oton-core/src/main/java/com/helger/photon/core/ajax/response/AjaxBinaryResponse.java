@@ -31,6 +31,7 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.EMimeContentType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.servlet.response.EContentDispositionType;
 import com.helger.servlet.response.UnifiedResponse;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -47,6 +48,7 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
   private final byte [] m_aValue;
   private final IMimeType m_aMimeType;
   private final String m_sDispositionFilename;
+  private EContentDispositionType m_eDispositionType = EContentDispositionType.ATTACHMENT;
   private Charset m_aTextCharset = CCharset.CHARSET_UTF_8_OBJ;
 
   @SuppressFBWarnings ("EI_EXPOSE_REP2")
@@ -58,21 +60,6 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
     m_aValue = ValueEnforcer.notEmpty (aValue, "Value");
     m_aMimeType = ValueEnforcer.notNull (aMimeType, "MimeType");
     m_sDispositionFilename = ValueEnforcer.notEmpty (sDispositionFilename, "DispositionFilename");
-  }
-
-  /**
-   * Set the charset to be used for responses that have a "text/" based MIME
-   * type.
-   *
-   * @param aTextCharset
-   *        The charset to use. May not be <code>null</code>.
-   * @return this for chaining
-   */
-  @Nonnull
-  public AjaxBinaryResponse setTextCharset (@Nonnull final Charset aTextCharset)
-  {
-    m_aTextCharset = ValueEnforcer.notNull (aTextCharset, "TextCharset");
-    return this;
   }
 
   /**
@@ -110,6 +97,48 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
   }
 
   /**
+   * Set the content disposition type. The default is
+   * {@link EContentDispositionType#ATTACHMENT}.
+   *
+   * @param eDispositionType
+   *        The type to use. May not be <code>null</code>.
+   * @return this for chaining
+   * @since 7.0.4
+   */
+  @Nonnull
+  public AjaxBinaryResponse setDispositionType (@Nonnull final EContentDispositionType eDispositionType)
+  {
+    m_eDispositionType = ValueEnforcer.notNull (eDispositionType, "DispositionType");
+    return this;
+  }
+
+  /**
+   * @return The content disposition type to be used. Never <code>null</code>.
+   *         The default is {@link EContentDispositionType#ATTACHMENT}.
+   * @since 7.0.4
+   */
+  @Nonnull
+  public EContentDispositionType getDispositionType ()
+  {
+    return m_eDispositionType;
+  }
+
+  /**
+   * Set the charset to be used for responses that have a "text/" based MIME
+   * type.
+   *
+   * @param aTextCharset
+   *        The charset to use. May not be <code>null</code>.
+   * @return this for chaining
+   */
+  @Nonnull
+  public AjaxBinaryResponse setTextCharset (@Nonnull final Charset aTextCharset)
+  {
+    m_aTextCharset = ValueEnforcer.notNull (aTextCharset, "TextCharset");
+    return this;
+  }
+
+  /**
    * @return The charset to be used for "text/" based MIME types. Never
    *         <code>null</code>.
    */
@@ -123,7 +152,8 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
   {
     aUnifiedResponse.setContent (m_aValue)
                     .setMimeType (m_aMimeType)
-                    .setContentDispositionFilename (m_sDispositionFilename);
+                    .setContentDispositionFilename (m_sDispositionFilename)
+                    .setContentDispositionType (m_eDispositionType);
 
     if (m_aMimeType.getContentType () == EMimeContentType.TEXT)
       aUnifiedResponse.setCharset (m_aTextCharset);
