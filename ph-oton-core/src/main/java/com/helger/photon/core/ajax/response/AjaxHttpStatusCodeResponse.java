@@ -78,7 +78,7 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   }
 
   /**
-   * @return HTTP 200
+   * @return HTTP 200 OK
    */
   @Nonnull
   public static AjaxHttpStatusCodeResponse createOk ()
@@ -87,7 +87,7 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   }
 
   /**
-   * @return HTTP 204
+   * @return HTTP 204 No Content
    */
   @Nonnull
   public static AjaxHttpStatusCodeResponse createNoContent ()
@@ -96,7 +96,16 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   }
 
   /**
-   * @return HTTP 404
+   * @return HTTP 400 Bad Request
+   */
+  @Nonnull
+  public static AjaxHttpStatusCodeResponse createBadRequest ()
+  {
+    return new AjaxHttpStatusCodeResponse (HttpServletResponse.SC_BAD_REQUEST);
+  }
+
+  /**
+   * @return HTTP 404 Not Found
    */
   @Nonnull
   public static AjaxHttpStatusCodeResponse createNotFound ()
@@ -105,7 +114,7 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   }
 
   /**
-   * @return HTTP 412
+   * @return HTTP 412 Precondition Failed
    */
   @Nonnull
   public static AjaxHttpStatusCodeResponse createPreconditionFailed ()
@@ -114,7 +123,7 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   }
 
   /**
-   * @return HTTP 500
+   * @return HTTP 500 Internal Server Error
    */
   @Nonnull
   public static AjaxHttpStatusCodeResponse createInternalServerError ()
