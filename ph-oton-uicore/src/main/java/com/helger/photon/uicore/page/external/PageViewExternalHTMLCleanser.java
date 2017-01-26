@@ -89,7 +89,8 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   }
 
   /**
-   * Set the link prefix that will be added to links missing the prefix.
+   * Set the link prefix that will be added to links missing the prefix. If set,
+   * must end with a slash ("/")
    *
    * @param sServerPrefixPath
    *        The link prefix to use. May neither be <code>null</code> nor empty
@@ -100,6 +101,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   public PageViewExternalHTMLCleanser setServerPrefixPath (@Nonnull @Nonempty final String sServerPrefixPath)
   {
     ValueEnforcer.notEmpty (sServerPrefixPath, "ServerPrefixPath");
+    ValueEnforcer.isTrue (sServerPrefixPath.endsWith ("/"), "ServerPrefixPath must end with a slash");
     m_sServerPrefixPath = sServerPrefixPath;
     return this;
   }
@@ -191,7 +193,9 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
       return false;
 
     // If prefix is defined and already present no need to change something
-    if (m_sServerPrefixPath.length () > 1 && sHref.startsWith (m_sServerPrefixPath))
+    // Or if the server prefix path is just "/" and the links starts with "/"
+    // it's also fine
+    if (sHref.startsWith (m_sServerPrefixPath))
       return false;
 
     // javascript: and mailto: are handled by URLProtocolRegistry
