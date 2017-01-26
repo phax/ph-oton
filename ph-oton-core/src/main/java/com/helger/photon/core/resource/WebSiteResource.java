@@ -17,6 +17,7 @@
 package com.helger.photon.core.resource;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
@@ -91,7 +92,13 @@ public class WebSiteResource
     IReadableResource aRes;
     if (LinkHelper.hasKnownProtocol (sPath))
     {
-      aRes = new URLResource (URLHelper.getAsURL (sPath));
+      final URL aURL = URLHelper.getAsURL (sPath);
+      if (aURL == null)
+      {
+        // Would throw an NPE late on anyway
+        throw new IllegalStateException ("Failed to convert '" + sPath + "' to a URL");
+      }
+      aRes = new URLResource (aURL);
       m_bResourceExists = true;
     }
     else
