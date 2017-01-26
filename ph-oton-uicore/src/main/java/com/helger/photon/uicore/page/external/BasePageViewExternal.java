@@ -16,8 +16,6 @@
  */
 package com.helger.photon.uicore.page.external;
 
-import java.util.function.Consumer;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -27,6 +25,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.function.IConsumer;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IMultilingualText;
@@ -55,20 +54,21 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
   @Nonnull
   private IMicroContainer _readFromResource (@Nonnull final IReadableResource aResource)
   {
+    final boolean bHasContentCleanser = hasContentCleanser ();
+
     // Main read
-    final IMicroContainer ret = readHTMLPageFragment (aResource);
+    final IMicroContainer ret = readHTMLPageFragment (aResource, !bHasContentCleanser);
 
     // Perform callback
-    if (hasContentCleanser ())
+    if (bHasContentCleanser)
       getContentCleanser ().accept (ret);
-
     return ret;
   }
 
   public BasePageViewExternal (@Nonnull @Nonempty final String sID,
                                @Nonnull final String sName,
                                @Nonnull final IReadableResource aResource,
-                               @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
+                               @Nullable final IConsumer <? super IMicroContainer> aContentCleanser)
   {
     this (sID, getAsMLT (sName), aResource, aContentCleanser);
   }
@@ -76,7 +76,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
   public BasePageViewExternal (@Nonnull @Nonempty final String sID,
                                @Nonnull final IMultilingualText aName,
                                @Nonnull final IReadableResource aResource,
-                               @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
+                               @Nullable final IConsumer <? super IMicroContainer> aContentCleanser)
   {
     super (sID, aName, aContentCleanser);
 

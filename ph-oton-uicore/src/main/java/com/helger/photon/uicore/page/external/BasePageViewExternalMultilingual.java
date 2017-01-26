@@ -19,7 +19,6 @@ package com.helger.photon.uicore.page.external;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,6 +31,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.function.IConsumer;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -98,11 +98,13 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
   @Nonnull
   private IMicroContainer _readFromResource (@Nonnull final IReadableResource aResource)
   {
+    final boolean bHasContentCleanser = hasContentCleanser ();
+
     // Main read
-    final IMicroContainer ret = readHTMLPageFragment (aResource);
+    final IMicroContainer ret = readHTMLPageFragment (aResource, !bHasContentCleanser);
 
     // Perform cleansing
-    if (hasContentCleanser ())
+    if (bHasContentCleanser)
       getContentCleanser ().accept (ret);
     return ret;
   }
@@ -123,7 +125,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
                                            @Nonnull final String sName,
                                            @Nonnull final Map <Locale, IReadableResource> aResources,
                                            @Nonnull final Locale aDefaultLocale,
-                                           @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
+                                           @Nullable final IConsumer <? super IMicroContainer> aContentCleanser)
   {
     this (sID, getAsMLT (sName), aResources, aDefaultLocale, aContentCleanser);
   }
@@ -132,7 +134,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
                                            @Nonnull final IMultilingualText aName,
                                            @Nonnull final Map <Locale, IReadableResource> aResources,
                                            @Nonnull final Locale aDefaultLocale,
-                                           @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
+                                           @Nullable final IConsumer <? super IMicroContainer> aContentCleanser)
   {
     super (sID, aName, aContentCleanser);
     ValueEnforcer.notEmpty (aResources, "Resources");

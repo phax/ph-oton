@@ -17,7 +17,6 @@
 package com.helger.photon.uicore.page.external;
 
 import java.nio.charset.Charset;
-import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,6 +27,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.function.IConsumer;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -57,24 +57,44 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
 
-  private final Consumer <? super IMicroContainer> m_aContentCleanser;
+  private final IConsumer <? super IMicroContainer> m_aContentCleanser;
   @GuardedBy ("m_aRWLock")
   private boolean m_bReadEveryTime = GlobalDebug.isDebugMode ();
 
   @Nonnull
+  @Deprecated
   public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource)
+  {
+    return readHTMLPageFragment (aResource, true);
+  }
+
+  @Nonnull
+  public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource,
+                                                      final boolean bPeformStandardCleansing)
   {
     return readHTMLPageFragment (aResource,
                                  DEFAULT_CHARSET,
                                  HCSettings.getConversionSettings ().getHTMLVersion (),
-                                 (SAXReaderSettings) null);
+                                 (SAXReaderSettings) null,
+                                 bPeformStandardCleansing);
+  }
+
+  @Nonnull
+  @Deprecated
+  public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource,
+                                                      @Nonnull final Charset aCharset,
+                                                      @Nonnull final EHTMLVersion eHTMLVersion,
+                                                      @Nullable final SAXReaderSettings aAdditionalSaxReaderSettings)
+  {
+    return readHTMLPageFragment (aResource, aCharset, eHTMLVersion, aAdditionalSaxReaderSettings, true);
   }
 
   @Nonnull
   public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource,
                                                       @Nonnull final Charset aCharset,
                                                       @Nonnull final EHTMLVersion eHTMLVersion,
-                                                      @Nullable final SAXReaderSettings aAdditionalSaxReaderSettings)
+                                                      @Nullable final SAXReaderSettings aAdditionalSaxReaderSettings,
+                                                      final boolean bPeformStandardCleansing)
   {
     // Read content once
     final String sContent = StreamHelper.getAllBytesAsString (aResource, aCharset);
@@ -93,15 +113,18 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
     if (ret == null)
       throw new IllegalStateException ("Failed to parse HTML code of resource " + aResource.toString ());
 
-    // Do standard cleansing with the provided HTML version!
-    MicroVisitor.visit (ret, new PageViewExternalHTMLCleanser (eHTMLVersion));
+    if (bPeformStandardCleansing)
+    {
+      // Do standard cleansing with the provided HTML version!
+      MicroVisitor.visit (ret, new PageViewExternalHTMLCleanser (eHTMLVersion));
+    }
 
     return ret;
   }
 
   public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID,
                                          @Nonnull final IMultilingualText aName,
-                                         @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
+                                         @Nullable final IConsumer <? super IMicroContainer> aContentCleanser)
   {
     super (sID, aName, null);
     m_aContentCleanser = aContentCleanser;
@@ -120,7 +143,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
   }
 
   @Nullable
-  public final Consumer <? super IMicroContainer> getContentCleanser ()
+  public final IConsumer <? super IMicroContainer> getContentCleanser ()
   {
     return m_aContentCleanser;
   }
