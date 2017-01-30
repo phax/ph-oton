@@ -79,9 +79,7 @@ public final class BootstrapHelper
   {
     if (aNode instanceof IHCElement <?>)
     {
-      if (!(aNode instanceof IHCControl <?>) && !(aNode instanceof IHCScript <?>))
-        return true;
-      return false;
+      return !(aNode instanceof IHCControl <?>) && !(aNode instanceof IHCScript <?>);
     }
 
     // Descend only in non-elements

@@ -124,7 +124,7 @@ public final class MarkdownProcessorTest
     }
     catch (final MarkdownException ex)
     {
-      throw new RuntimeException ("Error processing test file '" + m_sTestName + "'", ex);
+      throw new IllegalStateException ("Error processing test file '" + m_sTestName + "'", ex);
     }
   }
 }

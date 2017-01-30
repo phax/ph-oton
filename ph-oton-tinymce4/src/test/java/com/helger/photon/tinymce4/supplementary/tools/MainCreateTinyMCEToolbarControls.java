@@ -18,13 +18,19 @@ package com.helger.photon.tinymce4.supplementary.tools;
 
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 
-public class MainCreateTinyMCEToolbarControls
+public final class MainCreateTinyMCEToolbarControls
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (MainCreateTinyMCEToolbarControls.class);
+
   public static void main (final String [] args)
   {
+    final StringBuilder aSB = new StringBuilder ();
     // Paste table from http://www.tinymce.com/wiki.php/Controls into this
     // string
     // Last update: 2013-11-22
@@ -64,8 +70,14 @@ public class MainCreateTinyMCEToolbarControls
       for (int i = 1; i < aParts.length; ++i)
       {
         final String sControl = aParts[i];
-        System.out.println (sControl.toUpperCase (Locale.US) + " (\"" + sControl + "\", " + sPlugin + "),");
+        aSB.append (sControl.toUpperCase (Locale.US))
+           .append (" (\"")
+           .append (sControl)
+           .append ("\", ")
+           .append (sPlugin)
+           .append ("),\n");
       }
     }
+    s_aLogger.info (aSB.toString ());
   }
 }

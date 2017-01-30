@@ -214,7 +214,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
   {
     if (eFormAction.isEdit ())
       return false;
-    return true;
+    return super.isActionAllowed (aWPEC, eFormAction, aSelectedObject);
   }
 
   @Override

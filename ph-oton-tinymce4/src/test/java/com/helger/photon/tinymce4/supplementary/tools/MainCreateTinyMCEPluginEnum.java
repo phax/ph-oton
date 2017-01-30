@@ -19,19 +19,26 @@ package com.helger.photon.tinymce4.supplementary.tools;
 import java.io.File;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.filter.IFileFilter;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 
-public class MainCreateTinyMCEPluginEnum
+public final class MainCreateTinyMCEPluginEnum
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (MainCreateTinyMCEPluginEnum.class);
+
   public static void main (final String [] args)
   {
+    final StringBuilder aSB = new StringBuilder ();
     // Last update: 2013-11-22
     for (final File aFile : new FileSystemIterator ("src/main/resources/tinymce-dev/plugins").withFilter (IFileFilter.directoryPublic ()))
     {
       final String sID = FilenameHelper.getBaseName (aFile);
-      System.out.println (sID.toUpperCase (Locale.US) + " (\"" + sID + "\"),");
+      aSB.append (sID.toUpperCase (Locale.US)).append (" (\"").append (sID).append ("\"),\n");
     }
+    s_aLogger.info (aSB.toString ());
   }
 }

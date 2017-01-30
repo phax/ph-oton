@@ -227,7 +227,7 @@ public class MarkdownConfiguration
     {}
 
     /**
-     * Forces extened profile to be enabled by default.
+     * Forces extended profile to be enabled by default.
      *
      * @param bExtendedProfile
      *        true to use extended profile

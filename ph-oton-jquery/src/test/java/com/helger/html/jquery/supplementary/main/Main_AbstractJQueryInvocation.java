@@ -156,6 +156,6 @@ public class Main_AbstractJQueryInvocation extends AbstractCreateJQueryAPIList
     SimpleFileIO.writeFile (new File ("src/main/java/com/helger/html/jquery/AbstractJQueryInvocation.java"),
                             aFull.toString (),
                             CCharset.CHARSET_UTF_8_OBJ);
-    System.out.println ("Done");
+    s_aLogger.info ("Done");
   }
 }

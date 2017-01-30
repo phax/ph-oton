@@ -214,6 +214,6 @@ public class Main_AbstractJQueryInvocationExtendedTest extends AbstractCreateJQu
     SimpleFileIO.writeFile (new File ("src/test/java/com/helger/html/jquery/AbstractJQueryInvocationExtendedTest.java"),
                             aFull.toString (),
                             CCharset.CHARSET_UTF_8_OBJ);
-    System.out.println ("Done");
+    s_aLogger.info ("Done");
   }
 }

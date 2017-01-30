@@ -52,8 +52,8 @@ public final class DefaultLockManagerTest
     assertTrue (aLM.isObjectLockedByAnyUser (sObjID1));
     assertTrue (aLM.isObjectLockedByCurrentUser (sObjID1));
     assertFalse (aLM.isObjectLockedByOtherUser (sObjID1));
-    assertTrue (aLM.getAllLockedObjects ().size () == 1);
-    assertTrue (aLM.getAllLockedObjectsOfCurrentUser ().size () == 1);
+    assertEquals (1, aLM.getAllLockedObjects ().size ());
+    assertEquals (1, aLM.getAllLockedObjectsOfCurrentUser ().size ());
     assertTrue (aLM.getAllLockedObjectsOfUser (sUser1).isEmpty ());
 
     // Lock object again
@@ -61,8 +61,8 @@ public final class DefaultLockManagerTest
     assertTrue (aLM.isObjectLockedByAnyUser (sObjID1));
     assertTrue (aLM.isObjectLockedByCurrentUser (sObjID1));
     assertFalse (aLM.isObjectLockedByOtherUser (sObjID1));
-    assertTrue (aLM.getAllLockedObjects ().size () == 1);
-    assertTrue (aLM.getAllLockedObjectsOfCurrentUser ().size () == 1);
+    assertEquals (1, aLM.getAllLockedObjects ().size ());
+    assertEquals (1, aLM.getAllLockedObjectsOfCurrentUser ().size ());
     assertTrue (aLM.getAllLockedObjectsOfUser (sUser1).isEmpty ());
 
     // Try to lock object with other user - failure
@@ -70,8 +70,8 @@ public final class DefaultLockManagerTest
     assertTrue (aLM.isObjectLockedByAnyUser (sObjID1));
     assertTrue (aLM.isObjectLockedByCurrentUser (sObjID1));
     assertFalse (aLM.isObjectLockedByOtherUser (sObjID1));
-    assertTrue (aLM.getAllLockedObjects ().size () == 1);
-    assertTrue (aLM.getAllLockedObjectsOfCurrentUser ().size () == 1);
+    assertEquals (1, aLM.getAllLockedObjects ().size ());
+    assertEquals (1, aLM.getAllLockedObjectsOfCurrentUser ().size ());
     assertTrue (aLM.getAllLockedObjectsOfUser (sUser1).isEmpty ());
 
     // Unlock object
@@ -97,27 +97,27 @@ public final class DefaultLockManagerTest
     assertTrue (aLM.isObjectLockedByAnyUser (sObjID1));
     assertFalse (aLM.isObjectLockedByCurrentUser (sObjID1));
     assertTrue (aLM.isObjectLockedByOtherUser (sObjID1));
-    assertTrue (aLM.getAllLockedObjects ().size () == 1);
+    assertEquals (1, aLM.getAllLockedObjects ().size ());
     assertTrue (aLM.getAllLockedObjectsOfCurrentUser ().isEmpty ());
-    assertTrue (aLM.getAllLockedObjectsOfUser (sUser1).size () == 1);
+    assertEquals (1, aLM.getAllLockedObjectsOfUser (sUser1).size ());
 
     // Try to lock object with other user again - success
     assertTrue (aLM.lockObject (sObjID1, sUser1).isLocked ());
     assertTrue (aLM.isObjectLockedByAnyUser (sObjID1));
     assertFalse (aLM.isObjectLockedByCurrentUser (sObjID1));
     assertTrue (aLM.isObjectLockedByOtherUser (sObjID1));
-    assertTrue (aLM.getAllLockedObjects ().size () == 1);
+    assertEquals (1, aLM.getAllLockedObjects ().size ());
     assertTrue (aLM.getAllLockedObjectsOfCurrentUser ().isEmpty ());
-    assertTrue (aLM.getAllLockedObjectsOfUser (sUser1).size () == 1);
+    assertEquals (1, aLM.getAllLockedObjectsOfUser (sUser1).size ());
 
     // Unlock object using current user - failure
     assertTrue (aLM.unlockObject (sObjID1).isUnchanged ());
     assertTrue (aLM.isObjectLockedByAnyUser (sObjID1));
     assertFalse (aLM.isObjectLockedByCurrentUser (sObjID1));
     assertTrue (aLM.isObjectLockedByOtherUser (sObjID1));
-    assertTrue (aLM.getAllLockedObjects ().size () == 1);
+    assertEquals (1, aLM.getAllLockedObjects ().size ());
     assertTrue (aLM.getAllLockedObjectsOfCurrentUser ().isEmpty ());
-    assertTrue (aLM.getAllLockedObjectsOfUser (sUser1).size () == 1);
+    assertEquals (1, aLM.getAllLockedObjectsOfUser (sUser1).size ());
 
     // Unlock object with explicit user - success
     assertTrue (aLM.unlockObject (sUser1, sObjID1).isChanged ());
@@ -164,8 +164,8 @@ public final class DefaultLockManagerTest
     assertTrue (aLM.isObjectLockedByAnyUser (sObjID3));
     assertTrue (aLM.isObjectLockedByCurrentUser (sObjID3));
     assertFalse (aLM.isObjectLockedByOtherUser (sObjID3));
-    assertTrue (aLM.getAllLockedObjects ().size () == 3);
-    assertTrue (aLM.getAllLockedObjectsOfCurrentUser ().size () == 3);
+    assertEquals (3, aLM.getAllLockedObjects ().size ());
+    assertEquals (3, aLM.getAllLockedObjectsOfCurrentUser ().size ());
 
     // Lock object again
     assertTrue (aLM.lockObject (sObjID1).isLocked ());
@@ -180,13 +180,13 @@ public final class DefaultLockManagerTest
     assertTrue (aLM.isObjectLockedByAnyUser (sObjID3));
     assertTrue (aLM.isObjectLockedByCurrentUser (sObjID3));
     assertFalse (aLM.isObjectLockedByOtherUser (sObjID3));
-    assertTrue (aLM.getAllLockedObjects ().size () == 3);
-    assertTrue (aLM.getAllLockedObjectsOfCurrentUser ().size () == 3);
+    assertEquals (3, aLM.getAllLockedObjects ().size ());
+    assertEquals (3, aLM.getAllLockedObjectsOfCurrentUser ().size ());
 
     // Unlock object 2
     assertTrue (aLM.unlockObject (sObjID2).isChanged ());
-    assertTrue (aLM.getAllLockedObjects ().size () == 2);
-    assertTrue (aLM.getAllLockedObjectsOfCurrentUser ().size () == 2);
+    assertEquals (2, aLM.getAllLockedObjects ().size ());
+    assertEquals (2, aLM.getAllLockedObjectsOfCurrentUser ().size ());
     assertTrue (aLM.isObjectLockedByAnyUser (sObjID1));
     assertTrue (aLM.isObjectLockedByCurrentUser (sObjID1));
     assertFalse (aLM.isObjectLockedByOtherUser (sObjID1));
@@ -215,8 +215,8 @@ public final class DefaultLockManagerTest
     assertFalse (aLM.isObjectLockedByAnyUser (sObjID3));
     assertFalse (aLM.isObjectLockedByCurrentUser (sObjID3));
     assertFalse (aLM.isObjectLockedByOtherUser (sObjID3));
-    assertTrue (aLM.getAllLockedObjects ().size () == 1);
-    assertTrue (aLM.getAllLockedObjectsOfCurrentUser ().size () == 1);
+    assertEquals (1, aLM.getAllLockedObjects ().size ());
+    assertEquals (1, aLM.getAllLockedObjectsOfCurrentUser ().size ());
 
     // Unlock all objects (= obj2)
     final List <String> aUnlockedObjects = aLM.unlockAllObjectsOfCurrentUser ();

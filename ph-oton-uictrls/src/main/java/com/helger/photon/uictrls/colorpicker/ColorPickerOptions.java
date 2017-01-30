@@ -434,9 +434,9 @@ public class ColorPickerOptions
       ret.add ("onImmediateChange", m_aOnImmediateChange);
     if (m_bPickerOnFocus != DEFAULT_PICKER_ON_FOCUS)
       ret.add ("pickerOnfocus", m_bPickerOnFocus);
-    if (m_ePickerMode != DEFAULT_PICKER_MODE)
+    if (!m_ePickerMode.equals (DEFAULT_PICKER_MODE))
       ret.add ("pickerMode", m_ePickerMode.getAttrValue ());
-    if (m_ePickerPosition != DEFAULT_PICKER_POSITION)
+    if (!m_ePickerPosition.equals (DEFAULT_PICKER_POSITION))
       ret.add ("pickerPosition", m_ePickerPosition.getAttrValue ());
     if (m_bPickerSmartPosition != DEFAULT_PICKER_SMART_POSITION)
       ret.add ("pickerSmartPosition", m_bPickerSmartPosition);

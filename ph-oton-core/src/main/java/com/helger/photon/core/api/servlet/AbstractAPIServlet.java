@@ -115,13 +115,13 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
               aUnifiedResponse.setStatus (HttpServletResponse.SC_NO_CONTENT);
             }
         }
-        catch (final Throwable t)
+        catch (final IOException | ServletException ex)
         {
           // Re-throw
-          if (t instanceof IOException)
-            throw (IOException) t;
-          if (t instanceof ServletException)
-            throw (ServletException) t;
+          throw ex;
+        }
+        catch (final Throwable t)
+        {
           throw new ServletException ("Error invoking API " + eHTTPMethod + " '" + sAPIPath + "'", t);
         }
       }

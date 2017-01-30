@@ -176,12 +176,13 @@ public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecuti
         else
           aBody.addChild (aContent);
       }
+      catch (final ForcedRedirectException ex)
+      {
+        // Re-throw
+        throw ex;
+      }
       catch (final Throwable t)
       {
-        // Special exception ignored here
-        if (t instanceof ForcedRedirectException)
-          throw (ForcedRedirectException) t;
-
         // send internal error mail here
         new InternalErrorBuilder ().setUIErrorHandlerFor (aBody)
                                    .setThrowable (t)

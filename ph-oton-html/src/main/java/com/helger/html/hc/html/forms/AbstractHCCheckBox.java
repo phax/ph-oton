@@ -54,7 +54,6 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
   public static final String DEFAULT_HIDDEN_FIELD_PREFIX = "__";
 
   private boolean m_bEmitHiddenField = DEFAULT_EMIT_HIDDEN_FIELD;
-  private final boolean m_bEmittedHiddenField = false;
 
   /**
    * Constructor
@@ -143,11 +142,6 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
     if (StringHelper.hasNoText (sFieldName))
       return null;
     return getHiddenFieldName (sFieldName);
-  }
-
-  public final boolean didEmitHiddenField ()
-  {
-    return m_bEmittedHiddenField;
   }
 
   @Override

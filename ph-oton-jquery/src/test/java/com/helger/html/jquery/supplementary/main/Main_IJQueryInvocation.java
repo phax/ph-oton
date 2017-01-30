@@ -36,10 +36,10 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
   {
     // Read all data
     final ICommonsList <Entry> aAllEntries = readAllEntries ();
-    final ICommonsList <String> aLines = new CommonsArrayList<> ();
+    final ICommonsList <String> aLines = new CommonsArrayList <> ();
 
     // Collect all methods with the same name
-    final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased<> ();
+    final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased <> ();
     for (final Entry aEntry : aAllEntries)
       if (aEntry.getAPIType () == EAPIType.METHOD)
         aUsed.putSingle (aEntry.getName (), aEntry);
@@ -49,8 +49,8 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
     {
       boolean bIsDeprecated = true;
       boolean bIsPartiallyDeprecated = false;
-      final ICommonsOrderedSet <String> aReturnTypes = new CommonsLinkedHashSet<> ();
-      final ICommonsOrderedSet <String> aDeprecatedVersions = new CommonsLinkedHashSet<> ();
+      final ICommonsOrderedSet <String> aReturnTypes = new CommonsLinkedHashSet <> ();
+      final ICommonsOrderedSet <String> aDeprecatedVersions = new CommonsLinkedHashSet <> ();
       for (final Entry aEntry : aEntries)
       {
         aReturnTypes.add (aEntry.getReturnOrVoid ());
@@ -199,6 +199,6 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
     SimpleFileIO.writeFile (new File ("src/main/java/com/helger/html/jquery/IJQueryInvocation.java"),
                             aFull.toString (),
                             CCharset.CHARSET_UTF_8_OBJ);
-    System.out.println ("Done");
+    s_aLogger.info ("Done");
   }
 }

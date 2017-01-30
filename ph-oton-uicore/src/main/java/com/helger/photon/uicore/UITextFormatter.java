@@ -48,7 +48,7 @@ import com.helger.xml.microdom.util.MicroVisitor;
 public final class UITextFormatter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (UITextFormatter.class);
-  private static final MarkdownProcessor MARKDOWN = new MarkdownProcessor (MarkdownConfiguration.DEFAULT_EXTENSIONS);
+  private static final MarkdownProcessor MARKDOWN_PROC = new MarkdownProcessor (MarkdownConfiguration.DEFAULT_EXTENSIONS);
 
   private UITextFormatter ()
   {}
@@ -112,7 +112,7 @@ public final class UITextFormatter
   {
     try
     {
-      final HCNodeList aNL = MARKDOWN.process (sMD).getNodeList ();
+      final HCNodeList aNL = MARKDOWN_PROC.process (sMD).getNodeList ();
 
       // Replace a single <p> element with its contents
       if (aNL.getChildCount () == 1 && aNL.getChildAtIndex (0) instanceof HCP)

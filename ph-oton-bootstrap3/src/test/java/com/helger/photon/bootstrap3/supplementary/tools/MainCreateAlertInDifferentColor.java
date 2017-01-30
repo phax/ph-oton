@@ -18,8 +18,13 @@ package com.helger.photon.bootstrap3.supplementary.tools;
 
 import javax.annotation.Nonnull;
 
-public class MainCreateAlertInDifferentColor
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public final class MainCreateAlertInDifferentColor
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (MainCreateAlertInDifferentColor.class);
+
   public static String createAlertCSSCode (@Nonnull final String sClassName,
                                            @Nonnull final String sLightColor,
                                            @Nonnull final String sDarkColor,
@@ -62,6 +67,6 @@ public class MainCreateAlertInDifferentColor
 
   public static void main (final String [] args)
   {
-    System.out.println (createAlertCSSCode ("grey", "eeeeee", "cccccc", "999999"));
+    s_aLogger.info (createAlertCSSCode ("grey", "eeeeee", "cccccc", "999999"));
   }
 }

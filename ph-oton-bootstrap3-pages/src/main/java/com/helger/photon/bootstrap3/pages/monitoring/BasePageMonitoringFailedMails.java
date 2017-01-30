@@ -313,7 +313,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
   {
     if (eFormAction.isEdit ())
       return false;
-    return true;
+    return super.isActionAllowed (aWPEC, eFormAction, aSelectedObject);
   }
 
   @Override

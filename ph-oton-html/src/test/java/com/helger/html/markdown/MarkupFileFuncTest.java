@@ -53,8 +53,6 @@ package com.helger.html.markdown;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -75,9 +73,8 @@ import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.stream.StreamHelper;
+import com.helger.commons.io.stream.NonBlockingBufferedReader;
 import com.helger.commons.regex.RegExCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.mock.HCTestRuleOptimized;
@@ -89,13 +86,13 @@ public final class MarkupFileFuncTest
   @Rule
   public final HCTestRuleOptimized m_aRule = new HCTestRuleOptimized ();
 
-  private final static String [] TEST_FILENAMES = new String [] { "/dingus.txt",
-                                                                  "/paragraphs.txt",
-                                                                  "/snippets.txt",
-                                                                  "/lists.txt" };
+  private final static String [] TEST_FILENAMES = new String [] { "dingus.txt",
+                                                                  "paragraphs.txt",
+                                                                  "snippets.txt",
+                                                                  "lists.txt" };
 
   private static void _addTestResultPair (final List <String []> list,
-                                          @Nonnull final File aFile,
+                                          @Nonnull final String sFilename,
                                           final StringBuilder testbuf,
                                           final StringBuilder resultbuf,
                                           final String testNumber,
@@ -106,95 +103,88 @@ public final class MarkupFileFuncTest
       final String test = StringHelper.trimTrailingWhitespaces (testbuf.toString ());
       final String result = StringHelper.trimTrailingWhitespaces (resultbuf.toString ());
 
-      list.add (new String [] { "[" + aFile.getName () + "]" + testNumber + "(" + testName + ")", result, test });
+      list.add (new String [] { "[" + sFilename + "]" + testNumber + "(" + testName + ")", result, test });
     }
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  private static ICommonsList <String []> _getTestResultPairList (final String filename) throws IOException
+  private static ICommonsList <String []> _getTestResultPairList (final String sFilename) throws IOException
   {
-    final ICommonsList <String []> list = new CommonsArrayList<> ();
-    final File aFile = ClassPathResource.getAsFile (filename);
-    final BufferedReader in = new BufferedReader (new InputStreamReader (FileHelper.getInputStream (aFile),
-                                                                         CCharset.CHARSET_ISO_8859_1_OBJ));
-    try
+    final ICommonsList <String []> ret = new CommonsArrayList <> ();
+    try (final NonBlockingBufferedReader in = new NonBlockingBufferedReader (new InputStreamReader (ClassPathResource.getInputStream (sFilename),
+                                                                                                    CCharset.CHARSET_ISO_8859_1_OBJ)))
     {
-      StringBuilder test = null;
-      StringBuilder result = null;
+      StringBuilder aTest = null;
+      StringBuilder aResult = null;
 
-      final Pattern pTest = RegExCache.getPattern ("# Test (\\w+) \\((.*)\\)");
-      final Pattern pResult = RegExCache.getPattern ("# Result (\\w+)");
-      String line;
-      int lineNumber = 0;
+      final Pattern aPTest = RegExCache.getPattern ("# Test (\\w+) \\((.*)\\)");
+      final Pattern aPResult = RegExCache.getPattern ("# Result (\\w+)");
+      String sLine;
+      int nLineNumber = 0;
 
-      String testNumber = null;
-      String testName = null;
-      StringBuilder curbuf = null;
-      while ((line = in.readLine ()) != null)
+      String sTestNumber = null;
+      String sTestName = null;
+      StringBuilder aCurbuf = null;
+      while ((sLine = in.readLine ()) != null)
       {
-        lineNumber++;
-        final Matcher mTest = pTest.matcher (line);
-        final Matcher mResult = pResult.matcher (line);
+        nLineNumber++;
+        final Matcher mTest = aPTest.matcher (sLine);
+        final Matcher mResult = aPResult.matcher (sLine);
 
         if (mTest.matches ())
         {
           // Last match
-          _addTestResultPair (list, aFile, test, result, testNumber, testName);
+          _addTestResultPair (ret, sFilename, aTest, aResult, sTestNumber, sTestName);
 
           // # Test
-          testNumber = mTest.group (1);
-          testName = mTest.group (2);
-          test = new StringBuilder ();
-          result = new StringBuilder ();
-          curbuf = test;
+          sTestNumber = mTest.group (1);
+          sTestName = mTest.group (2);
+          aTest = new StringBuilder ();
+          aResult = new StringBuilder ();
+          aCurbuf = aTest;
         }
         else
           if (mResult.matches ())
           {
             // # Result
-            if (testNumber == null)
-              throw new RuntimeException ("Test file has result without a test (line " + lineNumber + ")");
+            if (sTestNumber == null)
+              throw new IllegalStateException ("Test file has result without a test (line " + nLineNumber + ")");
             final String resultNumber = mResult.group (1);
-            if (!testNumber.equals (resultNumber))
+            if (!sTestNumber.equals (resultNumber))
             {
-              throw new RuntimeException ("Result " +
-                                          resultNumber +
-                                          " test " +
-                                          testNumber +
-                                          " (line " +
-                                          lineNumber +
-                                          ")");
+              throw new IllegalStateException ("Result " +
+                                               resultNumber +
+                                               " test " +
+                                               sTestNumber +
+                                               " (line " +
+                                               nLineNumber +
+                                               ")");
             }
 
-            curbuf = result;
+            aCurbuf = aResult;
           }
           else
           {
-            if (curbuf == null)
+            if (aCurbuf == null)
               throw new IllegalStateException ();
-            curbuf.append (line);
-            curbuf.append ("\n");
+            aCurbuf.append (sLine).append ('\n');
           }
       }
 
       // The last one
-      _addTestResultPair (list, aFile, test, result, testNumber, testName);
+      _addTestResultPair (ret, sFilename, aTest, aResult, sTestNumber, sTestName);
 
-      return list;
-    }
-    finally
-    {
-      StreamHelper.close (in);
+      return ret;
     }
   }
 
   @Parameters
   public static Iterable <Object []> testResultPairs () throws IOException
   {
-    final ICommonsCollection <Object []> testResultPairs = new CommonsArrayList<> ();
+    final ICommonsCollection <Object []> testResultPairs = new CommonsArrayList <> ();
     for (final String filename : TEST_FILENAMES)
-      for (final String [] aTest : _getTestResultPairList ("MarkupFiles" + filename))
+      for (final String [] aTest : _getTestResultPairList ("MarkupFiles/" + filename))
         testResultPairs.add (new Object [] { aTest[0], aTest[1], aTest[2] });
     return testResultPairs;
   }
@@ -212,7 +202,7 @@ public final class MarkupFileFuncTest
   public void runTest () throws IOException
   {
     final Builder aBuilder = MarkdownConfiguration.builder ();
-    if (m_sTestName.startsWith ("[dingus.txt]1("))
+    if (m_sTestName.startsWith ("[MarkupFiles/dingus.txt]1("))
       aBuilder.setExtendedProfile (true);
     assertEquals (m_sTestName,
                   m_sExpectedResult.trim (),

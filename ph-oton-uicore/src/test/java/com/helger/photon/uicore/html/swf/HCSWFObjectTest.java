@@ -26,7 +26,6 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.photon.core.mock.PhotonCoreTestRule;
 import com.helger.xml.microdom.IMicroNode;
-import com.helger.xml.microdom.serialize.MicroWriter;
 
 /**
  * Test class for class {@link HCSWFObject}.
@@ -48,7 +47,5 @@ public final class HCSWFObjectTest
     x.addFlashVar ("flash1", "Wert");
     final IMicroNode aNode = HCRenderer.getAsNode (x);
     assertNotNull (aNode);
-    if (false)
-      System.out.println (MicroWriter.getXMLString (aNode));
   }
 }

@@ -30,7 +30,7 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
   {
     // Read all data
     final ICommonsList <Entry> aAllEntries = readAllEntries ();
-    final ICommonsList <String> aLines = new CommonsArrayList<> ();
+    final ICommonsList <String> aLines = new CommonsArrayList <> ();
 
     // All selectors
     if (false)
@@ -129,7 +129,7 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
     if (false)
     {
       // Collect all methods with the same name
-      final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased<> ();
+      final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased <> ();
       for (final Entry aEntry : aAllEntries)
         if (aEntry.getAPIType () == EAPIType.METHOD)
           aUsed.putSingle (aEntry.getName (), aEntry);
@@ -140,8 +140,8 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
         {
           boolean bIsDeprecated = true;
           boolean bIsPartiallyDeprecated = false;
-          final ICommonsOrderedSet <String> aReturnTypes = new CommonsLinkedHashSet<> ();
-          final ICommonsOrderedSet <String> aDeprecatedVersions = new CommonsLinkedHashSet<> ();
+          final ICommonsOrderedSet <String> aReturnTypes = new CommonsLinkedHashSet <> ();
+          final ICommonsOrderedSet <String> aDeprecatedVersions = new CommonsLinkedHashSet <> ();
           for (final Entry aEntry : aEntries)
           {
             aReturnTypes.add (aEntry.getReturnOrVoid ());
@@ -193,6 +193,6 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
     }
 
     for (final String sLine : aLines)
-      System.out.println (sLine);
+      s_aLogger.info (sLine);
   }
 }

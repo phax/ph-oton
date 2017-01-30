@@ -401,7 +401,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
       ret.add (JSON_WILDCARD, m_sWildcard);
     if (m_aReplace != null)
       ret.add (JSON_REPLACE, m_aReplace);
-    if (m_eRateLimitFn != DEFAULT_RATE_LIMIT_FN)
+    if (!m_eRateLimitFn.equals (DEFAULT_RATE_LIMIT_FN))
       ret.add (JSON_RATE_LIMIT_FN, m_eRateLimitFn.getValue ());
     if (m_nRateLimitWait != DEFAULT_RATE_LIMIT_WAIT)
       ret.add (JSON_RATE_LIMIT_WAIT, m_nRateLimitWait);

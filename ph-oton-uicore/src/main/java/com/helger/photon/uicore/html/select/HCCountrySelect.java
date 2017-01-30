@@ -40,7 +40,7 @@ public class HCCountrySelect extends HCExtSelect
 
     public static final EWithDeprecated DEFAULT = FALSE;
 
-    public boolean getAsBoolean ()
+    public boolean isWithDeprecated ()
     {
       return this == TRUE;
     }
@@ -49,7 +49,7 @@ public class HCCountrySelect extends HCExtSelect
   @Nonnull
   public static ICommonsList <Locale> getAllCountries (@Nonnull final EWithDeprecated eWithDeprecated)
   {
-    final boolean bWithDeprecated = eWithDeprecated.getAsBoolean ();
+    final boolean bWithDeprecated = eWithDeprecated.isWithDeprecated ();
     final ICommonsList <Locale> aLocales = new CommonsArrayList <> ();
     for (final Locale aCountry : CountryCache.getInstance ().getAllCountryLocales ())
       if (bWithDeprecated || !DeprecatedLocaleHandler.getDefaultInstance ().isDeprecatedLocaleWithFallback (aCountry))

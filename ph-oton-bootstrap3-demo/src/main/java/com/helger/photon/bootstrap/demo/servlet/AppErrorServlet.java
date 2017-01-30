@@ -36,11 +36,11 @@ public class AppErrorServlet extends AbstractUnifiedResponseServlet
                            AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH +
                            "?httpError=true" +
                            "&httpStatusCode=" +
-                           String.valueOf (aHttpRequest.getAttribute ("javax.servlet.error.status_code")) +
+                           aHttpRequest.getAttribute ("javax.servlet.error.status_code") +
                            "&httpStatusMessage=" +
-                           String.valueOf (aHttpRequest.getAttribute ("javax.servlet.error.message")) +
+                           aHttpRequest.getAttribute ("javax.servlet.error.message") +
                            "&httpRequestUri=" +
-                           String.valueOf (aHttpRequest.getAttribute ("javax.servlet.error.request_uri"));
+                           aHttpRequest.getAttribute ("javax.servlet.error.request_uri");
     aUnifiedResponse.setRedirect (sTarget);
   }
 }

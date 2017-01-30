@@ -66,6 +66,7 @@ public class Main_AbstractJQueryInvocationExtended extends AbstractCreateJQueryA
                 aLines.add (sRealPrefix +
                             "(" +
                             _getAnnotation (sJavaType) +
+                            "final " +
                             sJavaType +
                             " " +
                             aArg.getIdentifier () +
@@ -215,6 +216,6 @@ public class Main_AbstractJQueryInvocationExtended extends AbstractCreateJQueryA
     SimpleFileIO.writeFile (new File ("src/main/java/com/helger/html/jquery/AbstractJQueryInvocationExtended.java"),
                             aFull.toString (),
                             CCharset.CHARSET_UTF_8_OBJ);
-    System.out.println ("Done");
+    s_aLogger.info ("Done");
   }
 }

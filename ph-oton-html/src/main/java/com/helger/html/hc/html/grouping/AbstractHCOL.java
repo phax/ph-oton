@@ -52,19 +52,13 @@ public abstract class AbstractHCOL <THISTYPE extends AbstractHCOL <THISTYPE>> ex
   }
 
   @Nonnull
-  public final THISTYPE setStart (final int nStart)
-  {
-    return setStart (Integer.valueOf (nStart));
-  }
-
-  @Nonnull
   public final THISTYPE setStart (@Nullable final Integer aStart)
   {
     m_aStart = aStart;
     return thisAsT ();
   }
 
-  public final boolean getReversed ()
+  public final boolean isReversed ()
   {
     return m_bReversed;
   }

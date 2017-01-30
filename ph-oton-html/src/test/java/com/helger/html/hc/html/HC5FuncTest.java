@@ -19,6 +19,8 @@ package com.helger.html.hc.html;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.EHTMLVersion;
@@ -59,6 +61,8 @@ import com.helger.html.hc.render.HCRenderer;
  */
 public final class HC5FuncTest
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (HC5FuncTest.class);
+
   @Test
   public void testMainHC ()
   {
@@ -116,6 +120,6 @@ public final class HC5FuncTest
     final IHCConversionSettings aCS = HCSettings.getConversionSettings ().getCloneIfNecessary (EHTMLVersion.HTML5);
     assertNotNull (HCRenderer.getAsNode (h, aCS));
     if (false)
-      System.out.print (HCRenderer.getAsHTMLString (h, aCS));
+      s_aLogger.info (HCRenderer.getAsHTMLString (h, aCS));
   }
 }

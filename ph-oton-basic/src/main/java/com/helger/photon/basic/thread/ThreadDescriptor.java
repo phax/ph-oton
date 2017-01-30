@@ -148,37 +148,37 @@ public class ThreadDescriptor implements IHasMicroNodeRepresentation
         final MonitorInfo [] aMonitorInfos = m_aThreadInfo.getLockedMonitors ();
         if (ArrayHelper.isNotEmpty (aMonitorInfos))
         {
-          aSB.append ("Information on " + aMonitorInfos.length + " monitors:\n");
+          aSB.append ("Information on ").append (aMonitorInfos.length).append (" monitors:\n");
           for (final MonitorInfo aMonitorInfo : aMonitorInfos)
           {
-            aSB.append ("  monitor: " +
-                        aMonitorInfo.getClassName () +
-                        "@" +
-                        Integer.toHexString (aMonitorInfo.getIdentityHashCode ()) +
-                        " at " +
-                        aMonitorInfo.getLockedStackFrame () +
-                        " [" +
-                        (aMonitorInfo.getLockedStackDepth ()) +
-                        "]\n");
+            aSB.append ("  monitor: ")
+               .append (aMonitorInfo.getClassName ())
+               .append ('@')
+               .append (Integer.toHexString (aMonitorInfo.getIdentityHashCode ()))
+               .append (" at ")
+               .append (aMonitorInfo.getLockedStackFrame ())
+               .append (" [")
+               .append ((aMonitorInfo.getLockedStackDepth ()))
+               .append ("]\n");
           }
         }
         final LockInfo [] aSynchronizers = m_aThreadInfo.getLockedSynchronizers ();
         if (ArrayHelper.isNotEmpty (aSynchronizers))
         {
-          aSB.append ("Information on " + aSynchronizers.length + " synchronizers:\n");
+          aSB.append ("Information on ").append (aSynchronizers.length).append (" synchronizers:\n");
           for (final LockInfo aSynchronizer : aSynchronizers)
           {
-            aSB.append ("  lock:" +
-                        aSynchronizer.getClassName () +
-                        "@" +
-                        Integer.toHexString (aSynchronizer.getIdentityHashCode ()) +
-                        "\n");
+            aSB.append ("  lock:")
+               .append (aSynchronizer.getClassName ())
+               .append ('@')
+               .append (Integer.toHexString (aSynchronizer.getIdentityHashCode ()))
+               .append ('\n');
           }
         }
       }
       catch (final Throwable t)
       {
-        aSB.append ("Error retrieving infos: " + t.toString ());
+        aSB.append ("Error retrieving infos: ").append (t.toString ());
       }
     return aSB.toString ();
   }

@@ -22,6 +22,8 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.url.SimpleURL;
@@ -112,6 +114,7 @@ import com.helger.html.js.UnparsedJSCodeProvider;
  */
 public final class HCFuncTest
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (HCFuncTest.class);
   @Rule
   public final HCTestRuleOptimized m_aRule = new HCTestRuleOptimized ();
 
@@ -246,7 +249,7 @@ public final class HCFuncTest
     final IHCConversionSettings aCS = HCSettings.getConversionSettings ().getCloneIfNecessary (EHTMLVersion.XHTML11);
     assertNotNull (HCRenderer.getAsNode (h, aCS));
     if (false)
-      System.out.print (HCRenderer.getAsHTMLString (h, aCS));
+      s_aLogger.info (HCRenderer.getAsHTMLString (h, aCS));
   }
 
   @Test

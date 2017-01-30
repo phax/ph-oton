@@ -316,7 +316,7 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
       aOptions.add ("html", m_bHTML);
     if (m_ePlacement != null)
     {
-      if (m_ePlacement != DEFAULT_PLACEMENT || m_bPlacementAuto != DEFAULT_PLACEMENT_AUTO)
+      if (!m_ePlacement.equals (DEFAULT_PLACEMENT) || m_bPlacementAuto != DEFAULT_PLACEMENT_AUTO)
         aOptions.add ("placement", m_ePlacement.getValue () + (m_bPlacementAuto ? " auto" : ""));
     }
     else

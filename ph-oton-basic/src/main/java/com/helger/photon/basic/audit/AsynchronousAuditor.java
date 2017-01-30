@@ -121,6 +121,7 @@ public class AsynchronousAuditor extends AbstractAuditor
       return false;
     }))
     {
+      // Already shutdown!
       return EChange.UNCHANGED;
     }
 

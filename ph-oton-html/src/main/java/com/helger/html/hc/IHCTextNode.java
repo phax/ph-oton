@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.traits.IGenericImplTrait;
-import com.helger.xml.microdom.MicroText;
 
 /**
  * This class represents a text node.
@@ -92,8 +91,9 @@ public interface IHCTextNode <IMPLTYPE extends IHCTextNode <IMPLTYPE>> extends I
 
   /**
    * Enable or disable XML escaping in the final document. By default all text
-   * is escaped ({@link MicroText#DEFAULT_ESCAPE}), but for certain special
-   * cases (like script elements in HTML), XML escaping must be disabled.
+   * is escaped ({@link com.helger.xml.microdom.MicroText#DEFAULT_ESCAPE}), but
+   * for certain special cases (like script elements in HTML), XML escaping must
+   * be disabled.
    *
    * @param bEscape
    *        <code>true</code> to enable escaping (default), <code>false</code>

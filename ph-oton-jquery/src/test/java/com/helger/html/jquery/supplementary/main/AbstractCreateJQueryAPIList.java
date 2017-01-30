@@ -23,6 +23,9 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -55,6 +58,7 @@ import com.helger.xml.serialize.read.SAXReaderDefaultSettings;
 
 abstract class AbstractCreateJQueryAPIList
 {
+  protected static final Logger s_aLogger = LoggerFactory.getLogger (AbstractCreateJQueryAPIList.class);
   private static final String TYPE_ANY = "Anything";
 
   protected static enum EAPIType implements IHasName
@@ -84,7 +88,7 @@ abstract class AbstractCreateJQueryAPIList
     }
   }
 
-  private static final ICommonsSet <String> FORBIDDEN_NAMES = new CommonsHashSet<> ("true", "false", "switch");
+  private static final ICommonsSet <String> FORBIDDEN_NAMES = new CommonsHashSet <> ("true", "false", "switch");
 
   static String _makeIdentifier (final String sName)
   {
@@ -175,7 +179,7 @@ abstract class AbstractCreateJQueryAPIList
       m_sName = sName;
       m_sIdentifier = _makeIdentifier (sName);
       m_aTypes = aTypes;
-      m_aJavaTypes = new CommonsLinkedHashSet<> ();
+      m_aJavaTypes = new CommonsLinkedHashSet <> ();
       for (final String sType : aTypes)
         for (final String sType0 : _getJavaTypes (sType))
           m_aJavaTypes.add (sType0);
@@ -277,7 +281,7 @@ abstract class AbstractCreateJQueryAPIList
     private static final Version V1 = new Version (1);
 
     private final Version m_aAdded;
-    private final ICommonsList <Argument> m_aArgs = new CommonsArrayList<> ();
+    private final ICommonsList <Argument> m_aArgs = new CommonsArrayList <> ();
 
     public Signature (@Nonnull final Version aAdded)
     {
@@ -363,7 +367,7 @@ abstract class AbstractCreateJQueryAPIList
 
   protected static final class Entry
   {
-    private static final ICommonsSet <String> PARENT_CLASS_NAMES = new CommonsHashSet<> ("clone", "eq", "not");
+    private static final ICommonsSet <String> PARENT_CLASS_NAMES = new CommonsHashSet <> ("clone", "eq", "not");
 
     private final EAPIType m_eAPIType;
     private final String m_sName;
@@ -371,7 +375,7 @@ abstract class AbstractCreateJQueryAPIList
     private final String m_sReturn;
     private final Version m_aDeprecated;
     private final Version m_aRemoved;
-    private final ICommonsList <Signature> m_aSignatures = new CommonsArrayList<> ();
+    private final ICommonsList <Signature> m_aSignatures = new CommonsArrayList <> ();
 
     public Entry (@Nonnull final EAPIType eAPIType,
                   @Nonnull @Nonempty final String sName,
@@ -396,7 +400,7 @@ abstract class AbstractCreateJQueryAPIList
     {
       final boolean b = m_aSignatures.contains (aSignature);
       if (b && false)
-        System.out.println ("Duplicate: " + aSignature);
+        s_aLogger.info ("Duplicate: " + aSignature);
       return b;
     }
 
@@ -556,14 +560,14 @@ abstract class AbstractCreateJQueryAPIList
     // [Array, Boolean, Callbacks, Deferred, Element, Function, Integer, Number,
     // Object, PlainObject, Promise, String, XMLDocument, boolean, jQuery,
     // jqXHR, undefined]
-    final ICommonsNavigableSet <String> aAllReturnTypes = new CommonsTreeSet<> ();
+    final ICommonsNavigableSet <String> aAllReturnTypes = new CommonsTreeSet <> ();
 
     // [Anything, Array, Boolean, Deferred, Element, Elements, Event,
     // Function, Integer, Number, Number/String, Object, PlainObject, Selector,
     // String, document, htmlString, jQuery, jQuery object]
-    final ICommonsNavigableSet <String> aAllArgTypes = new CommonsTreeSet<> ();
+    final ICommonsNavigableSet <String> aAllArgTypes = new CommonsTreeSet <> ();
 
-    final ICommonsList <Entry> aAllEntries = new CommonsArrayList<> ();
+    final ICommonsList <Entry> aAllEntries = new CommonsArrayList <> ();
 
     if (false)
       SAXReaderDefaultSettings.setFeatureValue (EXMLParserFeature.XINCLUDE, Boolean.TRUE);
@@ -578,7 +582,7 @@ abstract class AbstractCreateJQueryAPIList
       if (eRoot.getTagName ().equals ("entries"))
         aEntries = eRoot.getAllChildElements ("entry");
       else
-        aEntries = new CommonsArrayList<> (eRoot);
+        aEntries = new CommonsArrayList <> (eRoot);
 
       for (final IMicroElement eEntry : aEntries)
       {
@@ -610,7 +614,7 @@ abstract class AbstractCreateJQueryAPIList
             final boolean bIsOptional = eArg.hasAttribute ("optional") ? StringParser.parseBool (eArg.getAttributeValue ("optional"))
                                                                        : false;
 
-            final ICommonsList <String> aTypes = new CommonsArrayList<> ();
+            final ICommonsList <String> aTypes = new CommonsArrayList <> ();
             if (StringHelper.hasNoTextAfterTrim (sArgType))
             {
               for (final IMicroElement eArgType : eArg.getAllChildElements ("type"))
@@ -671,7 +675,7 @@ abstract class AbstractCreateJQueryAPIList
         {
           final int nArgs = aSig.getArgumentCount ();
           if (false)
-            System.out.println (aEntry.getName () + " " + nArgs + " - " + nOptCount);
+            s_aLogger.info (aEntry.getName () + " " + nArgs + " - " + nOptCount);
           for (int i = nOptCount; i >= 1; --i)
           {
             final int nRemainingArgs = nArgs - i;
@@ -686,19 +690,19 @@ abstract class AbstractCreateJQueryAPIList
       }
     }
 
-    System.out.println ("Scanned " +
-                        nFiles +
-                        " files, " +
-                        aAllEntries.size () +
-                        " entries, " +
-                        nSignatures +
-                        " signatures and " +
-                        nArguments +
-                        " arguments");
+    s_aLogger.info ("Scanned " +
+                    nFiles +
+                    " files, " +
+                    aAllEntries.size () +
+                    " entries, " +
+                    nSignatures +
+                    " signatures and " +
+                    nArguments +
+                    " arguments");
     if (false)
     {
-      System.out.println ("Returns: " + aAllReturnTypes);
-      System.out.println ("Arg Types: " + aAllArgTypes);
+      s_aLogger.info ("Returns: " + aAllReturnTypes);
+      s_aLogger.info ("Arg Types: " + aAllArgTypes);
     }
     return aAllEntries;
   }

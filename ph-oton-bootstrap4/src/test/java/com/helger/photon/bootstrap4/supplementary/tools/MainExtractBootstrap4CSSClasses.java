@@ -20,6 +20,9 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.CommonsTreeSet;
 import com.helger.commons.collection.ext.ICommonsSet;
@@ -35,10 +38,13 @@ import com.helger.css.decl.visit.DefaultCSSVisitor;
 import com.helger.css.reader.CSSReader;
 import com.helger.photon.bootstrap4.EBootstrapCSSPathProvider;
 
-public class MainExtractBootstrap4CSSClasses
+public final class MainExtractBootstrap4CSSClasses
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (MainExtractBootstrap4CSSClasses.class);
+
   public static void main (final String [] args)
   {
+    final StringBuilder aSB = new StringBuilder ();
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EBootstrapCSSPathProvider.BOOTSTRAP.getCSSItemPath (true)),
                                                                CCharset.CHARSET_UTF_8_OBJ,
                                                                ECSSVersion.CSS30);
@@ -56,7 +62,7 @@ public class MainExtractBootstrap4CSSClasses
               aClasses.add (aSM.getValue ());
             else
               if (aSM.getValue ().contains ("."))
-                System.out.println (aSM.getValue ());
+                aSB.append (aSM.getValue ()).append ('\n');
           }
       }
     });
@@ -65,23 +71,13 @@ public class MainExtractBootstrap4CSSClasses
       final String sClassName = sClass.substring (1);
       String sFieldName = sClassName.toUpperCase (Locale.US);
       sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
-      System.out.println ("public static final ICSSClassProvider " +
-                          sFieldName +
-                          " = DefaultCSSClassProvider.create (\"" +
-                          sClassName +
-                          "\");");
+      aSB.append ("public static final ICSSClassProvider ")
+         .append (sFieldName)
+         .append (" = DefaultCSSClassProvider.create (\"")
+         .append (sClassName)
+         .append ("\");\n");
     }
 
-    System.out.println ();
-
-    // Icons
-    for (final String sClass : aClasses)
-      if (sClass.startsWith (".glyphicon-"))
-      {
-        final String sClassName = sClass.substring (1);
-        String sFieldName = sClassName.toUpperCase (Locale.US);
-        sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
-        System.out.println (sFieldName.substring ("glyphicon-".length ()) + " (CBootstrapCSS." + sFieldName + "),");
-      }
+    s_aLogger.info (aSB.toString ());
   }
 }

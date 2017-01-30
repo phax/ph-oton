@@ -142,13 +142,13 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
       // Write result to the passed response
       aResult.applyToResponse (aUnifiedResponse);
     }
-    catch (final Throwable t)
+    catch (final IOException | ServletException ex)
     {
       // Re-throw
-      if (t instanceof IOException)
-        throw (IOException) t;
-      if (t instanceof ServletException)
-        throw (ServletException) t;
+      throw ex;
+    }
+    catch (final Throwable t)
+    {
       throw new ServletException ("Error invoking AJAX function '" + sAjaxFunctionName + "'", t);
     }
   }

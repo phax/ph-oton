@@ -32,12 +32,15 @@ public interface IHCOL <THISTYPE extends IHCOL <THISTYPE>> extends IHCList <THIS
   Integer getStart ();
 
   @Nonnull
-  THISTYPE setStart (int nStart);
+  default THISTYPE setStart (final int nStart)
+  {
+    return setStart (Integer.valueOf (nStart));
+  }
 
   @Nonnull
   THISTYPE setStart (@Nullable Integer aStart);
 
-  boolean getReversed ();
+  boolean isReversed ();
 
   @Nonnull
   THISTYPE setReversed (boolean bReversed);

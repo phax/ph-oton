@@ -57,7 +57,7 @@ public final class RequestTracker extends AbstractGlobalWebSingleton
   private final RequestTrackingManager m_aRequestTrackingMgr = new RequestTrackingManager ();
   private final CallbackList <ILongRunningRequestCallback> m_aLongRunningCallbacks = new CallbackList <> ();
   private final CallbackList <IParallelRunningRequestCallback> m_aParallelRunningCallbacks = new CallbackList <> ();
-  private ScheduledExecutorService m_aExecSvc;
+  private final ScheduledExecutorService m_aExecSvc;
 
   private final class RequestTrackerMonitor extends AbstractWebScopeAwareRunnable
   {
