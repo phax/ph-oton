@@ -53,8 +53,6 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   TETHER ("tether/1.3.1/js/tether.js"),
   /** https://github.com/twitter/typeahead.js/ */
   TYPEAHEAD_0_9 ("typeahead/0.9.3/typeahead.js"),
-  /** https://github.com/twitter/typeahead.js/ */
-  TYPEAHEAD_0_11 ("typeahead/0.11.1/typeahead.bundle.js"),
   TYPEAHEAD_PH ("typeahead/ph-typeahead.js"),
   /** JS library to use animate.css - https://github.com/matthieua/WOW */
   WOW ("js/wow.js");
