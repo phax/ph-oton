@@ -83,7 +83,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   public static final class InitSettings <IMPLTYPE>
   {
     private boolean m_bDoInitialRead = true;
-    private Supplier <ICommonsMap <String, IMPLTYPE>> m_aMapSupplier = () -> new CommonsHashMap <> ();
+    private Supplier <ICommonsMap <String, IMPLTYPE>> m_aMapSupplier = () -> new CommonsHashMap<> ();
     private IFilter <IMicroElement> m_aReadElementFilter = IFilter.all ();
 
     @Nonnull
@@ -103,7 +103,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     @Nonnull
     public InitSettings <IMPLTYPE> setOrderedMapSupplier ()
     {
-      return setMapSupplier ( () -> new CommonsLinkedHashMap <> ());
+      return setMapSupplier ( () -> new CommonsLinkedHashMap<> ());
     }
 
     @Nonnull
@@ -119,11 +119,12 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, IMPLTYPE> m_aMap;
-  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList <> ();
+  private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList<> ();
   private IFilter <IMicroElement> m_aReadElementFilter;
 
   /**
-   * Default constructor
+   * Default constructor. Automatically tries to read the file in the
+   * constructor.
    *
    * @param aImplClass
    *        Implementation class. May not be <code>null</code>.
@@ -135,7 +136,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
                                  @Nullable final String sFilename) throws DAOException
   {
-    this (aImplClass, sFilename, new InitSettings <> ());
+    this (aImplClass, sFilename, new InitSettings<> ());
   }
 
   public AbstractMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
@@ -339,7 +340,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   @ReturnsMutableCopy
   public final <T> ICommonsList <T> getNone ()
   {
-    return new CommonsArrayList <> ();
+    return new CommonsArrayList<> ();
   }
 
   @Nonnull
@@ -348,7 +349,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   {
     // Use new CommonsArrayList to get the return type to NOT use "? extends
     // INTERFACETYPE"
-    return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aMap.values ()));
+    return m_aRWLock.readLocked ( () -> new CommonsArrayList<> (m_aMap.values ()));
   }
 
   @Nonnull
@@ -360,7 +361,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 
     // Use new CommonsArrayList to get the return type to NOT use "? extends
     // INTERFACETYPE"
-    final ICommonsList <INTERFACETYPE> ret = new CommonsArrayList <> ();
+    final ICommonsList <INTERFACETYPE> ret = new CommonsArrayList<> ();
     m_aRWLock.readLocked ( () -> CollectionHelper.findAll (m_aMap.values (), aFilter, ret::add));
     return ret;
   }

@@ -35,7 +35,7 @@ import com.helger.xml.microdom.convert.IMicroTypeConverter;
  * @author Philip Helger
  */
 @Immutable
-public class FavoriteMicroTypeConverter implements IMicroTypeConverter
+public final class FavoriteMicroTypeConverter implements IMicroTypeConverter
 {
   private static final String ATTR_ID = "id";
   private static final String ATTR_USER_ID = "userid";
@@ -80,7 +80,7 @@ public class FavoriteMicroTypeConverter implements IMicroTypeConverter
     final String sMenuItemID = eFavourite.getAttributeValue (ATTR_MENU_ITEM_ID);
     final String sDisplayName = eFavourite.getAttributeValue (ATTR_DISPLAY_NAME);
 
-    final ICommonsMap <String, String> aAdditionalParams = new CommonsLinkedHashMap <> ();
+    final ICommonsMap <String, String> aAdditionalParams = new CommonsLinkedHashMap<> ();
     for (final IMicroElement eCustom : eFavourite.getAllChildElements (ELEMENT_ADDITIONAL_PARAM))
       aAdditionalParams.put (eCustom.getAttributeValue (ATTR_NAME), eCustom.getAttributeValue (ATTR_VALUE));
 
