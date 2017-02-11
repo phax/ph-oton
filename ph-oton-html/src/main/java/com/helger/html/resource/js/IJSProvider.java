@@ -30,6 +30,9 @@ import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 @MustImplementEqualsAndHashcode
 public interface IJSProvider extends Serializable
 {
+  String DEFAULT_CONDITIONAL_COMMENT = null;
+  boolean DEFAULT_IS_BUNDLABLE = true;
+
   /**
    * @return The conditional comment required for this JS item or
    *         <code>null</code> if it applies to all browsers.

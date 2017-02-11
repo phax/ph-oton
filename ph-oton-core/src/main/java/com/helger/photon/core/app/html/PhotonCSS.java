@@ -38,6 +38,7 @@ import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ECSSMedium;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
+import com.helger.html.resource.css.ICSSProvider;
 import com.helger.photon.core.app.resource.CSSResourceSet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
@@ -116,7 +117,7 @@ public final class PhotonCSS
                                                       CSSFilenameHelper.getMinifiedCSSFilename (sPath),
                                                       sConditionalComment,
                                                       aMediaList,
-                                                      ConstantCSSPathProvider.DEFAULT_IS_BUNDLABLE));
+                                                      ICSSProvider.DEFAULT_IS_BUNDLABLE));
       }
   }
 

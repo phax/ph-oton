@@ -35,10 +35,6 @@ import com.helger.css.media.ICSSMediaList;
  */
 public final class ConstantCSSPathProvider implements ICSSPathProvider
 {
-  private static final String DEFAULT_CONDITIONAL_COMMENT = null;
-  private static final ICSSMediaList DEFAULT_CSS_MEDIA_LIST = null;
-  public static final boolean DEFAULT_IS_BUNDLABLE = true;
-
   private final String m_sPath;
   private final String m_sMinifiedPath;
   private final String m_sConditionalComment;

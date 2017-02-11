@@ -35,6 +35,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.html.js.JSFilenameHelper;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.html.resource.js.IJSProvider;
 import com.helger.photon.core.app.resource.JSResourceSet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
@@ -92,7 +93,7 @@ public final class PhotonJS
         aTarget.addItem (new ConstantJSPathProvider (sPath,
                                                      JSFilenameHelper.getMinifiedJSFilename (sPath),
                                                      sConditionalComment,
-                                                     ConstantJSPathProvider.DEFAULT_IS_BUNDLABLE));
+                                                     IJSProvider.DEFAULT_IS_BUNDLABLE));
       }
   }
 

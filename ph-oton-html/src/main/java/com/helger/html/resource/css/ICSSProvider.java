@@ -33,6 +33,10 @@ import com.helger.css.media.ICSSMediaList;
 @MustImplementEqualsAndHashcode
 public interface ICSSProvider extends Serializable
 {
+  String DEFAULT_CONDITIONAL_COMMENT = null;
+  ICSSMediaList DEFAULT_CSS_MEDIA_LIST = null;
+  boolean DEFAULT_IS_BUNDLABLE = true;
+
   /**
    * @return The conditional comment required for this JS item or
    *         <code>null</code> if it applies to all browsers.

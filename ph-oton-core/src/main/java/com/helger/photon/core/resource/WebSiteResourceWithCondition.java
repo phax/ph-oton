@@ -93,6 +93,10 @@ public class WebSiteResourceWithCondition
     m_aMediaList = aMediaList == null || aMediaList.hasNoMedia () ? null : new CSSMediaList (aMediaList);
   }
 
+  /**
+   * @return The resource as provided in the constructor. Never
+   *         <code>null</code>.
+   */
   @Nonnull
   public WebSiteResource getResource ()
   {
