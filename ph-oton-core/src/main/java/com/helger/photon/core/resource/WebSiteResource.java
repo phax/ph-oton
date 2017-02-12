@@ -32,7 +32,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.io.IHasInputStream;
@@ -274,8 +273,7 @@ public class WebSiteResource
     final WebSiteResource rhs = (WebSiteResource) o;
     return m_eResourceType.equals (rhs.m_eResourceType) &&
            m_sPath.equals (rhs.m_sPath) &&
-           m_aCharset.equals (rhs.m_aCharset) &&
-           EqualsHelper.equals (m_aContentHash, rhs.m_aContentHash);
+           m_aCharset.equals (rhs.m_aCharset);
   }
 
   @Override
@@ -287,7 +285,6 @@ public class WebSiteResource
       ret = m_nHashCode = new HashCodeGenerator (this).append (m_eResourceType)
                                                       .append (m_sPath)
                                                       .append (m_aCharset)
-                                                      .append (m_aContentHash)
                                                       .getHashCode ();
     return ret;
   }
