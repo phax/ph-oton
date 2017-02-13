@@ -70,7 +70,7 @@ public class BootstrapDropdownMenu extends AbstractHCUL <BootstrapDropdownMenu>
   public BootstrapDropdownMenu addHeader (@Nullable final String sHeaderText)
   {
     if (StringHelper.hasText (sHeaderText))
-      addItem (sHeaderText).addClass (CBootstrapCSS.DROPDOWN_HEADER);
+      addAndReturnItem (sHeaderText).addClass (CBootstrapCSS.DROPDOWN_HEADER);
     return this;
   }
 }
