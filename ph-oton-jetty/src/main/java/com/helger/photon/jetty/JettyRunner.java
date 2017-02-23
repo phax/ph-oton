@@ -17,11 +17,14 @@
 package com.helger.photon.jetty;
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import org.eclipse.jetty.server.Server;
+
+import com.helger.commons.exception.InitializationException;
 
 /**
  * A simple wrapper around Jetty. It synchronously starts and stops Jetty.
@@ -63,6 +66,7 @@ public class JettyRunner
     if (m_aThread != null)
       throw new IllegalStateException ("Jetty is already running!");
 
+    final AtomicBoolean aSuccess = new AtomicBoolean (true);
     final Semaphore s = new Semaphore (0);
     m_aThread = new Thread ( () -> {
       try
@@ -75,6 +79,15 @@ public class JettyRunner
             // Notify that server started
             s.release ();
           }
+
+          @Override
+          protected void onServerStartFailure (@Nonnull final Server aServer, @Nonnull final Throwable t)
+          {
+            // Server start failed - remember that
+            aSuccess.set (false);
+            s.release ();
+          }
+
         }.setPort (m_nPort).setStopPort (m_nStopPort).run ();
       }
       catch (final Exception ex)
@@ -87,6 +100,9 @@ public class JettyRunner
 
     // Wait until server started
     s.acquire ();
+
+    if (!aSuccess.get ())
+      throw new InitializationException ("Failed to start Jetty - see log files");
   }
 
   public synchronized void shutDownServer () throws Exception
