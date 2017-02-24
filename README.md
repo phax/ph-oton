@@ -2,16 +2,33 @@
 
 [![Build Status](https://travis-ci.org/phax/ph-oton.svg?branch=master)](https://travis-ci.org/phax/ph-oton)
 ﻿
-
 This set of Java libraries forms a package to build Java web applications.
 
 Contained subprojects are:
   * ph-oton-html - Java wrapper for all HTML elements and attributes
   * ph-oton-jscode - a Java code model to build structured JS code
   * ph-oton-jquery - an extension to ph-html-jscode to also support jQuery
-  * ph-oton-bootstrap3 - Java Wrapper for the Bootstrap 3.x controls 
+  * ph-oton-basic - basic application stuff
+  * ph-oton-security - security elements (user, user groups, roles etc.)
+  * ph-oton-exchange - data exchange
+  * ph-oton-connect - connectivity modules
+  * ph-oton-core - basic web stuff
+  * ph-oton-uicore - basic web UI stuff
+  * ph-oton-icon - icon library
+  * ph-oton-tinymce4 - TinyMCE4 wrapper
+  * ph-oton-datatables- Datatables.net wrapper
+  * ph-oton-uictrls - misc web UI controls
+  * ph-oton-jetty - wrapper for Jetty to simply use as main 
+  * ph-oton-bootstrap3 - Java Wrapper for the Bootstrap 3.x controls
+  * ph-oton-bootstrap3-uictrls - special UI controls for Bootstrap 3
+  * ph-oton-bootstrap3-pages - predefined UI pages with Bootstrap 3 styling
+  * ph-oton-bootstrap3-stub - Servlet stub for Bootstrap 3 web applications
+  * ph-oton-bootstrap3-demo - a standalone demo web application to be run in Tomcat or in provided Jetty
+  * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
 
 Release history:
+  * v7.0.4 - work in progress
+    * Updated to Jetty 9.4.2
   * v7.0.3 - 2017-01-10
     * Integrated ph-html into ph-oton
     * Binds to ph-commons 8.6.0
