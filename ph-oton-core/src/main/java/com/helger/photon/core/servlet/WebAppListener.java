@@ -65,6 +65,7 @@ import com.helger.datetime.util.PDTIOHelper;
 import com.helger.datetime.util.PDTWebDateHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOIntIDFactory;
+import com.helger.photon.basic.app.io.WebIOLongIDFactory;
 import com.helger.servlet.StaticServerInfo;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xml.microdom.IMicroDocument;
@@ -451,7 +452,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected void initGlobalIDFactory ()
   {
     // Set persistent ID provider: file based
-    GlobalIDFactory.setPersistentIntIDFactory (new WebIOIntIDFactory (ID_FILENAME));
+    GlobalIDFactory.setPersistentLongIDFactory (new WebIOLongIDFactory (ID_FILENAME));
+    GlobalIDFactory.setPersistentIntIDFactory ( () -> (int) GlobalIDFactory.getNewPersistentLongID ());
   }
 
   public final void contextInitialized (@Nonnull final ServletContextEvent aSCE)
