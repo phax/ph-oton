@@ -227,6 +227,6 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
                                        .appendIfNotNull ("thumbPrint", m_sThumbprint)
                                        .appendIfNotNull ("filter", m_aFilter)
                                        .appendIfNotNull ("ajax", m_aAjax)
-                                       .toString ();
+                                       .getToString ();
   }
 }

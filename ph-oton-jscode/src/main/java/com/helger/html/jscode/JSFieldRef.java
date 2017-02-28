@@ -95,6 +95,6 @@ public class JSFieldRef extends JSRef
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("object", m_aObject).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("object", m_aObject).getToString ();
   }
 }

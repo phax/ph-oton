@@ -75,6 +75,6 @@ public final class TrackedRequest
     return new ToStringGenerator (this).append ("RequestID", m_sRequestID)
                                        .append ("RequestScope", m_aRequestScope)
                                        .append ("StartMillis", m_nStartMillis)
-                                       .toString ();
+                                       .getToString ();
   }
 }

@@ -147,6 +147,6 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("List", m_aApiDecls).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("List", m_aApiDecls).getToString ();
   }
 }

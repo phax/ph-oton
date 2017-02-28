@@ -69,6 +69,6 @@ public class MenuObjectFilterUserAssignedToUserGroup extends AbstractMenuObjectF
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("userGroupID", m_sUserGroupID).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("userGroupID", m_sUserGroupID).getToString ();
   }
 }

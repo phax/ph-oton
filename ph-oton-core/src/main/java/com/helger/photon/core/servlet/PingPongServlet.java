@@ -17,11 +17,11 @@
 package com.helger.photon.core.servlet;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletException;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
@@ -45,7 +45,7 @@ public final class PingPongServlet extends AbstractUnifiedResponseServlet
   public static final String RESPONSE_TEXT = "pong";
 
   /** The response charset */
-  public static final Charset RESPONSE_CHARSET = CCharset.CHARSET_ISO_8859_1_OBJ;
+  public static final Charset RESPONSE_CHARSET = StandardCharsets.ISO_8859_1;
 
   /** The response MIME type */
   public static final IMimeType RESPONSE_MIMETYPE = CMimeType.TEXT_PLAIN;

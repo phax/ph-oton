@@ -83,6 +83,6 @@ public class JSLabel extends AbstractJSStatement
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("label", m_sLabel).toString ();
+    return new ToStringGenerator (this).append ("label", m_sLabel).getToString ();
   }
 }

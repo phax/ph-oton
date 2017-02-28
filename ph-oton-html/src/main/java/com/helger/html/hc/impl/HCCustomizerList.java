@@ -45,7 +45,7 @@ public class HCCustomizerList extends AbstractHCCustomizer
 {
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsList <IHCCustomizer> m_aList = new CommonsArrayList <> ();
+  private final ICommonsList <IHCCustomizer> m_aList = new CommonsArrayList<> ();
 
   public HCCustomizerList (@Nullable final IHCCustomizer... aCustomizers)
   {
@@ -114,6 +114,6 @@ public class HCCustomizerList extends AbstractHCCustomizer
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("List", m_aList).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("List", m_aList).getToString ();
   }
 }

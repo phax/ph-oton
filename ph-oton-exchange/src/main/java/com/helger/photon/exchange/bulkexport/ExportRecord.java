@@ -45,7 +45,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class ExportRecord implements IExportRecord
 {
-  private final ICommonsList <IExportRecordField> m_aFields = new CommonsArrayList <> ();
+  private final ICommonsList <IExportRecordField> m_aFields = new CommonsArrayList<> ();
 
   public ExportRecord ()
   {}
@@ -235,6 +235,6 @@ public class ExportRecord implements IExportRecord
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("fields", m_aFields).toString ();
+    return new ToStringGenerator (this).append ("fields", m_aFields).getToString ();
   }
 }

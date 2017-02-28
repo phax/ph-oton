@@ -53,7 +53,7 @@ public class HCHasCSSStyles implements IHCHasCSSStyles <HCHasCSSStyles>
   @ReturnsMutableCopy
   public final ICommonsList <ICSSValue> getAllStyleValues ()
   {
-    return m_aStyles == null ? new CommonsArrayList <> () : new CommonsArrayList <> (m_aStyles.values ());
+    return m_aStyles == null ? new CommonsArrayList<> () : new CommonsArrayList<> (m_aStyles.values ());
   }
 
   @Nullable
@@ -88,7 +88,7 @@ public class HCHasCSSStyles implements IHCHasCSSStyles <HCHasCSSStyles>
     if (aValue != null)
     {
       if (m_aStyles == null)
-        m_aStyles = new CommonsLinkedHashMap <> ();
+        m_aStyles = new CommonsLinkedHashMap<> ();
       m_aStyles.put (aValue.getProp (), aValue);
     }
     return this;
@@ -124,6 +124,6 @@ public class HCHasCSSStyles implements IHCHasCSSStyles <HCHasCSSStyles>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).appendIf ("Styles", m_aStyles, CollectionHelper::isNotEmpty).toString ();
+    return new ToStringGenerator (this).appendIf ("Styles", m_aStyles, CollectionHelper::isNotEmpty).getToString ();
   }
 }

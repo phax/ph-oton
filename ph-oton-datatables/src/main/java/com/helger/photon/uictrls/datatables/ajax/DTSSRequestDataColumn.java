@@ -103,6 +103,6 @@ public final class DTSSRequestDataColumn
                                        .append ("Searchable", m_bSearchable)
                                        .append ("Orderable", m_bOrderable)
                                        .append ("Search", m_aSearch)
-                                       .toString ();
+                                       .getToString ();
   }
 }

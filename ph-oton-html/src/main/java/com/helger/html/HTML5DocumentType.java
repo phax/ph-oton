@@ -89,6 +89,6 @@ public class HTML5DocumentType extends AbstractMicroNode implements IMicroDocume
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).toString ();
+    return new ToStringGenerator (this).getToString ();
   }
 }

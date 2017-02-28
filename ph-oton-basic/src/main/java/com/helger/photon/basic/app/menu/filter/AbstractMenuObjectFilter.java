@@ -69,6 +69,6 @@ public abstract class AbstractMenuObjectFilter implements IMenuObjectFilter
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).appendIfNotNull ("description", m_aDescription).toString ();
+    return new ToStringGenerator (this).appendIfNotNull ("description", m_aDescription).getToString ();
   }
 }

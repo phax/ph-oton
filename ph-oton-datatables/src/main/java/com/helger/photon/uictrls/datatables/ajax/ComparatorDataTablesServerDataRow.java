@@ -59,6 +59,6 @@ final class ComparatorDataTablesServerDataRow implements IComparator <DataTables
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("OrderColumns", m_aOrderColumns).toString ();
+    return new ToStringGenerator (this).append ("OrderColumns", m_aOrderColumns).getToString ();
   }
 }

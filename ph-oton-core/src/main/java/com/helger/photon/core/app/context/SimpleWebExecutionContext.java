@@ -223,6 +223,6 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
     return new ToStringGenerator (this).append ("requestURL", m_aRequestScope.getURL ())
                                        .append ("displayLocale", m_aDisplayLocale)
                                        .append ("menuTree", m_aMenuTree)
-                                       .toString ();
+                                       .getToString ();
   }
 }

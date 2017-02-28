@@ -111,6 +111,6 @@ public abstract class JSPrimitiveType extends AbstractJSType
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("name", m_sName).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("name", m_sName).getToString ();
   }
 }

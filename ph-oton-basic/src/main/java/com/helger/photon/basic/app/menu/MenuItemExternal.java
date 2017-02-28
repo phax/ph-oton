@@ -105,6 +105,6 @@ public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal> impl
                             .append ("URLProvider", m_aURLProvider)
                             .append ("DisplayText", m_aDisplayText)
                             .append ("Target", m_sTarget)
-                            .toString ();
+                            .getToString ();
   }
 }

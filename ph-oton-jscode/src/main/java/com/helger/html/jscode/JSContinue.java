@@ -89,6 +89,6 @@ public class JSContinue extends AbstractJSStatement
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("label", m_aLabel).toString ();
+    return new ToStringGenerator (this).append ("label", m_aLabel).getToString ();
   }
 }

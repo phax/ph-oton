@@ -53,7 +53,7 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
     m_aObjID = ValueEnforcer.notNull (aObjID, "ObjectID");
     m_eLocked = ValueEnforcer.notNull (eLocked, "Locked");
     m_bIsNewLock = bIsNewLock;
-    m_aUnlockedObjects = new CommonsArrayList <> (aUnlockedObjects);
+    m_aUnlockedObjects = new CommonsArrayList<> (aUnlockedObjects);
   }
 
   /**
@@ -126,12 +126,12 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
                                        .append ("locked", m_eLocked)
                                        .append ("isNewLock", m_bIsNewLock)
                                        .appendIf ("unlockedObjects", m_aUnlockedObjects, CollectionHelper::isNotEmpty)
-                                       .toString ();
+                                       .getToString ();
   }
 
   @Nonnull
   public static <IDTYPE> LockResult <IDTYPE> createFailure (@Nonnull final IDTYPE aObjID)
   {
-    return new LockResult <> (aObjID, ELocked.NOT_LOCKED, false, null);
+    return new LockResult<> (aObjID, ELocked.NOT_LOCKED, false, null);
   }
 }

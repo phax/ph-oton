@@ -41,7 +41,7 @@ public final class FormStateManager extends AbstractSessionWebSingleton
   private static final Logger s_aLogger = LoggerFactory.getLogger (FormStateManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, FormState> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <String, FormState> m_aMap = new CommonsHashMap<> ();
   @GuardedBy ("m_aRWLock")
   private boolean m_bAtLeastOnceAFormState = false;
 
@@ -109,6 +109,6 @@ public final class FormStateManager extends AbstractSessionWebSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("map", m_aMap).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("map", m_aMap).getToString ();
   }
 }

@@ -75,6 +75,6 @@ public class AuthSubject implements IAuthSubject
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_sID).append ("DisplayName", m_sDisplayName).toString ();
+    return new ToStringGenerator (this).append ("ID", m_sID).append ("DisplayName", m_sDisplayName).getToString ();
   }
 }

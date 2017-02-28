@@ -64,8 +64,8 @@ public final class BuildInfo
 
   private final ICommonsMap <String, String> m_aMap;
   private final int m_nVersion;
-  private final ICommonsMap <String, String> m_aSysProperties = new CommonsHashMap <> ();
-  private final ICommonsMap <String, String> m_aEnvVars = new CommonsHashMap <> ();
+  private final ICommonsMap <String, String> m_aSysProperties = new CommonsHashMap<> ();
+  private final ICommonsMap <String, String> m_aEnvVars = new CommonsHashMap<> ();
 
   public BuildInfo (@Nonnull final ICommonsMap <String, String> aMap)
   {
@@ -313,7 +313,7 @@ public final class BuildInfo
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("version", m_nVersion).append ("map", m_aMap).toString ();
+    return new ToStringGenerator (this).append ("version", m_nVersion).append ("map", m_aMap).getToString ();
   }
 
   @Nullable

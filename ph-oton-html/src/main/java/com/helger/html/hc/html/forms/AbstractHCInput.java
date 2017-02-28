@@ -566,6 +566,6 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
                             .appendIfNotNull ("step", m_sStep)
                             .appendIfNotNull ("value", m_sValue)
                             .append ("width", m_nWidth)
-                            .toString ();
+                            .getToString ();
   }
 }

@@ -74,6 +74,6 @@ public class CredentialValidationResult implements ICredentialValidationResult
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ErrorMsg", m_sErrorMsg).toString ();
+    return new ToStringGenerator (this).append ("ErrorMsg", m_sErrorMsg).getToString ();
   }
 }

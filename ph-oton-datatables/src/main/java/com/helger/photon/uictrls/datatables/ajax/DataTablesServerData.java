@@ -112,7 +112,7 @@ public final class DataTablesServerData implements IHasUIState
     final IHCConversionSettings aRealCS = createConversionSettings ();
 
     // Row data
-    m_aRows = new CommonsArrayList <> (aTable.getBodyRowCount ());
+    m_aRows = new CommonsArrayList<> (aTable.getBodyRowCount ());
     int nCells = 0;
     for (final HCRow aRow : aTable.getAllBodyRows ())
     {
@@ -237,6 +237,6 @@ public final class DataTablesServerData implements IHasUIState
                                        // .append ("serverSortState",
                                        // m_aServerSortState)
                                        .append ("filterType", m_eFilterType)
-                                       .toString ();
+                                       .getToString ();
   }
 }

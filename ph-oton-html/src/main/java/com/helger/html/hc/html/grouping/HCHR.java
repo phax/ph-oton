@@ -71,6 +71,6 @@ public class HCHR extends AbstractHCElement <HCHR>
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("noShade", m_bNoShade).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("noShade", m_bNoShade).getToString ();
   }
 }

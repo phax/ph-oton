@@ -92,6 +92,6 @@ public abstract class AbstractHCTablePart <THISTYPE extends AbstractHCTablePart 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("headerOrFooter", m_bHeaderOrFooter).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("headerOrFooter", m_bHeaderOrFooter).getToString ();
   }
 }

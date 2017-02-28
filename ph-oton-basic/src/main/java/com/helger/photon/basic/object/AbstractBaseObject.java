@@ -178,6 +178,6 @@ public abstract class AbstractBaseObject implements IObject
                                        .appendIfNotNull ("lastModificationUserID", m_sLastModificationUserID)
                                        .appendIfNotNull ("deletionDT", m_aDeletionDT)
                                        .appendIfNotNull ("deletionUserID", m_sDeletionUserID)
-                                       .toString ();
+                                       .getToString ();
   }
 }

@@ -126,6 +126,6 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
                             .append ("defer", m_bDefer)
                             .append ("async", m_bAsync)
                             .appendIfNotNull ("JSPathProvider", m_aJSPathProvider)
-                            .toString ();
+                            .getToString ();
   }
 }

@@ -270,6 +270,6 @@ public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <T
                             .append ("rows", m_nRows)
                             .appendIfNotNull ("value", m_sValue)
                             .appendIfNotNull ("wrap", m_eWrap)
-                            .toString ();
+                            .getToString ();
   }
 }

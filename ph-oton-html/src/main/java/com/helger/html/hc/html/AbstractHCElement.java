@@ -967,6 +967,6 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
                             .append ("hidden", m_bHidden)
                             .append ("spellcheck", m_bSpellCheck)
                             .appendIfNotNull ("customAttrs", m_aCustomAttrs)
-                            .toString ();
+                            .getToString ();
   }
 }

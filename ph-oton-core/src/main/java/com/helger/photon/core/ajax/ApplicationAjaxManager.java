@@ -94,6 +94,6 @@ public final class ApplicationAjaxManager extends AbstractApplicationWebSingleto
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("invoker", m_aInvoker).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("invoker", m_aInvoker).getToString ();
   }
 }

@@ -170,6 +170,6 @@ public abstract class AbstractHCA <THISTYPE extends AbstractHCA <THISTYPE>>
                             .appendIfNotNull ("name", m_sName)
                             .appendIfNotNull ("type", m_aType)
                             .appendIfNotNull ("mediaQuery", m_sMediaQuery)
-                            .toString ();
+                            .getToString ();
   }
 }

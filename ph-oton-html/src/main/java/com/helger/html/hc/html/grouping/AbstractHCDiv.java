@@ -70,6 +70,6 @@ public abstract class AbstractHCDiv <THISTYPE extends AbstractHCDiv <THISTYPE>>
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).appendIfNotNull ("name", m_sName).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).appendIfNotNull ("name", m_sName).getToString ();
   }
 }

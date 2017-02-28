@@ -55,13 +55,13 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
   private AbstractJSClass m_aSuperClass;
 
   /** Fields keyed by their names. */
-  private final ICommonsOrderedMap <String, JSFieldVar> m_aFields = new CommonsLinkedHashMap <> ();
+  private final ICommonsOrderedMap <String, JSFieldVar> m_aFields = new CommonsLinkedHashMap<> ();
 
   /** Constructors for this class */
   private JSConstructor m_aConstructor;
 
   /** Set of methods that are members of this class */
-  private final ICommonsList <JSMethod> m_aMethods = new CommonsArrayList <> ();
+  private final ICommonsList <JSMethod> m_aMethods = new CommonsArrayList<> ();
 
   /**
    * constructor
@@ -335,6 +335,6 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
                             .append ("fields", m_aFields)
                             .appendIfNotNull ("constructor", m_aConstructor)
                             .append ("methods", m_aMethods)
-                            .toString ();
+                            .getToString ();
   }
 }

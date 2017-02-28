@@ -22,6 +22,7 @@ import java.io.LineNumberReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -30,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.callback.IThrowingRunnable;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.io.stream.StreamHelper;
 
 final class InternalJettyStopMonitorThread extends Thread
@@ -63,7 +63,7 @@ final class InternalJettyStopMonitorThread extends Thread
     {
       try (final Socket aSocket = m_aServerSocket.accept ();
            final LineNumberReader lin = new LineNumberReader (new InputStreamReader (aSocket.getInputStream (),
-                                                                                     CCharset.CHARSET_UTF_8_OBJ)))
+                                                                                     StandardCharsets.UTF_8)))
       {
         // First line: key
         final String sKey = lin.readLine ();

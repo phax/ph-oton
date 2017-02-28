@@ -80,6 +80,6 @@ public class HCLinkTypeCustom implements IHCLinkType
   {
     return new ToStringGenerator (this).append ("attrValue", m_sAttrValue)
                                        .append ("allowedMoreThanOnce", m_bAllowedMoreThanOnce)
-                                       .toString ();
+                                       .getToString ();
   }
 }

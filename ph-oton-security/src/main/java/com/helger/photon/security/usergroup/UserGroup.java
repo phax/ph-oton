@@ -47,8 +47,8 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
 
   private String m_sName;
   private String m_sDescription;
-  private final ICommonsSet <String> m_aUserIDs = new CommonsHashSet <> ();
-  private final ICommonsSet <String> m_aRoleIDs = new CommonsHashSet <> ();
+  private final ICommonsSet <String> m_aUserIDs = new CommonsHashSet<> ();
+  private final ICommonsSet <String> m_aRoleIDs = new CommonsHashSet<> ();
 
   public UserGroup (@Nonnull @Nonempty final String sName,
                     @Nullable final String sDescription,
@@ -187,6 +187,6 @@ public final class UserGroup extends AbstractObjectWithCustomAttrs implements IU
                             .appendIfNotNull ("description", m_sDescription)
                             .append ("assignedUsers", m_aUserIDs)
                             .append ("assignedRoles", m_aRoleIDs)
-                            .toString ();
+                            .getToString ();
   }
 }

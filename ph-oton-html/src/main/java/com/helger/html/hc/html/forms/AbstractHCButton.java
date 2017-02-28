@@ -299,6 +299,6 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
                             .appendIfNotNull ("name", m_sName)
                             .append ("type", m_eType)
                             .appendIfNotNull ("value", m_sValue)
-                            .toString ();
+                            .getToString ();
   }
 }

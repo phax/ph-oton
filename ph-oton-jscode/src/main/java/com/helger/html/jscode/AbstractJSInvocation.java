@@ -72,7 +72,7 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
   /**
    * List of argument expressions for this method invocation
    */
-  private final ICommonsList <IJSExpression> m_aArgs = new CommonsArrayList <> ();
+  private final ICommonsList <IJSExpression> m_aArgs = new CommonsArrayList<> ();
 
   /**
    * Invoke a function
@@ -776,6 +776,6 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
                             .appendIfNotNull ("callee", m_aCallee)
                             .appendIfNotNull ("name", m_sName)
                             .append ("args", m_aArgs)
-                            .toString ();
+                            .getToString ();
   }
 }

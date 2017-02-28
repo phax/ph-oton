@@ -80,6 +80,6 @@ public class JSStringLiteral extends AbstractJSExpression
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("string", m_sStr).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("string", m_sStr).getToString ();
   }
 }

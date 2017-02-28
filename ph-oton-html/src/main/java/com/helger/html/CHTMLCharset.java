@@ -17,13 +17,13 @@
 package com.helger.html;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.commons.charset.CCharset;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 
 /**
@@ -35,17 +35,11 @@ import com.helger.xml.serialize.write.XMLWriterSettings;
 public final class CHTMLCharset
 {
   /** HTML charset */
-  public static final String CHARSET_HTML = XMLWriterSettings.DEFAULT_XML_CHARSET;
-  /** HTML charset */
   public static final Charset CHARSET_HTML_OBJ = XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ;
   /** CSS charset */
-  public static final String CHARSET_CSS = CCharset.CHARSET_UTF_8;
-  /** CSS charset */
-  public static final Charset CHARSET_CSS_OBJ = CCharset.CHARSET_UTF_8_OBJ;
+  public static final Charset CHARSET_CSS_OBJ = StandardCharsets.UTF_8;
   /** JS charset */
-  public static final String CHARSET_JS = CCharset.CHARSET_UTF_8;
-  /** JS charset */
-  public static final Charset CHARSET_JS_OBJ = CCharset.CHARSET_UTF_8_OBJ;
+  public static final Charset CHARSET_JS_OBJ = StandardCharsets.UTF_8;
 
   /** The locale to be used for upper/lowercasing stuff */
   public static final Locale LOCALE = CGlobal.DEFAULT_LOCALE;

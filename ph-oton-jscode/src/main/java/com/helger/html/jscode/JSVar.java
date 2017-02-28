@@ -180,6 +180,6 @@ public class JSVar extends AbstractJSAssignmentTarget implements IJSDeclaration
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("name", m_sName)
                             .appendIfNotNull ("init", m_aInit)
-                            .toString ();
+                            .getToString ();
   }
 }

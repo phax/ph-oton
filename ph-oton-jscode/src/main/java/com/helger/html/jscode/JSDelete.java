@@ -81,6 +81,6 @@ public class JSDelete extends AbstractJSStatement
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("expr", m_aExpr).toString ();
+    return new ToStringGenerator (this).append ("expr", m_aExpr).getToString ();
   }
 }

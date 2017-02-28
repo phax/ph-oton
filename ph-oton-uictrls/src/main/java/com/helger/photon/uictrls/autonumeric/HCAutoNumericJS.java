@@ -89,6 +89,6 @@ public class HCAutoNumericJS extends HCScriptInlineOnDocumentReady
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("autoNumeric", m_aAutoNumeric).toString ();
+    return new ToStringGenerator (this).append ("autoNumeric", m_aAutoNumeric).getToString ();
   }
 }

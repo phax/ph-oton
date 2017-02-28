@@ -42,8 +42,8 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 public final class PhotonSessionState extends AbstractSessionWebSingleton
 {
   private String m_sLastApplicationID;
-  private final ICommonsMap <String, IMenuItemPage> m_aSelectedMenuItems = new CommonsHashMap <> ();
-  private final ICommonsMap <String, Locale> m_aSelectedLocales = new CommonsHashMap <> ();
+  private final ICommonsMap <String, IMenuItemPage> m_aSelectedMenuItems = new CommonsHashMap<> ();
+  private final ICommonsMap <String, Locale> m_aSelectedLocales = new CommonsHashMap<> ();
 
   @Deprecated
   @UsedViaReflection
@@ -168,6 +168,6 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
                             .append ("LastApplicationID", m_sLastApplicationID)
                             .append ("SelectedMenuItems", m_aSelectedMenuItems)
                             .append ("SelectedLocales", m_aSelectedLocales)
-                            .toString ();
+                            .getToString ();
   }
 }

@@ -48,7 +48,7 @@ import com.helger.html.hc.ext.HCConditionalCommentNode;
 @Immutable
 public class WebSiteResourceBundle
 {
-  private final ICommonsList <WebSiteResource> m_aResources = new CommonsArrayList <> ();
+  private final ICommonsList <WebSiteResource> m_aResources = new CommonsArrayList<> ();
   private final String m_sConditionalComment;
   private final boolean m_bIsBundlable;
   private final CSSMediaList m_aMediaList;
@@ -201,6 +201,6 @@ public class WebSiteResourceBundle
                                        .appendIfNotNull ("ConditionalComment", m_sConditionalComment)
                                        .append ("IsBundlable", m_bIsBundlable)
                                        .appendIfNotNull ("MediaList", m_aMediaList)
-                                       .toString ();
+                                       .getToString ();
   }
 }

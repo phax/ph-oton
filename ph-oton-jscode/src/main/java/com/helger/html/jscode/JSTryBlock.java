@@ -132,6 +132,6 @@ public class JSTryBlock extends AbstractJSStatement
     return new ToStringGenerator (this).append ("body", m_aBody)
                                        .append ("catch", m_aCatch)
                                        .append ("finally", m_aFinally)
-                                       .toString ();
+                                       .getToString ();
   }
 }

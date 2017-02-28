@@ -61,6 +61,6 @@ public class DataTablesLengthMenuItem implements IHasDisplayText
   @Nonnull
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("itemCount", m_nItemCount).append ("text", m_aText).toString ();
+    return new ToStringGenerator (this).append ("itemCount", m_nItemCount).append ("text", m_aText).getToString ();
   }
 }

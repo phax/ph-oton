@@ -68,6 +68,6 @@ public abstract class AbstractLayoutManagerBasedLayoutHTMLProvider <LECTYPE exte
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("layoutMgr", m_aLayoutMgr).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("layoutMgr", m_aLayoutMgr).getToString ();
   }
 }

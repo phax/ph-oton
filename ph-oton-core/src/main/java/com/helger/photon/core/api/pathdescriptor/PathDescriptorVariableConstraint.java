@@ -107,7 +107,7 @@ public final class PathDescriptorVariableConstraint
   {
     return new ToStringGenerator (null).append ("ConstraintType", m_eConstraintType)
                                        .appendIfNotNull ("ConstraintValue", m_sConstraintValue)
-                                       .toString ();
+                                       .getToString ();
   }
 
   /**

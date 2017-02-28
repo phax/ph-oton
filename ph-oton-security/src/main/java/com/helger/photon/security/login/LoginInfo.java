@@ -181,6 +181,6 @@ public final class LoginInfo extends MapBasedAttributeContainer <String, String>
                             .append ("loginDT", m_aLoginDT)
                             .append ("lastAccessDT", m_aLastAccessDT)
                             .appendIfNotNull ("logoutDT", m_aLogoutDT)
-                            .toString ();
+                            .getToString ();
   }
 }

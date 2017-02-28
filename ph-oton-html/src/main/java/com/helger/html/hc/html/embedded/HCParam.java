@@ -128,6 +128,6 @@ public class HCParam extends AbstractHCElement <HCParam>
                             .appendIfNotNull ("value", m_sValue)
                             .appendIfNotNull ("valueType", m_eValueType)
                             .appendIfNotNull ("type", m_aType)
-                            .toString ();
+                            .getToString ();
   }
 }

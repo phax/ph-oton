@@ -297,6 +297,6 @@ public abstract class AbstractHCNode implements IHCNode
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("nodeState", m_eNodeState).toString ();
+    return new ToStringGenerator (this).append ("nodeState", m_eNodeState).getToString ();
   }
 }

@@ -815,6 +815,6 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("header", m_bHeader).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("header", m_bHeader).getToString ();
   }
 }

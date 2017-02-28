@@ -110,7 +110,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     @Override
     public String toString ()
     {
-      return new ToStringGenerator (this).append ("baseDir", m_sBaseDir).toString ();
+      return new ToStringGenerator (this).append ("baseDir", m_sBaseDir).getToString ();
     }
   }
 
@@ -307,7 +307,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     if (!aFile.exists ())
       return null;
 
-    final ICommonsList <IAuditItem> ret = new CommonsArrayList <> ();
+    final ICommonsList <IAuditItem> ret = new CommonsArrayList<> ();
     final IMicroDocument aDoc = MicroReader.readMicroXML (aFile);
     readFromXML (aDoc, aItem -> ret.add (aItem));
     return ret;
@@ -380,6 +380,6 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("items", m_aItems)
                             .append ("auditor", m_aAuditor)
-                            .toString ();
+                            .getToString ();
   }
 }

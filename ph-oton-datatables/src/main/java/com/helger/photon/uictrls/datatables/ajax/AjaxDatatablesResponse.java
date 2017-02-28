@@ -16,9 +16,10 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
+import java.nio.charset.StandardCharsets;
+
 import javax.annotation.Nonnull;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.mime.CMimeType;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.html.hc.special.IHCSpecialNodes;
@@ -43,7 +44,7 @@ public class AjaxDatatablesResponse extends AbstractAjaxResponse
   public void applyToResponse (final UnifiedResponse aUnifiedResponse)
   {
     final IJsonObject aJson = AjaxHtmlResponse.getResponseAsJSON (isSuccess (), m_aResponseData, m_aSpecialNodes, null);
-    aUnifiedResponse.setContentAndCharset (aJson.getAsJsonString (), CCharset.CHARSET_UTF_8_OBJ)
+    aUnifiedResponse.setContentAndCharset (aJson.getAsJsonString (), StandardCharsets.UTF_8)
                     .setMimeType (CMimeType.APPLICATION_JSON);
   }
 }

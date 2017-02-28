@@ -82,7 +82,7 @@ public class ExportRecordField implements IExportRecordField
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("fieldType", m_eFieldType).append ("value", m_aValue).toString ();
+    return new ToStringGenerator (this).append ("fieldType", m_eFieldType).append ("value", m_aValue).getToString ();
   }
 
   @Nonnull

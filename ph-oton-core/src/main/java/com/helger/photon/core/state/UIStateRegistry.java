@@ -58,7 +58,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
   public static final ObjectType OT_HCNODE = new ObjectType ("hcnode");
   private static final Logger s_aLogger = LoggerFactory.getLogger (UIStateRegistry.class);
 
-  private final ICommonsMap <ObjectType, ICommonsMap <String, IHasUIState>> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <ObjectType, ICommonsMap <String, IHasUIState>> m_aMap = new CommonsHashMap<> ();
 
   @UsedViaReflection
   @Deprecated
@@ -165,7 +165,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
       throw new IllegalStateException ("Object has no typeID: " + aNewState);
 
     return m_aRWLock.writeLocked ( () -> {
-      final Map <String, IHasUIState> aMap = m_aMap.computeIfAbsent (aOT, k -> new CommonsHashMap <> ());
+      final Map <String, IHasUIState> aMap = m_aMap.computeIfAbsent (aOT, k -> new CommonsHashMap<> ());
 
       if (s_aLogger.isDebugEnabled () && aMap.containsKey (sStateID))
         s_aLogger.debug ("Overwriting " + aOT.getName () + " with ID " + sStateID + " with new object");
@@ -235,6 +235,6 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("map", m_aMap).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("map", m_aMap).getToString ();
   }
 }

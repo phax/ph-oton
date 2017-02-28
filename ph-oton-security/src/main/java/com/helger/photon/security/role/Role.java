@@ -105,6 +105,6 @@ public final class Role extends AbstractObjectWithCustomAttrs implements IRole
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("name", m_sName)
                             .appendIfNotNull ("description", m_sDescription)
-                            .toString ();
+                            .getToString ();
   }
 }

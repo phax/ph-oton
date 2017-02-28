@@ -17,6 +17,7 @@
 package com.helger.photon.core.userdata;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Set;
 
@@ -26,7 +27,6 @@ import javax.servlet.ServletException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.mime.CMimeType;
@@ -147,7 +147,7 @@ public class UserUploadServlet extends AbstractUnifiedResponseServlet
       }
     }
     aUnifiedResponse.setMimeType (CMimeType.APPLICATION_JSON).setContentAndCharset (ret.getAsJsonString (),
-                                                                                    CCharset.CHARSET_UTF_8_OBJ);
+                                                                                    StandardCharsets.UTF_8);
   }
 
   @Override

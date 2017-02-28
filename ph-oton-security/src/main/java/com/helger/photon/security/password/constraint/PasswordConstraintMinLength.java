@@ -94,6 +94,6 @@ public class PasswordConstraintMinLength implements IPasswordConstraint
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("minLength", m_nMinLength).toString ();
+    return new ToStringGenerator (this).append ("minLength", m_nMinLength).getToString ();
   }
 }

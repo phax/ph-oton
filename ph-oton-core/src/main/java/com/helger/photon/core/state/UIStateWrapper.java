@@ -93,19 +93,21 @@ public class UIStateWrapper <T extends Serializable> implements IHasUIState
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("objectType", m_aObjectType).append ("object", m_aObject).toString ();
+    return new ToStringGenerator (this).append ("objectType", m_aObjectType)
+                                       .append ("object", m_aObject)
+                                       .getToString ();
   }
 
   @Nonnull
   public static <T extends Serializable> UIStateWrapper <T> create (@Nonnull final ObjectType aObjectType,
                                                                     @Nonnull final T aObject)
   {
-    return new UIStateWrapper <T> (aObjectType, aObject);
+    return new UIStateWrapper <> (aObjectType, aObject);
   }
 
   @Nonnull
   public static <T extends Serializable & IHasObjectType> UIStateWrapper <T> create (@Nonnull final T aObject)
   {
-    return new UIStateWrapper <T> (aObject.getObjectType (), aObject);
+    return new UIStateWrapper <> (aObject.getObjectType (), aObject);
   }
 }

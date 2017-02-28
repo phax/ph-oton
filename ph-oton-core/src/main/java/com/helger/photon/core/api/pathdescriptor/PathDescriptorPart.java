@@ -87,7 +87,7 @@ public final class PathDescriptorPart
   @ReturnsMutableCopy
   public ICommonsList <PathDescriptorVariableConstraint> getAllVariableConstraints ()
   {
-    return new CommonsArrayList <> (m_aVariableConstraints);
+    return new CommonsArrayList<> (m_aVariableConstraints);
   }
 
   /**
@@ -167,7 +167,7 @@ public final class PathDescriptorPart
                                        .appendIf ("VariableConstraints",
                                                   m_aVariableConstraints,
                                                   CollectionHelper::isNotEmpty)
-                                       .toString ();
+                                       .getToString ();
   }
 
   @Nonnull
@@ -204,7 +204,7 @@ public final class PathDescriptorPart
           if (aConstraint != null)
           {
             if (aVariableConstraints == null)
-              aVariableConstraints = new CommonsArrayList <> ();
+              aVariableConstraints = new CommonsArrayList<> ();
             aVariableConstraints.add (aConstraint);
           }
         }

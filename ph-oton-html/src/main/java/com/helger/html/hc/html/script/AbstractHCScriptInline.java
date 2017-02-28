@@ -199,6 +199,6 @@ public abstract class AbstractHCScriptInline <THISTYPE extends AbstractHCScriptI
                             .append ("mode", m_eScriptMode)
                             .append ("emitAfterFiles", m_bEmitAfterFiles)
                             .append ("cachedJSCode", m_sCachedJSCode)
-                            .toString ();
+                            .getToString ();
   }
 }

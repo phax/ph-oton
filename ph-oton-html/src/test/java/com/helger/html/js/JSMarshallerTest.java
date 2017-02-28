@@ -23,11 +23,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 import org.junit.Test;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
@@ -204,7 +204,7 @@ public final class JSMarshallerTest
       aUnescaped[i] = '\'' + JSMarshaller.javaScriptEscape (JSMarshaller.javaScriptUnescape (aStrings[i])) + '\'';
 
     String sJSFile = SimpleFileIO.getFileAsString (new File ("src/test/resources/test.js"),
-                                                   CCharset.CHARSET_ISO_8859_1_OBJ);
+                                                   StandardCharsets.ISO_8859_1);
 
     // Inline all texts
     for (int i = 0; i < aStrings.length; ++i)
@@ -213,7 +213,7 @@ public final class JSMarshallerTest
     // Cleanup (replace e.g. "['join']" with ".join"
     sJSFile = RegExHelper.stringReplacePattern ("\\['([a-zA-Z]+)'\\]", sJSFile, ".$1");
 
-    SimpleFileIO.writeFile (new File ("src/test/resources/cleaned.js"), sJSFile, CCharset.CHARSET_ISO_8859_1_OBJ);
+    SimpleFileIO.writeFile (new File ("src/test/resources/cleaned.js"), sJSFile, StandardCharsets.ISO_8859_1);
   }
 
   @Test

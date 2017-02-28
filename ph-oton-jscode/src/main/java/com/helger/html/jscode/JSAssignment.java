@@ -109,6 +109,6 @@ public class JSAssignment extends AbstractJSExpression implements IJSStatement
                             .append ("lhs", m_aLhs)
                             .append ("op", m_sOp)
                             .append ("rhs", m_aRhs)
-                            .toString ();
+                            .getToString ();
   }
 }

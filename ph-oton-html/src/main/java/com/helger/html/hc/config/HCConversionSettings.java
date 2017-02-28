@@ -429,6 +429,6 @@ public class HCConversionSettings implements IHCConversionSettings
                                        .append ("consistencyChecksEnabled", m_bConsistencyChecksEnabled)
                                        .append ("extractOutOfBandNodes", m_bExtractOutOfBandNodes)
                                        .appendIfNotNull ("customizer", m_aCustomizer)
-                                       .toString ();
+                                       .getToString ();
   }
 }

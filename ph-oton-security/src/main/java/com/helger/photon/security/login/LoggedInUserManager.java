@@ -184,7 +184,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     @Override
     public String toString ()
     {
-      return ToStringGenerator.getDerived (super.toString ()).append ("userID", m_sUserID).toString ();
+      return ToStringGenerator.getDerived (super.toString ()).append ("userID", m_sUserID).getToString ();
     }
   }
 
@@ -211,9 +211,9 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
   // Set of logged in user IDs
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, LoginInfo> m_aLoggedInUsers = new CommonsHashMap <> ();
-  private final CallbackList <IUserLoginCallback> m_aUserLoginCallbacks = new CallbackList <> ();
-  private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList <> ();
+  private final ICommonsMap <String, LoginInfo> m_aLoggedInUsers = new CommonsHashMap<> ();
+  private final CallbackList <IUserLoginCallback> m_aUserLoginCallbacks = new CallbackList<> ();
+  private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList<> ();
   private boolean m_bLogoutAlreadyLoggedInUser = DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER;
 
   @Deprecated
@@ -633,6 +633,6 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
                             .append ("userLoginCallbacks", m_aUserLoginCallbacks)
                             .append ("userLogoutCallbacks", m_aUserLogoutCallbacks)
                             .append ("logoutAlreadyLoggedInUser", m_bLogoutAlreadyLoggedInUser)
-                            .toString ();
+                            .getToString ();
   }
 }

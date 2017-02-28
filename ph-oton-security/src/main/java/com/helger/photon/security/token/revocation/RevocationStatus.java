@@ -147,6 +147,6 @@ public class RevocationStatus implements IRevocationStatus
                                        .appendIfNotNull ("RevocationUserID", m_sRevocationUserID)
                                        .appendIfNotNull ("RevocationDT", m_aRevocationDT)
                                        .appendIfNotNull ("RevocationReason", m_sRevocationReason)
-                                       .toString ();
+                                       .getToString ();
   }
 }

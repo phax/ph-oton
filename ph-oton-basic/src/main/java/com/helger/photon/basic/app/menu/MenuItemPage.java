@@ -110,6 +110,6 @@ public class MenuItemPage extends AbstractMenuObject <MenuItemPage> implements I
                             .append ("Page", m_aPage)
                             .append ("DisplayText", m_aDisplayText)
                             .append ("Target", m_sTarget)
-                            .toString ();
+                            .getToString ();
   }
 }

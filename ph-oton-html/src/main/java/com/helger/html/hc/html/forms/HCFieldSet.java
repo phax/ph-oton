@@ -112,6 +112,6 @@ public class HCFieldSet extends AbstractHCElementWithChildren <HCFieldSet>
                             .append ("disabled", m_bDisabled)
                             .appendIfNotNull ("form", m_sForm)
                             .appendIfNotNull ("name", m_sName)
-                            .toString ();
+                            .getToString ();
   }
 }

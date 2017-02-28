@@ -17,12 +17,12 @@
 package com.helger.photon.core.ajax.response;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.mime.CMimeType;
@@ -58,7 +58,7 @@ public class AjaxJsonResponse extends AbstractAjaxResponse
   {
     // Ensure it is valid JSON
     final String sResponse = m_aValue != null ? m_aValue.getAsJsonString () : "{}";
-    final Charset aCharset = CCharset.CHARSET_UTF_8_OBJ;
+    final Charset aCharset = StandardCharsets.UTF_8;
     aUnifiedResponse.setContentAndCharset (sResponse, aCharset)
                     .setMimeType (new MimeType (CMimeType.APPLICATION_JSON).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
                                                                                           aCharset.name ()));
@@ -84,7 +84,7 @@ public class AjaxJsonResponse extends AbstractAjaxResponse
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("value", m_aValue).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("value", m_aValue).getToString ();
   }
 
   @Nonnull

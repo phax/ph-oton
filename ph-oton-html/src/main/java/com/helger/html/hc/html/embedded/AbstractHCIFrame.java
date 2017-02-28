@@ -294,6 +294,6 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
                             .appendIfNotNull ("height", m_sHeight)
                             .append ("marginWidth", m_nMarginWidth)
                             .append ("marginHeight", m_nMarginHeight)
-                            .toString ();
+                            .getToString ();
   }
 }

@@ -134,7 +134,7 @@ public final class BootstrapGridSpec implements Serializable
                                        .append ("sm", m_eSM)
                                        .append ("md", m_eMD)
                                        .append ("lg", m_eLG)
-                                       .toString ();
+                                       .getToString ();
   }
 
   @Nonnull

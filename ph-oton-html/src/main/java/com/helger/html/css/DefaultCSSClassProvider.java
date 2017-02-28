@@ -101,7 +101,7 @@ public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("cssClass", m_sCSSClass).toString ();
+    return new ToStringGenerator (this).append ("cssClass", m_sCSSClass).getToString ();
   }
 
   @Nonnull

@@ -49,7 +49,7 @@ public final class PathMatchingResult
 
   /**
    * Constructor for "match"
-   * 
+   *
    * @param aVariableValues
    *        Non-<code>null</code> but may empty matching variables.
    */
@@ -73,7 +73,7 @@ public final class PathMatchingResult
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllVariableValues ()
   {
-    return new CommonsLinkedHashMap <> (m_aVariableValues);
+    return new CommonsLinkedHashMap<> (m_aVariableValues);
   }
 
   @Override
@@ -81,7 +81,7 @@ public final class PathMatchingResult
   {
     return new ToStringGenerator (null).append ("Match", m_bMatch)
                                        .appendIfNotNull ("VariableValues", m_aVariableValues)
-                                       .toString ();
+                                       .getToString ();
   }
 
   @Nonnull

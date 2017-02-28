@@ -66,6 +66,6 @@ public final class ApplicationMenuTree extends AbstractApplicationSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("proxy", m_aProxy).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("proxy", m_aProxy).getToString ();
   }
 }

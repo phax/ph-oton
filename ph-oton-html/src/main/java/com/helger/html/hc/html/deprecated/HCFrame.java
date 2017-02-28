@@ -196,6 +196,6 @@ public class HCFrame extends AbstractHCElement <HCFrame>
                             .append ("noResize", m_bNoResize)
                             .appendIfNotNull ("scrolling", m_eScrolling)
                             .appendIfNotNull ("src", m_sSrc)
-                            .toString ();
+                            .getToString ();
   }
 }

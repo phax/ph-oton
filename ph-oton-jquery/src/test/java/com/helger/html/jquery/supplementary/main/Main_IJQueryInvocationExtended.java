@@ -17,8 +17,8 @@
 package com.helger.html.jquery.supplementary.main;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsHashSet;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -32,10 +32,10 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
   {
     // Read all data
     final ICommonsList <Entry> aAllEntries = readAllEntries ();
-    final ICommonsList <String> aLines = new CommonsArrayList <> ();
+    final ICommonsList <String> aLines = new CommonsArrayList<> ();
 
     // IJQueryInvocationExtended
-    final ICommonsSet <String> aUsedJavaSignatures = new CommonsHashSet <> ();
+    final ICommonsSet <String> aUsedJavaSignatures = new CommonsHashSet<> ();
     for (final Entry aEntry : aAllEntries)
       if (aEntry.getAPIType () == EAPIType.METHOD)
       {
@@ -100,7 +100,7 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
               if (nMultiJavaTypeArgs == 0)
               {
                 String sParams = "";
-                final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
+                final ICommonsList <String> aJavaTypeKey = new CommonsArrayList<> ();
                 for (final Argument aArg : aSignature.getAllArguments ())
                 {
                   if (sParams.length () > 0)
@@ -120,7 +120,7 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
 
                 // Build template
                 String sTemplate = "";
-                final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
+                final ICommonsList <String> aJavaTypeKey = new CommonsArrayList<> ();
                 int nArgIndex = 0;
                 for (final Argument aArg : aSignature.getAllArguments ())
                 {
@@ -143,15 +143,15 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
                   ++nArgIndex;
                 }
 
-                ICommonsList <String> aAllParams = new CommonsArrayList <> (sTemplate);
-                ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringHelper.getImploded (',',
-                                                                                                        aJavaTypeKey));
+                ICommonsList <String> aAllParams = new CommonsArrayList<> (sTemplate);
+                ICommonsList <String> aAllJavaKeys = new CommonsArrayList<> (StringHelper.getImploded (',',
+                                                                                                       aJavaTypeKey));
 
                 for (int i = 0; i < nArgCount; ++i)
                   if (aMultiJavaTypeArgs[i] != null)
                   {
-                    final ICommonsList <String> aNewParams = new CommonsArrayList <> ();
-                    final ICommonsList <String> aNewJavaKeys = new CommonsArrayList <> ();
+                    final ICommonsList <String> aNewParams = new CommonsArrayList<> ();
+                    final ICommonsList <String> aNewJavaKeys = new CommonsArrayList<> ();
                     final String sSearch = "{" + i + "}";
                     for (final String sJavaType : aMultiJavaTypeArgs[i].getAllJavaTypes ())
                     {
@@ -203,7 +203,7 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
     aFull.append ("}\n");
     SimpleFileIO.writeFile (new File ("src/main/java/com/helger/html/jquery/IJQueryInvocationExtended.java"),
                             aFull.toString (),
-                            CCharset.CHARSET_UTF_8_OBJ);
+                            StandardCharsets.UTF_8);
     s_aLogger.info ("Done");
   }
 }

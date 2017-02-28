@@ -58,11 +58,11 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractHCSpecialNodes.class);
 
-  private final MultiLinkedHashMapLinkedHashSetBased <ICSSMediaList, String> m_aExternalCSSs = new MultiLinkedHashMapLinkedHashSetBased <> ();
+  private final MultiLinkedHashMapLinkedHashSetBased <ICSSMediaList, String> m_aExternalCSSs = new MultiLinkedHashMapLinkedHashSetBased<> ();
   private final InlineCSSList m_aInlineCSSBeforeExternal = new InlineCSSList ();
   private final InlineCSSList m_aInlineCSSAfterExternal = new InlineCSSList ();
 
-  private final ICommonsOrderedSet <String> m_aExternalJSs = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aExternalJSs = new CommonsLinkedHashSet<> ();
   private final CollectingJSCodeProvider m_aInlineJSBeforeExternal = new CollectingJSCodeProvider ();
   private final CollectingJSCodeProvider m_aInlineJSAfterExternal = new CollectingJSCodeProvider ();
 
@@ -116,7 +116,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
   @ReturnsMutableCopy
   public ICommonsOrderedMap <ICSSMediaList, ICommonsList <String>> getAllExternalCSSs ()
   {
-    final ICommonsOrderedMap <ICSSMediaList, ICommonsList <String>> ret = new CommonsLinkedHashMap <> ();
+    final ICommonsOrderedMap <ICSSMediaList, ICommonsList <String>> ret = new CommonsLinkedHashMap<> ();
     for (final Map.Entry <ICSSMediaList, ICommonsOrderedSet <String>> aEntry : m_aExternalCSSs.entrySet ())
       ret.put (aEntry.getKey (), aEntry.getValue ().getCopyAsList ());
     return ret;
@@ -291,6 +291,6 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
                                        .appendIf ("externalJS", m_aExternalJSs, CollectionHelper::isNotEmpty)
                                        .append ("inlineJSBeforeExternal", m_aInlineJSBeforeExternal)
                                        .append ("inlineJSAfterExternal", m_aInlineJSBeforeExternal)
-                                       .toString ();
+                                       .getToString ();
   }
 }

@@ -118,6 +118,6 @@ public class HCMeta extends AbstractHCElement <HCMeta>
                             .append ("httpEquiv", m_sHttpEquiv)
                             .append ("content", m_sContent)
                             .append ("charset", m_sCharset)
-                            .toString ();
+                            .getToString ();
   }
 }

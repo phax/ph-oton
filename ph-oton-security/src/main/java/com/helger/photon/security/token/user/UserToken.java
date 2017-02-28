@@ -84,6 +84,6 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("User", m_aUser).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("User", m_aUser).getToString ();
   }
 }

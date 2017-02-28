@@ -296,6 +296,6 @@ public abstract class AbstractHCForm <THISTYPE extends AbstractHCForm <THISTYPE>
                             .appendIfNotNull ("target", m_aTarget)
                             .append ("submitPressingEnter", m_bSubmitPressingEnter)
                             .append ("submitButtonTabIndex", m_nSubmitButtonTabIndex)
-                            .toString ();
+                            .getToString ();
   }
 }

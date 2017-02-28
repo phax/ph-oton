@@ -106,7 +106,7 @@ public class APIPath
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("HTTPMethod", m_eMethod).append ("Path", m_sPath).toString ();
+    return new ToStringGenerator (null).append ("HTTPMethod", m_eMethod).append ("Path", m_sPath).getToString ();
   }
 
   @Nonnull

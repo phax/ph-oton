@@ -137,6 +137,6 @@ public final class DTSSRequestDataOrderColumn implements Serializable
     return new ToStringGenerator (this).append ("SolumnIndex", m_nColumnIndex)
                                        .append ("SortOrder", m_eSortOrder)
                                        .append ("OrderSpec", m_aOrderSpec)
-                                       .toString ();
+                                       .getToString ();
   }
 }

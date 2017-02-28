@@ -74,7 +74,7 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("StatusCode", m_nStatusCode).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("StatusCode", m_nStatusCode).getToString ();
   }
 
   /**

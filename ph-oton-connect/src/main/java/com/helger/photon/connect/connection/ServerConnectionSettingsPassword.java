@@ -57,6 +57,6 @@ public class ServerConnectionSettingsPassword extends AbstractServerConnectionSe
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).appendPassword ("password").toString ();
+    return ToStringGenerator.getDerived (super.toString ()).appendPassword ("password").getToString ();
   }
 }

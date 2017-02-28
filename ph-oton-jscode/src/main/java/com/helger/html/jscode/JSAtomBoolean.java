@@ -67,6 +67,6 @@ public class JSAtomBoolean extends AbstractJSExpression
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("value", m_bValue).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("value", m_bValue).getToString ();
   }
 }

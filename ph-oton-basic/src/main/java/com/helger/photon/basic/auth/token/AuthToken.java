@@ -178,6 +178,6 @@ public final class AuthToken implements IAuthToken
                                        .append ("lastAccessDT", m_aLastAccessDT)
                                        .append ("expired", m_bExpired)
                                        .append ("expirationSeconds", m_nExpirationSeconds)
-                                       .toString ();
+                                       .getToString ();
   }
 }

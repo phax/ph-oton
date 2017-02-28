@@ -79,7 +79,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
     m_sValue = sValue;
-    m_aTokens = new CommonsArrayList <> (aTokens);
+    m_aTokens = new CommonsArrayList<> (aTokens);
   }
 
   /**
@@ -95,7 +95,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
     m_sValue = sValue;
-    m_aTokens = new CommonsArrayList <> (aTokens);
+    m_aTokens = new CommonsArrayList<> (aTokens);
   }
 
   /**
@@ -168,7 +168,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("value", m_sValue).append ("tokens", m_aTokens).toString ();
+    return new ToStringGenerator (this).append ("value", m_sValue).append ("tokens", m_aTokens).getToString ();
   }
 
   /**

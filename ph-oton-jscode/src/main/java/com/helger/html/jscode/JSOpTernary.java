@@ -128,6 +128,6 @@ public class JSOpTernary extends AbstractJSExpression
                             .append ("expr2", m_aExpr2)
                             .append ("op2", m_sOp2)
                             .append ("expr3", m_aExpr3)
-                            .toString ();
+                            .getToString ();
   }
 }

@@ -145,6 +145,6 @@ public class JSAtomInt extends AbstractJSAtomNumeric
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("value", m_nValue).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("value", m_nValue).getToString ();
   }
 }

@@ -85,6 +85,6 @@ public class JSCommentSingleLine extends AbstractJSStatement
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("comment", m_sComment).toString ();
+    return new ToStringGenerator (this).append ("comment", m_sComment).getToString ();
   }
 }

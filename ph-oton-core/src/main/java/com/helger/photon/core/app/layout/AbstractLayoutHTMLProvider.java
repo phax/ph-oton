@@ -64,7 +64,7 @@ public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecuti
   {
     ValueEnforcer.notEmpty (aLayoutAreaIDs, "LayoutAreaIDs");
 
-    m_aLayoutAreaIDs = new CommonsArrayList <> (aLayoutAreaIDs);
+    m_aLayoutAreaIDs = new CommonsArrayList<> (aLayoutAreaIDs);
   }
 
   /**
@@ -201,6 +201,6 @@ public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecuti
   {
     return new ToStringGenerator (this).append ("layoutAreaIDs", m_aLayoutAreaIDs)
                                        .append ("createLayoutAreaSpan", m_bCreateLayoutAreaSpan)
-                                       .toString ();
+                                       .getToString ();
   }
 }

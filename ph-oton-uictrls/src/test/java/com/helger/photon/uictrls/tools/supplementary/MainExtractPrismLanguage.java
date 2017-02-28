@@ -17,12 +17,12 @@
 package com.helger.photon.uictrls.tools.supplementary;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.file.SimpleFileIO;
@@ -38,7 +38,7 @@ public final class MainExtractPrismLanguage
   {
     final StringBuilder aSB = new StringBuilder ();
     final File f = new File ("src/main/resources/prismjs/prism.css");
-    String sLine = SimpleFileIO.getAllFileLines (f, CCharset.CHARSET_UTF_8_OBJ).get (0);
+    String sLine = SimpleFileIO.getAllFileLines (f, StandardCharsets.UTF_8).get (0);
     sLine = StringHelper.trimStartAndEnd (sLine, "/*", "*/").trim ();
     final ISimpleURL aURL = new SimpleURL (sLine);
 

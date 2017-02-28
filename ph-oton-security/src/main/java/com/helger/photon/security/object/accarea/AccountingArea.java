@@ -421,6 +421,6 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
                             .appendIfNotNull ("officeLocation", m_sOfficeLocation)
                             .appendIfNotNull ("commercialRegistrationNumber", m_sCommercialRegistrationNumber)
                             .appendIfNotNull ("commercialCourt", m_sCommercialCourt)
-                            .toString ();
+                            .getToString ();
   }
 }

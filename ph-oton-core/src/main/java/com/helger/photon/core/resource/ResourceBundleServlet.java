@@ -17,6 +17,7 @@
 package com.helger.photon.core.resource;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -30,7 +31,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.state.EContinue;
@@ -157,6 +157,6 @@ public class ResourceBundleServlet extends AbstractObjectDeliveryServlet
     aUnifiedResponse.enableCaching (CGlobal.SECONDS_PER_DAY * nCachingDays)
                     .setMimeType (aBundle.getMimeType ())
                     .setContent (aBundle)
-                    .setCharset (CCharset.CHARSET_UTF_8_OBJ);
+                    .setCharset (StandardCharsets.UTF_8);
   }
 }

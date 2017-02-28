@@ -173,6 +173,6 @@ public class SimpleAuditManager extends AbstractWALDAO <AuditItem> implements IA
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("CurrentUserIDProvider", m_aCurrentUserIDProvider)
                             .append ("Items", m_aItems)
-                            .toString ();
+                            .getToString ();
   }
 }

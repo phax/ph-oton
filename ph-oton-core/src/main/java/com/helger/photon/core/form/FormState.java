@@ -122,6 +122,6 @@ public class FormState implements ITypedObject <String>, Serializable
                                        .append ("DT", m_aDT)
                                        .append ("flowID", m_sFlowID)
                                        .append ("attrs", m_aAttrs)
-                                       .toString ();
+                                       .getToString ();
   }
 }

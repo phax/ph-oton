@@ -16,13 +16,13 @@
  */
 package com.helger.photon.exchange;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.mime.CMimeType;
@@ -48,7 +48,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
     @Nonnull
     public ExporterCSV createExporter ()
     {
-      return new ExporterCSV ().setCharset (CCharset.CHARSET_ISO_8859_1_OBJ).setSeparatorChar (';');
+      return new ExporterCSV ().setCharset (StandardCharsets.ISO_8859_1).setSeparatorChar (';');
     }
   },
   XLS ("xls", EExcelVersion.XLS.getFileExtension (), EExcelVersion.XLS.getMimeType (), true, EExchangeFileTypeName.XLS)

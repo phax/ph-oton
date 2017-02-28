@@ -55,6 +55,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 
@@ -64,7 +65,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.file.FilenameHelper;
@@ -79,7 +79,7 @@ public final class MarkdownProcessorTest
   @Parameters
   public static Iterable <Object []> markdownTests ()
   {
-    final ICommonsList <Object []> ret = new CommonsArrayList <> ();
+    final ICommonsList <Object []> ret = new CommonsArrayList<> ();
     for (final File aFile : new FileSystemRecursiveIterator (new File ("src/test/resources/MarkdownTest")))
     {
       final String sFilename = aFile.getName ();
@@ -108,7 +108,7 @@ public final class MarkdownProcessorTest
   private static String _slurp (final String sFilename)
   {
     // Avoid differences in newlines
-    final String sFile = SimpleFileIO.getFileAsString (new File (sFilename), CCharset.CHARSET_UTF_8_OBJ);
+    final String sFile = SimpleFileIO.getFileAsString (new File (sFilename), StandardCharsets.UTF_8);
     return StringHelper.removeAll (sFile, '\r');
   }
 

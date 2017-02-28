@@ -105,6 +105,6 @@ public abstract class AbstractHasAccountingAreaOptionalObject extends AbstractHa
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("accoutingArea", m_aAccountingArea).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("accoutingArea", m_aAccountingArea).getToString ();
   }
 }

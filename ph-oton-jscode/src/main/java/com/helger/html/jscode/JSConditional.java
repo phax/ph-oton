@@ -191,6 +191,6 @@ public class JSConditional extends AbstractJSStatement
     return new ToStringGenerator (this).append ("test", m_aTest)
                                        .append ("then", m_aThen)
                                        .appendIfNotNull ("else", m_aElse)
-                                       .toString ();
+                                       .getToString ();
   }
 }

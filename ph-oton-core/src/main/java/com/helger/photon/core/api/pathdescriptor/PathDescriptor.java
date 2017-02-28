@@ -41,7 +41,7 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public final class PathDescriptor
 {
-  private final ICommonsList <PathDescriptorPart> m_aPathParts = new CommonsArrayList <> ();
+  private final ICommonsList <PathDescriptorPart> m_aPathParts = new CommonsArrayList<> ();
 
   private PathDescriptor (@Nonnull @Nonempty final List <String> aPathParts)
   {
@@ -78,7 +78,7 @@ public final class PathDescriptor
       return PathMatchingResult.NO_MATCH;
     }
 
-    final ICommonsOrderedMap <String, String> aVariableValues = new CommonsLinkedHashMap <> ();
+    final ICommonsOrderedMap <String, String> aVariableValues = new CommonsLinkedHashMap<> ();
     for (int i = 0; i < nPartCount; ++i)
     {
       final PathDescriptorPart aPart = m_aPathParts.get (i);
@@ -133,7 +133,7 @@ public final class PathDescriptor
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("PathParts", m_aPathParts).toString ();
+    return new ToStringGenerator (null).append ("PathParts", m_aPathParts).getToString ();
   }
 
   @Nonnull

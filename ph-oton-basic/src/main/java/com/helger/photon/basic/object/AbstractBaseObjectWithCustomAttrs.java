@@ -39,7 +39,7 @@ import com.helger.commons.string.ToStringGenerator;
 public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObject implements IObjectWithCustomAttrs
 {
 
-  private final MapBasedAttributeContainer <String, String> m_aAttrs = new MapBasedAttributeContainer <> ();
+  private final MapBasedAttributeContainer <String, String> m_aAttrs = new MapBasedAttributeContainer<> ();
 
   public AbstractBaseObjectWithCustomAttrs (@Nonnull final IObjectWithCustomAttrs aObject)
   {
@@ -82,6 +82,6 @@ public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObje
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("Attrs", m_aAttrs).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("Attrs", m_aAttrs).getToString ();
   }
 }

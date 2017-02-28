@@ -88,6 +88,6 @@ public class HCOptGroup extends AbstractHCElementWithInternalChildren <HCOptGrou
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("disabled", m_bDisabled)
                             .appendIfNotNull ("label", m_sLabel)
-                            .toString ();
+                            .getToString ();
   }
 }

@@ -378,6 +378,6 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
                             .append ("size", m_nSize)
                             .append ("options", m_aOptions)
                             .appendIf ("preselectedValues", m_aPreselectedValues, CollectionHelper::isNotEmpty)
-                            .toString ();
+                            .getToString ();
   }
 }

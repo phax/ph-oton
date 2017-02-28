@@ -369,6 +369,6 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
                             .append ("loginCount", m_nLoginCount)
                             .append ("consecutiveFailedLoginCount", m_nConsecutiveFailedLoginCount)
                             .append ("disabled", m_bDisabled)
-                            .toString ();
+                            .getToString ();
   }
 }

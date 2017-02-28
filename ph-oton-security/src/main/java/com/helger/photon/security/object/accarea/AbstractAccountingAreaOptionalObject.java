@@ -171,6 +171,6 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBaseO
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("client", m_aClient)
                             .append ("accoutingArea", m_aAccountingArea)
-                            .toString ();
+                            .getToString ();
   }
 }

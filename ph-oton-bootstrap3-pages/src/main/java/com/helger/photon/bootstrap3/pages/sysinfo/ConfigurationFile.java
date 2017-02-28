@@ -17,13 +17,13 @@
 package com.helger.photon.bootstrap3.pages.sysinfo;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
@@ -36,7 +36,7 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
 {
   private final IReadableResource m_aRes;
   private String m_sDescription;
-  private Charset m_aDefaultCharset = CCharset.CHARSET_UTF_8_OBJ;
+  private Charset m_aDefaultCharset = StandardCharsets.UTF_8;
   private EPrismLanguage m_eSyntaxHighlightLanguage = EPrismLanguage.NONE;
 
   /**
@@ -137,6 +137,6 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
                                        .append ("Description", m_sDescription)
                                        .append ("DefaultCharset", m_aDefaultCharset)
                                        .append ("Syntax", m_eSyntaxHighlightLanguage)
-                                       .toString ();
+                                       .getToString ();
   }
 }

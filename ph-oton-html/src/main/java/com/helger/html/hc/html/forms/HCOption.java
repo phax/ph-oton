@@ -137,6 +137,6 @@ public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, H
                             .appendIfNotNull ("label", m_sLabel)
                             .append ("selected", m_bSelected)
                             .appendIfNotNull ("value", m_sValue)
-                            .toString ();
+                            .getToString ();
   }
 }

@@ -38,7 +38,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class LocaleManager implements ILocaleManager
 {
-  private final ICommonsOrderedSet <Locale> m_aLocales = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <Locale> m_aLocales = new CommonsLinkedHashSet<> ();
   private Locale m_aDefaultLocale;
 
   public LocaleManager ()
@@ -102,6 +102,6 @@ public class LocaleManager implements ILocaleManager
   {
     return new ToStringGenerator (this).append ("locales", m_aLocales)
                                        .append ("defaultLocale", m_aDefaultLocale)
-                                       .toString ();
+                                       .getToString ();
   }
 }

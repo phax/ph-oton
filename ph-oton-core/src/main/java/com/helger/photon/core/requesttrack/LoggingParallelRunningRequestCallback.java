@@ -81,6 +81,6 @@ public class LoggingParallelRunningRequestCallback implements IParallelRunningRe
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("errorLevel", m_aErrorLevel).toString ();
+    return new ToStringGenerator (this).append ("errorLevel", m_aErrorLevel).getToString ();
   }
 }

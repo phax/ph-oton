@@ -51,7 +51,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
   /**
    * List of parameters for this function's declaration
    */
-  private final ICommonsList <JSVar> m_aParams = new CommonsArrayList <> ();
+  private final ICommonsList <JSVar> m_aParams = new CommonsArrayList<> ();
 
   /**
    * Block of statements that makes up the body this function
@@ -235,6 +235,6 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
                                        .append ("name", m_sName)
                                        .appendIf ("params", m_aParams, CollectionHelper::isNotEmpty)
                                        .appendIfNotNull ("body", m_aBody)
-                                       .toString ();
+                                       .getToString ();
   }
 }

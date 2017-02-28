@@ -68,6 +68,6 @@ public abstract class AbstractHasClient implements IHasClient
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("client", m_aClient).toString ();
+    return new ToStringGenerator (this).append ("client", m_aClient).getToString ();
   }
 }

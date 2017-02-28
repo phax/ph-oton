@@ -215,6 +215,6 @@ public class JSBlock extends AbstractJSBlock implements IJSGeneratable, IJSState
                             .append ("bracesRequired", m_bBracesRequired)
                             .append ("identRequired", m_bIndentRequired)
                             .append ("newLineAtEnd", m_bNewLineAtEnd)
-                            .toString ();
+                            .getToString ();
   }
 }

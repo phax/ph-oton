@@ -91,6 +91,6 @@ public final class ServerLogSessionKey extends AbstractSessionWebSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("generatedKey", m_sGeneratedKey).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("generatedKey", m_sGeneratedKey).getToString ();
   }
 }

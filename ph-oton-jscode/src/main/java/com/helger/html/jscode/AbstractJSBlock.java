@@ -59,12 +59,12 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
   /**
    * List of the content of this block
    */
-  private final ICommonsList <IHasJSCode> m_aObjs = new CommonsArrayList <> ();
+  private final ICommonsList <IHasJSCode> m_aObjs = new CommonsArrayList<> ();
 
   /**
    * Named map of all declarations
    */
-  private final ICommonsMap <String, IJSDeclaration> m_aDecls = new CommonsHashMap <> ();
+  private final ICommonsMap <String, IJSDeclaration> m_aDecls = new CommonsHashMap<> ();
 
   /**
    * Current position. Must be &ge; 0.
@@ -1161,6 +1161,6 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
     return new ToStringGenerator (this).appendIf ("objs", m_aObjs, CollectionHelper::isNotEmpty)
                                        .appendIf ("decls", m_aDecls, CollectionHelper::isNotEmpty)
                                        .append ("pos", m_nPos)
-                                       .toString ();
+                                       .getToString ();
   }
 }

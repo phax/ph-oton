@@ -75,6 +75,6 @@ public class DAOWebFileIO implements IDAOIO
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("FileIO", m_aFileIO).toString ();
+    return new ToStringGenerator (this).append ("FileIO", m_aFileIO).getToString ();
   }
 }

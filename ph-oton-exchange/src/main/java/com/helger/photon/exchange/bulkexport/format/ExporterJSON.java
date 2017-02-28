@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,7 +32,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.iterate.IterableIterator;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
@@ -66,7 +66,7 @@ public final class ExporterJSON implements IExporterFile
   private static final Logger s_aLogger = LoggerFactory.getLogger (ExporterJSON.class);
 
   private IJsonWriterSettings m_aJWS = new JsonWriterSettings ();
-  private Charset m_aCharset = CCharset.CHARSET_UTF_8_OBJ;
+  private Charset m_aCharset = StandardCharsets.UTF_8;
   private boolean m_bEmitType = DEFAULT_EMIT_TYPE;
 
   public ExporterJSON ()
@@ -144,7 +144,7 @@ public final class ExporterJSON implements IExporterFile
 
     // Body
     final JsonArray aBody = new JsonArray ();
-    for (final IExportRecord aBodyRecord : new IterableIterator <> (aProvider.getBodyRecords ()))
+    for (final IExportRecord aBodyRecord : new IterableIterator<> (aProvider.getBodyRecords ()))
       aBody.add (_emitRecord (aBodyRecord));
     if (!aBody.isEmpty ())
       aDoc.add (ELEMENT_BODY, aBody);

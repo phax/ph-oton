@@ -17,8 +17,8 @@
 package com.helger.html.jquery.supplementary.main;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.multimap.IMultiMapListBased;
@@ -31,10 +31,10 @@ public class Main_AbstractJQueryInvocationTest extends AbstractCreateJQueryAPILi
   {
     // Read all data
     final ICommonsList <Entry> aAllEntries = readAllEntries ();
-    final ICommonsList <String> aLines = new CommonsArrayList <> ();
+    final ICommonsList <String> aLines = new CommonsArrayList<> ();
 
     // Collect all methods with the same name
-    final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased <> ();
+    final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased<> ();
     for (final Entry aEntry : aAllEntries)
       if (aEntry.getAPIType () == EAPIType.METHOD)
         aUsed.putSingle (aEntry.getName (), aEntry);
@@ -100,7 +100,7 @@ public class Main_AbstractJQueryInvocationTest extends AbstractCreateJQueryAPILi
     aFull.append ("}\n");
     SimpleFileIO.writeFile (new File ("src/test/java/com/helger/html/jquery/AbstractJQueryInvocationTest.java"),
                             aFull.toString (),
-                            CCharset.CHARSET_UTF_8_OBJ);
+                            StandardCharsets.UTF_8);
     s_aLogger.info ("Done");
   }
 }

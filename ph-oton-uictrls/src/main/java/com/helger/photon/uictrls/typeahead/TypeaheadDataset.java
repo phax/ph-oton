@@ -489,6 +489,6 @@ public class TypeaheadDataset
                                        .appendIfNotNull ("local", m_aLocal)
                                        .appendIfNotNull ("prefetch", m_aPrefetch)
                                        .appendIfNotNull ("remote", m_aRemote)
-                                       .toString ();
+                                       .getToString ();
   }
 }

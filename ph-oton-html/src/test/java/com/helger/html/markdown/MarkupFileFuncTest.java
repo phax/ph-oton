@@ -55,6 +55,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,7 +70,6 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsCollection;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -111,9 +111,9 @@ public final class MarkupFileFuncTest
   @ReturnsMutableCopy
   private static ICommonsList <String []> _getTestResultPairList (final String sFilename) throws IOException
   {
-    final ICommonsList <String []> ret = new CommonsArrayList <> ();
+    final ICommonsList <String []> ret = new CommonsArrayList<> ();
     try (final NonBlockingBufferedReader in = new NonBlockingBufferedReader (new InputStreamReader (ClassPathResource.getInputStream (sFilename),
-                                                                                                    CCharset.CHARSET_ISO_8859_1_OBJ)))
+                                                                                                    StandardCharsets.ISO_8859_1)))
     {
       StringBuilder aTest = null;
       StringBuilder aResult = null;
@@ -182,7 +182,7 @@ public final class MarkupFileFuncTest
   @Parameters
   public static Iterable <Object []> testResultPairs () throws IOException
   {
-    final ICommonsCollection <Object []> testResultPairs = new CommonsArrayList <> ();
+    final ICommonsCollection <Object []> testResultPairs = new CommonsArrayList<> ();
     for (final String filename : TEST_FILENAMES)
       for (final String [] aTest : _getTestResultPairList ("MarkupFiles/" + filename))
         testResultPairs.add (new Object [] { aTest[0], aTest[1], aTest[2] });

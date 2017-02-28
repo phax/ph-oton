@@ -61,6 +61,6 @@ public final class JsonToStringConverter implements IJSToStringConverter, Serial
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).toString ();
+    return new ToStringGenerator (this).getToString ();
   }
 }

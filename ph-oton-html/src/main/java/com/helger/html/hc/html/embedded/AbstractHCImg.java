@@ -230,6 +230,6 @@ public abstract class AbstractHCImg <THISTYPE extends AbstractHCImg <THISTYPE>>
                             .appendIfNotNull ("Extent", m_aExtent)
                             .appendIfNotNull ("Alt", m_sAlt)
                             .appendIfNotNull ("CrossOrigin", m_eCrossOrigin)
-                            .toString ();
+                            .getToString ();
   }
 }

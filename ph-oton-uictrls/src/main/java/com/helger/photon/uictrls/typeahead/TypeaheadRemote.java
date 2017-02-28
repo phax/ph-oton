@@ -434,6 +434,6 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
                                        .append ("maxParallelRequests", m_nMaxParallelRequests)
                                        .appendIfNotNull ("beforeSend", m_aBeforeSend)
                                        .appendIfNotNull ("filter", m_aFilter)
-                                       .toString ();
+                                       .getToString ();
   }
 }

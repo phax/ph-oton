@@ -68,6 +68,6 @@ public class JSConstructor extends JSFunction
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("class", m_aClass.name ()).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("class", m_aClass.name ()).getToString ();
   }
 }

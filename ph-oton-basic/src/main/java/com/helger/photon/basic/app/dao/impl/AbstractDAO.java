@@ -49,13 +49,13 @@ public abstract class AbstractDAO implements IDAO
   /** By default auto-save is enabled */
   public static final boolean DEFAULT_AUTO_SAVE_ENABLED = true;
 
-  private static CallbackList <IDAOReadExceptionCallback> s_aExceptionHandlersRead = new CallbackList <> ();
-  private static CallbackList <IDAOWriteExceptionCallback> s_aExceptionHandlersWrite = new CallbackList <> ();
+  private static CallbackList <IDAOReadExceptionCallback> s_aExceptionHandlersRead = new CallbackList<> ();
+  private static CallbackList <IDAOWriteExceptionCallback> s_aExceptionHandlersWrite = new CallbackList<> ();
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("m_aRWLock")
-  private final NonBlockingStack <Boolean> m_aAutoSaveStack = new NonBlockingStack <> ();
+  private final NonBlockingStack <Boolean> m_aAutoSaveStack = new NonBlockingStack<> ();
   @GuardedBy ("m_aRWLock")
   private boolean m_bPendingChanges = false;
   @GuardedBy ("m_aRWLock")
@@ -259,6 +259,6 @@ public abstract class AbstractDAO implements IDAO
     return new ToStringGenerator (this).append ("autoSaveStack", m_aAutoSaveStack)
                                        .append ("pendingChanges", m_bPendingChanges)
                                        .append ("autoSaveEnabled", m_bAutoSaveEnabled)
-                                       .toString ();
+                                       .getToString ();
   }
 }

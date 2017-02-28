@@ -106,7 +106,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
                             .append ("labelText", m_sPlainText)
                             .append ("isTextLabel", m_bTextLabel)
                             .append ("type", m_eType)
-                            .toString ();
+                            .getToString ();
   }
 
   @Nonnull

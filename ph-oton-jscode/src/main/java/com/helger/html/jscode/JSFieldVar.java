@@ -128,6 +128,6 @@ public class JSFieldVar extends JSVar implements IJSDocCommentable
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("ownerClass", m_aOwnerClass)
                             .appendIfNotNull ("jsDoc", m_aJSDoc)
-                            .toString ();
+                            .getToString ();
   }
 }

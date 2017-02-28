@@ -98,6 +98,6 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
     return new ToStringGenerator (this).append ("FunctionName", m_sFunctionName)
                                        .append ("ExecutorFactory", m_aExecutorFactory)
                                        .appendIfNotNull ("ExecutorFilter", m_aExecutionFilter)
-                                       .toString ();
+                                       .getToString ();
   }
 }

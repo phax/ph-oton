@@ -16,11 +16,11 @@
  */
 package com.helger.photon.icon.tools.supplementary;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.CommonsTreeSet;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsSet;
@@ -41,10 +41,10 @@ public class MainExtractFontAwesomeCSSClasses
   public static void main (final String [] args)
   {
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EIconCSSPathProvider.FONT_AWESOME4.getCSSItemPath (true)),
-                                                               CCharset.CHARSET_UTF_8_OBJ,
+                                                               StandardCharsets.UTF_8,
                                                                ECSSVersion.CSS30);
-    final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
-    final ICommonsSet <String> aClassesIcon = new CommonsTreeSet <> ();
+    final ICommonsSet <String> aClasses = new CommonsTreeSet<> ();
+    final ICommonsSet <String> aClassesIcon = new CommonsTreeSet<> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()
     {
       @Override

@@ -140,6 +140,6 @@ public class JSRegExLiteral extends AbstractJSExpression
                             .append ("global", m_bGlobal)
                             .append ("caseInsensitive", m_bCaseInsensitive)
                             .append ("multiLine", m_bMultiLine)
-                            .toString ();
+                            .getToString ();
   }
 }

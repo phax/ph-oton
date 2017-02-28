@@ -362,6 +362,6 @@ public abstract class AbstractHCHasChildrenMutable <THISTYPE extends AbstractHCH
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("children", m_aChildren).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("children", m_aChildren).getToString ();
   }
 }

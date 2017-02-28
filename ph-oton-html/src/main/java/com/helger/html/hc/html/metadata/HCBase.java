@@ -92,6 +92,6 @@ public class HCBase extends AbstractHCElement <HCBase>
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("href", m_aHref)
                             .append ("target", m_aTarget)
-                            .toString ();
+                            .getToString ();
   }
 }

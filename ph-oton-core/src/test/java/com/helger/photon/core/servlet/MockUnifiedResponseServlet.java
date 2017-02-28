@@ -16,12 +16,12 @@
  */
 package com.helger.photon.core.servlet;
 
+import java.nio.charset.StandardCharsets;
 import java.util.EnumSet;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.mime.CMimeType;
 import com.helger.http.EHTTPMethod;
 import com.helger.servlet.response.UnifiedResponse;
@@ -49,7 +49,7 @@ public final class MockUnifiedResponseServlet extends AbstractUnifiedResponseSer
   protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                 @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
-    aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, CCharset.CHARSET_UTF_8_OBJ)
+    aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, StandardCharsets.UTF_8)
                     .setMimeType (CMimeType.TEXT_PLAIN)
                     .disableCaching ();
   }

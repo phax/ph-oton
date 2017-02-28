@@ -104,6 +104,6 @@ public class HC_Action implements ICloneable <HC_Action>
   {
     return new ToStringGenerator (null).appendIfNotNull ("ActionURL", m_aActionURL)
                                        .appendIfNotNull ("ActionJS", m_aActionJS)
-                                       .toString ();
+                                       .getToString ();
   }
 }

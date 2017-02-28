@@ -115,7 +115,7 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
                                        .append ("executionDT", m_aExecutionDT)
                                        .append ("success", m_bSuccess)
                                        .append ("errorMsg", m_sErrorMessage)
-                                       .toString ();
+                                       .getToString ();
   }
 
   @Nonnull

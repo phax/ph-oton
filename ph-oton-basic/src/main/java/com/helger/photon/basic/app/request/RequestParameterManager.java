@@ -195,6 +195,6 @@ public class RequestParameterManager extends AbstractGlobalWebSingleton implemen
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("RequestParamHandler", m_aRequestParamHdl).toString ();
+    return new ToStringGenerator (this).append ("RequestParamHandler", m_aRequestParamHdl).getToString ();
   }
 }

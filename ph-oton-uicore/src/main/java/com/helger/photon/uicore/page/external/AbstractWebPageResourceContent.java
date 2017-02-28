@@ -17,6 +17,7 @@
 package com.helger.photon.uicore.page.external;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,7 +25,6 @@ import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.function.IConsumer;
@@ -53,7 +53,7 @@ import com.helger.xml.serialize.read.SAXReaderSettings;
 public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext> extends
                                                      AbstractWebPage <WPECTYPE> implements IWebPageResourceContent
 {
-  public static final Charset DEFAULT_CHARSET = CCharset.CHARSET_UTF_8_OBJ;
+  public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
 
@@ -159,6 +159,6 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("ContentCleanser", m_aContentCleanser)
                             .append ("ReadEveryTime", m_bReadEveryTime)
-                            .toString ();
+                            .getToString ();
   }
 }

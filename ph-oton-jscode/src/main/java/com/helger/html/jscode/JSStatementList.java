@@ -35,7 +35,7 @@ import com.helger.html.js.IJSWriterSettings;
  */
 public final class JSStatementList extends AbstractJSStatement
 {
-  private final ICommonsList <IJSStatement> m_aStatements = new CommonsArrayList <> ();
+  private final ICommonsList <IJSStatement> m_aStatements = new CommonsArrayList<> ();
 
   public JSStatementList ()
   {}
@@ -113,6 +113,6 @@ public final class JSStatementList extends AbstractJSStatement
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("statements", m_aStatements).toString ();
+    return new ToStringGenerator (this).append ("statements", m_aStatements).getToString ();
   }
 }

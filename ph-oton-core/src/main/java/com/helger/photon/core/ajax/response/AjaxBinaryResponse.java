@@ -17,6 +17,7 @@
 package com.helger.photon.core.ajax.response;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -24,7 +25,6 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.mime.CMimeType;
@@ -49,7 +49,7 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
   private final IMimeType m_aMimeType;
   private final String m_sDispositionFilename;
   private EContentDispositionType m_eDispositionType = EContentDispositionType.ATTACHMENT;
-  private Charset m_aTextCharset = CCharset.CHARSET_UTF_8_OBJ;
+  private Charset m_aTextCharset = StandardCharsets.UTF_8;
 
   @SuppressFBWarnings ("EI_EXPOSE_REP2")
   public AjaxBinaryResponse (@Nonnull @Nonempty final byte [] aValue,
@@ -192,7 +192,7 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
                             .append ("MimeType", m_aMimeType)
                             .append ("DispositionFilename", m_sDispositionFilename)
                             .append ("TextCharset", m_aTextCharset)
-                            .toString ();
+                            .getToString ();
   }
 
   @Nonnull

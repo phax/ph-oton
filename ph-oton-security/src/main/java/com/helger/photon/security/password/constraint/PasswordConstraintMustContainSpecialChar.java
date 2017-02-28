@@ -100,6 +100,6 @@ public class PasswordConstraintMustContainSpecialChar implements IPasswordConstr
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("minSpecials", m_nMinSpecials).toString ();
+    return new ToStringGenerator (this).append ("minSpecials", m_nMinSpecials).getToString ();
   }
 }

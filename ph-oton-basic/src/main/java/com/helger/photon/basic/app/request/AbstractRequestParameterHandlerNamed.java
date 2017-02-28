@@ -95,6 +95,6 @@ public abstract class AbstractRequestParameterHandlerNamed implements IRequestPa
   {
     return new ToStringGenerator (this).append ("ParameterNameLocale", m_sRequestParamNameLocale)
                                        .append ("ParameterNameMenuItem", m_sRequestParamNameMenuItem)
-                                       .toString ();
+                                       .getToString ();
   }
 }

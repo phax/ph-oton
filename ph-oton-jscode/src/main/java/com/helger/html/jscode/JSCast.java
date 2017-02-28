@@ -95,6 +95,6 @@ public class JSCast extends AbstractJSExpression
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("type", m_aType)
                             .append ("object", m_aExpr)
-                            .toString ();
+                            .getToString ();
   }
 }

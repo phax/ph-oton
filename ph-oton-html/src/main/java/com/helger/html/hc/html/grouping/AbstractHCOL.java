@@ -103,6 +103,6 @@ public abstract class AbstractHCOL <THISTYPE extends AbstractHCOL <THISTYPE>> ex
                             .appendIfNotNull ("start", m_aStart)
                             .append ("reversed", m_bReversed)
                             .appendIfNotNull ("type", m_eType)
-                            .toString ();
+                            .getToString ();
   }
 }

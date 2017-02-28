@@ -188,7 +188,7 @@ public class JSAssocArray extends AbstractJSExpression
     ValueEnforcer.notNull (aValue, "Value");
 
     if (m_aExprs == null)
-      m_aExprs = new CommonsLinkedHashMap <> ();
+      m_aExprs = new CommonsLinkedHashMap<> ();
     m_aExprs.put (aKey, aValue);
     return this;
   }
@@ -268,6 +268,6 @@ public class JSAssocArray extends AbstractJSExpression
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("exprs", m_aExprs).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("exprs", m_aExprs).getToString ();
   }
 }

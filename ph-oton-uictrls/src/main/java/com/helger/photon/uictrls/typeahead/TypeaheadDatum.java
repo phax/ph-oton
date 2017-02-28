@@ -78,7 +78,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
     m_sValue = sValue;
-    m_aTokens = new CommonsArrayList <> (aTokens);
+    m_aTokens = new CommonsArrayList<> (aTokens);
   }
 
   /**
@@ -94,7 +94,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
     m_sValue = sValue;
-    m_aTokens = new CommonsArrayList <> (aTokens);
+    m_aTokens = new CommonsArrayList<> (aTokens);
   }
 
   /**
@@ -167,7 +167,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("value", m_sValue).append ("tokens", m_aTokens).toString ();
+    return new ToStringGenerator (this).append ("value", m_sValue).append ("tokens", m_aTokens).getToString ();
   }
 
   /**

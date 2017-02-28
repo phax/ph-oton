@@ -42,7 +42,7 @@ public final class ForcedRedirectManager extends AbstractSessionWebSingleton
   private static final Logger s_aLogger = LoggerFactory.getLogger (ForcedRedirectManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IHCNode> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <String, IHCNode> m_aMap = new CommonsHashMap<> ();
 
   @Deprecated
   @UsedViaReflection
@@ -152,6 +152,6 @@ public final class ForcedRedirectManager extends AbstractSessionWebSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("map", m_aMap).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("map", m_aMap).getToString ();
   }
 }

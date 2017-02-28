@@ -161,6 +161,6 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("Separator", m_sSeparator).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("Separator", m_sSeparator).getToString ();
   }
 }

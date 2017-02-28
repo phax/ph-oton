@@ -335,7 +335,7 @@ public class HCLink extends AbstractHCElement <HCLink>
                             .appendIfNotNull ("CSSPathProvider", m_aCSSPathProvider)
                             .appendIfNotNull ("CrossOrigin", m_eCrossOrigin)
                             .appendIfNotNull ("Integrity", m_sIntegrity)
-                            .toString ();
+                            .getToString ();
   }
 
   /**

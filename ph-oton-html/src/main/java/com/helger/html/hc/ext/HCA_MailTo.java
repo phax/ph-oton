@@ -46,7 +46,7 @@ public class HCA_MailTo extends AbstractHCA <HCA_MailTo>
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("email", m_sEmailAddress).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("email", m_sEmailAddress).getToString ();
   }
 
   @Nullable

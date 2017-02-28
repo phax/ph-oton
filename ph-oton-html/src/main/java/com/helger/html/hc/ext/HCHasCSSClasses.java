@@ -126,6 +126,6 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
     return new ToStringGenerator (this).appendIf ("CSSClassProviders",
                                                   m_aCSSClassProviders,
                                                   CollectionHelper::isNotEmpty)
-                                       .toString ();
+                                       .getToString ();
   }
 }

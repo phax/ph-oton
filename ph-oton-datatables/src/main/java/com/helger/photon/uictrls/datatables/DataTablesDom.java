@@ -48,13 +48,13 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
 
   public DataTablesDom ()
   {
-    m_aElements = new CommonsArrayList <> ();
+    m_aElements = new CommonsArrayList<> ();
   }
 
   public DataTablesDom (@Nonnull final DataTablesDom aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
-    m_aElements = new CommonsArrayList <> (aOther.m_aElements);
+    m_aElements = new CommonsArrayList<> (aOther.m_aElements);
   }
 
   @CheckForSigned
@@ -323,6 +323,6 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
     return new ToStringGenerator (this).append ("elements", m_aElements)
                                        .append ("openDivCount", m_nOpenDivs)
                                        .append ("pos", m_nPos)
-                                       .toString ();
+                                       .getToString ();
   }
 }

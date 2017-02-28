@@ -77,7 +77,7 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
   {
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("selectedMenuItem", m_aSelectedMenuItem)
-                            .toString ();
+                            .getToString ();
   }
 
   @Nonnull

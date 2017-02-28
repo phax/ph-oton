@@ -129,6 +129,6 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("resource", m_aResource)
                             .append ("parsedContent", m_aParsedContent)
-                            .toString ();
+                            .getToString ();
   }
 }

@@ -39,7 +39,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
   /**
    * List of parameters for this function's declaration
    */
-  private final ICommonsList <JSVar> m_aParams = new CommonsArrayList <> ();
+  private final ICommonsList <JSVar> m_aParams = new CommonsArrayList<> ();
 
   /**
    * JBlock of statements that makes up the body this function
@@ -195,6 +195,6 @@ public class JSAnonymousFunction extends AbstractJSExpression
     return ToStringGenerator.getDerived (super.toString ())
                             .appendIf ("params", m_aParams, CollectionHelper::isNotEmpty)
                             .append ("body", m_aBody)
-                            .toString ();
+                            .getToString ();
   }
 }

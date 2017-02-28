@@ -155,6 +155,6 @@ public class JSCommentPart extends CommonsArrayList <Object>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("list", super.toString ()).toString ();
+    return new ToStringGenerator (this).append ("list", super.toString ()).getToString ();
   }
 }

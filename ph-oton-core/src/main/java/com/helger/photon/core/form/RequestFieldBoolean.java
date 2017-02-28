@@ -94,7 +94,7 @@ public class RequestFieldBoolean extends RequestField implements IHCRequestField
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("defaultValue", m_bDefaultValue).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("defaultValue", m_bDefaultValue).getToString ();
   }
 
   public static boolean getCheckBoxValue (@Nonnull @Nonempty final String sFieldName, final boolean bDefaultValue)

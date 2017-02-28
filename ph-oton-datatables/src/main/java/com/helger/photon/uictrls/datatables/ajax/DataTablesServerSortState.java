@@ -42,7 +42,7 @@ final class DataTablesServerSortState implements Serializable
 
   DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData, @Nonnull final Locale aDisplayLocale)
   {
-    this (aServerData, new CommonsArrayList <> (0), aDisplayLocale);
+    this (aServerData, new CommonsArrayList<> (0), aDisplayLocale);
   }
 
   public DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData,
@@ -106,6 +106,6 @@ final class DataTablesServerSortState implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("OrderColumns", m_aOrderColumns).toString ();
+    return new ToStringGenerator (this).append ("OrderColumns", m_aOrderColumns).getToString ();
   }
 }

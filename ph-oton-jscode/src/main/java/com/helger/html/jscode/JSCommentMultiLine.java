@@ -41,10 +41,10 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
   private static final String INDENT = " *     ";
 
   /** list of @-param tags */
-  private final ICommonsOrderedMap <String, JSCommentPart> m_aParams = new CommonsLinkedHashMap <> ();
+  private final ICommonsOrderedMap <String, JSCommentPart> m_aParams = new CommonsLinkedHashMap<> ();
 
   /** list of xdoclets */
-  private final ICommonsOrderedMap <String, ICommonsMap <String, String>> m_aXDoclets = new CommonsLinkedHashMap <> ();
+  private final ICommonsOrderedMap <String, ICommonsMap <String, String>> m_aXDoclets = new CommonsLinkedHashMap<> ();
 
   /** The @-return tag part. */
   private JSCommentPart m_aReturn;
@@ -138,7 +138,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
     ICommonsMap <String, String> aMap = m_aXDoclets.get (sName);
     if (aMap == null)
     {
-      aMap = new CommonsHashMap <> ();
+      aMap = new CommonsHashMap<> ();
       m_aXDoclets.put (sName, aMap);
     }
     return aMap;
@@ -262,6 +262,6 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
                                        .append ("xdoclets", m_aXDoclets)
                                        .append ("return", m_aReturn)
                                        .append ("deprecated", m_aDeprecated)
-                                       .toString ();
+                                       .getToString ();
   }
 }

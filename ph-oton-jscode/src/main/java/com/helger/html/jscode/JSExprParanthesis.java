@@ -62,6 +62,6 @@ public class JSExprParanthesis extends AbstractJSExpression
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("expr", m_aExpr).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("expr", m_aExpr).getToString ();
   }
 }

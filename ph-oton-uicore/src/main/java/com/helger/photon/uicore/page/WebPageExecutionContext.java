@@ -62,6 +62,6 @@ public class WebPageExecutionContext extends LayoutExecutionContext implements I
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("webPage", m_aWebPage)
                             .append ("nodeList", m_aNodeList)
-                            .toString ();
+                            .getToString ();
   }
 }

@@ -141,6 +141,6 @@ public class JSAtomDecimal extends AbstractJSAtomNumeric
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("value", m_dValue).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("value", m_dValue).getToString ();
   }
 }

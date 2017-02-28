@@ -138,6 +138,6 @@ public class JSCase extends AbstractJSStatement
     return new ToStringGenerator (this).appendIfNotNull ("label", m_aLabel)
                                        .append ("body", m_aBody)
                                        .append ("isDefaultCase", m_bIsDefaultCase)
-                                       .toString ();
+                                       .getToString ();
   }
 }

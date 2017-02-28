@@ -65,6 +65,6 @@ public class UncheckedCSSClassProvider implements ICSSClassProvider
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("cssClass", m_sCSSClass).toString ();
+    return new ToStringGenerator (this).append ("cssClass", m_sCSSClass).getToString ();
   }
 }

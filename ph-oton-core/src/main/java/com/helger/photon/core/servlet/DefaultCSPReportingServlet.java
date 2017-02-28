@@ -17,6 +17,7 @@
 package com.helger.photon.core.servlet;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletException;
@@ -28,7 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
 import com.helger.commons.io.stream.StreamHelper;
@@ -89,7 +89,7 @@ public class DefaultCSPReportingServlet extends HttpServlet
       handleCSPReport (aJson);
     else
       s_aLogger.error ("Failed to parse CSP report JSON: " +
-                       CharsetManager.getAsString (aBytes, CCharset.CHARSET_ISO_8859_1_OBJ));
+                       CharsetManager.getAsString (aBytes, StandardCharsets.ISO_8859_1));
   }
 
   @Override

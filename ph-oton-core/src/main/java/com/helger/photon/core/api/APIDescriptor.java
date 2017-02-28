@@ -41,8 +41,8 @@ public class APIDescriptor implements IAPIDescriptor
 {
   private final APIPath m_aAPIPath;
   private final PathDescriptor m_aPathDescriptor;
-  private final ICommonsOrderedSet <String> m_aRequiredHeaders = new CommonsLinkedHashSet <> ();
-  private final ICommonsOrderedSet <String> m_aRequiredParams = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aRequiredHeaders = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aRequiredParams = new CommonsLinkedHashSet<> ();
   private IAPIExecutionFilter m_aExecutionFilter;
   private final IFactory <? extends IAPIExecutor> m_aExecutorFactory;
 
@@ -233,6 +233,6 @@ public class APIDescriptor implements IAPIDescriptor
                                        .appendIf ("RequiredParams", m_aRequiredParams, CollectionHelper::isNotEmpty)
                                        .append ("ExecutionFactory", m_aExecutorFactory)
                                        .appendIfNotNull ("ExecutionFilter", m_aExecutionFilter)
-                                       .toString ();
+                                       .getToString ();
   }
 }

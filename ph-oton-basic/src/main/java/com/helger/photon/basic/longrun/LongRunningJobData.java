@@ -186,7 +186,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
                                        .append ("endDateTime", m_aEndDateTime)
                                        .append ("execSucces", m_eExecSuccess)
                                        .append ("result", m_aResult)
-                                       .toString ();
+                                       .getToString ();
 
   }
 }

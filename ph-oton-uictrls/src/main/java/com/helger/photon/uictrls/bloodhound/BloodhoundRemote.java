@@ -285,6 +285,6 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
                                        .append ("rateLimitWait", m_nRateLimitWait)
                                        .appendIfNotNull ("filter", m_aFilter)
                                        .appendIfNotNull ("ajax", m_aAjax)
-                                       .toString ();
+                                       .getToString ();
   }
 }

@@ -108,6 +108,6 @@ public abstract class AbstractUserDataObject implements IUserDataObject
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("path", m_sPath).append ("isTemporary", m_bIsTemporary).toString ();
+    return new ToStringGenerator (this).append ("path", m_sPath).append ("isTemporary", m_bIsTemporary).getToString ();
   }
 }

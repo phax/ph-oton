@@ -86,6 +86,6 @@ public class JSMethod extends JSFunction
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("ownerClass", m_aOwnerClass.name ()).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("ownerClass", m_aOwnerClass.name ()).getToString ();
   }
 }

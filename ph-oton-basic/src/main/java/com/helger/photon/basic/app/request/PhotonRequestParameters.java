@@ -147,6 +147,6 @@ public class PhotonRequestParameters implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("Locale", m_aLocale).append ("MenuItem", m_aMenuItem).toString ();
+    return new ToStringGenerator (null).append ("Locale", m_aLocale).append ("MenuItem", m_aMenuItem).getToString ();
   }
 }

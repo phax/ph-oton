@@ -64,6 +64,6 @@ public class TokenCredentials implements ITokenCredentials
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("TokenString", m_sTokenString).toString ();
+    return new ToStringGenerator (this).append ("TokenString", m_sTokenString).getToString ();
   }
 }

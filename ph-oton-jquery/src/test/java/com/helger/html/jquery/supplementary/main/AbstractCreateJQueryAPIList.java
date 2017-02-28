@@ -88,7 +88,7 @@ abstract class AbstractCreateJQueryAPIList
     }
   }
 
-  private static final ICommonsSet <String> FORBIDDEN_NAMES = new CommonsHashSet <> ("true", "false", "switch");
+  private static final ICommonsSet <String> FORBIDDEN_NAMES = new CommonsHashSet<> ("true", "false", "switch");
 
   static String _makeIdentifier (final String sName)
   {
@@ -179,7 +179,7 @@ abstract class AbstractCreateJQueryAPIList
       m_sName = sName;
       m_sIdentifier = _makeIdentifier (sName);
       m_aTypes = aTypes;
-      m_aJavaTypes = new CommonsLinkedHashSet <> ();
+      m_aJavaTypes = new CommonsLinkedHashSet<> ();
       for (final String sType : aTypes)
         for (final String sType0 : _getJavaTypes (sType))
           m_aJavaTypes.add (sType0);
@@ -272,7 +272,7 @@ abstract class AbstractCreateJQueryAPIList
     @Override
     public String toString ()
     {
-      return new ToStringGenerator (null).append ("name", m_sName).append ("types", m_aTypes).toString ();
+      return new ToStringGenerator (null).append ("name", m_sName).append ("types", m_aTypes).getToString ();
     }
   }
 
@@ -281,7 +281,7 @@ abstract class AbstractCreateJQueryAPIList
     private static final Version V1 = new Version (1);
 
     private final Version m_aAdded;
-    private final ICommonsList <Argument> m_aArgs = new CommonsArrayList <> ();
+    private final ICommonsList <Argument> m_aArgs = new CommonsArrayList<> ();
 
     public Signature (@Nonnull final Version aAdded)
     {
@@ -361,13 +361,13 @@ abstract class AbstractCreateJQueryAPIList
     @Override
     public String toString ()
     {
-      return new ToStringGenerator (null).append ("added", m_aAdded).append ("args", m_aArgs).toString ();
+      return new ToStringGenerator (null).append ("added", m_aAdded).append ("args", m_aArgs).getToString ();
     }
   }
 
   protected static final class Entry
   {
-    private static final ICommonsSet <String> PARENT_CLASS_NAMES = new CommonsHashSet <> ("clone", "eq", "not");
+    private static final ICommonsSet <String> PARENT_CLASS_NAMES = new CommonsHashSet<> ("clone", "eq", "not");
 
     private final EAPIType m_eAPIType;
     private final String m_sName;
@@ -375,7 +375,7 @@ abstract class AbstractCreateJQueryAPIList
     private final String m_sReturn;
     private final Version m_aDeprecated;
     private final Version m_aRemoved;
-    private final ICommonsList <Signature> m_aSignatures = new CommonsArrayList <> ();
+    private final ICommonsList <Signature> m_aSignatures = new CommonsArrayList<> ();
 
     public Entry (@Nonnull final EAPIType eAPIType,
                   @Nonnull @Nonempty final String sName,
@@ -560,14 +560,14 @@ abstract class AbstractCreateJQueryAPIList
     // [Array, Boolean, Callbacks, Deferred, Element, Function, Integer, Number,
     // Object, PlainObject, Promise, String, XMLDocument, boolean, jQuery,
     // jqXHR, undefined]
-    final ICommonsNavigableSet <String> aAllReturnTypes = new CommonsTreeSet <> ();
+    final ICommonsNavigableSet <String> aAllReturnTypes = new CommonsTreeSet<> ();
 
     // [Anything, Array, Boolean, Deferred, Element, Elements, Event,
     // Function, Integer, Number, Number/String, Object, PlainObject, Selector,
     // String, document, htmlString, jQuery, jQuery object]
-    final ICommonsNavigableSet <String> aAllArgTypes = new CommonsTreeSet <> ();
+    final ICommonsNavigableSet <String> aAllArgTypes = new CommonsTreeSet<> ();
 
-    final ICommonsList <Entry> aAllEntries = new CommonsArrayList <> ();
+    final ICommonsList <Entry> aAllEntries = new CommonsArrayList<> ();
 
     if (false)
       SAXReaderDefaultSettings.setFeatureValue (EXMLParserFeature.XINCLUDE, Boolean.TRUE);
@@ -582,7 +582,7 @@ abstract class AbstractCreateJQueryAPIList
       if (eRoot.getTagName ().equals ("entries"))
         aEntries = eRoot.getAllChildElements ("entry");
       else
-        aEntries = new CommonsArrayList <> (eRoot);
+        aEntries = new CommonsArrayList<> (eRoot);
 
       for (final IMicroElement eEntry : aEntries)
       {
@@ -614,7 +614,7 @@ abstract class AbstractCreateJQueryAPIList
             final boolean bIsOptional = eArg.hasAttribute ("optional") ? StringParser.parseBool (eArg.getAttributeValue ("optional"))
                                                                        : false;
 
-            final ICommonsList <String> aTypes = new CommonsArrayList <> ();
+            final ICommonsList <String> aTypes = new CommonsArrayList<> ();
             if (StringHelper.hasNoTextAfterTrim (sArgType))
             {
               for (final IMicroElement eArgType : eArg.getAllChildElements ("type"))

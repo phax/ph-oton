@@ -105,6 +105,6 @@ public class JSWhileLoop extends AbstractJSStatement
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("test", m_aTest).append ("body", m_aBody).toString ();
+    return new ToStringGenerator (this).append ("test", m_aTest).append ("body", m_aBody).getToString ();
   }
 }

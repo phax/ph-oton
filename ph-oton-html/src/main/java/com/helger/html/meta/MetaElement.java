@@ -73,7 +73,7 @@ public class MetaElement implements IMutableMetaElement
   private boolean m_bIsHttpEquiv;
 
   /** locale to value map. */
-  private final ICommonsOrderedMap <Locale, String> m_aContents = new CommonsLinkedHashMap <> ();
+  private final ICommonsOrderedMap <Locale, String> m_aContents = new CommonsLinkedHashMap<> ();
 
   public MetaElement (@Nonnull final IMetaElementDeclaration aMetaTagDecl, @Nullable final String sContent)
   {
@@ -210,7 +210,7 @@ public class MetaElement implements IMutableMetaElement
   @ReturnsMutableCopy
   public ICommonsList <IMetaElementValue> getAsMetaElementValueList ()
   {
-    final ICommonsList <IMetaElementValue> ret = new CommonsArrayList <> (m_aContents.size ());
+    final ICommonsList <IMetaElementValue> ret = new CommonsArrayList<> (m_aContents.size ());
     for (final Map.Entry <Locale, String> aEntry : m_aContents.entrySet ())
       ret.add (new MetaElementValue (m_sName, aEntry.getKey (), aEntry.getValue (), m_bIsHttpEquiv));
     return ret;
@@ -322,6 +322,6 @@ public class MetaElement implements IMutableMetaElement
                                        .appendIfNotNull ("scheme", m_sScheme)
                                        .append ("contents", m_aContents)
                                        .append ("isHttpEquiv", m_bIsHttpEquiv)
-                                       .toString ();
+                                       .getToString ();
   }
 }

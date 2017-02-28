@@ -44,7 +44,7 @@ public class JSSwitch extends AbstractJSStatement
   /**
    * List of cases.
    */
-  private final ICommonsList <JSCase> m_aCases = new CommonsArrayList <> ();
+  private final ICommonsList <JSCase> m_aCases = new CommonsArrayList<> ();
 
   /**
    * a single default case
@@ -137,6 +137,6 @@ public class JSSwitch extends AbstractJSStatement
     return new ToStringGenerator (this).append ("test", m_aTest)
                                        .append ("cases", m_aCases)
                                        .append ("defaultCase", m_aDefaultCase)
-                                       .toString ();
+                                       .getToString ();
   }
 }

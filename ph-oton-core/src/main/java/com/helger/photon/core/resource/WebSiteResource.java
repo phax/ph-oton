@@ -19,6 +19,7 @@ package com.helger.photon.core.resource;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hashcode.IHashCodeGenerator;
@@ -66,7 +66,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 @Immutable
 public class WebSiteResource
 {
-  public static final Charset DEFAULT_CHARSET = CCharset.CHARSET_UTF_8_OBJ;
+  public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResource.class);
 
@@ -295,6 +295,6 @@ public class WebSiteResource
     return new ToStringGenerator (this).append ("ResourceType", m_eResourceType)
                                        .append ("Path", m_sPath)
                                        .append ("Charset", m_aCharset)
-                                       .toString ();
+                                       .getToString ();
   }
 }

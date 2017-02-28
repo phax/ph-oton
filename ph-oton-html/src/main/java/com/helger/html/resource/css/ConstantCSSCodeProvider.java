@@ -100,7 +100,7 @@ public final class ConstantCSSCodeProvider implements ICSSCodeProvider
                                        .appendIfNotNull ("conditionalComment", m_sConditionalComment)
                                        .appendIfNotNull ("CSSMediaList", m_aCSSMediaList)
                                        .append ("isBundlable", m_bIsBundlable)
-                                       .toString ();
+                                       .getToString ();
   }
 
   @Nonnull

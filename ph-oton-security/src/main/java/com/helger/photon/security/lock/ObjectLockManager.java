@@ -33,7 +33,7 @@ import com.helger.photon.security.login.LoggedInUserManager;
 @ThreadSafe
 public final class ObjectLockManager extends AbstractGlobalSingleton
 {
-  private final DefaultLockManager <String> m_aMgr = new DefaultLockManager <> (LoggedInUserManager.getInstance ());
+  private final DefaultLockManager <String> m_aMgr = new DefaultLockManager<> (LoggedInUserManager.getInstance ());
 
   @Deprecated
   @UsedViaReflection
@@ -61,6 +61,6 @@ public final class ObjectLockManager extends AbstractGlobalSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("mgr", m_aMgr).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("mgr", m_aMgr).getToString ();
   }
 }

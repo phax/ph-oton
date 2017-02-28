@@ -129,6 +129,6 @@ public abstract class AbstractHCScript <THISTYPE extends AbstractHCScript <THIST
                             .appendIfNotNull ("Charset", m_sCharset)
                             .appendIfNotNull ("CrossOrigin", m_eCrossOrigin)
                             .appendIfNotNull ("Integrity", m_sIntegrity)
-                            .toString ();
+                            .getToString ();
   }
 }

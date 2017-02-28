@@ -179,6 +179,6 @@ public final class DTSSRequestData
                                        .append ("Search", m_aSearch)
                                        .append ("OrderColumns", m_aOrderColumns)
                                        .append ("ColumnData", m_aColumnData)
-                                       .toString ();
+                                       .getToString ();
   }
 }

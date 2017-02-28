@@ -53,7 +53,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   public static final ICSSClassProvider TT_IS_UNDER_CURSOR = DefaultCSSClassProvider.create ("tt-is-under-cursor");
 
   private final IJSExpression m_aSelector;
-  private final ICommonsList <TypeaheadDataset> m_aDatasets = new CommonsArrayList <> ();
+  private final ICommonsList <TypeaheadDataset> m_aDatasets = new CommonsArrayList<> ();
   private JSAnonymousFunction m_aOnInitialized;
   private JSAnonymousFunction m_aOnOpened;
   private JSAnonymousFunction m_aOnClosed;
@@ -300,7 +300,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
                                        .appendIfNotNull ("onClosed", m_aOnClosed)
                                        .appendIfNotNull ("onSelected", m_aOnSelected)
                                        .appendIfNotNull ("onAutoCompleted", m_aOnAutoCompleted)
-                                       .toString ();
+                                       .getToString ();
   }
 
   @Nonnull

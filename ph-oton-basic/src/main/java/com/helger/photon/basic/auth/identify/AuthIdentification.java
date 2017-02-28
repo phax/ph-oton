@@ -84,6 +84,6 @@ public final class AuthIdentification implements IAuthIdentification
   {
     return new ToStringGenerator (this).appendIfNotNull ("subject", m_aSubject)
                                        .append ("identificationDT", m_aIdentificationDT)
-                                       .toString ();
+                                       .getToString ();
   }
 }

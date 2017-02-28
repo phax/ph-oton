@@ -17,9 +17,9 @@
 package com.helger.html.jquery.supplementary.main;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -36,10 +36,10 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
   {
     // Read all data
     final ICommonsList <Entry> aAllEntries = readAllEntries ();
-    final ICommonsList <String> aLines = new CommonsArrayList <> ();
+    final ICommonsList <String> aLines = new CommonsArrayList<> ();
 
     // Collect all methods with the same name
-    final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased <> ();
+    final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased<> ();
     for (final Entry aEntry : aAllEntries)
       if (aEntry.getAPIType () == EAPIType.METHOD)
         aUsed.putSingle (aEntry.getName (), aEntry);
@@ -49,8 +49,8 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
     {
       boolean bIsDeprecated = true;
       boolean bIsPartiallyDeprecated = false;
-      final ICommonsOrderedSet <String> aReturnTypes = new CommonsLinkedHashSet <> ();
-      final ICommonsOrderedSet <String> aDeprecatedVersions = new CommonsLinkedHashSet <> ();
+      final ICommonsOrderedSet <String> aReturnTypes = new CommonsLinkedHashSet<> ();
+      final ICommonsOrderedSet <String> aDeprecatedVersions = new CommonsLinkedHashSet<> ();
       for (final Entry aEntry : aEntries)
       {
         aReturnTypes.add (aEntry.getReturnOrVoid ());
@@ -198,7 +198,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
     aFull.append ("}\n");
     SimpleFileIO.writeFile (new File ("src/main/java/com/helger/html/jquery/IJQueryInvocation.java"),
                             aFull.toString (),
-                            CCharset.CHARSET_UTF_8_OBJ);
+                            StandardCharsets.UTF_8);
     s_aLogger.info ("Done");
   }
 }

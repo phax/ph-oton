@@ -110,7 +110,7 @@ public class AjaxStringResponse extends AbstractAjaxResponse
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("Value", m_sValue)
                             .append ("MimeType", m_aMimeType)
-                            .toString ();
+                            .getToString ();
   }
 
   @Nonnull

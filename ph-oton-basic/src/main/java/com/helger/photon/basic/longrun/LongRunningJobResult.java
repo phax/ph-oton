@@ -103,7 +103,7 @@ public class LongRunningJobResult implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("type", m_eType).append ("result", m_aResult).toString ();
+    return new ToStringGenerator (this).append ("type", m_eType).append ("result", m_aResult).getToString ();
   }
 
   @Nonnull

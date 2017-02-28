@@ -180,6 +180,6 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("items", m_aItems).toString ();
+    return new ToStringGenerator (this).append ("items", m_aItems).getToString ();
   }
 }

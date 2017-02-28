@@ -173,6 +173,6 @@ public abstract class AbstractHCControl <THISTYPE extends AbstractHCControl <THI
                             .append ("readOnly", m_bReadOnly)
                             .append ("required", m_bRequired)
                             .append ("autoFocus", m_bAutoFocus)
-                            .toString ();
+                            .getToString ();
   }
 }

@@ -19,6 +19,7 @@ package com.helger.photon.core.resource;
 import java.io.InputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
@@ -29,7 +30,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.io.EAppend;
 import com.helger.commons.io.IHasInputStream;
@@ -53,7 +53,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public class WebSiteResourceBundleSerialized implements IHasInputStream
 {
   public static final String RESOURCE_BUNDLE_PATH = "resource-bundles/";
-  public static final Charset CHARSET_TO_USE = CCharset.CHARSET_UTF_8_OBJ;
+  public static final Charset CHARSET_TO_USE = StandardCharsets.UTF_8;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResourceBundleSerialized.class);
 
@@ -72,7 +72,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
 
   /**
    * Constructor for de-serialization only.
-   * 
+   *
    * @param sBundleID
    *        Bundle ID
    * @param aBundle
@@ -95,7 +95,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
     if (!aTargetRes.exists ())
     {
       // persist file by merging all items
-      try (final Writer aWriter = StreamHelper.getBuffered (aTargetRes.getWriter (CCharset.CHARSET_UTF_8_OBJ,
+      try (final Writer aWriter = StreamHelper.getBuffered (aTargetRes.getWriter (StandardCharsets.UTF_8,
                                                                                   EAppend.TRUNCATE)))
       {
         if (aWriter == null)
@@ -240,6 +240,6 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
     return new ToStringGenerator (this).append ("BundleID", m_sBundleID)
                                        .append ("Bundle", m_aBundle)
                                        .append ("CreationDT", m_aCreationDT)
-                                       .toString ();
+                                       .getToString ();
   }
 }

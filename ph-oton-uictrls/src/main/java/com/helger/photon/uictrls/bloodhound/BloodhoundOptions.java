@@ -321,6 +321,6 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
                                        .appendIfNotNull ("local", m_aLocal)
                                        .appendIfNotNull ("prefetch", m_aPrefetch)
                                        .appendIfNotNull ("remote", m_aRemote)
-                                       .toString ();
+                                       .getToString ();
   }
 }

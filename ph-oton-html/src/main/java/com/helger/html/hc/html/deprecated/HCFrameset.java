@@ -83,6 +83,6 @@ public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("cols", m_nCols)
                             .append ("rows", m_nRows)
-                            .toString ();
+                            .getToString ();
   }
 }

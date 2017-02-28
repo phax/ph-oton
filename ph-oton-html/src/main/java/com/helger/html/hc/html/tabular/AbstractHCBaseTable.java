@@ -472,6 +472,6 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
                             .append ("header", m_aHead)
                             .append ("body", m_aBody)
                             .append ("footer", m_aFoot)
-                            .toString ();
+                            .getToString ();
   }
 }

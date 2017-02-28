@@ -17,6 +17,7 @@
 package com.helger.photon.core.resource;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,7 +25,6 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.StringHelper;
@@ -226,7 +226,7 @@ public class WebSiteResourceWithCondition
                                        .appendIfNotNull ("conditionalComment", m_sConditionalComment)
                                        .append ("isBundlable", m_bIsBundlable)
                                        .appendIfNotNull ("mediaList", m_aMediaList)
-                                       .toString ();
+                                       .getToString ();
   }
 
   /**
@@ -253,7 +253,7 @@ public class WebSiteResourceWithCondition
   {
     return new WebSiteResourceWithCondition (EWebSiteResourceType.JS,
                                              sPath,
-                                             CCharset.CHARSET_UTF_8_OBJ,
+                                             StandardCharsets.UTF_8,
                                              sConditionalComment,
                                              bIsBundlable,
                                              (ICSSMediaList) null);
@@ -287,7 +287,7 @@ public class WebSiteResourceWithCondition
   {
     return new WebSiteResourceWithCondition (EWebSiteResourceType.CSS,
                                              sPath,
-                                             CCharset.CHARSET_UTF_8_OBJ,
+                                             StandardCharsets.UTF_8,
                                              sConditionalComment,
                                              bIsBundlable,
                                              aMediaList);

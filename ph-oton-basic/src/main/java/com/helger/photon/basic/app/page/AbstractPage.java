@@ -43,7 +43,7 @@ public abstract class AbstractPage implements IPage
   private final String m_sID;
   private IMultilingualText m_aName;
   private IMultilingualText m_aDescription;
-  private final MapBasedAttributeContainerAny <String> m_aAttrs = new MapBasedAttributeContainerAny <> ();
+  private final MapBasedAttributeContainerAny <String> m_aAttrs = new MapBasedAttributeContainerAny<> ();
 
   @Nullable
   public static ReadOnlyMultilingualText getAsMLT (@Nullable final String sText)
@@ -208,6 +208,6 @@ public abstract class AbstractPage implements IPage
                                        .append ("Name", m_aName)
                                        .appendIfNotNull ("Description", m_aDescription)
                                        .append ("Attrs", m_aAttrs)
-                                       .toString ();
+                                       .getToString ();
   }
 }

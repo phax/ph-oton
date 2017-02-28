@@ -116,7 +116,7 @@ public final class ConstantJSPathProvider implements IJSPathProvider
                                        .append ("minifiedPath", m_sMinifiedPath)
                                        .appendIfNotNull ("conditionalComment", m_sConditionalComment)
                                        .append ("isBundlable", m_bIsBundlable)
-                                       .toString ();
+                                       .getToString ();
   }
 
   @Nonnull

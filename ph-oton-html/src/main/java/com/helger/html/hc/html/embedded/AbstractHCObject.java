@@ -341,6 +341,6 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
                             .appendIfNotNull ("standBy", m_sStandBy)
                             .appendIfNotNull ("type", m_aType)
                             .appendIfNotNull ("useMap", m_sUseMap)
-                            .toString ();
+                            .getToString ();
   }
 }

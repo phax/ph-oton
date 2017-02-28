@@ -46,7 +46,7 @@ public class LayoutManagerProxy <LECTYPE extends ILayoutExecutionContext> implem
 {
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsOrderedMap <String, ILayoutAreaContentProvider <LECTYPE>> m_aContentProviders = new CommonsLinkedHashMap <> ();
+  private final ICommonsOrderedMap <String, ILayoutAreaContentProvider <LECTYPE>> m_aContentProviders = new CommonsLinkedHashMap<> ();
 
   public LayoutManagerProxy ()
   {}
@@ -70,7 +70,7 @@ public class LayoutManagerProxy <LECTYPE extends ILayoutExecutionContext> implem
   @ReturnsMutableCopy
   public ICommonsList <String> getAllAreaIDs ()
   {
-    return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aContentProviders.keySet ()));
+    return m_aRWLock.readLocked ( () -> new CommonsArrayList<> (m_aContentProviders.keySet ()));
   }
 
   @Nullable
@@ -87,6 +87,6 @@ public class LayoutManagerProxy <LECTYPE extends ILayoutExecutionContext> implem
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("contentProviders", m_aContentProviders).toString ();
+    return new ToStringGenerator (this).append ("contentProviders", m_aContentProviders).getToString ();
   }
 }

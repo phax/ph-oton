@@ -75,7 +75,7 @@ public class HCEntityNode extends AbstractHCNode
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("entity", m_aEntity)
                             .append ("plainText", m_sPlainText)
-                            .toString ();
+                            .getToString ();
   }
 
   @Nonnull

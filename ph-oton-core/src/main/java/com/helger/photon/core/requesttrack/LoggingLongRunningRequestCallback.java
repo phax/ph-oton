@@ -84,6 +84,6 @@ public class LoggingLongRunningRequestCallback implements ILongRunningRequestCal
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("errorLevel", m_aErrorLevel).toString ();
+    return new ToStringGenerator (this).append ("errorLevel", m_aErrorLevel).getToString ();
   }
 }

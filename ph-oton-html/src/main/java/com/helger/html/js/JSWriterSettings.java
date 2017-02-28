@@ -145,7 +145,7 @@ public class JSWriterSettings implements IJSWriterSettings, ICloneable <JSWriter
                                        .append ("GenerateComments", m_bGenerateComments)
                                        .append ("Indent", m_sIndent)
                                        .append ("NewLineMode", m_eNewLineMode)
-                                       .toString ();
+                                       .getToString ();
   }
 
   @Nonnull

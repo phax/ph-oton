@@ -100,6 +100,6 @@ public class PasswordConstraintMustContainDigit implements IPasswordConstraint
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("minDigits", m_nMinDigits).toString ();
+    return new ToStringGenerator (this).append ("minDigits", m_nMinDigits).getToString ();
   }
 }

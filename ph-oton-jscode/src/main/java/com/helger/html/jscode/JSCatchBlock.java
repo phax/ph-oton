@@ -98,6 +98,6 @@ public class JSCatchBlock implements IJSGeneratable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("var", m_aVar).append ("body", m_aBody).toString ();
+    return new ToStringGenerator (this).append ("var", m_aVar).append ("body", m_aBody).getToString ();
   }
 }

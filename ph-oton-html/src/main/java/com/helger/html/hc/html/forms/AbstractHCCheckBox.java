@@ -160,7 +160,9 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("emitHiddenField", m_bEmitHiddenField).toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("emitHiddenField", m_bEmitHiddenField)
+                            .getToString ();
   }
 
   /**

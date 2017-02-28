@@ -16,6 +16,7 @@
  */
 package com.helger.photon.uictrls.fineupload5.servlet;
 
+import java.nio.charset.StandardCharsets;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -25,7 +26,6 @@ import javax.annotation.concurrent.Immutable;
 import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.state.ESuccess;
@@ -68,7 +68,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * Keep in mind that the Content-Type will be absent from the request header,
  * and credentials (cookies) and non-simple headers cannot be sent.
  * </p>
- * 
+ *
  * @author Philip Helger
  */
 public abstract class AbstractFineUploader5Servlet extends AbstractUnifiedResponseServlet
@@ -226,7 +226,7 @@ public abstract class AbstractFineUploader5Servlet extends AbstractUnifiedRespon
       // Mime type should be text/plain according to
       // http://docs.fineuploader.com/branch/master/endpoint_handlers/traditional.html
       aUnifiedResponse.disableCaching ()
-                      .setContentAndCharset (aResponse.getAsJsonString (), CCharset.CHARSET_UTF_8_OBJ)
+                      .setContentAndCharset (aResponse.getAsJsonString (), StandardCharsets.UTF_8)
                       .setMimeType (CMimeType.TEXT_PLAIN);
     }
     catch (final Throwable t)

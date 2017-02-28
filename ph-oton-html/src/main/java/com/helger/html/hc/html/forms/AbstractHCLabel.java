@@ -98,6 +98,6 @@ public abstract class AbstractHCLabel <THISTYPE extends AbstractHCLabel <THISTYP
     return ToStringGenerator.getDerived (super.toString ())
                             .appendIfNotNull ("for", m_sFor)
                             .appendIfNotNull ("form", m_sForm)
-                            .toString ();
+                            .getToString ();
   }
 }

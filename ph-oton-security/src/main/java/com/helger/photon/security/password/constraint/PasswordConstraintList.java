@@ -39,7 +39,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class PasswordConstraintList implements IPasswordConstraintList
 {
-  private final ICommonsList <IPasswordConstraint> m_aConstraints = new CommonsArrayList <> ();
+  private final ICommonsList <IPasswordConstraint> m_aConstraints = new CommonsArrayList<> ();
 
   public PasswordConstraintList ()
   {}
@@ -125,7 +125,7 @@ public class PasswordConstraintList implements IPasswordConstraintList
   public ICommonsList <String> getInvalidPasswordDescriptions (@Nullable final String sPlainTextPassword,
                                                                @Nonnull final Locale aContentLocale)
   {
-    final ICommonsList <String> ret = new CommonsArrayList <> ();
+    final ICommonsList <String> ret = new CommonsArrayList<> ();
     for (final IPasswordConstraint aPasswordConstraint : m_aConstraints)
       if (!aPasswordConstraint.isPasswordValid (sPlainTextPassword))
         ret.add (aPasswordConstraint.getDescription (aContentLocale));
@@ -136,7 +136,7 @@ public class PasswordConstraintList implements IPasswordConstraintList
   @ReturnsMutableCopy
   public ICommonsList <String> getAllPasswordConstraintDescriptions (@Nonnull final Locale aContentLocale)
   {
-    final ICommonsList <String> ret = new CommonsArrayList <> ();
+    final ICommonsList <String> ret = new CommonsArrayList<> ();
     for (final IPasswordConstraint aPasswordConstraint : m_aConstraints)
       ret.add (aPasswordConstraint.getDescription (aContentLocale));
     return ret;
@@ -168,6 +168,6 @@ public class PasswordConstraintList implements IPasswordConstraintList
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("constraints", m_aConstraints).toString ();
+    return new ToStringGenerator (this).append ("constraints", m_aConstraints).getToString ();
   }
 }

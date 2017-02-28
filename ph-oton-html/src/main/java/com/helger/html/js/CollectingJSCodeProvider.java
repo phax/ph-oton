@@ -259,6 +259,6 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).appendIf ("list", m_aList, CollectionHelper::isNotEmpty).toString ();
+    return new ToStringGenerator (this).appendIf ("list", m_aList, CollectionHelper::isNotEmpty).getToString ();
   }
 }

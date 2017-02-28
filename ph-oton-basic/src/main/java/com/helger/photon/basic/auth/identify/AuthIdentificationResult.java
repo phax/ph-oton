@@ -93,7 +93,7 @@ public class AuthIdentificationResult implements ISuccessIndicator, Serializable
   {
     return new ToStringGenerator (this).append ("AuthToken", m_aAuthToken)
                                        .append ("CredentialValidationFailure", m_aCredentialValidationFailure)
-                                       .toString ();
+                                       .getToString ();
   }
 
   /**

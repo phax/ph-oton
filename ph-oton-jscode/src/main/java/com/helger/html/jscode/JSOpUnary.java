@@ -107,6 +107,6 @@ public class JSOpUnary extends AbstractJSExpression
                             .append ("op", m_sOp)
                             .append ("expr", m_aExpr)
                             .append ("opFirst", m_bOpFirst)
-                            .toString ();
+                            .getToString ();
   }
 }

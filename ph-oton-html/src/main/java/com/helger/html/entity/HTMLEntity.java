@@ -76,6 +76,6 @@ public class HTMLEntity implements IHTMLEntity
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("name", m_sEntityName).toString ();
+    return new ToStringGenerator (this).append ("name", m_sEntityName).getToString ();
   }
 }

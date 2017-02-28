@@ -175,6 +175,6 @@ public final class InvokableAPIDescriptor
     return new ToStringGenerator (this).append ("APIDescriptor", m_aDescriptor)
                                        .append ("Path", m_sPath)
                                        .append ("PathVariables", m_aPathVariables)
-                                       .toString ();
+                                       .getToString ();
   }
 }

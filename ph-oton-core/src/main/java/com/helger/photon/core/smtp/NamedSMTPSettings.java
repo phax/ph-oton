@@ -124,6 +124,6 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
     return new ToStringGenerator (this).append ("ID", m_sID)
                                        .append ("name", m_sName)
                                        .append ("SMTPsettings", m_aSMTPSettings)
-                                       .toString ();
+                                       .getToString ();
   }
 }

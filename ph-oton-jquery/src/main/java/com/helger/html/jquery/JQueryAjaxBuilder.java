@@ -410,6 +410,6 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("url", m_aURL).toString ();
+    return new ToStringGenerator (this).append ("url", m_aURL).getToString ();
   }
 }

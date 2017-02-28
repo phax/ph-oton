@@ -66,6 +66,6 @@ public final class DataTablesOrderColumn
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("index", m_nIndex).append ("sortOrder", m_eSortOrder).toString ();
+    return new ToStringGenerator (this).append ("index", m_nIndex).append ("sortOrder", m_eSortOrder).getToString ();
   }
 }

@@ -19,10 +19,11 @@ package com.helger.photon.core.servlet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.nio.charset.StandardCharsets;
+
 import org.junit.Rule;
 import org.junit.Test;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.servlet.mock.MockHttpServletResponse;
 import com.helger.web.scope.mock.WebScopeAwareTestSetup;
 import com.helger.web.scope.mock.WebScopeTestRule;
@@ -54,7 +55,7 @@ public final class AbstractUnifiedResponseServletTest
                          "/mock/testrequest;JSESSIONID=1234?name=value&name2=value2");
     final MockHttpServletResponse aResponse = m_aRule.getServletContext ().invoke (m_aRule.getRequest ());
     assertNotNull (aResponse);
-    final String sResponseContent = aResponse.getContentAsString (CCharset.CHARSET_UTF_8_OBJ);
+    final String sResponseContent = aResponse.getContentAsString (StandardCharsets.UTF_8);
     assertNotNull (sResponseContent);
     assertEquals (MockUnifiedResponseServlet.RESPONSE_TEXT, sResponseContent);
   }

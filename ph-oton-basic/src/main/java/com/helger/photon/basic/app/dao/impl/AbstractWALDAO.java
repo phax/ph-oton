@@ -919,7 +919,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     ValueEnforcer.notNull (eActionType, "ActionType");
 
     // Convert single item to list
-    markAsChanged (new CommonsArrayList <> (aModifiedElement), eActionType);
+    markAsChanged (new CommonsArrayList<> (aModifiedElement), eActionType);
   }
 
   @MustBeLocked (ELockType.WRITE)
@@ -1020,6 +1020,6 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                             .appendIfNotNull ("lastReadDT", m_aLastReadDT)
                             .append ("writeCount", m_nWriteCount)
                             .appendIfNotNull ("lastWriteDT", m_aLastWriteDT)
-                            .toString ();
+                            .getToString ();
   }
 }

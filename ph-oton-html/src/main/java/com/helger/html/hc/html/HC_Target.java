@@ -85,7 +85,7 @@ public class HC_Target implements IHCHasHTMLAttributeValue, Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (super.toString ()).append ("name", m_sName).toString ();
+    return new ToStringGenerator (super.toString ()).append ("name", m_sName).getToString ();
   }
 
   /**

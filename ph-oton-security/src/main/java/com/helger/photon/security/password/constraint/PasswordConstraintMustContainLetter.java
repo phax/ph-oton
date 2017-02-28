@@ -100,6 +100,6 @@ public class PasswordConstraintMustContainLetter implements IPasswordConstraint
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("minLetters", m_nMinLetters).toString ();
+    return new ToStringGenerator (this).append ("minLetters", m_nMinLetters).getToString ();
   }
 }

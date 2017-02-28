@@ -47,6 +47,6 @@ public class HCOutOfBandNode extends AbstractHCWrappingNode
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("outOfBandNode", m_aOutOfBandNode).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("outOfBandNode", m_aOutOfBandNode).getToString ();
   }
 }

@@ -77,6 +77,6 @@ public final class LockInfo implements ILockInfo
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("userID", m_sUserID).append ("lockTime", m_aLockTime).toString ();
+    return new ToStringGenerator (this).append ("userID", m_sUserID).append ("lockTime", m_aLockTime).getToString ();
   }
 }

@@ -121,6 +121,6 @@ public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>
                             .append ("colspan", m_nColspan)
                             .append ("rowSpan", m_nRowspan)
                             .append ("align", m_eAlign)
-                            .toString ();
+                            .getToString ();
   }
 }

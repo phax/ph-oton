@@ -70,6 +70,6 @@ public class UnparsedJSCodeProvider implements IHasJSCode
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("jsCode", m_sJSCode).toString ();
+    return new ToStringGenerator (this).append ("jsCode", m_sJSCode).getToString ();
   }
 }

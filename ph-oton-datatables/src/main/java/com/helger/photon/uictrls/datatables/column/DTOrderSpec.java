@@ -162,6 +162,6 @@ public final class DTOrderSpec implements Serializable
                                        .append ("Collating", m_bCollating)
                                        .append ("DisplayLocale", m_aDisplayLocale)
                                        .append ("Comparator", m_aComparator)
-                                       .toString ();
+                                       .getToString ();
   }
 }

@@ -249,6 +249,6 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("basePath", m_aBasePath).toString ();
+    return new ToStringGenerator (this).append ("basePath", m_aBasePath).getToString ();
   }
 }

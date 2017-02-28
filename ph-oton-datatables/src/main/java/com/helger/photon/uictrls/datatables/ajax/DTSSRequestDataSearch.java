@@ -79,6 +79,8 @@ public final class DTSSRequestDataSearch
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("searchTexts", m_aSearchTexts).append ("regEx", m_bRegEx).toString ();
+    return new ToStringGenerator (this).append ("searchTexts", m_aSearchTexts)
+                                       .append ("regEx", m_bRegEx)
+                                       .getToString ();
   }
 }

@@ -270,6 +270,6 @@ public class HCStyle extends AbstractHCElement <HCStyle>
                             .append ("content", m_sContent)
                             .append ("mode", m_eMode)
                             .append ("emitAfterFiles", m_bEmitAfterFiles)
-                            .toString ();
+                            .getToString ();
   }
 }

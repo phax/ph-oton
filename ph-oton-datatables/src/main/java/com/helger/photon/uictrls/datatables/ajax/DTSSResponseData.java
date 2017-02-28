@@ -153,6 +153,6 @@ public final class DTSSResponseData implements IHasJson
                                        .append ("Data", m_aData)
                                        .append ("ErrorMsg", m_sErrorMsg)
                                        .append ("SpecialNodes", m_aSpecialNodes)
-                                       .toString ();
+                                       .getToString ();
   }
 }

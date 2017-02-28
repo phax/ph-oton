@@ -229,6 +229,6 @@ public final class DataTablesServerDataCell implements Serializable
   @Nonnull
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("html", m_sHTML).append ("textContent", m_sTextContent).toString ();
+    return new ToStringGenerator (this).append ("html", m_sHTML).append ("textContent", m_sTextContent).getToString ();
   }
 }

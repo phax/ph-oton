@@ -143,6 +143,6 @@ public class JSType implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("jsType", m_eType).toString ();
+    return new ToStringGenerator (null).append ("jsType", m_eType).getToString ();
   }
 }

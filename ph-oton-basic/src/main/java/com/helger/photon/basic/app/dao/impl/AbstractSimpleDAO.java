@@ -657,6 +657,6 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
                             .appendIfNotNull ("lastReadDT", m_aLastReadDT)
                             .append ("writeCount", m_nWriteCount)
                             .appendIfNotNull ("lastWriteDT", m_aLastWriteDT)
-                            .toString ();
+                            .getToString ();
   }
 }

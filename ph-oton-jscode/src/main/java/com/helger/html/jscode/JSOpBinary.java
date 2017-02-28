@@ -160,6 +160,6 @@ public class JSOpBinary extends AbstractJSExpression
                             .append ("lhs", m_aLeft)
                             .append ("op", m_sOp)
                             .append ("rhs", m_aRight)
-                            .toString ();
+                            .getToString ();
   }
 }

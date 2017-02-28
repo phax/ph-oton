@@ -111,6 +111,6 @@ public class MetaElementValue implements IMetaElementValue
                                        .append ("contentLocale", m_aContentLocale)
                                        .append ("content", m_sContent)
                                        .append ("isHttpEquiv", m_bIsHttpEquiv)
-                                       .toString ();
+                                       .getToString ();
   }
 }

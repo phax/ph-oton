@@ -111,6 +111,6 @@ public class JSForIn extends AbstractJSStatement
     return new ToStringGenerator (this).append ("loopVar", m_aLoopVar)
                                        .append ("collection", m_aCollection)
                                        .append ("body", m_aBody)
-                                       .toString ();
+                                       .getToString ();
   }
 }

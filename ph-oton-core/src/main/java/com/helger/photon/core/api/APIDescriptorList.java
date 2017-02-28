@@ -46,13 +46,13 @@ public class APIDescriptorList
   private static final Logger s_aLogger = LoggerFactory.getLogger (APIDescriptorList.class);
 
   /** Store APIDescriptor per HTTP method for quick access. */
-  private final ICommonsMap <EHTTPMethod, ICommonsList <APIDescriptor>> m_aMap = new CommonsEnumMap <> (EHTTPMethod.class);
+  private final ICommonsMap <EHTTPMethod, ICommonsList <APIDescriptor>> m_aMap = new CommonsEnumMap<> (EHTTPMethod.class);
 
   public APIDescriptorList ()
   {
     // Init map
     for (final EHTTPMethod e : EHTTPMethod.values ())
-      m_aMap.put (e, new CommonsArrayList <> ());
+      m_aMap.put (e, new CommonsArrayList<> ());
   }
 
   public void addDescriptor (@Nonnull final APIDescriptor aDescriptor)
@@ -67,7 +67,7 @@ public class APIDescriptorList
   @ReturnsMutableCopy
   public ICommonsList <IAPIDescriptor> getAllDescriptors ()
   {
-    final ICommonsList <IAPIDescriptor> ret = new CommonsArrayList <> ();
+    final ICommonsList <IAPIDescriptor> ret = new CommonsArrayList<> ();
     for (final ICommonsList <APIDescriptor> aList : m_aMap.values ())
       ret.addAll (aList);
     return ret;
@@ -93,7 +93,7 @@ public class APIDescriptorList
     final String sSourcePath = aPath.getPath ();
     final ICommonsList <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sSourcePath);
 
-    final ICommonsList <InvokableAPIDescriptor> aMatching = new CommonsArrayList <> ();
+    final ICommonsList <InvokableAPIDescriptor> aMatching = new CommonsArrayList<> ();
 
     // HTTP Method must match
     for (final APIDescriptor aDescriptor : m_aMap.get (aPath.getHTTPMethod ()))
@@ -118,6 +118,6 @@ public class APIDescriptorList
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Map", m_aMap).toString ();
+    return new ToStringGenerator (this).append ("Map", m_aMap).getToString ();
   }
 }

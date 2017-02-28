@@ -88,7 +88,7 @@ public final class PhotonPathMapper
       return new ToStringGenerator (null).append ("ApplicationServletPath", m_sApplicationServletPath)
                                          .append ("AjaxServletPath", m_sAjaxServletPath)
                                          .append ("APIServletPath", m_sAPIServletPath)
-                                         .toString ();
+                                         .getToString ();
     }
   }
 
@@ -97,7 +97,7 @@ public final class PhotonPathMapper
   @GuardedBy ("s_aRWLock")
   private static String s_sDefaultAppID;
   @GuardedBy ("s_aRWLock")
-  private static ICommonsMap <String, PathEntry> s_aMap = new CommonsHashMap <> ();
+  private static ICommonsMap <String, PathEntry> s_aMap = new CommonsHashMap<> ();
 
   private PhotonPathMapper ()
   {}
@@ -296,7 +296,7 @@ public final class PhotonPathMapper
   @ReturnsMutableCopy
   public static ICommonsMap <String, PathEntry> getApplicationIDToPathEntryMap ()
   {
-    return s_aRWLock.readLocked ( () -> new CommonsHashMap <> (s_aMap.getClone ()));
+    return s_aRWLock.readLocked ( () -> new CommonsHashMap<> (s_aMap.getClone ()));
   }
 
   /**
@@ -307,9 +307,9 @@ public final class PhotonPathMapper
   @ReturnsMutableCopy
   public static ICommonsMap <String, String> getApplicationIDToApplicationServletPathMap ()
   {
-    return s_aRWLock.readLocked ( () -> new CommonsHashMap <> (s_aMap.entrySet (),
-                                                               x -> x.getKey (),
-                                                               x -> x.getValue ().getApplicationServletPath ()));
+    return s_aRWLock.readLocked ( () -> new CommonsHashMap<> (s_aMap.entrySet (),
+                                                              x -> x.getKey (),
+                                                              x -> x.getValue ().getApplicationServletPath ()));
   }
 
   /**
@@ -320,9 +320,9 @@ public final class PhotonPathMapper
   @ReturnsMutableCopy
   public static ICommonsMap <String, String> getApplicationIDToAjaxServletPathMap ()
   {
-    return s_aRWLock.readLocked ( () -> new CommonsHashMap <> (s_aMap.entrySet (),
-                                                               x -> x.getKey (),
-                                                               x -> x.getValue ().getAjaxServletPath ()));
+    return s_aRWLock.readLocked ( () -> new CommonsHashMap<> (s_aMap.entrySet (),
+                                                              x -> x.getKey (),
+                                                              x -> x.getValue ().getAjaxServletPath ()));
   }
 
   /**
@@ -334,9 +334,9 @@ public final class PhotonPathMapper
   @ReturnsMutableCopy
   public static ICommonsMap <String, String> getApplicationIDToAPIServletPathMap ()
   {
-    return s_aRWLock.readLocked ( () -> new CommonsHashMap <> (s_aMap.entrySet (),
-                                                               x -> x.getKey (),
-                                                               x -> x.getValue ().getAPIServletPath ()));
+    return s_aRWLock.readLocked ( () -> new CommonsHashMap<> (s_aMap.entrySet (),
+                                                              x -> x.getKey (),
+                                                              x -> x.getValue ().getAPIServletPath ()));
   }
 
   /**

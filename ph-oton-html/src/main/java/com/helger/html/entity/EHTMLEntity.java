@@ -308,12 +308,12 @@ public enum EHTMLEntity implements IHTMLEntity
   lang ("lang", '\u2329', "left-pointing angle bracket = bra"),
   rang ("rang", '\u232a', "right-pointing angle bracket = ket");
 
-  private static final ICommonsOrderedMap <String, EHTMLEntity> s_aEntityRefToEntityMap = new CommonsLinkedHashMap <> ();
-  private static final ICommonsOrderedMap <Character, EHTMLEntity> s_aCharToEntityMap = new CommonsLinkedHashMap <> ();
-  private static final ICommonsOrderedMap <String, Character> s_aEntityRefToCharMap = new CommonsLinkedHashMap <> ();
-  private static final ICommonsOrderedMap <String, String> s_aEntityRefToCharStringMap = new CommonsLinkedHashMap <> ();
-  private static final ICommonsOrderedMap <Character, String> s_aCharToEntityRefMap = new CommonsLinkedHashMap <> ();
-  private static final ICommonsOrderedMap <String, String> s_aCharStringToEntityRefMap = new CommonsLinkedHashMap <> ();
+  private static final ICommonsOrderedMap <String, EHTMLEntity> s_aEntityRefToEntityMap = new CommonsLinkedHashMap<> ();
+  private static final ICommonsOrderedMap <Character, EHTMLEntity> s_aCharToEntityMap = new CommonsLinkedHashMap<> ();
+  private static final ICommonsOrderedMap <String, Character> s_aEntityRefToCharMap = new CommonsLinkedHashMap<> ();
+  private static final ICommonsOrderedMap <String, String> s_aEntityRefToCharStringMap = new CommonsLinkedHashMap<> ();
+  private static final ICommonsOrderedMap <Character, String> s_aCharToEntityRefMap = new CommonsLinkedHashMap<> ();
+  private static final ICommonsOrderedMap <String, String> s_aCharStringToEntityRefMap = new CommonsLinkedHashMap<> ();
 
   static
   {
@@ -420,7 +420,7 @@ public enum EHTMLEntity implements IHTMLEntity
     return new ToStringGenerator (this).append ("name", m_sEntityName)
                                        .append ("char", "0x" + StringHelper.getHexStringLeadingZero (m_cChar, 4))
                                        .append ("description", m_sDescription)
-                                       .toString ();
+                                       .getToString ();
   }
 
   /**

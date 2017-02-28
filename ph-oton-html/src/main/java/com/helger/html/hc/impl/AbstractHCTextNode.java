@@ -107,6 +107,6 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("text", m_sText)
                             .append ("escape", m_bEscape)
-                            .toString ();
+                            .getToString ();
   }
 }

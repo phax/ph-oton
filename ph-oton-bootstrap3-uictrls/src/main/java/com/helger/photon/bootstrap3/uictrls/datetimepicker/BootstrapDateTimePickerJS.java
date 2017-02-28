@@ -51,6 +51,6 @@ public class BootstrapDateTimePickerJS extends AbstractHCScriptInline <Bootstrap
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("DTP", m_aDTP).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("DTP", m_aDTP).getToString ();
   }
 }

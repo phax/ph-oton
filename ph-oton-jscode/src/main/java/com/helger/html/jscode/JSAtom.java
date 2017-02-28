@@ -71,6 +71,6 @@ public class JSAtom extends AbstractJSExpression
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("atom", m_sAtom).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("atom", m_sAtom).getToString ();
   }
 }

@@ -20,10 +20,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
@@ -54,7 +54,7 @@ public final class ExporterCSVTest
                                                                 .addField (3.1145)
                                                                 .addField (new BigDecimal ("12345123451234512345123451234512345123451234512345.12345"));
     final ExportRecord aEmptyRecord = new ExportRecord ();
-    final ExporterCSV aExporter = new ExporterCSV (CCharset.CHARSET_ISO_8859_1_OBJ);
+    final ExporterCSV aExporter = new ExporterCSV (StandardCharsets.ISO_8859_1);
     // Fails because no record is present
     assertTrue (aExporter.exportRecords (new EmptyExportRecordProvider (), new NonBlockingByteArrayOutputStream ())
                          .isFailure ());

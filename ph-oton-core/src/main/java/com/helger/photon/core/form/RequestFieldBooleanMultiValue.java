@@ -93,7 +93,7 @@ public class RequestFieldBooleanMultiValue extends RequestField implements IHCRe
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("Value", m_sValue)
                             .append ("DefaultValue", m_bDefaultValue)
-                            .toString ();
+                            .getToString ();
   }
 
   public static boolean getCheckBoxValue (@Nonnull @Nonempty final String sFieldName,

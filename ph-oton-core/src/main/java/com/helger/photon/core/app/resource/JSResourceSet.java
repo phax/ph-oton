@@ -53,9 +53,9 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsList <IJSPathProvider> m_aList = new CommonsArrayList <> ();
+  private final ICommonsList <IJSPathProvider> m_aList = new CommonsArrayList<> ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsSet <IJSPathProvider> m_aItems = new CommonsLinkedHashSet <> ();
+  private final ICommonsSet <IJSPathProvider> m_aItems = new CommonsLinkedHashSet<> ();
   @GuardedBy ("m_aRWLock")
   private boolean m_bIsCollected = false;
 
@@ -181,7 +181,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   @ReturnsMutableCopy
   public ICommonsOrderedSet <IJSPathProvider> getAllItems ()
   {
-    return m_aRWLock.readLocked ( () -> new CommonsLinkedHashSet <> (m_aList));
+    return m_aRWLock.readLocked ( () -> new CommonsLinkedHashSet<> (m_aList));
   }
 
   public void getAllItems (@Nonnull final Collection <? super IJSPathProvider> aTarget)
@@ -242,6 +242,6 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("list", m_aList).toString ();
+    return new ToStringGenerator (this).append ("list", m_aList).getToString ();
   }
 }

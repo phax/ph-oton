@@ -161,6 +161,6 @@ public class GoMappingItem implements Serializable
                                        .append ("isInternal", m_bIsInternal)
                                        .append ("target", m_aTargetURL)
                                        .append ("isEditable", m_bIsEditable)
-                                       .toString ();
+                                       .getToString ();
   }
 }

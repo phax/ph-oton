@@ -85,6 +85,6 @@ public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSet
                             .append ("PrivateKeyBytes#", m_aPrivateKeyBytes.length)
                             .append ("PublicKeyBytes#", m_aPublicKeyBytes.length)
                             .appendPassword ("KeyPairPassphrase")
-                            .toString ();
+                            .getToString ();
   }
 }

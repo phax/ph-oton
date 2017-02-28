@@ -64,6 +64,6 @@ public final class JSExprDirect extends AbstractJSExpression
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("source", m_sSource).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("source", m_sSource).getToString ();
   }
 }

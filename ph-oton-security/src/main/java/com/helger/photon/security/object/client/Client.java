@@ -101,6 +101,6 @@ public class Client extends AbstractObject implements IClient
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("displayName", m_sDisplayName).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("displayName", m_sDisplayName).getToString ();
   }
 }

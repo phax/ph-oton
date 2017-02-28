@@ -234,6 +234,6 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
                             .append ("Label", m_sLabel)
                             .append ("RadioGroup", m_sRadioGroup)
                             .append ("Type", m_eType)
-                            .toString ();
+                            .getToString ();
   }
 }

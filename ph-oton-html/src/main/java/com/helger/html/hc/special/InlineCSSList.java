@@ -88,7 +88,7 @@ public class InlineCSSList
     @Override
     public String toString ()
     {
-      return new ToStringGenerator (null).append ("MediaList", m_aMediaList).toString ();
+      return new ToStringGenerator (null).append ("MediaList", m_aMediaList).getToString ();
     }
   }
 
@@ -128,11 +128,11 @@ public class InlineCSSList
     @Override
     public String toString ()
     {
-      return new ToStringGenerator (this).append ("Key", m_aKey).append ("CSS", m_aCSS).toString ();
+      return new ToStringGenerator (this).append ("Key", m_aKey).append ("CSS", m_aCSS).getToString ();
     }
   }
 
-  private final ICommonsList <Item> m_aItems = new CommonsArrayList <> ();
+  private final ICommonsList <Item> m_aItems = new CommonsArrayList<> ();
 
   public InlineCSSList ()
   {}
@@ -178,6 +178,6 @@ public class InlineCSSList
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Items", m_aItems).toString ();
+    return new ToStringGenerator (this).append ("Items", m_aItems).getToString ();
   }
 }

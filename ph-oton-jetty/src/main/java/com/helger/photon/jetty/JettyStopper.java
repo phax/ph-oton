@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -29,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.charset.CCharset;
 
 /**
  * Stop a Jetty that was started with {@link JettyStarter}.
@@ -71,7 +71,7 @@ public final class JettyStopper
       try (final OutputStream out = s.getOutputStream ())
       {
         s_aLogger.info ("Sending Jetty stop request");
-        out.write ((m_sStopKey + "\r\nstop\r\n").getBytes (CCharset.CHARSET_UTF_8_OBJ));
+        out.write ((m_sStopKey + "\r\nstop\r\n").getBytes (StandardCharsets.UTF_8));
         out.flush ();
       }
       s_aLogger.info ("Done");

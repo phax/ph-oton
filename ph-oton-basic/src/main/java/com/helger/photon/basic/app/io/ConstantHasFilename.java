@@ -66,6 +66,6 @@ public class ConstantHasFilename implements IHasFilename
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("filename", m_sFilename).toString ();
+    return new ToStringGenerator (this).append ("filename", m_sFilename).getToString ();
   }
 }

@@ -251,6 +251,6 @@ public class HCHtml extends AbstractHCElement <HCHtml>
     return ToStringGenerator.getDerived (super.toString ())
                             .appendIfNotNull ("head", m_aHead)
                             .appendIfNotNull ("body", m_aBody)
-                            .toString ();
+                            .getToString ();
   }
 }

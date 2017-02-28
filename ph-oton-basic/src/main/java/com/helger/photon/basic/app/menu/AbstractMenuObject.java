@@ -95,6 +95,6 @@ public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <I
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("ID", m_sID)
                             .appendIfNotNull ("displayFilter", m_aDisplayFilter)
-                            .toString ();
+                            .getToString ();
   }
 }

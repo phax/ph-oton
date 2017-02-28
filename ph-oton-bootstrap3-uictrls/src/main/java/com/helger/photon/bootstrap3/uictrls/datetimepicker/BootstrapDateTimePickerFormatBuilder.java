@@ -41,7 +41,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
 {
-  private final ICommonsList <Object> m_aList = new CommonsArrayList <> ();
+  private final ICommonsList <Object> m_aList = new CommonsArrayList<> ();
 
   public BootstrapDateTimePickerFormatBuilder ()
   {}
@@ -113,13 +113,13 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("list", m_aList).toString ();
+    return new ToStringGenerator (this).append ("list", m_aList).getToString ();
   }
 
   private static final class Searcher
   {
     private String m_sRest;
-    private final ICommonsMap <String, EDateTimePickerFormatToken> m_aAllMatching = new CommonsHashMap <> ();
+    private final ICommonsMap <String, EDateTimePickerFormatToken> m_aAllMatching = new CommonsHashMap<> ();
     private final Comparator <String> m_aComp = IComparator.getComparatorStringLongestFirst ();
 
     public Searcher (@Nonnull final String sRest)

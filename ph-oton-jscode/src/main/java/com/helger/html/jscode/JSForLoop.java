@@ -36,9 +36,9 @@ import com.helger.html.js.IJSWriterSettings;
  */
 public class JSForLoop extends AbstractJSStatement
 {
-  private final ICommonsList <IJSExpression> m_aInits = new CommonsArrayList <> ();
+  private final ICommonsList <IJSExpression> m_aInits = new CommonsArrayList<> ();
   private IJSExpression m_aTest;
-  private final ICommonsList <IJSExpression> m_aUpdates = new CommonsArrayList <> ();
+  private final ICommonsList <IJSExpression> m_aUpdates = new CommonsArrayList<> ();
   private JSBlock m_aBody;
 
   public JSForLoop ()
@@ -174,6 +174,6 @@ public class JSForLoop extends AbstractJSStatement
                                        .append ("test", m_aTest)
                                        .append ("updates", m_aUpdates)
                                        .append ("body", m_aBody)
-                                       .toString ();
+                                       .getToString ();
   }
 }

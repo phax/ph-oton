@@ -58,6 +58,6 @@ public abstract class AbstractAjaxResponse implements IAjaxResponse
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("success", m_bSuccess).toString ();
+    return new ToStringGenerator (this).append ("success", m_bSuccess).getToString ();
   }
 }

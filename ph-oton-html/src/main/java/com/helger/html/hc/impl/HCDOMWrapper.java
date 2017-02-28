@@ -104,6 +104,6 @@ public class HCDOMWrapper extends AbstractHCNode
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("node", m_aNode).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("node", m_aNode).getToString ();
   }
 }

@@ -818,6 +818,6 @@ public abstract class AbstractJSExpression implements IJSExpression
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).toString ();
+    return new ToStringGenerator (this).getToString ();
   }
 }

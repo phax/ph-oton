@@ -40,7 +40,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class AuditItemList
 {
-  private final ICommonsList <IAuditItem> m_aItems = new CommonsArrayList <> ();
+  private final ICommonsList <IAuditItem> m_aItems = new CommonsArrayList<> ();
 
   public AuditItemList ()
   {}
@@ -101,6 +101,6 @@ public final class AuditItemList
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("items", m_aItems).toString ();
+    return new ToStringGenerator (this).append ("items", m_aItems).getToString ();
   }
 }

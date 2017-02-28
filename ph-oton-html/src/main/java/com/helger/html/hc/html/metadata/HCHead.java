@@ -641,6 +641,6 @@ public class HCHead extends AbstractHCElement <HCHead>
                             .append ("links", m_aLinks)
                             .append ("CSS", m_aCSS)
                             .append ("JS", m_aJS)
-                            .toString ();
+                            .getToString ();
   }
 }

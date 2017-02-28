@@ -42,7 +42,7 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 public final class ApplicationLayoutManager <LECTYPE extends ILayoutExecutionContext>
                                             extends AbstractApplicationSingleton implements ILayoutManager <LECTYPE>
 {
-  private final LayoutManagerProxy <LECTYPE> m_aProxy = new LayoutManagerProxy <LECTYPE> ();
+  private final LayoutManagerProxy <LECTYPE> m_aProxy = new LayoutManagerProxy <> ();
 
   @UsedViaReflection
   @Deprecated
@@ -85,6 +85,6 @@ public final class ApplicationLayoutManager <LECTYPE extends ILayoutExecutionCon
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("proxy", m_aProxy).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("proxy", m_aProxy).getToString ();
   }
 }

@@ -79,6 +79,6 @@ public class JSToStringConverter implements IJSToStringConverter
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("withVar", m_bWithSurroundingVar).toString ();
+    return new ToStringGenerator (this).append ("withVar", m_bWithSurroundingVar).getToString ();
   }
 }

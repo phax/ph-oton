@@ -68,6 +68,6 @@ public class JSArrayType extends JSType implements IHasChildJSType
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("childType", m_aChildType).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("childType", m_aChildType).getToString ();
   }
 }

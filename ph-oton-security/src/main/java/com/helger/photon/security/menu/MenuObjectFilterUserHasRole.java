@@ -68,6 +68,6 @@ public class MenuObjectFilterUserHasRole extends AbstractMenuObjectFilter
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("roleID", m_sRoleID).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("roleID", m_sRoleID).getToString ();
   }
 }

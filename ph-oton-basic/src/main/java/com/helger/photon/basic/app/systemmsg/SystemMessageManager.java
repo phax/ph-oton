@@ -149,6 +149,6 @@ public final class SystemMessageManager extends AbstractSimpleDAO
     return new ToStringGenerator (this).appendIfNotNull ("lastUpdate", m_aLastUpdate)
                                        .append ("messageType", m_eMessageType)
                                        .append ("message", m_sMessage)
-                                       .toString ();
+                                       .getToString ();
   }
 }

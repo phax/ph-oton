@@ -208,6 +208,6 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
                             .append ("loop", m_bLoop)
                             .appendIfNotNull ("palette", m_sPalette)
                             .appendIfNotNull ("type", m_aType)
-                            .toString ();
+                            .getToString ();
   }
 }

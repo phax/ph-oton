@@ -101,6 +101,6 @@ public abstract class AbstractClientObject extends AbstractBaseObject implements
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("client", m_aClient).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("client", m_aClient).getToString ();
   }
 }

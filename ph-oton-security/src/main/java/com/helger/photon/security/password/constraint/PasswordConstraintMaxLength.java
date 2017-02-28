@@ -87,6 +87,6 @@ public class PasswordConstraintMaxLength implements IPasswordConstraint
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("maxLength", m_nMaxLength).toString ();
+    return new ToStringGenerator (this).append ("maxLength", m_nMaxLength).getToString ();
   }
 }

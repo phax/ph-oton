@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap4.supplementary.tools;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -23,7 +24,6 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.CommonsTreeSet;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -46,9 +46,9 @@ public final class MainExtractBootstrap4CSSClasses
   {
     final StringBuilder aSB = new StringBuilder ();
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EBootstrapCSSPathProvider.BOOTSTRAP.getCSSItemPath (true)),
-                                                               CCharset.CHARSET_UTF_8_OBJ,
+                                                               StandardCharsets.UTF_8,
                                                                ECSSVersion.CSS30);
-    final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
+    final ICommonsSet <String> aClasses = new CommonsTreeSet<> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()
     {
       @Override

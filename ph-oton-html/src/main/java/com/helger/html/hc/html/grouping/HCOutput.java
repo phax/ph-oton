@@ -137,6 +137,6 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
                             .appendIfNotNull ("for", m_sFor)
                             .appendIfNotNull ("form", m_sForm)
                             .appendIfNotNull ("name", m_sName)
-                            .toString ();
+                            .getToString ();
   }
 }

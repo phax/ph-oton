@@ -71,6 +71,6 @@ public abstract class AbstractHCUL <THISTYPE extends AbstractHCUL <THISTYPE>> ex
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).appendIfNotNull ("type", m_eType).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).appendIfNotNull ("type", m_eType).getToString ();
   }
 }

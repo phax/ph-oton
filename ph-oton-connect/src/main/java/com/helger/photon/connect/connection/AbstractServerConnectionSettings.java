@@ -87,6 +87,6 @@ public abstract class AbstractServerConnectionSettings implements IBaseServerCon
                                        .append ("Port", m_nPort)
                                        .append ("Username", m_sUserName)
                                        .append ("ConnectionTimeoutMillis", m_nConnectionTimeoutMillis)
-                                       .toString ();
+                                       .getToString ();
   }
 }

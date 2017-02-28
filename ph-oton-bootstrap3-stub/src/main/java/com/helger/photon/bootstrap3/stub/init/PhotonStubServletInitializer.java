@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap3.stub.init;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
@@ -29,7 +30,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.commons.charset.CCharset;
 import com.helger.photon.bootstrap3.stub.PhotonStubServletContextListener;
 import com.helger.photon.core.ajax.servlet.PublicApplicationAjaxServlet;
 import com.helger.photon.core.ajax.servlet.SecureApplicationAjaxServlet;
@@ -108,7 +108,7 @@ public final class PhotonStubServletInitializer
         if (aFilter != null)
         {
           // Filter is new
-          aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_ENCODING, CCharset.CHARSET_UTF_8);
+          aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_ENCODING, StandardCharsets.UTF_8.name ());
           aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_FORCE_ENCODING, Boolean.TRUE.toString ());
           aFilter.addMappingForUrlPatterns (null, false, "/*");
         }

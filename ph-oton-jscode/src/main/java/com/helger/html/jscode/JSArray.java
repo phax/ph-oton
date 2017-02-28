@@ -233,7 +233,7 @@ public class JSArray extends AbstractJSExpression
     ValueEnforcer.notNull (aExpr, "Expr");
 
     if (m_aExprs == null)
-      m_aExprs = new CommonsArrayList <> ();
+      m_aExprs = new CommonsArrayList<> ();
     m_aExprs.add (aExpr);
     return this;
   }
@@ -281,6 +281,6 @@ public class JSArray extends AbstractJSExpression
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("exprs", m_aExprs).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("exprs", m_aExprs).getToString ();
   }
 }

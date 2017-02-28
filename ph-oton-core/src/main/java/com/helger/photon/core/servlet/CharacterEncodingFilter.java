@@ -17,6 +17,7 @@
 package com.helger.photon.core.servlet;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.servlet.Filter;
@@ -31,7 +32,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.string.StringParser;
 import com.helger.servlet.ServletHelper;
@@ -49,7 +49,7 @@ public class CharacterEncodingFilter implements Filter
   /** Name of the init parameter to force setting the encoding */
   public static final String INITPARAM_FORCE_ENCODING = "forceEncoding";
   /** The default encoding is UTF-8 */
-  public static final String DEFAULT_ENCODING = CCharset.CHARSET_UTF_8;
+  public static final String DEFAULT_ENCODING = StandardCharsets.UTF_8.name ();
   /** By default the encoding is not enforced. */
   public static final boolean DEFAULT_FORCE_ENCODING = false;
   private static final String REQUEST_ATTR = CharacterEncodingFilter.class.getName ();

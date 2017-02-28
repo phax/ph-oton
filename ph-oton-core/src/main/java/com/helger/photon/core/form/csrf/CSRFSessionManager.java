@@ -107,6 +107,6 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("nonce", m_sNonce).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("nonce", m_sNonce).getToString ();
   }
 }

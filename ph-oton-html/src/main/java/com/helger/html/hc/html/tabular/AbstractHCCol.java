@@ -98,6 +98,6 @@ public abstract class AbstractHCCol <IMPLTYPE extends AbstractHCCol <IMPLTYPE>> 
     return ToStringGenerator.getDerived (super.toString ())
                             .appendIfNotNull ("width", m_sWidth)
                             .append ("span", m_nSpan)
-                            .toString ();
+                            .getToString ();
   }
 }

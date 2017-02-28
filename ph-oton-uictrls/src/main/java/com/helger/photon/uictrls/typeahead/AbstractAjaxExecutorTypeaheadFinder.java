@@ -191,7 +191,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     {
       return new ToStringGenerator (this).append ("searchTerms", m_aSearchTerms)
                                          .append ("sortLocale", m_aSortLocale)
-                                         .toString ();
+                                         .getToString ();
     }
   }
 

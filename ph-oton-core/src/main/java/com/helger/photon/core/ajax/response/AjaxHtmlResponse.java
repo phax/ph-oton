@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.ajax.response;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -23,7 +24,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -330,7 +330,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
   public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
   {
     final IJsonObject aJson = getResponseAsJSON ();
-    aUnifiedResponse.setContentAndCharset (aJson.getAsJsonString (), CCharset.CHARSET_UTF_8_OBJ)
+    aUnifiedResponse.setContentAndCharset (aJson.getAsJsonString (), StandardCharsets.UTF_8)
                     .setMimeType (CMimeType.APPLICATION_JSON);
   }
 
@@ -361,7 +361,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
     return ToStringGenerator.getDerived (super.toString ())
                             .appendIfNotNull ("errorMsg", m_sErrorMessage)
                             .appendIfNotNull ("successValue", m_aSuccessValue)
-                            .toString ();
+                            .getToString ();
   }
 
   @Nonnull

@@ -17,6 +17,7 @@
 package com.helger.html.markdown;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -24,7 +25,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -214,11 +214,11 @@ public class MarkdownConfiguration
     private boolean m_bSafeMode = false;
     private boolean m_bForceExtendedProfile = false;
     private boolean m_bConvertNewline2Br = false;
-    private Charset m_aEncoding = CCharset.CHARSET_UTF_8_OBJ;
+    private Charset m_aEncoding = StandardCharsets.UTF_8;
     private IMarkdownDecorator m_aDecorator = new MarkdownDefaultDecorator ();
     private IMarkdownBlockEmitter m_aCodeBlockEmitter = null;
     private IMarkdownSpanEmitter m_aSpecialLinkEmitter = null;
-    private final ICommonsList <AbstractMarkdownPlugin> m_aPlugins = new CommonsArrayList <> ();
+    private final ICommonsList <AbstractMarkdownPlugin> m_aPlugins = new CommonsArrayList<> ();
 
     /**
      * Constructor.

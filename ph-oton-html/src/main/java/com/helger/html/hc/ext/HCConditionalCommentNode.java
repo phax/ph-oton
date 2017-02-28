@@ -125,7 +125,7 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   {
     return new ToStringGenerator (this).append ("condition", m_sCondition)
                                        .append ("wrappedNode", m_aWrappedNode)
-                                       .toString ();
+                                       .getToString ();
   }
 
   @Nonnull

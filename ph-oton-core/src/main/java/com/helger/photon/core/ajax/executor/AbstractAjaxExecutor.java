@@ -85,6 +85,6 @@ public abstract class AbstractAjaxExecutor implements IAjaxExecutor
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).toString ();
+    return new ToStringGenerator (this).getToString ();
   }
 }

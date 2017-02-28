@@ -133,6 +133,6 @@ public final class AuditItem implements IAuditItem
                                        .append ("type", m_eType)
                                        .append ("success", m_eSuccess)
                                        .append ("action", m_sAction)
-                                       .toString ();
+                                       .getToString ();
   }
 }

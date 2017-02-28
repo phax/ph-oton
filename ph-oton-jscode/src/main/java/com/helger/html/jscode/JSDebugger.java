@@ -63,6 +63,6 @@ public class JSDebugger extends AbstractJSStatement
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).toString ();
+    return new ToStringGenerator (this).getToString ();
   }
 }

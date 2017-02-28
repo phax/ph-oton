@@ -115,7 +115,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   protected void addMetaElements (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                   @Nonnull final HCHead aHead)
   {
-    final ICommonsList <IMetaElement> aMetaElements = new CommonsArrayList <> ();
+    final ICommonsList <IMetaElement> aMetaElements = new CommonsArrayList<> ();
     {
       // add special meta element at the beginning
       final IMimeType aMimeType = PhotonHTMLHelper.getMimeType (aRequestScope);
@@ -249,6 +249,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).toString ();
+    return new ToStringGenerator (this).getToString ();
   }
 }

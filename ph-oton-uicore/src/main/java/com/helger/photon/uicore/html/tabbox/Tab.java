@@ -127,6 +127,6 @@ public class Tab implements IHasID <String>, Serializable
                                        .append ("label", m_aLabel)
                                        .append ("content", m_aContent)
                                        .append ("disabled", m_bDisabled)
-                                       .toString ();
+                                       .getToString ();
   }
 }
