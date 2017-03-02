@@ -16,12 +16,18 @@
  */
 package com.helger.photon.core.ajax.response;
 
+import java.nio.charset.StandardCharsets;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.servlet.http.HttpServletResponse;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.url.ISimpleURL;
+import com.helger.http.CHTTPHeader;
 import com.helger.servlet.response.UnifiedResponse;
 
 /**
@@ -33,6 +39,7 @@ import com.helger.servlet.response.UnifiedResponse;
 public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
 {
   private final int m_nStatusCode;
+  private ISimpleURL m_aLocation;
 
   public AjaxHttpStatusCodeResponse (final int nStatusCode)
   {
@@ -49,9 +56,36 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
     return m_nStatusCode;
   }
 
+  /**
+   * @return The optional location for redirects. May be <code>null</code>.
+   * @since 7.0.4
+   */
+  @Nullable
+  public ISimpleURL getLocation ()
+  {
+    return m_aLocation;
+  }
+
+  /**
+   * Set the HTTP header "Location"
+   *
+   * @param aLocation
+   *        The location for redirects. May be <code>null</code>.
+   * @return this for chaining
+   * @since 7.0.4
+   */
+  public AjaxHttpStatusCodeResponse setLocation (@Nullable final ISimpleURL aLocation)
+  {
+    m_aLocation = aLocation;
+    return this;
+  }
+
   public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
   {
     aUnifiedResponse.setStatus (m_nStatusCode);
+    if (m_aLocation != null)
+      aUnifiedResponse.setCustomResponseHeader (CHTTPHeader.LOCATION,
+                                                m_aLocation.getAsStringWithEncodedParameters (StandardCharsets.UTF_8));
   }
 
   @Override
@@ -93,6 +127,22 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   public static AjaxHttpStatusCodeResponse createNoContent ()
   {
     return new AjaxHttpStatusCodeResponse (HttpServletResponse.SC_NO_CONTENT);
+  }
+
+  /**
+   * @param aLocation
+   *        The redirect URL. May not be <code>null</code>.
+   * @return HTTP 303 See Other
+   * @since 7.0.4
+   */
+  @Nonnull
+  public static AjaxHttpStatusCodeResponse createSeeOther (@Nonnull final ISimpleURL aLocation)
+  {
+    ValueEnforcer.notNull (aLocation, "Location");
+
+    final AjaxHttpStatusCodeResponse ret = new AjaxHttpStatusCodeResponse (HttpServletResponse.SC_SEE_OTHER);
+    ret.setLocation (aLocation);
+    return ret;
   }
 
   /**
