@@ -22,6 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
@@ -37,7 +38,7 @@ import com.helger.servlet.response.UnifiedResponse;
 public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
 {
   private final int m_nStatusCode;
-  private ISimpleURL m_aLocation;
+  private ISimpleURL m_aRedirectTargetURL;
 
   public AjaxHttpStatusCodeResponse (final int nStatusCode)
   {
@@ -59,29 +60,32 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
    * @since 7.0.4
    */
   @Nullable
-  public ISimpleURL getLocation ()
+  public ISimpleURL getRedirectTargetURL ()
   {
-    return m_aLocation;
+    return m_aRedirectTargetURL;
   }
 
   /**
    * Set the HTTP header "Location"
    *
-   * @param aLocation
+   * @param aRedirectTargetURL
    *        The location for redirects. May be <code>null</code>.
    * @return this for chaining
    * @since 7.0.4
    */
-  public AjaxHttpStatusCodeResponse setLocation (@Nullable final ISimpleURL aLocation)
+  public AjaxHttpStatusCodeResponse setRedirectTargetURL (@Nullable final ISimpleURL aRedirectTargetURL)
   {
-    m_aLocation = aLocation;
+    m_aRedirectTargetURL = aRedirectTargetURL;
     return this;
   }
 
   public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
   {
-    if (m_aLocation != null)
-      aUnifiedResponse.setRedirect (m_aLocation, ERedirectMode.POST_REDIRECT_GET);
+    if (m_aRedirectTargetURL != null)
+    {
+      // Internally differentiates between HTTP 1.0 and 1.1
+      aUnifiedResponse.setRedirect (m_aRedirectTargetURL, ERedirectMode.POST_REDIRECT_GET);
+    }
     else
       aUnifiedResponse.setStatus (m_nStatusCode);
   }
@@ -94,19 +98,25 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
     if (!super.equals (o))
       return false;
     final AjaxHttpStatusCodeResponse rhs = (AjaxHttpStatusCodeResponse) o;
-    return m_nStatusCode == rhs.m_nStatusCode;
+    return m_nStatusCode == rhs.m_nStatusCode && EqualsHelper.equals (m_aRedirectTargetURL, rhs.m_aRedirectTargetURL);
   }
 
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_nStatusCode).getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ())
+                            .append (m_nStatusCode)
+                            .append (m_aRedirectTargetURL)
+                            .getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("StatusCode", m_nStatusCode).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("StatusCode", m_nStatusCode)
+                            .appendIfNotNull ("RedirectTargetURL", m_aRedirectTargetURL)
+                            .getToString ();
   }
 
   /**
@@ -128,18 +138,18 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
   }
 
   /**
-   * @param aLocation
+   * @param aRedirectTargetURL
    *        The redirect URL. May not be <code>null</code>.
    * @return HTTP 303 See Other
    * @since 7.0.4
    */
   @Nonnull
-  public static AjaxHttpStatusCodeResponse createSeeOther (@Nonnull final ISimpleURL aLocation)
+  public static AjaxHttpStatusCodeResponse createSeeOther (@Nonnull final ISimpleURL aRedirectTargetURL)
   {
-    ValueEnforcer.notNull (aLocation, "Location");
+    ValueEnforcer.notNull (aRedirectTargetURL, "Location");
 
     final AjaxHttpStatusCodeResponse ret = new AjaxHttpStatusCodeResponse (HttpServletResponse.SC_SEE_OTHER);
-    ret.setLocation (aLocation);
+    ret.setRedirectTargetURL (aRedirectTargetURL);
     return ret;
   }
 
