@@ -350,6 +350,18 @@ public class JettyStarter
 
       // Callback
       onServerStarted (aServer);
+
+      Runtime.getRuntime ().addShutdownHook (new Thread ( () -> {
+        try
+        {
+          aServer.stop ();
+          aServer.join ();
+        }
+        catch (final Exception ex)
+        {
+          s_aLogger.error ("Exception in ShutdownHook of JettyStarter!", ex);
+        }
+      }));
     }
     catch (final Throwable t)
     {
