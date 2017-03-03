@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.ajax.response;
 
-import java.nio.charset.StandardCharsets;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -27,7 +25,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.http.CHTTPHeader;
+import com.helger.servlet.response.ERedirectMode;
 import com.helger.servlet.response.UnifiedResponse;
 
 /**
@@ -82,10 +80,10 @@ public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
 
   public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
   {
-    aUnifiedResponse.setStatus (m_nStatusCode);
     if (m_aLocation != null)
-      aUnifiedResponse.setCustomResponseHeader (CHTTPHeader.LOCATION,
-                                                m_aLocation.getAsStringWithEncodedParameters (StandardCharsets.UTF_8));
+      aUnifiedResponse.setRedirect (m_aLocation, ERedirectMode.POST_REDIRECT_GET);
+    else
+      aUnifiedResponse.setStatus (m_nStatusCode);
   }
 
   @Override

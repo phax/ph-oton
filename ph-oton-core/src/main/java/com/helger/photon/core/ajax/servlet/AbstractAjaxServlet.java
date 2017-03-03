@@ -108,7 +108,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
     // Remember in scope
     // Important: use a wrapper to avoid scope destruction
     aRequestScope.setAttribute (SCOPE_ATTR_NAME, sFunctionName);
-    aRequestScope.setAttribute (SCOPE_ATTR_INVOKER, new Wrapper <> (aAjaxInvoker));
+    aRequestScope.setAttribute (SCOPE_ATTR_INVOKER, new Wrapper<> (aAjaxInvoker));
     aRequestScope.setAttribute (SCOPE_ATTR_EXECUTOR, aAjaxExecutor);
     return EContinue.CONTINUE;
   }
@@ -133,14 +133,14 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
       if (s_aLogger.isTraceEnabled ())
         s_aLogger.trace ("  AJAX Result: " + aResult);
 
+      // Write result to the passed response
+      aResult.applyToResponse (aUnifiedResponse);
+
       if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
       {
         // Status codes are not meant to be cached
         aUnifiedResponse.removeCaching ();
       }
-
-      // Write result to the passed response
-      aResult.applyToResponse (aUnifiedResponse);
     }
     catch (final IOException | ServletException ex)
     {
