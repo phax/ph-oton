@@ -16,41 +16,41 @@
  */
 package com.helger.photon.exchange.bulkexport;
 
+import java.io.Serializable;
+import java.util.function.Consumer;
+
 import javax.annotation.Nonnull;
 
-import com.helger.commons.collection.ext.CommonsArrayList;
-
 /**
- * The main record provider.
+ * The main record provider. Major rewrite in 7.0.4
  *
  * @author Philip Helger
  */
-public interface IExportRecordProvider
+public interface IExportRecordProvider extends Serializable
 {
   /**
-   * @return The optional header record. Never <code>null</code>.
+   * @param aConsumer
+   *        The consumer invoked for each header record. May not be
+   *        <code>null</code>.
    */
-  @Nonnull
-  default Iterable <? extends IExportRecord> getHeaderRecords ()
-  {
-    return new CommonsArrayList <> ();
-  }
+  default void forEachHeaderRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
+  {}
 
   /**
-   * @return An iterator for all body records. Never <code>null</code>.
+   * @param aConsumer
+   *        The consumer invoked for each body record. May not be
+   *        <code>null</code>.
    */
   @Nonnull
-  default Iterable <? extends IExportRecord> getBodyRecords ()
-  {
-    return new CommonsArrayList <> ();
-  }
+  default void forEachBodyRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
+  {}
 
   /**
-   * @return The optional footer record. Never <code>null</code>.
+   * @param aConsumer
+   *        The consumer invoked for each footer record. May not be
+   *        <code>null</code>.
    */
   @Nonnull
-  default Iterable <? extends IExportRecord> getFooterRecords ()
-  {
-    return new CommonsArrayList <> ();
-  }
+  default void forEachFooterRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
+  {}
 }

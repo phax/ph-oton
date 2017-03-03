@@ -29,6 +29,7 @@ import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.photon.exchange.EExchangeFileType;
 
@@ -51,8 +52,8 @@ public abstract class AbstractBulkImport implements IBulkImport
     ValueEnforcer.notEmptyNoNullValue (aColumnNames, "ColumnNames");
     ValueEnforcer.notEmptyNoNullValue (aFileTypes, "FileTypes");
     m_nHeaderRowsToSkip = nHeaderRowsToSkip;
-    m_aColumnNames = new CommonsArrayList <> (aColumnNames);
-    m_aFileTypes = new CommonsLinkedHashSet <> (aFileTypes);
+    m_aColumnNames = new CommonsArrayList<> (aColumnNames);
+    m_aFileTypes = new CommonsLinkedHashSet<> (aFileTypes);
   }
 
   @Override
@@ -74,7 +75,7 @@ public abstract class AbstractBulkImport implements IBulkImport
   @Nonempty
   public final ICommonsList <String> getColumnDescriptions (@Nonnull final Locale aContentLocale)
   {
-    final ICommonsList <String> ret = new CommonsArrayList <> (getColumnCount ());
+    final ICommonsList <String> ret = new CommonsArrayList<> (getColumnCount ());
     for (final IHasDisplayText aColumn : m_aColumnNames)
       ret.add (aColumn.getDisplayText (aContentLocale));
     return ret;
@@ -87,5 +88,14 @@ public abstract class AbstractBulkImport implements IBulkImport
   public final ICommonsList <EExchangeFileType> getSupportedFileTypes ()
   {
     return m_aFileTypes.getCopyAsList ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("HeaderRowsToSkip", m_nHeaderRowsToSkip)
+                                       .append ("ColumnNames", m_aColumnNames)
+                                       .append ("FileTypes", m_aFileTypes)
+                                       .getToString ();
   }
 }

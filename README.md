@@ -29,6 +29,8 @@ Contained subprojects are:
 Release history:
   * v7.0.4 - work in progress
     * Updated to Jetty 9.4.2
+    * API extensions
+    * Updated to Apache commons-net 3.6 
   * v7.0.3 - 2017-01-10
     * Integrated ph-html into ph-oton
     * Binds to ph-commons 8.6.0

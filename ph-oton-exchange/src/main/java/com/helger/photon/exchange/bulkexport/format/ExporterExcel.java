@@ -306,16 +306,13 @@ public class ExporterExcel implements IExporterFile
       aWBCH.createNewSheet ();
 
       // Header
-      for (final IExportRecord aHeaderRecord : aProvider.getHeaderRecords ())
-        _emitRecord (aWBCH, EExportRecordType.HEADER, aHeaderRecord);
+      aProvider.forEachHeaderRecord (x -> _emitRecord (aWBCH, EExportRecordType.HEADER, x));
 
       // Body
-      for (final IExportRecord aBodyRecord : aProvider.getBodyRecords ())
-        _emitRecord (aWBCH, EExportRecordType.BODY, aBodyRecord);
+      aProvider.forEachBodyRecord (x -> _emitRecord (aWBCH, EExportRecordType.BODY, x));
 
       // Footer
-      for (final IExportRecord aFooterRecord : aProvider.getFooterRecords ())
-        _emitRecord (aWBCH, EExportRecordType.FOOTER, aFooterRecord);
+      aProvider.forEachFooterRecord (x -> _emitRecord (aWBCH, EExportRecordType.FOOTER, x));
 
       if (aWBCH.getRowCount () == 0)
         return ESuccess.FAILURE;

@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.iterate.IterableIterator;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.json.IJsonArray;
@@ -137,26 +136,23 @@ public final class ExporterJSON implements IExporterFile
 
     // Header
     final JsonArray aHeader = new JsonArray ();
-    for (final IExportRecord aHeaderRecord : aProvider.getHeaderRecords ())
-      aHeader.add (_emitRecord (aHeaderRecord));
-    if (!aHeader.isEmpty ())
+    aProvider.forEachHeaderRecord (x -> aHeader.add (_emitRecord (x)));
+    if (aHeader.isNotEmpty ())
       aDoc.add (ELEMENT_HEADER, aHeader);
 
     // Body
     final JsonArray aBody = new JsonArray ();
-    for (final IExportRecord aBodyRecord : new IterableIterator<> (aProvider.getBodyRecords ()))
-      aBody.add (_emitRecord (aBodyRecord));
-    if (!aBody.isEmpty ())
+    aProvider.forEachBodyRecord (x -> aBody.add (_emitRecord (x)));
+    if (aBody.isNotEmpty ())
       aDoc.add (ELEMENT_BODY, aBody);
 
     // Footer
     final JsonArray aFooter = new JsonArray ();
-    for (final IExportRecord aFooterRecord : aProvider.getFooterRecords ())
-      aFooter.add (_emitRecord (aFooterRecord));
-    if (!aFooter.isEmpty ())
+    aProvider.forEachFooterRecord (x -> aFooter.add (_emitRecord (x)));
+    if (aFooter.isNotEmpty ())
       aDoc.add (ELEMENT_FOOTER, aFooter);
 
-    if (aHeader.isEmpty () && aBody.isEmpty () && aFooter.isEmpty ())
+    if (aDoc.isEmpty ())
       return null;
 
     return aDoc;

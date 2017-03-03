@@ -58,6 +58,7 @@ public final class ExporterCSV implements IExporterFile
   private char m_cQuoteChar = CCSV.DEFAULT_QUOTE_CHARACTER;
   private char m_cEscapeChar = CCSV.DEFAULT_ESCAPE_CHARACTER;
   private EUnicodeBOM m_eBOM;
+  private boolean m_bAvoidWriteEmpty = false;
 
   public ExporterCSV ()
   {
@@ -86,35 +87,12 @@ public final class ExporterCSV implements IExporterFile
    * @param cSeparator
    *        Separator char
    * @return this for chaining
-   * @deprecated Use {@link #setSeparatorChar(char)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ExporterCSV setSeparator (final char cSeparator)
-  {
-    return setSeparatorChar (cSeparator);
-  }
-
-  /**
-   * @param cSeparator
-   *        Separator char
-   * @return this for chaining
    */
   @Nonnull
   public ExporterCSV setSeparatorChar (final char cSeparator)
   {
     m_cSeparatorChar = cSeparator;
     return this;
-  }
-
-  /**
-   * @return Current separator char
-   * @deprecated Use {@link #getSeparatorChar()} instead
-   */
-  @Deprecated
-  public char getSeparator ()
-  {
-    return getSeparatorChar ();
   }
 
   /**
@@ -162,18 +140,54 @@ public final class ExporterCSV implements IExporterFile
     return m_eBOM;
   }
 
-  private static void _emitRecord (@Nonnull final ICommonsList <ICommonsList <String>> aRecords,
-                                   @Nonnull final IExportRecord aRecord)
+  /**
+   * Enable or disable that empty files are written. By enabling this, all
+   * records are collected which results in higher memory consumption but safer
+   * output. If this is disabled (the default) than it my happen that nothing is
+   * written on the output stream.
+   *
+   * @param bAvoidWriteEmpty
+   *        <code>true</code> to collect before write, <code>false</code> to
+   *        write directly
+   * @return this for chaining
+   * @since 7.0.4
+   */
+  @Nonnull
+  public ExporterCSV setAvoidWriteEmpty (final boolean bAvoidWriteEmpty)
+  {
+    m_bAvoidWriteEmpty = bAvoidWriteEmpty;
+    return this;
+  }
+
+  /**
+   * @return <code>true</code> if empty files are not written,
+   *         <code>false</code> otherwise (by default).
+   */
+  public boolean isAvoidWriteEmpty ()
+  {
+    return m_bAvoidWriteEmpty;
+  }
+
+  @Nonnull
+  private static ICommonsList <String> _getAsCSVRecord (@Nonnull final IExportRecord aRecord)
   {
     final ICommonsList <? extends IExportRecordField> aAllFields = aRecord.getAllFields ();
-    final ICommonsList <String> aValues = new CommonsArrayList <> (aAllFields.size ());
+    final ICommonsList <String> aCSVValues = new CommonsArrayList<> (aAllFields.size ());
     for (final IExportRecordField aField : aAllFields)
     {
       final Object aFieldValue = aField.getFieldValue ();
       if (aFieldValue != null)
-        aValues.add (TypeConverter.convertIfNecessary (aFieldValue, String.class));
+        aCSVValues.add (TypeConverter.convertIfNecessary (aFieldValue, String.class));
     }
-    aRecords.add (aValues);
+    return aCSVValues;
+  }
+
+  @Nonnull
+  private CSVWriter _createCSVWriter (@Nonnull final OutputStream aOS)
+  {
+    return new CSVWriter (new OutputStreamWriter (aOS, m_aCharset)).setSeparatorChar (m_cSeparatorChar)
+                                                                   .setQuoteChar (m_cQuoteChar)
+                                                                   .setEscapeChar (m_cEscapeChar);
   }
 
   @Override
@@ -186,47 +200,50 @@ public final class ExporterCSV implements IExporterFile
       ValueEnforcer.notNull (aProvider, "Provider");
       ValueEnforcer.notNull (aOS, "OutputStream");
 
-      final ICommonsList <ICommonsList <String>> aRecords = new CommonsArrayList <> ();
+      if (m_bAvoidWriteEmpty)
+      {
+        // Collect all records in the correct order
+        final ICommonsList <ICommonsList <String>> aCSVRecords = new CommonsArrayList<> ();
+        aProvider.forEachHeaderRecord (x -> aCSVRecords.add (_getAsCSVRecord (x)));
+        aProvider.forEachBodyRecord (x -> aCSVRecords.add (_getAsCSVRecord (x)));
+        aProvider.forEachFooterRecord (x -> aCSVRecords.add (_getAsCSVRecord (x)));
 
-      // Header
-      for (final IExportRecord aHeaderRecord : aProvider.getHeaderRecords ())
-        _emitRecord (aRecords, aHeaderRecord);
-
-      // Body
-      for (final IExportRecord aBodyRecord : aProvider.getBodyRecords ())
-        _emitRecord (aRecords, aBodyRecord);
-
-      // Footer
-      for (final IExportRecord aFooterRecord : aProvider.getFooterRecords ())
-        _emitRecord (aRecords, aFooterRecord);
-
-      // The body element is always present
-      if (aRecords.isEmpty ())
-        return ESuccess.FAILURE;
-
-      // Write BOM if necessary
-      if (m_eBOM != null)
-        try
+        if (aCSVRecords.isEmpty ())
         {
+          // No records to handle
+          return ESuccess.FAILURE;
+        }
+
+        // Write BOM if necessary
+        if (m_eBOM != null)
           aOS.write (m_eBOM.getAllBytes ());
-        }
-        catch (final IOException ex)
-        {
-          s_aLogger.error ("Failed to write BOM on stream", ex);
-        }
 
-      try (final CSVWriter aWriter = new CSVWriter (new OutputStreamWriter (aOS,
-                                                                            m_aCharset)).setSeparatorChar (m_cSeparatorChar)
-                                                                                        .setQuoteChar (m_cQuoteChar)
-                                                                                        .setEscapeChar (m_cEscapeChar))
-      {
-        aWriter.writeAll (aRecords);
-        return ESuccess.SUCCESS;
+        try (final CSVWriter aWriter = _createCSVWriter (aOS))
+        {
+          aWriter.writeAll (aCSVRecords);
+        }
       }
-      catch (final IOException ex)
+      else
       {
-        return ESuccess.FAILURE;
+        // Write directly
+
+        // Write BOM if necessary
+        if (m_eBOM != null)
+          aOS.write (m_eBOM.getAllBytes ());
+
+        try (final CSVWriter aWriter = _createCSVWriter (aOS))
+        {
+          aProvider.forEachHeaderRecord (x -> aWriter.writeNext (_getAsCSVRecord (x)));
+          aProvider.forEachBodyRecord (x -> aWriter.writeNext (_getAsCSVRecord (x)));
+          aProvider.forEachFooterRecord (x -> aWriter.writeNext (_getAsCSVRecord (x)));
+        }
       }
+      return ESuccess.SUCCESS;
+    }
+    catch (final IOException ex)
+    {
+      s_aLogger.error ("Error exporting to CSV", ex);
+      return ESuccess.FAILURE;
     }
     finally
     {

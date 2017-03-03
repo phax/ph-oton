@@ -16,6 +16,8 @@
  */
 package com.helger.photon.exchange.bulkexport;
 
+import java.util.function.Consumer;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -61,22 +63,19 @@ public class ConstantExportRecordProvider implements IExportRecordProvider
       m_aFooter.add (aFooter);
   }
 
-  @Nonnull
-  public ICommonsList <? extends IExportRecord> getHeaderRecords ()
+  public void forEachHeaderRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
   {
-    return m_aHeader;
+    m_aHeader.forEach (aConsumer);
   }
 
-  @Nonnull
-  public ICommonsList <? extends IExportRecord> getBodyRecords ()
+  public void forEachBodyRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
   {
-    return m_aBody;
+    m_aBody.forEach (aConsumer);
   }
 
-  @Nonnull
-  public ICommonsList <? extends IExportRecord> getFooterRecords ()
+  public void forEachFooterRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
   {
-    return m_aFooter;
+    m_aFooter.forEach (aConsumer);
   }
 
   @Override

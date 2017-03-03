@@ -56,8 +56,12 @@ public final class ExporterCSVTest
     final ExportRecord aEmptyRecord = new ExportRecord ();
     final ExporterCSV aExporter = new ExporterCSV (StandardCharsets.ISO_8859_1);
     // Fails because no record is present
-    assertTrue (aExporter.exportRecords (new EmptyExportRecordProvider (), new NonBlockingByteArrayOutputStream ())
+    assertTrue (aExporter.setAvoidWriteEmpty (true)
+                         .exportRecords (new EmptyExportRecordProvider (), new NonBlockingByteArrayOutputStream ())
                          .isFailure ());
+    assertTrue (aExporter.setAvoidWriteEmpty (false)
+                         .exportRecords (new EmptyExportRecordProvider (), new NonBlockingByteArrayOutputStream ())
+                         .isSuccess ());
     assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (CollectionHelper.newList (aRecordWithAllTypes)),
                                          new NonBlockingByteArrayOutputStream ())
                          .isSuccess ());

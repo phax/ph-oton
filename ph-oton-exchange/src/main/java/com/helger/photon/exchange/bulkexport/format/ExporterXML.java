@@ -111,21 +111,18 @@ public final class ExporterXML implements IExporterFile
 
     // Header
     final IMicroElement eHeader = eRoot.appendElement (ELEMENT_HEADER);
-    for (final IExportRecord aHeaderRecord : aProvider.getHeaderRecords ())
-      _emitRecord (eHeader, aHeaderRecord);
+    aProvider.forEachHeaderRecord (x -> _emitRecord (eHeader, x));
 
     // Body
     final IMicroElement eBody = eRoot.appendElement (ELEMENT_BODY);
-    for (final IExportRecord aBodyRecord : aProvider.getBodyRecords ())
-      _emitRecord (eBody, aBodyRecord);
+    aProvider.forEachBodyRecord (x -> _emitRecord (eBody, x));
 
     // Footer
     final IMicroElement eFooter = eRoot.appendElement (ELEMENT_FOOTER);
-    for (final IExportRecord aFooterRecord : aProvider.getFooterRecords ())
-      _emitRecord (eFooter, aFooterRecord);
+    aProvider.forEachFooterRecord (x -> _emitRecord (eFooter, x));
 
     // The body element is always present
-    if (eBody.getChildCount () == 0)
+    if (eBody.hasNoChildren ())
       return null;
 
     return aDoc;
