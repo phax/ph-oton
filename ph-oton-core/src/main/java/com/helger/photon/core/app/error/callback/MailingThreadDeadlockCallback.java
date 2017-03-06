@@ -58,6 +58,7 @@ public class MailingThreadDeadlockCallback implements IThreadDeadlockCallback
   public void onDeadlockDetected (@Nonnull @Nonempty final ThreadDeadlockInfo [] aDeadlockedThreads)
   {
     s_aLogger.warn ("Deadlock of " + ArrayHelper.getSize (aDeadlockedThreads) + " threads detected!");
+
     final StringBuilder aSB = new StringBuilder ();
     aSB.append (InternalErrorHandler.fillInternalErrorMetaData (null, null, null).getAsString ());
     for (final ThreadDeadlockInfo aTDI : aDeadlockedThreads)

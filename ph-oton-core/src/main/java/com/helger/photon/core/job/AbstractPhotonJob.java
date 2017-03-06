@@ -17,6 +17,7 @@
 package com.helger.photon.core.job;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.StringHelper;
@@ -33,14 +34,23 @@ public abstract class AbstractPhotonJob extends AbstractScopeAwareJob
 {
   /**
    * This key of the job-data map must be present and must contain the
-   * application ID.
-   * 
+   * application ID if no fixed Application ID is provided in the constructor.
+   *
    * @since 7.0.4
    */
   public static final String JOB_DATA_ATTR_APPLICATION_ID = "$ph-oton.job.appid";
 
+  private final String m_sFixedAppID;
+
   protected AbstractPhotonJob ()
-  {}
+  {
+    this ((String) null);
+  }
+
+  protected AbstractPhotonJob (@Nullable final String sFixedAppID)
+  {
+    m_sFixedAppID = sFixedAppID;
+  }
 
   @Override
   @Nonnull
@@ -48,6 +58,9 @@ public abstract class AbstractPhotonJob extends AbstractScopeAwareJob
   protected final String getApplicationScopeID (@Nonnull final JobDataMap aJobDataMap,
                                                 @Nonnull final IJobExecutionContext aContext)
   {
+    if (StringHelper.hasText (m_sFixedAppID))
+      return m_sFixedAppID;
+
     final String sAppID = aJobDataMap.getString (JOB_DATA_ATTR_APPLICATION_ID);
     if (StringHelper.hasNoText (sAppID))
       throw new IllegalStateException ("JobDataMap is missing entry for '" +
