@@ -31,6 +31,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
+@FunctionalInterface
 public interface IInternalErrorCallback extends ICallback
 {
   /**

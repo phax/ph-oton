@@ -21,13 +21,12 @@ import java.net.InetAddress;
 import java.time.Clock;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -36,13 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.base64.Base64;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
@@ -53,7 +47,7 @@ import com.helger.commons.email.IEmailAddress;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.lang.ICloneable;
+import com.helger.commons.lang.ClassPathHelper;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.scope.mgr.ScopeSessionManager;
@@ -91,207 +85,20 @@ import com.helger.xml.serialize.write.XMLWriterSettings;
  *
  * @author Philip Helger
  * @see InternalErrorBuilder
+ * @see InternalErrorEmailSettings
  */
 @ThreadSafe
 public final class InternalErrorHandler
 {
-  @NotThreadSafe
-  public static final class EmailSettings implements ICloneable <EmailSettings>
-  {
-    private ISMTPSettings m_aSMTPSettings;
-    private IEmailAddress m_aSenderAddress;
-    private ICommonsList <IEmailAddress> m_aReceiverAddresses;
-    private IEmailAttachmentList m_aAttachmentList;
-
-    public EmailSettings ()
-    {}
-
-    public EmailSettings (@Nonnull final EmailSettings aOther)
-    {
-      ValueEnforcer.notNull (aOther, "Other");
-      m_aSMTPSettings = aOther.m_aSMTPSettings;
-      m_aSenderAddress = aOther.m_aSenderAddress;
-      m_aReceiverAddresses = aOther.m_aReceiverAddresses;
-      m_aAttachmentList = aOther.m_aAttachmentList;
-    }
-
-    @Nonnull
-    public EmailSettings setSMTPSettings (@Nullable final ISMTPSettings aSMTPSettings)
-    {
-      m_aSMTPSettings = aSMTPSettings;
-      return this;
-    }
-
-    @Nullable
-    public ISMTPSettings getSMTPSettings ()
-    {
-      return m_aSMTPSettings;
-    }
-
-    @Nonnull
-    public EmailSettings setSenderAddress (@Nullable final IEmailAddress aSenderAddress)
-    {
-      m_aSenderAddress = aSenderAddress;
-      return this;
-    }
-
-    @Nullable
-    public IEmailAddress getSenderAddress ()
-    {
-      return m_aSenderAddress;
-    }
-
-    @Nonnull
-    public EmailSettings setReceiverAddress (@Nullable final IEmailAddress aReceiverAddress)
-    {
-      return setReceiverAddresses (aReceiverAddress == null ? null : new CommonsArrayList <> (aReceiverAddress));
-    }
-
-    @Nonnull
-    public EmailSettings setReceiverAddresses (@Nullable final List <? extends IEmailAddress> aReceiverAddresses)
-    {
-      if (aReceiverAddresses != null && CollectionHelper.containsAnyNullElement (aReceiverAddresses))
-        throw new IllegalArgumentException ("The list of receiver addresses may not contain any null element!");
-
-      m_aReceiverAddresses = new CommonsArrayList <> (aReceiverAddresses);
-      return this;
-    }
-
-    @Nonnull
-    public EmailSettings setReceiverAddresses (@Nullable final IEmailAddress... aReceiverAddresses)
-    {
-      if (aReceiverAddresses != null && ArrayHelper.containsAnyNullElement (aReceiverAddresses))
-        throw new IllegalArgumentException ("The array of receiver addresses may not contain any null element!");
-
-      m_aReceiverAddresses = new CommonsArrayList <> (aReceiverAddresses);
-      return this;
-    }
-
-    @Nonnull
-    @ReturnsMutableCopy
-    public ICommonsList <IEmailAddress> getReceiverAddresses ()
-    {
-      // May be null
-      return new CommonsArrayList <> (m_aReceiverAddresses);
-    }
-
-    @Nonnull
-    public EmailSettings setAttachmentList (@Nullable final IEmailAttachmentList aAttachmentList)
-    {
-      m_aAttachmentList = aAttachmentList;
-      return this;
-    }
-
-    @Nullable
-    public IEmailAttachmentList getAttachmentList ()
-    {
-      return m_aAttachmentList;
-    }
-
-    @Nonnull
-    @ReturnsMutableCopy
-    public EmailSettings getClone ()
-    {
-      return new EmailSettings (this);
-    }
-  }
-
   public static final boolean DEFAULT_ENABLE_FULL_THREAD_DUMPS = false;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (InternalErrorHandler.class);
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-  private static final EmailSettings s_aEmailSettings = new EmailSettings ();
-  private static IInternalErrorCallback s_aCustomExceptionHandler;
-  private static boolean s_bEnableFullThreadDumps = DEFAULT_ENABLE_FULL_THREAD_DUMPS;
-
-  private static final ICommonsMap <String, MutableInt> s_aIntErrCache = new CommonsHashMap <> ();
+  @GuardedBy ("s_aRWLock")
+  private static final ICommonsMap <String, MutableInt> s_aIntErrCache = new CommonsHashMap<> ();
 
   private InternalErrorHandler ()
   {}
-
-  public static void setSMTPSettings (@Nullable final ISMTPSettings aSMTPSettings)
-  {
-    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setSMTPSettings (aSMTPSettings));
-  }
-
-  @Nullable
-  public static ISMTPSettings getSMTPSettings ()
-  {
-    return s_aRWLock.readLocked ( () -> s_aEmailSettings.getSMTPSettings ());
-  }
-
-  public static void setSMTPSenderAddress (@Nullable final IEmailAddress aSenderAddress)
-  {
-    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setSenderAddress (aSenderAddress));
-  }
-
-  @Nullable
-  public static IEmailAddress getSMTPSenderAddress ()
-  {
-    return s_aRWLock.readLocked (s_aEmailSettings::getSenderAddress);
-  }
-
-  public static void setSMTPReceiverAddress (@Nullable final IEmailAddress aReceiverAddress)
-  {
-    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setReceiverAddress (aReceiverAddress));
-  }
-
-  public static void setSMTPReceiverAddresses (@Nullable final List <? extends IEmailAddress> aReceiverAddresses)
-  {
-    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setReceiverAddresses (aReceiverAddresses));
-  }
-
-  public static void setSMTPReceiverAddresses (@Nullable final IEmailAddress... aReceiverAddresses)
-  {
-    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setReceiverAddresses (aReceiverAddresses));
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public static ICommonsList <IEmailAddress> getSMTPReceiverAddresses ()
-  {
-    return s_aRWLock.readLocked (s_aEmailSettings::getReceiverAddresses);
-  }
-
-  /**
-   * Enable the creation of a dump of all threads. Warning: this takes a lot of
-   * CPU, so enable this only when you are not running a performance critical
-   * application! The default is {@value #DEFAULT_ENABLE_FULL_THREAD_DUMPS}.
-   *
-   * @param bEnableFullThreadDumps
-   *        <code>true</code> to enabled, <code>false</code> to disable.
-   */
-  public static void setEnableFullThreadDumps (final boolean bEnableFullThreadDumps)
-  {
-    s_aRWLock.writeLocked ( () -> s_bEnableFullThreadDumps = bEnableFullThreadDumps);
-  }
-
-  public static boolean isEnableFullThreadDumps ()
-  {
-    return s_aRWLock.readLocked ( () -> s_bEnableFullThreadDumps);
-  }
-
-  /**
-   * @return The current custom exception handler or <code>null</code> if none
-   *         is set.
-   */
-  @Nullable
-  public static IInternalErrorCallback getCustomExceptionHandler ()
-  {
-    return s_aRWLock.readLocked ( () -> s_aCustomExceptionHandler);
-  }
-
-  /**
-   * Set the custom exception handler.
-   *
-   * @param aCustomExceptionHandler
-   *        The exception handler to be used. May be <code>null</code> to
-   *        indicate none.
-   */
-  public static void setCustomExceptionHandler (@Nullable final IInternalErrorCallback aCustomExceptionHandler)
-  {
-    s_aRWLock.writeLocked ( () -> s_aCustomExceptionHandler = aCustomExceptionHandler);
-  }
 
   /**
    * Create a new unique error ID.
@@ -333,38 +140,51 @@ public final class InternalErrorHandler
     return t.getMessage () + " -- " + t.getClass ().getName ();
   }
 
+  @Nonnull
+  private static String _createMailSubject (@Nonnull final InternalErrorMetadata aMetadata)
+  {
+    final StringBuilder aSubject = new StringBuilder ();
+    if (GlobalDebug.isDebugMode ())
+      aSubject.append ("[DEBUG] ");
+    if (GlobalDebug.isProductionMode ())
+      aSubject.append ("[PRODUCTION] ");
+    aSubject.append ("Internal error");
+    final String sErrorMsg = aMetadata.getFieldValue (InternalErrorBuilder.KEY_ERROR_MSG, null);
+    if (StringHelper.hasText (sErrorMsg))
+      aSubject.append (": ").append (sErrorMsg);
+    aSubject.append (" [").append (aMetadata.getErrorID ()).append (']');
+    final String sMailSubject = aSubject.toString ();
+    return sMailSubject;
+  }
+
   private static void _sendInternalErrorMailToVendor (@Nonnull final InternalErrorMetadata aMetadata,
                                                       @Nonnull final ThreadDescriptor aCurrentThreadDescriptor,
                                                       @Nullable final ThreadDescriptorList aAllThreads,
-                                                      @Nonnull final EmailSettings aEmailSettings)
+                                                      @Nonnull final InternalErrorEmailSettings aEmailSettings,
+                                                      @Nullable final IEmailAttachmentList aEmailAttachments,
+                                                      final boolean bAddClassPath)
   {
     int nOccurranceCount = 1;
     final String sThrowableStackTrace = aCurrentThreadDescriptor.getStackTrace ();
     if (StringHelper.hasText (sThrowableStackTrace))
     {
       // Check if an internal error was already sent for this stack trace
-      final MutableInt aMI = s_aIntErrCache.get (sThrowableStackTrace);
-      if (aMI != null)
-      {
-        // This stack trace was already found!
-        aMI.inc ();
+      final MutableInt aMI = s_aRWLock.writeLockedThrowing ( () -> s_aIntErrCache.computeIfAbsent (sThrowableStackTrace,
+                                                                                                   k -> new MutableInt (0)));
+      // This stack trace was already found!
+      aMI.inc ();
 
-        // Send only every 100th invocation!
-        nOccurranceCount = aMI.intValue ();
-        if ((nOccurranceCount % 100) != 0)
-        {
-          s_aLogger.warn ("Not sending internal error mail, because this error occurred " +
-                          nOccurranceCount +
-                          " times");
-          return;
-        }
+      // Send only every 100th invocation!
+      nOccurranceCount = aMI.intValue ();
+      if ((nOccurranceCount % 100) != 0)
+      {
+        s_aLogger.warn ("Not sending internal error mail, because this error occurred " + nOccurranceCount + " times");
+        return;
       }
-      else
-        s_aIntErrCache.put (sThrowableStackTrace, new MutableInt (1));
     }
 
     final IEmailAddress aSender = aEmailSettings.getSenderAddress ();
-    final ICommonsList <IEmailAddress> aReceiver = aEmailSettings.getReceiverAddresses ();
+    final ICommonsList <IEmailAddress> aReceiver = aEmailSettings.getAllReceiverAddresses ();
     final ISMTPSettings aSMTPSettings = aEmailSettings.getSMTPSettings ();
 
     boolean bCanSend = true;
@@ -388,20 +208,33 @@ public final class InternalErrorHandler
 
     if (bCanSend)
     {
-      final String sMailSubject = StringHelper.getConcatenatedOnDemand ("Internal error", ' ', aMetadata.getErrorID ());
+      final String sMailSubject = _createMailSubject (aMetadata);
 
       // Main error thread dump
       final String sSeparator = "\n---------------------------------------------------------------\n";
       String sMailBody = aMetadata.getAsString () + sSeparator + aCurrentThreadDescriptor.getAsString () + sSeparator;
       if (aAllThreads != null)
+      {
+        // Add dump of all threads
         sMailBody += aAllThreads.getAsString () + sSeparator;
+      }
+
+      if (bAddClassPath)
+      {
+        // Add all classpath entries
+        final StringBuilder aSB = new StringBuilder ("ClassPath:\n");
+        for (final String sClassPathEntry : ClassPathHelper.getAllClassPathEntries ())
+          aSB.append ("  ").append (sClassPathEntry).append ('\n');
+        aSB.append (sSeparator);
+        sMailBody += aSB.toString ();
+      }
 
       final EmailData aEmailData = new EmailData (EEmailType.TEXT);
       aEmailData.setFrom (aSender);
       aEmailData.setTo (aReceiver);
       aEmailData.setSubject (sMailSubject);
       aEmailData.setBody (sMailBody);
-      aEmailData.setAttachments (aEmailSettings.getAttachmentList ());
+      aEmailData.setAttachments (aEmailAttachments);
 
       try
       {
@@ -424,7 +257,7 @@ public final class InternalErrorHandler
   private static void _saveInternalErrorToXML (@Nonnull final InternalErrorMetadata aMetadata,
                                                @Nonnull final ThreadDescriptor aCurrentDescriptor,
                                                @Nullable final ThreadDescriptorList aAllThreads,
-                                               @Nonnull final EmailSettings aEmailSettings)
+                                               @Nullable final IEmailAttachmentList aEmailAttachments)
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("internalerror");
@@ -433,11 +266,10 @@ public final class InternalErrorHandler
     if (aAllThreads != null)
       eRoot.appendChild (aAllThreads.getAsMicroNode ());
 
-    final IEmailAttachmentList aEmailAttachments = aEmailSettings.getAttachmentList ();
     if (aEmailAttachments != null)
     {
       final ICommonsList <IEmailAttachmentDataSource> aAttachments = aEmailAttachments.getAsDataSourceList ();
-      if (CollectionHelper.isNotEmpty (aAttachments))
+      if (aAttachments.isNotEmpty ())
       {
         final IMicroElement eAttachments = eRoot.appendElement ("attachments");
         for (final IEmailAttachmentDataSource aDS : aAttachments)
@@ -515,7 +347,7 @@ public final class InternalErrorHandler
       catch (final Throwable t2)
       {
         // fall-through - happens in a weird case
-        aMetadata.addField ("Request URL", t2);
+        aMetadata.addFieldRetrievalError ("Request URL", t2);
       }
 
       aMetadata.addField ("User agent", RequestHelper.getUserAgent (aRequestScope.getRequest ()).getAsString ());
@@ -527,7 +359,7 @@ public final class InternalErrorHandler
       catch (final Throwable t2)
       {
         // fall-through - happens in a weird case
-        aMetadata.addField ("Remote IP address", t2);
+        aMetadata.addFieldRetrievalError ("Remote IP address", t2);
       }
 
       // Mobile browser?
@@ -590,7 +422,7 @@ public final class InternalErrorHandler
     catch (final Throwable t2)
     {
       // Happens if no scope is available (or what so ever)
-      aMetadata.addField ("User", t2);
+      aMetadata.addFieldRetrievalError ("User", t2);
     }
 
     // Disk space info
@@ -657,15 +489,21 @@ public final class InternalErrorHandler
           s_aLogger.error ("Failed to get request cookies from " + aHttpRequest, t2);
         }
       }
+      else
+        aMetadata.addField ("HttpServletRequest", "RequestScope does not contain an HttpServletRequest");
     }
+    else
+      aMetadata.addField ("RequestScope", "None available");
     return aMetadata;
   }
 
-  public static void sendInternalErrorMailToVendor (@Nullable final Throwable t,
-                                                    @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
-                                                    @Nullable final String sErrorID,
-                                                    @Nullable final Map <String, String> aCustomData,
-                                                    @Nonnull final EmailSettings aEmailSettings)
+  private static void _notifyVendor (@Nullable final Throwable t,
+                                     @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @Nullable final String sErrorID,
+                                     @Nullable final Map <String, String> aCustomData,
+                                     @Nonnull final InternalErrorEmailSettings aEmailSettings,
+                                     final IEmailAttachmentList aEmailAttachments,
+                                     final boolean bAddClassPath)
   {
     // Create all metadata from the request
     final InternalErrorMetadata aMetadata = fillInternalErrorMetaData (aRequestScope, sErrorID, aCustomData);
@@ -675,14 +513,19 @@ public final class InternalErrorHandler
 
     // Get all thread descriptors
     ThreadDescriptorList aAllThreads = null;
-    if (isEnableFullThreadDumps ())
+    if (InternalErrorSettings.isDumpAllThreads ())
       aAllThreads = ThreadDescriptorList.createWithAllThreads ();
 
     // Main mail sending
-    _sendInternalErrorMailToVendor (aMetadata, aCurrentThreadDescriptor, aAllThreads, aEmailSettings);
+    _sendInternalErrorMailToVendor (aMetadata,
+                                    aCurrentThreadDescriptor,
+                                    aAllThreads,
+                                    aEmailSettings,
+                                    aEmailAttachments,
+                                    bAddClassPath);
 
     // Save as XML too
-    _saveInternalErrorToXML (aMetadata, aCurrentThreadDescriptor, aAllThreads, aEmailSettings);
+    _saveInternalErrorToXML (aMetadata, aCurrentThreadDescriptor, aAllThreads, aEmailAttachments);
   }
 
   /**
@@ -707,17 +550,20 @@ public final class InternalErrorHandler
    * @param bInvokeCustomExceptionHandler
    *        <code>true</code> to invoke the custom exception handler (if any is
    *        present), <code>false</code> to not do so.
+   * @param bAddClassPath
+   *        Add the class path entries to the error message.
    * @return The created unique error ID
    */
   @Nonnull
   @Nonempty
-  public static String handleInternalError (@Nullable final IUIInternalErrorHandler aUIErrorHandler,
-                                            @Nullable final Throwable t,
-                                            @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
-                                            @Nullable final Map <String, String> aCustomData,
-                                            @Nullable final IEmailAttachmentList aEmailAttachments,
-                                            @Nullable final Locale aDisplayLocale,
-                                            final boolean bInvokeCustomExceptionHandler)
+  static String handleInternalError (@Nullable final IUIInternalErrorHandler aUIErrorHandler,
+                                     @Nullable final Throwable t,
+                                     @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @Nullable final Map <String, String> aCustomData,
+                                     @Nullable final IEmailAttachmentList aEmailAttachments,
+                                     @Nullable final Locale aDisplayLocale,
+                                     final boolean bInvokeCustomExceptionHandler,
+                                     final boolean bAddClassPath)
   {
     final Locale aRealDisplayLocale = aDisplayLocale != null ? aDisplayLocale : CGlobal.DEFAULT_LOCALE;
 
@@ -732,6 +578,8 @@ public final class InternalErrorHandler
 
     if (GlobalDebug.isDebugMode ())
     {
+      // Debug mode - log and eventually throw exception (except weÄre in unit
+      // tests)
       if (aCustomData != null)
         s_aLogger.error ("Custom data: " + aCustomData);
 
@@ -741,18 +589,20 @@ public final class InternalErrorHandler
     }
     else
     {
-      // GlobalDebug is disabled -> send mail with attachments
-      sendInternalErrorMailToVendor (t,
-                                     aRequestScope,
-                                     sErrorID,
-                                     aCustomData,
-                                     s_aEmailSettings.getClone ().setAttachmentList (aEmailAttachments));
+      // Send mail with attachments
+      _notifyVendor (t,
+                     aRequestScope,
+                     sErrorID,
+                     aCustomData,
+                     InternalErrorSettings.getCopyOfEmailSettings (),
+                     aEmailAttachments,
+                     bAddClassPath);
     }
 
     if (bInvokeCustomExceptionHandler)
     {
       // Invoke custom exception handler (if present)
-      final IInternalErrorCallback aCustomExceptionHandler = getCustomExceptionHandler ();
+      final IInternalErrorCallback aCustomExceptionHandler = InternalErrorSettings.getCustomExceptionHandler ();
       if (aCustomExceptionHandler != null)
         try
         {

@@ -71,7 +71,7 @@ public abstract class AbstractErrorCallback implements
                                             IParallelRunningRequestCallback
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractErrorCallback.class);
-  private final ICommonsSet <String> m_aHandledLongRunning = new LRUSet <> (1000);
+  private final ICommonsSet <String> m_aHandledLongRunning = new LRUSet<> (1000);
 
   @Nullable
   public static final Locale getSafeDisplayLocale (@Nullable final Locale aFallback)

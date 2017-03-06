@@ -22,6 +22,7 @@ import java.util.function.BiConsumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -44,17 +45,32 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @author Philip Helger
  * @see InternalErrorHandler
  */
+@NotThreadSafe
 public class InternalErrorBuilder
 {
+  /** By default custom exception handlers are invoked too */
   public static final boolean DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER = true;
+  /**
+   * By default the class path entries are send by mail.
+   *
+   * @since 7.0.4
+   */
+  public static final boolean DEFAULT_ADD_CLASS_PATH = true;
+  /**
+   * Special custom data key for the error message.
+   *
+   * @since 7.0.4
+   */
+  public static final String KEY_ERROR_MSG = "Error Message";
 
   protected IUIInternalErrorHandler m_aUIErrorHandler;
   protected Throwable m_aThrowable;
   protected IRequestWebScopeWithoutResponse m_aRequestScope;
-  protected final ICommonsOrderedMap <String, String> m_aCustomData = new CommonsLinkedHashMap <> ();
+  protected final ICommonsOrderedMap <String, String> m_aCustomData = new CommonsLinkedHashMap<> ();
   protected EmailAttachmentList m_aEmailAttachments;
   protected Locale m_aDisplayLocale;
   protected boolean m_bInvokeCustomExceptionHandler = DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER;
+  protected boolean m_bAddClassPath = DEFAULT_ADD_CLASS_PATH;
 
   public InternalErrorBuilder ()
   {
@@ -105,6 +121,18 @@ public class InternalErrorBuilder
   public IRequestWebScopeWithoutResponse getRequestScope ()
   {
     return m_aRequestScope;
+  }
+
+  @Nonnull
+  public InternalErrorBuilder addErrorMessage (@Nonnull @Nonempty final String sErrorMessage)
+  {
+    return addCustomData (KEY_ERROR_MSG, sErrorMessage);
+  }
+
+  @Nullable
+  public String getErrorMessage (@Nullable final String sDefaultValue)
+  {
+    return m_aCustomData.getOrDefault (KEY_ERROR_MSG, sDefaultValue);
   }
 
   @Nonnull
@@ -213,6 +241,31 @@ public class InternalErrorBuilder
   }
 
   /**
+   * Add the class path to the internal errors?
+   *
+   * @param bAddClassPath
+   *        <code>true</code> to add the class path entries, <code>false</code>
+   *        to not do it.
+   * @return this for chaining
+   * @since 7.0.4
+   */
+  @Nonnull
+  public InternalErrorBuilder setAddClassPath (final boolean bAddClassPath)
+  {
+    m_bAddClassPath = bAddClassPath;
+    return this;
+  }
+
+  /**
+   * @return <code>true</code> if the class path should be added to the internal
+   *         error (default), or <code>false</code> if it should not.
+   */
+  public boolean isAddClassPath ()
+  {
+    return m_bAddClassPath;
+  }
+
+  /**
    * Shortcut for setting display locale and request scope at once from a web
    * execution context
    *
@@ -243,6 +296,7 @@ public class InternalErrorBuilder
                                                      m_aCustomData,
                                                      m_aEmailAttachments,
                                                      m_aDisplayLocale,
-                                                     m_bInvokeCustomExceptionHandler);
+                                                     m_bInvokeCustomExceptionHandler,
+                                                     m_bAddClassPath);
   }
 }

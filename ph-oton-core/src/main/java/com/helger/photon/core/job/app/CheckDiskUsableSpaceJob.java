@@ -32,6 +32,7 @@ import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.io.misc.SizeHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.error.InternalErrorHandler;
+import com.helger.photon.core.app.error.InternalErrorSettings;
 import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.quartz.DisallowConcurrentExecution;
 import com.helger.quartz.IJobExecutionContext;
@@ -97,11 +98,11 @@ public class CheckDiskUsableSpaceJob extends AbstractPhotonJob
                                                    .getAsString ();
 
       final EmailData aEmailData = new EmailData (EEmailType.TEXT);
-      aEmailData.setFrom (InternalErrorHandler.getSMTPSenderAddress ());
-      aEmailData.setTo (InternalErrorHandler.getSMTPReceiverAddresses ());
-      aEmailData.setSubject ("[system-monitor] Usable Disk Space is low: " + sUsableFormatted);
+      aEmailData.setFrom (InternalErrorSettings.getSMTPSenderAddress ());
+      aEmailData.setTo (InternalErrorSettings.getSMTPReceiverAddresses ());
+      aEmailData.setSubject ("[ph-oton] Usable Disk Space is low: " + sUsableFormatted);
       aEmailData.setBody (sMailBody);
-      ScopedMailAPI.getInstance ().queueMail (InternalErrorHandler.getSMTPSettings (), aEmailData);
+      ScopedMailAPI.getInstance ().queueMail (InternalErrorSettings.getSMTPSettings (), aEmailData);
     }
   }
 
@@ -130,7 +131,7 @@ public class CheckDiskUsableSpaceJob extends AbstractPhotonJob
 
     setApplicationScopeID (sApplicationID);
 
-    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap <> ();
+    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap<> ();
     aJobDataMap.put (JOB_DATA_ATTR_THRESHOLD_BYTES, Long.valueOf (nThresholdBytes));
 
     return GlobalQuartzScheduler.getInstance ().scheduleJob (CheckDiskUsableSpaceJob.class.getName (),

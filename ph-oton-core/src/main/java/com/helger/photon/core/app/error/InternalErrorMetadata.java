@@ -29,6 +29,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.string.StringHelper;
 import com.helger.xml.microdom.IHasMicroNodeRepresentation;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
@@ -81,12 +82,12 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
   private static final Logger s_aLogger = LoggerFactory.getLogger (InternalErrorMetadata.class);
 
   private final String m_sErrorID;
-  private final ICommonsList <Entry> m_aFields = new CommonsArrayList <> ();
-  private final ICommonsList <Entry> m_aRequestFields = new CommonsArrayList <> ();
-  private final ICommonsList <Entry> m_aRequestHeaders = new CommonsArrayList <> ();
-  private final ICommonsList <Entry> m_aRequestParameters = new CommonsArrayList <> ();
-  private final ICommonsList <Entry> m_aRequestCookies = new CommonsArrayList <> ();
-  private final ICommonsList <Entry> m_aSessionFields = new CommonsArrayList <> ();
+  private final ICommonsList <Entry> m_aFields = new CommonsArrayList<> ();
+  private final ICommonsList <Entry> m_aRequestFields = new CommonsArrayList<> ();
+  private final ICommonsList <Entry> m_aRequestHeaders = new CommonsArrayList<> ();
+  private final ICommonsList <Entry> m_aRequestParameters = new CommonsArrayList<> ();
+  private final ICommonsList <Entry> m_aRequestCookies = new CommonsArrayList<> ();
+  private final ICommonsList <Entry> m_aSessionFields = new CommonsArrayList<> ();
 
   public InternalErrorMetadata (@Nullable final String sErrorID)
   {
@@ -107,11 +108,19 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
   }
 
   @Nonnull
-  public InternalErrorMetadata addField (@Nonnull @Nonempty final String sKey, @Nonnull final Throwable t)
+  public InternalErrorMetadata addFieldRetrievalError (@Nonnull @Nonempty final String sKey, @Nonnull final Throwable t)
   {
     final String sValue = "Failed to get " + sKey + ": " + t.getMessage () + " -- " + t.getClass ().getName ();
     s_aLogger.warn (sValue);
     return addField (sKey, sValue);
+  }
+
+  @Nullable
+  public String getFieldValue (@Nullable final String sKey, @Nullable final String sDefaultValue)
+  {
+    // Linear effort
+    final Entry aEntry = StringHelper.hasNoText (sKey) ? null : m_aFields.findFirst (x -> x.getKey ().equals (sKey));
+    return aEntry != null ? aEntry.getValue () : sDefaultValue;
   }
 
   @Nonnull
@@ -232,6 +241,7 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
       for (final Entry aEntry : m_aSessionFields)
         aSB.append ("  ").append (aEntry.getAsString ()).append ('\n');
     }
+
     return aSB.toString ();
   }
 

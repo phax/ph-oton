@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.app.error;
+package com.helger.photon.core.app.error.callback;
 
 import javax.annotation.Nonnull;
 
@@ -28,6 +28,8 @@ import com.helger.commons.deadlock.ThreadDeadlockInfo;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.photon.basic.thread.ThreadDescriptor;
 import com.helger.photon.basic.thread.ThreadDescriptorList;
+import com.helger.photon.core.app.error.InternalErrorHandler;
+import com.helger.photon.core.app.error.InternalErrorSettings;
 import com.helger.smtp.data.EEmailType;
 import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
@@ -68,11 +70,11 @@ public class MailingThreadDeadlockCallback implements IThreadDeadlockCallback
        .append ("\n---------------------------------------------------------------");
 
     final EmailData aEmailData = new EmailData (EEmailType.TEXT);
-    aEmailData.setFrom (InternalErrorHandler.getSMTPSenderAddress ());
-    aEmailData.setTo (InternalErrorHandler.getSMTPReceiverAddresses ());
-    aEmailData.setSubject ("[system-monitor] Dead lock of " + aDeadlockedThreads.length + " threads detected");
+    aEmailData.setFrom (InternalErrorSettings.getSMTPSenderAddress ());
+    aEmailData.setTo (InternalErrorSettings.getSMTPReceiverAddresses ());
+    aEmailData.setSubject ("[ph-oton] Dead lock of " + aDeadlockedThreads.length + " threads detected");
     aEmailData.setBody (aSB.toString ());
 
-    ScopedMailAPI.getInstance ().queueMail (InternalErrorHandler.getSMTPSettings (), aEmailData);
+    ScopedMailAPI.getInstance ().queueMail (InternalErrorSettings.getSMTPSettings (), aEmailData);
   }
 }

@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.app.error.uihandler;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -26,7 +27,8 @@ import javax.annotation.Nullable;
  *
  * @author Philip Helger
  */
-public interface IUIInternalErrorHandler
+@FunctionalInterface
+public interface IUIInternalErrorHandler extends Serializable
 {
   /**
    * @param t

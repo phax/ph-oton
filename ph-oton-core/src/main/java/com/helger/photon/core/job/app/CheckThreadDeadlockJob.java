@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.deadlock.ThreadDeadlockDetector;
-import com.helger.photon.core.app.error.MailingThreadDeadlockCallback;
+import com.helger.photon.core.app.error.callback.MailingThreadDeadlockCallback;
 import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.quartz.DisallowConcurrentExecution;
 import com.helger.quartz.IJobExecutionContext;
