@@ -34,7 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.base64.Base64;
 import com.helger.commons.collection.ext.CommonsHashMap;
@@ -50,11 +49,13 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ClassPathHelper;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.mutable.MutableInt;
+import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.scope.mgr.ScopeSessionManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.util.PDTIOHelper;
 import com.helger.datetime.util.PDTWebDateHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
+import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.basic.thread.ThreadDescriptor;
 import com.helger.photon.basic.thread.ThreadDescriptorList;
 import com.helger.photon.core.app.error.callback.IInternalErrorCallback;
@@ -71,6 +72,7 @@ import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.smtp.settings.ISMTPSettings;
 import com.helger.smtp.transport.MailAPI;
 import com.helger.useragent.uaprofile.UAProfile;
+import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
@@ -528,6 +530,25 @@ public final class InternalErrorHandler
     _saveInternalErrorToXML (aMetadata, aCurrentThreadDescriptor, aAllThreads, aEmailAttachments);
   }
 
+  @Nullable
+  private static final Locale _getSafeDisplayLocale ()
+  {
+    try
+    {
+      // This may fail, if a weird application context is used
+      return RequestParameterManager.getInstance ().getRequestDisplayLocale ();
+    }
+    catch (final IllegalStateException ex)
+    {
+      // I just want to know, where and how this happens...
+      final IRequestWebScope aRequestScope = WebScopeManager.getRequestScopeOrNull ();
+      final String sAppID = aRequestScope == null ? "<no request scope present>"
+                                                  : ScopeManager.getRequestApplicationID (aRequestScope);
+      s_aLogger.warn ("Failed to retrieve default locale for application ID '" + sAppID + "'");
+      return InternalErrorSettings.getFallbackLocale ();
+    }
+  }
+
   /**
    * Triggering of an internal error. This method should not be called manually
    * but instead {@link InternalErrorBuilder} should be used, as this is the
@@ -546,7 +567,8 @@ public final class InternalErrorHandler
    *        Email attachments to be added. May be <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to use for the texts. May be <code>null</code> in
-   *        which case it defaults to {@link CGlobal#DEFAULT_LOCALE}.
+   *        which case it will be the request locale or the fallback locale from
+   *        the internal error settings.
    * @param bInvokeCustomExceptionHandler
    *        <code>true</code> to invoke the custom exception handler (if any is
    *        present), <code>false</code> to not do so.
@@ -565,7 +587,7 @@ public final class InternalErrorHandler
                                      final boolean bInvokeCustomExceptionHandler,
                                      final boolean bAddClassPath)
   {
-    final Locale aRealDisplayLocale = aDisplayLocale != null ? aDisplayLocale : CGlobal.DEFAULT_LOCALE;
+    final Locale aRealDisplayLocale = aDisplayLocale != null ? aDisplayLocale : _getSafeDisplayLocale ();
 
     final String sErrorID = createNewInternalErrorID ();
 

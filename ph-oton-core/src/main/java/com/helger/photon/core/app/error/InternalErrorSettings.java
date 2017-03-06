@@ -16,11 +16,15 @@
  */
 package com.helger.photon.core.app.error;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.helger.commons.CGlobal;
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
@@ -47,6 +51,8 @@ public final class InternalErrorSettings
   private static IInternalErrorCallback s_aCustomExceptionHandler;
   @GuardedBy ("s_aRWLock")
   private static boolean s_bEnableDumpAllThreads = DEFAULT_ENABLE_FULL_THREAD_DUMPS;
+  @GuardedBy ("s_aRWLock")
+  private static Locale s_aFallbackLocale = CGlobal.DEFAULT_LOCALE;
 
   private InternalErrorSettings ()
   {}
@@ -140,5 +146,28 @@ public final class InternalErrorSettings
   public static void setCustomExceptionHandler (@Nullable final IInternalErrorCallback aCustomExceptionHandler)
   {
     s_aRWLock.writeLocked ( () -> s_aCustomExceptionHandler = aCustomExceptionHandler);
+  }
+
+  /**
+   * Set the fallback locale in case none could be determined.
+   * 
+   * @param aFallbackLocale
+   *        Locale to use. May not be <code>null</code>.
+   * @since 7.0.4
+   */
+  public static void setFallbackLocale (@Nonnull final Locale aFallbackLocale)
+  {
+    ValueEnforcer.notNull (aFallbackLocale, "FallbackLocale");
+    s_aRWLock.writeLocked ( () -> s_aFallbackLocale = aFallbackLocale);
+  }
+
+  /**
+   * @return The fallback locale to use. Never <code>null</code>.
+   * @since 7.0.4
+   */
+  @Nonnull
+  public static Locale getFallbackLocale ()
+  {
+    return s_aRWLock.readLocked ( () -> s_aFallbackLocale);
   }
 }

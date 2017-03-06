@@ -17,27 +17,21 @@
 package com.helger.photon.core.app.error.callback;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.collection.impl.LRUSet;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SMap;
 import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
 import com.helger.photon.basic.app.dao.IDAOWriteExceptionCallback;
 import com.helger.photon.basic.app.dao.impl.AbstractDAO;
-import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.basic.longrun.ILongRunningJob;
 import com.helger.photon.core.ajax.AjaxSettings;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
@@ -58,7 +52,6 @@ import com.helger.schedule.job.IJobExceptionCallback;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * A base class for a central error callback that handles all kind of errors and
@@ -75,27 +68,7 @@ public abstract class AbstractErrorCallback implements
                                             ILongRunningRequestCallback,
                                             IParallelRunningRequestCallback
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractErrorCallback.class);
   private final ICommonsSet <String> m_aHandledLongRunning = new LRUSet<> (1000);
-
-  @Nullable
-  public static final Locale getSafeDisplayLocale (@Nullable final Locale aFallback)
-  {
-    try
-    {
-      // This may fail, if a weird application context is used
-      return RequestParameterManager.getInstance ().getRequestDisplayLocale ();
-    }
-    catch (final IllegalStateException ex)
-    {
-      // I just want to know, where and how this happens...
-      final IRequestWebScope aRequestScope = WebScopeManager.getRequestScopeOrNull ();
-      final String sAppID = aRequestScope == null ? "<no request scope present>"
-                                                  : ScopeManager.getRequestApplicationID (aRequestScope);
-      s_aLogger.warn ("Failed to retrieve default locale for application ID '" + sAppID + "'");
-      return aFallback;
-    }
-  }
 
   /**
    * Implement this method to handle all errors in a similar way.
