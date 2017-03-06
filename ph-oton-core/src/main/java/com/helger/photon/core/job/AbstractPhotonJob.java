@@ -18,9 +18,8 @@ package com.helger.photon.core.job;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.core.app.CApplication;
+import com.helger.commons.string.StringHelper;
 import com.helger.quartz.IJobExecutionContext;
 import com.helger.quartz.JobDataMap;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
@@ -32,20 +31,29 @@ import com.helger.web.scope.util.AbstractScopeAwareJob;
  */
 public abstract class AbstractPhotonJob extends AbstractScopeAwareJob
 {
-  // Default to be on the safe side
-  private static String s_sAppID = CApplication.APP_ID_SECURE;
+  /**
+   * This key of the job-data map must be present and must contain the
+   * application ID.
+   * 
+   * @since 7.0.4
+   */
+  public static final String JOB_DATA_ATTR_APPLICATION_ID = "$ph-oton.job.appid";
 
-  protected static void setApplicationScopeID (@Nonnull @Nonempty final String sApplicationID)
-  {
-    ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
-    if (s_sAppID == null)
-      s_sAppID = sApplicationID;
-  }
+  protected AbstractPhotonJob ()
+  {}
 
   @Override
+  @Nonnull
+  @Nonempty
   protected final String getApplicationScopeID (@Nonnull final JobDataMap aJobDataMap,
                                                 @Nonnull final IJobExecutionContext aContext)
   {
-    return s_sAppID;
+    final String sAppID = aJobDataMap.getString (JOB_DATA_ATTR_APPLICATION_ID);
+    if (StringHelper.hasNoText (sAppID))
+      throw new IllegalStateException ("JobDataMap is missing entry for '" +
+                                       JOB_DATA_ATTR_APPLICATION_ID +
+                                       "' - see " +
+                                       AbstractPhotonJob.class.getName ());
+    return sAppID;
   }
 }

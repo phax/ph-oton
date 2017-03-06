@@ -23,7 +23,9 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.quartz.DisallowConcurrentExecution;
@@ -82,12 +84,14 @@ public class FailedMailResendJob extends AbstractPhotonJob
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
 
-    setApplicationScopeID (sApplicationID);
+    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap<> ();
+    aJobDataMap.put (JOB_DATA_ATTR_APPLICATION_ID, sApplicationID);
+
     return GlobalQuartzScheduler.getInstance ().scheduleJob (FailedMailResendJob.class.getName (),
                                                              JDK8TriggerBuilder.newTrigger ()
                                                                                .startNow ()
                                                                                .withSchedule (aScheduleBuilder),
                                                              FailedMailResendJob.class,
-                                                             null);
+                                                             aJobDataMap);
   }
 }
