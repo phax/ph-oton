@@ -38,6 +38,7 @@ import com.helger.photon.basic.app.dao.IDAOReadExceptionCallback;
 import com.helger.photon.basic.app.dao.IDAOWriteExceptionCallback;
 import com.helger.photon.basic.app.dao.impl.AbstractDAO;
 import com.helger.photon.basic.app.request.RequestParameterManager;
+import com.helger.photon.basic.longrun.ILongRunningJob;
 import com.helger.photon.core.ajax.AjaxSettings;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
 import com.helger.photon.core.ajax.IAjaxExecutor;
@@ -51,6 +52,9 @@ import com.helger.photon.core.requesttrack.ILongRunningRequestCallback;
 import com.helger.photon.core.requesttrack.IParallelRunningRequestCallback;
 import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.core.requesttrack.TrackedRequest;
+import com.helger.quartz.IJob;
+import com.helger.schedule.job.AbstractJob;
+import com.helger.schedule.job.IJobExceptionCallback;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -67,6 +71,7 @@ public abstract class AbstractErrorCallback implements
                                             IAPIExceptionCallback,
                                             IDAOReadExceptionCallback,
                                             IDAOWriteExceptionCallback,
+                                            IJobExceptionCallback,
                                             ILongRunningRequestCallback,
                                             IParallelRunningRequestCallback
 {
@@ -158,6 +163,18 @@ public abstract class AbstractErrorCallback implements
              new SMap ().add ("action", "write").add ("path", aRes.getPath ()).add ("content", aFileContent));
   }
 
+  public void onScheduledJobException (@Nonnull final Throwable t,
+                                       @Nullable final String sJobClassName,
+                                       @Nonnull final IJob aJob)
+  {
+    onError (t,
+             (IRequestWebScopeWithoutResponse) null,
+             "Error executing background job " + sJobClassName,
+             new SMap ().addIfNotNull ("job-class", sJobClassName)
+                        .add ("job-object", aJob)
+                        .add ("long-running", aJob instanceof ILongRunningJob));
+  }
+
   public void onLongRunningRequest (@Nonnull @Nonempty final String sUniqueRequestID,
                                     @Nonnull final IRequestWebScope aRequestScope,
                                     @Nonnegative final long nRunningMilliseconds)
@@ -194,8 +211,9 @@ public abstract class AbstractErrorCallback implements
    * <li>ApplicationAjaxManager - exception handler</li>
    * <li>ApplicationAPIManager - exception handler</li>
    * <li>AbstractDAO - read and write exception handler</li>
-   * <li>RequestTracker - long running requests and parallel running requests
-   * </li>
+   * <li>AbstractJob - exception callback</li>
+   * <li>RequestTracker - long running requests and parallel running
+   * requests</li>
    * </ul>
    *
    * @param aCallback
@@ -207,6 +225,7 @@ public abstract class AbstractErrorCallback implements
     APISettings.getExceptionCallbacks ().addCallback (aCallback);
     AbstractDAO.getExceptionHandlersRead ().addCallback (aCallback);
     AbstractDAO.getExceptionHandlersWrite ().addCallback (aCallback);
+    AbstractJob.getExceptionCallbacks ().addCallback (aCallback);
     RequestTracker.getLongRunningRequestCallbacks ().addCallback (aCallback);
     RequestTracker.getParallelRunningRequestCallbacks ().addCallback (aCallback);
   }

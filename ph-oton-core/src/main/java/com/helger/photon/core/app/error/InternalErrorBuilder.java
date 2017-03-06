@@ -124,7 +124,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder addErrorMessage (@Nonnull @Nonempty final String sErrorMessage)
+  public InternalErrorBuilder addErrorMessage (@Nullable final String sErrorMessage)
   {
     return addCustomData (KEY_ERROR_MSG, sErrorMessage);
   }
