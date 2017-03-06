@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.collection.impl.LRUSet;
 import com.helger.commons.io.resource.IReadableResource;
@@ -179,6 +180,17 @@ public abstract class AbstractErrorCallback implements
   {}
 
   /**
+   * Install this error callback in all relevant places.
+   *
+   * @see #installToPhoton(AbstractErrorCallback)
+   */
+  @OverrideOnDemand
+  public void install ()
+  {
+    installToPhoton (this);
+  }
+
+  /**
    * Install the provided error callback for the following things:
    * <ul>
    * <li>ApplicationAjaxManager - exception handler</li>
@@ -192,7 +204,7 @@ public abstract class AbstractErrorCallback implements
    * @param aCallback
    *        The callback to be installed. May not be <code>null</code>.
    */
-  public static void install (@Nonnull final AbstractErrorCallback aCallback)
+  public static void installToPhoton (@Nonnull final AbstractErrorCallback aCallback)
   {
     AjaxSettings.getExceptionCallbacks ().addCallback (aCallback);
     APISettings.getExceptionCallbacks ().addCallback (aCallback);
