@@ -27,12 +27,13 @@ Contained subprojects are:
   * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
 
 Release history:
-  * v7.0.4 - work in progress
+  * v7.0.4 - 2017-03-09
     * Updated to Jetty 9.4.2
     * API extensions
     * Updated to Apache commons-net 3.6
     * Improved internal error handling API
     * Internal changes in the ph-oton jobs.
+    * Removed some deprecated methods
   * v7.0.3 - 2017-01-10
     * Integrated ph-html into ph-oton
     * Binds to ph-commons 8.6.0
@@ -70,6 +71,30 @@ Release history:
   * Application server requirements:
       * At least Tomcat 8.x
       * Jetty 9.3.x with AnnotationConfiguration enabled
+      
+## Maven usage
+
+```xml
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-parent-pom</artifactId>
+        <version>7.0.4</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  
+  <dependencies>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-oton-bootstrap3-stub</artifactId>
+    </dependency>
+  </dependencies>
+```
+
 
 ---
 
