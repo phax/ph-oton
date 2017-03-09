@@ -53,21 +53,6 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    * @param aNode
    *        Child to add. May be <code>null</code>.
    * @return this
-   * @deprecated Use {@link #addChildAt(int, IHCNode)} instead
-   */
-  @Nonnull
-  @Deprecated
-  default IMPLTYPE addChild (@Nonnegative final int nIndex, @Nullable final CHILDTYPE aNode)
-  {
-    return addChildAt (nIndex, aNode);
-  }
-
-  /**
-   * @param nIndex
-   *        The index to where the element should be inserted.
-   * @param aNode
-   *        Child to add. May be <code>null</code>.
-   * @return this
    */
   @Nonnull
   IMPLTYPE addChildAt (@Nonnegative int nIndex, @Nullable CHILDTYPE aNode);
@@ -87,39 +72,6 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
   }
 
   /**
-   * Use {@link #addChild(IHCNode)} instead.
-   *
-   * @param nIndex
-   *        The index to where the element should be inserted.
-   * @param aChild
-   *        The child to add. May be <code>null</code>.
-   * @return this
-   */
-  @Deprecated
-  @DevelopersNote ("Use addChildAt instead")
-  default IMPLTYPE addChildren (@Nonnegative final int nIndex, @Nullable final CHILDTYPE aChild)
-  {
-    return addChildrenAt (nIndex, aChild);
-  }
-
-  /**
-   * Use {@link #addChild(IHCNode)} instead.
-   *
-   * @param nIndex
-   *        The index to where the element should be inserted.
-   * @param aChild
-   *        The child to add. May be <code>null</code>.
-   * @return this
-   */
-  @Deprecated
-  @DevelopersNote ("Use addChildAt instead")
-  default IMPLTYPE addChildrenAt (@Nonnegative final int nIndex, @Nullable final CHILDTYPE aChild)
-  {
-    ValueEnforcer.isBetweenInclusive (nIndex, "Index", 0, getChildCount ());
-    return addChildAt (nIndex, aChild);
-  }
-
-  /**
    * @param aChildren
    *        Children to add. May be <code>null</code>.
    * @return this
@@ -132,22 +84,6 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
       for (final CHILDTYPE aChild : aChildren)
         addChild (aChild);
     return thisAsT ();
-  }
-
-  /**
-   * @param nIndex
-   *        The index to where the elements should be inserted.
-   * @param aChildren
-   *        Children to add. May be <code>null</code>.
-   * @return this
-   * @deprecated Use {@link #addChildrenAt(int, IHCNode...)} instead
-   */
-  @Nonnull
-  @SuppressWarnings ("unchecked")
-  @Deprecated
-  default IMPLTYPE addChildren (@Nonnegative final int nIndex, @Nullable final CHILDTYPE... aChildren)
-  {
-    return addChildrenAt (nIndex, aChildren);
   }
 
   /**
@@ -183,21 +119,6 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
       for (final CHILDTYPE aChild : aChildren)
         addChild (aChild);
     return thisAsT ();
-  }
-
-  /**
-   * @param nIndex
-   *        The index to where the elements should be inserted.
-   * @param aChildren
-   *        Children to add. May be <code>null</code>.
-   * @return this
-   * @deprecated Use {@link #addChildrenAt(int, Iterable)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default IMPLTYPE addChildren (@Nonnegative final int nIndex, @Nullable final Iterable <? extends CHILDTYPE> aChildren)
-  {
-    return addChildrenAt (nIndex, aChildren);
   }
 
   /**
@@ -244,24 +165,6 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    * @param <V>
    *        The type to add. Needs to be a IHCNode or a sub class.
    * @return the added child
-   * @deprecated Use {@link #addAndReturnChildAt(int, IHCNode)} instead
-   */
-  @Nullable
-  @CheckReturnValue
-  @Deprecated
-  default <V extends CHILDTYPE> V addAndReturnChild (@Nonnegative final int nIndex, @Nullable final V aChild)
-  {
-    return addAndReturnChildAt (nIndex, aChild);
-  }
-
-  /**
-   * @param nIndex
-   *        The index where the element should be added. Always &ge; 0.
-   * @param aChild
-   *        Child to add. May be <code>null</code>.
-   * @param <V>
-   *        The type to add. Needs to be a IHCNode or a sub class.
-   * @return the added child
    */
   @Nullable
   @CheckReturnValue
@@ -269,21 +172,6 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
   {
     addChildAt (nIndex, aChild);
     return aChild;
-  }
-
-  /**
-   * Remove the child at the specified index.
-   *
-   * @param nIndex
-   *        The index to use. Must be &ge; 0.
-   * @return this
-   * @deprecated Use {@link #removeChildAt(int)} instead
-   */
-  @Nonnull
-  @Deprecated
-  default IMPLTYPE removeChild (@Nonnegative final int nIndex)
-  {
-    return removeChildAt (nIndex);
   }
 
   /**

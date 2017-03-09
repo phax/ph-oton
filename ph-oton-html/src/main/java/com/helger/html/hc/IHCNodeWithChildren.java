@@ -53,21 +53,6 @@ public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPL
    * @param sText
    *        Child text to add. May be <code>null</code>.
    * @return this
-   * @deprecated Use {@link #addChildAt(int,String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default IMPLTYPE addChild (@Nonnegative final int nIndex, @Nullable final String sText)
-  {
-    return addChildAt (nIndex, sText);
-  }
-
-  /**
-   * @param nIndex
-   *        The index to where the element should be inserted.
-   * @param sText
-   *        Child text to add. May be <code>null</code>.
-   * @return this
    */
   @Nonnull
   default IMPLTYPE addChildAt (@Nonnegative final int nIndex, @Nullable final String sText)
