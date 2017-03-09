@@ -978,6 +978,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        Object for storing the validation errors. Never <code>null</code>.
    * @param eFormAction
    *        The form action mode. Either create, copy or edit.
+   * @return <code>true</code> to show the input form again, <code>false</code>
+   *         not to
    */
   @OverrideOnDemand
   protected boolean showInputFormAgain (@Nonnull final WPECTYPE aWPEC,

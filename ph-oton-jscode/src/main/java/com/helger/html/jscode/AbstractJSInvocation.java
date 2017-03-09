@@ -72,12 +72,13 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
   /**
    * List of argument expressions for this method invocation
    */
-  private final ICommonsList <IJSExpression> m_aArgs = new CommonsArrayList<> ();
+  private final ICommonsList <IJSExpression> m_aArgs = new CommonsArrayList <> ();
 
   /**
    * Invoke a function
    *
    * @param aFunction
+   *        Function to be invoked
    */
   protected AbstractJSInvocation (@Nonnull final JSFunction aFunction)
   {
@@ -136,6 +137,11 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
 
   /**
    * Invokes a static method on a class.
+   *
+   * @param aType
+   *        type to invoke
+   * @param sMethod
+   *        Method name to invoke
    */
   protected AbstractJSInvocation (@Nullable final AbstractJSClass aType, @Nonnull @Nonempty final String sMethod)
   {

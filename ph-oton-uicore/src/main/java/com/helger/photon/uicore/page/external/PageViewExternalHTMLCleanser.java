@@ -184,7 +184,9 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
    * elements) needs a context path prefix
    *
    * @param sHref
-   * @return
+   *        The link HREF to check
+   * @return <code>true</code> if the link needs a context path,
+   *         <code>false</code> if not.
    */
   @OverrideOnDemand
   protected boolean linkNeedsContextPath (@Nullable final String sHref)

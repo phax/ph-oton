@@ -75,6 +75,11 @@ public class JSCommentPart extends CommonsArrayList <Object>
 
   /**
    * Writes this part into the formatter by using the specified indentation.
+   * 
+   * @param aFormatter
+   *        Formatter to use. May not be <code>null</code>.
+   * @param sIndent
+   *        Indentation string to use. May not be <code>null</code>.
    */
   protected void format (@Nonnull final JSFormatter aFormatter, @Nonnull final String sIndent)
   {

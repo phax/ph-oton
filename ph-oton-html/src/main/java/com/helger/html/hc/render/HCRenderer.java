@@ -53,6 +53,8 @@ public final class HCRenderer
    * @param aConversionSettings
    *        Conversion settings to be used.
    * @return The passed in node.
+   * @param <T>
+   *        Input and return node type
    */
   @Nonnull
   public static <T extends IHCNode> T getPreparedNode (@Nonnull final T aNode,
