@@ -23,6 +23,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.DevelopersNote;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -114,7 +115,7 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
   default ICommonsList <? extends IHCCol <?>> getAllColumns ()
   {
     final HCColGroup aColGroup = getColGroup ();
-    return aColGroup != null ? aColGroup.getAllColumns () : new CommonsArrayList<> ();
+    return aColGroup != null ? aColGroup.getAllColumns () : new CommonsArrayList <> ();
   }
 
   /**
@@ -126,23 +127,6 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
    */
   @Nonnull
   IMPLTYPE addColumn (@Nullable IHCCol <?> aCol);
-
-  /**
-   * Add the specified column at the specified index.
-   *
-   * @param nIndex
-   *        The index where the column should be added. Must be &ge; 0.
-   * @param aCol
-   *        The column to be added. May be <code>null</code>.
-   * @return this
-   * @deprecated Use {@link #addColumnAt(int,IHCCol)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default IMPLTYPE addColumn (@Nonnegative final int nIndex, @Nullable final IHCCol <?> aCol)
-  {
-    return addColumnAt (nIndex, aCol);
-  }
 
   /**
    * Add the specified column at the specified index.
@@ -166,6 +150,7 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
    */
   @Nonnull
   @Deprecated
+  @DevelopersNote ("Use addColumn")
   default IMPLTYPE addColumns (@Nullable final IHCCol <?> aCol)
   {
     return addColumn (aCol);
@@ -203,22 +188,6 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
       for (final IHCCol <?> aCol : aCols)
         addColumn (aCol);
     return thisAsT ();
-  }
-
-  /**
-   * Remove the column definition at the specified index. This does not affect
-   * any row contents.
-   *
-   * @param nColumnIndex
-   *        The index of the column to remove
-   * @return this
-   * @deprecated Use {@link #removeColumnAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default IMPLTYPE removeColumnAtIndex (@Nonnegative final int nColumnIndex)
-  {
-    return removeColumnAt (nColumnIndex);
   }
 
   /**
@@ -361,21 +330,6 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
    * @param nIndex
    *        The index to be used. Should be &ge; 0.
    * @return this for chaining
-   * @deprecated Use {@link #addHeaderRowAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default HCRow addHeaderRow (@Nonnegative final int nIndex)
-  {
-    return addHeaderRowAt (nIndex);
-  }
-
-  /**
-   * Add a header row at the specified index.
-   *
-   * @param nIndex
-   *        The index to be used. Should be &ge; 0.
-   * @return this for chaining
    */
   @Nonnull
   default HCRow addHeaderRowAt (@Nonnegative final int nIndex)
@@ -398,44 +352,12 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
    * @param aRow
    *        The row to be added. May be <code>null</code>.
    * @return this for chaining
-   * @deprecated Use {@link #addHeaderRowAt(int,HCRow)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default IMPLTYPE addHeaderRow (@Nonnegative final int nIndex, @Nullable final HCRow aRow)
-  {
-    return addHeaderRowAt (nIndex, aRow);
-  }
-
-  /**
-   * Add a header row at the specified index.
-   *
-   * @param nIndex
-   *        The index to be used. Should be &ge; 0.
-   * @param aRow
-   *        The row to be added. May be <code>null</code>.
-   * @return this for chaining
    */
   @Nonnull
   default IMPLTYPE addHeaderRowAt (@Nonnegative final int nIndex, @Nullable final HCRow aRow)
   {
     getHead ().addChildAt (nIndex, aRow);
     return thisAsT ();
-  }
-
-  /**
-   * Remove the header row at the specified index.
-   *
-   * @param nIndex
-   *        The index to be used. Should be &ge; 0.
-   * @return this for chaining
-   * @deprecated Use {@link #removeHeaderRowAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default IMPLTYPE removeHeaderRowAtIndex (@Nonnegative final int nIndex)
-  {
-    return removeHeaderRowAt (nIndex);
   }
 
   /**
@@ -570,21 +492,6 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
    * @param nIndex
    *        The index to be used. Should be &ge; 0.
    * @return this for chaining
-   * @deprecated Use {@link #addFooterRowAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default HCRow addFooterRow (@Nonnegative final int nIndex)
-  {
-    return addFooterRowAt (nIndex);
-  }
-
-  /**
-   * Add a footer row at the specified index.
-   *
-   * @param nIndex
-   *        The index to be used. Should be &ge; 0.
-   * @return this for chaining
    */
   @Nonnull
   default HCRow addFooterRowAt (@Nonnegative final int nIndex)
@@ -607,44 +514,12 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
    * @param aRow
    *        The row to be added. May be <code>null</code>.
    * @return this for chaining
-   * @deprecated Use {@link #addFooterRowAt(int,HCRow)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default IMPLTYPE addFooterRow (@Nonnegative final int nIndex, @Nullable final HCRow aRow)
-  {
-    return addFooterRowAt (nIndex, aRow);
-  }
-
-  /**
-   * Add a footer row at the specified index.
-   *
-   * @param nIndex
-   *        The index to be used. Should be &ge; 0.
-   * @param aRow
-   *        The row to be added. May be <code>null</code>.
-   * @return this for chaining
    */
   @Nonnull
   default IMPLTYPE addFooterRowAt (@Nonnegative final int nIndex, @Nullable final HCRow aRow)
   {
     getFoot ().addChildAt (nIndex, aRow);
     return thisAsT ();
-  }
-
-  /**
-   * Remove a footer row at the specified index.
-   *
-   * @param nIndex
-   *        The index to be used. Should be &ge; 0.
-   * @return this for chaining
-   * @deprecated Use {@link #removeFooterRowAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default IMPLTYPE removeFooterRowAtIndex (@Nonnegative final int nIndex)
-  {
-    return removeFooterRowAt (nIndex);
   }
 
   /**
@@ -779,21 +654,6 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
    * @param nIndex
    *        The index to be used. Should be &ge; 0.
    * @return this for chaining
-   * @deprecated Use {@link #addBodyRowAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default HCRow addBodyRow (@Nonnegative final int nIndex)
-  {
-    return addBodyRowAt (nIndex);
-  }
-
-  /**
-   * Add a body row at the specified index.
-   *
-   * @param nIndex
-   *        The index to be used. Should be &ge; 0.
-   * @return this for chaining
    */
   @Nonnull
   default HCRow addBodyRowAt (@Nonnegative final int nIndex)
@@ -816,44 +676,12 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
    * @param aRow
    *        The row to be added. May be <code>null</code>.
    * @return this for chaining
-   * @deprecated Use {@link #addBodyRowAt(int,HCRow)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default IMPLTYPE addBodyRow (@Nonnegative final int nIndex, @Nullable final HCRow aRow)
-  {
-    return addBodyRowAt (nIndex, aRow);
-  }
-
-  /**
-   * Add a body row at the specified index.
-   *
-   * @param nIndex
-   *        The index to be used. Should be &ge; 0.
-   * @param aRow
-   *        The row to be added. May be <code>null</code>.
-   * @return this for chaining
    */
   @Nonnull
   default IMPLTYPE addBodyRowAt (@Nonnegative final int nIndex, @Nullable final HCRow aRow)
   {
     getBody ().addChildAt (nIndex, aRow);
     return thisAsT ();
-  }
-
-  /**
-   * Remove the body row at the specified index.
-   *
-   * @param nIndex
-   *        The index to be used. Should be &ge; 0.
-   * @return this for chaining
-   * @deprecated Use {@link #removeBodyRowAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default IMPLTYPE removeBodyRowAtIndex (@Nonnegative final int nIndex)
-  {
-    return removeBodyRowAt (nIndex);
   }
 
   /**

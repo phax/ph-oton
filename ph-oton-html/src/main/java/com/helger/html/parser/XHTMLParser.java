@@ -62,12 +62,6 @@ public class XHTMLParser
                                                                                      .setFeatureValue (EXMLParserFeature.EXTERNAL_GENERAL_ENTITIES,
                                                                                                        false);
 
-  @Deprecated
-  public XHTMLParser ()
-  {
-    this (EHTMLVersion.DEFAULT);
-  }
-
   public XHTMLParser (@Nonnull final EHTMLVersion eHTMLVersion)
   {
     m_eHTMLVersion = ValueEnforcer.notNull (eHTMLVersion, "HTMLVersion");

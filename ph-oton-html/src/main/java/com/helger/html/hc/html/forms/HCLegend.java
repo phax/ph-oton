@@ -16,11 +16,7 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.EHTMLElement;
-import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 /**
@@ -33,75 +29,5 @@ public class HCLegend extends AbstractHCElementWithChildren <HCLegend>
   public HCLegend ()
   {
     super (EHTMLElement.LEGEND);
-  }
-
-  /**
-   * Create a new LEGEND element with the passed child text
-   *
-   * @param sChild
-   *        The child to be appended. May be <code>null</code>
-   * @return The created HCLegend element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCLegend create (@Nullable final String sChild)
-  {
-    return new HCLegend ().addChild (sChild);
-  }
-
-  /**
-   * Create a new LEGEND element with the passed child texts
-   *
-   * @param aChildren
-   *        The child texts to be appended. May be <code>null</code>
-   * @return The created HCLegend element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCLegend create (@Nullable final String... aChildren)
-  {
-    return new HCLegend ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new LEGEND element with the passed child node
-   *
-   * @param aChild
-   *        The child node to be appended. May be <code>null</code>
-   * @return The created HCLegend element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCLegend create (@Nullable final IHCNode aChild)
-  {
-    return new HCLegend ().addChild (aChild);
-  }
-
-  /**
-   * Create a new LEGEND element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created HCLegend element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCLegend create (@Nullable final IHCNode... aChildren)
-  {
-    return new HCLegend ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new LEGEND element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created HCLegend element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCLegend create (@Nullable final Iterable <? extends IHCNode> aChildren)
-  {
-    return new HCLegend ().addChildren (aChildren);
   }
 }

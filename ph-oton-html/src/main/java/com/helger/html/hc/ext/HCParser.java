@@ -38,10 +38,6 @@ public class HCParser extends XHTMLParser
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (HCParser.class);
 
-  @Deprecated
-  public HCParser ()
-  {}
-
   public HCParser (@Nonnull final EHTMLVersion eHTMLVersion)
   {
     super (eHTMLVersion);

@@ -39,7 +39,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSize, ICloneable <CollectingJSCodeProvider>
 {
-  private final ICommonsList <IHasJSCode> m_aList = new CommonsArrayList<> ();
+  private final ICommonsList <IHasJSCode> m_aList = new CommonsArrayList <> ();
 
   public CollectingJSCodeProvider ()
   {}
@@ -75,23 +75,6 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
    * @param aProvider
    *        The JS code provider to be added. May be <code>null</code>.
    * @return this for chaining
-   * @deprecated Use {@link #addAt(int,IHasJSCode)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public CollectingJSCodeProvider addAtIndex (@Nonnegative final int nIndex, @Nullable final IHasJSCode aProvider)
-  {
-    return addAt (nIndex, aProvider);
-  }
-
-  /**
-   * Add JS code at the specified index.
-   *
-   * @param nIndex
-   *        The index where the element should be added. Should be &ge; 0.
-   * @param aProvider
-   *        The JS code provider to be added. May be <code>null</code>.
-   * @return this for chaining
    */
   @Nonnull
   public CollectingJSCodeProvider addAt (@Nonnegative final int nIndex, @Nullable final IHasJSCode aProvider)
@@ -99,25 +82,6 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
     if (aProvider != null)
       m_aList.add (nIndex, aProvider);
     return this;
-  }
-
-  /**
-   * Add JS code at the specified index but unwrapping any
-   * {@link CollectingJSCodeProvider} instances.
-   *
-   * @param nIndex
-   *        The index where the element should be added. Should be &ge; 0.
-   * @param aProvider
-   *        The JS code provider to be added. May be <code>null</code>.
-   * @return this for chaining
-   * @deprecated Use {@link #addFlattenedAt(int,IHasJSCode)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public CollectingJSCodeProvider addAtIndexFlattened (@Nonnegative final int nIndex,
-                                                       @Nullable final IHasJSCode aProvider)
-  {
-    return addFlattenedAt (nIndex, aProvider);
   }
 
   /**
@@ -170,21 +134,6 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
   public CollectingJSCodeProvider prependFlattened (@Nullable final IHasJSCode aProvider)
   {
     return addFlattenedAt (0, aProvider);
-  }
-
-  /**
-   * Remove the entry at the specified index.
-   *
-   * @param nIndex
-   *        the index to be removed. Should be &ge; 0.
-   * @return this for chaining
-   * @deprecated Use {@link #removeAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public CollectingJSCodeProvider removeAtIndex (@Nonnegative final int nIndex)
-  {
-    return removeAt (nIndex);
   }
 
   /**

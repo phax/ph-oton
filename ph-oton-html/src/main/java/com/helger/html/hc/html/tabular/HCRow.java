@@ -77,21 +77,6 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @param nIndex
    *        The index where the cell should be added
    * @return The created cell. Never <code>null</code>.
-   * @deprecated Use {@link #addCellAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public IHCCell <?> addCell (@Nonnegative final int nIndex)
-  {
-    return addCellAt (nIndex);
-  }
-
-  /**
-   * Add an empty cell at the specified index.
-   *
-   * @param nIndex
-   *        The index where the cell should be added
-   * @return The created cell. Never <code>null</code>.
    */
   @Nonnull
   public IHCCell <?> addCellAt (@Nonnegative final int nIndex)
@@ -180,48 +165,12 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @param sCellText
    *        The text to be set into the cell. May be <code>null</code>.
    * @return the created table cell
-   * @deprecated Use {@link #addAndReturnCellAt(int,String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  @CheckReturnValue
-  public IHCCell <?> addAndReturnCell (@Nonnegative final int nIndex, @Nullable final String sCellText)
-  {
-    return addAndReturnCellAt (nIndex, sCellText);
-  }
-
-  /**
-   * Add a single cell with the given text element.
-   *
-   * @param nIndex
-   *        The index where the cell should be added
-   * @param sCellText
-   *        The text to be set into the cell. May be <code>null</code>.
-   * @return the created table cell
    */
   @Nonnull
   @CheckReturnValue
   public IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final String sCellText)
   {
     return addCellAt (nIndex).addChild (sCellText);
-  }
-
-  /**
-   * Add a single new cell and add the passed element.
-   *
-   * @param nIndex
-   *        The index where the cell should be added
-   * @param aCellChild
-   *        The element to add. May be <code>null</code>.
-   * @return The created cell. Never <code>null</code>.
-   * @deprecated Use {@link #addAndReturnCellAt(int,IHCNode)} instead
-   */
-  @Deprecated
-  @Nonnull
-  @CheckReturnValue
-  public IHCCell <?> addAndReturnCell (@Nonnegative final int nIndex, @Nullable final IHCNode aCellChild)
-  {
-    return addAndReturnCellAt (nIndex, aCellChild);
   }
 
   /**
@@ -248,24 +197,6 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @param aCellTexts
    *        The text to be set into the cell. May be <code>null</code>.
    * @return the created table cell
-   * @deprecated Use {@link #addAndReturnCellAt(int,String...)} instead
-   */
-  @Deprecated
-  @Nonnull
-  @CheckReturnValue
-  public IHCCell <?> addAndReturnCell (@Nonnegative final int nIndex, @Nullable final String... aCellTexts)
-  {
-    return addAndReturnCellAt (nIndex, aCellTexts);
-  }
-
-  /**
-   * Add a single cell with the given text elements.
-   *
-   * @param nIndex
-   *        The index where the cell should be added
-   * @param aCellTexts
-   *        The text to be set into the cell. May be <code>null</code>.
-   * @return the created table cell
    */
   @Nonnull
   @CheckReturnValue
@@ -282,49 +213,12 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @param aCellChildren
    *        The list of elements to add. May be <code>null</code>.
    * @return The created cell. Never <code>null</code>.
-   * @deprecated Use {@link #addAndReturnCellAt(int,IHCNode...)} instead
-   */
-  @Deprecated
-  @Nonnull
-  @CheckReturnValue
-  public IHCCell <?> addAndReturnCell (@Nonnegative final int nIndex, @Nullable final IHCNode... aCellChildren)
-  {
-    return addAndReturnCellAt (nIndex, aCellChildren);
-  }
-
-  /**
-   * Add a single new cell and add the passed elements.
-   *
-   * @param nIndex
-   *        The index where the cell should be added
-   * @param aCellChildren
-   *        The list of elements to add. May be <code>null</code>.
-   * @return The created cell. Never <code>null</code>.
    */
   @Nonnull
   @CheckReturnValue
   public IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode... aCellChildren)
   {
     return addCellAt (nIndex).addChildren (aCellChildren);
-  }
-
-  /**
-   * Add a single new cell and add the passed elements.
-   *
-   * @param nIndex
-   *        The index where the cell should be added
-   * @param aCellChildren
-   *        The list of elements to add. May be <code>null</code>.
-   * @return The created cell. Never <code>null</code>.
-   * @deprecated Use {@link #addAndReturnCellAt(int,Iterable)} instead
-   */
-  @Deprecated
-  @Nonnull
-  @CheckReturnValue
-  public IHCCell <?> addAndReturnCell (@Nonnegative final int nIndex,
-                                       @Nullable final Iterable <? extends IHCNode> aCellChildren)
-  {
-    return addAndReturnCellAt (nIndex, aCellChildren);
   }
 
   /**
@@ -422,46 +316,12 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @param sCellText
    *        The text to be set into the cell. May be <code>null</code>.
    * @return this (the table row)
-   * @deprecated Use {@link #addCellAt(int,String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCRow addCell (@Nonnegative final int nIndex, @Nullable final String sCellText)
-  {
-    return addCellAt (nIndex, sCellText);
-  }
-
-  /**
-   * Add a single cell with the given text element.
-   *
-   * @param nIndex
-   *        The index where the cell should be added
-   * @param sCellText
-   *        The text to be set into the cell. May be <code>null</code>.
-   * @return this (the table row)
    */
   @Nonnull
   public HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final String sCellText)
   {
     addCellAt (nIndex).addChild (sCellText);
     return this;
-  }
-
-  /**
-   * Add a single new cell and add the passed element.
-   *
-   * @param nIndex
-   *        The index where the cell should be added
-   * @param aChild
-   *        The element to add. May be <code>null</code>.
-   * @return this (the table row)
-   * @deprecated Use {@link #addCellAt(int,IHCNode)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCRow addCell (@Nonnegative final int nIndex, @Nullable final IHCNode aChild)
-  {
-    return addCellAt (nIndex, aChild);
   }
 
   /**
@@ -488,46 +348,12 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @param aCellChildren
    *        The list of texts to add. May be <code>null</code>.
    * @return this (the table row)
-   * @deprecated Use {@link #addCellAt(int,String...)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCRow addCell (@Nonnegative final int nIndex, @Nullable final String... aCellChildren)
-  {
-    return addCellAt (nIndex, aCellChildren);
-  }
-
-  /**
-   * Add a single new cell and add the passed texts.
-   *
-   * @param nIndex
-   *        The index where the cell should be added
-   * @param aCellChildren
-   *        The list of texts to add. May be <code>null</code>.
-   * @return this (the table row)
    */
   @Nonnull
   public HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final String... aCellChildren)
   {
     addCellAt (nIndex).addChildren (aCellChildren);
     return this;
-  }
-
-  /**
-   * Add a single new cell and add the passed elements.
-   *
-   * @param nIndex
-   *        The index where the cell should be added
-   * @param aCellChildren
-   *        The list of elements to add. May be <code>null</code>.
-   * @return this (the table row)
-   * @deprecated Use {@link #addCellAt(int,IHCNode...)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCRow addCell (@Nonnegative final int nIndex, @Nullable final IHCNode... aCellChildren)
-  {
-    return addCellAt (nIndex, aCellChildren);
   }
 
   /**
@@ -554,23 +380,6 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @param aCellChildren
    *        The list of elements to add. May be <code>null</code>.
    * @return this (the table row)
-   * @deprecated Use {@link #addCellAt(int,Iterable)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCRow addCell (@Nonnegative final int nIndex, @Nullable final Iterable <? extends IHCNode> aCellChildren)
-  {
-    return addCellAt (nIndex, aCellChildren);
-  }
-
-  /**
-   * Add a single new cell and add the passed elements.
-   *
-   * @param nIndex
-   *        The index where the cell should be added
-   * @param aCellChildren
-   *        The list of elements to add. May be <code>null</code>.
-   * @return this (the table row)
    */
   @Nonnull
   public HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final Iterable <? extends IHCNode> aCellChildren)
@@ -580,8 +389,8 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   }
 
   @Deprecated
-  @DevelopersNote ("Use either addCell or add parameters :)")
   @Nonnull
+  @DevelopersNote ("Use addCell")
   public HCRow addCells (@Nullable final String sCellChild)
   {
     return addCell (sCellChild);
@@ -604,8 +413,8 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   }
 
   @Deprecated
-  @DevelopersNote ("Use either addCell or add parameters :)")
   @Nonnull
+  @DevelopersNote ("Use addCell")
   public HCRow addCells (@Nullable final IHCNode aCellChild)
   {
     return addCell (aCellChild);
@@ -739,21 +548,6 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
       for (final IHCCell <?> aCell : directGetAllChildren ())
         ret.addChild (aCell);
     return ret;
-  }
-
-  /**
-   * Remove the cell at the specified index
-   *
-   * @param nIndex
-   *        The index to remove
-   * @return this
-   * @deprecated Use {@link #removeCellAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCRow removeCellAtIndex (@Nonnegative final int nIndex)
-  {
-    return removeCellAt (nIndex);
   }
 
   /**

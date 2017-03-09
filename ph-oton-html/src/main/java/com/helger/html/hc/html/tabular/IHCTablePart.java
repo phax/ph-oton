@@ -47,21 +47,6 @@ public interface IHCTablePart <THISTYPE extends IHCTablePart <THISTYPE>>
    * @param nIndex
    *        The index to add the row at. Must be &ge; 0.
    * @return The created row and never <code>null</code>.
-   * @deprecated Use {@link #addRowAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default HCRow addRow (@Nonnegative final int nIndex)
-  {
-    return addRowAt (nIndex);
-  }
-
-  /**
-   * Add a row at the specified index.
-   *
-   * @param nIndex
-   *        The index to add the row at. Must be &ge; 0.
-   * @return The created row and never <code>null</code>.
    */
   @Nonnull
   HCRow addRowAt (@Nonnegative int nIndex);

@@ -16,11 +16,6 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.html.hc.IHCNode;
-
 /**
  * Represents an HTML &lt;label&gt; element
  *
@@ -30,74 +25,4 @@ public class HCLabel extends AbstractHCLabel <HCLabel>
 {
   public HCLabel ()
   {}
-
-  /**
-   * Create a new LABEL element with the passed child text
-   *
-   * @param sChild
-   *        The child to be appended. May be <code>null</code>
-   * @return The created HCLabel element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCLabel create (@Nullable final String sChild)
-  {
-    return new HCLabel ().addChild (sChild);
-  }
-
-  /**
-   * Create a new LABEL element with the passed child texts
-   *
-   * @param aChildren
-   *        The child texts to be appended. May be <code>null</code>
-   * @return The created HCLabel element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCLabel create (@Nullable final String... aChildren)
-  {
-    return new HCLabel ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new LABEL element with the passed child node
-   *
-   * @param aChild
-   *        The child node to be appended. May be <code>null</code>
-   * @return The created HCLabel element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCLabel create (@Nullable final IHCNode aChild)
-  {
-    return new HCLabel ().addChild (aChild);
-  }
-
-  /**
-   * Create a new LABEL element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created HCLabel element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCLabel create (@Nullable final IHCNode... aChildren)
-  {
-    return new HCLabel ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new LABEL element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created HCLabel element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCLabel create (@Nullable final Iterable <? extends IHCNode> aChildren)
-  {
-    return new HCLabel ().addChildren (aChildren);
-  }
 }

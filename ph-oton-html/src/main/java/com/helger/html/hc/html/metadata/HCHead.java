@@ -52,10 +52,10 @@ public class HCHead extends AbstractHCElement <HCHead>
   private String m_sProfile;
   private final HCTitle m_aPageTitle = new HCTitle ();
   private final HCBase m_aBase = new HCBase ();
-  private final ICommonsList <HCMeta> m_aMetaElements = new CommonsArrayList<> ();
-  private final ICommonsList <HCLink> m_aLinks = new CommonsArrayList<> ();
-  private final ICommonsList <IHCNode> m_aCSS = new CommonsArrayList<> ();
-  private final ICommonsList <IHCNode> m_aJS = new CommonsArrayList<> ();
+  private final ICommonsList <HCMeta> m_aMetaElements = new CommonsArrayList <> ();
+  private final ICommonsList <HCLink> m_aLinks = new CommonsArrayList <> ();
+  private final ICommonsList <IHCNode> m_aCSS = new CommonsArrayList <> ();
+  private final ICommonsList <IHCNode> m_aJS = new CommonsArrayList <> ();
 
   public HCHead ()
   {
@@ -128,23 +128,6 @@ public class HCHead extends AbstractHCElement <HCHead>
     ValueEnforcer.notNull (aMetaElement, "MetaElement");
     m_aMetaElements.add (aMetaElement);
     return this;
-  }
-
-  /**
-   * Add the meta element at the specified index.
-   *
-   * @param nIndex
-   *        The index to be used. Should be &ge; 0.
-   * @param aMetaElement
-   *        The element to be added. May not be <code>null</code>.
-   * @return this for chaining
-   * @deprecated Use {@link #addMetaElementAt(int,HCMeta)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCHead addMetaElement (@Nonnegative final int nIndex, @Nonnull final HCMeta aMetaElement)
-  {
-    return addMetaElementAt (nIndex, aMetaElement);
   }
 
   /**
@@ -249,24 +232,6 @@ public class HCHead extends AbstractHCElement <HCHead>
    * @param aLink
    *        The link to be added. May not be <code>null</code>.
    * @return this
-   * @deprecated Use {@link #addLinkAt(int,HCLink)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCHead addLink (@Nonnegative final int nIndex, @Nonnull final HCLink aLink)
-  {
-    return addLinkAt (nIndex, aLink);
-  }
-
-  /**
-   * Add a link object to the head at the specified position.
-   *
-   * @param nIndex
-   *        The index where the links should be added (counting link elements
-   *        only)
-   * @param aLink
-   *        The link to be added. May not be <code>null</code>.
-   * @return this
    */
   @Nonnull
   public HCHead addLinkAt (@Nonnegative final int nIndex, @Nonnull final HCLink aLink)
@@ -317,23 +282,6 @@ public class HCHead extends AbstractHCElement <HCHead>
       throw new IllegalArgumentException (aCSS + " is not a valid CSS node!");
     m_aCSS.add (aCSS);
     return this;
-  }
-
-  /**
-   * Add a CSS node at the specified index.
-   *
-   * @param nIndex
-   *        The index to add. Should be &ge; 0.
-   * @param aCSS
-   *        The CSS node to be added. May not be <code>null</code>.
-   * @return this for chaining
-   * @deprecated Use {@link #addCSSAt(int,IHCNode)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCHead addCSS (@Nonnegative final int nIndex, @Nonnull final IHCNode aCSS)
-  {
-    return addCSSAt (nIndex, aCSS);
   }
 
   /**
@@ -401,23 +349,6 @@ public class HCHead extends AbstractHCElement <HCHead>
       throw new IllegalArgumentException (aJS + " is not a valid JS node!");
     m_aJS.add (aJS);
     return this;
-  }
-
-  /**
-   * Append some JavaScript code at the specified index
-   *
-   * @param nIndex
-   *        The index where the JS should be added (counting only JS elements)
-   * @param aJS
-   *        The JS to be added. May not be <code>null</code>.
-   * @return this
-   * @deprecated Use {@link #addJSAt(int,IHCNode)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCHead addJS (@Nonnegative final int nIndex, @Nonnull final IHCNode aJS)
-  {
-    return addJSAt (nIndex, aJS);
   }
 
   /**
@@ -554,7 +485,7 @@ public class HCHead extends AbstractHCElement <HCHead>
   @Nullable
   public ICommonsList <? extends IHCNode> getAllChildren ()
   {
-    final ICommonsList <IHCNode> ret = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     ret.add (m_aPageTitle);
     ret.add (m_aBase);
     ret.addAll (m_aMetaElements);

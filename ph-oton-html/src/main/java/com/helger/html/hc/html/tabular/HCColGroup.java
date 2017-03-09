@@ -78,23 +78,6 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    * @param aCol
    *        the column to add
    * @return this
-   * @deprecated Use {@link #addColumnAt(int,IHCCol)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCColGroup addColumn (@Nonnegative final int nIndex, @Nullable final IHCCol <?> aCol)
-  {
-    return addColumnAt (nIndex, aCol);
-  }
-
-  /**
-   * Add a new column.
-   *
-   * @param nIndex
-   *        The index where the column should be added
-   * @param aCol
-   *        the column to add
-   * @return this
    */
   @Nonnull
   public HCColGroup addColumnAt (@Nonnegative final int nIndex, @Nullable final IHCCol <?> aCol)
@@ -150,21 +133,6 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
   public IHCCol <?> getColumnOfIndex (final int nIndex)
   {
     return getChildAtIndex (nIndex);
-  }
-
-  /**
-   * Remove the column at the specified index
-   *
-   * @param nIndex
-   *        The index of the column to be removed
-   * @return this
-   * @deprecated Use {@link #removeColumnAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public HCColGroup removeColumnAtIndex (final int nIndex)
-  {
-    return removeColumnAt (nIndex);
   }
 
   /**

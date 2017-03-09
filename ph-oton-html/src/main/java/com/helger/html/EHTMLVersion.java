@@ -110,13 +110,6 @@ public enum EHTMLVersion
   };
 
   /**
-   * XHTML 1.1 is the default HTML version to use
-   */
-  @Nonnull
-  @Deprecated
-  public static final EHTMLVersion DEFAULT = XHTML11;
-
-  /**
    * @return The document type matching this HTML version. Never
    *         <code>null</code>.
    */

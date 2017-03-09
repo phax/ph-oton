@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.DevelopersNote;
 import com.helger.commons.annotation.UnsupportedOperation;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.type.ObjectType;
@@ -88,6 +89,7 @@ public final class AuditHelper
   @SuppressWarnings ("unused")
   @Deprecated
   @UnsupportedOperation
+  @DevelopersNote ("Use the version with parameters!")
   public static void onAuditCreateFailure (@Nonnull final ObjectType aObjectType)
   {
     throw new UnsupportedOperationException ();
@@ -101,6 +103,7 @@ public final class AuditHelper
   @SuppressWarnings ("unused")
   @Deprecated
   @UnsupportedOperation
+  @DevelopersNote ("Use the version with parameters!")
   public static void onAuditModifySuccess (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat)
   {
     throw new UnsupportedOperationException ();
@@ -116,6 +119,7 @@ public final class AuditHelper
   @SuppressWarnings ("unused")
   @Deprecated
   @UnsupportedOperation
+  @DevelopersNote ("Use the version with parameters!")
   public static void onAuditModifyFailure (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat)
   {
     throw new UnsupportedOperationException ();
@@ -131,6 +135,7 @@ public final class AuditHelper
   @SuppressWarnings ("unused")
   @Deprecated
   @UnsupportedOperation
+  @DevelopersNote ("Use the version with parameters!")
   public static void onAuditDeleteSuccess (@Nonnull final ObjectType aObjectType)
   {
     throw new UnsupportedOperationException ();
@@ -144,6 +149,7 @@ public final class AuditHelper
   @SuppressWarnings ("unused")
   @Deprecated
   @UnsupportedOperation
+  @DevelopersNote ("Use the version with parameters!")
   public static void onAuditDeleteFailure (@Nonnull final ObjectType aObjectType)
   {
     throw new UnsupportedOperationException ();
@@ -157,6 +163,7 @@ public final class AuditHelper
   @SuppressWarnings ("unused")
   @Deprecated
   @UnsupportedOperation
+  @DevelopersNote ("Use the version with parameters!")
   public static void onAuditUndeleteSuccess (@Nonnull final ObjectType aObjectType)
   {
     throw new UnsupportedOperationException ();
@@ -170,6 +177,7 @@ public final class AuditHelper
   @SuppressWarnings ("unused")
   @Deprecated
   @UnsupportedOperation
+  @DevelopersNote ("Use the version with parameters!")
   public static void onAuditUndeleteFailure (@Nonnull final ObjectType aObjectType)
   {
     throw new UnsupportedOperationException ();

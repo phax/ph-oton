@@ -73,23 +73,6 @@ public interface IHCSelect <THISTYPE extends IHCSelect <THISTYPE>> extends IHCCo
    * @param aOption
    *        The option to be added. May not be <code>null</code>.
    * @return this for chaining
-   * @deprecated Use {@link #addOptionAt(int,HCOption)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default HCOption addOptionAtIndex (@Nonnegative final int nIndex, @Nonnull final HCOption aOption)
-  {
-    return addOptionAt (nIndex, aOption);
-  }
-
-  /**
-   * Add a new option at the specified index.
-   *
-   * @param nIndex
-   *        The index to use. Should be &ge; 0.
-   * @param aOption
-   *        The option to be added. May not be <code>null</code>.
-   * @return this for chaining
    */
   @Nonnull
   HCOption addOptionAt (@Nonnegative int nIndex, @Nonnull HCOption aOption);
@@ -137,27 +120,6 @@ public interface IHCSelect <THISTYPE extends IHCSelect <THISTYPE>> extends IHCCo
    * @param sText
    *        The text of the option to be added. May be <code>null</code>.
    * @return this for chaining
-   * @deprecated Use {@link #addOptionAt(int,String,String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default HCOption addOptionAtIndex (@Nonnegative final int nIndex,
-                                     @Nullable final String sValue,
-                                     @Nullable final String sText)
-  {
-    return addOptionAt (nIndex, sValue, sText);
-  }
-
-  /**
-   * Add a new option at the specified index.
-   *
-   * @param nIndex
-   *        The index to use. Should be &ge; 0.
-   * @param sValue
-   *        The value of the option to be added. May be <code>null</code>.
-   * @param sText
-   *        The text of the option to be added. May be <code>null</code>.
-   * @return this for chaining
    */
   @Nonnull
   default HCOption addOptionAt (@Nonnegative final int nIndex,
@@ -183,39 +145,9 @@ public interface IHCSelect <THISTYPE extends IHCSelect <THISTYPE>> extends IHCCo
    * @param nIndex
    *        The index to be removed. Should be &ge; 0.
    * @return this for chaining
-   * @deprecated Use {@link #removeOptionAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default THISTYPE removeOptionAtIndex (@Nonnegative final int nIndex)
-  {
-    return removeOptionAt (nIndex);
-  }
-
-  /**
-   * Remove the option at the specified index.
-   *
-   * @param nIndex
-   *        The index to be removed. Should be &ge; 0.
-   * @return this for chaining
    */
   @Nonnull
   THISTYPE removeOptionAt (@Nonnegative int nIndex);
-
-  /**
-   * Remove the option group at the specified index.
-   *
-   * @param nIndex
-   *        The index to be removed. Should be &ge; 0.
-   * @return this for chaining
-   * @deprecated Use {@link #removeOptionGroupAt(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  default THISTYPE removeOptionGroupAtIndex (@Nonnegative final int nIndex)
-  {
-    return removeOptionGroupAt (nIndex);
-  }
 
   /**
    * Remove the option group at the specified index.

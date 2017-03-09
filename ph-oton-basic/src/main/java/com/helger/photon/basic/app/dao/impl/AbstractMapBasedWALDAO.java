@@ -35,6 +35,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.CodingStyleguideUnaware;
+import com.helger.commons.annotation.DevelopersNote;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -262,6 +263,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   @MustBeLocked (ELockType.WRITE)
   @OverridingMethodsMustInvokeSuper
   @Deprecated
+  @DevelopersNote ("Avoid that this method is overridden!")
   protected final void markAsChanged (@Nonnull final IMPLTYPE aModifiedElement,
                                       @Nonnull final EDAOActionType eActionType)
   {

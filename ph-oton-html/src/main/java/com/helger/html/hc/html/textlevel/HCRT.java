@@ -16,12 +16,8 @@
  */
 package com.helger.html.hc.html.textlevel;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.EHTMLElement;
 import com.helger.html.annotation.SinceHTML5;
-import com.helger.html.hc.IHCNode;
 
 @SinceHTML5
 public class HCRT extends AbstractHCRubyChild <HCRT>
@@ -29,75 +25,5 @@ public class HCRT extends AbstractHCRubyChild <HCRT>
   public HCRT ()
   {
     super (EHTMLElement.RT);
-  }
-
-  /**
-   * Create a new RT element with the passed child text
-   *
-   * @param sChild
-   *        The child to be appended. May be <code>null</code>
-   * @return The created HCRT element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCRT create (@Nullable final String sChild)
-  {
-    return new HCRT ().addChild (sChild);
-  }
-
-  /**
-   * Create a new RT element with the passed child texts
-   *
-   * @param aChildren
-   *        The child texts to be appended. May be <code>null</code>
-   * @return The created HCRT element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCRT create (@Nullable final String... aChildren)
-  {
-    return new HCRT ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new RT element with the passed child node
-   *
-   * @param aChild
-   *        The child node to be appended. May be <code>null</code>
-   * @return The created HCRT element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCRT create (@Nullable final IHCNode aChild)
-  {
-    return new HCRT ().addChild (aChild);
-  }
-
-  /**
-   * Create a new RT element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created HCRT element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCRT create (@Nullable final IHCNode... aChildren)
-  {
-    return new HCRT ().addChildren (aChildren);
-  }
-
-  /**
-   * Create a new RT element with the passed child nodes
-   *
-   * @param aChildren
-   *        The child nodes to be appended. May be <code>null</code>
-   * @return The created HCRT element and never <code>null</code>
-   */
-  @Nonnull
-  @Deprecated
-  public static HCRT create (@Nullable final Iterable <? extends IHCNode> aChildren)
-  {
-    return new HCRT ().addChildren (aChildren);
   }
 }
