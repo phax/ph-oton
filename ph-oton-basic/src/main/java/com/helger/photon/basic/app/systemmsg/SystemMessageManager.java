@@ -25,8 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -51,9 +49,7 @@ public final class SystemMessageManager extends AbstractSimpleDAO
   private static final String ELEMENT_MESSAGE = "message";
   private static final Logger s_aLogger = LoggerFactory.getLogger (SystemMessageManager.class);
 
-  private LocalDateTime m_aLastUpdate;
-  private ESystemMessageType m_eMessageType = ESystemMessageType.DEFAULT;
-  private String m_sMessage;
+  private final SystemMessageData m_aData = new SystemMessageData ();
 
   public SystemMessageManager (@Nullable final String sFilename) throws DAOException
   {
@@ -64,9 +60,7 @@ public final class SystemMessageManager extends AbstractSimpleDAO
   public void reload ()
   {
     m_aRWLock.writeLocked ( () -> {
-      m_aLastUpdate = null;
-      m_eMessageType = ESystemMessageType.DEFAULT;
-      m_sMessage = null;
+      m_aData.internalReset ();
       try
       {
         initialRead ();
@@ -83,9 +77,9 @@ public final class SystemMessageManager extends AbstractSimpleDAO
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
     final IMicroElement eRoot = aDoc.getDocumentElement ();
-    m_aLastUpdate = eRoot.getAttributeValueWithConversion (ATTR_LAST_UPDATE, LocalDateTime.class);
-    m_eMessageType = ESystemMessageType.getFromIDOrDefault (eRoot.getAttributeValue (ATTR_MESSAGE_TYPE));
-    m_sMessage = MicroHelper.getChildTextContent (eRoot, ELEMENT_MESSAGE);
+    m_aData.internalSetLastUpdate (eRoot.getAttributeValueWithConversion (ATTR_LAST_UPDATE, LocalDateTime.class));
+    m_aData.internalSetMessageType (ESystemMessageType.getFromIDOrDefault (eRoot.getAttributeValue (ATTR_MESSAGE_TYPE)));
+    m_aData.internalSetMessage (MicroHelper.getChildTextContent (eRoot, ELEMENT_MESSAGE));
     return EChange.UNCHANGED;
   }
 
@@ -94,28 +88,28 @@ public final class SystemMessageManager extends AbstractSimpleDAO
   {
     final IMicroDocument ret = new MicroDocument ();
     final IMicroElement eRoot = ret.appendElement (ELEMENT_SYSTEM_MESSAGE);
-    eRoot.setAttributeWithConversion (ATTR_LAST_UPDATE, m_aLastUpdate);
-    eRoot.setAttribute (ATTR_MESSAGE_TYPE, m_eMessageType.getID ());
-    eRoot.appendElement (ELEMENT_MESSAGE).appendText (m_sMessage);
+    eRoot.setAttributeWithConversion (ATTR_LAST_UPDATE, m_aData.getLastUpdateDT ());
+    eRoot.setAttribute (ATTR_MESSAGE_TYPE, m_aData.getMessageTypeID ());
+    eRoot.appendElement (ELEMENT_MESSAGE).appendText (m_aData.getMessage ());
     return ret;
   }
 
   @Nullable
   public LocalDateTime getLastUpdateDT ()
   {
-    return m_aRWLock.readLocked ( () -> m_aLastUpdate);
+    return m_aRWLock.readLocked ( () -> m_aData.getLastUpdateDT ());
   }
 
   @Nonnull
   public ESystemMessageType getMessageType ()
   {
-    return m_aRWLock.readLocked ( () -> m_eMessageType);
+    return m_aRWLock.readLocked ( () -> m_aData.getMessageType ());
   }
 
   @Nullable
   public String getSystemMessage ()
   {
-    return m_aRWLock.readLocked ( () -> m_sMessage);
+    return m_aRWLock.readLocked ( () -> m_aData.getMessage ());
   }
 
   public boolean hasSystemMessage ()
@@ -131,14 +125,9 @@ public final class SystemMessageManager extends AbstractSimpleDAO
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (m_eMessageType.equals (eMessageType) && EqualsHelper.equals (m_sMessage, sMessage))
+      if (m_aData.setSystemMessage (eMessageType, sMessage).isUnchanged ())
         return EChange.UNCHANGED;
 
-      m_eMessageType = eMessageType;
-      m_sMessage = sMessage;
-
-      // Update last update
-      m_aLastUpdate = PDTFactory.getCurrentLocalDateTime ();
       markAsChanged ();
     }
     finally
@@ -153,9 +142,6 @@ public final class SystemMessageManager extends AbstractSimpleDAO
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).appendIfNotNull ("lastUpdate", m_aLastUpdate)
-                                       .append ("messageType", m_eMessageType)
-                                       .append ("message", m_sMessage)
-                                       .getToString ();
+    return new ToStringGenerator (this).appendIfNotNull ("Data", m_aData).getToString ();
   }
 }
