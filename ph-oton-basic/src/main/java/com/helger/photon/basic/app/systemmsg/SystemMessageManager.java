@@ -128,7 +128,9 @@ public final class SystemMessageManager extends AbstractSimpleDAO
   {
     ValueEnforcer.notNull (eMessageType, "MessageType");
 
-    return m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
       if (m_eMessageType.equals (eMessageType) && EqualsHelper.equals (m_sMessage, sMessage))
         return EChange.UNCHANGED;
 
@@ -138,9 +140,14 @@ public final class SystemMessageManager extends AbstractSimpleDAO
       // Update last update
       m_aLastUpdate = PDTFactory.getCurrentLocalDateTime ();
       markAsChanged ();
-      AuditHelper.onAuditExecuteSuccess ("update-system-message", eMessageType, sMessage);
-      return EChange.CHANGED;
-    });
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+
+    AuditHelper.onAuditExecuteSuccess ("update-system-message", eMessageType, sMessage);
+    return EChange.CHANGED;
   }
 
   @Override
