@@ -26,6 +26,15 @@ public class SystemMessageData implements ISystemMessageData
   private ESystemMessageType m_eMessageType = ESystemMessageType.DEFAULT;
   private String m_sMessage;
 
+  public SystemMessageData ()
+  {}
+
+  public SystemMessageData (@Nonnull final ESystemMessageType eMessageType, @Nullable final String sMessage)
+  {
+    internalSetMessageType (eMessageType);
+    internalSetMessage (sMessage);
+  }
+
   @Nullable
   public LocalDateTime getLastUpdateDT ()
   {
@@ -44,25 +53,25 @@ public class SystemMessageData implements ISystemMessageData
     return m_sMessage;
   }
 
-  void internalReset ()
+  final void internalReset ()
   {
     internalSetLastUpdate (null);
     internalSetMessageType (ESystemMessageType.DEFAULT);
     internalSetMessage (null);
   }
 
-  void internalSetLastUpdate (@Nullable final LocalDateTime aLastUpdate)
+  final void internalSetLastUpdate (@Nullable final LocalDateTime aLastUpdate)
   {
     m_aLastUpdate = aLastUpdate;
   }
 
-  void internalSetMessageType (@Nonnull final ESystemMessageType eType)
+  final void internalSetMessageType (@Nonnull final ESystemMessageType eType)
   {
     ValueEnforcer.notNull (eType, "Type");
     m_eMessageType = eType;
   }
 
-  void internalSetMessage (@Nullable final String sMessage)
+  final void internalSetMessage (@Nullable final String sMessage)
   {
     m_sMessage = sMessage;
   }
@@ -75,11 +84,10 @@ public class SystemMessageData implements ISystemMessageData
     if (m_eMessageType.equals (eMessageType) && EqualsHelper.equals (m_sMessage, sMessage))
       return EChange.UNCHANGED;
 
-    m_eMessageType = eMessageType;
-    m_sMessage = sMessage;
+    internalSetMessageType (eMessageType);
+    internalSetMessage (sMessage);
+    internalSetLastUpdate (PDTFactory.getCurrentLocalDateTime ());
 
-    // Update last update
-    m_aLastUpdate = PDTFactory.getCurrentLocalDateTime ();
     return EChange.CHANGED;
   }
 
