@@ -1,6 +1,5 @@
 package com.helger.photon.basic.app.systemmsg;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
@@ -8,12 +7,10 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -23,7 +20,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @since 7.1.0
  */
 @NotThreadSafe
-public class SystemMessageData implements Serializable
+public class SystemMessageData implements ISystemMessageData
 {
   private LocalDateTime m_aLastUpdate;
   private ESystemMessageType m_eMessageType = ESystemMessageType.DEFAULT;
@@ -41,22 +38,10 @@ public class SystemMessageData implements Serializable
     return m_eMessageType;
   }
 
-  @Nonnull
-  @Nonempty
-  public String getMessageTypeID ()
-  {
-    return getMessageType ().getID ();
-  }
-
   @Nullable
   public String getMessage ()
   {
     return m_sMessage;
-  }
-
-  public boolean hasMessage ()
-  {
-    return StringHelper.hasText (getMessage ());
   }
 
   void internalReset ()
