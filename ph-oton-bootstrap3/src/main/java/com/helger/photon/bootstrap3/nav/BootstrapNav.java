@@ -20,11 +20,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Since;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElementWithChildren;
+import com.helger.html.hc.html.forms.IHCButton;
 import com.helger.html.hc.html.grouping.AbstractHCUL;
 import com.helger.html.hc.html.grouping.IHCLI;
 import com.helger.html.hc.html.textlevel.HCA;
@@ -121,6 +123,22 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
       // Icon is the first child of the content
       aContent.addChildAt (0, aIcon.getAsNode ());
     }
+    return this;
+  }
+
+  @Nonnull
+  @Since ("7.10")
+  public BootstrapNav addButton (@Nonnull final IHCButton <?> aButton)
+  {
+    return addButton (aButton, DEFAULT_DISABLED);
+  }
+
+  @Nonnull
+  @Since ("7.10")
+  public BootstrapNav addButton (@Nonnull final IHCButton <?> aButton, final boolean bDisabled)
+  {
+    aButton.addClass (CBootstrapCSS.NAVBAR_BTN);
+    addItem (aButton, bDisabled, null);
     return this;
   }
 
