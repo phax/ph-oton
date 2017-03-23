@@ -27,6 +27,8 @@ Contained subprojects are:
   * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
 
 Release history:
+  * v7.1.0 - work in progress
+    * Updated to Jetty 9.4.3
   * v7.0.4 - 2017-03-09
     * Updated to Jetty 9.4.2
     * API extensions
@@ -66,7 +68,7 @@ Release history:
     * first ph-oton release based on old webbasics and webctrls etc.
     * requires ph-commons 6.x
 
-#Requirements
+# Requirements
   * Java 1.8+ is required for building 
   * Application server requirements:
       * At least Tomcat 8.x
