@@ -36,11 +36,10 @@ import com.helger.photon.core.app.error.InternalErrorSettings;
 import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.quartz.DisallowConcurrentExecution;
 import com.helger.quartz.IJobExecutionContext;
-import com.helger.quartz.ISimpleTrigger;
+import com.helger.quartz.IScheduleBuilder;
+import com.helger.quartz.ITrigger;
 import com.helger.quartz.JobDataMap;
 import com.helger.quartz.JobExecutionException;
-import com.helger.quartz.ScheduleBuilder;
-import com.helger.quartz.SimpleScheduleBuilder;
 import com.helger.quartz.TriggerKey;
 import com.helger.schedule.quartz.GlobalQuartzScheduler;
 import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
@@ -122,11 +121,12 @@ public class CheckDiskUsableSpaceJob extends AbstractPhotonJob
    * @return The created trigger key for further usage. Never <code>null</code>.
    */
   @Nonnull
-  public static TriggerKey schedule (@Nonnull final ScheduleBuilder <ISimpleTrigger> aScheduleBuilder,
+  public static TriggerKey schedule (@Nonnull final IScheduleBuilder <? extends ITrigger> aScheduleBuilder,
                                      @Nonnull @Nonempty final String sApplicationID,
                                      @Nonnegative final long nThresholdBytes)
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
+    ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
     ValueEnforcer.isGE0 (nThresholdBytes, "ThresholdBytes");
 
     final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap<> ();
@@ -136,7 +136,7 @@ public class CheckDiskUsableSpaceJob extends AbstractPhotonJob
     return GlobalQuartzScheduler.getInstance ().scheduleJob (CheckDiskUsableSpaceJob.class.getName (),
                                                              JDK8TriggerBuilder.newTrigger ()
                                                                                .startNow ()
-                                                                               .withSchedule (SimpleScheduleBuilder.repeatMinutelyForever (60)),
+                                                                               .withSchedule (aScheduleBuilder),
                                                              CheckDiskUsableSpaceJob.class,
                                                              aJobDataMap);
   }
