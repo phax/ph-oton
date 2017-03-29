@@ -33,7 +33,7 @@ import com.helger.commons.string.ToStringGenerator;
  * System message data used in {@link SystemMessageManager}.
  *
  * @author Philip Helger
- * @since 7.1.0
+ * @since 7.0.5
  */
 @NotThreadSafe
 public class SystemMessageData implements ISystemMessageData

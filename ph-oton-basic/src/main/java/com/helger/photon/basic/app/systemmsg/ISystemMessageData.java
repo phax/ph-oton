@@ -29,7 +29,7 @@ import com.helger.commons.string.StringHelper;
  * System message data read-only interface.
  *
  * @author Philip Helger
- * @since 7.1.0
+ * @since 7.0.5
  */
 public interface ISystemMessageData extends Serializable
 {
