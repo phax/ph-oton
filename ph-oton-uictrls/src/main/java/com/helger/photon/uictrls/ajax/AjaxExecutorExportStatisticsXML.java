@@ -37,7 +37,7 @@ public class AjaxExecutorExportStatisticsXML extends AbstractAjaxExecutor
   protected AjaxStringResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
-    final String sXMLString = MicroWriter.getXMLString (aDoc);
+    final String sXMLString = MicroWriter.getNodeAsString (aDoc);
     return AjaxStringResponse.createForXML (true, sXMLString);
   }
 }

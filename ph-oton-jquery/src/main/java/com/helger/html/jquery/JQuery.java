@@ -201,13 +201,13 @@ public final class JQuery
   @Nonnull
   public static JQueryInvocation parseHTML (@Nonnull final Node aHTML)
   {
-    return parseHTML (XMLWriter.getXMLString (aHTML));
+    return parseHTML (XMLWriter.getNodeAsString (aHTML));
   }
 
   @Nonnull
   public static JQueryInvocation parseHTML (@Nonnull final IMicroNode aHTML)
   {
-    return parseHTML (MicroWriter.getXMLString (aHTML));
+    return parseHTML (MicroWriter.getNodeAsString (aHTML));
   }
 
   @Nonnull
@@ -249,13 +249,13 @@ public final class JQuery
   @Nonnull
   public static JQueryInvocation parseXML (@Nonnull final Node aXML)
   {
-    return parseXML (XMLWriter.getXMLString (aXML));
+    return parseXML (XMLWriter.getNodeAsString (aXML));
   }
 
   @Nonnull
   public static JQueryInvocation parseXML (@Nonnull final IMicroNode aXML)
   {
-    return parseXML (MicroWriter.getXMLString (aXML));
+    return parseXML (MicroWriter.getNodeAsString (aXML));
   }
 
   @Nonnull

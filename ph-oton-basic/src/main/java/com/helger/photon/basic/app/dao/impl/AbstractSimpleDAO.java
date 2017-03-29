@@ -191,7 +191,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
       {
         case READ:
           // Check for read-rights
-          if (!FileHelper.canRead (aFile))
+          if (!aFile.canRead ())
             throw new DAOException ("The DAO of class " +
                                     getClass ().getName () +
                                     " has no access rights to read from '" +
@@ -200,7 +200,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
           break;
         case WRITE:
           // Check for write-rights
-          if (!FileHelper.canWrite (aFile))
+          if (!aFile.canWrite ())
             throw new DAOException ("The DAO of class " +
                                     getClass ().getName () +
                                     " has no access rights to write to '" +
@@ -471,7 +471,7 @@ public abstract class AbstractSimpleDAO extends AbstractDAO
     if (getExceptionHandlersWrite ().hasCallbacks ())
     {
       final IReadableResource aRes = new FileSystemResource (sErrorFilename);
-      final String sXMLContent = aDoc == null ? "no XML document created" : MicroWriter.getXMLString (aDoc);
+      final String sXMLContent = aDoc == null ? "no XML document created" : MicroWriter.getNodeAsString (aDoc);
       getExceptionHandlersWrite ().forEach (aCB -> aCB.onDAOWriteException (t, aRes, sXMLContent));
     }
   }

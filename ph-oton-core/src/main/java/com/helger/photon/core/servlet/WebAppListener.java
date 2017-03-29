@@ -49,7 +49,6 @@ import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.lang.ClassPathHelper;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.string.StringHelper;
@@ -70,7 +69,6 @@ import com.helger.servlet.StaticServerInfo;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
-import com.helger.xml.serialize.write.XMLWriterSettings;
 import com.helger.xml.util.XMLCleanup;
 import com.helger.xml.util.statistics.StatisticsExporter;
 
@@ -619,7 +617,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
         aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
         aDoc.getDocumentElement ()
             .setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
-        SimpleFileIO.writeFile (aDestPath, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
+        MicroWriter.writeToFile (aDoc, aDestPath);
       }
       catch (final Throwable t)
       {

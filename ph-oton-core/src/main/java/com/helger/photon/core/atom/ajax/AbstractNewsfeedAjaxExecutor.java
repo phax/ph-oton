@@ -118,7 +118,7 @@ public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor
     // Performance improvement: set the Last-Modified HTTP header if available
     final LocalDateTime aLDT = aFeed.getUpdated () != null ? aFeed.getUpdated ().getDateTime () : null;
 
-    final String sXML = MicroWriter.getXMLString (aFeed.getAsDocument ());
+    final String sXML = MicroWriter.getNodeAsString (aFeed.getAsDocument ());
     StatisticsManager.getTimerHandler (AbstractNewsfeedAjaxExecutor.class.getName () + "$TIMER." + m_sFeedID)
                      .addTime (aSW.stopAndGetMillis ());
 

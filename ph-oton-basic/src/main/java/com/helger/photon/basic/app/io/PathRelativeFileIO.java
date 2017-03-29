@@ -32,7 +32,6 @@ import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.EAppend;
-import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.iterate.FileSystemRecursiveIterator;
@@ -64,20 +63,20 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
       if (aFile.isFile ())
       {
         // Check if files are read-write
-        if (!FileHelper.canRead (aFile))
+        if (!aFile.canRead ())
           throw new IllegalArgumentException ("Cannot read file " + aFile);
-        if (!FileHelper.canWrite (aFile))
+        if (!aFile.canWrite ())
           s_aLogger.warn ("Cannot write file " + aFile);
         ++nFiles;
       }
       else
         if (aFile.isDirectory ())
         {
-          if (!FileHelper.canRead (aFile))
+          if (!aFile.canRead ())
             throw new IllegalArgumentException ("Cannot read in directory " + aFile);
-          if (!FileHelper.canWrite (aFile))
+          if (!aFile.canWrite ())
             s_aLogger.warn ("Cannot write in directory " + aFile);
-          if (!FileHelper.canExecute (aFile))
+          if (!aFile.canExecute ())
             s_aLogger.warn ("Cannot execute in directory " + aFile);
           ++nDirs;
         }

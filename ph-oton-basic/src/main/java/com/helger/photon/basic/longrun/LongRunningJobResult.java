@@ -90,7 +90,7 @@ public class LongRunningJobResult implements Serializable
       case FILE:
         return getResultFile ().getAbsolutePath ();
       case XML:
-        return MicroWriter.getXMLString (getResultXML ());
+        return MicroWriter.getNodeAsString (getResultXML ());
       case TEXT:
         return getResultText ();
       case LINK:

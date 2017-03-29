@@ -97,7 +97,7 @@ public final class InternalErrorHandler
   private static final Logger s_aLogger = LoggerFactory.getLogger (InternalErrorHandler.class);
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
-  private static final ICommonsMap <String, MutableInt> s_aIntErrCache = new CommonsHashMap<> ();
+  private static final ICommonsMap <String, MutableInt> s_aIntErrCache = new CommonsHashMap <> ();
 
   private InternalErrorHandler ()
   {}
@@ -299,7 +299,7 @@ public final class InternalErrorHandler
                              ".xml";
     SimpleFileIO.writeFile (WebFileIO.getDataIO ()
                                      .getFile ("internal-errors/" + PDTFactory.getCurrentYear () + "/" + sFilename),
-                            MicroWriter.getXMLString (aDoc),
+                            MicroWriter.getNodeAsString (aDoc),
                             XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
   }
 
