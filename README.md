@@ -27,7 +27,7 @@ Contained subprojects are:
   * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
 
 Release history:
-  * v7.0.5 - work in progress
+  * v7.0.5 - 2017-03-30
     * Updated to Jetty 9.4.3
     * Updated to ph-schedule 3.6.1
     * Improved SystemMessage API
@@ -84,7 +84,7 @@ Release history:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>7.0.4</version>
+        <version>7.0.5</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
