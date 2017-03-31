@@ -135,7 +135,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
 
   public boolean hasAnyClientExceptGlobal ()
   {
-    return containsAny (c -> !c.isGlobalClient ());
+    return containsAny (x -> !x.isGlobalClient ());
   }
 
   @Nonnegative
