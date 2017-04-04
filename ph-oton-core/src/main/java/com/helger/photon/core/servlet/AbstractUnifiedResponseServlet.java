@@ -62,6 +62,7 @@ import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.servlet.ServletContextPathHolder;
 import com.helger.servlet.StaticServerInfo;
+import com.helger.servlet.async.ServletAsyncSpec;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.ERedirectMode;
 import com.helger.servlet.response.UnifiedResponse;
@@ -141,6 +142,12 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
 
   protected AbstractUnifiedResponseServlet ()
   {
+    this (ServletAsyncSpec.createSync ());
+  }
+
+  protected AbstractUnifiedResponseServlet (@Nonnull final ServletAsyncSpec aAsyncSpec)
+  {
+    super (aAsyncSpec);
     ServletStatusManager.onServletCtor (getClass ());
   }
 
@@ -390,10 +397,10 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     return new UnifiedResponse (eHTTPVersion, eHTTPMethod, aHttpRequest);
   }
 
-  private void _run (@Nonnull final HttpServletRequest aHttpRequest,
-                     @Nonnull final HttpServletResponse aHttpResponse,
-                     @Nonnull final IRequestWebScope aRequestScope,
-                     @Nonnull final EHTTPMethod eHTTPMethod) throws ServletException, IOException
+  private void _runServlet (@Nonnull final HttpServletRequest aHttpRequest,
+                            @Nonnull final HttpServletResponse aHttpResponse,
+                            @Nonnull final IRequestWebScope aRequestScope,
+                            @Nonnull final EHTTPMethod eHTTPMethod) throws ServletException, IOException
   {
     // Increment invocation counter
     ServletStatusManager.onServletInvocation (getClass ());
@@ -617,6 +624,14 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         s_aLogger.error ("onRequestEnd failed", t);
       }
     }
+  }
+
+  private void _run (@Nonnull final HttpServletRequest aHttpRequest,
+                     @Nonnull final HttpServletResponse aHttpResponse,
+                     @Nonnull final IRequestWebScope aRequestScope,
+                     @Nonnull final EHTTPMethod eHTTPMethod) throws ServletException, IOException
+  {
+    _runServlet (aHttpRequest, aHttpResponse, aRequestScope, eHTTPMethod);
   }
 
   @Override

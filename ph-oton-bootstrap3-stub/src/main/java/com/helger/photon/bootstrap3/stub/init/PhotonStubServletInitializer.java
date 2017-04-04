@@ -98,6 +98,7 @@ public final class PhotonStubServletInitializer
         if (aFilter != null)
         {
           // Filter is new
+          aFilter.setAsyncSupported (true);
           aFilter.addMappingForUrlPatterns (null, false, "/*");
         }
       }
@@ -108,6 +109,7 @@ public final class PhotonStubServletInitializer
         if (aFilter != null)
         {
           // Filter is new
+          aFilter.setAsyncSupported (true);
           aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_ENCODING, StandardCharsets.UTF_8.name ());
           aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_FORCE_ENCODING, Boolean.TRUE.toString ());
           aFilter.addMappingForUrlPatterns (null, false, "/*");
@@ -118,28 +120,40 @@ public final class PhotonStubServletInitializer
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationAjaxServlet",
                                                                      SecureApplicationAjaxServlet.class);
         if (aServlet != null)
+        {
+          aServlet.setAsyncSupported (true);
           aServlet.addMapping (SecureApplicationAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
+        }
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PublicApplicationAjaxServlet",
                                                                      PublicApplicationAjaxServlet.class);
         if (aServlet != null)
+        {
+          aServlet.setAsyncSupported (true);
           aServlet.addMapping (PublicApplicationAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
+        }
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationAPIServlet",
                                                                      SecureApplicationAPIServlet.class);
         if (aServlet != null)
+        {
+          aServlet.setAsyncSupported (true);
           aServlet.addMapping (SecureApplicationAPIServlet.SERVLET_DEFAULT_PATH + "/*");
+        }
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PublicApplicationAPIServlet",
                                                                      PublicApplicationAPIServlet.class);
         if (aServlet != null)
+        {
+          aServlet.setAsyncSupported (true);
           aServlet.addMapping (PublicApplicationAPIServlet.SERVLET_DEFAULT_PATH + "/*");
+        }
       }
 
       {
@@ -171,7 +185,9 @@ public final class PhotonStubServletInitializer
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("LogoutServlet", LogoutServlet.class);
         if (aServlet != null)
+        {
           aServlet.addMapping (LogoutServlet.SERVLET_DEFAULT_PATH + "/*");
+        }
       }
 
       {
@@ -187,7 +203,9 @@ public final class PhotonStubServletInitializer
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("GoServlet", GoServlet.class);
         if (aServlet != null)
+        {
           aServlet.addMapping (GoServlet.SERVLET_DEFAULT_PATH + "/*");
+        }
       }
 
       {

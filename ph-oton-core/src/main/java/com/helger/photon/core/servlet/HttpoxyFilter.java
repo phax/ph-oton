@@ -16,19 +16,18 @@
  */
 package com.helger.photon.core.servlet;
 
+import java.io.IOException;
+
 import javax.annotation.Nonnull;
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.servlet.filter.AbstractHttpFilter;
 import com.helger.servlet.request.RequestLogger;
 
 /**
@@ -37,29 +36,20 @@ import com.helger.servlet.request.RequestLogger;
  *
  * @author Philip Helger
  */
-public class HttpoxyFilter implements Filter
+public class HttpoxyFilter extends AbstractHttpFilter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (HttpoxyFilter.class);
 
-  public void init (@Nonnull final FilterConfig aFilterConfig) throws ServletException
-  {}
-
-  public void destroy ()
-  {}
-
-  public void doFilter (@Nonnull final ServletRequest aRequest,
-                        @Nonnull final ServletResponse aResponse,
-                        @Nonnull final FilterChain aChain) throws java.io.IOException, ServletException
+  @Override
+  public void doHttpFilter (@Nonnull final HttpServletRequest aHttpRequest,
+                            @Nonnull final HttpServletResponse aHttpResponse,
+                            @Nonnull final FilterChain aChain) throws IOException, ServletException
   {
-
-    final HttpServletRequest aHttpRequest = (HttpServletRequest) aRequest;
-    final HttpServletResponse aHttpResponse = (HttpServletResponse) aResponse;
-
     final String sPoxy = aHttpRequest.getHeader ("proxy");
     if (sPoxy == null)
     {
       // call next filter in the chain.
-      aChain.doFilter (aRequest, aResponse);
+      aChain.doFilter (aHttpRequest, aHttpResponse);
     }
     else
     {

@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.url;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -221,52 +219,6 @@ public final class LinkHelper
   }
 
   /**
-   * Prefix the passed href with the relative context path in case the passed
-   * href has no protocol yet.<br>
-   * Important: this method does not add the session ID in case cookies are
-   * disabled by the client!
-   *
-   * @param sHRef
-   *        The href to be extended. May not be <code>null</code>.
-   * @param aParams
-   *        Optional parameter map. May be <code>null</code>.
-   * @return Either the original href if already absolute or
-   *         <code>/webapp-context/<i>href</i></code> otherwise. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  @Deprecated
-  public static SimpleURL getURLWithContext (@Nonnull final String sHRef, @Nullable final Map <String, String> aParams)
-  {
-    return new SimpleURL (getURIWithContext (sHRef), aParams);
-  }
-
-  /**
-   * Prefix the passed href with the relative context path in case the passed
-   * href has no protocol yet.
-   *
-   * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
-   * @param sHRef
-   *        The href to be extended. May not be <code>null</code>.
-   * @param aParams
-   *        Optional parameter map. May be <code>null</code>.
-   * @return Either the original href if already absolute or
-   *         <code>/webapp-context/<i>href</i></code> otherwise. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  @Deprecated
-  public static SimpleURL getURLWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                             @Nonnull final String sHRef,
-                                             @Nullable final Map <String, String> aParams)
-  {
-    final String sURIWithContext = getURIWithContext (aRequestScope, sHRef);
-    return new SimpleURL (sURIWithContext, aParams);
-  }
-
-  /**
    * Prefix the passed href with the absolute server + context path in case the
    * passed href has no protocol yet.<br>
    * Important: this method does not add the session ID in case cookies are
@@ -355,53 +307,6 @@ public final class LinkHelper
                                                       @Nonnull final String sHRef)
   {
     return new SimpleURL (getURIWithServerAndContext (aRequestScope, sHRef));
-  }
-
-  /**
-   * Prefix the passed href with the absolute server + context path in case the
-   * passed href has no protocol yet.<br>
-   * Important: this method does not add the session ID in case cookies are
-   * disabled by the client!
-   *
-   * @param sHRef
-   *        The href to be extended.
-   * @param aParams
-   *        params
-   * @return Either the original href if already absolute or
-   *         <code>http://servername:8123/webapp-context/<i>href</i></code>
-   *         otherwise.
-   */
-  @Nonnull
-  @Deprecated
-  public static SimpleURL getURLWithServerAndContext (@Nonnull final String sHRef,
-                                                      @Nullable final Map <String, String> aParams)
-  {
-    return new SimpleURL (getURIWithServerAndContext (sHRef), aParams);
-  }
-
-  /**
-   * Prefix the passed href with the absolute server + context path in case the
-   * passed href has no protocol yet.
-   *
-   * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
-   * @param sHRef
-   *        The href to be extended.
-   * @param aParams
-   *        params
-   * @return Either the original href if already absolute or
-   *         <code>http://servername:8123/webapp-context/<i>href</i></code>
-   *         otherwise.
-   */
-  @Nonnull
-  @Deprecated
-  public static SimpleURL getURLWithServerAndContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                      @Nonnull final String sHRef,
-                                                      @Nullable final Map <String, String> aParams)
-  {
-    final String sURI = getURIWithServerAndContext (aRequestScope, sHRef);
-    return new SimpleURL (sURI, aParams);
   }
 
   /**

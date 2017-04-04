@@ -22,12 +22,8 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,6 +34,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.string.StringHelper;
+import com.helger.servlet.filter.AbstractHttpFilter;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.ResponseHelper;
 import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
@@ -49,12 +46,9 @@ import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
  *
  * @author Philip Helger
  */
-public class CheckResponseFilter implements Filter
+public class CheckResponseFilter extends AbstractHttpFilter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CheckResponseFilter.class);
-
-  public void init (@Nonnull final FilterConfig aFilterConfig) throws ServletException
-  {}
 
   /**
    * @param sRequestURL
@@ -134,26 +128,21 @@ public class CheckResponseFilter implements Filter
     checkHeaders (sRequestURL, aHeaders, nStatusCode);
   }
 
-  public void doFilter (@Nonnull final ServletRequest aRequest,
-                        @Nonnull final ServletResponse aResponse,
-                        @Nonnull final FilterChain aChain) throws IOException, ServletException
+  @Override
+  public void doHttpFilter (@Nonnull final HttpServletRequest aRequest,
+                            @Nonnull final HttpServletResponse aResponse,
+                            @Nonnull final FilterChain aChain) throws IOException, ServletException
   {
-    // Works only for HTTP requests
-    if (aRequest instanceof HttpServletRequest && aResponse instanceof HttpServletResponse)
+    // Create a response wrapper
+    final StatusAwareHttpResponseWrapper aWrapper = new StatusAwareHttpResponseWrapper (aResponse);
+    try
     {
-      // Create a response wrapper
-      final StatusAwareHttpResponseWrapper aWrapper = new StatusAwareHttpResponseWrapper ((HttpServletResponse) aResponse);
       aChain.doFilter (aRequest, aWrapper);
-      // Evaluate the result
-      _checkResults ((HttpServletRequest) aRequest, aWrapper);
     }
-    else
+    finally
     {
-      // Do nothing
-      aChain.doFilter (aRequest, aResponse);
+      // Evaluate the result
+      _checkResults (aRequest, aWrapper);
     }
   }
-
-  public void destroy ()
-  {}
 }

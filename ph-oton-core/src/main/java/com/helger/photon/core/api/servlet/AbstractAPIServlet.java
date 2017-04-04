@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.http.EHTTPMethod;
@@ -34,6 +35,7 @@ import com.helger.photon.core.api.ApplicationAPIManager;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
+import com.helger.servlet.async.ServletAsyncSpec;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -47,6 +49,12 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAPIServlet.class);
   private static final EnumSet <EHTTPMethod> ALL = EnumSet.allOf (EHTTPMethod.class);
+
+  protected AbstractAPIServlet ()
+  {
+    // Be asynchronous :)
+    super (ServletAsyncSpec.createAsync (1 * CGlobal.MILLISECONDS_PER_SECOND));
+  }
 
   @Override
   @Nonnull

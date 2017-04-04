@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -35,6 +34,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.string.StringParser;
 import com.helger.servlet.ServletHelper;
+import com.helger.servlet.filter.AbstractServletFilter;
 
 /**
  * Special servlet filter that applies a certain encoding to a request and a
@@ -42,7 +42,7 @@ import com.helger.servlet.ServletHelper;
  *
  * @author Philip Helger
  */
-public class CharacterEncodingFilter implements Filter
+public class CharacterEncodingFilter extends AbstractServletFilter
 {
   /** Name of the init parameter for the encoding */
   public static final String INITPARAM_ENCODING = "encoding";
@@ -76,6 +76,7 @@ public class CharacterEncodingFilter implements Filter
     return m_bForceEncoding;
   }
 
+  @Override
   public void init (@Nonnull final FilterConfig aFilterConfig) throws ServletException
   {
     // encoding
@@ -116,7 +117,4 @@ public class CharacterEncodingFilter implements Filter
     // Next filter in the chain
     aChain.doFilter (aRequest, aResponse);
   }
-
-  public void destroy ()
-  {}
 }

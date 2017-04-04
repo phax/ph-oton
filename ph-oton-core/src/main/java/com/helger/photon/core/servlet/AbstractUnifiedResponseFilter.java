@@ -91,6 +91,7 @@ public abstract class AbstractUnifiedResponseFilter extends AbstractScopeAwareFi
       return EContinue.BREAK;
     }
 
+    // Start unified response handling
     final UnifiedResponse aUnifiedResponse = new UnifiedResponse (eHTTPVersion, eHTTPMethod, aHttpRequest);
     if (handleRequest (aRequestScope, aUnifiedResponse).isContinue ())
     {

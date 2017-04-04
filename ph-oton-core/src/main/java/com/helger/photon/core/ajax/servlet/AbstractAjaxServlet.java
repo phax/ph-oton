@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
@@ -36,6 +37,7 @@ import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
+import com.helger.servlet.async.ServletAsyncSpec;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -52,6 +54,12 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
   private static final String SCOPE_ATTR_NAME = "$ph-ajaxservlet.name";
   private static final String SCOPE_ATTR_INVOKER = "$ph-ajaxservlet.invoker";
   private static final String SCOPE_ATTR_EXECUTOR = "$ph-ajaxservlet.executor";
+
+  protected AbstractAjaxServlet ()
+  {
+    // Be asynchronous :)
+    super (ServletAsyncSpec.createAsync (1 * CGlobal.MILLISECONDS_PER_SECOND));
+  }
 
   /**
    * Get the AJAX invoker matching the passed request
@@ -108,7 +116,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
     // Remember in scope
     // Important: use a wrapper to avoid scope destruction
     aRequestScope.setAttribute (SCOPE_ATTR_NAME, sFunctionName);
-    aRequestScope.setAttribute (SCOPE_ATTR_INVOKER, new Wrapper<> (aAjaxInvoker));
+    aRequestScope.setAttribute (SCOPE_ATTR_INVOKER, new Wrapper <> (aAjaxInvoker));
     aRequestScope.setAttribute (SCOPE_ATTR_EXECUTOR, aAjaxExecutor);
     return EContinue.CONTINUE;
   }
