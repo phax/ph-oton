@@ -41,7 +41,7 @@ public class HttpoxyFilter implements Filter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (HttpoxyFilter.class);
 
-  public void init (final FilterConfig aFilterConfig) throws ServletException
+  public void init (@Nonnull final FilterConfig aFilterConfig) throws ServletException
   {}
 
   public void destroy ()
@@ -55,8 +55,8 @@ public class HttpoxyFilter implements Filter
     final HttpServletRequest aHttpRequest = (HttpServletRequest) aRequest;
     final HttpServletResponse aHttpResponse = (HttpServletResponse) aResponse;
 
-    final String poxy = aHttpRequest.getHeader ("proxy");
-    if (poxy == null)
+    final String sPoxy = aHttpRequest.getHeader ("proxy");
+    if (sPoxy == null)
     {
       // call next filter in the chain.
       aChain.doFilter (aRequest, aResponse);
