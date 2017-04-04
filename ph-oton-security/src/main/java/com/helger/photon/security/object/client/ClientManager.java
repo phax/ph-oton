@@ -146,7 +146,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IClient> getAllClients ()
+  public ICommonsList <IClient> getAllClients ()
   {
     return getAll ();
   }
