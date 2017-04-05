@@ -50,12 +50,16 @@ public class CheckResponseFilter extends AbstractHttpServletFilter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CheckResponseFilter.class);
 
+  public CheckResponseFilter ()
+  {}
+
   /**
    * @param sRequestURL
    *        The request URL.
    * @param nStatusCode
    *        The response status code.
    */
+  @OverrideOnDemand
   protected void checkStatusCode (@Nonnull final String sRequestURL, final int nStatusCode)
   {
     if (nStatusCode < HttpServletResponse.SC_MULTIPLE_CHOICES || nStatusCode >= HttpServletResponse.SC_BAD_REQUEST)

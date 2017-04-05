@@ -19,6 +19,7 @@ package com.helger.photon.core.servlet;
 import java.io.IOException;
 
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +41,11 @@ public class HttpoxyFilter extends AbstractHttpServletFilter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (HttpoxyFilter.class);
 
+  public HttpoxyFilter ()
+  {}
+
   @Override
+  @OverridingMethodsMustInvokeSuper
   public void doHttpFilter (@Nonnull final HttpServletRequest aHttpRequest,
                             @Nonnull final HttpServletResponse aHttpResponse,
                             @Nonnull final FilterChain aChain) throws IOException, ServletException

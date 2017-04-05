@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.charset.CharsetManager;
+import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.string.StringParser;
 import com.helger.servlet.ServletHelper;
 import com.helger.servlet.filter.AbstractHttpServletFilter;
@@ -51,11 +52,15 @@ public class CharacterEncodingFilter extends AbstractHttpServletFilter
   public static final String DEFAULT_ENCODING = StandardCharsets.UTF_8.name ();
   /** By default the encoding is not enforced. */
   public static final boolean DEFAULT_FORCE_ENCODING = false;
-  private static final String REQUEST_ATTR = CharacterEncodingFilter.class.getName ();
+  private static final String REQUEST_ATTR = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
+                                             CharacterEncodingFilter.class.getName ();
   private static final Logger s_aLogger = LoggerFactory.getLogger (CharacterEncodingFilter.class);
 
   private String m_sEncoding = DEFAULT_ENCODING;
   private boolean m_bForceEncoding = DEFAULT_FORCE_ENCODING;
+
+  public CharacterEncodingFilter ()
+  {}
 
   /**
    * @return The encoding to be used by this filter. Neither <code>null</code>
