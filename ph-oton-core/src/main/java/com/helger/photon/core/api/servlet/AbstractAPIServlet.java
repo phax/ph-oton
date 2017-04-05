@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.CodingStyleguideUnaware;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.http.EHTTPMethod;
 import com.helger.photon.core.api.APIPath;
@@ -53,7 +54,9 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
   protected AbstractAPIServlet ()
   {
     // Be asynchronous :)
-    super (ServletAsyncSpec.createAsync (1 * CGlobal.MILLISECONDS_PER_SECOND, null, EnumSet.of (EHTTPMethod.GET)));
+    super (ServletAsyncSpec.createAsync (GlobalDebug.isDebugMode () ? 0 : 30 * CGlobal.MILLISECONDS_PER_SECOND,
+                                         null,
+                                         EnumSet.of (EHTTPMethod.GET, EHTTPMethod.HEAD)));
   }
 
   @Override

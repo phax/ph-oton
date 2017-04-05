@@ -21,10 +21,9 @@ import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +33,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.string.StringParser;
 import com.helger.servlet.ServletHelper;
-import com.helger.servlet.filter.AbstractServletFilter;
+import com.helger.servlet.filter.AbstractHttpServletFilter;
 
 /**
  * Special servlet filter that applies a certain encoding to a request and a
@@ -42,7 +41,7 @@ import com.helger.servlet.filter.AbstractServletFilter;
  *
  * @author Philip Helger
  */
-public class CharacterEncodingFilter extends AbstractServletFilter
+public class CharacterEncodingFilter extends AbstractHttpServletFilter
 {
   /** Name of the init parameter for the encoding */
   public static final String INITPARAM_ENCODING = "encoding";
@@ -77,10 +76,12 @@ public class CharacterEncodingFilter extends AbstractServletFilter
   }
 
   @Override
-  public void init (@Nonnull final FilterConfig aFilterConfig) throws ServletException
+  public void init () throws ServletException
   {
+    super.init ();
+
     // encoding
-    final String sEncoding = aFilterConfig.getInitParameter (INITPARAM_ENCODING);
+    final String sEncoding = getFilterConfig ().getInitParameter (INITPARAM_ENCODING);
     if (sEncoding != null)
     {
       // Throws IllegalArgumentException in case it is unknown
@@ -89,14 +90,15 @@ public class CharacterEncodingFilter extends AbstractServletFilter
     }
 
     // force encoding?
-    final String sForceEncoding = aFilterConfig.getInitParameter (INITPARAM_FORCE_ENCODING);
+    final String sForceEncoding = getFilterConfig ().getInitParameter (INITPARAM_FORCE_ENCODING);
     if (sForceEncoding != null)
       m_bForceEncoding = StringParser.parseBool (sForceEncoding);
   }
 
-  public void doFilter (@Nonnull final ServletRequest aRequest,
-                        @Nonnull final ServletResponse aResponse,
-                        @Nonnull final FilterChain aChain) throws IOException, ServletException
+  @Override
+  public void doHttpFilter (@Nonnull final HttpServletRequest aRequest,
+                            @Nonnull final HttpServletResponse aResponse,
+                            @Nonnull final FilterChain aChain) throws IOException, ServletException
   {
     // Avoid double filtering
     if (aRequest.getAttribute (REQUEST_ATTR) == null)

@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.wrapper.Wrapper;
@@ -60,7 +61,9 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
   protected AbstractAjaxServlet ()
   {
     // Be asynchronous :)
-    super (ServletAsyncSpec.createAsync (1 * CGlobal.MILLISECONDS_PER_SECOND, null, EnumSet.of (EHTTPMethod.GET)));
+    super (ServletAsyncSpec.createAsync (GlobalDebug.isDebugMode () ? 0 : 30 * CGlobal.MILLISECONDS_PER_SECOND,
+                                         null,
+                                         EnumSet.of (EHTTPMethod.GET, EHTTPMethod.HEAD)));
   }
 
   /**

@@ -76,7 +76,7 @@ public class DefaultCSPReportingServlet extends HttpServlet
 
   @Override
   protected void doPost (@Nonnull final HttpServletRequest aHttpRequest,
-                         final HttpServletResponse aHttpResponse) throws ServletException, IOException
+                         @Nonnull final HttpServletResponse aHttpResponse) throws ServletException, IOException
   {
     ServletStatusManager.onServletInvocation (getClass ());
 
