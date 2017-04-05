@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.servlet.filter.AbstractHttpFilter;
+import com.helger.servlet.filter.AbstractHttpServletFilter;
 import com.helger.servlet.request.RequestLogger;
 
 /**
@@ -36,7 +36,7 @@ import com.helger.servlet.request.RequestLogger;
  *
  * @author Philip Helger
  */
-public class HttpoxyFilter extends AbstractHttpFilter
+public class HttpoxyFilter extends AbstractHttpServletFilter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (HttpoxyFilter.class);
 

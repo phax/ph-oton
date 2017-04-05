@@ -187,7 +187,7 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
   @Nonnull
   default SimpleURL getLinkToMenuItem (@Nonnull final String sMenuItemID)
   {
-    return RequestParameterManager.getInstance ().getLinkToMenuItem (getRequestScope (), sMenuItemID);
+    return getLinkToMenuItem (getDisplayLocale (), sMenuItemID);
   }
 
   /**
@@ -221,7 +221,7 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
   @Nonnull
   default SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID, @Nonnull final String sMenuItemID)
   {
-    return RequestParameterManager.getInstance ().getLinkToMenuItem (sAppID, getRequestScope (), sMenuItemID);
+    return getLinkToMenuItem (sAppID, getDisplayLocale (), sMenuItemID);
   }
 
   /**

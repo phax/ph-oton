@@ -104,7 +104,7 @@ public abstract class AbstractHCHasChildrenMutable <THISTYPE extends AbstractHCH
     {
       beforeAddChild (aChild);
       if (m_aChildren == null)
-        m_aChildren = new CommonsArrayList<> ();
+        m_aChildren = new CommonsArrayList <> ();
       int nAddIndex;
       if (nIndex < 0)
       {
@@ -202,7 +202,7 @@ public abstract class AbstractHCHasChildrenMutable <THISTYPE extends AbstractHCH
   @ReturnsMutableCopy
   public final ICommonsList <CHILDTYPE> getAllChildren ()
   {
-    return new CommonsArrayList<> (m_aChildren);
+    return new CommonsArrayList <> (m_aChildren);
   }
 
   @Override

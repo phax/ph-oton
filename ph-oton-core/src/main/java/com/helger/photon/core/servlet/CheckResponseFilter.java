@@ -34,7 +34,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.string.StringHelper;
-import com.helger.servlet.filter.AbstractHttpFilter;
+import com.helger.servlet.filter.AbstractHttpServletFilter;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.ResponseHelper;
 import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
@@ -46,7 +46,7 @@ import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
  *
  * @author Philip Helger
  */
-public class CheckResponseFilter extends AbstractHttpFilter
+public class CheckResponseFilter extends AbstractHttpServletFilter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CheckResponseFilter.class);
 

@@ -91,7 +91,7 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   @ReturnsMutableCopy
   public ICommonsList <? extends IHCNode> getAllChildren ()
   {
-    return new CommonsArrayList<> (m_aHead, m_aBody);
+    return new CommonsArrayList <> (m_aHead, m_aBody);
   }
 
   @Override
@@ -166,7 +166,7 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   @ReturnsMutableCopy
   public ICommonsList <IHCNode> getAllOutOfBandNodesWithMergedInlineNodes ()
   {
-    final ICommonsList <IHCNode> aAllOOBNodes = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> aAllOOBNodes = new CommonsArrayList <> ();
     // Add all existing JS and CSS nodes from the head, as they are known to be
     // out-of-band
     m_aHead.getAllAndRemoveAllJSNodes (aAllOOBNodes);
@@ -213,7 +213,7 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   public void moveScriptElementsToBody ()
   {
     // Move all JS from head to body
-    final ICommonsList <IHCNode> aJSNodes = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> aJSNodes = new CommonsArrayList <> ();
     m_aHead.getAllAndRemoveAllJSNodes (aJSNodes);
 
     // Find index of first script in body

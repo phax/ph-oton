@@ -111,50 +111,10 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    *        May be <code>null</code>.
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
-   * @deprecated Use {@link #postRedirectGetInternal(IHCNode)} instead
-   */
-  @Deprecated
-  default void postRedirectGet (@Nullable final IHCNode aContent) throws ForcedRedirectException
-  {
-    postRedirectGetInternal (aContent);
-  }
-
-  /**
-   * Throw a {@link ForcedRedirectException} with the self href of the current
-   * layout context. This immediately stops the request and sends a HTTP
-   * redirect to the client.
-   *
-   * @param aContent
-   *        The content to be displayed next time the page is rendered via GET.
-   *        May be <code>null</code>.
-   * @throws ForcedRedirectException
-   *         Every time, since this is the P-R-G indicator.
    */
   default void postRedirectGetInternal (@Nullable final IHCNode aContent) throws ForcedRedirectException
   {
     postRedirectGetInternal (aContent, (Map <String, String>) null);
-  }
-
-  /**
-   * Throw a {@link ForcedRedirectException} with the self href of the current
-   * layout context. This immediately stops the request and sends a HTTP
-   * redirect to the client.
-   *
-   * @param aContent
-   *        The content to be displayed next time the page is rendered via GET.
-   *        May be <code>null</code>.
-   * @param aAdditionalParameters
-   *        Additional parameters to be added to the request. May be
-   *        <code>null</code> or empty.
-   * @throws ForcedRedirectException
-   *         Every time, since this is the P-R-G indicator.
-   * @deprecated Use {@link #postRedirectGetInternal(IHCNode,Map)} instead
-   */
-  @Deprecated
-  default void postRedirectGet (@Nullable final IHCNode aContent,
-                                @Nullable final Map <String, String> aAdditionalParameters) throws ForcedRedirectException
-  {
-    postRedirectGetInternal (aContent, aAdditionalParameters);
   }
 
   /**
@@ -198,22 +158,6 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
                                         @Nullable final IHCNode aContent) throws ForcedRedirectException
   {
     postRedirectGet (aTargetURL.add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE), aContent);
-  }
-
-  /**
-   * Throw a {@link ForcedRedirectException} with the passed URL. This
-   * immediately stops the request and sends a HTTP redirect to the client.
-   *
-   * @param aTargetURL
-   *        The target URL to redirect to via GET. May be <code>null</code>.
-   * @throws ForcedRedirectException
-   *         Every time, since this is the P-R-G indicator.
-   * @deprecated Use {@link #postRedirectGetExternal(ISimpleURL)} instead
-   */
-  @Deprecated
-  default void postRedirectGet (@Nonnull final ISimpleURL aTargetURL) throws ForcedRedirectException
-  {
-    postRedirectGetExternal (aTargetURL);
   }
 
   /**

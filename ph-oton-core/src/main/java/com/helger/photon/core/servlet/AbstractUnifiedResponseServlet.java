@@ -397,10 +397,10 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     return new UnifiedResponse (eHTTPVersion, eHTTPMethod, aHttpRequest);
   }
 
-  private void _runServlet (@Nonnull final HttpServletRequest aHttpRequest,
-                            @Nonnull final HttpServletResponse aHttpResponse,
-                            @Nonnull final IRequestWebScope aRequestScope,
-                            @Nonnull final EHTTPMethod eHTTPMethod) throws ServletException, IOException
+  private void _run (@Nonnull final HttpServletRequest aHttpRequest,
+                     @Nonnull final HttpServletResponse aHttpResponse,
+                     @Nonnull final IRequestWebScope aRequestScope,
+                     @Nonnull final EHTTPMethod eHTTPMethod) throws ServletException, IOException
   {
     // Increment invocation counter
     ServletStatusManager.onServletInvocation (getClass ());
@@ -624,14 +624,6 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         s_aLogger.error ("onRequestEnd failed", t);
       }
     }
-  }
-
-  private void _run (@Nonnull final HttpServletRequest aHttpRequest,
-                     @Nonnull final HttpServletResponse aHttpResponse,
-                     @Nonnull final IRequestWebScope aRequestScope,
-                     @Nonnull final EHTTPMethod eHTTPMethod) throws ServletException, IOException
-  {
-    _runServlet (aHttpRequest, aHttpResponse, aRequestScope, eHTTPMethod);
   }
 
   @Override

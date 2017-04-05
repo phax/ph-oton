@@ -17,6 +17,7 @@
 package com.helger.photon.core.ajax.servlet;
 
 import java.io.IOException;
+import java.util.EnumSet;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -32,6 +33,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.wrapper.Wrapper;
+import com.helger.http.EHTTPMethod;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
@@ -58,7 +60,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
   protected AbstractAjaxServlet ()
   {
     // Be asynchronous :)
-    super (ServletAsyncSpec.createAsync (1 * CGlobal.MILLISECONDS_PER_SECOND));
+    super (ServletAsyncSpec.createAsync (1 * CGlobal.MILLISECONDS_PER_SECOND, null, EnumSet.of (EHTTPMethod.GET)));
   }
 
   /**

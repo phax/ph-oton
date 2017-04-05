@@ -69,6 +69,8 @@ public final class HCHelper
   {
     if (aNode.hasChildren ())
     {
+      // Use getAllChildren because the tree might be modified internally!
+      // Using an iterable would be quicker but more error prone!
       for (final IHCNode aChild : aNode.getAllChildren ())
       {
         // call callback
@@ -166,7 +168,7 @@ public final class HCHelper
     ValueEnforcer.notNull (aElement, "element");
     ValueEnforcer.notNull (eHTMLElement, "HTMLElement");
 
-    final ICommonsList <IMicroElement> ret = new CommonsArrayList<> ();
+    final ICommonsList <IMicroElement> ret = new CommonsArrayList <> ();
     ret.addAll (aElement.getAllChildElements (eHTMLElement.getElementName ()));
     ret.addAll (aElement.getAllChildElements (eHTMLElement.getElementNameUpperCase ()));
     return ret;
@@ -205,7 +207,7 @@ public final class HCHelper
   @ReturnsMutableCopy
   public static ICommonsList <IHCNode> getAsFlattenedList (@Nullable final IHCNode aNode)
   {
-    final ICommonsList <IHCNode> ret = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     _recursiveAddFlattened (aNode, ret);
     return ret;
   }
@@ -225,7 +227,7 @@ public final class HCHelper
   @ReturnsMutableCopy
   public static ICommonsList <IHCNode> getAsFlattenedList (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
-    final ICommonsList <IHCNode> ret = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     if (aNodes != null)
       for (final IHCNode aNode : aNodes)
         _recursiveAddFlattened (aNode, ret);

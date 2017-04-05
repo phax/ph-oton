@@ -217,7 +217,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
     if (aCSSClassProvider != null)
     {
       if (m_aCSSClassProviders == null)
-        m_aCSSClassProviders = new CommonsLinkedHashSet<> ();
+        m_aCSSClassProviders = new CommonsLinkedHashSet <> ();
       m_aCSSClassProviders.add (aCSSClassProvider);
     }
     return thisAsT ();
@@ -243,14 +243,14 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
   @ReturnsMutableCopy
   public final ICommonsOrderedSet <ICSSClassProvider> getAllClasses ()
   {
-    return CollectionHelper.newOrderedSet (m_aCSSClassProviders);
+    return new CommonsLinkedHashSet <> (m_aCSSClassProviders);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public final ICommonsOrderedSet <String> getAllClassNames ()
   {
-    final ICommonsOrderedSet <String> ret = new CommonsLinkedHashSet<> ();
+    final ICommonsOrderedSet <String> ret = new CommonsLinkedHashSet <> ();
     if (m_aCSSClassProviders != null)
       for (final ICSSClassProvider aCSSClassProvider : m_aCSSClassProviders)
       {
@@ -263,14 +263,21 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
 
   public final boolean hasAnyClass ()
   {
-    return m_aCSSClassProviders != null && !m_aCSSClassProviders.isEmpty ();
+    return m_aCSSClassProviders != null && m_aCSSClassProviders.isNotEmpty ();
   }
 
   @Nullable
   public final String getAllClassesAsString ()
   {
-    if (m_aCSSClassProviders == null || m_aCSSClassProviders.isEmpty ())
+    if (m_aCSSClassProviders == null)
       return null;
+
+    final int nCount = m_aCSSClassProviders.size ();
+    if (nCount == 0)
+      return null;
+
+    if (nCount == 1)
+      return m_aCSSClassProviders.getFirst ().getCSSClass ();
 
     final StringBuilder aSB = new StringBuilder ();
     for (final ICSSClassProvider aCSSClassProvider : m_aCSSClassProviders)
@@ -290,14 +297,14 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
   @ReturnsMutableCopy
   public final ICommonsOrderedMap <ECSSProperty, ICSSValue> getAllStyles ()
   {
-    return CollectionHelper.newOrderedMap (m_aStyles);
+    return new CommonsLinkedHashMap <> (m_aStyles);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public final ICommonsList <ICSSValue> getAllStyleValues ()
   {
-    return m_aStyles == null ? new CommonsArrayList<> () : m_aStyles.copyOfValues ();
+    return m_aStyles == null ? new CommonsArrayList <> () : m_aStyles.copyOfValues ();
   }
 
   @Nullable
@@ -323,7 +330,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
 
   public final boolean hasAnyStyle ()
   {
-    return m_aStyles != null && !m_aStyles.isEmpty ();
+    return m_aStyles != null && m_aStyles.isNotEmpty ();
   }
 
   @Nonnull
@@ -332,7 +339,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
     if (aValue != null)
     {
       if (m_aStyles == null)
-        m_aStyles = new CommonsLinkedHashMap<> ();
+        m_aStyles = new CommonsLinkedHashMap <> ();
       m_aStyles.put (aValue.getProp (), aValue);
     }
     return thisAsT ();
@@ -358,6 +365,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
   {
     if (m_aStyles == null || m_aStyles.isEmpty ())
       return null;
+
     final StringBuilder aSB = new StringBuilder ();
     for (final ICSSValue aValue : m_aStyles.values ())
       aSB.append (aValue.getAsCSSString (aCSSSettings, 0));
@@ -642,7 +650,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
   @Nonnull
   public final Iterable <Map.Entry <String, String>> getAllCustomAttrsIterable ()
   {
-    return m_aCustomAttrs == null ? new CommonsArrayList<> (0) : m_aCustomAttrs.entrySet ();
+    return m_aCustomAttrs == null ? new CommonsArrayList <> (0) : m_aCustomAttrs.entrySet ();
   }
 
   @Nonnull
@@ -651,7 +659,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
     if (StringHelper.hasText (sName) && sValue != null)
     {
       if (m_aCustomAttrs == null)
-        m_aCustomAttrs = new CommonsLinkedHashMap<> ();
+        m_aCustomAttrs = new CommonsLinkedHashMap <> ();
       m_aCustomAttrs.put (sName, sValue);
     }
     return thisAsT ();
@@ -712,7 +720,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllDataAttrs ()
   {
-    final ICommonsOrderedMap <String, String> ret = new CommonsLinkedHashMap<> ();
+    final ICommonsOrderedMap <String, String> ret = new CommonsLinkedHashMap <> ();
     if (m_aCustomAttrs != null)
       for (final Map.Entry <String, String> aEntry : m_aCustomAttrs.entrySet ())
         if (isDataAttrName (aEntry.getKey ()))

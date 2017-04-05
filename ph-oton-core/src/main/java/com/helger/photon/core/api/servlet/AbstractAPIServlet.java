@@ -53,7 +53,7 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
   protected AbstractAPIServlet ()
   {
     // Be asynchronous :)
-    super (ServletAsyncSpec.createAsync (1 * CGlobal.MILLISECONDS_PER_SECOND));
+    super (ServletAsyncSpec.createAsync (1 * CGlobal.MILLISECONDS_PER_SECOND, null, EnumSet.of (EHTTPMethod.GET)));
   }
 
   @Override

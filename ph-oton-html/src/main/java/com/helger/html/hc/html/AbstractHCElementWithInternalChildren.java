@@ -105,7 +105,7 @@ public abstract class AbstractHCElementWithInternalChildren <THISTYPE extends Ab
     {
       beforeAddChild (aChild);
       if (m_aChildren == null)
-        m_aChildren = new CommonsArrayList<> ();
+        m_aChildren = new CommonsArrayList <> ();
       int nAddIndex;
       if (nIndex < 0)
       {
@@ -203,7 +203,7 @@ public abstract class AbstractHCElementWithInternalChildren <THISTYPE extends Ab
   @ReturnsMutableCopy
   public final ICommonsList <CHILDTYPE> getAllChildren ()
   {
-    return new CommonsArrayList<> (m_aChildren);
+    return new CommonsArrayList <> (m_aChildren);
   }
 
   @Override

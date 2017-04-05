@@ -482,7 +482,8 @@ public class HCHead extends AbstractHCElement <HCHead>
   }
 
   @Override
-  @Nullable
+  @Nonnull
+  @ReturnsMutableCopy
   public ICommonsList <? extends IHCNode> getAllChildren ()
   {
     final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
