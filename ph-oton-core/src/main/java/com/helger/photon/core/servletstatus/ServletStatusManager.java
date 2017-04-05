@@ -16,15 +16,16 @@
  */
 package com.helger.photon.core.servletstatus;
 
+import java.io.Serializable;
 import java.lang.reflect.Modifier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
+import javax.servlet.GenericServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
-import javax.servlet.http.HttpServlet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,7 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class ServletStatusManager
+public final class ServletStatusManager implements Serializable
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ServletStatusManager.class);
 
@@ -59,14 +60,14 @@ public final class ServletStatusManager
 
   @Nonnull
   @Nonempty
-  private static String _getKey (@Nonnull final Class <? extends HttpServlet> aServletClass)
+  private static String _getKey (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
     return aServletClass.getName ();
   }
 
   @Nonnull
   @MustBeLocked (ELockType.WRITE)
-  private static ServletStatus _getOrCreateServletStatus (@Nonnull final Class <? extends HttpServlet> aServletClass)
+  private static ServletStatus _getOrCreateServletStatus (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
     ValueEnforcer.notNull (aServletClass, "Servlet class");
     if (Modifier.isAbstract (aServletClass.getModifiers ()))
@@ -76,43 +77,39 @@ public final class ServletStatusManager
     return s_aMap.computeIfAbsent (sKey, k -> new ServletStatus (aServletClass.getName ()));
   }
 
-  private static void _updateStatus (@Nonnull final Class <? extends HttpServlet> aServletClass,
+  private static void _updateStatus (@Nonnull final Class <? extends GenericServlet> aServletClass,
                                      @Nonnull final EServletStatus eNewStatus)
   {
     ValueEnforcer.notNull (eNewStatus, "NewStatus");
 
-    s_aRWLock.writeLocked ( () -> {
-      _getOrCreateServletStatus (aServletClass).internalSetCurrentStatus (eNewStatus);
-    });
+    s_aRWLock.writeLocked ( () -> _getOrCreateServletStatus (aServletClass).internalSetCurrentStatus (eNewStatus));
 
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Servlet status of " + aServletClass + " changed to " + eNewStatus);
   }
 
-  public static void onServletCtor (@Nonnull final Class <? extends HttpServlet> aServletClass)
+  public static void onServletCtor (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
     _updateStatus (aServletClass, EServletStatus.CONSTRUCTED);
   }
 
-  public static void onServletInit (@Nonnull final Class <? extends HttpServlet> aServletClass)
+  public static void onServletInit (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
     _updateStatus (aServletClass, EServletStatus.INITED);
   }
 
-  public static void onServletInvocation (@Nonnull final Class <? extends HttpServlet> aServletClass)
+  public static void onServletInvocation (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
-    s_aRWLock.writeLocked ( () -> {
-      _getOrCreateServletStatus (aServletClass).internalIncrementInvocationCount ();
-    });
+    s_aRWLock.writeLocked ( () -> _getOrCreateServletStatus (aServletClass).internalIncrementInvocationCount ());
   }
 
-  public static void onServletDestroy (@Nonnull final Class <? extends HttpServlet> aServletClass)
+  public static void onServletDestroy (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
     _updateStatus (aServletClass, EServletStatus.DESTROYED);
   }
 
   @Nullable
-  public static ServletStatus getStatus (@Nullable final Class <? extends HttpServlet> aServletClass)
+  public static ServletStatus getStatus (@Nullable final Class <? extends GenericServlet> aServletClass)
   {
     if (aServletClass == null)
       return null;
@@ -137,7 +134,7 @@ public final class ServletStatusManager
    * @return <code>true</code> if the passed servlet class is contained in the
    *         {@link ServletContext}.
    */
-  public static boolean isServletRegistered (@Nonnull final Class <? extends HttpServlet> aServletClass)
+  public static boolean isServletRegistered (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
     final String sClassName = ValueEnforcer.notNull (aServletClass, "ServletClass").getName ();
 

@@ -17,7 +17,6 @@
 package com.helger.photon.core.ajax.servlet;
 
 import java.io.IOException;
-import java.util.EnumSet;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -28,19 +27,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.wrapper.Wrapper;
-import com.helger.http.EHTTPMethod;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
-import com.helger.servlet.async.ServletAsyncSpec;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -59,12 +54,7 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
   private static final String SCOPE_ATTR_EXECUTOR = "$ph-ajaxservlet.executor";
 
   protected AbstractAjaxServlet ()
-  {
-    // Be asynchronous :)
-    super (ServletAsyncSpec.createAsync (GlobalDebug.isDebugMode () ? 0 : 30 * CGlobal.MILLISECONDS_PER_SECOND,
-                                         null,
-                                         EnumSet.of (EHTTPMethod.GET, EHTTPMethod.HEAD)));
-  }
+  {}
 
   /**
    * Get the AJAX invoker matching the passed request

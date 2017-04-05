@@ -62,7 +62,6 @@ import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.servlet.ServletContextPathHolder;
 import com.helger.servlet.StaticServerInfo;
-import com.helger.servlet.async.ServletAsyncSpec;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.ERedirectMode;
 import com.helger.servlet.response.UnifiedResponse;
@@ -142,12 +141,6 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
 
   protected AbstractUnifiedResponseServlet ()
   {
-    this (ServletAsyncSpec.createSync ());
-  }
-
-  protected AbstractUnifiedResponseServlet (@Nonnull final ServletAsyncSpec aAsyncSpec)
-  {
-    super (aAsyncSpec);
     ServletStatusManager.onServletCtor (getClass ());
   }
 
