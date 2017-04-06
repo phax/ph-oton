@@ -28,7 +28,7 @@ import com.helger.xml.microdom.IMicroDocumentType;
  */
 public enum EHTMLVersion
 {
-  XHTML10_STRICT
+  XHTML10_STRICT (false)
   {
     @Override
     @Nonnull
@@ -44,7 +44,7 @@ public enum EHTMLVersion
       return CHTMLDocTypes.DOCTYPE_XHTML_URI;
     }
   },
-  XHTML10_TRANSITIONAL
+  XHTML10_TRANSITIONAL (false)
   {
     @Override
     @Nonnull
@@ -60,7 +60,7 @@ public enum EHTMLVersion
       return CHTMLDocTypes.DOCTYPE_XHTML_URI;
     }
   },
-  XHTML11
+  XHTML11 (false)
   {
     @Override
     @Nonnull
@@ -76,7 +76,7 @@ public enum EHTMLVersion
       return CHTMLDocTypes.DOCTYPE_XHTML_URI;
     }
   },
-  HTML5
+  HTML5 (true)
   {
     @Override
     @Nonnull
@@ -92,7 +92,7 @@ public enum EHTMLVersion
       return null;
     }
   },
-  HTML51
+  HTML51 (true)
   {
     @Override
     @Nonnull
@@ -108,6 +108,13 @@ public enum EHTMLVersion
       return null;
     }
   };
+
+  private final boolean m_bIsAtLeastHTML5;
+
+  private EHTMLVersion (final boolean bIsAtLeastHTML5)
+  {
+    m_bIsAtLeastHTML5 = bIsAtLeastHTML5;
+  }
 
   /**
    * @return The document type matching this HTML version. Never
@@ -135,11 +142,11 @@ public enum EHTMLVersion
 
   public boolean isPriorToHTML5 ()
   {
-    return !isAtLeastHTML5 ();
+    return !m_bIsAtLeastHTML5;
   }
 
   public boolean isAtLeastHTML5 ()
   {
-    return this == HTML5 || this == HTML51;
+    return m_bIsAtLeastHTML5;
   }
 }
