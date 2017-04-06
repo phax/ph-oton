@@ -38,6 +38,7 @@ import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCCell;
+import com.helger.xml.microdom.IMicroQName;
 
 /**
  * This class holds table rows to be used by the DataTables server side
@@ -52,8 +53,8 @@ public final class DataTablesServerDataRow implements Serializable
 
   private final String m_sRowID;
   private final String m_sRowClass;
-  private ICommonsOrderedMap <String, String> m_aRowData;
-  private ICommonsOrderedMap <String, String> m_aRowAttr;
+  private ICommonsOrderedMap <IMicroQName, String> m_aRowData;
+  private ICommonsOrderedMap <IMicroQName, String> m_aRowAttr;
   private final ICommonsList <DataTablesServerDataCell> m_aCells;
 
   public DataTablesServerDataRow (@Nonnull final HCRow aRow, @Nonnull final IHCConversionSettings aCS)
@@ -65,21 +66,24 @@ public final class DataTablesServerDataRow implements Serializable
     m_sRowClass = aRow.getAllClassesAsString ();
 
     if (aRow.hasCustomAttrs ())
-      for (final Map.Entry <String, String> aEntry : aRow.getAllCustomAttrsIterable ())
-        if (AbstractHCElement.isDataAttrName (aEntry.getKey ()))
+      for (final Map.Entry <IMicroQName, String> aEntry : aRow.getAllCustomAttrsIterable ())
+      {
+        final IMicroQName aAttrName = aEntry.getKey ();
+        if (AbstractHCElement.isDataAttrName (aAttrName.getName ()))
         {
           // Data attribute
           if (m_aRowData == null)
             m_aRowData = new CommonsLinkedHashMap <> ();
-          m_aRowData.put (aEntry.getKey (), aEntry.getValue ());
+          m_aRowData.put (aAttrName, aEntry.getValue ());
         }
         else
         {
           // Custom non-data attribute
           if (m_aRowAttr == null)
             m_aRowAttr = new CommonsLinkedHashMap <> ();
-          m_aRowAttr.put (aEntry.getKey (), aEntry.getValue ());
+          m_aRowAttr.put (aAttrName, aEntry.getValue ());
         }
+      }
 
     m_aCells = new CommonsArrayList <> (aRow.getCellCount ());
     for (final IHCCell <?> aCell : aRow.getAllCellsIterable ())
@@ -118,7 +122,7 @@ public final class DataTablesServerDataRow implements Serializable
 
   @Nonnull
   @ReturnsMutableObject ("speed")
-  public ICommonsOrderedMap <String, String> directGetAllRowData ()
+  public ICommonsOrderedMap <IMicroQName, String> directGetAllRowData ()
   {
     return m_aRowData;
   }
@@ -130,7 +134,7 @@ public final class DataTablesServerDataRow implements Serializable
 
   @Nullable
   @ReturnsMutableObject ("speed")
-  public ICommonsOrderedMap <String, String> directGetAllRowAttrs ()
+  public ICommonsOrderedMap <IMicroQName, String> directGetAllRowAttrs ()
   {
     return m_aRowAttr;
   }

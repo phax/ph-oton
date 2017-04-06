@@ -42,8 +42,8 @@ public class ColorPickerOptions
   public static final boolean DEFAULT_HASH = false;
   public static final boolean DEFAULT_CAPS = true;
   public static final boolean DEFAULT_SLIDER = true;
-  public static final String DEFAULT_VALUE_ELEMENT = CHTMLAttributes.TARGET;
-  public static final String DEFAULT_STYLE_ELEMENT = CHTMLAttributes.TARGET;
+  public static final String DEFAULT_VALUE_ELEMENT = CHTMLAttributes.TARGET.getName ();
+  public static final String DEFAULT_STYLE_ELEMENT = CHTMLAttributes.TARGET.getName ();
   public static final boolean DEFAULT_PICKER_ON_FOCUS = true;
   public static final EColorPickerMode DEFAULT_PICKER_MODE = EColorPickerMode.HSV;
   public static final EColorPickerPosition DEFAULT_PICKER_POSITION = EColorPickerPosition.BOTTOM;

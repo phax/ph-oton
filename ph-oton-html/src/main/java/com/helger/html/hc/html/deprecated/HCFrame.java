@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.CGlobal;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.annotation.DeprecatedInHTML5;
@@ -177,7 +178,7 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     if (StringHelper.hasText (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
     if (m_bNoResize)
-      aElement.setAttribute (CHTMLAttributes.NORESIZE, CHTMLAttributes.NORESIZE);
+      aElement.setAttribute (CHTMLAttributes.NORESIZE, CHTMLAttributeValues.NORESIZE);
     if (m_eScrolling != null)
       aElement.setAttribute (CHTMLAttributes.SCROLLING, m_eScrolling);
     if (StringHelper.hasText (m_sSrc))

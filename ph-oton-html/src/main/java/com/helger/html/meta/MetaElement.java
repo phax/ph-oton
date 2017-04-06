@@ -49,7 +49,9 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroContainer;
+import com.helger.xml.microdom.MicroQName;
 
 /**
  * Represents a single HTML meta element.
@@ -73,7 +75,7 @@ public class MetaElement implements IMutableMetaElement
   private boolean m_bIsHttpEquiv;
 
   /** locale to value map. */
-  private final ICommonsOrderedMap <Locale, String> m_aContents = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <Locale, String> m_aContents = new CommonsLinkedHashMap <> ();
 
   public MetaElement (@Nonnull final IMetaElementDeclaration aMetaTagDecl, @Nullable final String sContent)
   {
@@ -210,7 +212,7 @@ public class MetaElement implements IMutableMetaElement
   @ReturnsMutableCopy
   public ICommonsList <IMetaElementValue> getAsMetaElementValueList ()
   {
-    final ICommonsList <IMetaElementValue> ret = new CommonsArrayList<> (m_aContents.size ());
+    final ICommonsList <IMetaElementValue> ret = new CommonsArrayList <> (m_aContents.size ());
     for (final Map.Entry <Locale, String> aEntry : m_aContents.entrySet ())
       ret.add (new MetaElementValue (m_sName, aEntry.getKey (), aEntry.getValue (), m_bIsHttpEquiv));
     return ret;
@@ -229,9 +231,8 @@ public class MetaElement implements IMutableMetaElement
    *         be <code>null</code> nor empty
    */
   @Nonnull
-  @Nonempty
   @OverrideOnDemand
-  protected String getNodeNameAttribute ()
+  protected IMicroQName getNodeNameAttribute ()
   {
     return CHTMLAttributes.NAME;
   }
@@ -243,7 +244,7 @@ public class MetaElement implements IMutableMetaElement
   @Nonnull
   @Nonempty
   @OverrideOnDemand
-  protected String getNodeContentAttribute ()
+  protected IMicroQName getNodeContentAttribute ()
   {
     return CHTMLAttributes.CONTENT;
   }
@@ -274,7 +275,7 @@ public class MetaElement implements IMutableMetaElement
       if (aContentLocale != null && !LocaleHelper.isSpecialLocale (aContentLocale))
       {
         final String sLang = aContentLocale.toString ();
-        aMeta.setAttribute (XMLConstants.XML_NS_URI, CHTMLAttributes.LANG, sLang);
+        aMeta.setAttribute (new MicroQName (XMLConstants.XML_NS_URI, CHTMLAttributes.LANG.getName ()), sLang);
         if (bAtLeastHTML5)
         {
           // When the attribute xml:lang in no namespace is specified, the

@@ -22,9 +22,13 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.meta.MetaElement;
+import com.helger.xml.microdom.IMicroQName;
+import com.helger.xml.microdom.MicroQName;
 
 public class OpenGraphMetaElement extends MetaElement
 {
+  private static final IMicroQName QNAME_PROPERTY = new MicroQName ("property");
+
   public OpenGraphMetaElement (@Nonnull final EOpenGraphObjectProperty eProperty, @Nullable final String sContent)
   {
     super (eProperty.getID (), false, sContent);
@@ -34,8 +38,8 @@ public class OpenGraphMetaElement extends MetaElement
   @Nonnull
   @Nonempty
   @OverrideOnDemand
-  protected String getNodeNameAttribute ()
+  protected IMicroQName getNodeNameAttribute ()
   {
-    return "property";
+    return QNAME_PROPERTY;
   }
 }

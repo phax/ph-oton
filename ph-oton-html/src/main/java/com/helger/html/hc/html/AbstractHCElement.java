@@ -68,7 +68,9 @@ import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSEventMap;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.MicroQName;
 
 /**
  * Base class for an HC element.
@@ -123,7 +125,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
   private boolean m_bSpellCheck = DEFAULT_SPELLCHECK;
   private EHTMLRole m_eRole;
 
-  private ICommonsOrderedMap <String, String> m_aCustomAttrs;
+  private ICommonsOrderedMap <IMicroQName, String> m_aCustomAttrs;
 
   protected AbstractHCElement (@Nonnull final EHTMLElement eElement)
   {
@@ -629,59 +631,47 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
     return CollectionHelper.getSize (m_aCustomAttrs);
   }
 
-  public boolean containsCustomAttr (@Nullable final String sName)
+  public boolean containsCustomAttr (@Nullable final IMicroQName aName)
   {
-    return m_aCustomAttrs != null && StringHelper.hasText (sName) ? m_aCustomAttrs.containsKey (sName) : false;
+    return m_aCustomAttrs != null && aName != null ? m_aCustomAttrs.containsKey (aName) : false;
   }
 
   @Nullable
-  public final String getCustomAttrValue (@Nullable final String sName)
+  public final String getCustomAttrValue (@Nullable final IMicroQName aName)
   {
-    return m_aCustomAttrs != null && StringHelper.hasText (sName) ? m_aCustomAttrs.get (sName) : null;
+    return m_aCustomAttrs != null && aName != null ? m_aCustomAttrs.get (aName) : null;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsOrderedMap <String, String> getAllCustomAttrs ()
+  public final ICommonsOrderedMap <IMicroQName, String> getAllCustomAttrs ()
   {
-    return CollectionHelper.newOrderedMap (m_aCustomAttrs);
+    return new CommonsLinkedHashMap <> (m_aCustomAttrs);
   }
 
   @Nonnull
-  public final Iterable <Map.Entry <String, String>> getAllCustomAttrsIterable ()
+  public final Iterable <Map.Entry <IMicroQName, String>> getAllCustomAttrsIterable ()
   {
     return m_aCustomAttrs == null ? new CommonsArrayList <> (0) : m_aCustomAttrs.entrySet ();
   }
 
   @Nonnull
-  public final THISTYPE setCustomAttr (@Nullable final String sName, @Nullable final String sValue)
+  public final THISTYPE setCustomAttr (@Nullable final IMicroQName aName, @Nullable final String sValue)
   {
-    if (StringHelper.hasText (sName) && sValue != null)
+    if (aName != null && sValue != null)
     {
       if (m_aCustomAttrs == null)
         m_aCustomAttrs = new CommonsLinkedHashMap <> ();
-      m_aCustomAttrs.put (sName, sValue);
+      m_aCustomAttrs.put (aName, sValue);
     }
     return thisAsT ();
   }
 
   @Nonnull
-  public final THISTYPE setCustomAttr (@Nullable final String sName, final int nValue)
+  public final THISTYPE removeCustomAttr (@Nullable final IMicroQName aName)
   {
-    return setCustomAttr (sName, Integer.toString (nValue));
-  }
-
-  @Nonnull
-  public final THISTYPE setCustomAttr (@Nullable final String sName, final long nValue)
-  {
-    return setCustomAttr (sName, Long.toString (nValue));
-  }
-
-  @Nonnull
-  public final THISTYPE removeCustomAttr (@Nullable final String sName)
-  {
-    if (m_aCustomAttrs != null && sName != null)
-      m_aCustomAttrs.remove (sName);
+    if (m_aCustomAttrs != null && aName != null)
+      m_aCustomAttrs.remove (aName);
     return thisAsT ();
   }
 
@@ -691,16 +681,16 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
   }
 
   @Nullable
-  public static String makeDataAttrName (@Nullable final String sName)
+  public static IMicroQName makeDataAttrName (@Nullable final String sName)
   {
-    return StringHelper.hasNoText (sName) ? sName : CHTMLAttributes.HTML5_PREFIX_DATA + sName;
+    return StringHelper.hasNoText (sName) ? null : new MicroQName (CHTMLAttributes.HTML5_PREFIX_DATA + sName);
   }
 
   public boolean hasDataAttrs ()
   {
     if (m_aCustomAttrs != null)
-      for (final String sName : m_aCustomAttrs.keySet ())
-        if (isDataAttrName (sName))
+      for (final IMicroQName aName : m_aCustomAttrs.keySet ())
+        if (isDataAttrName (aName.getName ()))
           return true;
     return false;
   }
@@ -718,26 +708,14 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsOrderedMap <String, String> getAllDataAttrs ()
+  public ICommonsOrderedMap <IMicroQName, String> getAllDataAttrs ()
   {
-    final ICommonsOrderedMap <String, String> ret = new CommonsLinkedHashMap <> ();
+    final ICommonsOrderedMap <IMicroQName, String> ret = new CommonsLinkedHashMap <> ();
     if (m_aCustomAttrs != null)
-      for (final Map.Entry <String, String> aEntry : m_aCustomAttrs.entrySet ())
-        if (isDataAttrName (aEntry.getKey ()))
+      for (final Map.Entry <IMicroQName, String> aEntry : m_aCustomAttrs.entrySet ())
+        if (isDataAttrName (aEntry.getKey ().getName ()))
           ret.put (aEntry.getKey (), aEntry.getValue ());
     return ret;
-  }
-
-  @Nonnull
-  public THISTYPE setDataAttr (@Nullable final String sName, final int nValue)
-  {
-    return setCustomAttr (makeDataAttrName (sName), nValue);
-  }
-
-  @Nonnull
-  public THISTYPE setDataAttr (@Nullable final String sName, final long nValue)
-  {
-    return setCustomAttr (makeDataAttrName (sName), nValue);
   }
 
   @Nonnull
@@ -795,9 +773,9 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
     if (eHTMLVersion.isAtLeastHTML5 ())
     {
       if (m_aCustomAttrs != null)
-        for (final Map.Entry <String, String> aEntry : m_aCustomAttrs.entrySet ())
+        for (final Map.Entry <IMicroQName, String> aEntry : m_aCustomAttrs.entrySet ())
         {
-          final String sAttrName = aEntry.getKey ();
+          final String sAttrName = aEntry.getKey ().getName ();
           // Link element often contains arbitrary attributes
           if (!StringHelper.startsWith (sAttrName, CHTMLAttributes.HTML5_PREFIX_DATA) &&
               !StringHelper.startsWith (sAttrName, CHTMLAttributes.PREFIX_ARIA) &&
@@ -852,7 +830,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
     if (StringHelper.hasText (m_sLanguage))
     {
       // Both "xml:lang" and "lang"
-      aElement.setAttribute (XMLConstants.XML_NS_URI, CHTMLAttributes.LANG, m_sLanguage);
+      aElement.setAttribute (new MicroQName (XMLConstants.XML_NS_URI, CHTMLAttributes.LANG.getName ()), m_sLanguage);
       aElement.setAttribute (CHTMLAttributes.LANG, m_sLanguage);
     }
 
@@ -912,7 +890,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
       aElement.setAttribute (CHTMLAttributes.ROLE, m_eRole.getID ());
 
     if (m_aCustomAttrs != null)
-      for (final Map.Entry <String, String> aEntry : m_aCustomAttrs.entrySet ())
+      for (final Map.Entry <IMicroQName, String> aEntry : m_aCustomAttrs.entrySet ())
         aElement.setAttribute (aEntry.getKey (), aEntry.getValue ());
   }
 

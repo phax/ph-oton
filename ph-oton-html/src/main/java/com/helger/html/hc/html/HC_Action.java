@@ -31,6 +31,7 @@ import com.helger.html.js.CJS;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroQName;
 
 /**
  * Represents the action to be used with button and form.
@@ -77,7 +78,7 @@ public class HC_Action implements ICloneable <HC_Action>
     m_aActionJS = aAction;
   }
 
-  public void applyProperties (@Nonnull final String sAttributeName,
+  public void applyProperties (@Nonnull final IMicroQName aAttributeName,
                                @Nonnull final IMicroElement aElement,
                                @Nonnull final IJSWriterSettings aSettings,
                                @Nonnull final Charset aCharset)
@@ -85,11 +86,11 @@ public class HC_Action implements ICloneable <HC_Action>
     if (m_aActionJS != null)
     {
       final String sJSCode = m_aActionJS.getJSCode (aSettings);
-      aElement.setAttribute (sAttributeName, CJS.JS_PREFIX + sJSCode);
+      aElement.setAttribute (aAttributeName, CJS.JS_PREFIX + sJSCode);
     }
     else
       if (m_aActionURL != null)
-        aElement.setAttribute (sAttributeName, m_aActionURL.getAsStringWithEncodedParameters (aCharset));
+        aElement.setAttribute (aAttributeName, m_aActionURL.getAsStringWithEncodedParameters (aCharset));
   }
 
   @Nonnull

@@ -35,6 +35,7 @@ import com.helger.xml.CXML;
 import com.helger.xml.microdom.IMicroComment;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.IMicroText;
 
 /**
@@ -208,7 +209,8 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
     return true;
   }
 
-  private static final String [] LINK_ATTR_NAMES = new String [] { CHTMLAttributes.SRC, CHTMLAttributes.HREF };
+  private static final IMicroQName [] LINK_ATTR_NAMES = new IMicroQName [] { CHTMLAttributes.SRC,
+                                                                             CHTMLAttributes.HREF };
 
   @Override
   public EHierarchyVisitorReturn onItemBeforeChildren (final IMicroNode aItem)
@@ -242,15 +244,15 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
           aElement.removeAttribute (CHTMLAttributes.COLSPAN);
 
         // Ensure all link targets are server absolute
-        for (final String sLinkAttrName : LINK_ATTR_NAMES)
+        for (final IMicroQName aLinkAttrName : LINK_ATTR_NAMES)
         {
-          String sPath = aElement.getAttributeValue (sLinkAttrName);
+          String sPath = aElement.getAttributeValue (aLinkAttrName);
           if (sPath != null)
           {
             if (linkNeedsContextPath (sPath))
             {
               sPath = m_sServerPrefixPath + sPath;
-              aElement.setAttribute (sLinkAttrName, sPath);
+              aElement.setAttribute (aLinkAttrName, sPath);
             }
           }
         }

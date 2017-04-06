@@ -941,7 +941,7 @@ public final class JQuerySelector implements IJQuerySelector
   public static IJQuerySelector nameAttr (@Nonnull @Nonempty final String sNameAttrValue)
   {
     ValueEnforcer.notEmpty (sNameAttrValue, "NameAttrValue");
-    return attributeEquals (CHTMLAttributes.NAME, sNameAttrValue);
+    return attributeEquals (CHTMLAttributes.NAME.getName (), sNameAttrValue);
   }
 
   /**

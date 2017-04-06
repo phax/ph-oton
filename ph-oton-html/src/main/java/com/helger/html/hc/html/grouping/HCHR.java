@@ -19,6 +19,7 @@ package com.helger.html.hc.html.grouping;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -59,7 +60,7 @@ public class HCHR extends AbstractHCElement <HCHR>
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_bNoShade)
-      aElement.setAttribute (CHTMLAttributes.NOSHADE, CHTMLAttributes.NOSHADE);
+      aElement.setAttribute (CHTMLAttributes.NOSHADE, CHTMLAttributeValues.NOSHADE);
   }
 
   @Override
