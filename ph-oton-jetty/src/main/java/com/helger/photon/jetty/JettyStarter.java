@@ -20,6 +20,7 @@ import java.io.File;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
@@ -30,6 +31,7 @@ import org.eclipse.jetty.server.session.DefaultSessionCache;
 import org.eclipse.jetty.server.session.FileSessionDataStore;
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.util.thread.ThreadPool;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.FragmentConfiguration;
 import org.eclipse.jetty.webapp.JettyWebXmlConfiguration;
@@ -73,6 +75,7 @@ public class JettyStarter
   private boolean m_bSpecialSessionMgr = true;
   private String m_sResourceBase = "target/webapp-classes";
   private String m_sContextPath = DEFAULT_CONTEXT_PATH;
+  private ThreadPool m_aThreadPool;
 
   public JettyStarter (@Nonnull final Class <?> aAppClass)
   {
@@ -204,6 +207,22 @@ public class JettyStarter
   }
 
   /**
+   * Set the thread pool to use.
+   *
+   * @param aThreadPool
+   *        Thread pool. May be <code>null</code> to use the default thread
+   *        pool.
+   * @return this
+   * @since 7.0.6
+   */
+  @Nonnull
+  public JettyStarter setThreadPool (@Nullable final ThreadPool aThreadPool)
+  {
+    m_aThreadPool = aThreadPool;
+    return this;
+  }
+
+  /**
    * Customize
    *
    * @param aServerConnector
@@ -271,7 +290,7 @@ public class JettyStarter
     final String sTempDir = SystemProperties.getTmpDir ();
 
     // Create main server
-    final Server aServer = new Server ();
+    final Server aServer = new Server (m_aThreadPool);
     {
       // Create connector on Port
       final ServerConnector aConnector = new ServerConnector (aServer);
