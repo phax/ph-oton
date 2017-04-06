@@ -28,6 +28,7 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.json.IJson;
+import com.helger.xml.microdom.IMicroQName;
 
 /**
  * This file is generated - do NOT edit!
@@ -236,7 +237,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE add(@Nonnull ICSSClassProvider selector, @Nonnull String context);
 
 /**
-
 * @return this
 * @since jQuery 1.8
 */
@@ -924,7 +924,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE ajaxSuccess(@Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @deprecated Deprecated since jQuery 1.8
 * @since jQuery 1.2
@@ -1550,6 +1549,14 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE attr(@Nonnull String attributeName);
 
 /**
+* @param attributeName The name of the attribute to get.
+
+* @return this
+* @since jQuery 1
+*/
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName);
+
+/**
 * @param attributeName The name of the attribute to set.
 * @param value A value to set for the attribute. If null, the specified attribute will be removed (as in .removeAttr()).
 
@@ -1584,6 +1591,15 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 * @since jQuery 1
 */
 @Nonnull THISTYPE attr(@Nonnull String attributeName, @Nonnull IJSExpression value);
+
+/**
+* @param attributeName The name of the attribute to set.
+* @param value A value to set for the attribute. If null, the specified attribute will be removed (as in .removeAttr()).
+
+* @return this
+* @since jQuery 1
+*/
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull IJSExpression value);
 
 /**
 * @param attributeName The name of the attribute to set.
@@ -1628,6 +1644,15 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 * @return this
 * @since jQuery 1
 */
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull IJson value);
+
+/**
+* @param attributeName The name of the attribute to set.
+* @param value A value to set for the attribute. If null, the specified attribute will be removed (as in .removeAttr()).
+
+* @return this
+* @since jQuery 1
+*/
 @Nonnull THISTYPE attr(@Nonnull IJSExpression attributeName, @Nonnull IHCNode value);
 
 /**
@@ -1656,6 +1681,15 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 * @since jQuery 1
 */
 @Nonnull THISTYPE attr(@Nonnull String attributeName, @Nonnull IHCNode value);
+
+/**
+* @param attributeName The name of the attribute to set.
+* @param value A value to set for the attribute. If null, the specified attribute will be removed (as in .removeAttr()).
+
+* @return this
+* @since jQuery 1
+*/
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull IHCNode value);
 
 /**
 * @param attributeName The name of the attribute to set.
@@ -1700,6 +1734,15 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 * @return this
 * @since jQuery 1
 */
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull String value);
+
+/**
+* @param attributeName The name of the attribute to set.
+* @param value A value to set for the attribute. If null, the specified attribute will be removed (as in .removeAttr()).
+
+* @return this
+* @since jQuery 1
+*/
 @Nonnull THISTYPE attr(@Nonnull IJSExpression attributeName, int value);
 
 /**
@@ -1728,6 +1771,15 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 * @since jQuery 1
 */
 @Nonnull THISTYPE attr(@Nonnull String attributeName, int value);
+
+/**
+* @param attributeName The name of the attribute to set.
+* @param value A value to set for the attribute. If null, the specified attribute will be removed (as in .removeAttr()).
+
+* @return this
+* @since jQuery 1
+*/
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName, int value);
 
 /**
 * @param attributeName The name of the attribute to set.
@@ -1772,6 +1824,15 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 * @return this
 * @since jQuery 1
 */
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName, long value);
+
+/**
+* @param attributeName The name of the attribute to set.
+* @param value A value to set for the attribute. If null, the specified attribute will be removed (as in .removeAttr()).
+
+* @return this
+* @since jQuery 1
+*/
 @Nonnull THISTYPE attr(@Nonnull IJSExpression attributeName, @Nonnull BigInteger value);
 
 /**
@@ -1800,6 +1861,15 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 * @since jQuery 1
 */
 @Nonnull THISTYPE attr(@Nonnull String attributeName, @Nonnull BigInteger value);
+
+/**
+* @param attributeName The name of the attribute to set.
+* @param value A value to set for the attribute. If null, the specified attribute will be removed (as in .removeAttr()).
+
+* @return this
+* @since jQuery 1
+*/
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull BigInteger value);
 
 /**
 * @param attributeName The name of the attribute to set.
@@ -1844,6 +1914,15 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 * @return this
 * @since jQuery 1
 */
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName, double value);
+
+/**
+* @param attributeName The name of the attribute to set.
+* @param value A value to set for the attribute. If null, the specified attribute will be removed (as in .removeAttr()).
+
+* @return this
+* @since jQuery 1
+*/
 @Nonnull THISTYPE attr(@Nonnull IJSExpression attributeName, @Nonnull BigDecimal value);
 
 /**
@@ -1872,6 +1951,15 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 * @since jQuery 1
 */
 @Nonnull THISTYPE attr(@Nonnull String attributeName, @Nonnull BigDecimal value);
+
+/**
+* @param attributeName The name of the attribute to set.
+* @param value A value to set for the attribute. If null, the specified attribute will be removed (as in .removeAttr()).
+
+* @return this
+* @since jQuery 1
+*/
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull BigDecimal value);
 
 /**
 * @param attributeName The name of the attribute to set.
@@ -1911,6 +1999,15 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 
 /**
 * @param attributeName The name of the attribute to set.
+* @param value A value to set for the attribute. If null, the specified attribute will be removed (as in .removeAttr()).
+
+* @return this
+* @since jQuery 1
+*/
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull JQueryInvocation value);
+
+/**
+* @param attributeName The name of the attribute to set.
 * @param function A function returning the value to set. this is the current element. Receives the index position of the element in the set and the old attribute value as arguments.
 
 * @return this
@@ -1944,6 +2041,15 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 * @since jQuery 1.1
 */
 @Nonnull THISTYPE attr(@Nonnull String attributeName, @Nonnull JSAnonymousFunction function);
+
+/**
+* @param attributeName The name of the attribute to set.
+* @param function A function returning the value to set. this is the current element. Receives the index position of the element in the set and the old attribute value as arguments.
+
+* @return this
+* @since jQuery 1.1
+*/
+@Nonnull THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull JSAnonymousFunction function);
 
 /**
 * @param content HTML string, DOM element, text node, array of elements and text nodes, or jQuery object to insert before each element in the set of matched elements.
@@ -2714,7 +2820,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE blur(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -2745,21 +2850,18 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE callbacks_add(@Nonnull JSArray callbacks);
 
 /**
-
 * @return this
 * @since jQuery 1.7
 */
 @Nonnull THISTYPE callbacks_disable();
 
 /**
-
 * @return this
 * @since jQuery 1.7
 */
 @Nonnull THISTYPE callbacks_disabled();
 
 /**
-
 * @return this
 * @since jQuery 1.7
 */
@@ -2774,7 +2876,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE callbacks_fire(@Nonnull IJSExpression arguments);
 
 /**
-
 * @return this
 * @since jQuery 1.7
 */
@@ -2798,14 +2899,12 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE callbacks_fireWith(@Nonnull IJSExpression context, @Nonnull IJSExpression args);
 
 /**
-
 * @return this
 * @since jQuery 1.7
 */
 @Nonnull THISTYPE callbacks_fired();
 
 /**
-
 * @return this
 * @since jQuery 1.7
 */
@@ -2828,14 +2927,12 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE callbacks_has(@Nonnull JSAnonymousFunction callback);
 
 /**
-
 * @return this
 * @since jQuery 1.7
 */
 @Nonnull THISTYPE callbacks_lock();
 
 /**
-
 * @return this
 * @since jQuery 1.7
 */
@@ -2900,14 +2997,12 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE change(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE change();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -2954,7 +3049,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE children(@Nonnull ICSSClassProvider selector);
 
 /**
-
 * @return this
 * @since jQuery 1.4
 */
@@ -3027,14 +3121,12 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE click(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE click();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -3327,7 +3419,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE closest(@Nonnull JSArray selectors, @Nonnull String context);
 
 /**
-
 * @return this
 * @since jQuery 1.2
 */
@@ -3368,7 +3459,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE contextmenu(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -3843,7 +3933,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE data(@Nonnull String key);
 
 /**
-
 * @return this
 * @since jQuery 1.4
 */
@@ -3884,7 +3973,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE dblclick(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -4107,7 +4195,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE deferred_fail(@Nonnull JSAnonymousFunction failCallbacks, @Nonnull JSAnonymousFunction failCallbacks1);
 
 /**
-
 * @return this
 * @deprecated Deprecated since jQuery 1.7
 * @since jQuery 1.5
@@ -4116,7 +4203,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE deferred_isRejected();
 
 /**
-
 * @return this
 * @deprecated Deprecated since jQuery 1.7
 * @since jQuery 1.5
@@ -4171,7 +4257,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE deferred_notifyWith(@Nonnull IJSExpression context, @Nonnull JSArray args);
 
 /**
-
 * @return this
 * @deprecated Deprecated since jQuery 1.8
 * @since jQuery 1.6
@@ -4555,7 +4640,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE deferred_progress(@Nonnull JSArray progressCallbacks, @Nonnull JSArray progressCallbacks1);
 
 /**
-
 * @return this
 * @since jQuery 1.5
 */
@@ -4570,7 +4654,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE deferred_promise(@Nonnull IJSExpression target);
 
 /**
-
 * @return this
 * @since jQuery 1.5
 */
@@ -4623,7 +4706,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE deferred_rejectWith(@Nonnull IJSExpression context, @Nonnull JSArray args);
 
 /**
-
 * @return this
 * @since jQuery 1.5
 */
@@ -4676,7 +4758,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE deferred_resolveWith(@Nonnull IJSExpression context, @Nonnull JSArray args);
 
 /**
-
 * @return this
 * @since jQuery 1.7
 */
@@ -5903,7 +5984,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE delegate(@Nonnull String selector, @Nonnull IJSExpression events);
 
 /**
-
 * @return this
 * @since jQuery 1.2
 */
@@ -5942,7 +6022,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE dequeue(@Nonnull String queueName);
 
 /**
-
 * @return this
 * @since jQuery 1.4
 */
@@ -5989,7 +6068,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE detach(@Nonnull ICSSClassProvider selector);
 
 /**
-
 * @return this
 * @deprecated Deprecated since jQuery 1.7
 * @since jQuery 1.4.1
@@ -6230,14 +6308,12 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE each(@Nonnull JSAnonymousFunction function);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE empty();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -6318,56 +6394,48 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE error(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1.3
 */
 @Nonnull THISTYPE event_isDefaultPrevented();
 
 /**
-
 * @return this
 * @since jQuery 1.3
 */
 @Nonnull THISTYPE event_isImmediatePropagationStopped();
 
 /**
-
 * @return this
 * @since jQuery 1.3
 */
 @Nonnull THISTYPE event_isPropagationStopped();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE event_preventDefault();
 
 /**
-
 * @return this
 * @since jQuery 1.3
 */
 @Nonnull THISTYPE event_stopImmediatePropagation();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE event_stopPropagation();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE fadeIn();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -14312,7 +14380,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE fadeTo(@Nonnull BigDecimal duration, @Nonnull BigDecimal opacity, @Nonnull String easing, @Nonnull JSAnonymousFunction complete);
 
 /**
-
 * @return this
 * @since jQuery 1.4.4
 */
@@ -14439,7 +14506,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE find(@Nonnull JQueryInvocation element);
 
 /**
-
 * @return this
 * @since jQuery 1.9
 */
@@ -14478,7 +14544,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE finish(@Nonnull String queue);
 
 /**
-
 * @return this
 * @since jQuery 1.4
 */
@@ -14519,7 +14584,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE focus(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -14560,7 +14624,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE focusin(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -14601,7 +14664,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE focusout(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -14640,7 +14702,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE get(@Nonnull BigInteger index);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -14719,7 +14780,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE hasClass(@Nonnull String className);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -14806,7 +14866,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE height(@Nonnull JSAnonymousFunction function);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -14937,7 +14996,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE hover(@Nonnull JSAnonymousFunction handlerInOut);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -14980,7 +15038,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE html(@Nonnull JSAnonymousFunction function);
 
 /**
-
 * @return this
 * @since jQuery 1.4
 */
@@ -15043,7 +15100,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE index(@Nonnull JQueryInvocation element);
 
 /**
-
 * @return this
 * @since jQuery 1.2.6
 */
@@ -15130,7 +15186,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE innerHeight(@Nonnull JSAnonymousFunction function);
 
 /**
-
 * @return this
 * @since jQuery 1.2.6
 */
@@ -15459,7 +15514,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE keydown(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -15500,7 +15554,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE keypress(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -15541,14 +15594,12 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE keyup(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE keyup();
 
 /**
-
 * @return this
 * @since jQuery 1.4
 */
@@ -16320,7 +16371,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE mousedown(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -16361,7 +16411,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE mouseenter(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -16402,7 +16451,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE mouseleave(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -16443,7 +16491,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE mousemove(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -16484,7 +16531,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE mouseout(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -16525,7 +16571,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE mouseover(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -16566,14 +16611,12 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE mouseup(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE mouseup();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -16620,7 +16663,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE next(@Nonnull ICSSClassProvider selector);
 
 /**
-
 * @return this
 * @since jQuery 1.2
 */
@@ -16659,7 +16701,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE nextAll(@Nonnull String selector);
 
 /**
-
 * @return this
 * @since jQuery 1.4
 */
@@ -17605,14 +17646,12 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE off(@Nonnull String events, @Nonnull String selector, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1.7
 */
 @Nonnull THISTYPE off();
 
 /**
-
 * @return this
 * @since jQuery 1.2
 */
@@ -17635,7 +17674,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE offset(@Nonnull JSAnonymousFunction function);
 
 /**
-
 * @return this
 * @since jQuery 1.2.6
 */
@@ -19010,7 +19048,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE one(@Nonnull IJSExpression events);
 
 /**
-
 * @return this
 * @since jQuery 1.2.6
 */
@@ -19105,7 +19142,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE outerHeight(@Nonnull JSAnonymousFunction function);
 
 /**
-
 * @return this
 * @since jQuery 1.2.6
 */
@@ -19200,7 +19236,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE outerWidth(@Nonnull JSAnonymousFunction function);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -19247,7 +19282,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE parent(@Nonnull ICSSClassProvider selector);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -19294,7 +19328,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE parents(@Nonnull ICSSClassProvider selector);
 
 /**
-
 * @return this
 * @since jQuery 1.4
 */
@@ -19672,7 +19705,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE parentsUntil(@Nonnull JQueryInvocation element, @Nonnull ICSSClassProvider filter);
 
 /**
-
 * @return this
 * @since jQuery 1.2
 */
@@ -20256,7 +20288,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE prependTo(@Nonnull JQueryInvocation target);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -20303,7 +20334,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE prev(@Nonnull ICSSClassProvider selector);
 
 /**
-
 * @return this
 * @since jQuery 1.2
 */
@@ -20350,7 +20380,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE prevAll(@Nonnull ICSSClassProvider selector);
 
 /**
-
 * @return this
 * @since jQuery 1.4
 */
@@ -20728,7 +20757,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE prevUntil(@Nonnull JQueryInvocation element, @Nonnull ICSSClassProvider filter);
 
 /**
-
 * @return this
 * @since jQuery 1.6
 */
@@ -21083,7 +21111,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE pushStack(@Nonnull JSArray elements, @Nonnull String name, @Nonnull JSArray arguments);
 
 /**
-
 * @return this
 * @since jQuery 1.2
 */
@@ -21246,7 +21273,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE ready(@Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -21317,7 +21343,14 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE removeAttr(@Nonnull String attributeName);
 
 /**
+* @param attributeName An attribute to remove; as of version 1.7, it can be a space-separated list of attributes.
 
+* @return this
+* @since jQuery 1
+*/
+@Nonnull THISTYPE removeAttr(@Nonnull IMicroQName attributeName);
+
+/**
 * @return this
 * @since jQuery 1
 */
@@ -21364,7 +21397,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE removeClass(@Nonnull JSAnonymousFunction function);
 
 /**
-
 * @return this
 * @since jQuery 1.2.3
 */
@@ -21597,7 +21629,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE resize(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -21638,14 +21669,12 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE scroll(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE scroll();
 
 /**
-
 * @return this
 * @since jQuery 1.2.6
 */
@@ -21700,7 +21729,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE scrollLeft(@Nonnull BigDecimal value);
 
 /**
-
 * @return this
 * @since jQuery 1.2.6
 */
@@ -21789,28 +21817,24 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE select(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE select();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE serialize();
 
 /**
-
 * @return this
 * @since jQuery 1.2
 */
 @Nonnull THISTYPE serializeArray();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -21889,7 +21913,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE show(@Nonnull String duration);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -21936,7 +21959,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE siblings(@Nonnull ICSSClassProvider selector);
 
 /**
-
 * @return this
 * @deprecated Deprecated since jQuery 1.8
 * @since jQuery 1
@@ -22121,28 +22143,24 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE slice(@Nonnull BigInteger start, @Nonnull BigInteger end);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE slideDown();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE slideToggle();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE slideUp();
 
 /**
-
 * @return this
 * @since jQuery 1.2
 */
@@ -22473,14 +22491,12 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE submit(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
 @Nonnull THISTYPE submit();
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -22575,7 +22591,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE text(@Nonnull JSAnonymousFunction function);
 
 /**
-
 * @return this
 * @since jQuery 1.4
 */
@@ -22722,7 +22737,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE toggle(@Nonnull JSAnonymousFunction handler, @Nonnull JSAnonymousFunction handler1, @Nonnull JSAnonymousFunction handler2);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -22939,7 +22953,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE toggleClass(@Nonnull JSAnonymousFunction function, boolean state);
 
 /**
-
 * @return this
 * @deprecated Deprecated since jQuery 3
 * @since jQuery 1.4
@@ -23338,7 +23351,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE unbind(@Nonnull String eventType, boolean _false);
 
 /**
-
 * @return this
 * @deprecated Deprecated since jQuery 3
 * @since jQuery 1
@@ -23347,7 +23359,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE unbind();
 
 /**
-
 * @return this
 * @deprecated Deprecated since jQuery 3
 * @since jQuery 1.4.2
@@ -23998,7 +24009,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE unload(@Nonnull IJSExpression eventData, @Nonnull JSAnonymousFunction handler);
 
 /**
-
 * @return this
 * @since jQuery 1.4
 */
@@ -24037,7 +24047,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE unwrap(@Nonnull String selector);
 
 /**
-
 * @return this
 * @since jQuery 1
 */
@@ -24132,7 +24141,6 @@ public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationEx
 @Nonnull THISTYPE val(@Nonnull JSAnonymousFunction function);
 
 /**
-
 * @return this
 * @since jQuery 1
 */

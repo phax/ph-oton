@@ -675,6 +675,11 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
     return thisAsT ();
   }
 
+  public static boolean isDataAttrName (@Nullable final IMicroQName aName)
+  {
+    return aName != null && isDataAttrName (aName.getName ());
+  }
+
   public static boolean isDataAttrName (@Nullable final String sName)
   {
     return StringHelper.startsWith (sName, CHTMLAttributes.HTML5_PREFIX_DATA);

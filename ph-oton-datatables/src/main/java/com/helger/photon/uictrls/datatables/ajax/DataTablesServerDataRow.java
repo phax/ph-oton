@@ -69,7 +69,7 @@ public final class DataTablesServerDataRow implements Serializable
       for (final Map.Entry <IMicroQName, String> aEntry : aRow.getAllCustomAttrsIterable ())
       {
         final IMicroQName aAttrName = aEntry.getKey ();
-        if (AbstractHCElement.isDataAttrName (aAttrName.getName ()))
+        if (AbstractHCElement.isDataAttrName (aAttrName))
         {
           // Data attribute
           if (m_aRowData == null)

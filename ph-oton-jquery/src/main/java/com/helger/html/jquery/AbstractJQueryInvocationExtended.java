@@ -31,6 +31,7 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSFunction;
 import com.helger.json.IJson;
+import com.helger.xml.microdom.IMicroQName;
 
 /**
  * This file is generated - do NOT edit!
@@ -569,6 +570,9 @@ public THISTYPE attr(@Nonnull final IHCNode attributeName) { return attr ().arg 
 public THISTYPE attr(@Nonnull final String attributeName) { return attr ().arg (attributeName); }
 
 @Nonnull
+public THISTYPE attr(@Nonnull final IMicroQName attributeName) { return attr ().arg (attributeName); }
+
+@Nonnull
 public THISTYPE attr(@Nonnull IJSExpression attributeName, @Nonnull IJSExpression value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
@@ -579,6 +583,9 @@ public THISTYPE attr(@Nonnull IHCNode attributeName, @Nonnull IJSExpression valu
 
 @Nonnull
 public THISTYPE attr(@Nonnull String attributeName, @Nonnull IJSExpression value) { return attr ().arg (attributeName).arg (value); }
+
+@Nonnull
+public THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull IJSExpression value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
 public THISTYPE attr(@Nonnull IJSExpression attributeName, @Nonnull IJson value) { return attr ().arg (attributeName).arg (value); }
@@ -593,6 +600,9 @@ public THISTYPE attr(@Nonnull IHCNode attributeName, @Nonnull IJson value) { ret
 public THISTYPE attr(@Nonnull String attributeName, @Nonnull IJson value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
+public THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull IJson value) { return attr ().arg (attributeName).arg (value); }
+
+@Nonnull
 public THISTYPE attr(@Nonnull IJSExpression attributeName, @Nonnull IHCNode value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
@@ -603,6 +613,9 @@ public THISTYPE attr(@Nonnull IHCNode attributeName, @Nonnull IHCNode value) { r
 
 @Nonnull
 public THISTYPE attr(@Nonnull String attributeName, @Nonnull IHCNode value) { return attr ().arg (attributeName).arg (value); }
+
+@Nonnull
+public THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull IHCNode value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
 public THISTYPE attr(@Nonnull IJSExpression attributeName, @Nonnull String value) { return attr ().arg (attributeName).arg (value); }
@@ -617,6 +630,9 @@ public THISTYPE attr(@Nonnull IHCNode attributeName, @Nonnull String value) { re
 public THISTYPE attr(@Nonnull String attributeName, @Nonnull String value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
+public THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull String value) { return attr ().arg (attributeName).arg (value); }
+
+@Nonnull
 public THISTYPE attr(@Nonnull IJSExpression attributeName, int value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
@@ -627,6 +643,9 @@ public THISTYPE attr(@Nonnull IHCNode attributeName, int value) { return attr ()
 
 @Nonnull
 public THISTYPE attr(@Nonnull String attributeName, int value) { return attr ().arg (attributeName).arg (value); }
+
+@Nonnull
+public THISTYPE attr(@Nonnull IMicroQName attributeName, int value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
 public THISTYPE attr(@Nonnull IJSExpression attributeName, long value) { return attr ().arg (attributeName).arg (value); }
@@ -641,6 +660,9 @@ public THISTYPE attr(@Nonnull IHCNode attributeName, long value) { return attr (
 public THISTYPE attr(@Nonnull String attributeName, long value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
+public THISTYPE attr(@Nonnull IMicroQName attributeName, long value) { return attr ().arg (attributeName).arg (value); }
+
+@Nonnull
 public THISTYPE attr(@Nonnull IJSExpression attributeName, @Nonnull BigInteger value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
@@ -651,6 +673,9 @@ public THISTYPE attr(@Nonnull IHCNode attributeName, @Nonnull BigInteger value) 
 
 @Nonnull
 public THISTYPE attr(@Nonnull String attributeName, @Nonnull BigInteger value) { return attr ().arg (attributeName).arg (value); }
+
+@Nonnull
+public THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull BigInteger value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
 public THISTYPE attr(@Nonnull IJSExpression attributeName, double value) { return attr ().arg (attributeName).arg (value); }
@@ -665,6 +690,9 @@ public THISTYPE attr(@Nonnull IHCNode attributeName, double value) { return attr
 public THISTYPE attr(@Nonnull String attributeName, double value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
+public THISTYPE attr(@Nonnull IMicroQName attributeName, double value) { return attr ().arg (attributeName).arg (value); }
+
+@Nonnull
 public THISTYPE attr(@Nonnull IJSExpression attributeName, @Nonnull BigDecimal value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
@@ -675,6 +703,9 @@ public THISTYPE attr(@Nonnull IHCNode attributeName, @Nonnull BigDecimal value) 
 
 @Nonnull
 public THISTYPE attr(@Nonnull String attributeName, @Nonnull BigDecimal value) { return attr ().arg (attributeName).arg (value); }
+
+@Nonnull
+public THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull BigDecimal value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
 public THISTYPE attr(@Nonnull IJSExpression attributeName, @Nonnull JQueryInvocation value) { return attr ().arg (attributeName).arg (value); }
@@ -689,6 +720,9 @@ public THISTYPE attr(@Nonnull IHCNode attributeName, @Nonnull JQueryInvocation v
 public THISTYPE attr(@Nonnull String attributeName, @Nonnull JQueryInvocation value) { return attr ().arg (attributeName).arg (value); }
 
 @Nonnull
+public THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull JQueryInvocation value) { return attr ().arg (attributeName).arg (value); }
+
+@Nonnull
 public THISTYPE attr(@Nonnull IJSExpression attributeName, @Nonnull JSAnonymousFunction function) { return attr ().arg (attributeName).arg (function); }
 
 @Nonnull
@@ -699,6 +733,9 @@ public THISTYPE attr(@Nonnull IHCNode attributeName, @Nonnull JSAnonymousFunctio
 
 @Nonnull
 public THISTYPE attr(@Nonnull String attributeName, @Nonnull JSAnonymousFunction function) { return attr ().arg (attributeName).arg (function); }
+
+@Nonnull
+public THISTYPE attr(@Nonnull IMicroQName attributeName, @Nonnull JSAnonymousFunction function) { return attr ().arg (attributeName).arg (function); }
 
 @Nonnull
 public THISTYPE before(@Nonnull final IJSExpression content) { return before ().arg (content); }
@@ -6547,6 +6584,9 @@ public THISTYPE removeAttr(@Nonnull final IHCNode attributeName) { return remove
 
 @Nonnull
 public THISTYPE removeAttr(@Nonnull final String attributeName) { return removeAttr ().arg (attributeName); }
+
+@Nonnull
+public THISTYPE removeAttr(@Nonnull final IMicroQName attributeName) { return removeAttr ().arg (attributeName); }
 
 @Nonnull
 public THISTYPE removeClass(@Nonnull final IJSExpression className) { return removeClass ().arg (className); }

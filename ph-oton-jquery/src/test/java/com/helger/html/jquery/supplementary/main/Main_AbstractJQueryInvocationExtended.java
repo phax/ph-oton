@@ -32,10 +32,10 @@ public class Main_AbstractJQueryInvocationExtended extends AbstractCreateJQueryA
   {
     // Read all data
     final ICommonsList <Entry> aAllEntries = readAllEntries ();
-    final ICommonsList <String> aLines = new CommonsArrayList<> ();
+    final ICommonsList <String> aLines = new CommonsArrayList <> ();
 
     // IJQueryInvocationExtended
-    final ICommonsSet <String> aUsedJavaSignatures = new CommonsHashSet<> ();
+    final ICommonsSet <String> aUsedJavaSignatures = new CommonsHashSet <> ();
     for (final Entry aEntry : aAllEntries)
       if (aEntry.getAPIType () == EAPIType.METHOD)
       {
@@ -84,7 +84,7 @@ public class Main_AbstractJQueryInvocationExtended extends AbstractCreateJQueryA
             if (nMultiJavaTypeArgs == 0)
             {
               String sParams = "";
-              final ICommonsList <String> aJavaTypeKey = new CommonsArrayList<> ();
+              final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
               for (final Argument aArg : aSignature.getAllArguments ())
               {
                 if (sParams.length () > 0)
@@ -109,7 +109,7 @@ public class Main_AbstractJQueryInvocationExtended extends AbstractCreateJQueryA
 
               // Build template
               String sTemplate = "";
-              final ICommonsList <String> aJavaTypeKey = new CommonsArrayList<> ();
+              final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
               int nArgIndex = 0;
               for (final Argument aArg : aSignature.getAllArguments ())
               {
@@ -132,15 +132,15 @@ public class Main_AbstractJQueryInvocationExtended extends AbstractCreateJQueryA
                 ++nArgIndex;
               }
 
-              ICommonsList <String> aAllParams = new CommonsArrayList<> (sTemplate);
-              ICommonsList <String> aAllJavaKeys = new CommonsArrayList<> (StringHelper.getImploded (',',
-                                                                                                     aJavaTypeKey));
+              ICommonsList <String> aAllParams = new CommonsArrayList <> (sTemplate);
+              ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringHelper.getImploded (',',
+                                                                                                      aJavaTypeKey));
 
               for (int i = 0; i < nArgCount; ++i)
                 if (aMultiJavaTypeArgs[i] != null)
                 {
-                  final ICommonsList <String> aNewParams = new CommonsArrayList<> ();
-                  final ICommonsList <String> aNewJavaKeys = new CommonsArrayList<> ();
+                  final ICommonsList <String> aNewParams = new CommonsArrayList <> ();
+                  final ICommonsList <String> aNewJavaKeys = new CommonsArrayList <> ();
                   final String sSearch = "{" + i + "}";
                   for (final String sJavaType : aMultiJavaTypeArgs[i].getAllJavaTypes ())
                   {
@@ -190,6 +190,7 @@ public class Main_AbstractJQueryInvocationExtended extends AbstractCreateJQueryA
                                                    "import com.helger.html.jscode.JSArray;\n" +
                                                    "import com.helger.html.jscode.JSFunction;\n" +
                                                    "import com.helger.json.IJson;\n" +
+                                                   "import com.helger.xml.microdom.IMicroQName;\n" +
                                                    "\n" +
                                                    "/**\n" +
                                                    " * This file is generated - do NOT edit!\n" +

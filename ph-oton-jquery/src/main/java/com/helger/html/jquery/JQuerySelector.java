@@ -43,6 +43,7 @@ import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSStringLiteral;
+import com.helger.xml.microdom.IMicroQName;
 
 @Immutable
 @CodingStyleguideUnaware
@@ -420,6 +421,21 @@ public final class JQuerySelector implements IJQuerySelector
   // static methods
 
   /**
+   * @param aAttrName
+   *        Attribute name
+   * @param sAttrValue
+   *        Attribute value
+   * @return <code>[attrName*='attrValue']</code>
+   */
+  @Nonnull
+  public static IJQuerySelector attributeContains (@Nonnull final IMicroQName aAttrName,
+                                                   @Nonnull final String sAttrValue)
+  {
+    ValueEnforcer.notNull (aAttrName, "AttrName");
+    return attributeContains (aAttrName.getName (), sAttrValue);
+  }
+
+  /**
    * @param sAttrName
    *        Attribute name
    * @param sAttrValue
@@ -433,6 +449,21 @@ public final class JQuerySelector implements IJQuerySelector
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
     return new JQuerySelector ("[" + sAttrName + "*=" + JSStringLiteral.getAsString (sAttrValue) + "]");
+  }
+
+  /**
+   * @param aAttrName
+   *        Attribute name
+   * @param sAttrValue
+   *        Attribute value
+   * @return <code>[attrName|='attrValue']</code>
+   */
+  @Nonnull
+  public static IJQuerySelector attributeContainsPrefix (@Nonnull final IMicroQName aAttrName,
+                                                         @Nonnull final String sAttrValue)
+  {
+    ValueEnforcer.notNull (aAttrName, "AttrName");
+    return attributeContainsPrefix (aAttrName.getName (), sAttrValue);
   }
 
   /**
@@ -452,6 +483,21 @@ public final class JQuerySelector implements IJQuerySelector
   }
 
   /**
+   * @param aAttrName
+   *        Attribute name
+   * @param sAttrValue
+   *        Attribute value
+   * @return <code>[attrName~='attrValue']</code>
+   */
+  @Nonnull
+  public static IJQuerySelector attributeContainsWord (@Nonnull final IMicroQName aAttrName,
+                                                       @Nonnull final String sAttrValue)
+  {
+    ValueEnforcer.notNull (aAttrName, "AttrName");
+    return attributeContainsWord (aAttrName.getName (), sAttrValue);
+  }
+
+  /**
    * @param sAttrName
    *        Attribute name
    * @param sAttrValue
@@ -465,6 +511,21 @@ public final class JQuerySelector implements IJQuerySelector
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
     return new JQuerySelector ("[" + sAttrName + "~=" + JSStringLiteral.getAsString (sAttrValue) + "]");
+  }
+
+  /**
+   * @param aAttrName
+   *        Attribute name
+   * @param sAttrValue
+   *        Attribute value
+   * @return <code>[attrName$='attrValue']</code>
+   */
+  @Nonnull
+  public static IJQuerySelector attributeEndsWith (@Nonnull final IMicroQName aAttrName,
+                                                   @Nonnull final String sAttrValue)
+  {
+    ValueEnforcer.notNull (aAttrName, "AttrName");
+    return attributeEndsWith (aAttrName.getName (), sAttrValue);
   }
 
   /**
@@ -484,6 +545,20 @@ public final class JQuerySelector implements IJQuerySelector
   }
 
   /**
+   * @param aAttrName
+   *        Attribute name
+   * @param sAttrValue
+   *        Attribute value
+   * @return <code>[attrName='attrValue']</code>
+   */
+  @Nonnull
+  public static IJQuerySelector attributeEquals (@Nonnull final IMicroQName aAttrName, @Nonnull final String sAttrValue)
+  {
+    ValueEnforcer.notNull (aAttrName, "AttrName");
+    return attributeEquals (aAttrName.getName (), sAttrValue);
+  }
+
+  /**
    * @param sAttrName
    *        Attribute name
    * @param sAttrValue
@@ -500,6 +575,18 @@ public final class JQuerySelector implements IJQuerySelector
   }
 
   /**
+   * @param aAttrName
+   *        Attribute name
+   * @return <code>[attrName]</code>
+   */
+  @Nonnull
+  public static IJQuerySelector attributeHas (@Nonnull final IMicroQName aAttrName)
+  {
+    ValueEnforcer.notNull (aAttrName, "AttrName");
+    return attributeHas (aAttrName.getName ());
+  }
+
+  /**
    * @param sAttrName
    *        Attribute name
    * @return <code>[attrName]</code>
@@ -509,6 +596,21 @@ public final class JQuerySelector implements IJQuerySelector
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     return new JQuerySelector ("[" + sAttrName + "]");
+  }
+
+  /**
+   * @param aAttrName
+   *        Attribute name
+   * @param sAttrValue
+   *        Attribute value
+   * @return <code>[attrName!='attrValue']</code>
+   */
+  @Nonnull
+  public static IJQuerySelector attributeNotEqual (@Nonnull final IMicroQName aAttrName,
+                                                   @Nonnull final String sAttrValue)
+  {
+    ValueEnforcer.notNull (aAttrName, "AttrName");
+    return attributeNotEqual (aAttrName.getName (), sAttrValue);
   }
 
   /**
@@ -525,6 +627,21 @@ public final class JQuerySelector implements IJQuerySelector
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
     return new JQuerySelector ("[" + sAttrName + "!=" + JSStringLiteral.getAsString (sAttrValue) + "]");
+  }
+
+  /**
+   * @param aAttrName
+   *        Attribute name
+   * @param sAttrValue
+   *        Attribute value
+   * @return <code>[attrName^='attrValue']</code>
+   */
+  @Nonnull
+  public static IJQuerySelector attributeStartsWith (@Nonnull final IMicroQName aAttrName,
+                                                     @Nonnull final String sAttrValue)
+  {
+    ValueEnforcer.notNull (aAttrName, "AttrName");
+    return attributeStartsWith (aAttrName.getName (), sAttrValue);
   }
 
   /**
@@ -941,7 +1058,7 @@ public final class JQuerySelector implements IJQuerySelector
   public static IJQuerySelector nameAttr (@Nonnull @Nonempty final String sNameAttrValue)
   {
     ValueEnforcer.notEmpty (sNameAttrValue, "NameAttrValue");
-    return attributeEquals (CHTMLAttributes.NAME.getName (), sNameAttrValue);
+    return attributeEquals (CHTMLAttributes.NAME, sNameAttrValue);
   }
 
   /**

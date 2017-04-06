@@ -37,6 +37,7 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSMarshaller;
 import com.helger.json.IJson;
+import com.helger.xml.microdom.IMicroQName;
 
 /**
  * Object invocation
@@ -321,6 +322,12 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
   public IMPLTYPE arg (@Nullable final IJson aValue)
   {
     return aValue == null ? argNull () : arg (JSExpr.json (aValue));
+  }
+
+  @Nonnull
+  public IMPLTYPE arg (@Nullable final IMicroQName aValue)
+  {
+    return aValue == null ? argNull () : arg (JSExpr.lit (aValue.getName ()));
   }
 
   @Nonnull
