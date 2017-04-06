@@ -370,7 +370,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
 
     final StringBuilder aSB = new StringBuilder ();
     for (final ICSSValue aValue : m_aStyles.values ())
-      aSB.append (aValue.getAsCSSString (aCSSSettings, 0));
+      aSB.append (aValue.getAsCSSString (aCSSSettings));
     return aSB.toString ();
   }
 
