@@ -868,7 +868,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
     // Global attributes
     if (m_nTabIndex != DEFAULT_TABINDEX)
       aElement.setAttribute (CHTMLAttributes.TABINDEX, m_nTabIndex);
-    if (StringHelper.hasNoText (m_sAccessKey))
+    if (StringHelper.hasText (m_sAccessKey))
       aElement.setAttribute (CHTMLAttributes.ACCESSKEY, m_sAccessKey);
 
     // Global HTML5 attributes
@@ -879,7 +879,7 @@ public abstract class AbstractHCElement <THISTYPE extends AbstractHCElement <THI
                                m_eTranslate.isTrue () ? CHTMLAttributeValues.YES : CHTMLAttributeValues.NO);
       if (m_eContentEditable != null)
         aElement.setAttribute (CHTMLAttributes.CONTENTEDITABLE, m_eContentEditable);
-      if (StringHelper.hasNoText (m_sContextMenuID))
+      if (StringHelper.hasText (m_sContextMenuID))
         aElement.setAttribute (CHTMLAttributes.CONTEXTMENU, m_sContextMenuID);
       if (m_eDraggable != null)
         aElement.setAttribute (CHTMLAttributes.DRAGGABLE, m_eDraggable);
