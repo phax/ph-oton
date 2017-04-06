@@ -383,17 +383,17 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
 
   @Nonnull
   @OverrideOnDemand
-  protected UnifiedResponse createUnifiedResponse (@Nonnull final EHTTPVersion eHTTPVersion,
-                                                   @Nonnull final EHTTPMethod eHTTPMethod,
+  protected UnifiedResponse createUnifiedResponse (@Nonnull final EHTTPVersion eHttpVersion,
+                                                   @Nonnull final EHTTPMethod eHttpMethod,
                                                    @Nonnull final HttpServletRequest aHttpRequest)
   {
-    return new UnifiedResponse (eHTTPVersion, eHTTPMethod, aHttpRequest);
+    return new UnifiedResponse (eHttpVersion, eHttpMethod, aHttpRequest);
   }
 
   private void _run (@Nonnull final HttpServletRequest aHttpRequest,
                      @Nonnull final HttpServletResponse aHttpResponse,
                      @Nonnull final IRequestWebScope aRequestScope,
-                     @Nonnull final EHTTPMethod eHTTPMethod) throws ServletException, IOException
+                     @Nonnull final EHTTPMethod eHttpMethod) throws ServletException, IOException
   {
     // Increment invocation counter
     ServletStatusManager.onServletInvocation (getClass ());
@@ -426,17 +426,17 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     }
 
     final Set <EHTTPMethod> aAllowedHTTPMethods = getAllowedHTTPMethods ();
-    if (!aAllowedHTTPMethods.contains (eHTTPMethod))
+    if (!aAllowedHTTPMethods.contains (eHttpMethod))
     {
       // Disallow method
-      m_aStatsHttpMethodDisallowed.increment (eHTTPMethod.getName ());
+      m_aStatsHttpMethodDisallowed.increment (eHttpMethod.getName ());
 
       // Build Allow response header
       final String sAllow = StringHelper.getImplodedMapped (", ", aAllowedHTTPMethods, EHTTPMethod::getName);
       s_aLogger.warn ("Request " +
                       aRequestScope.getURL () +
                       " uses disallowed HTTP method " +
-                      eHTTPMethod +
+                      eHttpMethod +
                       "! Allowed methods are: " +
                       sAllow);
       aHttpResponse.setHeader (CHTTPHeader.ALLOW, sAllow);
@@ -447,13 +447,13 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         aHttpResponse.sendError (HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
-    m_aStatsHttpMethodAllowed.increment (eHTTPMethod.getName ());
+    m_aStatsHttpMethodAllowed.increment (eHttpMethod.getName ());
 
     // Now all pre-conditions were checked. As the next step check some last
     // modification issues, for performance reasons. If all optimizations fail,
     // perform the regular request.
 
-    final UnifiedResponse aUnifiedResponse = createUnifiedResponse (eHTTPVersion, eHTTPMethod, aHttpRequest);
+    final UnifiedResponse aUnifiedResponse = createUnifiedResponse (eHTTPVersion, eHttpMethod, aHttpRequest);
     if (initRequestState (aRequestScope, aUnifiedResponse).isBreak ())
     {
       if (s_aLogger.isDebugEnabled ())
@@ -467,7 +467,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     m_aStatsInitSuccess.increment ();
 
     // Check for last-modification on GET and HEAD
-    if (eHTTPMethod == EHTTPMethod.GET || eHTTPMethod == EHTTPMethod.HEAD)
+    if (eHttpMethod == EHTTPMethod.GET || eHttpMethod == EHTTPMethod.HEAD)
     {
       final LocalDateTime aLastModification = getLastModificationDateTime (aRequestScope);
       if (aLastModification != null)

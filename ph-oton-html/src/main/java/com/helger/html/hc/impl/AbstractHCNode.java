@@ -29,6 +29,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.EHTMLVersion;
@@ -157,12 +158,15 @@ public abstract class AbstractHCNode implements IHCNode
    */
   public final void internalSetNodeState (@Nonnull final EHCNodeState eNodeState)
   {
-    ValueEnforcer.notNull (eNodeState, "NodeState");
-    if (m_eNodeState.isAfter (eNodeState))
-      HCConsistencyChecker.consistencyError ("The new node state is invalid. Got " +
-                                             eNodeState +
-                                             " but having " +
-                                             m_eNodeState);
+    if (GlobalDebug.isDebugMode ())
+    {
+      ValueEnforcer.notNull (eNodeState, "NodeState");
+      if (m_eNodeState.isAfter (eNodeState))
+        HCConsistencyChecker.consistencyError ("The new node state is invalid. Got " +
+                                               eNodeState +
+                                               " but having " +
+                                               m_eNodeState);
+    }
     m_eNodeState = eNodeState;
   }
 
