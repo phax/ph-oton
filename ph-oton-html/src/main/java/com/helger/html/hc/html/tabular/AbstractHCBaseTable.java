@@ -30,6 +30,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
@@ -150,13 +151,20 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   @ReturnsMutableCopy
   public final ICommonsList <IHCNode> getAllChildren ()
   {
-    final ICommonsList <IHCNode> ret = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     if (m_aColGroup != null)
       ret.add (m_aColGroup);
     ret.add (m_aHead);
     ret.add (m_aBody);
     ret.add (m_aFoot);
     return ret;
+  }
+
+  @Override
+  @Nonnull
+  public ICommonsIterable <? extends IHCNode> getChildren ()
+  {
+    return getAllChildren ();
   }
 
   @Override
@@ -380,7 +388,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   {
     int nRowIndex = 0;
     boolean bTotalHasRowSpans = false;
-    final ICommonsList <int []> aTotalRowSpans = new CommonsArrayList<> (aPart.getChildCount ());
+    final ICommonsList <int []> aTotalRowSpans = new CommonsArrayList <> (aPart.getChildCount ());
     if (aPart.hasChildren ())
       for (final HCRow aBodyRow : aPart.directGetRowList ())
       {

@@ -56,8 +56,8 @@ public final class HCHTMLHelper
     ValueEnforcer.notNull (aOwner, "Owner");
     ValueEnforcer.notEmpty (aElements, "Elements");
 
-    final ICommonsList <IHCElement <?>> ret = new CommonsArrayList<> ();
-    HCHelper.iterateChildren (aOwner, (aParentNode, aChildNode) -> {
+    final ICommonsList <IHCElement <?>> ret = new CommonsArrayList <> ();
+    HCHelper.iterateChildrenNoCopy (aOwner, (aParentNode, aChildNode) -> {
       if (aChildNode instanceof IHCElement <?>)
       {
         final IHCElement <?> aCurrentElement = (IHCElement <?>) aChildNode;
@@ -92,8 +92,8 @@ public final class HCHTMLHelper
     ValueEnforcer.notNull (aOwner, "Owner");
     ValueEnforcer.notEmpty (aElements, "Elements");
 
-    final Wrapper <IHCElement <?>> ret = new Wrapper<> ();
-    HCHelper.iterateChildren (aOwner, (aParentNode, aChildNode) -> {
+    final Wrapper <IHCElement <?>> ret = new Wrapper <> ();
+    HCHelper.iterateChildrenNoCopy (aOwner, (aParentNode, aChildNode) -> {
       if (aChildNode instanceof IHCElement <?>)
       {
         final IHCElement <?> aCurrentElement = (IHCElement <?>) aChildNode;
@@ -140,8 +140,8 @@ public final class HCHTMLHelper
     ValueEnforcer.notNull (aOwner, "Owner");
     ValueEnforcer.notEmpty (aElements, "Elements");
 
-    final Wrapper <IHCElement <?>> ret = new Wrapper<> ();
-    HCHelper.iterateChildren (aOwner, (aParentNode, aChildNode) -> {
+    final Wrapper <IHCElement <?>> ret = new Wrapper <> ();
+    HCHelper.iterateChildrenNoCopy (aOwner, (aParentNode, aChildNode) -> {
       if (aChildNode instanceof IHCElement <?>)
       {
         final IHCElement <?> aCurrentElement = (IHCElement <?>) aChildNode;

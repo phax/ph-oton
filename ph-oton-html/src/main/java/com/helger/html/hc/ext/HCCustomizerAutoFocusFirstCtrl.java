@@ -45,9 +45,9 @@ public class HCCustomizerAutoFocusFirstCtrl extends AbstractHCCustomizer
 
   public static void setAutoFocusOnFirstControl (@Nonnull final IHCNode aStartNode)
   {
-    final Wrapper <IHCHasFocus <?>> aFirstCtrl = new Wrapper<> ();
+    final Wrapper <IHCHasFocus <?>> aFirstCtrl = new Wrapper <> ();
     final MutableBoolean bAnyCtrlHasFocus = new MutableBoolean (false);
-    HCHelper.iterateChildren (aStartNode, (aParentNode, aChildNode) -> {
+    HCHelper.iterateChildrenNoCopy (aStartNode, (aParentNode, aChildNode) -> {
       if (aChildNode instanceof AbstractHCInput <?>)
       {
         final AbstractHCInput <?> aHasFocus = (AbstractHCInput <?>) aChildNode;

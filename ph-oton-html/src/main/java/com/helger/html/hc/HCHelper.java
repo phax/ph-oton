@@ -52,7 +52,7 @@ public final class HCHelper
       return true;
 
     final MutableBoolean ret = new MutableBoolean (false);
-    iterateChildren (aStartNode, (aParentNode, aChildNode) -> {
+    iterateChildrenNoCopy (aStartNode, (aParentNode, aChildNode) -> {
       if (aChildNode instanceof IHCTextNode <?>)
       {
         ret.set (true);
@@ -85,6 +85,28 @@ public final class HCHelper
     return EFinish.UNFINISHED;
   }
 
+  @Nonnull
+  private static EFinish _recursiveIterateTreeNoCopy (@Nonnull final IHCNode aNode,
+                                                      @Nonnull final IHCIteratorCallback aCallback)
+  {
+    if (aNode.hasChildren ())
+    {
+      // Use getChildren because the tree might be modified internally!
+      // Using an iterable would be quicker but more error prone!
+      for (final IHCNode aChild : aNode.getChildren ())
+      {
+        // call callback
+        if (aCallback.call (aNode, aChild).isFinished ())
+          return EFinish.FINISHED;
+
+        // does the node has children
+        if (_recursiveIterateTreeNoCopy (aChild, aCallback).isFinished ())
+          return EFinish.FINISHED;
+      }
+    }
+    return EFinish.UNFINISHED;
+  }
+
   /**
    * Recursively iterate the node and all child nodes of the passed node. The
    * difference to {@link #iterateChildren(IHCNode, IHCIteratorCallback)} is,
@@ -106,6 +128,26 @@ public final class HCHelper
   }
 
   /**
+   * Recursively iterate the node and all child nodes of the passed node. The
+   * difference to {@link #iterateChildrenNoCopy(IHCNode, IHCIteratorCallback)}
+   * is, that the callback is also invoked on the passed node.
+   *
+   * @param aNode
+   *        The node to be iterated.
+   * @param aCallback
+   *        The callback to be invoked on every child
+   */
+  public static void iterateTreeNoCopy (@Nonnull final IHCNode aNode, @Nonnull final IHCIteratorCallback aCallback)
+  {
+    ValueEnforcer.notNull (aNode, "node");
+    ValueEnforcer.notNull (aCallback, "callback");
+
+    // call callback on start node
+    if (aCallback.call (null, aNode).isUnfinished ())
+      _recursiveIterateTreeNoCopy (aNode, aCallback);
+  }
+
+  /**
    * Recursively iterate all child nodes of the passed node.
    *
    * @param aNode
@@ -119,6 +161,22 @@ public final class HCHelper
     ValueEnforcer.notNull (aCallback, "callback");
 
     _recursiveIterateTree (aNode, aCallback);
+  }
+
+  /**
+   * Recursively iterate all child nodes of the passed node.
+   *
+   * @param aNode
+   *        The node who's children should be iterated.
+   * @param aCallback
+   *        The callback to be invoked on every child
+   */
+  public static void iterateChildrenNoCopy (@Nonnull final IHCNode aNode, @Nonnull final IHCIteratorCallback aCallback)
+  {
+    ValueEnforcer.notNull (aNode, "node");
+    ValueEnforcer.notNull (aCallback, "callback");
+
+    _recursiveIterateTreeNoCopy (aNode, aCallback);
   }
 
   /**

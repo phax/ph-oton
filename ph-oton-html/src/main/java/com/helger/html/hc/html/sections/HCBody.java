@@ -50,7 +50,7 @@ public class HCBody extends AbstractHCElementWithChildren <HCBody>
     super.onConsistencyCheck (aConversionSettings);
 
     final ICommonsSet <String> aUsedIDs = new CommonsHashSet <> ();
-    HCHelper.iterateTree (this, (aParentNode, aChildNode) -> {
+    HCHelper.iterateTreeNoCopy (this, (aParentNode, aChildNode) -> {
       if (aChildNode instanceof IHCHasID <?>)
       {
         final IHCHasID <?> aElement = (IHCHasID <?>) aChildNode;

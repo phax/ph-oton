@@ -26,6 +26,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.state.EChange;
@@ -494,6 +495,13 @@ public class HCHead extends AbstractHCElement <HCHead>
     ret.addAll (m_aCSS);
     ret.addAll (m_aJS);
     return ret;
+  }
+
+  @Override
+  @Nonnull
+  public ICommonsIterable <? extends IHCNode> getChildren ()
+  {
+    return getAllChildren ();
   }
 
   @Override

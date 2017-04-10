@@ -36,6 +36,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
@@ -203,6 +204,13 @@ public abstract class AbstractHCHasChildrenMutable <THISTYPE extends AbstractHCH
   public final ICommonsList <CHILDTYPE> getAllChildren ()
   {
     return new CommonsArrayList <> (m_aChildren);
+  }
+
+  @Override
+  @Nullable
+  public final ICommonsIterable <CHILDTYPE> getChildren ()
+  {
+    return m_aChildren;
   }
 
   @Override

@@ -27,6 +27,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.EHCNodeState;
@@ -119,6 +120,13 @@ public abstract class AbstractHCWrappingNode extends AbstractHCNode implements I
   public ICommonsList <? extends IHCNode> getAllChildren ()
   {
     return getWrappedNode ().getAllChildren ();
+  }
+
+  @Override
+  @Nullable
+  public ICommonsIterable <? extends IHCNode> getChildren ()
+  {
+    return getWrappedNode ().getChildren ();
   }
 
   @Override

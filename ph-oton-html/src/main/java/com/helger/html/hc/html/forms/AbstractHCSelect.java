@@ -29,6 +29,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.string.StringHelper;
@@ -62,8 +63,8 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   // required is inherited
   private int m_nSize = CGlobal.ILLEGAL_UINT;
 
-  private ICommonsList <IHCNode> m_aOptions = new CommonsArrayList<> ();
-  private final ICommonsSet <String> m_aPreselectedValues = new CommonsHashSet<> ();
+  private ICommonsList <IHCNode> m_aOptions = new CommonsArrayList <> ();
+  private final ICommonsSet <String> m_aPreselectedValues = new CommonsHashSet <> ();
 
   public AbstractHCSelect ()
   {
@@ -180,7 +181,7 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   @Nonnull
   public final THISTYPE removeAllOptions ()
   {
-    final ICommonsList <IHCNode> aRest = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> aRest = new CommonsArrayList <> ();
     for (final IHCNode aChild : m_aOptions)
       if (!(aChild instanceof HCOption))
         aRest.add (aChild);
@@ -191,7 +192,7 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   @Nonnull
   public final THISTYPE removeAllOptionGroups ()
   {
-    final ICommonsList <IHCNode> aRest = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> aRest = new CommonsArrayList <> ();
     for (final IHCNode aChild : m_aOptions)
       if (!(aChild instanceof HCOptGroup))
         aRest.add (aChild);
@@ -309,6 +310,13 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   public ICommonsList <? extends IHCNode> getAllChildren ()
   {
     return m_aOptions.getClone ();
+  }
+
+  @Override
+  @Nonnull
+  public ICommonsIterable <? extends IHCNode> getChildren ()
+  {
+    return m_aOptions;
   }
 
   @Override

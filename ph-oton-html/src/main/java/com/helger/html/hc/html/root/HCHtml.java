@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -92,6 +93,13 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   public ICommonsList <? extends IHCNode> getAllChildren ()
   {
     return new CommonsArrayList <> (m_aHead, m_aBody);
+  }
+
+  @Override
+  @Nonnull
+  public ICommonsIterable <? extends IHCNode> getChildren ()
+  {
+    return getAllChildren ();
   }
 
   @Override
