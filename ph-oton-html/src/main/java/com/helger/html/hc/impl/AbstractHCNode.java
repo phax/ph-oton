@@ -50,6 +50,7 @@ import com.helger.xml.microdom.IMicroNode;
 @NotThreadSafe
 public abstract class AbstractHCNode implements IHCNode
 {
+  private static final boolean DEBUG_NODE_STATE = GlobalDebug.isDebugMode ();
   private EHCNodeState m_eNodeState = EHCNodeState.INITIAL;
 
   @OverrideOnDemand
@@ -166,7 +167,7 @@ public abstract class AbstractHCNode implements IHCNode
    */
   public final void internalSetNodeState (@Nonnull final EHCNodeState eNodeState)
   {
-    if (GlobalDebug.isDebugMode ())
+    if (DEBUG_NODE_STATE)
     {
       ValueEnforcer.notNull (eNodeState, "NodeState");
       if (m_eNodeState.isAfter (eNodeState))
@@ -309,6 +310,6 @@ public abstract class AbstractHCNode implements IHCNode
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("nodeState", m_eNodeState).getToString ();
+    return new ToStringGenerator (this).append ("NodeState", m_eNodeState).getToString ();
   }
 }
