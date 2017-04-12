@@ -47,7 +47,7 @@ public final class BuildInfo
   /**
    * The default filename as stored in the JAR files.
    */
-  public static final String BUILDINFO_FILENAME = "META-INF/buildinfo.xml";
+  public static final String BUILDINFO_FILENAME_XML = "META-INF/buildinfo.xml";
 
   /**
    * Indicate that certain fields are only available from V2
