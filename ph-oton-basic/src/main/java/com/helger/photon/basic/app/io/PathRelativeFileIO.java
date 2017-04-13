@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.EAppend;
@@ -205,7 +204,7 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
                             @Nonnull final String sContent,
                             @Nonnull final Charset aCharset)
   {
-    return saveFile (sFilename, CharsetManager.getAsBytes (sContent, aCharset));
+    return saveFile (sFilename, sContent.getBytes (aCharset));
   }
 
   @Nonnull
@@ -219,7 +218,7 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
                               @Nonnull final String sContent,
                               @Nonnull final Charset aCharset)
   {
-    return appendFile (sFilename, CharsetManager.getAsBytes (sContent, aCharset));
+    return appendFile (sFilename, sContent.getBytes (aCharset));
   }
 
   @Nonnull

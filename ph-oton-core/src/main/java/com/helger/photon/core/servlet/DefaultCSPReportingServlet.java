@@ -29,7 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.json.IJson;
@@ -88,8 +87,7 @@ public class DefaultCSPReportingServlet extends HttpServlet
     if (aJson != null)
       handleCSPReport (aJson);
     else
-      s_aLogger.error ("Failed to parse CSP report JSON: " +
-                       CharsetManager.getAsString (aBytes, StandardCharsets.ISO_8859_1));
+      s_aLogger.error ("Failed to parse CSP report JSON: " + new String (aBytes, StandardCharsets.ISO_8859_1));
   }
 
   @Override
