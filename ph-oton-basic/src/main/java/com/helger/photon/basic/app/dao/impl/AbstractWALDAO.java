@@ -300,7 +300,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   /**
    * This method is used upon recovery to convert a stored object to its native
    * representation. If you overwrite this method, you should consider
-   * overriding {@link #convertToString(Serializable)} as well.
+   * overriding {@link #convertNativeToWALString(Serializable)} as well.
    *
    * @param sElement
    *        The string representation to be converted. Never <code>null</code>.
@@ -310,12 +310,12 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   @Nullable
   @OverrideOnDemand
   @IsLocked (ELockType.WRITE)
-  protected DATATYPE convertToNative (@Nonnull final String sElement)
+  protected DATATYPE convertWALStringToNative (@Nonnull final String sElement)
   {
     final IMicroDocument aDoc = MicroReader.readMicroXML (sElement);
-    if (aDoc != null && aDoc.getDocumentElement () != null)
-      return MicroTypeConverter.convertToNative (aDoc.getDocumentElement (), m_aDataTypeClass);
-    return null;
+    if (aDoc == null || aDoc.getDocumentElement () == null)
+      return null;
+    return MicroTypeConverter.convertToNative (aDoc.getDocumentElement (), m_aDataTypeClass);
   }
 
   /**
@@ -503,7 +503,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
               for (int i = 0; i < nElements; ++i)
               {
                 final String sElement = StreamHelper.readSafeUTF (aOIS);
-                final DATATYPE aElement = convertToNative (sElement);
+                final DATATYPE aElement = convertWALStringToNative (sElement);
                 if (aElement == null)
                   throw new IllegalStateException ("Action [" +
                                                    eActionType +
@@ -832,12 +832,12 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   }
 
   // Performance and small version
-  private static final IXMLWriterSettings WAL_XWS = new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG)
-                                                                            .setIndent (EXMLSerializeIndent.NONE);
+  protected static final IXMLWriterSettings WAL_XWS = new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG)
+                                                                              .setIndent (EXMLSerializeIndent.NONE);
 
   @Nonnull
   @OverrideOnDemand
-  protected String convertToString (@Nonnull final DATATYPE aModifiedElement)
+  protected String convertNativeToWALString (@Nonnull final DATATYPE aModifiedElement)
   {
     final IMicroElement aElement = MicroTypeConverter.convertToMicroElement (aModifiedElement, "item");
     if (aElement == null)
@@ -855,10 +855,9 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                   @Nonnull final EDAOActionType eActionType,
                                   @Nonnull @Nonempty final String sWALFilename)
   {
-    DataOutputStream aDOS = null;
-    try
+    try (final DataOutputStream aDOS = new DataOutputStream (m_aDAOIO.getFileIO ().getOutputStream (sWALFilename,
+                                                                                                    EAppend.APPEND)))
     {
-      aDOS = new DataOutputStream (m_aDAOIO.getFileIO ().getOutputStream (sWALFilename, EAppend.APPEND));
       // Write action type ID
       StreamHelper.writeSafeUTF (aDOS, eActionType.getID ());
       // Write number of elements
@@ -866,7 +865,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       // Write all data elements as XML Strings :)
       for (final DATATYPE aModifiedElement : aModifiedElements)
       {
-        final String sElement = convertToString (aModifiedElement);
+        final String sElement = convertNativeToWALString (aModifiedElement);
         StreamHelper.writeSafeUTF (aDOS, sElement);
       }
       return ESuccess.SUCCESS;
@@ -875,10 +874,6 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     {
       s_aLogger.error ("Error writing WAL file " + sWALFilename, t);
       triggerExceptionHandlersWrite (t, sWALFilename, (IMicroDocument) null);
-    }
-    finally
-    {
-      StreamHelper.close (aDOS);
     }
     return ESuccess.FAILURE;
   }
