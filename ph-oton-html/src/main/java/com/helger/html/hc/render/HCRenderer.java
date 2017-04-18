@@ -23,6 +23,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.io.stream.NonBlockingStringWriter;
 import com.helger.commons.state.EFinish;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.HCHelper;
@@ -262,6 +263,18 @@ public final class HCRenderer
     final IMicroNode aMicroNode = getAsNode (aHCNode, aConversionSettings);
     if (aMicroNode == null)
       return "";
+
+    if (true)
+    {
+      try (final NonBlockingStringWriter aWriter = new NonBlockingStringWriter (1024))
+      {
+        // start serializing
+        if (MicroWriter.writeToWriter (aMicroNode, aWriter, aConversionSettings.getXMLWriterSettings ()).isSuccess ())
+          return aWriter.getAsString ();
+      }
+      return "";
+    }
+
     return MicroWriter.getNodeAsString (aMicroNode, aConversionSettings.getXMLWriterSettings ());
   }
 
