@@ -547,7 +547,7 @@ public final class InternalErrorHandler
     }
     catch (final IllegalStateException ex)
     {
-      // I just want to know, where and how this happens...
+      // This happens e.g. on internal errors on startup
       final IRequestWebScope aRequestScope = WebScopeManager.getRequestScopeOrNull ();
       final String sAppID = aRequestScope == null ? "<no request scope present>"
                                                   : ScopeManager.getRequestApplicationID (aRequestScope);
