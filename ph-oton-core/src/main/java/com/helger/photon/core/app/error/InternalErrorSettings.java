@@ -121,6 +121,10 @@ public final class InternalErrorSettings
     s_aRWLock.writeLocked ( () -> s_bEnableDumpAllThreads = bEnableDumpAllThreads);
   }
 
+  /**
+   * @return <code>true</code> to dump all threads on internal error,
+   *         <code>false</code> to not do it.
+   */
   public static boolean isDumpAllThreads ()
   {
     return s_aRWLock.readLocked ( () -> s_bEnableDumpAllThreads);
@@ -150,7 +154,7 @@ public final class InternalErrorSettings
 
   /**
    * Set the fallback locale in case none could be determined.
-   * 
+   *
    * @param aFallbackLocale
    *        Locale to use. May not be <code>null</code>.
    * @since 7.0.4
