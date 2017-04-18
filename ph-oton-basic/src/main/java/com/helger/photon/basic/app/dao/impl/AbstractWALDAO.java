@@ -476,14 +476,12 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
         if (aWALFile != null && aWALFile.exists ())
         {
           s_aLogger.info ("Trying to recover from WAL file " + aWALFile.getAbsolutePath ());
-          DataInputStream aOIS = null;
           boolean bFinishedSuccessful = false;
           boolean bPerformedAtLeastOnRecovery = false;
 
           // Avoid writing the recovery actions to the WAL file again :)
-          try
+          try (final DataInputStream aOIS = new DataInputStream (FileHelper.getInputStream (aWALFile)))
           {
-            aOIS = new DataInputStream (FileHelper.getInputStream (aWALFile));
             while (true)
             {
               // Read action type
@@ -565,10 +563,6 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
             s_aLogger.error ("Failed to recover from WAL file " + aWALFile.getAbsolutePath (), t);
             triggerExceptionHandlersRead (t, false, aWALFile);
             throw new DAOException ("Error the WAL file '" + aWALFile.getAbsolutePath () + "'", t);
-          }
-          finally
-          {
-            StreamHelper.close (aOIS);
           }
 
           if (bFinishedSuccessful)
@@ -855,8 +849,8 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                   @Nonnull final EDAOActionType eActionType,
                                   @Nonnull @Nonempty final String sWALFilename)
   {
-    try (final DataOutputStream aDOS = new DataOutputStream (m_aDAOIO.getFileIO ().getOutputStream (sWALFilename,
-                                                                                                    EAppend.APPEND)))
+    final FileSystemResource aWALRes = m_aDAOIO.getFileIO ().getResource (sWALFilename);
+    try (final DataOutputStream aDOS = new DataOutputStream (aWALRes.getOutputStream (EAppend.APPEND)))
     {
       // Write action type ID
       StreamHelper.writeSafeUTF (aDOS, eActionType.getID ());
