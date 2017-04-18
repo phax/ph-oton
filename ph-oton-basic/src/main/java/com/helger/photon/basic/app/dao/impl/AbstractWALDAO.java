@@ -72,6 +72,8 @@ import com.helger.xml.microdom.MicroComment;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 import com.helger.xml.microdom.serialize.MicroReader;
 import com.helger.xml.microdom.serialize.MicroWriter;
+import com.helger.xml.serialize.write.EXMLIncorrectCharacterHandling;
+import com.helger.xml.serialize.write.EXMLSerializeIndent;
 import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 
@@ -829,6 +831,10 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       s_aLogger.error ("Failed to delete WAL file " + aWALFile.getAbsolutePath ());
   }
 
+  // Performance and small version
+  private static final IXMLWriterSettings WAL_XWS = new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG)
+                                                                            .setIndent (EXMLSerializeIndent.NONE);
+
   @Nonnull
   @OverrideOnDemand
   protected String convertToString (@Nonnull final DATATYPE aModifiedElement)
@@ -840,7 +846,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                        " of class " +
                                        aModifiedElement.getClass ().getName () +
                                        " to XML!");
-    return MicroWriter.getNodeAsString (aElement);
+    return MicroWriter.getNodeAsString (aElement, WAL_XWS);
   }
 
   @Nonnull
