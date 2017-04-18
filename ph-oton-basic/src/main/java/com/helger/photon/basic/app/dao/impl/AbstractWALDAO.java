@@ -866,7 +866,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     }
     catch (final Throwable t)
     {
-      s_aLogger.error ("Error writing WAL file " + sWALFilename, t);
+      s_aLogger.error ("Error writing WAL file " + aWALRes, t);
       triggerExceptionHandlersWrite (t, sWALFilename, (IMicroDocument) null);
     }
     return ESuccess.FAILURE;
