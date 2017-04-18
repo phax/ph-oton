@@ -25,6 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
@@ -46,6 +47,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public class LayoutExecutionContext extends SimpleWebExecutionContext implements ILayoutExecutionContext
 {
   private final IMenuItemPage m_aSelectedMenuItem;
+  private transient SimpleURL m_aSelfHref;
 
   public LayoutExecutionContext (@Nonnull final ILayoutExecutionContext aLEC)
   {
@@ -63,6 +65,18 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
   public IMenuItemPage getSelectedMenuItem ()
   {
     return m_aSelectedMenuItem;
+  }
+
+  @Nonnull
+  public SimpleURL getSelfHref ()
+  {
+    SimpleURL ret = m_aSelfHref;
+    if (ret == null)
+    {
+      // Cache for speed
+      m_aSelfHref = ret = getLinkToMenuItem (getSelectedMenuItemID ());
+    }
+    return ret.getClone ();
   }
 
   public void postRedirectGet (@Nonnull final ISimpleURL aTargetURL,
