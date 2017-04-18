@@ -20,10 +20,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsLinkedHashMap;
@@ -48,8 +50,18 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 @NotThreadSafe
 public class InternalErrorBuilder
 {
-  /** By default custom exception handlers are invoked too */
-  public static final boolean DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER = true;
+  /**
+   * By default each internal error is also stored as XML.
+   *
+   * @since 7.0.6
+   */
+  public static final boolean DEFAULT_SEND_EMAIL = true;
+  /**
+   * By default each internal error is also stored as XML.
+   *
+   * @since 7.0.6
+   */
+  public static final boolean DEFAULT_SAVE_AS_XML = true;
   /**
    * By default the class path entries are send by mail.
    *
@@ -57,25 +69,89 @@ public class InternalErrorBuilder
    */
   public static final boolean DEFAULT_ADD_CLASS_PATH = true;
   /**
+   * By default custom exception handlers are invoked too
+   */
+  public static final boolean DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER = true;
+  /**
+   * By default only ever 100th internal errors with the same stack trace is
+   * send be email.
+   *
+   * @since 7.0.6
+   */
+  public static final int DEFAULT_DUPLICATE_ELIMINIATION_COUNTER = 100;
+  /**
    * Special custom data key for the error message.
    *
    * @since 7.0.4
    */
   public static final String KEY_ERROR_MSG = "Error Message";
 
+  protected boolean m_bSendEmail = DEFAULT_SEND_EMAIL;
+  protected boolean m_bSaveAsXML = DEFAULT_SAVE_AS_XML;
   protected IUIInternalErrorHandler m_aUIErrorHandler;
   protected Throwable m_aThrowable;
   protected IRequestWebScopeWithoutResponse m_aRequestScope;
-  protected final ICommonsOrderedMap <String, String> m_aCustomData = new CommonsLinkedHashMap<> ();
+  protected final ICommonsOrderedMap <String, String> m_aCustomData = new CommonsLinkedHashMap <> ();
   protected EmailAttachmentList m_aEmailAttachments;
   protected Locale m_aDisplayLocale;
   protected boolean m_bInvokeCustomExceptionHandler = DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER;
   protected boolean m_bAddClassPath = DEFAULT_ADD_CLASS_PATH;
+  protected int m_nDuplicateEliminiationCounter = DEFAULT_DUPLICATE_ELIMINIATION_COUNTER;
 
   public InternalErrorBuilder ()
   {
     addCustomData ("GlobalDebug.debug", GlobalDebug.isDebugMode ());
     addCustomData ("GlobalDebug.production", GlobalDebug.isProductionMode ());
+  }
+
+  /**
+   * Send the internal error by email?
+   *
+   * @param bSendEmail
+   *        <code>true</code> to do so, <code>false</code> to not do it.
+   * @return this for chaining
+   * @since 7.0.6
+   */
+  @Nonnull
+  public InternalErrorBuilder setSendEmail (final boolean bSendEmail)
+  {
+    m_bSendEmail = bSendEmail;
+    return this;
+  }
+
+  /**
+   * @return <code>true</code> if the internal error should be send by email
+   *         (default), or <code>false</code> if it should not.
+   * @since 7.0.6
+   */
+  public boolean isSendEmail ()
+  {
+    return m_bSendEmail;
+  }
+
+  /**
+   * Save the internal error also as XML?
+   *
+   * @param bSaveAsXML
+   *        <code>true</code> to do so, <code>false</code> to not do it.
+   * @return this for chaining
+   * @since 7.0.6
+   */
+  @Nonnull
+  public InternalErrorBuilder setSaveAsXML (final boolean bSaveAsXML)
+  {
+    m_bSaveAsXML = bSaveAsXML;
+    return this;
+  }
+
+  /**
+   * @return <code>true</code> if the internal error should also be saved as XML
+   *         (default), or <code>false</code> if it should not.
+   * @since 7.0.6
+   */
+  public boolean isSaveAsXML ()
+  {
+    return m_bSaveAsXML;
   }
 
   @Nonnull
@@ -266,6 +342,34 @@ public class InternalErrorBuilder
   }
 
   /**
+   * Set the duplicate elimination counter.
+   *
+   * @param nDuplicateEliminiationCounter
+   *        The value to set. Must be &ge; 0. Pass 0 to disable any duplicate
+   *        elimination and send all errors by email.
+   * @return this for chaining
+   * @since 7.0.6
+   */
+  @Nonnull
+  public InternalErrorBuilder setDuplicateEliminiationCounter (@Nonnegative final int nDuplicateEliminiationCounter)
+  {
+    ValueEnforcer.isGE0 (nDuplicateEliminiationCounter, "DuplicateEliminiationCounter");
+    m_nDuplicateEliminiationCounter = nDuplicateEliminiationCounter;
+    return this;
+  }
+
+  /**
+   * @return The duplicate elimination counter. Defaults to
+   *         {@link #DEFAULT_DUPLICATE_ELIMINIATION_COUNTER}.
+   * @since 7.0.6
+   */
+  @Nonnegative
+  public int getDuplicateEliminationCounter ()
+  {
+    return m_nDuplicateEliminiationCounter;
+  }
+
+  /**
    * Shortcut for setting display locale and request scope at once from a web
    * execution context
    *
@@ -290,13 +394,16 @@ public class InternalErrorBuilder
   @Nonempty
   public String handle ()
   {
-    return InternalErrorHandler.handleInternalError (m_aUIErrorHandler,
+    return InternalErrorHandler.handleInternalError (m_bSendEmail,
+                                                     m_bSaveAsXML,
+                                                     m_aUIErrorHandler,
                                                      m_aThrowable,
                                                      m_aRequestScope,
                                                      m_aCustomData,
                                                      m_aEmailAttachments,
                                                      m_aDisplayLocale,
                                                      m_bInvokeCustomExceptionHandler,
-                                                     m_bAddClassPath);
+                                                     m_bAddClassPath,
+                                                     m_nDuplicateEliminiationCounter);
   }
 }

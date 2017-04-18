@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -164,21 +165,21 @@ public final class InternalErrorHandler
                                                       @Nullable final ThreadDescriptorList aAllThreads,
                                                       @Nonnull final InternalErrorEmailSettings aEmailSettings,
                                                       @Nullable final IEmailAttachmentList aEmailAttachments,
-                                                      final boolean bAddClassPath)
+                                                      final boolean bAddClassPath,
+                                                      @Nonnegative final int nDuplicateEliminiationCount)
   {
     int nOccurranceCount = 1;
     final String sThrowableStackTrace = aCurrentThreadDescriptor.getStackTrace ();
-    if (StringHelper.hasText (sThrowableStackTrace))
+    if (StringHelper.hasText (sThrowableStackTrace) && nDuplicateEliminiationCount > 1)
     {
       // Check if an internal error was already sent for this stack trace
-      final MutableInt aMI = s_aRWLock.writeLockedThrowing ( () -> s_aIntErrCache.computeIfAbsent (sThrowableStackTrace,
-                                                                                                   k -> new MutableInt (0)));
-      // This stack trace was already found!
+      final MutableInt aMI = s_aRWLock.writeLocked ( () -> s_aIntErrCache.computeIfAbsent (sThrowableStackTrace,
+                                                                                           k -> new MutableInt (0)));
       aMI.inc ();
 
-      // Send only every 100th invocation!
+      // Send only every Nth invocation!
       nOccurranceCount = aMI.intValue ();
-      if ((nOccurranceCount % 100) != 0)
+      if ((nOccurranceCount % nDuplicateEliminiationCount) != 0)
       {
         s_aLogger.warn ("Not sending internal error mail, because this error occurred " + nOccurranceCount + " times");
         return;
@@ -499,13 +500,16 @@ public final class InternalErrorHandler
     return aMetadata;
   }
 
-  private static void _notifyVendor (@Nullable final Throwable t,
+  private static void _notifyVendor (final boolean bSendEmail,
+                                     final boolean bSaveAsXML,
+                                     @Nullable final Throwable t,
                                      @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
                                      @Nullable final String sErrorID,
                                      @Nullable final Map <String, String> aCustomData,
                                      @Nonnull final InternalErrorEmailSettings aEmailSettings,
-                                     final IEmailAttachmentList aEmailAttachments,
-                                     final boolean bAddClassPath)
+                                     @Nullable final IEmailAttachmentList aEmailAttachments,
+                                     final boolean bAddClassPath,
+                                     @Nonnegative final int nDuplicateEliminiationCount)
   {
     // Create all metadata from the request
     final InternalErrorMetadata aMetadata = fillInternalErrorMetaData (aRequestScope, sErrorID, aCustomData);
@@ -519,15 +523,18 @@ public final class InternalErrorHandler
       aAllThreads = ThreadDescriptorList.createWithAllThreads ();
 
     // Main mail sending
-    _sendInternalErrorMailToVendor (aMetadata,
-                                    aCurrentThreadDescriptor,
-                                    aAllThreads,
-                                    aEmailSettings,
-                                    aEmailAttachments,
-                                    bAddClassPath);
+    if (bSendEmail)
+      _sendInternalErrorMailToVendor (aMetadata,
+                                      aCurrentThreadDescriptor,
+                                      aAllThreads,
+                                      aEmailSettings,
+                                      aEmailAttachments,
+                                      bAddClassPath,
+                                      nDuplicateEliminiationCount);
 
     // Save as XML too
-    _saveInternalErrorToXML (aMetadata, aCurrentThreadDescriptor, aAllThreads, aEmailAttachments);
+    if (bSaveAsXML)
+      _saveInternalErrorToXML (aMetadata, aCurrentThreadDescriptor, aAllThreads, aEmailAttachments);
   }
 
   @Nullable
@@ -554,6 +561,10 @@ public final class InternalErrorHandler
    * but instead {@link InternalErrorBuilder} should be used, as this is the
    * builder class for this method.
    *
+   * @param bSendEmail
+   *        <code>true</code> to send the internal error as email
+   * @param bSaveAsXML
+   *        <code>true</code> to also save the internal error as XML
    * @param aUIErrorHandler
    *        Show an internal error on the screen. May be <code>null</code>.
    * @param t
@@ -573,19 +584,27 @@ public final class InternalErrorHandler
    *        <code>true</code> to invoke the custom exception handler (if any is
    *        present), <code>false</code> to not do so.
    * @param bAddClassPath
-   *        Add the class path entries to the error message.
+   *        Add the class path entries to the email message.
+   * @param nDuplicateEliminiationCounter
+   *        A modulo value to be used for sending emails every Nth time an error
+   *        occurs. So if the same exception occurs 2mio times, that an email is
+   *        send out only every "2mio % value" times. Only values &gt; 1 are
+   *        considered.
    * @return The created unique error ID
    */
   @Nonnull
   @Nonempty
-  static String handleInternalError (@Nullable final IUIInternalErrorHandler aUIErrorHandler,
+  static String handleInternalError (final boolean bSendEmail,
+                                     final boolean bSaveAsXML,
+                                     @Nullable final IUIInternalErrorHandler aUIErrorHandler,
                                      @Nullable final Throwable t,
                                      @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
                                      @Nullable final Map <String, String> aCustomData,
                                      @Nullable final IEmailAttachmentList aEmailAttachments,
                                      @Nullable final Locale aDisplayLocale,
                                      final boolean bInvokeCustomExceptionHandler,
-                                     final boolean bAddClassPath)
+                                     final boolean bAddClassPath,
+                                     @Nonnegative final int nDuplicateEliminiationCounter)
   {
     final Locale aRealDisplayLocale = aDisplayLocale != null ? aDisplayLocale : _getSafeDisplayLocale ();
 
@@ -612,13 +631,16 @@ public final class InternalErrorHandler
     else
     {
       // Send mail with attachments
-      _notifyVendor (t,
+      _notifyVendor (bSendEmail,
+                     bSaveAsXML,
+                     t,
                      aRequestScope,
                      sErrorID,
                      aCustomData,
                      InternalErrorSettings.getCopyOfEmailSettings (),
                      aEmailAttachments,
-                     bAddClassPath);
+                     bAddClassPath,
+                     nDuplicateEliminiationCounter);
     }
 
     if (bInvokeCustomExceptionHandler)
