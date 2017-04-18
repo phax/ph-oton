@@ -113,6 +113,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   private final IMutableStatisticsHandlerTimer m_aStatsCounterWriteTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
                                                                                                               "$write");
   // Performance and small version
+  public static final IXMLWriterSettings WRITE_XWS = new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG);
   public static final IXMLWriterSettings WAL_XWS = new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG)
                                                                            .setIndent (EXMLSerializeIndent.NONE);
 
@@ -640,29 +641,13 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   }
 
   /**
-   * Optional callback method that is invoked before the file handle gets
-   * opened. This method can e.g. be used to create backups.
-   *
-   * @param sFilename
-   *        The filename provided by the internal filename provider. Never
-   *        <code>null</code>.
-   * @param aFile
-   *        The resolved file. It is already consistency checked. Never
-   *        <code>null</code>.
-   */
-  @OverrideOnDemand
-  @MustBeLocked (ELockType.WRITE)
-  protected void beforeWriteToFile (@Nonnull final String sFilename, @Nonnull final File aFile)
-  {}
-
-  /**
    * @return The {@link IXMLWriterSettings} to be used to serialize the data.
    */
   @Nonnull
   @OverrideOnDemand
   protected IXMLWriterSettings getXMLWriterSettings ()
   {
-    return WAL_XWS;
+    return WRITE_XWS;
   }
 
   /**
@@ -747,10 +732,6 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       // Generic modification
       modifyWriteData (aDoc);
 
-      // Perform optional stuff like backup etc. Must be done BEFORE the output
-      // stream is opened!
-      beforeWriteToFile (sFilename, aFile);
-
       // Get the output stream
       final OutputStream aOS = FileHelper.getOutputStream (aFile);
       if (aOS == null)
@@ -828,6 +809,16 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       s_aLogger.error ("Failed to delete WAL file " + aWALFile.getAbsolutePath ());
   }
 
+  /**
+   * @return The {@link IXMLWriterSettings} to be used to serialize the data.
+   */
+  @Nonnull
+  @OverrideOnDemand
+  protected IXMLWriterSettings getWALXMLWriterSettings ()
+  {
+    return WAL_XWS;
+  }
+
   @Nonnull
   @OverrideOnDemand
   protected String convertNativeToWALString (@Nonnull final DATATYPE aModifiedElement)
@@ -839,7 +830,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                        " of class " +
                                        aModifiedElement.getClass ().getName () +
                                        " to XML!");
-    return MicroWriter.getNodeAsString (aElement, getXMLWriterSettings ());
+    return MicroWriter.getNodeAsString (aElement, getWALXMLWriterSettings ());
   }
 
   @Nonnull
