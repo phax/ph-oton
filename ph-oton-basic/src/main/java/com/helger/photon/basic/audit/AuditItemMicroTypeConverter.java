@@ -26,7 +26,9 @@ import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 
 /**
@@ -39,11 +41,11 @@ public class AuditItemMicroTypeConverter implements IMicroTypeConverter
 {
   public static final String ELEMENT_ITEM = "item";
   /* Old version with different format was called "dts" */
-  public static final String ATTR_DT = "ldt";
-  public static final String ATTR_USER = "user";
-  public static final String ATTR_TYPE = "type";
+  public static final IMicroQName ATTR_DT = new MicroQName ("ldt");
+  public static final IMicroQName ATTR_USER = new MicroQName ("user");
+  public static final IMicroQName ATTR_TYPE = new MicroQName ("type");
   /* initially was called "succes" by accident */
-  public static final String ATTR_SUCCESS = "success";
+  public static final IMicroQName ATTR_SUCCESS = new MicroQName ("success");
 
   @Nonnull
   public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
