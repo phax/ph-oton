@@ -43,6 +43,7 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
 
@@ -185,7 +186,11 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext>
     }
     aNodeList.addChild (aTable);
 
-    final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.addChild (aDataTables);
+    // Use a client side DataTables since this page is mostly called in
+    // situations where the machine is very busy
+    final DataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+    aDT.setLengthMenu (new DataTablesLengthMenu ().addItemAll ());
+    aDT.setAjaxBuilder (null);
+    aNodeList.addChild (aDT);
   }
 }
