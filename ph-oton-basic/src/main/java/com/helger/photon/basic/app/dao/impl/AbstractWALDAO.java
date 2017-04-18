@@ -323,6 +323,17 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   }
 
   /**
+   * Called between initial read and WAL handling.
+   * 
+   * @param aDoc
+   *        The read document. Never <code>null</code>
+   */
+  @OverrideOnDemand
+  @IsLocked (ELockType.WRITE)
+  protected void onBetweenReadAndWAL (@Nonnull final IMicroDocument aDoc)
+  {}
+
+  /**
    * Called when a recovery is needed to create a new item.
    *
    * @param aElement
@@ -351,7 +362,8 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
 
   /**
    * Call this method inside the constructor to read the file contents directly.
-   * This method is write locked!
+   * This method is write locking internally. This method performs WAL file
+   * reading upon startup both after init as well as after read!
    *
    * @throws DAOException
    *         in case initialization or reading failed!
@@ -381,6 +393,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       {
         m_bCanWriteWAL = false;
 
+        IMicroDocument aDoc = null;
         try
         {
           ESuccess eWriteSuccess = ESuccess.SUCCESS;
@@ -421,7 +434,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
               s_aLogger.info ("Trying to read WAL DAO XML file '" + aFinalFile.getAbsolutePath () + "'");
 
             m_aStatsCounterReadTotal.increment ();
-            final IMicroDocument aDoc = MicroReader.readMicroXML (aFinalFile);
+            aDoc = MicroReader.readMicroXML (aFinalFile);
             if (aDoc == null)
               s_aLogger.error ("Failed to read DAO XML document from file '" + aFinalFile.getAbsolutePath () + "'");
             else
@@ -473,6 +486,10 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                   "'",
                                   t);
         }
+
+        // Trigger after read before WAL
+        if (aDoc != null)
+          onBetweenReadAndWAL (aDoc);
 
         // Check if there is anything to recover
         final String sWALFilename = _getWALFilename ();
