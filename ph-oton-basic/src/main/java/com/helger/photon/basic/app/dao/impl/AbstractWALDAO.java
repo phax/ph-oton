@@ -112,6 +112,9 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                                                                                                        "$write-exceptions");
   private final IMutableStatisticsHandlerTimer m_aStatsCounterWriteTimer = StatisticsManager.getTimerHandler (getClass ().getName () +
                                                                                                               "$write");
+  // Performance and small version
+  public static final IXMLWriterSettings WAL_XWS = new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG)
+                                                                           .setIndent (EXMLSerializeIndent.NONE);
 
   private Class <DATATYPE> m_aDataTypeClass;
   private final IDAOIO m_aDAOIO;
@@ -659,7 +662,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
   @OverrideOnDemand
   protected IXMLWriterSettings getXMLWriterSettings ()
   {
-    return XMLWriterSettings.DEFAULT_XML_SETTINGS;
+    return WAL_XWS;
   }
 
   /**
@@ -825,10 +828,6 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       s_aLogger.error ("Failed to delete WAL file " + aWALFile.getAbsolutePath ());
   }
 
-  // Performance and small version
-  protected static final IXMLWriterSettings WAL_XWS = new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG)
-                                                                              .setIndent (EXMLSerializeIndent.NONE);
-
   @Nonnull
   @OverrideOnDemand
   protected String convertNativeToWALString (@Nonnull final DATATYPE aModifiedElement)
@@ -840,7 +839,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                        " of class " +
                                        aModifiedElement.getClass ().getName () +
                                        " to XML!");
-    return MicroWriter.getNodeAsString (aElement, WAL_XWS);
+    return MicroWriter.getNodeAsString (aElement, getXMLWriterSettings ());
   }
 
   @Nonnull
