@@ -324,7 +324,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
 
   /**
    * Called between initial read and WAL handling.
-   * 
+   *
    * @param aDoc
    *        The read document. Never <code>null</code>
    */
@@ -731,12 +731,14 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     if (isDebugLogging ())
       s_aLogger.info ("Trying to write WAL DAO file '" + sFilename + "'");
 
-    File aFile = null;
+    File aFileNew = null;
     IMicroDocument aDoc = null;
+    final String sFilenameNew = sFilename + ".new";
+    final String sFilenamePrev = sFilename + ".prev";
     try
     {
       // Get the file handle
-      aFile = getSafeFile (sFilename, EMode.WRITE);
+      aFileNew = getSafeFile (sFilenameNew, EMode.WRITE);
 
       m_aStatsCounterWriteTotal.increment ();
       final StopWatch aSW = StopWatch.createdStarted ();
@@ -750,12 +752,12 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       modifyWriteData (aDoc);
 
       // Get the output stream
-      final OutputStream aOS = FileHelper.getOutputStream (aFile);
+      final OutputStream aOS = FileHelper.getOutputStream (aFileNew);
       if (aOS == null)
       {
         // Happens, when another application has the file open!
         // Logger warning already emitted
-        throw new DAOException ("Failed to open output stream for '" + aFile.getAbsolutePath () + "'");
+        throw new DAOException ("Failed to open output stream for '" + aFileNew.getAbsolutePath () + "'");
       }
 
       // Write to file (closes the OS)
@@ -763,6 +765,22 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       if (MicroWriter.writeToStream (aDoc, aOS, aXWS).isFailure ())
         throw new DAOException ("Failed to write DAO XML data to file");
 
+      // Rename existing file to old
+      FileIOError aIOError = m_aDAOIO.getFileIO ().renameFile (sFilename, sFilenamePrev);
+      if (aIOError.isSuccess ())
+      {
+        // Rename new file to final
+        aIOError = m_aDAOIO.getFileIO ().renameFile (sFilenameNew, sFilename);
+        if (aIOError.isSuccess ())
+        {
+          // Finally delete old file
+          aIOError = m_aDAOIO.getFileIO ().deleteFileIfExisting (sFilenamePrev);
+        }
+      }
+      if (aIOError.isFailure ())
+        throw new IllegalStateException ("IO error on rename: " + aIOError);
+
+      // Update stats etc.
       m_aStatsCounterWriteTimer.addTime (aSW.stopAndGetMillis ());
       m_aStatsCounterWriteSuccess.increment ();
       m_nWriteCount++;
@@ -771,7 +789,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
     }
     catch (final Throwable t)
     {
-      final String sErrorFilename = aFile != null ? aFile.getAbsolutePath () : sFilename;
+      final String sErrorFilename = aFileNew != null ? aFileNew.getAbsolutePath () : sFilename;
 
       s_aLogger.error ("The DAO of class " +
                        getClass ().getName () +
