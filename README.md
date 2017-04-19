@@ -29,6 +29,7 @@ Contained subprojects are:
 Release history:
   * v7.0.6 - work in progress
     * Updated to ph-web 8.8.0
+    * Updated to Jetty 9.4.4
     * Improved rendering speed through internal optimizations
   * v7.0.5 - 2017-03-30
     * Updated to Jetty 9.4.3
