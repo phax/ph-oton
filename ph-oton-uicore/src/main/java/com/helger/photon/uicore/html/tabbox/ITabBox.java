@@ -24,6 +24,7 @@ import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeList;
+import com.helger.html.hc.impl.HCTextNode;
 
 /**
  * Base interface for a tab box
@@ -46,28 +47,34 @@ public interface ITabBox <THISTYPE extends ITabBox <THISTYPE>> extends IHCNodeLi
   THISTYPE setActiveTabID (@Nullable String sID);
 
   @Nonnull
-  Tab addTab (@Nullable String sLabel, @Nullable IHCNode aContent);
+  default Tab addTab (@Nullable final String sID, @Nullable final String sLabel, @Nullable final IHCNode aContent)
+  {
+    return addTab (sID, new HCTextNode (sLabel), aContent, DEFAULT_ACTIVE);
+  }
 
   @Nonnull
-  Tab addTab (@Nullable String sLabel, @Nullable IHCNode aContent, boolean bActive);
+  default Tab addTab (@Nullable final String sID, @Nullable final IHCNode aLabel, @Nullable final IHCNode aContent)
+  {
+    return addTab (sID, aLabel, aContent, DEFAULT_ACTIVE);
+  }
 
   @Nonnull
-  Tab addTab (@Nullable String sLabel, @Nullable IHCNode aContent, boolean bActive, boolean bDisabled);
+  default Tab addTab (@Nullable final String sID,
+                      @Nullable final String sLabel,
+                      @Nullable final IHCNode aContent,
+                      final boolean bActive)
+  {
+    return addTab (sID, new HCTextNode (sLabel), aContent, bActive);
+  }
 
   @Nonnull
-  Tab addTab (@Nullable String sID, @Nullable String sLabel, @Nullable IHCNode aContent, boolean bActive);
-
-  @Nonnull
-  Tab addTab (@Nullable IHCNode aLabel, @Nullable IHCNode aContent);
-
-  @Nonnull
-  Tab addTab (@Nullable IHCNode aLabel, @Nullable IHCNode aContent, boolean bActive);
-
-  @Nonnull
-  Tab addTab (@Nullable IHCNode aLabel, @Nullable IHCNode aContent, boolean bActive, boolean bDisabled);
-
-  @Nonnull
-  Tab addTab (@Nullable String sID, @Nullable IHCNode aLabel, @Nullable IHCNode aContent, boolean bActive);
+  default Tab addTab (@Nullable final String sID,
+                      @Nullable final IHCNode aLabel,
+                      @Nullable final IHCNode aContent,
+                      final boolean bActive)
+  {
+    return addTab (sID, aLabel, aContent, bActive, DEFAULT_DISABLED);
+  }
 
   @Nonnull
   Tab addTab (@Nullable String sID,

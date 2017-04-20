@@ -32,7 +32,6 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.impl.AbstractHCNodeList;
-import com.helger.html.hc.impl.HCTextNode;
 
 /**
  * Represent a single tab box
@@ -64,78 +63,6 @@ public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>
     if (StringHelper.hasText (sID) && !m_aTabs.containsKey (sID))
       s_aLogger.warn ("No tab with ID '" + sID + "' to be set active!");
     return thisAsT ();
-  }
-
-  @Nonnull
-  @Deprecated
-  public Tab addTab (@Nullable final String sLabel, @Nullable final IHCNode aContent)
-  {
-    return addTab (null, new HCTextNode (sLabel), aContent, DEFAULT_ACTIVE);
-  }
-
-  @Nonnull
-  @Deprecated
-  public Tab addTab (@Nullable final String sLabel, @Nullable final IHCNode aContent, final boolean bActive)
-  {
-    return addTab (null, new HCTextNode (sLabel), aContent, bActive);
-  }
-
-  @Nonnull
-  public Tab addTab (@Nullable final String sID, @Nullable final String sLabel, @Nullable final IHCNode aContent)
-  {
-    return addTab (sID, new HCTextNode (sLabel), aContent, DEFAULT_ACTIVE);
-  }
-
-  @Nonnull
-  @Deprecated
-  public Tab addTab (@Nullable final String sLabel,
-                     @Nullable final IHCNode aContent,
-                     final boolean bActive,
-                     final boolean bDisabled)
-  {
-    return addTab (null, new HCTextNode (sLabel), aContent, bActive, bDisabled);
-  }
-
-  @Nonnull
-  public Tab addTab (@Nullable final String sID,
-                     @Nullable final String sLabel,
-                     @Nullable final IHCNode aContent,
-                     final boolean bActive)
-  {
-    return addTab (sID, new HCTextNode (sLabel), aContent, bActive);
-  }
-
-  @Nonnull
-  @Deprecated
-  public Tab addTab (@Nullable final IHCNode aLabel, @Nullable final IHCNode aContent)
-  {
-    return addTab (null, aLabel, aContent, DEFAULT_ACTIVE);
-  }
-
-  @Nonnull
-  @Deprecated
-  public Tab addTab (@Nullable final IHCNode aLabel, @Nullable final IHCNode aContent, final boolean bActive)
-  {
-    return addTab (null, aLabel, aContent, bActive);
-  }
-
-  @Nonnull
-  @Deprecated
-  public Tab addTab (@Nullable final IHCNode aLabel,
-                     @Nullable final IHCNode aContent,
-                     final boolean bActive,
-                     final boolean bDisabled)
-  {
-    return addTab (null, aLabel, aContent, bActive, bDisabled);
-  }
-
-  @Nonnull
-  public Tab addTab (@Nullable final String sID,
-                     @Nullable final IHCNode aLabel,
-                     @Nullable final IHCNode aContent,
-                     final boolean bActive)
-  {
-    return addTab (sID, aLabel, aContent, bActive, DEFAULT_DISABLED);
   }
 
   @Nonnull
