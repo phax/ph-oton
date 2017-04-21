@@ -29,8 +29,8 @@ Contained subprojects are:
 Release history:
   * v7.0.6 - work in progress
     * Updated to ph-web 8.8.0
-    * Updated to Jetty 9.4.4
     * Improved rendering speed through internal optimizations
+    * Updated to Bootstrap Datetime picker 2.4.4
   * v7.0.5 - 2017-03-30
     * Updated to Jetty 9.4.3
     * Updated to ph-schedule 3.6.1

@@ -37,7 +37,7 @@ public final class ThirdPartyModuleProvider_ph_oton_bootstrap3_uictrls implement
   public static final IThirdPartyModule BOOTSTRAP_DATETIME_PICKER = new ThirdPartyModule ("Bootstrap Datetime Picker",
                                                                                           "Sebastian Malot",
                                                                                           ELicense.APACHE2,
-                                                                                          new Version (2, 3, 4),
+                                                                                          new Version (2, 4, 4),
                                                                                           "http://www.malot.fr/bootstrap-datetimepicker/index.php");
 
   @Nullable
