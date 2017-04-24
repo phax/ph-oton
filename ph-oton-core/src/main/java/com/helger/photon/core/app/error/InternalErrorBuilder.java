@@ -63,8 +63,7 @@ public class InternalErrorBuilder
    */
   public static final boolean DEFAULT_SAVE_AS_XML = true;
   /**
-   * By default the class path entries are not added, because the Tomcat
-   * classpath is not very interesting.
+   * By default the class path entries are not added, because the Tomcat classpath is not very interesting.
    *
    * @since 7.0.4
    */
