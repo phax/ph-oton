@@ -619,7 +619,7 @@ public final class InternalErrorHandler
 
     if (GlobalDebug.isDebugMode ())
     {
-      // Debug mode - log and eventually throw exception (except weÄre in unit
+      // Debug mode - log and eventually throw exception (except we're in unit
       // tests)
       if (aCustomData != null)
         s_aLogger.error ("Custom data: " + aCustomData);

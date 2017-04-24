@@ -63,11 +63,12 @@ public class InternalErrorBuilder
    */
   public static final boolean DEFAULT_SAVE_AS_XML = true;
   /**
-   * By default the class path entries are send by mail.
+   * By default the class path entries are not added, because the Tomcat
+   * classpath is not very interesting.
    *
    * @since 7.0.4
    */
-  public static final boolean DEFAULT_ADD_CLASS_PATH = true;
+  public static final boolean DEFAULT_ADD_CLASS_PATH = false;
   /**
    * By default custom exception handlers are invoked too
    */
@@ -243,10 +244,10 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder addCustomData (@Nullable final Map <String, String> aMap)
+  public InternalErrorBuilder addCustomData (@Nullable final Map <String, String> aCustomData)
   {
-    if (aMap != null)
-      m_aCustomData.putAll (aMap);
+    if (aCustomData != null)
+      m_aCustomData.putAll (aCustomData);
     return this;
   }
 
@@ -286,6 +287,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
+  @ReturnsMutableCopy
   public EmailAttachmentList getEmailAttachmentList ()
   {
     return new EmailAttachmentList (m_aEmailAttachments);
