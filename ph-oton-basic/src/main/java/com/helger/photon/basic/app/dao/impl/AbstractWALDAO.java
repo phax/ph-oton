@@ -47,6 +47,8 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.io.EAppend;
+import com.helger.commons.io.file.EFileIOErrorCode;
+import com.helger.commons.io.file.EFileIOOperation;
 import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.io.resource.FileSystemResource;
@@ -64,6 +66,7 @@ import com.helger.datetime.format.PDTToString;
 import com.helger.photon.basic.app.dao.IDAOIO;
 import com.helger.photon.basic.app.io.ConstantHasFilename;
 import com.helger.photon.basic.app.io.IHasFilename;
+import com.helger.photon.basic.app.io.IMutablePathRelativeIO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.xml.microdom.IMicroComment;
 import com.helger.xml.microdom.IMicroDocument;
@@ -766,15 +769,20 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
         throw new DAOException ("Failed to write DAO XML data to file");
 
       // Rename existing file to old
-      FileIOError aIOError = m_aDAOIO.getFileIO ().renameFile (sFilename, sFilenamePrev);
+      final IMutablePathRelativeIO aFileIO = m_aDAOIO.getFileIO ();
+      FileIOError aIOError;
+      if (aFileIO.existsFile (sFilename))
+        aIOError = aFileIO.renameFile (sFilename, sFilenamePrev);
+      else
+        aIOError = new FileIOError (EFileIOOperation.RENAME_FILE, EFileIOErrorCode.NO_ERROR);
       if (aIOError.isSuccess ())
       {
         // Rename new file to final
-        aIOError = m_aDAOIO.getFileIO ().renameFile (sFilenameNew, sFilename);
+        aIOError = aFileIO.renameFile (sFilenameNew, sFilename);
         if (aIOError.isSuccess ())
         {
           // Finally delete old file
-          aIOError = m_aDAOIO.getFileIO ().deleteFileIfExisting (sFilenamePrev);
+          aIOError = aFileIO.deleteFileIfExisting (sFilenamePrev);
         }
       }
       if (aIOError.isFailure ())
