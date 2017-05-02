@@ -32,24 +32,26 @@ import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_1000_48;
 import com.helger.security.password.salt.IPasswordSalt;
 import com.helger.security.password.salt.PasswordSalt;
 import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.util.MicroHelper;
 
 public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConverter
 {
-  private static final String ATTR_DESIREDLOCALE = "desiredlocale";
-  private static final String ATTR_LASTLOGINLDT = "lastloginldt";
-  private static final String ATTR_LOGINCOUNT = "logincount";
-  private static final String ATTR_CONSECUTIVEFAILEDLOGINCOUNT = "consecutivefailedlogincount";
+  private static final IMicroQName ATTR_DESIREDLOCALE = new MicroQName ("desiredlocale");
+  private static final IMicroQName ATTR_LASTLOGINLDT = new MicroQName ("lastloginldt");
+  private static final IMicroQName ATTR_LOGINCOUNT = new MicroQName ("logincount");
+  private static final IMicroQName ATTR_CONSECUTIVEFAILEDLOGINCOUNT = new MicroQName ("consecutivefailedlogincount");
   private static final String ELEMENT_LOGINNAME = "loginname";
   private static final String ELEMENT_EMAILADDRESS = "emailaddress";
   private static final String ELEMENT_PASSWORDHASH = "passwordhash";
-  private static final String ATTR_ALGORITHM = "algorithm";
-  private static final String ATTR_SALT = "salt";
+  private static final IMicroQName ATTR_ALGORITHM = new MicroQName ("algorithm");
+  private static final IMicroQName ATTR_SALT = new MicroQName ("salt");
   private static final String ELEMENT_FIRSTNAME = "firstname";
   private static final String ELEMENT_LASTNAME = "lastname";
   private static final String ELEMENT_DESCRIPTION = "description";
-  private static final String ATTR_DISABLED = "disabled";
+  private static final IMicroQName ATTR_DISABLED = new MicroQName ("disabled");
 
   @Nonnull
   public IMicroElement convertToMicroElement (@Nonnull final Object aObject,

@@ -306,6 +306,15 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     m_aCallbacks.forEach (aCB -> aCB.onUpdateItem (aItem));
   }
 
+  /**
+   * Delete the item by removing it from the map. If something was remove the
+   * onDeleteItem callback is invoked.
+   * 
+   * @param sID
+   *        The ID to be removed. May be <code>null</code>.
+   * @return The deleted item. If <code>null</code> no such item was found and
+   *         therefore nothing was removed.
+   */
   @MustBeLocked (ELockType.WRITE)
   @Nullable
   protected final IMPLTYPE internalDeleteItem (@Nullable final String sID)

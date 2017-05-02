@@ -30,6 +30,8 @@ import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.photon.basic.object.IObject;
 import com.helger.photon.basic.object.IObjectWithCustomAttrs;
 import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroQName;
+import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 
 /**
@@ -39,13 +41,13 @@ import com.helger.xml.microdom.convert.IMicroTypeConverter;
  */
 public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConverter
 {
-  protected static final String ATTR_ID = "id";
-  protected static final String ATTR_CREATIONLDT = "creationldt";
-  protected static final String ATTR_CREATIONUSERID = "creationuserid";
-  protected static final String ATTR_LASTMODLDT = "lastmodldt";
-  protected static final String ATTR_LASTMODUSERID = "lastmoduserid";
-  protected static final String ATTR_DELETIONLDT = "deletionldt";
-  protected static final String ATTR_DELETIONUSERID = "deletionuserid";
+  protected static final IMicroQName ATTR_ID = new MicroQName ("id");
+  protected static final IMicroQName ATTR_CREATIONLDT = new MicroQName ("creationldt");
+  protected static final IMicroQName ATTR_CREATIONUSERID = new MicroQName ("creationuserid");
+  protected static final IMicroQName ATTR_LASTMODLDT = new MicroQName ("lastmodldt");
+  protected static final IMicroQName ATTR_LASTMODUSERID = new MicroQName ("lastmoduserid");
+  protected static final IMicroQName ATTR_DELETIONLDT = new MicroQName ("deletionldt");
+  protected static final IMicroQName ATTR_DELETIONUSERID = new MicroQName ("deletionuserid");
   protected static final String ELEMENT_CUSTOM = "custom";
 
   public static final void setObjectFields (@Nonnull final IObject aValue, @Nonnull final IMicroElement aElement)
@@ -78,22 +80,22 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
    *
    * @param aElement
    *        Element
-   * @param sLDTName
+   * @param aLDTName
    *        new local date time element name
-   * @param sDTName
+   * @param aDTName
    *        old date time element name
    * @return May be <code>null</code>.
    */
   @Nullable
   @ContainsSoftMigration
   public static LocalDateTime readAsLocalDateTime (@Nonnull final IMicroElement aElement,
-                                                   @Nonnull final String sLDTName,
-                                                   @Nonnull final String sDTName)
+                                                   @Nonnull final IMicroQName aLDTName,
+                                                   @Nonnull final String aDTName)
   {
-    LocalDateTime aLDT = aElement.getAttributeValueWithConversion (sLDTName, LocalDateTime.class);
+    LocalDateTime aLDT = aElement.getAttributeValueWithConversion (aLDTName, LocalDateTime.class);
     if (aLDT == null)
     {
-      final ZonedDateTime aDT = aElement.getAttributeValueWithConversion (sDTName, ZonedDateTime.class);
+      final ZonedDateTime aDT = aElement.getAttributeValueWithConversion (aDTName, ZonedDateTime.class);
       if (aDT != null)
         aLDT = aDT.toLocalDateTime ();
     }
