@@ -64,7 +64,7 @@ public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecuti
   {
     ValueEnforcer.notEmpty (aLayoutAreaIDs, "LayoutAreaIDs");
 
-    m_aLayoutAreaIDs = new CommonsArrayList<> (aLayoutAreaIDs);
+    m_aLayoutAreaIDs = new CommonsArrayList <> (aLayoutAreaIDs);
   }
 
   /**
@@ -188,6 +188,7 @@ public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecuti
                                    .setThrowable (t)
                                    .addCustomData ("areaid", sAreaID)
                                    .setFromWebExecutionContext (aLEC)
+                                   .setDuplicateEliminiationCounter (0)
                                    .handle ();
       }
     }

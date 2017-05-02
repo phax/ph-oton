@@ -173,8 +173,9 @@ public final class InternalErrorHandler
     if (StringHelper.hasText (sThrowableStackTrace) && nDuplicateEliminiationCount > 1)
     {
       // Check if an internal error was already sent for this stack trace
+      // Init with -1 so that it gets send the first time
       final MutableInt aMI = s_aRWLock.writeLocked ( () -> s_aIntErrCache.computeIfAbsent (sThrowableStackTrace,
-                                                                                           k -> new MutableInt (0)));
+                                                                                           k -> new MutableInt (-1)));
       aMI.inc ();
 
       // Send only every Nth invocation!
