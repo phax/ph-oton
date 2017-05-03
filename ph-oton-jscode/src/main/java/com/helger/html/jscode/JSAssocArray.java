@@ -161,6 +161,16 @@ public class JSAssocArray extends AbstractJSExpression
   }
 
   @Nonnull
+  public <T> JSAssocArray addAll (@Nonnull final Iterable <? extends T> aCont,
+                                  @Nonnull final Function <? super T, String> aKeyExtractor,
+                                  @Nonnull final Function <? super T, IJSExpression> aValueExtractor)
+  {
+    for (final T aObj : aCont)
+      add (aKeyExtractor.apply (aObj), aValueExtractor.apply (aObj));
+    return this;
+  }
+
+  @Nonnull
   public JSAssocArray add (@Nonnull final String sKey, @Nonnull final IJSExpression aValue)
   {
     if (!m_bForceQuotingNames)
@@ -270,16 +280,5 @@ public class JSAssocArray extends AbstractJSExpression
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ()).append ("exprs", m_aExprs).getToString ();
-  }
-
-  @Nonnull
-  public static <T> JSAssocArray create (@Nonnull final Iterable <T> aCont,
-                                         @Nonnull final Function <T, String> aKeyExtractor,
-                                         @Nonnull final Function <T, IJSExpression> aValueExtractor)
-  {
-    final JSAssocArray ret = new JSAssocArray ();
-    for (final T aObj : aCont)
-      ret.add (aKeyExtractor.apply (aObj), aValueExtractor.apply (aObj));
-    return ret;
   }
 }
