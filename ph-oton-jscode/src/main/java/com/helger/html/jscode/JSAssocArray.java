@@ -19,6 +19,7 @@ package com.helger.html.jscode;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -188,7 +189,7 @@ public class JSAssocArray extends AbstractJSExpression
     ValueEnforcer.notNull (aValue, "Value");
 
     if (m_aExprs == null)
-      m_aExprs = new CommonsLinkedHashMap<> ();
+      m_aExprs = new CommonsLinkedHashMap <> ();
     m_aExprs.put (aKey, aValue);
     return this;
   }
@@ -269,5 +270,16 @@ public class JSAssocArray extends AbstractJSExpression
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ()).append ("exprs", m_aExprs).getToString ();
+  }
+
+  @Nonnull
+  public static <T> JSAssocArray create (@Nonnull final Iterable <T> aCont,
+                                         @Nonnull final Function <T, String> aKeyExtractor,
+                                         @Nonnull final Function <T, IJSExpression> aValueExtractor)
+  {
+    final JSAssocArray ret = new JSAssocArray ();
+    for (final T aObj : aCont)
+      ret.add (aKeyExtractor.apply (aObj), aValueExtractor.apply (aObj));
+    return ret;
   }
 }
