@@ -27,7 +27,7 @@ Contained subprojects are:
   * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
 
 Release history:
-  * v7.0.6 - work in progress
+  * v7.1.0 - work in progress
     * Updated to ph-web 8.8.0
     * Improved rendering speed through internal optimizations
     * Updated to Bootstrap Datetime picker 2.4.4
