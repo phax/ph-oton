@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.charset.CharsetManager;
+import com.helger.commons.mime.EMimeContentType;
 import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
@@ -166,7 +167,10 @@ public class CharacterEncodingFilter extends AbstractHttpServletFilter
       {
         aRequest.setCharacterEncoding (m_sEncoding);
         if (sOldRequestEncoding != null && !m_sEncoding.equalsIgnoreCase (sOldRequestEncoding))
+        {
+          // Request encoding should always be present (at least from browsers)
           s_aLogger.info ("Changed request encoding from '" + sOldRequestEncoding + "' to '" + m_sEncoding + "'");
+        }
       }
     }
 
@@ -177,15 +181,19 @@ public class CharacterEncodingFilter extends AbstractHttpServletFilter
     {
       // Maybe null e.g. for HTTP 304
       final String sContentType = aResponse.getContentType ();
-      final boolean bCanApplyCharset = sContentType != null && sContentType.startsWith ("text/");
+
+      // Only apply to "text/" MIME types
+      final boolean bCanApplyCharset = sContentType != null && EMimeContentType.TEXT.isTypeOf (sContentType);
       if (bCanApplyCharset)
       {
-
         final String sOldResponseEncoding = aResponse.getCharacterEncoding ();
         if (sOldResponseEncoding == null || m_bForceResponseEncoding)
         {
           aResponse.setCharacterEncoding (m_sEncoding);
           if (sOldResponseEncoding != null && !m_sEncoding.equalsIgnoreCase (sOldResponseEncoding))
+          {
+            // Default response encoding in Jetty 9.x is "iso-8859-1" on German
+            // Windows 7 machine
             s_aLogger.info ("Changed response encoding from '" +
                             sOldResponseEncoding +
                             "' to '" +
@@ -193,6 +201,7 @@ public class CharacterEncodingFilter extends AbstractHttpServletFilter
                             "' for MIME type '" +
                             sContentType +
                             "'");
+          }
         }
       }
     }
