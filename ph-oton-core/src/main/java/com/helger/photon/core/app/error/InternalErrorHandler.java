@@ -539,7 +539,7 @@ public final class InternalErrorHandler
   }
 
   @Nullable
-  private static final Locale _getSafeDisplayLocale ()
+  private static Locale _getSafeDisplayLocale ()
   {
     try
     {

@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableObject;
@@ -64,6 +65,7 @@ public class FineUploader5Core implements IFineUploader5Part
   public static final boolean DEFAULT_CORE_MULTIPLE = true;
 
   // text
+  @CodingStyleguideUnaware
   public static final Set <String> DEFAULT_TEXT_SIZE_SYMBOLS = new CommonsLinkedHashSet <> ("kB",
                                                                                             "MB",
                                                                                             "GB",

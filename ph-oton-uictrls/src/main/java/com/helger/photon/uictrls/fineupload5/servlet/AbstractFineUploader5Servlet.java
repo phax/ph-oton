@@ -26,6 +26,7 @@ import javax.annotation.concurrent.Immutable;
 import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.state.ESuccess;
@@ -191,6 +192,7 @@ public abstract class AbstractFineUploader5Servlet extends AbstractUnifiedRespon
     }
   }
 
+  @CodingStyleguideUnaware
   public static final Set <EHTTPMethod> ALLOWED_METHDOS = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.POST,
                                                                                                          EHTTPMethod.DELETE));
 

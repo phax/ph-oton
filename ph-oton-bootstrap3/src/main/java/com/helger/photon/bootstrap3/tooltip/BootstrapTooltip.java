@@ -27,6 +27,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
@@ -83,8 +84,8 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
   public static final EBootstrapTooltipPosition DEFAULT_PLACEMENT = EBootstrapTooltipPosition.TOP;
   public static final boolean DEFAULT_PLACEMENT_AUTO = false;
   @CodingStyleguideUnaware
-  public static final Set <EBootstrapTooltipTrigger> DEFAULT_TRIGGER = CollectionHelper.makeUnmodifiable (CollectionHelper.newSortedSet (EBootstrapTooltipTrigger.HOVER,
-                                                                                                                                         EBootstrapTooltipTrigger.FOCUS));
+  public static final Set <EBootstrapTooltipTrigger> DEFAULT_TRIGGER = new CommonsLinkedHashSet <> (EBootstrapTooltipTrigger.HOVER,
+                                                                                                    EBootstrapTooltipTrigger.FOCUS).getAsUnmodifiable ();
 
   private final IJQuerySelector m_aSelector;
   private boolean m_bAnimation = DEFAULT_ANIMATION;
@@ -95,6 +96,7 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
   private String m_sSelector;
   private String m_sTooltipTitle;
   private JSAnonymousFunction m_aTooltipTitleFunc;
+  @CodingStyleguideUnaware
   private Set <EBootstrapTooltipTrigger> m_aTrigger = DEFAULT_TRIGGER;
   private int m_nShowDelay = 0;
   private int m_nHideDelay = 0;
