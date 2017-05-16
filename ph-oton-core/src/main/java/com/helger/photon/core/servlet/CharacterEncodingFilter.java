@@ -28,10 +28,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.charset.CharsetManager;
 import com.helger.commons.scope.mgr.ScopeManager;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.servlet.ServletHelper;
 import com.helger.servlet.filter.AbstractHttpServletFilter;
@@ -46,8 +47,16 @@ public class CharacterEncodingFilter extends AbstractHttpServletFilter
 {
   /** Name of the init parameter for the encoding */
   public static final String INITPARAM_ENCODING = "encoding";
-  /** Name of the init parameter to force setting the encoding */
+  /** Name of the init parameter to force setting the request encoding */
+  public static final String INITPARAM_FORCE_REQUEST_ENCODING = "forceRequestEncoding";
+  /** Name of the init parameter to force setting the response encoding */
+  public static final String INITPARAM_FORCE_RESPONSE_ENCODING = "forceResponseEncoding";
+  /**
+   * Name of the init parameter to force setting the request and response
+   * encoding
+   */
   public static final String INITPARAM_FORCE_ENCODING = "forceEncoding";
+
   /** The default encoding is UTF-8 */
   public static final String DEFAULT_ENCODING = StandardCharsets.UTF_8.name ();
   /** By default the encoding is not enforced. */
@@ -57,7 +66,8 @@ public class CharacterEncodingFilter extends AbstractHttpServletFilter
   private static final Logger s_aLogger = LoggerFactory.getLogger (CharacterEncodingFilter.class);
 
   private String m_sEncoding = DEFAULT_ENCODING;
-  private boolean m_bForceEncoding = DEFAULT_FORCE_ENCODING;
+  private boolean m_bForceRequestEncoding = DEFAULT_FORCE_ENCODING;
+  private boolean m_bForceResponseEncoding = DEFAULT_FORCE_ENCODING;
 
   public CharacterEncodingFilter ()
   {}
@@ -66,18 +76,45 @@ public class CharacterEncodingFilter extends AbstractHttpServletFilter
    * @return The encoding to be used by this filter. Neither <code>null</code>
    *         nor empty.
    */
-  @OverrideOnDemand
   @Nonnull
   @Nonempty
-  protected String getEncoding ()
+  public final String getEncoding ()
   {
     return m_sEncoding;
   }
 
-  @OverrideOnDemand
-  protected boolean isForceEncoding ()
+  public final void setEncoding (@Nonnull @Nonempty final String sEncoding)
   {
-    return m_bForceEncoding;
+    ValueEnforcer.notEmpty (sEncoding, "Encoding");
+    // Throws IllegalArgumentException in case it is unknown
+    CharsetManager.getCharsetFromName (sEncoding);
+    m_sEncoding = sEncoding;
+  }
+
+  public final boolean isForceRequestEncoding ()
+  {
+    return m_bForceRequestEncoding;
+  }
+
+  public final void setForceRequestEncoding (final boolean bForce)
+  {
+    m_bForceRequestEncoding = bForce;
+  }
+
+  public final boolean isForceResponseEncoding ()
+  {
+    return m_bForceRequestEncoding;
+  }
+
+  public final void setForceResponseEncoding (final boolean bForce)
+  {
+    m_bForceResponseEncoding = bForce;
+  }
+
+  public final void setForceEncoding (final boolean bForce)
+  {
+    setForceRequestEncoding (bForce);
+    setForceResponseEncoding (bForce);
   }
 
   @Override
@@ -87,17 +124,23 @@ public class CharacterEncodingFilter extends AbstractHttpServletFilter
 
     // encoding
     final String sEncoding = getFilterConfig ().getInitParameter (INITPARAM_ENCODING);
-    if (sEncoding != null)
-    {
-      // Throws IllegalArgumentException in case it is unknown
-      CharsetManager.getCharsetFromName (sEncoding);
-      m_sEncoding = sEncoding;
-    }
+    if (StringHelper.hasText (sEncoding))
+      setEncoding (sEncoding);
+
+    // force request encoding?
+    String sForce = getFilterConfig ().getInitParameter (INITPARAM_FORCE_REQUEST_ENCODING);
+    if (sForce != null)
+      setForceRequestEncoding (StringParser.parseBool (sForce));
+
+    // force response encoding?
+    sForce = getFilterConfig ().getInitParameter (INITPARAM_FORCE_RESPONSE_ENCODING);
+    if (sForce != null)
+      setForceResponseEncoding (StringParser.parseBool (sForce));
 
     // force encoding?
-    final String sForceEncoding = getFilterConfig ().getInitParameter (INITPARAM_FORCE_ENCODING);
-    if (sForceEncoding != null)
-      m_bForceEncoding = StringParser.parseBool (sForceEncoding);
+    sForce = getFilterConfig ().getInitParameter (INITPARAM_FORCE_ENCODING);
+    if (sForce != null)
+      setForceEncoding (StringParser.parseBool (sForce));
   }
 
   @Override
@@ -106,22 +149,52 @@ public class CharacterEncodingFilter extends AbstractHttpServletFilter
                             @Nonnull final FilterChain aChain) throws IOException, ServletException
   {
     // Avoid double filtering
+    boolean bExecuteNow;
     if (aRequest.getAttribute (REQUEST_ATTR) == null)
     {
-      final String sEncoding = getEncoding ();
+      bExecuteNow = true;
+      ServletHelper.setRequestAttribute (aRequest, REQUEST_ATTR, Boolean.TRUE);
+    }
+    else
+      bExecuteNow = false;
+
+    if (bExecuteNow)
+    {
       final String sOldRequestEncoding = aRequest.getCharacterEncoding ();
       // We need this for all form data etc.
-      if (sOldRequestEncoding == null || isForceEncoding ())
+      if (sOldRequestEncoding == null || m_bForceRequestEncoding)
       {
-        aRequest.setCharacterEncoding (sEncoding);
-        if (sOldRequestEncoding != null && !sEncoding.equalsIgnoreCase (sOldRequestEncoding))
-          s_aLogger.info ("Changed request encoding from '" + sOldRequestEncoding + "' to '" + sEncoding + "'");
+        aRequest.setCharacterEncoding (m_sEncoding);
+        if (sOldRequestEncoding != null && !m_sEncoding.equalsIgnoreCase (sOldRequestEncoding))
+          s_aLogger.info ("Changed request encoding from '" + sOldRequestEncoding + "' to '" + m_sEncoding + "'");
       }
-      aResponse.setCharacterEncoding (sEncoding);
-      ServletHelper.setRequestAttribute (aRequest, REQUEST_ATTR, Boolean.TRUE);
     }
 
     // Next filter in the chain
     aChain.doFilter (aRequest, aResponse);
+
+    if (bExecuteNow)
+    {
+      // Maybe null e.g. for HTTP 304
+      final String sContentType = aResponse.getContentType ();
+      final boolean bCanApplyCharset = sContentType != null && sContentType.startsWith ("text/");
+      if (bCanApplyCharset)
+      {
+
+        final String sOldResponseEncoding = aResponse.getCharacterEncoding ();
+        if (sOldResponseEncoding == null || m_bForceResponseEncoding)
+        {
+          aResponse.setCharacterEncoding (m_sEncoding);
+          if (sOldResponseEncoding != null && !m_sEncoding.equalsIgnoreCase (sOldResponseEncoding))
+            s_aLogger.info ("Changed response encoding from '" +
+                            sOldResponseEncoding +
+                            "' to '" +
+                            m_sEncoding +
+                            "' for MIME type '" +
+                            sContentType +
+                            "'");
+        }
+      }
+    }
   }
 }
