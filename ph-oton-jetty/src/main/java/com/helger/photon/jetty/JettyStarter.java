@@ -301,8 +301,9 @@ public class JettyStarter
       aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormContentSize",
                             Integer.valueOf (2 * CGlobal.BYTES_PER_MEGABYTE));
       aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormKeys", Integer.valueOf (20000));
-      customizeServer (aServer);
     }
+
+    customizeServer (aServer);
 
     final WebAppContext aWebAppCtx = new WebAppContext ();
     {
