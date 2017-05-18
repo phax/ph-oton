@@ -194,13 +194,14 @@ public class CharacterEncodingFilter extends AbstractHttpServletFilter
           {
             // Default response encoding in Jetty 9.x is "iso-8859-1" on German
             // Windows 7 machine
-            s_aLogger.info ("Changed response encoding from '" +
-                            sOldResponseEncoding +
-                            "' to '" +
-                            m_sEncoding +
-                            "' for MIME type '" +
-                            sContentType +
-                            "'");
+            if (s_aLogger.isDebugEnabled ())
+              s_aLogger.debug ("Changed response encoding from '" +
+                               sOldResponseEncoding +
+                               "' to '" +
+                               m_sEncoding +
+                               "' for MIME type '" +
+                               sContentType +
+                               "'");
           }
         }
       }
