@@ -304,7 +304,7 @@ abstract class AbstractCreateJQueryAPIList
 
     public boolean isAddedAfter10 ()
     {
-      return m_aAdded.isGreaterThan (V1);
+      return m_aAdded.isGT (V1);
     }
 
     @Nonnegative

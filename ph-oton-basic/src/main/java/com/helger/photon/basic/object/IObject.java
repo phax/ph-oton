@@ -24,7 +24,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.type.ITypedObject;
-import com.helger.datetime.util.PDTHelper;
 import com.helger.photon.basic.datetime.IHasCreationInfo;
 import com.helger.photon.basic.datetime.IHasDeletionInfo;
 import com.helger.photon.basic.datetime.IHasLastModificationInfo;
@@ -89,6 +88,6 @@ public interface IObject extends
   default boolean isDeleted (@Nonnull final LocalDateTime aDT)
   {
     ValueEnforcer.notNull (aDT, "LocalDateTime");
-    return hasDeletionDateTime () && PDTHelper.isLessOrEqual (getDeletionDateTime (), aDT);
+    return hasDeletionDateTime () && getDeletionDateTime ().compareTo (aDT) <= 0;
   }
 }

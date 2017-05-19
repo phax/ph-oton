@@ -51,7 +51,6 @@ import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
-import com.helger.datetime.util.PDTHelper;
 import com.helger.http.CHTTPHeader;
 import com.helger.http.EHTTPMethod;
 import com.helger.http.EHTTPVersion;
@@ -479,7 +478,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         if (nRequestIfModifiedSince >= 0)
         {
           final LocalDateTime aRequestIfModifiedSince = convertMillisToDateTimeGMT (nRequestIfModifiedSince);
-          if (PDTHelper.isLessOrEqual (aLastModification, aRequestIfModifiedSince))
+          if (aLastModification.compareTo (aRequestIfModifiedSince) <= 0)
           {
             if (s_aLogger.isDebugEnabled ())
               s_aLogger.debug ("Requested resource was not modified: " + aRequestScope.getPathWithinServlet ());
@@ -497,7 +496,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         if (nRequestIfUnmodifiedSince >= 0)
         {
           final LocalDateTime aRequestIfUnmodifiedSince = convertMillisToDateTimeGMT (nRequestIfUnmodifiedSince);
-          if (PDTHelper.isGreaterOrEqual (aLastModification, aRequestIfUnmodifiedSince))
+          if (aLastModification.compareTo (aRequestIfUnmodifiedSince) >= 0)
           {
             if (s_aLogger.isDebugEnabled ())
               s_aLogger.debug ("Requested resource was not modified: " + aRequestScope.getPathWithinServlet ());
