@@ -34,6 +34,7 @@ import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdown;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdownMenu;
+import com.helger.photon.bootstrap3.dropdown.EBootstrapDropdownMenuAlignment;
 import com.helger.photon.uicore.icon.IIcon;
 
 /**
@@ -160,15 +161,29 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
   @Nonnull
   public BootstrapDropdownMenu addDropdownMenu (@Nullable final String sText)
   {
-    return addDropdownMenu (new HCTextNode (sText));
+    return addDropdownMenu (EBootstrapDropdownMenuAlignment.DEFAULT, new HCTextNode (sText));
+  }
+
+  @Nonnull
+  public BootstrapDropdownMenu addDropdownMenu (@Nullable final EBootstrapDropdownMenuAlignment eAlignment,
+                                                @Nullable final String sText)
+  {
+    return addDropdownMenu (eAlignment, new HCTextNode (sText));
   }
 
   @Nonnull
   public BootstrapDropdownMenu addDropdownMenu (@Nullable final IHCNode aText)
   {
+    return addDropdownMenu (EBootstrapDropdownMenuAlignment.DEFAULT, aText);
+  }
+
+  @Nonnull
+  public BootstrapDropdownMenu addDropdownMenu (@Nullable final EBootstrapDropdownMenuAlignment eAlignment,
+                                                @Nullable final IHCNode aText)
+  {
     final IHCLI <?> aLI = addItem ().addClass (CBootstrapCSS.DROPDOWN);
     aLI.addChild (BootstrapDropdown.makeDropdownToggle (new HCA (new SimpleURL ()).addChild (aText)));
-    final BootstrapDropdownMenu aMenu = aLI.addAndReturnChild (new BootstrapDropdownMenu ());
+    final BootstrapDropdownMenu aMenu = aLI.addAndReturnChild (new BootstrapDropdownMenu (eAlignment));
     return aMenu;
   }
 }
