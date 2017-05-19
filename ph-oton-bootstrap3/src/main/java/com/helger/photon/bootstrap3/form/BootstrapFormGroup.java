@@ -26,6 +26,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
@@ -186,7 +187,7 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
   @Nonnull
   public final BootstrapFormGroup setHelpText (@Nullable final String sHelpText)
   {
-    return setHelpText (new HCNodeList ().addChild (sHelpText));
+    return setHelpText (new HCNodeList ().addChildren (HCExtHelper.nl2divList (sHelpText)));
   }
 
   @Nonnull
