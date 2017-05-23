@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.charset.EUnicodeBOM;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -57,6 +58,7 @@ public final class ExporterCSV implements IExporterFile
   private char m_cSeparatorChar = CCSV.DEFAULT_SEPARATOR;
   private char m_cQuoteChar = CCSV.DEFAULT_QUOTE_CHARACTER;
   private char m_cEscapeChar = CCSV.DEFAULT_ESCAPE_CHARACTER;
+  private String m_sLineEnd = CSVWriter.DEFAULT_LINE_END;
   private EUnicodeBOM m_eBOM;
   private boolean m_bAvoidWriteEmpty = false;
 
@@ -128,6 +130,21 @@ public final class ExporterCSV implements IExporterFile
   }
 
   @Nonnull
+  public ExporterCSV setLineEnd (@Nonnull @Nonempty final String sLineEnd)
+  {
+    ValueEnforcer.notEmpty (sLineEnd, "LineEnd");
+    m_sLineEnd = sLineEnd;
+    return this;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getLineEnd ()
+  {
+    return m_sLineEnd;
+  }
+
+  @Nonnull
   public ExporterCSV setUnicodeBOM (@Nullable final EUnicodeBOM eBOM)
   {
     m_eBOM = eBOM;
@@ -172,7 +189,7 @@ public final class ExporterCSV implements IExporterFile
   private static ICommonsList <String> _getAsCSVRecord (@Nonnull final IExportRecord aRecord)
   {
     final ICommonsList <? extends IExportRecordField> aAllFields = aRecord.getAllFields ();
-    final ICommonsList <String> aCSVValues = new CommonsArrayList<> (aAllFields.size ());
+    final ICommonsList <String> aCSVValues = new CommonsArrayList <> (aAllFields.size ());
     for (final IExportRecordField aField : aAllFields)
     {
       final Object aFieldValue = aField.getFieldValue ();
@@ -187,7 +204,8 @@ public final class ExporterCSV implements IExporterFile
   {
     return new CSVWriter (new OutputStreamWriter (aOS, m_aCharset)).setSeparatorChar (m_cSeparatorChar)
                                                                    .setQuoteChar (m_cQuoteChar)
-                                                                   .setEscapeChar (m_cEscapeChar);
+                                                                   .setEscapeChar (m_cEscapeChar)
+                                                                   .setLineEnd (m_sLineEnd);
   }
 
   @Override
@@ -203,7 +221,7 @@ public final class ExporterCSV implements IExporterFile
       if (m_bAvoidWriteEmpty)
       {
         // Collect all records in the correct order
-        final ICommonsList <ICommonsList <String>> aCSVRecords = new CommonsArrayList<> ();
+        final ICommonsList <ICommonsList <String>> aCSVRecords = new CommonsArrayList <> ();
         aProvider.forEachHeaderRecord (x -> aCSVRecords.add (_getAsCSVRecord (x)));
         aProvider.forEachBodyRecord (x -> aCSVRecords.add (_getAsCSVRecord (x)));
         aProvider.forEachFooterRecord (x -> aCSVRecords.add (_getAsCSVRecord (x)));
