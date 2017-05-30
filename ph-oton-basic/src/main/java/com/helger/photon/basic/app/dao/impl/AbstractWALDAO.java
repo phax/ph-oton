@@ -771,8 +771,12 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
       // Rename existing file to old
       final IMutablePathRelativeIO aFileIO = m_aDAOIO.getFileIO ();
       FileIOError aIOError;
+      boolean bRenamedToPrev = false;
       if (aFileIO.existsFile (sFilename))
+      {
         aIOError = aFileIO.renameFile (sFilename, sFilenamePrev);
+        bRenamedToPrev = true;
+      }
       else
         aIOError = new FileIOError (EFileIOOperation.RENAME_FILE, EFileIOErrorCode.NO_ERROR);
       if (aIOError.isSuccess ())
@@ -784,9 +788,16 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
           // Finally delete old file
           aIOError = aFileIO.deleteFileIfExisting (sFilenamePrev);
         }
+        else
+        {
+          // 2nd rename failed
+          // -> Revert original rename to stay as consistent as possible
+          if (bRenamedToPrev)
+            aFileIO.renameFile (sFilenamePrev, sFilename);
+        }
       }
       if (aIOError.isFailure ())
-        throw new IllegalStateException ("IO error on rename: " + aIOError);
+        throw new IllegalStateException ("Error on rename(existing-old)/rename(new-existing)/delete(old): " + aIOError);
 
       // Update stats etc.
       m_aStatsCounterWriteTimer.addTime (aSW.stopAndGetMillis ());
