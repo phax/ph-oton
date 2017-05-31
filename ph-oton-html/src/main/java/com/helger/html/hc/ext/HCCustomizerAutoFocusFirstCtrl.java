@@ -19,15 +19,14 @@ package com.helger.html.hc.ext;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.mutable.MutableBoolean;
 import com.helger.commons.state.EFinish;
 import com.helger.commons.wrapper.Wrapper;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.forms.AbstractHCInput;
 import com.helger.html.hc.html.forms.HCHiddenField;
+import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.html.hc.html.forms.IHCHasFocus;
 import com.helger.html.hc.impl.AbstractHCCustomizer;
@@ -46,43 +45,41 @@ public class HCCustomizerAutoFocusFirstCtrl extends AbstractHCCustomizer
   public static void setAutoFocusOnFirstControl (@Nonnull final IHCNode aStartNode)
   {
     final Wrapper <IHCHasFocus <?>> aFirstCtrl = new Wrapper <> ();
-    final MutableBoolean bAnyCtrlHasFocus = new MutableBoolean (false);
+
     HCHelper.iterateChildrenNoCopy (aStartNode, (aParentNode, aChildNode) -> {
-      if (aChildNode instanceof AbstractHCInput <?>)
+      if (aChildNode instanceof IHCControl <?>)
       {
-        final AbstractHCInput <?> aHasFocus = (AbstractHCInput <?>) aChildNode;
-        if (!aFirstCtrl.isSet ())
-        {
-          if (aHasFocus instanceof HCHiddenField)
-          {
-            // cannot focus
-          }
-          else
-            if (aHasFocus.isReadOnly ())
-            {
-              // cannot focus read-only controls
-            }
-            else
-              aFirstCtrl.set (aHasFocus);
-        }
-        if (aHasFocus.isAutoFocus ())
+        final IHCControl <?> aCurCtrl = (IHCControl <?>) aChildNode;
+        if (aCurCtrl.isAutoFocus ())
         {
           // No need to continue because an existing control already has the
           // focus
-          bAnyCtrlHasFocus.set (true);
           return EFinish.FINISHED;
+        }
+
+        if (!aFirstCtrl.isSet ())
+        {
+          if (aCurCtrl instanceof HCHiddenField)
+          {
+            // cannot focus hidden field
+          }
+          else
+            if (aCurCtrl.isReadOnly () || aCurCtrl.isDisabled ())
+            {
+              // cannot focus read-only/disabled controls
+            }
+            else
+              aFirstCtrl.set (aCurCtrl);
         }
       }
 
       return EFinish.UNFINISHED;
     });
 
-    if (!bAnyCtrlHasFocus.booleanValue ())
-    {
-      final IHCHasFocus <?> aFirst = aFirstCtrl.get ();
-      if (aFirst != null)
-        aFirst.setAutoFocus (true);
-    }
+    // Anything to focus?
+    final IHCHasFocus <?> aFirst = aFirstCtrl.get ();
+    if (aFirst != null)
+      aFirst.setAutoFocus (true);
   }
 
   @Override
