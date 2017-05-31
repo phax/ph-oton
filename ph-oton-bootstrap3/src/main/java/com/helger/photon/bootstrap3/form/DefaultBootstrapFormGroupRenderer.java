@@ -31,6 +31,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.CHTMLAttributes;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
@@ -248,8 +249,16 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 
     final List <IHCControl <?>> aAllCtrls = HCCtrlHelper.getAllHCControls (aCtrls);
 
-    // Set CSS class to all contained controls
-    BootstrapHelper.markAsFormControls (aAllCtrls);
+    if (aAllCtrls != null)
+    {
+      // Set CSS class to all contained controls
+      BootstrapHelper.markAsFormControls (aAllCtrls);
+
+      // Set "aria-labelledby"
+      if (aLabel != null)
+        for (final IHCControl <?> aCurCtrl : aAllCtrls)
+          aCurCtrl.setCustomAttr (CHTMLAttributes.ARIA_LABELLEDBY, aLabel.ensureID ().getID ());
+    }
 
     final IHCControl <?> aFirstControl = CollectionHelper.getFirstElement (aAllCtrls);
     HCDiv aFinalNode;
