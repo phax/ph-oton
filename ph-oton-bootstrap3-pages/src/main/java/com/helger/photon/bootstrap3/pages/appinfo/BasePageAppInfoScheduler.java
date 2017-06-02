@@ -37,6 +37,7 @@ import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.HCUL;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCTable;
+import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
@@ -45,6 +46,7 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
+import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.quartz.IJobDetail;
@@ -192,13 +194,14 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
                           PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getNextFireTime ()),
                                                    aDisplayLocale));
 
-            final HCTable aJobDataTable = new HCTable (HCCol.star (), HCCol.star ());
+            final BootstrapTable aJobDataTable = new BootstrapTable (HCCol.star (), HCCol.star ());
+            aJobDataTable.setCondensed (true);
             for (final Map.Entry <String, Object> aEntry : aDetail.getJobDataMap ().entrySet ())
               aJobDataTable.addBodyRow ().addCells (aEntry.getKey (), String.valueOf (aEntry.getValue ()));
 
             aUL2.addItem (new HCTextNode (EText.MSG_JOB_DATA.getDisplayText (aDisplayLocale)),
                           aJobDataTable.hasBodyRows () ? aJobDataTable
-                                                       : new HCTextNode (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
+                                                       : new HCEM ().addChild (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
           }
         aTab.addChild (aDetailUL);
 
