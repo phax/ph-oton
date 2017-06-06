@@ -16,6 +16,8 @@
  */
 package com.helger.photon.bootstrap3.button;
 
+import java.util.function.Consumer;
+
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
@@ -110,5 +112,31 @@ public class BootstrapButtonGroup extends AbstractHCDiv <BootstrapButtonGroup>
     addChild (aCaret);
 
     return addDropDownMenu ();
+  }
+
+  /**
+   * Create a new button group with a default button and an additional drop down
+   * part.
+   *
+   * @param aButton
+   *        The button to be added. May not be <code>null</code>.
+   * @param aMenuItemProvider
+   *        The drop down menu item provider.
+   * @return The created button group. Never <code>null</code>.
+   */
+  @Nonnull
+  public static BootstrapButtonGroup createButtonAsDropDownMenuWithSeparateCaret (@Nonnull final BootstrapButton aButton,
+                                                                                  @Nonnull final Consumer <? super BootstrapDropdownMenu> aMenuItemProvider)
+  {
+    final BootstrapButtonGroup aBG = new BootstrapButtonGroup ();
+    aBG.addChild (aButton);
+
+    final BootstrapButton aCaret = new BootstrapButton (aButton.getButtonType (), aButton.getButtonSize ());
+    BootstrapDropdown.makeDropdownToggle (aCaret);
+    aBG.addChild (aCaret);
+
+    final BootstrapDropdownMenu aMenu = aBG.addDropDownMenu ();
+    aMenuItemProvider.accept (aMenu);
+    return aBG;
   }
 }

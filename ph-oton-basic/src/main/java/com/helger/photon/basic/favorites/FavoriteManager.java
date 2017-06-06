@@ -57,7 +57,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
   private static final String ELEMENT_ITEM = "favorite";
 
   /** Map from user ID to favorites */
-  private final MultiHashMapArrayListBased <String, Favorite> m_aMap = new MultiHashMapArrayListBased<> ();
+  private final MultiHashMapArrayListBased <String, Favorite> m_aMap = new MultiHashMapArrayListBased <> ();
 
   public FavoriteManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -138,9 +138,9 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IFavorite> getAllFavoritesOfUser (@Nullable final String sUserID)
+  public ICommonsList <IFavorite> getAllFavoritesOfUser (@Nullable final String sUserID)
   {
-    return m_aRWLock.readLocked ( () -> new CommonsArrayList<> (m_aMap.get (sUserID)));
+    return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aMap.get (sUserID)));
   }
 
   /**
@@ -183,7 +183,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
       return false;
 
     final ICommonsMap <String, String> aRealAdditionalParams = aAdditionalParams != null ? aAdditionalParams
-                                                                                         : new CommonsHashMap<> ();
+                                                                                         : new CommonsHashMap <> ();
     return getAllFavoritesOfUser (sUserID).containsAny (aFavorite -> aFavorite.hasSameContent (sApplicationID,
                                                                                                sMenuItemID,
                                                                                                aRealAdditionalParams));
@@ -211,7 +211,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
     if (StringHelper.hasText (sUserID) && StringHelper.hasText (sApplicationID) && StringHelper.hasText (sMenuItemID))
     {
       final ICommonsMap <String, String> aRealAdditionalParams = aAdditionalParams != null ? aAdditionalParams
-                                                                                           : new CommonsHashMap<> ();
+                                                                                           : new CommonsHashMap <> ();
       return getAllFavoritesOfUser (sUserID).findFirst (aFavorite -> aFavorite.hasSameContent (sApplicationID,
                                                                                                sMenuItemID,
                                                                                                aRealAdditionalParams));
@@ -276,7 +276,7 @@ public class FavoriteManager extends AbstractWALDAO <Favorite>
                                  @Nullable final String sDisplayName)
   {
 
-    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLocked ( () -> new CommonsArrayList<> (m_aMap.get (sUserID)));
+    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aMap.get (sUserID)));
 
     final Favorite aFavorite = aFavorites.findFirst (f -> f.getID ().equals (sID));
     if (aFavorite == null)

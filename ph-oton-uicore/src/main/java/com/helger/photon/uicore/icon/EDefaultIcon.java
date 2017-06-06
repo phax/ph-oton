@@ -21,7 +21,9 @@ import javax.annotation.Nullable;
 import com.helger.html.hc.html.IHCElement;
 
 /**
- * Contains all default icon types
+ * Contains all default icon types. A default icon is an abstraction level for
+ * different icon suites (FamFam, Bootstrap, ...) to handle certain things
+ * layout-independent.
  *
  * @author Philip Helger
  */
