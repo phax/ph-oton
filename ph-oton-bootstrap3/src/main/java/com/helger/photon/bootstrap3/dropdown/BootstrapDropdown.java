@@ -134,7 +134,9 @@ public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
   {
     aElement.addClass (CBootstrapCSS.DROPDOWN_TOGGLE)
             .setDataAttr ("toggle", "dropdown")
-            .addChild (new BootstrapCaret ());
+            .addChild (new BootstrapCaret ())
+            .setCustomAttr (CHTMLAttributes.ARIA_HASPOPUP, "true")
+            .setCustomAttr (CHTMLAttributes.ARIA_EXPANDED, "false");
     return aElement;
   }
 }
