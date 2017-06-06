@@ -52,6 +52,11 @@ public class JSArray extends AbstractJSExpression
     return m_aExprs == null || m_aExprs.isEmpty ();
   }
 
+  public boolean isNotEmpty ()
+  {
+    return m_aExprs != null && m_aExprs.isNotEmpty ();
+  }
+
   @Nonnegative
   public int size ()
   {
@@ -233,7 +238,7 @@ public class JSArray extends AbstractJSExpression
     ValueEnforcer.notNull (aExpr, "Expr");
 
     if (m_aExprs == null)
-      m_aExprs = new CommonsArrayList<> ();
+      m_aExprs = new CommonsArrayList <> ();
     m_aExprs.add (aExpr);
     return this;
   }

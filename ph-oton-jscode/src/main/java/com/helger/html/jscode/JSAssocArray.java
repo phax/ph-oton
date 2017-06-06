@@ -70,6 +70,11 @@ public class JSAssocArray extends AbstractJSExpression
     return m_aExprs == null || m_aExprs.isEmpty ();
   }
 
+  public boolean isNotEmpty ()
+  {
+    return m_aExprs != null && m_aExprs.isNotEmpty ();
+  }
+
   @Nonnegative
   public int size ()
   {
