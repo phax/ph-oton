@@ -17,6 +17,7 @@
 package com.helger.photon.bootstrap3.uictrls.treeview;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -26,9 +27,13 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 
+@NotThreadSafe
 public class BootstrapTreeViewItem
 {
   private final IJSExpression m_aText;
+  private boolean m_bSelectable = false;
+  private boolean m_bDisabled = false;
+  private boolean m_bChecked = false;
 
   public BootstrapTreeViewItem (@Nonnull final IHCNode aText)
   {
@@ -51,12 +56,48 @@ public class BootstrapTreeViewItem
     return m_aText;
   }
 
+  public void setSelectable (final boolean bSelectable)
+  {
+    m_bSelectable = bSelectable;
+  }
+
+  public boolean isSelectable ()
+  {
+    return m_bSelectable;
+  }
+
+  public void setDisabled (final boolean bDisabled)
+  {
+    m_bDisabled = bDisabled;
+  }
+
+  public boolean isDisabled ()
+  {
+    return m_bDisabled;
+  }
+
+  public void setChecked (final boolean bChecked)
+  {
+    m_bChecked = bChecked;
+  }
+
+  public boolean isChecked ()
+  {
+    return m_bChecked;
+  }
+
   @Nonnull
   @ReturnsMutableCopy
   public JSAssocArray getAsJSAssocArray ()
   {
     final JSAssocArray ret = new JSAssocArray ();
     ret.add ("text", m_aText);
+    if (m_bSelectable)
+      ret.add ("selectable", true);
+    if (m_bDisabled)
+      ret.add ("disabled", true);
+    if (m_bChecked)
+      ret.add ("checked", true);
     return ret;
   }
 }

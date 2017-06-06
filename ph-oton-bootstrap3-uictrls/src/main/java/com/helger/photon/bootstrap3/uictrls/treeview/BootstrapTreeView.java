@@ -202,7 +202,7 @@ public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
         // Child nodes
         final JSArray aChildNodes = new JSArray ();
         _recursiveFillJSTree (aTreeItem.getAllChildren (), aChildNodes);
-        if (!aChildNodes.isEmpty ())
+        if (aChildNodes.isNotEmpty ())
           aJSNode.add ("nodes", aChildNodes);
 
         // Append to result list
