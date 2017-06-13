@@ -1212,9 +1212,9 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       m_aTable.removeAllBodyRows ();
 
       final JSAnonymousFunction aAF = new JSAnonymousFunction ();
-      final JSVar aData = aAF.param ("d");
-      final JSVar aCallback = aAF.param ("cb");
-      aAF.param ("s");
+      final JSVar aData = aAF.param ("data");
+      final JSVar aCallback = aAF.param ("callback");
+      aAF.param ("settings");
       aAF.body ()
          .add (m_aAjaxBuilder.getClone ()
                              .data (JQuery.extend ().arg (aData).arg (m_aAjaxBuilder.data ()))
