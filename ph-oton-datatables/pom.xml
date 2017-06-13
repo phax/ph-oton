@@ -90,6 +90,38 @@
           </excludes>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.helger.maven</groupId>
+        <artifactId>ph-jscompress-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jscompress</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <forceCreation>false</forceCreation>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.helger.maven</groupId>
+        <artifactId>ph-csscompress-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>csscompress</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <forceCompress>false</forceCompress>
+          <removeUnnecessaryCode>true</removeUnnecessaryCode>
+          <quoteURLs>true</quoteURLs>
+          <verbose>false</verbose>
+          <sourceDirectory>${basedir}/src/main/resources/datatables</sourceDirectory>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>

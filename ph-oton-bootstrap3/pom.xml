@@ -118,7 +118,7 @@
           <forceCompress>false</forceCompress>
           <removeUnnecessaryCode>true</removeUnnecessaryCode>
           <quoteURLs>true</quoteURLs>
-          <verbose>true</verbose>
+          <verbose>false</verbose>
           <sourceDirectory>${basedir}/src/main/resources</sourceDirectory>
         </configuration>
       </plugin>
