@@ -10,7 +10,7 @@ Contained subprojects are:
   * ph-oton-jquery - an extension to ph-html-jscode to also support jQuery
   * ph-oton-basic - basic application stuff
   * ph-oton-security - security elements (user, user groups, roles etc.)
-  * ph-oton-exchange - data exchange
+  * ph-oton-exchange - data exchange (import and export)
   * ph-oton-connect - connectivity modules
   * ph-oton-core - basic web stuff
   * ph-oton-uicore - basic web UI stuff
@@ -33,6 +33,7 @@ Release history:
     * Updated to Bootstrap Datetime picker 2.4.4
     * Updated to Jetty 9.4.6
     * `CharacterEncodingFilter` more flexible
+    * Updated to DataTables 1.10.15
   * v7.0.5 - 2017-03-30
     * Updated to Jetty 9.4.3
     * Updated to ph-schedule 3.6.1
