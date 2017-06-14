@@ -223,6 +223,9 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
    *        The item to be added or updated
    * @param eActionType
    *        The action type. Must be CREATE or UPDATE!
+   * @throws IllegalArgumentException
+   *         If on CREATE an item with the same ID is already contained. If on
+   *         UPDATE an item with the provided ID does NOT exist.
    */
   @MustBeLocked (ELockType.WRITE)
   private void _addItem (@Nonnull final IMPLTYPE aItem, @Nonnull final EDAOActionType eActionType)
@@ -276,6 +279,8 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
    * @param aNewItem
    *        The item to be added. May not be <code>null</code>.
    * @return The passed parameter as-is
+   * @throws IllegalArgumentException
+   *         If an item with the same ID is already contained
    */
   @MustBeLocked (ELockType.WRITE)
   protected final IMPLTYPE internalCreateItem (@Nonnull final IMPLTYPE aNewItem)
@@ -294,6 +299,8 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
    *
    * @param aItem
    *        The item to be updated. May not be <code>null</code>.
+   * @throws IllegalArgumentException
+   *         If no item with the same ID is already contained
    */
   @MustBeLocked (ELockType.WRITE)
   protected final void internalUpdateItem (@Nonnull final IMPLTYPE aItem)
@@ -309,7 +316,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   /**
    * Delete the item by removing it from the map. If something was remove the
    * onDeleteItem callback is invoked.
-   * 
+   *
    * @param sID
    *        The ID to be removed. May be <code>null</code>.
    * @return The deleted item. If <code>null</code> no such item was found and
@@ -333,6 +340,13 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     return aDeletedItem;
   }
 
+  /**
+   * Mark an item as "deleted" without actually deleting it from the map. This
+   * method only triggers the update action but does not alter the item.
+   *
+   * @param aItem
+   *        The item that was marked as "deleted"
+   */
   @MustBeLocked (ELockType.WRITE)
   protected final void internalMarkItemDeleted (@Nonnull final IMPLTYPE aItem)
   {
@@ -342,6 +356,13 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     m_aCallbacks.forEach (aCB -> aCB.onMarkItemDeleted (aItem));
   }
 
+  /**
+   * Mark an item as "no longer deleted" without actually adding it to the map.
+   * This method only triggers the update action but does not alter the item.
+   *
+   * @param aItem
+   *        The item that was marked as "no longer deleted"
+   */
   @MustBeLocked (ELockType.WRITE)
   protected final void internalMarkItemUndeleted (@Nonnull final IMPLTYPE aItem)
   {
@@ -351,10 +372,17 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     m_aCallbacks.forEach (aCB -> aCB.onMarkItemUndeleted (aItem));
   }
 
+  /**
+   * Remove all items without triggering any callback.
+   *
+   * @return {@link EChange#CHANGED} if something was contained,
+   *         {@link EChange#UNCHANGED} otherwise.
+   */
   @MustBeLocked (ELockType.WRITE)
-  protected final void internalRemoveAllItemsNoCallback ()
+  @Nonnull
+  protected final EChange internalRemoveAllItemsNoCallback ()
   {
-    m_aMap.removeAll ();
+    return m_aMap.removeAll ();
   }
 
   @Nonnull
