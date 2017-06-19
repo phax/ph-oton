@@ -118,7 +118,35 @@ import com.helger.html.hc.html.tabular.HCTFoot;
 import com.helger.html.hc.html.tabular.HCTH;
 import com.helger.html.hc.html.tabular.HCTHead;
 import com.helger.html.hc.html.tabular.HCTable;
-import com.helger.html.hc.html.textlevel.*;
+import com.helger.html.hc.html.textlevel.HCA;
+import com.helger.html.hc.html.textlevel.HCAbbr;
+import com.helger.html.hc.html.textlevel.HCB;
+import com.helger.html.hc.html.textlevel.HCBDI;
+import com.helger.html.hc.html.textlevel.HCBDO;
+import com.helger.html.hc.html.textlevel.HCBR;
+import com.helger.html.hc.html.textlevel.HCCite;
+import com.helger.html.hc.html.textlevel.HCCode;
+import com.helger.html.hc.html.textlevel.HCDFN;
+import com.helger.html.hc.html.textlevel.HCData;
+import com.helger.html.hc.html.textlevel.HCEM;
+import com.helger.html.hc.html.textlevel.HCI;
+import com.helger.html.hc.html.textlevel.HCKBD;
+import com.helger.html.hc.html.textlevel.HCMark;
+import com.helger.html.hc.html.textlevel.HCQ;
+import com.helger.html.hc.html.textlevel.HCRP;
+import com.helger.html.hc.html.textlevel.HCRT;
+import com.helger.html.hc.html.textlevel.HCRuby;
+import com.helger.html.hc.html.textlevel.HCS;
+import com.helger.html.hc.html.textlevel.HCSamp;
+import com.helger.html.hc.html.textlevel.HCSmall;
+import com.helger.html.hc.html.textlevel.HCSpan;
+import com.helger.html.hc.html.textlevel.HCStrong;
+import com.helger.html.hc.html.textlevel.HCSub;
+import com.helger.html.hc.html.textlevel.HCSup;
+import com.helger.html.hc.html.textlevel.HCTime;
+import com.helger.html.hc.html.textlevel.HCU;
+import com.helger.html.hc.html.textlevel.HCVar;
+import com.helger.html.hc.html.textlevel.HCWBR;
 import com.helger.html.hc.impl.HCTextNode;
 
 @Immutable
@@ -390,7 +418,7 @@ public final class HCExtHelper
   }
 
   @FunctionalInterface
-  private static interface ILineConsumer
+  public static interface ILineConsumer
   {
     void accept (@Nonnull String sLine, boolean bIsLast);
   }
