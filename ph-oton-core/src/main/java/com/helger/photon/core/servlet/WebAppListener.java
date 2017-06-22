@@ -127,7 +127,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   /** The logger to use. */
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebAppListener.class);
 
-  private static final AtomicBoolean s_aInited = new AtomicBoolean (false);
+  private final AtomicBoolean m_aInited = new AtomicBoolean (false);
   private LocalDateTime m_aInitializationStartDT;
   private LocalDateTime m_aInitializationEndDT;
   private boolean m_bHandleStatisticsOnEnd = true;
@@ -458,7 +458,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {
     final ServletContext aSC = aSCE.getServletContext ();
 
-    if (s_aInited.getAndSet (true))
+    if (m_aInited.getAndSet (true))
       throw new IllegalStateException ("WebAppListener was already instantiated!");
 
     final StopWatch aSW = StopWatch.createdStarted ();
@@ -658,7 +658,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     CommonsCleanup.cleanup ();
 
     // De-init
-    s_aInited.set (false);
+    m_aInited.set (false);
 
     if (s_aLogger.isInfoEnabled ())
       s_aLogger.info ("Servlet context '" +
