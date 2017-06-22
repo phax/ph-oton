@@ -127,13 +127,24 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   /** The logger to use. */
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebAppListener.class);
 
-  private final AtomicBoolean m_aInited = new AtomicBoolean (false);
+  private static final AtomicBoolean s_aOnlyOneInstanceAllowed = new AtomicBoolean (true);
+  private static final AtomicBoolean s_aInited = new AtomicBoolean (false);
   private LocalDateTime m_aInitializationStartDT;
   private LocalDateTime m_aInitializationEndDT;
   private boolean m_bHandleStatisticsOnEnd = true;
 
   public WebAppListener ()
   {}
+
+  public static void setOnlyOneInstanceAllowed (final boolean bCheck)
+  {
+    s_aOnlyOneInstanceAllowed.set (bCheck);
+  }
+
+  public static boolean isOnlyOneInstanceAllowed ()
+  {
+    return s_aOnlyOneInstanceAllowed.get ();
+  }
 
   protected final void logServerInfo (@Nonnull final ServletContext aSC)
   {
@@ -458,8 +469,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {
     final ServletContext aSC = aSCE.getServletContext ();
 
-    if (m_aInited.getAndSet (true))
-      throw new IllegalStateException ("WebAppListener was already instantiated!");
+    if (isOnlyOneInstanceAllowed ())
+      if (s_aInited.getAndSet (true))
+        throw new IllegalStateException ("WebAppListener was already instantiated!");
 
     final StopWatch aSW = StopWatch.createdStarted ();
     m_aInitializationStartDT = PDTFactory.getCurrentLocalDateTime ();
@@ -503,13 +515,16 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     beforeContextInitialized (aSC);
 
     // begin global context
-    WebScopeManager.onGlobalBegin (aSC);
+    if (isOnlyOneInstanceAllowed () || !WebScopeManager.isGlobalScopePresent ())
+    {
+      WebScopeManager.onGlobalBegin (aSC);
 
-    // Init IO
-    initPaths (aSC);
+      // Init IO
+      initPaths (aSC);
 
-    // Set persistent ID provider - must be done after IO is setup
-    initGlobalIDFactory ();
+      // Set persistent ID provider - must be done after IO is setup
+      initGlobalIDFactory ();
+    }
 
     // Callback
     afterContextInitialized (aSC);
@@ -657,8 +672,11 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     XMLCleanup.cleanup ();
     CommonsCleanup.cleanup ();
 
-    // De-init
-    m_aInited.set (false);
+    if (isOnlyOneInstanceAllowed ())
+    {
+      // De-init
+      s_aInited.set (false);
+    }
 
     if (s_aLogger.isInfoEnabled ())
       s_aLogger.info ("Servlet context '" +
