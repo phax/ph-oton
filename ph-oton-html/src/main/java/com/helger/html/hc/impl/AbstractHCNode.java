@@ -258,16 +258,16 @@ public abstract class AbstractHCNode implements IHCNode
   /**
    * @param aConversionSettings
    *        HC conversion settings
-   * @param bForceRegistration
+   * @param bForcedRegistration
    *        <code>true</code> if the registration is forced by the caller.
    */
   @OverrideOnDemand
   protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                              final boolean bForceRegistration)
+                                              final boolean bForcedRegistration)
   {}
 
   public final void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                               final boolean bForceRegistration)
+                                               final boolean bForcedRegistration)
   {
     // register resources only once
     if (m_eNodeState.isBefore (EHCNodeState.RESOURCES_REGISTERED))
@@ -275,8 +275,8 @@ public abstract class AbstractHCNode implements IHCNode
       _ensureNodeState (EHCNodeState.CONSISTENCY_CHECKED);
       // Register resources only, if forced or if it can be converted to a micro
       // node
-      if (bForceRegistration || canConvertToMicroNode (aConversionSettings))
-        onRegisterExternalResources (aConversionSettings, bForceRegistration);
+      if (bForcedRegistration || canConvertToMicroNode (aConversionSettings))
+        onRegisterExternalResources (aConversionSettings, bForcedRegistration);
       internalSetNodeState (EHCNodeState.RESOURCES_REGISTERED);
     }
   }

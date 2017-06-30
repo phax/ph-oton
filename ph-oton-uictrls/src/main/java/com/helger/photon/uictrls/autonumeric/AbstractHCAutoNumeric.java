@@ -59,8 +59,9 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNumeric <IMPLTYPE>>
-                                            extends AbstractHCInput <IMPLTYPE> implements IHCNodeWithJSOptions
+public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNumeric <IMPLTYPE>> extends
+                                            AbstractHCInput <IMPLTYPE> implements
+                                            IHCNodeWithJSOptions
 {
   /** The special CSS class to use for numeric inputs */
   public static final ICSSClassProvider CSS_CLASS_AUTO_NUMERIC_EDIT = DefaultCSSClassProvider.create ("auto-numeric-edit");
@@ -372,6 +373,8 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForcedRegistration)
   {
+    super.onRegisterExternalResources (aConversionSettings, bForcedRegistration);
+
     // Register resources
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.AUTONUMERIC);
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTONUMERIC);
