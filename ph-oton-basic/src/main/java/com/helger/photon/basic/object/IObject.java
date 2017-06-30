@@ -17,7 +17,9 @@
 package com.helger.photon.basic.object;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -45,6 +47,20 @@ public interface IObject extends
    */
   @Nullable
   LocalDateTime getCreationDateTime ();
+
+  @Nullable
+  default LocalDate getCreationDate ()
+  {
+    final LocalDateTime aLDT = getCreationDateTime ();
+    return aLDT == null ? null : aLDT.toLocalDate ();
+  }
+
+  @Nullable
+  default LocalTime getCreationTime ()
+  {
+    final LocalDateTime aLDT = getCreationDateTime ();
+    return aLDT == null ? null : aLDT.toLocalTime ();
+  }
 
   /**
    * @return The user ID who created the object. May be <code>null</code> in
