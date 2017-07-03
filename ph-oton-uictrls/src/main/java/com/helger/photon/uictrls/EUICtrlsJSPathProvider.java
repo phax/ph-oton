@@ -34,6 +34,8 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   AUTONUMERIC ("autonumeric/1.9.37/autoNumeric.js"),
   AUTOSIZE ("autosize/1.18.18/jquery.autosize.js"),
   AUTOSIZE_ALL ("autosize/autosize-all.js"),
+  AUTOSIZE3 ("autosize/3.0.20/autosize.js"),
+  AUTOSIZE3_ALL ("autosize/autosize3-all.js"),
   /** BigDecimal support for JS */
   BIG_DECIMAL ("js/big.js"),
   CHART_1 ("chart/1.0.2/Chart.js"),
