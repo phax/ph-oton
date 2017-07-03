@@ -67,7 +67,9 @@ public class DTCol extends AbstractHCCol <DTCol>
 
   public DTCol (@Nullable final IHCNode aHeaderNode)
   {
-    setWidth (CHTMLAttributeValues.STAR);
+    // WAI problem
+    if (false)
+      setWidth (CHTMLAttributeValues.STAR);
     setHeaderNode (aHeaderNode);
   }
 
