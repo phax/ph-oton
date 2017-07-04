@@ -39,8 +39,7 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   /** JQuery 2.x */
   JQUERY_2 ("uicore/jquery/jquery-2.2.4.js"),
   /** JQuery 3.x */
-  JQUERY_3 ("uicore/jquery/jquery-3.1.1.js"),
-  JQUERY_COOKIE ("uicore/jqueryplugins/jquery.cookie.js"),
+  JQUERY_3 ("uicore/jquery/jquery-3.2.1.js"),
   JQUERY_HIGHLIGHT ("uicore/jqueryplugins/jquery.highlight.js"),
   JQUERY_HOTKEYS ("uicore/jqueryplugins/jquery.hotkeys.js"),
   JQUERY_MIGRATE ("uicore/jqueryplugins/jquery-migrate-1.4.1.js"),
@@ -48,6 +47,8 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   JQUERY_MOUSEWHEEL ("uicore/jqueryplugins/jquery.mousewheel.js"),
   JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/2.1.2/jquery.placeholder.js", "if lt IE 10"),
   JQUERY_PLACEHOLDER_ALL ("uicore/jqueryplaceholder/jquery.placeholder-all.js", "if lt IE 10"),
+  JS_COOKIE ("uicore/jqueryplugins/js.cookie.js"),
+  JS_STORAGE ("uicore/jqueryplugins/js.storage.js"),
   MOMENT ("uicore/moment/2.11.2/moment-with-locales.js"),
   /** Edit placeholder fix for IE &lt; 10 */
   @Deprecated
