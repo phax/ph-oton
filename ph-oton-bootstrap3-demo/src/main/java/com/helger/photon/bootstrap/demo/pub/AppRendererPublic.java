@@ -107,8 +107,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
     {
       final Locale aDisplayLocale = aLEC.getDisplayLocale ();
       final BootstrapNav aNav = new BootstrapNav ();
-      aNav.addItem (new HCSpan ().addClass (CBootstrapCSS.NAVBAR_TEXT)
-                                 .addChild ("Logged in as ")
+      aNav.addText (new HCSpan ().addChild ("Logged in as ")
                                  .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
                                                                                                          aDisplayLocale))));
 

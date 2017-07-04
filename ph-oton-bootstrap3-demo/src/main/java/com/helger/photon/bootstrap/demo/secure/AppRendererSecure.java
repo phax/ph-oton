@@ -79,8 +79,7 @@ public final class AppRendererSecure implements ILayoutAreaContentProvider <Layo
 
     final BootstrapNav aNav = new BootstrapNav ();
     final IUser aUser = LoggedInUserManager.getInstance ().getCurrentUser ();
-    aNav.addItem (new HCSpan ().addChild ("Logged in as ")
-                               .addClass (CBootstrapCSS.NAVBAR_TEXT)
+    aNav.addText (new HCSpan ().addChild ("Logged in as ")
                                .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
                                                                                                        aDisplayLocale))));
 
