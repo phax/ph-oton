@@ -30,6 +30,7 @@ import com.helger.html.hc.html.forms.IHCButton;
 import com.helger.html.hc.html.grouping.AbstractHCUL;
 import com.helger.html.hc.html.grouping.IHCLI;
 import com.helger.html.hc.html.textlevel.HCA;
+import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdown;
@@ -125,6 +126,20 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
       aContent.addChildAt (0, aIcon.getAsNode ());
     }
     return this;
+  }
+
+  @Nonnull
+  @Since ("7.10")
+  public BootstrapNav addText (@Nullable final String sText)
+  {
+    return addText (new HCSpan ().addChild (sText));
+  }
+
+  @Nonnull
+  @Since ("7.10")
+  public BootstrapNav addText (@Nullable final IHCElementWithChildren <?> aContent)
+  {
+    return addItem (aContent.addClass (CBootstrapCSS.NAVBAR_TEXT), DEFAULT_DISABLED);
   }
 
   @Nonnull
