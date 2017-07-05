@@ -27,7 +27,7 @@ Contained subprojects are:
   * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
 
 Release history:
-  * v7.1.0 - work in progress
+  * v7.1.0 - 2017-07-05
     * Updated to ph-web 8.8.0
     * Improved rendering speed through internal optimizations
     * Updated to Bootstrap Datetime picker 2.4.4
@@ -81,7 +81,7 @@ Release history:
   * Java 1.8+ is required for building 
   * Application server requirements:
       * At least Tomcat 8.x
-      * Jetty 9.3.x with AnnotationConfiguration enabled
+      * Jetty 9.4.x with AnnotationConfiguration enabled
       
 ## Maven usage
 
@@ -91,7 +91,7 @@ Release history:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>7.0.5</version>
+        <version>7.1.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
