@@ -366,7 +366,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   @Nonnull
-  protected String getServletContextPath (@Nonnull final ServletContext aSC)
+  protected String getServletContextPath (@Nonnull final ServletContext aSC) throws IllegalStateException
   {
     String sPath = aSC.getRealPath (".");
     if (sPath == null)
