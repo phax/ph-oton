@@ -106,6 +106,7 @@ public enum EPhotonCoreText implements IHasDisplayTextWithArgs
   BUTTON_CANCEL ("Abbrechen", "Cancel"),
   BUTTON_CLOSE ("Schließen", "Close"),
   BUTTON_SELECT ("Auswählen...", "Select..."),
+  BUTTON_BROWSE ("Durchsuchen...", "Browse..."),
   BUTTON_DELETE ("Löschen", "Delete"),
   BUTTON_DELETE_ALL ("Alle löschen", "Delete all"),
   BUTTON_UPLOAD ("Hochladen", "Upload"),
