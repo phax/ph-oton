@@ -94,8 +94,9 @@ public final class WebFileIO
 
       s_aLogger.info ("Using '" + aServletContextPath + "' as the servlet context path");
       // Don't check access rights again, if it equals the data path
-      s_aServletContextPath = new PathRelativeFileIO (aServletContextPath,
-                                                      bCheckFileAccess && !aServletContextPath.equals (aDataPath));
+      s_aServletContextPath = new ReadOnlyPathRelativeFileIO (aServletContextPath,
+                                                              bCheckFileAccess &&
+                                                                                   !aServletContextPath.equals (aDataPath));
     });
   }
 

@@ -40,7 +40,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 
 /**
- * Default implementation of {@link IPathRelativeIO}.
+ * Default implementation of {@link IMutablePathRelativeIO}.
  *
  * @author Philip Helger
  */
@@ -51,7 +51,7 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
 
   private final File m_aBasePath;
 
-  private void _checkAccessRights ()
+  static void internalCheckAccessRights (@Nonnull final File m_aBasePath)
   {
     // Check read/write/execute
     final StopWatch aSW = StopWatch.createdStarted ();
@@ -105,7 +105,7 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
     m_aBasePath = aBasePath;
 
     if (bCheckAccessRights)
-      _checkAccessRights ();
+      internalCheckAccessRights (m_aBasePath);
   }
 
   @Nonnull
@@ -247,6 +247,6 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("basePath", m_aBasePath).getToString ();
+    return new ToStringGenerator (this).append ("BasePath", m_aBasePath).getToString ();
   }
 }
