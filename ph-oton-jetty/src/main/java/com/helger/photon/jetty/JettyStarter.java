@@ -31,6 +31,7 @@ import org.eclipse.jetty.server.session.DefaultSessionCache;
 import org.eclipse.jetty.server.session.FileSessionDataStore;
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.thread.ThreadPool;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.FragmentConfiguration;
@@ -73,9 +74,23 @@ public class JettyStarter
   private String m_sStopKey = DEFAULT_STOP_KEY;
   private int m_nStopPort = DEFAULT_STOP_PORT;
   private boolean m_bSpecialSessionMgr = true;
-  private String m_sResourceBase = "target/webapp-classes";
+  private Resource m_aResourceBase = _asRes ("target/webapp-classes");
+  private String m_sWebXmlResource;
   private String m_sContextPath = DEFAULT_CONTEXT_PATH;
   private ThreadPool m_aThreadPool;
+
+  @Nonnull
+  private static Resource _asRes (@Nonnull final String sPath)
+  {
+    try
+    {
+      return Resource.newResource (sPath);
+    }
+    catch (final Exception ex)
+    {
+      throw new IllegalArgumentException ("Invalid resource path '" + sPath + "'");
+    }
+  }
 
   public JettyStarter (@Nonnull final Class <?> aAppClass)
   {
@@ -184,8 +199,38 @@ public class JettyStarter
   @Nonnull
   public JettyStarter setResourceBase (@Nonnull @Nonempty final String sResourceBase)
   {
-    ValueEnforcer.notEmpty (sResourceBase, "sResourceBase");
-    m_sResourceBase = sResourceBase;
+    ValueEnforcer.notEmpty (sResourceBase, "ResourceBase");
+    return setResourceBase (_asRes (sResourceBase));
+  }
+
+  /**
+   * Set the common resource base (directory) from which all web application
+   * resources will be loaded (servlet context root).
+   *
+   * @param aResourceBase
+   *        The resource. May neither be <code>null</code> nor empty.
+   * @return this for chaining
+   */
+  @Nonnull
+  public JettyStarter setResourceBase (@Nonnull final Resource aResourceBase)
+  {
+    ValueEnforcer.notNull (aResourceBase, "ResourceBase");
+    m_aResourceBase = aResourceBase;
+    return this;
+  }
+
+  /**
+   * Set the path to WEB-INF/web.xml. If unspecified, the default relative to
+   * the resource base is used.
+   * 
+   * @param sWebXmlResource
+   *        web.xml resource. May be <code>null</code>.
+   * @return this for chaining.
+   */
+  @Nonnull
+  public JettyStarter setWebXmlResource (@Nullable final String sWebXmlResource)
+  {
+    m_sWebXmlResource = sWebXmlResource;
     return this;
   }
 
@@ -307,8 +352,9 @@ public class JettyStarter
 
     final WebAppContext aWebAppCtx = new WebAppContext ();
     {
-      aWebAppCtx.setDescriptor (m_sResourceBase + "/WEB-INF/web.xml");
-      aWebAppCtx.setResourceBase (m_sResourceBase);
+      aWebAppCtx.setBaseResource (m_aResourceBase);
+      aWebAppCtx.setDescriptor (m_sWebXmlResource != null ? m_sWebXmlResource
+                                                          : m_aResourceBase.addPath ("/WEB-INF/web.xml").getName ());
       aWebAppCtx.setContextPath (m_sContextPath);
       aWebAppCtx.setTempDirectory (new File (sTempDir + '/' + m_sDirBaseName + ".webapp"));
       aWebAppCtx.setParentLoaderPriority (true);
