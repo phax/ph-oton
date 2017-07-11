@@ -16,8 +16,6 @@
  */
 package com.helger.html.hc.config;
 
-import java.nio.charset.Charset;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -369,12 +367,6 @@ public class HCConversionSettings implements IHCConversionSettings
   public IHCCustomizer getCustomizer ()
   {
     return m_aCustomizer;
-  }
-
-  @Nonnull
-  public Charset getCharset ()
-  {
-    return m_aXMLWriterSettings.getCharsetObj ();
   }
 
   @OverridingMethodsMustInvokeSuper

@@ -118,5 +118,8 @@ public interface IHCConversionSettingsToNode
    *         <code>getXMLWriterSettings ().getCharset()</code>.
    */
   @Nonnull
-  Charset getCharset ();
+  default Charset getCharset ()
+  {
+    return getXMLWriterSettings ().getCharsetObj ();
+  }
 }
