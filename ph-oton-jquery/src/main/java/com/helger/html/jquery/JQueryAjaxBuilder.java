@@ -113,13 +113,13 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   }
 
   @Nonnull
-  public JQueryAjaxBuilder cache (final boolean bCache)
+  public final JQueryAjaxBuilder cache (final boolean bCache)
   {
     return cache (JSExpr.lit (bCache));
   }
 
   @Nonnull
-  public JQueryAjaxBuilder cache (@Nullable final IJSExpression aCache)
+  public final JQueryAjaxBuilder cache (@Nullable final IJSExpression aCache)
   {
     m_aCache = aCache;
     return this;
