@@ -39,7 +39,6 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
 import com.helger.photon.core.app.layout.ApplicationLayoutManager;
 import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
-import com.helger.photon.core.userdata.UserDataManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.constraint.PasswordConstraintList;
 import com.helger.photon.security.password.constraint.PasswordConstraintMinLength;
@@ -76,9 +75,6 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
   {
     // Enable when ready
     WebScopeManager.setSessionPassivationAllowed (false);
-
-    // UDO to data directory
-    UserDataManager.setServletContextIO (false);
 
     // Define the password constrains
     GlobalPasswordSettings.setPasswordConstraintList (new PasswordConstraintList (new PasswordConstraintMinLength (DEFAULT_PASSWORD_MIN_LENGTH)));

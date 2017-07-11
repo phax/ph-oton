@@ -65,8 +65,8 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecutionContext>
-                                             extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecutionContext> extends
+                                             AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -93,6 +93,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     MSG_SYSTEM_SC_DIR_FREE ("Freier Speicherplatz im WebApp-Verzeichnis", "Free space in the WebApp directory"),
     MSG_SYSTEM_SC_DIR_USABLE ("Verwendbarer Speicherplatz im WebApp-Verzeichnis",
                               "Usable space in the WebApp directory"),
+    MSG_SYSTEM_SC_NO_DIR ("Kein Verzeichnis", "Not a directory"),
     MSG_ENDORSED_DIR ("Endorsed Verzeichnis", "Endorsed directory"),
     MSG_EXT_DIR ("Extension Verzeichnis", "Extension directory"),
     MSG_DIR_NOT_EXISTING ("Das Verzeichnis existiert nicht", "The directory does not exist"),
@@ -211,21 +212,24 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
                                        SystemHelper.getSystemCharset ().toString ());
         aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_LOCALE.getDisplayText (aDisplayLocale),
                                        SystemHelper.getSystemLocale ().toString ());
-        aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_MEM_FREE.getDisplayText (aDisplayLocale),
-                                       Long.toString (SystemHelper.getFreeMemory ()) +
-                                                                                                  " / " +
-                                                                                                  aSH.getAsMatching (SystemHelper.getFreeMemory (),
-                                                                                                                     2));
-        aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_MEM_MAX.getDisplayText (aDisplayLocale),
-                                       Long.toString (SystemHelper.getMaxMemory ()) +
-                                                                                                 " / " +
-                                                                                                 aSH.getAsMatching (SystemHelper.getMaxMemory (),
-                                                                                                                    2));
-        aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_MEM_TOTAL.getDisplayText (aDisplayLocale),
-                                       Long.toString (SystemHelper.getTotalMemory ()) +
-                                                                                                   " / " +
-                                                                                                   aSH.getAsMatching (SystemHelper.getTotalMemory (),
-                                                                                                                      2));
+        aTable.addBodyRow ()
+              .addCells (EText.MSG_SYSTEM_MEM_FREE.getDisplayText (aDisplayLocale),
+                         Long.toString (SystemHelper.getFreeMemory ()) +
+                                                                                    " / " +
+                                                                                    aSH.getAsMatching (SystemHelper.getFreeMemory (),
+                                                                                                       2));
+        aTable.addBodyRow ()
+              .addCells (EText.MSG_SYSTEM_MEM_MAX.getDisplayText (aDisplayLocale),
+                         Long.toString (SystemHelper.getMaxMemory ()) +
+                                                                                   " / " +
+                                                                                   aSH.getAsMatching (SystemHelper.getMaxMemory (),
+                                                                                                      2));
+        aTable.addBodyRow ()
+              .addCells (EText.MSG_SYSTEM_MEM_TOTAL.getDisplayText (aDisplayLocale),
+                         Long.toString (SystemHelper.getTotalMemory ()) +
+                                                                                     " / " +
+                                                                                     aSH.getAsMatching (SystemHelper.getTotalMemory (),
+                                                                                                        2));
         aTable.addBodyRow ().addCells (EText.MSG_CONTEXT_CLASSLOADER.getDisplayText (aDisplayLocale),
                                        ClassLoaderHelper.getContextClassLoader ().toString ());
         aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_CLASSLOADER.getDisplayText (aDisplayLocale),
@@ -241,13 +245,25 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
                                        aSH.getAsMatching (aBaseDir.getUsableSpace (), 2));
 
         final File aSCDir = WebFileIO.getServletContextIO ().getBasePathFile ();
-        aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_SC_DIR.getDisplayText (aDisplayLocale), aSCDir.toString ());
-        aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_SC_DIR_TOTAL.getDisplayText (aDisplayLocale),
-                                       aSH.getAsMatching (aSCDir.getTotalSpace (), 2));
-        aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_SC_DIR_FREE.getDisplayText (aDisplayLocale),
-                                       aSH.getAsMatching (aSCDir.getFreeSpace (), 2));
-        aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_SC_DIR_USABLE.getDisplayText (aDisplayLocale),
-                                       aSH.getAsMatching (aSCDir.getUsableSpace (), 2));
+        if (aSCDir != null)
+        {
+          String sSCDir = aSCDir.toString ();
+          final String sSCAbsDir = aSCDir.getAbsolutePath ();
+          if (!sSCAbsDir.equals (sSCDir))
+            sSCDir += " (" + sSCAbsDir + ")";
+          aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_SC_DIR.getDisplayText (aDisplayLocale), sSCDir);
+          aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_SC_DIR_TOTAL.getDisplayText (aDisplayLocale),
+                                         aSH.getAsMatching (aSCDir.getTotalSpace (), 2));
+          aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_SC_DIR_FREE.getDisplayText (aDisplayLocale),
+                                         aSH.getAsMatching (aSCDir.getFreeSpace (), 2));
+          aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_SC_DIR_USABLE.getDisplayText (aDisplayLocale),
+                                         aSH.getAsMatching (aSCDir.getUsableSpace (), 2));
+        }
+        else
+        {
+          aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_SC_DIR.getDisplayText (aDisplayLocale),
+                                         EText.MSG_SYSTEM_SC_NO_DIR.getDisplayText (aDisplayLocale));
+        }
 
         _addDirectoryContent (aTable,
                               "java.endorsed.dirs",

@@ -43,12 +43,9 @@ public final class UserDataManager
    * context directory.
    */
   public static final String DEFAULT_USER_DATA_PATH = "/user";
-  /** By default the user data is accessed via the servletContext IO */
-  public static final boolean DEFAULT_SERVLET_CONTEXT_IO = true;
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   private static String s_sUserDataPath = DEFAULT_USER_DATA_PATH;
-  private static boolean s_bServletContextIO = DEFAULT_SERVLET_CONTEXT_IO;
 
   private UserDataManager ()
   {}
@@ -82,26 +79,6 @@ public final class UserDataManager
   public static String getUserDataPath ()
   {
     return s_aRWLock.readLocked ( () -> s_sUserDataPath);
-  }
-
-  /**
-   * Determine whether file resources are located relative to the servlet
-   * context (inside the web application) or inside the data directory (outside
-   * the web application). By default the files reside inside the web
-   * application.
-   *
-   * @param bServletContextIO
-   *        <code>true</code> to use servlet context IO, <code>false</code> to
-   *        use data IO.
-   */
-  public static void setServletContextIO (final boolean bServletContextIO)
-  {
-    s_aRWLock.writeLocked ( () -> s_bServletContextIO = bServletContextIO);
-  }
-
-  public static boolean isServletContextIO ()
-  {
-    return s_aRWLock.readLocked ( () -> s_bServletContextIO);
   }
 
   /**
@@ -166,7 +143,7 @@ public final class UserDataManager
   @Nonnull
   private static IPathRelativeIO _getFileIO ()
   {
-    return isServletContextIO () ? WebFileIO.getServletContextIO () : WebFileIO.getDataIO ();
+    return WebFileIO.getDataIO ();
   }
 
   /**
