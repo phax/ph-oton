@@ -53,6 +53,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   private IJSExpression m_aURL;
   private IJSExpression m_aTraditional;
   private IJSExpression m_aType;
+  private IJSExpression m_aMethod;
 
   // Callbacks
   private IJSExpression m_aCallbackContext;
@@ -79,6 +80,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     m_aURL = aOther.m_aURL;
     m_aTraditional = aOther.m_aTraditional;
     m_aType = aOther.m_aType;
+    m_aMethod = aOther.m_aMethod;
 
     m_aCallbackContext = aOther.m_aCallbackContext;
     m_aBeforeSend = aOther.m_aBeforeSend;
@@ -255,6 +257,25 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   public JQueryAjaxBuilder url (@Nullable final IJSExpression aURL)
   {
     m_aURL = aURL;
+    return this;
+  }
+
+  @Nullable
+  public IJSExpression method ()
+  {
+    return m_aMethod;
+  }
+
+  @Nonnull
+  public JQueryAjaxBuilder method (@Nullable final String sMethod)
+  {
+    return method (sMethod == null ? null : JSExpr.lit (sMethod));
+  }
+
+  @Nonnull
+  public JQueryAjaxBuilder method (@Nullable final IJSExpression aMethod)
+  {
+    m_aMethod = aMethod;
     return this;
   }
 
