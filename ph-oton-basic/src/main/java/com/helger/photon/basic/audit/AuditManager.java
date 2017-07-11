@@ -48,9 +48,9 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.photon.basic.app.io.IFileRelativeIO;
 import com.helger.photon.basic.app.io.IHasFilename;
-import com.helger.photon.basic.app.io.IMutablePathRelativeIO;
-import com.helger.photon.basic.app.io.IPathRelativeIO;
+import com.helger.photon.basic.app.io.IMutableFileRelativeIO;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
 import com.helger.xml.microdom.IMicroDocument;
@@ -75,8 +75,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
 
     AuditHasFilename (@Nullable final String sBaseDir)
     {
-      ValueEnforcer.isTrue (StringHelper.hasNoText (sBaseDir) ||
-                            FilenameHelper.endsWithPathSeparatorChar (sBaseDir),
+      ValueEnforcer.isTrue (StringHelper.hasNoText (sBaseDir) || FilenameHelper.endsWithPathSeparatorChar (sBaseDir),
                             () -> "BaseDir '" + sBaseDir + "' must end with path separator!");
       m_sBaseDir = sBaseDir;
     }
@@ -173,7 +172,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     m_sBaseDir = sBaseDir;
     if (StringHelper.hasText (sBaseDir))
     {
-      final IMutablePathRelativeIO aIO = getDAOIO ().getFileIO ();
+      final IMutableFileRelativeIO aIO = getDAOIO ().getFileIO ();
       aIO.createDirectory (sBaseDir, true);
 
       // Migrate to new directory structure
@@ -307,7 +306,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     if (!aFile.exists ())
       return null;
 
-    final ICommonsList <IAuditItem> ret = new CommonsArrayList<> ();
+    final ICommonsList <IAuditItem> ret = new CommonsArrayList <> ();
     final IMicroDocument aDoc = MicroReader.readMicroXML (aFile);
     readFromXML (aDoc, aItem -> ret.add (aItem));
     return ret;
@@ -323,7 +322,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
       // In in memory only the current data is available
       if (!isInMemory ())
       {
-        final IPathRelativeIO aDataIO = WebFileIO.getDataIO ();
+        final IFileRelativeIO aDataIO = WebFileIO.getDataIO ();
 
         // check for year (from now back)
         int nYear = aEarliest.getYear ();

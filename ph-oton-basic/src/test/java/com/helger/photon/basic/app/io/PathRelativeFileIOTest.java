@@ -32,7 +32,7 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.photon.basic.mock.PhotonBasicTestRule;
 
 /**
- * Test class for class {@link PathRelativeFileIO}
+ * Test class for class {@link FileRelativeIO}
  *
  * @author Philip Helger
  */
@@ -44,7 +44,7 @@ public final class PathRelativeFileIOTest
   @Test
   public void testBasePath () throws IOException
   {
-    final IMutablePathRelativeIO aIO = WebFileIO.getDataIO ();
+    final IMutableFileRelativeIO aIO = WebFileIO.getDataIO ();
     final String sTestFile = "testfile";
     final String sTestContent = "Das ist der Inhalt der TestDatei";
     final String sTestFile2 = "testfile2";

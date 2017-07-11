@@ -16,14 +16,17 @@
  */
 package com.helger.photon.basic.app.io;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.exception.InitializationException;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.resourceresolver.DefaultResourceResolver;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -32,29 +35,34 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public class ReadOnlyPathRelativeFileIO implements IPathRelativeIO
+public class PathRelativeIO implements IPathRelativeIO
 {
-  private final File m_aBasePath;
+  private final String m_sBasePath;
 
-  public ReadOnlyPathRelativeFileIO (@Nonnull final File aBasePath, final boolean bCheckAccessRights)
+  public PathRelativeIO (@Nonnull @Nonempty final String sBasePath)
   {
-    ValueEnforcer.notNull (aBasePath, "BasePath");
-    if (!aBasePath.isAbsolute ())
-      throw new IllegalArgumentException ("Please provide an absolute path: " + aBasePath);
-
-    // Must be an existing directory (and not e.g. a file)
-    if (!aBasePath.isDirectory ())
-      throw new InitializationException ("The passed base path " + aBasePath + " exists but is not a directory!");
-    m_aBasePath = aBasePath;
-
-    if (bCheckAccessRights)
-      PathRelativeFileIO.internalCheckAccessRights (m_aBasePath);
+    ValueEnforcer.notEmpty (sBasePath, "BasePath");
+    m_sBasePath = sBasePath;
   }
 
   @Nonnull
-  public File getBasePathFile ()
+  @Nonempty
+  public String getBasePath ()
   {
-    return m_aBasePath;
+    return m_sBasePath;
+  }
+
+  @Nonnull
+  public IReadableResource getResource (final String sRelativePath)
+  {
+    try
+    {
+      return DefaultResourceResolver.getResolvedResource (sRelativePath, m_sBasePath);
+    }
+    catch (final IOException ex)
+    {
+      throw new UncheckedIOException (ex);
+    }
   }
 
   @Override
@@ -64,19 +72,19 @@ public class ReadOnlyPathRelativeFileIO implements IPathRelativeIO
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final ReadOnlyPathRelativeFileIO rhs = (ReadOnlyPathRelativeFileIO) o;
-    return m_aBasePath.equals (rhs.m_aBasePath);
+    final PathRelativeIO rhs = (PathRelativeIO) o;
+    return m_sBasePath.equals (rhs.m_sBasePath);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aBasePath).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sBasePath).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("BasePath", m_aBasePath).getToString ();
+    return new ToStringGenerator (this).append ("BasePath", m_sBasePath).getToString ();
   }
 }

@@ -66,7 +66,7 @@ import com.helger.datetime.format.PDTToString;
 import com.helger.photon.basic.app.dao.IDAOIO;
 import com.helger.photon.basic.app.io.ConstantHasFilename;
 import com.helger.photon.basic.app.io.IHasFilename;
-import com.helger.photon.basic.app.io.IMutablePathRelativeIO;
+import com.helger.photon.basic.app.io.IMutableFileRelativeIO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.xml.microdom.IMicroComment;
 import com.helger.xml.microdom.IMicroDocument;
@@ -769,7 +769,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
         throw new DAOException ("Failed to write DAO XML data to file");
 
       // Rename existing file to old
-      final IMutablePathRelativeIO aFileIO = m_aDAOIO.getFileIO ();
+      final IMutableFileRelativeIO aFileIO = m_aDAOIO.getFileIO ();
       FileIOError aIOError;
       boolean bRenamedToPrev = false;
       if (aFileIO.existsFile (sFilename))

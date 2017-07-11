@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.LoggingFileOperationCallback;
@@ -47,7 +48,7 @@ public final class WebFileIO
   @GuardedBy ("s_aRWLock")
   private static FileOperationManager s_aFileOpMgr = new FileOperationManager (new LoggingFileOperationCallback ());
   @GuardedBy ("s_aRWLock")
-  private static IMutablePathRelativeIO s_aDataPath;
+  private static IMutableFileRelativeIO s_aDataPath;
   @GuardedBy ("s_aRWLock")
   private static IPathRelativeIO s_aServletContextPath;
 
@@ -77,11 +78,11 @@ public final class WebFileIO
   }
 
   public static void initPaths (@Nonnull final File aDataPath,
-                                @Nonnull final File aServletContextPath,
+                                @Nonnull @Nonempty final String sServletContextPath,
                                 final boolean bCheckFileAccess)
   {
     ValueEnforcer.notNull (aDataPath, "DataPath");
-    ValueEnforcer.notNull (aServletContextPath, "ServletContextPath");
+    ValueEnforcer.notEmpty (sServletContextPath, "ServletContextPath");
 
     s_aRWLock.writeLocked ( () -> {
       if (s_aDataPath != null)
@@ -90,13 +91,10 @@ public final class WebFileIO
         throw new IllegalStateException ("Another servlet context path is already present: " + s_aServletContextPath);
 
       s_aLogger.info ("Using '" + aDataPath + "' as the data path");
-      s_aDataPath = new PathRelativeFileIO (aDataPath, bCheckFileAccess);
+      s_aDataPath = new FileRelativeIO (aDataPath, bCheckFileAccess);
 
-      s_aLogger.info ("Using '" + aServletContextPath + "' as the servlet context path");
-      // Don't check access rights again, if it equals the data path
-      s_aServletContextPath = new ReadOnlyPathRelativeFileIO (aServletContextPath,
-                                                              bCheckFileAccess &&
-                                                                                   !aServletContextPath.equals (aDataPath));
+      s_aLogger.info ("Using '" + sServletContextPath + "' as the servlet context path");
+      s_aServletContextPath = new PathRelativeIO (sServletContextPath);
     });
   }
 
@@ -124,12 +122,12 @@ public final class WebFileIO
    * @return data IO provider.
    * @throws IllegalStateException
    *         if no data path was provided. Call
-   *         {@link #initPaths(File, File, boolean)} first.
+   *         {@link #initPaths(File, String, boolean)} first.
    */
   @Nonnull
-  public static IMutablePathRelativeIO getDataIO ()
+  public static IMutableFileRelativeIO getDataIO ()
   {
-    final IMutablePathRelativeIO ret = s_aRWLock.readLocked ( () -> s_aDataPath);
+    final IMutableFileRelativeIO ret = s_aRWLock.readLocked ( () -> s_aDataPath);
     if (ret == null)
       throw new IllegalStateException ("Data path was not initialized!");
     return ret;
@@ -140,7 +138,7 @@ public final class WebFileIO
    *         no sense to modify the contents of the servlet context directory.
    * @throws IllegalStateException
    *         if no servlet context path was provided. Call
-   *         {@link #initPaths(File, File, boolean)} first.
+   *         {@link #initPaths(File, String, boolean)} first.
    */
   @Nonnull
   public static IPathRelativeIO getServletContextIO ()

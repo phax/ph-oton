@@ -21,6 +21,7 @@ import java.io.File;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.cleanup.CommonsCleanup;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.photon.basic.app.io.WebFileIO;
@@ -38,11 +39,11 @@ public final class PhotonBasicTestInit
   private PhotonBasicTestInit ()
   {}
 
-  public static void init (@Nonnull final File aDataPath, @Nonnull final File aServletContextPath)
+  public static void init (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
   {
     // Init the base path once
     // don't check access rights in test, for performance reasons
-    WebFileIO.initPaths (aDataPath, aServletContextPath, false);
+    WebFileIO.initPaths (aDataPath, sServletContextPath, false);
 
     // Init the IDs
     if (!GlobalIDFactory.hasPersistentIntIDFactory ())

@@ -16,7 +16,6 @@
  */
 package com.helger.photon.basic.app.io;
 
-import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.Serializable;
@@ -26,91 +25,34 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.io.file.FileHelper;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.resource.FileSystemResource;
+import com.helger.commons.io.resource.IReadableResource;
 
 /**
  * A read-only version of a path-relative IO component. For a version with
- * explicitly modifying methods see {@link IMutablePathRelativeIO}.
+ * explicitly modifying methods see {@link IMutableFileRelativeIO}.
  *
  * @author Philip Helger
  */
 public interface IPathRelativeIO extends Serializable
 {
   /**
-   * @return The base path. Never <code>null</code>.
-   */
-  @Nonnull
-  File getBasePathFile ();
-
-  /**
-   * @return The absolute base path that is used. Neither <code>null</code> nor
-   *         empty.
+   * @return The base path. May be a file path, a URL or whatever. Never
+   *         <code>null</code>.
    */
   @Nonnull
   @Nonempty
-  default String getBasePath ()
-  {
-    return getBasePathFile ().getAbsolutePath ();
-  }
-
-  /**
-   * Get a {@link File} relative to the base path.
-   *
-   * @param sRelativePath
-   *        the relative path
-   * @return The "absolute" {@link File} and never <code>null</code>.
-   * @see #getBasePathFile()
-   */
-  @Nonnull
-  default File getFile (@Nonnull final String sRelativePath)
-  {
-    return new File (getBasePathFile (), sRelativePath);
-  }
-
-  /**
-   * Check if a file relative to the base path exists
-   *
-   * @param sRelativePath
-   *        the relative path
-   * @return <code>true</code> if the {@link File} is a file and exists,
-   *         <code>false</code> otherwise.
-   * @see #getBasePathFile()
-   */
-  default boolean existsFile (@Nonnull final String sRelativePath)
-  {
-    return FileHelper.existsFile (getFile (sRelativePath));
-  }
-
-  /**
-   * Check if a directory relative to the base path exists
-   *
-   * @param sRelativePath
-   *        the relative path
-   * @return <code>true</code> if the {@link File} is a directory and exists,
-   *         <code>false</code> otherwise.
-   * @see #getBasePathFile()
-   */
-  default boolean existsDir (@Nonnull final String sRelativePath)
-  {
-    return FileHelper.existsDir (getFile (sRelativePath));
-  }
+  String getBasePath ();
 
   /**
    * Get the file system resource relative to the base path
    *
    * @param sRelativePath
    *        the relative path
-   * @return The "absolute" {@link FileSystemResource} and never
+   * @return The "absolute" {@link IReadableResource} and never
    *         <code>null</code>.
-   * @see #getBasePathFile()
    */
   @Nonnull
-  default FileSystemResource getResource (@Nonnull final String sRelativePath)
-  {
-    return new FileSystemResource (getFile (sRelativePath));
-  }
+  IReadableResource getResource (@Nonnull String sRelativePath);
 
   /**
    * Get the {@link InputStream} relative to the base path
@@ -118,7 +60,6 @@ public interface IPathRelativeIO extends Serializable
    * @param sRelativePath
    *        the relative path
    * @return <code>null</code> if the path does not exist
-   * @see #getBasePathFile()
    */
   @Nullable
   default InputStream getInputStream (@Nonnull final String sRelativePath)
@@ -134,26 +75,10 @@ public interface IPathRelativeIO extends Serializable
    * @param aCharset
    *        The charset to use. May not be <code>null</code>.
    * @return <code>null</code> if the path does not exist
-   * @see #getBasePathFile()
    */
   @Nullable
   default Reader getReader (@Nonnull final String sRelativePath, @Nonnull final Charset aCharset)
   {
     return getResource (sRelativePath).getReader (aCharset);
   }
-
-  /**
-   * Get the relative file name for the passed absolute file.
-   *
-   * @param aAbsoluteFile
-   *        The non-<code>null</code> absolute file to make relative.
-   * @return <code>null</code> if the passed file is not a child of this base
-   *         directory.
-   */
-  @Nullable
-  default String getRelativeFilename (@Nonnull final File aAbsoluteFile)
-  {
-    return FilenameHelper.getRelativeToParentDirectory (aAbsoluteFile, getBasePathFile ());
-  }
-
 }

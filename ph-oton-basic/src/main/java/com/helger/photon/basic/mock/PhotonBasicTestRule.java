@@ -21,6 +21,7 @@ import java.io.File;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.scope.mock.ScopeTestRule;
 
 /**
@@ -31,14 +32,14 @@ import com.helger.commons.scope.mock.ScopeTestRule;
 public class PhotonBasicTestRule extends ScopeTestRule
 {
   private final File m_aDataPath;
-  private final File m_aServletContextPath;
+  private final String m_sServletContextPath;
 
   /**
    * Ctor using the default storage path from {@link ScopeTestRule}
    */
   public PhotonBasicTestRule ()
   {
-    this (ScopeTestRule.STORAGE_PATH, ScopeTestRule.STORAGE_PATH);
+    this (ScopeTestRule.STORAGE_PATH, ScopeTestRule.STORAGE_PATH.getAbsolutePath ());
   }
 
   /**
@@ -46,15 +47,15 @@ public class PhotonBasicTestRule extends ScopeTestRule
    *
    * @param aDataPath
    *        The data path to be used. May not be <code>null</code>.
-   * @param aServletContextPath
+   * @param sServletContextPath
    *        The servlet context path to be used. May not be <code>null</code>.
    */
-  public PhotonBasicTestRule (@Nonnull final File aDataPath, @Nonnull final File aServletContextPath)
+  public PhotonBasicTestRule (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
   {
     ValueEnforcer.notNull (aDataPath, "DataPath");
-    ValueEnforcer.notNull (aServletContextPath, "ServletContextPath");
+    ValueEnforcer.notEmpty (sServletContextPath, "ServletContextPath");
     m_aDataPath = aDataPath.getAbsoluteFile ();
-    m_aServletContextPath = aServletContextPath.getAbsoluteFile ();
+    m_sServletContextPath = sServletContextPath;
   }
 
   /**
@@ -70,16 +71,17 @@ public class PhotonBasicTestRule extends ScopeTestRule
    * @return The used servlet context path. Never <code>null</code>.
    */
   @Nonnull
-  public File getServletContextPath ()
+  @Nonempty
+  public String getServletContextPath ()
   {
-    return m_aServletContextPath;
+    return m_sServletContextPath;
   }
 
   @Override
   public void before ()
   {
     super.before ();
-    PhotonBasicTestInit.init (m_aDataPath, m_aServletContextPath);
+    PhotonBasicTestInit.init (m_aDataPath, m_sServletContextPath);
   }
 
   @Override

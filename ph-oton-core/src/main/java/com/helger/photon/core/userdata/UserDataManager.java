@@ -26,7 +26,7 @@ import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
-import com.helger.photon.basic.app.io.IPathRelativeIO;
+import com.helger.photon.basic.app.io.IFileRelativeIO;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -141,7 +141,7 @@ public final class UserDataManager
   }
 
   @Nonnull
-  private static IPathRelativeIO _getFileIO ()
+  private static IFileRelativeIO _getFileIO ()
   {
     return WebFileIO.getDataIO ();
   }

@@ -366,6 +366,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   @Nonnull
+  @Nonempty
   protected String getServletContextPath (@Nonnull final ServletContext aSC) throws IllegalStateException
   {
     String sPath = aSC.getRealPath (".");
@@ -449,7 +450,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     // Should the file access check be performed?
     final boolean bFileAccessCheck = shouldCheckFileAccess (aSC);
     // Init the IO layer
-    WebFileIO.initPaths (aDataPath, new File (sServletContextPath), bFileAccessCheck);
+    WebFileIO.initPaths (aDataPath, sServletContextPath, bFileAccessCheck);
   }
 
   /**

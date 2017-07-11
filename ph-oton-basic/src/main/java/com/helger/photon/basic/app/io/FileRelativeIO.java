@@ -40,14 +40,14 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 
 /**
- * Default implementation of {@link IMutablePathRelativeIO}.
+ * Default implementation of {@link IMutableFileRelativeIO}.
  *
  * @author Philip Helger
  */
 @Immutable
-public class PathRelativeFileIO implements IMutablePathRelativeIO
+public class FileRelativeIO implements IMutableFileRelativeIO
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PathRelativeFileIO.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (FileRelativeIO.class);
 
   private final File m_aBasePath;
 
@@ -90,7 +90,7 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
                     " milliseconds");
   }
 
-  public PathRelativeFileIO (@Nonnull final File aBasePath, final boolean bCheckAccessRights)
+  public FileRelativeIO (@Nonnull final File aBasePath, final boolean bCheckAccessRights)
   {
     ValueEnforcer.notNull (aBasePath, "BasePath");
     if (!aBasePath.isAbsolute ())
@@ -234,7 +234,7 @@ public class PathRelativeFileIO implements IMutablePathRelativeIO
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final PathRelativeFileIO rhs = (PathRelativeFileIO) o;
+    final FileRelativeIO rhs = (FileRelativeIO) o;
     return m_aBasePath.equals (rhs.m_aBasePath);
   }
 

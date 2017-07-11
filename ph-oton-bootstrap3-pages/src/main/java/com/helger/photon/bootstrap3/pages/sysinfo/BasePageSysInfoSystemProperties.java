@@ -93,7 +93,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     MSG_SYSTEM_SC_DIR_FREE ("Freier Speicherplatz im WebApp-Verzeichnis", "Free space in the WebApp directory"),
     MSG_SYSTEM_SC_DIR_USABLE ("Verwendbarer Speicherplatz im WebApp-Verzeichnis",
                               "Usable space in the WebApp directory"),
-    MSG_SYSTEM_SC_NO_DIR ("Kein Verzeichnis", "Not a directory"),
+    MSG_SYSTEM_SC_NO_DIR ("Kein Verzeichnis: {0}", "Not a directory: {0}"),
     MSG_ENDORSED_DIR ("Endorsed Verzeichnis", "Endorsed directory"),
     MSG_EXT_DIR ("Extension Verzeichnis", "Extension directory"),
     MSG_DIR_NOT_EXISTING ("Das Verzeichnis existiert nicht", "The directory does not exist"),
@@ -244,10 +244,10 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_BASEDIR_USABLE.getDisplayText (aDisplayLocale),
                                        aSH.getAsMatching (aBaseDir.getUsableSpace (), 2));
 
-        final File aSCDir = WebFileIO.getServletContextIO ().getBasePathFile ();
-        if (aSCDir != null)
+        String sSCDir = WebFileIO.getServletContextIO ().getBasePath ();
+        final File aSCDir = new File (sSCDir);
+        if (aSCDir.exists ())
         {
-          String sSCDir = aSCDir.toString ();
           final String sSCAbsDir = aSCDir.getAbsolutePath ();
           if (!sSCAbsDir.equals (sSCDir))
             sSCDir += " (" + sSCAbsDir + ")";
@@ -262,7 +262,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         else
         {
           aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_SC_DIR.getDisplayText (aDisplayLocale),
-                                         EText.MSG_SYSTEM_SC_NO_DIR.getDisplayText (aDisplayLocale));
+                                         EText.MSG_SYSTEM_SC_NO_DIR.getDisplayTextWithArgs (aDisplayLocale, sSCDir));
         }
 
         _addDirectoryContent (aTable,

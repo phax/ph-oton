@@ -22,7 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.dao.IDAOIO;
-import com.helger.photon.basic.app.io.IMutablePathRelativeIO;
+import com.helger.photon.basic.app.io.IMutableFileRelativeIO;
 import com.helger.photon.basic.app.io.WebFileIO;
 
 /**
@@ -35,7 +35,7 @@ public class DAOWebFileIO implements IDAOIO
 {
   private static final DAOWebFileIO s_aInstance = new DAOWebFileIO ();
 
-  private IMutablePathRelativeIO m_aFileIO;
+  private IMutableFileRelativeIO m_aFileIO;
 
   protected DAOWebFileIO ()
   {
@@ -54,9 +54,9 @@ public class DAOWebFileIO implements IDAOIO
   }
 
   @Nonnull
-  public IMutablePathRelativeIO getFileIO ()
+  public IMutableFileRelativeIO getFileIO ()
   {
-    IMutablePathRelativeIO ret = m_aFileIO;
+    IMutableFileRelativeIO ret = m_aFileIO;
     if (ret == null)
     {
       // Remember upon first access - in case the WebFileIO is not yet

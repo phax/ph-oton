@@ -21,6 +21,7 @@ import java.io.File;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.scope.mock.ScopeTestRule;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.web.scope.mock.WebScopeTestRule;
@@ -33,7 +34,7 @@ import com.helger.web.scope.mock.WebScopeTestRule;
 public class PhotonBasicWebTestRule extends WebScopeTestRule
 {
   private final File m_aDataPath;
-  private final File m_aServletContextPath;
+  private final String m_sServletContextPath;
   private boolean m_bDeleteAllData = false;
 
   /**
@@ -41,7 +42,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
    */
   public PhotonBasicWebTestRule ()
   {
-    this (ScopeTestRule.STORAGE_PATH, ScopeTestRule.STORAGE_PATH);
+    this (ScopeTestRule.STORAGE_PATH, ScopeTestRule.STORAGE_PATH.getAbsolutePath ());
   }
 
   /**
@@ -49,15 +50,15 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
    *
    * @param aDataPath
    *        The data path to be used. May not be <code>null</code>.
-   * @param aServletContextPath
+   * @param sServletContextPath
    *        The servlet context path to be used. May not be <code>null</code>.
    */
-  public PhotonBasicWebTestRule (@Nonnull final File aDataPath, @Nonnull final File aServletContextPath)
+  public PhotonBasicWebTestRule (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
   {
     ValueEnforcer.notNull (aDataPath, "DataPath");
-    ValueEnforcer.notNull (aServletContextPath, "ServletContextPath");
+    ValueEnforcer.notNull (sServletContextPath, "ServletContextPath");
     m_aDataPath = aDataPath.getAbsoluteFile ();
-    m_aServletContextPath = aServletContextPath.getAbsoluteFile ();
+    m_sServletContextPath = sServletContextPath;
   }
 
   /**
@@ -73,9 +74,10 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
    * @return The used servlet context path. Never <code>null</code>.
    */
   @Nonnull
-  public File getServletContextPath ()
+  @Nonempty
+  public String getServletContextPath ()
   {
-    return m_aServletContextPath;
+    return m_sServletContextPath;
   }
 
   @Nonnull
@@ -89,7 +91,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   public void before ()
   {
     super.before ();
-    PhotonBasicTestInit.init (m_aDataPath, m_aServletContextPath);
+    PhotonBasicTestInit.init (m_aDataPath, m_sServletContextPath);
 
     if (m_bDeleteAllData)
     {

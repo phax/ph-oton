@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.app.io;
 
+import java.io.Serializable;
+
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
@@ -26,7 +28,8 @@ import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IHasFilename
+@FunctionalInterface
+public interface IHasFilename extends Serializable
 {
   /**
    * @return The filename to use. May be <code>null</code> to indicate that no

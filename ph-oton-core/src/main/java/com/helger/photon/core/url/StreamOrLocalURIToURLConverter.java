@@ -43,10 +43,16 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   public StreamOrLocalURIToURLConverter ()
   {}
 
+  /**
+   * Absolute paths are project relative files and therefore are relative to the
+   * servlet context directory
+   * 
+   * @param sURI
+   *        The String to check. May neither be <code>null</code> nor empty.
+   * @return <code>true</code> if the URI starts with '/'
+   */
   public static final boolean isProjectRelativeURI (@Nonnull @Nonempty final String sURI)
   {
-    // Absolute paths are project relative files and therefore are relative to
-    // the servlet context directory
     return StringHelper.startsWith (sURI, '/');
   }
 
