@@ -351,4 +351,34 @@ public final class JSGlobal
   {
     return unescape ().arg (aString);
   }
+
+  @Nonnull
+  public static JSRef json ()
+  {
+    return JSExpr.ref ("JSON");
+  }
+
+  @Nonnull
+  public static JSInvocation jsonParse ()
+  {
+    return json ().invoke ("parse");
+  }
+
+  @Nonnull
+  public static JSInvocation jsonParse (@Nonnull final IJSExpression aText)
+  {
+    return jsonParse ().arg (aText);
+  }
+
+  @Nonnull
+  public static JSInvocation jsonStringify ()
+  {
+    return json ().invoke ("stringify");
+  }
+
+  @Nonnull
+  public static JSInvocation jsonStringify (@Nonnull final IJSExpression aExpr)
+  {
+    return jsonStringify ().arg (aExpr);
+  }
 }
