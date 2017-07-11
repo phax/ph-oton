@@ -30,6 +30,7 @@ import com.helger.commons.io.resource.FileSystemResource;
  * An extended {@link IPathRelativeIO} version that uses files as the basis.
  *
  * @author Philip Helger
+ * @since 7.1.1
  */
 public interface IFileRelativeIO extends IPathRelativeIO
 {

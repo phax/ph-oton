@@ -33,6 +33,7 @@ import com.helger.commons.state.ESuccess;
  * base interface with writable methods relative to a certain directory.
  *
  * @author Philip Helger
+ * @since 7.1.1
  */
 public interface IMutableFileRelativeIO extends IFileRelativeIO
 {
