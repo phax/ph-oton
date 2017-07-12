@@ -46,7 +46,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   /**
    * Absolute paths are project relative files and therefore are relative to the
    * servlet context directory
-   * 
+   *
    * @param sURI
    *        The String to check. May neither be <code>null</code> nor empty.
    * @return <code>true</code> if the URI starts with '/'
@@ -74,7 +74,10 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
     // Absolute paths are project relative files and therefore are relative to
     // the servlet context directory
     if (isProjectRelativeURI (sURI))
-      return WebFileIO.getServletContextIO ().getResource (sURI);
+    {
+      // Cut "/" to avoid recognition as absolute file on Linux!
+      return WebFileIO.getServletContextIO ().getResource (sURI.substring (1));
+    }
 
     // Defaults to class path
     return new ClassPathResource (sURI);
