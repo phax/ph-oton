@@ -36,7 +36,7 @@ import com.helger.photon.basic.mock.PhotonBasicTestRule;
  *
  * @author Philip Helger
  */
-public final class PathRelativeFileIOTest
+public final class FileRelativeIOTest
 {
   @Rule
   public final TestRule m_aRule = new PhotonBasicTestRule ();
