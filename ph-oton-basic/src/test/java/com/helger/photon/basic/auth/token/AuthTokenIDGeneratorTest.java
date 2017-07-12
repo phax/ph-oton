@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import com.helger.commons.collection.ext.CommonsHashSet;
 import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.random.RandomHelper;
 
 /**
  * Test class for class AuthTokenIDGenerator.
@@ -34,8 +35,17 @@ public final class AuthTokenIDGeneratorTest
   public void testAll ()
   {
     // Ensure they are unique....
-    final ICommonsSet <String> aAll = new CommonsHashSet <> ();
-    for (int i = 0; i < 1000; i++)
-      assertTrue (aAll.add (AuthTokenIDGenerator.generateNewTokenID ()));
+    final boolean bOld = RandomHelper.isUseSecureRandom ();
+    RandomHelper.setUseSecureRandom (false);
+    try
+    {
+      final ICommonsSet <String> aAll = new CommonsHashSet <> ();
+      for (int i = 0; i < 1000; i++)
+        assertTrue (aAll.add (AuthTokenIDGenerator.generateNewTokenID ()));
+    }
+    finally
+    {
+      RandomHelper.setUseSecureRandom (bOld);
+    }
   }
 }
