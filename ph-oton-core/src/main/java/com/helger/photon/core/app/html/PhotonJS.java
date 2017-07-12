@@ -84,7 +84,7 @@ public final class PhotonJS
           throw new IllegalStateException ("The provided global JS resource '" +
                                            sPath +
                                            "' resolved to '" +
-                                           aChildRes.getAsURL () +
+                                           aChildRes +
                                            "' does NOT exist!");
 
         final String sConditionalComment = eChild.getAttributeValue ("condcomment");

@@ -87,7 +87,7 @@ public final class PhotonCSS
           throw new IllegalStateException ("The provided global CSS resource '" +
                                            sPath +
                                            "' resolved to '" +
-                                           aChildRes.getAsURL () +
+                                           aChildRes +
                                            "' does NOT exist!");
 
         final String sConditionalComment = eChild.getAttributeValue ("condcomment");
