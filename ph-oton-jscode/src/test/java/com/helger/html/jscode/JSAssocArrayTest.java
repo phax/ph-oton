@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
+import com.helger.html.js.JSWriterDefaultSettings;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 
@@ -29,12 +30,20 @@ public class JSAssocArrayTest
     assertTrue (a.get ("a") instanceof JSAtomInt);
     assertNotNull (a.get ("b"));
     assertTrue (a.get ("b") instanceof JSArray);
-    assertEquals ("{\r\n" +
-                  "  a:1,\r\n" +
-                  "  b:[1,'value2',{\r\n" +
-                  "    c:1,\r\n" +
-                  "    d:123456789123456789123456789\r\n" +
-                  "  }]\r\n" +
+
+    final String sEOL = JSWriterDefaultSettings.getNewLineMode ().getText ();
+    assertEquals ("{" +
+                  sEOL +
+                  "  a:1," +
+                  sEOL +
+                  "  b:[1,'value2',{" +
+                  sEOL +
+                  "    c:1," +
+                  sEOL +
+                  "    d:123456789123456789123456789" +
+                  sEOL +
+                  "  }]" +
+                  sEOL +
                   "}",
                   a.getJSCode ());
   }

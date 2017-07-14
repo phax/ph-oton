@@ -24,6 +24,8 @@ import javax.annotation.Nonnull;
 
 import org.eclipse.jetty.server.Server;
 
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.exception.InitializationException;
 
 /**
@@ -36,6 +38,7 @@ public class JettyRunner
 {
   private final int m_nPort;
   private final int m_nStopPort;
+  private String m_sAppName = "JettyRunner";
   private Thread m_aThread;
 
   public JettyRunner ()
@@ -61,6 +64,21 @@ public class JettyRunner
     return m_nStopPort;
   }
 
+  @Nonnull
+  @Nonempty
+  public String getAppName ()
+  {
+    return m_sAppName;
+  }
+
+  @Nonnull
+  public JettyRunner setAppName (@Nonnull @Nonempty final String sAppName)
+  {
+    ValueEnforcer.notEmpty (sAppName, "AppName");
+    m_sAppName = sAppName;
+    return this;
+  }
+
   public synchronized void startServer () throws Exception
   {
     if (m_aThread != null)
@@ -71,7 +89,7 @@ public class JettyRunner
     m_aThread = new Thread ( () -> {
       try
       {
-        new JettyStarter ("JettyRunner:" + m_nPort + ":" + m_nStopPort)
+        new JettyStarter (m_sAppName)
         {
           @Override
           protected void onServerStarted (@Nonnull final Server aServer)
