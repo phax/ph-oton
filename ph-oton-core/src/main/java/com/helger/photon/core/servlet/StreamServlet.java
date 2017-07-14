@@ -37,14 +37,12 @@ public class StreamServlet extends AbstractStreamServlet
   public static final String SERVLET_DEFAULT_NAME = LinkHelper.DEFAULT_STREAM_SERVLET_NAME;
   public static final String SERVLET_DEFAULT_PATH = "/" + SERVLET_DEFAULT_NAME;
 
-  private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (StreamServlet.class);
-
   public StreamServlet ()
   {}
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return s_bIsRegistered;
+    return ServletStatusManager.getInstance ().isServletRegistered (StreamServlet.class);
   }
 
   @Override

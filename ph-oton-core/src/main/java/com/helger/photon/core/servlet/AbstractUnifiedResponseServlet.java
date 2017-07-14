@@ -140,7 +140,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
 
   protected AbstractUnifiedResponseServlet ()
   {
-    ServletStatusManager.onServletCtor (getClass ());
+    ServletStatusManager.getInstance ().onServletCtor (getClass ());
   }
 
   protected static final long getUnifiedMillis (final long nMillis)
@@ -162,14 +162,14 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   protected void onInit () throws ServletException
   {
     super.onInit ();
-    ServletStatusManager.onServletInit (getClass ());
+    ServletStatusManager.getInstance ().onServletInit (getClass ());
   }
 
   @Override
   @OverridingMethodsMustInvokeSuper
   protected void onDestroy ()
   {
-    ServletStatusManager.onServletDestroy (getClass ());
+    ServletStatusManager.getInstance ().onServletDestroy (getClass ());
     super.onDestroy ();
   }
 
@@ -395,7 +395,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                      @Nonnull final EHTTPMethod eHttpMethod) throws ServletException, IOException
   {
     // Increment invocation counter
-    ServletStatusManager.onServletInvocation (getClass ());
+    ServletStatusManager.getInstance ().onServletInvocation (getClass ());
     // Set the last application ID in the session
     PhotonSessionState.getInstance ().setLastApplicationID (getApplicationID ());
 

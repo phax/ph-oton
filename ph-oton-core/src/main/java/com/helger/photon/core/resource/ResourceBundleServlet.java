@@ -69,8 +69,7 @@ public class ResourceBundleServlet extends AbstractObjectDeliveryServlet
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleServlet.class);
-  private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (ResourceBundleServlet.class);
-  private static final AtomicBoolean s_bIsEnabled = new AtomicBoolean (s_bIsRegistered &&
+  private static final AtomicBoolean s_bIsEnabled = new AtomicBoolean (isServletRegisteredInServletContext () &&
                                                                        GlobalDebug.isProductionMode ());
 
   public ResourceBundleServlet ()
@@ -78,7 +77,7 @@ public class ResourceBundleServlet extends AbstractObjectDeliveryServlet
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return s_bIsRegistered;
+    return ServletStatusManager.getInstance ().isServletRegistered (ResourceBundleServlet.class);
   }
 
   public static void setEnabled (final boolean bEnable)

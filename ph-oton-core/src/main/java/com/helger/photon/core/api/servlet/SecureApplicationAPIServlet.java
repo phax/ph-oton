@@ -32,14 +32,12 @@ public class SecureApplicationAPIServlet extends AbstractApplicationAPIServlet
   public static final String SERVLET_DEFAULT_NAME = "secureapi";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (SecureApplicationAPIServlet.class);
-
   public SecureApplicationAPIServlet ()
   {}
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return s_bIsRegistered;
+    return ServletStatusManager.getInstance ().isServletRegistered (SecureApplicationAPIServlet.class);
   }
 
   @Override

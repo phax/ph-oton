@@ -29,7 +29,8 @@ Contained subprojects are:
 Release history:
   * v7.1.1 - work in progress
     * Requires ph-commons 8.6.6
-    * ServletContext base path can now be anything
+    * ServletContext base path can now be any URL
+    * Made ServletStatusManager non-static
   * v7.1.0 - 2017-07-05
     * Updated to ph-web 8.8.x
     * Improved rendering speed through internal optimizations

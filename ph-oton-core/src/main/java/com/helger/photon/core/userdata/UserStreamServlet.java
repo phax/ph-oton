@@ -32,14 +32,12 @@ public class UserStreamServlet extends AbstractUserStreamServlet
   public static final String SERVLET_DEFAULT_NAME = "user";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (UserStreamServlet.class);
-
   public UserStreamServlet ()
   {}
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return s_bIsRegistered;
+    return ServletStatusManager.getInstance ().isServletRegistered (UserStreamServlet.class);
   }
 
   @Override

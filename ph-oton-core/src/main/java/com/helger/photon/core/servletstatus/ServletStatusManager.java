@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.servletstatus;
 
-import java.io.Serializable;
 import java.lang.reflect.Modifier;
 
 import javax.annotation.Nonnull;
@@ -35,9 +34,10 @@ import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.web.scope.IGlobalWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
 
@@ -47,23 +47,30 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class ServletStatusManager implements Serializable
+public final class ServletStatusManager extends AbstractGlobalSingleton
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ServletStatusManager.class);
 
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-  @GuardedBy ("s_aRWLock")
-  private static final ICommonsMap <String, ServletStatus> s_aMap = new CommonsHashMap <> ();
+  @GuardedBy ("m_aRWLock")
+  private final ICommonsMap <String, ServletStatus> m_aMap = new CommonsHashMap <> ();
 
-  private ServletStatusManager ()
+  @Deprecated
+  @UsedViaReflection
+  public ServletStatusManager ()
   {}
+
+  @Nonnull
+  public static ServletStatusManager getInstance ()
+  {
+    return getGlobalSingleton (ServletStatusManager.class);
+  }
 
   /**
    * Reset all contained information!
    */
-  public static void reset ()
+  public void reset ()
   {
-    s_aRWLock.writeLocked ( () -> s_aMap.clear ());
+    m_aRWLock.writeLocked ( () -> m_aMap.clear ());
   }
 
   @Nonnull
@@ -75,62 +82,62 @@ public final class ServletStatusManager implements Serializable
 
   @Nonnull
   @MustBeLocked (ELockType.WRITE)
-  private static ServletStatus _getOrCreateServletStatus (@Nonnull final Class <? extends GenericServlet> aServletClass)
+  private ServletStatus _getOrCreateServletStatus (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
     ValueEnforcer.notNull (aServletClass, "Servlet class");
     if (Modifier.isAbstract (aServletClass.getModifiers ()))
       throw new IllegalStateException ("Passed servlet class is abstract: " + aServletClass);
 
     final String sKey = _getKey (aServletClass);
-    return s_aMap.computeIfAbsent (sKey, k -> new ServletStatus (aServletClass.getName ()));
+    return m_aMap.computeIfAbsent (sKey, k -> new ServletStatus (aServletClass.getName ()));
   }
 
-  private static void _updateStatus (@Nonnull final Class <? extends GenericServlet> aServletClass,
-                                     @Nonnull final EServletStatus eNewStatus)
+  private void _updateStatus (@Nonnull final Class <? extends GenericServlet> aServletClass,
+                              @Nonnull final EServletStatus eNewStatus)
   {
     ValueEnforcer.notNull (eNewStatus, "NewStatus");
 
-    s_aRWLock.writeLocked ( () -> _getOrCreateServletStatus (aServletClass).internalSetCurrentStatus (eNewStatus));
+    m_aRWLock.writeLocked ( () -> _getOrCreateServletStatus (aServletClass).internalSetCurrentStatus (eNewStatus));
 
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Servlet status of " + aServletClass + " changed to " + eNewStatus);
   }
 
-  public static void onServletCtor (@Nonnull final Class <? extends GenericServlet> aServletClass)
+  public void onServletCtor (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
     _updateStatus (aServletClass, EServletStatus.CONSTRUCTED);
   }
 
-  public static void onServletInit (@Nonnull final Class <? extends GenericServlet> aServletClass)
+  public void onServletInit (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
     _updateStatus (aServletClass, EServletStatus.INITED);
   }
 
-  public static void onServletInvocation (@Nonnull final Class <? extends GenericServlet> aServletClass)
+  public void onServletInvocation (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
-    s_aRWLock.writeLocked ( () -> _getOrCreateServletStatus (aServletClass).internalIncrementInvocationCount ());
+    m_aRWLock.writeLocked ( () -> _getOrCreateServletStatus (aServletClass).internalIncrementInvocationCount ());
   }
 
-  public static void onServletDestroy (@Nonnull final Class <? extends GenericServlet> aServletClass)
+  public void onServletDestroy (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
     _updateStatus (aServletClass, EServletStatus.DESTROYED);
   }
 
   @Nullable
-  public static ServletStatus getStatus (@Nullable final Class <? extends GenericServlet> aServletClass)
+  public ServletStatus getStatus (@Nullable final Class <? extends GenericServlet> aServletClass)
   {
     if (aServletClass == null)
       return null;
 
     final String sKey = _getKey (aServletClass);
-    return s_aRWLock.readLocked ( () -> s_aMap.get (sKey));
+    return m_aRWLock.readLocked ( () -> m_aMap.get (sKey));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsMap <String, ServletStatus> getAllStatus ()
+  public ICommonsMap <String, ServletStatus> getAllStatus ()
   {
-    return s_aRWLock.readLocked ( () -> s_aMap.getClone ());
+    return m_aRWLock.readLocked ( () -> m_aMap.getClone ());
   }
 
   /**
@@ -142,7 +149,7 @@ public final class ServletStatusManager implements Serializable
    * @return <code>true</code> if the passed servlet class is contained in the
    *         {@link ServletContext}.
    */
-  public static boolean isServletRegistered (@Nonnull final Class <? extends GenericServlet> aServletClass)
+  public boolean isServletRegistered (@Nonnull final Class <? extends GenericServlet> aServletClass)
   {
     final String sClassName = ValueEnforcer.notNull (aServletClass, "ServletClass").getName ();
 

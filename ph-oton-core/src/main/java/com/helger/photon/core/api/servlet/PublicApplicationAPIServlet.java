@@ -32,14 +32,12 @@ public class PublicApplicationAPIServlet extends AbstractApplicationAPIServlet
   public static final String SERVLET_DEFAULT_NAME = "publicapi";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (PublicApplicationAPIServlet.class);
-
   public PublicApplicationAPIServlet ()
   {}
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return s_bIsRegistered;
+    return ServletStatusManager.getInstance ().isServletRegistered (PublicApplicationAPIServlet.class);
   }
 
   @Override

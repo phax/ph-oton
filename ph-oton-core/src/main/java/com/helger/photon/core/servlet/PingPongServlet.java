@@ -52,14 +52,12 @@ public final class PingPongServlet extends AbstractUnifiedResponseServlet
 
   private static final IMutableStatisticsHandlerCounter s_aStatsPingPong = StatisticsManager.getCounterHandler (PingPongServlet.class);
 
-  private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (PingPongServlet.class);
-
   public PingPongServlet ()
   {}
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return s_bIsRegistered;
+    return ServletStatusManager.getInstance ().isServletRegistered (PingPongServlet.class);
   }
 
   @Override

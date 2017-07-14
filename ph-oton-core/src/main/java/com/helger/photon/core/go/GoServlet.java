@@ -61,14 +61,13 @@ public class GoServlet extends AbstractUnifiedResponseServlet
                                                                                                                        "$error");
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsOK = StatisticsManager.getKeyedCounterHandler (GoServlet.class.getName () +
                                                                                                                     "$ok");
-  private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (GoServlet.class);
 
   public GoServlet ()
   {}
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return s_bIsRegistered;
+    return ServletStatusManager.getInstance ().isServletRegistered (GoServlet.class);
   }
 
   @Override

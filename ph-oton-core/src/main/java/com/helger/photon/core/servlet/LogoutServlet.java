@@ -41,14 +41,12 @@ public class LogoutServlet extends AbstractUnifiedResponseServlet
   public static final String SERVLET_DEFAULT_NAME = "logout";
   public static final String SERVLET_DEFAULT_PATH = "/" + SERVLET_DEFAULT_NAME;
 
-  private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (LogoutServlet.class);
-
   public LogoutServlet ()
   {}
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return s_bIsRegistered;
+    return ServletStatusManager.getInstance ().isServletRegistered (LogoutServlet.class);
   }
 
   @Override

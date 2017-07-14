@@ -54,8 +54,8 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionContext>
-                                          extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionContext> extends
+                                          AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -124,7 +124,9 @@ public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionCon
                                         new DTCol (EText.MSG_INIT_DT.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,
                                                                                                                       aDisplayLocale)).setID (getID ());
 
-    for (final Map.Entry <String, ServletStatus> aItem : ServletStatusManager.getAllStatus ().entrySet ())
+    for (final Map.Entry <String, ServletStatus> aItem : ServletStatusManager.getInstance ()
+                                                                             .getAllStatus ()
+                                                                             .entrySet ())
     {
       final ServletStatus aServletStatus = aItem.getValue ();
 

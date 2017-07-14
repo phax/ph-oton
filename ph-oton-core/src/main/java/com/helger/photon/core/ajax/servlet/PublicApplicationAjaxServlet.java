@@ -32,14 +32,12 @@ public class PublicApplicationAjaxServlet extends AbstractApplicationAjaxServlet
   public static final String SERVLET_DEFAULT_NAME = "publicajax";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (PublicApplicationAjaxServlet.class);
-
   public PublicApplicationAjaxServlet ()
   {}
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return s_bIsRegistered;
+    return ServletStatusManager.getInstance ().isServletRegistered (PublicApplicationAjaxServlet.class);
   }
 
   @Override

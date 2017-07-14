@@ -32,14 +32,12 @@ public class SecureApplicationAjaxServlet extends AbstractApplicationAjaxServlet
   public static final String SERVLET_DEFAULT_NAME = "secureajax";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (SecureApplicationAjaxServlet.class);
-
   public SecureApplicationAjaxServlet ()
   {}
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return s_bIsRegistered;
+    return ServletStatusManager.getInstance ().isServletRegistered (SecureApplicationAjaxServlet.class);
   }
 
   @Override

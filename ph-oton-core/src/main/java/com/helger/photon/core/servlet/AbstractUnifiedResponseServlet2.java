@@ -33,7 +33,7 @@ public abstract class AbstractUnifiedResponseServlet2 extends AbstractHttpServle
 {
   protected AbstractUnifiedResponseServlet2 ()
   {
-    ServletStatusManager.onServletCtor (getClass ());
+    ServletStatusManager.getInstance ().onServletCtor (getClass ());
   }
 
   @Override
@@ -41,14 +41,14 @@ public abstract class AbstractUnifiedResponseServlet2 extends AbstractHttpServle
   public void init () throws ServletException
   {
     super.init ();
-    ServletStatusManager.onServletInit (getClass ());
+    ServletStatusManager.getInstance ().onServletInit (getClass ());
   }
 
   @Override
   @OverridingMethodsMustInvokeSuper
   public void destroy ()
   {
-    ServletStatusManager.onServletDestroy (getClass ());
+    ServletStatusManager.getInstance ().onServletDestroy (getClass ());
     super.destroy ();
   }
 }

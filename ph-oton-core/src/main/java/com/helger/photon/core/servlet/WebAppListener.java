@@ -65,7 +65,6 @@ import com.helger.datetime.util.PDTWebDateHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOIntIDFactory;
 import com.helger.photon.basic.app.io.WebIOLongIDFactory;
-import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.servlet.StaticServerInfo;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xml.microdom.IMicroDocument;
@@ -668,9 +667,6 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
     // Reset base path - mainly for testing
     WebFileIO.resetPaths ();
-
-    // Reset servlet status
-    ServletStatusManager.reset ();
 
     // Clear commons cache also manually - but after destroy because it
     // is used in equals and hashCode implementations

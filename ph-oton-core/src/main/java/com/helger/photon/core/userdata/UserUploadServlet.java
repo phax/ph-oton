@@ -55,14 +55,12 @@ public class UserUploadServlet extends AbstractUnifiedResponseServlet
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (UserUploadServlet.class);
 
-  private static final boolean s_bIsRegistered = ServletStatusManager.isServletRegistered (UserUploadServlet.class);
-
   public UserUploadServlet ()
   {}
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return s_bIsRegistered;
+    return ServletStatusManager.getInstance ().isServletRegistered (UserUploadServlet.class);
   }
 
   @Override
