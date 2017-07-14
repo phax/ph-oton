@@ -156,7 +156,6 @@ public class JSAssocArray extends AbstractJSExpression
   }
 
   @Nonnull
-  @Deprecated
   public JSAssocArray add (@Nonnull final String sKey, @Nullable final IJson aValue)
   {
     return add (sKey, aValue == null ? JSExpr.NULL : JSExpr.json (aValue));
