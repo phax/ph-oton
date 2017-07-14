@@ -141,6 +141,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
 
   protected AbstractUnifiedResponseServlet ()
   {
+    // Remember to avoid crash on shutdown, when no GlobalScope is present
     m_aStatusMgr = ServletStatusManager.getInstance ();
     m_aStatusMgr.onServletCtor (getClass ());
   }

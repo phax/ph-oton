@@ -35,6 +35,7 @@ public abstract class AbstractUnifiedResponseServlet2 extends AbstractHttpServle
 
   protected AbstractUnifiedResponseServlet2 ()
   {
+    // Remember to avoid crash on shutdown, when no GlobalScope is present
     m_aStatusMgr = ServletStatusManager.getInstance ();
     m_aStatusMgr.onServletCtor (getClass ());
   }

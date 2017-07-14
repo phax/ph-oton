@@ -53,6 +53,7 @@ public class DefaultCSPReportingServlet extends HttpServlet
 
   public DefaultCSPReportingServlet ()
   {
+    // Remember to avoid crash on shutdown, when no GlobalScope is present
     m_aStatusMgr = ServletStatusManager.getInstance ();
     m_aStatusMgr.onServletCtor (getClass ());
   }
