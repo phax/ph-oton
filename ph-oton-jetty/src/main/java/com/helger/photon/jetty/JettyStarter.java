@@ -222,7 +222,7 @@ public class JettyStarter
   /**
    * Set the path to WEB-INF/web.xml. If unspecified, the default relative to
    * the resource base is used.
-   * 
+   *
    * @param sWebXmlResource
    *        web.xml resource. May be <code>null</code>.
    * @return this for chaining.
@@ -412,7 +412,7 @@ public class JettyStarter
     {
       // Starting the engines:
       aServer.start ();
-      s_aLogger.info ("Started Jetty " + m_sAppName);
+      s_aLogger.info ("Started Jetty" + ":" + m_nPort + ":" + m_nStopPort + " " + m_sAppName);
 
       // Callback
       onServerStarted (aServer);

@@ -71,7 +71,7 @@ public class JettyRunner
     m_aThread = new Thread ( () -> {
       try
       {
-        new JettyStarter ("JettyRunner")
+        new JettyStarter ("JettyRunner:" + m_nPort + ":" + m_nStopPort)
         {
           @Override
           protected void onServerStarted (@Nonnull final Server aServer)
@@ -102,7 +102,7 @@ public class JettyRunner
     s.acquire ();
 
     if (!aSuccess.get ())
-      throw new InitializationException ("Failed to start Jetty - see log files");
+      throw new InitializationException ("Failed to start Jetty:" + m_nPort + ":" + m_nStopPort + " - see log files");
   }
 
   public synchronized void shutDownServer () throws Exception

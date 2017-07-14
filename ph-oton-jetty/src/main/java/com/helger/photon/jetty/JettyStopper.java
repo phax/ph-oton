@@ -70,7 +70,7 @@ public final class JettyStopper
 
       try (final OutputStream out = s.getOutputStream ())
       {
-        s_aLogger.info ("Sending Jetty stop request");
+        s_aLogger.info ("Sending Jetty stop request to port " + m_nStopPort);
         out.write ((m_sStopKey + "\r\nstop\r\n").getBytes (StandardCharsets.UTF_8));
         out.flush ();
       }
