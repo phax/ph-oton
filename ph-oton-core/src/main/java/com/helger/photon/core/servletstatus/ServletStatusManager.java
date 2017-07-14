@@ -58,6 +58,14 @@ public final class ServletStatusManager implements Serializable
   private ServletStatusManager ()
   {}
 
+  /**
+   * Reset all contained information!
+   */
+  public static void reset ()
+  {
+    s_aRWLock.writeLocked ( () -> s_aMap.clear ());
+  }
+
   @Nonnull
   @Nonempty
   private static String _getKey (@Nonnull final Class <? extends GenericServlet> aServletClass)
