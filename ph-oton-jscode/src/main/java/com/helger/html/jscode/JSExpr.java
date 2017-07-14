@@ -348,9 +348,18 @@ public final class JSExpr
   }
 
   @Nonnull
-  public static JSExprDirect json (@Nonnull final IJson aJson)
+  public static IJSExpression json (@Nonnull final IJson aJson)
   {
     ValueEnforcer.notNull (aJson, "Json");
+
+    if (true)
+    {
+      if (aJson.isObject ())
+        return new JSAssocArray ().addJson (aJson.getAsObject ());
+      if (aJson.isArray ())
+        return new JSArray ().addJson (aJson.getAsArray ());
+      return convert (aJson.getAsValue ().getValue ());
+    }
 
     return direct (aJson.getAsJsonString ());
   }

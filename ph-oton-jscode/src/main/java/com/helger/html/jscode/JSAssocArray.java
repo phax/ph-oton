@@ -68,7 +68,7 @@ public class JSAssocArray extends AbstractJSExpression
   /**
    * Get the key to be used. May be either a {@link JSAtom} or a
    * {@link JSStringLiteral}.
-   * 
+   *
    * @param sKey
    *        Key to use. May not be <code>null</code>.
    * @return Never <code>null</code>.
@@ -156,6 +156,7 @@ public class JSAssocArray extends AbstractJSExpression
   }
 
   @Nonnull
+  @Deprecated
   public JSAssocArray add (@Nonnull final String sKey, @Nullable final IJson aValue)
   {
     return add (sKey, aValue == null ? JSExpr.NULL : JSExpr.json (aValue));
@@ -226,17 +227,7 @@ public class JSAssocArray extends AbstractJSExpression
   public JSAssocArray addJson (@Nonnull final IJsonObject aJson)
   {
     for (final Map.Entry <String, IJson> aEntry : aJson)
-    {
-      final String sKey = aEntry.getKey ();
-      final IJson aValue = aEntry.getValue ();
-      if (aValue.isObject ())
-        add (sKey, new JSAssocArray ().addJson (aValue.getAsObject ()));
-      else
-        if (aValue.isArray ())
-          add (sKey, new JSArray ().addJson (aValue.getAsArray ()));
-        else
-          add (sKey, JSExpr.convert (aValue.getAsValue ().getValue ()));
-    }
+      add (aEntry.getKey (), JSExpr.json (aEntry.getValue ()));
     return this;
   }
 

@@ -248,15 +248,7 @@ public class JSArray extends AbstractJSExpression
   public JSArray addJson (@Nonnull final IJsonArray aJson)
   {
     for (final IJson aValue : aJson)
-    {
-      if (aValue.isObject ())
-        add (new JSAssocArray ().addJson (aValue.getAsObject ()));
-      else
-        if (aValue.isArray ())
-          add (new JSArray ().addJson (aValue.getAsArray ()));
-        else
-          add (JSExpr.convert (aValue.getAsValue ().getValue ()));
-    }
+      add (JSExpr.json (aValue));
     return this;
   }
 
