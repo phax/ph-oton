@@ -31,9 +31,12 @@ import com.helger.servlet.response.UnifiedResponse;
  */
 public abstract class AbstractUnifiedResponseServlet2 extends AbstractHttpServlet
 {
+  private final ServletStatusManager m_aStatusMgr;
+
   protected AbstractUnifiedResponseServlet2 ()
   {
-    ServletStatusManager.getInstance ().onServletCtor (getClass ());
+    m_aStatusMgr = ServletStatusManager.getInstance ();
+    m_aStatusMgr.onServletCtor (getClass ());
   }
 
   @Override
@@ -41,14 +44,14 @@ public abstract class AbstractUnifiedResponseServlet2 extends AbstractHttpServle
   public void init () throws ServletException
   {
     super.init ();
-    ServletStatusManager.getInstance ().onServletInit (getClass ());
+    m_aStatusMgr.onServletInit (getClass ());
   }
 
   @Override
   @OverridingMethodsMustInvokeSuper
   public void destroy ()
   {
-    ServletStatusManager.getInstance ().onServletDestroy (getClass ());
+    m_aStatusMgr.onServletDestroy (getClass ());
     super.destroy ();
   }
 }

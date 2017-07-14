@@ -137,10 +137,12 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                                                                                                                        "$handled-requests.failure");
   private final IMutableStatisticsHandlerCounter m_aStatsOnRequestEndFailure = StatisticsManager.getCounterHandler (getClass ().getName () +
                                                                                                                     "$on-request-end.failure");
+  private final ServletStatusManager m_aStatusMgr;
 
   protected AbstractUnifiedResponseServlet ()
   {
-    ServletStatusManager.getInstance ().onServletCtor (getClass ());
+    m_aStatusMgr = ServletStatusManager.getInstance ();
+    m_aStatusMgr.onServletCtor (getClass ());
   }
 
   protected static final long getUnifiedMillis (final long nMillis)
@@ -162,14 +164,14 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   protected void onInit () throws ServletException
   {
     super.onInit ();
-    ServletStatusManager.getInstance ().onServletInit (getClass ());
+    m_aStatusMgr.onServletInit (getClass ());
   }
 
   @Override
   @OverridingMethodsMustInvokeSuper
   protected void onDestroy ()
   {
-    ServletStatusManager.getInstance ().onServletDestroy (getClass ());
+    m_aStatusMgr.onServletDestroy (getClass ());
     super.onDestroy ();
   }
 
@@ -395,7 +397,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                      @Nonnull final EHTTPMethod eHttpMethod) throws ServletException, IOException
   {
     // Increment invocation counter
-    ServletStatusManager.getInstance ().onServletInvocation (getClass ());
+    m_aStatusMgr.onServletInvocation (getClass ());
     // Set the last application ID in the session
     PhotonSessionState.getInstance ().setLastApplicationID (getApplicationID ());
 

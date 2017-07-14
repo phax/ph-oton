@@ -49,15 +49,18 @@ public class DefaultCSPReportingServlet extends HttpServlet
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (DefaultCSPReportingServlet.class);
 
+  private final ServletStatusManager m_aStatusMgr;
+
   public DefaultCSPReportingServlet ()
   {
-    ServletStatusManager.getInstance ().onServletCtor (getClass ());
+    m_aStatusMgr = ServletStatusManager.getInstance ();
+    m_aStatusMgr.onServletCtor (getClass ());
   }
 
   @Override
   public void init () throws ServletException
   {
-    ServletStatusManager.getInstance ().onServletInit (getClass ());
+    m_aStatusMgr.onServletInit (getClass ());
   }
 
   /**
@@ -77,7 +80,7 @@ public class DefaultCSPReportingServlet extends HttpServlet
   protected void doPost (@Nonnull final HttpServletRequest aHttpRequest,
                          @Nonnull final HttpServletResponse aHttpResponse) throws ServletException, IOException
   {
-    ServletStatusManager.getInstance ().onServletInvocation (getClass ());
+    m_aStatusMgr.onServletInvocation (getClass ());
 
     // Read all request body bytes
     final byte [] aBytes = StreamHelper.getAllBytes (aHttpRequest.getInputStream ());
@@ -93,6 +96,6 @@ public class DefaultCSPReportingServlet extends HttpServlet
   @Override
   public void destroy ()
   {
-    ServletStatusManager.getInstance ().onServletDestroy (getClass ());
+    m_aStatusMgr.onServletDestroy (getClass ());
   }
 }
