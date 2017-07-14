@@ -314,6 +314,34 @@ public final class JSExpr
   }
 
   @Nonnull
+  public static IJSExpression convert (@Nullable final Object o)
+  {
+    if (o == null)
+      return NULL;
+    if (o instanceof IJSExpression)
+      return (IJSExpression) o;
+    if (o instanceof String)
+      return lit ((String) o);
+    if (o instanceof BigInteger)
+      return lit ((BigInteger) o);
+    if (o instanceof BigDecimal)
+      return lit ((BigDecimal) o);
+    if (o instanceof Boolean)
+      return lit (((Boolean) o).booleanValue ());
+    if (o instanceof Character)
+      return lit (((Character) o).charValue ());
+    if (o instanceof Double)
+      return lit (((Double) o).doubleValue ());
+    if (o instanceof Float)
+      return lit (((Float) o).floatValue ());
+    if (o instanceof Long)
+      return lit (((Long) o).longValue ());
+    if (o instanceof Number)
+      return lit (((Number) o).intValue ());
+    throw new IllegalArgumentException ("Cannot convert object of class " + o.getClass () + " to IJSExpression!");
+  }
+
+  @Nonnull
   public static JSRegExLiteral regex (@Nonnull final String sRegEx)
   {
     return new JSRegExLiteral (sRegEx);

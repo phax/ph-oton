@@ -27,7 +27,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsLinkedHashMap;
 import com.helger.commons.collection.ext.ICommonsOrderedMap;
 import com.helger.commons.equals.EqualsHelper;
@@ -37,6 +36,7 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.js.JSMarshaller;
 import com.helger.json.IJson;
+import com.helger.json.IJsonObject;
 
 /**
  * array creation and initialization.
@@ -63,6 +63,26 @@ public class JSAssocArray extends AbstractJSExpression
   {
     m_bForceQuotingNames = bForceQuotingNames;
     return this;
+  }
+
+  /**
+   * Get the key to be used. May be either a {@link JSAtom} or a
+   * {@link JSStringLiteral}.
+   * 
+   * @param sKey
+   *        Key to use. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public final IJSExpression getKey (@Nonnull final String sKey)
+  {
+    if (!m_bForceQuotingNames)
+    {
+      // Don't quote value identifiers
+      if (JSMarshaller.isJSIdentifier (sKey))
+        return new JSAtom (sKey);
+    }
+    return JSExpr.lit (sKey);
   }
 
   public boolean isEmpty ()
@@ -178,14 +198,7 @@ public class JSAssocArray extends AbstractJSExpression
   @Nonnull
   public JSAssocArray add (@Nonnull final String sKey, @Nonnull final IJSExpression aValue)
   {
-    if (!m_bForceQuotingNames)
-    {
-      // Don't quote value identifiers
-      if (JSMarshaller.isJSIdentifier (sKey))
-        return add (new JSAtom (sKey), aValue);
-    }
-
-    return add (JSExpr.lit (sKey), aValue);
+    return add (getKey (sKey), aValue);
   }
 
   /**
@@ -210,10 +223,28 @@ public class JSAssocArray extends AbstractJSExpression
   }
 
   @Nonnull
+  public JSAssocArray addJson (@Nonnull final IJsonObject aJson)
+  {
+    for (final Map.Entry <String, IJson> aEntry : aJson)
+    {
+      final String sKey = aEntry.getKey ();
+      final IJson aValue = aEntry.getValue ();
+      if (aValue.isObject ())
+        add (sKey, new JSAssocArray ().addJson (aValue.getAsObject ()));
+      else
+        if (aValue.isArray ())
+          add (sKey, new JSArray ().addJson (aValue.getAsArray ()));
+        else
+          add (sKey, JSExpr.convert (aValue.getAsValue ().getValue ()));
+    }
+    return this;
+  }
+
+  @Nonnull
   public JSAssocArray remove (@Nonnull final String sKey)
   {
     if (m_aExprs != null)
-      remove (JSExpr.lit (sKey));
+      remove (getKey (sKey));
     return this;
   }
 
@@ -228,7 +259,7 @@ public class JSAssocArray extends AbstractJSExpression
   @Nullable
   public IJSExpression get (@Nullable final String sKey)
   {
-    return get (JSExpr.lit (sKey));
+    return get (getKey (sKey));
   }
 
   @Nullable
@@ -243,7 +274,13 @@ public class JSAssocArray extends AbstractJSExpression
   @ReturnsMutableCopy
   public ICommonsOrderedMap <IJSExpression, IJSExpression> getAll ()
   {
-    return CollectionHelper.newOrderedMap (m_aExprs);
+    return new CommonsLinkedHashMap <> (m_aExprs);
+  }
+
+  @Nonnegative
+  public int getCount ()
+  {
+    return m_aExprs.size ();
   }
 
   public void generate (@Nonnull final JSFormatter aFormatter)
