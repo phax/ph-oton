@@ -23,6 +23,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -71,14 +72,14 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
    * @param sValue
    *        Value to display. Must not be <code>null</code>.
    * @param aTokens
-   *        All possible tokens. Must not be <code>null</code>.
+   *        All possible tokens. Must neither be <code>null</code> nor empty.
    */
-  public TypeaheadDatum (@Nonnull final String sValue, @Nonnull final String... aTokens)
+  public TypeaheadDatum (@Nonnull final String sValue, @Nonnull @Nonempty final String... aTokens)
   {
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
     m_sValue = sValue;
-    m_aTokens = new CommonsArrayList<> (aTokens);
+    m_aTokens = new CommonsArrayList <> (aTokens);
   }
 
   /**
@@ -94,7 +95,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
     m_sValue = sValue;
-    m_aTokens = new CommonsArrayList<> (aTokens);
+    m_aTokens = new CommonsArrayList <> (aTokens);
   }
 
   /**
