@@ -119,10 +119,10 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
       else
       {
         // It's relative and therefore streamed
-        final StringBuilder aPrefix = new StringBuilder (LinkHelper.getStreamServletPath ());
+        String sPrefix = LinkHelper.getStreamServletPath ();
         if (!StringHelper.startsWith (sURI, '/'))
-          aPrefix.append ('/');
-        ret = LinkHelper.getURLWithContext (aPrefix.append (sURI).toString ());
+          sPrefix += '/';
+        ret = LinkHelper.getURLWithContext (sPrefix + sURI);
       }
     }
     return ret;
