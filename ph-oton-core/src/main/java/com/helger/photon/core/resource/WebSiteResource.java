@@ -17,7 +17,6 @@
 package com.helger.photon.core.resource;
 
 import java.io.IOException;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -36,23 +35,19 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.io.IHasInputStream;
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.URLResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.URLHelper;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.visit.AbstractModifyingCSSUrlVisitor;
 import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriter;
-import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
-import com.helger.photon.core.url.LinkHelper;
 import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 import com.helger.security.messagedigest.MessageDigestValue;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -88,54 +83,28 @@ public class WebSiteResource
     m_sPath = ValueEnforcer.notEmpty (sPath, "Path");
     m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
 
-    IReadableResource aRes;
-    if (LinkHelper.hasKnownProtocol (sPath))
-    {
-      final URL aURL = URLHelper.getAsURL (sPath);
-      if (aURL == null)
-      {
-        // Would throw an NPE late on anyway
-        throw new IllegalStateException ("Failed to convert '" + sPath + "' to a URL");
-      }
-      aRes = new URLResource (aURL);
-      m_bResourceExists = true;
-    }
-    else
-    {
-      aRes = new ClassPathResource (sPath);
-      if (aRes.exists ())
-      {
-        m_bResourceExists = true;
-      }
-      else
-      {
-        // Required for project specific files (like app.js) when running in
-        // Jetty
-        aRes = WebFileIO.getServletContextIO ().getResource (sPath);
-        m_bResourceExists = aRes.exists ();
-      }
-    }
-
-    m_aResource = aRes;
+    m_aResource = PhotonHTMLSettings.getURIToURLConverter ().getAsResource (sPath);
+    m_bResourceExists = m_aResource.exists ();
 
     // No hash for external resources
-    if (m_bResourceExists && !(aRes instanceof URLResource))
+    if (m_bResourceExists && !(m_aResource instanceof URLResource))
     {
       byte [] aDigestBytes = ArrayHelper.EMPTY_BYTE_ARRAY;
       try
       {
-        aDigestBytes = MessageDigestValue.create (aRes.getInputStream (), EMessageDigestAlgorithm.SHA_512)
+        aDigestBytes = MessageDigestValue.create (m_aResource.getInputStream (), EMessageDigestAlgorithm.SHA_512)
                                          .getAllDigestBytes ();
       }
       catch (final IOException ex)
       {
-        s_aLogger.error ("Failed to create message digest of " + aRes.getPath (), ex);
+        s_aLogger.error ("Failed to create message digest of " + m_aResource.getPath (), ex);
       }
       m_aContentHash = aDigestBytes;
       m_sContentHash = StringHelper.getHexEncoded (aDigestBytes);
     }
     else
     {
+      // No hash value
       m_aContentHash = ArrayHelper.EMPTY_BYTE_ARRAY;
       m_sContentHash = "";
     }
@@ -152,6 +121,12 @@ public class WebSiteResource
   public String getPath ()
   {
     return m_sPath;
+  }
+
+  @Nonnull
+  public IReadableResource getResource ()
+  {
+    return m_aResource;
   }
 
   @Nonnull
@@ -258,9 +233,9 @@ public class WebSiteResource
     // Cut it down to the first 16 bytes, because the SHA512 hash is 128 bytes
     // long
     final String sVersion = m_sContentHash.length () >= 16 ? m_sContentHash.substring (0, 16) : "";
-    return PhotonHTMLSettings.getURIToURLConverter ()
-                             .getAsURL (aRequestScope, m_sPath)
-                             .addIf ("version", sVersion, StringHelper::hasText);
+    return PhotonHTMLSettings.getURIToURLConverter ().getAsURL (aRequestScope, m_sPath).addIf ("version",
+                                                                                               sVersion,
+                                                                                               StringHelper::hasText);
   }
 
   @Override

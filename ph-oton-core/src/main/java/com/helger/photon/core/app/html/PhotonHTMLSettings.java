@@ -65,7 +65,8 @@ public final class PhotonHTMLSettings
                                        @Nonnull final ICSSPathProvider aCSS,
                                        final boolean bRegular)
   {
-    return getURIToURLConverter ().getAsURL (aRequestScope, aCSS.getCSSItemPath (bRegular));
+    final String sPath = aCSS.getCSSItemPath (bRegular);
+    return getURIToURLConverter ().getAsURL (aRequestScope, sPath);
   }
 
   @Nonnull
@@ -73,6 +74,7 @@ public final class PhotonHTMLSettings
                                       @Nonnull final IJSPathProvider aJS,
                                       final boolean bRegular)
   {
-    return getURIToURLConverter ().getAsURL (aRequestScope, aJS.getJSItemPath (bRegular));
+    final String sPath = aJS.getJSItemPath (bRegular);
+    return getURIToURLConverter ().getAsURL (aRequestScope, sPath);
   }
 }

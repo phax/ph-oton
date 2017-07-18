@@ -67,20 +67,29 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   {
     ValueEnforcer.notEmpty (sURI, "URI");
 
+    IReadableResource ret;
+
     // If the URL is absolute, use it
     if (LinkHelper.hasKnownProtocol (sURI))
-      return new URLResource (URLHelper.getAsURL (sURI));
-
-    // Absolute paths are project relative files and therefore are relative to
-    // the servlet context directory
-    if (isProjectRelativeURI (sURI))
     {
-      // Cut "/" to avoid recognition as absolute file on Linux!
-      return WebFileIO.getServletContextIO ().getResource (sURI.substring (1));
+      ret = new URLResource (URLHelper.getAsURL (sURI));
     }
-
-    // Defaults to class path
-    return new ClassPathResource (sURI);
+    else
+    {
+      // Absolute paths are project relative files and therefore are relative to
+      // the servlet context directory
+      if (isProjectRelativeURI (sURI))
+      {
+        // Cut "/" to avoid recognition as absolute file on Linux!
+        ret = WebFileIO.getServletContextIO ().getResource (sURI.substring (1));
+      }
+      else
+      {
+        // Defaults to class path
+        ret = new ClassPathResource (sURI);
+      }
+    }
+    return ret;
   }
 
   @Nonnull
@@ -94,22 +103,29 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   {
     ValueEnforcer.notEmpty (sURI, "URI");
 
+    SimpleURL ret;
+
     // If the URL is absolute, use it
     if (LinkHelper.hasKnownProtocol (sURI))
-      return new SimpleURL (sURI);
-
-    // Absolute paths stays
-    if (isProjectRelativeURI (sURI))
+      ret = new SimpleURL (sURI);
+    else
     {
-      // Just add the context
-      return LinkHelper.getURLWithContext (sURI);
+      // Absolute paths stays
+      if (isProjectRelativeURI (sURI))
+      {
+        // Just add the context
+        ret = LinkHelper.getURLWithContext (sURI);
+      }
+      else
+      {
+        // It's relative and therefore streamed
+        final StringBuilder aPrefix = new StringBuilder (LinkHelper.getStreamServletPath ());
+        if (!StringHelper.startsWith (sURI, '/'))
+          aPrefix.append ('/');
+        ret = LinkHelper.getURLWithContext (aPrefix.append (sURI).toString ());
+      }
     }
-
-    // It's relative and therefore streamed
-    final StringBuilder aPrefix = new StringBuilder (LinkHelper.getStreamServletPath ());
-    if (!StringHelper.startsWith (sURI, '/'))
-      aPrefix.append ('/');
-    return LinkHelper.getURLWithContext (aPrefix.append (sURI).toString ());
+    return ret;
   }
 
   @Nonnull
@@ -126,15 +142,24 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notEmpty (sURI, "URI");
 
+    SimpleURL ret;
+
     // If the URL is absolute, use it
     if (LinkHelper.hasKnownProtocol (sURI))
-      return new SimpleURL (sURI);
-
-    // Absolute paths stay
-    if (isProjectRelativeURI (sURI))
-      return LinkHelper.getURLWithContext (aRequestScope, sURI);
-
-    // Relative paths will get streamed
-    return LinkHelper.getStreamURL (aRequestScope, sURI);
+      ret = new SimpleURL (sURI);
+    else
+    {
+      // Absolute paths stay
+      if (isProjectRelativeURI (sURI))
+      {
+        ret = LinkHelper.getURLWithContext (aRequestScope, sURI);
+      }
+      else
+      {
+        // Relative paths will get streamed
+        ret = LinkHelper.getStreamURL (aRequestScope, sURI);
+      }
+    }
+    return ret;
   }
 }
