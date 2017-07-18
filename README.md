@@ -27,9 +27,9 @@ Contained subprojects are:
   * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
 
 Release history:
-  * v7.1.1 - work in progress
+  * v7.1.1 - 2017-07-18
     * Requires ph-commons 8.6.6
-    * ServletContext base path can now be any URL
+    * ServletContext base path can now be any URL (instead of a manadatory File)
     * Made `ServletStatusManager` non-static
     * Improved JS API (better Json support)
   * v7.1.0 - 2017-07-05
@@ -96,7 +96,7 @@ Release history:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>7.1.0</version>
+        <version>7.1.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
