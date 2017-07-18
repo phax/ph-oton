@@ -24,12 +24,14 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.charset.EUnicodeBOM;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -50,7 +52,8 @@ import com.helger.photon.exchange.bulkexport.IExporterFile;
  *
  * @author Philip Helger
  */
-public final class ExporterCSV implements IExporterFile
+@NotThreadSafe
+public class ExporterCSV implements IExporterFile
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ExporterCSV.class);
 
@@ -225,8 +228,16 @@ public final class ExporterCSV implements IExporterFile
     return aCSVValues;
   }
 
+  /**
+   * Create a new CSV writer.
+   *
+   * @param aOS
+   *        The output stream to write to. May not be <code>null</code>.
+   * @return The {@link CSVWriter} to used. Never <code>null</code>.
+   */
   @Nonnull
-  private CSVWriter _createCSVWriter (@Nonnull final OutputStream aOS)
+  @OverrideOnDemand
+  protected CSVWriter createCSVWriter (@Nonnull final OutputStream aOS)
   {
     return new CSVWriter (new OutputStreamWriter (aOS, m_aCharset)).setSeparatorChar (m_cSeparatorChar)
                                                                    .setQuoteChar (m_cQuoteChar)
@@ -263,7 +274,7 @@ public final class ExporterCSV implements IExporterFile
         if (m_eBOM != null)
           aOS.write (m_eBOM.getAllBytes ());
 
-        try (final CSVWriter aWriter = _createCSVWriter (aOS))
+        try (final CSVWriter aWriter = createCSVWriter (aOS))
         {
           aWriter.writeAll (aCSVRecords);
         }
@@ -276,7 +287,7 @@ public final class ExporterCSV implements IExporterFile
         if (m_eBOM != null)
           aOS.write (m_eBOM.getAllBytes ());
 
-        try (final CSVWriter aWriter = _createCSVWriter (aOS))
+        try (final CSVWriter aWriter = createCSVWriter (aOS))
         {
           aProvider.forEachHeaderRecord (x -> aWriter.writeNext (_getAsCSVRecord (x)));
           aProvider.forEachBodyRecord (x -> aWriter.writeNext (_getAsCSVRecord (x)));

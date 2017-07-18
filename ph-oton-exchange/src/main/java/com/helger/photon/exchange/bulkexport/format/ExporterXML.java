@@ -22,6 +22,7 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
@@ -43,7 +44,8 @@ import com.helger.xml.serialize.write.XMLWriterSettings;
  *
  * @author Philip Helger
  */
-public final class ExporterXML implements IExporterFile
+@NotThreadSafe
+public class ExporterXML implements IExporterFile
 {
   public static final boolean DEFAULT_EMIT_TYPE_ATTRIBUTE = true;
   private static final String ELEMENT_ROOT = "root";

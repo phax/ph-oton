@@ -53,7 +53,7 @@ import com.helger.photon.exchange.bulkexport.IExporterFile;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class ExporterJSON implements IExporterFile
+public class ExporterJSON implements IExporterFile
 {
   public static final boolean DEFAULT_EMIT_TYPE = true;
   private static final String ELEMENT_HEADER = "header";
