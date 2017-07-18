@@ -61,6 +61,7 @@ public final class ExporterCSV implements IExporterFile
   private String m_sLineEnd = CSVWriter.DEFAULT_LINE_END;
   private EUnicodeBOM m_eBOM;
   private boolean m_bAvoidWriteEmpty = false;
+  private boolean m_bAvoidFinalLineEnd = CSVWriter.DEFAULT_AVOID_FINAL_LINE_END;
 
   public ExporterCSV ()
   {
@@ -185,6 +186,31 @@ public final class ExporterCSV implements IExporterFile
     return m_bAvoidWriteEmpty;
   }
 
+  /**
+   * Set whether the CSV file should end with a new line or not.
+   *
+   * @param bAvoidFinalLineEnd
+   *        <code>true</code> to avoid the CSV file ending with a new line.
+   * @return this for chaining
+   * @since 7.1.1
+   */
+  @Nonnull
+  public ExporterCSV setAvoidFinalLineEnd (final boolean bAvoidFinalLineEnd)
+  {
+    m_bAvoidFinalLineEnd = bAvoidFinalLineEnd;
+    return this;
+  }
+
+  /**
+   * @return <code>true</code> if the written data should end with a line end,
+   *         <code>false</code> otherwise (by default).
+   * @since 7.1.1
+   */
+  public boolean isAvoidFinalLineEnd ()
+  {
+    return m_bAvoidFinalLineEnd;
+  }
+
   @Nonnull
   private static ICommonsList <String> _getAsCSVRecord (@Nonnull final IExportRecord aRecord)
   {
@@ -205,7 +231,8 @@ public final class ExporterCSV implements IExporterFile
     return new CSVWriter (new OutputStreamWriter (aOS, m_aCharset)).setSeparatorChar (m_cSeparatorChar)
                                                                    .setQuoteChar (m_cQuoteChar)
                                                                    .setEscapeChar (m_cEscapeChar)
-                                                                   .setLineEnd (m_sLineEnd);
+                                                                   .setLineEnd (m_sLineEnd)
+                                                                   .setAvoidFinalLineEnd (m_bAvoidFinalLineEnd);
   }
 
   @Override
