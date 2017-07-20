@@ -44,7 +44,8 @@ public interface IPathRelativeIO extends Serializable
   String getBasePath ();
 
   /**
-   * Get the file system resource relative to the base path
+   * Get the file system resource relative to the base path. This method CAN NOT
+   * handle absolute paths!
    *
    * @param sRelativePath
    *        the relative path
