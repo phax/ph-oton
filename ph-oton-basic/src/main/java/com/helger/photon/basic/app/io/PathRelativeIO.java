@@ -25,6 +25,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resourceresolver.DefaultResourceResolver;
 import com.helger.commons.string.ToStringGenerator;
@@ -53,15 +54,22 @@ public class PathRelativeIO implements IPathRelativeIO
   }
 
   @Nonnull
-  public IReadableResource getResource (final String sRelativePath)
+  public IReadableResource getResource (@Nonnull @Nonempty final String sRelativePath)
   {
+    ValueEnforcer.notEmpty (sRelativePath, "RelativePath");
+
     try
     {
-      return DefaultResourceResolver.getResolvedResource (sRelativePath, m_sBasePath);
+      // Remove any leading slash to avoid that the resource resolver considers
+      // this an absolute URL on Linux!
+      final String sEffectiveRelativePath = FilenameHelper.startsWithPathSeparatorChar (sRelativePath) ? sRelativePath.substring (1)
+                                                                                                       : sRelativePath;
+
+      return DefaultResourceResolver.getResolvedResource (sEffectiveRelativePath, m_sBasePath);
     }
     catch (final IOException ex)
     {
-      throw new UncheckedIOException (ex);
+      throw new UncheckedIOException ("Error resolving '" + sRelativePath + "' on base path '" + m_sBasePath + "'", ex);
     }
   }
 
