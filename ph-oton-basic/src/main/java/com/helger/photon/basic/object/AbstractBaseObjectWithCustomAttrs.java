@@ -25,7 +25,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.AttributeContainerAny;
+import com.helger.commons.collection.attr.AttributeContainer;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -38,18 +38,18 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObject implements IObjectWithCustomAttrs
 {
-  private final AttributeContainerAny <String> m_aAttrs = new AttributeContainerAny <> ();
+  private final AttributeContainer <String, String> m_aCustomAttrs = new AttributeContainer <> ();
 
   public AbstractBaseObjectWithCustomAttrs (@Nonnull final IObjectWithCustomAttrs aObject)
   {
-    this (aObject, aObject.attrs ());
+    this (aObject, aObject.customAttrs ());
   }
 
   public AbstractBaseObjectWithCustomAttrs (@Nonnull final IObject aObject,
-                                            @Nullable final Map <String, ?> aCustomAttrs)
+                                            @Nullable final Map <String, String> aCustomAttrs)
   {
     super (aObject);
-    m_aAttrs.putAllIn (aCustomAttrs);
+    m_aCustomAttrs.putAllIn (aCustomAttrs);
   }
 
   public AbstractBaseObjectWithCustomAttrs (@Nonnull @Nonempty final String sID,
@@ -59,7 +59,7 @@ public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObje
                                             @Nullable final String sLastModificationUserID,
                                             @Nullable final LocalDateTime aDeletionDT,
                                             @Nullable final String sDeletionUserID,
-                                            @Nullable final Map <String, ?> aCustomAttrs)
+                                            @Nullable final Map <String, String> aCustomAttrs)
   {
     super (sID,
            aCreationDT,
@@ -68,19 +68,19 @@ public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObje
            sLastModificationUserID,
            aDeletionDT,
            sDeletionUserID);
-    m_aAttrs.putAllIn (aCustomAttrs);
+    m_aCustomAttrs.putAllIn (aCustomAttrs);
   }
 
   @Nonnull
   @ReturnsMutableObject
-  public AttributeContainerAny <String> attrs ()
+  public final AttributeContainer <String, String> customAttrs ()
   {
-    return m_aAttrs;
+    return m_aCustomAttrs;
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("Attrs", m_aAttrs).getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("CusomAttrs", m_aCustomAttrs).getToString ();
   }
 }
