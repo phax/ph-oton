@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsImmutableObject;
-import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.html.annotation.DeprecatedInHTML5;
 import com.helger.html.annotation.SinceHTML5;
 

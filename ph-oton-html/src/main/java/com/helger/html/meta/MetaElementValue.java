@@ -29,7 +29,7 @@ import com.helger.commons.string.ToStringGenerator;
 /**
  * This class encapsulates a single MetaTag. It consists of a name, a locale and
  * a value. If the meta tag is locale independent, the constant
- * {@link com.helger.commons.CGlobal#LOCALE_INDEPENDENT} is used.
+ * {@link com.helger.commons.locale.LocaleHelper#LOCALE_INDEPENDENT} is used.
  *
  * @author Philip Helger
  */

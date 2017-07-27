@@ -19,8 +19,8 @@ package com.helger.html.markdown;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.CodingStyleguideUnaware;
-import com.helger.commons.collection.ext.CommonsLinkedList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsLinkedList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.EHTMLElement;
 
 /**

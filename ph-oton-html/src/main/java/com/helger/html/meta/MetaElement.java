@@ -27,16 +27,15 @@ import javax.xml.XMLConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.CommonsLinkedHashMap;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsOrderedMap;
-import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.locale.LocaleHelper;
@@ -140,7 +139,7 @@ public class MetaElement implements IMutableMetaElement
 
   public boolean isLanguageIndependent ()
   {
-    return m_aContents.containsKey (CGlobal.LOCALE_INDEPENDENT);
+    return m_aContents.containsKey (LocaleHelper.LOCALE_INDEPENDENT);
   }
 
   @Nonnull
@@ -153,7 +152,7 @@ public class MetaElement implements IMutableMetaElement
   @Nullable
   public String getContentLanguageIndependent ()
   {
-    return m_aContents.get (CGlobal.LOCALE_INDEPENDENT);
+    return m_aContents.get (LocaleHelper.LOCALE_INDEPENDENT);
   }
 
   @Nonnull
@@ -166,7 +165,7 @@ public class MetaElement implements IMutableMetaElement
   @Nonnull
   public static Locale getRealContentLocale (@Nullable final Locale aContentLocale)
   {
-    return aContentLocale == null ? CGlobal.LOCALE_INDEPENDENT : aContentLocale;
+    return aContentLocale == null ? LocaleHelper.LOCALE_INDEPENDENT : aContentLocale;
   }
 
   @Nonnull

@@ -65,11 +65,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.io.file.FileSystemRecursiveIterator;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.io.file.iterate.FileSystemRecursiveIterator;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.mock.HCTestRuleOptimized;
 

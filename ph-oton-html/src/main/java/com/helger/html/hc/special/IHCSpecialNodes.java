@@ -21,8 +21,8 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsOrderedMap;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.resource.css.ICSSCodeProvider;

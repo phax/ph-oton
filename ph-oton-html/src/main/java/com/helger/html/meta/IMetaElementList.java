@@ -16,7 +16,6 @@
  */
 package com.helger.html.meta;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import javax.annotation.Nonnegative;
@@ -25,9 +24,9 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsIterable;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.collection.impl.ICommonsIterable;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
 
 /**
  * Read only base interface for a list of {@link IMetaElement} objects.
@@ -35,7 +34,7 @@ import com.helger.commons.collection.ext.ICommonsOrderedSet;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IMetaElementList extends Serializable, ICommonsIterable <IMetaElement>
+public interface IMetaElementList extends ICommonsIterable <IMetaElement>
 {
   /**
    * @return A set with used meta element names. Never <code>null</code>.

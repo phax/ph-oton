@@ -16,8 +16,8 @@
  */
 package com.helger.html.markdown;
 
-import com.helger.commons.collection.ext.CommonsHashSet;
-import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.url.IURLProtocol;
 import com.helger.commons.url.URLProtocolRegistry;
 import com.helger.html.EHTMLElement;

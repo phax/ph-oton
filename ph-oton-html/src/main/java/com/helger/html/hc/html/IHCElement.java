@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.ext.ICommonsOrderedMap;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.state.ETriState;
 import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLRole;

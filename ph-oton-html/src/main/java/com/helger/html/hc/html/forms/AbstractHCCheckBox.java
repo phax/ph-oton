@@ -19,8 +19,6 @@ package com.helger.html.hc.html.forms;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -36,8 +34,8 @@ import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <IMPLTYPE>>
-                                         extends AbstractHCInput <IMPLTYPE>
+public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <IMPLTYPE>> extends
+                                         AbstractHCInput <IMPLTYPE>
 {
   /** The default value of the "value" attribute in HTML */
   public static final String DEFAULT_VALUE = Boolean.TRUE.toString ();
@@ -46,12 +44,6 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
    * Emit a hidden field that indicates that the check-box was in the request.
    */
   public static final boolean DEFAULT_EMIT_HIDDEN_FIELD = true;
-
-  /**
-   * The prefix to appended to the field name of the checkbox to create the
-   * hidden field.
-   */
-  public static final String DEFAULT_HIDDEN_FIELD_PREFIX = "__";
 
   private boolean m_bEmitHiddenField = DEFAULT_EMIT_HIDDEN_FIELD;
 
@@ -133,7 +125,6 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
    *
    * @return <code>null</code> if no field name ({@link #getName()}) is present
    *         or a non-<code>null</code> and non-empty string.
-   * @see #getHiddenFieldName(String)
    */
   @Nullable
   public final String getHiddenFieldName ()
@@ -141,7 +132,8 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
     final String sFieldName = getName ();
     if (StringHelper.hasNoText (sFieldName))
       return null;
-    return getHiddenFieldName (sFieldName);
+    // Must match the constant in IRequestParamContainer (ph-web)
+    return "__" + sFieldName;
   }
 
   @Override
@@ -163,21 +155,5 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("emitHiddenField", m_bEmitHiddenField)
                             .getToString ();
-  }
-
-  /**
-   * Get the name of the automatic hidden field associated with a check-box.
-   *
-   * @param sFieldName
-   *        The name of the check-box.
-   * @return The name of the hidden field associated with the given check-box
-   *         name.
-   */
-  @Nonnull
-  @Nonempty
-  public static String getHiddenFieldName (@Nonnull @Nonempty final String sFieldName)
-  {
-    ValueEnforcer.notEmpty (sFieldName, "FieldName");
-    return DEFAULT_HIDDEN_FIELD_PREFIX + sFieldName;
   }
 }
