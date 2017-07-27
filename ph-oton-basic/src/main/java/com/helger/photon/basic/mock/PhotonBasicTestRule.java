@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.scope.mock.ScopeTestRule;
+import com.helger.scope.mock.ScopeTestRule;
 
 /**
  * Non-web scope aware test rule, with a defined storage root directory

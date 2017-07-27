@@ -75,7 +75,7 @@ public class AsynchronousAuditor extends AbstractAuditor
 
     m_aCollector = new MyCollector (aPerformer);
     m_aSenderThreadPool = Executors.newSingleThreadExecutor (s_aThreadFactory);
-    m_aSenderThreadPool.submit (m_aCollector);
+    m_aSenderThreadPool.submit (m_aCollector::collect);
   }
 
   @Override

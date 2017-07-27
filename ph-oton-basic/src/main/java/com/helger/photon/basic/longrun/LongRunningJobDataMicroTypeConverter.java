@@ -33,7 +33,7 @@ import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 import com.helger.xml.microdom.serialize.MicroReader;
 
-public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeConverter
+public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeConverter <LongRunningJobData>
 {
   private static final String ATTR_ID = "id";
   private static final String ATTR_STARTDT = "startdt";
@@ -45,11 +45,10 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
   private static final String ATTR_TYPE = "type";
 
   @Nullable
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final LongRunningJobData aValue,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull final String sTagName)
   {
-    final LongRunningJobData aValue = (LongRunningJobData) aObject;
     final IMicroElement eJobData = new MicroElement (sNamespaceURI, sTagName);
     eJobData.setAttribute (ATTR_ID, aValue.getID ());
     eJobData.setAttributeWithConversion (ATTR_STARTDT, aValue.getStartDateTime ());

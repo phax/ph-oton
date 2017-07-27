@@ -44,8 +44,9 @@ import com.helger.commons.annotation.IsLocked;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.io.EAppend;
 import com.helger.commons.io.file.EFileIOErrorCode;
 import com.helger.commons.io.file.EFileIOOperation;
@@ -62,7 +63,6 @@ import com.helger.commons.statistics.IMutableStatisticsHandlerTimer;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
-import com.helger.datetime.format.PDTToString;
 import com.helger.photon.basic.app.dao.IDAOIO;
 import com.helger.photon.basic.app.io.ConstantHasFilename;
 import com.helger.photon.basic.app.io.IHasFilename;
@@ -287,7 +287,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                                       @Nullable final File aFile)
   {
     // Custom exception handler for reading
-    if (getExceptionHandlersRead ().hasCallbacks ())
+    if (getExceptionHandlersRead ().isNotEmpty ())
     {
       final IReadableResource aRes = aFile == null ? null : new FileSystemResource (aFile);
       getExceptionHandlersRead ().forEach (aCB -> aCB.onDAOReadException (t, bIsInitialization, aRes));
@@ -696,7 +696,7 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                                        @Nullable final IMicroDocument aDoc)
   {
     // Check if a custom exception handler is present
-    if (getExceptionHandlersWrite ().hasCallbacks ())
+    if (getExceptionHandlersWrite ().isNotEmpty ())
     {
       final IReadableResource aRes = new FileSystemResource (sErrorFilename);
       final String sXMLContent = aDoc == null ? "no XML document created" : MicroWriter.getNodeAsString (aDoc);

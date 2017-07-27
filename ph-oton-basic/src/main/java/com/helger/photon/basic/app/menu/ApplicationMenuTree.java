@@ -20,9 +20,9 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.scope.mgr.ScopeManager;
-import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.scope.mgr.ScopeManager;
+import com.helger.scope.singleton.AbstractApplicationSingleton;
 
 /**
  * Represents a per-application menu tree

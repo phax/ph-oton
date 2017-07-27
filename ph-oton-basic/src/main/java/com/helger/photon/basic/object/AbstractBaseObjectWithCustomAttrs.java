@@ -25,7 +25,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.MapBasedAttributeContainer;
+import com.helger.commons.collection.attr.AttributeContainerAny;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -38,16 +38,15 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObject implements IObjectWithCustomAttrs
 {
-
-  private final MapBasedAttributeContainer <String, String> m_aAttrs = new MapBasedAttributeContainer<> ();
+  private final AttributeContainerAny <String> m_aAttrs = new AttributeContainerAny <> ();
 
   public AbstractBaseObjectWithCustomAttrs (@Nonnull final IObjectWithCustomAttrs aObject)
   {
-    this (aObject, aObject.getAllAttributes ());
+    this (aObject, aObject.attrs ());
   }
 
   public AbstractBaseObjectWithCustomAttrs (@Nonnull final IObject aObject,
-                                            @Nullable final Map <String, String> aCustomAttrs)
+                                            @Nullable final Map <String, ?> aCustomAttrs)
   {
     super (aObject);
     m_aAttrs.setAttributes (aCustomAttrs);
@@ -60,7 +59,7 @@ public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObje
                                             @Nullable final String sLastModificationUserID,
                                             @Nullable final LocalDateTime aDeletionDT,
                                             @Nullable final String sDeletionUserID,
-                                            @Nullable final Map <String, String> aCustomAttrs)
+                                            @Nullable final Map <String, ?> aCustomAttrs)
   {
     super (sID,
            aCreationDT,
@@ -73,8 +72,8 @@ public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObje
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public MapBasedAttributeContainer <String, String> getMutableAttributes ()
+  @ReturnsMutableObject
+  public AttributeContainerAny <String> attrs ()
   {
     return m_aAttrs;
   }

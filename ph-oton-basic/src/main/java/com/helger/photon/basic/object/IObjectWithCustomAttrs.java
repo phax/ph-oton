@@ -16,14 +16,22 @@
  */
 package com.helger.photon.basic.object;
 
-import com.helger.commons.collection.attr.IHasMutableAttributes;
+import javax.annotation.Nonnull;
+
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
 
 /**
  * Base interface for objects with custom attributes
  *
  * @author Philip Helger
  */
-public interface IObjectWithCustomAttrs extends IObject, IHasMutableAttributes <String, String>
+public interface IObjectWithCustomAttrs extends IObject
 {
-  /* empty */
+  /**
+   * @return Custom attributes.
+   */
+  @Nonnull
+  @ReturnsMutableObject
+  IMutableAttributeContainerAny <String> attrs ();
 }

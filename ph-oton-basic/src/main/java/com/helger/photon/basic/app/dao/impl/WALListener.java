@@ -32,14 +32,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.CommonsHashSet;
-import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.collection.ext.ICommonsSet;
-import com.helger.commons.concurrent.ManagedExecutorService;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsSet;
+import com.helger.commons.concurrent.ExecutorServiceHelper;
 import com.helger.commons.lang.TimeValue;
-import com.helger.commons.scope.IScope;
-import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
+import com.helger.scope.IScope;
+import com.helger.scope.singleton.AbstractGlobalSingleton;
 
 /**
  * The global write ahead logging manager that schedules future writings of a
@@ -119,7 +119,7 @@ public final class WALListener extends AbstractGlobalSingleton
     });
 
     // Wait until all tasks finished
-    ManagedExecutorService.shutdownAndWaitUntilAllTasksAreFinished (m_aES);
+    ExecutorServiceHelper.shutdownAndWaitUntilAllTasksAreFinished (m_aES);
   }
 
   /**

@@ -46,11 +46,16 @@ public final class WebFileIO
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
-  private static FileOperationManager s_aFileOpMgr = new FileOperationManager (new LoggingFileOperationCallback ());
+  private static FileOperationManager s_aFileOpMgr = new FileOperationManager ();
   @GuardedBy ("s_aRWLock")
   private static IMutableFileRelativeIO s_aDataPath;
   @GuardedBy ("s_aRWLock")
   private static IPathRelativeIO s_aServletContextPath;
+
+  static
+  {
+    s_aFileOpMgr.callbacks ().add (new LoggingFileOperationCallback ());
+  }
 
   private WebFileIO ()
   {}

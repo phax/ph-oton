@@ -24,16 +24,13 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.util.MicroHelper;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-public final class SystemMigrationResultMicroTypeConverter implements IMicroTypeConverter
+public final class SystemMigrationResultMicroTypeConverter implements IMicroTypeConverter <SystemMigrationResult>
 {
   private static final String ATTR_MIGRATION_ID = "id";
   private static final String ATTR_EXECUTION_LDT = "executionldt";
@@ -41,23 +38,21 @@ public final class SystemMigrationResultMicroTypeConverter implements IMicroType
   private static final String ELEMENT_ERROR_MSG = "errormsg";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final SystemMigrationResult aValue,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull @Nonempty final String sTagName)
   {
-    final SystemMigrationResult aValue = (SystemMigrationResult) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     aElement.setAttribute (ATTR_MIGRATION_ID, aValue.getID ());
     aElement.setAttributeWithConversion (ATTR_EXECUTION_LDT, aValue.getExecutionDateTime ());
-    aElement.setAttribute (ATTR_SUCCESS, Boolean.toString (aValue.isSuccess ()));
-    if (StringHelper.hasText (aValue.getErrorMessage ()))
+    aElement.setAttribute (ATTR_SUCCESS, aValue.isSuccess ());
+    if (aValue.hasErrorMessage ())
       aElement.appendElement (sNamespaceURI, ELEMENT_ERROR_MSG).appendText (aValue.getErrorMessage ());
     return aElement;
   }
 
   @Nonnull
   @ContainsSoftMigration
-  @SuppressFBWarnings ("NP_NULL_PARAM_DEREF")
   public SystemMigrationResult convertToNative (@Nonnull final IMicroElement aElement)
   {
     final String sID = aElement.getAttributeValue (ATTR_MIGRATION_ID);
@@ -72,6 +67,7 @@ public final class SystemMigrationResultMicroTypeConverter implements IMicroType
     final String sSuccess = aElement.getAttributeValue (ATTR_SUCCESS);
     final boolean bSuccess = StringParser.parseBool (sSuccess);
     final String sErrorMsg = MicroHelper.getChildTextContent (aElement, ELEMENT_ERROR_MSG);
+
     return new SystemMigrationResult (sID, aExecLDT, bSuccess, sErrorMsg);
   }
 }

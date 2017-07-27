@@ -23,8 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.collection.ext.CommonsLinkedHashMap;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
@@ -35,7 +35,7 @@ import com.helger.xml.microdom.convert.IMicroTypeConverter;
  * @author Philip Helger
  */
 @Immutable
-public final class FavoriteMicroTypeConverter implements IMicroTypeConverter
+public final class FavoriteMicroTypeConverter implements IMicroTypeConverter <Favorite>
 {
   private static final String ATTR_ID = "id";
   private static final String ATTR_USER_ID = "userid";
@@ -47,11 +47,10 @@ public final class FavoriteMicroTypeConverter implements IMicroTypeConverter
   private static final String ATTR_VALUE = "value";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final Favorite aFavourite,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull final String sTagName)
   {
-    final IFavorite aFavourite = (IFavorite) aObject;
     final IMicroElement eFavourite = new MicroElement (sNamespaceURI, sTagName);
     eFavourite.setAttribute (ATTR_ID, aFavourite.getID ());
     eFavourite.setAttribute (ATTR_USER_ID, aFavourite.getUserID ());
@@ -80,7 +79,7 @@ public final class FavoriteMicroTypeConverter implements IMicroTypeConverter
     final String sMenuItemID = eFavourite.getAttributeValue (ATTR_MENU_ITEM_ID);
     final String sDisplayName = eFavourite.getAttributeValue (ATTR_DISPLAY_NAME);
 
-    final ICommonsMap <String, String> aAdditionalParams = new CommonsLinkedHashMap<> ();
+    final ICommonsMap <String, String> aAdditionalParams = new CommonsLinkedHashMap <> ();
     for (final IMicroElement eCustom : eFavourite.getAllChildElements (ELEMENT_ADDITIONAL_PARAM))
       aAdditionalParams.put (eCustom.getAttributeValue (ATTR_NAME), eCustom.getAttributeValue (ATTR_VALUE));
 

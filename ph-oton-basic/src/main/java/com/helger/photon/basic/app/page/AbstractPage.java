@@ -22,12 +22,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
-import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
+import com.helger.commons.collection.attr.AttributeContainerAny;
+import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.ReadOnlyMultilingualText;
@@ -43,12 +42,12 @@ public abstract class AbstractPage implements IPage
   private final String m_sID;
   private IMultilingualText m_aName;
   private IMultilingualText m_aDescription;
-  private final MapBasedAttributeContainerAny <String> m_aAttrs = new MapBasedAttributeContainerAny<> ();
+  private final AttributeContainerAny <String> m_aAttrs = new AttributeContainerAny <> ();
 
   @Nullable
   public static ReadOnlyMultilingualText getAsMLT (@Nullable final String sText)
   {
-    return sText == null ? null : new ReadOnlyMultilingualText (CGlobal.LOCALE_INDEPENDENT, sText);
+    return sText == null ? null : new ReadOnlyMultilingualText (LocaleHelper.LOCALE_INDEPENDENT, sText);
   }
 
   /**
@@ -195,8 +194,8 @@ public abstract class AbstractPage implements IPage
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public IMutableAttributeContainerAny <String> getMutableAttributes ()
+  @ReturnsMutableObject
+  public final AttributeContainerAny <String> attrs ()
   {
     return m_aAttrs;
   }

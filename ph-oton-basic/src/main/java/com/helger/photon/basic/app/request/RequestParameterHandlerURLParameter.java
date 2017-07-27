@@ -48,8 +48,8 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
   public PhotonRequestParameters getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
-    ret.setLocaleFromString (aRequestScope.getAttributeAsString (getRequestParamNameLocale ()));
-    ret.setMenuItemFromString (aRequestScope.getAttributeAsString (getRequestParamNameMenuItem ()));
+    ret.setLocaleFromString (aRequestScope.params ().getAsString (getRequestParamNameLocale ()));
+    ret.setMenuItemFromString (aRequestScope.params ().getAsString (getRequestParamNameMenuItem ()));
     return ret;
   }
 

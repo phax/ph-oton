@@ -21,7 +21,8 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collection.attr.IHasMutableAttributesAny;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.display.IHasDisplayText;
 
@@ -30,7 +31,7 @@ import com.helger.commons.text.display.IHasDisplayText;
  *
  * @author Philip Helger
  */
-public interface IPage extends IHasID <String>, IHasDisplayText, IHasMutableAttributesAny <String>
+public interface IPage extends IHasID <String>, IHasDisplayText
 {
   /**
    * Get the description of the page in the passed locale.
@@ -43,4 +44,11 @@ public interface IPage extends IHasID <String>, IHasDisplayText, IHasMutableAttr
    */
   @Nullable
   String getDescription (@Nonnull Locale aContentLocale);
+
+  /**
+   * @return Custom attributes.
+   */
+  @Nonnull
+  @ReturnsMutableObject
+  IMutableAttributeContainerAny <String> attrs ();
 }

@@ -24,13 +24,13 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.lang.ClassHelper;
-import com.helger.commons.scope.IScope;
-import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.photon.basic.app.systemmsg.SystemMessageManager;
 import com.helger.photon.basic.favorites.FavoriteManager;
 import com.helger.photon.basic.longrun.LongRunningJobManager;
 import com.helger.photon.basic.longrun.LongRunningJobResultManager;
 import com.helger.photon.basic.migration.SystemMigrationManager;
+import com.helger.scope.IScope;
+import com.helger.scope.singleton.AbstractGlobalSingleton;
 
 /**
  * The meta system manager encapsulates all managers that are located in this

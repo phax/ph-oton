@@ -42,13 +42,13 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.CommonsLinkedHashMap;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.collection.ext.ICommonsSet;
-import com.helger.commons.filter.IFilter;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsSet;
+import com.helger.commons.functional.IPredicate;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.state.EChange;
@@ -72,7 +72,9 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
  */
 @ThreadSafe
 public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
-                                             extends AbstractWALDAO <IMPLTYPE> implements IMapBasedDAO <INTERFACETYPE>
+                                             extends
+                                             AbstractWALDAO <IMPLTYPE> implements
+                                             IMapBasedDAO <INTERFACETYPE>
 {
   /**
    * Extensible constructor parameter builder. Must be static because it is used
@@ -86,7 +88,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   {
     private boolean m_bDoInitialRead = true;
     private Supplier <ICommonsMap <String, IMPLTYPE>> m_aMapSupplier = () -> new CommonsHashMap <> ();
-    private IFilter <IMicroElement> m_aReadElementFilter = IFilter.all ();
+    private IPredicate <IMicroElement> m_aReadElementFilter = IPredicate.all ();
 
     @Nonnull
     public InitSettings <IMPLTYPE> setDoInitialRead (final boolean bDoInitialRead)
@@ -109,7 +111,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
     }
 
     @Nonnull
-    public InitSettings <IMPLTYPE> setReadElementFilter (@Nonnull final IFilter <IMicroElement> aReadElementFilter)
+    public InitSettings <IMPLTYPE> setReadElementFilter (@Nonnull final IPredicate <IMicroElement> aReadElementFilter)
     {
       m_aReadElementFilter = ValueEnforcer.notNull (aReadElementFilter, "ReadElementFilter");
       return this;
@@ -122,7 +124,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, IMPLTYPE> m_aMap;
   private final CallbackList <IDAOChangeCallback <INTERFACETYPE>> m_aCallbacks = new CallbackList <> ();
-  private IFilter <IMicroElement> m_aReadElementFilter;
+  private IPredicate <IMicroElement> m_aReadElementFilter;
 
   /**
    * Default constructor. Automatically tries to read the file in the
@@ -231,8 +233,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
   private void _addItem (@Nonnull final IMPLTYPE aItem, @Nonnull final EDAOActionType eActionType)
   {
     ValueEnforcer.notNull (aItem, "Item");
-    ValueEnforcer.isTrue (eActionType == EDAOActionType.CREATE ||
-                          eActionType == EDAOActionType.UPDATE,
+    ValueEnforcer.isTrue (eActionType == EDAOActionType.CREATE || eActionType == EDAOActionType.UPDATE,
                           "Invalid action type provided!");
 
     final String sID = aItem.getID ();

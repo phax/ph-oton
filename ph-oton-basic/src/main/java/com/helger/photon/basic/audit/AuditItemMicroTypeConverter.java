@@ -37,7 +37,7 @@ import com.helger.xml.microdom.convert.IMicroTypeConverter;
  * @author Philip Helger
  */
 @Immutable
-public class AuditItemMicroTypeConverter implements IMicroTypeConverter
+public class AuditItemMicroTypeConverter implements IMicroTypeConverter <AuditItem>
 {
   public static final String ELEMENT_ITEM = "item";
   /* Old version with different format was called "dts" */
@@ -48,11 +48,10 @@ public class AuditItemMicroTypeConverter implements IMicroTypeConverter
   public static final IMicroQName ATTR_SUCCESS = new MicroQName ("success");
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final AuditItem aAuditItem,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull final String sTagName)
   {
-    final AuditItem aAuditItem = (AuditItem) aObject;
     final IMicroElement eItem = new MicroElement (sNamespaceURI, sTagName);
     eItem.setAttributeWithConversion (ATTR_DT, aAuditItem.getDateTime ());
     eItem.setAttribute (ATTR_USER, aAuditItem.getUserID ());

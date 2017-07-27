@@ -21,9 +21,9 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.scope.mgr.ScopeManager;
-import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.scope.mgr.ScopeManager;
+import com.helger.scope.singleton.AbstractApplicationSingleton;
 
 /**
  * This class manages the locales available in the application.

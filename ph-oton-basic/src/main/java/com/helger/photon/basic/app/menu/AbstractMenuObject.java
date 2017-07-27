@@ -22,7 +22,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.attr.AttributeContainerAny;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.traits.IGenericImplTrait;
@@ -35,12 +36,13 @@ import com.helger.commons.traits.IGenericImplTrait;
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <IMPLTYPE>>
-                                         extends MapBasedAttributeContainerAny <String>
-                                         implements IMenuObject, IGenericImplTrait <IMPLTYPE>
+public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <IMPLTYPE>> implements
+                                         IMenuObject,
+                                         IGenericImplTrait <IMPLTYPE>
 {
   private final String m_sID;
   private IMenuObjectFilter m_aDisplayFilter;
+  private final AttributeContainerAny <String> m_aAttrs = new AttributeContainerAny <> ();
 
   public AbstractMenuObject (@Nonnull @Nonempty final String sID)
   {
@@ -72,12 +74,19 @@ public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <I
     return m_aDisplayFilter == null || m_aDisplayFilter.test (this);
   }
 
+  @Nonnull
+  @ReturnsMutableObject
+  public final AttributeContainerAny <String> attrs ()
+  {
+    return m_aAttrs;
+  }
+
   @Override
   public boolean equals (final Object o)
   {
     if (o == this)
       return true;
-    if (!super.equals (o))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final AbstractMenuObject <?> rhs = (AbstractMenuObject <?>) o;
     return m_sID.equals (rhs.m_sID);
@@ -94,7 +103,8 @@ public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <I
   {
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("ID", m_sID)
-                            .appendIfNotNull ("displayFilter", m_aDisplayFilter)
+                            .appendIfNotNull ("DisplayFilter", m_aDisplayFilter)
+                            .append ("Attrs", m_aAttrs)
                             .getToString ();
   }
 }

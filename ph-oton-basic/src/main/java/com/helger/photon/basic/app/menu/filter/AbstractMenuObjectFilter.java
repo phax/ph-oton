@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.CGlobal;
+import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.ReadOnlyMultilingualText;
@@ -50,7 +50,7 @@ public abstract class AbstractMenuObjectFilter implements IMenuObjectFilter
   @Nonnull
   public AbstractMenuObjectFilter setDescription (@Nullable final String sDescription)
   {
-    return setDescription (new ReadOnlyMultilingualText (CGlobal.LOCALE_INDEPENDENT, sDescription));
+    return setDescription (new ReadOnlyMultilingualText (LocaleHelper.LOCALE_INDEPENDENT, sDescription));
   }
 
   @Nonnull

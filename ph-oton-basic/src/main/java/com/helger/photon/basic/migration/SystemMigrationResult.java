@@ -30,6 +30,7 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.state.ISuccessIndicator;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -82,6 +83,11 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
   public String getErrorMessage ()
   {
     return m_sErrorMessage;
+  }
+
+  public boolean hasErrorMessage ()
+  {
+    return StringHelper.hasText (m_sErrorMessage);
   }
 
   @Override

@@ -33,7 +33,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.EAppend;
 import com.helger.commons.io.file.FileIOError;
 import com.helger.commons.io.file.FileOperationManager;
-import com.helger.commons.io.file.iterate.FileSystemRecursiveIterator;
+import com.helger.commons.io.file.FileSystemRecursiveIterator;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.ToStringGenerator;

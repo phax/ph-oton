@@ -19,7 +19,7 @@ package com.helger.photon.basic.app.menu;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.hierarchy.visit.IHierarchyVisitorCallback;
 import com.helger.tree.withid.DefaultTreeItemWithID;
 

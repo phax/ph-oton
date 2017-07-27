@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.url.ConstantHasSimpleURL;
 import com.helger.commons.url.IHasSimpleURL;
