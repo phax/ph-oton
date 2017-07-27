@@ -33,7 +33,7 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
  *
  * @author Philip Helger
  */
-public final class AccessTokenMicroTypeConverter implements IMicroTypeConverter
+public final class AccessTokenMicroTypeConverter implements IMicroTypeConverter <AccessToken>
 {
   private static final String ATTR_TOKEN_STRING = "tokenstring";
   private static final String ATTR_NOT_BEFORE = "notbefore";
@@ -41,11 +41,10 @@ public final class AccessTokenMicroTypeConverter implements IMicroTypeConverter
   private static final String ELEMENT_REVOCATION = "revocation";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final AccessToken aValue,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull @Nonempty final String sTagName)
   {
-    final IAccessToken aValue = (IAccessToken) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     aElement.setAttribute (ATTR_TOKEN_STRING, aValue.getTokenString ());
     aElement.setAttributeWithConversion (ATTR_NOT_BEFORE, aValue.getNotBefore ());

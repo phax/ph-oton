@@ -37,7 +37,7 @@ import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.util.MicroHelper;
 
-public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConverter
+public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConverter <User>
 {
   private static final IMicroQName ATTR_DESIREDLOCALE = new MicroQName ("desiredlocale");
   private static final IMicroQName ATTR_LASTLOGINLDT = new MicroQName ("lastloginldt");
@@ -54,11 +54,10 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
   private static final IMicroQName ATTR_DISABLED = new MicroQName ("disabled");
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final User aUser,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull final String sTagName)
   {
-    final IUser aUser = (IUser) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aUser, aElement);
     aElement.appendElement (ELEMENT_LOGINNAME).appendText (aUser.getLoginName ());

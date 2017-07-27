@@ -78,7 +78,7 @@ public final class UserGroupTest
     assertEquals (2, aUserGroup2.getAllContainedRoleIDs ().size ());
     assertTrue (aUserGroup2.getAllContainedRoleIDs ().contains ("role1"));
     assertTrue (aUserGroup2.getAllContainedRoleIDs ().contains ("role2"));
-    assertEquals (1, aUserGroup2.getAttributes ().getAttributeCount ());
-    assertEquals ("value", aUserGroup2.getAttributes ().getAttributeAsString ("key"));
+    assertEquals (1, aUserGroup2.customAttrs ().size ());
+    assertEquals ("value", aUserGroup2.customAttrs ().getAsString ("key"));
   }
 }

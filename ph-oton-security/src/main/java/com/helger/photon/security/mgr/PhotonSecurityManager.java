@@ -41,8 +41,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.lang.ClassHelper;
-import com.helger.commons.scope.IScope;
-import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.audit.AuditManager;
 import com.helger.photon.security.lock.DefaultLockManager;
@@ -55,6 +53,8 @@ import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.token.user.UserTokenManager;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.UserGroupManager;
+import com.helger.scope.IScope;
+import com.helger.scope.singleton.AbstractGlobalSingleton;
 
 /**
  * The meta system manager encapsulates all managers that are located in this
@@ -90,7 +90,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   private void _initCallbacks ()
   {
     // Remember the last login date of the user
-    LoggedInUserManager.getInstance ().getUserLoginCallbacks ().addCallback (new IUserLoginCallback ()
+    LoggedInUserManager.getInstance ().userLoginCallbacks ().add (new IUserLoginCallback ()
     {
       @Override
       public void onUserLogin (@Nonnull final LoginInfo aInfo)

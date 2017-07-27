@@ -27,8 +27,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.IReloadableDAO;
@@ -348,8 +348,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
     {
       EChange eChange = aUserGroup.setName (sNewName);
       eChange = eChange.or (aUserGroup.setDescription (sNewDescription));
-      eChange = eChange.or (aUserGroup.getMutableAttributes ().clear ());
-      eChange = eChange.or (aUserGroup.getMutableAttributes ().setAttributes (aNewCustomAttrs));
+      eChange = eChange.or (aUserGroup.customAttrs ().setAll (aNewCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

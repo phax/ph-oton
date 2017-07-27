@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.datetime.PDTFactory;
 import com.helger.photon.security.token.revocation.IRevocationStatus;
 
 /**
@@ -62,7 +63,10 @@ public interface IAccessToken extends Serializable
    * @return <code>true</code> if the token is valid now. This method does not
    *         consider the revocation status!
    */
-  boolean isValidNow ();
+  default boolean isValidNow ()
+  {
+    return isValidAt (PDTFactory.getCurrentLocalDateTime ());
+  }
 
   /**
    * Check if the token is valid at the specified date and time. This method
@@ -89,5 +93,8 @@ public interface IAccessToken extends Serializable
    *         <code>false</code> otherwise.
    * @see #getRevocationStatus()
    */
-  boolean isRevoked ();
+  default boolean isRevoked ()
+  {
+    return getRevocationStatus ().isRevoked ();
+  }
 }

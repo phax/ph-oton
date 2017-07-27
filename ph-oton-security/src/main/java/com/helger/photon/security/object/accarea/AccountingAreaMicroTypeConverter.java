@@ -25,7 +25,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.system.SystemHelper;
 import com.helger.masterdata.address.Address;
 import com.helger.masterdata.currency.ECurrency;
-import com.helger.photon.basic.object.accarea.IAccountingArea;
 import com.helger.photon.basic.object.client.IClient;
 import com.helger.photon.basic.object.client.IClientResolver;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
@@ -33,7 +32,7 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 
-public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroTypeConverter
+public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroTypeConverter <AccountingArea>
 {
   private static final String ATTR_CLIENTID = "clientid";
   private static final String ATTR_DISPLAYNAME = "displayname";
@@ -59,11 +58,10 @@ public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroT
   }
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final AccountingArea aValue,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull @Nonempty final String sTagName)
   {
-    final IAccountingArea aValue = (IAccountingArea) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     aElement.setAttribute (ATTR_CLIENTID, aValue.getClientID ());
     setObjectFields (aValue, aElement);

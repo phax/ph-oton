@@ -90,11 +90,6 @@ public final class AccessToken implements IAccessToken
     m_aNotAfter = aNotAfter;
   }
 
-  public boolean isValidNow ()
-  {
-    return isValidAt (PDTFactory.getCurrentLocalDateTime ());
-  }
-
   public boolean isValidAt (@Nonnull final LocalDateTime aDT)
   {
     ValueEnforcer.notNull (aDT, "DateTime");
@@ -109,11 +104,6 @@ public final class AccessToken implements IAccessToken
   public RevocationStatus getRevocationStatus ()
   {
     return m_aRevocationStatus;
-  }
-
-  public boolean isRevoked ()
-  {
-    return m_aRevocationStatus.isRevoked ();
   }
 
   public void markRevoked (@Nonnull @Nonempty final String sRevocationUserID,

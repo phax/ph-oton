@@ -34,7 +34,7 @@ import com.helger.xml.microdom.util.MicroHelper;
  *
  * @author Philip Helger
  */
-public final class RevocationStatusMicroTypeConverter implements IMicroTypeConverter
+public final class RevocationStatusMicroTypeConverter implements IMicroTypeConverter <RevocationStatus>
 {
   private static final String ATTR_IS_REVOKED = "isrevoked";
   private static final String ATTR_USER_ID = "ruserid";
@@ -42,11 +42,10 @@ public final class RevocationStatusMicroTypeConverter implements IMicroTypeConve
   private static final String ELEMENT_REASON = "reason";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final RevocationStatus aValue,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull @Nonempty final String sTagName)
   {
-    final IRevocationStatus aValue = (IRevocationStatus) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     aElement.setAttribute (ATTR_IS_REVOKED, aValue.isRevoked ());
     aElement.setAttribute (ATTR_USER_ID, aValue.getRevocationUserID ());

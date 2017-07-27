@@ -25,8 +25,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.CommonsLinkedHashMap;
-import com.helger.commons.collection.ext.ICommonsOrderedMap;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.photon.basic.object.IObject;
 import com.helger.photon.basic.object.IObjectWithCustomAttrs;
 import com.helger.xml.microdom.IMicroElement;
@@ -38,8 +38,10 @@ import com.helger.xml.microdom.convert.IMicroTypeConverter;
  * Abstract base class for object related micro type conversion.
  *
  * @author Philip Helger
+ * @param <T>
+ *        Data type to handle
  */
-public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConverter
+public abstract class AbstractObjectMicroTypeConverter <T> implements IMicroTypeConverter <T>
 {
   protected static final IMicroQName ATTR_ID = new MicroQName ("id");
   protected static final IMicroQName ATTR_CREATIONLDT = new MicroQName ("creationldt");
@@ -65,8 +67,7 @@ public abstract class AbstractObjectMicroTypeConverter implements IMicroTypeConv
                                             @Nonnull final IMicroElement aElement)
   {
     setObjectFields ((IObject) aValue, aElement);
-    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aValue.getAllAttributes ())
-                                                                   .entrySet ())
+    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aValue.customAttrs ()).entrySet ())
     {
       final IMicroElement eCustom = aElement.appendElement (ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());

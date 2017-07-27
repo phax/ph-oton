@@ -26,7 +26,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
@@ -94,8 +94,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
     {
       EChange eChange = EChange.UNCHANGED;
       // client ID cannot be changed!
-      eChange = eChange.or (aUserToken.getMutableAttributes ().clear ());
-      eChange = eChange.or (aUserToken.getMutableAttributes ().setAttributes (aCustomAttrs));
+      eChange = eChange.or (aUserToken.customAttrs ().setAll (aCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

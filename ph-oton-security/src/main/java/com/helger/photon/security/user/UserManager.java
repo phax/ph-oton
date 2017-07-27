@@ -30,7 +30,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.IReloadableDAO;
@@ -473,8 +473,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
       eChange = eChange.or (aUser.setDescription (sNewDescription));
       eChange = eChange.or (aUser.setDesiredLocale (aNewDesiredLocale));
       eChange = eChange.or (aUser.setDisabled (bNewDisabled));
-      eChange = eChange.or (aUser.getMutableAttributes ().clear ());
-      eChange = eChange.or (aUser.getMutableAttributes ().setAttributes (aNewCustomAttrs));
+      eChange = eChange.or (aUser.customAttrs ().setAll (aNewCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

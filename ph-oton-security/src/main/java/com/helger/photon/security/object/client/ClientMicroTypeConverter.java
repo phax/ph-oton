@@ -20,21 +20,19 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.basic.object.client.IClient;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
-public final class ClientMicroTypeConverter extends AbstractObjectMicroTypeConverter
+public final class ClientMicroTypeConverter extends AbstractObjectMicroTypeConverter <Client>
 {
   private static final String ATTR_DISPLAYNAME = "displayname";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final Client aValue,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull @Nonempty final String sTagName)
   {
-    final IClient aValue = (IClient) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aValue, aElement);
     aElement.setAttribute (ATTR_DISPLAYNAME, aValue.getDisplayName ());

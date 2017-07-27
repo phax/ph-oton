@@ -18,7 +18,7 @@ package com.helger.photon.security.user.credentials;
 
 import javax.annotation.Nullable;
 
-import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.impl.ICommonsCollection;
 import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 import com.helger.photon.security.user.IUser;
 

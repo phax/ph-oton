@@ -24,14 +24,13 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.attr.MapBasedAttributeContainer;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.IHasID;
-import com.helger.commons.scope.ISessionScope;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.security.user.IUser;
+import com.helger.scope.ISessionScope;
 
 /**
  * Represents the information of a single logged in user.
@@ -39,7 +38,7 @@ import com.helger.photon.security.user.IUser;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class LoginInfo extends MapBasedAttributeContainer <String, String> implements IHasID <String>
+public final class LoginInfo implements IHasID <String>
 {
   private final IUser m_aUser;
   private final ISessionScope m_aSessionScope;

@@ -84,8 +84,8 @@ public final class UserTokenTest
 
     final UserToken aUserToken = new UserToken (null, new SMap ("key", "value"), aUser);
     assertTrue (StringHelper.hasText (aUserToken.getActiveTokenString ()));
-    assertEquals (1, aUserToken.getAttributes ().getAttributeCount ());
-    assertEquals ("value", aUserToken.getAttributes ().getAttributeAsString ("key"));
+    assertEquals (1, aUserToken.customAttrs ().size ());
+    assertEquals ("value", aUserToken.customAttrs ().getAsString ("key"));
 
     XMLTestHelper.testMicroTypeConversion (aUserToken);
   }

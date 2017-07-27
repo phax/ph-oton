@@ -21,9 +21,9 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.scope.singleton.AbstractGlobalSingleton;
 
 /**
  * Singleton of {@link ILockManager}.

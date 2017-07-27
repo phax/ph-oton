@@ -26,7 +26,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.IReloadableDAO;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
@@ -282,8 +282,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
     {
       EChange eChange = aRole.setName (sNewName);
       eChange = eChange.or (aRole.setDescription (sNewDescription));
-      eChange = eChange.or (aRole.getMutableAttributes ().clear ());
-      eChange = eChange.or (aRole.getMutableAttributes ().setAttributes (aNewCustomAttrs));
+      eChange = eChange.or (aRole.customAttrs ().setAll (aNewCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

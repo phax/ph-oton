@@ -30,17 +30,16 @@ import com.helger.xml.microdom.util.MicroHelper;
  *
  * @author Philip Helger
  */
-public final class RoleMicroTypeConverter extends AbstractObjectMicroTypeConverter
+public final class RoleMicroTypeConverter extends AbstractObjectMicroTypeConverter <Role>
 {
   private static final String ATTR_NAME = "name";
   private static final String ELEMENT_DESCRIPTION = "description";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final Role aRole,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull final String sTagName)
   {
-    final IRole aRole = (IRole) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aRole, aElement);
     aElement.setAttribute (ATTR_NAME, aRole.getName ());

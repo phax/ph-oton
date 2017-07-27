@@ -35,14 +35,10 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.ICommonsCollection;
-import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.collection.ext.ICommonsSet;
-import com.helger.commons.scope.IScope;
-import com.helger.commons.scope.ISessionScope;
-import com.helger.commons.scope.mgr.ScopeManager;
-import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsCollection;
+import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.audit.AuditHelper;
@@ -53,6 +49,10 @@ import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.util.SecurityHelper;
+import com.helger.scope.IScope;
+import com.helger.scope.ISessionScope;
+import com.helger.scope.mgr.ScopeManager;
+import com.helger.scope.singleton.AbstractGlobalSingleton;
 import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.session.ISessionWebScopeActivationHandler;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
@@ -71,8 +71,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *
    * @author Philip Helger
    */
-  public static final class InternalSessionUserHolder extends AbstractSessionWebSingleton
-                                                      implements ISessionWebScopeActivationHandler
+  public static final class InternalSessionUserHolder extends AbstractSessionWebSingleton implements
+                                                      ISessionWebScopeActivationHandler
   {
     private static final long serialVersionUID = 2322897734799334L;
 
@@ -211,9 +211,9 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
   // Set of logged in user IDs
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, LoginInfo> m_aLoggedInUsers = new CommonsHashMap<> ();
-  private final CallbackList <IUserLoginCallback> m_aUserLoginCallbacks = new CallbackList<> ();
-  private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList<> ();
+  private final ICommonsMap <String, LoginInfo> m_aLoggedInUsers = new CommonsHashMap <> ();
+  private final CallbackList <IUserLoginCallback> m_aUserLoginCallbacks = new CallbackList <> ();
+  private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList <> ();
   private boolean m_bLogoutAlreadyLoggedInUser = DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER;
 
   @Deprecated
@@ -221,7 +221,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   public LoggedInUserManager ()
   {
     // Ensure that all objects of a user are unlocked upon logout
-    m_aUserLogoutCallbacks.addCallback (new InternalUserLogoutCallbackUnlockAllObjects ());
+    m_aUserLogoutCallbacks.add (new InternalUserLogoutCallbackUnlockAllObjects ());
   }
 
   /**
@@ -237,8 +237,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    * @return The user login callback list. Never <code>null</code>.
    */
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public CallbackList <IUserLoginCallback> getUserLoginCallbacks ()
+  @ReturnsMutableObject
+  public CallbackList <IUserLoginCallback> userLoginCallbacks ()
   {
     return m_aUserLoginCallbacks;
   }
@@ -247,8 +247,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    * @return The user logout callback list. Never <code>null</code>.
    */
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public CallbackList <IUserLogoutCallback> getUserLogoutCallbacks ()
+  @ReturnsMutableObject
+  public CallbackList <IUserLogoutCallback> userLogoutCallbacks ()
   {
     return m_aUserLogoutCallbacks;
   }

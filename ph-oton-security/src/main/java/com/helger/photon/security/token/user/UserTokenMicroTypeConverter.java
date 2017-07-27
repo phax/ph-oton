@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
 import com.helger.photon.security.token.accesstoken.AccessToken;
@@ -37,17 +37,16 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
  *
  * @author Philip Helger
  */
-public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeConverter
+public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeConverter <UserToken>
 {
   private static final String ELEMENT_ACCESS_TOKEN = "accesstoken";
   private static final String ATTR_USER_ID = "userid";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final UserToken aValue,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull @Nonempty final String sTagName)
   {
-    final IUserToken aValue = (IUserToken) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aValue, aElement);
     for (final IAccessToken aAccessToken : aValue.getAllAccessTokens ())

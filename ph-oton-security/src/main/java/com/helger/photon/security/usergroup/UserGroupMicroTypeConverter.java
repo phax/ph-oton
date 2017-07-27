@@ -26,7 +26,7 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.util.MicroHelper;
 
-public final class UserGroupMicroTypeConverter extends AbstractObjectMicroTypeConverter
+public final class UserGroupMicroTypeConverter extends AbstractObjectMicroTypeConverter <UserGroup>
 {
   private static final String ATTR_NAME = "name";
   private static final String ELEMENT_DESCRIPTION = "description";
@@ -34,11 +34,10 @@ public final class UserGroupMicroTypeConverter extends AbstractObjectMicroTypeCo
   private static final String ELEMENT_ROLE = "role";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final UserGroup aUserGroup,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull final String sTagName)
   {
-    final IUserGroup aUserGroup = (IUserGroup) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aUserGroup, aElement);
     aElement.setAttribute (ATTR_NAME, aUserGroup.getName ());
