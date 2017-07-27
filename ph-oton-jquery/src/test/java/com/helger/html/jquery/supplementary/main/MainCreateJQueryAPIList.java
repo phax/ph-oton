@@ -16,12 +16,12 @@
  */
 package com.helger.html.jquery.supplementary.main;
 
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.CommonsLinkedHashSet;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsOrderedSet;
-import com.helger.commons.collection.multimap.IMultiMapListBased;
-import com.helger.commons.collection.multimap.MultiTreeMapArrayListBased;
+import com.helger.collection.multimap.IMultiMapListBased;
+import com.helger.collection.multimap.MultiTreeMapArrayListBased;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsLinkedHashSet;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.string.StringHelper;
 
 public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList

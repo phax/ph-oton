@@ -23,13 +23,13 @@ import javax.annotation.concurrent.Immutable;
 
 import org.w3c.dom.Node;
 
+import com.helger.collection.pair.IPair;
+import com.helger.collection.pair.Pair;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.pair.IPair;
-import com.helger.commons.collection.pair.Pair;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.id.IHasID;
 import com.helger.html.EHTMLElement;
 import com.helger.html.css.ICSSClassProvider;
