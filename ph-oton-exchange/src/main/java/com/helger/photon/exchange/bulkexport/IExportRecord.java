@@ -19,7 +19,7 @@ package com.helger.photon.exchange.bulkexport;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsList;
 
 /**
  * Represents a single record to be exported.
