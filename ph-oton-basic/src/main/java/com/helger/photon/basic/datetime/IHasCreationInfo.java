@@ -16,7 +16,7 @@
  */
 package com.helger.photon.basic.datetime;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.datetime.domain.IHasCreationDateTime;
 
@@ -28,8 +28,8 @@ import com.helger.datetime.domain.IHasCreationDateTime;
 public interface IHasCreationInfo extends IHasCreationDateTime
 {
   /**
-   * @return The user ID who created the object. May not be <code>null</code>.
+   * @return The user ID who created the object. May be <code>null</code>.
    */
-  @Nonnull
+  @Nullable
   String getCreationUserID ();
 }

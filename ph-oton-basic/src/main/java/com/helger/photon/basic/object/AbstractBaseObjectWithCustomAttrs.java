@@ -49,7 +49,7 @@ public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObje
                                             @Nullable final Map <String, ?> aCustomAttrs)
   {
     super (aObject);
-    m_aAttrs.setAttributes (aCustomAttrs);
+    m_aAttrs.putAllIn (aCustomAttrs);
   }
 
   public AbstractBaseObjectWithCustomAttrs (@Nonnull @Nonempty final String sID,
@@ -68,7 +68,7 @@ public abstract class AbstractBaseObjectWithCustomAttrs extends AbstractBaseObje
            sLastModificationUserID,
            aDeletionDT,
            sDeletionUserID);
-    m_aAttrs.setAttributes (aCustomAttrs);
+    m_aAttrs.putAllIn (aCustomAttrs);
   }
 
   @Nonnull

@@ -17,12 +17,9 @@
 package com.helger.photon.basic.object;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.type.ITypedObject;
@@ -42,33 +39,6 @@ public interface IObject extends
                          IHasDeletionInfo,
                          Serializable
 {
-  /**
-   * @return The <code>null</code>-able creation date time of the object.
-   */
-  @Nullable
-  LocalDateTime getCreationDateTime ();
-
-  @Nullable
-  default LocalDate getCreationDate ()
-  {
-    final LocalDateTime aLDT = getCreationDateTime ();
-    return aLDT == null ? null : aLDT.toLocalDate ();
-  }
-
-  @Nullable
-  default LocalTime getCreationTime ()
-  {
-    final LocalDateTime aLDT = getCreationDateTime ();
-    return aLDT == null ? null : aLDT.toLocalTime ();
-  }
-
-  /**
-   * @return The user ID who created the object. May be <code>null</code> in
-   *         case of migrated content.
-   */
-  @Nullable
-  String getCreationUserID ();
-
   default boolean isLastChangeAfter (@Nonnull final LocalDateTime aDT)
   {
     final LocalDateTime aCreationDT = getCreationDateTime ();
