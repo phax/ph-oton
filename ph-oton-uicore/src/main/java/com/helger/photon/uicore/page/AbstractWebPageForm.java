@@ -1077,7 +1077,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   private static JSAssocArray _getAsAssocArray (@Nonnull final FormState aFormState)
   {
     final JSAssocArray ret = new JSAssocArray ();
-    for (final Map.Entry <String, Object> aEntry : aFormState.attrs ())
+    for (final Map.Entry <String, Object> aEntry : aFormState.attrs ().entrySet ())
     {
       final String sKey = aEntry.getKey ();
       final Object aValue = aEntry.getValue ();
