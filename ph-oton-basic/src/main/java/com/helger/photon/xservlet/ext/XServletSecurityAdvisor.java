@@ -1,4 +1,4 @@
-package com.helger.photon.xservlet.security;
+package com.helger.photon.xservlet.ext;
 
 import java.io.IOException;
 

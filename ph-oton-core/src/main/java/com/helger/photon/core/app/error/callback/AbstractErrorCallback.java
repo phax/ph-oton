@@ -43,10 +43,10 @@ import com.helger.photon.core.api.IAPIExceptionCallback;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
 import com.helger.photon.core.app.error.InternalErrorHandler;
-import com.helger.photon.core.requesttrack.ILongRunningRequestCallback;
-import com.helger.photon.core.requesttrack.IParallelRunningRequestCallback;
-import com.helger.photon.core.requesttrack.RequestTracker;
-import com.helger.photon.core.requesttrack.TrackedRequest;
+import com.helger.photon.xservlet.requesttrack.ILongRunningRequestCallback;
+import com.helger.photon.xservlet.requesttrack.IParallelRunningRequestCallback;
+import com.helger.photon.xservlet.requesttrack.RequestTracker;
+import com.helger.photon.xservlet.requesttrack.TrackedRequest;
 import com.helger.quartz.IJob;
 import com.helger.schedule.job.AbstractJob;
 import com.helger.schedule.job.IJobExceptionCallback;
@@ -211,7 +211,7 @@ public abstract class AbstractErrorCallback implements
     AbstractDAO.getExceptionHandlersRead ().add (aCallback);
     AbstractDAO.getExceptionHandlersWrite ().add (aCallback);
     AbstractJob.getExceptionCallbacks ().add (aCallback);
-    RequestTracker.getLongRunningRequestCallbacks ().add (aCallback);
-    RequestTracker.getParallelRunningRequestCallbacks ().add (aCallback);
+    RequestTracker.longRunningRequestCallbacks ().add (aCallback);
+    RequestTracker.parallelRunningRequestCallbacks ().add (aCallback);
   }
 }

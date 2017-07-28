@@ -22,7 +22,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.url.URLHelper;
-import com.helger.photon.core.app.CApplication;
+import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -50,7 +50,7 @@ public class StreamServlet extends AbstractStreamServlet
   @Nonempty
   protected String getApplicationID ()
   {
-    return CApplication.APP_ID_PUBLIC;
+    return CApplicationID.APP_ID_PUBLIC;
   }
 
   @Override

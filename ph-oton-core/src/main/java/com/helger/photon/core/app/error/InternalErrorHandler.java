@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.app.error;
 
-import java.io.File;
 import java.net.InetAddress;
 import java.time.Clock;
 import java.time.ZonedDateTime;
@@ -55,11 +54,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.request.RequestParameterManager;
-import com.helger.photon.basic.thread.ThreadDescriptor;
-import com.helger.photon.basic.thread.ThreadDescriptorList;
-import com.helger.photon.core.app.error.callback.IInternalErrorCallback;
 import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
-import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.scope.mgr.ScopeSessionManager;
 import com.helger.servlet.ServletHelper;
@@ -82,6 +77,8 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.serialize.write.XMLWriterSettings;
+import com.helger.xml.util.thread.ThreadDescriptor;
+import com.helger.xml.util.thread.ThreadDescriptorList;
 
 /**
  * A handler for internal errors
@@ -424,23 +421,6 @@ public final class InternalErrorHandler
       }
     }
 
-    // User ID
-    try
-    {
-      aMetadata.addField ("User", LoggedInUserManager.getInstance ().getCurrentUserID ());
-    }
-    catch (final Throwable t2)
-    {
-      // Happens if no scope is available (or what so ever)
-      aMetadata.addFieldRetrievalError ("User", t2);
-    }
-
-    // Disk space info
-    final File aBasePath = WebFileIO.getDataIO ().getBasePathFile ();
-    aMetadata.addField ("BaseDirectory", aBasePath.getAbsolutePath ());
-    aMetadata.addField ("Usable bytes", Long.toString (aBasePath.getUsableSpace ()));
-    aMetadata.addField ("Free bytes", Long.toString (aBasePath.getFreeSpace ()));
-
     // Network info
     try
     {
@@ -653,16 +633,8 @@ public final class InternalErrorHandler
     if (bInvokeCustomExceptionHandler)
     {
       // Invoke custom exception handler (if present)
-      final IInternalErrorCallback aCustomExceptionHandler = InternalErrorSettings.getCustomExceptionHandler ();
-      if (aCustomExceptionHandler != null)
-        try
-        {
-          aCustomExceptionHandler.onInternalError (t, aRequestScope, sErrorID, aRealDisplayLocale);
-        }
-        catch (final Throwable t2)
-        {
-          s_aLogger.error ("Internal error in custom exception handler " + aCustomExceptionHandler, t2);
-        }
+      InternalErrorSettings.callbacks ()
+                           .forEach (x -> x.onInternalError (t, aRequestScope, sErrorID, aRealDisplayLocale));
     }
 
     return sErrorID;

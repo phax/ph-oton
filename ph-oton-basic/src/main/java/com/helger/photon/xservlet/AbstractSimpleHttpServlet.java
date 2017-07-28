@@ -152,7 +152,7 @@ public abstract class AbstractSimpleHttpServlet extends AbstractXServlet
     {}
   }
 
-  private static final class ToUnifiedResponseHttpServletHandler implements IScopedXServletHandler
+  private static final class ToUnifiedResponseHttpServletHandler implements IXServletHandler
   {
     private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractSimpleHttpServlet.ToUnifiedResponseHttpServletHandler.class);
 
@@ -263,9 +263,8 @@ public abstract class AbstractSimpleHttpServlet extends AbstractXServlet
                                         @Nonnull final ISimpleHandler aSimpleHandler)
   {
     final IXServletHandler aRealHandler = new AsyncXServletHandler (aAsyncSpec,
-                                                                    new ScopingXServletHandler (sApplicationID,
-                                                                                                new ToUnifiedResponseHttpServletHandler (aSimpleHandler,
-                                                                                                                                         sApplicationID)));
-    super.registerHandler (eMethod, aRealHandler);
+                                                                    new ToUnifiedResponseHttpServletHandler (aSimpleHandler,
+                                                                                                             sApplicationID));
+    m_aHandlerRegistry.registerHandler (eMethod, aRealHandler);
   }
 }

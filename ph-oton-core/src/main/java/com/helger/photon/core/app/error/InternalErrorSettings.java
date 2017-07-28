@@ -26,6 +26,8 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.email.IEmailAddress;
@@ -48,11 +50,10 @@ public final class InternalErrorSettings
   @GuardedBy ("s_aRWLock")
   private static final InternalErrorEmailSettings s_aEmailSettings = new InternalErrorEmailSettings ();
   @GuardedBy ("s_aRWLock")
-  private static IInternalErrorCallback s_aCustomExceptionHandler;
-  @GuardedBy ("s_aRWLock")
   private static boolean s_bEnableDumpAllThreads = DEFAULT_ENABLE_FULL_THREAD_DUMPS;
   @GuardedBy ("s_aRWLock")
   private static Locale s_aFallbackLocale = CGlobal.DEFAULT_LOCALE;
+  private static CallbackList <IInternalErrorCallback> s_aCallbacks = new CallbackList <> ();
 
   private InternalErrorSettings ()
   {}
@@ -131,28 +132,6 @@ public final class InternalErrorSettings
   }
 
   /**
-   * @return The current custom exception handler or <code>null</code> if none
-   *         is set.
-   */
-  @Nullable
-  public static IInternalErrorCallback getCustomExceptionHandler ()
-  {
-    return s_aRWLock.readLocked ( () -> s_aCustomExceptionHandler);
-  }
-
-  /**
-   * Set the custom exception handler.
-   *
-   * @param aCustomExceptionHandler
-   *        The exception handler to be used. May be <code>null</code> to
-   *        indicate none.
-   */
-  public static void setCustomExceptionHandler (@Nullable final IInternalErrorCallback aCustomExceptionHandler)
-  {
-    s_aRWLock.writeLocked ( () -> s_aCustomExceptionHandler = aCustomExceptionHandler);
-  }
-
-  /**
    * Set the fallback locale in case none could be determined.
    *
    * @param aFallbackLocale
@@ -173,5 +152,16 @@ public final class InternalErrorSettings
   public static Locale getFallbackLocale ()
   {
     return s_aRWLock.readLocked ( () -> s_aFallbackLocale);
+  }
+
+  /**
+   * @return The current custom internal error callbacks. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableObject
+  public static CallbackList <IInternalErrorCallback> callbacks ()
+  {
+    return s_aCallbacks;
   }
 }

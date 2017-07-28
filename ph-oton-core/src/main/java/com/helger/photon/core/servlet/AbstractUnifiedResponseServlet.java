@@ -56,7 +56,7 @@ import com.helger.http.EHTTPVersion;
 import com.helger.photon.basic.app.PhotonSessionState;
 import com.helger.photon.core.app.redirect.ForcedRedirectException;
 import com.helger.photon.core.app.redirect.ForcedRedirectManager;
-import com.helger.photon.core.requesttrack.RequestTracker;
+import com.helger.photon.xservlet.requesttrack.RequestTracker;
 import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.ServletContextPathHolder;

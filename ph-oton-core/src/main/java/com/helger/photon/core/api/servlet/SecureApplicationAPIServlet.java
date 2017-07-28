@@ -19,7 +19,7 @@ package com.helger.photon.core.api.servlet;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.core.app.CApplication;
+import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 
 /**
@@ -45,6 +45,6 @@ public class SecureApplicationAPIServlet extends AbstractApplicationAPIServlet
   @Nonempty
   protected String getApplicationID ()
   {
-    return CApplication.APP_ID_SECURE;
+    return CApplicationID.APP_ID_SECURE;
   }
 }

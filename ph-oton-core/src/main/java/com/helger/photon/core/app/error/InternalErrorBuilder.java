@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.app.error;
 
+import java.io.File;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -32,9 +33,11 @@ import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.html.hc.IHCNodeWithChildren;
+import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
 import com.helger.photon.core.app.error.uihandler.UIInternalErrorHandler;
+import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.smtp.data.EmailAttachmentList;
 import com.helger.smtp.data.IEmailAttachment;
 import com.helger.smtp.data.IEmailAttachmentList;
@@ -63,7 +66,8 @@ public class InternalErrorBuilder
    */
   public static final boolean DEFAULT_SAVE_AS_XML = true;
   /**
-   * By default the class path entries are not added, because the Tomcat classpath is not very interesting.
+   * By default the class path entries are not added, because the Tomcat
+   * classpath is not very interesting.
    *
    * @since 7.0.4
    */
@@ -102,6 +106,24 @@ public class InternalErrorBuilder
   {
     addCustomData ("GlobalDebug.debug", GlobalDebug.isDebugMode ());
     addCustomData ("GlobalDebug.production", GlobalDebug.isProductionMode ());
+
+    // Disk space info
+    final File aBasePath = WebFileIO.getDataIO ().getBasePathFile ();
+    addCustomData ("Data Directory", aBasePath.getAbsolutePath ());
+    addCustomData ("Usable bytes", Long.toString (aBasePath.getUsableSpace ()));
+    addCustomData ("Free bytes", Long.toString (aBasePath.getFreeSpace ()));
+    addCustomData ("ServletContext Base path", WebFileIO.getServletContextIO ().getBasePath ());
+
+    // User ID
+    try
+    {
+      addCustomData ("User", LoggedInUserManager.getInstance ().getCurrentUserID ());
+    }
+    catch (final Throwable t2)
+    {
+      // Happens if no scope is available (or what so ever)
+      addCustomData ("User", "Unknown");
+    }
   }
 
   /**

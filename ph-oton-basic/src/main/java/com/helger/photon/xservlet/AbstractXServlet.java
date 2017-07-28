@@ -17,10 +17,8 @@
 package com.helger.photon.xservlet;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.EnumSet;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -37,10 +35,10 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsEnumMap;
-import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.exception.InitializationException;
 import com.helger.commons.http.CHTTPHeader;
+import com.helger.commons.lang.ClassHelper;
+import com.helger.commons.state.EChange;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
@@ -50,10 +48,16 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.http.EHTTPMethod;
 import com.helger.http.EHTTPVersion;
-import com.helger.photon.xservlet.security.XServletSecurityAdvisor;
+import com.helger.photon.xservlet.ext.XServletConsistencyAdvisor;
+import com.helger.photon.xservlet.ext.XServletSecurityAdvisor;
+import com.helger.photon.xservlet.requesttrack.RequestTracker;
 import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
+import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.http.CountingOnlyHttpServletResponse;
 import com.helger.servlet.request.RequestLogger;
+import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
+import com.helger.web.scope.IRequestWebScope;
+import com.helger.web.scope.request.RequestScopeInitializer;
 
 /**
  * Abstract HTTP based servlet. Compared to the default
@@ -72,6 +76,9 @@ import com.helger.servlet.request.RequestLogger;
  */
 public abstract class AbstractXServlet extends GenericServlet
 {
+  /** The name of the request attribute uniquely identifying the request ID */
+  public static final String REQUEST_ATTR_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "request.id";
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractXServlet.class);
   private static final IMutableStatisticsHandlerCounter s_aCounterRequestsTotal = StatisticsManager.getCounterHandler (AbstractXServlet.class.getName () +
                                                                                                                        "$requests.total");
@@ -79,28 +86,28 @@ public abstract class AbstractXServlet extends GenericServlet
                                                                                                                           "$requests.accepted");
   private static final IMutableStatisticsHandlerCounter s_aCounterRequestsHandled = StatisticsManager.getCounterHandler (AbstractXServlet.class.getName () +
                                                                                                                          "$requests.handled");
-  private static final IMutableStatisticsHandlerKeyedCounter s_aCounterRequestsPerVersionTotal = StatisticsManager.getKeyedCounterHandler (AbstractXServlet.class.getName () +
-                                                                                                                                           "$requests-per-version.total");
+  private static final IMutableStatisticsHandlerKeyedCounter s_aCounterRequestsPerVersionAccepted = StatisticsManager.getKeyedCounterHandler (AbstractXServlet.class.getName () +
+                                                                                                                                              "$requests-per-version.accepted");
   private static final IMutableStatisticsHandlerKeyedCounter s_aCounterRequestsPerVersionHandled = StatisticsManager.getKeyedCounterHandler (AbstractXServlet.class.getName () +
                                                                                                                                              "$requests-per-version.handled");
-  private static final IMutableStatisticsHandlerKeyedCounter s_aCounterRequestsPerMethodTotal = StatisticsManager.getKeyedCounterHandler (AbstractXServlet.class.getName () +
-                                                                                                                                          "$requests-per-method.total");
+  private static final IMutableStatisticsHandlerKeyedCounter s_aCounterRequestsPerMethodAccepted = StatisticsManager.getKeyedCounterHandler (AbstractXServlet.class.getName () +
+                                                                                                                                             "$requests-per-method.accepted");
   private static final IMutableStatisticsHandlerKeyedCounter s_aCounterRequestsPerMethodHandled = StatisticsManager.getKeyedCounterHandler (AbstractXServlet.class.getName () +
                                                                                                                                             "$requests-per-method.handled");
   private final IMutableStatisticsHandlerKeyedCounter m_aCounterHttpMethodUnhandled = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
                                                                                                                                 "$method.unhandled");
   private static final IMutableStatisticsHandlerKeyedTimer s_aTimer = StatisticsManager.getKeyedTimerHandler (AbstractXServlet.class);
 
+  private static final AtomicLong s_aRequestID = new AtomicLong (0);
+  private static final AtomicBoolean s_aFirstRequest = new AtomicBoolean (true);
+
   private final ServletStatusManager m_aStatusMgr;
 
   /** The main handler map */
-  private final ICommonsMap <EHTTPMethod, IXServletHandler> m_aHandler = new CommonsEnumMap <> (EHTTPMethod.class);
+  protected final XServletHandlerRegistry m_aHandlerRegistry = new XServletHandlerRegistry ();
 
-  /** The request fallback charset to be used, if none is present! */
-  private Charset m_aRequestFallbackCharset = StandardCharsets.UTF_8;
-
-  /** The response fallback charset to be used, if none is present! */
-  private Charset m_aResponseFallbackCharset = StandardCharsets.UTF_8;
+  // Determine in "init" method
+  private transient String m_sStatusApplicationID;
 
   /**
    * Does nothing, because this is an abstract class.
@@ -108,21 +115,36 @@ public abstract class AbstractXServlet extends GenericServlet
   public AbstractXServlet ()
   {
     // This handler is always the same, so it is registered here for convenience
-    registerHandler (EHTTPMethod.TRACE, new XServletHandlerTRACE ());
+    m_aHandlerRegistry.registerHandler (EHTTPMethod.TRACE, new XServletHandlerTRACE ());
 
     // Default HEAD handler -> invoke with GET
-    registerHandler (EHTTPMethod.HEAD, (aHttpRequest, aHttpResponse, eHttpVersion, eHttpMethod) -> {
-      final CountingOnlyHttpServletResponse aResponseWrapper = new CountingOnlyHttpServletResponse (aHttpResponse);
-      _internalService (aHttpRequest, aResponseWrapper, eHttpVersion, EHTTPMethod.GET);
-      aResponseWrapper.setContentLengthAutomatically ();
-    });
+    m_aHandlerRegistry.registerHandler (EHTTPMethod.HEAD,
+                                        (aHttpRequest, aHttpResponse, eHttpVersion, eHttpMethod, aRequestScope) -> {
+                                          final CountingOnlyHttpServletResponse aResponseWrapper = new CountingOnlyHttpServletResponse (aHttpResponse);
+                                          _internalService (aHttpRequest,
+                                                            aResponseWrapper,
+                                                            eHttpVersion,
+                                                            EHTTPMethod.GET,
+                                                            aRequestScope);
+                                          aResponseWrapper.setContentLengthAutomatically ();
+                                        });
 
     // Default OPTIONS handler
-    registerHandler (EHTTPMethod.OPTIONS, new XServletHandlerOPTIONS (this::_getAllowString));
+    m_aHandlerRegistry.registerHandler (EHTTPMethod.OPTIONS,
+                                        new XServletHandlerOPTIONS (m_aHandlerRegistry::getAllowedHttpMethodsString));
 
     // Remember to avoid crash on shutdown, when no GlobalScope is present
     m_aStatusMgr = ServletStatusManager.getInstance ();
     m_aStatusMgr.onServletCtor (getClass ());
+  }
+
+  /**
+   * @return The application ID for this servlet.
+   */
+  @OverrideOnDemand
+  protected String getApplicationID ()
+  {
+    return ClassHelper.getClassLocalName (getClass ());
   }
 
   /**
@@ -133,6 +155,10 @@ public abstract class AbstractXServlet extends GenericServlet
   {
     super.init (aSC);
     m_aStatusMgr.onServletInit (getClass ());
+
+    m_sStatusApplicationID = getApplicationID ();
+    if (StringHelper.hasNoText (m_sStatusApplicationID))
+      throw new InitializationException ("Failed retrieve a valid application ID! Please override getApplicationID()");
   }
 
   @Override
@@ -143,105 +169,43 @@ public abstract class AbstractXServlet extends GenericServlet
     super.destroy ();
   }
 
-  /**
-   * Register a handler for the provided HTTP method. If another handler is
-   * already registered, the new registration overwrites the old one.
-   *
-   * @param eHTTPMethod
-   *        The HTTP method to register for. May not be <code>null</code>.
-   * @param aHandler
-   *        The handler to register. May not be <code>null</code>.
-   */
-  protected final void registerHandler (@Nonnull final EHTTPMethod eHTTPMethod,
-                                        @Nonnull final IXServletHandler aHandler)
-  {
-    ValueEnforcer.notNull (eHTTPMethod, "HTTPMethod");
-    ValueEnforcer.notNull (aHandler, "Handler");
-
-    if (m_aHandler.containsKey (eHTTPMethod))
-      throw new IllegalStateException ("An HTTP handler for HTTP method " + eHTTPMethod + " is already registered!");
-    m_aHandler.put (eHTTPMethod, aHandler);
-  }
-
-  /**
-   * @return The fallback charset to be used if an HTTP request has no charset
-   *         defined. Never <code>null</code>.
-   */
   @Nonnull
-  protected final Charset getRequestFallbackCharset ()
+  private static EChange _trackBeforeHandleRequest (@Nonnull final IRequestWebScope aRequestScope)
   {
-    return m_aRequestFallbackCharset;
+    // Check if an attribute is already present
+    // An ID may already be present, if the request is internally dispatched
+    // (e.g. via the error handler)
+    String sID = aRequestScope.attrs ().getAsString (REQUEST_ATTR_ID);
+    if (sID != null)
+      return EChange.UNCHANGED;
+
+    // Create a unique ID for the request
+    sID = Long.toString (s_aRequestID.incrementAndGet ());
+    aRequestScope.attrs ().putIn (REQUEST_ATTR_ID, sID);
+    RequestTracker.addRequest (sID, aRequestScope);
+    return EChange.CHANGED;
   }
 
-  /**
-   * Set the fallback charset for HTTP request if they don't have a charset
-   * defined. By default UTF-8 is used.
-   *
-   * @param aFallbackCharset
-   *        The fallback charset to be used. May not be <code>null</code>.
-   */
-  protected final void setRequestFallbackCharset (@Nonnull final Charset aFallbackCharset)
+  private static void _trackAfterHandleRequest (@Nonnull final IRequestWebScope aRequestScope)
   {
-    ValueEnforcer.notNull (aFallbackCharset, "FallbackCharset");
-    m_aRequestFallbackCharset = aFallbackCharset;
-  }
-
-  /**
-   * @return The fallback charset to be used if an HTTP response has no charset
-   *         defined. Never <code>null</code>.
-   */
-  @Nonnull
-  protected final Charset getResponseFallbackCharset ()
-  {
-    return m_aResponseFallbackCharset;
-  }
-
-  /**
-   * Set the fallback charset for HTTP response if they don't have a charset
-   * defined. By default UTF-8 is used.
-   *
-   * @param aFallbackCharset
-   *        The fallback charset to be used. May not be <code>null</code>.
-   */
-  protected final void setResponseFallbackCharset (@Nonnull final Charset aFallbackCharset)
-  {
-    ValueEnforcer.notNull (aFallbackCharset, "FallbackCharset");
-    m_aResponseFallbackCharset = aFallbackCharset;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  private EnumSet <EHTTPMethod> _getAllowedHTTPMethods ()
-  {
-    // Return all methods for which handlers are registered
-    final EnumSet <EHTTPMethod> ret = EnumSet.copyOf (m_aHandler.keySet ());
-    if (!ret.contains (EHTTPMethod.GET))
-    {
-      // If GET is not supported, HEAD is also not supported
-      ret.remove (EHTTPMethod.HEAD);
-    }
-    return ret;
-  }
-
-  @Nonnull
-  private String _getAllowString ()
-  {
-    return StringHelper.getImplodedMapped (", ", _getAllowedHTTPMethods (), EHTTPMethod::getName);
+    final String sID = aRequestScope.attrs ().getAsString (REQUEST_ATTR_ID);
+    RequestTracker.removeRequest (sID);
   }
 
   private void _internalService (@Nonnull final HttpServletRequest aHttpRequest,
                                  @Nonnull final HttpServletResponse aHttpResponse,
                                  @Nonnull final EHTTPVersion eHttpVersion,
-                                 @Nonnull final EHTTPMethod eHttpMethod) throws ServletException, IOException
+                                 @Nonnull final EHTTPMethod eHttpMethod,
+                                 @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
     // Find the handler for the HTTP method
-    final IXServletHandler aHandler = m_aHandler.get (eHttpMethod);
+    final IXServletHandler aHandler = m_aHandlerRegistry.getHandler (eHttpMethod);
     if (aHandler == null)
     {
       // HTTP method is not supported by this servlet!
       m_aCounterHttpMethodUnhandled.increment (eHttpMethod.getName ());
 
-      aHttpResponse.setHeader (CHTTPHeader.ALLOW, _getAllowString ());
+      aHttpResponse.setHeader (CHTTPHeader.ALLOW, m_aHandlerRegistry.getAllowedHttpMethodsString ());
       if (eHttpVersion == EHTTPVersion.HTTP_11)
         aHttpResponse.sendError (HttpServletResponse.SC_METHOD_NOT_ALLOWED);
       else
@@ -251,11 +215,14 @@ public abstract class AbstractXServlet extends GenericServlet
 
     // HTTP method is supported by this servlet implementation
     final StopWatch aSW = StopWatch.createdStarted ();
+    boolean bTrackedRequest = false;
     try
     {
+      bTrackedRequest = _trackBeforeHandleRequest (aRequestScope).isChanged ();
+
       // This may indirectly call "_internalService" again (e.g. for HEAD
       // requests, which calls GET internally)
-      aHandler.handle (aHttpRequest, aHttpResponse, eHttpVersion, eHttpMethod);
+      aHandler.handle (aHttpRequest, aHttpResponse, eHttpVersion, eHttpMethod, aRequestScope);
 
       // Handled and no exception
       s_aCounterRequestsHandled.increment ();
@@ -264,6 +231,9 @@ public abstract class AbstractXServlet extends GenericServlet
     }
     finally
     {
+      if (bTrackedRequest)
+        _trackAfterHandleRequest (aRequestScope);
+
       // Timer per HTTP method
       s_aTimer.addTime (eHttpMethod.getName (), aSW.stopAndGetMillis ());
     }
@@ -288,51 +258,18 @@ public abstract class AbstractXServlet extends GenericServlet
     log (sFullMsg);
   }
 
-  /**
-   * This method is required to ensure that the HTTP request is correctly
-   * encoded. Normally this is done via the charset filter, but if a
-   * non-existing URL is accessed then the error redirect happens without the
-   * charset filter ever called.
-   *
-   * @param aHttpRequest
-   *        The current HTTP request. Never <code>null</code>.
-   */
+  @Nonnull
   @OverrideOnDemand
-  protected void ensureRequestCharset (@Nonnull final HttpServletRequest aHttpRequest)
+  protected XServletSecurityAdvisor createSecurityAdvisor ()
   {
-    if (aHttpRequest.getCharacterEncoding () == null)
-    {
-      final String sCharsetName = m_aRequestFallbackCharset.name ();
-      s_aLogger.warn ("Forcing request charset to " + sCharsetName);
-      try
-      {
-        aHttpRequest.setCharacterEncoding (sCharsetName);
-      }
-      catch (final UnsupportedEncodingException ex)
-      {
-        throw new RuntimeException (ex);
-      }
-    }
+    return new XServletSecurityAdvisor ();
   }
 
-  /**
-   * This method is required to ensure that the HTTP response is correctly
-   * encoded. Normally this is done via the charset filter, but if a
-   * non-existing URL is accessed then the error redirect happens without the
-   * charset filter ever called.
-   *
-   * @param aHttpResponse
-   *        The current HTTP response. Never <code>null</code>.
-   */
+  @Nonnull
   @OverrideOnDemand
-  protected void ensureResponseCharset (@Nonnull final HttpServletResponse aHttpResponse)
+  protected XServletConsistencyAdvisor createConsistencyAdvisor ()
   {
-    if (aHttpResponse.getCharacterEncoding () == null)
-    {
-      final String sCharsetName = m_aResponseFallbackCharset.name ();
-      s_aLogger.warn ("Forcing response charset to " + sCharsetName);
-      aHttpResponse.setCharacterEncoding (sCharsetName);
-    }
+    return new XServletConsistencyAdvisor ();
   }
 
   /**
@@ -362,14 +299,6 @@ public abstract class AbstractXServlet extends GenericServlet
     final HttpServletRequest aHttpRequest = (HttpServletRequest) aRequest;
     final HttpServletResponse aHttpResponse = (HttpServletResponse) aResponse;
 
-    final XServletSecurityAdvisor aSecurityAdvisor = new XServletSecurityAdvisor ();
-    if (aSecurityAdvisor.beforeRequestIsProcessed (aHttpRequest, aHttpResponse).isFinished ())
-    {
-      // Some security related issues was discovered so that the process cannot
-      // be handled.
-      return;
-    }
-
     s_aCounterRequestsTotal.increment ();
     m_aStatusMgr.onServletInvocation (getClass ());
 
@@ -383,6 +312,7 @@ public abstract class AbstractXServlet extends GenericServlet
       aHttpResponse.sendError (HttpServletResponse.SC_HTTP_VERSION_NOT_SUPPORTED);
       return;
     }
+    s_aCounterRequestsPerVersionAccepted.increment (eHTTPVersion.getName ());
 
     // Ensure a valid HTTP method is provided
     final String sMethod = aHttpRequest.getMethod ();
@@ -394,25 +324,55 @@ public abstract class AbstractXServlet extends GenericServlet
       aHttpResponse.sendError (HttpServletResponse.SC_NOT_IMPLEMENTED);
       return;
     }
+    s_aCounterRequestsPerMethodAccepted.increment (eHTTPMethod.getName ());
 
-    // HTTP version and method are valid
-    s_aCounterRequestsPerVersionTotal.increment (eHTTPVersion.getName ());
-    s_aCounterRequestsPerMethodTotal.increment (eHTTPMethod.getName ());
-    s_aCounterRequestsAccepted.increment ();
+    final XServletSecurityAdvisor aSecurityAdvisor = createSecurityAdvisor ();
+    if (aSecurityAdvisor.beforeRequestIsProcessed (aHttpRequest, aHttpResponse).isFinished ())
+    {
+      // Some security related issues was discovered so that the process cannot
+      // be handled.
+      return;
+    }
 
-    ensureRequestCharset (aHttpRequest);
-    ensureResponseCharset (aHttpResponse);
+    final XServletConsistencyAdvisor aConsistencyAdvisor = createConsistencyAdvisor ();
+    aConsistencyAdvisor.beforeRequestIsProcessed (aHttpRequest, aHttpResponse);
+    final StatusAwareHttpResponseWrapper aHttpResponseWrapper = new StatusAwareHttpResponseWrapper (aHttpResponse);
+    try
+    {
+      // HTTP version and method are valid
+      s_aCounterRequestsAccepted.increment ();
 
-    // Determine handler
-    _internalService (aHttpRequest, aHttpResponse, eHTTPVersion, eHTTPMethod);
+      // Create request scope
+      final RequestScopeInitializer aRequestScopeInitializer = RequestScopeInitializer.create (m_sStatusApplicationID,
+                                                                                               aHttpRequest,
+                                                                                               aHttpResponse);
+      try
+      {
+
+        // Determine handler
+        _internalService (aHttpRequest,
+                          aHttpResponseWrapper,
+                          eHTTPVersion,
+                          eHTTPMethod,
+                          aRequestScopeInitializer.getRequestScope ());
+      }
+      finally
+      {
+        // Destroy request scope
+        aRequestScopeInitializer.destroyScope ();
+      }
+    }
+    finally
+    {
+      aConsistencyAdvisor.afterRequest (aHttpRequest, aHttpResponseWrapper);
+    }
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Handler", m_aHandler)
-                                       .append ("RequestFallbackCharset", m_aRequestFallbackCharset.name ())
-                                       .append ("ResponseFallbackCharset", m_aResponseFallbackCharset.name ())
+    return new ToStringGenerator (this).append ("HandlerRegistry", m_aHandlerRegistry)
+                                       .append ("ApplicationID", m_sStatusApplicationID)
                                        .getToString ();
   }
 }

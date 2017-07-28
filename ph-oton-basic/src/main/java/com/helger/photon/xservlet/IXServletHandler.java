@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.helger.http.EHTTPMethod;
 import com.helger.http.EHTTPVersion;
+import com.helger.web.scope.IRequestWebScope;
 
 /**
  * HTTP servlet handler for a single HTTP method.
@@ -47,6 +48,8 @@ public interface IXServletHandler extends Serializable
    *        HTTP version. Never <code>null</code>.
    * @param eHttpMethod
    *        HTTP method. Never <code>null</code>.
+   * @param aRequestScope
+   *        Request scpe. Never <code>null</code>.
    * @throws ServletException
    *         On business error
    * @throws IOException
@@ -55,5 +58,6 @@ public interface IXServletHandler extends Serializable
   void handle (@Nonnull HttpServletRequest aHttpRequest,
                @Nonnull HttpServletResponse aHttpResponse,
                @Nonnull EHTTPVersion eHttpVersion,
-               @Nonnull EHTTPMethod eHttpMethod) throws ServletException, IOException;
+               @Nonnull EHTTPMethod eHttpMethod,
+               @Nonnull IRequestWebScope aRequestScope) throws ServletException, IOException;
 }

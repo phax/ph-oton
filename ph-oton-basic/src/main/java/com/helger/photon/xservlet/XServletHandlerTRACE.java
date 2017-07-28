@@ -28,6 +28,7 @@ import com.helger.commons.mime.EMimeContentType;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.http.EHTTPMethod;
 import com.helger.http.EHTTPVersion;
+import com.helger.web.scope.IRequestWebScope;
 
 /**
  * Called by the server (via the <code>service</code> method) to allow a servlet
@@ -46,7 +47,8 @@ public class XServletHandlerTRACE implements IXServletHandler
   public void handle (@Nonnull final HttpServletRequest aHttpRequest,
                       @Nonnull final HttpServletResponse aHttpResponse,
                       @Nonnull final EHTTPVersion eHTTPVersion,
-                      @Nonnull final EHTTPMethod eHTTPMethod) throws ServletException, IOException
+                      @Nonnull final EHTTPMethod eHTTPMethod,
+                      @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
     final StringBuilder aSB = new StringBuilder ().append (EHTTPMethod.TRACE.getName ())
                                                   .append (' ')

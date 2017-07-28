@@ -34,6 +34,7 @@ import com.helger.servlet.async.AsyncServletRunnerDefault;
 import com.helger.servlet.async.ExtAsyncContext;
 import com.helger.servlet.async.IAsyncServletRunner;
 import com.helger.servlet.async.ServletAsyncSpec;
+import com.helger.web.scope.IRequestWebScope;
 
 /**
  * A special {@link IXServletHandler} that allows to run requests
@@ -80,7 +81,8 @@ public final class AsyncXServletHandler implements IXServletHandler
   private void _handleAsync (@Nonnull final HttpServletRequest aHttpRequest,
                              @Nonnull final HttpServletResponse aHttpResponse,
                              @Nonnull final EHTTPVersion eHttpVersion,
-                             @Nonnull final EHTTPMethod eHttpMethod)
+                             @Nonnull final EHTTPMethod eHttpMethod,
+                             @Nonnull final IRequestWebScope aRequestScope)
   {
     final ExtAsyncContext aExtAsyncCtx = ExtAsyncContext.create (aHttpRequest,
                                                                  aHttpResponse,
@@ -95,7 +97,8 @@ public final class AsyncXServletHandler implements IXServletHandler
         m_aNestedHandler.handle (aExtAsyncCtx.getRequest (),
                                  aExtAsyncCtx.getResponse (),
                                  aExtAsyncCtx.getHTTPVersion (),
-                                 aExtAsyncCtx.getHTTPMethod ());
+                                 aExtAsyncCtx.getHTTPMethod (),
+                                 aRequestScope);
       }
       catch (final Throwable t)
       {
@@ -135,17 +138,18 @@ public final class AsyncXServletHandler implements IXServletHandler
   public void handle (@Nonnull final HttpServletRequest aHttpRequest,
                       @Nonnull final HttpServletResponse aHttpResponse,
                       @Nonnull final EHTTPVersion eHttpVersion,
-                      @Nonnull final EHTTPMethod eHttpMethod) throws ServletException, IOException
+                      @Nonnull final EHTTPMethod eHttpMethod,
+                      @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
     if (isRunAsynchronously (eHttpMethod))
     {
       // Run asynchronously
-      _handleAsync (aHttpRequest, aHttpResponse, eHttpVersion, eHttpMethod);
+      _handleAsync (aHttpRequest, aHttpResponse, eHttpVersion, eHttpMethod, aRequestScope);
     }
     else
     {
       // Run synchronously
-      m_aNestedHandler.handle (aHttpRequest, aHttpResponse, eHttpVersion, eHttpMethod);
+      m_aNestedHandler.handle (aHttpRequest, aHttpResponse, eHttpVersion, eHttpMethod, aRequestScope);
     }
   }
 

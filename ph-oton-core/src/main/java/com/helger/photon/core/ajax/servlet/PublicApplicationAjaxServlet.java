@@ -19,7 +19,7 @@ package com.helger.photon.core.ajax.servlet;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.core.app.CApplication;
+import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 
 /**
@@ -45,6 +45,6 @@ public class PublicApplicationAjaxServlet extends AbstractApplicationAjaxServlet
   @Nonempty
   protected String getApplicationID ()
   {
-    return CApplication.APP_ID_PUBLIC;
+    return CApplicationID.APP_ID_PUBLIC;
   }
 }

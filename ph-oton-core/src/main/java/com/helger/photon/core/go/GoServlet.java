@@ -33,12 +33,12 @@ import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.url.SimpleURL;
 import com.helger.http.EHTTPMethod;
+import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.RequestParameterManager;
-import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
@@ -75,7 +75,7 @@ public class GoServlet extends AbstractUnifiedResponseServlet
   @Nonempty
   protected String getApplicationID ()
   {
-    return CApplication.APP_ID_PUBLIC;
+    return CApplicationID.APP_ID_PUBLIC;
   }
 
   @Override

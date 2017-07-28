@@ -28,16 +28,15 @@ import com.helger.html.hc.impl.HCCustomizerList;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.basic.app.PhotonPathMapper;
 import com.helger.photon.bootstrap3.BootstrapCustomConfig;
 import com.helger.photon.bootstrap3.servlet.BootstrapCustomizer;
 import com.helger.photon.core.ajax.servlet.PublicApplicationAjaxServlet;
 import com.helger.photon.core.ajax.servlet.SecureApplicationAjaxServlet;
-import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.app.html.PhotonMetaElements;
-import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.core.servlet.AbstractPublicApplicationServlet;
 import com.helger.photon.core.servlet.AbstractSecureApplicationServlet;
 import com.helger.photon.uicore.EUICoreCSSPathProvider;
@@ -46,6 +45,7 @@ import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.autonumeric.AbstractHCAutoNumeric;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
+import com.helger.photon.xservlet.requesttrack.RequestTracker;
 import com.helger.scope.ScopeHelper;
 import com.helger.servlet.response.UnifiedResponseDefaultSettings;
 import com.helger.web.scope.mgr.ThrowingScopeFactory;
@@ -147,15 +147,15 @@ public final class PhotonStubInitializer
     if (!PhotonPathMapper.containsAnyMapping ())
     {
       // Add default mapping from Application ID to path
-      PhotonPathMapper.setApplicationServletPathMapping (CApplication.APP_ID_PUBLIC,
+      PhotonPathMapper.setApplicationServletPathMapping (CApplicationID.APP_ID_PUBLIC,
                                                          AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
-      PhotonPathMapper.setAjaxServletPathMapping (CApplication.APP_ID_PUBLIC,
+      PhotonPathMapper.setAjaxServletPathMapping (CApplicationID.APP_ID_PUBLIC,
                                                   PublicApplicationAjaxServlet.SERVLET_DEFAULT_PATH);
-      PhotonPathMapper.setApplicationServletPathMapping (CApplication.APP_ID_SECURE,
+      PhotonPathMapper.setApplicationServletPathMapping (CApplicationID.APP_ID_SECURE,
                                                          AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
-      PhotonPathMapper.setAjaxServletPathMapping (CApplication.APP_ID_SECURE,
+      PhotonPathMapper.setAjaxServletPathMapping (CApplicationID.APP_ID_SECURE,
                                                   SecureApplicationAjaxServlet.SERVLET_DEFAULT_PATH);
-      PhotonPathMapper.setDefaultApplicationID (CApplication.APP_ID_PUBLIC);
+      PhotonPathMapper.setDefaultApplicationID (CApplicationID.APP_ID_PUBLIC);
     }
   }
 }

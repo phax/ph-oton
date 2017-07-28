@@ -19,7 +19,7 @@ package com.helger.photon.core.servlet;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.core.app.CApplication;
+import com.helger.photon.basic.app.CApplicationID;
 
 /**
  * The servlet to show the secure application
@@ -39,6 +39,6 @@ public abstract class AbstractSecureApplicationServlet extends AbstractApplicati
   @Nonempty
   protected String getApplicationID ()
   {
-    return CApplication.APP_ID_SECURE;
+    return CApplicationID.APP_ID_SECURE;
   }
 }

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.app;
+package com.helger.photon.basic.app;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -24,13 +24,13 @@ import javax.annotation.concurrent.Immutable;
  * @author Philip Helger
  */
 @Immutable
-public final class CApplication
+public final class CApplicationID
 {
   /** The default application ID to be used for the public application */
   public static final String APP_ID_PUBLIC = "public";
   /** The default application ID to be used for the secure application */
   public static final String APP_ID_SECURE = "secure";
 
-  private CApplication ()
+  private CApplicationID ()
   {}
 }

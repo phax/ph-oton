@@ -35,7 +35,7 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.state.EContinue;
 import com.helger.http.EHTTPMethod;
-import com.helger.photon.core.app.CApplication;
+import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryServlet;
 import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
@@ -98,7 +98,7 @@ public class ResourceBundleServlet extends AbstractObjectDeliveryServlet
   @Nonempty
   protected String getApplicationID ()
   {
-    return CApplication.APP_ID_PUBLIC;
+    return CApplicationID.APP_ID_PUBLIC;
   }
 
   @Override

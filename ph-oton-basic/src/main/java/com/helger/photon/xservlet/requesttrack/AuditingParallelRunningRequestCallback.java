@@ -14,37 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.requesttrack;
+package com.helger.photon.xservlet.requesttrack;
+
+import java.util.List;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.audit.AuditHelper;
-import com.helger.servlet.request.RequestHelper;
-import com.helger.web.scope.IRequestWebScope;
 
 /**
- * A simple implementation of {@link ILongRunningRequestCallback} simply
+ * A simple implementation of {@link IParallelRunningRequestCallback} simply
  * auditing such events.
  *
  * @author Philip Helger
  * @since 4.0.0
  */
-public class AuditingLongRunningRequestCallback implements ILongRunningRequestCallback
+public class AuditingParallelRunningRequestCallback implements IParallelRunningRequestCallback
 {
-  public AuditingLongRunningRequestCallback ()
+  public AuditingParallelRunningRequestCallback ()
   {}
 
-  public void onLongRunningRequest (@Nonnull @Nonempty final String sUniqueRequestID,
-                                    @Nonnull final IRequestWebScope aRequestScope,
-                                    @Nonnegative final long nRunningMilliseconds)
+  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests,
+                                         @Nonnull @Nonempty final List <TrackedRequest> aRequests)
   {
-    AuditHelper.onAuditExecuteSuccess ("long-running-request",
-                                       sUniqueRequestID,
-                                       Long.valueOf (nRunningMilliseconds),
-                                       RequestHelper.getURL (aRequestScope.getRequest ()));
+    final ICommonsList <String> aURLs = new CommonsArrayList<> ();
+    for (final TrackedRequest aRequest : aRequests)
+      aURLs.add (aRequest.getRequestScope ().getURL ());
+    AuditHelper.onAuditExecuteSuccess ("parallel-running-requests", Integer.valueOf (nParallelRequests), aURLs);
+  }
+
+  public void onParallelRunningRequestsBelowLimit ()
+  {
+    AuditHelper.onAuditExecuteSuccess ("parallel-running-requests", "back-to-normal");
   }
 
   @Override

@@ -21,8 +21,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
@@ -36,6 +34,7 @@ import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
+import com.helger.commons.concurrent.BasicThreadFactory;
 import com.helger.commons.concurrent.ExecutorServiceHelper;
 import com.helger.commons.lang.TimeValue;
 import com.helger.scope.IScope;
@@ -71,16 +70,8 @@ public final class WALListener extends AbstractGlobalSingleton
   private static final Logger s_aLogger = LoggerFactory.getLogger (WALListener.class);
 
   // custom ThreadFactory to give the baby a name
-  private final ScheduledExecutorService m_aES = Executors.newSingleThreadScheduledExecutor (new ThreadFactory ()
-  {
-    private final AtomicInteger m_aCount = new AtomicInteger (0);
-
-    public Thread newThread (final Runnable r)
-    {
-      final Thread t = new Thread (r, "WAL-Listener-" + m_aCount.incrementAndGet ());
-      return t;
-    }
-  });
+  private final ScheduledExecutorService m_aES = Executors.newSingleThreadScheduledExecutor (new BasicThreadFactory.Builder ().setNamingPattern ("WAL-Listener-%d")
+                                                                                                                              .build ());
   @GuardedBy ("m_aRWLock")
   private final ICommonsSet <String> m_aWaitingDAOs = new CommonsHashSet <> ();
   @GuardedBy ("m_aRWLock")

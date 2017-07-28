@@ -24,13 +24,13 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.bootstrap.demo.app.AppSecurity;
 import com.helger.photon.bootstrap.demo.app.AppSettings;
 import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
 import com.helger.photon.bootstrap.demo.pub.InitializerPublic;
 import com.helger.photon.bootstrap.demo.secure.InitializerSecure;
 import com.helger.photon.bootstrap3.servlet.AbstractWebAppListenerMultiAppBootstrap;
-import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
 
@@ -72,8 +72,8 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
   protected ICommonsMap <String, IApplicationInitializer <LayoutExecutionContext>> getAllInitializers ()
   {
     final ICommonsMap <String, IApplicationInitializer <LayoutExecutionContext>> ret = new CommonsHashMap <> ();
-    ret.put (CApplication.APP_ID_SECURE, new InitializerSecure ());
-    ret.put (CApplication.APP_ID_PUBLIC, new InitializerPublic ());
+    ret.put (CApplicationID.APP_ID_SECURE, new InitializerSecure ());
+    ret.put (CApplicationID.APP_ID_PUBLIC, new InitializerPublic ());
     return ret;
   }
 

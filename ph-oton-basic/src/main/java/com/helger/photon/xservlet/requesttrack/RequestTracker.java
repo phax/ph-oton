@@ -14,11 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.requesttrack;
+package com.helger.photon.xservlet.requesttrack;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
@@ -31,10 +30,10 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
+import com.helger.commons.concurrent.BasicThreadFactory;
 import com.helger.commons.concurrent.ExecutorServiceHelper;
 import com.helger.commons.error.level.EErrorLevel;
-import com.helger.photon.core.app.CApplication;
-import com.helger.photon.core.app.error.InternalErrorBuilder;
+import com.helger.photon.basic.app.CApplicationID;
 import com.helger.scope.IScope;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
@@ -64,7 +63,7 @@ public final class RequestTracker extends AbstractGlobalWebSingleton
     public RequestTrackerMonitor ()
     {
       // Use a fixed app ID to ensure this monitor can be started!
-      super (WebScopeManager.getGlobalScope ().getServletContext (), CApplication.APP_ID_PUBLIC);
+      super (WebScopeManager.getGlobalScope ().getServletContext (), CApplicationID.APP_ID_PUBLIC);
     }
 
     @Override
@@ -77,7 +76,7 @@ public final class RequestTracker extends AbstractGlobalWebSingleton
       }
       catch (final Throwable t)
       {
-        new InternalErrorBuilder ().setThrowable (t).addCustomData ("context", "long-running-requests").handle ();
+        s_aLogger.error ("Error checking for long running requests", t);
       }
     }
   }
@@ -93,18 +92,9 @@ public final class RequestTracker extends AbstractGlobalWebSingleton
                                .add (new AuditingParallelRunningRequestCallback ());
 
     // Create the executor service
-    m_aExecSvc = Executors.newSingleThreadScheduledExecutor (new ThreadFactory ()
-    {
-      private int m_nCount = 0;
-
-      public Thread newThread (final Runnable r)
-      {
-        final int nID = m_nCount++;
-        final Thread aThread = new Thread (r, "RequestTrackerMonitor-" + nID);
-        aThread.setDaemon (true);
-        return aThread;
-      }
-    });
+    m_aExecSvc = Executors.newSingleThreadScheduledExecutor (new BasicThreadFactory.Builder ().setNamingPattern ("RequestTrackerMonitor-%d")
+                                                                                              .setDaemon (true)
+                                                                                              .build ());
 
     // Start the monitoring thread each second
     m_aExecSvc.scheduleAtFixedRate (new RequestTrackerMonitor (), 0, 1, TimeUnit.SECONDS);
@@ -135,15 +125,15 @@ public final class RequestTracker extends AbstractGlobalWebSingleton
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public static CallbackList <ILongRunningRequestCallback> getLongRunningRequestCallbacks ()
+  @ReturnsMutableObject
+  public static CallbackList <ILongRunningRequestCallback> longRunningRequestCallbacks ()
   {
     return getInstance ().m_aLongRunningCallbacks;
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public static CallbackList <IParallelRunningRequestCallback> getParallelRunningRequestCallbacks ()
+  @ReturnsMutableObject
+  public static CallbackList <IParallelRunningRequestCallback> parallelRunningRequestCallbacks ()
   {
     return getInstance ().m_aParallelRunningCallbacks;
   }

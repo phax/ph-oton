@@ -26,13 +26,13 @@ import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.deadlock.IThreadDeadlockCallback;
 import com.helger.commons.deadlock.ThreadDeadlockInfo;
 import com.helger.commons.lang.StackTraceHelper;
-import com.helger.photon.basic.thread.ThreadDescriptor;
-import com.helger.photon.basic.thread.ThreadDescriptorList;
 import com.helger.photon.core.app.error.InternalErrorHandler;
 import com.helger.photon.core.app.error.InternalErrorSettings;
 import com.helger.smtp.data.EEmailType;
 import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
+import com.helger.xml.util.thread.ThreadDescriptor;
+import com.helger.xml.util.thread.ThreadDescriptorList;
 
 /**
  * An implementation if {@link IThreadDeadlockCallback} that sends an internal
