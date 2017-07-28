@@ -50,7 +50,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.http.EHTTPMethod;
 import com.helger.http.EHTTPVersion;
-import com.helger.photon.basic.servletstatus.ServletStatusManager;
+import com.helger.photon.xservlet.security.XServletSecurityAdvisor;
+import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 import com.helger.servlet.http.CountingOnlyHttpServletResponse;
 import com.helger.servlet.request.RequestLogger;
 
@@ -338,10 +339,10 @@ public abstract class AbstractXServlet extends GenericServlet
    * Dispatches client requests to the protected <code>service</code> method.
    * There's no need to override this method.
    *
-   * @param req
+   * @param aRequest
    *        the {@link HttpServletRequest} object that contains the request the
    *        client made of the servlet
-   * @param res
+   * @param aResponse
    *        the {@link HttpServletResponse} object that contains the response
    *        the servlet returns to the client
    * @exception IOException
@@ -352,14 +353,22 @@ public abstract class AbstractXServlet extends GenericServlet
    * @see javax.servlet.Servlet#service
    */
   @Override
-  public final void service (@Nonnull final ServletRequest req,
-                             @Nonnull final ServletResponse res) throws ServletException, IOException
+  public final void service (@Nonnull final ServletRequest aRequest,
+                             @Nonnull final ServletResponse aResponse) throws ServletException, IOException
   {
-    ValueEnforcer.isInstanceOf (req, HttpServletRequest.class, "Non-HTTP servlet request");
-    ValueEnforcer.isInstanceOf (req, HttpServletResponse.class, "Non-HTTP servlet response");
+    ValueEnforcer.isInstanceOf (aRequest, HttpServletRequest.class, "Non-HTTP servlet request");
+    ValueEnforcer.isInstanceOf (aRequest, HttpServletResponse.class, "Non-HTTP servlet response");
 
-    final HttpServletRequest aHttpRequest = (HttpServletRequest) req;
-    final HttpServletResponse aHttpResponse = (HttpServletResponse) res;
+    final HttpServletRequest aHttpRequest = (HttpServletRequest) aRequest;
+    final HttpServletResponse aHttpResponse = (HttpServletResponse) aResponse;
+
+    final XServletSecurityAdvisor aSecurityAdvisor = new XServletSecurityAdvisor ();
+    if (aSecurityAdvisor.beforeRequestIsProcessed (aHttpRequest, aHttpResponse).isFinished ())
+    {
+      // Some security related issues was discovered so that the process cannot
+      // be handled.
+      return;
+    }
 
     s_aCounterRequestsTotal.increment ();
     m_aStatusMgr.onServletInvocation (getClass ());
@@ -402,7 +411,8 @@ public abstract class AbstractXServlet extends GenericServlet
   public String toString ()
   {
     return new ToStringGenerator (this).append ("Handler", m_aHandler)
-                                       .append ("FallbackCharset", m_aResponseFallbackCharset.name ())
+                                       .append ("RequestFallbackCharset", m_aRequestFallbackCharset.name ())
+                                       .append ("ResponseFallbackCharset", m_aResponseFallbackCharset.name ())
                                        .getToString ();
   }
 }

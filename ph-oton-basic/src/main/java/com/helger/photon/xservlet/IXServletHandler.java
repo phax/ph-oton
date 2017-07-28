@@ -28,10 +28,10 @@ import com.helger.http.EHTTPMethod;
 import com.helger.http.EHTTPVersion;
 
 /**
- * HTTP servlet handler for a single HTTP methods.
+ * HTTP servlet handler for a single HTTP method.
  *
  * @author Philip Helger
- * @since 8.8.0
+ * @since 8.0.0
  */
 @FunctionalInterface
 public interface IXServletHandler extends Serializable

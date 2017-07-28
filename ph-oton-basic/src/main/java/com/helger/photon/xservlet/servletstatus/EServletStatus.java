@@ -14,41 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.servletstatus;
+package com.helger.photon.xservlet.servletstatus;
 
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
 
-/**
- * Contains texts for {@link EServletStatus}.
- *
- * @author Philip Helger
- */
-@Translatable
-public enum EServletStatusText implements IHasDisplayText
+public enum EServletStatus implements IHasDisplayText
 {
-  CONSTRUCTED ("Instanziert", "Constructed"),
-  INITED ("Initialisiert", "Initialized"),
-  DESTROYED ("Zerstört", "Destroyed");
+  CONSTRUCTED (EServletStatusText.CONSTRUCTED),
+  INITED (EServletStatusText.INITED),
+  DESTROYED (EServletStatusText.DESTROYED);
 
-  private final IMultilingualText m_aTP;
+  private final IHasDisplayText m_aText;
 
-  private EServletStatusText (final String sDE, final String sEN)
+  private EServletStatus (@Nonnull final EServletStatusText aText)
   {
-    m_aTP = TextHelper.create_DE_EN (sDE, sEN);
+    m_aText = aText;
   }
 
   @Nullable
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
+    return m_aText.getDisplayText (aContentLocale);
+  }
+
+  @Nullable
+  public static EServletStatus getSuccessorOf (@Nullable final EServletStatus eStatus)
+  {
+    if (eStatus == null)
+      return CONSTRUCTED;
+    if (eStatus == CONSTRUCTED)
+      return INITED;
+    if (eStatus == INITED)
+      return DESTROYED;
+    return null;
   }
 }

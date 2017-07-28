@@ -33,9 +33,6 @@ import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.basic.servletstatus.EServletStatus;
-import com.helger.photon.basic.servletstatus.ServletStatus;
-import com.helger.photon.basic.servletstatus.ServletStatusManager;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -46,6 +43,9 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
+import com.helger.photon.xservlet.servletstatus.EServletStatus;
+import com.helger.photon.xservlet.servletstatus.ServletStatus;
+import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * Show servlet status.

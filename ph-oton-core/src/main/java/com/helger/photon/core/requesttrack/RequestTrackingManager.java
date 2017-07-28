@@ -36,7 +36,6 @@ import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.photon.core.app.error.InternalErrorBuilder;
 import com.helger.web.scope.IRequestWebScope;
 
 /**
@@ -176,7 +175,10 @@ public final class RequestTrackingManager
   public void removeRequest (@Nonnull @Nonempty final String sRequestID,
                              @Nonnull final CallbackList <IParallelRunningRequestCallback> aCallbacks)
   {
-    if (m_aRWLock.writeLocked ( () -> {
+    boolean bNowBelowLimit = false;
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
       if (m_aOpenRequests.remove (sRequestID) == null)
       {
         // Should never happen
@@ -188,23 +190,18 @@ public final class RequestTrackingManager
       {
         // Back to normal!
         m_bParallelRunningRequestsAboveLimit = false;
-        return true;
+        bNowBelowLimit = true;
       }
-      return false;
-    }))
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+
+    if (bNowBelowLimit)
     {
       // Invoke callbacks "below limit again"
-      try
-      {
-        for (final IParallelRunningRequestCallback aCallback : aCallbacks.getAllCallbacks ())
-          aCallback.onParallelRunningRequestsBelowLimit ();
-      }
-      catch (final Throwable t)
-      {
-        new InternalErrorBuilder ().setThrowable (t)
-                                   .addCustomData ("context", "parallel-running-requests-below-limit")
-                                   .handle ();
-      }
+      aCallbacks.forEach (x -> x.onParallelRunningRequestsBelowLimit ());
     }
   }
 
@@ -215,7 +212,9 @@ public final class RequestTrackingManager
 
     if (aCallbacks.isNotEmpty ())
     {
-      m_aRWLock.readLocked ( () -> {
+      m_aRWLock.readLock ().lock ();
+      try
+      {
         // Check only if they are enabled!
         if (m_bLongRunningCheckEnabled)
         {
@@ -244,7 +243,11 @@ public final class RequestTrackingManager
             }
           }
         }
-      });
+      }
+      finally
+      {
+        m_aRWLock.readLock ().unlock ();
+      }
     }
   }
 }

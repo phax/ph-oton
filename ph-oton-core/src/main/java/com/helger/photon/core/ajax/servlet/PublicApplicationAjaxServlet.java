@@ -19,8 +19,8 @@ package com.helger.photon.core.ajax.servlet;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.basic.servletstatus.ServletStatusManager;
 import com.helger.photon.core.app.CApplication;
+import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * This class handles the AJAX functions for the public application
