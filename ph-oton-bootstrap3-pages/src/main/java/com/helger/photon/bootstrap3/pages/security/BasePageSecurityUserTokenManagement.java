@@ -26,8 +26,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.state.IValidityIndicator;
@@ -78,8 +78,8 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 
-public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecutionContext>
-                                                 extends AbstractWebPageSecurityToken <IUserToken, WPECTYPE>
+public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecutionContext> extends
+                                                 AbstractWebPageSecurityToken <IUserToken, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -415,7 +415,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     }
 
     // custom attributes
-    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
+    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.customAttrs ();
 
     // Callback for custom attributes
     final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
@@ -469,8 +469,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                aSelectedObject == null ? null
                                                                                                                        : aSelectedObject.getUser ()),
                                                                              aDisplayLocale,
-                                                                             x -> !x.isDeleted () &&
-                                                                                  x.isEnabled ()).setReadOnly (bEdit))
+                                                                             x -> !x.isDeleted () && x.isEnabled ())
+                                                                                                                    .setReadOnly (bEdit))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_USER)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_TOKEN_STRING.getDisplayText (aDisplayLocale))
@@ -586,20 +586,20 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
         if (canCreateNewAccessToken (aCurObject))
           aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
                                               .add (CPageParam.PARAM_ACTION, ACTION_CREATE_NEW_ACCESS_TOKEN)
-                                              .add (CPageParam.PARAM_OBJECT,
-                                                    aCurObject.getID ())).addChild (EDefaultIcon.REFRESH.getAsNode ())
-                                                                         .setTitle (EBaseText.TITLE_ACTION_CREATE_NEW_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                           sDisplayName)));
+                                              .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
+                                                                                                  .addChild (EDefaultIcon.REFRESH.getAsNode ())
+                                                                                                  .setTitle (EBaseText.TITLE_ACTION_CREATE_NEW_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                                                    sDisplayName)));
         else
           aActionCell.addChild (createEmptyAction ());
         aActionCell.addChild (" ");
         if (canRevokeAccessToken (aCurObject))
           aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
                                               .add (CPageParam.PARAM_ACTION, ACTION_REVOKE_ACCESS_TOKEN)
-                                              .add (CPageParam.PARAM_OBJECT,
-                                                    aCurObject.getID ())).addChild (EDefaultIcon.CANCEL.getAsNode ())
-                                                                         .setTitle (EBaseText.TITLE_ACTION_REVOKE_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                       sDisplayName)));
+                                              .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
+                                                                                                  .addChild (EDefaultIcon.CANCEL.getAsNode ())
+                                                                                                  .setTitle (EBaseText.TITLE_ACTION_REVOKE_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                                                sDisplayName)));
         else
           aActionCell.addChild (createEmptyAction ());
       }

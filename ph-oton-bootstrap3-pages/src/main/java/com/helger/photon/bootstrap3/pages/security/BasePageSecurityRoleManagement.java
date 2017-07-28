@@ -26,8 +26,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.string.StringHelper;
@@ -70,8 +70,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 
-public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionContext>
-                                            extends AbstractWebPageSecurityObjectWithAttributes <IRole, WPECTYPE>
+public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionContext> extends
+                                            AbstractWebPageSecurityObjectWithAttributes <IRole, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -233,7 +233,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     }
 
     // custom attributes
-    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
+    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.customAttrs ();
 
     // Callback for custom attributes
     final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,

@@ -30,11 +30,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.datetime.EDTFormatterMode;
+import com.helger.commons.datetime.PDTFormatter;
+import com.helger.commons.datetime.PDTFromString;
 import com.helger.commons.locale.LocaleParser;
 import com.helger.commons.string.StringHelper;
-import com.helger.datetime.format.PDTFormatter;
-import com.helger.datetime.format.PDTFormatter.EFormatterMode;
-import com.helger.datetime.format.PDTFromString;
 import com.helger.masterdata.currency.ECurrency;
 
 /**
@@ -82,7 +82,9 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <LocalDate> getExtractorDate (@Nonnull final Locale aDisplayLocale)
   {
-    return getExtractorDate (PDTFormatter.getFormatterDate (FormatStyle.MEDIUM, aDisplayLocale, EFormatterMode.PARSE));
+    return getExtractorDate (PDTFormatter.getFormatterDate (FormatStyle.MEDIUM,
+                                                            aDisplayLocale,
+                                                            EDTFormatterMode.PARSE));
   }
 
   @Nonnull
@@ -100,7 +102,9 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <LocalTime> getExtractorTime (@Nonnull final Locale aDisplayLocale)
   {
-    return getExtractorTime (PDTFormatter.getFormatterTime (FormatStyle.MEDIUM, aDisplayLocale, EFormatterMode.PARSE));
+    return getExtractorTime (PDTFormatter.getFormatterTime (FormatStyle.MEDIUM,
+                                                            aDisplayLocale,
+                                                            EDTFormatterMode.PARSE));
   }
 
   @Nonnull
@@ -120,7 +124,7 @@ public final class ComparatorDT
   {
     return getExtractorDateTime (PDTFormatter.getFormatterDateTime (FormatStyle.MEDIUM,
                                                                     aDisplayLocale,
-                                                                    EFormatterMode.PARSE));
+                                                                    EDTFormatterMode.PARSE));
   }
 
   @Nonnull

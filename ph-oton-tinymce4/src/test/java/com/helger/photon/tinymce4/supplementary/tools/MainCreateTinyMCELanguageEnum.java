@@ -22,9 +22,9 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.io.file.FileSystemIterator;
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.file.filter.IFileFilter;
-import com.helger.commons.io.file.iterate.FileSystemIterator;
+import com.helger.commons.io.file.IFileFilter;
 import com.helger.commons.locale.LocaleCache;
 
 public final class MainCreateTinyMCELanguageEnum

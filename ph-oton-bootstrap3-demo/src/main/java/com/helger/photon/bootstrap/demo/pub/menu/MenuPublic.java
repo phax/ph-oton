@@ -62,7 +62,8 @@ public final class MenuPublic
                                                                                   "GTC",
                                                                                   new ClassPathResource ("viewpages/en/gtc.xml"),
                                                                                   null))
-             .setAttribute (CMenuPublic.FLAG_FOOTER, Boolean.TRUE);
+             .attrs ()
+             .putIn (CMenuPublic.FLAG_FOOTER, Boolean.TRUE);
 
     // Set default
     aMenuTree.setDefaultMenuItemID (CMenuPublic.MENU_SITENOTICE);

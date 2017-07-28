@@ -30,16 +30,13 @@ import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.lang.ClassHelper;
-import com.helger.commons.scope.ISessionApplicationScope;
-import com.helger.commons.scope.ISessionScope;
-import com.helger.commons.scope.mgr.ScopeSessionManager;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -63,6 +60,9 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
+import com.helger.scope.ISessionApplicationScope;
+import com.helger.scope.ISessionScope;
+import com.helger.scope.mgr.ScopeSessionManager;
 import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
 
@@ -73,8 +73,8 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionContext>
-                                        extends AbstractBootstrapWebPageForm <ISessionScope, WPECTYPE>
+public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionContext> extends
+                                        AbstractBootstrapWebPageForm <ISessionScope, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -183,7 +183,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SESSION_APPLICATION_SCOPES.getDisplayText (aDisplayLocale))
                                                        .setCtrl (Integer.toString (aScope.getSessionApplicationScopeCount ())));
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (Integer.toString (aScope.getAttributeCount ())));
+                                                       .setCtrl (Integer.toString (aScope.attrs ().size ())));
 
     if (aScope instanceof ISessionWebScope)
     {
@@ -217,9 +217,8 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     // All scope attributes
     final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                              new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
-                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionscope-" +
-                                                                                                                 aScope.getID ());
-    for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
+                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionscope-" + aScope.getID ());
+    for (final Map.Entry <String, Object> aEntry : aScope.attrs ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
                  .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
@@ -252,15 +251,14 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                                        .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (),
                                                                                              aDisplayLocale)));
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (Integer.toString (aScope.getAttributeCount ())));
+                                                       .setCtrl (Integer.toString (aScope.attrs ().size ())));
     aNodeList.addChild (aTableScope);
 
     // All scope attributes
     final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                              new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
-                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionappscope" +
-                                                                                                                 aScope.getID ());
-    for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
+                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionappscope" + aScope.getID ());
+    for (final Map.Entry <String, Object> aEntry : aScope.attrs ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
                  .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
@@ -355,7 +353,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
       aRow.addCell (new HCA (aViewLink).addChild (aSessionScope.getID () +
                                                   (bIsMySession ? EText.MSG_MY_SESSION.getDisplayText (aDisplayLocale)
                                                                 : "")));
-      aRow.addCell (Integer.toString (aSessionScope.getAttributeCount ()));
+      aRow.addCell (Integer.toString (aSessionScope.attrs ().size ()));
       if (aWebScope != null)
         aRow.addCell (PDTToString.getAsString (PDTFactory.createLocalDateTime (aWebScope.getLastAccessedTime ()),
                                                aDisplayLocale));

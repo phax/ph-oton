@@ -25,8 +25,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.AttributeContainerAny;
-import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
+import com.helger.commons.collection.attr.AttributeContainer;
+import com.helger.commons.collection.attr.IMutableAttributeContainer;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -48,7 +48,7 @@ public final class LoginInfo implements IHasID <String>
   private final LocalDateTime m_aLoginDT;
   private LocalDateTime m_aLastAccessDT;
   private LocalDateTime m_aLogoutDT;
-  private final AttributeContainerAny <String> m_aAttrs = new AttributeContainerAny <> ();
+  private final AttributeContainer <String, String> m_aAttrs = new AttributeContainer <> ();
 
   public LoginInfo (@Nonnull final IUser aUser, @Nonnull final ISessionScope aSessionScope)
   {
@@ -150,7 +150,7 @@ public final class LoginInfo implements IHasID <String>
 
   @Nonnull
   @ReturnsMutableObject
-  public IMutableAttributeContainerAny <String> attrs ()
+  public IMutableAttributeContainer <String, String> attrs ()
   {
     return m_aAttrs;
   }

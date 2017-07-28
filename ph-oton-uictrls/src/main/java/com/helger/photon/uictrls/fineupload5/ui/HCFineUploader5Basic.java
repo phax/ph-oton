@@ -88,7 +88,7 @@ public class HCFineUploader5Basic extends AbstractHCNodeList <HCFineUploader5Bas
 
     // The global variable holding the number of files selected for upload
     IJSAssignmentTarget aGlobalCnt;
-    if (!WebScopeManager.getRequestScope ().getAndSetAttributeFlag ("fineuploader-globalvars"))
+    if (!WebScopeManager.getRequestScope ().attrs ().getAndSetFlag ("fineuploader5-globalvars"))
       aGlobalCnt = aPkg.var ("g_nUploadCnt", 0);
     else
       aGlobalCnt = JSExpr.ref ("g_nUploadCnt");

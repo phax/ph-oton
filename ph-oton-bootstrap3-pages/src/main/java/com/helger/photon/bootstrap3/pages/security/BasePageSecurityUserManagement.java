@@ -27,11 +27,12 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.ICommonsCollection;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.collection.impl.ICommonsCollection;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.email.EmailAddressHelper;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.name.IHasName;
@@ -41,7 +42,6 @@ import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCA_MailTo;
 import com.helger.html.hc.ext.HCExtHelper;
@@ -99,8 +99,8 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionContext>
-                                            extends AbstractWebPageSecurityObjectWithAttributes <IUser, WPECTYPE>
+public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionContext> extends
+                                            AbstractWebPageSecurityObjectWithAttributes <IUser, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -535,7 +535,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     }
 
     // custom attributes
-    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
+    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.customAttrs ();
 
     // Callback for custom attributes
     final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
@@ -587,10 +587,12 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final String sEmailAddress = aWPEC.getAttributeAsString (FIELD_EMAILADDRESS);
     final String sPassword = aWPEC.getAttributeAsString (FIELD_PASSWORD);
     final String sPasswordConf = aWPEC.getAttributeAsString (FIELD_PASSWORD_CONFIRM);
-    final boolean bEnabled = bIsAdministrator ? true : aWPEC.getCheckBoxAttr (FIELD_ENABLED, DEFAULT_USER_ENABLED);
+    final boolean bEnabled = bIsAdministrator ? true
+                                              : aWPEC.params ().isCheckBoxChecked (FIELD_ENABLED, DEFAULT_USER_ENABLED);
     final String sDescription = aWPEC.getAttributeAsString (FIELD_DESCRIPTION);
     final ICommonsCollection <String> aUserGroupIDs = bIsAdministrator ? aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ())
-                                                                       : aWPEC.getAttributeAsList (FIELD_USERGROUPS);
+                                                                       : aWPEC.params ()
+                                                                              .getAsStringList (FIELD_USERGROUPS);
 
     if (useEmailAddressAsLoginName ())
     {
@@ -655,7 +657,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       {
         final String sUserID = aSelectedObject.getID ();
 
-        final Map <String, String> aAttrMap = aSelectedObject.getAllAttributes ();
+        final Map <String, String> aAttrMap = aSelectedObject.customAttrs ();
         if (aCustomAttrMap != null)
           aAttrMap.putAll (aCustomAttrMap);
 
@@ -829,7 +831,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     }
 
     {
-      final ICommonsCollection <String> aUserGroupIDs = aSelectedObject == null ? aWPEC.getAttributeAsList (FIELD_USERGROUPS)
+      final ICommonsCollection <String> aUserGroupIDs = aSelectedObject == null ? aWPEC.params ()
+                                                                                       .getAsStringList (FIELD_USERGROUPS)
                                                                                 : aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ());
       final HCUserGroupForUserSelect aSelect = new HCUserGroupForUserSelect (new RequestField (FIELD_USERGROUPS),
                                                                              aUserGroupIDs);
@@ -931,11 +934,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       {
         aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
                                             .add (CPageParam.PARAM_ACTION, ACTION_RESET_PASSWORD)
-                                            .add (CPageParam.PARAM_OBJECT,
-                                                  aCurUser.getID ())).setTitle (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                   SecurityHelper.getUserDisplayName (aCurUser,
-                                                                                                                                                                      aDisplayLocale)))
-                                                                     .addChild (getResetPasswordIcon ()));
+                                            .add (CPageParam.PARAM_OBJECT, aCurUser.getID ()))
+                                                                                              .setTitle (EText.TITLE_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                            SecurityHelper.getUserDisplayName (aCurUser,
+                                                                                                                                                                                               aDisplayLocale)))
+                                                                                              .addChild (getResetPasswordIcon ()));
       }
       else
         aActionCell.addChild (createEmptyAction ());

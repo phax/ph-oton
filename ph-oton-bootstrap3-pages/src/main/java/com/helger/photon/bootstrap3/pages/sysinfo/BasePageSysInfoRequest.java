@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.compare.IComparator;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.string.StringHelper;
@@ -208,7 +208,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
-      for (final Map.Entry <String, Object> aEntry : aRequestScope.getAllAttributes ()
+      for (final Map.Entry <String, Object> aEntry : aRequestScope.attrs ()
                                                                   .getSortedByKey (IComparator.getComparatorCollating (aDisplayLocale))
                                                                   .entrySet ())
       {

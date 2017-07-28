@@ -19,7 +19,7 @@ package com.helger.photon.uictrls.datatables.ajax;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.compare.IComparator;
 import com.helger.commons.string.ToStringGenerator;
 

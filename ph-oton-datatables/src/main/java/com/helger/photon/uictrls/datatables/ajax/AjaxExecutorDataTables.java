@@ -26,11 +26,11 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.attr.AttributeValueConverter;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.string.StringParser;
+import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
@@ -313,17 +313,16 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
   protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("DataTables AJAX request: " +
-                       CollectionHelper.getSortedByKey (aRequestScope.getAllAttributes ()));
+      s_aLogger.debug ("DataTables AJAX request: " + CollectionHelper.getSortedByKey (aRequestScope.params ()));
 
     // Read input parameters and ensure non negativeness
-    final int nDraw = aRequestScope.getAttributeAsInt (DRAW);
-    final int nDisplayStart = Math.max (aRequestScope.getAttributeAsInt (START, 0), 0);
+    final int nDraw = aRequestScope.params ().getAsInt (DRAW);
+    final int nDisplayStart = Math.max (aRequestScope.params ().getAsInt (START, 0), 0);
     // -1 means show all
     // This parameter is "" or "NaN" when scrolling is active - use -1 as well
-    final int nDisplayLength = aRequestScope.getAttributeAsInt (LENGTH, DataTablesLengthMenu.COUNT_ALL);
-    final String sSearchValue = aRequestScope.getAttributeAsString (SEARCH_VALUE);
-    final boolean bSearchRegEx = aRequestScope.getAttributeAsBoolean (SEARCH_REGEX, false);
+    final int nDisplayLength = aRequestScope.params ().getAsInt (LENGTH, DataTablesLengthMenu.COUNT_ALL);
+    final String sSearchValue = aRequestScope.params ().getAsString (SEARCH_VALUE);
+    final boolean bSearchRegEx = aRequestScope.params ().getAsBoolean (SEARCH_REGEX, false);
 
     // Read "order
     final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns = new CommonsArrayList <> ();
@@ -339,9 +338,7 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
           if (aOrderPerIndex == null)
             break;
 
-          final int nOrderColumn = Math.max (AttributeValueConverter.getAsInt (ORDER_COLUMN,
-                                                                               aOrderPerIndex.getString (ORDER_COLUMN),
-                                                                               0),
+          final int nOrderColumn = Math.max (TypeConverter.convertToInt (aOrderPerIndex.getString (ORDER_COLUMN), 0),
                                              0);
           final String sOrderDir = aOrderPerIndex.getString (ORDER_DIR);
           final ESortOrder eOrderDir = EDataTablesOrderDirectionType.getSortOrderFromNameOrNull (sOrderDir);
@@ -394,10 +391,10 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
                                                               aOrderColumns);
 
     // Resolve dataTables from UIStateRegistry
-    final String sDataTablesID = aRequestScope.getAttributeAsString (OBJECT_ID);
-    final DataTablesServerData aServerData = UIStateRegistry.getCurrent ().getCastedState (
-                                                                                           DataTablesServerData.OT_DATATABLES,
-                                                                                           sDataTablesID);
+    final String sDataTablesID = aRequestScope.params ().getAsString (OBJECT_ID);
+    final DataTablesServerData aServerData = UIStateRegistry.getCurrent ()
+                                                            .getCastedState (DataTablesServerData.OT_DATATABLES,
+                                                                             sDataTablesID);
     if (aServerData == null)
       return AjaxHtmlResponse.createError ("No such data tables ID: " + sDataTablesID);
 

@@ -26,11 +26,11 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -56,8 +56,8 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
-                                     extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext> extends
+                                     AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -153,7 +153,7 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
                                                                         aDisplayLocale)));
 
     // Check max items parameter
-    int nMaxItems = aWPEC.getAttributeAsInt (PARAM_MAX_ITEMS);
+    int nMaxItems = aWPEC.params ().getAsInt (PARAM_MAX_ITEMS);
     if (nMaxItems <= 0)
       nMaxItems = DEFAULT_MAX_ITEMS;
 
@@ -163,8 +163,8 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
                                         new DTCol (EText.MSG_USER.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_ACTION.getDisplayText (aDisplayLocale)).setDataSort (4,
-                                                                                                                  0)).setID (getID ());
+                                        new DTCol (EText.MSG_ACTION.getDisplayText (aDisplayLocale)).setDataSort (4, 0))
+                                                                                                                        .setID (getID ());
     for (final IAuditItem aItem : m_aAuditMgr.getLastAuditItems (nMaxItems))
     {
       final HCRow aRow = aTable.addBodyRow ();

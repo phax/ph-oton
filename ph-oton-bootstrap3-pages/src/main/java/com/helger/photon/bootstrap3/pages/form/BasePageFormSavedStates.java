@@ -25,11 +25,11 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCCell;
@@ -62,8 +62,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
-                                     extends AbstractBootstrapWebPageForm <FormState, WPECTYPE>
+public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext> extends
+                                     AbstractBootstrapWebPageForm <FormState, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -237,17 +237,16 @@ public class BasePageFormSavedStates <WPECTYPE extends IWebPageExecutionContext>
 
         final IHCCell <?> aActionCell = aRow.addCell ();
         // Original action (currently always create even for copy)
-        final String sAction = aFormState.getAllAttributes ().getAttributeAsString (CPageParam.PARAM_ACTION,
-                                                                                    CPageParam.ACTION_CREATE);
+        final String sAction = aFormState.attrs ().getAsString (CPageParam.PARAM_ACTION, CPageParam.ACTION_CREATE);
         // Original object ID
-        final String sObjectID = aFormState.getAllAttributes ().getAttributeAsString (CPageParam.PARAM_OBJECT);
+        final String sObjectID = aFormState.attrs ().getAsString (CPageParam.PARAM_OBJECT);
         aActionCell.addChild (new HCA (aWPEC.getLinkToMenuItem (aFormState.getPageID ())
                                             .add (CPageParam.PARAM_ACTION, sAction)
                                             .addIf (CPageParam.PARAM_OBJECT, sObjectID, Objects::nonNull)
                                             .add (FIELD_FLOW_ID, aFormState.getFlowID ())
-                                            .add (FIELD_RESTORE_FLOW_ID,
-                                                  aFormState.getFlowID ())).setTitle (EText.SAVED_STATE_EDIT.getDisplayText (aDisplayLocale))
-                                                                           .addChild (EDefaultIcon.NEW.getAsNode ()));
+                                            .add (FIELD_RESTORE_FLOW_ID, aFormState.getFlowID ()))
+                                                                                                  .setTitle (EText.SAVED_STATE_EDIT.getDisplayText (aDisplayLocale))
+                                                                                                  .addChild (EDefaultIcon.NEW.getAsNode ()));
         aActionCell.addChild (createDeleteLink (aWPEC,
                                                 aFormState,
                                                 EText.SAVED_STATE_DELETE.getDisplayText (aDisplayLocale)));

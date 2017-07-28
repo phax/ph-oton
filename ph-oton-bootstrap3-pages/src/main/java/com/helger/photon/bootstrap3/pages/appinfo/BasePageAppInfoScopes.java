@@ -27,7 +27,6 @@ import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.lang.ClassHelper;
-import com.helger.commons.scope.IApplicationScope;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
@@ -48,6 +47,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.scope.IApplicationScope;
 import com.helger.web.scope.IGlobalWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
 
@@ -58,8 +58,8 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext>
-                                   extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext> extends
+                                   AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -135,14 +135,14 @@ public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext>
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_APPLICATION_SCOPES.getDisplayText (aDisplayLocale))
                                                        .setCtrl (Integer.toString (aScope.getApplicationScopeCount ())));
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (Integer.toString (aScope.getAttributeCount ())));
+                                                       .setCtrl (Integer.toString (aScope.attrs ().size ())));
     aNodeList.addChild (aTableScope);
 
     // All scope attributes
     final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                              new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
                                              new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("globalscope");
-    for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
+    for (final Map.Entry <String, Object> aEntry : aScope.attrs ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
                  .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
@@ -174,15 +174,14 @@ public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext>
                                                        .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (),
                                                                                              aDisplayLocale)));
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (Integer.toString (aScope.getAttributeCount ())));
+                                                       .setCtrl (Integer.toString (aScope.attrs ().size ())));
     aNodeList.addChild (aTableScope);
 
     // All scope attributes
     final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                              new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
-                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("appscope" +
-                                                                                                                 aScope.getID ());
-    for (final Map.Entry <String, Object> aEntry : aScope.getAllAttributes ().entrySet ())
+                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("appscope" + aScope.getID ());
+    for (final Map.Entry <String, Object> aEntry : aScope.attrs ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
                  .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))

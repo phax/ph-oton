@@ -24,12 +24,12 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.ext.CommonsHashSet;
-import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.ICommonsSet;
+import com.helger.commons.datetime.EDTFormatterMode;
+import com.helger.commons.datetime.EDTType;
+import com.helger.commons.datetime.PDTFormatter;
 import com.helger.commons.string.StringHelper;
-import com.helger.datetime.EDTType;
-import com.helger.datetime.format.PDTFormatter;
-import com.helger.datetime.format.PDTFormatter.EFormatterMode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.photon.core.app.html.PhotonJS;
@@ -95,7 +95,7 @@ public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
                            .arg (_fixFormatter (PDTFormatter.getPattern (eDTType,
                                                                          aDisplayLocale,
                                                                          FormatStyle.MEDIUM,
-                                                                         EFormatterMode.PARSE)))
+                                                                         EDTFormatterMode.PARSE)))
                            .arg (aDisplayLocale.toString ()));
       }
     });

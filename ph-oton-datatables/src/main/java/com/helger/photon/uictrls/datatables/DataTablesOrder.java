@@ -19,8 +19,8 @@ package com.helger.photon.uictrls.datatables;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.html.jscode.JSArray;
 

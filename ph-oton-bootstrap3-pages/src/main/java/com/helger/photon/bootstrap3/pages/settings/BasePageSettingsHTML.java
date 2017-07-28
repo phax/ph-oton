@@ -48,8 +48,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext>
-                                  extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> extends
+                                  AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -129,26 +129,31 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext>
     if (aWPEC.hasAction (CPageParam.ACTION_SAVE))
     {
       // Save changes
-      final boolean bFormatHTML = aWPEC.getCheckBoxAttr (FIELD_FORMAT_HTML,
-                                                         aConversionSettings.getXMLWriterSettings ()
-                                                                            .getIndent ()
-                                                                            .isIndent ());
-      final boolean bFormatCSS = aWPEC.getCheckBoxAttr (FIELD_FORMAT_CSS,
-                                                        !aConversionSettings.getCSSWriterSettings ()
-                                                                            .isOptimizedOutput ());
-      final boolean bFormatJS = aWPEC.getCheckBoxAttr (FIELD_FORMAT_JS,
-                                                       aConversionSettings.getJSWriterSettings ().isIndentAndAlign ());
-      final boolean bConsistencyChecksEnabled = aWPEC.getCheckBoxAttr (FIELD_CONSISTENCY_CHECKS_ENABLED,
-                                                                       aConversionSettings.areConsistencyChecksEnabled ());
-      final boolean bExtractOutOfBandNodes = aWPEC.getCheckBoxAttr (FIELD_EXTRACT_OUT_OF_BAND_NODES,
-                                                                    aConversionSettings.isExtractOutOfBandNodes ());
-      final boolean bAutoCompleteForPasswordEdits = aWPEC.getCheckBoxAttr (FIELD_AUTO_COMPLETE_FOR_PASSWORD_EDITS,
-                                                                           !HCSettings.isAutoCompleteOffForPasswordEdits ());
-      final boolean bOOBDebug = aWPEC.getCheckBoxAttr (FIELD_OUT_OF_BAND_DEBUG,
-                                                       HCSettings.isOutOfBandDebuggingEnabled ());
-      final boolean bScriptsInBody = aWPEC.getCheckBoxAttr (FIELD_SCRIPTS_IN_BODY, HCSettings.isScriptsInBody ());
-      final boolean bUseRegularResources = aWPEC.getCheckBoxAttr (FIELD_USE_REGULAR_RESOURCES,
-                                                                  HCSettings.isUseRegularResources ());
+      final boolean bFormatHTML = aWPEC.params ().isCheckBoxChecked (FIELD_FORMAT_HTML,
+                                                                     aConversionSettings.getXMLWriterSettings ()
+                                                                                        .getIndent ()
+                                                                                        .isIndent ());
+      final boolean bFormatCSS = aWPEC.params ().isCheckBoxChecked (FIELD_FORMAT_CSS,
+                                                                    !aConversionSettings.getCSSWriterSettings ()
+                                                                                        .isOptimizedOutput ());
+      final boolean bFormatJS = aWPEC.params ().isCheckBoxChecked (FIELD_FORMAT_JS,
+                                                                   aConversionSettings.getJSWriterSettings ()
+                                                                                      .isIndentAndAlign ());
+      final boolean bConsistencyChecksEnabled = aWPEC.params ()
+                                                     .isCheckBoxChecked (FIELD_CONSISTENCY_CHECKS_ENABLED,
+                                                                         aConversionSettings.areConsistencyChecksEnabled ());
+      final boolean bExtractOutOfBandNodes = aWPEC.params ()
+                                                  .isCheckBoxChecked (FIELD_EXTRACT_OUT_OF_BAND_NODES,
+                                                                      aConversionSettings.isExtractOutOfBandNodes ());
+      final boolean bAutoCompleteForPasswordEdits = aWPEC.params ()
+                                                         .isCheckBoxChecked (FIELD_AUTO_COMPLETE_FOR_PASSWORD_EDITS,
+                                                                             !HCSettings.isAutoCompleteOffForPasswordEdits ());
+      final boolean bOOBDebug = aWPEC.params ().isCheckBoxChecked (FIELD_OUT_OF_BAND_DEBUG,
+                                                                   HCSettings.isOutOfBandDebuggingEnabled ());
+      final boolean bScriptsInBody = aWPEC.params ().isCheckBoxChecked (FIELD_SCRIPTS_IN_BODY,
+                                                                        HCSettings.isScriptsInBody ());
+      final boolean bUseRegularResources = aWPEC.params ().isCheckBoxChecked (FIELD_USE_REGULAR_RESOURCES,
+                                                                              HCSettings.isUseRegularResources ());
 
       // Apply the settings
       HCSettings.getMutableConversionSettings ()

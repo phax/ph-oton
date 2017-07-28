@@ -55,8 +55,8 @@ import com.helger.smtp.listener.IEmailDataTransportListener;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext>
-                                    extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> extends
+                                    AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -126,9 +126,9 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext>
     if (aWPEC.hasAction (CPageParam.ACTION_SAVE))
     {
       // Save changes
-      final boolean bGlobalDebug = aWPEC.getCheckBoxAttr (FIELD_GLOBAL_DEBUG, GlobalDebug.isDebugMode ());
-      final boolean bGlobalProduction = aWPEC.getCheckBoxAttr (FIELD_GLOBAL_PRODUCTION,
-                                                               GlobalDebug.isProductionMode ());
+      final boolean bGlobalDebug = aWPEC.params ().isCheckBoxChecked (FIELD_GLOBAL_DEBUG, GlobalDebug.isDebugMode ());
+      final boolean bGlobalProduction = aWPEC.params ().isCheckBoxChecked (FIELD_GLOBAL_PRODUCTION,
+                                                                           GlobalDebug.isProductionMode ());
 
       GlobalDebug.setDebugModeDirect (bGlobalDebug);
       GlobalDebug.setProductionModeDirect (bGlobalProduction);

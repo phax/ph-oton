@@ -26,13 +26,14 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -72,8 +73,8 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionContext>
-                                         extends AbstractBootstrapWebPageForm <LoginInfo, WPECTYPE>
+public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionContext> extends
+                                         AbstractBootstrapWebPageForm <LoginInfo, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -246,8 +247,8 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                                   .setCtrl (aSelectedObject.getSessionScope ().getID ()));
 
     // Add custom attributes
-    final Map <String, String> aAttrs = aSelectedObject.getAllAttributes ();
-    if (!aAttrs.isEmpty ())
+    final IAttributeContainer <String, String> aAttrs = aSelectedObject.attrs ();
+    if (aAttrs.isEmpty ())
     {
       final HCTable aCustomAttrTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                                     new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID (aSelectedObject.getID ());
@@ -333,10 +334,10 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
         final String sUserName = SecurityHelper.getUserDisplayName (aLoginInfo.getUser (), aDisplayLocale);
         aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
                                             .add (CPageParam.PARAM_ACTION, ACTION_LOGOUT_USER)
-                                            .add (CPageParam.PARAM_OBJECT,
-                                                  aLoginInfo.getID ())).setTitle (EText.MSG_LOGOUT_USER.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                sUserName))
-                                                                       .addChild (getLogoutUserIcon ()));
+                                            .add (CPageParam.PARAM_OBJECT, aLoginInfo.getID ()))
+                                                                                                .setTitle (EText.MSG_LOGOUT_USER.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                         sUserName))
+                                                                                                .addChild (getLogoutUserIcon ()));
       }
       else
       {

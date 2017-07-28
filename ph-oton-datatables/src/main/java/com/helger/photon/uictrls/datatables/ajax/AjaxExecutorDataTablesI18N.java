@@ -62,7 +62,7 @@ public class AjaxExecutorDataTablesI18N extends AbstractAjaxExecutor
   protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     // Resolve language
-    final String sLanguage = aRequestScope.getAttributeAsString (LANGUAGE_ID);
+    final String sLanguage = aRequestScope.params ().getAsString (LANGUAGE_ID);
     Locale aLanguage = LocaleCache.getInstance ().getLocale (sLanguage);
     if (aLanguage == null)
     {

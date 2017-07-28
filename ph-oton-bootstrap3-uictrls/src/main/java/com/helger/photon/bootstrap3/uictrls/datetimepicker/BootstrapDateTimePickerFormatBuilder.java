@@ -25,23 +25,22 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.cache.AbstractNotifyingCache;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.cache.Cache;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.compare.IComparator;
+import com.helger.commons.datetime.PDTFromString;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.format.PDTFromString;
 import com.helger.photon.uicore.datetime.IDateFormatBuilder;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
 {
-  private final ICommonsList <Object> m_aList = new CommonsArrayList<> ();
+  private final ICommonsList <Object> m_aList = new CommonsArrayList <> ();
 
   public BootstrapDateTimePickerFormatBuilder ()
   {}
@@ -119,7 +118,7 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
   private static final class Searcher
   {
     private String m_sRest;
-    private final ICommonsMap <String, EDateTimePickerFormatToken> m_aAllMatching = new CommonsHashMap<> ();
+    private final ICommonsMap <String, EDateTimePickerFormatToken> m_aAllMatching = new CommonsHashMap <> ();
     private final Comparator <String> m_aComp = IComparator.getComparatorStringLongestFirst ();
 
     public Searcher (@Nonnull final String sRest)
@@ -163,35 +162,30 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
     }
   }
 
-  private static final class PatternCache extends AbstractNotifyingCache <String, BootstrapDateTimePickerFormatBuilder>
+  private static final class PatternCache extends Cache <String, BootstrapDateTimePickerFormatBuilder>
   {
     public PatternCache ()
     {
-      super ("BootstrapDateTimePickerFormatBuilder.PatternCache");
-    }
+      super (sJavaPattern -> {
+        ValueEnforcer.notNull (sJavaPattern, "JavaPattern");
 
-    @Override
-    @Nonnull
-    @SuppressFBWarnings ("NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE")
-    protected BootstrapDateTimePickerFormatBuilder getValueToCache (@Nullable final String sJavaPattern)
-    {
-      ValueEnforcer.notNull (sJavaPattern, "JavaPattern");
-
-      // Do parsing
-      final BootstrapDateTimePickerFormatBuilder aDFB = new BootstrapDateTimePickerFormatBuilder ();
-      final Searcher aSearcher = new Searcher (sJavaPattern);
-      while (aSearcher.hasMore ())
-      {
-        final EDateTimePickerFormatToken eToken = aSearcher.getNextToken ();
-        if (eToken != null)
-          aDFB.append (eToken);
-        else
+        // Do parsing
+        final BootstrapDateTimePickerFormatBuilder aDFB = new BootstrapDateTimePickerFormatBuilder ();
+        final Searcher aSearcher = new Searcher (sJavaPattern);
+        while (aSearcher.hasMore ())
         {
-          // It's not a token -> use a single char and check for the next token
-          aDFB.append (aSearcher.getNextChar ());
+          final EDateTimePickerFormatToken eToken = aSearcher.getNextToken ();
+          if (eToken != null)
+            aDFB.append (eToken);
+          else
+          {
+            // It's not a token -> use a single char and check for the next
+            // token
+            aDFB.append (aSearcher.getNextChar ());
+          }
         }
-      }
-      return aDFB;
+        return aDFB;
+      }, CGlobal.ILLEGAL_UINT, "BootstrapDateTimePickerFormatBuilder.PatternCache");
     }
   }
 

@@ -20,8 +20,8 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
@@ -93,7 +93,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
   {
     m_aFooterObjects = new CommonsArrayList <> ();
     ApplicationMenuTree.getTree ().iterateAllMenuObjects (aCurrentObject -> {
-      if (aCurrentObject.containsAttribute (CMenuPublic.FLAG_FOOTER))
+      if (aCurrentObject.attrs ().containsKey (CMenuPublic.FLAG_FOOTER))
         m_aFooterObjects.add (aCurrentObject);
     });
   }
@@ -157,7 +157,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
       protected boolean isMenuItemValidToBeDisplayed (@Nonnull final IMenuObject aMenuObj)
       {
         // Don't show items that belong to the footer
-        if (aMenuObj.containsAttribute (CMenuPublic.FLAG_FOOTER))
+        if (aMenuObj.attrs ().containsKey (CMenuPublic.FLAG_FOOTER))
           return false;
 
         // Use default code
@@ -183,11 +183,11 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
     aPageContainer.addChild (BootstrapSystemMessage.createDefault ());
 
     // Handle 404 case here (see error404.jsp)
-    if ("true".equals (aRequestScope.getAttributeAsString ("httpError")))
+    if (aRequestScope.params ().hasStringValue ("httpError", "true"))
     {
-      final String sHttpStatusCode = aRequestScope.getAttributeAsString ("httpStatusCode");
-      final String sHttpStatusMessage = aRequestScope.getAttributeAsString ("httpStatusMessage");
-      final String sHttpRequestURI = aRequestScope.getAttributeAsString ("httpRequestUri");
+      final String sHttpStatusCode = aRequestScope.params ().getAsString ("httpStatusCode");
+      final String sHttpStatusMessage = aRequestScope.params ().getAsString ("httpStatusMessage");
+      final String sHttpRequestURI = aRequestScope.params ().getAsString ("httpRequestUri");
       aPageContainer.addChild (new BootstrapErrorBox ().addChild ("HTTP error " +
                                                                   sHttpStatusCode +
                                                                   " (" +
@@ -200,7 +200,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
     else
     {
       // Add the forced redirect content here
-      if (aWPEC.containsAttribute (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE))
+      if (aWPEC.params ().containsKey (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE))
         aPageContainer.addChild (ForcedRedirectManager.getLastForcedRedirectContent (aDisplayPage.getID ()));
     }
 

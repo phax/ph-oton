@@ -27,7 +27,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
-import com.helger.commons.charset.CharsetManager;
+import com.helger.commons.charset.CharsetHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.email.EmailAddressHelper;
 import com.helger.commons.string.StringHelper;
@@ -89,8 +89,8 @@ import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.smtp.settings.ISMTPSettings;
 import com.helger.smtp.settings.SMTPSettings;
 
-public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
-                                  extends AbstractBootstrapWebPageForm <NamedSMTPSettings, WPECTYPE>
+public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> extends
+                                  AbstractBootstrapWebPageForm <NamedSMTPSettings, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -433,13 +433,14 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
       sPassword = aSelectedObject.getSMTPSettings ().getPassword ();
     }
     final String sCharset = aWPEC.getAttributeAsString (FIELD_CHARSET);
-    final Charset aCharset = CharsetManager.getCharsetFromNameOrNull (sCharset);
+    final Charset aCharset = CharsetHelper.getCharsetFromNameOrNull (sCharset);
 
-    final boolean bSSLEnabled = aWPEC.getCheckBoxAttr (FIELD_SSL, EmailGlobalSettings.isUseSSL ());
-    final boolean bSTARTTLSEnabled = aWPEC.getCheckBoxAttr (FIELD_STARTTLS, EmailGlobalSettings.isUseSTARTTLS ());
-    final long nConnectionTimeoutMS = aWPEC.getAttributeAsLong (FIELD_CONNECTION_TIMEOUT, CGlobal.ILLEGAL_ULONG);
-    final long nSocketTimeoutMS = aWPEC.getAttributeAsLong (FIELD_SOCKET_TIMEOUT, CGlobal.ILLEGAL_ULONG);
-    final boolean bDebugSMTP = aWPEC.getCheckBoxAttr (FIELD_DEBUG_SMTP, EmailGlobalSettings.isDebugSMTP ());
+    final boolean bSSLEnabled = aWPEC.params ().isCheckBoxChecked (FIELD_SSL, EmailGlobalSettings.isUseSSL ());
+    final boolean bSTARTTLSEnabled = aWPEC.params ().isCheckBoxChecked (FIELD_STARTTLS,
+                                                                        EmailGlobalSettings.isUseSTARTTLS ());
+    final long nConnectionTimeoutMS = aWPEC.params ().getAsLong (FIELD_CONNECTION_TIMEOUT, CGlobal.ILLEGAL_ULONG);
+    final long nSocketTimeoutMS = aWPEC.params ().getAsLong (FIELD_SOCKET_TIMEOUT, CGlobal.ILLEGAL_ULONG);
+    final boolean bDebugSMTP = aWPEC.params ().isCheckBoxChecked (FIELD_DEBUG_SMTP, EmailGlobalSettings.isDebugSMTP ());
 
     if (StringHelper.hasNoText (sName))
       aFormErrors.addFieldError (FIELD_NAME, EText.ERROR_NAME_EMPTY.getDisplayText (aDisplayLocale));
@@ -665,9 +666,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext>
 
       aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
                                           .add (CPageParam.PARAM_ACTION, ACTION_TEST_MAIL)
-                                          .add (CPageParam.PARAM_OBJECT,
-                                                aCurObject.getID ())).setTitle (EText.MSG_SEND_TEST_MAIL.getDisplayText (aDisplayLocale))
-                                                                     .addChild (getTestMailIcon ()));
+                                          .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
+                                                                                              .setTitle (EText.MSG_SEND_TEST_MAIL.getDisplayText (aDisplayLocale))
+                                                                                              .addChild (getTestMailIcon ()));
     }
 
     aNodeList.addChild (aTable);

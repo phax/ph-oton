@@ -20,7 +20,6 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.scope.ScopeHelper;
 import com.helger.commons.system.SystemProperties;
 import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
@@ -47,6 +46,7 @@ import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.autonumeric.AbstractHCAutoNumeric;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
+import com.helger.scope.ScopeHelper;
 import com.helger.servlet.response.UnifiedResponseDefaultSettings;
 import com.helger.web.scope.mgr.ThrowingScopeFactory;
 import com.helger.web.scope.mgr.WebScopeManager;

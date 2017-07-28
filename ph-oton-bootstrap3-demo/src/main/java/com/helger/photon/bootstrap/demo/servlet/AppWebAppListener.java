@@ -22,8 +22,8 @@ import javax.servlet.ServletContext;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.photon.bootstrap.demo.app.AppSecurity;
 import com.helger.photon.bootstrap.demo.app.AppSettings;
 import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;

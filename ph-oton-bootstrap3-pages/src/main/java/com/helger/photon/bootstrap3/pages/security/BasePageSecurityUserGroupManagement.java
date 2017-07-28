@@ -28,9 +28,9 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.ICommonsCollection;
-import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.collection.impl.ICommonsCollection;
+import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.name.IHasName;
@@ -287,7 +287,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     }
 
     // custom attributes
-    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.getAllAttributes ();
+    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.customAttrs ();
 
     // Callback for custom attributes
     final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
@@ -331,7 +331,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final String sName = aWPEC.getAttributeAsString (FIELD_NAME);
     final String sDescription = aWPEC.getAttributeAsString (FIELD_DESCRIPTION);
-    final ICommonsCollection <String> aRoleIDs = aWPEC.getAttributeAsList (FIELD_ROLES);
+    final ICommonsCollection <String> aRoleIDs = aWPEC.params ().getAsStringList (FIELD_ROLES);
     final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
@@ -357,7 +357,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       {
         final String sUserGroupID = aSelectedObject.getID ();
 
-        final Map <String, String> aAttrMap = aSelectedObject.getAllAttributes ();
+        final Map <String, String> aAttrMap = aSelectedObject.customAttrs ();
         if (aCustomAttrMap != null)
           aAttrMap.putAll (aCustomAttrMap);
 
@@ -426,7 +426,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
     // Role assignment
     {
-      final Collection <String> aRoleIDs = aSelectedObject == null ? aWPEC.getAttributeAsList (FIELD_ROLES)
+      final Collection <String> aRoleIDs = aSelectedObject == null ? aWPEC.params ().getAsStringList (FIELD_ROLES)
                                                                    : aSelectedObject.getAllContainedRoleIDs ();
       final HCRoleForUserGroupSelect aSelect = new HCRoleForUserGroupSelect (new RequestField (FIELD_ROLES), aRoleIDs);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
