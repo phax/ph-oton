@@ -124,7 +124,7 @@ public class ResourceBundleServlet extends AbstractObjectDeliveryServlet
       return EContinue.BREAK;
 
     // Allow only valid bundle IDs
-    final String sBundleID = _getBundleIDFromFilename (aRequestScope.params ()
+    final String sBundleID = _getBundleIDFromFilename (aRequestScope.attrs ()
                                                                     .getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME));
     if (!PhotonCoreManager.getWebSiteResourceBundleMgr ().containsResourceBundleOfID (sBundleID))
     {
