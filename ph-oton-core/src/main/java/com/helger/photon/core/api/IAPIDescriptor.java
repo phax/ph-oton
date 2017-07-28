@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsOrderedSet;
-import com.helger.commons.factory.IFactory;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
+import com.helger.commons.functional.ISupplier;
 import com.helger.http.EHTTPMethod;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
 
@@ -57,7 +57,7 @@ public interface IAPIDescriptor
    * @return The non-<code>null</code> factory used to create the main invoker.
    */
   @Nonnull
-  IFactory <? extends IAPIExecutor> getExecutorFactory ();
+  ISupplier <? extends IAPIExecutor> getExecutorFactory ();
 
   /**
    * @return <code>true</code> if this API has required HTTP headers.

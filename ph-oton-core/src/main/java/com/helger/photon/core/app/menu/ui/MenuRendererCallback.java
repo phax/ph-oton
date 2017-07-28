@@ -21,9 +21,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.collection.impl.NonBlockingStack;
-import com.helger.commons.factory.IFactory;
+import com.helger.commons.collection.NonBlockingStack;
+import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.functional.ISupplier;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.html.hc.IHCNode;
@@ -47,11 +47,11 @@ import com.helger.tree.withid.DefaultTreeItemWithID;
  * @param <T>
  *        Parent element type
  */
-public class MenuRendererCallback <T extends IHCList <?, HCLI>>
-                                  extends DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
+public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
+                                  DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
 {
   private final ISimpleWebExecutionContext m_aSWEC;
-  private final IFactory <T> m_aFactory;
+  private final ISupplier <T> m_aFactory;
   private final NonBlockingStack <T> m_aMenuListStack;
   private final IMenuItemRenderer <T> m_aRenderer;
   private final ICommonsMap <String, Boolean> m_aDisplayMenuItemIDs;
@@ -61,7 +61,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
   private final String m_sSelectedItem;
 
   protected MenuRendererCallback (@Nonnull final ILayoutExecutionContext aLEC,
-                                  @Nonnull final IFactory <T> aFactory,
+                                  @Nonnull final ISupplier <T> aFactory,
                                   @Nonnull final NonBlockingStack <T> aMenuListStack,
                                   @Nonnull final IMenuItemRenderer <T> aRenderer,
                                   @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
@@ -225,7 +225,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
    */
   @Nonnull
   public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final IFactory <T> aFactory,
+                                                                    @Nonnull final ISupplier <T> aFactory,
                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer)
   {
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
@@ -256,7 +256,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
    */
   @Nonnull
   public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final IFactory <T> aFactory,
+                                                                    @Nonnull final ISupplier <T> aFactory,
                                                                     @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer)
   {
@@ -289,7 +289,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
    */
   @Nonnull
   public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final IFactory <T> aFactory,
+                                                                    @Nonnull final ISupplier <T> aFactory,
                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer,
                                                                     @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
   {
@@ -318,7 +318,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>>
    */
   @Nonnull
   public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final IFactory <T> aFactory,
+                                                                    @Nonnull final ISupplier <T> aFactory,
                                                                     @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer,
                                                                     @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)

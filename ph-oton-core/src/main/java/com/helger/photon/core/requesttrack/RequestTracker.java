@@ -31,11 +31,11 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.concurrent.ManagedExecutorService;
+import com.helger.commons.concurrent.ExecutorServiceHelper;
 import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.scope.IScope;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
+import com.helger.scope.IScope;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
@@ -87,10 +87,10 @@ public final class RequestTracker extends AbstractGlobalWebSingleton
   public RequestTracker ()
   {
     // Register default callbacks
-    m_aLongRunningCallbacks.addCallback (new LoggingLongRunningRequestCallback (EErrorLevel.ERROR))
-                           .addCallback (new AuditingLongRunningRequestCallback ());
-    m_aParallelRunningCallbacks.addCallback (new LoggingParallelRunningRequestCallback (EErrorLevel.WARN))
-                               .addCallback (new AuditingParallelRunningRequestCallback ());
+    m_aLongRunningCallbacks.add (new LoggingLongRunningRequestCallback (EErrorLevel.ERROR))
+                           .add (new AuditingLongRunningRequestCallback ());
+    m_aParallelRunningCallbacks.add (new LoggingParallelRunningRequestCallback (EErrorLevel.WARN))
+                               .add (new AuditingParallelRunningRequestCallback ());
 
     // Create the executor service
     m_aExecSvc = Executors.newSingleThreadScheduledExecutor (new ThreadFactory ()
@@ -115,7 +115,7 @@ public final class RequestTracker extends AbstractGlobalWebSingleton
   protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
   {
     // Destroy RequestTrackerMonitor thread(s)
-    ManagedExecutorService.shutdownAndWaitUntilAllTasksAreFinished (m_aExecSvc);
+    ExecutorServiceHelper.shutdownAndWaitUntilAllTasksAreFinished (m_aExecSvc);
   }
 
   @Nonnull

@@ -23,8 +23,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.photon.core.mgr.PhotonCoreManager;

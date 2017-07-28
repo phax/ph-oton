@@ -22,19 +22,17 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.attr.IAttributeContainer;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.servlet.request.IRequestParamMap;
+import com.helger.servlet.request.RequestHelper;
 import com.helger.useragent.IUserAgent;
 import com.helger.useragent.browser.BrowserInfo;
-import com.helger.web.fileupload.IFileItem;
+import com.helger.web.scope.IRequestParamContainer;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-public interface ISimpleWebExecutionContext extends IAttributeContainer <String, Object>
+public interface ISimpleWebExecutionContext
 {
   /**
    * @return The current request scope. Never <code>null</code>.
@@ -42,112 +40,10 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
   @Nonnull
   IRequestWebScopeWithoutResponse getRequestScope ();
 
-  /**
-   * @return The current display locale. Base on the item of the request
-   *         manager.
-   */
   @Nonnull
-  Locale getDisplayLocale ();
-
-  /**
-   * @return The current menu tree. Based on the menu tree of the request
-   *         manager.
-   */
-  @Nonnull
-  IMenuTree getMenuTree ();
-
-  // The following 4 methods are copied from IRequestScope
-
-  /**
-   * Get a list of all attribute values with the same name.
-   *
-   * @param sName
-   *        The name of the attribute to query.
-   * @return <code>null</code> if no such attribute value exists
-   */
-  @Nullable
-  default ICommonsList <String> getAttributeAsList (@Nullable final String sName)
+  default IRequestParamContainer params ()
   {
-    return getAttributeAsList (sName, null);
-  }
-
-  /**
-   * Get a list of all attribute values with the same name.
-   *
-   * @param sName
-   *        The name of the attribute to query.
-   * @param aDefault
-   *        The default value to be returned, if no such attribute is present.
-   * @return <code>default</code> if no such attribute value exists
-   */
-  @Nullable
-  ICommonsList <String> getAttributeAsList (@Nullable String sName, @Nullable ICommonsList <String> aDefault);
-
-  /**
-   * Check if a attribute with the given name is present in the request and has
-   * the specified value.
-   *
-   * @param sName
-   *        The name of the attribute to check
-   * @param sDesiredValue
-   *        The value to be matched
-   * @return <code>true</code> if an attribute with the given name is present
-   *         and has the desired value
-   */
-  default boolean hasAttributeValue (@Nullable final String sName, @Nullable final String sDesiredValue)
-  {
-    return EqualsHelper.equals (getAttributeAsString (sName), sDesiredValue);
-  }
-
-  /**
-   * Check if a attribute with the given name is present in the request and has
-   * the specified value. If no such attribute is present, the passed default
-   * value is returned.
-   *
-   * @param sName
-   *        The name of the attribute to check
-   * @param sDesiredValue
-   *        The value to be matched
-   * @param bDefault
-   *        the default value to be returned, if the specified attribute is not
-   *        present
-   * @return <code>true</code> if an attribute with the given name is present
-   *         and has the desired value, <code>false</code> if the attribute is
-   *         present but has a different value. If the attribute is not present,
-   *         the default value is returned.
-   */
-  default boolean hasAttributeValue (@Nullable final String sName,
-                                     @Nullable final String sDesiredValue,
-                                     final boolean bDefault)
-  {
-    final String sValue = getAttributeAsString (sName);
-    return sValue == null ? bDefault : EqualsHelper.equals (sValue, sDesiredValue);
-  }
-
-  /**
-   * Get the value of the checkbox of the request parameter with the given name.
-   *
-   * @param sName
-   *        Request parameter name
-   * @param bDefaultValue
-   *        the default value to be returned, if no request attribute is present
-   * @return The value of the passed request parameter
-   */
-  boolean getCheckBoxAttr (@Nullable String sName, boolean bDefaultValue);
-
-  /**
-   * Get the uploaded file with the specified request parameter.
-   *
-   * @param sName
-   *        The parameter name.
-   * @return <code>null</code> if no such uploaded file is present.
-   * @throws ClassCastException
-   *         if the passed request parameter is not a file
-   */
-  @Nullable
-  default IFileItem getFileItem (@Nullable final String sName)
-  {
-    return getRequestScope ().getAttributeAsFileItem (sName);
+    return getRequestScope ().params ();
   }
 
   /**
@@ -160,12 +56,29 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
   }
 
   /**
+   * @return The current display locale. Based on the locale of the request
+   *         manager.
+   */
+  @Nonnull
+  Locale getDisplayLocale ();
+
+  /**
+   * @return The current menu tree. Based on the menu tree of the request
+   *         manager.
+   */
+  @Nonnull
+  IMenuTree getMenuTree ();
+
+  /**
    * Get the user agent object of this HTTP request.
    *
    * @return A non-<code>null</code> user agent object.
    */
   @Nonnull
-  IUserAgent getUserAgent ();
+  default IUserAgent getUserAgent ()
+  {
+    return RequestHelper.getUserAgent (getRequestScope ().getRequest ());
+  }
 
   /**
    * @return The information about the matching browser or <code>null</code> if
@@ -244,10 +157,8 @@ public interface ISimpleWebExecutionContext extends IAttributeContainer <String,
                                        @Nonnull final Locale aDisplayLocale,
                                        @Nonnull final String sMenuItemID)
   {
-    return RequestParameterManager.getInstance ().getLinkToMenuItem (sAppID,
-                                                                     getRequestScope (),
-                                                                     aDisplayLocale,
-                                                                     sMenuItemID);
+    return RequestParameterManager.getInstance ()
+                                  .getLinkToMenuItem (sAppID, getRequestScope (), aDisplayLocale, sMenuItemID);
   }
 
   /**

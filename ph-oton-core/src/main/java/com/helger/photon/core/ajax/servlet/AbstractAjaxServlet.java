@@ -110,9 +110,9 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
 
     // Remember in scope
     // Important: use a wrapper to avoid scope destruction
-    aRequestScope.setAttribute (SCOPE_ATTR_NAME, sFunctionName);
-    aRequestScope.setAttribute (SCOPE_ATTR_INVOKER, new Wrapper <> (aAjaxInvoker));
-    aRequestScope.setAttribute (SCOPE_ATTR_EXECUTOR, aAjaxExecutor);
+    aRequestScope.attrs ().putIn (SCOPE_ATTR_NAME, sFunctionName);
+    aRequestScope.attrs ().putIn (SCOPE_ATTR_INVOKER, new Wrapper <> (aAjaxInvoker));
+    aRequestScope.attrs ().putIn (SCOPE_ATTR_EXECUTOR, aAjaxExecutor);
     return EContinue.CONTINUE;
   }
 
@@ -121,10 +121,12 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
                                 @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
   {
     // Action is present
-    final String sAjaxFunctionName = aRequestScope.getAttributeAsString (SCOPE_ATTR_NAME);
-    final IAjaxInvoker aAjaxInvoker = (IAjaxInvoker) aRequestScope.getTypedAttribute (SCOPE_ATTR_INVOKER, Wrapper.class)
+    final String sAjaxFunctionName = aRequestScope.attrs ().getAsString (SCOPE_ATTR_NAME);
+    final IAjaxInvoker aAjaxInvoker = (IAjaxInvoker) aRequestScope.attrs ()
+                                                                  .getCastedValue (SCOPE_ATTR_INVOKER, Wrapper.class)
                                                                   .get ();
-    final IAjaxExecutor aAjaxExecutor = aRequestScope.getTypedAttribute (SCOPE_ATTR_EXECUTOR, IAjaxExecutor.class);
+    final IAjaxExecutor aAjaxExecutor = aRequestScope.attrs ().getCastedValue (SCOPE_ATTR_EXECUTOR,
+                                                                               IAjaxExecutor.class);
 
     // Never cache the result but the executor may overwrite it
     aUnifiedResponse.disableCaching ();

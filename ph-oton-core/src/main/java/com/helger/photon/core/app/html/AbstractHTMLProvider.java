@@ -25,8 +25,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;

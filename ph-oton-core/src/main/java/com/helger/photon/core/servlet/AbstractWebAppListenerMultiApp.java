@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.css.propertyvalue.CSSValue;
 import com.helger.html.hc.config.HCSettings;

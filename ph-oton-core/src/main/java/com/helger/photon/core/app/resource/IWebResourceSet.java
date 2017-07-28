@@ -16,14 +16,13 @@
  */
 package com.helger.photon.core.app.resource;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsIterable;
-import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.collection.impl.ICommonsIterable;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.state.EChange;
 
 /**
@@ -33,7 +32,7 @@ import com.helger.commons.state.EChange;
  * @param <T>
  *        The contained data type.
  */
-public interface IWebResourceSet <T> extends Serializable, ICommonsIterable <T>
+public interface IWebResourceSet <T> extends ICommonsIterable <T>
 {
   /**
    * Add an item

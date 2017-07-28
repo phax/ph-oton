@@ -27,18 +27,17 @@ import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 import com.helger.xml.microdom.util.MicroHelper;
 
-public final class NamedSMTPSettingsMicroTypeConverter implements IMicroTypeConverter
+public final class NamedSMTPSettingsMicroTypeConverter implements IMicroTypeConverter <NamedSMTPSettings>
 {
   private static final String ATTR_ID = "id";
   private static final String ELEMENT_NAME = "name";
   private static final String ELEMENT_SMTPSETTINGS = "smtpsettings";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aSource,
+  public IMicroElement convertToMicroElement (@Nonnull final NamedSMTPSettings aNamedSMTPSettings,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull final String sTagName)
   {
-    final NamedSMTPSettings aNamedSMTPSettings = (NamedSMTPSettings) aSource;
     final IMicroElement eSMTPSettings = new MicroElement (sNamespaceURI, sTagName);
     eSMTPSettings.setAttribute (ATTR_ID, aNamedSMTPSettings.getID ());
     eSMTPSettings.appendElement (sNamespaceURI, ELEMENT_NAME).appendText (aNamedSMTPSettings.getName ());

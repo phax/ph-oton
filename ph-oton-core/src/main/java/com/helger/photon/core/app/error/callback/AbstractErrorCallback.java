@@ -25,8 +25,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.ext.ICommonsSet;
-import com.helger.commons.collection.impl.LRUSet;
+import com.helger.commons.collection.impl.ICommonsSet;
+import com.helger.commons.collection.map.LRUSet;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SMap;
@@ -69,7 +69,7 @@ public abstract class AbstractErrorCallback implements
                                             ILongRunningRequestCallback,
                                             IParallelRunningRequestCallback
 {
-  private final ICommonsSet <String> m_aHandledLongRunning = new LRUSet<> (1000);
+  private final ICommonsSet <String> m_aHandledLongRunning = new LRUSet <> (1000);
 
   /**
    * Implement this method to handle all errors in a similar way.
@@ -206,12 +206,12 @@ public abstract class AbstractErrorCallback implements
    */
   public static void installToPhoton (@Nonnull final AbstractErrorCallback aCallback)
   {
-    AjaxSettings.getExceptionCallbacks ().addCallback (aCallback);
-    APISettings.getExceptionCallbacks ().addCallback (aCallback);
-    AbstractDAO.getExceptionHandlersRead ().addCallback (aCallback);
-    AbstractDAO.getExceptionHandlersWrite ().addCallback (aCallback);
-    AbstractJob.getExceptionCallbacks ().addCallback (aCallback);
-    RequestTracker.getLongRunningRequestCallbacks ().addCallback (aCallback);
-    RequestTracker.getParallelRunningRequestCallbacks ().addCallback (aCallback);
+    AjaxSettings.getExceptionCallbacks ().add (aCallback);
+    APISettings.getExceptionCallbacks ().add (aCallback);
+    AbstractDAO.getExceptionHandlersRead ().add (aCallback);
+    AbstractDAO.getExceptionHandlersWrite ().add (aCallback);
+    AbstractJob.getExceptionCallbacks ().add (aCallback);
+    RequestTracker.getLongRunningRequestCallbacks ().add (aCallback);
+    RequestTracker.getParallelRunningRequestCallbacks ().add (aCallback);
   }
 }

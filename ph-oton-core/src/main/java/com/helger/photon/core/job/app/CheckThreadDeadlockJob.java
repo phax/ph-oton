@@ -23,8 +23,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.deadlock.ThreadDeadlockDetector;
 import com.helger.photon.core.app.error.callback.MailingThreadDeadlockCallback;
 import com.helger.photon.core.job.AbstractPhotonJob;
@@ -61,7 +61,7 @@ public class CheckThreadDeadlockJob extends AbstractPhotonJob
       s_aLogger.debug ("Checking for dead locks");
 
     final ThreadDeadlockDetector aTDD = new ThreadDeadlockDetector ();
-    aTDD.addCallback (new MailingThreadDeadlockCallback ());
+    aTDD.callbacks ().add (new MailingThreadDeadlockCallback ());
     aTDD.findDeadlockedThreads ();
   }
 
@@ -83,7 +83,7 @@ public class CheckThreadDeadlockJob extends AbstractPhotonJob
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
 
-    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap<> ();
+    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap <> ();
     aJobDataMap.put (JOB_DATA_ATTR_APPLICATION_ID, sApplicationID);
 
     return GlobalQuartzScheduler.getInstance ().scheduleJob (CheckThreadDeadlockJob.class.getName (),

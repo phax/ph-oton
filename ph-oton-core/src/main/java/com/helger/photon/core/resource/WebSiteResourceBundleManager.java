@@ -32,14 +32,14 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.charset.CharsetManager;
+import com.helger.commons.charset.CharsetHelper;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.io.file.iterate.FileSystemIterator;
+import com.helger.commons.io.file.FileSystemIterator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
@@ -133,7 +133,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
           final String sCharset = eResource.getAttributeValue (ATTR_CHARSET);
           // Soft migration as charset was added later
           final Charset aCharset = sCharset == null ? WebSiteResource.DEFAULT_CHARSET
-                                                    : CharsetManager.getCharsetFromName (sCharset);
+                                                    : CharsetHelper.getCharsetFromName (sCharset);
 
           final WebSiteResource aNewResource = new WebSiteResource (eResourceType, sPath, aCharset);
           if (!aNewResource.isExisting ())

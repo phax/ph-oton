@@ -35,9 +35,9 @@ import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.scope.singleton.AbstractGlobalSingleton;
 import com.helger.web.scope.IGlobalWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
 

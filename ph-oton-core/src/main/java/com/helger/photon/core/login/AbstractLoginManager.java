@@ -25,8 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.ext.CommonsHashSet;
-import com.helger.commons.collection.ext.ICommonsCollection;
+import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.ICommonsCollection;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
@@ -131,7 +131,8 @@ public abstract class AbstractLoginManager
   @OverrideOnDemand
   protected boolean isLoginInProgress (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS.equals (aRequestScope.getAttributeAsString (CLogin.REQUEST_PARAM_ACTION));
+    return CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS.equals (aRequestScope.params ()
+                                                                                 .getAsString (CLogin.REQUEST_PARAM_ACTION));
   }
 
   /**
@@ -196,14 +197,14 @@ public abstract class AbstractLoginManager
                                   final boolean bLoggedInInThisRequest)
   {
     // Set some debugging details
-    aLoginInfo.setAttribute (LOGIN_INFO_REMOTE_ADDRESS, aRequestScope.getRemoteAddr ());
-    aLoginInfo.setAttribute (LOGIN_INFO_REMOTE_HOST, aRequestScope.getRemoteHost ());
-    aLoginInfo.setAttribute (LOGIN_INFO_REQUEST_URI, aRequestScope.getRequestURI ());
-    aLoginInfo.setAttribute (LOGIN_INFO_QUERY_STRING, aRequestScope.getQueryString ());
-    aLoginInfo.setAttribute (LOGIN_INFO_USER_AGENT,
-                             RequestHelper.getHttpUserAgentStringFromRequest (aRequestScope.getRequest ()));
-    aLoginInfo.setAttribute (LOGIN_INFO_REQUEST_COUNT,
-                             Integer.toString (aLoginInfo.getAttributeAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
+    aLoginInfo.attrs ().putIn (LOGIN_INFO_REMOTE_ADDRESS, aRequestScope.getRemoteAddr ());
+    aLoginInfo.attrs ().putIn (LOGIN_INFO_REMOTE_HOST, aRequestScope.getRemoteHost ());
+    aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_URI, aRequestScope.getRequestURI ());
+    aLoginInfo.attrs ().putIn (LOGIN_INFO_QUERY_STRING, aRequestScope.getQueryString ());
+    aLoginInfo.attrs ().putIn (LOGIN_INFO_USER_AGENT,
+                               RequestHelper.getHttpUserAgentStringFromRequest (aRequestScope.getRequest ()));
+    aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_COUNT,
+                               Integer.toString (aLoginInfo.attrs ().getAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
   }
 
   /**

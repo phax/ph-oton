@@ -52,8 +52,8 @@ public final class APISettings
   static
   {
     // Register default handler
-    getExceptionCallbacks ().addCallback (new LoggingAPIExceptionCallback ());
-    getLongRunningExecutionCallbacks ().addCallback (new LoggingAPILongRunningExecutionCallback ());
+    getExceptionCallbacks ().add (new LoggingAPIExceptionCallback ());
+    getLongRunningExecutionCallbacks ().add (new LoggingAPILongRunningExecutionCallback ());
   }
 
   private APISettings ()

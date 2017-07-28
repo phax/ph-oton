@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsOrderedMap;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -126,7 +126,7 @@ public final class InvokableAPIDescriptor
     // Check required parameters
     if (m_aDescriptor.hasRequiredParams ())
       for (final String sRequiredParam : m_aDescriptor.getAllRequiredParams ())
-        if (!aRequestScope.containsAttribute (sRequiredParam))
+        if (!aRequestScope.params ().containsKey (sRequiredParam))
         {
           s_aLogger.warn ("Request '" + m_sPath + "' is missing required HTTP parameter '" + sRequiredParam + "'");
           return false;

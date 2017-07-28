@@ -18,13 +18,11 @@ package com.helger.photon.core.form;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hc.html.forms.AbstractHCCheckBox;
 import com.helger.html.request.IHCRequestFieldBoolean;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * Special request field specially for check boxes with a fixed value.
@@ -71,7 +69,7 @@ public class RequestFieldBoolean extends RequestField implements IHCRequestField
 
   public boolean isChecked ()
   {
-    return getCheckBoxValue (getFieldName (), m_bDefaultValue);
+    return WebScopeManager.getRequestScope ().params ().isCheckBoxChecked (getFieldName (), m_bDefaultValue);
   }
 
   @Override
@@ -95,25 +93,5 @@ public class RequestFieldBoolean extends RequestField implements IHCRequestField
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ()).append ("defaultValue", m_bDefaultValue).getToString ();
-  }
-
-  public static boolean getCheckBoxValue (@Nonnull @Nonempty final String sFieldName, final boolean bDefaultValue)
-  {
-    ValueEnforcer.notEmpty (sFieldName, "FieldName");
-
-    final IRequestWebScopeWithoutResponse aScope = getScope ();
-
-    // Is the checked value present?
-    final String sRequestValue = aScope.getAttributeAsString (sFieldName);
-    if (sRequestValue != null)
-      return true;
-
-    // Check if the hidden parameter for "checkbox is contained in the request"
-    // is present?
-    if (aScope.containsAttribute (AbstractHCCheckBox.getHiddenFieldName (sFieldName)))
-      return false;
-
-    // Neither nor - default!
-    return bDefaultValue;
   }
 }

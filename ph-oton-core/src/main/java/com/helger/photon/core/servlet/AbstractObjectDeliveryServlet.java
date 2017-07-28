@@ -30,16 +30,16 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsLinkedHashSet;
-import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.collection.impl.CommonsLinkedHashSet;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.math.MathHelper;
 import com.helger.commons.random.RandomHelper;
 import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.URLHelper;
+import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -77,12 +77,12 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
                                                                                     16) +
                                                                      '"';
 
-  private final ICommonsOrderedSet <String> m_aDeniedFilenames = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aDeniedExtensions = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aDeniedRegExs = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aAllowedFilenames = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aAllowedExtensions = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aAllowedRegExs = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aDeniedFilenames = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aDeniedExtensions = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aDeniedRegExs = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aAllowedFilenames = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aAllowedExtensions = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aAllowedRegExs = new CommonsLinkedHashSet <> ();
   private boolean m_bDeniedAllExtensions = false;
   private boolean m_bAllowedAllExtensions = false;
 
@@ -365,7 +365,7 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
     }
 
     // Filename seems to be safe
-    aRequestScope.setAttribute (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME, sFilename);
+    aRequestScope.attrs ().putIn (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME, sFilename);
     return EContinue.CONTINUE;
   }
 

@@ -22,8 +22,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.factory.IFactory;
-import com.helger.commons.filter.IFilter;
+import com.helger.commons.functional.IPredicate;
+import com.helger.commons.functional.ISupplier;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.core.url.LinkHelper;
@@ -40,14 +40,14 @@ public interface IAjaxFunctionDeclaration extends IHasName
    * @return The executor factory to be used. May not be <code>null</code>.
    */
   @Nonnull
-  IFactory <? extends IAjaxExecutor> getExecutorFactory ();
+  ISupplier <? extends IAjaxExecutor> getExecutorFactory ();
 
   /**
    * @return The optional filter to be invoked before the main AJAX invocation.
    *         May be <code>null</code>.
    */
   @Nullable
-  IFilter <IRequestWebScopeWithoutResponse> getExecutionFilter ();
+  IPredicate <IRequestWebScopeWithoutResponse> getExecutionFilter ();
 
   /**
    * @return The path to the AJAX servlet. Must start with a slash and end with
@@ -118,24 +118,6 @@ public interface IAjaxFunctionDeclaration extends IHasName
   default SimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return LinkHelper.getURLWithContext (aRequestScope, getPathWithoutContext ());
-  }
-
-  /**
-   * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
-   * @param aParams
-   *        An optional map with URL parameters to be used in the URL. May be
-   *        <code>null</code> or empty.
-   * @return The URL where the AJAX function can be invoked. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  @Deprecated
-  default SimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                      @Nullable final Map <String, String> aParams)
-  {
-    return getInvocationURL (aRequestScope).addAll (aParams);
   }
 
   /**

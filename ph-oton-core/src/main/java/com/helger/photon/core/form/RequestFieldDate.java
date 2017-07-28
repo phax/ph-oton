@@ -28,9 +28,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.format.PDTToString;
 import com.helger.datetime.util.PDTXMLConverter;
 
 /**

@@ -27,8 +27,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsLinkedHashSet;
-import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.collection.impl.CommonsLinkedHashSet;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.concurrent.SimpleLock;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
@@ -177,11 +177,11 @@ public final class PhotonJS
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
 
     return s_aLock.locked ( () -> {
-      JSResourceSet ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_JSRESOURCES);
+      JSResourceSet ret = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_JSRESOURCES);
       if (ret == null && bCreateIfNotExisting)
       {
         ret = new JSResourceSet ();
-        aRequestScope.setAttribute (REQUEST_ATTR_JSRESOURCES, ret);
+        aRequestScope.attrs ().putIn (REQUEST_ATTR_JSRESOURCES, ret);
       }
       return ret;
     });

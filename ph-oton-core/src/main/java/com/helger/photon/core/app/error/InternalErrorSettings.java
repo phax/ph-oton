@@ -26,7 +26,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.email.IEmailAddress;
 import com.helger.photon.core.app.error.callback.IInternalErrorCallback;

@@ -37,11 +37,12 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.base64.Base64;
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.datetime.PDTWebDateHelper;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.email.IEmailAddress;
 import com.helger.commons.id.factory.GlobalIDFactory;
@@ -50,11 +51,8 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ClassPathHelper;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.mutable.MutableInt;
-import com.helger.commons.scope.mgr.ScopeManager;
-import com.helger.commons.scope.mgr.ScopeSessionManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.util.PDTIOHelper;
-import com.helger.datetime.util.PDTWebDateHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.basic.thread.ThreadDescriptor;
@@ -62,6 +60,8 @@ import com.helger.photon.basic.thread.ThreadDescriptorList;
 import com.helger.photon.core.app.error.callback.IInternalErrorCallback;
 import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
 import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.scope.mgr.ScopeManager;
+import com.helger.scope.mgr.ScopeSessionManager;
 import com.helger.servlet.ServletHelper;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.request.RequestLogger;
@@ -372,10 +372,16 @@ public final class InternalErrorHandler
         aMetadata.addField ("UAProfile", aProfile.toString ());
 
       // Add all request attributes
-      for (final Map.Entry <String, Object> aEntry : aRequestScope.getAllAttributes ()
+      for (final Map.Entry <String, Object> aEntry : aRequestScope.attrs ()
                                                                   .getSortedByKey (Comparator.naturalOrder ())
                                                                   .entrySet ())
-        aMetadata.addField ("[Request] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
+        aMetadata.addField ("[Request Attr] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
+
+      // Add all request params
+      for (final Map.Entry <String, Object> aEntry : aRequestScope.params ()
+                                                                  .getSortedByKey (Comparator.naturalOrder ())
+                                                                  .entrySet ())
+        aMetadata.addField ("[Request Param] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
     }
     else
     {
@@ -411,7 +417,7 @@ public final class InternalErrorHandler
         aMetadata.addField ("SessionID", aSessionScope.getID ());
 
         // Add all session attributes
-        for (final Map.Entry <String, Object> aEntry : aSessionScope.getAllAttributes ()
+        for (final Map.Entry <String, Object> aEntry : aSessionScope.attrs ()
                                                                     .getSortedByKey (Comparator.naturalOrder ())
                                                                     .entrySet ())
           aMetadata.addField ("[Session] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));

@@ -20,12 +20,10 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.hc.html.forms.AbstractHCCheckBox;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * Special request field specially for check boxes where the same field name can
@@ -67,7 +65,7 @@ public class RequestFieldBooleanMultiValue extends RequestField implements IHCRe
 
   public boolean isChecked ()
   {
-    return getCheckBoxValue (getFieldName (), m_sValue, m_bDefaultValue);
+    return WebScopeManager.getRequestScope ().params ().hasCheckBoxValue (getFieldName (), m_sValue, m_bDefaultValue);
   }
 
   @Override
@@ -94,29 +92,5 @@ public class RequestFieldBooleanMultiValue extends RequestField implements IHCRe
                             .append ("Value", m_sValue)
                             .append ("DefaultValue", m_bDefaultValue)
                             .getToString ();
-  }
-
-  public static boolean getCheckBoxValue (@Nonnull @Nonempty final String sFieldName,
-                                          @Nonnull final String sFieldValue,
-                                          final boolean bDefaultValue)
-  {
-    ValueEnforcer.notEmpty (sFieldName, "FieldName");
-    ValueEnforcer.notNull (sFieldValue, "FieldValue");
-
-    final IRequestWebScopeWithoutResponse aScope = getScope ();
-
-    // Get all values for the field name
-    ICommonsList <String> aValues = aScope.getAttributeAsList (sFieldName);
-    if (aValues != null)
-      return aValues.contains (sFieldValue);
-
-    // Check if the hidden parameter for "checkbox is contained in the request"
-    // is present?
-    aValues = aScope.getAttributeAsList (AbstractHCCheckBox.getHiddenFieldName (sFieldName));
-    if (aValues != null && aValues.contains (sFieldValue))
-      return false;
-
-    // Neither nor - default!
-    return bDefaultValue;
   }
 }

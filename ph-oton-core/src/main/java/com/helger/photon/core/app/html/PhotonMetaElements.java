@@ -28,10 +28,10 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.CommonsLinkedHashMap;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsOrderedMap;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.concurrent.SimpleLock;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.html.meta.IMetaElement;
@@ -142,11 +142,11 @@ public final class PhotonMetaElements
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
 
     return s_aLock.locked ( () -> {
-      MetaElementList ret = aRequestScope.getCastedAttribute (REQUEST_ATTR_METAELEMENTS);
+      MetaElementList ret = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_METAELEMENTS);
       if (ret == null && bCreateIfNotExisting)
       {
         ret = new MetaElementList ();
-        aRequestScope.setAttribute (REQUEST_ATTR_METAELEMENTS, ret);
+        aRequestScope.attrs ().putIn (REQUEST_ATTR_METAELEMENTS, ret);
       }
       return ret;
     });

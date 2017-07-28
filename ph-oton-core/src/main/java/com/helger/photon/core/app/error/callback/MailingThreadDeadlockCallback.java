@@ -49,7 +49,7 @@ public class MailingThreadDeadlockCallback implements IThreadDeadlockCallback
   {
     // Always ends with a newline char
     final StringBuilder aTI = new StringBuilder (aTDI.getThreadInfo ().toString ());
-    final StackTraceElement [] aSTE = aTDI.getStackTrace ();
+    final StackTraceElement [] aSTE = aTDI.getAllStackTraceElements ();
     if (aSTE != null)
       aTI.append (StackTraceHelper.getStackAsString (aSTE, false));
     return aTI.toString ();

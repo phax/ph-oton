@@ -32,11 +32,11 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.mime.EMimeContentType;
-import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
+import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.response.ResponseHelperSettings;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -104,7 +104,7 @@ public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServle
     }
 
     // Resource exists - save in request scope
-    aRequestScope.setAttribute (REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE, aRes);
+    aRequestScope.attrs ().putIn (REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE, aRes);
     return EContinue.CONTINUE;
   }
 
@@ -113,7 +113,7 @@ public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServle
   protected LocalDateTime getLastModificationDateTime (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // We have an existing resource
-    final IReadableResource aRes = aRequestScope.<IReadableResource> getCastedAttribute (REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE);
+    final IReadableResource aRes = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE);
 
     // Try to convert the resource to a file, because only files have a last
     // modification DateTime
@@ -171,7 +171,7 @@ public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServle
     m_aStatsRequests.increment ();
 
     // We have an existing resource
-    final IReadableResource aRes = aRequestScope.<IReadableResource> getCastedAttribute (REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE);
+    final IReadableResource aRes = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE);
 
     // Try to set content type no matter whether caching is used or not!
     final String sMimeType = determineMimeType (sFilename, aRes);

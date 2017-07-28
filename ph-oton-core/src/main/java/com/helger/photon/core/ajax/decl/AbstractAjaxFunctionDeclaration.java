@@ -23,8 +23,8 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.factory.FactoryNewInstance;
-import com.helger.commons.factory.IFactory;
-import com.helger.commons.filter.IFilter;
+import com.helger.commons.functional.IPredicate;
+import com.helger.commons.functional.ISupplier;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.ajax.AjaxInvoker;
 import com.helger.photon.core.ajax.IAjaxExecutor;
@@ -40,24 +40,26 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDeclaration
 {
   private final String m_sFunctionName;
-  private final IFactory <? extends IAjaxExecutor> m_aExecutorFactory;
-  private final IFilter <IRequestWebScopeWithoutResponse> m_aExecutionFilter;
+  private final ISupplier <? extends IAjaxExecutor> m_aExecutorFactory;
+  private final IPredicate <IRequestWebScopeWithoutResponse> m_aExecutionFilter;
 
   public AbstractAjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
                                           @Nonnull final IAjaxExecutor aExecutor)
   {
-    this (sFunctionName, () -> aExecutor, (IFilter <IRequestWebScopeWithoutResponse>) null);
+    this (sFunctionName, () -> aExecutor, (IPredicate <IRequestWebScopeWithoutResponse>) null);
   }
 
   public AbstractAjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
                                           @Nonnull final Class <? extends IAjaxExecutor> aExecutorClass)
   {
-    this (sFunctionName, FactoryNewInstance.create (aExecutorClass), (IFilter <IRequestWebScopeWithoutResponse>) null);
+    this (sFunctionName,
+          FactoryNewInstance.create (aExecutorClass),
+          (IPredicate <IRequestWebScopeWithoutResponse>) null);
   }
 
   public AbstractAjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
-                                          @Nonnull final IFactory <? extends IAjaxExecutor> aExecutorFactory,
-                                          @Nullable final IFilter <IRequestWebScopeWithoutResponse> aExecutionFilter)
+                                          @Nonnull final ISupplier <? extends IAjaxExecutor> aExecutorFactory,
+                                          @Nullable final IPredicate <IRequestWebScopeWithoutResponse> aExecutionFilter)
   {
     ValueEnforcer.isTrue (AjaxInvoker.isValidFunctionName (sFunctionName), "Invalid Ajax functionName provided");
     m_sFunctionName = sFunctionName;
@@ -73,13 +75,13 @@ public abstract class AbstractAjaxFunctionDeclaration implements IAjaxFunctionDe
   }
 
   @Nonnull
-  public final IFactory <? extends IAjaxExecutor> getExecutorFactory ()
+  public final ISupplier <? extends IAjaxExecutor> getExecutorFactory ()
   {
     return m_aExecutorFactory;
   }
 
   @Nullable
-  public final IFilter <IRequestWebScopeWithoutResponse> getExecutionFilter ()
+  public final IPredicate <IRequestWebScopeWithoutResponse> getExecutionFilter ()
   {
     return m_aExecutionFilter;
   }

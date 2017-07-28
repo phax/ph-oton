@@ -23,10 +23,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.CommonsLinkedHashSet;
-import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.collection.impl.CommonsLinkedHashSet;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.factory.FactoryNewInstance;
-import com.helger.commons.factory.IFactory;
+import com.helger.commons.functional.ISupplier;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
@@ -41,10 +41,10 @@ public class APIDescriptor implements IAPIDescriptor
 {
   private final APIPath m_aAPIPath;
   private final PathDescriptor m_aPathDescriptor;
-  private final ICommonsOrderedSet <String> m_aRequiredHeaders = new CommonsLinkedHashSet<> ();
-  private final ICommonsOrderedSet <String> m_aRequiredParams = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aRequiredHeaders = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aRequiredParams = new CommonsLinkedHashSet <> ();
   private IAPIExecutionFilter m_aExecutionFilter;
-  private final IFactory <? extends IAPIExecutor> m_aExecutorFactory;
+  private final ISupplier <? extends IAPIExecutor> m_aExecutorFactory;
 
   /**
    * Constructor
@@ -83,7 +83,8 @@ public class APIDescriptor implements IAPIDescriptor
    *        The factory to be used to create executor instances for every API
    *        invocation. May not be <code>null</code>.
    */
-  public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final IFactory <? extends IAPIExecutor> aExecutorFactory)
+  public APIDescriptor (@Nonnull final APIPath aPath,
+                        @Nonnull final ISupplier <? extends IAPIExecutor> aExecutorFactory)
   {
     m_aAPIPath = ValueEnforcer.notNull (aPath, "Path");
     m_aPathDescriptor = PathDescriptor.create (aPath.getPath ());
@@ -103,7 +104,7 @@ public class APIDescriptor implements IAPIDescriptor
   }
 
   @Nonnull
-  public IFactory <? extends IAPIExecutor> getExecutorFactory ()
+  public ISupplier <? extends IAPIExecutor> getExecutorFactory ()
   {
     return m_aExecutorFactory;
   }

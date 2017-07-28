@@ -51,7 +51,7 @@ public abstract class AbstractAjaxExecutor implements IAjaxExecutor
   protected void modifyRequestParamMap (@Nonnull final IMutableAttributeContainerAny <String> aParams)
   {
     // Remove the jQuery time stamp parameter
-    aParams.removeAttribute (REQUEST_PARAM_JQUERY_NO_CACHE);
+    aParams.remove (REQUEST_PARAM_JQUERY_NO_CACHE);
   }
 
   /**

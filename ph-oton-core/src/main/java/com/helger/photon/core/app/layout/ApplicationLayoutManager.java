@@ -23,13 +23,13 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.scope.mgr.ScopeManager;
-import com.helger.commons.scope.singleton.AbstractApplicationSingleton;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.scope.mgr.ScopeManager;
+import com.helger.scope.singleton.AbstractApplicationSingleton;
 
 /**
  * This class handles the mapping of the area ID to a content provider.

@@ -23,9 +23,9 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.scope.IScope;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.scope.IScope;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
 /**

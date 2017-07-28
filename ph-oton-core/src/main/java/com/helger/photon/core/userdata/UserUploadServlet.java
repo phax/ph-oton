@@ -88,7 +88,7 @@ public class UserUploadServlet extends AbstractUnifiedResponseServlet
   {
     IJsonObject ret;
 
-    final Object aFile = aRequestScope.getAttributeObject (PARAM_FILE);
+    final Object aFile = aRequestScope.params ().getValue (PARAM_FILE);
     if (!(aFile instanceof IFileItem))
     {
       ret = createError ("No file passed. Maybe the request is not multipart, put 'multipart/form-data' enctype for your form.");
@@ -96,13 +96,13 @@ public class UserUploadServlet extends AbstractUnifiedResponseServlet
     else
     {
       final IFileItem aFileItem = (IFileItem) aFile;
-      final String sDirectory = aRequestScope.getAttributeAsString (PARAM_DIRECTORY);
+      final String sDirectory = aRequestScope.params ().getAsString (PARAM_DIRECTORY);
       final boolean bDirectoryPresent = StringHelper.hasText (sDirectory);
       if (bDirectoryPresent && !FilenameHelper.isValidFilenameWithPaths (sDirectory))
         ret = createError ("The passed directory name '" + sDirectory + "' is invalid!");
       else
       {
-        final String sID = aRequestScope.getAttributeAsString (PARAM_ID);
+        final String sID = aRequestScope.params ().getAsString (PARAM_ID);
         if (StringHelper.hasNoText (sID))
           ret = createError ("No file ID passed!");
         else

@@ -30,11 +30,11 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.charset.CharsetManager;
+import com.helger.commons.charset.CharsetHelper;
 import com.helger.commons.mime.EMimeContentType;
-import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
+import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.ServletHelper;
 import com.helger.servlet.filter.AbstractHttpServletFilter;
 
@@ -88,7 +88,7 @@ public class CharacterEncodingFilter extends AbstractHttpServletFilter
   {
     ValueEnforcer.notEmpty (sEncoding, "Encoding");
     // Throws IllegalArgumentException in case it is unknown
-    CharsetManager.getCharsetFromName (sEncoding);
+    CharsetHelper.getCharsetFromName (sEncoding);
     m_sEncoding = sEncoding;
   }
 

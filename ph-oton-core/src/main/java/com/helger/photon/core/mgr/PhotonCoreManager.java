@@ -24,12 +24,12 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.lang.ClassHelper;
-import com.helger.commons.scope.IScope;
-import com.helger.commons.scope.singleton.AbstractGlobalSingleton;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.smtp.FailedMailQueueWithDAO;
 import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
+import com.helger.scope.IScope;
+import com.helger.scope.singleton.AbstractGlobalSingleton;
 import com.helger.smtp.scope.ScopedMailAPI;
 
 /**

@@ -27,7 +27,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;

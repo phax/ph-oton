@@ -24,16 +24,15 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 
-public final class UserDataObjectMicroTypeConverter implements IMicroTypeConverter
+public final class UserDataObjectMicroTypeConverter implements IMicroTypeConverter <UserDataObject>
 {
   private static final String ATTR_PATH = "path";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+  public IMicroElement convertToMicroElement (@Nonnull final UserDataObject aValue,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull @Nonempty final String sTagName)
   {
-    final UserDataObject aValue = (UserDataObject) aObject;
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     aElement.setAttribute (ATTR_PATH, aValue.getPath ());
     return aElement;

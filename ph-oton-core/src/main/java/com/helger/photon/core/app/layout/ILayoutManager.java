@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;

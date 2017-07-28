@@ -38,20 +38,19 @@ import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.http.CHTTPHeader;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.scope.mgr.ScopeManager;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
-import com.helger.http.CHTTPHeader;
 import com.helger.http.EHTTPMethod;
 import com.helger.http.EHTTPVersion;
 import com.helger.photon.basic.app.PhotonSessionState;
@@ -59,6 +58,7 @@ import com.helger.photon.core.app.redirect.ForcedRedirectException;
 import com.helger.photon.core.app.redirect.ForcedRedirectManager;
 import com.helger.photon.core.requesttrack.RequestTracker;
 import com.helger.photon.core.servletstatus.ServletStatusManager;
+import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.ServletContextPathHolder;
 import com.helger.servlet.StaticServerInfo;
 import com.helger.servlet.request.RequestHelper;
@@ -372,7 +372,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
 
     // Create a unique ID for the request
     sID = Long.toString (s_aRequestID.incrementAndGet ());
-    aRequestScope.setAttribute (REQUEST_ATTR_ID, sID);
+    aRequestScope.attrs ().putIn (REQUEST_ATTR_ID, sID);
     RequestTracker.addRequest (sID, aRequestScope);
     return EChange.CHANGED;
   }

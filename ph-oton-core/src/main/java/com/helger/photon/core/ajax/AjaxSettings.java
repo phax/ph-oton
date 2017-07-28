@@ -52,8 +52,8 @@ public final class AjaxSettings
   static
   {
     // Register default handler
-    getExceptionCallbacks ().addCallback (new LoggingAjaxExceptionCallback ());
-    getLongRunningExecutionCallbacks ().addCallback (new LoggingAjaxLongRunningExecutionCallback ());
+    getExceptionCallbacks ().add (new LoggingAjaxExceptionCallback ());
+    getLongRunningExecutionCallbacks ().add (new LoggingAjaxLongRunningExecutionCallback ());
   }
 
   private AjaxSettings ()

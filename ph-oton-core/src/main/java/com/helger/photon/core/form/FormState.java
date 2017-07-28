@@ -26,7 +26,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
+import com.helger.commons.collection.attr.AttributeContainerAny;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ITypedObject;
@@ -41,11 +41,11 @@ public class FormState implements ITypedObject <String>, Serializable
   private final String m_sPageID;
   private final LocalDateTime m_aDT;
   private final String m_sFlowID;
-  private final MapBasedAttributeContainerAny <String> m_aAttrs;
+  private final AttributeContainerAny <String> m_aAttrs;
 
   public FormState (@Nonnull @Nonempty final String sPageID,
                     @Nonnull @Nonempty final String sFlowID,
-                    @Nonnull final MapBasedAttributeContainerAny <String> aAttrs)
+                    @Nonnull final AttributeContainerAny <String> aAttrs)
   {
     ValueEnforcer.notEmpty (sPageID, "PageID");
     ValueEnforcer.notEmpty (sFlowID, "FlowID");
@@ -91,8 +91,8 @@ public class FormState implements ITypedObject <String>, Serializable
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public MapBasedAttributeContainerAny <String> getAllAttributes ()
+  @ReturnsMutableObject
+  public AttributeContainerAny <String> attrs ()
   {
     return m_aAttrs;
   }
@@ -101,7 +101,7 @@ public class FormState implements ITypedObject <String>, Serializable
   public JsonObject getAsJsonObject ()
   {
     final JsonObject ret = new JsonObject ();
-    for (final Map.Entry <String, Object> aEntry : m_aAttrs.getAllAttributes ().entrySet ())
+    for (final Map.Entry <String, Object> aEntry : m_aAttrs.entrySet ())
     {
       final String sKey = aEntry.getKey ();
       final Object aValue = aEntry.getValue ();
@@ -121,7 +121,7 @@ public class FormState implements ITypedObject <String>, Serializable
     return new ToStringGenerator (this).append ("pageID", m_sPageID)
                                        .append ("DT", m_aDT)
                                        .append ("flowID", m_sFlowID)
-                                       .append ("attrs", m_aAttrs)
+                                       .append ("Attrs", m_aAttrs)
                                        .getToString ();
   }
 }

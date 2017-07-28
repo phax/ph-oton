@@ -23,10 +23,10 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.ext.ICommonsMap;
-import com.helger.commons.scope.mgr.ScopeManager;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
+import com.helger.scope.mgr.ScopeManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.singleton.AbstractApplicationWebSingleton;
 

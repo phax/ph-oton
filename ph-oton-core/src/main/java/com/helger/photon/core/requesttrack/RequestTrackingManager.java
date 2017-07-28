@@ -32,9 +32,9 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.callback.ICallbackList;
-import com.helger.commons.collection.ext.CommonsLinkedHashMap;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsOrderedMap;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
 import com.helger.web.scope.IRequestWebScope;
@@ -213,7 +213,7 @@ public final class RequestTrackingManager
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Checking for long running requests");
 
-    if (aCallbacks.hasCallbacks ())
+    if (aCallbacks.isNotEmpty ())
     {
       m_aRWLock.readLocked ( () -> {
         // Check only if they are enabled!
