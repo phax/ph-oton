@@ -21,7 +21,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.charset.CharsetManager;
+import com.helger.commons.charset.CharsetHelper;
 import com.helger.html.request.IHCRequestField;
 
 public class HCCharsetSelect extends HCExtSelect
@@ -32,7 +32,7 @@ public class HCCharsetSelect extends HCExtSelect
   {
     super (aRF);
 
-    for (final Charset aCharset : CharsetManager.getAllCharsets ().values ())
+    for (final Charset aCharset : CharsetHelper.getAllCharsets ().values ())
       if (aCharset.isRegistered () || !bOnlyRegistered)
         addOption (aCharset.name (), aCharset.displayName (aDisplayLocale));
 

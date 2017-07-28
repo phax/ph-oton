@@ -23,8 +23,8 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
@@ -32,7 +32,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
 
 public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
-                                                        implements IWebPageActionHandlerMulti <DATATYPE, WPECTYPE>
+                                                        implements
+                                                        IWebPageActionHandlerMulti <DATATYPE, WPECTYPE>
 {
   private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
   private final String m_sFieldName;
@@ -59,7 +60,7 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
   public ICommonsList <DATATYPE> getAllSelectedObjects (@Nonnull final WPECTYPE aWPEC)
   {
     final ICommonsList <DATATYPE> ret = new CommonsArrayList <> ();
-    final ICommonsList <String> aIDs = aWPEC.getAttributeAsList (m_sFieldName);
+    final ICommonsList <String> aIDs = aWPEC.params ().getAsStringList (m_sFieldName);
     if (aIDs != null)
       for (final String sID : aIDs)
         ret.addIfNotNull (m_aResolver.apply (aWPEC, sID));

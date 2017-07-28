@@ -28,23 +28,22 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.cache.AbstractNotifyingCache;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.cache.Cache;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.compare.IComparator;
+import com.helger.commons.datetime.PDTFromString;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.datetime.format.PDTFromString;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public final class DateFormatBuilder implements IDateFormatBuilder
 {
-  private final ICommonsList <Object> m_aList = new CommonsArrayList<> ();
+  private final ICommonsList <Object> m_aList = new CommonsArrayList <> ();
 
   public DateFormatBuilder ()
   {}
@@ -167,7 +166,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
   private static final class Searcher
   {
     private String m_sRest;
-    private final ICommonsMap <String, EDateTimeFormatToken> m_aAllMatching = new CommonsHashMap<> ();
+    private final ICommonsMap <String, EDateTimeFormatToken> m_aAllMatching = new CommonsHashMap <> ();
     private final Comparator <String> m_aComp = IComparator.getComparatorStringLongestFirst ();
 
     public Searcher (@Nonnull final String sRest)
@@ -211,35 +210,30 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     }
   }
 
-  private static final class PatternCache extends AbstractNotifyingCache <String, DateFormatBuilder>
+  private static final class PatternCache extends Cache <String, DateFormatBuilder>
   {
     public PatternCache ()
     {
-      super ("DateFormatBuilder.PatternCache");
-    }
+      super (sJavaPattern -> {
+        ValueEnforcer.notNull (sJavaPattern, "JavaPattern");
 
-    @Override
-    @Nonnull
-    @SuppressFBWarnings ("NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE")
-    protected DateFormatBuilder getValueToCache (@Nullable final String sJavaPattern)
-    {
-      ValueEnforcer.notNull (sJavaPattern, "JavaPattern");
-
-      // Do parsing
-      final DateFormatBuilder aDFB = new DateFormatBuilder ();
-      final Searcher aSearcher = new Searcher (sJavaPattern);
-      while (aSearcher.hasMore ())
-      {
-        final EDateTimeFormatToken eToken = aSearcher.getNextToken ();
-        if (eToken != null)
-          aDFB.append (eToken);
-        else
+        // Do parsing
+        final DateFormatBuilder aDFB = new DateFormatBuilder ();
+        final Searcher aSearcher = new Searcher (sJavaPattern);
+        while (aSearcher.hasMore ())
         {
-          // It's not a token -> use a single char and check for the next token
-          aDFB.append (aSearcher.getNextChar ());
+          final EDateTimeFormatToken eToken = aSearcher.getNextToken ();
+          if (eToken != null)
+            aDFB.append (eToken);
+          else
+          {
+            // It's not a token -> use a single char and check for the next
+            // token
+            aDFB.append (aSearcher.getNextChar ());
+          }
         }
-      }
-      return aDFB;
+        return aDFB;
+      }, CGlobal.ILLEGAL_UINT, "DateFormatBuilder.PatternCache");
     }
   }
 

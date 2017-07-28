@@ -46,6 +46,13 @@ public interface ISimpleWebExecutionContext
     return getRequestScope ().params ();
   }
 
+  // Deprecated
+  @Nullable
+  default String getAttributeAsString (@Nullable final String sFieldName)
+  {
+    return params ().getAsString (sFieldName);
+  }
+
   /**
    * @return A cached request param map for this request.
    */

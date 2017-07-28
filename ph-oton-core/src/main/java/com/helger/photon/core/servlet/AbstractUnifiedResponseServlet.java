@@ -366,7 +366,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     // Check if an attribute is already present
     // An ID may already be present, if the request is internally dispatched
     // (e.g. via the error handler)
-    String sID = aRequestScope.getAttributeAsString (REQUEST_ATTR_ID);
+    String sID = aRequestScope.attrs ().getAsString (REQUEST_ATTR_ID);
     if (sID != null)
       return EChange.UNCHANGED;
 
@@ -379,7 +379,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
 
   private static void _trackAfterHandleRequest (@Nonnull final IRequestWebScope aRequestScope)
   {
-    final String sID = aRequestScope.getAttributeAsString (REQUEST_ATTR_ID);
+    final String sID = aRequestScope.attrs ().getAsString (REQUEST_ATTR_ID);
     RequestTracker.removeRequest (sID);
   }
 

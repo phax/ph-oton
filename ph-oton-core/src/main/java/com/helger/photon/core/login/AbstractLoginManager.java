@@ -147,7 +147,7 @@ public abstract class AbstractLoginManager
   @OverrideOnDemand
   protected String getLoginName (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return aRequestScope.getAttributeAsString (CLogin.REQUEST_ATTR_USERID);
+    return aRequestScope.params ().getAsString (CLogin.REQUEST_ATTR_USERID);
   }
 
   /**
@@ -162,7 +162,7 @@ public abstract class AbstractLoginManager
   @OverrideOnDemand
   protected String getPassword (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return aRequestScope.getAttributeAsString (CLogin.REQUEST_ATTR_PASSWORD);
+    return aRequestScope.params ().getAsString (CLogin.REQUEST_ATTR_PASSWORD);
   }
 
   /**

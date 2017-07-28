@@ -385,7 +385,7 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
                                 @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
   {
     // The request has been checked and the filename is valid for delivery
-    final String sFilename = aRequestScope.getAttributeAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME);
+    final String sFilename = aRequestScope.params ().getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME);
     onDeliverResource (aRequestScope, aUnifiedResponse, sFilename);
 
     if (s_aLogger.isDebugEnabled ())

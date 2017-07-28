@@ -91,7 +91,7 @@ public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServle
       return EContinue.BREAK;
 
     // Resolve the resource from the passed filename
-    final String sFilename = aRequestScope.getAttributeAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME);
+    final String sFilename = aRequestScope.params ().getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME);
     final IReadableResource aRes = getResource (aRequestScope, sFilename);
     if (!aRes.exists ())
     {

@@ -19,7 +19,7 @@ package com.helger.photon.uicore.facebook.opengraph;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.IsSPIInterface;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 
 @IsSPIInterface
 public interface IFacebookObjectProvider

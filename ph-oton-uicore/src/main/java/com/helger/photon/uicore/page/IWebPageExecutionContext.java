@@ -45,7 +45,7 @@ public interface IWebPageExecutionContext extends ILayoutExecutionContext
   @Nullable
   default String getAction ()
   {
-    return getAttributeAsString (CPageParam.PARAM_ACTION);
+    return params ().getAsString (CPageParam.PARAM_ACTION);
   }
 
   /**
@@ -67,7 +67,7 @@ public interface IWebPageExecutionContext extends ILayoutExecutionContext
   @Nullable
   default String getSubAction ()
   {
-    return getAttributeAsString (CPageParam.PARAM_SUBACTION);
+    return params ().getAsString (CPageParam.PARAM_SUBACTION);
   }
 
   /**

@@ -25,12 +25,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.cache.AbstractNotifyingCache;
-import com.helger.commons.cache.IMutableCache;
-import com.helger.commons.collection.ext.CommonsHashSet;
-import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.cache.Cache;
+import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.scope.IScope;
+import com.helger.scope.IScope;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 public final class FacebookLocaleMapping extends AbstractGlobalWebSingleton
@@ -118,15 +117,9 @@ public final class FacebookLocaleMapping extends AbstractGlobalWebSingleton
 
   private final ICommonsSet <Locale> m_aFBLocales = new CommonsHashSet <> ();
 
-  private final IMutableCache <Locale, Locale> m_aCache = new AbstractNotifyingCache <Locale, Locale> (FacebookLocaleMapping.class.getName ())
-  {
-    @Override
-    @Nonnull
-    protected Locale getValueToCache (@Nullable final Locale aLocale)
-    {
-      return aLocale == null ? FALLBACK : _getFBCompatibleLocale (aLocale);
-    }
-  };
+  private final Cache <Locale, Locale> m_aCache = new Cache <> (aLocale -> {
+    return aLocale == null ? FALLBACK : _getFBCompatibleLocale (aLocale);
+  }, -1, FacebookLocaleMapping.class.getName ());
 
   @Nonnull
   private Locale _getFBCompatibleLocale (@Nonnull final Locale aLocale)

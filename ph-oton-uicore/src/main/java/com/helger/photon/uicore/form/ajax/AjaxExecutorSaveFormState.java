@@ -21,7 +21,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.attr.MapBasedAttributeContainerAny;
+import com.helger.commons.collection.attr.AttributeContainerAny;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxJsonResponse;
@@ -44,7 +44,7 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
   @OverrideOnDemand
   protected void saveFormState (@Nonnull final String sPageID,
                                 @Nonnull final String sFlowID,
-                                @Nonnull final MapBasedAttributeContainerAny <String> aFieldCont)
+                                @Nonnull final AttributeContainerAny <String> aFieldCont)
   {
     FormStateManager.getInstance ().saveFormState (new FormState (sPageID, sFlowID, aFieldCont));
   }
@@ -54,13 +54,13 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
   protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     // Extract page ID
-    final String sPageID = aRequestScope.getAttributeAsString (ATTR_PAGE_ID);
+    final String sPageID = aRequestScope.attrs ().getAsString (ATTR_PAGE_ID);
     if (sPageID == null)
       return AjaxJsonResponse.createError ("Page ID is missing!");
 
-    // Filter all fields
-    final MapBasedAttributeContainerAny <String> aFieldCont = new MapBasedAttributeContainerAny <> ();
-    for (final Map.Entry <String, Object> aEntry : aRequestScope.getAllAttributes ().entrySet ())
+    // Filter all params
+    final AttributeContainerAny <String> aFieldCont = new AttributeContainerAny <> ();
+    for (final Map.Entry <String, Object> aEntry : aRequestScope.params ().entrySet ())
       if (aEntry.getKey ().startsWith (PREFIX_FIELD))
       {
         // Skip the prefix
@@ -69,16 +69,16 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
         // be restored as array values!
         // This affects checkboxes, radio buttons and multi selects
         if (StringHelper.hasText (sFieldName))
-          aFieldCont.setAttribute (sFieldName, aEntry.getValue ());
+          aFieldCont.putIn (sFieldName, aEntry.getValue ());
       }
 
     // Extract the flow ID
-    final String sFlowID = aFieldCont.getAttributeAsString (FIELD_FLOW_ID);
+    final String sFlowID = aFieldCont.getAsString (FIELD_FLOW_ID);
     if (sFlowID == null)
       return AjaxJsonResponse.createError ("Flow ID is missing!");
 
-    aFieldCont.removeAttribute (FIELD_FLOW_ID);
-    aFieldCont.removeAttribute (CPageParam.PARAM_SUBACTION);
+    aFieldCont.removeObject (FIELD_FLOW_ID);
+    aFieldCont.removeObject (CPageParam.PARAM_SUBACTION);
     // Leave action and object
 
     saveFormState (sPageID, sFlowID, aFieldCont);

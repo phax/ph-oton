@@ -31,8 +31,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.name.IHasDisplayName;
@@ -87,7 +87,8 @@ import com.helger.photon.uicore.page.handler.IWebPageActionHandler;
  */
 @NotThreadSafe
 public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
-                                          extends AbstractWebPage <WPECTYPE>
+                                          extends
+                                          AbstractWebPage <WPECTYPE>
 {
   // all internal IDs starting with "$" to prevent accidental overwrite with
   // actual field
@@ -1073,10 +1074,10 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
 
   @Nonnull
   @ReturnsMutableCopy
-  private static JSAssocArray _getAsAssocArray (final FormState aFormState)
+  private static JSAssocArray _getAsAssocArray (@Nonnull final FormState aFormState)
   {
     final JSAssocArray ret = new JSAssocArray ();
-    for (final Map.Entry <String, Object> aEntry : aFormState.getAllAttributes ().getAllAttributes ().entrySet ())
+    for (final Map.Entry <String, Object> aEntry : aFormState.attrs ())
     {
       final String sKey = aEntry.getKey ();
       final Object aValue = aEntry.getValue ();
@@ -1084,12 +1085,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
         ret.add (sKey, (String) aValue);
       else
         if (aValue instanceof String [])
-        {
-          final JSArray aArray = new JSArray ();
-          for (final String sElement : (String []) aValue)
-            aArray.add (sElement);
-          ret.add (sKey, aArray);
-        }
+          ret.add (sKey, new JSArray ().addAll ((String []) aValue));
       // else e.g. fileitem -> ignore
     }
     return ret;

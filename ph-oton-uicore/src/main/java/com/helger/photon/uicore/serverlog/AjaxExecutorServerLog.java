@@ -59,9 +59,9 @@ public class AjaxExecutorServerLog extends AbstractAjaxExecutor
   @Nonnull
   protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
-    final String sSeverity = aRequestScope.getAttributeAsString (PARAM_SEVERITY);
-    final String sMessage = aRequestScope.getAttributeAsString (PARAM_MESSAGE);
-    final String sKey = aRequestScope.getAttributeAsString (PARAM_KEY);
+    final String sSeverity = aRequestScope.params ().getAsString (PARAM_SEVERITY);
+    final String sMessage = aRequestScope.params ().getAsString (PARAM_MESSAGE);
+    final String sKey = aRequestScope.params ().getAsString (PARAM_KEY);
     final String sExpectedKey = ServerLogSessionKey.getGeneratedSessionKey ();
     if (StringHelper.hasNoText (sMessage) || sExpectedKey == null || !sExpectedKey.equals (sKey))
       return AjaxJsonResponse.createError ("Missing required parameter");
