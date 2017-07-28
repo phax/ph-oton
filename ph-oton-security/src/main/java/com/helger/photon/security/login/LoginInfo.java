@@ -24,6 +24,9 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.attr.AttributeContainerAny;
+import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -45,6 +48,7 @@ public final class LoginInfo implements IHasID <String>
   private final LocalDateTime m_aLoginDT;
   private LocalDateTime m_aLastAccessDT;
   private LocalDateTime m_aLogoutDT;
+  private final AttributeContainerAny <String> m_aAttrs = new AttributeContainerAny <> ();
 
   public LoginInfo (@Nonnull final IUser aUser, @Nonnull final ISessionScope aSessionScope)
   {
@@ -144,6 +148,13 @@ public final class LoginInfo implements IHasID <String>
     return m_aLogoutDT != null;
   }
 
+  @Nonnull
+  @ReturnsMutableObject
+  public IMutableAttributeContainerAny <String> attrs ()
+  {
+    return m_aAttrs;
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -156,7 +167,8 @@ public final class LoginInfo implements IHasID <String>
            m_aSessionScope.getID ().equals (rhs.m_aSessionScope.getID ()) &&
            m_aLoginDT.equals (rhs.m_aLoginDT) &&
            m_aLastAccessDT.equals (rhs.m_aLastAccessDT) &&
-           EqualsHelper.equals (m_aLogoutDT, rhs.m_aLogoutDT);
+           EqualsHelper.equals (m_aLogoutDT, rhs.m_aLogoutDT) &&
+           m_aAttrs.equals (rhs.m_aAttrs);
   }
 
   @Override
@@ -168,6 +180,7 @@ public final class LoginInfo implements IHasID <String>
                             .append (m_aLoginDT)
                             .append (m_aLastAccessDT)
                             .append (m_aLogoutDT)
+                            .append (m_aAttrs)
                             .getHashCode ();
   }
 
@@ -175,11 +188,12 @@ public final class LoginInfo implements IHasID <String>
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("user", m_aUser)
-                            .append ("sessionScopeID", m_aSessionScope.getID ())
-                            .append ("loginDT", m_aLoginDT)
-                            .append ("lastAccessDT", m_aLastAccessDT)
-                            .appendIfNotNull ("logoutDT", m_aLogoutDT)
+                            .append ("User", m_aUser)
+                            .append ("SessionScopeID", m_aSessionScope.getID ())
+                            .append ("LoginDT", m_aLoginDT)
+                            .append ("LastAccessDT", m_aLastAccessDT)
+                            .appendIfNotNull ("LogoutDT", m_aLogoutDT)
+                            .append ("Attrs", m_aAttrs)
                             .getToString ();
   }
 }
