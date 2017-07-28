@@ -48,8 +48,6 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.http.EHTTPMethod;
 import com.helger.http.EHTTPVersion;
-import com.helger.photon.xservlet.ext.XServletConsistencyAdvisor;
-import com.helger.photon.xservlet.ext.XServletSecurityAdvisor;
 import com.helger.photon.xservlet.requesttrack.RequestTracker;
 import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 import com.helger.scope.mgr.ScopeManager;
@@ -260,16 +258,16 @@ public abstract class AbstractXServlet extends GenericServlet
 
   @Nonnull
   @OverrideOnDemand
-  protected XServletSecurityAdvisor createSecurityAdvisor ()
+  protected XServletAdvisorSecurity createSecurityAdvisor ()
   {
-    return new XServletSecurityAdvisor ();
+    return new XServletAdvisorSecurity ();
   }
 
   @Nonnull
   @OverrideOnDemand
-  protected XServletConsistencyAdvisor createConsistencyAdvisor ()
+  protected XServletAdvisorConsistency createConsistencyAdvisor ()
   {
-    return new XServletConsistencyAdvisor ();
+    return new XServletAdvisorConsistency ();
   }
 
   /**
@@ -326,7 +324,7 @@ public abstract class AbstractXServlet extends GenericServlet
     }
     s_aCounterRequestsPerMethodAccepted.increment (eHTTPMethod.getName ());
 
-    final XServletSecurityAdvisor aSecurityAdvisor = createSecurityAdvisor ();
+    final XServletAdvisorSecurity aSecurityAdvisor = createSecurityAdvisor ();
     if (aSecurityAdvisor.beforeRequestIsProcessed (aHttpRequest, aHttpResponse).isFinished ())
     {
       // Some security related issues was discovered so that the process cannot
@@ -334,7 +332,7 @@ public abstract class AbstractXServlet extends GenericServlet
       return;
     }
 
-    final XServletConsistencyAdvisor aConsistencyAdvisor = createConsistencyAdvisor ();
+    final XServletAdvisorConsistency aConsistencyAdvisor = createConsistencyAdvisor ();
     aConsistencyAdvisor.beforeRequestIsProcessed (aHttpRequest, aHttpResponse);
     final StatusAwareHttpResponseWrapper aHttpResponseWrapper = new StatusAwareHttpResponseWrapper (aHttpResponse);
     try
@@ -348,7 +346,6 @@ public abstract class AbstractXServlet extends GenericServlet
                                                                                                aHttpResponse);
       try
       {
-
         // Determine handler
         _internalService (aHttpRequest,
                           aHttpResponseWrapper,

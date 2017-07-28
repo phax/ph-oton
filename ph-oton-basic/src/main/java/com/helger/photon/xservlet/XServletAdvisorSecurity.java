@@ -1,4 +1,4 @@
-package com.helger.photon.xservlet.ext;
+package com.helger.photon.xservlet;
 
 import java.io.IOException;
 
@@ -13,9 +13,9 @@ import com.helger.commons.http.CHTTPHeader;
 import com.helger.commons.state.EFinish;
 import com.helger.servlet.request.RequestLogger;
 
-public class XServletSecurityAdvisor
+public class XServletAdvisorSecurity
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (XServletSecurityAdvisor.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (XServletAdvisorSecurity.class);
 
   @Nonnull
   protected EFinish checkForHttpPoxy (@Nonnull final HttpServletRequest aHttpRequest,

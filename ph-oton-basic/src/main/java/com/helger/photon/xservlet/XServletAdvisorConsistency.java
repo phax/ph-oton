@@ -1,13 +1,12 @@
-package com.helger.photon.xservlet.ext;
+package com.helger.photon.xservlet;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,9 +22,9 @@ import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.ResponseHelper;
 import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
 
-public class XServletConsistencyAdvisor
+public class XServletAdvisorConsistency
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (XServletConsistencyAdvisor.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (XServletAdvisorConsistency.class);
 
   /** The request fallback charset to be used, if none is present! */
   private Charset m_aRequestFallbackCharset = StandardCharsets.UTF_8;
@@ -121,6 +120,7 @@ public class XServletConsistencyAdvisor
     }
   }
 
+  @OverridingMethodsMustInvokeSuper
   public void beforeRequestIsProcessed (@Nonnull final HttpServletRequest aHttpRequest,
                                         @Nonnull final HttpServletResponse aHttpResponse) throws IOException
   {
@@ -186,10 +186,10 @@ public class XServletConsistencyAdvisor
    */
   @OverrideOnDemand
   protected void checkHeaders (@Nonnull final String sRequestURL,
-                               @Nonnull final Map <String, ? extends List <String>> aHeaders,
+                               @Nonnull final ICommonsMap <String, ICommonsList <String>> aHeaders,
                                final int nStatusCode)
   {
-    if (nStatusCode != HttpServletResponse.SC_OK && !aHeaders.isEmpty ())
+    if (nStatusCode != HttpServletResponse.SC_OK && aHeaders.isNotEmpty ())
       s_aLogger.warn ("Headers on " + nStatusCode + " response to '" + sRequestURL + "': " + aHeaders);
   }
 
