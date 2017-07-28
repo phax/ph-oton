@@ -63,7 +63,10 @@ public final class SystemMigrationResultMicroTypeConverter implements IMicroType
       final ZonedDateTime aExecDT = aElement.getAttributeValueWithConversion ("executiondt", ZonedDateTime.class);
       if (aExecDT != null)
         aExecLDT = aExecDT.toLocalDateTime ();
+      else
+        throw new IllegalStateException ("No exceution date time found!");
     }
+
     final String sSuccess = aElement.getAttributeValue (ATTR_SUCCESS);
     final boolean bSuccess = StringParser.parseBool (sSuccess);
     final String sErrorMsg = MicroHelper.getChildTextContent (aElement, ELEMENT_ERROR_MSG);

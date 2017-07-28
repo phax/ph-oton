@@ -236,9 +236,9 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
 
   /**
    * @return In case this is a success, this field contains the success object.
-   *         May be <code>null</code>.
+   *         Never <code>null</code>.
    */
-  @Nullable
+  @Nonnull
   public IJsonObject getSuccessValue ()
   {
     return m_aSuccessValue;
@@ -342,8 +342,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
     if (!super.equals (o))
       return false;
     final AjaxHtmlResponse rhs = (AjaxHtmlResponse) o;
-    return EqualsHelper.equals (m_sErrorMessage, rhs.m_sErrorMessage) &&
-           EqualsHelper.equals (m_aSuccessValue, rhs.m_aSuccessValue);
+    return EqualsHelper.equals (m_sErrorMessage, rhs.m_sErrorMessage) && m_aSuccessValue.equals (rhs.m_aSuccessValue);
   }
 
   @Override
@@ -359,8 +358,8 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("errorMsg", m_sErrorMessage)
-                            .appendIfNotNull ("successValue", m_aSuccessValue)
+                            .appendIfNotNull ("ErrorMsg", m_sErrorMessage)
+                            .appendIfNotNull ("SuccessValue", m_aSuccessValue)
                             .getToString ();
   }
 
