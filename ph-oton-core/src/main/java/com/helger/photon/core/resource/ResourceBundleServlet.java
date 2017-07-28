@@ -35,10 +35,10 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.state.EContinue;
 import com.helger.http.EHTTPMethod;
+import com.helger.photon.basic.servletstatus.ServletStatusManager;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryServlet;
-import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 

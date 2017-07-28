@@ -22,8 +22,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.url.URLHelper;
+import com.helger.photon.basic.servletstatus.ServletStatusManager;
 import com.helger.photon.core.app.CApplication;
-import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 

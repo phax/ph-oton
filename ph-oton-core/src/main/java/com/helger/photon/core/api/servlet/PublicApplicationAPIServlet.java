@@ -19,8 +19,8 @@ package com.helger.photon.core.api.servlet;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.photon.basic.servletstatus.ServletStatusManager;
 import com.helger.photon.core.app.CApplication;
-import com.helger.photon.core.servletstatus.ServletStatusManager;
 
 /**
  * This class handles the API functions for the public application

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.servletstatus;
+package com.helger.photon.basic.servletstatus;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

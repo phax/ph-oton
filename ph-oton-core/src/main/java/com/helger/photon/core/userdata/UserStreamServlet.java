@@ -19,8 +19,8 @@ package com.helger.photon.core.userdata;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.photon.basic.servletstatus.ServletStatusManager;
 import com.helger.photon.core.app.CApplication;
-import com.helger.photon.core.servletstatus.ServletStatusManager;
 
 /**
  * Stream user provided resources available on disk via HTTP to a client.

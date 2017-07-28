@@ -38,10 +38,10 @@ import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.RequestParameterManager;
+import com.helger.photon.basic.servletstatus.ServletStatusManager;
 import com.helger.photon.core.app.CApplication;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
-import com.helger.photon.core.servletstatus.ServletStatusManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
