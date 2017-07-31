@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.core.api.APIPath;
 import com.helger.photon.core.api.ApplicationAPIManager;
 import com.helger.photon.core.api.IAPIInvoker;
@@ -46,7 +46,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAPIServlet.class);
-  private static final EnumSet <EHTTPMethod> ALL = EnumSet.allOf (EHTTPMethod.class);
+  private static final EnumSet <EHttpMethod> ALL = EnumSet.allOf (EHttpMethod.class);
 
   protected AbstractAPIServlet ()
   {}
@@ -54,7 +54,7 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
   @Override
   @Nonnull
   @CodingStyleguideUnaware
-  protected EnumSet <EHTTPMethod> getAllowedHTTPMethods ()
+  protected EnumSet <EHttpMethod> getAllowedHTTPMethods ()
   {
     return ALL;
   }
@@ -75,7 +75,7 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
   {
     // ensure leading "/"
     final String sAPIPath = FilenameHelper.ensurePathStartingWithSeparator (aRequestScope.getPathWithinServlet ());
-    final EHTTPMethod eHTTPMethod = aRequestScope.getHttpMethod ();
+    final EHttpMethod eHTTPMethod = aRequestScope.getHttpMethod ();
     final IAPIInvoker aAPIMgr = getAPIInvoker (aRequestScope);
     final InvokableAPIDescriptor aInvokableDescriptor = aAPIMgr.getAPIByPath (new APIPath (eHTTPMethod, sAPIPath));
     if (aInvokableDescriptor == null)

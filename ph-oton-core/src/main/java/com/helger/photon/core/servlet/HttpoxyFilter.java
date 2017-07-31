@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.http.CHTTPHeader;
+import com.helger.commons.http.CHttpHeader;
 import com.helger.servlet.filter.AbstractHttpServletFilter;
 import com.helger.servlet.request.RequestLogger;
 
@@ -51,7 +51,7 @@ public class HttpoxyFilter extends AbstractHttpServletFilter
                             @Nonnull final HttpServletResponse aHttpResponse,
                             @Nonnull final FilterChain aChain) throws IOException, ServletException
   {
-    final String sPoxy = aHttpRequest.getHeader (CHTTPHeader.PROXY);
+    final String sPoxy = aHttpRequest.getHeader (CHttpHeader.PROXY);
     if (sPoxy == null)
     {
       // call next filter in the chain.

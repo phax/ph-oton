@@ -23,7 +23,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.mime.CMimeType;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mock.MockServletRequestListenerScopeAware;
@@ -40,9 +40,9 @@ public final class MockUnifiedResponseServlet extends AbstractUnifiedResponseSer
 
   @Override
   @Nonnull
-  protected Set <EHTTPMethod> getAllowedHTTPMethods ()
+  protected Set <EHttpMethod> getAllowedHTTPMethods ()
   {
-    return EnumSet.allOf (EHTTPMethod.class);
+    return EnumSet.allOf (EHttpMethod.class);
   }
 
   @Override

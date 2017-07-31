@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import com.helger.commons.http.CHTTPHeader;
+import com.helger.commons.http.CHttpHeader;
 
 /**
  * Test class for class {@link APIDescriptor}.
@@ -41,7 +41,7 @@ public final class APIDescriptorTest
                                                                                                            "client"));
     aList.addDescriptor (new APIDescriptor (APIPath.delete ("/service/{participantID}/get"), aExec));
     aList.addDescriptor (new APIDescriptor (APIPath.put ("/r2o/v1/invoice"),
-                                            aExec).addRequiredHeaders (CHTTPHeader.AUTHORIZATION));
+                                            aExec).addRequiredHeaders (CHttpHeader.AUTHORIZATION));
     aList.addDescriptor (new APIDescriptor (APIPath.put ("/r2o/{version:regex=v[0-9]+}/invoice"), aExec));
 
     assertNotNull (aList.getMatching (APIPath.get ("/r2o/v1/accessToken")));

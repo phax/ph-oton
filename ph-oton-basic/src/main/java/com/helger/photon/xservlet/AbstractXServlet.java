@@ -35,10 +35,13 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.exception.InitializationException;
-import com.helger.commons.http.CHTTPHeader;
+import com.helger.commons.http.CHttpHeader;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.state.EChange;
+import com.helger.commons.state.EContinue;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
@@ -46,21 +49,29 @@ import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
-import com.helger.http.EHTTPMethod;
-import com.helger.http.EHTTPVersion;
+import com.helger.http.EHttpMethod;
+import com.helger.http.EHttpVersion;
+import com.helger.photon.basic.app.PhotonSessionState;
+import com.helger.photon.xservlet.forcedredirect.ForcedRedirectException;
+import com.helger.photon.xservlet.forcedredirect.ForcedRedirectManager;
 import com.helger.photon.xservlet.requesttrack.RequestTracker;
 import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 import com.helger.scope.mgr.ScopeManager;
+import com.helger.servlet.ServletContextPathHolder;
+import com.helger.servlet.StaticServerInfo;
 import com.helger.servlet.http.CountingOnlyHttpServletResponse;
 import com.helger.servlet.request.RequestLogger;
+import com.helger.servlet.response.ERedirectMode;
 import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScope;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.request.RequestScopeInitializer;
 
 /**
  * Abstract HTTP based servlet. Compared to the default
  * {@link javax.servlet.http.HttpServlet} this class uses a handler map with
- * {@link EHTTPMethod} as the key.<br>
+ * {@link EHttpMethod} as the key.<br>
  * The following features are added compared to the default servlet
  * implementation:
  * <ul>
@@ -84,6 +95,10 @@ public abstract class AbstractXServlet extends GenericServlet
                                                                                                                           "$requests.accepted");
   private static final IMutableStatisticsHandlerCounter s_aCounterRequestsHandled = StatisticsManager.getCounterHandler (AbstractXServlet.class.getName () +
                                                                                                                          "$requests.handled");
+  private static final IMutableStatisticsHandlerCounter s_aCounterRequestsPRG = StatisticsManager.getCounterHandler (AbstractXServlet.class.getName () +
+                                                                                                                     "$requests.post-redirect-get");
+  private static final IMutableStatisticsHandlerCounter s_aCounterRequestsWithException = StatisticsManager.getCounterHandler (AbstractXServlet.class.getName () +
+                                                                                                                               "$requests.withexception");
   private static final IMutableStatisticsHandlerKeyedCounter s_aCounterRequestsPerVersionAccepted = StatisticsManager.getKeyedCounterHandler (AbstractXServlet.class.getName () +
                                                                                                                                               "$requests-per-version.accepted");
   private static final IMutableStatisticsHandlerKeyedCounter s_aCounterRequestsPerVersionHandled = StatisticsManager.getKeyedCounterHandler (AbstractXServlet.class.getName () +
@@ -113,22 +128,22 @@ public abstract class AbstractXServlet extends GenericServlet
   public AbstractXServlet ()
   {
     // This handler is always the same, so it is registered here for convenience
-    m_aHandlerRegistry.registerHandler (EHTTPMethod.TRACE, new XServletHandlerTRACE ());
+    m_aHandlerRegistry.registerHandler (EHttpMethod.TRACE, new XServletHandlerTRACE ());
 
     // Default HEAD handler -> invoke with GET
-    m_aHandlerRegistry.registerHandler (EHTTPMethod.HEAD,
+    m_aHandlerRegistry.registerHandler (EHttpMethod.HEAD,
                                         (aHttpRequest, aHttpResponse, eHttpVersion, eHttpMethod, aRequestScope) -> {
                                           final CountingOnlyHttpServletResponse aResponseWrapper = new CountingOnlyHttpServletResponse (aHttpResponse);
                                           _internalService (aHttpRequest,
                                                             aResponseWrapper,
                                                             eHttpVersion,
-                                                            EHTTPMethod.GET,
+                                                            EHttpMethod.GET,
                                                             aRequestScope);
                                           aResponseWrapper.setContentLengthAutomatically ();
                                         });
 
     // Default OPTIONS handler
-    m_aHandlerRegistry.registerHandler (EHTTPMethod.OPTIONS,
+    m_aHandlerRegistry.registerHandler (EHttpMethod.OPTIONS,
                                         new XServletHandlerOPTIONS (m_aHandlerRegistry::getAllowedHttpMethodsString));
 
     // Remember to avoid crash on shutdown, when no GlobalScope is present
@@ -137,10 +152,11 @@ public abstract class AbstractXServlet extends GenericServlet
   }
 
   /**
-   * @return The application ID for this servlet.
+   * @return The application ID for this servlet. Called only once during
+   *         initialization!
    */
   @OverrideOnDemand
-  protected String getApplicationID ()
+  protected String getInitApplicationID ()
   {
     return ClassHelper.getClassLocalName (getClass ());
   }
@@ -154,9 +170,9 @@ public abstract class AbstractXServlet extends GenericServlet
     super.init (aSC);
     m_aStatusMgr.onServletInit (getClass ());
 
-    m_sStatusApplicationID = getApplicationID ();
+    m_sStatusApplicationID = getInitApplicationID ();
     if (StringHelper.hasNoText (m_sStatusApplicationID))
-      throw new InitializationException ("Failed retrieve a valid application ID! Please override getApplicationID()");
+      throw new InitializationException ("Failed retrieve a valid application ID! Please check your overriden getInitApplicationID()");
   }
 
   @Override
@@ -165,6 +181,15 @@ public abstract class AbstractXServlet extends GenericServlet
   {
     m_aStatusMgr.onServletDestroy (getClass ());
     super.destroy ();
+  }
+
+  @Nonnull
+  @OverrideOnDemand
+  protected UnifiedResponse createUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
+                                                   @Nonnull final EHttpMethod eHttpMethod,
+                                                   @Nonnull final HttpServletRequest aHttpRequest)
+  {
+    return new UnifiedResponse (eHttpVersion, eHttpMethod, aHttpRequest);
   }
 
   @Nonnull
@@ -190,10 +215,81 @@ public abstract class AbstractXServlet extends GenericServlet
     RequestTracker.removeRequest (sID);
   }
 
+  /**
+   * Called when an exception occurred in
+   * {@link #handleRequest(IRequestWebScopeWithoutResponse, UnifiedResponse)}.
+   * This method is only called for non-request-cancel operations.
+   *
+   * @param aRequestScope
+   *        The source request scope. Never <code>null</code>.
+   * @param aUnifiedResponse
+   *        The response to the current request. Never <code>null</code>.
+   * @param t
+   *        The Throwable that occurred. Never <code>null</code>.
+   * @return {@link EContinue#CONTINUE} to propagate the Exception,
+   *         {@link EContinue#BREAK} to swallow it. May not be
+   *         <code>null</code>.
+   */
+  @OverrideOnDemand
+  @Nonnull
+  protected EContinue onException (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                   @Nonnull final UnifiedResponse aUnifiedResponse,
+                                   @Nonnull final Throwable t)
+  {
+    final String sMsg = "Internal error on HTTP " +
+                        aRequestScope.getMethod () +
+                        " on resource '" +
+                        aRequestScope.getURL () +
+                        "' - Application ID '" +
+                        m_sStatusApplicationID +
+                        "'";
+
+    if (StreamHelper.isKnownEOFException (t))
+    {
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug (sMsg + " - " + ClassHelper.getClassLocalName (t) + " - " + t.getMessage ());
+
+      // Never propagate
+      return EContinue.BREAK;
+    }
+
+    // Log always including full exception
+    s_aLogger.error (sMsg, t);
+
+    // Propagate only in debug mode
+    return EContinue.valueOf (GlobalDebug.isDebugMode ());
+  }
+
+  /**
+   * Called before a valid request is handled. This method is only called if
+   * HTTP version matches, HTTP method is supported and sending a cached HTTP
+   * response is not an option.
+   *
+   * @param aRequestScope
+   *        The request scope that will be used for processing the request.
+   *        Never <code>null</code>.
+   */
+  @OverrideOnDemand
+  protected void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {}
+
+  /**
+   * Called after a valid request was processed. This method is only called if
+   * the handleRequest method was invoked. If an exception occurred this method
+   * is called after
+   * {@link #onException(IRequestWebScopeWithoutResponse, UnifiedResponse, Throwable)}
+   *
+   * @param bExceptionOccurred
+   *        if <code>true</code> an exception occurred in request processing.
+   */
+  @OverrideOnDemand
+  protected void onRequestEnd (final boolean bExceptionOccurred)
+  {}
+
   private void _internalService (@Nonnull final HttpServletRequest aHttpRequest,
                                  @Nonnull final HttpServletResponse aHttpResponse,
-                                 @Nonnull final EHTTPVersion eHttpVersion,
-                                 @Nonnull final EHTTPMethod eHttpMethod,
+                                 @Nonnull final EHttpVersion eHttpVersion,
+                                 @Nonnull final EHttpMethod eHttpMethod,
                                  @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
     // Find the handler for the HTTP method
@@ -203,17 +299,31 @@ public abstract class AbstractXServlet extends GenericServlet
       // HTTP method is not supported by this servlet!
       m_aCounterHttpMethodUnhandled.increment (eHttpMethod.getName ());
 
-      aHttpResponse.setHeader (CHTTPHeader.ALLOW, m_aHandlerRegistry.getAllowedHttpMethodsString ());
-      if (eHttpVersion == EHTTPVersion.HTTP_11)
+      aHttpResponse.setHeader (CHttpHeader.ALLOW, m_aHandlerRegistry.getAllowedHttpMethodsString ());
+      if (eHttpVersion == EHttpVersion.HTTP_11)
         aHttpResponse.sendError (HttpServletResponse.SC_METHOD_NOT_ALLOWED);
       else
         aHttpResponse.sendError (HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
 
+    // before-callback
+    try
+    {
+      onRequestBegin (aRequestScope);
+    }
+    catch (final Throwable t)
+    {
+      s_aLogger.error ("onRequestBegin failed", t);
+    }
+
+    // Build the response
+    final UnifiedResponse aUnifiedResponse = createUnifiedResponse (eHttpVersion, eHttpMethod, aHttpRequest);
+
     // HTTP method is supported by this servlet implementation
     final StopWatch aSW = StopWatch.createdStarted ();
     boolean bTrackedRequest = false;
+    boolean bExceptionOccurred = true;
     try
     {
       bTrackedRequest = _trackBeforeHandleRequest (aRequestScope).isChanged ();
@@ -222,15 +332,60 @@ public abstract class AbstractXServlet extends GenericServlet
       // requests, which calls GET internally)
       aHandler.handle (aHttpRequest, aHttpResponse, eHttpVersion, eHttpMethod, aRequestScope);
 
+      // No error occurred
+      bExceptionOccurred = false;
+
       // Handled and no exception
       s_aCounterRequestsHandled.increment ();
       s_aCounterRequestsPerVersionHandled.increment (eHttpVersion.getName ());
       s_aCounterRequestsPerMethodHandled.increment (eHttpMethod.getName ());
     }
+    catch (final ForcedRedirectException ex)
+    {
+      s_aCounterRequestsPRG.increment ();
+
+      // Remember the content
+      ForcedRedirectManager.getInstance ().createForcedRedirect (ex);
+      // And set the redirect
+      aUnifiedResponse.setRedirect (ex.getRedirectTargetURL (), ERedirectMode.POST_REDIRECT_GET);
+      // Stop exception handling
+      aUnifiedResponse.applyToResponse (aHttpResponse);
+    }
+    catch (final Throwable t)
+    {
+      s_aCounterRequestsWithException.increment ();
+
+      // Invoke exception handler (includes Post-Redirect-Handling)
+      if (onException (aRequestScope, aUnifiedResponse, t).isContinue ())
+      {
+        // Propagate exception
+        if (t instanceof IOException)
+          throw (IOException) t;
+        if (t instanceof ServletException)
+          throw (ServletException) t;
+        throw new ServletException (t);
+      }
+
+      // E.g. Post-Redirect-Get is handled with this
+      aUnifiedResponse.applyToResponse (aHttpResponse);
+    }
     finally
     {
       if (bTrackedRequest)
+      {
+        // Track after only if tracked on the beginning
         _trackAfterHandleRequest (aRequestScope);
+      }
+
+      // after-callback
+      try
+      {
+        onRequestEnd (bExceptionOccurred);
+      }
+      catch (final Throwable t)
+      {
+        s_aLogger.error ("onRequestEnd failed", t);
+      }
 
       // Timer per HTTP method
       s_aTimer.addTime (eHttpMethod.getName (), aSW.stopAndGetMillis ());
@@ -297,12 +452,18 @@ public abstract class AbstractXServlet extends GenericServlet
     final HttpServletRequest aHttpRequest = (HttpServletRequest) aRequest;
     final HttpServletResponse aHttpResponse = (HttpServletResponse) aResponse;
 
+    // Increase counter
     s_aCounterRequestsTotal.increment ();
+
+    // Increase per servlet invocation
     m_aStatusMgr.onServletInvocation (getClass ());
+
+    // Set the last application ID in the session
+    PhotonSessionState.getInstance ().setLastApplicationID (m_sStatusApplicationID);
 
     // Ensure a valid HTTP version is provided
     final String sProtocol = aHttpRequest.getProtocol ();
-    final EHTTPVersion eHTTPVersion = EHTTPVersion.getFromNameOrNull (sProtocol);
+    final EHttpVersion eHTTPVersion = EHttpVersion.getFromNameOrNull (sProtocol);
     if (eHTTPVersion == null)
     {
       // HTTP version disallowed
@@ -314,7 +475,7 @@ public abstract class AbstractXServlet extends GenericServlet
 
     // Ensure a valid HTTP method is provided
     final String sMethod = aHttpRequest.getMethod ();
-    final EHTTPMethod eHTTPMethod = EHTTPMethod.getFromNameOrNull (sMethod);
+    final EHttpMethod eHTTPMethod = EHttpMethod.getFromNameOrNull (sMethod);
     if (eHTTPMethod == null)
     {
       // HTTP method unknown
@@ -323,6 +484,16 @@ public abstract class AbstractXServlet extends GenericServlet
       return;
     }
     s_aCounterRequestsPerMethodAccepted.increment (eHTTPMethod.getName ());
+
+    // May already be set in test cases!
+    if (s_aFirstRequest.getAndSet (false) && !StaticServerInfo.isSet ())
+    {
+      // First set the default web server info
+      StaticServerInfo.init (aHttpRequest.getScheme (),
+                             aHttpRequest.getServerName (),
+                             aHttpRequest.getServerPort (),
+                             ServletContextPathHolder.getContextPath ());
+    }
 
     final XServletAdvisorSecurity aSecurityAdvisor = createSecurityAdvisor ();
     if (aSecurityAdvisor.beforeRequestIsProcessed (aHttpRequest, aHttpResponse).isFinished ())
@@ -334,6 +505,7 @@ public abstract class AbstractXServlet extends GenericServlet
 
     final XServletAdvisorConsistency aConsistencyAdvisor = createConsistencyAdvisor ();
     aConsistencyAdvisor.beforeRequestIsProcessed (aHttpRequest, aHttpResponse);
+
     final StatusAwareHttpResponseWrapper aHttpResponseWrapper = new StatusAwareHttpResponseWrapper (aHttpResponse);
     try
     {
@@ -362,6 +534,7 @@ public abstract class AbstractXServlet extends GenericServlet
     finally
     {
       aConsistencyAdvisor.afterRequest (aHttpRequest, aHttpResponseWrapper);
+      aSecurityAdvisor.afterRequest (aHttpRequest, aHttpResponseWrapper);
     }
   }
 

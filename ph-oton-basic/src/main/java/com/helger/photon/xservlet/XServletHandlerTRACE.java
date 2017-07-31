@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.mime.EMimeContentType;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.http.EHTTPMethod;
-import com.helger.http.EHTTPVersion;
+import com.helger.http.EHttpMethod;
+import com.helger.http.EHttpVersion;
 import com.helger.web.scope.IRequestWebScope;
 
 /**
@@ -46,11 +46,11 @@ public class XServletHandlerTRACE implements IXServletHandler
 
   public void handle (@Nonnull final HttpServletRequest aHttpRequest,
                       @Nonnull final HttpServletResponse aHttpResponse,
-                      @Nonnull final EHTTPVersion eHTTPVersion,
-                      @Nonnull final EHTTPMethod eHTTPMethod,
+                      @Nonnull final EHttpVersion eHTTPVersion,
+                      @Nonnull final EHttpMethod eHTTPMethod,
                       @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
-    final StringBuilder aSB = new StringBuilder ().append (EHTTPMethod.TRACE.getName ())
+    final StringBuilder aSB = new StringBuilder ().append (EHttpMethod.TRACE.getName ())
                                                   .append (' ')
                                                   .append (aHttpRequest.getRequestURI ())
                                                   .append (' ')

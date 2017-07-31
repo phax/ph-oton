@@ -34,7 +34,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.state.EContinue;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryServlet;
@@ -103,7 +103,7 @@ public class ResourceBundleServlet extends AbstractObjectDeliveryServlet
 
   @Override
   @Nonnull
-  protected Set <EHTTPMethod> getAllowedHTTPMethods ()
+  protected Set <EHttpMethod> getAllowedHTTPMethods ()
   {
     return ALLOWED_METHDOS_GET;
   }

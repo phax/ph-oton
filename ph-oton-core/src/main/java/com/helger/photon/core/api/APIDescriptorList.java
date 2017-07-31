@@ -32,7 +32,7 @@ import com.helger.commons.collection.impl.CommonsEnumMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptorHelper;
 import com.helger.photon.core.api.pathdescriptor.PathMatchingResult;
 
@@ -46,12 +46,12 @@ public class APIDescriptorList
   private static final Logger s_aLogger = LoggerFactory.getLogger (APIDescriptorList.class);
 
   /** Store APIDescriptor per HTTP method for quick access. */
-  private final ICommonsMap <EHTTPMethod, ICommonsList <APIDescriptor>> m_aMap = new CommonsEnumMap<> (EHTTPMethod.class);
+  private final ICommonsMap <EHttpMethod, ICommonsList <APIDescriptor>> m_aMap = new CommonsEnumMap<> (EHttpMethod.class);
 
   public APIDescriptorList ()
   {
     // Init map
-    for (final EHTTPMethod e : EHTTPMethod.values ())
+    for (final EHttpMethod e : EHttpMethod.values ())
       m_aMap.put (e, new CommonsArrayList<> ());
   }
 

@@ -46,8 +46,8 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.context.SimpleWebExecutionContext;
-import com.helger.photon.core.app.redirect.ForcedRedirectException;
 import com.helger.photon.core.resource.ResourceBundleServlet;
+import com.helger.photon.xservlet.forcedredirect.ForcedRedirectException;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

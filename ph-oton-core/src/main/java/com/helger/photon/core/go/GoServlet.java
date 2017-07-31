@@ -32,7 +32,7 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.url.SimpleURL;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
@@ -81,7 +81,7 @@ public class GoServlet extends AbstractUnifiedResponseServlet
   @Override
   @Nonnull
   @CodingStyleguideUnaware
-  protected Set <EHTTPMethod> getAllowedHTTPMethods ()
+  protected Set <EHttpMethod> getAllowedHTTPMethods ()
   {
     return ALLOWED_METHDOS_GET;
   }

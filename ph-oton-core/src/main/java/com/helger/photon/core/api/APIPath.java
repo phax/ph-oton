@@ -24,7 +24,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 
 /**
  * This class contains a combination of path and HTTP method.
@@ -34,7 +34,7 @@ import com.helger.http.EHTTPMethod;
 @Immutable
 public class APIPath
 {
-  private final EHTTPMethod m_eMethod;
+  private final EHttpMethod m_eMethod;
   private final String m_sPath;
 
   /**
@@ -45,7 +45,7 @@ public class APIPath
    * @param sPath
    *        The path relative to the owning servlet.
    */
-  public APIPath (@Nonnull final EHTTPMethod eMethod, @Nonnull @Nonempty final String sPath)
+  public APIPath (@Nonnull final EHttpMethod eMethod, @Nonnull @Nonempty final String sPath)
   {
     m_eMethod = ValueEnforcer.notNull (eMethod, "Method");
     m_sPath = ValueEnforcer.notEmpty (sPath, "Path");
@@ -56,7 +56,7 @@ public class APIPath
    *         <code>null</code>.
    */
   @Nonnull
-  public EHTTPMethod getHTTPMethod ()
+  public EHttpMethod getHTTPMethod ()
   {
     return m_eMethod;
   }
@@ -112,24 +112,24 @@ public class APIPath
   @Nonnull
   public static APIPath get (@Nonnull @Nonempty final String sPath)
   {
-    return new APIPath (EHTTPMethod.GET, sPath);
+    return new APIPath (EHttpMethod.GET, sPath);
   }
 
   @Nonnull
   public static APIPath post (@Nonnull @Nonempty final String sPath)
   {
-    return new APIPath (EHTTPMethod.POST, sPath);
+    return new APIPath (EHttpMethod.POST, sPath);
   }
 
   @Nonnull
   public static APIPath put (@Nonnull @Nonempty final String sPath)
   {
-    return new APIPath (EHTTPMethod.PUT, sPath);
+    return new APIPath (EHttpMethod.PUT, sPath);
   }
 
   @Nonnull
   public static APIPath delete (@Nonnull @Nonempty final String sPath)
   {
-    return new APIPath (EHTTPMethod.DELETE, sPath);
+    return new APIPath (EHttpMethod.DELETE, sPath);
   }
 }

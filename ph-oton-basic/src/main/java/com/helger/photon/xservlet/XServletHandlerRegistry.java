@@ -10,12 +10,12 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsEnumMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.string.StringHelper;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 
 final class XServletHandlerRegistry
 {
   /** The main handler map */
-  private final ICommonsMap <EHTTPMethod, IXServletHandler> m_aHandler = new CommonsEnumMap <> (EHTTPMethod.class);
+  private final ICommonsMap <EHttpMethod, IXServletHandler> m_aHandler = new CommonsEnumMap <> (EHttpMethod.class);
 
   public XServletHandlerRegistry ()
   {}
@@ -29,7 +29,7 @@ final class XServletHandlerRegistry
    * @param aHandler
    *        The handler to register. May not be <code>null</code>.
    */
-  void registerHandler (@Nonnull final EHTTPMethod eHTTPMethod, @Nonnull final IXServletHandler aHandler)
+  void registerHandler (@Nonnull final EHttpMethod eHTTPMethod, @Nonnull final IXServletHandler aHandler)
   {
     ValueEnforcer.notNull (eHTTPMethod, "HTTPMethod");
     ValueEnforcer.notNull (aHandler, "Handler");
@@ -41,14 +41,14 @@ final class XServletHandlerRegistry
 
   @Nonnull
   @ReturnsMutableCopy
-  EnumSet <EHTTPMethod> getAllowedHTTPMethods ()
+  EnumSet <EHttpMethod> getAllowedHTTPMethods ()
   {
     // Return all methods for which handlers are registered
-    final EnumSet <EHTTPMethod> ret = EnumSet.copyOf (m_aHandler.keySet ());
-    if (!ret.contains (EHTTPMethod.GET))
+    final EnumSet <EHttpMethod> ret = EnumSet.copyOf (m_aHandler.keySet ());
+    if (!ret.contains (EHttpMethod.GET))
     {
       // If GET is not supported, HEAD is also not supported
-      ret.remove (EHTTPMethod.HEAD);
+      ret.remove (EHttpMethod.HEAD);
     }
     return ret;
   }
@@ -56,11 +56,11 @@ final class XServletHandlerRegistry
   @Nonnull
   String getAllowedHttpMethodsString ()
   {
-    return StringHelper.getImplodedMapped (", ", getAllowedHTTPMethods (), EHTTPMethod::getName);
+    return StringHelper.getImplodedMapped (", ", getAllowedHTTPMethods (), EHttpMethod::getName);
   }
 
   @Nullable
-  IXServletHandler getHandler (@Nonnull final EHTTPMethod eHttpMethod)
+  IXServletHandler getHandler (@Nonnull final EHttpMethod eHttpMethod)
   {
     return m_aHandler.get (eHttpMethod);
   }

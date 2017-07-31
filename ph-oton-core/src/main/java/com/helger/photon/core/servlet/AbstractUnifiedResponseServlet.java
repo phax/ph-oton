@@ -41,7 +41,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.http.CHTTPHeader;
+import com.helger.commons.http.CHttpHeader;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.regex.RegExHelper;
@@ -51,11 +51,11 @@ import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
-import com.helger.http.EHTTPMethod;
-import com.helger.http.EHTTPVersion;
+import com.helger.http.EHttpMethod;
+import com.helger.http.EHttpVersion;
 import com.helger.photon.basic.app.PhotonSessionState;
-import com.helger.photon.core.app.redirect.ForcedRedirectException;
-import com.helger.photon.core.app.redirect.ForcedRedirectManager;
+import com.helger.photon.xservlet.forcedredirect.ForcedRedirectException;
+import com.helger.photon.xservlet.forcedredirect.ForcedRedirectManager;
 import com.helger.photon.xservlet.requesttrack.RequestTracker;
 import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 import com.helger.scope.mgr.ScopeManager;
@@ -80,19 +80,19 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
 {
   /** Default allowed methods: HEAD, GET and POST */
   @CodingStyleguideUnaware
-  public static final Set <EHTTPMethod> DEFAULT_ALLOWED_METHDOS = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.HEAD,
-                                                                                                                 EHTTPMethod.GET,
-                                                                                                                 EHTTPMethod.POST));
+  public static final Set <EHttpMethod> DEFAULT_ALLOWED_METHDOS = CollectionHelper.makeUnmodifiable (EnumSet.of (EHttpMethod.HEAD,
+                                                                                                                 EHttpMethod.GET,
+                                                                                                                 EHttpMethod.POST));
   /** Allowed methods: GET and POST */
   @CodingStyleguideUnaware
-  public static final Set <EHTTPMethod> ALLOWED_METHDOS_GET_POST = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.GET,
-                                                                                                                  EHTTPMethod.POST));
+  public static final Set <EHttpMethod> ALLOWED_METHDOS_GET_POST = CollectionHelper.makeUnmodifiable (EnumSet.of (EHttpMethod.GET,
+                                                                                                                  EHttpMethod.POST));
   /** Allowed methods: GET */
   @CodingStyleguideUnaware
-  public static final Set <EHTTPMethod> ALLOWED_METHDOS_GET = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.GET));
+  public static final Set <EHttpMethod> ALLOWED_METHDOS_GET = CollectionHelper.makeUnmodifiable (EnumSet.of (EHttpMethod.GET));
   /** Allowed methods: POST */
   @CodingStyleguideUnaware
-  public static final Set <EHTTPMethod> ALLOWED_METHDOS_POST = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.POST));
+  public static final Set <EHttpMethod> ALLOWED_METHDOS_POST = CollectionHelper.makeUnmodifiable (EnumSet.of (EHttpMethod.POST));
 
   /** The name of the request attribute uniquely identifying the request ID */
   public static final String REQUEST_ATTR_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "request.id";
@@ -189,7 +189,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   /**
    * Check if the passed HTTP method is allowed. If not, a
    * {@link HttpServletResponse#SC_METHOD_NOT_ALLOWED} will be returned. By
-   * default only {@link EHTTPMethod#GET} and {@link EHTTPMethod#POST} are
+   * default only {@link EHttpMethod#GET} and {@link EHttpMethod#POST} are
    * allowed.
    *
    * @return A non-<code>null</code> set of all allowed HTTP methods.
@@ -197,7 +197,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   @OverrideOnDemand
   @Nonnull
   @ReturnsImmutableObject
-  protected Set <EHTTPMethod> getAllowedHTTPMethods ()
+  protected Set <EHttpMethod> getAllowedHTTPMethods ()
   {
     return DEFAULT_ALLOWED_METHDOS;
   }
@@ -385,8 +385,8 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
 
   @Nonnull
   @OverrideOnDemand
-  protected UnifiedResponse createUnifiedResponse (@Nonnull final EHTTPVersion eHttpVersion,
-                                                   @Nonnull final EHTTPMethod eHttpMethod,
+  protected UnifiedResponse createUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
+                                                   @Nonnull final EHttpMethod eHttpMethod,
                                                    @Nonnull final HttpServletRequest aHttpRequest)
   {
     return new UnifiedResponse (eHttpVersion, eHttpMethod, aHttpRequest);
@@ -395,14 +395,14 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
   private void _run (@Nonnull final HttpServletRequest aHttpRequest,
                      @Nonnull final HttpServletResponse aHttpResponse,
                      @Nonnull final IRequestWebScope aRequestScope,
-                     @Nonnull final EHTTPMethod eHttpMethod) throws ServletException, IOException
+                     @Nonnull final EHttpMethod eHttpMethod) throws ServletException, IOException
   {
     // Increment invocation counter
     m_aStatusMgr.onServletInvocation (getClass ());
     // Set the last application ID in the session
     PhotonSessionState.getInstance ().setLastApplicationID (getApplicationID ());
 
-    final EHTTPVersion eHTTPVersion = RequestHelper.getHttpVersion (aHttpRequest);
+    final EHttpVersion eHTTPVersion = RequestHelper.getHttpVersion (aHttpRequest);
     if (eHTTPVersion == null)
     {
       // HTTP version disallowed
@@ -427,23 +427,23 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                              ServletContextPathHolder.getContextPath ());
     }
 
-    final Set <EHTTPMethod> aAllowedHTTPMethods = getAllowedHTTPMethods ();
+    final Set <EHttpMethod> aAllowedHTTPMethods = getAllowedHTTPMethods ();
     if (!aAllowedHTTPMethods.contains (eHttpMethod))
     {
       // Disallow method
       m_aStatsHttpMethodDisallowed.increment (eHttpMethod.getName ());
 
       // Build Allow response header
-      final String sAllow = StringHelper.getImplodedMapped (", ", aAllowedHTTPMethods, EHTTPMethod::getName);
+      final String sAllow = StringHelper.getImplodedMapped (", ", aAllowedHTTPMethods, EHttpMethod::getName);
       s_aLogger.warn ("Request " +
                       aRequestScope.getURL () +
                       " uses disallowed HTTP method " +
                       eHttpMethod +
                       "! Allowed methods are: " +
                       sAllow);
-      aHttpResponse.setHeader (CHTTPHeader.ALLOW, sAllow);
+      aHttpResponse.setHeader (CHttpHeader.ALLOW, sAllow);
 
-      if (eHTTPVersion == EHTTPVersion.HTTP_11)
+      if (eHTTPVersion == EHttpVersion.HTTP_11)
         aHttpResponse.sendError (HttpServletResponse.SC_METHOD_NOT_ALLOWED);
       else
         aHttpResponse.sendError (HttpServletResponse.SC_BAD_REQUEST);
@@ -469,7 +469,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     m_aStatsInitSuccess.increment ();
 
     // Check for last-modification on GET and HEAD
-    if (eHttpMethod == EHTTPMethod.GET || eHttpMethod == EHTTPMethod.HEAD)
+    if (eHttpMethod == EHttpMethod.GET || eHttpMethod == EHttpMethod.HEAD)
     {
       final LocalDateTime aLastModification = getLastModificationDateTime (aRequestScope);
       if (aLastModification != null)
@@ -477,7 +477,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         m_aStatsHasLastModification.increment ();
 
         // Get the If-Modified-Since date header
-        final long nRequestIfModifiedSince = aHttpRequest.getDateHeader (CHTTPHeader.IF_MODIFIED_SINCE);
+        final long nRequestIfModifiedSince = aHttpRequest.getDateHeader (CHttpHeader.IF_MODIFIED_SINCE);
         if (nRequestIfModifiedSince >= 0)
         {
           final LocalDateTime aRequestIfModifiedSince = convertMillisToDateTimeGMT (nRequestIfModifiedSince);
@@ -495,7 +495,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         }
 
         // Get the If-Unmodified-Since date header
-        final long nRequestIfUnmodifiedSince = aHttpRequest.getDateHeader (CHTTPHeader.IF_UNMODIFIED_SINCE);
+        final long nRequestIfUnmodifiedSince = aHttpRequest.getDateHeader (CHttpHeader.IF_UNMODIFIED_SINCE);
         if (nRequestIfUnmodifiedSince >= 0)
         {
           final LocalDateTime aRequestIfUnmodifiedSince = convertMillisToDateTimeGMT (nRequestIfUnmodifiedSince);
@@ -524,7 +524,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
         m_aStatsHasETag.increment ();
 
         // get the request ETag
-        final String sRequestETags = aHttpRequest.getHeader (CHTTPHeader.IF_NON_MATCH);
+        final String sRequestETags = aHttpRequest.getHeader (CHttpHeader.IF_NON_MATCH);
         if (StringHelper.hasText (sRequestETags))
         {
           // Request header may contain several ETag values
@@ -626,7 +626,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                                  @Nonnull final HttpServletResponse aHttpResponse,
                                  @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
-    _run (aHttpRequest, aHttpResponse, aRequestScope, EHTTPMethod.DELETE);
+    _run (aHttpRequest, aHttpResponse, aRequestScope, EHttpMethod.DELETE);
   }
 
   @Override
@@ -634,7 +634,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                               @Nonnull final HttpServletResponse aHttpResponse,
                               @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
-    _run (aHttpRequest, aHttpResponse, aRequestScope, EHTTPMethod.GET);
+    _run (aHttpRequest, aHttpResponse, aRequestScope, EHttpMethod.GET);
   }
 
   @Override
@@ -642,7 +642,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                                @Nonnull final HttpServletResponse aHttpResponse,
                                @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
-    _run (aHttpRequest, aHttpResponse, aRequestScope, EHTTPMethod.HEAD);
+    _run (aHttpRequest, aHttpResponse, aRequestScope, EHttpMethod.HEAD);
   }
 
   @Override
@@ -650,7 +650,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                                   @Nonnull final HttpServletResponse aHttpResponse,
                                   @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
-    _run (aHttpRequest, aHttpResponse, aRequestScope, EHTTPMethod.OPTIONS);
+    _run (aHttpRequest, aHttpResponse, aRequestScope, EHttpMethod.OPTIONS);
   }
 
   @Override
@@ -658,7 +658,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                                @Nonnull final HttpServletResponse aHttpResponse,
                                @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
-    _run (aHttpRequest, aHttpResponse, aRequestScope, EHTTPMethod.POST);
+    _run (aHttpRequest, aHttpResponse, aRequestScope, EHttpMethod.POST);
   }
 
   @Override
@@ -666,7 +666,7 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                               @Nonnull final HttpServletResponse aHttpResponse,
                               @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
-    _run (aHttpRequest, aHttpResponse, aRequestScope, EHTTPMethod.PUT);
+    _run (aHttpRequest, aHttpResponse, aRequestScope, EHttpMethod.PUT);
   }
 
   @Override
@@ -674,6 +674,6 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                                 @Nonnull final HttpServletResponse aHttpResponse,
                                 @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
-    _run (aHttpRequest, aHttpResponse, aRequestScope, EHTTPMethod.TRACE);
+    _run (aHttpRequest, aHttpResponse, aRequestScope, EHttpMethod.TRACE);
   }
 }

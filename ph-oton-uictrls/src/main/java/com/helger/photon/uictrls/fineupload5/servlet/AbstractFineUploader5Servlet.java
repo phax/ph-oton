@@ -32,7 +32,7 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
@@ -193,15 +193,15 @@ public abstract class AbstractFineUploader5Servlet extends AbstractUnifiedRespon
   }
 
   @CodingStyleguideUnaware
-  public static final Set <EHTTPMethod> ALLOWED_METHDOS = CollectionHelper.makeUnmodifiable (EnumSet.of (EHTTPMethod.POST,
-                                                                                                         EHTTPMethod.DELETE));
+  public static final Set <EHttpMethod> ALLOWED_METHDOS = CollectionHelper.makeUnmodifiable (EnumSet.of (EHttpMethod.POST,
+                                                                                                         EHttpMethod.DELETE));
 
   public AbstractFineUploader5Servlet ()
   {}
 
   @Override
   @Nonnull
-  protected Set <EHTTPMethod> getAllowedHTTPMethods ()
+  protected Set <EHttpMethod> getAllowedHTTPMethods ()
   {
     return ALLOWED_METHDOS;
   }

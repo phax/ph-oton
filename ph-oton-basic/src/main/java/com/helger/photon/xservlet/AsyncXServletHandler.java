@@ -28,8 +28,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.http.EHTTPMethod;
-import com.helger.http.EHTTPVersion;
+import com.helger.http.EHttpMethod;
+import com.helger.http.EHttpVersion;
 import com.helger.servlet.async.AsyncServletRunnerDefault;
 import com.helger.servlet.async.ExtAsyncContext;
 import com.helger.servlet.async.IAsyncServletRunner;
@@ -80,8 +80,8 @@ public final class AsyncXServletHandler implements IXServletHandler
 
   private void _handleAsync (@Nonnull final HttpServletRequest aHttpRequest,
                              @Nonnull final HttpServletResponse aHttpResponse,
-                             @Nonnull final EHTTPVersion eHttpVersion,
-                             @Nonnull final EHTTPMethod eHttpMethod,
+                             @Nonnull final EHttpVersion eHttpVersion,
+                             @Nonnull final EHttpMethod eHttpMethod,
                              @Nonnull final IRequestWebScope aRequestScope)
   {
     final ExtAsyncContext aExtAsyncCtx = ExtAsyncContext.create (aHttpRequest,
@@ -130,15 +130,15 @@ public final class AsyncXServletHandler implements IXServletHandler
     });
   }
 
-  public boolean isRunAsynchronously (@Nonnull final EHTTPMethod eHttpMethod)
+  public boolean isRunAsynchronously (@Nonnull final EHttpMethod eHttpMethod)
   {
     return m_aAsyncSpec.isAsynchronous () && m_aAsyncSpec.isAsyncHTTPMethod (eHttpMethod);
   }
 
   public void handle (@Nonnull final HttpServletRequest aHttpRequest,
                       @Nonnull final HttpServletResponse aHttpResponse,
-                      @Nonnull final EHTTPVersion eHttpVersion,
-                      @Nonnull final EHTTPMethod eHttpMethod,
+                      @Nonnull final EHttpVersion eHttpVersion,
+                      @Nonnull final EHttpMethod eHttpMethod,
                       @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
     if (isRunAsynchronously (eHttpMethod))

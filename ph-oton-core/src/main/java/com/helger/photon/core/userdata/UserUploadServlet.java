@@ -31,7 +31,7 @@ import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.StringHelper;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
@@ -65,7 +65,7 @@ public class UserUploadServlet extends AbstractUnifiedResponseServlet
 
   @Override
   @Nonnull
-  protected Set <EHTTPMethod> getAllowedHTTPMethods ()
+  protected Set <EHttpMethod> getAllowedHTTPMethods ()
   {
     return ALLOWED_METHDOS_POST;
   }

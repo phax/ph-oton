@@ -41,7 +41,7 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
 import com.helger.photon.core.app.html.AbstractHTMLProvider;
-import com.helger.photon.core.app.redirect.ForcedRedirectException;
+import com.helger.photon.xservlet.forcedredirect.ForcedRedirectException;
 
 /**
  * Abstract class for create layouts based on certain areas.

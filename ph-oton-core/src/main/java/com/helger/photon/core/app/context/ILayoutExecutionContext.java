@@ -28,8 +28,8 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.page.IPage;
-import com.helger.photon.core.app.redirect.ForcedRedirectException;
-import com.helger.photon.core.app.redirect.ForcedRedirectManager;
+import com.helger.photon.xservlet.forcedredirect.ForcedRedirectException;
+import com.helger.photon.xservlet.forcedredirect.ForcedRedirectManager;
 
 /**
  * Base interface for a current request context that also has "layout"

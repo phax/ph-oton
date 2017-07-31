@@ -29,7 +29,7 @@ import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.jscode.JSAssocArray;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 
 /**
  * Wrapper for Fine Uploader 5.x deleteFile part
@@ -40,12 +40,12 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
 {
   public static final boolean DEFAULT_DELETE_FILE_ENABLED = false;
   public static final ISimpleURL DEFAULT_DELETE_FILE_ENDPOINT = new SimpleURL ("/server/upload");
-  public static final EHTTPMethod DEFAULT_DELETE_FILE_METHOD = EHTTPMethod.DELETE;
+  public static final EHttpMethod DEFAULT_DELETE_FILE_METHOD = EHttpMethod.DELETE;
 
   private final ICommonsOrderedMap <String, String> m_aDeleteFileCustomHeaders = new CommonsLinkedHashMap <> ();
   private boolean m_bDeleteFileEnabled = DEFAULT_DELETE_FILE_ENABLED;
   private ISimpleURL m_aDeleteFileEndpoint = DEFAULT_DELETE_FILE_ENDPOINT;
-  private EHTTPMethod m_eDeleteFileMethod = DEFAULT_DELETE_FILE_METHOD;
+  private EHttpMethod m_eDeleteFileMethod = DEFAULT_DELETE_FILE_METHOD;
   private final ICommonsOrderedMap <String, String> m_aDeleteFileParams = new CommonsLinkedHashMap <> ();
 
   public FineUploader5DeleteFile ()
@@ -146,7 +146,7 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
   }
 
   @Nonnull
-  public EHTTPMethod getMethod ()
+  public EHttpMethod getMethod ()
   {
     return m_eDeleteFileMethod;
   }
@@ -159,7 +159,7 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
    * @return this for chaining
    */
   @Nonnull
-  public FineUploader5DeleteFile setMethod (@Nonnull final EHTTPMethod eMethod)
+  public FineUploader5DeleteFile setMethod (@Nonnull final EHttpMethod eMethod)
   {
     ValueEnforcer.notNull (eMethod, "Method");
     m_eDeleteFileMethod = eMethod;

@@ -29,7 +29,7 @@ import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.jscode.JSAssocArray;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 
 /**
  * Wrapper for Fine Uploader 5.x request part
@@ -42,7 +42,7 @@ public class FineUploader5Request implements IFineUploader5Part
   public static final String DEFAULT_REQUEST_FILENAME_PARAM = "qqfilename";
   public static final boolean DEFAULT_REQUEST_FORCE_MULTIPART = true;
   public static final String DEFAULT_REQUEST_INPUT_NAME = "qqfile";
-  public static final EHTTPMethod DEFAULT_REQUEST_METHOD = EHTTPMethod.POST;
+  public static final EHttpMethod DEFAULT_REQUEST_METHOD = EHttpMethod.POST;
   public static final boolean DEFAULT_REQUEST_PARAMS_IN_BODY = true;
   public static final String DEFAULT_REQUEST_UUID_NAME = "qquuid";
   public static final String DEFAULT_REQUEST_TOTAL_FILE_SIZE_NAME = "qqtotalfilesize";
@@ -52,7 +52,7 @@ public class FineUploader5Request implements IFineUploader5Part
   private String m_sRequestFilenameParam = DEFAULT_REQUEST_FILENAME_PARAM;
   private boolean m_bRequestForceMultipart = DEFAULT_REQUEST_FORCE_MULTIPART;
   private String m_sRequestInputName = DEFAULT_REQUEST_INPUT_NAME;
-  private EHTTPMethod m_eRequestMethod = DEFAULT_REQUEST_METHOD;
+  private EHttpMethod m_eRequestMethod = DEFAULT_REQUEST_METHOD;
   private final ICommonsOrderedMap <String, String> m_aRequestParams = new CommonsLinkedHashMap <> ();
   private boolean m_bRequestParamsInBody = DEFAULT_REQUEST_PARAMS_IN_BODY;
   private String m_sRequestUUIDName = DEFAULT_REQUEST_UUID_NAME;
@@ -202,7 +202,7 @@ public class FineUploader5Request implements IFineUploader5Part
   }
 
   @Nonnull
-  public EHTTPMethod getMethod ()
+  public EHttpMethod getMethod ()
   {
     return m_eRequestMethod;
   }
@@ -216,7 +216,7 @@ public class FineUploader5Request implements IFineUploader5Part
    * @return this
    */
   @Nonnull
-  public FineUploader5Request setMethod (@Nonnull final EHTTPMethod eMethod)
+  public FineUploader5Request setMethod (@Nonnull final EHttpMethod eMethod)
   {
     ValueEnforcer.notNull (eMethod, "Method");
     m_eRequestMethod = eMethod;

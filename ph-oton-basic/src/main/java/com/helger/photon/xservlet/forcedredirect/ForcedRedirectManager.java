@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.app.redirect;
+package com.helger.photon.xservlet.forcedredirect;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

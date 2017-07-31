@@ -22,6 +22,16 @@ import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.ResponseHelper;
 import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
 
+/**
+ * Handle special content related stuff that needs to be processed for every
+ * servlet. Currently handled are:
+ * <ul>
+ * <li>Request fallback charset</li>
+ * <li>Response fallback charset</li>
+ * </ul>
+ * 
+ * @author Philip Helger
+ */
 public class XServletAdvisorConsistency
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (XServletAdvisorConsistency.class);

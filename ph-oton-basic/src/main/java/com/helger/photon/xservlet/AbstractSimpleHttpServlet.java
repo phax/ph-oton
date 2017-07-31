@@ -30,8 +30,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EContinue;
-import com.helger.http.EHTTPMethod;
-import com.helger.http.EHTTPVersion;
+import com.helger.http.EHttpMethod;
+import com.helger.http.EHttpVersion;
 import com.helger.servlet.async.ServletAsyncSpec;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScope;
@@ -54,8 +54,8 @@ public abstract class AbstractSimpleHttpServlet extends AbstractXServlet
   public static interface ISimpleHandler
   {
     @Nonnull
-    default UnifiedResponse createUnifiedResponse (@Nonnull final EHTTPVersion eHttpVersion,
-                                                   @Nonnull final EHTTPMethod eHttpMethod,
+    default UnifiedResponse createUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
+                                                   @Nonnull final EHttpMethod eHttpMethod,
                                                    @Nonnull final HttpServletRequest aHttpRequest)
     {
       return new UnifiedResponse (eHttpVersion, eHttpMethod, aHttpRequest);
@@ -193,8 +193,8 @@ public abstract class AbstractSimpleHttpServlet extends AbstractXServlet
 
     public void handle (@Nonnull final HttpServletRequest aHttpRequest,
                         @Nonnull final HttpServletResponse aHttpResponse,
-                        @Nonnull final EHTTPVersion eHttpVersion,
-                        @Nonnull final EHTTPMethod eHttpMethod,
+                        @Nonnull final EHttpVersion eHttpVersion,
+                        @Nonnull final EHttpMethod eHttpMethod,
                         @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
     {
       final UnifiedResponse aUnifiedResponse = m_aSimpleHandler.createUnifiedResponse (eHttpVersion,
@@ -257,7 +257,7 @@ public abstract class AbstractSimpleHttpServlet extends AbstractXServlet
     }
   }
 
-  protected final void registerHandler (@Nonnull final EHTTPMethod eMethod,
+  protected final void registerHandler (@Nonnull final EHttpMethod eMethod,
                                         @Nonnull final ServletAsyncSpec aAsyncSpec,
                                         @Nonnull @Nonempty final String sApplicationID,
                                         @Nonnull final ISimpleHandler aSimpleHandler)

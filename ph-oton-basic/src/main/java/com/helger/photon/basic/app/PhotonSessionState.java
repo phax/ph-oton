@@ -34,6 +34,11 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
 /**
  * This class maintains ph-oton specific settings within a session.
+ * <ul>
+ * <li>The last used application ID</li>
+ * <li>The selected menu items per application ID</li>
+ * <li>The selected display locale per application ID</li>
+ * </ul>
  *
  * @author Philip Helger
  * @since 6.1.0
@@ -42,8 +47,8 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 public final class PhotonSessionState extends AbstractSessionWebSingleton
 {
   private String m_sLastApplicationID;
-  private final ICommonsMap <String, IMenuItemPage> m_aSelectedMenuItems = new CommonsHashMap<> ();
-  private final ICommonsMap <String, Locale> m_aSelectedLocales = new CommonsHashMap<> ();
+  private final ICommonsMap <String, IMenuItemPage> m_aSelectedMenuItems = new CommonsHashMap <> ();
+  private final ICommonsMap <String, Locale> m_aSelectedLocales = new CommonsHashMap <> ();
 
   @Deprecated
   @UsedViaReflection

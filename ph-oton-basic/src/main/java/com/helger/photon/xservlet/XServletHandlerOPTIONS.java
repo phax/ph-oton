@@ -25,10 +25,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.functional.ISupplier;
-import com.helger.commons.http.CHTTPHeader;
+import com.helger.commons.http.CHttpHeader;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.http.EHTTPMethod;
-import com.helger.http.EHTTPVersion;
+import com.helger.http.EHttpMethod;
+import com.helger.http.EHttpVersion;
 import com.helger.web.scope.IRequestWebScope;
 
 /**
@@ -57,12 +57,12 @@ public class XServletHandlerOPTIONS implements IXServletHandler
 
   public void handle (@Nonnull final HttpServletRequest aHttpRequest,
                       @Nonnull final HttpServletResponse aHttpResponse,
-                      @Nonnull final EHTTPVersion eHTTPVersion,
-                      @Nonnull final EHTTPMethod eHTTPMethod,
+                      @Nonnull final EHttpVersion eHTTPVersion,
+                      @Nonnull final EHttpMethod eHTTPMethod,
                       @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
     // Build Allow response header - that's it
-    aHttpResponse.setHeader (CHTTPHeader.ALLOW, m_aAllowProvider.get ());
+    aHttpResponse.setHeader (CHttpHeader.ALLOW, m_aAllowProvider.get ());
   }
 
   @Override

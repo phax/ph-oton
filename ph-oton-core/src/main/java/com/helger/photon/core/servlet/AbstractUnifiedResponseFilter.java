@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.state.EContinue;
-import com.helger.http.EHTTPMethod;
-import com.helger.http.EHTTPVersion;
+import com.helger.http.EHttpMethod;
+import com.helger.http.EHttpVersion;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScope;
@@ -73,7 +73,7 @@ public abstract class AbstractUnifiedResponseFilter extends AbstractScopeAwareFi
                                                                                          ServletException
   {
     // Check HTTP version
-    final EHTTPVersion eHTTPVersion = RequestHelper.getHttpVersion (aHttpRequest);
+    final EHttpVersion eHTTPVersion = RequestHelper.getHttpVersion (aHttpRequest);
     if (eHTTPVersion == null)
     {
       aHttpResponse.sendError (HttpServletResponse.SC_HTTP_VERSION_NOT_SUPPORTED);
@@ -81,10 +81,10 @@ public abstract class AbstractUnifiedResponseFilter extends AbstractScopeAwareFi
     }
 
     // Check HTTP Method
-    final EHTTPMethod eHTTPMethod = RequestHelper.getHttpMethod (aHttpRequest);
+    final EHttpMethod eHTTPMethod = RequestHelper.getHttpMethod (aHttpRequest);
     if (eHTTPMethod == null)
     {
-      if (eHTTPVersion == EHTTPVersion.HTTP_11)
+      if (eHTTPVersion == EHttpVersion.HTTP_11)
         aHttpResponse.sendError (HttpServletResponse.SC_METHOD_NOT_ALLOWED);
       else
         aHttpResponse.sendError (HttpServletResponse.SC_BAD_REQUEST);

@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.functional.ISupplier;
-import com.helger.http.EHTTPMethod;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
 
 /**
@@ -42,7 +42,7 @@ public interface IAPIDescriptor
    * @return The HTTP method required to call this API.
    */
   @Nonnull
-  default EHTTPMethod getHTTPMethod ()
+  default EHttpMethod getHTTPMethod ()
   {
     return getAPIPath ().getHTTPMethod ();
   }
