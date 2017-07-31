@@ -287,10 +287,10 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                                       @Nullable final File aFile)
   {
     // Custom exception handler for reading
-    if (getExceptionHandlersRead ().isNotEmpty ())
+    if (exceptionHandlersRead ().isNotEmpty ())
     {
       final IReadableResource aRes = aFile == null ? null : new FileSystemResource (aFile);
-      getExceptionHandlersRead ().forEach (aCB -> aCB.onDAOReadException (t, bIsInitialization, aRes));
+      exceptionHandlersRead ().forEach (aCB -> aCB.onDAOReadException (t, bIsInitialization, aRes));
     }
   }
 
@@ -696,11 +696,11 @@ public abstract class AbstractWALDAO <DATATYPE extends Serializable> extends Abs
                                                        @Nullable final IMicroDocument aDoc)
   {
     // Check if a custom exception handler is present
-    if (getExceptionHandlersWrite ().isNotEmpty ())
+    if (exceptionHandlersWrite ().isNotEmpty ())
     {
       final IReadableResource aRes = new FileSystemResource (sErrorFilename);
       final String sXMLContent = aDoc == null ? "no XML document created" : MicroWriter.getNodeAsString (aDoc);
-      getExceptionHandlersWrite ().forEach (aCB -> aCB.onDAOWriteException (t, aRes, sXMLContent));
+      exceptionHandlersWrite ().forEach (aCB -> aCB.onDAOWriteException (t, aRes, sXMLContent));
     }
   }
 

@@ -152,13 +152,13 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
                                               new DTCol (EText.MSG_CALLBACK.getDisplayText (aDisplayLocale))).setID (getID () +
                                                                                                                      sAppScopeID +
                                                                                                                      "-api-cb");
-          for (final IAPIExceptionCallback aCB : APISettings.getExceptionCallbacks ().getAllCallbacks ())
+          for (final IAPIExceptionCallback aCB : APISettings.exceptionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("Exception", aCB.toString ());
-          for (final IAPIBeforeExecutionCallback aCB : APISettings.getBeforeExecutionCallbacks ().getAllCallbacks ())
+          for (final IAPIBeforeExecutionCallback aCB : APISettings.beforeExecutionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("BeforeExecution", aCB.toString ());
-          for (final IAPIAfterExecutionCallback aCB : APISettings.getAfterExecutionCallbacks ().getAllCallbacks ())
+          for (final IAPIAfterExecutionCallback aCB : APISettings.afterExecutionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("AfterExecution", aCB.toString ());
-          for (final IAPILongRunningExecutionCallback aCB : APISettings.getLongRunningExecutionCallbacks ()
+          for (final IAPILongRunningExecutionCallback aCB : APISettings.longRunningExecutionCallbacks ()
                                                                        .getAllCallbacks ())
             aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
           aTab.addChild (aTable);

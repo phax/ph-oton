@@ -52,8 +52,8 @@ public final class APISettings
   static
   {
     // Register default handler
-    getExceptionCallbacks ().add (new LoggingAPIExceptionCallback ());
-    getLongRunningExecutionCallbacks ().add (new LoggingAPILongRunningExecutionCallback ());
+    exceptionCallbacks ().add (new LoggingAPIExceptionCallback ());
+    longRunningExecutionCallbacks ().add (new LoggingAPILongRunningExecutionCallback ());
   }
 
   private APISettings ()
@@ -61,21 +61,21 @@ public final class APISettings
 
   @Nonnull
   @ReturnsMutableObject ("design")
-  public static CallbackList <IAPIExceptionCallback> getExceptionCallbacks ()
+  public static CallbackList <IAPIExceptionCallback> exceptionCallbacks ()
   {
     return s_aExceptionCallbacks;
   }
 
   @Nonnull
   @ReturnsMutableObject ("design")
-  public static CallbackList <IAPIBeforeExecutionCallback> getBeforeExecutionCallbacks ()
+  public static CallbackList <IAPIBeforeExecutionCallback> beforeExecutionCallbacks ()
   {
     return s_aBeforeExecutionCallbacks;
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public static CallbackList <IAPIAfterExecutionCallback> getAfterExecutionCallbacks ()
+  @ReturnsMutableObject
+  public static CallbackList <IAPIAfterExecutionCallback> afterExecutionCallbacks ()
   {
     return s_aAfterExecutionCallbacks;
   }
@@ -98,8 +98,8 @@ public final class APISettings
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public static CallbackList <IAPILongRunningExecutionCallback> getLongRunningExecutionCallbacks ()
+  @ReturnsMutableObject
+  public static CallbackList <IAPILongRunningExecutionCallback> longRunningExecutionCallbacks ()
   {
     return s_aLongRunningExecutionCallbacks;
   }

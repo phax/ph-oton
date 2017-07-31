@@ -106,13 +106,13 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
       s_aStatsGlobalInvoke.increment ();
 
       // Invoke before handler
-      APISettings.getBeforeExecutionCallbacks ()
+      APISettings.beforeExecutionCallbacks ()
                  .forEach (aCB -> aCB.onBeforeExecution (this, aInvokableDescriptor, aRequestScope));
 
       aInvokableDescriptor.invokeAPI (aRequestScope, aUnifiedResponse);
 
       // Invoke after handler
-      APISettings.getAfterExecutionCallbacks ()
+      APISettings.afterExecutionCallbacks ()
                  .forEach (aCB -> aCB.onAfterExecution (this, aInvokableDescriptor, aRequestScope));
 
       // Increment statistics after successful call
@@ -125,7 +125,7 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
       if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
       {
         // Long running execution
-        APISettings.getLongRunningExecutionCallbacks ()
+        APISettings.longRunningExecutionCallbacks ()
                    .forEach (aCB -> aCB.onLongRunningExecution (this,
                                                                 aInvokableDescriptor,
                                                                 aRequestScope,
@@ -134,7 +134,7 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
     }
     catch (final Throwable t)
     {
-      APISettings.getExceptionCallbacks ()
+      APISettings.exceptionCallbacks ()
                  .forEach (aCB -> aCB.onAPIExecutionException (this, aInvokableDescriptor, aRequestScope, t));
 
       // Re-throw

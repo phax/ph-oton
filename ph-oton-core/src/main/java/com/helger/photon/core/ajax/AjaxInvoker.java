@@ -135,7 +135,7 @@ public class AjaxInvoker implements IAjaxInvoker
       s_aStatsGlobalInvoke.increment ();
 
       // Invoke before handler
-      AjaxSettings.getBeforeExecutionCallbacks ()
+      AjaxSettings.beforeExecutionCallbacks ()
                   .forEach (aCB -> aCB.onBeforeExecution (this, sFunctionName, aRequestScope, aAjaxExecutor));
 
       // Register all external resources, prior to handling the main request, as
@@ -155,7 +155,7 @@ public class AjaxInvoker implements IAjaxInvoker
       }
 
       // Invoke after handler
-      AjaxSettings.getAfterExecutionCallbacks ()
+      AjaxSettings.afterExecutionCallbacks ()
                   .forEach (aCB -> aCB.onAfterExecution (this,
                                                          sFunctionName,
                                                          aRequestScope,
@@ -172,7 +172,7 @@ public class AjaxInvoker implements IAjaxInvoker
       if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
       {
         // Long running execution
-        AjaxSettings.getLongRunningExecutionCallbacks ().forEach (aCB -> aCB.onLongRunningExecution (this,
+        AjaxSettings.longRunningExecutionCallbacks ().forEach (aCB -> aCB.onLongRunningExecution (this,
                                                                                                      sFunctionName,
                                                                                                      aRequestScope,
                                                                                                      aAjaxExecutor,
@@ -182,7 +182,7 @@ public class AjaxInvoker implements IAjaxInvoker
     }
     catch (final Throwable t)
     {
-      AjaxSettings.getExceptionCallbacks ()
+      AjaxSettings.exceptionCallbacks ()
                   .forEach (aCB -> aCB.onAjaxExecutionException (this, sFunctionName, aAjaxExecutor, aRequestScope, t));
 
       // Re-throw

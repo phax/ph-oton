@@ -52,8 +52,8 @@ public final class AjaxSettings
   static
   {
     // Register default handler
-    getExceptionCallbacks ().add (new LoggingAjaxExceptionCallback ());
-    getLongRunningExecutionCallbacks ().add (new LoggingAjaxLongRunningExecutionCallback ());
+    exceptionCallbacks ().add (new LoggingAjaxExceptionCallback ());
+    longRunningExecutionCallbacks ().add (new LoggingAjaxLongRunningExecutionCallback ());
   }
 
   private AjaxSettings ()
@@ -61,21 +61,21 @@ public final class AjaxSettings
 
   @Nonnull
   @ReturnsMutableObject ("design")
-  public static CallbackList <IAjaxExceptionCallback> getExceptionCallbacks ()
+  public static CallbackList <IAjaxExceptionCallback> exceptionCallbacks ()
   {
     return s_aExceptionCallbacks;
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public static CallbackList <IAjaxBeforeExecutionCallback> getBeforeExecutionCallbacks ()
+  @ReturnsMutableObject
+  public static CallbackList <IAjaxBeforeExecutionCallback> beforeExecutionCallbacks ()
   {
     return s_aBeforeExecutionCallbacks;
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public static CallbackList <IAjaxAfterExecutionCallback> getAfterExecutionCallbacks ()
+  @ReturnsMutableObject
+  public static CallbackList <IAjaxAfterExecutionCallback> afterExecutionCallbacks ()
   {
     return s_aAfterExecutionCallbacks;
   }
@@ -98,8 +98,8 @@ public final class AjaxSettings
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public static CallbackList <IAjaxLongRunningExecutionCallback> getLongRunningExecutionCallbacks ()
+  @ReturnsMutableObject
+  public static CallbackList <IAjaxLongRunningExecutionCallback> longRunningExecutionCallbacks ()
   {
     return s_aLongRunningExecutionCallbacks;
   }

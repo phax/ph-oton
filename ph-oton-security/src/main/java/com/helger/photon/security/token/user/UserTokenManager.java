@@ -54,8 +54,8 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
    * @return The user token callback list. Never <code>null</code>.
    */
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public CallbackList <IUserTokenModificationCallback> getUserTokenModificationCallbacks ()
+  @ReturnsMutableObject
+  public CallbackList <IUserTokenModificationCallback> userTokenModificationCallbacks ()
   {
     return m_aCallbacks;
   }

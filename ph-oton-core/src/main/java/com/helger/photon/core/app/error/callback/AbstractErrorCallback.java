@@ -206,11 +206,11 @@ public abstract class AbstractErrorCallback implements
    */
   public static void installToPhoton (@Nonnull final AbstractErrorCallback aCallback)
   {
-    AjaxSettings.getExceptionCallbacks ().add (aCallback);
-    APISettings.getExceptionCallbacks ().add (aCallback);
-    AbstractDAO.getExceptionHandlersRead ().add (aCallback);
-    AbstractDAO.getExceptionHandlersWrite ().add (aCallback);
-    AbstractJob.getExceptionCallbacks ().add (aCallback);
+    AjaxSettings.exceptionCallbacks ().add (aCallback);
+    APISettings.exceptionCallbacks ().add (aCallback);
+    AbstractDAO.exceptionHandlersRead ().add (aCallback);
+    AbstractDAO.exceptionHandlersWrite ().add (aCallback);
+    AbstractJob.exceptionCallbacks ().add (aCallback);
     RequestTracker.longRunningRequestCallbacks ().add (aCallback);
     RequestTracker.parallelRunningRequestCallbacks ().add (aCallback);
   }

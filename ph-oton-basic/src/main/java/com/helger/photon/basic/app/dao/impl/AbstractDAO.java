@@ -71,14 +71,14 @@ public abstract class AbstractDAO implements IDAO
 
   @Nonnull
   @ReturnsMutableObject ("design")
-  public static final CallbackList <IDAOReadExceptionCallback> getExceptionHandlersRead ()
+  public static final CallbackList <IDAOReadExceptionCallback> exceptionHandlersRead ()
   {
     return s_aExceptionHandlersRead;
   }
 
   @Nonnull
   @ReturnsMutableObject ("design")
-  public static final CallbackList <IDAOWriteExceptionCallback> getExceptionHandlersWrite ()
+  public static final CallbackList <IDAOWriteExceptionCallback> exceptionHandlersWrite ()
   {
     return s_aExceptionHandlersWrite;
   }

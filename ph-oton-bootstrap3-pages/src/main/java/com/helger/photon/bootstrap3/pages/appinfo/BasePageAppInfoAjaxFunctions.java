@@ -159,13 +159,13 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
                                               new DTCol (EText.MSG_CALLBACK.getDisplayText (aDisplayLocale))).setID (getID () +
                                                                                                                      sAppScopeID +
                                                                                                                      "-ajax-cb");
-          for (final IAjaxExceptionCallback aCB : AjaxSettings.getExceptionCallbacks ().getAllCallbacks ())
+          for (final IAjaxExceptionCallback aCB : AjaxSettings.exceptionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("Exception", aCB.toString ());
-          for (final IAjaxBeforeExecutionCallback aCB : AjaxSettings.getBeforeExecutionCallbacks ().getAllCallbacks ())
+          for (final IAjaxBeforeExecutionCallback aCB : AjaxSettings.beforeExecutionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("BeforeExecution", aCB.toString ());
-          for (final IAjaxAfterExecutionCallback aCB : AjaxSettings.getAfterExecutionCallbacks ().getAllCallbacks ())
+          for (final IAjaxAfterExecutionCallback aCB : AjaxSettings.afterExecutionCallbacks ().getAllCallbacks ())
             aTable.addBodyRow ().addCells ("AfterExecution", aCB.toString ());
-          for (final IAjaxLongRunningExecutionCallback aCB : AjaxSettings.getLongRunningExecutionCallbacks ()
+          for (final IAjaxLongRunningExecutionCallback aCB : AjaxSettings.longRunningExecutionCallbacks ()
                                                                          .getAllCallbacks ())
             aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
           aTab.addChild (aTable);

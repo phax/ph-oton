@@ -117,7 +117,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
    */
   @Nonnull
   @ReturnsMutableObject ("design")
-  public CallbackList <IUserModificationCallback> getUserModificationCallbacks ()
+  public CallbackList <IUserModificationCallback> userModificationCallbacks ()
   {
     return m_aCallbacks;
   }

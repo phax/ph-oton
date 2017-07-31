@@ -213,7 +213,7 @@ public abstract class AbstractMapBasedWALDAO <INTERFACETYPE extends IHasID <Stri
 
   @Nonnull
   @ReturnsMutableObject ("design")
-  public CallbackList <IDAOChangeCallback <INTERFACETYPE>> getCallbacks ()
+  public CallbackList <IDAOChangeCallback <INTERFACETYPE>> callbacks ()
   {
     return m_aCallbacks;
   }

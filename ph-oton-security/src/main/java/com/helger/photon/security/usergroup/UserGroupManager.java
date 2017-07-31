@@ -122,8 +122,8 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
    * @return The user group callback list. Never <code>null</code>.
    */
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public CallbackList <IUserGroupModificationCallback> getUserGroupModificationCallbacks ()
+  @ReturnsMutableObject
+  public CallbackList <IUserGroupModificationCallback> userGroupModificationCallbacks ()
   {
     return m_aCallbacks;
   }

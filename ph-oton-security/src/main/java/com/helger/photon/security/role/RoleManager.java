@@ -76,7 +76,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
    */
   @Nonnull
   @ReturnsMutableObject ("design")
-  public CallbackList <IRoleModificationCallback> getRoleModificationCallbacks ()
+  public CallbackList <IRoleModificationCallback> roleModificationCallbacks ()
   {
     return m_aCallbacks;
   }
