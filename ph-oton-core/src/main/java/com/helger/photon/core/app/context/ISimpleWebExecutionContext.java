@@ -40,6 +40,9 @@ public interface ISimpleWebExecutionContext
   @Nonnull
   IRequestWebScopeWithoutResponse getRequestScope ();
 
+  /**
+   * @return The container with all request parameters. Never <code>null</code>.
+   */
   @Nonnull
   default IRequestParamContainer params ()
   {
