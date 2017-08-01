@@ -159,7 +159,7 @@ public final class HCSettings
   @Nonnull
   public static Charset getHTMLCharset ()
   {
-    return getConversionSettings ().getXMLWriterSettings ().getCharsetObj ();
+    return getConversionSettings ().getXMLWriterSettings ().getCharset ();
   }
 
   /**

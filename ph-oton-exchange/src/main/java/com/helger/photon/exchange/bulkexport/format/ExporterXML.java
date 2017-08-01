@@ -72,7 +72,7 @@ public class ExporterXML implements IExporterFile
   @Nonnull
   public Charset getCharset ()
   {
-    return m_aXWS.getCharsetObj ();
+    return m_aXWS.getCharset ();
   }
 
   @Nonnull

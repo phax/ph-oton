@@ -19,6 +19,7 @@ package com.helger.photon.uicore.page.external;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.xml.XMLConstants;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -31,7 +32,6 @@ import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLVersion;
 import com.helger.servlet.ServletContextPathHolder;
-import com.helger.xml.CXML;
 import com.helger.xml.microdom.IMicroComment;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
@@ -233,7 +233,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
         aElement.setNamespaceURI (m_sNamespaceURI);
 
         // Remove attribute xml:space
-        aElement.removeAttribute (CXML.XML_NS_XML, "space");
+        aElement.removeAttribute (XMLConstants.XML_NS_URI, "space");
 
         // Remove unnecessary attributes
         final String sRowSpan = aElement.getAttributeValue (CHTMLAttributes.ROWSPAN);

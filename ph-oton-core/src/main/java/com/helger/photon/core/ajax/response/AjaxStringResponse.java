@@ -135,7 +135,7 @@ public class AjaxStringResponse extends AbstractAjaxResponse
   {
     return new AjaxStringResponse (bSuccess,
                                    aNode == null ? null : MicroWriter.getNodeAsString (aNode, aSettings),
-                                   aSettings.getCharsetObj (),
+                                   aSettings.getCharset (),
                                    CMimeType.APPLICATION_XML);
   }
 
@@ -152,7 +152,7 @@ public class AjaxStringResponse extends AbstractAjaxResponse
   {
     return new AjaxStringResponse (bSuccess,
                                    aNode == null ? null : XMLWriter.getNodeAsString (aNode, aSettings),
-                                   aSettings.getCharsetObj (),
+                                   aSettings.getCharset (),
                                    CMimeType.APPLICATION_XML);
   }
 

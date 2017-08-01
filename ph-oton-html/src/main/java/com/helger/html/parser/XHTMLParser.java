@@ -19,6 +19,7 @@ package com.helger.html.parser;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.xml.XMLConstants;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -27,7 +28,6 @@ import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.entity.HTMLEntityResolver;
-import com.helger.xml.CXML;
 import com.helger.xml.EXMLParserFeature;
 import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.IMicroDocument;
@@ -153,7 +153,11 @@ public class XHTMLParser
                                                                    EXMLIncorrectCharacterHandling.DEFAULT,
                                                                    m_eHTMLVersion.getDocType ()) +
                           "<html" +
-                          (sHTMLNamespaceURI != null ? ' ' + CXML.XML_ATTR_XMLNS + "=\"" + sHTMLNamespaceURI + '"'
+                          (sHTMLNamespaceURI != null ? ' ' +
+                                                       XMLConstants.XMLNS_ATTRIBUTE +
+                                                       "=\"" +
+                                                       sHTMLNamespaceURI +
+                                                       '"'
                                                      : "") +
                           "><head><title></title></head><body>" +
                           StringHelper.getNotNull (sXHTMLFragment) +
