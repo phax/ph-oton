@@ -18,14 +18,14 @@ package com.helger.photon.basic.object.accarea;
 
 import javax.annotation.Nullable;
 
-import com.helger.photon.basic.object.client.IHasClient;
+import com.helger.photon.basic.object.tenant.IHasTenant;
 
 /**
  * Base interface for objects that have an accounting area.
  *
  * @author Philip Helger
  */
-public interface IHasAccountingArea extends IHasClient, IHasAccountingAreaID
+public interface IHasAccountingArea extends IHasTenant, IHasAccountingAreaID
 {
   /**
    * @return The accounting area or <code>null</code>.

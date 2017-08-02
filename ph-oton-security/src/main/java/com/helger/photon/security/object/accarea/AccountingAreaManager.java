@@ -34,7 +34,7 @@ import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.object.accarea.IAccountingArea;
 import com.helger.photon.basic.object.accarea.IAccountingAreaResolver;
-import com.helger.photon.basic.object.client.IClient;
+import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.security.object.ObjectHelper;
 
 /**
@@ -51,7 +51,7 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
   }
 
   @Nonnull
-  public IAccountingArea createAccountingArea (@Nonnull final IClient aClient,
+  public IAccountingArea createAccountingArea (@Nonnull final ITenant aClient,
                                                @Nonnull @Nonempty final String sDisplayName,
                                                @Nullable final String sCompanyType,
                                                @Nullable final String sCompanyVATIN,
@@ -219,40 +219,40 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
   @ReturnsMutableCopy
   public ICommonsList <IAccountingArea> getAllAccountingAreasOfClient (@Nullable final String sClientID)
   {
-    return getAll (x -> x.hasSameClientID (sClientID));
+    return getAll (x -> x.hasSameTenantID (sClientID));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <IAccountingArea> getAllAccountingAreasOfClient (@Nullable final IClient aClient)
+  public ICommonsList <IAccountingArea> getAllAccountingAreasOfClient (@Nullable final ITenant aClient)
   {
-    return getAll (x -> x.hasSameClient (aClient));
+    return getAll (x -> x.hasSameTenant (aClient));
   }
 
   @Nonnegative
-  public int getCountAccountingAreasOfClient (@Nullable final IClient aClient)
+  public int getCountAccountingAreasOfClient (@Nullable final ITenant aClient)
   {
-    return getCount (x -> x.hasSameClient (aClient));
+    return getCount (x -> x.hasSameTenant (aClient));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllAccountingAreaIDsOfClient (@Nullable final String sClientID)
   {
-    return getAllMapped (x -> x.hasSameClientID (sClientID), IAccountingArea::getID);
+    return getAllMapped (x -> x.hasSameTenantID (sClientID), IAccountingArea::getID);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <String> getAllAccountingAreaIDsOfClient (@Nullable final IClient aClient)
+  public ICommonsList <String> getAllAccountingAreaIDsOfClient (@Nullable final ITenant aClient)
   {
-    return getAllMapped (x -> x.hasSameClient (aClient), IAccountingArea::getID);
+    return getAllMapped (x -> x.hasSameTenant (aClient), IAccountingArea::getID);
   }
 
   @Nonnegative
-  public int getCountAccountingAreaIDsOfClient (@Nullable final IClient aClient)
+  public int getCountAccountingAreaIDsOfClient (@Nullable final ITenant aClient)
   {
-    return getCount (x -> x.hasSameClient (aClient));
+    return getCount (x -> x.hasSameTenant (aClient));
   }
 
   @Nullable
@@ -263,22 +263,22 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
   }
 
   @Nullable
-  public IAccountingArea getAccountingAreaOfID (@Nullable final String sID, @Nullable final IClient aClient)
+  public IAccountingArea getAccountingAreaOfID (@Nullable final String sID, @Nullable final ITenant aClient)
   {
     final IAccountingArea aAccountingArea = getAccountingAreaOfID (sID);
-    return aAccountingArea != null && aAccountingArea.hasSameClient (aClient) ? aAccountingArea : null;
+    return aAccountingArea != null && aAccountingArea.hasSameTenant (aClient) ? aAccountingArea : null;
   }
 
-  public boolean containsAccountingAreaWithID (@Nullable final String sID, @Nullable final IClient aClient)
+  public boolean containsAccountingAreaWithID (@Nullable final String sID, @Nullable final ITenant aClient)
   {
     return getAccountingAreaOfID (sID, aClient) != null;
   }
 
   @Nullable
-  public IAccountingArea getAccountingAreaOfName (@Nullable final String sName, @Nullable final IClient aClient)
+  public IAccountingArea getAccountingAreaOfName (@Nullable final String sName, @Nullable final ITenant aClient)
   {
     if (StringHelper.hasNoText (sName) || aClient == null)
       return null;
-    return findFirst (a -> a.hasSameClient (aClient) && a.getDisplayName ().equals (sName));
+    return findFirst (a -> a.hasSameTenant (aClient) && a.getDisplayName ().equals (sName));
   }
 }

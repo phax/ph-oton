@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.client;
+package com.helger.photon.security.object.tenant;
 
 import java.util.Locale;
 
@@ -27,19 +27,18 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.basic.object.AbstractObject;
-import com.helger.photon.basic.object.client.CClient;
-import com.helger.photon.basic.object.client.IClient;
+import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.security.object.StubObject;
 
 /**
- * Default implementation of {@link IClient}
+ * Default implementation of {@link ITenant}
  *
  * @author Philip Helger
  */
 @NotThreadSafe
-public class Client extends AbstractObject implements IClient
+public class Tenant extends AbstractObject implements ITenant
 {
-  public static final ObjectType OT = new ObjectType ("client");
+  public static final ObjectType OT = new ObjectType ("tenant");
 
   private String m_sDisplayName;
 
@@ -51,12 +50,12 @@ public class Client extends AbstractObject implements IClient
    * @param sDisplayName
    *        display name
    */
-  public Client (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sDisplayName)
+  public Tenant (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sDisplayName)
   {
     this (StubObject.createForCurrentUserAndID (sID), sDisplayName);
   }
 
-  Client (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final String sDisplayName)
+  Tenant (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final String sDisplayName)
   {
     super (aStubObject);
     setDisplayName (sDisplayName);
@@ -66,11 +65,6 @@ public class Client extends AbstractObject implements IClient
   public ObjectType getObjectType ()
   {
     return OT;
-  }
-
-  public boolean isGlobalClient ()
-  {
-    return CClient.GLOBAL_CLIENT.equals (getID ());
   }
 
   @Nonnull
@@ -101,6 +95,6 @@ public class Client extends AbstractObject implements IClient
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("displayName", m_sDisplayName).getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("DisplayName", m_sDisplayName).getToString ();
   }
 }

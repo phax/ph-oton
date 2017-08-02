@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.client;
+package com.helger.photon.security.object.tenant;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -28,9 +28,9 @@ import com.helger.commons.state.EChange;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
-import com.helger.photon.basic.object.client.CClient;
-import com.helger.photon.basic.object.client.IClient;
-import com.helger.photon.basic.object.client.IClientResolver;
+import com.helger.photon.basic.object.tenant.CTenant;
+import com.helger.photon.basic.object.tenant.ITenant;
+import com.helger.photon.basic.object.tenant.ITenantResolver;
 import com.helger.photon.security.object.ObjectHelper;
 
 /**
@@ -38,33 +38,33 @@ import com.helger.photon.security.object.ObjectHelper;
  *
  * @author Philip Helger
  */
-public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> implements IClientResolver
+public class TenantManager extends AbstractMapBasedWALDAO <ITenant, Tenant> implements ITenantResolver
 {
-  public ClientManager (@Nonnull @Nonempty final String sFilename) throws DAOException
+  public TenantManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
-    super (Client.class, sFilename);
+    super (Tenant.class, sFilename);
   }
 
   @Override
   @Nonnull
   protected EChange onInit ()
   {
-    internalCreateItem (new Client (CClient.GLOBAL_CLIENT, CClient.GLOBAL_CLIENT_NAME));
+    internalCreateItem (new Tenant (CTenant.GLOBAL_TENANT_ID, CTenant.GLOBAL_CLIENT_NAME));
     return EChange.CHANGED;
   }
 
   @Nullable
-  public IClient createClient (@Nonnull @Nonempty final String sClientID, @Nonnull @Nonempty final String sDisplayName)
+  public ITenant createClient (@Nonnull @Nonempty final String sClientID, @Nonnull @Nonempty final String sDisplayName)
   {
     if (containsWithID (sClientID))
       return null;
 
-    final Client aClient = new Client (sClientID, sDisplayName);
+    final Tenant aClient = new Tenant (sClientID, sDisplayName);
 
     m_aRWLock.writeLocked ( () -> {
       internalCreateItem (aClient);
     });
-    AuditHelper.onAuditCreateSuccess (Client.OT, aClient.getID (), sDisplayName);
+    AuditHelper.onAuditCreateSuccess (Tenant.OT, aClient.getID (), sDisplayName);
 
     return aClient;
   }
@@ -72,10 +72,10 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
   @Nonnull
   public EChange updateClient (@Nonnull @Nonempty final String sClientID, @Nonnull @Nonempty final String sDisplayName)
   {
-    final Client aClient = getOfID (sClientID);
+    final Tenant aClient = getOfID (sClientID);
     if (aClient == null)
     {
-      AuditHelper.onAuditModifyFailure (Client.OT, sClientID, "no-such-id");
+      AuditHelper.onAuditModifyFailure (Tenant.OT, sClientID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -94,7 +94,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (Client.OT, "all", sClientID, sDisplayName);
+    AuditHelper.onAuditModifySuccess (Tenant.OT, "all", sClientID, sDisplayName);
 
     return EChange.CHANGED;
   }
@@ -102,10 +102,10 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
   @Nonnull
   public EChange deleteClient (@Nullable final String sClientID)
   {
-    final Client aDeletedClient = getOfID (sClientID);
+    final Tenant aDeletedClient = getOfID (sClientID);
     if (aDeletedClient == null)
     {
-      AuditHelper.onAuditDeleteFailure (Client.OT, "no-such-object-id", sClientID);
+      AuditHelper.onAuditDeleteFailure (Tenant.OT, "no-such-object-id", sClientID);
       return EChange.UNCHANGED;
     }
 
@@ -114,7 +114,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
     {
       if (ObjectHelper.setDeletionNow (aDeletedClient).isUnchanged ())
       {
-        AuditHelper.onAuditDeleteFailure (Client.OT, "already-deleted", sClientID);
+        AuditHelper.onAuditDeleteFailure (Tenant.OT, "already-deleted", sClientID);
         return EChange.UNCHANGED;
       }
       internalMarkItemDeleted (aDeletedClient);
@@ -123,7 +123,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditDeleteSuccess (Client.OT, sClientID);
+    AuditHelper.onAuditDeleteSuccess (Tenant.OT, sClientID);
 
     return EChange.CHANGED;
   }
@@ -146,7 +146,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <IClient> getAllClients ()
+  public ICommonsList <ITenant> getAllClients ()
   {
     return getAll ();
   }
@@ -159,7 +159,7 @@ public class ClientManager extends AbstractMapBasedWALDAO <IClient, Client> impl
   }
 
   @Nullable
-  public IClient getClientOfID (@Nullable final String sID)
+  public ITenant getClientOfID (@Nullable final String sID)
   {
     return getOfID (sID);
   }

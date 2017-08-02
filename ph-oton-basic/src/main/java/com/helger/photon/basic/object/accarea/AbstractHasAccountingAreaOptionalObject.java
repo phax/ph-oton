@@ -24,31 +24,31 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.object.client.AbstractHasClient;
-import com.helger.photon.basic.object.client.IClient;
+import com.helger.photon.basic.object.tenant.AbstractHasTenant;
+import com.helger.photon.basic.object.tenant.ITenant;
 
 @Immutable
-public abstract class AbstractHasAccountingAreaOptionalObject extends AbstractHasClient implements IHasAccountingArea
+public abstract class AbstractHasAccountingAreaOptionalObject extends AbstractHasTenant implements IHasAccountingArea
 {
   private final IAccountingArea m_aAccountingArea;
 
   protected AbstractHasAccountingAreaOptionalObject (@Nonnull final IAccountingAreaObject aOther)
   {
-    super (aOther.getClient ());
+    super (aOther.getTenant ());
     m_aAccountingArea = aOther.getAccountingArea ();
   }
 
   public AbstractHasAccountingAreaOptionalObject (@Nonnull final IAccountingArea aAccountingArea)
   {
-    this (aAccountingArea.getClient (), aAccountingArea);
+    this (aAccountingArea.getTenant (), aAccountingArea);
   }
 
-  public AbstractHasAccountingAreaOptionalObject (@Nonnull final IClient aClient,
+  public AbstractHasAccountingAreaOptionalObject (@Nonnull final ITenant aClient,
                                                   @Nullable final IAccountingArea aAccountingArea)
   {
     super (aClient);
     ValueEnforcer.notNull (aAccountingArea, "AccountingArea");
-    if (aAccountingArea != null && !aAccountingArea.hasSameClient (aClient))
+    if (aAccountingArea != null && !aAccountingArea.hasSameTenant (aClient))
       throw new IllegalArgumentException ("The passed accounting area '" +
                                           aAccountingArea.getID () +
                                           "' does not belong to the passed client '" +
@@ -73,14 +73,14 @@ public abstract class AbstractHasAccountingAreaOptionalObject extends AbstractHa
   public final boolean hasSameClientAndAccountingAreaID (@Nullable final IAccountingArea aAccountingArea)
   {
     return aAccountingArea != null &&
-           hasSameClientID (aAccountingArea) &&
+           hasSameTenantID (aAccountingArea) &&
            (m_aAccountingArea == null || m_aAccountingArea.getID ().equals (aAccountingArea.getID ()));
   }
 
   public final boolean hasSameClientAndAccountingAreaID (@Nullable final IAccountingAreaObject aAccountingAreaObject)
   {
     return aAccountingAreaObject != null &&
-           hasSameClientID (aAccountingAreaObject) &&
+           hasSameTenantID (aAccountingAreaObject) &&
            (m_aAccountingArea == null ||
             m_aAccountingArea.getID ().equals (aAccountingAreaObject.getAccountingAreaID ()));
   }

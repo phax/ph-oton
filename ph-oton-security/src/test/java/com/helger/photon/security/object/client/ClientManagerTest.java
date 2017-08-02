@@ -28,14 +28,15 @@ import org.junit.rules.TestRule;
 
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
-import com.helger.photon.basic.object.client.IClient;
+import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
+import com.helger.photon.security.object.tenant.TenantManager;
 
 /**
- * Test class for class {@link ClientManager}
+ * Test class for class {@link TenantManager}
  *
  * @author Philip Helger
  */
@@ -49,7 +50,7 @@ public final class ClientManagerTest
   {
     PhotonSecurityManager.getUserMgr ().createDefaults ();
 
-    final ClientManager aMgr = new ClientManager ("dummy-client.xml");
+    final TenantManager aMgr = new TenantManager ("dummy-client.xml");
 
     // Login required for deletion
     final LoggedInUserManager aLUM = LoggedInUserManager.getInstance ();
@@ -58,7 +59,7 @@ public final class ClientManagerTest
     try
     {
       final String sClientID = Long.toString (Clock.systemUTC ().millis ());
-      final IClient aClient = aMgr.createClient (sClientID, "Name1");
+      final ITenant aClient = aMgr.createClient (sClientID, "Name1");
       assertNotNull (aClient);
       try
       {

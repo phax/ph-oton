@@ -32,9 +32,9 @@ import com.helger.masterdata.address.Address;
 import com.helger.masterdata.address.IAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.object.accarea.IAccountingArea;
-import com.helger.photon.basic.object.client.IClient;
+import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.security.object.StubObject;
-import com.helger.photon.security.object.client.AbstractClientObject;
+import com.helger.photon.security.object.tenant.AbstractTenantObject;
 
 /**
  * Default implementation of {@link IAccountingArea}
@@ -42,7 +42,7 @@ import com.helger.photon.security.object.client.AbstractClientObject;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class AccountingArea extends AbstractClientObject implements IAccountingArea
+public class AccountingArea extends AbstractTenantObject implements IAccountingArea
 {
   public static final ObjectType OT = new ObjectType ("accountingarea");
 
@@ -97,7 +97,7 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
    * @param aDisplayLocale
    *        The display locale to use. May not be <code>null</code>.
    */
-  public AccountingArea (@Nonnull final IClient aClient,
+  public AccountingArea (@Nonnull final ITenant aClient,
                          @Nonnull @Nonempty final String sDisplayName,
                          @Nullable final String sCompanyType,
                          @Nullable final String sCompanyVATIN,
@@ -133,7 +133,7 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
           aDisplayLocale);
   }
 
-  AccountingArea (@Nonnull final IClient aClient,
+  AccountingArea (@Nonnull final ITenant aClient,
                   @Nonnull final StubObject aStubObject,
                   @Nonnull @Nonempty final String sDisplayName,
                   @Nullable final String sCompanyType,
@@ -400,7 +400,7 @@ public class AccountingArea extends AbstractClientObject implements IAccountingA
   @Nonempty
   public String getAsUIText (final Locale aDisplayLocale)
   {
-    return getClient ().getAsUIText (aDisplayLocale) + " - " + getDisplayName ();
+    return getTenant ().getAsUIText (aDisplayLocale) + " - " + getDisplayName ();
   }
 
   @Override

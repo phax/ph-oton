@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.client;
+package com.helger.photon.security.object.tenant;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,12 +24,12 @@ import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
-public final class ClientMicroTypeConverter extends AbstractObjectMicroTypeConverter <Client>
+public final class TenantMicroTypeConverter extends AbstractObjectMicroTypeConverter <Tenant>
 {
   private static final String ATTR_DISPLAYNAME = "displayname";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Client aValue,
+  public IMicroElement convertToMicroElement (@Nonnull final Tenant aValue,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull @Nonempty final String sTagName)
   {
@@ -40,9 +40,9 @@ public final class ClientMicroTypeConverter extends AbstractObjectMicroTypeConve
   }
 
   @Nonnull
-  public Client convertToNative (@Nonnull final IMicroElement aElement)
+  public Tenant convertToNative (@Nonnull final IMicroElement aElement)
   {
     final String sDisplayName = aElement.getAttributeValue (ATTR_DISPLAYNAME);
-    return new Client (getStubObject (aElement), sDisplayName);
+    return new Tenant (getStubObject (aElement), sDisplayName);
   }
 }

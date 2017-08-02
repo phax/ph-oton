@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.photon.security.object.accarea.AccountingArea;
 import com.helger.photon.security.object.accarea.AccountingAreaMicroTypeConverter;
-import com.helger.photon.security.object.client.Client;
+import com.helger.photon.security.object.tenant.Tenant;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistry;
 
@@ -38,7 +38,7 @@ public final class MicroTypeConverterRegistrar_ph_oton_security_Mock implements 
     try
     {
       aRegistry.registerMicroElementTypeConverter (AccountingArea.class,
-                                                   new AccountingAreaMicroTypeConverter (sID -> new Client (sID,
+                                                   new AccountingAreaMicroTypeConverter (sID -> new Tenant (sID,
                                                                                                             "Dummy-" +
                                                                                                                  sID)));
     }

@@ -29,8 +29,8 @@ import com.helger.masterdata.address.Address;
 import com.helger.masterdata.address.EAddressType;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
-import com.helger.photon.basic.object.client.IClient;
-import com.helger.photon.security.object.client.Client;
+import com.helger.photon.basic.object.tenant.ITenant;
+import com.helger.photon.security.object.tenant.Tenant;
 import com.helger.xml.mock.XMLTestHelper;
 
 /**
@@ -46,7 +46,7 @@ public final class AccountingAreaTest
   @Test
   public void testBasic ()
   {
-    final IClient aClient = new Client ("anyid", "Mock client");
+    final ITenant aClient = new Tenant ("anyid", "Mock client");
     final Address aAddress = new Address (EAddressType.PERSONAL,
                                           "AT",
                                           "Wien",
@@ -73,7 +73,7 @@ public final class AccountingAreaTest
                                                  "ABC",
                                                  "Wien2",
                                                  Locale.GERMANY);
-    assertSame (aClient, a.getClient ());
+    assertSame (aClient, a.getTenant ());
     assertEquals ("Accounting area 1", a.getDisplayName ());
     assertEquals ("GmbH", a.getCompanyType ());
     assertEquals ("ATU00000000", a.getCompanyVATIN ());

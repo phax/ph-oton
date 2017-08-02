@@ -16,14 +16,14 @@
  */
 package com.helger.photon.basic.object.accarea;
 
-import com.helger.photon.basic.object.client.IClientObject;
+import com.helger.photon.basic.object.tenant.ITenantObject;
 
 /**
  * Base interface for an object that is uniquely assigned to an accounting area.
  *
  * @author Philip Helger
  */
-public interface IAccountingAreaObject extends IClientObject, IHasAccountingArea
+public interface IAccountingAreaObject extends ITenantObject, IHasAccountingArea
 {
   /* empty */
 }

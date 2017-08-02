@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.client;
+package com.helger.photon.security.object.tenant;
 
 import java.time.LocalDateTime;
 
@@ -28,32 +28,32 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.object.AbstractBaseObject;
-import com.helger.photon.basic.object.client.IClient;
-import com.helger.photon.basic.object.client.IClientObject;
+import com.helger.photon.basic.object.tenant.ITenant;
+import com.helger.photon.basic.object.tenant.ITenantObject;
 import com.helger.photon.security.object.StubObject;
 
 @Immutable
-public abstract class AbstractClientObject extends AbstractBaseObject implements IClientObject
+public abstract class AbstractTenantObject extends AbstractBaseObject implements ITenantObject
 {
-  private final IClient m_aClient;
+  private final ITenant m_aTenant;
   // Status vars
   private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
-  protected AbstractClientObject (@Nonnull final IClientObject aBase)
+  protected AbstractTenantObject (@Nonnull final ITenantObject aBase)
   {
     super (aBase);
-    m_aClient = aBase.getClient ();
+    m_aTenant = aBase.getTenant ();
     // Recalculate hash code, if this implementation class is different from the
     // passed implementation class
   }
 
-  public AbstractClientObject (@Nonnull final IClient aClient, @Nonnull final StubObject aObject)
+  public AbstractTenantObject (@Nonnull final ITenant aClient, @Nonnull final StubObject aObject)
   {
     super (aObject);
-    m_aClient = ValueEnforcer.notNull (aClient, "Client");
+    m_aTenant = ValueEnforcer.notNull (aClient, "Client");
   }
 
-  public AbstractClientObject (@Nonnull final IClient aClient,
+  public AbstractTenantObject (@Nonnull final ITenant aClient,
                                @Nonnull @Nonempty final String sID,
                                @Nonnull final LocalDateTime aCreationDT,
                                @Nullable final String sCreationUserID,
@@ -69,13 +69,13 @@ public abstract class AbstractClientObject extends AbstractBaseObject implements
            sLastModificationUserID,
            aDeletionDT,
            sDeletionUserID);
-    m_aClient = ValueEnforcer.notNull (aClient, "Client");
+    m_aTenant = ValueEnforcer.notNull (aClient, "Client");
   }
 
   @Nonnull
-  public final IClient getClient ()
+  public final ITenant getTenant ()
   {
-    return m_aClient;
+    return m_aTenant;
   }
 
   @Override
@@ -85,8 +85,8 @@ public abstract class AbstractClientObject extends AbstractBaseObject implements
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final AbstractClientObject rhs = (AbstractClientObject) o;
-    return m_aClient.equals (rhs.m_aClient) && getID ().equals (rhs.getID ());
+    final AbstractTenantObject rhs = (AbstractTenantObject) o;
+    return m_aTenant.equals (rhs.m_aTenant) && getID ().equals (rhs.getID ());
   }
 
   @Override
@@ -94,13 +94,13 @@ public abstract class AbstractClientObject extends AbstractBaseObject implements
   {
     int ret = m_nHashCode;
     if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
-      ret = m_nHashCode = new HashCodeGenerator (this).append (m_aClient).append (getID ()).getHashCode ();
+      ret = m_nHashCode = new HashCodeGenerator (this).append (m_aTenant).append (getID ()).getHashCode ();
     return ret;
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("client", m_aClient).getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("Tenant", m_aTenant).getToString ();
   }
 }

@@ -14,35 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.object.client;
+package com.helger.photon.basic.object.tenant;
 
-import javax.annotation.Nullable;
-
-import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.name.IHasDisplayName;
+import com.helger.photon.basic.object.IObject;
+import com.helger.photon.basic.uitext.IHasUIText;
 
 /**
- * Base interface for objects that have a client ID.
+ * Represents a single client (Mandant)
  *
  * @author Philip Helger
  */
-public interface IHasClientID
+public interface ITenant extends IObject, IHasDisplayName, IHasUIText
 {
   /**
-   * @return The client ID or <code>null</code>.
+   * @return <code>true</code> if this is the system global client
    */
-  @Nullable
-  String getClientID ();
-
-  /**
-   * Check if the passed client ID has the same ID as this object
-   *
-   * @param sClientID
-   *        The client ID to check. May be <code>null</code>.
-   * @return <code>true</code> if this object and the passed object have the
-   *         same client ID
-   */
-  default boolean hasSameClientID (@Nullable final String sClientID)
+  default boolean isGlobalClient ()
   {
-    return EqualsHelper.equals (getClientID (), sClientID);
+    return CTenant.GLOBAL_TENANT_ID.equals (getID ());
   }
 }

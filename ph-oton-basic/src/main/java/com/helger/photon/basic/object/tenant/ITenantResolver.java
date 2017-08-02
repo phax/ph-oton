@@ -14,27 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.object.client;
+package com.helger.photon.basic.object.tenant;
 
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.photon.basic.object.IObject;
+import javax.annotation.Nullable;
 
 /**
- * Constants for {@link IObject} etc.
+ * Resolver for {@link ITenant} objects.
  *
  * @author Philip Helger
  */
-@Immutable
-public final class CClient
+public interface ITenantResolver
 {
-  public static final String GLOBAL_CLIENT = "$";
-  public static final String GLOBAL_CLIENT_NAME = "$system client$";
-
-  @PresentForCodeCoverage
-  private static final CClient s_aInstance = new CClient ();
-
-  private CClient ()
-  {}
+  /**
+   * Get the client of the specified ID.
+   *
+   * @param sID
+   *        The ID to be resolved. May be <code>null</code>.
+   * @return <code>null</code> if no such client exists.
+   */
+  @Nullable
+  ITenant getClientOfID (@Nullable String sID);
 }

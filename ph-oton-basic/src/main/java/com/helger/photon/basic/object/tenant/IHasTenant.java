@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.object.client;
+package com.helger.photon.basic.object.tenant;
 
 import javax.annotation.Nullable;
 
@@ -25,32 +25,32 @@ import com.helger.commons.equals.EqualsHelper;
  *
  * @author Philip Helger
  */
-public interface IHasClient extends IHasClientID
+public interface IHasTenant extends IHasTenantID
 {
   /**
    * @return The client or <code>null</code>.
    */
   @Nullable
-  IClient getClient ();
+  ITenant getTenant ();
 
   @Nullable
-  default String getClientID ()
+  default String getTenantID ()
   {
-    final IClient aClient = getClient ();
-    return aClient == null ? null : aClient.getID ();
+    final ITenant aTenant = getTenant ();
+    return aTenant == null ? null : aTenant.getID ();
   }
 
   /**
    * Check if the passed object has the same client ID as this object
    *
-   * @param aClientObject
+   * @param aObj
    *        The object to check. May be <code>null</code>.
    * @return <code>true</code> if this object and the passed object (if not
    *         <code>null</code>) have the same client ID
    */
-  default boolean hasSameClientID (@Nullable final IClientObject aClientObject)
+  default boolean hasSameTenantID (@Nullable final ITenantObject aObj)
   {
-    return aClientObject != null && hasSameClientID (aClientObject.getClientID ());
+    return aObj != null && hasSameTenantID (aObj.getTenantID ());
   }
 
   /**
@@ -61,8 +61,8 @@ public interface IHasClient extends IHasClientID
    * @return <code>true</code> if this object and the passed object have the
    *         same client.
    */
-  default boolean hasSameClient (@Nullable final IClient aClient)
+  default boolean hasSameTenant (@Nullable final ITenant aClient)
   {
-    return EqualsHelper.equals (getClient (), aClient);
+    return EqualsHelper.equals (getTenant (), aClient);
   }
 }

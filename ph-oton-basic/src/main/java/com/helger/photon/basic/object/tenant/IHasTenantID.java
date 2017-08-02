@@ -14,36 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.object.client;
+package com.helger.photon.basic.object.tenant;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.basic.object.IObject;
+import com.helger.commons.equals.EqualsHelper;
 
 /**
- * Base interface for an object that is uniquely assigned to a client.
+ * Base interface for objects that have a client ID.
  *
  * @author Philip Helger
  */
-public interface IClientObject extends IObject, IHasClient
+public interface IHasTenantID
 {
   /**
-   * @return The client to which the object is assigned to. May not be
-   *         <code>null</code>.
+   * @return The client ID or <code>null</code>.
    */
-  @Nonnull
-  IClient getClient ();
+  @Nullable
+  String getTenantID ();
 
   /**
-   * @return The client ID to which the object is assigned to. May neither be
-   *         <code>null</code> nor empty.
-   * @see #getClient()
+   * Check if the passed tenant ID has the same ID as this object
+   *
+   * @param sTenantID
+   *        The client ID to check. May be <code>null</code>.
+   * @return <code>true</code> if this object and the passed object have the
+   *         same client ID
    */
-  @Nonnull
-  @Nonempty
-  default String getClientID ()
+  default boolean hasSameTenantID (@Nullable final String sTenantID)
   {
-    return getClient ().getID ();
+    return EqualsHelper.equals (getTenantID (), sTenantID);
   }
 }

@@ -14,24 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.object.client;
+package com.helger.photon.basic.object.tenant;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+import com.helger.commons.annotation.Nonempty;
+import com.helger.photon.basic.object.IObject;
 
 /**
- * Resolver for {@link IClient} objects.
+ * Base interface for an object that is uniquely assigned to a client.
  *
  * @author Philip Helger
  */
-public interface IClientResolver
+public interface ITenantObject extends IObject, IHasTenant
 {
   /**
-   * Get the client of the specified ID.
-   *
-   * @param sID
-   *        The ID to be resolved. May be <code>null</code>.
-   * @return <code>null</code> if no such client exists.
+   * @return The client to which the object is assigned to. May not be
+   *         <code>null</code>.
    */
-  @Nullable
-  IClient getClientOfID (@Nullable String sID);
+  @Nonnull
+  ITenant getTenant ();
+
+  /**
+   * @return The client ID to which the object is assigned to. May neither be
+   *         <code>null</code> nor empty.
+   * @see #getTenant()
+   */
+  @Nonnull
+  @Nonempty
+  default String getTenantID ()
+  {
+    return getTenant ().getID ();
+  }
 }

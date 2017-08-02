@@ -27,6 +27,9 @@ Contained subprojects are:
   * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
 
 Release history:
+  * v8.0.0 - work in progress
+    * Updated to ph-commons 9.0.0
+    * Renamed 'Client' to 'Tenant'
   * v7.1.2 - 2017-07-19
     * Fixed an error with path handling of resource bundles when deployed as JAR
   * v7.1.1 - 2017-07-18

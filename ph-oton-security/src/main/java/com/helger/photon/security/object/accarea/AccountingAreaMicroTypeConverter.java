@@ -25,8 +25,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.system.SystemHelper;
 import com.helger.masterdata.address.Address;
 import com.helger.masterdata.currency.ECurrency;
-import com.helger.photon.basic.object.client.IClient;
-import com.helger.photon.basic.object.client.IClientResolver;
+import com.helger.photon.basic.object.tenant.ITenant;
+import com.helger.photon.basic.object.tenant.ITenantResolver;
 import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
@@ -50,9 +50,9 @@ public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroT
   private static final String ATTR_COMMERCIAL_REGISTRATION_NUMBER = "commregno";
   private static final String ATTR_COMMERCIAL_COURT = "commcourt";
 
-  private final IClientResolver m_aClientResolver;
+  private final ITenantResolver m_aClientResolver;
 
-  public AccountingAreaMicroTypeConverter (@Nonnull final IClientResolver aClientResolver)
+  public AccountingAreaMicroTypeConverter (@Nonnull final ITenantResolver aClientResolver)
   {
     m_aClientResolver = aClientResolver;
   }
@@ -63,7 +63,7 @@ public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroT
                                               @Nonnull @Nonempty final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
-    aElement.setAttribute (ATTR_CLIENTID, aValue.getClientID ());
+    aElement.setAttribute (ATTR_CLIENTID, aValue.getTenantID ());
     setObjectFields (aValue, aElement);
     aElement.setAttribute (ATTR_DISPLAYNAME, aValue.getDisplayName ());
     aElement.setAttribute (ATTR_COMPANY_TYPE, aValue.getCompanyType ());
@@ -89,7 +89,7 @@ public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroT
   {
     final Locale aLocale = SystemHelper.getSystemLocale ();
     final String sClientID = aElement.getAttributeValue (ATTR_CLIENTID);
-    final IClient aClient = m_aClientResolver.getClientOfID (sClientID);
+    final ITenant aClient = m_aClientResolver.getClientOfID (sClientID);
     if (aClient == null)
       throw new IllegalStateException ("Failed to resolve client ID '" + sClientID + "'");
 

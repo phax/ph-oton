@@ -14,21 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.object.client;
+package com.helger.photon.basic.object.tenant;
 
-import com.helger.commons.name.IHasDisplayName;
-import com.helger.photon.basic.object.IObject;
-import com.helger.photon.basic.uitext.IHasUIText;
+import javax.annotation.concurrent.Immutable;
+
+import com.helger.commons.annotation.PresentForCodeCoverage;
 
 /**
- * Represents a single client (Mandant)
+ * Constants for tenants etc.
  *
  * @author Philip Helger
  */
-public interface IClient extends IObject, IHasDisplayName, IHasUIText
+@Immutable
+public final class CTenant
 {
-  /**
-   * @return <code>true</code> if this is the system global client
-   */
-  boolean isGlobalClient ();
+  public static final String GLOBAL_TENANT_ID = "$";
+  public static final String GLOBAL_CLIENT_NAME = "$system client$";
+
+  @PresentForCodeCoverage
+  private static final CTenant s_aInstance = new CTenant ();
+
+  private CTenant ()
+  {}
 }

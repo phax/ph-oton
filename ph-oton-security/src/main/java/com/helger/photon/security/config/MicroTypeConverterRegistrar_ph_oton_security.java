@@ -19,11 +19,11 @@ package com.helger.photon.security.config;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.photon.basic.object.client.IClientResolver;
+import com.helger.photon.basic.object.tenant.ITenantResolver;
 import com.helger.photon.security.object.accarea.AccountingArea;
 import com.helger.photon.security.object.accarea.AccountingAreaMicroTypeConverter;
-import com.helger.photon.security.object.client.Client;
-import com.helger.photon.security.object.client.ClientMicroTypeConverter;
+import com.helger.photon.security.object.tenant.Tenant;
+import com.helger.photon.security.object.tenant.TenantMicroTypeConverter;
 import com.helger.photon.security.role.Role;
 import com.helger.photon.security.role.RoleMicroTypeConverter;
 import com.helger.photon.security.token.accesstoken.AccessToken;
@@ -50,7 +50,7 @@ public final class MicroTypeConverterRegistrar_ph_oton_security implements IMicr
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
     aRegistry.registerMicroElementTypeConverter (AccessToken.class, new AccessTokenMicroTypeConverter ());
-    aRegistry.registerMicroElementTypeConverter (Client.class, new ClientMicroTypeConverter ());
+    aRegistry.registerMicroElementTypeConverter (Tenant.class, new TenantMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (RevocationStatus.class, new RevocationStatusMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (Role.class, new RoleMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (User.class, new UserMicroTypeConverter ());
@@ -59,7 +59,7 @@ public final class MicroTypeConverterRegistrar_ph_oton_security implements IMicr
   }
 
   public static void registerSpecialMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry,
-                                                        @Nonnull final IClientResolver aClientResolver)
+                                                        @Nonnull final ITenantResolver aClientResolver)
   {
     aRegistry.registerMicroElementTypeConverter (AccountingArea.class,
                                                  new AccountingAreaMicroTypeConverter (aClientResolver));

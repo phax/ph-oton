@@ -23,7 +23,7 @@ import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.string.StringHelper;
 import com.helger.masterdata.address.IAddress;
 import com.helger.masterdata.currency.ECurrency;
-import com.helger.photon.basic.object.client.IClientObject;
+import com.helger.photon.basic.object.tenant.ITenantObject;
 import com.helger.photon.basic.uitext.IHasUIText;
 
 /**
@@ -31,7 +31,7 @@ import com.helger.photon.basic.uitext.IHasUIText;
  *
  * @author Philip Helger
  */
-public interface IAccountingArea extends IClientObject, IHasDisplayName, IHasUIText
+public interface IAccountingArea extends ITenantObject, IHasDisplayName, IHasUIText
 {
   /**
    * @return The company type. E.g. "KEG"

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.object.client;
+package com.helger.photon.basic.object.tenant;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -25,27 +25,27 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
 @Immutable
-public abstract class AbstractHasClient implements IHasClient
+public abstract class AbstractHasTenant implements IHasTenant
 {
   @Nonnull
-  private final IClient m_aClient;
+  private final ITenant m_aTenant;
 
-  public AbstractHasClient (@Nonnull final IClient aClient)
+  public AbstractHasTenant (@Nonnull final ITenant aTenant)
   {
-    m_aClient = ValueEnforcer.notNull (aClient, "Client");
+    m_aTenant = ValueEnforcer.notNull (aTenant, "Tenant");
   }
 
   @Nonnull
   @Nonempty
-  public final String getClientID ()
+  public final String getTenantID ()
   {
-    return m_aClient.getID ();
+    return m_aTenant.getID ();
   }
 
   @Nonnull
-  public final IClient getClient ()
+  public final ITenant getTenant ()
   {
-    return m_aClient;
+    return m_aTenant;
   }
 
   @Override
@@ -55,19 +55,19 @@ public abstract class AbstractHasClient implements IHasClient
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final AbstractHasClient rhs = (AbstractHasClient) o;
-    return m_aClient.equals (rhs.m_aClient);
+    final AbstractHasTenant rhs = (AbstractHasTenant) o;
+    return m_aTenant.equals (rhs.m_aTenant);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aClient).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aTenant).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("client", m_aClient).getToString ();
+    return new ToStringGenerator (this).append ("Tenant", m_aTenant).getToString ();
   }
 }
