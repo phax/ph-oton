@@ -27,7 +27,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
-import com.helger.masterdata.address.IAddress;
+import com.helger.masterdata.address.IPostalAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
@@ -57,7 +57,7 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
                                                @Nullable final String sCompanyVATIN,
                                                @Nullable final String sCompanyNumber,
                                                @Nullable final String sCustomerNumber,
-                                               @Nonnull final IAddress aAddress,
+                                               @Nonnull final IPostalAddress aAddress,
                                                @Nonnull final String sTelephone,
                                                @Nullable final String sFax,
                                                @Nullable final String sEmailAddress,
@@ -114,7 +114,7 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
                                        @Nullable final String sCompanyVATIN,
                                        @Nullable final String sCompanyNumber,
                                        @Nullable final String sCustomerNumber,
-                                       @Nonnull final IAddress aAddress,
+                                       @Nonnull final IPostalAddress aAddress,
                                        @Nonnull final String sTelephone,
                                        @Nullable final String sFax,
                                        @Nullable final String sEmailAddress,

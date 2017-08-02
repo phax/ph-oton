@@ -25,8 +25,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.masterdata.address.Address;
-import com.helger.masterdata.address.EAddressType;
+import com.helger.masterdata.address.PostalAddress;
+import com.helger.masterdata.address.EPostalAddressType;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.basic.object.tenant.ITenant;
@@ -47,7 +47,7 @@ public final class AccountingAreaTest
   public void testBasic ()
   {
     final ITenant aClient = new Tenant ("anyid", "Mock client");
-    final Address aAddress = new Address (EAddressType.PERSONAL,
+    final PostalAddress aAddress = new PostalAddress (EPostalAddressType.PERSONAL,
                                           "AT",
                                           "Wien",
                                           "1234",

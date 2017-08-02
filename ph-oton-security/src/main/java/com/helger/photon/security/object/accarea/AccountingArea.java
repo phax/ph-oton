@@ -28,8 +28,8 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.masterdata.address.Address;
-import com.helger.masterdata.address.IAddress;
+import com.helger.masterdata.address.PostalAddress;
+import com.helger.masterdata.address.IPostalAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.object.accarea.IAccountingArea;
 import com.helger.photon.basic.object.tenant.ITenant;
@@ -51,7 +51,7 @@ public class AccountingArea extends AbstractTenantObject implements IAccountingA
   private String m_sCompanyVATIN;
   private String m_sCompanyNumber;
   private String m_sCustomerNumber;
-  private Address m_aAddress;
+  private PostalAddress m_aAddress;
   private String m_sTelephone;
   private String m_sFax;
   private String m_sEmailAddress;
@@ -103,7 +103,7 @@ public class AccountingArea extends AbstractTenantObject implements IAccountingA
                          @Nullable final String sCompanyVATIN,
                          @Nullable final String sCompanyNumber,
                          @Nullable final String sCustomerNumber,
-                         @Nonnull final IAddress aAddress,
+                         @Nonnull final IPostalAddress aAddress,
                          @Nullable final String sTelephone,
                          @Nullable final String sFax,
                          @Nullable final String sEmailAddress,
@@ -140,7 +140,7 @@ public class AccountingArea extends AbstractTenantObject implements IAccountingA
                   @Nullable final String sCompanyVATIN,
                   @Nullable final String sCompanyNumber,
                   @Nullable final String sCustomerNumber,
-                  @Nonnull final IAddress aAddress,
+                  @Nonnull final IPostalAddress aAddress,
                   @Nullable final String sTelephone,
                   @Nullable final String sFax,
                   @Nullable final String sEmailAddress,
@@ -253,17 +253,17 @@ public class AccountingArea extends AbstractTenantObject implements IAccountingA
   }
 
   @Nonnull
-  public IAddress getAddress ()
+  public IPostalAddress getAddress ()
   {
     return m_aAddress;
   }
 
   @Nonnull
-  public EChange setAddress (@Nonnull final IAddress aAddress, @Nonnull final Locale aDisplayLocale)
+  public EChange setAddress (@Nonnull final IPostalAddress aAddress, @Nonnull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aAddress, "Address");
 
-    final Address aNewAddress = new Address (aAddress, aDisplayLocale);
+    final PostalAddress aNewAddress = new PostalAddress (aAddress, aDisplayLocale);
     if (aNewAddress.equals (m_aAddress))
       return EChange.UNCHANGED;
     m_aAddress = aNewAddress;

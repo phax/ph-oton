@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.string.StringHelper;
-import com.helger.masterdata.address.IAddress;
+import com.helger.masterdata.address.IPostalAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.object.tenant.ITenantObject;
 import com.helger.photon.basic.uitext.IHasUIText;
@@ -94,7 +94,7 @@ public interface IAccountingArea extends ITenantObject, IHasDisplayName, IHasUIT
    * @return The address of the owner. May not be <code>null</code>.
    */
   @Nonnull
-  IAddress getAddress ();
+  IPostalAddress getAddress ();
 
   /**
    * @return The telephone number. May be <code>null</code>.

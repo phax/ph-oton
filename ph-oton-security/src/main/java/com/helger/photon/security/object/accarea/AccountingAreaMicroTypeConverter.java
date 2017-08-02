@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.system.SystemHelper;
-import com.helger.masterdata.address.Address;
+import com.helger.masterdata.address.PostalAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.basic.object.tenant.ITenantResolver;
@@ -98,8 +98,8 @@ public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObje
     final String sCompanyVATIN = aElement.getAttributeValue (ATTR_COMPANY_VATIN);
     final String sCompanyNumber = aElement.getAttributeValue (ATTR_COMPANY_NUMBER);
     final String sCustomerNumber = aElement.getAttributeValue (ATTR_CUSTOMER_NUMBER);
-    final Address aAddress = MicroTypeConverter.convertToNative (aElement.getFirstChildElement (ELEMENT_ADDRESS),
-                                                                 Address.class);
+    final PostalAddress aAddress = MicroTypeConverter.convertToNative (aElement.getFirstChildElement (ELEMENT_ADDRESS),
+                                                                 PostalAddress.class);
     final String sTelephone = aElement.getAttributeValue (ATTR_TELEPHONE);
     final String sFax = aElement.getAttributeValue (ATTR_FAX);
     final String sEmailAddress = aElement.getAttributeValue (ATTR_EMAILADDRESS);
