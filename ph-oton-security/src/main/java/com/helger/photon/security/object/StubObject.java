@@ -17,6 +17,7 @@
 package com.helger.photon.security.object;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,21 +27,23 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.object.AbstractObject;
-import com.helger.photon.basic.object.IObject;
+import com.helger.photon.basic.object.AbstractBusinessObject;
+import com.helger.photon.basic.object.IBusinessObject;
 import com.helger.photon.security.login.LoggedInUserManager;
 
 /**
- * The most simple {@link IObject} implementation. Used for serialization
- * encapsulation and the like.
+ * The most simple {@link IBusinessObject} implementation. Used for
+ * serialization encapsulation and the like.
  *
  * @author Philip Helger
  */
-public final class StubObject extends AbstractObject
+public final class StubObject extends AbstractBusinessObject
 {
   public static final ObjectType OT_STUB = new ObjectType ("stub-object");
 
-  private StubObject (@Nonnull @Nonempty final String sID, @Nullable final String sCreationUserID)
+  private StubObject (@Nonnull @Nonempty final String sID,
+                      @Nullable final String sCreationUserID,
+                      @Nullable final Map <String, String> aCustomAttrs)
   {
     this (sID,
           PDTFactory.getCurrentLocalDateTime (),
@@ -48,7 +51,8 @@ public final class StubObject extends AbstractObject
           (LocalDateTime) null,
           (String) null,
           (LocalDateTime) null,
-          (String) null);
+          (String) null,
+          aCustomAttrs);
   }
 
   public StubObject (@Nonnull @Nonempty final String sID,
@@ -57,7 +61,8 @@ public final class StubObject extends AbstractObject
                      @Nullable final LocalDateTime aLastModificationDT,
                      @Nullable final String sLastModificationUserID,
                      @Nullable final LocalDateTime aDeletionDT,
-                     @Nullable final String sDeletionUserID)
+                     @Nullable final String sDeletionUserID,
+                     @Nullable final Map <String, String> aCustomAttrs)
   {
     super (sID,
            aCreationDT,
@@ -65,7 +70,8 @@ public final class StubObject extends AbstractObject
            aLastModificationDT,
            sLastModificationUserID,
            aDeletionDT,
-           sDeletionUserID);
+           sDeletionUserID,
+           aCustomAttrs);
   }
 
   @Nonnull
@@ -85,7 +91,8 @@ public final class StubObject extends AbstractObject
                            getLastModificationDateTime (),
                            getLastModificationUserID (),
                            getDeletionDateTime (),
-                           getDeletionUserID ());
+                           getDeletionUserID (),
+                           customAttrs ());
   }
 
   /**
@@ -100,6 +107,19 @@ public final class StubObject extends AbstractObject
   }
 
   /**
+   * Create a {@link StubObject} for the current user creating a new object ID
+   *
+   * @param aCustomAttrs
+   *        Custom attributes. May be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static StubObject createForCurrentUser (@Nullable final Map <String, String> aCustomAttrs)
+  {
+    return createForUser (LoggedInUserManager.getInstance ().getCurrentUserID (), aCustomAttrs);
+  }
+
+  /**
    * Create a {@link StubObject} using the provided user ID and a new object ID
    *
    * @param sUserID
@@ -109,7 +129,23 @@ public final class StubObject extends AbstractObject
   @Nonnull
   public static StubObject createForUser (@Nullable final String sUserID)
   {
-    return new StubObject (GlobalIDFactory.getNewPersistentStringID (), sUserID);
+    return new StubObject (GlobalIDFactory.getNewPersistentStringID (), sUserID, null);
+  }
+
+  /**
+   * Create a {@link StubObject} using the provided user ID and a new object ID
+   *
+   * @param sUserID
+   *        User ID
+   * @param aCustomAttrs
+   *        Custom attributes. May be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static StubObject createForUser (@Nullable final String sUserID,
+                                          @Nullable final Map <String, String> aCustomAttrs)
+  {
+    return new StubObject (GlobalIDFactory.getNewPersistentStringID (), sUserID, aCustomAttrs);
   }
 
   /**
@@ -123,6 +159,23 @@ public final class StubObject extends AbstractObject
   @Nonnull
   public static StubObject createForCurrentUserAndID (@Nonnull @Nonempty final String sID)
   {
-    return new StubObject (sID, LoggedInUserManager.getInstance ().getCurrentUserID ());
+    return new StubObject (sID, LoggedInUserManager.getInstance ().getCurrentUserID (), null);
+  }
+
+  /**
+   * Create a {@link StubObject} using the current user ID and the provided
+   * object ID
+   *
+   * @param sID
+   *        Object ID
+   * @param aCustomAttrs
+   *        Custom attributes. May be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static StubObject createForCurrentUserAndID (@Nonnull @Nonempty final String sID,
+                                                      @Nullable final Map <String, String> aCustomAttrs)
+  {
+    return new StubObject (sID, LoggedInUserManager.getInstance ().getCurrentUserID (), aCustomAttrs);
   }
 }

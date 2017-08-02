@@ -17,6 +17,7 @@
 package com.helger.photon.security.object.tenant;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,13 +28,13 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.object.AbstractBaseObject;
+import com.helger.photon.basic.object.AbstractBusinessObject;
 import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.basic.object.tenant.ITenantObject;
 import com.helger.photon.security.object.StubObject;
 
 @Immutable
-public abstract class AbstractTenantObject extends AbstractBaseObject implements ITenantObject
+public abstract class AbstractTenantObject extends AbstractBusinessObject implements ITenantObject
 {
   private final ITenant m_aTenant;
   // Status vars
@@ -68,7 +69,8 @@ public abstract class AbstractTenantObject extends AbstractBaseObject implements
            aLastModificationDT,
            sLastModificationUserID,
            aDeletionDT,
-           sDeletionUserID);
+           sDeletionUserID,
+           (Map <String, String>) null);
     m_aTenant = ValueEnforcer.notNull (aClient, "Client");
   }
 

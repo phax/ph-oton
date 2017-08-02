@@ -38,7 +38,7 @@ import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
-import com.helger.photon.security.object.ObjectHelper;
+import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.salt.IPasswordSalt;
@@ -477,7 +477,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aUser);
+      BusinessObjectHelper.setLastModificationNow (aUser);
       internalUpdateItem (aUser);
     }
     finally
@@ -532,7 +532,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aUser);
+      BusinessObjectHelper.setLastModificationNow (aUser);
       internalUpdateItem (aUser);
     }
     finally
@@ -622,7 +622,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (ObjectHelper.setDeletionNow (aUser).isUnchanged ())
+      if (BusinessObjectHelper.setDeletionNow (aUser).isUnchanged ())
       {
         AuditHelper.onAuditDeleteFailure (User.OT, "already-deleted", sUserID);
         return EChange.UNCHANGED;
@@ -662,7 +662,7 @@ public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (ObjectHelper.setUndeletionNow (aUser).isUnchanged ())
+      if (BusinessObjectHelper.setUndeletionNow (aUser).isUnchanged ())
         return EChange.UNCHANGED;
       internalMarkItemUndeleted (aUser);
     }

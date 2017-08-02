@@ -32,8 +32,8 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
-import com.helger.photon.security.object.StubObjectWithCustomAttrs;
+import com.helger.photon.basic.object.AbstractBusinessObject;
+import com.helger.photon.security.object.StubObject;
 
 /**
  * Default implementation of the {@link IUserGroup} interface.
@@ -41,23 +41,23 @@ import com.helger.photon.security.object.StubObjectWithCustomAttrs;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class UserGroup extends AbstractObjectWithCustomAttrs implements IUserGroup
+public final class UserGroup extends AbstractBusinessObject implements IUserGroup
 {
   public static final ObjectType OT = new ObjectType ("usergroup");
 
   private String m_sName;
   private String m_sDescription;
-  private final ICommonsSet <String> m_aUserIDs = new CommonsHashSet<> ();
-  private final ICommonsSet <String> m_aRoleIDs = new CommonsHashSet<> ();
+  private final ICommonsSet <String> m_aUserIDs = new CommonsHashSet <> ();
+  private final ICommonsSet <String> m_aRoleIDs = new CommonsHashSet <> ();
 
   public UserGroup (@Nonnull @Nonempty final String sName,
                     @Nullable final String sDescription,
                     @Nullable final Map <String, String> aCustomAttrs)
   {
-    this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs), sName, sDescription);
+    this (StubObject.createForCurrentUser (aCustomAttrs), sName, sDescription);
   }
 
-  protected UserGroup (@Nonnull final StubObjectWithCustomAttrs aStubObject,
+  protected UserGroup (@Nonnull final StubObject aStubObject,
                        @Nonnull @Nonempty final String sName,
                        @Nullable final String sDescription)
   {

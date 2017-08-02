@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.attr.IMutableAttributeContainer;
 import com.helger.commons.type.ITypedObject;
 import com.helger.photon.basic.datetime.IHasCreationInfo;
 import com.helger.photon.basic.datetime.IHasDeletionInfo;
@@ -32,12 +34,12 @@ import com.helger.photon.basic.datetime.IHasLastModificationInfo;
  *
  * @author Philip Helger
  */
-public interface IObject extends
-                         ITypedObject <String>,
-                         IHasCreationInfo,
-                         IHasLastModificationInfo,
-                         IHasDeletionInfo,
-                         Serializable
+public interface IBusinessObject extends
+                                 ITypedObject <String>,
+                                 IHasCreationInfo,
+                                 IHasLastModificationInfo,
+                                 IHasDeletionInfo,
+                                 Serializable
 {
   default boolean isLastChangeAfter (@Nonnull final LocalDateTime aDT)
   {
@@ -71,9 +73,16 @@ public interface IObject extends
    * @return <code>true</code> if this object was deleted, <code>false</code> if
    *         not.
    */
-  default boolean isDeleted (@Nonnull final LocalDateTime aDT)
+  default boolean isDeletedAt (@Nonnull final LocalDateTime aDT)
   {
     ValueEnforcer.notNull (aDT, "LocalDateTime");
     return hasDeletionDateTime () && getDeletionDateTime ().compareTo (aDT) <= 0;
   }
+
+  /**
+   * @return Custom attributes.
+   */
+  @Nonnull
+  @ReturnsMutableObject
+  IMutableAttributeContainer <String, String> customAttrs ();
 }

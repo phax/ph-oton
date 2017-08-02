@@ -32,7 +32,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
-import com.helger.photon.security.object.ObjectHelper;
+import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.user.IUser;
 
@@ -98,7 +98,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aUserToken);
+      BusinessObjectHelper.setLastModificationNow (aUserToken);
       internalUpdateItem (aUserToken);
     }
     finally
@@ -126,7 +126,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (ObjectHelper.setDeletionNow (aUserToken).isUnchanged ())
+      if (BusinessObjectHelper.setDeletionNow (aUserToken).isUnchanged ())
       {
         AuditHelper.onAuditDeleteFailure (UserToken.OT, "already-deleted", aUserToken.getID ());
         return EChange.UNCHANGED;
@@ -165,7 +165,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
     {
       aUserToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason);
       aAccessToken = aUserToken.createNewAccessToken (sTokenString);
-      ObjectHelper.setLastModificationNow (aUserToken);
+      BusinessObjectHelper.setLastModificationNow (aUserToken);
       internalUpdateItem (aUserToken);
     }
     finally
@@ -207,7 +207,7 @@ public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, 
         AuditHelper.onAuditModifyFailure (UserToken.OT, "already-revoked", sUserTokenID);
         return EChange.UNCHANGED;
       }
-      ObjectHelper.setLastModificationNow (aUserToken);
+      BusinessObjectHelper.setLastModificationNow (aUserToken);
       internalUpdateItem (aUserToken);
     }
     finally

@@ -32,9 +32,9 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
+import com.helger.photon.basic.object.AbstractBusinessObject;
 import com.helger.photon.security.CSecurity;
-import com.helger.photon.security.object.StubObjectWithCustomAttrs;
+import com.helger.photon.security.object.StubObject;
 import com.helger.security.password.hash.PasswordHash;
 
 /**
@@ -43,7 +43,7 @@ import com.helger.security.password.hash.PasswordHash;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class User extends AbstractObjectWithCustomAttrs implements IUser
+public class User extends AbstractBusinessObject implements IUser
 {
   public static final ObjectType OT = new ObjectType ("user");
 
@@ -91,7 +91,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
                @Nullable final Map <String, String> aCustomAttrs,
                final boolean bDisabled)
   {
-    this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs),
+    this (StubObject.createForCurrentUser (aCustomAttrs),
           sLoginName,
           sEmailAddress,
           aPasswordHash,
@@ -117,7 +117,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
                   @Nullable final Map <String, String> aCustomAttrs,
                   final boolean bDisabled)
   {
-    this (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs),
+    this (StubObject.createForCurrentUserAndID (sID, aCustomAttrs),
           sLoginName,
           sEmailAddress,
           aPasswordHash,
@@ -159,7 +159,7 @@ public class User extends AbstractObjectWithCustomAttrs implements IUser
    * @param bDisabled
    *        <code>true</code> if the user is disabled
    */
-  protected User (@Nonnull final StubObjectWithCustomAttrs aStubObject,
+  protected User (@Nonnull final StubObject aStubObject,
                   @Nonnull @Nonempty final String sLoginName,
                   @Nullable final String sEmailAddress,
                   @Nonnull final PasswordHash aPasswordHash,

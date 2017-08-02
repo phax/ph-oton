@@ -26,7 +26,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.object.AbstractObject;
+import com.helger.photon.basic.object.AbstractBusinessObject;
 import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.security.object.StubObject;
 
@@ -36,7 +36,7 @@ import com.helger.photon.security.object.StubObject;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class Tenant extends AbstractObject implements ITenant
+public class Tenant extends AbstractBusinessObject implements ITenant
 {
   public static final ObjectType OT = new ObjectType ("tenant");
 

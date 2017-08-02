@@ -35,7 +35,7 @@ import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.object.accarea.IAccountingArea;
 import com.helger.photon.basic.object.accarea.IAccountingAreaResolver;
 import com.helger.photon.basic.object.tenant.ITenant;
-import com.helger.photon.security.object.ObjectHelper;
+import com.helger.photon.security.object.BusinessObjectHelper;
 
 /**
  * Manages all available accounting areas.
@@ -153,7 +153,7 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aAccountingArea);
+      BusinessObjectHelper.setLastModificationNow (aAccountingArea);
       internalUpdateItem (aAccountingArea);
     }
     finally
@@ -192,7 +192,7 @@ public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccoun
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (ObjectHelper.setDeletionNow (aDeletedAccountingArea).isUnchanged ())
+      if (BusinessObjectHelper.setDeletionNow (aDeletedAccountingArea).isUnchanged ())
       {
         AuditHelper.onAuditDeleteFailure (AccountingArea.OT, "already-deleted", sAccountingAreaID);
         return EChange.UNCHANGED;

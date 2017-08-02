@@ -23,22 +23,22 @@ import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.auth.CBasicSecurity;
-import com.helger.photon.basic.object.AbstractBaseObject;
-import com.helger.photon.basic.object.IObject;
+import com.helger.photon.basic.object.AbstractBusinessObject;
+import com.helger.photon.basic.object.IBusinessObject;
 import com.helger.photon.security.login.LoggedInUserManager;
 
 /**
- * Helper class to work with {@link IObject} implementations.
+ * Helper class to work with {@link IBusinessObject} implementations.
  *
  * @author Philip Helger
  */
 @Immutable
-public final class ObjectHelper
+public final class BusinessObjectHelper
 {
-  private ObjectHelper ()
+  private BusinessObjectHelper ()
   {}
 
-  public static void setLastModificationNow (@Nonnull final AbstractBaseObject aObj)
+  public static void setLastModificationNow (@Nonnull final AbstractBusinessObject aObj)
   {
     String sCurrentUserID = LoggedInUserManager.getInstance ().getCurrentUserID ();
     if (StringHelper.hasNoText (sCurrentUserID))
@@ -50,14 +50,14 @@ public final class ObjectHelper
   }
 
   @Nonnull
-  public static EChange setDeletionNow (@Nonnull final AbstractBaseObject aObj)
+  public static EChange setDeletionNow (@Nonnull final AbstractBusinessObject aObj)
   {
     return aObj.setDeletion (PDTFactory.getCurrentLocalDateTime (),
                              LoggedInUserManager.getInstance ().getCurrentUserID ());
   }
 
   @Nonnull
-  public static EChange setUndeletionNow (@Nonnull final AbstractBaseObject aObj)
+  public static EChange setUndeletionNow (@Nonnull final AbstractBusinessObject aObj)
   {
     return aObj.setUndeletion (PDTFactory.getCurrentLocalDateTime (),
                                LoggedInUserManager.getInstance ().getCurrentUserID ());

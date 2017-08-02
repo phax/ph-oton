@@ -17,6 +17,7 @@
 package com.helger.photon.security.object.accarea;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,14 +28,14 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.object.AbstractBaseObject;
+import com.helger.photon.basic.object.AbstractBusinessObject;
 import com.helger.photon.basic.object.accarea.IAccountingArea;
 import com.helger.photon.basic.object.accarea.IAccountingAreaObject;
 import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.security.object.StubObject;
 
 @Immutable
-public abstract class AbstractAccountingAreaObject extends AbstractBaseObject implements IAccountingAreaObject
+public abstract class AbstractAccountingAreaObject extends AbstractBusinessObject implements IAccountingAreaObject
 {
   private final ITenant m_aClient;
   private final IAccountingArea m_aAccountingArea;
@@ -88,7 +89,8 @@ public abstract class AbstractAccountingAreaObject extends AbstractBaseObject im
            aLastModificationDT,
            sLastModificationUserID,
            aDeletionDT,
-           sDeletionUserID);
+           sDeletionUserID,
+           (Map <String, String>) null);
     ValueEnforcer.notNull (aClient, "Client");
     ValueEnforcer.notNull (aAccountingArea, "AccountingArea");
     if (!aAccountingArea.hasSameTenant (aClient))

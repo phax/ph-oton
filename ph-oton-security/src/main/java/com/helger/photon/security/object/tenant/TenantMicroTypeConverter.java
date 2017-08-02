@@ -20,11 +20,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
+import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
-public final class TenantMicroTypeConverter extends AbstractObjectMicroTypeConverter <Tenant>
+public final class TenantMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <Tenant>
 {
   private static final String ATTR_DISPLAYNAME = "displayname";
 

@@ -25,7 +25,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.url.SMap;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
-import com.helger.photon.security.object.StubObjectWithCustomAttrs;
+import com.helger.photon.security.object.StubObject;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 
@@ -42,7 +42,7 @@ public final class RoleTest
   @Test
   public void testBasic ()
   {
-    final Role aRole = new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1"), "Role 1", "Test role");
+    final Role aRole = new Role (StubObject.createForCurrentUserAndID ("id1"), "Role 1", "Test role");
     assertEquals ("id1", aRole.getID ());
     assertEquals ("Role 1", aRole.getName ());
   }
@@ -50,7 +50,7 @@ public final class RoleTest
   @Test
   public void testMicroConversion ()
   {
-    final Role aRole = new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1", new SMap ("key", "value")),
+    final Role aRole = new Role (StubObject.createForCurrentUserAndID ("id1", new SMap ("key", "value")),
                                  "Role 1",
                                  "bla");
 

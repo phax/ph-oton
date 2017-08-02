@@ -17,6 +17,7 @@
 package com.helger.photon.basic.object;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,18 +25,21 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.attr.AttributeContainer;
+import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
- * Abstract base implementation of {@link IObject} that handles everything
- * except {@link #getObjectType()}, {@link #equals(Object)} and
- * {@link #hashCode()}.
+ * Abstract base implementation of {@link IBusinessObject} that handles
+ * everything except {@link #getObjectType()}.
  *
  * @author Philip Helger
  */
 @Immutable
-public abstract class AbstractBaseObject implements IObject
+public abstract class AbstractBusinessObject implements IBusinessObject
 {
   private final String m_sID;
   private final LocalDateTime m_aCreationDT;
@@ -44,8 +48,11 @@ public abstract class AbstractBaseObject implements IObject
   private String m_sLastModificationUserID;
   private LocalDateTime m_aDeletionDT;
   private String m_sDeletionUserID;
+  private final AttributeContainer <String, String> m_aCustomAttrs = new AttributeContainer <> ();
+  // Status vars
+  private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
-  public AbstractBaseObject (@Nonnull final IObject aObject)
+  public AbstractBusinessObject (@Nonnull final IBusinessObject aObject)
   {
     this (aObject.getID (),
           aObject.getCreationDateTime (),
@@ -53,16 +60,18 @@ public abstract class AbstractBaseObject implements IObject
           aObject.getLastModificationDateTime (),
           aObject.getLastModificationUserID (),
           aObject.getDeletionDateTime (),
-          aObject.getDeletionUserID ());
+          aObject.getDeletionUserID (),
+          aObject.customAttrs ());
   }
 
-  public AbstractBaseObject (@Nonnull @Nonempty final String sID,
-                             @Nullable final LocalDateTime aCreationDT,
-                             @Nullable final String sCreationUserID,
-                             @Nullable final LocalDateTime aLastModificationDT,
-                             @Nullable final String sLastModificationUserID,
-                             @Nullable final LocalDateTime aDeletionDT,
-                             @Nullable final String sDeletionUserID)
+  public AbstractBusinessObject (@Nonnull @Nonempty final String sID,
+                                 @Nullable final LocalDateTime aCreationDT,
+                                 @Nullable final String sCreationUserID,
+                                 @Nullable final LocalDateTime aLastModificationDT,
+                                 @Nullable final String sLastModificationUserID,
+                                 @Nullable final LocalDateTime aDeletionDT,
+                                 @Nullable final String sDeletionUserID,
+                                 @Nullable final Map <String, String> aCustomAttrs)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
     m_aCreationDT = aCreationDT;
@@ -71,6 +80,7 @@ public abstract class AbstractBaseObject implements IObject
     m_sLastModificationUserID = sLastModificationUserID;
     m_aDeletionDT = aDeletionDT;
     m_sDeletionUserID = sDeletionUserID;
+    m_aCustomAttrs.addAll (aCustomAttrs);
   }
 
   @Nonnull
@@ -168,16 +178,44 @@ public abstract class AbstractBaseObject implements IObject
     return EChange.CHANGED;
   }
 
+  @Nonnull
+  @ReturnsMutableObject
+  public final AttributeContainer <String, String> customAttrs ()
+  {
+    return m_aCustomAttrs;
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+    final AbstractBusinessObject rhs = (AbstractBusinessObject) o;
+    return getID ().equals (rhs.getID ());
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int ret = m_nHashCode;
+    if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
+      ret = m_nHashCode = new HashCodeGenerator (this).append (getID ()).getHashCode ();
+    return ret;
+  }
+
   @Override
   public String toString ()
   {
     return new ToStringGenerator (this).append ("ID", m_sID)
-                                       .appendIfNotNull ("creationDT", m_aCreationDT)
-                                       .appendIfNotNull ("creationUserID", m_sCreationUserID)
-                                       .appendIfNotNull ("lastModificationDT", m_aLastModificationDT)
-                                       .appendIfNotNull ("lastModificationUserID", m_sLastModificationUserID)
-                                       .appendIfNotNull ("deletionDT", m_aDeletionDT)
-                                       .appendIfNotNull ("deletionUserID", m_sDeletionUserID)
+                                       .appendIfNotNull ("CreationDT", m_aCreationDT)
+                                       .appendIfNotNull ("CreationUserID", m_sCreationUserID)
+                                       .appendIfNotNull ("LastModificationDT", m_aLastModificationDT)
+                                       .appendIfNotNull ("LastModificationUserID", m_sLastModificationUserID)
+                                       .appendIfNotNull ("DeletionDT", m_aDeletionDT)
+                                       .appendIfNotNull ("DeletionUserID", m_sDeletionUserID)
+                                       .append ("CustomAttrs", m_aCustomAttrs)
                                        .getToString ();
   }
 }

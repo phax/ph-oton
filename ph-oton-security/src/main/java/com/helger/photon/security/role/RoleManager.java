@@ -33,8 +33,8 @@ import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
-import com.helger.photon.security.object.ObjectHelper;
-import com.helger.photon.security.object.StubObjectWithCustomAttrs;
+import com.helger.photon.security.object.BusinessObjectHelper;
+import com.helger.photon.security.object.StubObject;
 
 /**
  * This class manages the available roles.
@@ -62,11 +62,11 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
   public void createDefaults ()
   {
     if (!containsWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
-      internalCreateItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
+      internalCreateItem (new Role (StubObject.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
                                     CSecurity.ROLE_ADMINISTRATOR_NAME,
                                     (String) null));
     if (!containsWithID (CSecurity.ROLE_USER_ID))
-      internalCreateItem (new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
+      internalCreateItem (new Role (StubObject.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
                                     CSecurity.ROLE_USER_NAME,
                                     (String) null));
   }
@@ -133,9 +133,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
                                      @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create role
-    final Role aRole = new Role (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs),
-                                 sName,
-                                 sDescription);
+    final Role aRole = new Role (StubObject.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
 
     m_aRWLock.writeLocked ( () -> {
       // Store
@@ -169,7 +167,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
         AuditHelper.onAuditDeleteFailure (Role.OT, "no-such-role-id", sRoleID);
         return EChange.UNCHANGED;
       }
-      ObjectHelper.setDeletionNow (aDeletedRole);
+      BusinessObjectHelper.setDeletionNow (aDeletedRole);
     }
     finally
     {
@@ -234,7 +232,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
       if (aRole.setName (sNewName).isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aRole);
+      BusinessObjectHelper.setLastModificationNow (aRole);
       internalUpdateItem (aRole);
     }
     finally
@@ -286,7 +284,7 @@ public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> impl
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aRole);
+      BusinessObjectHelper.setLastModificationNow (aRole);
       internalUpdateItem (aRole);
     }
     finally

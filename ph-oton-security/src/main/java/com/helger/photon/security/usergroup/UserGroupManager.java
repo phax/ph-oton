@@ -36,8 +36,8 @@ import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.dao.impl.DAOException;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
-import com.helger.photon.security.object.ObjectHelper;
-import com.helger.photon.security.object.StubObjectWithCustomAttrs;
+import com.helger.photon.security.object.BusinessObjectHelper;
+import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.UserManager;
 
@@ -88,7 +88,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
     // Administrators user group
     UserGroup aUG = getOfID (CSecurity.USERGROUP_ADMINISTRATORS_ID);
     if (aUG == null)
-      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
+      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
                                                                              CSecurity.USERGROUP_ADMINISTRATORS_NAME,
                                                                              (String) null)));
     if (m_aUserMgr.containsWithID (CSecurity.USER_ADMINISTRATOR_ID))
@@ -99,7 +99,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
     // Users user group
     aUG = getOfID (CSecurity.USERGROUP_USERS_ID);
     if (aUG == null)
-      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
+      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
                                                                              CSecurity.USERGROUP_USERS_NAME,
                                                                              (String) null)));
     if (m_aUserMgr.containsWithID (CSecurity.USER_USER_ID))
@@ -110,7 +110,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
     // Guests user group
     aUG = getOfID (CSecurity.USERGROUP_GUESTS_ID);
     if (aUG == null)
-      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
+      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
                                                                              CSecurity.USERGROUP_GUESTS_NAME,
                                                                              (String) null)));
     if (m_aUserMgr.containsWithID (CSecurity.USER_GUEST_ID))
@@ -184,7 +184,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
                                                @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create user group
-    final UserGroup aUserGroup = new UserGroup (StubObjectWithCustomAttrs.createForCurrentUserAndID (sID, aCustomAttrs),
+    final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID (sID, aCustomAttrs),
                                                 sName,
                                                 sDescription);
 
@@ -229,7 +229,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (ObjectHelper.setDeletionNow (aDeletedUserGroup).isUnchanged ())
+      if (BusinessObjectHelper.setDeletionNow (aDeletedUserGroup).isUnchanged ())
       {
         AuditHelper.onAuditDeleteFailure (UserGroup.OT, "already-deleted", sUserGroupID);
         return EChange.UNCHANGED;
@@ -299,7 +299,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
       if (aUserGroup.setName (sNewName).isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aUserGroup);
+      BusinessObjectHelper.setLastModificationNow (aUserGroup);
       internalUpdateItem (aUserGroup);
     }
     finally
@@ -352,7 +352,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aUserGroup);
+      BusinessObjectHelper.setLastModificationNow (aUserGroup);
       internalUpdateItem (aUserGroup);
     }
     finally
@@ -400,7 +400,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
       if (aUserGroup.assignUser (sUserID).isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aUserGroup);
+      BusinessObjectHelper.setLastModificationNow (aUserGroup);
       internalUpdateItem (aUserGroup);
     }
     finally
@@ -442,7 +442,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
       if (aUserGroup.unassignUser (sUserID).isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aUserGroup);
+      BusinessObjectHelper.setLastModificationNow (aUserGroup);
       internalUpdateItem (aUserGroup);
     }
     finally
@@ -480,7 +480,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
         if (aUserGroup.unassignUser (sUserID).isChanged ())
         {
           aAffectedUserGroups.add (aUserGroup);
-          ObjectHelper.setLastModificationNow (aUserGroup);
+          BusinessObjectHelper.setLastModificationNow (aUserGroup);
           internalUpdateItem (aUserGroup);
           eChange = EChange.CHANGED;
         }
@@ -585,7 +585,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
       if (aUserGroup.assignRole (sRoleID).isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aUserGroup);
+      BusinessObjectHelper.setLastModificationNow (aUserGroup);
       internalUpdateItem (aUserGroup);
     }
     finally
@@ -627,7 +627,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
       if (aUserGroup.unassignRole (sRoleID).isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aUserGroup);
+      BusinessObjectHelper.setLastModificationNow (aUserGroup);
       internalUpdateItem (aUserGroup);
     }
     finally
@@ -665,7 +665,7 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
         if (aUserGroup.unassignRole (sRoleID).isChanged ())
         {
           aAffectedUserGroups.add (aUserGroup);
-          ObjectHelper.setLastModificationNow (aUserGroup);
+          BusinessObjectHelper.setLastModificationNow (aUserGroup);
           internalUpdateItem (aUserGroup);
           eChange = EChange.CHANGED;
         }

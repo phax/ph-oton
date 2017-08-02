@@ -27,12 +27,12 @@ import com.helger.masterdata.address.Address;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.basic.object.tenant.ITenantResolver;
-import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
+import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 
-public final class AccountingAreaMicroTypeConverter extends AbstractObjectMicroTypeConverter <AccountingArea>
+public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <AccountingArea>
 {
   private static final String ATTR_CLIENTID = "clientid";
   private static final String ATTR_DISPLAYNAME = "displayname";

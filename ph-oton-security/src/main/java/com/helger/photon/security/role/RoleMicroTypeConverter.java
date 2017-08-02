@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
+import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.util.MicroHelper;
@@ -30,7 +30,7 @@ import com.helger.xml.microdom.util.MicroHelper;
  *
  * @author Philip Helger
  */
-public final class RoleMicroTypeConverter extends AbstractObjectMicroTypeConverter <Role>
+public final class RoleMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <Role>
 {
   private static final String ATTR_NAME = "name";
   private static final String ELEMENT_DESCRIPTION = "description";
@@ -54,6 +54,6 @@ public final class RoleMicroTypeConverter extends AbstractObjectMicroTypeConvert
     final String sName = aElement.getAttributeValue (ATTR_NAME);
     final String sDescription = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_DESCRIPTION);
 
-    return new Role (getStubObjectWithCustomAttrs (aElement), sName, sDescription);
+    return new Role (getStubObject (aElement), sName, sDescription);
   }
 }

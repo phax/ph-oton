@@ -28,8 +28,8 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
-import com.helger.photon.security.object.StubObjectWithCustomAttrs;
+import com.helger.photon.basic.object.AbstractBusinessObject;
+import com.helger.photon.security.object.StubObject;
 
 /**
  * Default implementation of the {@link IRole} interface.
@@ -37,7 +37,7 @@ import com.helger.photon.security.object.StubObjectWithCustomAttrs;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class Role extends AbstractObjectWithCustomAttrs implements IRole
+public final class Role extends AbstractBusinessObject implements IRole
 {
   public static final ObjectType OT = new ObjectType ("role");
 
@@ -48,10 +48,10 @@ public final class Role extends AbstractObjectWithCustomAttrs implements IRole
                @Nullable final String sDescription,
                @Nullable final Map <String, String> aCustomAttrs)
   {
-    this (StubObjectWithCustomAttrs.createForCurrentUser (aCustomAttrs), sName, sDescription);
+    this (StubObject.createForCurrentUser (aCustomAttrs), sName, sDescription);
   }
 
-  protected Role (@Nonnull final StubObjectWithCustomAttrs aStubObject,
+  protected Role (@Nonnull final StubObject aStubObject,
                   @Nonnull @Nonempty final String sName,
                   @Nullable final String sDescription)
   {

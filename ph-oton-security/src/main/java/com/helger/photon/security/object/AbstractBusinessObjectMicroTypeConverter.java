@@ -27,8 +27,7 @@ import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.photon.basic.object.IObject;
-import com.helger.photon.basic.object.IObjectWithCustomAttrs;
+import com.helger.photon.basic.object.IBusinessObject;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroQName;
@@ -41,7 +40,7 @@ import com.helger.xml.microdom.convert.IMicroTypeConverter;
  * @param <T>
  *        Data type to handle
  */
-public abstract class AbstractObjectMicroTypeConverter <T> implements IMicroTypeConverter <T>
+public abstract class AbstractBusinessObjectMicroTypeConverter <T> implements IMicroTypeConverter <T>
 {
   protected static final IMicroQName ATTR_ID = new MicroQName ("id");
   protected static final IMicroQName ATTR_CREATIONLDT = new MicroQName ("creationldt");
@@ -52,7 +51,8 @@ public abstract class AbstractObjectMicroTypeConverter <T> implements IMicroType
   protected static final IMicroQName ATTR_DELETIONUSERID = new MicroQName ("deletionuserid");
   protected static final String ELEMENT_CUSTOM = "custom";
 
-  public static final void setObjectFields (@Nonnull final IObject aValue, @Nonnull final IMicroElement aElement)
+  public static final void setObjectFields (@Nonnull final IBusinessObject aValue,
+                                            @Nonnull final IMicroElement aElement)
   {
     aElement.setAttribute (ATTR_ID, aValue.getID ());
     aElement.setAttributeWithConversion (ATTR_CREATIONLDT, aValue.getCreationDateTime ());
@@ -61,15 +61,9 @@ public abstract class AbstractObjectMicroTypeConverter <T> implements IMicroType
     aElement.setAttribute (ATTR_LASTMODUSERID, aValue.getLastModificationUserID ());
     aElement.setAttributeWithConversion (ATTR_DELETIONLDT, aValue.getDeletionDateTime ());
     aElement.setAttribute (ATTR_DELETIONUSERID, aValue.getDeletionUserID ());
-  }
-
-  public static final void setObjectFields (@Nonnull final IObjectWithCustomAttrs aValue,
-                                            @Nonnull final IMicroElement aElement)
-  {
-    setObjectFields ((IObject) aValue, aElement);
     for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aValue.customAttrs ()).entrySet ())
     {
-      final IMicroElement eCustom = aElement.appendElement (ELEMENT_CUSTOM);
+      final IMicroElement eCustom = aElement.appendElement (aElement.getNamespaceURI (), ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
       eCustom.appendText (aEntry.getValue ());
     }
@@ -121,22 +115,17 @@ public abstract class AbstractObjectMicroTypeConverter <T> implements IMicroType
     final LocalDateTime aDeletionLDT = readAsLocalDateTime (aElement, ATTR_DELETIONLDT, "deletiondt");
     final String sDeletionUserID = aElement.getAttributeValue (ATTR_DELETIONUSERID);
 
+    final ICommonsOrderedMap <String, String> aCustomAttrs = new CommonsLinkedHashMap <> ();
+    for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
+      aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
+
     return new StubObject (sID,
                            aCreationLDT,
                            sCreationUserID,
                            aLastModificationLDT,
                            sLastModificationUserID,
                            aDeletionLDT,
-                           sDeletionUserID);
-  }
-
-  @Nonnull
-  public static final StubObjectWithCustomAttrs getStubObjectWithCustomAttrs (@Nonnull final IMicroElement aElement)
-  {
-    final ICommonsOrderedMap <String, String> aCustomAttrs = new CommonsLinkedHashMap <> ();
-    for (final IMicroElement eCustom : aElement.getAllChildElements (ELEMENT_CUSTOM))
-      aCustomAttrs.put (eCustom.getAttributeValue (ATTR_ID), eCustom.getTextContent ());
-
-    return new StubObjectWithCustomAttrs (getStubObject (aElement), aCustomAttrs);
+                           sDeletionUserID,
+                           aCustomAttrs);
   }
 }

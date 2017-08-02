@@ -21,12 +21,12 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
+import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.util.MicroHelper;
 
-public final class UserGroupMicroTypeConverter extends AbstractObjectMicroTypeConverter <UserGroup>
+public final class UserGroupMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <UserGroup>
 {
   private static final String ATTR_NAME = "name";
   private static final String ELEMENT_DESCRIPTION = "description";
@@ -44,9 +44,9 @@ public final class UserGroupMicroTypeConverter extends AbstractObjectMicroTypeCo
     if (StringHelper.hasText (aUserGroup.getDescription ()))
       aElement.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aUserGroup.getDescription ());
     for (final String sUserID : CollectionHelper.getSorted (aUserGroup.getAllContainedUserIDs ()))
-      aElement.appendElement (ELEMENT_USER).setAttribute (ATTR_ID, sUserID);
+      aElement.appendElement (sNamespaceURI, ELEMENT_USER).setAttribute (ATTR_ID, sUserID);
     for (final String sRoleID : CollectionHelper.getSorted (aUserGroup.getAllContainedRoleIDs ()))
-      aElement.appendElement (ELEMENT_ROLE).setAttribute (ATTR_ID, sRoleID);
+      aElement.appendElement (sNamespaceURI, ELEMENT_ROLE).setAttribute (ATTR_ID, sRoleID);
     return aElement;
   }
 
@@ -56,7 +56,7 @@ public final class UserGroupMicroTypeConverter extends AbstractObjectMicroTypeCo
     final String sName = aElement.getAttributeValue (ATTR_NAME);
     final String sDescription = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_DESCRIPTION);
 
-    final UserGroup aUserGroup = new UserGroup (getStubObjectWithCustomAttrs (aElement), sName, sDescription);
+    final UserGroup aUserGroup = new UserGroup (getStubObject (aElement), sName, sDescription);
     for (final IMicroElement eUser : aElement.getAllChildElements (ELEMENT_USER))
       aUserGroup.assignUser (eUser.getAttributeValue (ATTR_ID));
     for (final IMicroElement eRole : aElement.getAllChildElements (ELEMENT_ROLE))

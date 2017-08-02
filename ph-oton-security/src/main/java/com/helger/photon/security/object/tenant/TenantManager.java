@@ -31,7 +31,7 @@ import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.object.tenant.CTenant;
 import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.basic.object.tenant.ITenantResolver;
-import com.helger.photon.security.object.ObjectHelper;
+import com.helger.photon.security.object.BusinessObjectHelper;
 
 /**
  * Manages all available clients.
@@ -87,7 +87,7 @@ public class TenantManager extends AbstractMapBasedWALDAO <ITenant, Tenant> impl
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      ObjectHelper.setLastModificationNow (aClient);
+      BusinessObjectHelper.setLastModificationNow (aClient);
       internalUpdateItem (aClient);
     }
     finally
@@ -112,7 +112,7 @@ public class TenantManager extends AbstractMapBasedWALDAO <ITenant, Tenant> impl
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (ObjectHelper.setDeletionNow (aDeletedClient).isUnchanged ())
+      if (BusinessObjectHelper.setDeletionNow (aDeletedClient).isUnchanged ())
       {
         AuditHelper.onAuditDeleteFailure (Tenant.OT, "already-deleted", sClientID);
         return EChange.UNCHANGED;

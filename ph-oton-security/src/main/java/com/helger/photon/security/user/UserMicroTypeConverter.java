@@ -26,7 +26,7 @@ import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
-import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
+import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_1000_48;
 import com.helger.security.password.salt.IPasswordSalt;
@@ -37,7 +37,7 @@ import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.util.MicroHelper;
 
-public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConverter <User>
+public final class UserMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <User>
 {
   private static final IMicroQName ATTR_DESIREDLOCALE = new MicroQName ("desiredlocale");
   private static final IMicroQName ATTR_LASTLOGINLDT = new MicroQName ("lastloginldt");
@@ -113,7 +113,7 @@ public final class UserMicroTypeConverter extends AbstractObjectMicroTypeConvert
     final String sDisabled = aElement.getAttributeValue (ATTR_DISABLED);
     final boolean bDisabled = StringParser.parseBool (sDisabled);
 
-    return new User (getStubObjectWithCustomAttrs (aElement),
+    return new User (getStubObject (aElement),
                      sLoginName,
                      sEmailAddress,
                      aPasswordHash,

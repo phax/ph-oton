@@ -19,7 +19,7 @@ package com.helger.photon.security.role;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.text.IHasDescription;
-import com.helger.photon.basic.object.IObjectWithCustomAttrs;
+import com.helger.photon.basic.object.IBusinessObject;
 
 /**
  * Represents a single role that can be assigned to user groups.
@@ -27,7 +27,7 @@ import com.helger.photon.basic.object.IObjectWithCustomAttrs;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IRole extends IObjectWithCustomAttrs, IHasName, IHasDescription
+public interface IRole extends IBusinessObject, IHasName, IHasDescription
 {
   /* empty */
 }

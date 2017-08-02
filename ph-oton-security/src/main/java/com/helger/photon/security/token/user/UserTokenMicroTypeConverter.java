@@ -23,7 +23,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
-import com.helger.photon.security.object.AbstractObjectMicroTypeConverter;
+import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 import com.helger.photon.security.user.IUser;
@@ -37,7 +37,7 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
  *
  * @author Philip Helger
  */
-public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeConverter <UserToken>
+public final class UserTokenMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <UserToken>
 {
   private static final String ELEMENT_ACCESS_TOKEN = "accesstoken";
   private static final String ATTR_USER_ID = "userid";
@@ -71,6 +71,6 @@ public final class UserTokenMicroTypeConverter extends AbstractObjectMicroTypeCo
     if (aUser == null)
       throw new IllegalStateException ("Failed to resolve user with ID '" + sUserID + "'");
 
-    return new UserToken (getStubObjectWithCustomAttrs (aElement), aAccessTokens, aUser);
+    return new UserToken (getStubObject (aElement), aAccessTokens, aUser);
   }
 }

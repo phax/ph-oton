@@ -19,14 +19,14 @@ package com.helger.photon.basic.object.tenant;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.basic.object.IObject;
+import com.helger.photon.basic.object.IBusinessObject;
 
 /**
  * Base interface for an object that is uniquely assigned to a client.
  *
  * @author Philip Helger
  */
-public interface ITenantObject extends IObject, IHasTenant
+public interface ITenantObject extends IBusinessObject, IHasTenant
 {
   /**
    * @return The client to which the object is assigned to. May not be

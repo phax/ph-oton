@@ -31,7 +31,7 @@ import org.junit.rules.TestRule;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
-import com.helger.photon.security.object.StubObjectWithCustomAttrs;
+import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.security.password.salt.PasswordSalt;
 import com.helger.xml.microdom.IMicroElement;
@@ -50,7 +50,7 @@ public final class UserTest
   @Test
   public void testBasic ()
   {
-    final User aUser = new User (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1"),
+    final User aUser = new User (StubObject.createForCurrentUserAndID ("id1"),
                                  "MyName",
                                  "me@example.org",
                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), "ABCDEF"),
@@ -82,7 +82,7 @@ public final class UserTest
   @Test
   public void testBasic2 ()
   {
-    final User aUser = new User (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1"),
+    final User aUser = new User (StubObject.createForCurrentUserAndID ("id1"),
                                  "MyName",
                                  null,
                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), "ABCDEF"),
@@ -123,9 +123,8 @@ public final class UserTest
   @Test
   public void testMicroConversion ()
   {
-    final User aUser = new User (StubObjectWithCustomAttrs.createForCurrentUserAndID ("id1",
-                                                                                      CollectionHelper.newMap ("locale",
-                                                                                                               "de_DE")),
+    final User aUser = new User (StubObject.createForCurrentUserAndID ("id1",
+                                                                       CollectionHelper.newMap ("locale", "de_DE")),
                                  "MyName",
                                  "me@example.org",
                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), "ABCDEF"),

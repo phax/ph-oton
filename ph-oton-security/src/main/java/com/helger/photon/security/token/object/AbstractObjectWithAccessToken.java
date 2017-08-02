@@ -30,8 +30,8 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.object.AbstractObjectWithCustomAttrs;
-import com.helger.photon.security.object.StubObjectWithCustomAttrs;
+import com.helger.photon.basic.object.AbstractBusinessObject;
+import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 
@@ -40,8 +40,7 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
  *
  * @author Philip Helger
  */
-public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCustomAttrs
-                                                    implements IObjectWithAccessToken
+public abstract class AbstractObjectWithAccessToken extends AbstractBusinessObject implements IObjectWithAccessToken
 {
   private final ICommonsList <AccessToken> m_aAccessTokens;
 
@@ -54,12 +53,12 @@ public abstract class AbstractObjectWithAccessToken extends AbstractObjectWithCu
     return aAccessToken != null && !aAccessToken.isRevoked () ? aAccessToken : null;
   }
 
-  public AbstractObjectWithAccessToken (@Nonnull final StubObjectWithCustomAttrs aStubObject,
+  public AbstractObjectWithAccessToken (@Nonnull final StubObject aStubObject,
                                         @Nonnull @Nonempty final List <AccessToken> aAccessTokens)
   {
     super (aStubObject);
     ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");
-    m_aAccessTokens = new CommonsArrayList<> (aAccessTokens);
+    m_aAccessTokens = new CommonsArrayList <> (aAccessTokens);
     m_aActiveAccessToken = _getIfNotRevoked (CollectionHelper.getLastElement (aAccessTokens));
   }
 
