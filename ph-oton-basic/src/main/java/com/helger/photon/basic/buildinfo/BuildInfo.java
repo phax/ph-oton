@@ -32,8 +32,8 @@ import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.string.StringParser;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.traits.IGetterByKeyTrait;
 import com.helger.xml.microdom.util.XMLMapHandler;
 
 /**
@@ -42,7 +42,7 @@ import com.helger.xml.microdom.util.XMLMapHandler;
  *
  * @author Philip Helger
  */
-public final class BuildInfo
+public final class BuildInfo implements IGetterByKeyTrait <String>
 {
   /**
    * The default filename as stored in the JAR files.
@@ -64,13 +64,13 @@ public final class BuildInfo
 
   private final ICommonsMap <String, String> m_aMap;
   private final int m_nVersion;
-  private final ICommonsMap <String, String> m_aSysProperties = new CommonsHashMap<> ();
-  private final ICommonsMap <String, String> m_aEnvVars = new CommonsHashMap<> ();
+  private final ICommonsMap <String, String> m_aSysProperties = new CommonsHashMap <> ();
+  private final ICommonsMap <String, String> m_aEnvVars = new CommonsHashMap <> ();
 
   public BuildInfo (@Nonnull final ICommonsMap <String, String> aMap)
   {
     m_aMap = ValueEnforcer.notNull (aMap, "Map");
-    m_nVersion = getInt ("buildinfo.version");
+    m_nVersion = getAsInt ("buildinfo.version", 0);
     if (m_nVersion < 1)
       throw new IllegalArgumentException ("The passed map is not a buildinfo map!");
 
@@ -103,176 +103,161 @@ public final class BuildInfo
    * @return <code>null</code> if the key does not exist
    */
   @Nullable
-  public String getString (@Nullable final String sKey)
+  public String getValue (@Nullable final String sKey)
   {
     return m_aMap.get (sKey);
-  }
-
-  public long getLong (@Nullable final String sKey)
-  {
-    return StringParser.parseLong (getString (sKey), 0);
-  }
-
-  public int getInt (@Nullable final String sKey)
-  {
-    return StringParser.parseInt (getString (sKey), 0);
-  }
-
-  public boolean getBoolean (@Nullable final String sKey)
-  {
-    return StringParser.parseBool (getString (sKey));
   }
 
   @Nonnull
   public String getProjectGroupID ()
   {
-    return getString ("project.groupid");
+    return getAsString ("project.groupid");
   }
 
   @Nonnull
   public String getProjectArtifactID ()
   {
-    return getString ("project.artifactid");
+    return getAsString ("project.artifactid");
   }
 
   @Nonnull
   public String getProjectVersion ()
   {
-    return getString ("project.version");
+    return getAsString ("project.version");
   }
 
   @Nonnull
   public String getProjectName ()
   {
-    return getString ("project.name");
+    return getAsString ("project.name");
   }
 
   @Nonnull
   public String getProjectPackaging ()
   {
-    return getString ("project.packaging");
+    return getAsString ("project.packaging");
   }
 
   @Nonnull
   public String getParentProjectGroupID ()
   {
-    return getString ("parentproject.groupid");
+    return getAsString ("parentproject.groupid");
   }
 
   @Nonnull
   public String getParentProjectArtifactID ()
   {
-    return getString ("parentproject.artifactid");
+    return getAsString ("parentproject.artifactid");
   }
 
   @Nonnull
   public String getParentProjectVersion ()
   {
-    return getString ("parentproject.version");
+    return getAsString ("parentproject.version");
   }
 
   @Nonnull
   public String getParentProjectName ()
   {
-    return getString ("parentproject.name");
+    return getAsString ("parentproject.name");
   }
 
   @Nonnegative
   public int getBuildPluginCount ()
   {
-    return getInt ("build.plugin.count");
+    return getAsInt ("build.plugin.count", 0);
   }
 
   @Nonnull
   public String getBuildPluginGroupID (@Nonnegative final int nIndex)
   {
-    return getString ("build.plugin." + nIndex + ".groupid");
+    return getAsString ("build.plugin." + nIndex + ".groupid");
   }
 
   @Nonnull
   public String getBuildPluginArtifactID (@Nonnegative final int nIndex)
   {
-    return getString ("build.plugin." + nIndex + ".artifactid");
+    return getAsString ("build.plugin." + nIndex + ".artifactid");
   }
 
   @Nonnull
   public String getBuildPluginVersion (@Nonnegative final int nIndex)
   {
-    return getString ("build.plugin." + nIndex + ".version");
+    return getAsString ("build.plugin." + nIndex + ".version");
   }
 
   @Nonnull
   public String getBuildPluginConfiguration (@Nonnegative final int nIndex)
   {
-    return getString ("build.plugin." + nIndex + ".configuration");
+    return getAsString ("build.plugin." + nIndex + ".configuration");
   }
 
   @SinceBuildInfoV2
   public String getBuildPluginKey (@Nonnegative final int nIndex)
   {
-    return getString ("build.plugin." + nIndex + ".key");
+    return getAsString ("build.plugin." + nIndex + ".key");
   }
 
   @Nonnegative
   @SinceBuildInfoV2
   public int getDependencyCount ()
   {
-    return getInt ("dependency.count");
+    return getAsInt ("dependency.count", 0);
   }
 
   @Nonnull
   @SinceBuildInfoV2
   public String getDependencyGroupID (@Nonnegative final int nIndex)
   {
-    return getString ("dependency." + nIndex + ".groupid");
+    return getAsString ("dependency." + nIndex + ".groupid");
   }
 
   @Nonnull
   @SinceBuildInfoV2
   public String getDependencyArtifactID (@Nonnegative final int nIndex)
   {
-    return getString ("dependency." + nIndex + ".artifactid");
+    return getAsString ("dependency." + nIndex + ".artifactid");
   }
 
   @Nonnull
   @SinceBuildInfoV2
   public String getDependencyVersion (@Nonnegative final int nIndex)
   {
-    return getString ("dependency." + nIndex + ".version");
+    return getAsString ("dependency." + nIndex + ".version");
   }
 
   @Nonnull
   @SinceBuildInfoV2
   public String getDependencyType (@Nonnegative final int nIndex)
   {
-    return getString ("dependency." + nIndex + ".type");
+    return getAsString ("dependency." + nIndex + ".type");
   }
 
   @Nullable
   @SinceBuildInfoV2
   public String getDependencyClassifier (@Nonnegative final int nIndex)
   {
-    return getString ("dependency." + nIndex + ".classifier");
+    return getAsString ("dependency." + nIndex + ".classifier");
   }
 
   @Nonnull
   @SinceBuildInfoV2
   public String getDependencyScope (@Nonnegative final int nIndex)
   {
-    return getString ("dependency." + nIndex + ".scope");
+    return getAsString ("dependency." + nIndex + ".scope");
   }
 
   @Nullable
   @SinceBuildInfoV2
   public String getDependencySystemPath (@Nonnegative final int nIndex)
   {
-    return getString ("dependency." + nIndex + ".systempath");
+    return getAsString ("dependency." + nIndex + ".systempath");
   }
 
   @SinceBuildInfoV2
   public boolean isDependencyOptional (@Nonnegative final int nIndex)
   {
-    return getBoolean ("dependency." + nIndex + ".optional");
+    return getAsBoolean ("dependency." + nIndex + ".optional");
   }
 
   /**
@@ -285,7 +270,7 @@ public final class BuildInfo
   @SinceBuildInfoV2
   public String getDependencyManagementKey (@Nonnegative final int nIndex)
   {
-    return getString ("dependency." + nIndex + ".managementkey");
+    return getAsString ("dependency." + nIndex + ".managementkey");
   }
 
   // TODO add exclusions
@@ -293,7 +278,7 @@ public final class BuildInfo
   @Nonnull
   public LocalDateTime getBuildDateTime ()
   {
-    return PDTFactory.createLocalDateTime (getLong ("build.datetime.millis"));
+    return PDTFactory.createLocalDateTime (getAsLong ("build.datetime.millis", 0));
   }
 
   @Nonnull
