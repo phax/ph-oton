@@ -167,9 +167,6 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     if (eJVMVendor.isSun () && eJVMVendor != EJVMVendor.SUN_SERVER)
       s_aLogger.warn ("Consider using the Sun Server Runtime by specifiying '-server' on the commandline!");
 
-    if (SystemProperties.getJavaVersion ().startsWith ("1.6.0_14"))
-      s_aLogger.warn ("This Java version is bad for development - breakpoints don't work in the debugger!");
-
     if (getClass ().desiredAssertionStatus ())
       s_aLogger.warn ("Java assertions are enabled - this should be disabled in production!");
   }
