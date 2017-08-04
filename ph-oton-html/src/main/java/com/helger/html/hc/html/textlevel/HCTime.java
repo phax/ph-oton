@@ -93,7 +93,7 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   @Nonnull
   public HCTime setAsDate (@Nonnull final Date aDate)
   {
-    return setAsDate (TypeConverter.convertIfNecessary (aDate, LocalDate.class));
+    return setAsDate (TypeConverter.convert (aDate, LocalDate.class));
   }
 
   @Nonnull
@@ -151,7 +151,7 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   @Nonnull
   public HCTime setAsTime (@Nonnull final Date aDate)
   {
-    return setAsTime (TypeConverter.convertIfNecessary (aDate, LocalTime.class));
+    return setAsTime (TypeConverter.convert (aDate, LocalTime.class));
   }
 
   @Nonnull

@@ -263,23 +263,23 @@ public class ExporterExcel implements IExporterFile
               aWBCH.addCellStyle (m_aStyleText);
             break;
           case DATE:
-            aCell = aWBCH.addCell (TypeConverter.convertIfNecessary (aFieldValue, Date.class));
+            aCell = aWBCH.addCell (TypeConverter.convert (aFieldValue, Date.class));
             aWBCH.addCellStyle (m_aStyleDate);
             break;
           case TIME:
-            aCell = aWBCH.addCell (TypeConverter.convertIfNecessary (aFieldValue, Date.class));
+            aCell = aWBCH.addCell (TypeConverter.convert (aFieldValue, Date.class));
             aWBCH.addCellStyle (m_aStyleTime);
             break;
           case DATETIME:
             if (aFieldValue instanceof LocalDateTime)
             {
               // No timezone
-              aCell = aWBCH.addCell (TypeConverter.convertIfNecessary (aFieldValue, Date.class));
+              aCell = aWBCH.addCell (TypeConverter.convert (aFieldValue, Date.class));
             }
             else
             {
               // Here we have a timezone -> use calendar
-              aCell = aWBCH.addCell (TypeConverter.convertIfNecessary (aFieldValue, GregorianCalendar.class));
+              aCell = aWBCH.addCell (TypeConverter.convert (aFieldValue, GregorianCalendar.class));
             }
             aWBCH.addCellStyle (m_aStyleDateTime);
             break;

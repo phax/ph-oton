@@ -223,7 +223,7 @@ public class ExporterCSV implements IExporterFile
     {
       final Object aFieldValue = aField.getFieldValue ();
       if (aFieldValue != null)
-        aCSVValues.add (TypeConverter.convertIfNecessary (aFieldValue, String.class));
+        aCSVValues.add (TypeConverter.convert (aFieldValue, String.class));
     }
     return aCSVValues;
   }
