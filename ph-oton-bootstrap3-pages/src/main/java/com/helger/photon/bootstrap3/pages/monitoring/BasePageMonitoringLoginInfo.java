@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.attr.IAttributeContainer;
+import com.helger.commons.collection.attr.IStringMap;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.text.IMultilingualText;
@@ -247,7 +247,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                                   .setCtrl (aSelectedObject.getSessionScope ().getID ()));
 
     // Add custom attributes
-    final IAttributeContainer <String, String> aAttrs = aSelectedObject.attrs ();
+    final IStringMap aAttrs = aSelectedObject.attrs ();
     if (aAttrs.isEmpty ())
     {
       final HCTable aCustomAttrTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),

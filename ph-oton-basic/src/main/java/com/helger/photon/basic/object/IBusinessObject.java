@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.IMutableAttributeContainer;
+import com.helger.commons.collection.attr.IStringMap;
 import com.helger.commons.type.ITypedObject;
 import com.helger.photon.basic.datetime.IHasCreationInfo;
 import com.helger.photon.basic.datetime.IHasDeletionInfo;
@@ -84,5 +84,5 @@ public interface IBusinessObject extends
    */
   @Nonnull
   @ReturnsMutableObject
-  IMutableAttributeContainer <String, String> customAttrs ();
+  IStringMap customAttrs ();
 }

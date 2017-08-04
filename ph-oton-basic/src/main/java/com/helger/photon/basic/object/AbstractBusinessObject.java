@@ -26,7 +26,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.AttributeContainer;
+import com.helger.commons.collection.attr.StringMap;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.state.EChange;
@@ -48,7 +48,7 @@ public abstract class AbstractBusinessObject implements IBusinessObject
   private String m_sLastModificationUserID;
   private LocalDateTime m_aDeletionDT;
   private String m_sDeletionUserID;
-  private final AttributeContainer <String, String> m_aCustomAttrs = new AttributeContainer <> ();
+  private final StringMap m_aCustomAttrs = new StringMap ();
   // Status vars
   private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
@@ -180,7 +180,7 @@ public abstract class AbstractBusinessObject implements IBusinessObject
 
   @Nonnull
   @ReturnsMutableObject
-  public final AttributeContainer <String, String> customAttrs ()
+  public final StringMap customAttrs ()
   {
     return m_aCustomAttrs;
   }
