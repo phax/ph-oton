@@ -86,10 +86,10 @@ public final class RequestTracker extends AbstractGlobalWebSingleton
   public RequestTracker ()
   {
     // Register default callbacks
-    m_aLongRunningCallbacks.add (new LoggingLongRunningRequestCallback (EErrorLevel.ERROR))
-                           .add (new AuditingLongRunningRequestCallback ());
-    m_aParallelRunningCallbacks.add (new LoggingParallelRunningRequestCallback (EErrorLevel.WARN))
-                               .add (new AuditingParallelRunningRequestCallback ());
+    m_aLongRunningCallbacks.add (new LoggingLongRunningRequestCallback (EErrorLevel.ERROR));
+    m_aLongRunningCallbacks.add (new AuditingLongRunningRequestCallback ());
+    m_aParallelRunningCallbacks.add (new LoggingParallelRunningRequestCallback (EErrorLevel.WARN));
+    m_aParallelRunningCallbacks.add (new AuditingParallelRunningRequestCallback ());
 
     // Create the executor service
     m_aExecSvc = Executors.newSingleThreadScheduledExecutor (new BasicThreadFactory.Builder ().setNamingPattern ("RequestTrackerMonitor-%d")
