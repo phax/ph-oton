@@ -35,6 +35,9 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.http.CHttpHeader;
@@ -81,7 +84,7 @@ import com.helger.web.scope.request.RequestScopeInitializer;
  * </ul>
  *
  * @author Philip Helger
- * @since 9.0.0
+ * @since 8.0.0
  */
 public abstract class AbstractXServlet extends GenericServlet
 {
@@ -111,16 +114,20 @@ public abstract class AbstractXServlet extends GenericServlet
                                                                                                                                 "$method.unhandled");
   private static final IMutableStatisticsHandlerKeyedTimer s_aTimer = StatisticsManager.getKeyedTimerHandler (AbstractXServlet.class);
 
+  /** Thread-safe request counter */
   private static final AtomicLong s_aRequestID = new AtomicLong (0);
+  /** Indicator whether it is the first request or not */
   private static final AtomicBoolean s_aFirstRequest = new AtomicBoolean (true);
 
   private final ServletStatusManager m_aStatusMgr;
 
   /** The main handler map */
-  protected final XServletHandlerRegistry m_aHandlerRegistry = new XServletHandlerRegistry ();
+  private final XServletHandlerRegistry m_aHandlerRegistry = new XServletHandlerRegistry ();
+  private final ICommonsList <IXServletFilter> m_aFilterList = new CommonsArrayList <> ();
 
-  // Determine in "init" method
-  private transient String m_sStatusApplicationID;
+  // Status variables
+  // Determined in "init" method
+  private transient String m_sApplicationID;
 
   /**
    * Does nothing, because this is an abstract class.
@@ -151,6 +158,20 @@ public abstract class AbstractXServlet extends GenericServlet
     m_aStatusMgr.onServletCtor (getClass ());
   }
 
+  @Nonnull
+  @ReturnsMutableObject
+  protected final XServletHandlerRegistry handlerRegistry ()
+  {
+    return m_aHandlerRegistry;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject
+  protected final ICommonsList <IXServletFilter> filterList ()
+  {
+    return m_aFilterList;
+  }
+
   /**
    * @return The application ID for this servlet. Called only once during
    *         initialization!
@@ -170,8 +191,8 @@ public abstract class AbstractXServlet extends GenericServlet
     super.init (aSC);
     m_aStatusMgr.onServletInit (getClass ());
 
-    m_sStatusApplicationID = getInitApplicationID ();
-    if (StringHelper.hasNoText (m_sStatusApplicationID))
+    m_sApplicationID = getInitApplicationID ();
+    if (StringHelper.hasNoText (m_sApplicationID))
       throw new InitializationException ("Failed retrieve a valid application ID! Please check your overriden getInitApplicationID()");
   }
 
@@ -200,7 +221,10 @@ public abstract class AbstractXServlet extends GenericServlet
     // (e.g. via the error handler)
     String sID = aRequestScope.attrs ().getAsString (REQUEST_ATTR_ID);
     if (sID != null)
+    {
+      s_aLogger.info ("Request already contains an ID (" + sID + ") - so this is an recursive request...");
       return EChange.UNCHANGED;
+    }
 
     // Create a unique ID for the request
     sID = Long.toString (s_aRequestID.incrementAndGet ());
@@ -241,7 +265,7 @@ public abstract class AbstractXServlet extends GenericServlet
                         " on resource '" +
                         aRequestScope.getURL () +
                         "' - Application ID '" +
-                        m_sStatusApplicationID +
+                        m_sApplicationID +
                         "'";
 
     if (StreamHelper.isKnownEOFException (t))
@@ -292,6 +316,9 @@ public abstract class AbstractXServlet extends GenericServlet
                                  @Nonnull final EHttpMethod eHttpMethod,
                                  @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
+    // HTTP version and method are valid
+    s_aCounterRequestsAccepted.increment ();
+
     // Find the handler for the HTTP method
     final IXServletHandler aHandler = m_aHandlerRegistry.getHandler (eHttpMethod);
     if (aHandler == null)
@@ -411,20 +438,6 @@ public abstract class AbstractXServlet extends GenericServlet
     log (sFullMsg);
   }
 
-  @Nonnull
-  @OverrideOnDemand
-  protected XServletAdvisorSecurity createSecurityAdvisor ()
-  {
-    return new XServletAdvisorSecurity ();
-  }
-
-  @Nonnull
-  @OverrideOnDemand
-  protected XServletAdvisorConsistency createConsistencyAdvisor ()
-  {
-    return new XServletAdvisorConsistency ();
-  }
-
   /**
    * Dispatches client requests to the protected <code>service</code> method.
    * There's no need to override this method.
@@ -459,31 +472,31 @@ public abstract class AbstractXServlet extends GenericServlet
     m_aStatusMgr.onServletInvocation (getClass ());
 
     // Set the last application ID in the session
-    PhotonSessionState.getInstance ().setLastApplicationID (m_sStatusApplicationID);
+    PhotonSessionState.getInstance ().setLastApplicationID (m_sApplicationID);
 
     // Ensure a valid HTTP version is provided
     final String sProtocol = aHttpRequest.getProtocol ();
-    final EHttpVersion eHTTPVersion = EHttpVersion.getFromNameOrNull (sProtocol);
-    if (eHTTPVersion == null)
+    final EHttpVersion eHttpVersion = EHttpVersion.getFromNameOrNull (sProtocol);
+    if (eHttpVersion == null)
     {
       // HTTP version disallowed
       logInvalidRequestSetup ("Request has unsupported HTTP version (" + sProtocol + ")!", aHttpRequest);
       aHttpResponse.sendError (HttpServletResponse.SC_HTTP_VERSION_NOT_SUPPORTED);
       return;
     }
-    s_aCounterRequestsPerVersionAccepted.increment (eHTTPVersion.getName ());
+    s_aCounterRequestsPerVersionAccepted.increment (eHttpVersion.getName ());
 
     // Ensure a valid HTTP method is provided
     final String sMethod = aHttpRequest.getMethod ();
-    final EHttpMethod eHTTPMethod = EHttpMethod.getFromNameOrNull (sMethod);
-    if (eHTTPMethod == null)
+    final EHttpMethod eHttpMethod = EHttpMethod.getFromNameOrNull (sMethod);
+    if (eHttpMethod == null)
     {
       // HTTP method unknown
       logInvalidRequestSetup ("Request has unsupported HTTP method (" + sMethod + ")!", aHttpRequest);
       aHttpResponse.sendError (HttpServletResponse.SC_NOT_IMPLEMENTED);
       return;
     }
-    s_aCounterRequestsPerMethodAccepted.increment (eHTTPMethod.getName ());
+    s_aCounterRequestsPerMethodAccepted.increment (eHttpMethod.getName ());
 
     // May already be set in test cases!
     if (s_aFirstRequest.getAndSet (false) && !StaticServerInfo.isSet ())
@@ -495,46 +508,45 @@ public abstract class AbstractXServlet extends GenericServlet
                              ServletContextPathHolder.getContextPath ());
     }
 
-    final XServletAdvisorSecurity aSecurityAdvisor = createSecurityAdvisor ();
-    if (aSecurityAdvisor.beforeRequestIsProcessed (aHttpRequest, aHttpResponse).isFinished ())
-    {
-      // Some security related issues was discovered so that the process cannot
-      // be handled.
-      return;
-    }
-
-    final XServletAdvisorConsistency aConsistencyAdvisor = createConsistencyAdvisor ();
-    aConsistencyAdvisor.beforeRequestIsProcessed (aHttpRequest, aHttpResponse);
-
+    // Create a wrapper around the Servlet Response that saves the status code
     final StatusAwareHttpResponseWrapper aHttpResponseWrapper = new StatusAwareHttpResponseWrapper (aHttpResponse);
+
+    // Create effective filter list with all internal filters as well
+    final ICommonsList <IXServletFilter> aEffectiveFilterList = new CommonsArrayList <> ();
+    aEffectiveFilterList.add (XServletFilterSecurity.INSTANCE);
+    aEffectiveFilterList.add (new XServletFilterConsistency ());
+    aEffectiveFilterList.addAll (m_aFilterList);
+
+    // Create request scope
+    final RequestScopeInitializer aRequestScopeInitializer = RequestScopeInitializer.create (m_sApplicationID,
+                                                                                             aHttpRequest,
+                                                                                             aHttpResponseWrapper);
     try
     {
-      // HTTP version and method are valid
-      s_aCounterRequestsAccepted.increment ();
+      final IRequestWebScope aRequestScope = aRequestScopeInitializer.getRequestScope ();
 
-      // Create request scope
-      final RequestScopeInitializer aRequestScopeInitializer = RequestScopeInitializer.create (m_sStatusApplicationID,
-                                                                                               aHttpRequest,
-                                                                                               aHttpResponse);
+      // Filter before
+      for (final IXServletFilter aFilter : aEffectiveFilterList)
+        if (aFilter.beforeRequest (aHttpRequest, aHttpResponseWrapper, eHttpVersion, eHttpMethod, aRequestScope)
+                   .isBreak ())
+          return;
+
       try
       {
         // Determine handler
-        _internalService (aHttpRequest,
-                          aHttpResponseWrapper,
-                          eHTTPVersion,
-                          eHTTPMethod,
-                          aRequestScopeInitializer.getRequestScope ());
+        _internalService (aHttpRequest, aHttpResponseWrapper, eHttpVersion, eHttpMethod, aRequestScope);
       }
       finally
       {
-        // Destroy request scope
-        aRequestScopeInitializer.destroyScope ();
+        // Filter after
+        for (final IXServletFilter aFilter : aEffectiveFilterList)
+          aFilter.afterRequest (aHttpRequest, aHttpResponseWrapper, eHttpVersion, eHttpMethod, aRequestScope);
       }
     }
     finally
     {
-      aConsistencyAdvisor.afterRequest (aHttpRequest, aHttpResponseWrapper);
-      aSecurityAdvisor.afterRequest (aHttpRequest, aHttpResponseWrapper);
+      // Destroy request scope
+      aRequestScopeInitializer.destroyScope ();
     }
   }
 
@@ -542,7 +554,7 @@ public abstract class AbstractXServlet extends GenericServlet
   public String toString ()
   {
     return new ToStringGenerator (this).append ("HandlerRegistry", m_aHandlerRegistry)
-                                       .append ("ApplicationID", m_sStatusApplicationID)
+                                       .append ("ApplicationID", m_sApplicationID)
                                        .getToString ();
   }
 }

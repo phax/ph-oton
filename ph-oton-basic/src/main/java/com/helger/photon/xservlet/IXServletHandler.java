@@ -29,7 +29,7 @@ import com.helger.http.EHttpVersion;
 import com.helger.web.scope.IRequestWebScope;
 
 /**
- * HTTP servlet handler for a single HTTP method.
+ * Handler for a single HTTP method in an XServlet.
  *
  * @author Philip Helger
  * @since 8.0.0
@@ -49,7 +49,7 @@ public interface IXServletHandler extends Serializable
    * @param eHttpMethod
    *        HTTP method. Never <code>null</code>.
    * @param aRequestScope
-   *        Request scpe. Never <code>null</code>.
+   *        Request scope. Never <code>null</code>.
    * @throws ServletException
    *         On business error
    * @throws IOException

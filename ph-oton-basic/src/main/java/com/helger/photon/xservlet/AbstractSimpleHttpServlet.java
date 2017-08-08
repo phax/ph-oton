@@ -47,7 +47,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * </ul>
  *
  * @author Philip Helger
- * @since 8.8.0
+ * @since 8.0.0
  */
 public abstract class AbstractSimpleHttpServlet extends AbstractXServlet
 {
@@ -265,6 +265,6 @@ public abstract class AbstractSimpleHttpServlet extends AbstractXServlet
     final IXServletHandler aRealHandler = new AsyncXServletHandler (aAsyncSpec,
                                                                     new ToUnifiedResponseHttpServletHandler (aSimpleHandler,
                                                                                                              sApplicationID));
-    m_aHandlerRegistry.registerHandler (eMethod, aRealHandler);
+    handlerRegistry ().registerHandler (eMethod, aRealHandler);
   }
 }

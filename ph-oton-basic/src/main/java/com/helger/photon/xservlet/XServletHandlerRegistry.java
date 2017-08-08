@@ -12,7 +12,7 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.string.StringHelper;
 import com.helger.http.EHttpMethod;
 
-final class XServletHandlerRegistry
+public final class XServletHandlerRegistry
 {
   /** The main handler map */
   private final ICommonsMap <EHttpMethod, IXServletHandler> m_aHandler = new CommonsEnumMap <> (EHttpMethod.class);
@@ -29,7 +29,7 @@ final class XServletHandlerRegistry
    * @param aHandler
    *        The handler to register. May not be <code>null</code>.
    */
-  void registerHandler (@Nonnull final EHttpMethod eHTTPMethod, @Nonnull final IXServletHandler aHandler)
+  public void registerHandler (@Nonnull final EHttpMethod eHTTPMethod, @Nonnull final IXServletHandler aHandler)
   {
     ValueEnforcer.notNull (eHTTPMethod, "HTTPMethod");
     ValueEnforcer.notNull (aHandler, "Handler");
@@ -41,7 +41,7 @@ final class XServletHandlerRegistry
 
   @Nonnull
   @ReturnsMutableCopy
-  EnumSet <EHttpMethod> getAllowedHTTPMethods ()
+  public EnumSet <EHttpMethod> getAllowedHTTPMethods ()
   {
     // Return all methods for which handlers are registered
     final EnumSet <EHttpMethod> ret = EnumSet.copyOf (m_aHandler.keySet ());
@@ -54,13 +54,13 @@ final class XServletHandlerRegistry
   }
 
   @Nonnull
-  String getAllowedHttpMethodsString ()
+  public String getAllowedHttpMethodsString ()
   {
     return StringHelper.getImplodedMapped (", ", getAllowedHTTPMethods (), EHttpMethod::getName);
   }
 
   @Nullable
-  IXServletHandler getHandler (@Nonnull final EHttpMethod eHttpMethod)
+  public IXServletHandler getHandler (@Nonnull final EHttpMethod eHttpMethod)
   {
     return m_aHandler.get (eHttpMethod);
   }

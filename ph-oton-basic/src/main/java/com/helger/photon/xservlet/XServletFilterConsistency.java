@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,10 +17,14 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
+import com.helger.http.EHttpMethod;
+import com.helger.http.EHttpVersion;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.ResponseHelper;
 import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
+import com.helger.web.scope.IRequestWebScope;
 
 /**
  * Handle special content related stuff that needs to be processed for every
@@ -29,18 +33,22 @@ import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
  * <li>Request fallback charset</li>
  * <li>Response fallback charset</li>
  * </ul>
- * 
+ *
  * @author Philip Helger
  */
-public class XServletAdvisorConsistency
+public class XServletFilterConsistency implements IXServletFilter
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (XServletAdvisorConsistency.class);
+  public static final XServletFilterConsistency INSTANCE = new XServletFilterConsistency ();
+  private static final Logger s_aLogger = LoggerFactory.getLogger (XServletFilterConsistency.class);
 
   /** The request fallback charset to be used, if none is present! */
   private Charset m_aRequestFallbackCharset = StandardCharsets.UTF_8;
 
   /** The response fallback charset to be used, if none is present! */
   private Charset m_aResponseFallbackCharset = StandardCharsets.UTF_8;
+
+  public XServletFilterConsistency ()
+  {}
 
   /**
    * @return The fallback charset to be used if an HTTP request has no charset
@@ -130,12 +138,16 @@ public class XServletAdvisorConsistency
     }
   }
 
-  @OverridingMethodsMustInvokeSuper
-  public void beforeRequestIsProcessed (@Nonnull final HttpServletRequest aHttpRequest,
-                                        @Nonnull final HttpServletResponse aHttpResponse) throws IOException
+  @Nonnull
+  public EContinue beforeRequest (@Nonnull final HttpServletRequest aHttpRequest,
+                                  @Nonnull final HttpServletResponse aHttpResponse,
+                                  @Nonnull final EHttpVersion eHttpVersion,
+                                  @Nonnull final EHttpMethod eHttpMethod,
+                                  @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
     ensureRequestCharset (aHttpRequest);
     ensureResponseCharset (aHttpResponse);
+    return EContinue.CONTINUE;
   }
 
   /**
@@ -204,11 +216,17 @@ public class XServletAdvisorConsistency
   }
 
   public void afterRequest (@Nonnull final HttpServletRequest aHttpRequest,
-                            @Nonnull final StatusAwareHttpResponseWrapper aHttpResponse)
+                            @Nonnull final HttpServletResponse aHttpResponse,
+                            @Nonnull final EHttpVersion eHttpVersion,
+                            @Nonnull final EHttpMethod eHttpMethod,
+                            @Nonnull final IRequestWebScope aRequestScope)
   {
+    ValueEnforcer.isTrue (aHttpResponse instanceof StatusAwareHttpResponseWrapper,
+                          "Must be a StatusAwareHttpResponseWrapper");
     final String sRequestURL = RequestHelper.getURL (aHttpRequest);
-    final int nStatusCode = aHttpResponse.getStatusCode ();
-    final ICommonsMap <String, ICommonsList <String>> aHeaders = aHttpResponse.getHeaderMap ().getAllHeaders ();
+    final int nStatusCode = ((StatusAwareHttpResponseWrapper) aHttpResponse).getStatusCode ();
+    final ICommonsMap <String, ICommonsList <String>> aHeaders = ((StatusAwareHttpResponseWrapper) aHttpResponse).headerMap ()
+                                                                                                                 .getAllHeaders ();
     final String sCharacterEncoding = aHttpResponse.getCharacterEncoding ();
     final String sContentType = aHttpResponse.getContentType ();
 
