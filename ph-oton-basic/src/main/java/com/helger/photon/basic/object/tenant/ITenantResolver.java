@@ -26,12 +26,12 @@ import javax.annotation.Nullable;
 public interface ITenantResolver
 {
   /**
-   * Get the client of the specified ID.
+   * Get the tenant of the specified ID.
    *
    * @param sID
    *        The ID to be resolved. May be <code>null</code>.
-   * @return <code>null</code> if no such client exists.
+   * @return <code>null</code> if no such tenant exists.
    */
   @Nullable
-  ITenant getClientOfID (@Nullable String sID);
+  ITenant getTenantOfID (@Nullable String sID);
 }

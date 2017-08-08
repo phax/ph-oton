@@ -43,17 +43,18 @@ public abstract class AbstractHasAccountingAreaOptionalObject extends AbstractHa
     this (aAccountingArea.getTenant (), aAccountingArea);
   }
 
-  public AbstractHasAccountingAreaOptionalObject (@Nonnull final ITenant aClient,
+  public AbstractHasAccountingAreaOptionalObject (@Nonnull final ITenant aTenant,
                                                   @Nullable final IAccountingArea aAccountingArea)
   {
-    super (aClient);
+    super (aTenant);
     ValueEnforcer.notNull (aAccountingArea, "AccountingArea");
-    if (aAccountingArea != null && !aAccountingArea.hasSameTenant (aClient))
-      throw new IllegalArgumentException ("The passed accounting area '" +
-                                          aAccountingArea.getID () +
-                                          "' does not belong to the passed client '" +
-                                          aClient.getID () +
-                                          "'!");
+    if (aAccountingArea != null)
+      ValueEnforcer.isTrue (aAccountingArea.hasSameTenant (aTenant),
+                            () -> "The passed accounting area '" +
+                                  aAccountingArea.getID () +
+                                  "' does not belong to the passed tenant '" +
+                                  aTenant.getID () +
+                                  "'!");
 
     m_aAccountingArea = aAccountingArea;
   }
@@ -70,14 +71,14 @@ public abstract class AbstractHasAccountingAreaOptionalObject extends AbstractHa
     return m_aAccountingArea;
   }
 
-  public final boolean hasSameClientAndAccountingAreaID (@Nullable final IAccountingArea aAccountingArea)
+  public final boolean hasSameTenantAndAccountingAreaID (@Nullable final IAccountingArea aAccountingArea)
   {
     return aAccountingArea != null &&
            hasSameTenantID (aAccountingArea) &&
            (m_aAccountingArea == null || m_aAccountingArea.getID ().equals (aAccountingArea.getID ()));
   }
 
-  public final boolean hasSameClientAndAccountingAreaID (@Nullable final IAccountingAreaObject aAccountingAreaObject)
+  public final boolean hasSameTenantAndAccountingAreaID (@Nullable final IAccountingAreaObject aAccountingAreaObject)
   {
     return aAccountingAreaObject != null &&
            hasSameTenantID (aAccountingAreaObject) &&

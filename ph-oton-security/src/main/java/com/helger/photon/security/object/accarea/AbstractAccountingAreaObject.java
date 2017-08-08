@@ -130,14 +130,14 @@ public abstract class AbstractAccountingAreaObject extends AbstractBusinessObjec
     return m_aAccountingArea;
   }
 
-  public final boolean hasSameClientAndAccountingAreaID (@Nullable final IAccountingArea aAccountingArea)
+  public final boolean hasSameTenantAndAccountingAreaID (@Nullable final IAccountingArea aAccountingArea)
   {
     return aAccountingArea != null &&
            hasSameTenantID (aAccountingArea) &&
            m_aAccountingArea.getID ().equals (aAccountingArea.getID ());
   }
 
-  public final boolean hasSameClientAndAccountingAreaID (@Nullable final IAccountingAreaObject aAccountingAreaObject)
+  public final boolean hasSameTenantAndAccountingAreaID (@Nullable final IAccountingAreaObject aAccountingAreaObject)
   {
     return aAccountingAreaObject != null &&
            hasSameTenantID (aAccountingAreaObject) &&

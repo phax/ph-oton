@@ -21,14 +21,14 @@ import javax.annotation.Nullable;
 import com.helger.commons.equals.EqualsHelper;
 
 /**
- * Base interface for objects that have a client ID.
+ * Base interface for objects that have a tenant ID.
  *
  * @author Philip Helger
  */
 public interface IHasTenantID
 {
   /**
-   * @return The client ID or <code>null</code>.
+   * @return The tenant ID or <code>null</code>.
    */
   @Nullable
   String getTenantID ();
@@ -37,9 +37,9 @@ public interface IHasTenantID
    * Check if the passed tenant ID has the same ID as this object
    *
    * @param sTenantID
-   *        The client ID to check. May be <code>null</code>.
+   *        The tenant ID to check. May be <code>null</code>.
    * @return <code>true</code> if this object and the passed object have the
-   *         same client ID
+   *         same tenant ID
    */
   default boolean hasSameTenantID (@Nullable final String sTenantID)
   {

@@ -21,14 +21,14 @@ import javax.annotation.Nullable;
 import com.helger.commons.equals.EqualsHelper;
 
 /**
- * Base interface for objects that have a client.
+ * Base interface for objects that have a tenant.
  *
  * @author Philip Helger
  */
 public interface IHasTenant extends IHasTenantID
 {
   /**
-   * @return The client or <code>null</code>.
+   * @return The tenant or <code>null</code>.
    */
   @Nullable
   ITenant getTenant ();
@@ -41,12 +41,12 @@ public interface IHasTenant extends IHasTenantID
   }
 
   /**
-   * Check if the passed object has the same client ID as this object
+   * Check if the passed object has the same tenant ID as this object
    *
    * @param aObj
    *        The object to check. May be <code>null</code>.
    * @return <code>true</code> if this object and the passed object (if not
-   *         <code>null</code>) have the same client ID
+   *         <code>null</code>) have the same tenant ID
    */
   default boolean hasSameTenantID (@Nullable final ITenantObject aObj)
   {
@@ -54,15 +54,15 @@ public interface IHasTenant extends IHasTenantID
   }
 
   /**
-   * Check if the passed client has the same ID as this object
+   * Check if the passed tenant has the same ID as this object
    *
-   * @param aClient
-   *        The client to check. May be <code>null</code>.
+   * @param aTenant
+   *        The tenant to check. May be <code>null</code>.
    * @return <code>true</code> if this object and the passed object have the
-   *         same client.
+   *         same tenant.
    */
-  default boolean hasSameTenant (@Nullable final ITenant aClient)
+  default boolean hasSameTenant (@Nullable final ITenant aTenant)
   {
-    return EqualsHelper.equals (getTenant (), aClient);
+    return EqualsHelper.equals (getTenant (), aTenant);
   }
 }

@@ -46,24 +46,24 @@ public interface IHasAccountingArea extends IHasTenant, IHasAccountingAreaID
   }
 
   /**
-   * Check if the passed object has the same client ID and the same accounting
+   * Check if the passed object has the same tenant ID and the same accounting
    * area ID as this object
    *
    * @param aAccountingArea
    *        The object to check. May be <code>null</code>.
    * @return <code>true</code> if this object and the passed object have the
-   *         same client ID <b>and</b> the same accounting area ID
+   *         same tenant ID <b>and</b> the same accounting area ID
    */
-  boolean hasSameClientAndAccountingAreaID (@Nullable IAccountingArea aAccountingArea);
+  boolean hasSameTenantAndAccountingAreaID (@Nullable IAccountingArea aAccountingArea);
 
   /**
-   * Check if the passed object has the same client ID and the same accounting
+   * Check if the passed object has the same tenant ID and the same accounting
    * area ID as this object
    *
    * @param aAccountingAreaObject
    *        The object to check. May be <code>null</code>.
    * @return <code>true</code> if this object and the passed object have the
-   *         same client ID <b>and</b> the same accounting area ID
+   *         same tenant ID <b>and</b> the same accounting area ID
    */
-  boolean hasSameClientAndAccountingAreaID (@Nullable IAccountingAreaObject aAccountingAreaObject);
+  boolean hasSameTenantAndAccountingAreaID (@Nullable IAccountingAreaObject aAccountingAreaObject);
 }

@@ -135,7 +135,7 @@ public class TenantManager extends AbstractPhotonMapBasedWALDAO <ITenant, Tenant
 
   public boolean hasAnyClientExceptGlobal ()
   {
-    return containsAny (x -> !x.isGlobalClient ());
+    return containsAny (x -> !x.isGlobalTenant ());
   }
 
   @Nonnegative
@@ -159,7 +159,7 @@ public class TenantManager extends AbstractPhotonMapBasedWALDAO <ITenant, Tenant
   }
 
   @Nullable
-  public ITenant getClientOfID (@Nullable final String sID)
+  public ITenant getTenantOfID (@Nullable final String sID)
   {
     return getOfID (sID);
   }

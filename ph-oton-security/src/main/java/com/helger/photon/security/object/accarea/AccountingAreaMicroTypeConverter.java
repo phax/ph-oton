@@ -89,7 +89,7 @@ public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObje
   {
     final Locale aLocale = SystemHelper.getSystemLocale ();
     final String sClientID = aElement.getAttributeValue (ATTR_CLIENTID);
-    final ITenant aClient = m_aClientResolver.getClientOfID (sClientID);
+    final ITenant aClient = m_aClientResolver.getTenantOfID (sClientID);
     if (aClient == null)
       throw new IllegalStateException ("Failed to resolve client ID '" + sClientID + "'");
 

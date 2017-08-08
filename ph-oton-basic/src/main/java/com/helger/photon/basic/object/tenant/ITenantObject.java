@@ -22,21 +22,21 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.photon.basic.object.IBusinessObject;
 
 /**
- * Base interface for an object that is uniquely assigned to a client.
+ * Base interface for an object that is uniquely assigned to a tenant.
  *
  * @author Philip Helger
  */
 public interface ITenantObject extends IBusinessObject, IHasTenant
 {
   /**
-   * @return The client to which the object is assigned to. May not be
+   * @return The tenant to which the object is assigned to. May not be
    *         <code>null</code>.
    */
   @Nonnull
   ITenant getTenant ();
 
   /**
-   * @return The client ID to which the object is assigned to. May neither be
+   * @return The tenant ID to which the object is assigned to. May neither be
    *         <code>null</code> nor empty.
    * @see #getTenant()
    */

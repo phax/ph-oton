@@ -141,16 +141,21 @@ public interface IAccountingArea extends ITenantObject, IHasDisplayName, IHasUIT
   }
 
   /**
-   * @return The default currency in this client. May be <code>null</code>.
+   * @return The default currency. May be <code>null</code>.
    */
   @Nullable
   ECurrency getDefaultCurrency ();
 
   /**
-   * @return The default currency ID in this client. May be <code>null</code>.
+   * @return The default currency ID. May be <code>null</code>.
    */
   @Nullable
   String getDefaultCurrencyID ();
+
+  default boolean hasDefaultCurrency ()
+  {
+    return getDefaultCurrency () != null;
+  }
 
   /**
    * @return Office location (Firmensitz)

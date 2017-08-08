@@ -21,16 +21,16 @@ import com.helger.photon.basic.object.IBusinessObject;
 import com.helger.photon.basic.uitext.IHasUIText;
 
 /**
- * Represents a single client (Mandant)
+ * Represents a single tenant (Mandant)
  *
  * @author Philip Helger
  */
 public interface ITenant extends IBusinessObject, IHasDisplayName, IHasUIText
 {
   /**
-   * @return <code>true</code> if this is the system global client
+   * @return <code>true</code> if this is the system global tenant
    */
-  default boolean isGlobalClient ()
+  default boolean isGlobalTenant ()
   {
     return CTenant.GLOBAL_TENANT_ID.equals (getID ());
   }
