@@ -41,9 +41,9 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
-import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * Default servlet that performs URL redirects based on {@link GoMappingManager}

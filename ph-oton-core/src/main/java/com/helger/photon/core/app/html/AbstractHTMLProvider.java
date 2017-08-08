@@ -47,8 +47,8 @@ import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.context.SimpleWebExecutionContext;
 import com.helger.photon.core.resource.ResourceBundleServlet;
-import com.helger.photon.xservlet.forcedredirect.ForcedRedirectException;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 
 /**
  * Main class for creating HTML output

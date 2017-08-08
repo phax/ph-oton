@@ -32,8 +32,8 @@ import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.IRequestParameterManager;
 import com.helger.photon.basic.app.request.RequestParameterManager;
-import com.helger.photon.xservlet.forcedredirect.ForcedRedirectException;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 
 /**
  * This object is instantiated per page view and contains the current request

@@ -35,10 +35,10 @@ import com.helger.http.EHttpMethod;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
-import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.fileupload.IFileItem;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * A special upload servlet to be used with FineUploader.

@@ -24,8 +24,8 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.url.URLHelper;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.core.url.LinkHelper;
-import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * Stream arbitrary resources available in JAR files via HTTP to a client.

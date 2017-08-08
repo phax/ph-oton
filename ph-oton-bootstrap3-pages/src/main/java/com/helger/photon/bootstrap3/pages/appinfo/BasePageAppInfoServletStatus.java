@@ -43,9 +43,9 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
-import com.helger.photon.xservlet.servletstatus.EServletStatus;
-import com.helger.photon.xservlet.servletstatus.ServletStatus;
-import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
+import com.helger.xservlet.servletstatus.EServletStatus;
+import com.helger.xservlet.servletstatus.ServletStatus;
+import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * Show servlet status.

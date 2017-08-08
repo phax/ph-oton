@@ -34,7 +34,7 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.json.IJson;
 import com.helger.json.serialize.JsonReader;
 import com.helger.json.serialize.JsonWriterSettings;
-import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
+import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * A simple default implementation of a CSP (Content Security Policy) reporting

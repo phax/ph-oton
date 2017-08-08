@@ -84,11 +84,15 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-oton-html</artifactId>
+      <artifactId>ph-masterdata</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-masterdata</artifactId>
+      <artifactId>ph-xservlet</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-oton-html</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

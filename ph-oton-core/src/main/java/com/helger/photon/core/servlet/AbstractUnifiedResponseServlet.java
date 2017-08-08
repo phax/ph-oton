@@ -54,10 +54,6 @@ import com.helger.commons.string.StringHelper;
 import com.helger.http.EHttpMethod;
 import com.helger.http.EHttpVersion;
 import com.helger.photon.basic.app.PhotonSessionState;
-import com.helger.photon.xservlet.forcedredirect.ForcedRedirectException;
-import com.helger.photon.xservlet.forcedredirect.ForcedRedirectManager;
-import com.helger.photon.xservlet.requesttrack.RequestTracker;
-import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.ServletContextPathHolder;
 import com.helger.servlet.StaticServerInfo;
@@ -68,6 +64,10 @@ import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.request.RequestScopeInitializer;
 import com.helger.web.servlets.scope.AbstractScopeAwareHttpServlet;
+import com.helger.xservlet.forcedredirect.ForcedRedirectException;
+import com.helger.xservlet.forcedredirect.ForcedRedirectManager;
+import com.helger.xservlet.requesttrack.RequestTracker;
+import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * Abstract base class for a servlets delivering responses via

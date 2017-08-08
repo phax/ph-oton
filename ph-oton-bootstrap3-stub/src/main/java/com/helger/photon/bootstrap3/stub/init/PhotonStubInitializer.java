@@ -45,11 +45,11 @@ import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.autonumeric.AbstractHCAutoNumeric;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
-import com.helger.photon.xservlet.requesttrack.RequestTracker;
 import com.helger.scope.ScopeHelper;
 import com.helger.servlet.response.UnifiedResponseDefaultSettings;
 import com.helger.web.scope.mgr.ThrowingScopeFactory;
 import com.helger.web.scope.mgr.WebScopeManager;
+import com.helger.xservlet.requesttrack.RequestTracker;
 
 /**
  * This class triggers some default configuration to run ph-oton applications

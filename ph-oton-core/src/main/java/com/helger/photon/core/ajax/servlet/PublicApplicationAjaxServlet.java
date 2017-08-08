@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.photon.basic.app.CApplicationID;
-import com.helger.photon.xservlet.servletstatus.ServletStatusManager;
+import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * This class handles the AJAX functions for the public application
