@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.object.client;
+package com.helger.photon.security.object.tenant;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -40,7 +40,7 @@ import com.helger.photon.security.object.tenant.TenantManager;
  *
  * @author Philip Helger
  */
-public final class ClientManagerTest
+public final class TenantManagerTest
 {
   @Rule
   public final TestRule m_aRule = new PhotonBasicWebTestRule ();
