@@ -102,6 +102,7 @@ public enum EPhotonCoreText implements IHasDisplayTextWithArgs
   BUTTON_SAVE_ALL ("Alles Speichern", "Save all"),
   BUTTON_SAVE_AS ("Speichern unter...", "Save as..."),
   BUTTON_SAVE_CLOSE ("Speichern und schließen", "Save and close"),
+  BUTTON_LOAD ("Laden", "Load"),
   BUTTON_RESET ("Zurücksetzen", "Reset"),
   BUTTON_CANCEL ("Abbrechen", "Cancel"),
   BUTTON_CLOSE ("Schließen", "Close"),

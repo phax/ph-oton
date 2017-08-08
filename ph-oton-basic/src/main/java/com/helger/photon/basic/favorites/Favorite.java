@@ -73,7 +73,7 @@ public class Favorite implements IFavorite
     m_sMenuItemID = ValueEnforcer.notEmpty (sMenuItemID, "menu item ID");
     m_sApplicationID = ValueEnforcer.notEmpty (sApplicationID, "application ID");
     setDisplayName (sDisplayName);
-    m_aAdditionalParams = new CommonsHashMap<> (aAdditionalParams);
+    m_aAdditionalParams = new CommonsHashMap <> (aAdditionalParams);
   }
 
   @Nonnull
@@ -135,7 +135,7 @@ public class Favorite implements IFavorite
                                  @Nullable final ICommonsMap <String, String> aAdditionalParams)
   {
     final ICommonsMap <String, String> aRealAdditionalParams = aAdditionalParams != null ? aAdditionalParams
-                                                                                         : new CommonsHashMap<> ();
+                                                                                         : new CommonsHashMap <> ();
     return m_sApplicationID.equals (sAppID) &&
            m_sMenuItemID.equals (sMenuItemID) &&
            m_aAdditionalParams.equals (aRealAdditionalParams);
