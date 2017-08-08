@@ -41,26 +41,13 @@ import com.helger.photon.security.object.StubObject;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
+public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
 {
   private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public RoleManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
     super (Role.class, sFilename);
-  }
-
-  public boolean isReloadable ()
-  {
-    return true;
-  }
-
-  public void reload () throws DAOException
-  {
-    m_aRWLock.writeLockedThrowing ( () -> {
-      internalRemoveAllItemsNoCallback ();
-      initialRead ();
-    });
   }
 
   public void createDefaults ()

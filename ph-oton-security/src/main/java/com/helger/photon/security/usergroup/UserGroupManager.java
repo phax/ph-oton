@@ -74,19 +74,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return m_aRoleMgr;
   }
 
-  public boolean isReloadable ()
-  {
-    return true;
-  }
-
-  public void reload () throws DAOException
-  {
-    m_aRWLock.writeLockedThrowing ( () -> {
-      internalRemoveAllItemsNoCallback ();
-      initialRead ();
-    });
-  }
-
   public void createDefaults ()
   {
     // Administrators user group

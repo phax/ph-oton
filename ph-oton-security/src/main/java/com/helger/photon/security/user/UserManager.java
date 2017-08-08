@@ -58,19 +58,6 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
     super (User.class, sFilename);
   }
 
-  public boolean isReloadable ()
-  {
-    return true;
-  }
-
-  public void reload () throws DAOException
-  {
-    m_aRWLock.writeLockedThrowing ( () -> {
-      internalRemoveAllItemsNoCallback ();
-      initialRead ();
-    });
-  }
-
   public void createDefaults ()
   {
     // Create Administrator

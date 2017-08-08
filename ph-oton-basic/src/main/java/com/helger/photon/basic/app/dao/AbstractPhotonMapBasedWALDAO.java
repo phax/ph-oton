@@ -26,4 +26,17 @@ public abstract class AbstractPhotonMapBasedWALDAO <INTERFACETYPE extends IHasID
   {
     super (aImplClass, WebFileIO.getDataIO (), sFilename, aInitSettings);
   }
+
+  public boolean isReloadable ()
+  {
+    return true;
+  }
+
+  public void reload () throws DAOException
+  {
+    m_aRWLock.writeLockedThrowing ( () -> {
+      internalRemoveAllItemsNoCallback ();
+      initialRead ();
+    });
+  }
 }
