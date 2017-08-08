@@ -40,7 +40,6 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.cleanup.CommonsCleanup;
 import com.helger.commons.collection.impl.CommonsTreeMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsNavigableMap;
@@ -62,6 +61,7 @@ import com.helger.commons.thirdparty.ThirdPartyModuleRegistry;
 import com.helger.commons.timing.StopWatch;
 import com.helger.commons.url.URLHelper;
 import com.helger.datetime.util.PDTIOHelper;
+import com.helger.photon.basic.PhotonBasic;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOIntIDFactory;
 import com.helger.photon.basic.app.io.WebIOLongIDFactory;
@@ -69,7 +69,6 @@ import com.helger.servlet.StaticServerInfo;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
-import com.helger.xml.util.XMLCleanup;
 import com.helger.xml.util.statistics.StatisticsExporter;
 
 /**
@@ -662,13 +661,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     if (isHandleStatisticsOnEnd ())
       handleStatisticsOnEnd ();
 
-    // Reset base path - mainly for testing
-    WebFileIO.resetPaths ();
-
-    // Clear commons cache also manually - but after destroy because it
-    // is used in equals and hashCode implementations
-    XMLCleanup.cleanup ();
-    CommonsCleanup.cleanup ();
+    // Clean commons stuff etc
+    PhotonBasic.shutDown ();
 
     if (isOnlyOneInstanceAllowed ())
     {

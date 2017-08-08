@@ -22,11 +22,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.cleanup.CommonsCleanup;
 import com.helger.commons.id.factory.GlobalIDFactory;
+import com.helger.photon.basic.PhotonBasic;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOIntIDFactory;
-import com.helger.xml.util.XMLCleanup;
 
 /**
  * Static test init and shutdown code for this project
@@ -52,11 +51,6 @@ public final class PhotonBasicTestInit
 
   public static void shutdown ()
   {
-    // Init the base path once
-    WebFileIO.resetPaths ();
-
-    // Clean commons
-    XMLCleanup.cleanup ();
-    CommonsCleanup.cleanup ();
+    PhotonBasic.shutDown ();
   }
 }
