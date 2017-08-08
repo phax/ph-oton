@@ -122,7 +122,7 @@ public class CheckResponseFilter extends AbstractHttpServletFilter
   {
     final String sRequestURL = RequestHelper.getURL (aHttpRequest);
     final int nStatusCode = aHttpResponse.getStatusCode ();
-    final ICommonsMap <String, ICommonsList <String>> aHeaders = aHttpResponse.getHeaderMap ().getAllHeaders ();
+    final ICommonsMap <String, ICommonsList <String>> aHeaders = aHttpResponse.headerMap ().getAllHeaders ();
     final String sCharacterEncoding = aHttpResponse.getCharacterEncoding ();
     final String sContentType = aHttpResponse.getContentType ();
 
