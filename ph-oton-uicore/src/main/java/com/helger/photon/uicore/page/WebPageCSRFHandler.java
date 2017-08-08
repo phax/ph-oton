@@ -76,7 +76,7 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
     if (m_bCSRFPreventionEnabled)
     {
       final CSRFSessionManager aCSRFSessionMgr = CSRFSessionManager.getInstance ();
-      final String sNonce = aWPEC.getAttributeAsString (CPageParam.FIELD_NONCE);
+      final String sNonce = aWPEC.params ().getAsString (CPageParam.FIELD_NONCE);
       if (!aCSRFSessionMgr.isExpectedNonce (sNonce))
       {
         // CSRF failure!

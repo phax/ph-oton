@@ -329,8 +329,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final String sName = aWPEC.getAttributeAsString (FIELD_NAME);
-    final String sDescription = aWPEC.getAttributeAsString (FIELD_DESCRIPTION);
+    final String sName = aWPEC.params ().getAsString (FIELD_NAME);
+    final String sDescription = aWPEC.params ().getAsString (FIELD_DESCRIPTION);
     final ICommonsCollection <String> aRoleIDs = aWPEC.params ().getAsStringList (FIELD_ROLES);
     final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();

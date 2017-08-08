@@ -207,7 +207,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
   @OverrideOnDemand
   protected String getQueryString (@Nonnull final LECTYPE aLEC)
   {
-    return aLEC.getAttributeAsString (PARAM_QUERY);
+    return aLEC.params ().getAsString (PARAM_QUERY);
   }
 
   /**

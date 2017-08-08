@@ -133,8 +133,8 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
         {
           // Save message
-          final ESystemMessageType eNewMessageType = ESystemMessageType.getFromIDOrDefault (aWPEC.getAttributeAsString (FIELD_MESSAGE_TYPE));
-          final String sNewMessage = aWPEC.getAttributeAsString (FIELD_MESSAGE);
+          final ESystemMessageType eNewMessageType = ESystemMessageType.getFromIDOrDefault (aWPEC.params ().getAsString (FIELD_MESSAGE_TYPE));
+          final String sNewMessage = aWPEC.params ().getAsString (FIELD_MESSAGE);
           final EChange eChange = aSystemMsgMgr.setSystemMessage (eNewMessageType, sNewMessage);
           if (eChange.isChanged ())
           {

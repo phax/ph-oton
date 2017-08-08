@@ -230,10 +230,10 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
         if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
         {
-          final String sSender = aWPEC.getAttributeAsString (FIELD_TEST_SENDER);
-          final String sReceiver = aWPEC.getAttributeAsString (FIELD_TEST_RECEIVER);
-          final String sSubject = aWPEC.getAttributeAsString (FIELD_TEST_SUBJECT);
-          final String sBody = aWPEC.getAttributeAsString (FIELD_TEST_BODY);
+          final String sSender = aWPEC.params ().getAsString (FIELD_TEST_SENDER);
+          final String sReceiver = aWPEC.params ().getAsString (FIELD_TEST_RECEIVER);
+          final String sSubject = aWPEC.params ().getAsString (FIELD_TEST_SUBJECT);
+          final String sBody = aWPEC.params ().getAsString (FIELD_TEST_BODY);
 
           if (!EmailAddressHelper.isValid (sSender))
             aFormErrors.addFieldError (FIELD_TEST_SENDER, EText.ERR_SENDER_INVALID.getDisplayText (aDisplayLocale));
@@ -421,18 +421,18 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final String sName = aWPEC.getAttributeAsString (FIELD_NAME);
-    final String sHostName = aWPEC.getAttributeAsString (FIELD_HOSTNAME);
-    final String sPort = aWPEC.getAttributeAsString (FIELD_PORT);
+    final String sName = aWPEC.params ().getAsString (FIELD_NAME);
+    final String sHostName = aWPEC.params ().getAsString (FIELD_HOSTNAME);
+    final String sPort = aWPEC.params ().getAsString (FIELD_PORT);
     final int nPort = StringParser.parseInt (sPort, CGlobal.ILLEGAL_UINT);
-    final String sUserName = aWPEC.getAttributeAsString (FIELD_USERNAME);
-    String sPassword = aWPEC.getAttributeAsString (FIELD_PASSWORD);
+    final String sUserName = aWPEC.params ().getAsString (FIELD_USERNAME);
+    String sPassword = aWPEC.params ().getAsString (FIELD_PASSWORD);
     if (sPassword == null && aSelectedObject != null)
     {
       // Password is not changed
       sPassword = aSelectedObject.getSMTPSettings ().getPassword ();
     }
-    final String sCharset = aWPEC.getAttributeAsString (FIELD_CHARSET);
+    final String sCharset = aWPEC.params ().getAsString (FIELD_CHARSET);
     final Charset aCharset = CharsetHelper.getCharsetFromNameOrNull (sCharset);
 
     final boolean bSSLEnabled = aWPEC.params ().isCheckBoxChecked (FIELD_SSL, EmailGlobalSettings.isUseSSL ());

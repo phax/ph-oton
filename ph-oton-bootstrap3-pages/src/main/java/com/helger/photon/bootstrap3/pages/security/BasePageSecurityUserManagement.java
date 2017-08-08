@@ -278,8 +278,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
           // Check if the nonce matches
           if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
           {
-            final String sPlainTextPassword = aWPEC.getAttributeAsString (FIELD_PASSWORD);
-            final String sPlainTextPasswordConfirm = aWPEC.getAttributeAsString (FIELD_PASSWORD_CONFIRM);
+            final String sPlainTextPassword = aWPEC.params ().getAsString (FIELD_PASSWORD);
+            final String sPlainTextPasswordConfirm = aWPEC.params ().getAsString (FIELD_PASSWORD_CONFIRM);
 
             final ICommonsList <String> aPasswordErrors = GlobalPasswordSettings.getPasswordConstraintList ()
                                                                                 .getInvalidPasswordDescriptions (sPlainTextPassword,
@@ -581,15 +581,15 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
-    String sLoginName = aWPEC.getAttributeAsString (FIELD_LOGINNAME);
-    final String sFirstName = aWPEC.getAttributeAsString (FIELD_FIRSTNAME);
-    final String sLastName = aWPEC.getAttributeAsString (FIELD_LASTNAME);
-    final String sEmailAddress = aWPEC.getAttributeAsString (FIELD_EMAILADDRESS);
-    final String sPassword = aWPEC.getAttributeAsString (FIELD_PASSWORD);
-    final String sPasswordConf = aWPEC.getAttributeAsString (FIELD_PASSWORD_CONFIRM);
+    String sLoginName = aWPEC.params ().getAsString (FIELD_LOGINNAME);
+    final String sFirstName = aWPEC.params ().getAsString (FIELD_FIRSTNAME);
+    final String sLastName = aWPEC.params ().getAsString (FIELD_LASTNAME);
+    final String sEmailAddress = aWPEC.params ().getAsString (FIELD_EMAILADDRESS);
+    final String sPassword = aWPEC.params ().getAsString (FIELD_PASSWORD);
+    final String sPasswordConf = aWPEC.params ().getAsString (FIELD_PASSWORD_CONFIRM);
     final boolean bEnabled = bIsAdministrator ? true
                                               : aWPEC.params ().isCheckBoxChecked (FIELD_ENABLED, DEFAULT_USER_ENABLED);
-    final String sDescription = aWPEC.getAttributeAsString (FIELD_DESCRIPTION);
+    final String sDescription = aWPEC.params ().getAsString (FIELD_DESCRIPTION);
     final ICommonsCollection <String> aUserGroupIDs = bIsAdministrator ? aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ())
                                                                        : aWPEC.params ()
                                                                               .getAsStringList (FIELD_USERGROUPS);

@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.functional.IPredicate;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.display.IHasDisplayText;
 
 /**
@@ -44,13 +45,41 @@ public interface IMenuObjectFilter extends IPredicate <IMenuObject>, IHasDisplay
   default IMenuObjectFilter and (@Nonnull final IMenuObjectFilter aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
-    return x -> test (x) && aOther.test (x);
+    final IMenuObjectFilter aThis = this;
+    return new IMenuObjectFilter ()
+    {
+      public boolean test (final IMenuObject x)
+      {
+        return aThis.test (x) && aOther.test (x);
+      }
+
+      @Nullable
+      public String getDisplayText (@Nonnull final Locale aContentLocale)
+      {
+        return StringHelper.getConcatenatedOnDemand (aThis.getDisplayText (aContentLocale),
+                                                     " + ",
+                                                     aOther.getDisplayText (aContentLocale));
+      }
+    };
   }
 
   @Nonnull
   default IMenuObjectFilter or (@Nonnull final IMenuObjectFilter aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
-    return x -> test (x) || aOther.test (x);
+    final IMenuObjectFilter aThis = this;
+    return new IMenuObjectFilter ()
+    {
+      public boolean test (final IMenuObject x)
+      {
+        return aThis.test (x) || aOther.test (x);
+      }
+
+      @Nullable
+      public String getDisplayText (@Nonnull final Locale aContentLocale)
+      {
+        return StringHelper.getNotNull (aThis.getDisplayText (aContentLocale), aOther.getDisplayText (aContentLocale));
+      }
+    };
   }
 }

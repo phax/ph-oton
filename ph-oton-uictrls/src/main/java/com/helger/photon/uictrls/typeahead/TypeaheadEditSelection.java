@@ -97,8 +97,8 @@ public class TypeaheadEditSelection
   {
     ValueEnforcer.notNull (aWPEC, "WPEC");
 
-    String sEditValue = aWPEC.getAttributeAsString (sEditFieldName);
-    String sHiddenFieldValue = aWPEC.getAttributeAsString (sHiddenFieldName);
+    String sEditValue = aWPEC.params ().getAsString (sEditFieldName);
+    String sHiddenFieldValue = aWPEC.params ().getAsString (sHiddenFieldName);
     if (StringHelper.hasText (sHiddenFieldValue))
     {
       if (StringHelper.hasNoText (sEditValue))

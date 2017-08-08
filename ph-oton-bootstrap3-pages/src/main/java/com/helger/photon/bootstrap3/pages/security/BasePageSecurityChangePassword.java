@@ -137,9 +137,9 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
         if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
         {
           final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
-          final String sOldPlainTextPassword = aWPEC.getAttributeAsString (FIELD_OLD_PASSWORD);
-          final String sNewPlainTextPassword = aWPEC.getAttributeAsString (FIELD_NEW_PASSWORD);
-          final String sNewPlainTextPasswordConfirm = aWPEC.getAttributeAsString (FIELD_NEW_PASSWORD_CONFIRM);
+          final String sOldPlainTextPassword = aWPEC.params ().getAsString (FIELD_OLD_PASSWORD);
+          final String sNewPlainTextPassword = aWPEC.params ().getAsString (FIELD_NEW_PASSWORD);
+          final String sNewPlainTextPasswordConfirm = aWPEC.params ().getAsString (FIELD_NEW_PASSWORD_CONFIRM);
 
           if (!aUserMgr.areUserIDAndPasswordValid (aCurrentUser.getID (), sOldPlainTextPassword))
             aFormErrors.addFieldError (FIELD_OLD_PASSWORD,

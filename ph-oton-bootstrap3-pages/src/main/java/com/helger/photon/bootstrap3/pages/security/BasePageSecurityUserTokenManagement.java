@@ -191,8 +191,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                           if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
                           {
                             final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
-                            final String sRevocationReason = aWPEC.getAttributeAsString (FIELD_REVOCATION_REASON);
-                            final String sTokenString = aWPEC.getAttributeAsString (FIELD_TOKEN_STRING);
+                            final String sRevocationReason = aWPEC.params ().getAsString (FIELD_REVOCATION_REASON);
+                            final String sTokenString = aWPEC.params ().getAsString (FIELD_TOKEN_STRING);
 
                             if (bRevokedOld)
                             {
@@ -289,7 +289,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                           final FormErrorList aFormErrors = new FormErrorList ();
                           if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
                           {
-                            final String sRevocationReason = aWPEC.getAttributeAsString (FIELD_REVOCATION_REASON);
+                            final String sRevocationReason = aWPEC.params ().getAsString (FIELD_REVOCATION_REASON);
                             if (StringHelper.hasNoText (sRevocationReason))
                               aFormErrors.addFieldError (FIELD_REVOCATION_REASON,
                                                          EBaseText.ERR_REASON_EMPTY.getDisplayText (aDisplayLocale));
@@ -495,10 +495,10 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     final boolean bEdit = eFormAction.isEdit ();
 
-    final String sUserID = aWPEC.getAttributeAsString (FIELD_USER);
+    final String sUserID = aWPEC.params ().getAsString (FIELD_USER);
     final IUser aUser = bEdit ? aSelectedObject.getUser () : aUserMgr.getActiveUserOfID (sUserID);
     // Token string cannot be edited
-    final String sTokenString = bEdit ? null : aWPEC.getAttributeAsString (FIELD_TOKEN_STRING);
+    final String sTokenString = bEdit ? null : aWPEC.params ().getAsString (FIELD_TOKEN_STRING);
 
     if (aUser == null)
       aFormErrors.addFieldError (FIELD_USER, EText.ERR_USER_EMPTY.getDisplayText (aDisplayLocale));
