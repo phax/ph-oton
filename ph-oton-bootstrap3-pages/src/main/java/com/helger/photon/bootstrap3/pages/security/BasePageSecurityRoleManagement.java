@@ -25,10 +25,12 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
@@ -62,6 +64,8 @@ import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
 import com.helger.photon.security.role.RoleManager;
+import com.helger.photon.security.user.IUser;
+import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.IUserGroup;
 import com.helger.photon.security.usergroup.UserGroupManager;
 import com.helger.photon.uicore.page.EWebPageFormAction;
@@ -84,6 +88,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     LABEL_DESCRIPTION ("Beschreibung", "Description"),
     LABEL_USERGROUPS_0 ("Benutzergruppen", "User groups"),
     LABEL_USERGROUPS_N ("Benutzergruppen ({0})", "User groups ({0})"),
+    LABEL_USERS_N ("Benutzer ({0})", "Users ({0})"),
     LABEL_ATTRIBUTES ("Attribute", "Attributes"),
     NONE_ASSIGNED ("keine zugeordnet", "none assigned"),
     DELETE_QUERY ("Soll die Rolle ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the role ''{0}''?"),
@@ -212,8 +217,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                                    .setCtrl (HCExtHelper.nl2divList (aSelectedObject.getDescription ())));
 
     // All user groups to which the role is assigned
-    final Collection <? extends IUserGroup> aAssignedUserGroups = PhotonSecurityManager.getUserGroupMgr ()
-                                                                                       .getAllUserGroupsWithAssignedRole (aSelectedObject.getID ());
+    final ICommonsList <IUserGroup> aAssignedUserGroups = PhotonSecurityManager.getUserGroupMgr ()
+                                                                               .getAllUserGroupsWithAssignedRole (aSelectedObject.getID ());
     if (aAssignedUserGroups.isEmpty ())
     {
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
@@ -222,14 +227,31 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     else
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
-      CollectionHelper.getSorted (aAssignedUserGroups, IHasName.getComparatorCollating (aDisplayLocale))
-                      .forEach (aUserGroup -> aUserGroupUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
-                                                                                                                    BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
-                                                                                                                    aUserGroup.getID (),
-                                                                                                                    null)).addChild (aUserGroup.getName ()))));
+      aAssignedUserGroups.getSortedInline (IHasName.getComparatorCollating (aDisplayLocale))
+                         .forEach (aUserGroup -> aUserGroupUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
+                                                                                                                       BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
+                                                                                                                       aUserGroup.getID (),
+                                                                                                                       null)).addChild (aUserGroup.getName ()))));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                Integer.toString (aAssignedUserGroups.size ())))
                                                    .setCtrl (aUserGroupUI));
+
+      // Show users of user groups
+      final HCNodeList aUserUI = new HCNodeList ();
+      final ICommonsList <IUser> aAllUsersHavingThisRole = new CommonsArrayList <> ();
+      final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+      for (final IUserGroup aUG : aAssignedUserGroups)
+        for (final String sUserID : aUG.getAllContainedUserIDs ())
+          aAllUsersHavingThisRole.add (aUserMgr.getUserOfID (sUserID));
+
+      aAllUsersHavingThisRole.getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale))
+                             .forEach (aUser -> aUserUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
+                                                                                                                 BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
+                                                                                                                 aUser.getID (),
+                                                                                                                 null)).addChild (aUser.getDisplayName ()))));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_N.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                          Integer.toString (aAllUsersHavingThisRole.size ())))
+                                                   .setCtrl (aUserUI));
     }
 
     // custom attributes
