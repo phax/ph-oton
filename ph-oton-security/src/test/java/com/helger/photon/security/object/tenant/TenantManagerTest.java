@@ -26,14 +26,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
-import com.helger.photon.security.object.tenant.TenantManager;
 
 /**
  * Test class for class {@link TenantManager}

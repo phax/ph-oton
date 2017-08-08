@@ -21,7 +21,6 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.hierarchy.IHasChildrenRecursive;
 import com.helger.commons.hierarchy.IHasChildrenSorted;
 import com.helger.html.EHTMLVersion;
@@ -34,10 +33,6 @@ import com.helger.xml.microdom.IMicroNode;
  */
 public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecursive <IHCNode>, Serializable
 {
-  // TODO ph-commons 9
-  @Nullable
-  ICommonsIterable <? extends IHCNode> getChildren ();
-
   /**
    * @return The current node state and never <code>null</code>.
    */

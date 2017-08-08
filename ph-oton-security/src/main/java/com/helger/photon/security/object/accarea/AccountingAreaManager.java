@@ -27,10 +27,10 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
+import com.helger.dao.DAOException;
 import com.helger.masterdata.address.IPostalAddress;
 import com.helger.masterdata.currency.ECurrency;
-import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.photon.basic.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.object.accarea.IAccountingArea;
 import com.helger.photon.basic.object.accarea.IAccountingAreaResolver;
@@ -42,8 +42,9 @@ import com.helger.photon.security.object.BusinessObjectHelper;
  *
  * @author Philip Helger
  */
-public final class AccountingAreaManager extends AbstractMapBasedWALDAO <IAccountingArea, AccountingArea>
-                                         implements IAccountingAreaResolver
+public final class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccountingArea, AccountingArea>
+                                         implements
+                                         IAccountingAreaResolver
 {
   public AccountingAreaManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {

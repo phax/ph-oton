@@ -24,11 +24,11 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
+import com.helger.photon.basic.app.dao.AbstractPhotonMapBasedWALDAO;
 
 @ThreadSafe
-public class LongRunningJobResultManager extends AbstractMapBasedWALDAO <LongRunningJobData, LongRunningJobData>
+public class LongRunningJobResultManager extends AbstractPhotonMapBasedWALDAO <LongRunningJobData, LongRunningJobData>
 {
   public LongRunningJobResultManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {

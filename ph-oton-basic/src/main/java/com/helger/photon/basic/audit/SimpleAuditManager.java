@@ -31,9 +31,9 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.app.dao.impl.AbstractWALDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.app.dao.impl.EDAOActionType;
+import com.helger.dao.DAOException;
+import com.helger.dao.EDAOActionType;
+import com.helger.photon.basic.app.dao.AbstractPhotonWALDAO;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
@@ -47,7 +47,7 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
  * @author Philip Helger
  */
 @ThreadSafe
-public class SimpleAuditManager extends AbstractWALDAO <AuditItem> implements IAuditor
+public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> implements IAuditor
 {
   private final ICurrentUserIDProvider m_aCurrentUserIDProvider;
   private final AuditItemList m_aItems = new AuditItemList ();

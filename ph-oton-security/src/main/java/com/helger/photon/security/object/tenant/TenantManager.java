@@ -25,8 +25,8 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.state.EChange;
-import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
+import com.helger.photon.basic.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.basic.object.tenant.CTenant;
 import com.helger.photon.basic.object.tenant.ITenant;
@@ -38,7 +38,7 @@ import com.helger.photon.security.object.BusinessObjectHelper;
  *
  * @author Philip Helger
  */
-public class TenantManager extends AbstractMapBasedWALDAO <ITenant, Tenant> implements ITenantResolver
+public class TenantManager extends AbstractPhotonMapBasedWALDAO <ITenant, Tenant> implements ITenantResolver
 {
   public TenantManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {

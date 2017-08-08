@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
@@ -114,7 +115,7 @@ public final class LoggedInUserStorage
                       "' to be used as a file system name!");
 
     final File aDir = WebFileIO.getDataIO ().getFile (getBaseDirectory () + sRealUserID);
-    WebFileIO.getFileOpMgr ().createDirRecursiveIfNotExisting (aDir);
+    FileOperationManager.INSTANCE.createDirRecursiveIfNotExisting (aDir);
     return aDir;
   }
 }

@@ -39,8 +39,8 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.state.SuccessWithValue;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
+import com.helger.photon.basic.app.dao.AbstractPhotonSimpleDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
@@ -48,7 +48,7 @@ import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 @ThreadSafe
-public class SystemMigrationManager extends AbstractSimpleDAO
+public class SystemMigrationManager extends AbstractPhotonSimpleDAO
 {
   public static final ObjectType OT_SYSTEM_MIGRATION_RESULT = new ObjectType ("systemmigrationresult");
 
@@ -56,7 +56,7 @@ public class SystemMigrationManager extends AbstractSimpleDAO
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULTS = "systemmigrationresults";
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULT = "systemmigrationresult";
 
-  private final IMultiMapListBased <String, SystemMigrationResult> m_aMap = new MultiHashMapArrayListBased<> ();
+  private final IMultiMapListBased <String, SystemMigrationResult> m_aMap = new MultiHashMapArrayListBased <> ();
 
   public SystemMigrationManager (@Nullable final String sFilename) throws DAOException
   {
@@ -139,14 +139,14 @@ public class SystemMigrationManager extends AbstractSimpleDAO
   @ReturnsMutableCopy
   public ICommonsList <SystemMigrationResult> getAllMigrationResults (@Nullable final String sMigrationID)
   {
-    return m_aRWLock.readLocked ( () -> new CommonsArrayList<> (m_aMap.get (sMigrationID)));
+    return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aMap.get (sMigrationID)));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <SystemMigrationResult> getAllMigrationResultsFlattened ()
   {
-    final ICommonsList <SystemMigrationResult> ret = new CommonsArrayList<> ();
+    final ICommonsList <SystemMigrationResult> ret = new CommonsArrayList <> ();
     m_aRWLock.readLocked ( () -> {
       for (final ICommonsList <SystemMigrationResult> aResults : m_aMap.values ())
         ret.addAll (aResults);

@@ -20,6 +20,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -38,19 +39,17 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.concurrent.collector.IConcurrentPerformer;
 import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.functional.ISupplier;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.file.FileSystemIterator;
 import com.helger.commons.io.file.FilenameHelper;
+import com.helger.commons.io.relative.IFileRelativeIO;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.dao.DAOException;
 import com.helger.datetime.util.PDTIOHelper;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.app.io.IFileRelativeIO;
-import com.helger.photon.basic.app.io.IHasFilename;
-import com.helger.photon.basic.app.io.IMutableFileRelativeIO;
+import com.helger.photon.basic.app.dao.AbstractPhotonSimpleDAO;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.auth.ICurrentUserIDProvider;
 import com.helger.xml.microdom.IMicroDocument;
@@ -67,9 +66,9 @@ import com.helger.xml.microdom.serialize.MicroReader;
  * @author Philip Helger
  */
 @ThreadSafe
-public class AuditManager extends AbstractSimpleDAO implements IAuditManager
+public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManager
 {
-  private static final class AuditHasFilename implements IHasFilename
+  private static final class AuditHasFilename implements ISupplier <String>
   {
     private final String m_sBaseDir;
 
@@ -81,35 +80,12 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     }
 
     @Nullable
-    public String getFilename ()
+    public String get ()
     {
       // No base dir -> in memory only
       if (StringHelper.hasNoText (m_sBaseDir))
         return null;
       return m_sBaseDir + getRelativeAuditFilename (PDTFactory.getCurrentLocalDate ());
-    }
-
-    @Override
-    public boolean equals (final Object o)
-    {
-      if (o == this)
-        return true;
-      if (o == null || !getClass ().equals (o.getClass ()))
-        return false;
-      final AuditHasFilename rhs = (AuditHasFilename) o;
-      return EqualsHelper.equals (m_sBaseDir, rhs.m_sBaseDir);
-    }
-
-    @Override
-    public int hashCode ()
-    {
-      return new HashCodeGenerator (this).append (m_sBaseDir).getHashCode ();
-    }
-
-    @Override
-    public String toString ()
-    {
-      return new ToStringGenerator (this).append ("baseDir", m_sBaseDir).getToString ();
     }
   }
 
@@ -172,7 +148,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     m_sBaseDir = sBaseDir;
     if (StringHelper.hasText (sBaseDir))
     {
-      final IMutableFileRelativeIO aIO = getDAOIO ().getFileIO ();
+      final IFileRelativeIO aIO = getIO ();
       aIO.createDirectory (sBaseDir, true);
 
       // Migrate to new directory structure
@@ -230,7 +206,8 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     return m_aAuditor;
   }
 
-  public static void readFromXML (@Nonnull final IMicroDocument aDoc, @Nonnull final IAuditManagerReadHandler aHandler)
+  public static void readFromXML (@Nonnull final IMicroDocument aDoc,
+                                  @Nonnull final Consumer <? super IAuditItem> aHandler)
   {
     ValueEnforcer.notNull (aDoc, "Doc");
     ValueEnforcer.notNull (aHandler, "Handler");
@@ -238,7 +215,7 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     for (final IMicroElement eItem : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
     {
       final AuditItem aAuditItem = MicroTypeConverter.convertToNative (eItem, AuditItem.class);
-      aHandler.onReadAuditItem (aAuditItem);
+      aHandler.accept (aAuditItem);
     }
   }
 
@@ -302,13 +279,13 @@ public class AuditManager extends AbstractSimpleDAO implements IAuditManager
     ValueEnforcer.notNull (aDate, "Date");
 
     final String sFilename = m_sBaseDir + getRelativeAuditFilename (aDate);
-    final File aFile = getDAOIO ().getFileIO ().getFile (sFilename);
+    final File aFile = getIO ().getFile (sFilename);
     if (!aFile.exists ())
       return null;
 
     final ICommonsList <IAuditItem> ret = new CommonsArrayList <> ();
     final IMicroDocument aDoc = MicroReader.readMicroXML (aFile);
-    readFromXML (aDoc, aItem -> ret.add (aItem));
+    readFromXML (aDoc, ret::add);
     return ret;
   }
 

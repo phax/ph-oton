@@ -29,7 +29,11 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.io.file.FileOperationManager;
-import com.helger.commons.io.file.LoggingFileOperationCallback;
+import com.helger.commons.io.file.IFileOperationManager;
+import com.helger.commons.io.relative.FileRelativeIO;
+import com.helger.commons.io.relative.IFileRelativeIO;
+import com.helger.commons.io.relative.IPathRelativeIO;
+import com.helger.commons.io.relative.PathRelativeIO;
 
 /**
  * Abstract for accessing files inside the web application. It differentiates
@@ -46,41 +50,14 @@ public final class WebFileIO
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
-  private static FileOperationManager s_aFileOpMgr = new FileOperationManager ();
+  private static IFileOperationManager s_aFileOpMgr = FileOperationManager.INSTANCE;
   @GuardedBy ("s_aRWLock")
-  private static IMutableFileRelativeIO s_aDataPath;
+  private static IFileRelativeIO s_aDataPath;
   @GuardedBy ("s_aRWLock")
   private static IPathRelativeIO s_aServletContextPath;
 
-  static
-  {
-    s_aFileOpMgr.callbacks ().add (new LoggingFileOperationCallback ());
-  }
-
   private WebFileIO ()
   {}
-
-  /**
-   * Set the global file operation manager to be used.
-   *
-   * @param aFileOpMgr
-   *        The file operation manager. May not be <code>null</code>.
-   */
-  public static void setFileOpMgr (@Nonnull final FileOperationManager aFileOpMgr)
-  {
-    ValueEnforcer.notNull (aFileOpMgr, "FileOpMgr");
-
-    s_aRWLock.writeLocked ( () -> s_aFileOpMgr = aFileOpMgr);
-  }
-
-  /**
-   * @return The global file operation manager. Never <code>null</code>.
-   */
-  @Nonnull
-  public static FileOperationManager getFileOpMgr ()
-  {
-    return s_aRWLock.readLocked ( () -> s_aFileOpMgr);
-  }
 
   public static void initPaths (@Nonnull final File aDataPath,
                                 @Nonnull @Nonempty final String sServletContextPath,
@@ -89,18 +66,26 @@ public final class WebFileIO
     ValueEnforcer.notNull (aDataPath, "DataPath");
     ValueEnforcer.notEmpty (sServletContextPath, "ServletContextPath");
 
-    s_aRWLock.writeLocked ( () -> {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
       if (s_aDataPath != null)
         throw new IllegalStateException ("Another data path is already present: " + s_aDataPath);
       if (s_aServletContextPath != null)
         throw new IllegalStateException ("Another servlet context path is already present: " + s_aServletContextPath);
 
       s_aLogger.info ("Using '" + aDataPath + "' as the data path");
-      s_aDataPath = new FileRelativeIO (aDataPath, bCheckFileAccess);
+      s_aDataPath = new FileRelativeIO (aDataPath);
+      if (bCheckFileAccess)
+        FileRelativeIO.internalCheckAccessRights (aDataPath);
 
       s_aLogger.info ("Using '" + sServletContextPath + "' as the servlet context path");
       s_aServletContextPath = new PathRelativeIO (sServletContextPath);
-    });
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
   }
 
   /**
@@ -130,9 +115,9 @@ public final class WebFileIO
    *         {@link #initPaths(File, String, boolean)} first.
    */
   @Nonnull
-  public static IMutableFileRelativeIO getDataIO ()
+  public static IFileRelativeIO getDataIO ()
   {
-    final IMutableFileRelativeIO ret = s_aRWLock.readLocked ( () -> s_aDataPath);
+    final IFileRelativeIO ret = s_aRWLock.readLocked ( () -> s_aDataPath);
     if (ret == null)
       throw new IllegalStateException ("Data path was not initialized!");
     return ret;

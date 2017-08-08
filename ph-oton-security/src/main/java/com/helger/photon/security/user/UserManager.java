@@ -33,9 +33,8 @@ import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.basic.app.dao.IReloadableDAO;
-import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
+import com.helger.photon.basic.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.BusinessObjectHelper;
@@ -50,13 +49,18 @@ import com.helger.security.password.salt.PasswordSalt;
  * @author Philip Helger
  */
 @ThreadSafe
-public class UserManager extends AbstractMapBasedWALDAO <IUser, User> implements IReloadableDAO
+public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
 {
   private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
     super (User.class, sFilename);
+  }
+
+  public boolean isReloadable ()
+  {
+    return true;
   }
 
   public void reload () throws DAOException

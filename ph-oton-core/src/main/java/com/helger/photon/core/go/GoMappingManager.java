@@ -41,8 +41,8 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
+import com.helger.photon.basic.app.dao.AbstractPhotonSimpleDAO;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.IRequestParameterManager;
 import com.helger.photon.basic.app.request.RequestParameterManager;
@@ -60,7 +60,7 @@ import com.helger.xml.microdom.MicroDocument;
  * @author Philip Helger
  */
 @ThreadSafe
-public class GoMappingManager extends AbstractSimpleDAO
+public class GoMappingManager extends AbstractPhotonSimpleDAO
 {
   public static final boolean DEFAULT_EDITABLE = true;
 
@@ -73,7 +73,7 @@ public class GoMappingManager extends AbstractSimpleDAO
   private static final Logger s_aLogger = LoggerFactory.getLogger (GoMappingManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, GoMappingItem> m_aMap = new CommonsHashMap<> ();
+  private final ICommonsMap <String, GoMappingItem> m_aMap = new CommonsHashMap <> ();
 
   public GoMappingManager (@Nullable final String sFilename) throws DAOException
   {

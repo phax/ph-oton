@@ -37,9 +37,9 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.app.dao.impl.AbstractWALDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
-import com.helger.photon.basic.app.dao.impl.EDAOActionType;
+import com.helger.dao.DAOException;
+import com.helger.dao.EDAOActionType;
+import com.helger.photon.basic.app.dao.AbstractPhotonWALDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
@@ -52,7 +52,7 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
  * @author Philip Helger
  */
 @ThreadSafe
-public class FavoriteManager extends AbstractWALDAO <Favorite>
+public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
 {
   private static final String ELEMENT_ITEM = "favorite";
 

@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.io.file.FileOperationManager;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
 import com.helger.web.scope.mock.WebScopeTestRule;
@@ -96,8 +97,8 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
     if (m_bDeleteAllData)
     {
       // Clean all contained files
-      WebFileIO.getFileOpMgr ().deleteDirRecursiveIfExisting (WebFileIO.getDataIO ().getBasePathFile ());
-      WebFileIO.getFileOpMgr ().createDir (WebFileIO.getDataIO ().getBasePathFile ());
+      FileOperationManager.INSTANCE.deleteDirRecursiveIfExisting (WebFileIO.getDataIO ().getBasePathFile ());
+      FileOperationManager.INSTANCE.createDir (WebFileIO.getDataIO ().getBasePathFile ());
     }
   }
 

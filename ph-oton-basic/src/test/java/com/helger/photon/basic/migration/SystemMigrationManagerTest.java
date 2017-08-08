@@ -20,12 +20,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Rule;
 import org.junit.Test;
 
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
+import com.helger.photon.basic.mock.PhotonBasicTestRule;
 
 public final class SystemMigrationManagerTest
 {
+  @Rule
+  public final PhotonBasicTestRule m_aRule = new PhotonBasicTestRule ();
+
   @Test
   public void testBasicSuccess () throws DAOException
   {

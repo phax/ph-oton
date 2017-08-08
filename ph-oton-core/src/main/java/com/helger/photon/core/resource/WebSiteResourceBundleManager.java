@@ -39,20 +39,21 @@ import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.id.factory.GlobalIDFactory;
+import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.FileSystemIterator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ECSSMedium;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
+import com.helger.photon.basic.app.dao.AbstractPhotonSimpleDAO;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 
-public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
+public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
 {
   private static final String ELEMENT_RESOURCE_BUNDLES = "resource-bundles";
   private static final String ELEMENT_RESOURCE_BUNDLE = "resource-bundle";
@@ -207,7 +208,7 @@ public final class WebSiteResourceBundleManager extends AbstractSimpleDAO
       final File aDir = WebFileIO.getDataIO ().getFile (WebSiteResourceBundleSerialized.RESOURCE_BUNDLE_PATH);
       for (final File aFile : new FileSystemIterator (aDir))
         if (!containsResourceBundleOfID (aFile.getName ()))
-          if (WebFileIO.getFileOpMgr ().deleteFile (aFile).isSuccess ())
+          if (FileOperationManager.INSTANCE.deleteFile (aFile).isSuccess ())
             s_aLogger.info ("Successfully deleted the unused resource bundle file " + aFile.getAbsolutePath ());
     }
 

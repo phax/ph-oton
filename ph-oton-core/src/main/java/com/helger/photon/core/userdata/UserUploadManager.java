@@ -37,9 +37,9 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.io.file.FileIOError;
+import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.scope.IScope;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
@@ -72,7 +72,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   private static FileIOError _deleteUDO (@Nonnull final TemporaryUserDataObject aUDO)
   {
     s_aLogger.info ("Deleting uploaded file " + aUDO);
-    final FileIOError aError = WebFileIO.getFileOpMgr ().deleteFile (aUDO.getAsFile ());
+    final FileIOError aError = FileOperationManager.INSTANCE.deleteFile (aUDO.getAsFile ());
     if (aError.isFailure ())
       s_aLogger.error ("Failed to delete UDO " + aUDO.getPath () + ": " + aError.getErrorCode ());
     return aError;

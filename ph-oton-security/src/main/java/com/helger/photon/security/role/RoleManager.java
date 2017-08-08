@@ -28,9 +28,8 @@ import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
-import com.helger.photon.basic.app.dao.IReloadableDAO;
-import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
+import com.helger.photon.basic.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.BusinessObjectHelper;
@@ -42,13 +41,18 @@ import com.helger.photon.security.object.StubObject;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class RoleManager extends AbstractMapBasedWALDAO <IRole, Role> implements IReloadableDAO
+public final class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
 {
   private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public RoleManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
     super (Role.class, sFilename);
+  }
+
+  public boolean isReloadable ()
+  {
+    return true;
   }
 
   public void reload () throws DAOException

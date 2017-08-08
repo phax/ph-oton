@@ -32,8 +32,8 @@ import com.helger.commons.lang.IHasSize;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.app.dao.impl.AbstractSimpleDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
+import com.helger.photon.basic.app.dao.AbstractPhotonSimpleDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.smtp.CSMTP;
 import com.helger.smtp.settings.ISMTPSettings;
@@ -49,16 +49,14 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
  * @author Philip Helger
  */
 @ThreadSafe
-public class NamedSMTPSettingsManager extends AbstractSimpleDAO implements IHasSize
+public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements IHasSize
 {
   private static final String ELEMENT_ROOT = "namedsmtpsettingslist";
   private static final String ELEMENT_ITEM = "namedsmtpsettings";
-
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-
   private static boolean s_bCreateDefaults = true;
 
-  private final ICommonsMap <String, NamedSMTPSettings> m_aMap = new CommonsHashMap<> ();
+  private final ICommonsMap <String, NamedSMTPSettings> m_aMap = new CommonsHashMap <> ();
 
   public static boolean isCreateDefaults ()
   {

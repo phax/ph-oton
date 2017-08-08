@@ -29,8 +29,8 @@ import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
+import com.helger.photon.basic.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.photon.security.token.accesstoken.AccessToken;
@@ -41,7 +41,7 @@ import com.helger.photon.security.user.IUser;
  *
  * @author Philip Helger
  */
-public final class UserTokenManager extends AbstractMapBasedWALDAO <IUserToken, UserToken>
+public final class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, UserToken>
 {
   private final CallbackList <IUserTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
 

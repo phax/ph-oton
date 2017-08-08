@@ -31,9 +31,8 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.basic.app.dao.IReloadableDAO;
-import com.helger.photon.basic.app.dao.impl.AbstractMapBasedWALDAO;
-import com.helger.photon.basic.app.dao.impl.DAOException;
+import com.helger.dao.DAOException;
+import com.helger.photon.basic.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.BusinessObjectHelper;
@@ -47,7 +46,7 @@ import com.helger.photon.security.user.UserManager;
  * @author Philip Helger
  */
 @ThreadSafe
-public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGroup> implements IReloadableDAO
+public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, UserGroup>
 {
   private final UserManager m_aUserMgr;
   private final RoleManager m_aRoleMgr;
@@ -73,6 +72,11 @@ public class UserGroupManager extends AbstractMapBasedWALDAO <IUserGroup, UserGr
   public final RoleManager getRoleManager ()
   {
     return m_aRoleMgr;
+  }
+
+  public boolean isReloadable ()
+  {
+    return true;
   }
 
   public void reload () throws DAOException
