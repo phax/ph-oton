@@ -466,7 +466,7 @@ public class TypeaheadDataset
     {
       final JSArray aLocal = new JSArray ();
       for (final TypeaheadDatum aDatum : m_aLocal)
-        aLocal.add (aDatum.getAsJSObject ());
+        aLocal.add (aDatum.getAsJson ());
       ret.add (JSON_LOCAL, aLocal);
     }
     if (m_aPrefetch != null)

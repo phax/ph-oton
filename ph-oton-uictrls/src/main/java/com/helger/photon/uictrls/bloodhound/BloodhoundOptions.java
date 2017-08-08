@@ -294,7 +294,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
     {
       final JSArray aLocal = new JSArray ();
       for (final BloodhoundDatum aDatum : m_aLocal)
-        aLocal.add (aDatum.getAsJSObject ());
+        aLocal.add (aDatum.getAsJson ());
       ret.add (JSON_LOCAL, aLocal);
     }
     if (m_aPrefetch != null)

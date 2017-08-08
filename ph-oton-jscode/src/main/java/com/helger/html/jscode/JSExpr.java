@@ -18,6 +18,7 @@ package com.helger.html.jscode;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -353,9 +354,25 @@ public final class JSExpr
     ValueEnforcer.notNull (aJson, "Json");
 
     if (aJson.isObject ())
-      return new JSAssocArray ().addJson (aJson.getAsObject ());
+    {
+      final JSAssocArray ret = new JSAssocArray ();
+      for (final Map.Entry <String, IJson> aEntry : aJson.getAsObject ())
+      {
+        // Recursive add value
+        ret.add (aEntry.getKey (), json (aEntry.getValue ()));
+      }
+      return ret;
+    }
     if (aJson.isArray ())
-      return new JSArray ().addJson (aJson.getAsArray ());
+    {
+      final JSArray ret = new JSArray ();
+      for (final IJson aValue : aJson.getAsArray ())
+      {
+        // Recursive add value
+        ret.add (json (aValue));
+      }
+      return ret;
+    }
     return convert (aJson.getAsValue ().getValue ());
   }
 

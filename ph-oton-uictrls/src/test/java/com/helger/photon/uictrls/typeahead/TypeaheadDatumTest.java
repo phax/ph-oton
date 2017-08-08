@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.html.js.JSWriterSettings;
+import com.helger.html.jscode.JSExpr;
 
 /**
  * Test class for class {@link TypeaheadDatum}.
@@ -39,6 +40,7 @@ public final class TypeaheadDatumTest
     assertEquals (CollectionHelper.newList ("Token", "for", "this", "value"), p.getAllTokens ());
     assertEquals ("{\"value\":\"Value\",\"tokens\":[\"Token\",\"for\",\"this\",\"value\"]}",
                   p.getAsJson ().getAsJsonString ());
-    assertEquals ("{value:'Value',tokens:['Token','for','this','value']}", p.getAsJSObject ().getJSCode (aJSWS));
+    assertEquals ("{value:'Value',tokens:['Token','for','this','value']}",
+                  JSExpr.json (p.getAsJson ()).getJSCode (aJSWS));
   }
 }

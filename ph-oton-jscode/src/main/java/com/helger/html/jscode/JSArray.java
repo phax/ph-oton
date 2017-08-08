@@ -35,7 +35,6 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.IJson;
-import com.helger.json.IJsonArray;
 
 /**
  * array creation and initialization.
@@ -237,14 +236,6 @@ public class JSArray extends AbstractJSExpression implements IHasSize
     if (m_aExprs == null)
       m_aExprs = new CommonsArrayList <> ();
     m_aExprs.add (aExpr);
-    return this;
-  }
-
-  @Nonnull
-  public JSArray addJson (@Nonnull final IJsonArray aJson)
-  {
-    for (final IJson aValue : aJson)
-      add (JSExpr.json (aValue));
     return this;
   }
 

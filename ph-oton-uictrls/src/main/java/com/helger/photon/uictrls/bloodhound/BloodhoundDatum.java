@@ -31,8 +31,6 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.jscode.JSArray;
-import com.helger.html.jscode.JSAssocArray;
 import com.helger.json.IHasJson;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
@@ -79,7 +77,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
     m_sValue = sValue;
-    m_aTokens = new CommonsArrayList<> (aTokens);
+    m_aTokens = new CommonsArrayList <> (aTokens);
   }
 
   /**
@@ -95,7 +93,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
     m_sValue = sValue;
-    m_aTokens = new CommonsArrayList<> (aTokens);
+    m_aTokens = new CommonsArrayList <> (aTokens);
   }
 
   /**
@@ -128,19 +126,6 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
   public IJsonObject getAsJson ()
   {
     return new JsonObject ().add (JSON_VALUE, m_sValue).add (JSON_TOKENS, new JsonArray ().addAll (m_aTokens));
-  }
-
-  /**
-   * @return This object as JavaScript object representation. May not be
-   *         <code>null</code>.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  @OverrideOnDemand
-  @OverridingMethodsMustInvokeSuper
-  public JSAssocArray getAsJSObject ()
-  {
-    return new JSAssocArray ().add (JSON_VALUE, m_sValue).add (JSON_TOKENS, new JSArray ().addAll (m_aTokens));
   }
 
   public int compareTo (@Nonnull final BloodhoundDatum aOther)

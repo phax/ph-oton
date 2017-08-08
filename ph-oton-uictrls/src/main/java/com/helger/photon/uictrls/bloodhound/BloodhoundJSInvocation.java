@@ -97,7 +97,7 @@ public class BloodhoundJSInvocation extends AbstractJSInvocation <BloodhoundJSIn
     {
       final JSArray aArray = new JSArray ();
       for (final BloodhoundDatum aDatum : aDatums)
-        aArray.add (aDatum.getAsJSObject ());
+        aArray.add (aDatum.getAsJson ());
       return bloodhoundInvoke ("add").arg (aArray);
     }
     return this;

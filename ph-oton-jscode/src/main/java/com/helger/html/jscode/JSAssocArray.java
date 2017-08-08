@@ -219,7 +219,7 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
   }
 
   @Nonnull
-  public JSAssocArray addJson (@Nonnull final IJsonObject aJson)
+  public JSAssocArray addAll (@Nonnull final IJsonObject aJson)
   {
     for (final Map.Entry <String, IJson> aEntry : aJson)
       add (aEntry.getKey (), JSExpr.json (aEntry.getValue ()));
