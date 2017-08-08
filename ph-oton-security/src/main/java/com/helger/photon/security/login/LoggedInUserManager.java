@@ -365,19 +365,19 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       return _onLoginError (sUserID, ELoginResult.USER_IS_DISABLED);
     }
 
-    // Are all roles present?
-    if (!SecurityHelper.hasUserAllRoles (sUserID, aRequiredRoleIDs))
-    {
-      AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-is-missing-required-roles", aRequiredRoleIDs);
-      return _onLoginError (sUserID, ELoginResult.USER_IS_MISSING_ROLE);
-    }
-
     // Check the password
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     if (!aUserMgr.areUserIDAndPasswordValid (sUserID, sPlainTextPassword))
     {
       AuditHelper.onAuditExecuteFailure ("login", sUserID, "invalid-password");
       return _onLoginError (sUserID, ELoginResult.INVALID_PASSWORD);
+    }
+
+    // Are all roles present?
+    if (!SecurityHelper.hasUserAllRoles (sUserID, aRequiredRoleIDs))
+    {
+      AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-is-missing-required-roles", aRequiredRoleIDs);
+      return _onLoginError (sUserID, ELoginResult.USER_IS_MISSING_ROLE);
     }
 
     // Check if the password hash needs to be updated
