@@ -30,6 +30,7 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.lang.IHasSize;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.render.HCRenderer;
@@ -41,7 +42,7 @@ import com.helger.json.IJsonArray;
  *
  * @author Philip Helger
  */
-public class JSArray extends AbstractJSExpression
+public class JSArray extends AbstractJSExpression implements IHasSize
 {
   private ICommonsList <IJSExpression> m_aExprs;
 
@@ -53,13 +54,8 @@ public class JSArray extends AbstractJSExpression
     return m_aExprs == null || m_aExprs.isEmpty ();
   }
 
-  public boolean isNotEmpty ()
-  {
-    return m_aExprs != null && m_aExprs.isNotEmpty ();
-  }
-
   @Nonnegative
-  public int size ()
+  public int getSize ()
   {
     return m_aExprs == null ? 0 : m_aExprs.size ();
   }

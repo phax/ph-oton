@@ -203,7 +203,7 @@ public class DTPButtonsButton
       ret.add ("text", m_aText);
     onGetAsJS (ret);
 
-    if (ret.size () == 1)
+    if (ret.getSize () == 1)
     {
       final IJSExpression aValue = ret.get (new JSAtom ("extend"));
       if (aValue != null)

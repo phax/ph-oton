@@ -352,16 +352,11 @@ public final class JSExpr
   {
     ValueEnforcer.notNull (aJson, "Json");
 
-    if (true)
-    {
-      if (aJson.isObject ())
-        return new JSAssocArray ().addJson (aJson.getAsObject ());
-      if (aJson.isArray ())
-        return new JSArray ().addJson (aJson.getAsArray ());
-      return convert (aJson.getAsValue ().getValue ());
-    }
-
-    return direct (aJson.getAsJsonString ());
+    if (aJson.isObject ())
+      return new JSAssocArray ().addJson (aJson.getAsObject ());
+    if (aJson.isArray ())
+      return new JSArray ().addJson (aJson.getAsArray ());
+    return convert (aJson.getAsValue ().getValue ());
   }
 
   /**

@@ -131,7 +131,7 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
     if (StringHelper.hasText (m_sName))
       ret.add ("name", m_sName);
 
-    if (ret.size () == 1)
+    if (ret.getSize () == 1)
     {
       final IJSExpression aValue = ret.get (new JSAtom ("buttons"));
       if (aValue != null)

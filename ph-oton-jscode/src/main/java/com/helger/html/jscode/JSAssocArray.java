@@ -31,6 +31,7 @@ import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.lang.IHasSize;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.render.HCRenderer;
@@ -43,7 +44,7 @@ import com.helger.json.IJsonObject;
  *
  * @author Philip Helger
  */
-public class JSAssocArray extends AbstractJSExpression
+public class JSAssocArray extends AbstractJSExpression implements IHasSize
 {
   public static final boolean DEFAULT_FORCE_QUOTING_NAMES = false;
 
@@ -90,13 +91,8 @@ public class JSAssocArray extends AbstractJSExpression
     return m_aExprs == null || m_aExprs.isEmpty ();
   }
 
-  public boolean isNotEmpty ()
-  {
-    return m_aExprs != null && m_aExprs.isNotEmpty ();
-  }
-
   @Nonnegative
-  public int size ()
+  public int getSize ()
   {
     return m_aExprs == null ? 0 : m_aExprs.size ();
   }
