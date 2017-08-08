@@ -16,12 +16,8 @@
  */
 package com.helger.photon.basic.audit;
 
-import java.io.Serializable;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.functional.IBiFunction;
 import com.helger.commons.string.StringHelper;
 import com.helger.json.IJsonArray;
 import com.helger.json.JsonArray;
@@ -29,24 +25,12 @@ import com.helger.json.JsonObject;
 
 /**
  * Interface that is used to convert audit parameters to an audit string
- * 
+ *
  * @author Philip Helger
  */
 @FunctionalInterface
-public interface IAuditActionStringProvider extends Serializable
+public interface IAuditActionStringProvider extends IBiFunction <String, Object [], String>
 {
-  /**
-   * Create the audit string that should be persisted.
-   *
-   * @param sAction
-   *        Action
-   * @param aArgs
-   *        Optional arguments.
-   * @return The string representation.
-   */
-  @Nonnull
-  String createAuditString (@Nonnull String sAction, @Nullable Object [] aArgs);
-
   IAuditActionStringProvider PLAIN_STRING = (sAction, aArgs) -> {
     if (ArrayHelper.isEmpty (aArgs))
       return sAction;

@@ -72,7 +72,7 @@ public abstract class AbstractAuditor implements IAuditor
                                @Nonnull final String sAction,
                                @Nullable final Object... aArgs)
   {
-    final String sFullAction = m_aActionStringProvider.createAuditString (sAction, aArgs);
+    final String sFullAction = m_aActionStringProvider.apply (sAction, aArgs);
     final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (),
                                                 eActionType,
                                                 eSuccess,

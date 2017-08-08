@@ -163,18 +163,16 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     return ret;
   }
 
-  public void reload ()
+  public boolean isReloadable ()
   {
-    m_aRWLock.writeLocked ( () -> {
+    return true;
+  }
+
+  public void reload () throws DAOException
+  {
+    m_aRWLock.writeLockedThrowing ( () -> {
       m_aMap.clear ();
-      try
-      {
-        initialRead ();
-      }
-      catch (final DAOException ex)
-      {
-        throw new IllegalStateException ("Failed to reload go-mappings", ex);
-      }
+      initialRead ();
     });
     s_aLogger.info ("Reloaded " + m_aMap.size () + " go-mappings!");
   }

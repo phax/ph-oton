@@ -104,6 +104,11 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     return aDoc;
   }
 
+  public boolean isReloadable ()
+  {
+    return true;
+  }
+
   public void reload () throws DAOException
   {
     m_aRWLock.writeLockedThrowing ( () -> {
