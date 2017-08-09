@@ -84,10 +84,10 @@ public abstract class AbstractUnifiedResponseFilter extends AbstractScopeAwareFi
     final EHttpMethod eHTTPMethod = RequestHelper.getHttpMethod (aHttpRequest);
     if (eHTTPMethod == null)
     {
-      if (eHTTPVersion == EHttpVersion.HTTP_11)
-        aHttpResponse.sendError (HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-      else
+      if (eHTTPVersion.is10 ())
         aHttpResponse.sendError (HttpServletResponse.SC_BAD_REQUEST);
+      else
+        aHttpResponse.sendError (HttpServletResponse.SC_METHOD_NOT_ALLOWED);
       return EContinue.BREAK;
     }
 

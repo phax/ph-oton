@@ -449,8 +449,8 @@ public final class InternalErrorHandler
         }
         try
         {
-          for (final Map.Entry <String, String> aEntry : RequestLogger.getHTTPHeaderMap (aHttpRequest).entrySet ())
-            aMetadata.addRequestHeader (aEntry.getKey (), aEntry.getValue ());
+          RequestHelper.getRequestHeaderMap (aHttpRequest)
+                       .forEachSingleHeader ( (n, v) -> aMetadata.addRequestHeader (n, v));
         }
         catch (final Throwable t2)
         {

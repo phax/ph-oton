@@ -443,10 +443,10 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
                       sAllow);
       aHttpResponse.setHeader (CHttpHeader.ALLOW, sAllow);
 
-      if (eHTTPVersion == EHttpVersion.HTTP_11)
-        aHttpResponse.sendError (HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-      else
+      if (eHTTPVersion.is10 ())
         aHttpResponse.sendError (HttpServletResponse.SC_BAD_REQUEST);
+      else
+        aHttpResponse.sendError (HttpServletResponse.SC_METHOD_NOT_ALLOWED);
       return;
     }
     m_aStatsHttpMethodAllowed.increment (eHttpMethod.getName ());
