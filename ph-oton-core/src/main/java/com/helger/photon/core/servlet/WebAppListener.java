@@ -63,7 +63,6 @@ import com.helger.commons.url.URLHelper;
 import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.basic.PhotonBasic;
 import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.photon.basic.app.io.WebIOIntIDFactory;
 import com.helger.photon.basic.app.io.WebIOLongIDFactory;
 import com.helger.servlet.StaticServerInfo;
 import com.helger.web.scope.mgr.WebScopeManager;
@@ -451,8 +450,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * This method is called to initialize the global ID factory. By default a
-   * file-based {@link WebIOIntIDFactory} with the filename {@link #ID_FILENAME}
-   * is created.
+   * file-based {@link WebIOLongIDFactory} with the filename
+   * {@link #ID_FILENAME} is created.
    */
   @OverrideOnDemand
   protected void initGlobalIDFactory ()
@@ -522,6 +521,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       // Set persistent ID provider - must be done after IO is setup
       initGlobalIDFactory ();
     }
+
+    // right order?
+    PhotonBasic.startUp ();
 
     // Callback
     afterContextInitialized (aSC);

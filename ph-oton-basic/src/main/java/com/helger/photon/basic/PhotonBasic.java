@@ -1,5 +1,7 @@
 package com.helger.photon.basic;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.cleanup.CommonsCleanup;
@@ -13,13 +15,19 @@ import com.helger.xservlet.requesttrack.RequestTracker;
 @Immutable
 public final class PhotonBasic
 {
+  private static final AtomicBoolean s_aRegisteredRequestTracker = new AtomicBoolean (false);
+
   private PhotonBasic ()
   {}
 
   public static void startUp ()
   {
-    RequestTracker.longRunningRequestCallbacks ().add (new AuditingLongRunningRequestCallback ());
-    RequestTracker.parallelRunningRequestCallbacks ().add (new AuditingParallelRunningRequestCallback ());
+    // Ensure this is done only once
+    if (!s_aRegisteredRequestTracker.getAndSet (true))
+    {
+      RequestTracker.longRunningRequestCallbacks ().add (new AuditingLongRunningRequestCallback ());
+      RequestTracker.parallelRunningRequestCallbacks ().add (new AuditingParallelRunningRequestCallback ());
+    }
   }
 
   public static void shutDown ()
