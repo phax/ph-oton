@@ -19,26 +19,26 @@ package com.helger.photon.core.servlet;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.url.URLHelper;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.core.url.LinkHelper;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
+import com.helger.xservlet.simple.AbstractSimpleHttpServlet;
 
 /**
  * Stream arbitrary resources available in JAR files via HTTP to a client.
  *
  * @author Philip Helger
  */
-public class StreamServlet extends AbstractStreamServlet
+public class StreamServlet extends AbstractSimpleHttpServlet
 {
   public static final String SERVLET_DEFAULT_NAME = LinkHelper.DEFAULT_STREAM_SERVLET_NAME;
   public static final String SERVLET_DEFAULT_PATH = "/" + SERVLET_DEFAULT_NAME;
 
   public StreamServlet ()
-  {}
+  {
+    registerSyncHandler (EHttpMethod.GET, new ClassPathResourceHttpHandler ());
+  }
 
   public static boolean isServletRegisteredInServletContext ()
   {
@@ -48,19 +48,8 @@ public class StreamServlet extends AbstractStreamServlet
   @Override
   @Nonnull
   @Nonempty
-  protected String getApplicationID ()
+  protected String getInitApplicationID ()
   {
     return CApplicationID.APP_ID_PUBLIC;
-  }
-
-  @Override
-  @Nonnull
-  protected IReadableResource getResource (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                           @Nonnull final String sFilename)
-  {
-    // URL decode is required because requests contain e.g. "%20"
-    final String sFilename1 = URLHelper.urlDecode (sFilename);
-
-    return new ClassPathResource (sFilename1);
   }
 }

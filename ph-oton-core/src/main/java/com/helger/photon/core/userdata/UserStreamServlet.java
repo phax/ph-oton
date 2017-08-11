@@ -19,21 +19,25 @@ package com.helger.photon.core.userdata;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
+import com.helger.xservlet.simple.AbstractSimpleHttpServlet;
 
 /**
  * Stream user provided resources available on disk via HTTP to a client.
  *
  * @author Philip Helger
  */
-public class UserStreamServlet extends AbstractUserStreamServlet
+public class UserStreamServlet extends AbstractSimpleHttpServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "user";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
   public UserStreamServlet ()
-  {}
+  {
+    registerSyncHandler (EHttpMethod.GET, new UserDataDeliveryHttpHandler ());
+  }
 
   public static boolean isServletRegisteredInServletContext ()
   {
@@ -43,7 +47,7 @@ public class UserStreamServlet extends AbstractUserStreamServlet
   @Override
   @Nonnull
   @Nonempty
-  protected String getApplicationID ()
+  protected String getInitApplicationID ()
   {
     return CApplicationID.APP_ID_PUBLIC;
   }

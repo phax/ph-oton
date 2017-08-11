@@ -72,7 +72,7 @@ public final class PhotonStubInitializer
     PhotonCSS.registerCSSIncludeForGlobal (EUICoreCSSPathProvider.JQUERY_PLACEHOLDER);
 
     // JS
-    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_1);
+    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_3);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.UICORE_JQUERY);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.UICORE_FORM);
     for (final IJSPathProvider aPP : BootstrapCustomConfig.getAllBootstrapJS ())

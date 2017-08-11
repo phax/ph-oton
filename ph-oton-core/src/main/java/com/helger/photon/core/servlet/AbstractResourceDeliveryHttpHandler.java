@@ -51,9 +51,9 @@ import com.helger.xml.util.mime.MimeTypeInfoManager;
  * @author Philip Helger
  * @since 3.7.0
  */
-public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServlet
+public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObjectDeliveryHttpHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractStreamServlet.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractResourceDeliveryHttpHandler.class);
   private final IMutableStatisticsHandlerCounter m_aStatsRequests = StatisticsManager.getCounterHandler (getClass ().getName () +
                                                                                                          "$requests");
   private final IMutableStatisticsHandlerKeyedCounter m_aStatsSuccess = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
@@ -65,7 +65,7 @@ public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServle
   private static final String REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                                       "stream.resource";
 
-  protected AbstractStreamServlet ()
+  protected AbstractResourceDeliveryHttpHandler ()
   {}
 
   /**
@@ -83,8 +83,8 @@ public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServle
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull final UnifiedResponse aUnifiedResponse)
+  public EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @Nonnull final UnifiedResponse aUnifiedResponse)
   {
     // Check for valid filenames, path traversal etc.
     if (super.initRequestState (aRequestScope, aUnifiedResponse).isBreak ())
@@ -110,7 +110,7 @@ public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServle
 
   @Override
   @Nullable
-  protected LocalDateTime getLastModificationDateTime (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public LocalDateTime getLastModificationDateTime (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // We have an existing resource
     final IReadableResource aRes = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE);

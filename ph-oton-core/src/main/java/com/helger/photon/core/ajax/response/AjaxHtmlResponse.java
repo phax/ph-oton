@@ -208,6 +208,8 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
    *        calls, this should be <code>null</code> as there is no "document
    *        ready" callback - alternatively you can provide a custom "on
    *        document ready" provider.
+   * @param aCustomJson
+   *        Custom JSON object data structure. May be <code>null</code>.
    * @param sErrorMessage
    *        Optional error message if success if <code>false</code>
    */
@@ -215,6 +217,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
                               @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
                               @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
                               @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider,
+                              @Nullable final IJsonObject aCustomJson,
                               @Nullable final String sErrorMessage)
   {
     super (bSuccess);
@@ -229,6 +232,8 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
       // Do it after all nodes were finalized etc
       addCSSAndJS (aRequestScope, m_aSpecialNodes);
     }
+    if (aCustomJson != null)
+      aCustomJson.forEach ( (k, v) -> aObj.add (k, v));
 
     m_aSuccessValue = aObj;
     m_sErrorMessage = sErrorMessage;
@@ -396,7 +401,25 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
                                                 @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
                                                 @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
-    return new AjaxHtmlResponse (true, aRequestScope, aNode, aOnDocumentReadyProvider, (String) null);
+    return new AjaxHtmlResponse (true,
+                                 aRequestScope,
+                                 aNode,
+                                 aOnDocumentReadyProvider,
+                                 (IJsonObject) null,
+                                 (String) null);
+  }
+
+  @Nonnull
+  public static AjaxHtmlResponse createSuccessExt (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                   @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
+                                                   @Nullable final IJsonObject aCustomJson)
+  {
+    return new AjaxHtmlResponse (true,
+                                 aRequestScope,
+                                 aNode,
+                                 (IHCOnDocumentReadyProvider) null,
+                                 aCustomJson,
+                                 (String) null);
   }
 
   @Nonnull
@@ -406,6 +429,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
                                  (IRequestWebScopeWithoutResponse) null,
                                  (IHCHasChildrenMutable <?, IHCNode>) null,
                                  (IHCOnDocumentReadyProvider) null,
+                                 (IJsonObject) null,
                                  sErrorMessage);
   }
 }

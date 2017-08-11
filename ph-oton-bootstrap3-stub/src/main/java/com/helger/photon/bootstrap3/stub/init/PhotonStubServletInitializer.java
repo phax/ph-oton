@@ -37,7 +37,7 @@ import com.helger.photon.core.api.servlet.PublicApplicationAPIServlet;
 import com.helger.photon.core.api.servlet.SecureApplicationAPIServlet;
 import com.helger.photon.core.go.GoServlet;
 import com.helger.photon.core.resource.ResourceBundleServlet;
-import com.helger.photon.core.servlet.AbstractObjectDeliveryServlet;
+import com.helger.photon.core.servlet.AbstractObjectDeliveryHttpHandler;
 import com.helger.photon.core.servlet.CharacterEncodingFilter;
 import com.helger.photon.core.servlet.HttpoxyFilter;
 import com.helger.photon.core.servlet.LogoutServlet;
@@ -160,8 +160,8 @@ public final class PhotonStubServletInitializer
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("StreamServlet", StreamServlet.class);
         if (aServlet != null)
         {
-          aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS,
-                                     AbstractObjectDeliveryServlet.EXTENSION_MACRO_WEB_DEFAULT);
+          aServlet.setInitParameter (AbstractObjectDeliveryHttpHandler.INITPARAM_ALLOWED_EXTENSIONS,
+                                     AbstractObjectDeliveryHttpHandler.EXTENSION_MACRO_WEB_DEFAULT);
           aServlet.addMapping (StreamServlet.SERVLET_DEFAULT_PATH + "/*");
         }
       }
@@ -170,8 +170,8 @@ public final class PhotonStubServletInitializer
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("UserStreamServlet", UserStreamServlet.class);
         if (aServlet != null)
         {
-          aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS,
-                                     AbstractObjectDeliveryServlet.EXTENSION_MACRO_WEB_DEFAULT);
+          aServlet.setInitParameter (AbstractObjectDeliveryHttpHandler.INITPARAM_ALLOWED_EXTENSIONS,
+                                     AbstractObjectDeliveryHttpHandler.EXTENSION_MACRO_WEB_DEFAULT);
           aServlet.addMapping (UserStreamServlet.SERVLET_DEFAULT_PATH + "/*");
         }
       }
@@ -195,7 +195,7 @@ public final class PhotonStubServletInitializer
                                                                      ResourceBundleServlet.class);
         if (aServlet != null)
         {
-          aServlet.setInitParameter (AbstractObjectDeliveryServlet.INITPARAM_ALLOWED_EXTENSIONS, "js,css");
+          aServlet.setInitParameter (AbstractObjectDeliveryHttpHandler.INITPARAM_ALLOWED_EXTENSIONS, "js,css");
           aServlet.addMapping (ResourceBundleServlet.SERVLET_DEFAULT_PATH + "/*");
         }
       }

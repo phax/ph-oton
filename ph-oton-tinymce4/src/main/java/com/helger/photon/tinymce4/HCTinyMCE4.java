@@ -1326,7 +1326,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
-    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_1);
+    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_3);
     PhotonJS.registerJSIncludeForThisRequest (ETinyMCE4JSPathProvider.TINYMCE_4);
   }
 }

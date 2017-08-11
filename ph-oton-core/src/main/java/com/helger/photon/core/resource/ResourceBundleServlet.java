@@ -16,31 +16,19 @@
  */
 package com.helger.photon.core.resource;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.state.EContinue;
 import com.helger.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
-import com.helger.photon.core.mgr.PhotonCoreManager;
-import com.helger.photon.core.servlet.AbstractObjectDeliveryServlet;
-import com.helger.servlet.response.UnifiedResponse;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
+import com.helger.xservlet.simple.AbstractSimpleHttpServlet;
 
 /**
  * Special servlet to stream JS and CSS bundles.<br>
@@ -63,17 +51,19 @@ import com.helger.xservlet.servletstatus.ServletStatusManager;
  *
  * @author philip
  */
-public class ResourceBundleServlet extends AbstractObjectDeliveryServlet
+public class ResourceBundleServlet extends AbstractSimpleHttpServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "resbundle";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleServlet.class);
+  static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleServlet.class);
   private static final AtomicBoolean s_bIsEnabled = new AtomicBoolean (isServletRegisteredInServletContext () &&
                                                                        GlobalDebug.isProductionMode ());
 
   public ResourceBundleServlet ()
-  {}
+  {
+    registerSyncHandler (EHttpMethod.GET, new ResourceBundleDeliveryHttpHandler ());
+  }
 
   public static boolean isServletRegisteredInServletContext ()
   {
@@ -96,67 +86,8 @@ public class ResourceBundleServlet extends AbstractObjectDeliveryServlet
   @Override
   @Nonnull
   @Nonempty
-  protected String getApplicationID ()
+  protected String getInitApplicationID ()
   {
     return CApplicationID.APP_ID_PUBLIC;
-  }
-
-  @Override
-  @Nonnull
-  protected Set <EHttpMethod> getAllowedHTTPMethods ()
-  {
-    return ALLOWED_METHDOS_GET;
-  }
-
-  @Nonnull
-  private static String _getBundleIDFromFilename (@Nonnull final String sFilename)
-  {
-    // Cut leading path ("/") and file extension
-    return FilenameHelper.getBaseName (sFilename);
-  }
-
-  @Override
-  @OverridingMethodsMustInvokeSuper
-  protected EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull final UnifiedResponse aUnifiedResponse)
-  {
-    if (super.initRequestState (aRequestScope, aUnifiedResponse).isBreak ())
-      return EContinue.BREAK;
-
-    // Allow only valid bundle IDs
-    final String sBundleID = _getBundleIDFromFilename (aRequestScope.attrs ()
-                                                                    .getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME));
-    if (!PhotonCoreManager.getWebSiteResourceBundleMgr ().containsResourceBundleOfID (sBundleID))
-    {
-      s_aLogger.info ("Failed to resolve resource bundle with ID '" + sBundleID + "'");
-      aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
-      return EContinue.BREAK;
-    }
-    return EContinue.CONTINUE;
-  }
-
-  /**
-   * @return The number of days to cache the result.
-   */
-  @Nonnegative
-  protected int getCachingDays ()
-  {
-    return 30;
-  }
-
-  @Override
-  protected void onDeliverResource (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                    @Nonnull final UnifiedResponse aUnifiedResponse,
-                                    @Nonnull final String sFilename) throws IOException
-  {
-    final String sBundleID = _getBundleIDFromFilename (sFilename);
-    final WebSiteResourceBundleSerialized aBundle = PhotonCoreManager.getWebSiteResourceBundleMgr ()
-                                                                     .getResourceBundleOfID (sBundleID);
-
-    final int nCachingDays = getCachingDays ();
-    aUnifiedResponse.enableCaching (CGlobal.SECONDS_PER_DAY * nCachingDays)
-                    .setMimeType (aBundle.getMimeType ())
-                    .setContent (aBundle)
-                    .setCharset (StandardCharsets.UTF_8);
   }
 }

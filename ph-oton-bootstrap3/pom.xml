@@ -102,6 +102,7 @@
         </executions>
         <configuration>
           <forceCreation>false</forceCreation>
+          <sourceDirectory>${basedir}/src/main/resources/custom</sourceDirectory>
         </configuration>
       </plugin>
       <plugin>
@@ -119,7 +120,7 @@
           <removeUnnecessaryCode>true</removeUnnecessaryCode>
           <quoteURLs>true</quoteURLs>
           <verbose>false</verbose>
-          <sourceDirectory>${basedir}/src/main/resources</sourceDirectory>
+          <sourceDirectory>${basedir}/src/main/resources/custom</sourceDirectory>
         </configuration>
       </plugin>
     </plugins>

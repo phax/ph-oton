@@ -29,8 +29,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsLinkedHashSet;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.math.MathHelper;
@@ -42,6 +44,7 @@ import com.helger.commons.url.URLHelper;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.simple.IXServletSimpleHandler;
 
 /**
  * Base class for stream and download servlet.
@@ -49,7 +52,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @author Philip Helger
  * @since 3.7.0
  */
-public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedResponseServlet
+public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimpleHandler
 {
   public static final String INITPARAM_DENIED_FILENAMES = "deniedFilenames";
   public static final String INITPARAM_DENIED_EXTENSIONS = "deniedExtensions";
@@ -62,7 +65,7 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
 
   protected static final String REQUEST_ATTR_OBJECT_DELIVERY_FILENAME = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                                         "object-delivery.filename";
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractObjectDeliveryServlet.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractObjectDeliveryHttpHandler.class);
 
   /**
    * Create a unique value per server startup. This is the ETag value for all
@@ -86,7 +89,7 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
   private boolean m_bDeniedAllExtensions = false;
   private boolean m_bAllowedAllExtensions = false;
 
-  protected AbstractObjectDeliveryServlet ()
+  protected AbstractObjectDeliveryHttpHandler ()
   {}
 
   /**
@@ -147,19 +150,17 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
   }
 
   @Override
-  @OverridingMethodsMustInvokeSuper
-  protected final void onInit () throws ServletException
+  public void onServletInit (@Nonnull @Nonempty final String sApplicationID,
+                             @Nonnull final ICommonsMap <String, String> aInitParams)
   {
-    super.onInit ();
-
-    _initialFillSet (m_aDeniedFilenames, getInitParameter (INITPARAM_DENIED_FILENAMES), false);
-    _initialFillSet (m_aDeniedExtensions, getInitParameter (INITPARAM_DENIED_EXTENSIONS), true);
-    _initialFillSet (m_aDeniedRegExs, getInitParameter (INITPARAM_DENIED_REG_EXS), false);
+    _initialFillSet (m_aDeniedFilenames, aInitParams.get (INITPARAM_DENIED_FILENAMES), false);
+    _initialFillSet (m_aDeniedExtensions, aInitParams.get (INITPARAM_DENIED_EXTENSIONS), true);
+    _initialFillSet (m_aDeniedRegExs, aInitParams.get (INITPARAM_DENIED_REG_EXS), false);
     m_bDeniedAllExtensions = m_aDeniedExtensions.contains (INITPARAM_VALUE_WILDCARD);
 
-    _initialFillSet (m_aAllowedFilenames, getInitParameter (INITPARAM_ALLOWED_FILENAMES), false);
-    _initialFillSet (m_aAllowedExtensions, getInitParameter (INITPARAM_ALLOWED_EXTENSIONS), true);
-    _initialFillSet (m_aAllowedRegExs, getInitParameter (INITPARAM_ALLOWED_REG_EXS), false);
+    _initialFillSet (m_aAllowedFilenames, aInitParams.get (INITPARAM_ALLOWED_FILENAMES), false);
+    _initialFillSet (m_aAllowedExtensions, aInitParams.get (INITPARAM_ALLOWED_EXTENSIONS), true);
+    _initialFillSet (m_aAllowedRegExs, aInitParams.get (INITPARAM_ALLOWED_REG_EXS), false);
     m_bAllowedAllExtensions = m_aAllowedExtensions.contains (INITPARAM_VALUE_WILDCARD);
 
     if (s_aLogger.isDebugEnabled ())
@@ -347,8 +348,8 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull final UnifiedResponse aUnifiedResponse)
+  public EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @Nonnull final UnifiedResponse aUnifiedResponse)
   {
     // cut the leading "/"
     final String sFilename = URLHelper.urlDecode (aRequestScope.getPathWithinServlet ());
@@ -371,7 +372,7 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
 
   @Override
   @Nullable
-  protected final String getSupportedETag (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public final String getSupportedETag (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return ETAG_VALUE_OBJECT_DELIVERY_SERVLET;
   }
@@ -381,8 +382,8 @@ public abstract class AbstractObjectDeliveryServlet extends AbstractUnifiedRespo
                                              @Nonnull String sFilename) throws IOException;
 
   @Override
-  protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
   {
     // The request has been checked and the filename is valid for delivery
     final String sFilename = aRequestScope.attrs ().getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME);
